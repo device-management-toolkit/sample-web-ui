@@ -13,7 +13,7 @@ export class CiraConfigs extends React.Component {
             rpsKey: Config.rpsApiKey
         }
         return(<RpsProvider data={data}>
-               <CiraEditor rpsServer={Config.serviceUrls.rps} />
+               <CiraEditor rpsServer={Config.serviceUrls.rps} mpsServer={Config.serviceUrls.mps} />
                </RpsProvider>
         )
     }
