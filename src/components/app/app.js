@@ -46,9 +46,10 @@ const devicesTab = { to: '/mps/devices', svg: '', labelId: 'Devices' };
 const profilesTab = { to: '/rps/profiles', svg: '', labelId: 'Profiles' }
 const ciraConfigsTab = { to: '/rps/ciraConfigs', svg: '', labelId: 'CIRA Configs' };
 const domainsTab = { to: '/rps/domains', svg: '', labelId: 'Domains' };
-const networksTab = { to: '/rps/networkconfigs', svg: '', labelId: 'Network Configs'}
+// const networksTab = { to: '/rps/networkconfigs', svg: '', labelId: 'Network Configs'}
 const tabConfigsMPS = [dashboardTab, devicesTab];
-const tabConfigsRPS = [profilesTab, networksTab,  ciraConfigsTab, domainsTab];
+// const tabConfigsRPS = [profilesTab, networksTab,  ciraConfigsTab, domainsTab];
+const tabConfigsRPS = [ciraConfigsTab, profilesTab, domainsTab];
 /** The base component for the app */
 class App extends Component {
 
@@ -76,7 +77,7 @@ class App extends Component {
               <Protected exact path='/rps/profiles' component={ProfilesPage} />
               <Protected exact path='/rps/ciraconfigs' component={CiraConfigsPage} />
               <Protected exact path='/rps/domains' component={DomainsPage} />
-              <Protected exact path='/rps/networkconfigs' component={NetworksPage} />
+              {/* <Protected exact path='/rps/networkconfigs' component={NetworksPage} /> */}
               <Route exact path='/:ui/:guid' component={UiControlsPage} />
               <Route exact path='/landing' component={LandingPage} />
 
