@@ -5,14 +5,19 @@
 import React from 'react';
 import Config from 'app.config'
 import { PageContent, AjaxError, Grid, Cell } from 'components/shared';
-
+import { ToastContainer, toast } from 'react-toastify';
 import './dashboard.scss';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastMessage } from 'utilities';
 
 export class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = {
+      showNotification: false
+    }
   }
 
   componentDidMount() {
@@ -36,14 +41,21 @@ export class Dashboard extends React.Component {
         // updateConnectionSocket.onopen = null
         // updateConnectionSocket.onmessage = null
         // updateConnectionSocket.onclose = null;
-        updateConnectionSocket = null;
-        this.connectionStatusControl();
+        // updateConnectionSocket = null;
+        clearInterval(retry_timer);
+        // this.handleNotification();
       }, 5000);
     }
 
     updateConnectionSocket.onmessage = () => {
       setTimeout(() => { this.props.fetchDevices() }, 200);
     }
+  }
+
+  handleNotification = () => {
+    this.setState({
+      showNotification: true
+    })
   }
 
   navigateUser = filterString => {
@@ -55,12 +67,12 @@ export class Dashboard extends React.Component {
 
   render() {
     const { connected, disconnected, error, t } = this.props;
-    const totalDevices = (connected + disconnected)|| 0;
+    const totalDevices = (connected + disconnected) || 0;
     return (
       <React.Fragment>
         <PageContent className='dashboard-page-container' key="page-content">
           <h1 style={{ display: 'block', textAlign: 'center' }}>{t('dashboard.header')} </h1>
-          {error && <AjaxError error={error} t={t} />}
+          {/* {error && <AjaxError error={error} t={t} />} */}
           {/* {!error &&
             <PropertyGrid>
               <PropertyGridHeader>
@@ -105,7 +117,7 @@ export class Dashboard extends React.Component {
 
           <Grid>
             <Cell className='col-2'>
-              <div className={`stat-cell total ${totalDevices === connected ? 'allConnected': 'fewConnected'}`} id="total" onClick={e => this.navigateUser()}>
+              <div className={`stat-cell total ${totalDevices === connected ? 'allConnected' : 'fewConnected'}`} id="total" onClick={e => this.navigateUser()}>
                 <div className='stat-text'>{t('dashboard.totalDevices')} </div>
                 <div className='stat-value'><b> {totalDevices}</b></div>
               </div>
@@ -119,6 +131,20 @@ export class Dashboard extends React.Component {
               </div>
             </Cell>
           </Grid>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          >
+            {error && toast.error(<ToastMessage description={"oops!!! something went wrong. please check server address"} icon={'times-circle'} />)
+            }
+          </ToastContainer>
         </PageContent>
       </React.Fragment>)
   }

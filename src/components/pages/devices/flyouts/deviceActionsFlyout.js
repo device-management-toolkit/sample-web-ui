@@ -9,8 +9,8 @@ import './deviceActions.scss'
 import Dropdown from 'components/shared/forms/dropdown';
 import { FlyoutCell } from 'components/shared/grid/flyoutCell';
 import { ToastContainer, toast } from 'react-toastify'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastMessage } from 'utilities';
 
 export class DeviceActions extends React.Component {
 
@@ -73,4 +73,4 @@ export class DeviceActions extends React.Component {
 }
 
 const isDisplaylable = (isDisplay, label) => isDisplay ? true : !isDisplay && label !== "KVM" && label !== "SOL" ? true : false;
-const ToastMessage = ({ description, icon }) => <div><FontAwesomeIcon icon={icon} size="lg" /> {description}</div>
+// const ToastMessage = ({ description, icon }) => <div><FontAwesomeIcon icon={icon} size="lg" /> {description}</div>

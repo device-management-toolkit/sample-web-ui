@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Config from 'app.config';
 import dot from 'dot-object';
 import toCamelcase from './camelcase';
@@ -164,3 +165,5 @@ export const getIntervalParams = (timeInterval) => {
 export const getActionId = (action) => action === 'powerUp' ? 2 : action === 'powerOff' ? 8 : action === 'powerCycle' ? 5 : action === "reset" ? 10 : action === "softOff" ? 12 : action === "softReset" ? 14 : action === "sleep" ? 4 : action === "hibernate" ? 7 : action === "powerUpToBIOS" ? 100 : action === "resetToBIOS" ? 101 : null
 
 export const getActionById = (action) => action === 2 ? 'Power Up' : action === 8 ? 'Power Off' : action === 5 ? 'Power Cycle' : action === 10 ? "Reset" : action === 12 ? "Soft Off" : action === 14 ? "Soft Reset" : action === 4 ? "Sleep" : action === 7 ? "Hibernate" : action === 100 ? "Power Up To BIOS" : action === 101 ? "Reset To BIOS" : null
+
+export const ToastMessage = ({ description, icon }) => <div><FontAwesomeIcon icon={icon} size="lg" /> {description}</div>
