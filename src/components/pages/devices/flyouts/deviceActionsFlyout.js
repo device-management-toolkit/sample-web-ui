@@ -73,4 +73,3 @@ export class DeviceActions extends React.Component {
 }
 
 const isDisplaylable = (isDisplay, label) => isDisplay ? true : !isDisplay && label !== "KVM" && label !== "SOL" ? true : false;
-// const ToastMessage = ({ description, icon }) => <div><FontAwesomeIcon icon={icon} size="lg" /> {description}</div>

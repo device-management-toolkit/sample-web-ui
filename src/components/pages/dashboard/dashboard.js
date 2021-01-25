@@ -38,12 +38,7 @@ export class Dashboard extends React.Component {
 
     updateConnectionSocket.onclose = () => {
       retry_timer = setInterval(() => {
-        // updateConnectionSocket.onopen = null
-        // updateConnectionSocket.onmessage = null
-        // updateConnectionSocket.onclose = null;
-        // updateConnectionSocket = null;
         clearInterval(retry_timer);
-        // this.handleNotification();
       }, 5000);
     }
 
@@ -72,7 +67,6 @@ export class Dashboard extends React.Component {
       <React.Fragment>
         <PageContent className='dashboard-page-container' key="page-content">
           <h1 style={{ display: 'block', textAlign: 'center' }}>{t('dashboard.header')} </h1>
-          {/* {error && <AjaxError error={error} t={t} />} */}
           {/* {!error &&
             <PropertyGrid>
               <PropertyGridHeader>
