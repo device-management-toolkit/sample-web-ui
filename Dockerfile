@@ -1,14 +1,18 @@
 FROM node:12.19 as builder
 
-ARG RPS_SERVER=localhost
+ARG RPS_SERVER=##REACT_APP_RPS_SERVER##
 ARG RPS_WEB_PORT=8081
-ARG MPS_SERVER=localhost
+ARG MPS_SERVER=##REACT_APP_MPS_SERVER##
 ARG MPS_WEB_PORT=3000
+ARG RPSXAPIKEY=##REACT_APP_RPSXAPIKEY##
+ARG MPSXAPIKEY=##REACT_APP_MPSXAPIKEY##
 
 ENV REACT_APP_RPS_SERVER=${RPS_SERVER}
 ENV REACT_APP_RPS_WEB_PORT=${RPS_WEB_PORT}
 ENV REACT_APP_MPS_SERVER=${MPS_SERVER}
 ENV REACT_APP_MPS_WEB_PORT=${MPS_WEB_PORT}
+ENV REACT_APP_RPSXAPIKEY=${RPSXAPIKEY}
+ENV REACT_APP_MPSXAPIKEY=${MPSXAPIKEY}
 
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*","./"]
@@ -18,4 +22,4 @@ COPY . .
 RUN npm run build
 FROM nginx:latest
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-
+COPY --from=builder /usr/src/app/init.sh /docker-entrypoint.d/init.sh
