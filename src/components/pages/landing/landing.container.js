@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Landing } from './landing'
 import { redux as appRedux, getRpsStatus } from 'store/reducers/appReducer'
-import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { getLoggedInStatus } from 'store/reducers/authReducer';
 
@@ -19,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
     setRpsStatus: isRps => dispatch(appRedux.actions.updateRpsStatus(isRps))
 });
 
-export const LandingContainer = compose(withTranslation(), withRouter, connect(mapStateToProps, mapDispatchToProps))(Landing)
+export const LandingContainer = withRouter((connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Landing))))
