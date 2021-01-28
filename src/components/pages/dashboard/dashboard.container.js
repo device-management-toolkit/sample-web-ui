@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Dashboard } from './dashboard'
 import { epics as deviceEpics, getDevices, getConnectedDevicesCount, getDisconnectedDevicesCount, getDevicesError } from 'store/reducers/deviceReducer'
-import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
@@ -21,5 +20,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-//export const DashboardContainer = withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
-export const DashboardContainer = compose(withTranslation(), withRouter,connect(mapStateToProps, mapDispatchToProps))(Dashboard)
+export const DashboardContainer = withRouter((connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard))))
