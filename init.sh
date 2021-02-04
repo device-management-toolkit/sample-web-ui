@@ -1,0 +1,6 @@
+sed -i \
+-e "s|##REACT_APP_RPS_SERVER##|$REACT_APP_RPS_SERVER|g" \
+-e "s|##REACT_APP_MPS_SERVER##|$REACT_APP_MPS_SERVER|g" \
+-e "s|##REACT_APP_MPSXAPIKEY##|$REACT_APP_MPSXAPIKEY|g" \
+-e "s|##REACT_APP_RPSXAPIKEY##|$REACT_APP_RPSXAPIKEY|g" \
+ /usr/share/nginx/html/static/js/*.js
