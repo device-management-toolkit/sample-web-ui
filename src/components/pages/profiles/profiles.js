@@ -14,7 +14,7 @@ export class Profiles extends React.Component {
         }
         return (
             <RpsProvider data={data}>
-                <Profile rpsServer={Config.serviceUrls.rps} />
+                <Profile rpsServer={Config.serviceUrls.rps} mpsServer={Config.serviceUrls.mps}/>
             </RpsProvider>
         )
     }
