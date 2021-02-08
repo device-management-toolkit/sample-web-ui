@@ -9,6 +9,7 @@ const port = process.env.REACT_APP_MPS_WEB_PORT? process.env.REACT_APP_MPS_WEB_P
 const rpsPort = process.env.REACT_APP_RPS_WEB_PORT ? process.env.REACT_APP_RPS_WEB_PORT : 8081;
 const rpsServerIP = process.env.REACT_APP_RPS_SERVER ? process.env.REACT_APP_RPS_SERVER : 'localhost';
 const serverIP = process.env.REACT_APP_MPS_SERVER ? process.env.REACT_APP_MPS_SERVER : 'localhost';
+const authMode = process.env.REACT_APP_AUTH_MODE_ENABLED ? process.env.REACT_APP_AUTH_MODE_ENABLED : 'true'
 const mpsAPIKey = process.env.REACT_APP_MPSXAPIKEY ? process.env.REACT_APP_MPSXAPIKEY : 'APIKEYFORMPS123!';
 const rpsAPIKey = process.env.REACT_APP_RPSXAPIKEY ? process.env.REACT_APP_RPSXAPIKEY : 'APIKEYFORRPS123!'
 const Config = {
@@ -32,7 +33,8 @@ const Config = {
   mpsServer: `${serverIP}:${port}`,
   mpsApiKey: `${mpsAPIKey}`,
   rpsEnabled: true,
-  rpsApiKey: `${rpsAPIKey}`
+  rpsApiKey: `${rpsAPIKey}`,
+  authMode: authMode 
 };
 
 export default Config;

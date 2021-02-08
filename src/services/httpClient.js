@@ -70,8 +70,11 @@ export class HttpClient {
    */
   static ajax(url, options = {}, withAuth = true) {
     const { retryWaitTime, maxRetryAttempts } = Config;
+
     options.crossDomain = true
-    options.withCredentials = true
+    if (Config.authMode === 'true') {
+      options.withCredentials = true
+    }
     const request = HttpClient.createAjaxRequest({ ...options, url }, withAuth);
     return Observable.ajax(request)
       // If success, extract the response object and enforce camelCase keys if json response
