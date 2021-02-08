@@ -10,7 +10,8 @@ import Config from 'app.config'
 export class Profiles extends React.Component {
     render() {
         const data = {
-            rpsKey: Config.rpsApiKey
+            rpsKey: Config.rpsApiKey,
+            mpsKey: Config.mpsApiKey
         }
         return (
             <RpsProvider data={data}>
