@@ -1,0 +1,39 @@
+<mat-toolbar>
+    <div fxFlex="50">
+        Device Name Control
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end center">
+        <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
+            <mat-icon>power</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Power off the device" (click)="sendPowerAction(8)">
+            <mat-icon>power_off</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(8)">
+            <mat-icon>restart_alt</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button *ngFor="let option of powerOptions" mat-menu-item (click)="sendPowerAction(option.action)">
+                <span>{{option.label}}</span>
+            </button>
+        </mat-menu>
+    </div>
+</mat-toolbar>
+<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+<!-- <app-kvm></app-kvm> -->
+<mat-sidenav-container autosize>
+    <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
+        <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
+        <mat-vertical-stepper #stepper>
+            <mat-step completed="false" editable="false" *ngFor="let entry of auditLogData.records.slice().reverse()">
+                <ng-template matStepLabel>{{entry.Event}}<br />{{ entry.Time | amTimeAgo:true }} ago</ng-template>
+            </mat-step>
+        </mat-vertical-stepper>
+        <div fxLayoutAlign="center" style="margin-top:12px">
+            <button mat-flat-button (click)="navigateTo('auditlog')" color="primary">See All Activity</button>
+        </div>
+    </mat-sidenav>
+</mat-sidenav-container>

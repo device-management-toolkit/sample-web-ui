@@ -1,0 +1,43 @@
+<mat-toolbar>
+    <div fxLayoutAlign="start center" fxFlex="33">
+        <span i18n>Devices</span>
+    </div>
+    <div fxFlex></div>
+    <div fxFlex="33" fxLayoutAlign="end">
+        <button id="btnAddMale" fxHide.xs mat-button>
+            <mat-icon>add</mat-icon> Add New
+        </button>
+    </div>
+</mat-toolbar>
+<mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
+
+<mat-card>
+    <mat-card-content>
+        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Devices</h3>
+        <mat-table [dataSource]="devices" [fxHide]="isNoData()">
+
+            <!-- select Column -->
+            <ng-container matColumnDef="select" >
+                <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
+                <mat-cell *matCellDef="let row" fxFlex="70px">
+                    <mat-checkbox [(ngModel)]="row.isChecked" (click)="$event.stopPropagation()"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+            <!-- host Column -->
+            <ng-container matColumnDef="host">
+                <mat-header-cell *matHeaderCellDef> Host </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.host }} </mat-cell>
+            </ng-container>
+
+            <!-- status Column -->
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.conn) }} </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.host)"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,51 @@
+<mat-toolbar>
+  New Domain
+</mat-toolbar>
+<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card fxFlex="50">
+    <mat-card-header>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <div fxLayout="row wrap">
+          <mat-form-field fxFlex="100">
+            <input formControlName="profileName" matInput name="name" placeholder="Name" required>
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <input formControlName="domainSuffix" matInput name="domainName" placeholder="Domain Name" required
+              minlength=3>
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+          <div fxFlex="100" style="margin-top:12px">
+            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
+            <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx">
+          </div>
+
+          <mat-form-field fxFlex="100">
+            <input type="password" formControlName="provisioningCertPassword" matInput name="provisioningCertPassword"
+              placeholder="Provisioning Cert Password" required>
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayout.xs="column">
+          <div fxFlex="50" fxLayoutAlign="center center">
+            <button type="button" mat-button color="primary" (click)="cancel()">
+              <span i18n>CANCEL</span>
+            </button>
+          </div>
+          <div fxFlex="50" fxLayoutAlign="center center">
+            <button id="btnLogin" type="submit" mat-button color="primary">
+              <span i18n>SAVE</span>
+              <span class="glyphicon glyphicon-log-in padding10L"></span>
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>

@@ -1,0 +1,20 @@
+
+@import "~../../_variables.scss";
+h1,.mat-display-1 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.mat-icon{
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+}
+.mat-card{
+    background-color: mat-color($openamtui-primary,A100);
+}
+.mat-card.connected{
+    background-color: mat-color($openamtui-accent,A100);
+}
+.mat-card.disconnected{
+    background-color: mat-color($openamtui-warn,A100);
+}

@@ -1,0 +1,61 @@
+<div fxLayout="row" fxLayout.xs="column" id="login">
+    <div fxFlex="20"></div>
+    <div fxFlex="60">
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Login</mat-card-title>
+                <mat-card-subtitle>Open AMT Cloud Toolkit Portal</mat-card-subtitle>
+            </mat-card-header>
+            <div [hidden]="isLoading === false">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <mat-form-field fxFlex="100">
+                            <input formControlName="userId" matInput name="userId" placeholder="Username">
+                            <mat-error i18n=@@field.required>This field is required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="100">
+                            <input formControlName="password" type="password" matInput name="Password"
+                                placeholder="password" minlength="7">
+                            <mat-error i18n=@@field.required>This field is required</mat-error>
+                        </mat-form-field>
+                        <div fxFlex="100">
+                            <mat-chip-list *ngIf="errorMessage !== ''" fxLayoutAlign="center center">
+                                <mat-chip color="accent">{{ errorMessage }}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div fxLayout="row" fxLayout.xs="column">
+                        <div fxFlex="50" fxLayoutAlign="center center">
+                            <a mat-button [routerLink]='["/forgotpassword"]'>
+                                <span i18n>FORGOT PASSWORD</span>
+                                <span class="fa fa-question padding10L"></span>
+                            </a>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="center center">
+                            <button id="btnLogin" type="submit" mat-button color="primary">
+                                <span i18n>LOG IN</span>
+                                <span class="glyphicon glyphicon-log-in padding10L"></span>
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </form>
+            <mat-card-footer>
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="12px"
+                    style="margin:12px">
+                    <div fxFlex="50" fxFlex.xs="100"> © {{currentYear}} Intel Corporation </div>
+                    <div fxFlex="50" fxFlex.xs="100" style="text-align: right">
+
+                    </div>
+                </div>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+    <div fxFlex="20"></div>
+</div>

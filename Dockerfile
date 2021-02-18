@@ -1,28 +1,21 @@
-FROM node:12.19 as builder
-
-ARG RPS_SERVER=##REACT_APP_RPS_SERVER##
-ARG RPS_WEB_PORT=8081
-ARG MPS_SERVER=##REACT_APP_MPS_SERVER##
-ARG MPS_WEB_PORT=3000
-ARG RPSXAPIKEY=##REACT_APP_RPSXAPIKEY##
-ARG MPSXAPIKEY=##REACT_APP_MPSXAPIKEY##
-ARG AUTH_MODE_ENABLED=##REACT_APP_AUTH_MODE_ENABLED##
-
-ENV REACT_APP_RPS_SERVER=${RPS_SERVER}
-ENV REACT_APP_RPS_WEB_PORT=${RPS_WEB_PORT}
-ENV REACT_APP_MPS_SERVER=${MPS_SERVER}
-ENV REACT_APP_MPS_WEB_PORT=${MPS_WEB_PORT}
-ENV REACT_APP_RPSXAPIKEY=${RPSXAPIKEY}
-ENV REACT_APP_MPSXAPIKEY=${MPSXAPIKEY}
-ENV REACT_APP_AUTH_MODE_ENABLED=${AUTH_MODE_ENABLED}
-
+#*********************************************************************
+# Copyright (c) Intel Corporation 2021
+# SPDX-License-Identifier: Apache-2.0
+#*********************************************************************/
+### STAGE 1: Build ###
+FROM node:14 AS build
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*","./"]
-RUN npm ci 
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
-#RUN [ "npm","start" ]
 RUN npm run build
-FROM nginx:latest
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-COPY --from=builder /usr/src/app/init.sh /docker-entrypoint.d/init.sh
 
+### STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
+
+LABEL license='SPDX-License-Identifier: Apache-2.0' \
+      copyright='Copyright (c) 2021: Intel'
+
+#COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/openamtui /usr/share/nginx/html
+EXPOSE 80

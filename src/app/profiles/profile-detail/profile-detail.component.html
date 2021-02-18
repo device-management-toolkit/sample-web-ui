@@ -1,0 +1,70 @@
+<mat-toolbar>
+    New Profile
+</mat-toolbar>
+<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex="50">
+        <mat-card-header>
+            <mat-card-title></mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                <div fxLayout="row wrap">
+                    <mat-form-field fxFlex="100">
+                        <input formControlName="profileName" matInput name="profileName" placeholder="Profile Name"
+                            required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="100">
+                        <mat-label>Activation Mode</mat-label>
+                        <mat-select formControlName="activation" required>
+                            <mat-option *ngFor="let activationMode of activationModes" [value]="activationMode.value">
+                                {{activationMode.display}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password</mat-checkbox>
+
+
+                    <mat-form-field fxFlex="100">
+                        <input type="password" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8>
+                    </mat-form-field>
+
+                    <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password</mat-checkbox>
+
+                    <mat-form-field fxFlex="100">
+                        <input type="password" formControlName="mebxPassword" matInput name="mebxPassword" placeholder="MEBX Password" required minlength=8>
+                    </mat-form-field>
+                    <div>
+                        <mat-label>Network Configuration</mat-label>
+
+                        <br>
+                        <mat-radio-group name="networkConfigName" formControlName="networkConfigName"><br/>
+                            <mat-radio-button value="dhcp_enabled" checked="true">DHCP</mat-radio-button><br/><br/>
+                            <mat-radio-button value="dhcp_disabled">STATIC</mat-radio-button><br/><br/>
+                        </mat-radio-group>
+                    </div>
+                    <mat-form-field fxFlex="100">
+                        <mat-label>CIRA Configuration</mat-label>
+                        <mat-select formControlName="ciraConfigName">
+                            <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" fxLayoutAlign="center center">
+                        <button type="button" mat-button color="primary" (click)="cancel()">
+                            <span i18n>CANCEL</span>
+                        </button>
+                    </div>
+                    <div fxFlex="50" fxLayoutAlign="center center">
+                        <button type="submit" mat-button color="primary">
+                            <span i18n>SAVE</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-card-actions>
+        </form>
+    </mat-card>

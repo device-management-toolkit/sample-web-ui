@@ -1,16 +1,12 @@
 version: '3.4'
 
 services:
-  samplewebui:
-    image: samplewebui
-    network_mode: host
+  openamtui:
+    image: openamtui
     build:
       context: .
       dockerfile: ./Dockerfile
-      args:
-        RPS_SERVER: "192.168.1.69"
-        MPS_SERVER: "192.168.1.69"
     environment:
       NODE_ENV: production
     ports:
-      - 3001:80
+      - 8089:80

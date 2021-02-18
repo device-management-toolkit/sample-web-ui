@@ -1,0 +1,78 @@
+<mat-toolbar>
+    New CIRA Config
+</mat-toolbar>
+<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex="50">
+        <mat-card-header>
+            <mat-card-title></mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                <div fxLayout="row wrap">
+                    <mat-form-field fxFlex="100" style="margin-bottom: 10px;">
+                        <input formControlName="configName" matInput name="configName" placeholder="Config Name"
+                            required>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-radio-group name="serverAddressFormat" formControlName="serverAddressFormat"
+                        fxLayout="row wrap">
+                        <mat-radio-button fxFlex=50 value="3" checked="true">IPv4</mat-radio-button>
+                        <mat-radio-button fxFlex=50 value="201">FQDN</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-form-field fxFlex="100">
+                        <input formControlName="mpsServerAddress" matInput name="mpsServerAddress"
+                            placeholder="MPS Server Address" required>
+                        <mat-error>This field is required</mat-error>
+
+                    </mat-form-field>
+                    <mat-form-field fxFlex="100">
+                        <input formControlName="commonName" matInput name="commonName"
+                            placeholder="Cert Common Name (CN=)" required>
+                        <mat-error>This field is required</mat-error>
+
+                    </mat-form-field>
+                    <mat-form-field fxFlex="100">
+                        <input type=number formControlName="mpsPort" matInput name="mpsPort" placeholder="Port"
+                            required>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="100">
+                        <input formControlName="username" matInput name="username" placeholder="Username" required>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="100">
+                        <input type="password" formControlName="password" matInput name="password"
+                            placeholder="Password" required minlength=8>
+                        <mat-error>This field is required and must be at least 8 characters long</mat-error>
+                    </mat-form-field><br><br><br><br>
+                    <mat-slide-toggle formControlName="autoLoad">
+                        Auto-load MPS Root Certificate Format
+                    </mat-slide-toggle>
+
+                    <mat-form-field fxFlex="100" [fxHide]="shouldShowCertBox()">
+                        <textarea rows=5 formControlName="mpsRootCertificate" matInput name="mpsRootCertificate"
+                            placeholder="MPS Root Cert"></textarea>
+
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" fxLayoutAlign="center center">
+                        <button type="button" mat-button color="primary" (click)="cancel()">
+                            <span i18n>CANCEL</span>
+                        </button>
+                    </div>
+                    <div fxFlex="50" fxLayoutAlign="center center">
+                        <button type="submit" mat-button color="primary">
+                            <span i18n>SAVE</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,53 @@
+<mat-toolbar>
+    <div fxLayout="row" fxFlexFill>
+        <div fxLayoutAlign="start center" fxFlex="33">
+            <span i18n>Domains</span>
+        </div>
+        <div fxFlex></div>
+        <div fxFlex="33" fxLayoutAlign="end">
+            <button id="btnAddMale" fxHide.xs mat-button (click)="navigateTo()">
+                <mat-icon>add</mat-icon> Add New
+            </button>
+        </div>
+    </div>
+</mat-toolbar>
+<mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
+<mat-card>
+    <mat-card-content>
+        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Domains</h3>
+        <mat-table [dataSource]="domains" [fxHide]="isNoData()">
+            <!-- select Column -->
+            <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
+                <mat-cell *matCellDef="let row" fxFlex="70px">
+                    <mat-checkbox [(ngModel)]="row.isChecked" (click)="$event.stopPropagation()"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+            <!-- name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
+            </ng-container>
+
+            <!-- domainSuffix Column -->
+            <ng-container matColumnDef="domainSuffix">
+                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Domain Suffix</mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.domainSuffix }}
+                </mat-cell>
+            </ng-container>
+
+            <!-- remove Column -->
+            <ng-container matColumnDef="remove">
+                <mat-header-cell *matHeaderCellDef fxFlex="12.5"> </mat-header-cell>
+                <mat-cell *matCellDef="let row" fxFlex="12.5" (click)="$event.stopPropagation()">
+                  <button mat-icon-button (click)="delete(row.profileName)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
