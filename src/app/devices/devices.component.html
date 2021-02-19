@@ -17,22 +17,30 @@
         <mat-table [dataSource]="devices" [fxHide]="isNoData()">
 
             <!-- select Column -->
-            <ng-container matColumnDef="select" >
+            <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
                 <mat-cell *matCellDef="let row" fxFlex="70px">
                     <mat-checkbox [(ngModel)]="row.isChecked" (click)="$event.stopPropagation()"></mat-checkbox>
                 </mat-cell>
             </ng-container>
+
             <!-- host Column -->
-            <ng-container matColumnDef="host">
-                <mat-header-cell *matHeaderCellDef> Host </mat-header-cell>
+            <ng-container matColumnDef="hostname">
+                <mat-header-cell *matHeaderCellDef> Hostname </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+            </ng-container>
+
+            <!-- guid Column -->
+            <ng-container matColumnDef="guid">
+                <mat-header-cell *matHeaderCellDef> GUID </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{ element.host }} </mat-cell>
             </ng-container>
 
             <!-- status Column -->
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.conn) }} </mat-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.conn) }}
+                </mat-cell>
             </ng-container>
 
 

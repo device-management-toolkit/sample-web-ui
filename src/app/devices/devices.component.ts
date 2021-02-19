@@ -20,7 +20,7 @@ export class DevicesComponent implements OnInit {
   public devices: Device[] = []
   public isLoading = true
 
-  displayedColumns: string[] = ['select', 'host', 'status']
+  displayedColumns: string[] = ['select', 'hostname', 'guid', 'status']
 
   constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) { }
 

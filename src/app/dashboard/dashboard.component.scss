@@ -10,10 +10,10 @@ h1,.mat-display-1 {
     width: 48px;
 }
 .mat-card{
-    background-color: mat-color($openamtui-primary,A100);
+    background-color: mat-color($openamtui-accent,A200);
 }
 .mat-card.connected{
-    background-color: mat-color($openamtui-accent,A100);
+    background-color: mat-color($openamtui-accent,A200);
 }
 .mat-card.disconnected{
     background-color: mat-color($openamtui-warn,A100);
