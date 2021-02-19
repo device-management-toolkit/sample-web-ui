@@ -27,7 +27,6 @@
     "ngx-moment": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "ui-toolkit": "git+https://github.com/open-amt-cloud-toolkit/ui-toolkit.git",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

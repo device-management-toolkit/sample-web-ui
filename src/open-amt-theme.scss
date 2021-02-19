@@ -32,10 +32,8 @@ $openamtui-dark-theme: mat-dark-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($openamtui-theme);
-.dark-theme {
-  @include angular-material-color($openamtui-dark-theme);
-}
+@include angular-material-theme($openamtui-dark-theme);
+
 .light-theme {
   @include angular-material-color($openamtui-theme);
 }
@@ -45,7 +43,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-card {
   margin: 12px;
 }
-
+.mat-drawer-container {
+  background-color: #fafafa;
+  color:rgba(0, 0, 0, 0.87);
+}
 .mat-snack-bar-container {
   &.error {
     text-align: center;

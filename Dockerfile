@@ -8,14 +8,15 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run build -- --prod
 
 ### STAGE 2: Run ###
-FROM nginx:1.17.1-alpine
+FROM nginx:latest
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2021: Intel'
 
-#COPY nginx.conf /etc/nginx/nginx.conf
+
 COPY --from=build /usr/src/app/dist/openamtui /usr/share/nginx/html
+COPY --from=build /usr/src/app/init.sh /docker-entrypoint.d/init.sh
 EXPOSE 80
