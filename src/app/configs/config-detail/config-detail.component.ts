@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { of } from 'rxjs'
+import { throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { ConfigsService } from '../configs.service'
@@ -48,14 +48,12 @@ export class ConfigDetailComponent implements OnInit {
             // TODO: handle error better
             console.log(err)
             this.snackBar.open($localize`Error loading CIRA config`, undefined, SnackbarDefaults.defaultError)
-            return of(null)
+            return throwError(err)
           }), finalize(() => {
             this.isLoading = false
           })).subscribe(data => {
-          if (data != null) {
-            this.configForm.patchValue(data)
-            this.configForm.patchValue({ serverAddressFormat: data.serverAddressFormat.toString() })
-          }
+          this.configForm.patchValue(data)
+          this.configForm.patchValue({ serverAddressFormat: data.serverAddressFormat.toString() })
         })
       }
     })

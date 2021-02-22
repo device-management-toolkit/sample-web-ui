@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import Constants from 'src/app/shared/config/Constants'
@@ -82,7 +82,7 @@ export class ProfileDetailComponent implements OnInit {
         // TODO: handle error better
           console.log(err)
           this.snackBar.open($localize`Error creating profile`, undefined, SnackbarDefaults.defaultError)
-          return of(null)
+          return throwError(err)
         }), finalize(() => {
           this.isLoading = false
         })).subscribe(data => {

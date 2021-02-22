@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { AuthService } from '../auth.service'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         // TODO: handle error better
         console.log(err)
         this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
-        return of({})
+        return throwError(err)
       }), finalize(() => {
         this.isLoading = false
       })

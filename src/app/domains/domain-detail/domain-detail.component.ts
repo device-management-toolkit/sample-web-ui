@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DomainsService } from '../domains.service'
@@ -37,7 +37,7 @@ export class DomainDetailComponent implements OnInit {
           // TODO: handle error better
           console.log(err)
           this.snackBar.open($localize`Error loading domain profile`, undefined, SnackbarDefaults.defaultError)
-          return of({})
+          return throwError(err)
         }), finalize(() => {
           this.isLoading = false
         })).subscribe(data => {

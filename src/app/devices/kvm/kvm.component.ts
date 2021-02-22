@@ -3,6 +3,8 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core'
+// import { AMTDesktop, ConsoleLogger } from 'ui-toolkit'
+// import { LogLevel } from 'ui-toolkit/dist/src/core/ILogger'
 @Component({
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
@@ -11,6 +13,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, View
 export class KvmComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined
   public context!: CanvasRenderingContext2D
+  // logger: ConsoleLogger | null = null
 
   // constructor () { }
 
@@ -20,11 +23,14 @@ export class KvmComponent implements OnInit, AfterViewInit {
   module: any
 
   ngOnInit (): void {
+    // this.logger = new ConsoleLogger(1)
+
   }
 
   ngAfterViewInit (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    // this.module = new AMTDesktop(this.logger, this.context)
+
+    // this.module = new AMTDesktop(this.logger as any, this.context)
   }
 
   @HostListener('mouseup')

@@ -16,7 +16,7 @@ export class AuthService {
   isLoggedIn = false
   url = `${environment.mpsServer}/authorize`
   constructor (private readonly http: HttpClient) {
-    if (localStorage.loggedInUser) {
+    if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
     }
@@ -53,6 +53,6 @@ export class AuthService {
   logout (): void {
     this.isLoggedIn = false
     this.loggedInSubject.next(this.isLoggedIn)
-    localStorage.loggedInUser = null
+    localStorage.removeItem('loggedInUser')
   }
 }
