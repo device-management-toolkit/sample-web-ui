@@ -24,7 +24,8 @@ export class ProfileDetailComponent implements OnInit {
   public activationModes = [{ display: 'Admin Control Mode', value: Constants.ACMActivate }, { display: 'Client Control Mode', value: Constants.CCMActivate }]
   public ciraConfigurations: CIRAConfig[] = []
   public isLoading = false
-
+  public pageTitle = 'New Profile'
+  public isEdit = false
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
     public profilesService: ProfilesService, private readonly configsService: ConfigsService) {
     this.profileForm = fb.group({
@@ -33,11 +34,11 @@ export class ProfileDetailComponent implements OnInit {
       amtPassword: [null, Validators.required],
       generateRandomPassword: [false, Validators.required],
       generateRandomMEBxPassword: [false, Validators.required],
-      mebxPasswordLength: [null],
-      passwordLength: [null],
+      mebxPasswordLength: [{ value: null, disabled: true }, [Validators.max(32), Validators.min(8)]],
+      passwordLength: [{ value: null, disabled: true }, [Validators.max(32), Validators.min(8)]],
       mebxPassword: [null, Validators.required],
-      networkConfigName: [null, Validators.required],
-      ciraConfigName: [null, Validators.required]
+      networkConfigName: [null],
+      ciraConfigName: [null]
     })
   }
 
@@ -50,10 +51,13 @@ export class ProfileDetailComponent implements OnInit {
             // TODO: handle error better
             console.log(err)
             this.snackBar.open($localize`Error retrieving profile`, undefined, SnackbarDefaults.defaultError)
-            return of({})
+            return throwError(err)
           }), finalize(() => {
             this.isLoading = false
           })).subscribe(data => {
+          this.isEdit = true
+          this.profileForm.controls.profileName.disable()
+          this.pageTitle = data.profileName
           this.profileForm.patchValue(data)
         })
       }
@@ -67,6 +71,39 @@ export class ProfileDetailComponent implements OnInit {
     })).subscribe(data => {
       this.ciraConfigurations = data
     })
+
+    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
+    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
+  }
+
+  generateRandomPasswordChange (value: boolean): void {
+    console.log(value)
+    if (value) {
+      this.profileForm.controls.amtPassword.disable()
+      this.profileForm.controls.amtPassword.clearValidators()
+      this.profileForm.controls.passwordLength.setValidators([Validators.max(32), Validators.min(8)])
+      this.profileForm.controls.passwordLength.enable()
+    } else {
+      this.profileForm.controls.amtPassword.enable()
+      this.profileForm.controls.amtPassword.setValidators(Validators.required)
+      this.profileForm.controls.passwordLength.disable()
+      this.profileForm.controls.passwordLength.clearValidators()
+    }
+  }
+
+  generateRandomMEBxPasswordChange (value: boolean): void {
+    console.log(value)
+    if (value) {
+      this.profileForm.controls.mebxPassword.disable()
+      this.profileForm.controls.mebxPassword.clearValidators()
+      this.profileForm.controls.mebxPasswordLength.setValidators([Validators.max(32), Validators.min(8)])
+      this.profileForm.controls.mebxPasswordLength.enable()
+    } else {
+      this.profileForm.controls.mebxPassword.enable()
+      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+      this.profileForm.controls.mebxPasswordLength.disable()
+      this.profileForm.controls.mebxPasswordLength.clearValidators()
+    }
   }
 
   async cancel (): Promise<void> {
@@ -76,17 +113,23 @@ export class ProfileDetailComponent implements OnInit {
   onSubmit (): void {
     if (this.profileForm.valid) {
       this.isLoading = true
-      const result: any = Object.assign({}, this.profileForm.value)
-      this.profilesService.create(result).pipe(
+      const result: any = Object.assign({}, this.profileForm.getRawValue())
+      let request
+      if (this.isEdit) {
+        request = this.profilesService.update(result)
+      } else {
+        request = this.profilesService.create(result)
+      }
+      request.pipe(
         catchError(err => {
         // TODO: handle error better
           console.log(err)
-          this.snackBar.open($localize`Error creating profile`, undefined, SnackbarDefaults.defaultError)
+          this.snackBar.open($localize`Error creating/updating profile`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }), finalize(() => {
           this.isLoading = false
         })).subscribe(data => {
-        this.snackBar.open($localize`Profile created successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        this.snackBar.open($localize`Profile created/updated successfully`, undefined, SnackbarDefaults.defaultSuccess)
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.router.navigate(['/profiles'])
       })

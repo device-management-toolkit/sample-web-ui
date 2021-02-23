@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { CIRAConfig } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
+import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
 
 @Component({
@@ -26,6 +27,10 @@ export class ConfigsComponent implements OnInit {
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly configsService: ConfigsService) { }
 
   ngOnInit (): void {
+    this.getData()
+  }
+
+  getData (): void {
     this.configsService.getData().pipe(
       catchError(() => {
         this.snackBar.open($localize`Unable to load CIRA Configs`)
@@ -50,13 +55,15 @@ export class ConfigsComponent implements OnInit {
         this.isLoading = true
         this.configsService.delete(name).pipe(
           catchError(err => {
-            console.log(err)
-            return of(null)
+            this.snackBar.open($localize`Error deleting CIRA config`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
           }),
           finalize(() => {
             this.isLoading = false
           })
         ).subscribe(data => {
+          this.getData()
+          this.snackBar.open($localize`CIRA config deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         })
       }
     })

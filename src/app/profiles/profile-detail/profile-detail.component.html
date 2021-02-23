@@ -1,5 +1,5 @@
 <mat-toolbar>
-    New Profile
+    {{ pageTitle }}
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
 <div fxLayout="row" fxLayoutAlign="center">
@@ -14,6 +14,7 @@
                     <mat-form-field fxFlex="100">
                         <input formControlName="profileName" matInput name="profileName" placeholder="Profile Name"
                             required>
+                        <mat-error i18n>This field is required</mat-error>
                     </mat-form-field>
                     <mat-form-field fxFlex="100">
                         <mat-label>Activation Mode</mat-label>
@@ -22,32 +23,52 @@
                                 {{activationMode.display}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    
-                    <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password</mat-checkbox>
 
-
-                    <mat-form-field fxFlex="100">
-                        <input type="password" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8>
+                    <div fxFlex="50">
+                        <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password
+                        </mat-checkbox>
+                    </div>
+                    <mat-form-field fxFlex="50">
+                        <input type="number" formControlName="passwordLength" matInput name="passwordLength"
+                            placeholder="AMT Password Length" required>
+                        <mat-error i18n>This field is required and must be between 8 and 32</mat-error>
                     </mat-form-field>
 
-                    <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password</mat-checkbox>
+                    <mat-form-field fxFlex="100">
+                        <input type="password" formControlName="amtPassword" matInput name="amtPassword"
+                            placeholder="AMT Password" required minlength=8 maxlength="32">
+                        <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="50">
+                        <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password
+                        </mat-checkbox>
+                    </div>
+                    <mat-form-field fxFlex="50">
+                        <input type="number" formControlName="mebxPasswordLength" matInput name="mebxPasswordLength"
+                            placeholder="MEBx Password Length" required>
+                        <mat-error i18n>This field is required and must be between 8 and 32</mat-error>
+                    </mat-form-field>
 
                     <mat-form-field fxFlex="100">
-                        <input type="password" formControlName="mebxPassword" matInput name="mebxPassword" placeholder="MEBX Password" required minlength=8>
+                        <input type="password" formControlName="mebxPassword" matInput name="mebxPassword"
+                            placeholder="MEBX Password" required minlength=8 maxlength="32">
+                        <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
                     </mat-form-field>
                     <div>
                         <mat-label>Network Configuration</mat-label>
 
                         <br>
-                        <mat-radio-group name="networkConfigName" formControlName="networkConfigName"><br/>
-                            <mat-radio-button value="dhcp_enabled" checked="true">DHCP</mat-radio-button><br/><br/>
-                            <mat-radio-button value="dhcp_disabled">STATIC</mat-radio-button><br/><br/>
+                        <mat-radio-group name="networkConfigName" formControlName="networkConfigName"><br />
+                            <mat-radio-button value="dhcp_enabled" checked="true">DHCP</mat-radio-button><br /><br />
+                            <mat-radio-button value="dhcp_disabled">STATIC</mat-radio-button><br /><br />
                         </mat-radio-group>
                     </div>
                     <mat-form-field fxFlex="100">
                         <mat-label>CIRA Configuration</mat-label>
                         <mat-select formControlName="ciraConfigName">
-                            <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
+                            <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

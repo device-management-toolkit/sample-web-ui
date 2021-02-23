@@ -19,6 +19,9 @@ import { DomainsService } from '../domains.service'
 export class DomainDetailComponent implements OnInit {
   public domainForm: FormGroup
   public isLoading = false
+  public pageTitle = 'New Domain'
+  public isEdit = false
+
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, private readonly activeRoute: ActivatedRoute, public router: Router, public domainsService: DomainsService) {
     this.domainForm = fb.group({
       profileName: [null, Validators.required],
@@ -41,6 +44,9 @@ export class DomainDetailComponent implements OnInit {
         }), finalize(() => {
           this.isLoading = false
         })).subscribe(data => {
+          this.isEdit = true
+          this.domainForm.controls.profileName.disable()
+          this.pageTitle = data.profileName
           this.domainForm.patchValue(data)
         })
       }
@@ -48,21 +54,29 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit (): void {
-    const result: any = Object.assign({}, this.domainForm.value)
+    const result: any = Object.assign({}, this.domainForm.getRawValue())
     result.provisioningCertStorageFormat = 'string'
     if (this.domainForm.valid) {
       this.isLoading = true
-      this.domainsService.create(result).pipe(
+      let request
+
+      if (this.isEdit) {
+        request = this.domainsService.update(result)
+      } else {
+        request = this.domainsService.create(result)
+      }
+
+      request.pipe(
         catchError(err => {
           // TODO: handle error better
           console.log(err)
-          this.snackBar.open($localize`Error creating domain profile`, undefined, SnackbarDefaults.defaultError)
+          this.snackBar.open($localize`Error creating/updating domain profile`, undefined, SnackbarDefaults.defaultError)
           return of(null)
         }),
         finalize(() => {
           this.isLoading = false
         })).subscribe(data => {
-        this.snackBar.open($localize`Domain profile created successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        this.snackBar.open($localize`Domain profile created/updated successfully`, undefined, SnackbarDefaults.defaultSuccess)
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.router.navigate(['/domains'])
       })

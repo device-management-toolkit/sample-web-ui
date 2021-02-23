@@ -32,20 +32,22 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit (): Promise<void> {
-    this.isLoading = true
-    const result: any = Object.assign({}, this.loginForm.value)
-    this.authService.login(result.userId, result.password).pipe(
-      catchError(err => {
+    if (this.loginForm.valid) {
+      this.isLoading = true
+      const result: any = Object.assign({}, this.loginForm.value)
+      this.authService.login(result.userId, result.password).pipe(
+        catchError(err => {
         // TODO: handle error better
-        console.log(err)
-        this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      }), finalize(() => {
-        this.isLoading = false
-      })
-    ).subscribe(data => {
+          console.log(err)
+          this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }), finalize(() => {
+          this.isLoading = false
+        })
+      ).subscribe(data => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.router.navigate([''])
-    })
+        this.router.navigate([''])
+      })
+    }
   }
 }

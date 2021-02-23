@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { throwError, of } from 'rxjs'
+
 import { catchError, finalize } from 'rxjs/operators'
 import { Domain } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
@@ -26,6 +27,10 @@ export class DomainsComponent implements OnInit {
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly domainsService: DomainsService) { }
 
   ngOnInit (): void {
+    this.getData()
+  }
+
+  getData (): void {
     this.domainsService.getData()
       .pipe(
         catchError(() => {
@@ -51,13 +56,15 @@ export class DomainsComponent implements OnInit {
         this.isLoading = true
         this.domainsService.delete(name).pipe(
           catchError(err => {
-            console.log(err)
-            return of(null)
+            this.snackBar.open($localize`Error deleting domain`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
           }),
           finalize(() => {
             this.isLoading = false
           })
         ).subscribe(data => {
+          this.getData()
+          this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         })
       }
     })

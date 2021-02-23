@@ -10,7 +10,7 @@ export interface Device{
   conn: number
 }
 export interface Domain{
-  name: string
+  profileName: string
   domainSuffix: string
   provisioningCert: string
   provisioningCertPassword: string

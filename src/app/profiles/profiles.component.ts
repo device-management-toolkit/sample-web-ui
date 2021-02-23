@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { Profile } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
@@ -27,6 +27,10 @@ export class ProfilesComponent implements OnInit {
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly profilesService: ProfilesService) { }
 
   ngOnInit (): void {
+    this.getData()
+  }
+
+  getData (): void {
     this.profilesService.getData().pipe(
       catchError(() => {
         return of([])
@@ -50,14 +54,14 @@ export class ProfilesComponent implements OnInit {
         this.isLoading = true
         this.profilesService.delete(name).pipe(
           catchError(err => {
-            console.log(err)
             this.snackBar.open($localize`Error deleting profile`, undefined, SnackbarDefaults.defaultError)
-            return of(null)
+            return throwError(err)
           }),
           finalize(() => {
             this.isLoading = false
           })
         ).subscribe(data => {
+          this.getData()
           this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         })
       }

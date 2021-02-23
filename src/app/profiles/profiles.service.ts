@@ -37,6 +37,15 @@ export class ProfilesService {
       )
   }
 
+  update (profile: Profile): Observable<Profile> {
+    return this.http.patch<Profile>(this.url, profile, this.authService.getRPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   create (profile: Profile): Observable<Profile> {
     return this.http.post<Profile>(this.url, profile, this.authService.getRPSOptions())
       .pipe(

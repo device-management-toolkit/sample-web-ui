@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { APIResponse, CIRAConfig } from 'src/models/models'
+import { CIRAConfig } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -38,8 +38,17 @@ export class ConfigsService {
       )
   }
 
-  create (ciraConfig: CIRAConfig): Observable<APIResponse> {
-    return this.http.post<APIResponse>(this.url, ciraConfig, this.authService.getRPSOptions())
+  update (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
+    return this.http.patch<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  create (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
+    return this.http.post<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
           throw err

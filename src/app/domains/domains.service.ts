@@ -37,6 +37,15 @@ export class DomainsService {
       )
   }
 
+  update (domain: Domain): Observable<Domain> {
+    return this.http.patch<Domain>(this.url, domain, this.authService.getRPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   create (domain: Domain): Observable<Domain> {
     return this.http.post<Domain>(this.url, domain, this.authService.getRPSOptions())
       .pipe(
