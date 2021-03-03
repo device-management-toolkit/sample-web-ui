@@ -8,7 +8,11 @@
     "test": "ng test",
     "test-ci": "ng test --no-watch --no-progress",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "cy-ui": "cypress open --env ISOLATED=true",
+    "cy-e2e": "cypress open --env ISOLATED=false",
+    "cy-tstrnr-ui": "cypress run --env ISOLATED=true --record --key 2a235400-a9bf-4f8a-b6cf-bfb71d875828",
+    "cy-tstrnr-e2e": "cypress run --env ISOLATED=false --record --key 2a235400-a9bf-4f8a-b6cf-bfb71d875828"
   },
   "private": true,
   "dependencies": {
@@ -31,13 +35,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.5",
+    "@angular-eslint/template-parser": "1.2.0",
     "@angular/cli": "~11.0.5",
     "@angular/compiler-cli": "~11.0.5",
     "@angular/localize": "^11.0.9",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^14.14.31",
     "@typescript-eslint/eslint-plugin": "4.3.0",
-    "@typescript-eslint/parser": "4.3.0",
+    "cypress": "^6.5.0",
+    "@typescript-eslint/parser": "4.16.1",
     "eslint": "^7.6.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-with-typescript": "^20.0.0",
@@ -59,7 +65,6 @@
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
     "@angular-eslint/eslint-plugin-template": "1.2.0",
-    "@angular-eslint/schematics": "1.2.0",
-    "@angular-eslint/template-parser": "1.2.0"
+    "@angular-eslint/schematics": "1.2.0"
   }
 }
