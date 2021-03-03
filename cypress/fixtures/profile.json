@@ -1,0 +1,18 @@
+{
+    "default": {
+        "name": "default-profile",
+        "mode": "acmactivate",
+        "amtPassword": "8wF3S#f^vYUkqu",
+        "mebxPassword": "XT!2%7QsPJmfUB",
+        "netConfig": "DHCP",
+        "ciraConfig": "cira-for-profile-test"
+    },
+
+    "defaultCCM": {
+        "name": "default-ccm-profile",
+        "mode": "ccmactivate",
+        "amtPassword": "8wF3S#f^vYUkqu",
+        "netConfig": "DHCP",
+        "ciraConfig": "cira-for-profile-test"
+    }
+}
