@@ -3,6 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core'
+import { environment } from 'src/environments/environment'
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { DevicesService } from '../devices.service'
 @Component({
@@ -51,7 +52,8 @@ export class KvmComponent implements OnInit, AfterViewInit {
 
   instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceUuid, 16994, '', '', 0, 0, '13.76.223.84:3000/relay')
+    const url = `${environment.mpsServer.substring(environment.mpsServer.indexOf('://') + 3)}/relay`
+    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceUuid, 16994, '', '', 0, 0, url)
     this.module = new AMTDesktop(this.logger as any, this.context)
     this.dataProcessor = new DataProcessor(this.logger, this.redirector, this.module)
     this.mouseHelper = new MouseHelper(this.module, this.redirector, 200)
