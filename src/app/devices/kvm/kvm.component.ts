@@ -67,7 +67,7 @@ export class KvmComponent implements OnInit, AfterViewInit {
   }
 
   autoConnect (): void {
-    if (this.redirector !== null) {
+    if (this.redirector != null) {
       this.module.bpp = 2
       this.redirector.start(WebSocket)
       this.keyboardHelper.GrabKeyInput()
