@@ -2,7 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of } from 'rxjs'
@@ -17,9 +17,11 @@ import { DevicesService } from '../devices.service'
   styleUrls: ['./device-detail.component.scss']
 })
 export class DeviceDetailComponent implements OnInit {
+  @Input() public deviceUuid = null
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public isLoading = false
   public deviceId: string = ''
+  public showKvm: boolean = false
   public powerOptions = [
     {
       label: 'Hibernate',
@@ -90,6 +92,10 @@ export class DeviceDetailComponent implements OnInit {
       this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
       console.log(data)
     })
+  }
+
+  showKVMScreen (): void {
+    this.showKvm = true
   }
 
   async navigateTo (path: string): Promise<void> {

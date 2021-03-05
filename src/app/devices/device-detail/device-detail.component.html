@@ -12,6 +12,9 @@
         <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(8)">
             <mat-icon>restart_alt</mat-icon>
         </button>
+        <button mat-icon-button matTooltip="Connect KVM" (click)="showKVMScreen()">
+            <mat-icon>tv</mat-icon>
+        </button>
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -23,8 +26,12 @@
     </div>
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
-<!-- <app-kvm></app-kvm> -->
-<mat-sidenav-container autosize>
+<!-- <mat-card class="kvm-container">
+    <mat-card-content> -->
+        <div *ngIf="showKvm" class="kvm-container"><app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm"></app-kvm></div>
+    <!-- </mat-card-content>
+</mat-card> -->
+<mat-sidenav-container autosize *ngIf="!showKvm">
     <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
         <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
         <mat-vertical-stepper #stepper>

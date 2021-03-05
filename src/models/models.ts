@@ -64,3 +64,20 @@ export interface APIResponse{
   error: string
   message: string
 }
+
+export interface AmtFeatures{
+  userConsent: string
+  redirection: boolean
+  KVM: boolean
+  SOL: boolean
+  IDER: boolean
+}
+
+export interface AmtFeaturesResponse{
+  statusCode: number
+  payload: AmtFeatures
+}
+
+export interface PowerState{
+  powerstate: number
+}

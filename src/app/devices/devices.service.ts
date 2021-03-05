@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AuditLogResponse, Device } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, PowerState } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -55,6 +55,26 @@ export class DevicesService {
   getData (): Observable<Device[]> {
     const payload = { apikey: 'xxxxx', method: 'AllDevices', payload: {} }
     return this.http.post<Device[]>(`${environment.mpsServer}/admin`, payload, this.authService.getMPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  SetAmtFeatures (deviceId: string): Observable<AmtFeaturesResponse> {
+    const payload = { apikey: 'xxxxx', method: 'SetAMTFeatures', payload: { guid: deviceId, userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true } }
+    return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getPowerState (deviceId: string): Observable<PowerState> {
+    const payload = { apikey: 'xxxxx', method: 'PowerState', payload: { guid: deviceId } }
+    return this.http.post<PowerState>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(
         catchError((err) => {
           throw err

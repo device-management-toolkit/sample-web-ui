@@ -1,4 +1,4 @@
 <mat-toolbar>
-    <button mat-button>Connect KVM</button>
+    <button *ngIf="kvmState === 2" mat-button (click)="stopKvm()">{{btnText}}</button>
 </mat-toolbar>
-<canvas #canvas [width]="width" [height]="height"></canvas>
+<canvas class="canvas" #canvas [width]="width" [height]="height" (mousemove)="onMousemove($event)" (mouseup)="onMouseup($event)" (mousedown)="onMousedown($event)"></canvas>
