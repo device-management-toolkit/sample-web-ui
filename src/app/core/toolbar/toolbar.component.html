@@ -4,10 +4,6 @@
     </div>
     <div fxFlex="50" fxLayoutAlign="end center">
         <span i18n>Hi</span>
-        <!-- <button mat-icon-button>
-            <mat-icon>wb_sunny</mat-icon>
-            <mat-icon>nightlight_round</mat-icon>
-        </button> -->
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>account_circle</mat-icon>
         </button>
@@ -16,5 +12,8 @@
                 <mat-icon>logout</mat-icon><span i18n>Log out</span>
             </button>
         </mat-menu>
+        <button mat-icon-button (click)="displayAbout()">
+            <mat-icon>info</mat-icon>
+        </button>
     </div>
 </mat-toolbar>
