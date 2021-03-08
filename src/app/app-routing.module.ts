@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { ConfigDetailComponent } from './configs/config-detail/config-detail.component'
 import { ConfigsComponent } from './configs/configs.component'
+import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { DeviceDetailComponent } from './devices/device-detail/device-detail.component'
 import { DevicesComponent } from './devices/devices.component'
 import { DomainDetailComponent } from './domains/domain-detail/domain-detail.component'
@@ -12,6 +13,7 @@ import { ProfilesComponent } from './profiles/profiles.component'
 const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
   { path: 'devices/:id', component: DeviceDetailComponent },
+  { path: 'devices/:id/audit-log', component: AuditLogComponent },
   { path: 'profiles', component: ProfilesComponent },
   {
     path: 'profiles/new',
