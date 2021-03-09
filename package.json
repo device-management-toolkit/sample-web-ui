@@ -35,7 +35,7 @@
     "ui-toolkit": "https://github.com/open-amt-cloud-toolkit/ui-toolkit.git"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.5",
+    "@angular-devkit/build-angular": "~0.1102.3",
     "@angular-eslint/template-parser": "1.2.0",
     "@angular/cli": "~11.0.5",
     "@angular/compiler-cli": "~11.0.5",
