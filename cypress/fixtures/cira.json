@@ -1,0 +1,15 @@
+{
+  "default": {
+    "name": "default",
+    "format": "IPV4"
+  },
+
+  "wrong": {
+    "name": "asdf -%^7",
+    "format": "IPV4",
+    "server": "12345",
+    "port": "3",
+    "userName": "stand alone",
+    "password": "weak"
+  }
+}

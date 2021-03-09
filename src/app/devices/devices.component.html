@@ -27,7 +27,7 @@
             <!-- host Column -->
             <ng-container matColumnDef="hostname">
                 <mat-header-cell *matHeaderCellDef> Hostname </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{ element.metadata?.hostname }} </mat-cell>
             </ng-container>
 
             <!-- guid Column -->

@@ -2,7 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of } from 'rxjs'
@@ -17,9 +17,11 @@ import { DevicesService } from '../devices.service'
   styleUrls: ['./device-detail.component.scss']
 })
 export class DeviceDetailComponent implements OnInit {
+  @Input() public deviceUuid = null
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public isLoading = false
   public deviceId: string = ''
+  public showKvm: boolean = false
   public powerOptions = [
     {
       label: 'Hibernate',
@@ -51,6 +53,8 @@ export class DeviceDetailComponent implements OnInit {
     }
   ]
 
+  public showSol: boolean = false
+  public deviceState: number = 0
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) {
 
   }
@@ -61,7 +65,7 @@ export class DeviceDetailComponent implements OnInit {
       this.deviceId = params.id
       this.devicesService.getAuditLog(this.deviceId).pipe(
         catchError(err => {
-        // TODO: handle error better
+          // TODO: handle error better
           console.log(err)
           this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
           return of(this.auditLogData)
@@ -76,7 +80,7 @@ export class DeviceDetailComponent implements OnInit {
 
   sendPowerAction (action: number): void {
     this.isLoading = true
-    this.devicesService.sendPowerAction(this.deviceId, action).pipe(
+    this.devicesService.sendPowerAction(this.deviceId, action, true).pipe(
       catchError(err => {
         // TODO: handle error better
         console.log(err)
@@ -92,7 +96,19 @@ export class DeviceDetailComponent implements OnInit {
     })
   }
 
+  showKVMScreen (): void {
+    this.showKvm = true
+  }
+
   async navigateTo (path: string): Promise<void> {
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])
+  }
+
+  onSelectAction = (): void => {
+    this.showSol = !this.showSol
+  }
+
+  deviceStatus = (state: number): void => {
+    this.deviceState = state
   }
 }

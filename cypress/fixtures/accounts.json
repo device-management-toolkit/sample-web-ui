@@ -1,0 +1,10 @@
+{
+  "default": {
+    "username": "standalone",
+    "password": "G@ppm0ym"
+  },
+  "wrong": {
+    "username": "fakeUser",
+    "password": "Wr0nGP@$s"
+  }
+}
