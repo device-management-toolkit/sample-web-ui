@@ -26,6 +26,17 @@
     </div>
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+<mat-form-field *ngIf="!showKvm">
+    <mat-label>Encoding</mat-label>
+    <mat-select [(value)] = "selected">
+      <mat-option [value]="1">
+        RLE 8
+      </mat-option>
+      <mat-option [value]="2">
+        RLE 16
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 <!-- <mat-card class="kvm-container">
     <mat-card-content> -->
         <div *ngIf="showKvm" class="kvm-container"><app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm"></app-kvm></div>

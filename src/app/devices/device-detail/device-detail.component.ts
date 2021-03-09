@@ -18,6 +18,7 @@ import { DevicesService } from '../devices.service'
 })
 export class DeviceDetailComponent implements OnInit {
   @Input() public deviceUuid = null
+  @Input() selected = 1
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public isLoading = false
   public deviceId: string = ''
