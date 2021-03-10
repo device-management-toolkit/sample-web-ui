@@ -4,7 +4,7 @@
 **********************************************************************/
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { Profile } from 'src/models/models'
@@ -23,7 +23,8 @@ export class ProfilesService {
     return this.http.get<Profile[]>(this.url, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -32,7 +33,8 @@ export class ProfilesService {
     return this.http.get<Profile>(`${this.url}/${name}`, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -41,7 +43,8 @@ export class ProfilesService {
     return this.http.patch<Profile>(this.url, profile, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -50,7 +53,8 @@ export class ProfilesService {
     return this.http.post<Profile>(this.url, profile, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -59,7 +63,8 @@ export class ProfilesService {
     return this.http.delete(`${this.url}/${name}`, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
