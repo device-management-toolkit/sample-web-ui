@@ -30,7 +30,7 @@ export class SolComponent implements OnInit {
       this.uuid = params.id
     })
     this.init()
-    if (this.redirector !== 'null') {
+    if (this.redirector !== null) {
       if (this.deviceState === 0) {
         this.redirector.start(WebSocket)
       }
@@ -81,7 +81,7 @@ export class SolComponent implements OnInit {
   handleClearTerminal = (): any => this.term.reset()
 
   onSOLConnect = (e: Event): void => {
-    if (this.redirector !== 'null') {
+    if (this.redirector !== null) {
       if (this.deviceState === 0) {
         this.startSol()
       } else {
