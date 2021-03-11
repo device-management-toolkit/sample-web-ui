@@ -3,6 +3,12 @@
         Device Name Control
     </div>
     <div fxFlex="50" fxLayoutAlign="end center">
+        <button mat-icon-button matTooltip="Connect SOL" (click)="onSelectAction()" *ngIf="deviceState === 0">
+            <mat-icon>keyboard</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Disconnect SOL" (click)="onSelectAction()" *ngIf="deviceState === 3">
+            <mat-icon>keyboard_hide</mat-icon>
+        </button>
         <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
             <mat-icon>power</mat-icon>
         </button>
@@ -26,6 +32,10 @@
     </div>
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+
+<!-- <app-kvm></app-kvm> -->
+<mat-sidenav-container autosize>
+    <app-sol *ngIf="showSol" (solStatus)="showSol" (deviceStatus)="deviceStatus($event)"></app-sol>
 <!-- <mat-card class="kvm-container">
     <mat-card-content> -->
         <div *ngIf="showKvm" class="kvm-container"><app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm"></app-kvm></div>
