@@ -8,6 +8,12 @@
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
+    <mat-list *ngIf="errorMessages.length > 0">
+        <mat-list-item *ngFor="let item of errorMessages">
+            <mat-icon color="warn" mat-list-icon>error</mat-icon>
+            {{ item }}
+        </mat-list-item>
+    </mat-list>
     <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
       <mat-card-content>
         <div fxLayout="row wrap">

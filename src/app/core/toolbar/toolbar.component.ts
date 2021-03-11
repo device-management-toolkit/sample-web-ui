@@ -3,8 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
+import { AboutComponent } from '../about/about.component'
 
 @Component({
   selector: 'app-toolbar',
@@ -14,7 +16,7 @@ import { AuthService } from 'src/app/auth.service'
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
 
-  constructor (public router: Router, public authService: AuthService) {
+  constructor (public dialog: MatDialog, public router: Router, public authService: AuthService) {
   }
 
   ngOnInit (): void {
@@ -26,5 +28,9 @@ export class ToolbarComponent implements OnInit {
   async logout (): Promise<void> {
     this.authService.logout()
     await this.router.navigate(['/login'])
+  }
+
+  displayAbout (): void {
+    this.dialog.open(AboutComponent)
   }
 }
