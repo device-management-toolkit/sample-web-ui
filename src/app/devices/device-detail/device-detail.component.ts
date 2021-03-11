@@ -80,7 +80,7 @@ export class DeviceDetailComponent implements OnInit {
 
   sendPowerAction (action: number): void {
     this.isLoading = true
-    this.devicesService.sendPowerAction(this.deviceId, action, true).pipe(
+    this.devicesService.sendPowerAction(this.deviceId, action).pipe(
       catchError(err => {
         // TODO: handle error better
         console.log(err)
@@ -109,6 +109,7 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   deviceStatus = (state: number): void => {
+    console.log(state,"devicestate")
     this.deviceState = state
   }
 }

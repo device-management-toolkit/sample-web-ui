@@ -26,7 +26,8 @@ import { DeviceDetailComponent } from './devices/device-detail/device-detail.com
 import { MomentModule } from 'ngx-moment'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
-import { AuditLogComponent } from './devices/audit-log/audit-log.component'
+import { AuditLogComponent } from './devices/audit-log/audit-log.component';
+import { PoweralertComponent } from './devices/sol/poweralert/poweralert.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AuditLogComponent } from './devices/audit-log/audit-log.component'
     DeviceDetailComponent,
     KvmComponent,
     SolComponent,
-    AuditLogComponent
+    AuditLogComponent,
+    PoweralertComponent
   ],
   imports: [
     MomentModule,

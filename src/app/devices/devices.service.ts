@@ -14,11 +14,11 @@ import { AuthService } from '../auth.service'
   providedIn: 'root'
 })
 export class DevicesService {
-  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
+  constructor(private readonly authService: AuthService, private readonly http: HttpClient) {
 
   }
 
-  getAuditLog (deviceId: string, startIndex: number = 0): Observable<AuditLogResponse> {
+  getAuditLog(deviceId: string, startIndex: number = 0): Observable<AuditLogResponse> {
     const payload = {
       apikey: 'xxxxx',
       method: 'AuditLog',
@@ -35,20 +35,14 @@ export class DevicesService {
       )
   }
 
-  sendPowerAction (deviceId: string, action: number, useSOL?: boolean): Observable<any> {
+  sendPowerAction(deviceId: string, action: number): Observable<any> {
     const payload = {
       apikey: 'xxxxx',
       method: 'PowerAction',
-      payload: useSOL
-        ? {
-            guid: deviceId,
-            action,
-            useSOL
-          }
-        : {
-            guid: deviceId,
-            action
-          }
+      payload: {
+        guid: deviceId,
+        action
+      }
     }
     return this.http.post<any>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(
@@ -58,7 +52,7 @@ export class DevicesService {
       )
   }
 
-  getData (): Observable<Device[]> {
+  getData(): Observable<Device[]> {
     const payload = { apikey: 'xxxxx', method: 'AllDevices', payload: {} }
     return this.http.post<Device[]>(`${environment.mpsServer}/admin`, payload, this.authService.getMPSOptions())
       .pipe(
@@ -68,7 +62,7 @@ export class DevicesService {
       )
   }
 
-  SetAmtFeatures (deviceId: string): Observable<AmtFeaturesResponse> {
+  SetAmtFeatures(deviceId: string): Observable<AmtFeaturesResponse> {
     const payload = { apikey: 'xxxxx', method: 'SetAMTFeatures', payload: { guid: deviceId, userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true } }
     return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(
@@ -78,7 +72,7 @@ export class DevicesService {
       )
   }
 
-  getPowerState (deviceId: string): Observable<PowerState> {
+  getPowerState(deviceId: string): Observable<PowerState> {
     const payload = { apikey: 'xxxxx', method: 'PowerState', payload: { guid: deviceId } }
     return this.http.post<PowerState>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(
