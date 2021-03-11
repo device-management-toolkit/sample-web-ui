@@ -33,7 +33,7 @@ export class ConfigsComponent implements OnInit {
   getData (): void {
     this.configsService.getData().pipe(
       catchError(() => {
-        this.snackBar.open($localize`Unable to load CIRA Configs`)
+        this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
         return of([])
       }), finalize(() => {
         this.isLoading = false

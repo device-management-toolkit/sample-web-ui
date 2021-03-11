@@ -69,9 +69,8 @@ export class DomainDetailComponent implements OnInit {
       request.pipe(
         catchError(err => {
           // TODO: handle error better
-          console.log(err)
           this.snackBar.open($localize`Error creating/updating domain profile`, undefined, SnackbarDefaults.defaultError)
-          return of(null)
+          return throwError(err)
         }),
         finalize(() => {
           this.isLoading = false

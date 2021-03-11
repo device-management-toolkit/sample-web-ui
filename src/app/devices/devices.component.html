@@ -43,6 +43,30 @@
                 </mat-cell>
             </ng-container>
 
+            <!-- tags Column -->
+            <ng-container matColumnDef="tags">
+                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Tags</mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px">
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let tag of element.metadata?.tags">{{tag}}</mat-chip>
+                    </mat-chip-list>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Actions</mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px">
+                    <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,2)">
+                        <mat-icon>power</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,8)">
+                        <mat-icon>power_off</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,8)">
+                        <mat-icon>restart_alt</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.host)"></mat-row>
