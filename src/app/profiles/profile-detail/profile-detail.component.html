@@ -8,6 +8,12 @@
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
+    <mat-list *ngIf="errorMessages.length > 0">
+      <mat-list-item *ngFor="let item of errorMessages">
+        <mat-icon color="warn" mat-list-icon>error</mat-icon>
+        {{ item }}
+      </mat-list-item>
+    </mat-list>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <mat-card-content>
         <div fxLayout="row wrap">
@@ -22,7 +28,6 @@
                 {{activationMode.display}}</mat-option>
             </mat-select>
           </mat-form-field>
-
           <div fxFlex="50">
             <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password
             </mat-checkbox>

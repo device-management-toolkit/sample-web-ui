@@ -178,14 +178,20 @@ export class DevicesService {
       )
   }
 
-  sendPowerAction (deviceId: string, action: number): Observable<any> {
+  sendPowerAction (deviceId: string, action: number, useSOL?: boolean): Observable<any> {
     const payload = {
       apikey: 'xxxxx',
       method: 'PowerAction',
-      payload: {
-        guid: deviceId,
-        action
-      }
+      payload: useSOL
+        ? {
+            guid: deviceId,
+            action,
+            useSOL
+          }
+        : {
+            guid: deviceId,
+            action
+          }
     }
     return this.http.post<any>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(

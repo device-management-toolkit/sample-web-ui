@@ -57,6 +57,8 @@ export class DeviceDetailComponent implements OnInit {
     }
   ]
 
+  public showSol: boolean = false
+  public deviceState: number = 0
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) {
     this.targetOS = this.devicesService.TargetOSMap
   }
@@ -70,7 +72,7 @@ export class DeviceDetailComponent implements OnInit {
       const amtFeatures = this.devicesService.getAMTFeatures(this.deviceId)
       return forkJoin({ hwInfo, auditInfo, amtFeatures }).pipe(
         catchError(err => {
-        // TODO: handle error better
+          // TODO: handle error better
           console.log(err)
           this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
@@ -87,7 +89,7 @@ export class DeviceDetailComponent implements OnInit {
 
   sendPowerAction (action: number): void {
     this.isLoading = true
-    this.devicesService.sendPowerAction(this.deviceId, action).pipe(
+    this.devicesService.sendPowerAction(this.deviceId, action, true).pipe(
       catchError(err => {
         // TODO: handle error better
         console.log(err)
@@ -109,5 +111,13 @@ export class DeviceDetailComponent implements OnInit {
 
   async navigateTo (path: string): Promise<void> {
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])
+  }
+
+  onSelectAction = (): void => {
+    this.showSol = !this.showSol
+  }
+
+  deviceStatus = (state: number): void => {
+    this.deviceState = state
   }
 }
