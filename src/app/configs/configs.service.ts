@@ -4,7 +4,7 @@
 **********************************************************************/
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { CIRAConfig } from 'src/models/models'
@@ -24,7 +24,8 @@ export class ConfigsService {
     return this.http.get<CIRAConfig[]>(this.url, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -33,7 +34,8 @@ export class ConfigsService {
     return this.http.get<CIRAConfig>(`${this.url}/${name}`, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -42,7 +44,8 @@ export class ConfigsService {
     return this.http.patch<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
@@ -51,18 +54,22 @@ export class ConfigsService {
     return this.http.post<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }
 
-  loadMPSRootCert (): Observable<string> {
+  loadMPSRootCert (): Observable<any> {
+    // ToDo: Need to pass the mps server address to get the certs for each specific mps server
     const options: object = this.authService.getMPSOptions();
     (options as any).responseType = 'text'
     return this.http.post<string>(`${environment.mpsServer}/admin`, { apikey: 'xxxxx', method: 'MPSRootCertificate', payload: {} }, options)
       .pipe(
-        catchError((err) => {
-          throw err
+        catchError(() => {
+          const errorMessages: string[] = []
+          errorMessages.push('Error loading CIRA config')
+          return throwError(errorMessages)
         })
       )
   }
@@ -71,7 +78,8 @@ export class ConfigsService {
     return this.http.delete(`${this.url}/${name}`, this.authService.getRPSOptions())
       .pipe(
         catchError((err) => {
-          throw err
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
         })
       )
   }

@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { throwError, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 
-import { catchError, finalize, mergeMap } from 'rxjs/operators'
+import { finalize, mergeMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { CIRAConfig } from 'src/models/models'
 import { ConfigsService } from '../configs.service'
@@ -23,6 +23,7 @@ export class ConfigDetailComponent implements OnInit {
   public isLoading = false
   public pageTitle = 'New CIRA Config'
   public isEdit = false
+  public errorMessages: string[] = []
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, private readonly activeRoute: ActivatedRoute,
     public router: Router, public configsService: ConfigsService) {
     this.configForm = fb.group({
@@ -47,12 +48,7 @@ export class ConfigDetailComponent implements OnInit {
       if (params.name != null && params.name !== '') {
         this.isLoading = true
         this.configsService.getRecord(params.name).pipe(
-          catchError(err => {
-            // TODO: handle error better
-            console.log(err)
-            this.snackBar.open($localize`Error loading CIRA config`, undefined, SnackbarDefaults.defaultError)
-            return throwError(err)
-          }), finalize(() => {
+          finalize(() => {
             this.isLoading = false
           })).subscribe(data => {
           this.isEdit = true
@@ -60,6 +56,9 @@ export class ConfigDetailComponent implements OnInit {
           this.configForm.controls.configName.disable()
           this.configForm.patchValue(data)
           this.configForm.patchValue({ serverAddressFormat: data.serverAddressFormat.toString() })
+        },
+        error => {
+          this.errorMessages = error
         })
       }
     })
@@ -114,28 +113,19 @@ export class ConfigDetailComponent implements OnInit {
       result.authMethod = 2
       // convert to number
       result.serverAddressFormat = +result.serverAddressFormat
-
+      let reqType: string
       let rpsRequest: Observable<CIRAConfig>
       if (this.isEdit) {
-        console.log(this.configForm.controls.configName)
-        rpsRequest = this.configsService.update(result).pipe(catchError(err => {
-          this.snackBar.open($localize`Error updating CIRA config`, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
-        }))
+        reqType = 'updated'
+        rpsRequest = this.configsService.update(result)
       } else {
-        rpsRequest = this.configsService.create(result).pipe(catchError(err => {
-          this.snackBar.open($localize`Error creating CIRA config`, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
-        }))
+        reqType = 'created'
+        rpsRequest = this.configsService.create(result)
       }
       // todo: don't do it this way
       if (result.autoLoad) {
         delete result.autoLoad
         this.configsService.loadMPSRootCert().pipe(
-          catchError(err => {
-            this.snackBar.open($localize`Error loading MPS Root Cert`, undefined, SnackbarDefaults.defaultError)
-            return throwError(err)
-          }),
           finalize(() => {
             this.isLoading = false
           }),
@@ -143,22 +133,23 @@ export class ConfigDetailComponent implements OnInit {
             result.mpsRootCertificate = this.trimRootCert(data)
             return rpsRequest
           })).subscribe(data => {
-          this.snackBar.open($localize`CIRA config/updated created successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          this.snackBar.open($localize`CIRA ${reqType} created successfully`, undefined, SnackbarDefaults.defaultSuccess)
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           this.router.navigate(['/ciraconfigs'])
-        }, err => {
-          console.log(err)
+        }, error => {
+          console.log('error', error)
+          this.errorMessages = error
         })
       } else {
         delete result.autoLoad
         rpsRequest.pipe(finalize(() => {
           this.isLoading = false
         })).subscribe(data => {
-          this.snackBar.open($localize`CIRA config/updated created successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          this.snackBar.open($localize`CIRA ${reqType} created successfully`, undefined, SnackbarDefaults.defaultSuccess)
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           this.router.navigate(['/ciraconfigs'])
-        }, err => {
-          console.log(err)
+        }, error => {
+          this.errorMessages = error
         })
       }
     }

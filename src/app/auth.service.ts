@@ -55,4 +55,18 @@ export class AuthService {
     this.loggedInSubject.next(this.isLoggedIn)
     localStorage.removeItem('loggedInUser')
   }
+
+  onError (err: any): string[] {
+    const errorMessages: string[] = []
+    if (err.error.errors != null) {
+      err.error.errors.forEach((error: any) => {
+        errorMessages.push(error.msg)
+      })
+    } else if (err.error.message != null) {
+      errorMessages.push(err.error.message)
+    } else {
+      errorMessages.push(err.error.error)
+    }
+    return errorMessages
+  }
 }

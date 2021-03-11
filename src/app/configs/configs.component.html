@@ -10,7 +10,12 @@
     </div>
 </mat-toolbar>
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
-
+<mat-list *ngIf="errorMessages.length > 0">
+    <mat-list-item *ngFor="let item of errorMessages">
+        <mat-icon color="warn" mat-list-icon>error</mat-icon>
+        {{ item }}
+    </mat-list-item>
+</mat-list>
 <mat-card>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No CIRA Configs</h3>

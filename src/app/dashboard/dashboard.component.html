@@ -1,5 +1,5 @@
 <div fxLayout="row wrap">
-    <div fxFlex=33.3>
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
         <mat-card class="connected">
             <div fxFlexLayout="row">
                 <div fxFlex=25 fxLayoutAlign='center center'>
@@ -7,13 +7,13 @@
                 </div>
                 <div fxFlex=75>
                     <h1 class="mat-display-1">13</h1>
-                    <p>Total devices</p>
+                    <p>Total Devices</p>
                 </div>
             </div>
 
         </mat-card>
     </div>
-    <div fxFlex=33.3>
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
         <mat-card>
             <div fxFlexLayout="row">
                 <div fxFlex=25 fxLayoutAlign='center center'>
@@ -27,7 +27,7 @@
 
         </mat-card>
     </div>
-    <div fxFlex=33.3>
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
         <mat-card class="disconnected">
             <div fxFlexLayout="row">
                 <div fxFlex=25 fxLayoutAlign='center center'>
@@ -49,54 +49,51 @@
     <div fxFlex=100>
         <h1 class="mat-display-1">Welcome!</h1>
         <br />
-        <p class="mat-title">Lets get started! If you haven't checked out the documentation first, we recommended you
+        <p class="mat-title">Lets get started! We recommended you
             start <a href="https://open-amt-cloud-toolkit.github.io/docs">here</a> to become familiar
-            with the how the Open AMT Cloud toolkit works. Once you're ready, follow the steps below to configure the
-            toolkit to manage your devices. </p>
+            with the how the Open AMT Cloud toolkit works. Once you're ready, follow the steps below to configure the toolkit to manage Intel vPro® platforms and devices. </p>
         <br />
         <br />
     </div>
 
-    <!-- </mat-card-header>
-        <mat-card-content fxFlexLayout="row wrap"> -->
-    <div fxFlex=25 fxLayoutAlign="center stretch" fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100  fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/domains">1</button>
         </div>
         <div>
-            <h2 class="mat-h2">Create a Domain</h2>
-            <p>Required for activation in Admin Control Mode</p>
+            <h2 class="mat-h2">Add a Provisioning Certificate</h2>
+            <p>Required for activation in Admin Control Mode (ACM).</p>
         </div>
 
     </div>
-    <div fxFlex=25 fxLayoutAlign="center stretch" fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100  fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/ciraconfigs">2</button>
         </div>
         <div>
             <h2 class="mat-h2">Create a CIRA Config</h2>
-            <p>The CIRA config describes connection settings for where the device needs to connect.</p>
+            <p>Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS).</p>
         </div>
 
     </div>
-    <div fxFlex=25 fxLayoutAlign="center stretch" fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/profiles">3</button>
         </div>
         <div>
             <h2 class="mat-h2">Create a Profile</h2>
-            <p>The profile is used to activate a device with a given CIRA config, activation mode, and network settings.
+            <p>Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings.
             </p>
         </div>
 
     </div>
-    <div fxFlex=25 fxLayoutAlign="center stretch" fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/devices">4</button>
         </div>
         <div>
-            <h2 class="mat-h2">Manage your device</h2>
-            <p>After devices are activated and connected. You can begin managing your device.</p>
+            <h2 class="mat-h2">Manage Your Device</h2>
+            <p>Use device actions to control a list of activated, connected devices.</p>
         </div>
 
     </div>
