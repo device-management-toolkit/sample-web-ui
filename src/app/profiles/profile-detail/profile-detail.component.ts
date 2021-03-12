@@ -12,6 +12,8 @@ import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { CIRAConfig } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { MatChipInputEvent } from '@angular/material/chips'
 
 @Component({
   selector: 'app-profile-detail',
@@ -25,7 +27,10 @@ export class ProfileDetailComponent implements OnInit {
   public isLoading = false
   public pageTitle = 'New Profile'
   public isEdit = false
+  public tags: string[] = []
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public errorMessages: string[] = []
+
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
     public profilesService: ProfilesService, private readonly configsService: ConfigsService) {
     this.profileForm = fb.group({
@@ -53,6 +58,7 @@ export class ProfileDetailComponent implements OnInit {
           this.isEdit = true
           this.profileForm.controls.profileName.disable()
           this.pageTitle = data.profileName
+          this.tags = data.tags
           this.profileForm.patchValue(data)
         },
         error => {
@@ -96,6 +102,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.amtPassword.disable()
       this.profileForm.controls.amtPassword.setValue(null)
       this.profileForm.controls.amtPassword.clearValidators()
+      this.profileForm.controls.amtPassword.setValue(null)
       this.profileForm.controls.passwordLength.setValidators([Validators.max(32), Validators.min(8)])
       this.profileForm.controls.passwordLength.enable()
     } else {
@@ -112,6 +119,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
+      this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPasswordLength.setValidators([Validators.max(32), Validators.min(8)])
       this.profileForm.controls.mebxPasswordLength.enable()
     } else if (this.profileForm.controls.activation.value === Constants.ACMActivate) {
@@ -127,10 +135,34 @@ export class ProfileDetailComponent implements OnInit {
     await this.router.navigate(['/profiles'])
   }
 
+  remove (tag: string): void {
+    const index = this.tags.indexOf(tag)
+
+    if (index >= 0) {
+      this.tags.splice(index, 1)
+    }
+  }
+
+  add (event: MatChipInputEvent): void {
+    const input = event.input
+    const value = event.value
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push(value.trim())
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = ''
+    }
+  }
+
   onSubmit (): void {
     if (this.profileForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
+      result.tags = this.tags
       let request
       let reqType: string
       if (this.isEdit) {

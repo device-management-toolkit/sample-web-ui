@@ -75,6 +75,7 @@ export class DomainDetailComponent implements OnInit {
         this.router.navigate(['/domains'])
       },
       err => {
+        this.snackBar.open($localize`Error creating/updating domain profile`, undefined, SnackbarDefaults.defaultError)
         this.errorMessages = err
       })
     }

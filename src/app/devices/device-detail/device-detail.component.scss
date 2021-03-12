@@ -1,15 +1,4 @@
-.example-container {
-  width: 500px;
-  height: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.example-sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
+@import "../../../_variables.scss";
 
 .example-sidenav {
   padding: 20px;
@@ -26,4 +15,18 @@
 
 .auditlog-container {
   display: inline;
+}
+
+.mat-card {
+.mat-icon{
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+}
+}
+p{
+  color:map-get($openamtui-primary, 500);
+  span{
+    color:black
+  }
 }
