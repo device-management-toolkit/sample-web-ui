@@ -59,7 +59,7 @@ describe('DeviceDetailComponent', () => {
 
     fixture.detectChanges()
 
-    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4)
+    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, true)
     fixture.detectChanges()
     expect(component.isLoading).toBeFalse()
   })
