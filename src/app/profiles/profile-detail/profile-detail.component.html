@@ -3,7 +3,7 @@
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
 <div fxLayout="row" fxLayoutAlign="center">
-  <mat-card fxFlex="50">
+  <mat-card fxFlex="50" fxFlex.lt-md=100>
     <mat-card-header>
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
@@ -20,31 +20,34 @@
           <mat-form-field fxFlex="100">
             <input formControlName="profileName" matInput name="profileName" placeholder="Profile Name" required>
             <mat-error i18n>This field is required</mat-error>
+            <mat-hint>Provide a name for this profile. This will be the name of the profile used on the device during activation.</mat-hint>
           </mat-form-field>
           <mat-form-field fxFlex="100">
             <mat-label>Activation Mode</mat-label>
             <mat-select formControlName="activation" required>
               <mat-option *ngFor="let activationMode of activationModes" [value]="activationMode.value">
-                {{activationMode.display}}</mat-option>
+                {{activationMode.display}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
-          <div fxFlex="50">
-            <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password
-            </mat-checkbox>
+
+          <div fxFlex="50" style="margin-top:15px">
+            <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password</mat-checkbox>
           </div>
           <mat-form-field fxFlex="50">
             <input type="number" formControlName="passwordLength" matInput name="passwordLength" placeholder="AMT Password Length" required>
             <mat-error i18n>This field is required and must be between 8 and 32</mat-error>
+
           </mat-form-field>
 
           <mat-form-field fxFlex="100">
             <input type="password" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <mat-hint>The AMT Password is used for remote access of a device.</mat-hint>
           </mat-form-field>
 
-          <div fxFlex="50">
-            <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password
-            </mat-checkbox>
+          <div fxFlex="50" style="margin-top:15px">
+            <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password</mat-checkbox>
           </div>
           <mat-form-field fxFlex="50">
             <input type="number" formControlName="mebxPasswordLength" matInput name="mebxPasswordLength" placeholder="MEBx Password Length" required>
@@ -54,10 +57,10 @@
           <mat-form-field fxFlex="100">
             <input type="password" formControlName="mebxPassword" matInput name="mebxPassword" placeholder="MEBX Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device</mat-hint>
           </mat-form-field>
           <div>
             <mat-label>Network Configuration</mat-label>
-
             <br>
             <mat-radio-group name="networkConfigName" formControlName="networkConfigName"><br />
               <mat-radio-button value="dhcp_enabled" checked="true">DHCP</mat-radio-button><br /><br />
@@ -80,6 +83,7 @@
               </mat-chip>
               <input placeholder="New tag..." [matChipInputFor]="tagList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
+            <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag, then present enter or comma.</mat-hint>
           </mat-form-field>
         </div>
       </mat-card-content>
@@ -91,7 +95,7 @@
             </button>
           </div>
           <div fxFlex="50" fxLayoutAlign="center center">
-            <button type="submit" mat-button color="primary">
+            <button type="submit" mat-flat-button color="primary">
               <span i18n>SAVE</span>
             </button>
           </div>
