@@ -3,10 +3,11 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { Component, OnInit } from '@angular/core'
+import { MatSelectChange } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { BehaviorSubject, forkJoin, throwError } from 'rxjs'
+import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import { Device } from 'src/models/models'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
@@ -19,23 +20,43 @@ import { DevicesService } from './devices.service'
 export class DevicesComponent implements OnInit {
   public devices: Device[] = []
   public isLoading = true
+  public tags: string[] = []
+  public selectedTags = new BehaviorSubject<string[]>([])
 
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
 
   constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) { }
 
   ngOnInit (): void {
-    this.devicesService.getData().pipe(
-      catchError(() => {
+    const tags = this.devicesService.getTags()
+
+    forkJoin({ tags }).pipe(
+      catchError((err) => {
         this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
-        return of([])
+        return throwError(err)
       }), finalize(() => {
         this.isLoading = false
       })
     ).subscribe(data => {
-      this.devices = data
+      this.tags = data.tags
       // this.isLoading = false
     })
+
+    this.selectedTags.pipe(
+      mergeMap(tags => {
+        this.isLoading = true
+        return this.devicesService.getDevices(tags)
+      }),
+      finalize(() => {
+      })
+    ).subscribe(devices => {
+      this.devices = devices
+      this.isLoading = false
+    })
+  }
+
+  tagChange (event: MatSelectChange): void {
+    this.selectedTags.next(event.value)
   }
 
   isNoData (): boolean {
@@ -62,9 +83,8 @@ export class DevicesComponent implements OnInit {
     this.devicesService.sendPowerAction(deviceId, action).pipe(
       catchError(err => {
         // TODO: handle error better
-        console.log(err)
         this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
-        return of(null)
+        return throwError(err)
       }),
       finalize(() => {
         this.isLoading = false
