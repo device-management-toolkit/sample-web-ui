@@ -47,6 +47,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #fafafa;
   color:rgba(0, 0, 0, 0.87);
 }
+.mat-form-field{
+  margin-bottom: 10px;
+}
 .mat-snack-bar-container {
   &.error {
     text-align: center;
