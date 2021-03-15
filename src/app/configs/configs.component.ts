@@ -20,7 +20,6 @@ import { ConfigsService } from './configs.service'
 export class ConfigsComponent implements OnInit {
   public configs: CIRAConfig[] = []
   public isLoading = true
-  public errorMessages: string[] = []
   displayedColumns: string[] = ['name', 'mpsserver', 'port', 'username', 'certname', 'rootcert', 'remove']
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly configsService: ConfigsService) { }
@@ -36,9 +35,8 @@ export class ConfigsComponent implements OnInit {
       })
     ).subscribe(data => {
       this.configs = data
-    }, error => {
+    }, () => {
       this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
-      this.errorMessages = error
     })
   }
 
@@ -60,8 +58,8 @@ export class ConfigsComponent implements OnInit {
           this.getData()
           this.snackBar.open($localize`CIRA config deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         },
-        error => {
-          this.errorMessages = error
+        () => {
+          this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
         })
       }
     })
