@@ -41,7 +41,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CdkTableModule } from '@angular/cdk/table'
-import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
+import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component';
+import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component'
 // import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
@@ -121,7 +122,7 @@ import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
   ],
-  declarations: [AreYouSureDialogComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent]
 })
 export class OpenAMTMaterialModule {
 

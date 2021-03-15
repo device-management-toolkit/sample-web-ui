@@ -1,4 +1,5 @@
 <mat-toolbar>
     <button *ngIf="kvmState === 2" mat-button (click)="stopKvm()">{{btnText}}</button>
 </mat-toolbar>
-<canvas class="canvas" #canvas [width]="width" [height]="height" (mousemove)="onMousemove($event)" (mouseup)="onMouseup($event)" (mousedown)="onMousedown($event)"></canvas>
+<mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+<canvas class="canvas" oncontextmenu="return false" #canvas [width]="width" [height]="height" (mousemove)="onMousemove($event)" (mouseup)="onMouseup($event)" (mousedown)="onMousedown($event)"></canvas>

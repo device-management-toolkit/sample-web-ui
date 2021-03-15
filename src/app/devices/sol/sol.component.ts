@@ -21,6 +21,7 @@ import { PoweralertComponent } from './poweralert/poweralert.component'
 export class SolComponent implements OnInit {
   @Input() solStatus: boolean = false
   @Output() deviceStatus: EventEmitter<number> = new EventEmitter<number>()
+  @Input() selectedAction: string = ''
   public term: any
   public container!: any
   public terminal: any
@@ -32,10 +33,13 @@ export class SolComponent implements OnInit {
   public deviceState: number = 0
   public powerState: any = 0
   public isPoweredOn: boolean = false
+  public previousAction: string = 'sol'
 
   constructor(private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
+
   ngOnInit(): void {
+    console.log("ngOnInit sol")
     this.activatedRoute.params.subscribe(params => {
       this.uuid = params.id
     })
@@ -81,7 +85,7 @@ export class SolComponent implements OnInit {
 
   checkPowerStatus = (): boolean => this.powerState.powerstate === 2
 
-  init = (): void => { 
+  init = (): void => {
     this.terminal = new AmtTerminal()
     this.dataProcessor = new TerminalDataProcessor(this.terminal)
     this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}/relay`)
@@ -161,7 +165,34 @@ export class SolComponent implements OnInit {
     this.terminal.TermSendKeys(domEvent)
   }
 
+  ngDoCheck(): void {
+    if (this.selectedAction !== this.previousAction) {
+      this.redirector.stop()
+      this.cleanUp()
+      this.previousAction = this.selectedAction
+      console.log(this.selectedAction, "+++++++ngDoCheck2")
+    }
+    // console.log(this.selectedAction,"+++++++ngDoCheck sol")
+  }
+
+  // ngAfterContentInit(){
+  //   console.log("ngAfterContentInit sol")
+  // }
+
+  // ngAfterContentChecked(){
+  //   console.log("ngAfterContentChecked sol")
+  // }
+
+  // ngAfterViewInit(){
+  //   console.log("ngAfterViewInit sol")
+  // }
+
+  // ngAfterViewChecked(){
+  //   console.log("ngAfterViewChecked sol")
+  // }
+
   ngOnDestroy(): void {
+    console.log("ngOnDestroy sol")
     this.redirector.stop()
     this.cleanUp()
   }

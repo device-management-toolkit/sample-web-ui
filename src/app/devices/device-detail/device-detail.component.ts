@@ -18,6 +18,7 @@ import { DevicesService } from '../devices.service'
 })
 export class DeviceDetailComponent implements OnInit {
   @Input() public deviceUuid = null
+  @Input() selected = 1
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public isLoading = false
   public deviceId: string = ''
@@ -52,8 +53,8 @@ export class DeviceDetailComponent implements OnInit {
       action: 401
     }
   ]
-
   public showSol: boolean = false
+  public selectedAction : string = ''
   public deviceState: number = 0
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) {
 
@@ -109,7 +110,10 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   deviceStatus = (state: number): void => {
-    console.log(state,"devicestate")
-    this.deviceState = state
+     this.deviceState = state
   }
+
+  onSelectedAction = (selectedAction: string) : void => {
+    this.selectedAction = selectedAction
+  } 
 }
