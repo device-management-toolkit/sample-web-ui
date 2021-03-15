@@ -72,7 +72,7 @@ export class SolComponent implements OnInit {
     })
   }
   setAmtFeatures = (): void => {
-    this.deviceService.SetAmtFeatures(this.uuid).pipe(
+    this.deviceService.setAmtFeatures(this.uuid).pipe(
       catchError((err: any) => {
         // TODO: handle error better
         console.log(err)

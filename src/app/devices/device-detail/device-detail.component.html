@@ -61,4 +61,86 @@
             <button mat-flat-button (click)="navigateTo('audit-log')" color="primary">See All Activity</button>
         </div>
     </mat-sidenav>
+    <mat-sidenav-content>
+        <div fxLayout="row wrap">
+            <mat-card fxFlex="calc(50%-24px)" fxFlex.lt-lg="100">
+                <mat-card-header>
+                    <mat-card-title>
+                        System Summary
+                    </mat-card-title>
+                    <mat-card-subtitle>Summary of CPU and Chassis information</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p></p>
+                    <div *ngFor="let chip of hwInfo?.CIM_Chip?.responses">
+                        <p *ngIf="chip.Version != null">CPU: <span class="mat-h3"> {{chip.Version}}</span></p>
+                    </div>
+                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Manufacturer}}</span></p>
+                    <p>Model: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Model}}</span></p>
+                    <p>Serial No: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.SerialNumber}}</span></p>
+                    <p>Version: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Version}}</span></p>
+
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex="calc(50%-24px)" fxFlex.lt-lg="100">
+                <mat-card-header>
+                    <mat-card-title>
+                        AMT Enabled Features
+                    </mat-card-title>
+                    <mat-card-subtitle>Status of AMT Enabled Features</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p></p>
+                    <p>IDE Redirection: <span class="mat-h3"> {{amtFeatures?.payload?.IDER}}</span></p>
+                    <p>KVM: <span class="mat-h3"> {{amtFeatures?.payload?.KVM}}</span></p>
+                    <p>SOL: <span class="mat-h3"> {{amtFeatures?.payload?.SOL}}</span></p>
+                    <p>User Consent: <span class="mat-h3"> {{amtFeatures?.payload?.userConsent}}</span></p>
+
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex="calc(50% - 24px)" fxFlex.lt-lg="100">
+                <mat-card-header>
+                    <mat-card-title>
+                        BIOS Summary
+                    </mat-card-title>
+                    <mat-card-subtitle>Summary of BIOS information</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p></p>
+                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span></p>
+                    <p>Version: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Version}}</span></p>
+                    <p>Release Date: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime | amDateFormat:'LLL'}}</span></p>
+                    <p>Target OS: <span class="mat-h3"> {{ targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}</span></p>
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex="calc(50% - 24px)" fxFlex.lt-lg="100">
+                <mat-card-header>
+                    <mat-card-title>
+                        Memory Summary
+                    </mat-card-title>
+                    <mat-card-subtitle>Summary of physical memory installed</mat-card-subtitle>
+
+                </mat-card-header>
+                <mat-card-content>
+
+                    <div *ngFor="let bank of hwInfo?.CIM_PhysicalMemory?.responses" fxLayout="row wrap">
+                        <div fxFlex=100>
+                            <div fxFlex>
+                                <br />
+                                <p>Slot: <span class="mat-h3"> {{bank.BankLabel}}</span></p>
+                                <p>Capacity: <span class="mat-h3"> {{bank.Capacity / 1024 / 1024 / 1024 }} GB</span></p>
+                                <p>Clock Speed(Max): <span class="mat-h3"> {{bank.ConfiguredMemoryClockSpeed}} ({{bank.MaxMemorySpeed}}) Mhz</span></p>
+                                <p>Serial No.: <span class="mat-h3"> {{bank.SerialNumber}}</span></p>
+                            </div>
+                            <div fxFlex=10 fxLayoutAlign="center center">
+                                <mat-icon>memory</mat-icon>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    </mat-sidenav-content>
 </mat-sidenav-container>

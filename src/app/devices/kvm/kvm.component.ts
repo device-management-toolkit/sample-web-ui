@@ -146,7 +146,7 @@ export class KvmComponent implements OnInit {
   }
 
   setAmtFeatures(): void {
-    this.devicesService.SetAmtFeatures(this.deviceUuid).pipe(
+    this.devicesService.setAmtFeatures(this.deviceUuid).pipe(
       catchError((err: any) => {
         // TODO: handle error better
         console.log(err)

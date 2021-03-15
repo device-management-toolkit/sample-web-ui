@@ -20,7 +20,7 @@ export class DevicesComponent implements OnInit {
   public devices: Device[] = []
   public isLoading = true
 
-  displayedColumns: string[] = ['select', 'hostname', 'guid', 'status']
+  displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
 
   constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) { }
 
@@ -55,5 +55,23 @@ export class DevicesComponent implements OnInit {
       default:
         return 'unknown'
     }
+  }
+
+  sendPowerAction (deviceId: string, action: number): void {
+    this.isLoading = true
+    this.devicesService.sendPowerAction(deviceId, action).pipe(
+      catchError(err => {
+        // TODO: handle error better
+        console.log(err)
+        this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
+        return of(null)
+      }),
+      finalize(() => {
+        this.isLoading = false
+      })
+    ).subscribe(data => {
+      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      console.log(data)
+    })
   }
 }
