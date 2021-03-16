@@ -69,6 +69,6 @@
     "@angular-eslint/schematics": "1.2.0"
   },
   "optionalDependencies": {
-    "cypress": "^6.6.0"
+    "cypress": "^6.7.1"
   }
 }
