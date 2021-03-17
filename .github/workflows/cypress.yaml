@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
+    - run: npm install cypress
     - run: docker build . --file Dockerfile --tag vprodemo.azurecr.ui/samplewebui:latest
     - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
     - run: npm run cy-tstrnr-ui
