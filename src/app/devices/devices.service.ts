@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -131,7 +131,11 @@ export class DevicesService {
     113: 'Microsoft Windows Server 8'
   }
 
-  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
+
+  stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+
+  constructor(private readonly authService: AuthService, private readonly http: HttpClient) {
 
   }
 
@@ -152,7 +156,7 @@ export class DevicesService {
       )
   }
 
-  getHardwareInformation (guid: string): Observable<HardwareInformation> {
+  getHardwareInformation(guid: string): Observable<HardwareInformation> {
     const payload = {
       method: 'HardwareInformation',
       payload: { guid }
@@ -165,7 +169,7 @@ export class DevicesService {
       )
   }
 
-  getAMTFeatures (guid: string): Observable<AmtFeaturesResponse> {
+  getAMTFeatures(guid: string): Observable<AmtFeaturesResponse> {
     const payload = {
       method: 'GetAMTFeatures',
       payload: { guid }
@@ -178,7 +182,7 @@ export class DevicesService {
       )
   }
 
-  sendPowerAction (deviceId: string, action: number, useSOL?: boolean): Observable<any> {
+  sendPowerAction(deviceId: string, action: number, useSOL?: boolean): Observable<any> {
     const payload = {
       apikey: 'xxxxx',
       method: 'PowerAction',
@@ -205,7 +209,7 @@ export class DevicesService {
       )
   }
 
-  setAmtFeatures (deviceId: string): Observable<AmtFeaturesResponse> {
+  setAmtFeatures(deviceId: string): Observable<AmtFeaturesResponse> {
     const payload = { apikey: 'xxxxx', method: 'SetAMTFeatures', payload: { guid: deviceId, userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true } }
     return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(

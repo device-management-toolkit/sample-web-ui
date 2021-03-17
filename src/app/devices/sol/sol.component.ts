@@ -21,6 +21,7 @@ import { PoweralertComponent } from './poweralert/poweralert.component'
 export class SolComponent implements OnInit {
   @Input() solStatus: boolean = false
   @Output() deviceStatus: EventEmitter<number> = new EventEmitter<number>()
+  @Output() deviceState: number = 0
   @Input() selectedAction: string = ''
   public term: any
   public container!: any
@@ -30,7 +31,6 @@ export class SolComponent implements OnInit {
   public server: string = environment.mpsServer.replace('https://', '')
   public uuid: string = ''
   public dataProcessor: any
-  public deviceState: number = 0
   public powerState: any = 0
   public isPoweredOn: boolean = false
   public previousAction: string = 'sol'
@@ -39,7 +39,6 @@ export class SolComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("ngOnInit sol")
     this.activatedRoute.params.subscribe(params => {
       this.uuid = params.id
     })
@@ -70,7 +69,16 @@ export class SolComponent implements OnInit {
         this.startSol()
       }
     })
+    this.deviceService.stopwebSocket.subscribe(() => {
+      this.stopSol()
+    })
+    this.deviceService.startwebSocket.subscribe(() => {
+      this.init()
+      this.startSol()
+    })
   }
+
+
   setAmtFeatures = (): void => {
     this.deviceService.setAmtFeatures(this.uuid).pipe(
       catchError((err: any) => {
@@ -126,7 +134,7 @@ export class SolComponent implements OnInit {
   handleClearTerminal = (): any => this.term.reset()
 
   onSOLConnect = (e: Event): void => {
-    if (this.redirector !== null) {
+    if (this.redirector != null) {
       if (this.deviceState === 0) {
         this.startSol()
       } else {
@@ -136,7 +144,7 @@ export class SolComponent implements OnInit {
   }
 
   startSol = (): void => {
-    if (this.redirector !== null) {
+    if (this.redirector != null) {
       if (this.deviceState === 0) {
         this.redirector.start(WebSocket)
       }
@@ -144,13 +152,19 @@ export class SolComponent implements OnInit {
   }
 
   stopSol = (): void => {
-    this.redirector.stop()
-    this.handleClearTerminal()
-    this.cleanUp()
+    console.log("calling sol")
+    if (this.redirector != null) {
+      this.redirector.stop()
+      this.handleClearTerminal()
+      this.term.dispose()
+      this.cleanUp()
+
+    }
   }
 
   onTerminalStateChange = (redirector: AMTRedirector, state: number): void => {
     this.deviceState = state
+    // console.log(this.deviceState,"onTerminal State change")
     this.deviceStatus.emit(state)
   }
 
@@ -165,35 +179,11 @@ export class SolComponent implements OnInit {
     this.terminal.TermSendKeys(domEvent)
   }
 
-  ngDoCheck(): void {
-    if (this.selectedAction !== this.previousAction) {
+  ngOnDestroy(): void {
+    if (this.redirector != null) {
+      // console.log("ngOnDestroy sol")
       this.redirector.stop()
       this.cleanUp()
-      this.previousAction = this.selectedAction
-      console.log(this.selectedAction, "+++++++ngDoCheck2")
     }
-    // console.log(this.selectedAction,"+++++++ngDoCheck sol")
-  }
-
-  // ngAfterContentInit(){
-  //   console.log("ngAfterContentInit sol")
-  // }
-
-  // ngAfterContentChecked(){
-  //   console.log("ngAfterContentChecked sol")
-  // }
-
-  // ngAfterViewInit(){
-  //   console.log("ngAfterViewInit sol")
-  // }
-
-  // ngAfterViewChecked(){
-  //   console.log("ngAfterViewChecked sol")
-  // }
-
-  ngOnDestroy(): void {
-    console.log("ngOnDestroy sol")
-    this.redirector.stop()
-    this.cleanUp()
   }
 }

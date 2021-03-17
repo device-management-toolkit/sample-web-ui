@@ -1,4 +1,4 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
     <div fxFlex="50">
         Device Name Control
     </div>
@@ -6,7 +6,7 @@
         <button mat-icon-button matTooltip="Connect KVM" (click)="onSelectedAction('kvm')">
             <mat-icon>tv</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Connect SOL" (click)="onSelectedAction('sol')" *ngIf="deviceState !== 3">
+        <button mat-icon-button matTooltip="Connect SOL" (click)="navigateTo('sol')" *ngIf="deviceState !== 3">
             <mat-icon>keyboard</mat-icon>
         </button>
         <button mat-icon-button matTooltip="Disconnect SOL" (click)="onSelectedAction('')" *ngIf="deviceState === 3">
@@ -30,27 +30,30 @@
             </button>
         </mat-menu>
     </div>
-</mat-toolbar>
-<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
+</mat-toolbar> -->
+<app-device-toolbar></app-device-toolbar>
 <mat-form-field *ngIf="!showKvm">
     <mat-label>Encoding</mat-label>
-    <mat-select [(value)] = "selected">
-      <mat-option [value]="1">
-        RLE 8
-      </mat-option>
-      <mat-option [value]="2">
-        RLE 16
-      </mat-option>
+    <mat-select [(value)]="selected">
+        <mat-option [value]="1">
+            RLE 8
+        </mat-option>
+        <mat-option [value]="2">
+            RLE 16
+        </mat-option>
     </mat-select>
-  </mat-form-field>
+</mat-form-field>
 <!-- <mat-card class="kvm-container">
     <mat-card-content> -->
-        <div *ngIf="selectedAction === 'kvm'" class="kvm-container"><app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm" [selectedAction]="selectedAction"></app-kvm></div>
-        <app-sol *ngIf="selectedAction === 'sol'" (solStatus)="showSol" (deviceStatus)="deviceStatus($event)" [selectedAction]="selectedAction"></app-sol>
+<div *ngIf="selectedAction === 'kvm'" class="kvm-container">
+    <app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm" [selectedAction]="selectedAction"></app-kvm>
+</div>
+<app-sol *ngIf="selectedAction === 'sol'" (solStatus)="showSol" (deviceStatus)="deviceStatus($event)"
+    [selectedAction]="selectedAction"></app-sol>
 <!-- </mat-card-content>
 </mat-card> -->
 <mat-sidenav-container autosize *ngIf="!showKvm">
-   <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
+    <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
         <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
         <mat-vertical-stepper #stepper>
             <mat-step completed="false" editable="false" *ngFor="let entry of auditLogData.records.slice().reverse()">
@@ -107,10 +110,13 @@
                 </mat-card-header>
                 <mat-card-content>
                     <p></p>
-                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span></p>
+                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
+                    </p>
                     <p>Version: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Version}}</span></p>
-                    <p>Release Date: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime | amDateFormat:'LLL'}}</span></p>
-                    <p>Target OS: <span class="mat-h3"> {{ targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}</span></p>
+                    <p>Release Date: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
+                            amDateFormat:'LLL'}}</span></p>
+                    <p>Target OS: <span class="mat-h3"> {{
+                            targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}</span></p>
                 </mat-card-content>
             </mat-card>
             <mat-card fxFlex="calc(50% - 24px)" fxFlex.lt-lg="100">
@@ -129,7 +135,8 @@
                                 <br />
                                 <p>Slot: <span class="mat-h3"> {{bank.BankLabel}}</span></p>
                                 <p>Capacity: <span class="mat-h3"> {{bank.Capacity / 1024 / 1024 / 1024 }} GB</span></p>
-                                <p>Clock Speed(Max): <span class="mat-h3"> {{bank.ConfiguredMemoryClockSpeed}} ({{bank.MaxMemorySpeed}}) Mhz</span></p>
+                                <p>Clock Speed(Max): <span class="mat-h3"> {{bank.ConfiguredMemoryClockSpeed}}
+                                        ({{bank.MaxMemorySpeed}}) Mhz</span></p>
                                 <p>Serial No.: <span class="mat-h3"> {{bank.SerialNumber}}</span></p>
                             </div>
                             <div fxFlex=10 fxLayoutAlign="center center">
