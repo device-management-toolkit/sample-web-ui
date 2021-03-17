@@ -4,6 +4,7 @@
 **********************************************************************/
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { SharedModule } from '../shared/shared.module'
@@ -14,14 +15,16 @@ import { DevicesService } from './devices.service'
 describe('DevicesComponent', () => {
   let component: DevicesComponent
   let fixture: ComponentFixture<DevicesComponent>
-  let getDataSpy: jasmine.Spy
+  let getDevicesSpy: jasmine.Spy
+  let getTagsSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getData'])
-    getDataSpy = devicesService.getData.and.returnValue(of([]))
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags'])
+    getDevicesSpy = devicesService.getDevices.and.returnValue(of([]))
+    getTagsSpy = devicesService.getTags.and.returnValue(of([]))
 
     await TestBed.configureTestingModule({
-      imports: [SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [DevicesComponent],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: DevicesService, useValue: devicesService }]
@@ -38,6 +41,7 @@ describe('DevicesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
+    expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')
   })
 })
