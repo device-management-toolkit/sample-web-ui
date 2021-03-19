@@ -211,6 +211,28 @@ export class DevicesService {
       )
   }
 
+  getTags (): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.mpsServer}/metadata/tags`, this.authService.getMPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getDevices (tags: string[] = []): Observable<Device[]> {
+    let query = `${environment.mpsServer}/devices`
+    if (tags.length > 0) {
+      query += `?tags=${tags.join(',')}`
+    }
+    return this.http.get<Device[]>(query, this.authService.getMPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   setAmtFeatures (deviceId: string): Observable<AmtFeaturesResponse> {
     const payload = { apikey: 'xxxxx', method: 'SetAMTFeatures', payload: { guid: deviceId, userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true } }
     return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())

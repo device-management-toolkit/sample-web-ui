@@ -36,7 +36,6 @@ describe('ProfilesComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfilesComponent)
-
     component = fixture.componentInstance
     fixture.detectChanges()
   })

@@ -2,7 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { Component } from '@angular/core'
+import { AfterViewInit, Component, OnInit } from '@angular/core'
 import { NavigationStart, Router } from '@angular/router'
 import { AuthService } from './auth.service'
 
@@ -11,7 +11,7 @@ import { AuthService } from './auth.service'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'Open AMT Cloud Toolkit'
   isLoggedIn = false
   constructor (public router: Router, public authService: AuthService
