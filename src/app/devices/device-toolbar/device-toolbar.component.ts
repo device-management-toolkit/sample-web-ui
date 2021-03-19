@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import { catchError, finalize } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -12,8 +12,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   styleUrls: ['./device-toolbar.component.scss']
 })
 export class DeviceToolbarComponent implements OnInit {
-  @Input() deviceState: number = 0;
-  public isLoading = false
+  @Input() deviceState: number = 0
+  @Input() public isLoading = false
   public deviceId: string = ''
   public powerOptions = [
     {
@@ -45,16 +45,17 @@ export class DeviceToolbarComponent implements OnInit {
       action: 401
     }
   ]
-  constructor(public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) { }
 
-  ngOnInit(): void {
+  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) { }
+
+  ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
       // this.isLoading = true
       this.deviceId = params.id
     })
   }
 
-  sendPowerAction(action: number): void {
+  sendPowerAction (action: number): void {
     this.isLoading = true
     this.devicesService.sendPowerAction(this.deviceId, action).pipe(
       catchError(err => {
@@ -72,13 +73,12 @@ export class DeviceToolbarComponent implements OnInit {
     })
   }
 
-  stopSol(): void {
+  stopSol (): void {
     this.devicesService.stopwebSocket.next(true)
   }
 
-  navigateTo(path: string): void {
+  async navigateTo (path: string): Promise<void> {
     this.devicesService.startwebSocket.next(true)
-    this.router.navigate([`/devices/${this.deviceId}/${path}`])
+    await this.router.navigate([`/devices/${this.deviceId}/${path}`])
   }
-
 }

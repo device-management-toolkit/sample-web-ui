@@ -19,7 +19,6 @@ describe('DeviceDetailComponent', () => {
   let getAuditLogSpy: jasmine.Spy
   let getAMTFeaturesSpy: jasmine.Spy
   let getHardwareInformationSpy: jasmine.Spy
-  let sendPowerActionSpy: jasmine.Spy
 
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'sendPowerAction'])
@@ -27,7 +26,6 @@ describe('DeviceDetailComponent', () => {
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ }))
     getHardwareInformationSpy = devicesService.getHardwareInformation.and.returnValue(of({ }))
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ }))
 
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -54,15 +52,7 @@ describe('DeviceDetailComponent', () => {
     expect(getHardwareInformationSpy.calls.any()).toBe(true, 'getHardwareInformation called')
     expect(getAMTFeaturesSpy.calls.any()).toBe(true, 'getAMTFeatures called')
   })
-  it('should send power action', () => {
-    component.sendPowerAction(4)
 
-    fixture.detectChanges()
-
-    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, true)
-    fixture.detectChanges()
-    expect(component.isLoading).toBeFalse()
-  })
   it('should navigate to', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('path')

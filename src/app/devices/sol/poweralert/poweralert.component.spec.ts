@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PoweralertComponent } from './poweralert.component';
+import { PoweralertComponent } from './poweralert.component'
 
 describe('PoweralertComponent', () => {
-  let component: PoweralertComponent;
-  let fixture: ComponentFixture<PoweralertComponent>;
+  let component: PoweralertComponent
+  let fixture: ComponentFixture<PoweralertComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PoweralertComponent ]
+      declarations: [PoweralertComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PoweralertComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PoweralertComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

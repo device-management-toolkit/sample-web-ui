@@ -5,7 +5,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { forkJoin, of, throwError } from 'rxjs'
+import { forkJoin, throwError } from 'rxjs'
 
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -57,8 +57,9 @@ export class DeviceDetailComponent implements OnInit {
       action: 401
     }
   ]
+
   public showSol: boolean = false
-  public selectedAction : string = ''
+  public selectedAction: string = ''
   public deviceState: number = 0
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) {
     this.targetOS = this.devicesService.TargetOSMap
@@ -88,24 +89,6 @@ export class DeviceDetailComponent implements OnInit {
     })
   }
 
-  sendPowerAction (action: number): void {
-    this.isLoading = true
-    this.devicesService.sendPowerAction(this.deviceId, action).pipe(
-      catchError(err => {
-        // TODO: handle error better
-        console.log(err)
-        this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
-        return of(null)
-      }),
-      finalize(() => {
-        this.isLoading = false
-      })
-    ).subscribe(data => {
-      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
-      console.log(data)
-    })
-  }
-
   showKVMScreen (): void {
     this.showKvm = true
   }
@@ -119,10 +102,10 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   deviceStatus = (state: number): void => {
-     this.deviceState = state
+    this.deviceState = state
   }
 
-  onSelectedAction = (selectedAction: string) : void => {
+  onSelectedAction = (selectedAction: string): void => {
     this.selectedAction = selectedAction
-  } 
+  }
 }

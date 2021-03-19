@@ -26,8 +26,8 @@ import { DeviceDetailComponent } from './devices/device-detail/device-detail.com
 import { MomentModule } from 'ngx-moment'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
-import { AuditLogComponent } from './devices/audit-log/audit-log.component';
-import { PoweralertComponent } from './devices/sol/poweralert/poweralert.component';
+import { AuditLogComponent } from './devices/audit-log/audit-log.component'
+import { PoweralertComponent } from './devices/sol/poweralert/poweralert.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 
 @NgModule({

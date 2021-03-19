@@ -34,20 +34,20 @@ export class SolComponent implements OnInit {
   public powerState: any = 0
   public isPoweredOn: boolean = false
   public previousAction: string = 'sol'
+  public isLoading: boolean = false
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
-
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
       this.uuid = params.id
     })
     this.setAmtFeatures()
     this.deviceService.getPowerState(this.uuid).pipe(
       catchError(err => {
-        console.log(err, "coming error case")
+        console.log(err, 'coming error case')
         this.snackBar.open($localize`Error enabling sol`, undefined, SnackbarDefaults.defaultError)
-        return of()
+        return of(null)
       }),
       finalize(() => {
       })
@@ -69,15 +69,14 @@ export class SolComponent implements OnInit {
         this.startSol()
       }
     })
-    this.deviceService.stopwebSocket.subscribe(() => {
+    this.deviceService.stopwebSocket.subscribe((data: boolean) => {
       this.stopSol()
     })
-    this.deviceService.startwebSocket.subscribe(() => {
+    this.deviceService.startwebSocket.subscribe((data: boolean) => {
       this.init()
       this.startSol()
     })
   }
-
 
   setAmtFeatures = (): void => {
     this.deviceService.setAmtFeatures(this.uuid).pipe(
@@ -85,7 +84,7 @@ export class SolComponent implements OnInit {
         // TODO: handle error better
         console.log(err)
         this.snackBar.open($localize`Error enabling sol`, undefined, SnackbarDefaults.defaultError)
-        return of()
+        return of(null)
       }), finalize(() => {
       })
     )
@@ -146,26 +145,27 @@ export class SolComponent implements OnInit {
   startSol = (): void => {
     if (this.redirector != null) {
       if (this.deviceState === 0) {
+        this.isLoading = true
         this.redirector.start(WebSocket)
       }
     }
   }
 
   stopSol = (): void => {
-    console.log("calling sol")
     if (this.redirector != null) {
       this.redirector.stop()
       this.handleClearTerminal()
       this.term.dispose()
       this.cleanUp()
-
     }
   }
 
   onTerminalStateChange = (redirector: AMTRedirector, state: number): void => {
     this.deviceState = state
-    // console.log(this.deviceState,"onTerminal State change")
     this.deviceStatus.emit(state)
+    if (state === 3) {
+      this.isLoading = false
+    }
   }
 
   cleanUp = (): void => {
@@ -179,9 +179,8 @@ export class SolComponent implements OnInit {
     this.terminal.TermSendKeys(domEvent)
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     if (this.redirector != null) {
-      // console.log("ngOnDestroy sol")
       this.redirector.stop()
       this.cleanUp()
     }

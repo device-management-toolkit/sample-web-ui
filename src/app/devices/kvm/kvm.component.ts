@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./kvm.component.scss']
 })
 export class KvmComponent implements OnInit {
-  @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined
+  @ViewChild('canvas', { static: false }) canvas: ElementRef | any
   public context!: CanvasRenderingContext2D
 
   // setting a width and height for the canvas
@@ -39,12 +39,11 @@ export class KvmComponent implements OnInit {
   powerState: any = 0
   btnText: string = 'Disconnect'
   isPoweredOn: boolean = false
-  isLoading: boolean = false
+  public isLoading: boolean = false
   server: string = environment.mpsServer.replace('https://', '')
   previousAction: string = 'kvm'
 
-
-  constructor(public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService) {
+  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService) {
 
   }
 
@@ -52,8 +51,8 @@ export class KvmComponent implements OnInit {
   //   console.log("ngOnChanges kvm")
   // }
 
-  ngOnInit(): void {
-    console.log("ngOnInit kvm")
+  ngOnInit (): void {
+    console.log('ngOnInit kvm')
     this.logger = new ConsoleLogger(1)
     this.setAmtFeatures()
     this.isLoading = true
@@ -80,7 +79,7 @@ export class KvmComponent implements OnInit {
               setTimeout(() => {
                 this.isLoading = false
                 this.autoConnect()
-              }, 4000);
+              }, 4000)
             })
           }
         })
@@ -93,7 +92,7 @@ export class KvmComponent implements OnInit {
     })
   }
 
-  ngDoCheck(): void {
+  ngDoCheck (): void {
     if (this.selectedAction !== this.previousAction) {
       this.previousAction = this.selectedAction
     }
@@ -115,11 +114,11 @@ export class KvmComponent implements OnInit {
   //   console.log("ngAfterViewChecked kvm")
   // }
 
-  checkPowerStatus(): boolean {
+  checkPowerStatus (): boolean {
     return this.powerState.powerstate === 2
   }
 
-  instantiate(): void {
+  instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
     this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceUuid, 16994, '', '', 0, 0, `${this.server}/relay`)
     this.module = new AMTDesktop(this.logger as any, this.context)
@@ -137,7 +136,7 @@ export class KvmComponent implements OnInit {
     this.module.bpp = this.encoding
   }
 
-  autoConnect(): void {
+  autoConnect (): void {
     if (this.redirector != null) {
       this.module.bpp = 2
       this.redirector.start(WebSocket)
@@ -145,7 +144,7 @@ export class KvmComponent implements OnInit {
     }
   }
 
-  setAmtFeatures(): void {
+  setAmtFeatures (): void {
     this.devicesService.setAmtFeatures(this.deviceUuid).pipe(
       catchError((err: any) => {
         // TODO: handle error better
@@ -158,17 +157,17 @@ export class KvmComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event'])
-  onMouseup(event: MouseEvent): void {
+  onMouseup (event: MouseEvent): void {
     this.mouseHelper.mouseup(event)
   }
 
   @HostListener('mousemove', ['$event'])
-  onMousemove(event: MouseEvent): void {
+  onMousemove (event: MouseEvent): void {
     this.mouseHelper.mousemove(event)
   }
 
   @HostListener('mousedown', ['$event'])
-  onMousedown(event: MouseEvent): void {
+  onMousedown (event: MouseEvent): void {
     this.mouseHelper.mousedown(event)
   }
 
@@ -196,7 +195,7 @@ export class KvmComponent implements OnInit {
   }
 
   ngOnDestroy = (): void => {
-    console.log("ngOnDestroy kvm")
+    console.log('ngOnDestroy kvm')
     this.stopKvm()
   }
 }
