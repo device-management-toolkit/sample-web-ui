@@ -12,6 +12,21 @@
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
 
 <mat-card>
+    <mat-card-header>
+        <div fxLayout="row wrap" fxFlex=100>
+            <div fxFlex></div>
+            <div fxFlex="33" fxLayoutAlign="end">
+                <mat-form-field>
+                    <mat-label>Filter Tags</mat-label>
+                    <mat-select (selectionChange)="tagChange($event)" name="tag" multiple>
+                        <mat-option *ngFor="let tag of tags" [value]="tag">
+                            {{tag}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-header>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Devices</h3>
         <mat-table [dataSource]="devices" [fxHide]="isNoData()">

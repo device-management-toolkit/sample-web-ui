@@ -19,10 +19,14 @@ describe('ProfileDetailComponent', () => {
   let fixture: ComponentFixture<ProfileDetailComponent>
   let profileSpy: jasmine.Spy
   let configsSpy: jasmine.Spy
+  let profileCreateSpy: jasmine.Spy
+  let profileUpdateSpy: jasmine.Spy
   beforeEach(async () => {
-    const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord'])
+    const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord', 'update', 'create'])
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
     profileSpy = profilesService.getRecord.and.returnValue(of({}))
+    profileCreateSpy = profilesService.create.and.returnValue(of({}))
+    profileUpdateSpy = profilesService.update.and.returnValue(of({}))
     configsSpy = configsService.getData.and.returnValue(of([]))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -53,5 +57,72 @@ describe('ProfileDetailComponent', () => {
     expect(component).toBeTruthy()
     expect(configsSpy.calls.any()).toBe(true, 'getData called')
     expect(profileSpy.calls.any()).toBe(true, 'getRecord called')
+  })
+
+  it('should cancel', async () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    await component.cancel()
+    expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
+  })
+  it('should toggle generateRandomMEBxPassword when false', () => {
+    component.generateRandomMEBxPasswordChange(false)
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeFalse()
+    expect(component.profileForm.controls.mebxPasswordLength.disabled).toBeTrue()
+  })
+  it('should toggle generateRandomMEBxPassword when true', () => {
+    component.generateRandomMEBxPasswordChange(true)
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.mebxPasswordLength.disabled).toBeFalse()
+  })
+  it('should toggle generateRandomMEBxPassword when false', () => {
+    component.generateRandomPasswordChange(false)
+    expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
+    expect(component.profileForm.controls.passwordLength.disabled).toBeTrue()
+  })
+  it('should toggle generateRandomMEBxPassword when true', () => {
+    component.generateRandomPasswordChange(true)
+    expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.passwordLength.disabled).toBeFalse()
+  })
+  it('should submit when valid (update)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      mebxPasswordLength: null,
+      passwordLength: null,
+      mebxPassword: 'Password123',
+      networkConfigName: null,
+      ciraConfigName: null
+    })
+    component.onSubmit()
+
+    expect(profileUpdateSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+  it('should submit when valid (create)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      mebxPasswordLength: null,
+      passwordLength: null,
+      mebxPassword: 'Password123',
+      networkConfigName: null,
+      ciraConfigName: null
+    })
+    component.onSubmit()
+
+    expect(profileCreateSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
   })
 })

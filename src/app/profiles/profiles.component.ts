@@ -20,7 +20,6 @@ import { ProfilesService } from './profiles.service'
 export class ProfilesComponent implements OnInit {
   public profiles: Profile[] = []
   public isLoading = true
-  public errorMessages: string[] = []
   displayedColumns: string[] = ['name', 'networkConfig', 'ciraConfig', 'activation', 'remove']
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly profilesService: ProfilesService) { }
@@ -36,8 +35,8 @@ export class ProfilesComponent implements OnInit {
       })
     ).subscribe(data => {
       this.profiles = data
-    }, error => {
-      this.errorMessages = error
+    }, () => {
+      this.snackBar.open($localize`Unable to load profiles`, undefined, SnackbarDefaults.defaultError)
     })
   }
 
@@ -59,8 +58,8 @@ export class ProfilesComponent implements OnInit {
           this.getData()
           this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         },
-        error => {
-          this.errorMessages = error
+        () => {
+          this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
         })
       }
     })

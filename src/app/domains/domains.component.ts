@@ -21,7 +21,6 @@ import { DomainsService } from './domains.service'
 export class DomainsComponent implements OnInit {
   public domains: Domain[] = []
   public isLoading = true
-  public errorMessages: string[] = []
   displayedColumns: string[] = ['name', 'domainSuffix', 'remove']
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly domainsService: DomainsService) { }
@@ -38,8 +37,8 @@ export class DomainsComponent implements OnInit {
         })
       ).subscribe(data => {
         this.domains = data
-      }, error => {
-        this.errorMessages = error
+      }, () => {
+        this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
       })
   }
 
@@ -61,8 +60,8 @@ export class DomainsComponent implements OnInit {
           this.getData()
           this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         },
-        error => {
-          this.errorMessages = error
+        () => {
+          this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
         })
       }
     })
