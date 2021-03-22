@@ -2,17 +2,23 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { environment } from 'src/environments/environment'
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { of } from 'rxjs'
+import { catchError, finalize } from 'rxjs/operators'
+import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
   styleUrls: ['./kvm.component.scss']
 })
-export class KvmComponent implements OnInit, AfterViewInit {
-  @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined
+export class KvmComponent implements OnInit {
+  @ViewChild('canvas', { static: false }) canvas: ElementRef | any
   public context!: CanvasRenderingContext2D
 
   // setting a width and height for the canvas
@@ -20,7 +26,9 @@ export class KvmComponent implements OnInit, AfterViewInit {
   @Input() public height = 400
   @Input() deviceUuid: string = ''
   @Input() showKvm: boolean = false
+  @Input() encoding: number = 1
   @Output() showKvmChange = new EventEmitter<boolean>()
+  @Input() public selectedAction: string = ''
   module: any
   redirector: any
   dataProcessor!: IDataProcessor | null
@@ -31,19 +39,58 @@ export class KvmComponent implements OnInit, AfterViewInit {
   powerState: any = 0
   btnText: string = 'Disconnect'
   isPoweredOn: boolean = false
+  public isLoading: boolean = false
+  server: string = environment.mpsServer.replace('https://', '')
+  previousAction: string = 'kvm'
 
-  constructor (private readonly devicesService: DevicesService) {
+  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService) {
 
   }
 
   ngOnInit (): void {
     this.logger = new ConsoleLogger(1)
+    this.setAmtFeatures()
+    this.isLoading = true
+    this.devicesService.getPowerState(this.deviceUuid).pipe(
+      catchError(err => {
+        // TODO: handle error better
+        console.log(err)
+        this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
+        return of()
+      }), finalize(() => {
+      })
+    ).subscribe(data => {
+      this.powerState = data
+      this.isPoweredOn = this.checkPowerStatus()
+      if (!this.isPoweredOn) {
+        this.isLoading = false
+        const dialog = this.dialog.open(PowerUpAlertComponent)
+        dialog.afterClosed().subscribe(result => {
+          if (result) {
+            this.isLoading = true
+            this.devicesService.sendPowerAction(this.deviceUuid, 2).pipe().subscribe(data => {
+              console.info('canvas', this.canvas)
+              this.instantiate()
+              setTimeout(() => {
+                this.isLoading = false
+                this.autoConnect()
+              }, 4000)
+            })
+          }
+        })
+      } else {
+        console.info('canvas', this.canvas)
+        this.instantiate()
+        this.isLoading = false
+        this.autoConnect()
+      }
+    })
   }
 
-  ngAfterViewInit (): void {
-    this.instantiate()
-    // this.setAmtFeatures()
-    this.autoConnect()
+  ngDoCheck (): void {
+    if (this.selectedAction !== this.previousAction) {
+      this.previousAction = this.selectedAction
+    }
   }
 
   checkPowerStatus (): boolean {
@@ -52,8 +99,7 @@ export class KvmComponent implements OnInit, AfterViewInit {
 
   instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    const url = `${environment.mpsServer.substring(environment.mpsServer.indexOf('://') + 3)}/relay`
-    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceUuid, 16994, '', '', 0, 0, url)
+    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceUuid, 16994, '', '', 0, 0, `${this.server}/relay`)
     this.module = new AMTDesktop(this.logger as any, this.context)
     this.dataProcessor = new DataProcessor(this.logger, this.redirector, this.module)
     this.mouseHelper = new MouseHelper(this.module, this.redirector, 200)
@@ -66,6 +112,7 @@ export class KvmComponent implements OnInit, AfterViewInit {
     this.redirector.onStateChanged = this.onConnectionStateChange
     this.module.onProcessData = this.dataProcessor.processData.bind(this.dataProcessor)
     this.module.onSend = this.redirector.send.bind(this.redirector)
+    this.module.bpp = this.encoding
   }
 
   autoConnect (): void {
@@ -74,6 +121,18 @@ export class KvmComponent implements OnInit, AfterViewInit {
       this.redirector.start(WebSocket)
       this.keyboardHelper.GrabKeyInput()
     }
+  }
+
+  setAmtFeatures (): void {
+    this.devicesService.setAmtFeatures(this.deviceUuid).pipe(
+      catchError((err: any) => {
+        // TODO: handle error better
+        console.log(err)
+        this.snackBar.open($localize`Error enabling kvm`, undefined, SnackbarDefaults.defaultError)
+        return of()
+      }), finalize(() => {
+      })
+    ).subscribe()
   }
 
   @HostListener('mouseup', ['$event'])
@@ -95,7 +154,6 @@ export class KvmComponent implements OnInit, AfterViewInit {
     this.redirector = null
     this.module = null
     this.dataProcessor = null
-    // this.context.clearRect(0, 0, 400, 400)
     this.height = 400
     this.width = 400
     this.instantiate()
@@ -113,5 +171,9 @@ export class KvmComponent implements OnInit, AfterViewInit {
     if (state === 0) {
       this.showKvmChange.emit(false)
     }
+  }
+
+  ngOnDestroy = (): void => {
+    this.stopKvm()
   }
 }

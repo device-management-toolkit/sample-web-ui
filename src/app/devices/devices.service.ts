@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -131,6 +131,9 @@ export class DevicesService {
     113: 'Microsoft Windows Server 8'
   }
 
+  stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+
   constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
 
   }
@@ -178,20 +181,14 @@ export class DevicesService {
       )
   }
 
-  sendPowerAction (deviceId: string, action: number, useSOL?: boolean): Observable<any> {
+  sendPowerAction (deviceId: string, action: number): Observable<any> {
     const payload = {
       apikey: 'xxxxx',
       method: 'PowerAction',
-      payload: useSOL
-        ? {
-            guid: deviceId,
-            action,
-            useSOL
-          }
-        : {
-            guid: deviceId,
-            action
-          }
+      payload: {
+        guid: deviceId,
+        action
+      }
     }
     return this.http.post<any>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
       .pipe(
