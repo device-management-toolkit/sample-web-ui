@@ -2,11 +2,12 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
+import { SelectionModel } from '@angular/cdk/collections'
 import { Component, OnInit } from '@angular/core'
 import { MatSelectChange } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { BehaviorSubject, forkJoin, throwError } from 'rxjs'
+import { BehaviorSubject, forkJoin, Observable, throwError } from 'rxjs'
 import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import { Device } from 'src/models/models'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -22,10 +23,15 @@ export class DevicesComponent implements OnInit {
   public isLoading = true
   public tags: string[] = []
   public selectedTags = new BehaviorSubject<string[]>([])
+  public selection: SelectionModel<Device>
 
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
 
-  constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) { }
+  constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) {
+    const initialSelection: Device[] = []
+    const allowMultiSelect = true
+    this.selection = new SelectionModel<any>(allowMultiSelect, initialSelection)
+  }
 
   ngOnInit (): void {
     const tags = this.devicesService.getTags()
@@ -59,6 +65,19 @@ export class DevicesComponent implements OnInit {
     this.selectedTags.next(event.value)
   }
 
+  isAllSelected (): boolean {
+    const numSelected = this.selection.selected.length
+    const numRows = this.devices.length
+    return numSelected === numRows
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle (): void {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.devices.forEach(row => this.selection.select(row))
+  }
+
   isNoData (): boolean {
     return !this.isLoading && this.devices.length === 0
   }
@@ -76,6 +95,17 @@ export class DevicesComponent implements OnInit {
       default:
         return 'unknown'
     }
+  }
+
+  bulkPowerAction (action: number): void {
+    const requests: Array<Observable<any>> = []
+    this.selection.selected.forEach(z => {
+      requests.push(this.devicesService.sendPowerAction(z.host, action))
+    })
+
+    forkJoin(requests).subscribe(result => {
+      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+    })
   }
 
   sendPowerAction (deviceId: string, action: number): void {

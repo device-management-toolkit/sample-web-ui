@@ -9,6 +9,11 @@ export interface Device{
   icon: number
   conn: number
 }
+export interface DeviceStats{
+  totalCount: number
+  connectedCount: number
+  disconnectedCount: number
+}
 export interface Domain{
   profileName: string
   domainSuffix: string

@@ -1,3 +1,4 @@
+<mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
 <div fxLayout="row wrap">
     <div fxFlex=33.3 fxFlex.lt-sm=100>
         <mat-card class="connected">
@@ -6,7 +7,7 @@
                     <mat-icon>devices</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">13</h1>
+                    <h1 class="mat-display-1">{{stats?.totalCount}}</h1>
                     <p>Total Devices</p>
                 </div>
             </div>
@@ -20,7 +21,7 @@
                     <mat-icon>phonelink</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">13</h1>
+                    <h1 class="mat-display-1">{{stats?.connectedCount}}</h1>
                     <p>Devices Connected</p>
                 </div>
             </div>
@@ -34,7 +35,7 @@
                     <mat-icon>phonelink_off</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">13</h1>
+                    <h1 class="mat-display-1">{{stats?.disconnectedCount}}</h1>
                     <p>Devices Disconnected</p>
                 </div>
             </div>
@@ -56,7 +57,7 @@
         <br />
     </div>
 
-    <div fxFlex=25 fxFlex.lt-md=100  fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/domains">1</button>
         </div>
@@ -66,7 +67,7 @@
         </div>
 
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100  fxLayout="row">
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
         <div fxFlex=25>
             <button mat-fab routerLink="/ciraconfigs">2</button>
         </div>
