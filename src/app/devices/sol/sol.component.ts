@@ -37,15 +37,15 @@ export class SolComponent implements OnInit {
   public previousAction: string = 'sol'
   public isLoading: boolean = false
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
       this.uuid = params.id
     })
     this.setAmtFeatures()
     this.deviceService.getPowerState(this.uuid).pipe(
-      catchError(err => {
+      catchError(() => {
         this.snackBar.open($localize`Error enabling sol`, undefined, SnackbarDefaults.defaultError)
         return of(null)
       }),
@@ -59,7 +59,7 @@ export class SolComponent implements OnInit {
         dialog.afterClosed().subscribe(result => {
           if (result) {
             this.deviceService.sendPowerAction(this.uuid, 2).pipe(
-              catchError(err => {
+              catchError(() => {
                 this.snackBar.open($localize`Error sending power actions`, undefined, SnackbarDefaults.defaultError)
                 return of(null)
               })
@@ -85,7 +85,7 @@ export class SolComponent implements OnInit {
 
   setAmtFeatures = (): void => {
     this.deviceService.setAmtFeatures(this.uuid).pipe(
-      catchError((err: any) => {
+      catchError(() => {
         // TODO: handle error better
         this.snackBar.open($localize`Error sending amt features`, undefined, SnackbarDefaults.defaultError)
         return of(null)
@@ -183,7 +183,7 @@ export class SolComponent implements OnInit {
     this.terminal.TermSendKeys(domEvent)
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     if (this.redirector != null) {
       this.redirector.stop()
       this.cleanUp()

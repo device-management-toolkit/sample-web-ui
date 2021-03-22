@@ -47,7 +47,7 @@ export class KvmComponent implements OnInit {
 
   }
 
- ngOnInit (): void {
+  ngOnInit (): void {
     this.logger = new ConsoleLogger(1)
     this.setAmtFeatures()
     this.isLoading = true
