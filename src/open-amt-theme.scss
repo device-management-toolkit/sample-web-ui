@@ -43,6 +43,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-card {
   margin: 12px;
 }
+.mat-row{
+  -moz-transition: all .4s ease-in;
+  -webkit-transition: all .4s ease-in;
+  -o-transition: all .4s ease-in;  
+  transition: all .4s ease-in;
+  &:hover {
+    background-color: map-get($openamtui-accent, 100);
+    cursor:pointer;
+    -moz-transition: all .4s ease-in;
+    -webkit-transition: all .4s ease-in;
+    -o-transition: all .4s ease-in;  
+    transition: all .4s ease-in;
+  }
+}
 .mat-drawer-container {
   background-color: #fafafa;
   color:rgba(0, 0, 0, 0.87);

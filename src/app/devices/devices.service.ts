@@ -7,7 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, HardwareInformation, PowerState } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceStats, HardwareInformation, PowerState } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -243,6 +243,15 @@ export class DevicesService {
   getPowerState (deviceId: string): Observable<PowerState> {
     const payload = { apikey: 'xxxxx', method: 'PowerState', payload: { guid: deviceId } }
     return this.http.post<PowerState>(`${environment.mpsServer}/amt`, payload, this.authService.getMPSOptions())
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getStats (): Observable<DeviceStats> {
+    return this.http.get<DeviceStats>(`${environment.mpsServer}/devices/stats`, this.authService.getMPSOptions())
       .pipe(
         catchError((err) => {
           throw err
