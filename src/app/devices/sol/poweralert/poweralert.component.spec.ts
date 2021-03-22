@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PoweralertComponent } from './poweralert.component'
+import { PowerAlertComponent } from './poweralert.component'
 
 describe('PoweralertComponent', () => {
-  let component: PoweralertComponent
-  let fixture: ComponentFixture<PoweralertComponent>
+  let component: PowerAlertComponent
+  let fixture: ComponentFixture<PowerAlertComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PoweralertComponent]
+      declarations: [PowerAlertComponent]
     })
       .compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PoweralertComponent)
+    fixture = TestBed.createComponent(PowerAlertComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
