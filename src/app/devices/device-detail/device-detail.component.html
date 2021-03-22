@@ -1,21 +1,5 @@
 <app-device-toolbar [isLoading]="isLoading"></app-device-toolbar>
-<mat-form-field *ngIf="!showKvm">
-    <mat-label>Encoding</mat-label>
-    <mat-select [(value)]="selected">
-        <mat-option [value]="1">
-            RLE 8
-        </mat-option>
-        <mat-option [value]="2">
-            RLE 16
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-<div *ngIf="selectedAction === 'kvm'" class="kvm-container">
-    <app-kvm [deviceUuid]="deviceId" [(showKvm)]="showKvm" [selectedAction]="selectedAction"></app-kvm>
-</div>
-
-<mat-sidenav-container autosize *ngIf="!showKvm">
+<mat-sidenav-container autosize>
     <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
         <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
         <mat-vertical-stepper #stepper>

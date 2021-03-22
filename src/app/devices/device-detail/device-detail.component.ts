@@ -2,7 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { forkJoin, throwError } from 'rxjs'
@@ -18,14 +18,11 @@ import { DevicesService } from '../devices.service'
   styleUrls: ['./device-detail.component.scss']
 })
 export class DeviceDetailComponent implements OnInit {
-  @Input() public deviceUuid = null
-  @Input() selected = 1
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public hwInfo?: HardwareInformation
   public amtFeatures?: AmtFeaturesResponse
   public isLoading = false
   public deviceId: string = ''
-  public showKvm: boolean = false
   public targetOS: any
   public powerOptions = [
     {
@@ -87,10 +84,6 @@ export class DeviceDetailComponent implements OnInit {
         this.amtFeatures = results.amtFeatures
       })
     })
-  }
-
-  showKVMScreen (): void {
-    this.showKvm = true
   }
 
   async navigateTo (path: string): Promise<void> {

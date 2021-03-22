@@ -77,6 +77,10 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.stopwebSocket.next(true)
   }
 
+  stopKvm (): void {
+    this.devicesService.stopwebSocket.next(true)
+  }
+
   async navigateTo (path: string): Promise<void> {
     this.devicesService.startwebSocket.next(true)
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])

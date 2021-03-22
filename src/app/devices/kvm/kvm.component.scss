@@ -1,9 +1,13 @@
 .canvas{
-    max-height: 100%;
+    max-height: 80%;
     max-width: 100%;
 }
 .spinner{
     position: absolute;
     top: 50%;
     left: 50%;
+}
+.encoding-options{
+    margin-top: 20px;
+    font-size: 12px;
 }
