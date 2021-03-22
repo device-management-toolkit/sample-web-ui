@@ -133,7 +133,6 @@ export class OpenAMTMaterialModule {
   exports: [OpenAMTMaterialModule],
   imports: [
     CommonModule,
-
     OpenAMTMaterialModule
   ]
 })

@@ -47,12 +47,7 @@ export class KvmComponent implements OnInit {
 
   }
 
-  // ngOnChanges ():void{
-  //   console.log("ngOnChanges kvm")
-  // }
-
-  ngOnInit (): void {
-    console.log('ngOnInit kvm')
+ ngOnInit (): void {
     this.logger = new ConsoleLogger(1)
     this.setAmtFeatures()
     this.isLoading = true
@@ -97,22 +92,6 @@ export class KvmComponent implements OnInit {
       this.previousAction = this.selectedAction
     }
   }
-
-  // ngAfterContentInit(){
-  //   console.log("ngAfterContentInit kvm")
-  // }
-
-  // ngAfterContentChecked(){
-  //   console.log("ngAfterContentChecked kvm")
-  // }
-
-  // ngAfterViewInit(){
-  //   console.log("ngAfterViewInit kvm")
-  // }
-
-  // ngAfterViewChecked(){
-  //   console.log("ngAfterViewChecked kvm")
-  // }
 
   checkPowerStatus (): boolean {
     return this.powerState.powerstate === 2
@@ -195,7 +174,6 @@ export class KvmComponent implements OnInit {
   }
 
   ngOnDestroy = (): void => {
-    console.log('ngOnDestroy kvm')
     this.stopKvm()
   }
 }

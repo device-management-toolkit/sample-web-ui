@@ -10,7 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { PoweralertComponent } from './poweralert/poweralert.component'
+import { PowerAlertComponent } from './poweralert/poweralert.component'
+import { C, V, SPACE } from '@angular/cdk/keycodes'
 
 @Component({
   selector: 'app-sol',
@@ -36,16 +37,15 @@ export class SolComponent implements OnInit {
   public previousAction: string = 'sol'
   public isLoading: boolean = false
 
-  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.uuid = params.id
     })
     this.setAmtFeatures()
     this.deviceService.getPowerState(this.uuid).pipe(
       catchError(err => {
-        console.log(err, 'coming error case')
         this.snackBar.open($localize`Error enabling sol`, undefined, SnackbarDefaults.defaultError)
         return of(null)
       }),
@@ -55,10 +55,15 @@ export class SolComponent implements OnInit {
       this.powerState = data
       this.isPoweredOn = this.checkPowerStatus()
       if (!this.isPoweredOn) {
-        const dialog = this.dialog.open(PoweralertComponent)
+        const dialog = this.dialog.open(PowerAlertComponent)
         dialog.afterClosed().subscribe(result => {
           if (result) {
-            this.deviceService.sendPowerAction(this.uuid, 2).pipe().subscribe(data => {
+            this.deviceService.sendPowerAction(this.uuid, 2).pipe(
+              catchError(err => {
+                this.snackBar.open($localize`Error sending power actions`, undefined, SnackbarDefaults.defaultError)
+                return of(null)
+              })
+            ).subscribe(data => {
               this.init()
               this.startSol()
             })
@@ -82,8 +87,7 @@ export class SolComponent implements OnInit {
     this.deviceService.setAmtFeatures(this.uuid).pipe(
       catchError((err: any) => {
         // TODO: handle error better
-        console.log(err)
-        this.snackBar.open($localize`Error enabling sol`, undefined, SnackbarDefaults.defaultError)
+        this.snackBar.open($localize`Error sending amt features`, undefined, SnackbarDefaults.defaultError)
         return of(null)
       }), finalize(() => {
       })
@@ -116,13 +120,13 @@ export class SolComponent implements OnInit {
     this.term.attachCustomKeyEventHandler((e: any) => {
       e.stopPropagation()
       e.preventDefault()
-      if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+      if (e.ctrlKey && e.shiftKey && e.keyCode === C) {
         return navigator.clipboard.writeText(this.term.getSelection())
-      } else if (e.ctrlKey && e.shiftKey && e.keyCode === 86) {
+      } else if (e.ctrlKey && e.shiftKey && e.keyCode === V) {
         return navigator.clipboard.readText().then(text => {
           this.handleKeyPress(text)
         })
-      } else if (e.code === 'space') {
+      } else if (e.code === SPACE) {
         return this.handleKeyPress(e.key)
       }
     })
@@ -179,7 +183,7 @@ export class SolComponent implements OnInit {
     this.terminal.TermSendKeys(domEvent)
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     if (this.redirector != null) {
       this.redirector.stop()
       this.cleanUp()

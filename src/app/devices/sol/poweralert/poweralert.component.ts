@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core'
   templateUrl: './poweralert.component.html',
   styleUrls: ['./poweralert.component.scss']
 })
-export class PoweralertComponent implements OnInit {
+export class PowerAlertComponent implements OnInit {
   ngOnInit (): void {
   }
 }
