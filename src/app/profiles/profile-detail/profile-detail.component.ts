@@ -85,6 +85,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPasswordLength.disable()
       this.profileForm.controls.mebxPasswordLength.setValue(null)
       this.profileForm.controls.mebxPasswordLength.clearValidators()
+      this.profileForm.controls.generateRandomMEBxPassword.setValue(false)
       this.profileForm.controls.generateRandomMEBxPassword.disable()
       this.profileForm.controls.generateRandomMEBxPassword.clearValidators()
     } else {
