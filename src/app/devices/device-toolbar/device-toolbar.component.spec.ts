@@ -45,7 +45,7 @@ describe('DeviceToolbarComponent', () => {
 
     fixture.detectChanges()
 
-    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4)
+    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false)
     fixture.detectChanges()
     expect(component.isLoading).toBeFalse()
   })
