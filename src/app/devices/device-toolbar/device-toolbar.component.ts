@@ -50,14 +50,14 @@ export class DeviceToolbarComponent implements OnInit {
 
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
-      // this.isLoading = true
       this.deviceId = params.id
     })
   }
 
   sendPowerAction (action: number): void {
     this.isLoading = true
-    this.devicesService.sendPowerAction(this.deviceId, action).pipe(
+    const useSOL = action === 101
+    this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
       catchError(err => {
         // TODO: handle error better
         console.log(err)
