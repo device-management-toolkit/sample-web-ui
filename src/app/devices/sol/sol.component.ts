@@ -91,7 +91,7 @@ export class SolComponent implements OnInit {
         return of(null)
       }), finalize(() => {
       })
-    )
+    ).subscribe()
   }
 
   checkPowerStatus = (): boolean => this.powerState.powerstate === 2
