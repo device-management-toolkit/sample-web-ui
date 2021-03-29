@@ -22,7 +22,7 @@ describe('KvmComponent', () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket'])
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
-      startwebSocket: new EventEmitter<boolean>(false)
+      connectKvmSocket: new EventEmitter<boolean>(false)
     }
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))

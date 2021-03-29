@@ -85,4 +85,12 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.startwebSocket.next(true)
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])
   }
+
+  async navigateToKvm (path: string): Promise<void> {
+    if (this.router.url === `/devices/${this.deviceId}/kvm`) {
+      this.devicesService.connectKvmSocket.next(true)
+    } else {
+      await this.router.navigate([`/devices/${this.deviceId}/${path}`])
+    }
+  }
 }

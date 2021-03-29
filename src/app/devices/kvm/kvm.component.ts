@@ -6,7 +6,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEm
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { of } from 'rxjs'
+import { of, Subscription } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -27,6 +27,8 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public height = 400
   @Output() deviceState: number = 0
   @Output() deviceStatus: EventEmitter<number> = new EventEmitter<number>()
+  stopSocketSubscription!: Subscription
+  startSocketSubscription!: Subscription
   module: any
   redirector: any
   dataProcessor!: IDataProcessor | null
@@ -54,13 +56,14 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isLoading = true
       this.deviceId = params.id
     })
-    this.devicesService.stopwebSocket.subscribe(() => {
+    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.stopKvm()
     })
 
-    this.devicesService.startwebSocket.subscribe(() => {
+    this.startSocketSubscription = this.devicesService.connectKvmSocket.subscribe(() => {
       this.init()
     })
+    this.timeInterval = setInterval(() => this.devicesService.getPowerState(this.deviceId).pipe().subscribe(), 15000)
   }
 
   ngDoCheck (): void {
@@ -146,7 +149,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 0)
       }
     })
-    this.timeInterval = setInterval(() => this.devicesService.getPowerState(this.deviceId).pipe().subscribe(), 15000)
   }
 
   setAmtFeatures (): void {
@@ -177,11 +179,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  disableContextMenu (event: any): boolean {
-    event.preventDefault()
-    return false
-  }
-
   reset = (): void => {
     this.redirector = null
     this.module = null
@@ -205,6 +202,12 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy (): void {
     clearInterval(this.timeInterval)
     this.stopKvm()
+    if (this.startSocketSubscription) {
+      this.startSocketSubscription.unsubscribe()
+    }
+    if (this.stopSocketSubscription) {
+      this.stopSocketSubscription.unsubscribe()
+    }
   }
 
   async navigateTo (path: string): Promise<void> {
