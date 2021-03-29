@@ -27,9 +27,21 @@
             <mat-error>This field is required</mat-error>
             <mat-hint>Enter the FQDN that is associated with the provisioning certificate (i.e amtdomain.com)</mat-hint>
           </mat-form-field>
-          <div fxFlex="100" style="margin-top:12px">
-            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
-            <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx">
+          <div fxLayout="row wrap" fxFlex=100>
+            <div fxFlex="50" style="margin-top:12px">
+              <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
+              <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx">
+            </div>
+            <div fxFlex="50" fxLayoutAlign="start center">
+              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value == null">
+                <mat-icon    color="warn">remove_circle</mat-icon>
+                Certificate Not Yet Uploaded
+              </div>
+              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value != null">
+                <mat-icon    color="primary">check_circle</mat-icon>
+                Certificate Uploaded
+              </div>
+            </div>
           </div>
 
           <mat-form-field fxFlex="100">
