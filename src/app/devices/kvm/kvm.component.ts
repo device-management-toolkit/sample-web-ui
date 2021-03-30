@@ -6,8 +6,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEm
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { of } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { interval, of, Subscription } from 'rxjs'
+import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -27,6 +27,8 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public height = 400
   @Output() deviceState: number = 0
   @Output() deviceStatus: EventEmitter<number> = new EventEmitter<number>()
+  stopSocketSubscription!: Subscription
+  startSocketSubscription!: Subscription
   module: any
   redirector: any
   dataProcessor!: IDataProcessor | null
@@ -54,13 +56,14 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isLoading = true
       this.deviceId = params.id
     })
-    this.devicesService.stopwebSocket.subscribe(() => {
+    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.stopKvm()
     })
 
-    this.devicesService.startwebSocket.subscribe(() => {
+    this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
       this.init()
     })
+    this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
   }
 
   ngDoCheck (): void {
@@ -146,7 +149,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 0)
       }
     })
-    this.timeInterval = setInterval(() => this.devicesService.getPowerState(this.deviceId).pipe().subscribe(), 15000)
   }
 
   setAmtFeatures (): void {
@@ -177,11 +179,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  disableContextMenu (event: any): boolean {
-    event.preventDefault()
-    return false
-  }
-
   reset = (): void => {
     this.redirector = null
     this.module = null
@@ -203,8 +200,16 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy (): void {
-    clearInterval(this.timeInterval)
+    if (this.timeInterval) {
+      this.timeInterval.unsubscribe()
+    }
     this.stopKvm()
+    if (this.startSocketSubscription) {
+      this.startSocketSubscription.unsubscribe()
+    }
+    if (this.stopSocketSubscription) {
+      this.stopSocketSubscription.unsubscribe()
+    }
   }
 
   async navigateTo (path: string): Promise<void> {
