@@ -6,8 +6,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEm
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { of, Subscription } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { interval, of, Subscription } from 'rxjs'
+import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -60,10 +60,10 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
       this.stopKvm()
     })
 
-    this.startSocketSubscription = this.devicesService.connectKvmSocket.subscribe(() => {
+    this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
       this.init()
     })
-    this.timeInterval = setInterval(() => this.devicesService.getPowerState(this.deviceId).pipe().subscribe(), 15000)
+    this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
   }
 
   ngDoCheck (): void {
@@ -200,7 +200,9 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy (): void {
-    clearInterval(this.timeInterval)
+    if (this.timeInterval) {
+      this.timeInterval.unsubscribe()
+    }
     this.stopKvm()
     if (this.startSocketSubscription) {
       this.startSocketSubscription.unsubscribe()

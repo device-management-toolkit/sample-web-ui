@@ -133,7 +133,7 @@ export class DevicesService {
 
   stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
-  connectKvmSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
 
   constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
 
