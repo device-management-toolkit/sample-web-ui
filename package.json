@@ -29,7 +29,7 @@
     "@angular/router": "~11.2.5",
     "moment": "^2.29.1",
     "ngx-moment": "^5.0.0",
-    "rxjs": "~6.6.0",
+    "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
     "ui-toolkit": "git+https://github.com/open-amt-cloud-toolkit/ui-toolkit.git",
     "xterm": "^4.11.0",
