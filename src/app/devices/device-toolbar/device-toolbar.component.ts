@@ -56,7 +56,10 @@ export class DeviceToolbarComponent implements OnInit {
 
   sendPowerAction (action: number): void {
     this.isLoading = true
-    const useSOL = action === 101
+    let useSOL = false
+    if (this.router.url.toString().includes('sol') && action === 101) {
+      useSOL = true
+    }
     this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
       catchError(err => {
         // TODO: handle error better
