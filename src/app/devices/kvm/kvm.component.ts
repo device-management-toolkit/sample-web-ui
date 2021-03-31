@@ -6,8 +6,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEm
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { interval, of, Subscription } from 'rxjs'
-import { catchError, finalize, mergeMap } from 'rxjs/operators'
+import { fromEvent, interval, of, Subscription } from 'rxjs'
+import { catchError, finalize, mergeMap, throttleTime } from 'rxjs/operators'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -45,7 +45,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   server: string = environment.mpsServer.replace('https://', '')
   previousAction: string = 'kvm'
   selectedAction: string = ''
-
+  mouseMove: any = null
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute, public readonly router: Router) {
 
   }
@@ -97,6 +97,12 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     this.module.onSend = this.redirector.send.bind(this.redirector)
     this.module.onProcessData = this.dataProcessor.processData.bind(this.dataProcessor)
     this.module.bpp = this.selected
+    this.mouseMove = fromEvent(this.canvas?.nativeElement, 'mousemove')
+    this.mouseMove.pipe(throttleTime(200)).subscribe((event: any) => {
+      if (this.mouseHelper != null) {
+        this.mouseHelper.mousemove(event)
+      }
+    })
   }
 
   autoConnect (): void {
@@ -164,12 +170,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   onMouseup (event: MouseEvent): void {
     if (this.mouseHelper != null) {
       this.mouseHelper.mouseup(event)
-    }
-  }
-
-  onMousemove (event: MouseEvent): void {
-    if (this.mouseHelper != null) {
-      this.mouseHelper.mousemove(event)
     }
   }
 
