@@ -25,7 +25,7 @@ pipeline{
                         scanners             = ['checkmarx', 'protex', 'snyk']
                         scannerType          = 'javascript'
 
-                        protexProjectName    = 'OpenAMT - MPS'
+                        protexProjectName    = 'OpenAMT - sample-web-ui'
                         protexBuildName      = 'rrs-generic-protex-build'
 
                         checkmarxProjectName = "OpenAMT - MPS"
