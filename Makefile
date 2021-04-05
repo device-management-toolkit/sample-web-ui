@@ -1,13 +1,17 @@
-endtoend:
-	npm run cy-e2e
+cy:
+	@read -r -p "Isolate the front end? (y/n): " isolate;\
+	read -r -p "Enter the target url: " targetUrl;\
+	npm run cypress -- --env ISOLATE=$$isolate,BASEURL=$$targetUrl
 
-ui:
-	npm run cy-ui
+runner:
+	@read -r -p "Isolate the front end? (y/n): " isolate;\
+	read -r -p "Enter the target url: " targetUrl;\
+	npm run cy-runner -- --env ISOLATE=$$isolate,BASEURL=$$targetUrl
 
-run:
-	npm run cy-tstrnr-e2e
+# container:
+# 	docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
 
-runui:
-	npm run cy-tstrnr-ui
+# test-container:
+# 	docker run -d -p 4201:80 vprodemo.azurecr.ui/samplewebui:latest
 
-
+#npm run start

@@ -7,5 +7,9 @@
     "ciras": "ciraconfigs",
     "profiles": "profiles",
     "devices": "devices"
+  },
+
+  "extensions": {
+    "creation": "new"
   }
 }

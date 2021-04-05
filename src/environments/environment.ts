@@ -1,15 +1,15 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2021
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2021
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
   production: false,
-  mpsServer: 'https://localhost:3000',
-  rpsServer: 'https://localhost:8081',
+  mpsServer: 'https://192.168.50.40:3000',
+  rpsServer: 'https://192.168.50.40:8081',
   mpsAPIKey: 'APIKEYFORMPS123!',
   rpsAPIKey: 'APIKEYFORRPS123!'
 }

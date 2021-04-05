@@ -1,18 +1,36 @@
 {
-    "default": {
-        "name": "default-profile",
-        "mode": "acmactivate",
-        "amtPassword": "8wF3S#f^vYUkqu",
-        "mebxPassword": "XT!2%7QsPJmfUB",
-        "netConfig": "DHCP",
-        "ciraConfig": "cira-for-profile-test"
+  "happyPath": {
+    "name": "happyPath",
+    "admin": true,
+    "amtPassword": "P@ssw0rd",
+    "mebxPassword": "P@ssw0rd",
+    "netConfig": "DHCP",
+    "ciraConfig": "happyPath"
+  },
+
+  "defaultCCM": {
+    "name": "default-ccm-profile",
+    "mode": "ccmactivate",
+    "amtPassword": "8wF3S#f^vYUkqu",
+    "netConfig": "DHCP",
+    "ciraConfig": "cira-for-profile-test"
+  },
+
+  "wrong": {
+    "name": "bad name !",
+    "amtPassword": "password",
+    "mebxPassword": "12345678"
+  },
+
+  "check": {
+    "network": {
+      "dhcp": "dhcp_enabled",
+      "static": "dhcp_disabled"
     },
 
-    "defaultCCM": {
-        "name": "default-ccm-profile",
-        "mode": "ccmactivate",
-        "amtPassword": "8wF3S#f^vYUkqu",
-        "netConfig": "DHCP",
-        "ciraConfig": "cira-for-profile-test"
+    "mode": {
+      "acm": "acmactivate",
+      "ccm": "ccmactivate"
     }
+  }
 }
