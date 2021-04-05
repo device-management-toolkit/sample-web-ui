@@ -9,10 +9,8 @@
     "test-ci": "ng test --no-watch --no-progress",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "cy-ui": "cypress open --env ISOLATED=true",
-    "cy-e2e": "cypress open --env ISOLATED=false",
-    "cy-tstrnr-ui": "cypress run --env ISOLATED=true --record --key 2a235400-a9bf-4f8a-b6cf-bfb71d875828",
-    "cy-tstrnr-e2e": "cypress run --env ISOLATED=false --record --key 2a235400-a9bf-4f8a-b6cf-bfb71d875828"
+    "cypress": "cypress open",
+    "cy-runner": "cypress run"
   },
   "private": true,
   "dependencies": {
