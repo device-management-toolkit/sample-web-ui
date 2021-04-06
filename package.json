@@ -1,6 +1,6 @@
 {
   "name": "openamtui",
-  "version": "0.0.0",
+  "version": "1.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.7",
     "@angular-eslint/template-parser": "^2.0.2",
-    "@angular/cli": "~11.2.6",
+    "@angular/cli": "~11.2.7",
     "@angular/compiler-cli": "~11.2.5",
     "@angular/localize": "^11.2.8",
     "@types/jasmine": "~3.6.9",
@@ -67,6 +67,6 @@
     "@angular-eslint/schematics": "2.0.2"
   },
   "optionalDependencies": {
-    "cypress": "^6.7.1"
+    "cypress": "^6.9.1"
   }
 }
