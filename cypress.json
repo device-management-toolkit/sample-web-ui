@@ -1,3 +1,7 @@
 {
-  "projectId": "x5wpqh"
+  "projectId": "x5wpqh",
+  "env": {
+    "BASEURL": "http://localhost:4200/",
+    "ISOLATE": "Y"
+  }
 }
