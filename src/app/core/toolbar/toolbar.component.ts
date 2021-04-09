@@ -4,7 +4,6 @@
 **********************************************************************/
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
 
@@ -16,7 +15,7 @@ import { AboutComponent } from '../about/about.component'
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
 
-  constructor (public dialog: MatDialog, public router: Router, public authService: AuthService) {
+  constructor (public dialog: MatDialog, public authService: AuthService) {
   }
 
   ngOnInit (): void {
@@ -25,9 +24,8 @@ export class ToolbarComponent implements OnInit {
     })
   }
 
-  async logout (): Promise<void> {
+  logout (): void {
     this.authService.logout()
-    await this.router.navigate(['/login'])
   }
 
   displayAbout (): void {

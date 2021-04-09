@@ -43,6 +43,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { CdkTableModule } from '@angular/cdk/table'
 import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
 import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component'
+import { DialogContentComponent } from './dialog-content/dialog-content.component'
 // import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
@@ -122,7 +123,7 @@ import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
   ],
-  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent]
 })
 export class OpenAMTMaterialModule {
 

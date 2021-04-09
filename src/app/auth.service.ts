@@ -7,6 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -14,37 +15,29 @@ import { environment } from 'src/environments/environment'
 export class AuthService {
   loggedInSubject: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   isLoggedIn = false
-  url = `${environment.mpsServer}/authorize`
-  constructor (private readonly http: HttpClient) {
+  url = `${environment.mpsServer}/login/authorize`
+  constructor (private readonly http: HttpClient, public router: Router) {
     if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
     }
   }
 
-  getMPSOptions (): object {
-    return {
-      headers: { 'X-MPS-API-Key': environment.mpsAPIKey },
-      withCredentials: true
-    }
-  }
-
-  getRPSOptions (): object {
-    return {
-      headers: { 'X-RPS-API-Key': environment.rpsAPIKey }
-
-    }
+  getLoggedUserToken (): string {
+    const loggedUser: any = localStorage.getItem('loggedInUser')
+    const token: string = JSON.parse(loggedUser).token
+    return token
   }
 
   login (username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.url, { username, password }, this.getMPSOptions())
+    return this.http.post<any>(this.url, { username, password })
       .pipe(
-        map(() => {
+        map((data: any) => {
           this.isLoggedIn = true
           this.loggedInSubject.next(this.isLoggedIn)
-          localStorage.loggedInUser = JSON.stringify({ token: 'jwttoken' })
+          localStorage.loggedInUser = JSON.stringify(data)
         }),
-        catchError((err) => {
+        catchError((err: any) => {
           throw err
         })
       )
@@ -54,6 +47,8 @@ export class AuthService {
     this.isLoggedIn = false
     this.loggedInSubject.next(this.isLoggedIn)
     localStorage.removeItem('loggedInUser')
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.router.navigate(['/login'])
   }
 
   onError (err: any): string[] {

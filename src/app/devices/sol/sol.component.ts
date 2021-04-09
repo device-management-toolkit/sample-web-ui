@@ -99,7 +99,7 @@ export class SolComponent implements OnInit {
   init = (): void => {
     this.terminal = new AmtTerminal()
     this.dataProcessor = new TerminalDataProcessor(this.terminal)
-    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}/relay`)
+    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}/ws/relay`)
     this.terminal.onSend = this.redirector.send.bind(this.redirector)
     this.redirector.onNewState = this.terminal.StateChange.bind(this.terminal)
     this.redirector.onStateChanged = this.onTerminalStateChange.bind(this)

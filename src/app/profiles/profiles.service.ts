@@ -20,7 +20,7 @@ export class ProfilesService {
   }
 
   getData (): Observable<Profile[]> {
-    return this.http.get<Profile[]>(this.url, this.authService.getRPSOptions())
+    return this.http.get<Profile[]>(this.url)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -30,7 +30,7 @@ export class ProfilesService {
   }
 
   getRecord (name: string): Observable<Profile> {
-    return this.http.get<Profile>(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.get<Profile>(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -40,7 +40,7 @@ export class ProfilesService {
   }
 
   update (profile: Profile): Observable<Profile> {
-    return this.http.patch<Profile>(this.url, profile, this.authService.getRPSOptions())
+    return this.http.patch<Profile>(this.url, profile)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -50,7 +50,7 @@ export class ProfilesService {
   }
 
   create (profile: Profile): Observable<Profile> {
-    return this.http.post<Profile>(this.url, profile, this.authService.getRPSOptions())
+    return this.http.post<Profile>(this.url, profile)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -60,7 +60,7 @@ export class ProfilesService {
   }
 
   delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.delete(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

@@ -82,7 +82,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
 
   instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, `${this.server}/relay`)
+    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, `${this.server}/ws/relay`)
     this.module = new AMTDesktop(this.logger as any, this.context)
     this.dataProcessor = new DataProcessor(this.logger, this.redirector, this.module)
     this.mouseHelper = new MouseHelper(this.module, this.redirector, 200)

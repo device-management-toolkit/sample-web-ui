@@ -20,7 +20,7 @@ export class DomainsService {
   }
 
   getData (): Observable<Domain[]> {
-    return this.http.get<Domain[]>(this.url, this.authService.getRPSOptions())
+    return this.http.get<Domain[]>(this.url)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -30,7 +30,7 @@ export class DomainsService {
   }
 
   getRecord (name: string): Observable<Domain> {
-    return this.http.get<Domain>(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.get<Domain>(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -40,7 +40,7 @@ export class DomainsService {
   }
 
   update (domain: Domain): Observable<Domain> {
-    return this.http.patch<Domain>(this.url, domain, this.authService.getRPSOptions())
+    return this.http.patch<Domain>(this.url, domain)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -50,7 +50,7 @@ export class DomainsService {
   }
 
   create (domain: Domain): Observable<Domain> {
-    return this.http.post<Domain>(this.url, domain, this.authService.getRPSOptions())
+    return this.http.post<Domain>(this.url, domain)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -60,7 +60,7 @@ export class DomainsService {
   }
 
   delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.delete(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

@@ -21,7 +21,7 @@ export class ConfigsService {
   }
 
   getData (): Observable<CIRAConfig[]> {
-    return this.http.get<CIRAConfig[]>(this.url, this.authService.getRPSOptions())
+    return this.http.get<CIRAConfig[]>(this.url)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -31,7 +31,7 @@ export class ConfigsService {
   }
 
   getRecord (name: string): Observable<CIRAConfig> {
-    return this.http.get<CIRAConfig>(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.get<CIRAConfig>(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -41,7 +41,7 @@ export class ConfigsService {
   }
 
   update (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
-    return this.http.patch<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
+    return this.http.patch<CIRAConfig>(this.url, ciraConfig)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -51,7 +51,7 @@ export class ConfigsService {
   }
 
   create (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
-    return this.http.post<CIRAConfig>(this.url, ciraConfig, this.authService.getRPSOptions())
+    return this.http.post<CIRAConfig>(this.url, ciraConfig)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -62,20 +62,19 @@ export class ConfigsService {
 
   loadMPSRootCert (): Observable<any> {
     // ToDo: Need to pass the mps server address to get the certs for each specific mps server
-    const options: object = this.authService.getMPSOptions();
-    (options as any).responseType = 'text'
-    return this.http.post<string>(`${environment.mpsServer}/admin`, { apikey: 'xxxxx', method: 'MPSRootCertificate', payload: {} }, options)
+    const options = { responseType: 'text' } as any
+    return this.http.post<string>(`${environment.mpsServer}/admin`, { method: 'MPSRootCertificate', payload: {} }, options)
       .pipe(
-        catchError(() => {
+        catchError((err) => {
           const errorMessages: string[] = []
           errorMessages.push('Error loading CIRA config')
-          return throwError(errorMessages)
+          return throwError(err)
         })
       )
   }
 
   delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${name}`, this.authService.getRPSOptions())
+    return this.http.delete(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

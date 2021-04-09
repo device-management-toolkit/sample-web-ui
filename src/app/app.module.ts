@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SharedModule } from './shared/shared.module'
 import { CoreModule } from './core/core.module'
 import { DevicesComponent } from './devices/devices.component'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { DomainsComponent } from './domains/domains.component'
 import { ProfilesComponent } from './profiles/profiles.component'
@@ -29,6 +29,8 @@ import { SolComponent } from './devices/sol/sol.component'
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { PowerAlertComponent } from './devices/sol/poweralert/poweralert.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
+import { AuthorizeInterceptor } from './authorize.interceptor'
+import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 
 @NgModule({
   declarations: [
@@ -48,6 +50,9 @@ import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.
     AuditLogComponent,
     PowerAlertComponent,
     DeviceToolbarComponent
+  ],
+  entryComponents: [
+    DialogContentComponent
   ],
   imports: [
     MomentModule,
@@ -69,7 +74,13 @@ import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.
       }
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizeInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

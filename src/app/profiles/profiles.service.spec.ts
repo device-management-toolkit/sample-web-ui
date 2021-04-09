@@ -3,6 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { TestBed } from '@angular/core/testing'
+import { Router } from '@angular/router'
 import { AuthService } from '../auth.service'
 
 import { ProfilesService } from './profiles.service'
@@ -10,12 +11,12 @@ import { ProfilesService } from './profiles.service'
 describe('ProfilesService', () => {
   let service: ProfilesService
   let httpClientSpy: { get: jasmine.Spy }
-
+  let routerSpy
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get'])
-
+    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
-    service = new ProfilesService(new AuthService(httpClientSpy as any), httpClientSpy as any)
+    service = new ProfilesService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
   it('should be created', () => {

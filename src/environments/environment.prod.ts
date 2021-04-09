@@ -5,7 +5,5 @@
 export const environment = {
   production: true,
   mpsServer: '##MPS_SERVER##',
-  rpsServer: '##RPS_SERVER##',
-  mpsAPIKey: '##MPSXAPIKEY##',
-  rpsAPIKey: '##RPSXAPIKEY##'
+  rpsServer: '##RPS_SERVER##'
 }
