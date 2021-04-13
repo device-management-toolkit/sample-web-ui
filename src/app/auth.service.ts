@@ -15,11 +15,14 @@ import { Router } from '@angular/router'
 export class AuthService {
   loggedInSubject: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   isLoggedIn = false
-  url = `${environment.mpsServer}/login/authorize`
+  url: string = `${environment.mpsServer}/authorize`
   constructor (private readonly http: HttpClient, public router: Router) {
     if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
+    }
+    if (environment.mpsServer.includes('/mps')) { // handles kong route
+      this.url = `${environment.mpsServer}/login/authorize`
     }
   }
 
