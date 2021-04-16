@@ -2,6 +2,10 @@
   "projectId": "x5wpqh",
   "env": {
     "BASEURL": "http://localhost:4200/",
-    "ISOLATE": "Y"
+    "ISOLATE": "Y",
+    "MPSUSERNAME": "standalone",
+    "MPSPASSWORD": "G@ppm0ym",
+    "AMTPASSWORD": "P@ssw0rd",
+    "MEBXPASSWORD": "P@ssw0rd"
   }
 }

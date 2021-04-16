@@ -1,18 +1,7 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
+//Add repeditive groups of functions here
 
-//Enter info into a form
+//------------------- Enter info into a form -------------------------
+
 Cypress.Commands.add("login", (user, pass) => {
   if (user != "EMPTY") {
     cy.get("[name=userId]").type(user);
@@ -53,6 +42,29 @@ Cypress.Commands.add("enterDomainInfo", (name, domain, file, pass) => {
   cy.get("input[name=name]").type(name);
   cy.get("input[name=domainName]").type(domain);
 });
+
+//------------------------- Common Navigation --------------------------
+
+Cypress.Commands.add("goToPage", (pageName) => {
+  cy.get(".mat-list-item").contains(pageName).click();
+});
+
+//------------------------------- Other --------------------------------
+
+Cypress.Commands.add("myIntercept", (method, url, body) => {
+  if (Cypress.env("ISOLATED") != "n") {
+    cy.intercept(method, url, body);
+  } else {
+    cy.intercept(method, url);
+  }
+});
+
+//------------------------------ Help --------------------------------
+
+// https://on.cypress.io/custom-commands
+
+// -- This is a parent command --
+// Cypress.Commands.add("login", (email, password) => { ... })
 
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

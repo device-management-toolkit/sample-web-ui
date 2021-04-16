@@ -61,7 +61,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     })
 
     this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
-      this.init()
+      this.setAmtFeatures()
     })
     this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
   }
@@ -77,7 +77,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit (): void {
-    this.init()
+    this.setAmtFeatures()
   }
 
   instantiate (): void {
@@ -117,12 +117,10 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   connectKvm (): void {
-    this.init()
+    this.setAmtFeatures()
   }
 
   init (): void {
-    this.setAmtFeatures()
-    this.isLoading = true
     this.devicesService.getPowerState(this.deviceId).pipe(
       catchError(() => {
         this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
@@ -158,13 +156,15 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setAmtFeatures (): void {
+    this.isLoading = true
     this.devicesService.setAmtFeatures(this.deviceId).pipe(
       catchError(() => {
         this.snackBar.open($localize`Error enabling kvm`, undefined, SnackbarDefaults.defaultError)
+        this.init()
         return of()
       }), finalize(() => {
       })
-    ).subscribe()
+    ).subscribe(() => this.init())
   }
 
   onMouseup (event: MouseEvent): void {
