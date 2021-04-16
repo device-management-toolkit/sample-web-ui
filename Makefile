@@ -1,12 +1,12 @@
 cy:
 	@read -r -p "Isolate the front end? (y/n): " isolate;\
 	read -r -p "Enter the target url: " targetUrl;\
-	npm run cypress -- --env ISOLATE=$$isolate,BASEURL=$$targetUrl
+	npm run cypress -- --env ISOLATED=$$isolate,BASEURL=$$targetUrl
 
 runner:
 	@read -r -p "Isolate the front end? (y/n): " isolate;\
 	read -r -p "Enter the target url: " targetUrl;\
-	npm run cy-runner -- --env ISOLATE=$$isolate,BASEURL=$$targetUrl
+	npm run cy-runner -- --env ISOLATED=$$isolate,BASEURL=$$targetUrl
 
 # container:
 # 	docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
