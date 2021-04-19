@@ -29,7 +29,7 @@ export class SolComponent implements OnInit {
   public terminal: any
   public logger: ConsoleLogger = new ConsoleLogger(LogLevel.ERROR)
   public redirector: any
-  public server: string = environment.mpsServer.replace('https://', '')
+  public server: string = environment.mpsServer.replace('http', 'ws')
   public uuid: string = ''
   public dataProcessor: any
   public powerState: any = 0
