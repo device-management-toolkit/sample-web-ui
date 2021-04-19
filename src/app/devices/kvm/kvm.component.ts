@@ -42,7 +42,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   deviceId: string = ''
   selected: number = 2
   timeInterval!: any
-  server: string = environment.mpsServer.replace('https://', '')
+  server: string = environment.mpsServer.replace('http', 'ws')
   previousAction: string = 'kvm'
   selectedAction: string = ''
   mouseMove: any = null
