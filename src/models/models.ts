@@ -71,17 +71,12 @@ export interface APIResponse{
   message: string
 }
 
-export interface AmtFeatures{
+export interface AmtFeaturesResponse{
   userConsent: string
   redirection: boolean
   KVM: boolean
   SOL: boolean
   IDER: boolean
-}
-
-export interface AmtFeaturesResponse{
-  statusCode: number
-  payload: AmtFeatures
 }
 
 export interface PowerState{
