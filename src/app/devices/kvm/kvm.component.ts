@@ -42,12 +42,14 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   deviceId: string = ''
   selected: number = 2
   timeInterval!: any
-  server: string = environment.mpsServer.replace('http', 'ws')
+  server: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   previousAction: string = 'kvm'
   selectedAction: string = ''
   mouseMove: any = null
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute, public readonly router: Router) {
-
+    if (environment.mpsServer.includes('/mps')) { // handles kong route
+      this.server = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
+    }
   }
 
   ngOnInit (): void {
@@ -82,7 +84,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
 
   instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, `${this.server}/ws/relay`)
+    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, `${this.server}`)
     this.module = new AMTDesktop(this.logger as any, this.context)
     this.dataProcessor = new DataProcessor(this.logger, this.redirector, this.module)
     this.mouseHelper = new MouseHelper(this.module, this.redirector, 200)
