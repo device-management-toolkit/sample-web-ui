@@ -30,7 +30,7 @@ describe("Test CIRA Config Page", () => {
   context("successful run", () => {
     it.only("creates the default CIRA config", () => {
       //Stub the get and post requests
-      cy.myIntercept("POST", /admin$/, {
+      cy.myIntercept("GET", "ciracert", {
         statusCode: 200,
         body: ciraFixtures.MpsCertificate,
       }).as("certificate")

@@ -29,7 +29,7 @@
     "ngx-moment": "^5.0.0",
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",
-    "ui-toolkit": "git+https://github.com/open-amt-cloud-toolkit/ui-toolkit.git#v1.2.0",
+    "ui-toolkit": "git+https://github.com/open-amt-cloud-toolkit/ui-toolkit.git",
     "xterm": "^4.11.0",
     "zone.js": "~0.11.4"
   },
@@ -40,7 +40,7 @@
     "@angular-eslint/eslint-plugin-template": "^2.1.0",
     "@angular-eslint/schematics": "2.0.2",
     "@angular-eslint/template-parser": "^2.0.2",
-    "@angular/cli": "~11.2.8",
+    "@angular/cli": "~11.2.9",
     "@angular/compiler-cli": "~11.2.5",
     "@angular/localize": "^11.2.10",
     "@types/jasmine": "~3.6.9",

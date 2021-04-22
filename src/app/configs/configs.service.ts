@@ -63,7 +63,7 @@ export class ConfigsService {
   loadMPSRootCert (): Observable<any> {
     // ToDo: Need to pass the mps server address to get the certs for each specific mps server
     const options = { responseType: 'text' } as any
-    return this.http.post<string>(`${environment.mpsServer}/admin`, { method: 'MPSRootCertificate', payload: {} }, options)
+    return this.http.get<string>(`${environment.mpsServer}/api/v1/ciracert`, options)
       .pipe(
         catchError((err) => {
           const errorMessages: string[] = []

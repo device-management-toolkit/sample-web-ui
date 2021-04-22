@@ -29,7 +29,7 @@ export class SolComponent implements OnInit {
   public terminal: any
   public logger: ConsoleLogger = new ConsoleLogger(LogLevel.ERROR)
   public redirector: any
-  public server: string = environment.mpsServer.replace('http', 'ws')
+  public server: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public uuid: string = ''
   public dataProcessor: any
   public powerState: any = 0
@@ -37,7 +37,11 @@ export class SolComponent implements OnInit {
   public previousAction: string = 'sol'
   public isLoading: boolean = false
 
-  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) {
+    if (environment.mpsServer.includes('/mps')) { // handles kong route
+      this.server = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
+    }
+  }
 
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
@@ -99,7 +103,7 @@ export class SolComponent implements OnInit {
   init = (): void => {
     this.terminal = new AmtTerminal()
     this.dataProcessor = new TerminalDataProcessor(this.terminal)
-    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}/ws/relay`)
+    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}`)
     this.terminal.onSend = this.redirector.send.bind(this.redirector)
     this.redirector.onNewState = this.terminal.StateChange.bind(this.terminal)
     this.redirector.onStateChanged = this.onTerminalStateChange.bind(this)
