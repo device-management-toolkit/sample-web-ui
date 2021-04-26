@@ -100,7 +100,7 @@ export class DevicesComponent implements OnInit {
   bulkPowerAction (action: number): void {
     const requests: Array<Observable<any>> = []
     this.selection.selected.forEach(z => {
-      requests.push(this.devicesService.sendPowerAction(z.host, action))
+      requests.push(this.devicesService.sendPowerAction(z.guid, action))
     })
 
     forkJoin(requests).subscribe(result => {
