@@ -53,19 +53,19 @@
             <!-- host Column -->
             <ng-container matColumnDef="hostname">
                 <mat-header-cell *matHeaderCellDef> Hostname </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.metadata?.hostname }} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{ element.hostname }} </mat-cell>
             </ng-container>
 
             <!-- guid Column -->
             <ng-container matColumnDef="guid">
                 <mat-header-cell *matHeaderCellDef> GUID </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.host }} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{ element.guid }} </mat-cell>
             </ng-container>
 
             <!-- status Column -->
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.conn) }}
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.connectionStatus) }}
                 </mat-cell>
             </ng-container>
 
@@ -83,13 +83,13 @@
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Actions</mat-header-cell>
                 <mat-cell *matCellDef="let element" fxFlex="150px">
                     <div [fxHide]="selection.isSelected(element)">
-                        <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,2)">
+                        <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
                             <mat-icon>power</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,8)">
+                        <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
                             <mat-icon>power_off</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.host,5)">
+                        <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
                             <mat-icon>restart_alt</mat-icon>
                         </button>
                     </div>
@@ -97,7 +97,7 @@
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.host)"></mat-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
         </mat-table>
     </mat-card-content>
 </mat-card>

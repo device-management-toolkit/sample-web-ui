@@ -28,7 +28,7 @@ describe("Test CIRA Config Page", () => {
   })
 
   context("successful run", () => {
-    it.only("creates the default CIRA config", () => {
+    it("creates the default CIRA config", () => {
       //Stub the get and post requests
       cy.myIntercept("GET", "ciracert", {
         statusCode: 200,
@@ -125,15 +125,15 @@ describe("Test CIRA Config Page", () => {
 
   context("failed runs", () => {
     beforeEach("fills out the config", () => {
-      cy.intercept("POST", /admin$/, {
+      cy.myIntercept("GET", "ciracert", {
         statusCode: 200,
         body: ciraFixtures.MpsCertificate,
-      }).as("certificate")
+      }).as("certificate1")
 
       cy.intercept("POST", "ciraconfigs", {
         statusCode: apiResponses.ciraConfigs.create.badRequest.code,
         body: apiResponses.ciraConfigs.create.badRequest.response,
-      }).as("post-config")
+      }).as("post-config1")
 
       cy.intercept("GET", "ciraconfigs", {
         statusCode: apiResponses.ciraConfigs.getAll.empty.code,
@@ -156,7 +156,8 @@ describe("Test CIRA Config Page", () => {
       )
       cy.get("button[type=submit]").click({ timeout: 50000 })
 
-      cy.wait("@post-config")
+      cy.wait('@certificate1')
+      cy.wait("@post-config1")
         .its("response.statusCode")
         .should("eq", apiResponses.ciraConfigs.create.badRequest.code)
     })
@@ -171,7 +172,8 @@ describe("Test CIRA Config Page", () => {
       )
       cy.get("button[type=submit]").click()
 
-      cy.wait("@post-config").its("response.statusCode").should("eq", 400)
+      cy.wait('@certificate1')
+      cy.wait("@post-config1").its("response.statusCode").should("eq", 400)
     })
 
     it("invalid password", () => {
@@ -184,7 +186,8 @@ describe("Test CIRA Config Page", () => {
       )
       cy.get("button[type=submit]").click()
 
-      cy.wait("@post-config").its("response.statusCode").should("eq", 400)
+      cy.wait('@certificate1')
+      cy.wait("@post-config1").its("response.statusCode").should("eq", 400)
     })
   })
 })

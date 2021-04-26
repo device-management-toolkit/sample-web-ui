@@ -4,10 +4,10 @@
 **********************************************************************/
 
 export interface Device{
-  host: string
-  amtuser: string
+  hostname: string
   icon: number
-  conn: number
+  connectionStatus: number
+  guid: string
 }
 export interface DeviceStats{
   totalCount: number
