@@ -28,11 +28,11 @@ pipeline{
                         protexProjectName    = 'OpenAMT - sample-web-ui'
                         protexBuildName      = 'rrs-generic-protex-build'
 
-                        checkmarxProjectName = "OpenAMT - MPS"
+                        checkmarxProjectName =  'OpenAMT - sample-web-ui'
 
                         //snyk details
                         snykManifestFile        = ['package-lock.json']
-                        snykProjectName         = ['openamt-mps']
+                        snykProjectName         = ['openamt-sample-web-ui ']
                     }
                 }
             }
