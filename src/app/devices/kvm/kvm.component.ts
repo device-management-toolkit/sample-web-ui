@@ -6,7 +6,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEm
 import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { fromEvent, interval, of, Subscription } from 'rxjs'
+import { fromEvent, interval, of, Subscription, timer } from 'rxjs'
 import { catchError, finalize, mergeMap, throttleTime } from 'rxjs/operators'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -40,12 +40,18 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   isPoweredOn: boolean = false
   isLoading: boolean = false
   deviceId: string = ''
-  selected: number = 2
+  selected: number = 1
   timeInterval!: any
   server: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   previousAction: string = 'kvm'
   selectedAction: string = ''
   mouseMove: any = null
+
+  encodings = [
+    { value: 1, viewValue: 'RLE 8' },
+    { value: 2, viewValue: 'RLE 16' }
+  ]
+
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute, public readonly router: Router) {
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.server = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
@@ -118,8 +124,11 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     this.reset()
   }
 
-  connectKvm (): void {
-    this.setAmtFeatures()
+  onEncodingChange (): void {
+    this.stopKvm()
+    timer(1000).subscribe(() => {
+      this.autoConnect()
+    })
   }
 
   init (): void {

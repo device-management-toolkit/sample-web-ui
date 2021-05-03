@@ -11,6 +11,7 @@ import { of } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ActivatedRoute } from '@angular/router'
 import { EventEmitter } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -27,7 +28,7 @@ describe('KvmComponent', () => {
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     await TestBed.configureTestingModule({
-      imports: [SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
       declarations: [KvmComponent],
       providers: [{ provide: DevicesService, useValue: { ...devicesService, ...websocketStub } }, {
         provide: ActivatedRoute,
