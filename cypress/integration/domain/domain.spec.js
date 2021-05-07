@@ -1,31 +1,15 @@
 //https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
-//Tests the creation of a profile
-const loginFixtures = require("../fixtures/accounts.json")
-const urlFixtures = require("../fixtures/urls.json")
-const domainFixtures = require("../fixtures/domain.json")
-const apiResponses = require("../fixtures/apiResponses.json")
-const baseUrl = Cypress.env("BASEURL")
+import 'cypress-file-upload'
+
+const domainFixtures = require("../../fixtures/domain.json")
+const apiResponses = require("../../fixtures/apiResponses.json")
 
 //---------------------------- Test section ----------------------------
 
 describe("Test Domain Page", () => {
   beforeEach("before", () => {
-    cy.window().then((win) => {
-      win.sessionStorage.clear()
-    })
-
-    cy.myIntercept("POST", "authorize", {
-      statusCode: apiResponses.login.success.code,
-      body: { token: "" },
-    }).as("login-request")
-
-    //Login and navigate to profile page
-    cy.visit(baseUrl)
-    cy.login(loginFixtures.default.username, loginFixtures.default.password)
-    cy.wait("@login-request")
-      .its("response.statusCode")
-      .should("eq", apiResponses.login.success.code)
+    cy.setup()
   })
 
   context("successful run", () => {
@@ -57,21 +41,14 @@ describe("Test Domain Page", () => {
       //and a spoof pfx file is created
       cy.enterDomainInfo(
         domainFixtures.default.name,
-        domainFixtures.default.domain
+        domainFixtures.default.domain,
+        domainFixtures.default.filePath,
+        domainFixtures.default.password
       )
-      //TODO: delete cancel and click save button once page can be filled out
-      cy.get("button").contains("CANCEL").click()
 
-      //Wait for requests to finish and check them their responses
-      //TODO: add this code back when page can be submitted
-      // cy.wait("@post-domain").then((req) => {
-      //   cy.wrap(req)
-      //     .its("response.statusCode")
-      //     .should("eq", apiResponses.domains.create.success.code)
-      // })
+      cy.get('button').contains('SAVE').click()
 
-      //TODO: check the response to make sure that it is correct
-      //this is currently difficult because of the format of the response
+      cy.wait('@post-domain')
       cy.wait("@get-domains2")
         .its("response.statusCode")
         .should("eq", apiResponses.domains.getAll.success.code)

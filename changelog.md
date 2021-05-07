@@ -1,6 +1,63 @@
-<a name="v1.2.0"></a>
-## v1.2.0
+<a name="v1.3.0"></a>
+## [v1.3.0]
 
+### Build
+- **dep:** bump ui-toolkit version to latest
+- **deps:** Bump tslib from 2.1.0 to 2.2.0
+- **deps:** Bump zone.js from 0.10.3 to 0.11.4
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin from 2.1.0 to 4.0.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/schematics from 2.0.2 to 4.0.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 11.2.9 to 11.2.11 ([#202](https://github.com/open-amt-cloud-toolkit/rps/issues/202))
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 11.2.8 to 11.2.9
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 11.2.9 to 11.2.10
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin from 2.0.2 to 2.1.0
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#197](https://github.com/open-amt-cloud-toolkit/rps/issues/197))
+- **deps-dev:** Bump eslint from 7.23.0 to 7.24.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 11.2.8 to 11.2.9
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 11.2.7 to 11.2.8
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.20.0 to 4.21.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#203](https://github.com/open-amt-cloud-toolkit/rps/issues/203))
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 11.2.6 to 11.2.7
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 11.2.7 to 11.2.8
+- **version:** update package.json to v1.3.0
+
+### Ci
+- bump cypress to 6.9.1
+- point it to the right Protex project
+
+### Docs
+- added documentation for Cypress ([#194](https://github.com/open-amt-cloud-toolkit/rps/issues/194))
+- **changelog:** add v1.2.0 ([#161](https://github.com/open-amt-cloud-toolkit/rps/issues/161))
+
+### Feat
+- **authentication:** add stateless authentication ([#162](https://github.com/open-amt-cloud-toolkit/rps/issues/162))
+
+### Fix
+- upgrade multiple dependencies with Snyk ([#201](https://github.com/open-amt-cloud-toolkit/rps/issues/201))
+- reworked ui tests to work with cypress 7
+- **jenkins:** fixed checkmarx and snyk targets
+- **kvm:** add encoding options to kvm page ([#189](https://github.com/open-amt-cloud-toolkit/rps/issues/189))
+- **kvm:** make amt features call synchronous in kvm page ([#152](https://github.com/open-amt-cloud-toolkit/rps/issues/152))
+- **mpsapi:** update setAMTFeatures
+- **routing:** use correct url when in dev or prod mode
+- **websocket:** fix server url for kvm and sol
+
+### Refactor
+- updated device obj to match mps ([#192](https://github.com/open-amt-cloud-toolkit/rps/issues/192))
+- updated lock for pr
+- **api:** updated mps api routes ([#187](https://github.com/open-amt-cloud-toolkit/rps/issues/187))
+
+### Test
+- **cy:** cypress update for 1.2 ([#154](https://github.com/open-amt-cloud-toolkit/rps/issues/154))
+
+
+<a name="v1.2.0"></a>
+## [v1.2.0] - 2021-04-02
 ### Build
 - fix scripts for docker
 - **deps:** Bump cypress from 6.6.0 to 6.7.1
@@ -62,6 +119,9 @@
 - add initial Jenkinsfile
 - add cypress to github actions
 - set codecov action to v1.2.1
+
+### Docs
+- add changelog
 
 ### Feat
 - **audit-log:** add audit-log table
@@ -162,5 +222,3 @@
 - migrate webui from mps
 - **docker:** optimize how server is set
 
-
-[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.1.0...HEAD
