@@ -2,9 +2,9 @@
 //different combinations of invalid login info.
 //Also tests things like canceling a login and logging out after the login
 
-const loginFixtures = require("../fixtures/accounts.json")
-const urlFixtures = require("../fixtures/urls.json")
-const apiResponses = require("../fixtures/apiResponses.json")
+const loginFixtures = require("../../fixtures/accounts.json")
+const urlFixtures = require("../../fixtures/urls.json")
+const apiResponses = require("../../fixtures/apiResponses.json")
 const baseUrl = Cypress.env("BASEURL")
 
 //---------------------------- Test section ----------------------------

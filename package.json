@@ -67,6 +67,7 @@
     "typescript": "~4.1.5"
   },
   "optionalDependencies": {
-    "cypress": "^7.1.0"
+    "cypress": "^7.2.0",
+    "cypress-file-upload": "^5.0.7"
   }
 }

@@ -5,7 +5,7 @@
     },
 
     "fail": {
-      "code": 403,
+      "code": 401,
       "response": {
         "error": "string",
         "message": "string"

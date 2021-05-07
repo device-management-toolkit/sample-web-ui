@@ -1,30 +1,16 @@
 //Tests the creation of a cira-config
 
-const loginFixtures = require("../fixtures/accounts.json")
-const urlFixtures = require("../fixtures/urls.json")
-const apiResponses = require("../fixtures/apiResponses.json")
-const ciraFixtures = require("../fixtures/cira.json")
+const loginFixtures = require("../../fixtures/accounts.json")
+const urlFixtures = require("../../fixtures/urls.json")
+const apiResponses = require("../../fixtures/apiResponses.json")
+const ciraFixtures = require("../../fixtures/cira.json")
 const baseUrl = Cypress.env("BASEURL")
 
 //---------------------------- Test section ----------------------------
 
 describe("Test CIRA Config Page", () => {
   beforeEach("Clear cache and login", () => {
-    cy.window().then((win) => {
-      win.sessionStorage.clear()
-    })
-
-    cy.myIntercept("POST", "authorize", {
-      statusCode: apiResponses.login.success.code,
-      body: { token: "" },
-    }).as("login-request")
-
-    //Login
-    cy.visit(baseUrl)
-    cy.login(loginFixtures.default.username, loginFixtures.default.password)
-    cy.wait("@login-request")
-      .its("response.statusCode")
-      .should("eq", apiResponses.login.success.code)
+    cy.setup()
   })
 
   context("successful run", () => {
