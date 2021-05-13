@@ -15,3 +15,15 @@ runner:
 # 	docker run -d -p 4201:80 vprodemo.azurecr.ui/samplewebui:latest
 
 #npm run start
+
+e2e-runner:
+#prep
+	npx cypress run --spec "cypress/integration/login/*"
+#create
+	npx cypress run --spec "cypress/integration/cira/create.*"
+	npx cypress run --spec "cypress/integration/profile/create.*"
+#test
+	npx cypress run --spec "cypress/integration/**/create-error.*,cypress/integration/domain/* "
+#delete
+	npx cypress run --spec "cypress/integration/profile/delete.*"
+	npx cypress run --spec "cypress/integration/cira/delete.*"

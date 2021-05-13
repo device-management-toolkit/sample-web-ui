@@ -1,7 +1,7 @@
 {
   "happyPath": {
     "name": "happyPath",
-    "admin": true,
+    "admin": false,
     "amtPassword": "P@ssw0rd",
     "mebxPassword": "P@ssw0rd",
     "netConfig": "DHCP",

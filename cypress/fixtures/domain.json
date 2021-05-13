@@ -2,7 +2,7 @@
   "default": {
     "name": "happyPath",
     "domain": "happyPath.com",
-    "file": "",
-    "password": ""
+    "filePath": "test.pfx",
+    "password": "123!@#qewQWE"
   }
 }

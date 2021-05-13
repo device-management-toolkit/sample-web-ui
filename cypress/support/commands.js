@@ -1,5 +1,29 @@
 //Add repeditive groups of functions here
 
+const apiResponses = require("../fixtures/apiResponses.json")
+const loginFixtures = require("../fixtures/accounts.json")
+
+//-------------------- before / beforeEach ---------------------------
+
+Cypress.Commands.add("setup", () => {
+  cy.window().then((win) => {
+    win.sessionStorage.clear()
+  })
+
+  cy.myIntercept("POST", "authorize", {
+    statusCode: apiResponses.login.success.code,
+    body: { token: "" },
+  }).as("login-request")
+
+  //Login
+  cy.visit(Cypress.env("BASEURL"))
+  cy.login(loginFixtures.default.username, loginFixtures.default.password)
+  cy.wait("@login-request")
+    .its("response.statusCode")
+    .should("eq", apiResponses.login.success.code)
+})
+
+
 //------------------- Enter info into a form -------------------------
 
 Cypress.Commands.add("login", (user, pass) => {
@@ -30,8 +54,13 @@ Cypress.Commands.add(
       cy.get("mat-select[formcontrolname=activation").click();
       cy.contains("Client Control Mode").click();
     }
+
     cy.get("input").get("[name=amtPassword]").type(amtPass);
-    cy.get("input").get("[name=mebxPassword]").type(mebxPass);
+
+    if (admin) {
+      cy.get("input").get("[name=mebxPassword]").type(mebxPass);
+    }
+    
     cy.contains(network).click();
     cy.get("mat-select[formcontrolname=ciraConfigName]").click();
     cy.contains(cira).click();
@@ -39,8 +68,10 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add("enterDomainInfo", (name, domain, file, pass) => {
-  cy.get("input[name=name]").type(name);
-  cy.get("input[name=domainName]").type(domain);
+  cy.get('input[name="name"]').type(name)
+  cy.get('input[name="domainName"]').type(domain)
+  cy.get('input[type="file"]').attachFile(file)
+  cy.get('input[name="provisioningCertPassword"]').type(pass)
 });
 
 //------------------------- Common Navigation --------------------------
@@ -52,7 +83,7 @@ Cypress.Commands.add("goToPage", (pageName) => {
 //------------------------------- Other --------------------------------
 
 Cypress.Commands.add("myIntercept", (method, url, body) => {
-  if (Cypress.env("ISOLATED") != "n") {
+  if (Cypress.env("ISOLATE").charAt(0).toLowerCase() != "n") {
     cy.intercept(method, url, body);
   } else {
     cy.intercept(method, url);
