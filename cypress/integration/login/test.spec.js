@@ -5,8 +5,6 @@
 const loginFixtures = require("../../fixtures/accounts.json")
 const urlFixtures = require("../../fixtures/urls.json")
 const apiResponses = require("../../fixtures/apiResponses.json")
-const baseUrl = Cypress.env("BASEURL")
-
 //---------------------------- Test section ----------------------------
 
 describe("Load Site", () => {
@@ -18,10 +16,10 @@ describe("Load Site", () => {
     })
 
     //Go to base site
-    cy.visit(baseUrl)
+    cy.visit(Cypress.env("BASEURL"))
 
     //Make sure the login page was hit
-    cy.url().should("eq", baseUrl + urlFixtures.page.login)
+    cy.url().should("eq", Cypress.env("BASEURL") + urlFixtures.page.login)
   })
 })
 

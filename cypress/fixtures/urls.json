@@ -3,10 +3,10 @@
 
   "page": {
     "login": "login",
-    "domains": "domains",
-    "ciras": "ciraconfigs",
-    "profiles": "profiles",
-    "devices": "devices"
+    "domain": "domains",
+    "cira": "ciraconfigs",
+    "profile": "profiles",
+    "device": "devices"
   },
 
   "extensions": {

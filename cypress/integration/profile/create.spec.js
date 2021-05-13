@@ -1,10 +1,6 @@
 //Tests the creation of a profile
-const loginFixtures = require("../../fixtures/accounts.json")
-const urlFixtures = require("../../fixtures/urls.json")
-const ciraFixtures = require("../../fixtures/cira.json")
 const profileFixtures = require("../../fixtures/profile.json")
 const apiResponses = require("../../fixtures/apiResponses.json")
-const baseUrl = Cypress.env("BASEURL")
 
 //---------------------------- Test section ----------------------------
 
@@ -69,6 +65,6 @@ describe("Test Profile Page", () => {
       cy.get("mat-cell").contains(profileFixtures.happyPath.name)
       cy.get("mat-cell").contains(profileFixtures.check.network.dhcp)
       cy.get("mat-cell").contains(profileFixtures.happyPath.ciraConfig)
-      cy.get("mat-cell").contains(profileFixtures.check.mode.acm)
+      cy.get("mat-cell").contains(profileFixtures.check.mode.ccm)
     })
 })

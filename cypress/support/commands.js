@@ -2,7 +2,6 @@
 
 const apiResponses = require("../fixtures/apiResponses.json")
 const loginFixtures = require("../fixtures/accounts.json")
-const baseUrl = Cypress.env("BASEURL")
 
 //-------------------- before / beforeEach ---------------------------
 
@@ -17,7 +16,7 @@ Cypress.Commands.add("setup", () => {
   }).as("login-request")
 
   //Login
-  cy.visit(baseUrl)
+  cy.visit(Cypress.env("BASEURL"))
   cy.login(loginFixtures.default.username, loginFixtures.default.password)
   cy.wait("@login-request")
     .its("response.statusCode")
@@ -55,8 +54,13 @@ Cypress.Commands.add(
       cy.get("mat-select[formcontrolname=activation").click();
       cy.contains("Client Control Mode").click();
     }
+
     cy.get("input").get("[name=amtPassword]").type(amtPass);
-    cy.get("input").get("[name=mebxPassword]").type(mebxPass);
+
+    if (admin) {
+      cy.get("input").get("[name=mebxPassword]").type(mebxPass);
+    }
+    
     cy.contains(network).click();
     cy.get("mat-select[formcontrolname=ciraConfigName]").click();
     cy.contains(cira).click();
