@@ -519,7 +519,7 @@
             "host": "8dad96cb-c3db-11e6-9c43-bc0000d20000",
             "icon": 1,
             "conn": 1,
-            "meatadata": {
+            "metadata": {
               "guid": 12345,
               "hostname": "AMTDEVICENUC1",
               "tags": [
@@ -535,7 +535,7 @@
             "host": "bf49cf00-9164-11e4-952b-b8aeed7ec594",
             "icon": 1,
             "conn": 0,
-            "meatadata": {
+            "metadata": {
               "guid": 67890,
               "hostname": "AMTDEVICENUC2",
               "tags": [

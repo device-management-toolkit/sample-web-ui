@@ -31,7 +31,7 @@ describe("Test Profile Page", () => {
       cy.get("mat-cell").contains(profileFixtures.happyPath.name)
       cy.get("mat-cell").contains(profileFixtures.check.network.dhcp)
       cy.get("mat-cell").contains(profileFixtures.happyPath.ciraConfig)
-      cy.get("mat-cell").contains(profileFixtures.check.mode.acm)
+      cy.get("mat-cell").contains(profileFixtures.check.mode.ccm)
 
       //Change api response
       cy.myIntercept("GET", "profiles", {
