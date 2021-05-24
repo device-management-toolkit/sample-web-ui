@@ -41,7 +41,7 @@ describe("Test CIRA Config Page", () => {
       cy.enterCiraInfo(
         ciraFixtures.default.name,
         ciraFixtures.default.format,
-        ciraFixtures.default.addr,
+        Cypress.env("FQDN"),
         Cypress.env("MPSUSERNAME"),
         Cypress.env("MPSPASSWORD")
       )
