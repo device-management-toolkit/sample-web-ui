@@ -35,7 +35,6 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit (): void {
     const tags = this.devicesService.getTags()
-
     forkJoin({ tags }).pipe(
       catchError((err) => {
         this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
@@ -86,11 +85,11 @@ export class DevicesComponent implements OnInit {
     await this.router.navigate([`/devices/${path}`])
   }
 
-  translateConnectionStatus (status: number): string {
+  translateConnectionStatus (status: boolean): string {
     switch (status) {
-      case 0:
+      case false:
         return 'disconnected'
-      case 1:
+      case true:
         return 'connected'
       default:
         return 'unknown'
