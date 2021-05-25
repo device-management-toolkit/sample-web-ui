@@ -6,7 +6,7 @@
 export interface Device{
   hostname: string
   icon: number
-  connectionStatus: number
+  connectionStatus: boolean
   guid: string
 }
 export interface DeviceStats{

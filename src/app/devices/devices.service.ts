@@ -191,7 +191,7 @@ export class DevicesService {
   }
 
   getTags (): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/metadata/tags`)
+    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
       .pipe(
         catchError((err) => {
           throw err

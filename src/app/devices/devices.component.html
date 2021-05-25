@@ -74,7 +74,7 @@
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Tags</mat-header-cell>
                 <mat-cell *matCellDef="let element" fxFlex="150px">
                     <mat-chip-list>
-                        <mat-chip *ngFor="let tag of element.metadata?.tags">{{tag}}</mat-chip>
+                        <mat-chip *ngFor="let tag of element?.tags">{{tag}}</mat-chip>
                     </mat-chip-list>
                 </mat-cell>
             </ng-container>
