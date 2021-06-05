@@ -24,6 +24,12 @@
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "no-import-side-effect": [
+      true,
+      {
+        "ignore-module": "(core-js/.|zone\.js/.|@angular/localize/init)$"
+      }
+    ],
   }
 }

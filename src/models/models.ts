@@ -8,6 +8,7 @@ export interface Device{
   icon: number
   connectionStatus: boolean
   guid: string
+  tags: string[]
 }
 export interface DeviceStats{
   totalCount: number

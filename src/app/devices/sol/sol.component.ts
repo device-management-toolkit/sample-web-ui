@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core'
 import { Terminal } from 'xterm'
-import { AmtTerminal, AMTRedirector, TerminalDataProcessor, ConsoleLogger, Protocol, LogLevel } from 'ui-toolkit'
+import { AmtTerminal, AMTRedirector, TerminalDataProcessor, ConsoleLogger, Protocol, LogLevel } from 'ui-toolkit/core'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'

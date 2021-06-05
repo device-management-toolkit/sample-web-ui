@@ -1,6 +1,6 @@
 @import "../../../_variables.scss";
 
-.example-sidenav {
+.auditlog-sidenav {
   padding: 20px;
 }
 
@@ -18,11 +18,19 @@
 }
 
 .mat-card {
-.mat-icon{
-  font-size: 48px;
-  height: 48px;
-  width: 48px;
-}
+  .amt-features{
+    
+    .mat-icon{
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
+    }
+  }
+  .mat-icon{
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+  }
 }
 p{
   color:map-get($openamtui-primary, 500);
