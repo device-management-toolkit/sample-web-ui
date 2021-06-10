@@ -199,6 +199,16 @@ export class DevicesService {
       )
   }
 
+  getDevice (guid: string): Observable<Device> {
+    const query = `${environment.mpsServer}/api/v1/devices/${guid}`
+    return this.http.get<Device>(query)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getDevices (tags: string[] = []): Observable<Device[]> {
     let query = `${environment.mpsServer}/api/v1/devices`
     if (tags.length > 0) {
