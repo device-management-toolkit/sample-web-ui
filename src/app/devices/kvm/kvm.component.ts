@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, EventEmitter, Output, OnDestroy } from '@angular/core'
-import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from 'ui-toolkit/core'
+import { AMTDesktop, ConsoleLogger, ILogger, Protocol, AMTKvmDataRedirector, DataProcessor, IDataProcessor, MouseHelper, KeyBoardHelper } from '@open-amt-cloud-toolkit/ui-toolkit/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { fromEvent, interval, of, Subscription, timer } from 'rxjs'
@@ -13,6 +13,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
+import { AuthService } from 'src/app/auth.service'
 @Component({
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
@@ -52,7 +53,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     { value: 2, viewValue: 'RLE 16' }
   ]
 
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute, public readonly router: Router) {
+  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, private readonly authService: AuthService, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute, public readonly router: Router) {
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.server = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
@@ -90,7 +91,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
 
   instantiate (): void {
     this.context = this.canvas?.nativeElement.getContext('2d')
-    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, `${this.server}`)
+    this.redirector = new AMTKvmDataRedirector(this.logger, Protocol.KVM, new FileReader(), this.deviceId, 16994, '', '', 0, 0, this.authService.getLoggedUserToken(), this.server)
     this.module = new AMTDesktop(this.logger as any, this.context)
     this.dataProcessor = new DataProcessor(this.logger, this.redirector, this.module)
     this.mouseHelper = new MouseHelper(this.module, this.redirector, 200)

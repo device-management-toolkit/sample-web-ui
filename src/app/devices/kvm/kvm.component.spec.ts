@@ -12,15 +12,20 @@ import { SharedModule } from 'src/app/shared/shared.module'
 import { ActivatedRoute } from '@angular/router'
 import { EventEmitter } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { AuthService } from 'src/app/auth.service'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
   let fixture: ComponentFixture<KvmComponent>
   let setAmtFeaturesSpy: jasmine.Spy
   let powerStateSpy: jasmine.Spy
+  let tokenSpy: jasmine.Spy
 
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket'])
+    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
+    tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
+
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       connectKVMSocket: new EventEmitter<boolean>(false)
@@ -35,7 +40,7 @@ describe('KvmComponent', () => {
         useValue: {
           params: of({ id: 'guid' })
         }
-      }]
+      }, { provide: AuthService, useValue: authService }]
     })
       .compileComponents()
   })
@@ -48,6 +53,7 @@ describe('KvmComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+    expect(tokenSpy).toHaveBeenCalled()
     expect(setAmtFeaturesSpy.calls.any()).toBe(true)
     expect(powerStateSpy.calls.any()).toBe(true)
   })
