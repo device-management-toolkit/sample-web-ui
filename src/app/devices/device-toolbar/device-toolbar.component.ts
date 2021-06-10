@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { Device } from 'src/models/models'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -14,6 +15,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 export class DeviceToolbarComponent implements OnInit {
   @Input() deviceState: number = 0
   @Input() public isLoading = false
+  public device: Device | null = null
   public deviceId: string = ''
   public powerOptions = [
     {
@@ -51,6 +53,9 @@ export class DeviceToolbarComponent implements OnInit {
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
       this.deviceId = params.id
+      this.devicesService.getDevice(this.deviceId).subscribe(data => {
+        this.device = data
+      })
     })
   }
 

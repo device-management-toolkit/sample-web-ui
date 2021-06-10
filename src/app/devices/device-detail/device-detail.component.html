@@ -1,7 +1,6 @@
-
 <app-device-toolbar [isLoading]="isLoading"></app-device-toolbar>
 <mat-sidenav-container autosize>
-    <mat-sidenav class="example-sidenav" mode="side" position="end" opened>
+    <mat-sidenav class="auditlog-sidenav" mode="side" position="end" opened>
         <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
         <mat-vertical-stepper #stepper>
             <mat-step completed="false" editable="false" *ngFor="let entry of auditLogData.records.slice().reverse()">
@@ -23,14 +22,42 @@
                 </mat-card-header>
                 <mat-card-content>
                     <p></p>
-                    <div *ngFor="let chip of hwInfo?.CIM_Chip?.responses">
-                        <p *ngIf="chip.Version != null">CPU: <span class="mat-h3"> {{chip.Version}}</span></p>
+                    <div fxLayout="row wrap">
+                        <div *ngFor="let chip of hwInfo?.CIM_Chip?.responses" fxFlex="100">
+                            <div *ngIf="chip.Version != null">
+                                <div fxFlex="25">
+                                    <p>CPU: </p>
+                                </div>
+                                <div fxFlex="75" fxLayoutAlign="end">
+                                    <span class="mat-h3"> {{chip.Version}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Manufacturer: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">{{hwInfo?.CIM_Chassis?.response?.Manufacturer}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Model: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Model}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Serial No:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.SerialNumber}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Version: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">{{hwInfo?.CIM_Chassis?.response?.Version}}</span>
+                        </div>
                     </div>
-                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Manufacturer}}</span></p>
-                    <p>Model: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Model}}</span></p>
-                    <p>Serial No: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.SerialNumber}}</span></p>
-                    <p>Version: <span class="mat-h3"> {{hwInfo?.CIM_Chassis?.response?.Version}}</span></p>
-
                 </mat-card-content>
             </mat-card>
             <mat-card fxFlex="calc(50%-24px)" fxFlex.lt-lg="100">
@@ -40,13 +67,34 @@
                     </mat-card-title>
                     <mat-card-subtitle>Status of AMT Enabled Features</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content>
+                <mat-card-content class="amt-features">
                     <p></p>
-                    <p>IDE Redirection: <span class="mat-h3"> {{amtFeatures?.IDER}}</span></p>
-                    <p>KVM: <span class="mat-h3"> {{amtFeatures?.KVM}}</span></p>
-                    <p>SOL: <span class="mat-h3"> {{amtFeatures?.SOL}}</span></p>
-                    <p>User Consent: <span class="mat-h3"> {{amtFeatures?.userConsent}}</span></p>
-
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50">
+                            <p>IDE Redirection:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <mat-icon>{{amtFeatures?.IDER === true ? "check_circle":"cancel"}}</mat-icon>
+                        </div>
+                        <div fxFlex="50">
+                            <p>KVM:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <mat-icon>{{amtFeatures?.KVM === true ? "check_circle":"cancel"}}</mat-icon>
+                        </div>
+                        <div fxFlex="50">
+                            <p>SOL:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <mat-icon>{{amtFeatures?.SOL === true ? "check_circle":"cancel"}}</mat-icon>
+                        </div>
+                        <div fxFlex="50">
+                            <p>User Consent:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{amtFeatures?.userConsent}}</span>
+                        </div>
+                    </div>
                 </mat-card-content>
             </mat-card>
             <mat-card fxFlex="calc(50% - 24px)" fxFlex.lt-lg="100">
@@ -58,13 +106,36 @@
                 </mat-card-header>
                 <mat-card-content>
                     <p></p>
-                    <p>Manufacturer: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
-                    </p>
-                    <p>Version: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.Version}}</span></p>
-                    <p>Release Date: <span class="mat-h3"> {{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
-                            amDateFormat:'LLL'}}</span></p>
-                    <p>Target OS: <span class="mat-h3"> {{
-                            targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}</span></p>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50">
+                            <p>Manufacturer: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">{{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Version:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end"><span class="mat-h3">
+                                {{hwInfo?.CIM_BIOSElement?.response?.Version}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Release Date:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">{{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
+                                amDateFormat:'LLL'}}</span>
+                        </div>
+                        <div fxFlex="50">
+
+                            <p>Target OS:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">
+                                {{targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}
+                            </span>
+                        </div>
+                    </div>
                 </mat-card-content>
             </mat-card>
             <mat-card fxFlex="calc(50% - 24px)" fxFlex.lt-lg="100">
@@ -73,29 +144,44 @@
                         Memory Summary
                     </mat-card-title>
                     <mat-card-subtitle>Summary of physical memory installed</mat-card-subtitle>
-
+                    <div fxFlex fxLayoutAlign="end start">
+                        <mat-icon>memory</mat-icon>
+                    </div>
                 </mat-card-header>
                 <mat-card-content>
-
                     <div *ngFor="let bank of hwInfo?.CIM_PhysicalMemory?.responses" fxLayout="row wrap">
-                        <div fxFlex=100>
-                            <div fxFlex>
-                                <br />
-                                <p>Slot: <span class="mat-h3"> {{bank.BankLabel}}</span></p>
-                                <p>Capacity: <span class="mat-h3"> {{bank.Capacity / 1024 / 1024 / 1024 }} GB</span></p>
-                                <p>Clock Speed(Max): <span class="mat-h3"> {{bank.ConfiguredMemoryClockSpeed}}
-                                        ({{bank.MaxMemorySpeed}}) Mhz</span></p>
-                                <p>Serial No.: <span class="mat-h3"> {{bank.SerialNumber}}</span></p>
-                            </div>
-                            <div fxFlex=10 fxLayoutAlign="center center">
-                                <mat-icon>memory</mat-icon>
-                            </div>
+                        <div style="margin: 12px 0;" fxFlex=100>
+                            <mat-divider ></mat-divider>
                         </div>
-                        <mat-divider></mat-divider>
+                        <div fxFlex="50">
+                            <p>Slot: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{bank.BankLabel}}</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Capacity: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{bank.Capacity / 1024 / 1024 / 1024 }} GB</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Clock Speed(Max):</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{bank.ConfiguredMemoryClockSpeed}}
+                                ({{bank.MaxMemorySpeed}}) Mhz</span>
+                        </div>
+                        <div fxFlex="50">
+                            <p>Serial No.:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3"> {{bank.SerialNumber}}</span>
+                        </div>
+
                     </div>
                 </mat-card-content>
             </mat-card>
-
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

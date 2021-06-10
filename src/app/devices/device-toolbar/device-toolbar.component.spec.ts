@@ -11,11 +11,13 @@ describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
   let fixture: ComponentFixture<DeviceToolbarComponent>
   let sendPowerActionSpy: jasmine.Spy
+  let getDeviceSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({}))
+    getDeviceSpy = devicesService.getDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
       declarations: [DeviceToolbarComponent],
@@ -39,6 +41,7 @@ describe('DeviceToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+    expect(getDeviceSpy).toHaveBeenCalledWith('guid')
   })
   it('should send power action', () => {
     component.sendPowerAction(4)

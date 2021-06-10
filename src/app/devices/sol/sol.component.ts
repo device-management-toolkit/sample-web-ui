@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core'
 import { Terminal } from 'xterm'
-import { AmtTerminal, AMTRedirector, TerminalDataProcessor, ConsoleLogger, Protocol, LogLevel } from 'ui-toolkit'
+import { AmtTerminal, AMTRedirector, TerminalDataProcessor, ConsoleLogger, Protocol, LogLevel } from '@open-amt-cloud-toolkit/ui-toolkit/core'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
@@ -12,6 +12,7 @@ import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { PowerAlertComponent } from './poweralert/poweralert.component'
 import { C, V, SPACE } from '@angular/cdk/keycodes'
+import { AuthService } from 'src/app/auth.service'
 
 @Component({
   selector: 'app-sol',
@@ -37,7 +38,7 @@ export class SolComponent implements OnInit {
   public previousAction: string = 'sol'
   public isLoading: boolean = false
 
-  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor (private readonly activatedRoute: ActivatedRoute, private readonly authService: AuthService, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog) {
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.server = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
@@ -103,7 +104,7 @@ export class SolComponent implements OnInit {
   init = (): void => {
     this.terminal = new AmtTerminal()
     this.dataProcessor = new TerminalDataProcessor(this.terminal)
-    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, `${this.server}`)
+    this.redirector = new AMTRedirector(this.logger, Protocol.SOL, new FileReader(), this.uuid, 16994, '', '', 0, 0, this.authService.getLoggedUserToken(), `${this.server}`)
     this.terminal.onSend = this.redirector.send.bind(this.redirector)
     this.redirector.onNewState = this.terminal.StateChange.bind(this.terminal)
     this.redirector.onStateChanged = this.onTerminalStateChange.bind(this)

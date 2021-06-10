@@ -1,18 +1,24 @@
 <mat-toolbar>
-    <div fxFlex="50">
-        Device Name Control
+    <div fxFlex>
+        {{ device?.hostname }} Device Control
+        <div class="mat-caption">{{deviceId}}</div>
+    </div>
+    <div fxFlex>
+        <mat-chip-list>
+            <mat-chip *ngFor="let tag of device?.tags">{{tag}}</mat-chip>
+        </mat-chip-list>
     </div>
     <div fxFlex="50" fxLayoutAlign="end center">
         <button mat-icon-button matTooltip="Connect KVM" (click)="navigateTo('kvm')" *ngIf="deviceState !== 2">
             <mat-icon>tv</mat-icon>
         </button>
         <button *ngIf="deviceState === 2" mat-icon-button matTooltip="Disconnect KVM" (click)="stopKvm()">
-        <mat-icon>tv_off</mat-icon>
-    </button>
+            <mat-icon>tv_off</mat-icon>
+        </button>
         <button mat-icon-button matTooltip="Connect SOL" (click)="navigateTo('sol')" *ngIf="deviceState !== 3">
             <mat-icon>keyboard</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Disconnect SOL" (click)= "stopSol()" *ngIf="deviceState === 3">
+        <button mat-icon-button matTooltip="Disconnect SOL" (click)="stopSol()" *ngIf="deviceState === 3">
             <mat-icon>keyboard_hide</mat-icon>
         </button>
         <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
