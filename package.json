@@ -30,7 +30,7 @@
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",
     "@open-amt-cloud-toolkit/ui-toolkit": "git+https://github.com/open-amt-cloud-toolkit/ui-toolkit.git#dist",
-    "xterm": "^4.12.0",
+    "xterm": "^4.13.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
