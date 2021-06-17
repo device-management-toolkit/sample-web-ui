@@ -34,11 +34,6 @@
           <div fxFlex="50" style="margin-top:15px">
             <mat-checkbox formControlName="generateRandomPassword">Generate Random AMT Password</mat-checkbox>
           </div>
-          <mat-form-field fxFlex="50">
-            <input type="number" formControlName="passwordLength" matInput name="passwordLength" placeholder="AMT Password Length" required>
-            <mat-error i18n>This field is required and must be between 8 and 32</mat-error>
-          </mat-form-field>
-
           <mat-form-field fxFlex="100">
             <input type="password" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
@@ -48,11 +43,6 @@
           <div fxFlex="50" style="margin-top:15px">
             <mat-checkbox formControlName="generateRandomMEBxPassword">Generate Random MEBX Password</mat-checkbox>
           </div>
-          <mat-form-field fxFlex="50">
-            <input type="number" formControlName="mebxPasswordLength" matInput name="mebxPasswordLength" placeholder="MEBx Password Length" required>
-            <mat-error i18n>This field is required and must be between 8 and 32</mat-error>
-          </mat-form-field>
-
           <mat-form-field fxFlex="100">
             <input type="password" formControlName="mebxPassword" matInput name="mebxPassword" placeholder="MEBX Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>

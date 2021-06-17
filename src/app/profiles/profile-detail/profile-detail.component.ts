@@ -39,8 +39,8 @@ export class ProfileDetailComponent implements OnInit {
       amtPassword: [null, Validators.required],
       generateRandomPassword: [false, Validators.required],
       generateRandomMEBxPassword: [false, Validators.required],
-      mebxPasswordLength: [{ value: null, disabled: true }, [Validators.max(32), Validators.min(8)]],
-      passwordLength: [{ value: null, disabled: true }, [Validators.max(32), Validators.min(8)]],
+      mebxPasswordLength: [{ value: null, disabled: true }],
+      passwordLength: [{ value: null, disabled: true }],
       mebxPassword: [null, Validators.required],
       networkConfigName: [null],
       ciraConfigName: [null]
@@ -105,7 +105,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.amtPassword.setValue(null)
       this.profileForm.controls.amtPassword.clearValidators()
       this.profileForm.controls.amtPassword.setValue(null)
-      this.profileForm.controls.passwordLength.setValidators([Validators.max(32), Validators.min(8)])
+      this.profileForm.controls.passwordLength.setValue(8)
       this.profileForm.controls.passwordLength.enable()
     } else {
       this.profileForm.controls.amtPassword.enable()
@@ -122,7 +122,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
       this.profileForm.controls.mebxPassword.setValue(null)
-      this.profileForm.controls.mebxPasswordLength.setValidators([Validators.max(32), Validators.min(8)])
+      this.profileForm.controls.mebxPasswordLength.setValue(8)
       this.profileForm.controls.mebxPasswordLength.enable()
     } else if (this.profileForm.controls.activation.value === Constants.ACMActivate) {
       this.profileForm.controls.mebxPassword.enable()

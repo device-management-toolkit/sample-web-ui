@@ -40,8 +40,7 @@ export class ConfigDetailComponent implements OnInit {
       username: ['admin', Validators.required],
       generateRandomPassword: [false, Validators.required],
       passwordLength: [
-        { value: null, disabled: true },
-        [Validators.max(32), Validators.min(8)]
+        { value: null, disabled: true }
       ],
       password: [null, Validators.required],
       autoLoad: [true, Validators.required],
@@ -134,8 +133,8 @@ export class ConfigDetailComponent implements OnInit {
       this.configForm.controls.password.setValue(null)
       this.configForm.controls.password.clearValidators()
       this.configForm.controls.password.setValue(null)
-      this.configForm.controls.passwordLength.setValidators([Validators.max(32), Validators.min(8)])
-      this.configForm.controls.passwordLength.enable()
+      this.configForm.controls.passwordLength.setValue(8)
+      // this.configForm.controls.passwordLength.enable()
     } else {
       this.configForm.controls.password.enable()
       this.configForm.controls.password.setValidators(Validators.required)
