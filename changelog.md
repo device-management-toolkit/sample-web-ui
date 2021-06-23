@@ -1,3 +1,72 @@
+
+<a name="v1.4.0"></a>
+## [v1.4.0] - 2021-06-22
+### Build
+- **dep:** update ui-toolkit
+- **deps:** Bump xterm from 4.12.0 to 4.13.0 ([#273](https://github.com/open-amt-cloud-toolkit/rps/issues/273))
+- **deps:** Bump xterm from 4.11.0 to 4.12.0
+- **deps:** Bump tslib from 2.2.0 to 2.3.0 ([#270](https://github.com/open-amt-cloud-toolkit/rps/issues/270))
+- **deps:** Bump cypress from 7.3.0 to 7.5.0 ([#266](https://github.com/open-amt-cloud-toolkit/rps/issues/266))
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.3.0 to 35.3.2 ([#284](https://github.com/open-amt-cloud-toolkit/rps/issues/284))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.26.1 to 4.27.0 ([#280](https://github.com/open-amt-cloud-toolkit/rps/issues/280))
+- **deps-dev:** Bump typescript from 4.1.5 to 4.1.6 ([#282](https://github.com/open-amt-cloud-toolkit/rps/issues/282))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#274](https://github.com/open-amt-cloud-toolkit/rps/issues/274))
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 12.0.4 to 12.0.5 ([#279](https://github.com/open-amt-cloud-toolkit/rps/issues/279))
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.1.3 to 35.3.0 ([#277](https://github.com/open-amt-cloud-toolkit/rps/issues/277))
+- **deps-dev:** Bump eslint-plugin-promise from 4.3.1 to 5.1.0 ([#269](https://github.com/open-amt-cloud-toolkit/rps/issues/269))
+- **deps-dev:** Bump karma from 6.3.3 to 6.3.4 ([#271](https://github.com/open-amt-cloud-toolkit/rps/issues/271))
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser ([#265](https://github.com/open-amt-cloud-toolkit/rps/issues/265))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.21.0 to 4.26.1 ([#267](https://github.com/open-amt-cloud-toolkit/rps/issues/267))
+- **deps-dev:** Bump karma from 6.3.2 to 6.3.3
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 11.2.11 to 11.2.14 ([#263](https://github.com/open-amt-cloud-toolkit/rps/issues/263))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#261](https://github.com/open-amt-cloud-toolkit/rps/issues/261))
+- **deps-dev:** Bump eslint from 7.28.0 to 7.29.0 ([#285](https://github.com/open-amt-cloud-toolkit/rps/issues/285))
+- **deps-dev:** Bump eslint from 7.26.0 to 7.28.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 11.2.13 to 12.0.4 ([#258](https://github.com/open-amt-cloud-toolkit/rps/issues/258))
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/builder from 2.0.2 to 4.3.0 ([#250](https://github.com/open-amt-cloud-toolkit/rps/issues/250))
+- **deps-dev:** Bump eslint-config-standard from 16.0.2 to 16.0.3 ([#249](https://github.com/open-amt-cloud-toolkit/rps/issues/249))
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.7.4 to 3.7.7 ([#260](https://github.com/open-amt-cloud-toolkit/rps/issues/260))
+- **deps-dev:** Bump ts-node from 9.1.1 to 10.0.0 ([#259](https://github.com/open-amt-cloud-toolkit/rps/issues/259))
+- **deps-dev:** Bump eslint-plugin-jsdoc from 32.3.0 to 35.1.3 ([#254](https://github.com/open-amt-cloud-toolkit/rps/issues/254))
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 14.14.37 to 14.17.3 ([#255](https://github.com/open-amt-cloud-toolkit/rps/issues/255))
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/schematics from 4.0.0 to 4.3.0
+- **deps-dev:** Bump eslint-plugin-import from 2.22.1 to 2.23.4
+- **deps-dev:** Bump karma-jasmine-html-reporter from 1.5.4 to 1.6.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template
+- **deps-dev:** Bump [@angular](https://github.com/angular)/compiler-cli from 11.2.6 to 11.2.9
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.7.1 to 3.7.4
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin from 4.0.0 to 4.3.0
+- **deps-dev:** Bump eslint from 7.24.0 to 7.26.0 ([#214](https://github.com/open-amt-cloud-toolkit/rps/issues/214))
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#215](https://github.com/open-amt-cloud-toolkit/rps/issues/215))
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.6.9 to 3.7.1 ([#216](https://github.com/open-amt-cloud-toolkit/rps/issues/216))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#217](https://github.com/open-amt-cloud-toolkit/rps/issues/217))
+- **deps-dev:** Bump jasmine-spec-reporter from 6.0.0 to 7.0.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 11.2.10 to 11.2.13
+- **version:** bump to v1.4.0
+
+### Ci
+- add codeql for code analysis
+- **changelog:** add automation for changelog generation
+
+### Feat
+- **cira:** update-cira-password ([#256](https://github.com/open-amt-cloud-toolkit/rps/issues/256))
+- **dynamincpassword:** removed password length ([#275](https://github.com/open-amt-cloud-toolkit/rps/issues/275))
+
+### Fix
+- **api:** updated mps api ([#222](https://github.com/open-amt-cloud-toolkit/rps/issues/222))
+
+### Refactor
+- **device-detail:** essential device data now shown on device detail page
+
+### Test
+- **e2e:** use env for FQDN in Cira config
+- **e2e:** delete redundant tests
+- **e2e:** changed tests to work with e2e flow
+- **e2e:** added file uploading and reorganized for e2e testing
+
+
+
 <a name="v1.3.0"></a>
 ## [v1.3.0]
 
