@@ -21,7 +21,7 @@
                         <input formControlName="configName" matInput name="configName" placeholder="Config Name"
                             required>
                         <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter a name for this CIRA config (ie. Azure CIRA Config)</mat-hint>
+                        <mat-hint>Enter a name for this CIRA config (e.g., Azure CIRA Config)</mat-hint>
                     </mat-form-field>
 
                     <mat-radio-group name="serverAddressFormat" formControlName="serverAddressFormat"
@@ -31,7 +31,7 @@
                     </mat-radio-group>
                     <mat-form-field fxFlex="100">
                         <input formControlName="mpsServerAddress" matInput name="mpsServerAddress"
-                            placeholder="MPS Server Address" required>
+                            placeholder="MPS Address" required>
                         <mat-error>This field is required</mat-error>
                         <mat-hint>Enter the address of where your MPS instance is hosted</mat-hint>
                     </mat-form-field>
@@ -39,13 +39,13 @@
                         <input formControlName="commonName" matInput name="commonName"
                             placeholder="Cert Common Name (CN=)" required>
                         <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the common name that matches what is in the certificate. This should typically match the IP address of your MPS Server if not using an FQDN.</mat-hint>
+                        <mat-hint>Enter the common name contained in the certificate.</mat-hint>
                     </mat-form-field>
                     <mat-form-field fxFlex="100">
                         <input type=number formControlName="mpsPort" matInput name="mpsPort" placeholder="Port"
                             required>
                         <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the port for which MPS Server is listening. The default is 4433.</mat-hint>
+                        <mat-hint>Enter the CIRA Port for the MPS Instance. The default is 4433.</mat-hint>
                     </mat-form-field>
                     <mat-form-field fxFlex="100">
                         <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16">
