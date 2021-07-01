@@ -1,17 +1,17 @@
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
+
 <div fxLayout="row wrap">
     <div fxFlex=33.3 fxFlex.lt-sm=100>
-        <mat-card class="connected">
+        <mat-card>
             <div fxFlexLayout="row">
                 <div fxFlex=25 fxLayoutAlign='center center'>
                     <mat-icon>devices</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">{{stats?.totalCount}}</h1>
+                    <h1 class="mat-display-2">{{stats?.totalCount}}</h1>
                     <p>Total Devices</p>
                 </div>
             </div>
-
         </mat-card>
     </div>
     <div fxFlex=33.3 fxFlex.lt-sm=100>
@@ -21,81 +21,102 @@
                     <mat-icon>phonelink</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">{{stats?.connectedCount}}</h1>
+                    <h1 class="mat-display-2">{{stats?.connectedCount}}</h1>
                     <p>Devices Connected</p>
                 </div>
             </div>
-
         </mat-card>
     </div>
     <div fxFlex=33.3 fxFlex.lt-sm=100>
-        <mat-card class="disconnected">
+        <mat-card>
             <div fxFlexLayout="row">
                 <div fxFlex=25 fxLayoutAlign='center center'>
                     <mat-icon>phonelink_off</mat-icon>
                 </div>
                 <div fxFlex=75>
-                    <h1 class="mat-display-1">{{stats?.disconnectedCount}}</h1>
+                    <h1 class="mat-display-2">{{stats?.disconnectedCount}}</h1>
                     <p>Devices Disconnected</p>
                 </div>
             </div>
-
         </mat-card>
     </div>
 </div>
-
+<mat-divider></mat-divider>
+<div fxLayout="row wrap">
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
+        <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+            <div fxFlexLayout="row">
+                <div fxFlex=80>
+                    <h1 class="mat-display-1">Get started</h1>
+                    <p>New to the toolkit? See the documentation to learn the basics first.</p>
+                </div>
+                <div fxFlex=20 fxLayoutAlign="center center">
+                    <mat-icon>import_contacts</mat-icon>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
+        <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+            <div fxFlexLayout="row">
+                <div fxFlex=80>
+                    <h1 class="mat-display-1">Understand Security</h1>
+                    <p>Confused about security topics? Learn about passwords, Vault, certificates, and more.</p>
+                </div>
+                <div fxFlex=20 fxLayoutAlign="center center">
+                    <mat-icon>lock</mat-icon>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex=33.3 fxFlex.lt-sm=100>
+        <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+            <div fxFlexLayout="row">
+                <div fxFlex=80>
+                    <h1 class="mat-display-1">Deploy</h1>
+                    <p>Ready to move to Production? Check out our deployment guide (Coming Soon).</p>
+                </div>
+                <div fxFlex=20 fxLayoutAlign="center center">
+                    <mat-icon>trending_up</mat-icon>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<mat-divider></mat-divider>
 <div fxLayout="row wrap" style="margin: 15px">
-    <!-- <mat-card>
-        <mat-card-header> -->
-    <div fxFlex=100>
-        <h1 class="mat-display-1">Welcome!</h1>
-        <br />
-        <p class="mat-title">Lets get started! We recommended you
-            start <a href="https://open-amt-cloud-toolkit.github.io/docs">here</a> to become familiar
-            with the how the Open AMT Cloud toolkit works. Once you're ready, follow the steps below to configure the toolkit to manage Intel vPro® platforms and devices. </p>
-        <br />
-        <br />
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex=100 matTooltip="Required for activation in Admin Control Mode (ACM)">
+            <button mat-icon-button routerLink="/domains">
+                <mat-icon>security</mat-icon>
+            </button>
+        </div>
+        <h3 fxFlex=100 class="mat-h3">1. Add a Provisioning Certificate</h3>
     </div>
-
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
-        <div fxFlex=25>
-            <button mat-fab routerLink="/domains">1</button>
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex=100
+            matTooltip="Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS)">
+            <button mat-icon-button routerLink="/ciraconfigs">
+                <mat-icon>phonelink_setup</mat-icon>
+            </button>
         </div>
-        <div>
-            <h2 class="mat-h2">Add a Provisioning Certificate</h2>
-            <p>Required for activation in Admin Control Mode (ACM).</p>
-        </div>
-
+        <h3 class="mat-h3">2. Create a CIRA Config</h3>
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
-        <div fxFlex=25>
-            <button mat-fab routerLink="/ciraconfigs">2</button>
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex=100
+            matTooltip="Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings">
+            <button mat-icon-button routerLink="/profiles">
+                <mat-icon>system_update</mat-icon>
+            </button>
         </div>
-        <div>
-            <h2 class="mat-h2">Create a CIRA Config</h2>
-            <p>Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS).</p>
-        </div>
-
+        <h3 class="mat-h3">3. Create a Profile</h3>
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
-        <div fxFlex=25>
-            <button mat-fab routerLink="/profiles">3</button>
+    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex=100 matTooltip="Use device actions to control a list of activated, connected devices">
+            <button mat-icon-button routerLink="/devices">
+                <mat-icon>phonelink</mat-icon>
+            </button>
         </div>
-        <div>
-            <h2 class="mat-h2">Create a Profile</h2>
-            <p>Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings.
-            </p>
-        </div>
-
-    </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="row">
-        <div fxFlex=25>
-            <button mat-fab routerLink="/devices">4</button>
-        </div>
-        <div>
-            <h2 class="mat-h2">Manage Your Device</h2>
-            <p>Use device actions to control a list of activated, connected devices.</p>
-        </div>
-
+        <h3 class="mat-h3">4. Manage Your Device</h3>
     </div>
 </div>

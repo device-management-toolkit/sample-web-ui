@@ -36,4 +36,8 @@ export class DashboardComponent implements OnInit {
       this.stats = data
     })
   }
+
+  navigateTo (url: string): void {
+    window.open(url, '_blank')
+  }
 }
