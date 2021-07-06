@@ -15,12 +15,18 @@ Cypress.Commands.add("setup", () => {
     body: { token: "" },
   }).as("login-request")
 
+  cy.myIntercept("GET", "mps/api/v1/devices/stats", {
+    statusCode: 200,
+    body: {  },
+  }).as("stats-request")
+
   //Login
   cy.visit(Cypress.env("BASEURL"))
   cy.login(loginFixtures.default.username, loginFixtures.default.password)
   cy.wait("@login-request")
     .its("response.statusCode")
     .should("eq", apiResponses.login.success.code)
+  
 })
 
 

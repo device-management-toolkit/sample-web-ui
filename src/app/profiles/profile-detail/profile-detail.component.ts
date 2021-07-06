@@ -42,7 +42,7 @@ export class ProfileDetailComponent implements OnInit {
       mebxPasswordLength: [{ value: null, disabled: true }],
       passwordLength: [{ value: null, disabled: true }],
       mebxPassword: [null, Validators.required],
-      networkConfigName: [null],
+      dhcpEnabled: [true],
       ciraConfigName: [null]
     })
   }
@@ -75,7 +75,7 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
     this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
     this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
-    this.profileForm.controls.networkConfigName?.valueChanges.subscribe(value => this.networkConfigChange(value))
+    this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => this.networkConfigChange(value))
   }
 
   activationChange (value: string): void {
@@ -133,8 +133,8 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  networkConfigChange (value: string): void {
-    if (value === 'dhcp_disabled') {
+  networkConfigChange (value: boolean): void {
+    if (!value) {
       this.profileForm.controls.ciraConfigName.disable()
       this.profileForm.controls.ciraConfigName.setValue(null)
     } else {

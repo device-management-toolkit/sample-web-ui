@@ -31,7 +31,7 @@ export interface Profile {
   configurationScript: null
   activation: string
   ciraConfigName: string
-  networkConfigName: string
+  dhcpEnabled: boolean
   mebxPassword: string
   generateRandomMEBxPassword: boolean
   mebxPasswordLength: number

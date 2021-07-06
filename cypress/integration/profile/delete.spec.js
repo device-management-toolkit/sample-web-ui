@@ -29,7 +29,7 @@ describe("Test Profile Page", () => {
 
       //Check that the profile was not deleted
       cy.get("mat-cell").contains(profileFixtures.happyPath.name)
-      cy.get("mat-cell").contains(profileFixtures.check.network.dhcp)
+      cy.get("mat-cell").contains(profileFixtures.check.network.dhcp.toString())
       cy.get("mat-cell").contains(profileFixtures.happyPath.ciraConfig)
       cy.get("mat-cell").contains(profileFixtures.check.mode.ccm)
 
