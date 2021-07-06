@@ -1,0 +1,46 @@
+<div>
+    <h2 mat-dialog-title>Add a New Device</h2>
+</div>
+<div mat-dialog-content>
+    <div>
+        <mat-checkbox fxFlex=50 [checked]=true aria-checked="true" (change)="updateCertCheck($event)">No Self-Signed
+            Cert Check
+        </mat-checkbox>
+        <mat-checkbox fxFlex=50 (change)="updateVerboseCheck($event)">Show Verbose
+        </mat-checkbox>
+    </div>
+    <div>
+        <mat-form-field fxFlex="100">
+            <mat-label>Choose Profile</mat-label>
+            <mat-select (selectionChange)="profileChange($event)" name="profile" required>
+                <mat-option *ngFor="let profile of profiles" [value]="profile.profileName">
+                    {{profile.profileName}}
+                </mat-option>
+            </mat-select>
+            <mat-error>Profile is required</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-tab-group class="tab-group" mat-align-tabs="center" animationDuration="0ms" fxFlex=100
+            (selectedTabChange)='tabChange($event)'>
+            <mat-tab [disabled]="isActivationCommandDisabled()" label="Linux" class="tab">
+            </mat-tab>
+            <mat-tab [disabled]="isActivationCommandDisabled()" label="Windows" class="tab">
+            </mat-tab>
+            <mat-tab [disabled]="isActivationCommandDisabled()" label="Docker" class="tab">
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div>
+        <mat-form-field appearance="fill" fxFlex=100>
+            <input [disabled]="isActivationCommandDisabled()" fxFlex=100 matInput type="text" value="{{activationUrl}}"
+                readonly />
+            <button [disabled]="isActivationCommandDisabled()" matSuffix mat-icon-button (click)="onCopy()"
+                [cdkCopyToClipboard]="activationUrl">
+                <mat-icon *ngIf="!isCopied">file_copy</mat-icon>
+                <mat-icon *ngIf="isCopied">check</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+</div>

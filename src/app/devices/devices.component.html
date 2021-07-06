@@ -2,7 +2,12 @@
     <div fxLayoutAlign="start center" fxFlex="33">
         <span i18n>Devices</span>
     </div>
-    <div fxFlex></div>
+    <div fxFlex fxLayoutAlign="end end">
+        <button mat-button (click)="addDevice()">
+            <mat-icon>add</mat-icon>
+            <span i18n>Add a Device</span>
+        </button>
+    </div>
     <div [fxHide]="selection.isEmpty()">
         <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); bulkPowerAction(2)">
             <mat-icon>power</mat-icon>

@@ -4,12 +4,14 @@
 **********************************************************************/
 import { SelectionModel } from '@angular/cdk/collections'
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { MatSelectChange } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { BehaviorSubject, forkJoin, Observable, throwError } from 'rxjs'
 import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import { Device } from 'src/models/models'
+import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
 
@@ -27,7 +29,7 @@ export class DevicesComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
 
-  constructor (public snackBar: MatSnackBar, public readonly router: Router, private readonly devicesService: DevicesService) {
+  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService) {
     const initialSelection: Device[] = []
     const allowMultiSelect = true
     this.selection = new SelectionModel<any>(allowMultiSelect, initialSelection)
@@ -121,6 +123,13 @@ export class DevicesComponent implements OnInit {
     ).subscribe(data => {
       this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
       console.log(data)
+    })
+  }
+
+  addDevice (): void {
+    this.dialog.open(AddDeviceComponent, {
+      height: '350px',
+      width: '600px'
     })
   }
 }
