@@ -51,6 +51,11 @@ describe("Test Device Page", () => {
     })
 
     it("selects the first device", () => {
+      cy.myIntercept("GET", /tags$/, {
+        statusCode: apiResponses.tags.getAll.success.code,
+        body: apiResponses.tags.getAll.success.response,
+      }).as("get-tags")
+
       cy.myIntercept("GET", /devices$/, {
         statusCode: apiResponses.devices.getAll.success.code,
         body: apiResponses.devices.getAll.success.response,
@@ -58,6 +63,7 @@ describe("Test Device Page", () => {
 
       cy.goToPage("Devices")
       cy.wait("@get-devices").its("response.statusCode").should("eq", 200)
+      cy.wait("@get-tags").its("response.statusCode").should("eq", 200)
 
       cy.get("mat-table mat-row:first").click()
     })

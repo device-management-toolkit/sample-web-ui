@@ -96,7 +96,7 @@ describe('ProfileDetailComponent', () => {
       mebxPasswordLength: null,
       passwordLength: null,
       mebxPassword: 'Password123',
-      networkConfigName: null,
+      dhcpEnabled: true,
       ciraConfigName: null
     })
     component.onSubmit()
@@ -117,7 +117,7 @@ describe('ProfileDetailComponent', () => {
       mebxPasswordLength: null,
       passwordLength: null,
       mebxPassword: 'Password123',
-      networkConfigName: null,
+      dhcpEnabled: true,
       ciraConfigName: null
     })
     component.onSubmit()
