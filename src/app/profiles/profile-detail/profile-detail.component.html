@@ -51,9 +51,9 @@
           <div>
             <mat-label>Network Configuration</mat-label>
             <br>
-            <mat-radio-group name="networkConfigName" formControlName="networkConfigName"><br />
-              <mat-radio-button value="dhcp_enabled" checked="true">DHCP</mat-radio-button><br /><br />
-              <mat-radio-button value="dhcp_disabled">STATIC</mat-radio-button><br /><br />
+            <mat-radio-group name="dhcpEnabled" formControlName="dhcpEnabled"><br />
+              <mat-radio-button [value]="true" checked="true">DHCP</mat-radio-button><br /><br />
+              <mat-radio-button [value]="false">STATIC</mat-radio-button><br /><br />
             </mat-radio-group>
           </div>
           <mat-form-field fxFlex="100">

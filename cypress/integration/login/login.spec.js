@@ -40,7 +40,10 @@ describe("Test login page", () => {
           statusCode: apiResponses.login.success.code,
           body: { token: "" },
       }).as("login-request")
-
+      cy.myIntercept("GET", "mps/api/v1/devices/stats", {
+        statusCode: 200,
+        body: {  },
+      }).as("stats-request")
       //Login
       cy.login(loginFixtures.default.username, loginFixtures.default.password)
 
@@ -131,14 +134,7 @@ describe("Test login page", () => {
 
   context("Logout", () => {
     it("logs in then out", () => {
-      cy.myIntercept("POST", "authorize", {
-        statusCode: apiResponses.login.success.code,
-        body: { token: "" },
-      }).as("login-request")
-
-      //Login
-      cy.login(loginFixtures.default.username, loginFixtures.default.password)
-      cy.wait("@login-request")
+      cy.setup()
 
       //Check that the login was successful
       cy.url().should("eq", baseUrl)

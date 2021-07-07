@@ -24,8 +24,8 @@
 
   "check": {
     "network": {
-      "dhcp": "dhcp_enabled",
-      "static": "dhcp_disabled"
+      "dhcp": true,
+      "static": false
     },
 
     "mode": {

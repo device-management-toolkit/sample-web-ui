@@ -365,7 +365,7 @@
             "configurationScript": null,
             "activation": "ccmactivate",
             "ciraConfigName": "default",
-            "networkConfigName": "dhcp_enabled",
+            "dhcpEnabled": "true",
             "generateRandomMEBxPassword": false,
             "mebxPasswordLength": null
           }
@@ -404,7 +404,7 @@
           "configurationScript": null,
           "activation": "ccmactivate",
           "ciraConfigName": "default",
-          "networkConfigName": "dhcp_enabled",
+          "dhcpEnabled": true,
           "generateRandomMEBxPassword": false,
           "mebxPasswordLength": null
         }
