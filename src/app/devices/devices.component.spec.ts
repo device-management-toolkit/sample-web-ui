@@ -4,6 +4,7 @@
 **********************************************************************/
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
@@ -43,5 +44,13 @@ describe('DevicesComponent', () => {
     expect(component).toBeTruthy()
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
     expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')
+  })
+
+  it('should open the add device dialog', () => {
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.addDevice()
+    expect(dialogSpy).toHaveBeenCalled()
   })
 })

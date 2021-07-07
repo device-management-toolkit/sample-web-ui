@@ -37,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { ClipboardModule } from '@angular/cdk/clipboard'
 
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -44,10 +45,12 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
 import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component'
 import { DialogContentComponent } from './dialog-content/dialog-content.component'
+import { AddDeviceComponent } from './add-device/add-device.component'
 // import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   imports: [
+    CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
@@ -82,7 +85,8 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     MatTabsModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ClipboardModule
   ],
   exports: [
     FlexLayoutModule,
@@ -118,12 +122,13 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     MatSidenavModule,
     MatPaginatorModule,
     CdkTableModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ClipboardModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
   ],
-  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent]
 })
 export class OpenAMTMaterialModule {
 
