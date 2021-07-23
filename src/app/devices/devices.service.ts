@@ -172,7 +172,12 @@ export class DevicesService {
       action,
       useSOL
     }
-    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`, payload)
+
+    const url: string = action < 100
+      ? `${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`
+      : `${environment.mpsServer}/api/v1/amt/power/bootoptions/${deviceId}`
+
+    return this.http.post<any>(url, payload)
       .pipe(
         catchError((err) => {
           throw err
