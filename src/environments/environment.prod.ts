@@ -5,5 +5,6 @@
 export const environment = {
   production: true,
   mpsServer: '##MPS_SERVER##',
-  rpsServer: '##RPS_SERVER##'
+  rpsServer: '##RPS_SERVER##',
+  vault: '##VAULT_SERVER##'
 }

@@ -128,7 +128,7 @@ export class DevicesComponent implements OnInit {
 
   addDevice (): void {
     this.dialog.open(AddDeviceComponent, {
-      height: '350px',
+      height: '400px',
       width: '600px'
     })
   }

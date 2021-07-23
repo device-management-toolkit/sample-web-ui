@@ -18,7 +18,7 @@ export class AddDeviceComponent implements OnInit {
   rpcLinux: string = 'sudo ./rpc '
   rpcDocker: string = 'sudo docker run --device=/dev/mei0 rpc:latest '
   rpcWindows: string = 'rpc.exe '
-  serverUrl: string = `-u ${environment.rpsServer.replace('http', 'ws').replace('/rps', '')}/activate `
+  serverUrl: string = `-u wss://${this.formServerUrl()}/activate `
   selectedProfile: string = ''
   verboseString: string = ''
   certCheckString: string = '-n '
@@ -53,6 +53,17 @@ export class AddDeviceComponent implements OnInit {
         break
     }
     this.activationUrl += `${this.serverUrl}${this.certCheckString}${this.verboseString}${this.selectedProfile}`
+  }
+
+  formServerUrl (): string {
+    let serverUrl: string = ''
+    const url = environment.rpsServer.substring(environment.rpsServer.indexOf('://') + 3)
+    if (url.includes(':')) {
+      serverUrl += url.substring(0, url.indexOf(':'))
+    } else if (url.includes('/')) {
+      serverUrl += url.substring(0, url.indexOf('/'))
+    }
+    return serverUrl
   }
 
   profileChange (event: MatSelectChange): void {

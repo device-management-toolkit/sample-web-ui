@@ -56,14 +56,14 @@ export class AuthService {
 
   onError (err: any): string[] {
     const errorMessages: string[] = []
-    if (err.error.errors != null) {
+    if (err.error?.errors != null) {
       err.error.errors.forEach((error: any) => {
         errorMessages.push(error.msg)
       })
-    } else if (err.error.message != null) {
+    } else if (err.error?.message != null) {
       errorMessages.push(err.error.message)
     } else {
-      errorMessages.push(err.error.error)
+      errorMessages.push(err)
     }
     return errorMessages
   }

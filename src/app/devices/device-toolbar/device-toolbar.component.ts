@@ -6,6 +6,8 @@ import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
+import { MatDialog } from '@angular/material/dialog'
+import { DeactivateDeviceComponent } from 'src/app/shared/deactivate-device/deactivate-device.component'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -48,7 +50,7 @@ export class DeviceToolbarComponent implements OnInit {
     }
   ]
 
-  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) { }
+  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, private readonly matDialog: MatDialog) { }
 
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
@@ -97,5 +99,15 @@ export class DeviceToolbarComponent implements OnInit {
     } else {
       await this.router.navigate([`/devices/${this.deviceId}/${path}`])
     }
+  }
+
+  deactivateADevice = (): void => {
+    this.matDialog.open(DeactivateDeviceComponent, {
+      height: '380px',
+      width: '600px',
+      data: {
+        id: this.deviceId
+      }
+    })
   }
 }

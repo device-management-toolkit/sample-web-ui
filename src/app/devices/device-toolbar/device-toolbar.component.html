@@ -8,7 +8,13 @@
             <mat-chip *ngFor="let tag of device?.tags">{{tag}}</mat-chip>
         </mat-chip-list>
     </div>
+
     <div fxFlex="50" fxLayoutAlign="end center">
+        <button fxHide.xs mat-icon-button matTooltip="Get command to deactivate device" (click)="deactivateADevice()">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <mat-divider style="height:40px" vertical="true"></mat-divider>
+
         <button mat-icon-button matTooltip="Connect KVM" (click)="navigateTo('kvm')" *ngIf="deviceState !== 2">
             <mat-icon>tv</mat-icon>
         </button>
@@ -21,6 +27,7 @@
         <button mat-icon-button matTooltip="Disconnect SOL" (click)="stopSol()" *ngIf="deviceState === 3">
             <mat-icon>keyboard_hide</mat-icon>
         </button>
+        <mat-divider style="height:40px" vertical="true"></mat-divider>
         <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
             <mat-icon>power</mat-icon>
         </button>
