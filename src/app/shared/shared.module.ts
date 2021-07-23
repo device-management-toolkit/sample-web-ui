@@ -38,15 +38,13 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { ClipboardModule } from '@angular/cdk/clipboard'
-
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CdkTableModule } from '@angular/cdk/table'
 import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
 import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component'
 import { DialogContentComponent } from './dialog-content/dialog-content.component'
+import { DeactivateDeviceComponent } from './deactivate-device/deactivate-device.component'
 import { AddDeviceComponent } from './add-device/add-device.component'
-// import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   imports: [
@@ -89,6 +87,7 @@ import { AddDeviceComponent } from './add-device/add-device.component'
     ClipboardModule
   ],
   exports: [
+    CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
@@ -128,7 +127,7 @@ import { AddDeviceComponent } from './add-device/add-device.component'
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
   ],
-  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent, DeactivateDeviceComponent]
 })
 export class OpenAMTMaterialModule {
 

@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Deactivate Device </h2>
+<mat-card-subtitle>In order to deactivate a device, you'll need to execute a command on the configured AMT Device. This
+    dialog will help generate the command to run. Since the AMT Password is required, you'll need to provide a token
+    that has access to retrieve this device's password.</mat-card-subtitle>
+
+<div mat-dialog-content>
+    <form [formGroup]="vaultForm" (ngSubmit)="onSubmit()" fxLayout="row">
+        <div fxFlex=100  fxLayout="row">
+            <div fxFlex=70 >
+                <mat-form-field fxFlexFill>
+                    <input type="password" formControlName="vaultToken" matInput name="vaultToken"
+                        placeholder="Vault Token" required>
+                    <mat-error i18n=@@field.required>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex=30 fxLayoutAlign="end start">
+                <button color="primary" mat-flat-button type="submit" [disabled]="!vaultForm.valid">
+                    Retrieve Password
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <mat-tab-group *ngIf="hasRetrievedPassword" class="tab-group" mat-align-tabs="center" animationDuration="0ms"
+        fxFlex=100 (selectedTabChange)='tabChange($event)'>
+        <mat-tab label="Linux" class="tab">
+        </mat-tab>
+        <mat-tab label="Windows" class="tab">
+        </mat-tab>
+        <mat-tab label="Docker" class="tab">
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<div *ngIf="hasRetrievedPassword">
+    <mat-form-field appearance="fill" fxFlex=100>
+        <input fxFlex=100 matInput type="text" value="{{deactivationUrl}}" readonly />
+        <button matSuffix mat-icon-button (click)="onCopy()" [cdkCopyToClipboard]="deactivationUrl">
+            <mat-icon *ngIf="!isCopied">file_copy</mat-icon>
+            <mat-icon *ngIf="isCopied">check</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+<div flex="100" *ngIf="error" class="error-message">
+    <p>Unable to retrieve the password</p>
+</div>
