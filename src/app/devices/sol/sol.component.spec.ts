@@ -20,11 +20,10 @@ describe('SolComponent', () => {
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['getPowerState', 'setAmtFeatures'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
+    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
-
     const authServiceStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       startwebSocket: new EventEmitter<boolean>(false)
