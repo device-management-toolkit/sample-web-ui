@@ -23,8 +23,6 @@ describe('KvmComponent', () => {
 
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket'])
-    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
-    tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
 
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
@@ -32,6 +30,9 @@ describe('KvmComponent', () => {
     }
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
+    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
+    tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
+
     await TestBed.configureTestingModule({
       imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
       declarations: [KvmComponent],
