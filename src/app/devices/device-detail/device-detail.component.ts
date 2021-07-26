@@ -5,9 +5,8 @@
 import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { forkJoin, throwError } from 'rxjs'
-
-import { catchError, finalize } from 'rxjs/operators'
+import { throwError } from 'rxjs'
+import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AmtFeaturesResponse, AuditLogResponse, HardwareInformation } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -66,22 +65,33 @@ export class DeviceDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.isLoading = true
       this.deviceId = params.id
-      const hwInfo = this.devicesService.getHardwareInformation(this.deviceId)
-      const auditInfo = this.devicesService.getAuditLog(this.deviceId)
-      const amtFeatures = this.devicesService.getAMTFeatures(this.deviceId)
-      return forkJoin({ hwInfo, auditInfo, amtFeatures }).pipe(
-        catchError(err => {
-          // TODO: handle error better
-          console.log(err)
-          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
-        }), finalize(() => {
-          this.isLoading = false
-        })
-      ).subscribe((results) => {
-        this.hwInfo = results.hwInfo
-        this.auditLogData = results.auditInfo
-        this.amtFeatures = results.amtFeatures
+      const tempLoading = [true, true, true]
+      this.devicesService.getHardwareInformation(this.deviceId).pipe(finalize(() => {
+        tempLoading[0] = false
+        this.isLoading = !tempLoading.every(v => !v)
+      })).subscribe(results => {
+        this.hwInfo = results
+      }, err => {
+        this.snackBar.open($localize`Error retrieving HW Info`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
+      this.devicesService.getAuditLog(this.deviceId).pipe(finalize(() => {
+        tempLoading[1] = false
+        this.isLoading = !tempLoading.every(v => !v)
+      })).subscribe(results => {
+        this.auditLogData = results
+      }, err => {
+        this.snackBar.open($localize`Error retrieving Audit Log`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
+      this.devicesService.getAMTFeatures(this.deviceId).pipe(finalize(() => {
+        tempLoading[2] = false
+        this.isLoading = !tempLoading.every(v => !v)
+      })).subscribe(results => {
+        this.amtFeatures = results
+      }, err => {
+        this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
       })
     })
   }
