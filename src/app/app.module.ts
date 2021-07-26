@@ -32,6 +32,7 @@ import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.
 import { AuthorizeInterceptor } from './authorize.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
+import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
         path: 'login',
         component: LoginComponent
       }
-    ])
+    ]),
+    KvmModule
   ],
   providers: [
     {
