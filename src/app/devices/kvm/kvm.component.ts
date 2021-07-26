@@ -40,7 +40,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     { value: 2, viewValue: 'RLE 16' }
   ]
 
-  constructor(public snackBar: MatSnackBar,
+  constructor (public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private readonly devicesService: DevicesService,
     public readonly activatedRoute: ActivatedRoute,
@@ -52,7 +52,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {
       this.isLoading = true
       this.deviceId = params.id
@@ -67,11 +67,11 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit (): void {
     this.setAmtFeatures()
   }
 
-  init(): void {
+  init (): void {
     this.devicesService.getPowerState(this.deviceId).pipe(
       catchError(() => {
         this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
@@ -104,11 +104,11 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  checkPowerStatus(): boolean {
+  checkPowerStatus (): boolean {
     return this.powerState.powerstate === 2
   }
 
-  setAmtFeatures(): void {
+  setAmtFeatures (): void {
     this.isLoading = true
     this.devicesService.setAmtFeatures(this.deviceId).pipe(catchError(() => {
       this.snackBar.open($localize`Error Enabling kvm`, undefined, SnackbarDefaults.defaultError)
@@ -126,7 +126,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
     this.deviceState = event
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy (): void {
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()
     }

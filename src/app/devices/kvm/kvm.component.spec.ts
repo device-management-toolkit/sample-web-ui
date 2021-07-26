@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module'
 import { ActivatedRoute } from '@angular/router'
 import { EventEmitter } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { AuthService } from 'src/app/auth.service'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -36,7 +37,7 @@ describe('KvmComponent', () => {
         useValue: {
           params: of({ id: 'guid' })
         }
-      }]
+      }, { provide: AuthService, useValue: { getLoggedUserToken: () => '' } }]
     })
       .compileComponents()
   })
