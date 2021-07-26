@@ -2,7 +2,7 @@
 <mat-toolbar>
     <mat-form-field>
         <mat-label>Choose encoding type</mat-label>
-        <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange()">
+        <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
             <mat-option *ngFor="let encode of encodings" [value]="encode.value">
                 {{ encode.viewValue }}
             </mat-option>
@@ -11,5 +11,4 @@
 
 </mat-toolbar>
 <mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
-<canvas class="canvas" #canvas [width]="width" [height]="height" oncontextmenu="return false"
-    (mouseup)="onMouseup($event)" (mousedown)="onMousedown($event)"></canvas>
+<amt-kvm *ngIf="readytoLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceStatus($event)"></amt-kvm>
