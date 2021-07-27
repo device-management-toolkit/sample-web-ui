@@ -3,19 +3,19 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-export interface Device{
+export interface Device {
   hostname: string
   icon: number
   connectionStatus: boolean
   guid: string
   tags: string[]
 }
-export interface DeviceStats{
+export interface DeviceStats {
   totalCount: number
   connectedCount: number
   disconnectedCount: number
 }
-export interface Domain{
+export interface Domain {
   profileName: string
   domainSuffix: string
   provisioningCert: string
@@ -36,6 +36,7 @@ export interface Profile {
   generateRandomMEBxPassword: boolean
   mebxPasswordLength: number
   tags: string[]
+  wifiConfigs: any[]
 }
 export interface CIRAConfig {
   configName: string
@@ -49,7 +50,7 @@ export interface CIRAConfig {
   mpsRootCertificate: string
   proxyDetails: string
 }
-export interface AuditLog{
+export interface AuditLog {
   AuditApp: string
   AuditAppID: number
   Event: string
@@ -62,17 +63,17 @@ export interface AuditLog{
   NetAddress: string
   Time: string
 }
-export interface AuditLogResponse{
+export interface AuditLogResponse {
   totalCnt: number
   records: AuditLog[]
 }
 
-export interface APIResponse{
+export interface APIResponse {
   error: string
   message: string
 }
 
-export interface AmtFeaturesResponse{
+export interface AmtFeaturesResponse {
   userConsent: string
   redirection: boolean
   KVM: boolean
@@ -80,7 +81,7 @@ export interface AmtFeaturesResponse{
   IDER: boolean
 }
 
-export interface PowerState{
+export interface PowerState {
   powerstate: number
 }
 
@@ -210,7 +211,7 @@ export interface CIMPhysicalPackage {
   ChassisPackageType?: number
 }
 
-export interface HardwareResponse<T>{
+export interface HardwareResponse<T> {
   response: T
   responses: any
   status: number
@@ -224,4 +225,23 @@ export interface HardwareInformation {
   CIM_PhysicalMemory: HardwareResponse<CIMPhysicalMemory>
   CIM_MediaAccessDevice: HardwareResponse<CIMMediaAccessDevice[]>
   CIM_PhysicalPackage: HardwareResponse<CIMPhysicalPackage[]>
+}
+
+export interface WiFiProfile {
+  profileName: string
+  priority: number
+}
+export interface WirelessConfig {
+  profileName: string
+  authenticationMethod: number
+  encryptionMethod: number
+  ssid: string
+  pskValue: string
+  linkPolicy: number[]
+}
+export interface ValidatorError {
+  msg: string
+  param: string
+  location: string
+  value: string
 }

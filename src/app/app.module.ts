@@ -31,6 +31,8 @@ import { PowerAlertComponent } from './devices/sol/poweralert/poweralert.compone
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 import { AuthorizeInterceptor } from './authorize.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
+import { WirelessComponent } from './wireless/wireless.component'
+import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 
@@ -51,7 +53,9 @@ import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
     SolComponent,
     AuditLogComponent,
     PowerAlertComponent,
-    DeviceToolbarComponent
+    DeviceToolbarComponent,
+    WirelessComponent,
+    WirelessDetailComponent
   ],
   entryComponents: [
     DialogContentComponent

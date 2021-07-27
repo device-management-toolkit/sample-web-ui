@@ -1,0 +1,62 @@
+<mat-toolbar>
+  {{pageTitle}}
+</mat-toolbar>
+
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card fxFlex="50" fxFlex.lt-md=100>
+    <mat-list *ngIf="errorMessages.length > 0">
+      <mat-list-item *ngFor="let item of errorMessages">
+        <mat-icon color="warn" mat-list-icon>error</mat-icon>
+        {{ item }}
+      </mat-list-item>
+    </mat-list>
+    <form [formGroup]="wirelessForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <div fxLayout="row wrap">
+          <mat-form-field fxFlex="100">
+            <input formControlName="profileName" matInput name="profileName" placeholder="Wireless Profile Name" required>
+            <mat-error i18n>This field is required and must be alphanumeric with no spaces or symbols.</mat-error>
+            <mat-hint>Provide a name for this wireless profile.</mat-hint>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <mat-label>Authentication Method</mat-label>
+            <mat-select formControlName="authenticationMethod" required>
+              <mat-option *ngFor="let authenticationMode of authenticationModes" [value]="authenticationMode.value">
+                {{authenticationMode.display}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <mat-label>Encryption Method</mat-label>
+            <mat-select formControlName="encryptionMethod" required>
+              <mat-option *ngFor="let encryptionMode of encryptionModes" [value]="encryptionMode.value">
+                {{encryptionMode.display}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <input type="text" formControlName="ssid" matInput name="ssid" placeholder="SSID" required maxlength="32">
+          </mat-form-field>
+          <mat-form-field fxFlex="100">
+            <input type="password" formControlName="pskPassphrase" matInput name="pskPassphrase" placeholder="PSK Passphrase" required minlength=8 maxlength="63">
+            <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayout.xs="column">
+          <div fxFlex="50" fxLayoutAlign="center center">
+            <button type="button" mat-button color="primary" (click)="cancel()">
+              <span i18n>CANCEL</span>
+            </button>
+          </div>
+          <div fxFlex="50" fxLayoutAlign="center center">
+            <button type="submit" mat-flat-button color="primary">
+              <span i18n>SAVE</span>
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

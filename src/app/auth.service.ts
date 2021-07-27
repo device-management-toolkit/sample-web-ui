@@ -8,6 +8,7 @@ import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { Router } from '@angular/router'
+import { ValidatorError } from 'src/models/models'
 
 @Injectable({
   providedIn: 'root'
@@ -57,8 +58,8 @@ export class AuthService {
   onError (err: any): string[] {
     const errorMessages: string[] = []
     if (err.error?.errors != null) {
-      err.error.errors.forEach((error: any) => {
-        errorMessages.push(error.msg)
+      err.error.errors.forEach((error: ValidatorError) => {
+        errorMessages.push(`${error.msg}: ${error.param}`)
       })
     } else if (err.error?.message != null) {
       errorMessages.push(err.error.message)
