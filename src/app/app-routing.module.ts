@@ -11,6 +11,8 @@ import { DomainDetailComponent } from './domains/domain-detail/domain-detail.com
 import { DomainsComponent } from './domains/domains.component'
 import { ProfileDetailComponent } from './profiles/profile-detail/profile-detail.component'
 import { ProfilesComponent } from './profiles/profiles.component'
+import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
+import { WirelessComponent } from './wireless/wireless.component'
 
 const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
@@ -41,7 +43,15 @@ const routes: Routes = [
       { path: '', component: DomainDetailComponent }
     ]
   },
-  { path: 'domains/:name', component: DomainDetailComponent }
+  { path: 'domains/:name', component: DomainDetailComponent },
+  { path: 'wireless', component: WirelessComponent },
+  {
+    path: 'wireless/new',
+    children: [
+      { path: '', component: WirelessDetailComponent }
+    ]
+  },
+  { path: 'wireless/:name', component: WirelessDetailComponent }
 ]
 
 @NgModule({

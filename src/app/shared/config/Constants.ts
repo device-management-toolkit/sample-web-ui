@@ -4,5 +4,9 @@
 **********************************************************************/
 export default {
   ACMActivate: 'acmactivate',
-  CCMActivate: 'ccmactivate'
+  CCMActivate: 'ccmactivate',
+  WPAPSK: 4,
+  WPA2PSK: 6,
+  TKIP: 3,
+  CCMP: 4
 }

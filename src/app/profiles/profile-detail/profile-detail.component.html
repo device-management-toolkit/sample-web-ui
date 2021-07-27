@@ -49,6 +49,7 @@
             <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device</mat-hint>
           </mat-form-field>
           <div>
+            <br />
             <mat-label>Network Configuration</mat-label>
             <br>
             <mat-radio-group name="dhcpEnabled" formControlName="dhcpEnabled"><br />
@@ -59,12 +60,11 @@
           <mat-form-field fxFlex="100">
             <mat-label>CIRA Configuration</mat-label>
             <mat-select formControlName="ciraConfigName">
-              <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}
-              </mat-option>
+              <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
             </mat-select>
-            <mat-hint>CIRA cannot be configured for static Network</mat-hint>
+            <mat-hint>CIRA cannot be configured for static network</mat-hint>
           </mat-form-field>
-          <mat-form-field fxFlex=100>
+          <mat-form-field fxFlex=100 style="margin-bottom:24px;">
             <mat-label>Tags</mat-label>
             <mat-chip-list #tagList aria-label="Tag selection">
               <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
@@ -75,6 +75,33 @@
             </mat-chip-list>
             <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag, then present enter or comma.</mat-hint>
           </mat-form-field>
+
+          <mat-form-field fxFlex="100">
+            <mat-label>Wi-Fi Profiles</mat-label>
+            <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete" [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectWifiProfile($event)">
+              <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi">{{wifi}}</mat-option>
+            </mat-autocomplete>
+            <mat-hint>Wi-Fi will not work over static Network</mat-hint>
+          </mat-form-field>
+          <div [fxHide]="selectedWifiConfigs.length <= 0">
+            <mat-label class="mat-subheading-1">Associated Wireless Profiles (In Priority Order)</mat-label>
+            <br />
+            <mat-hint>Drag and Drop to reorder</mat-hint>
+          </div>
+          <mat-list cdkDropList (cdkDropListDropped)="drop($event)">
+            <mat-list-item class="drag-box" cdkDrag *ngFor="let item of selectedWifiConfigs">
+              <p matLine>{{item.priority}}. {{item.profileName}}</p>
+              <mat-icon matListIcon>drag_handle</mat-icon>
+              <button type="button" mat-icon-button (click)="removeWifiProfile(item)">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </mat-list-item>
+          </mat-list>
+
+
+
         </div>
       </mat-card-content>
       <mat-card-actions>

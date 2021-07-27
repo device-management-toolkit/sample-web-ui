@@ -3,17 +3,21 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { finalize } from 'rxjs/operators'
+import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { CIRAConfig } from 'src/models/models'
+import { CIRAConfig, WiFiProfile } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipInputEvent } from '@angular/material/chips'
+import { WirelessService } from 'src/app/wireless/wireless.service'
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
+import { Observable, of } from 'rxjs'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 
 @Component({
   selector: 'app-profile-detail',
@@ -28,11 +32,15 @@ export class ProfileDetailComponent implements OnInit {
   public pageTitle = 'New Profile'
   public isEdit = false
   public tags: string[] = []
+  public selectedWifiConfigs: WiFiProfile[] = []
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public errorMessages: string[] = []
+  wirelessConfigurations: string[] = []
+  filteredWifiList: Observable<string[]> = of([])
+  wifiAutocomplete = new FormControl()
 
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
-    public profilesService: ProfilesService, private readonly configsService: ConfigsService) {
+    public profilesService: ProfilesService, private readonly configsService: ConfigsService, private readonly wirelessService: WirelessService) {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [this.activationModes[0].value, Validators.required],
@@ -43,27 +51,32 @@ export class ProfileDetailComponent implements OnInit {
       passwordLength: [{ value: null, disabled: true }],
       mebxPassword: [null, Validators.required],
       dhcpEnabled: [true],
-      ciraConfigName: [null]
+      ciraConfigName: [null],
+      wifiConfigs: [null]
     })
   }
 
   ngOnInit (): void {
     this.activeRoute.params.subscribe(params => {
+      this.getWirelessConfigs()
       if (params.name != null && params.name !== '') {
         this.isLoading = true
-        this.profilesService.getRecord(params.name).pipe(
-          finalize(() => {
-            this.isLoading = false
-          })).subscribe(data => {
-          this.isEdit = true
-          this.profileForm.controls.profileName.disable()
-          this.pageTitle = data.profileName
-          this.tags = data.tags
-          this.profileForm.patchValue(data)
-        },
-        error => {
-          this.errorMessages = error
-        })
+        this.profilesService.getRecord(params.name)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            })
+          ).subscribe(data => {
+            this.isEdit = true
+            this.profileForm.controls.profileName.disable()
+            this.pageTitle = data.profileName
+            this.tags = data.tags
+            this.profileForm.patchValue(data)
+            this.profileForm.controls.wifiConfigs.setValue(data.wifiConfigs.map(item => item.profileName))
+            this.selectedWifiConfigs = data.wifiConfigs
+          }, error => {
+            this.errorMessages = error
+          })
       }
     })
 
@@ -72,6 +85,10 @@ export class ProfileDetailComponent implements OnInit {
     }, error => {
       this.errorMessages = error
     })
+    this.filteredWifiList = this.wifiAutocomplete.valueChanges.pipe(
+      startWith(''),
+      map(value => this.search(value))
+    )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
     this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
     this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
@@ -97,6 +114,14 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.generateRandomMEBxPassword.enable()
       this.profileForm.controls.generateRandomMEBxPassword.setValidators(Validators.required)
     }
+  }
+
+  getWirelessConfigs (): void {
+    this.wirelessService.getData().subscribe(data => {
+      this.wirelessConfigurations = data.map(item => item.profileName)
+    }, error => {
+      this.errorMessages = error
+    })
   }
 
   generateRandomPasswordChange (value: boolean): void {
@@ -136,14 +161,38 @@ export class ProfileDetailComponent implements OnInit {
   networkConfigChange (value: boolean): void {
     if (!value) {
       this.profileForm.controls.ciraConfigName.disable()
+      this.wifiAutocomplete.reset({ value: '', disabled: true })
       this.profileForm.controls.ciraConfigName.setValue(null)
     } else {
       this.profileForm.controls.ciraConfigName.enable()
+      this.wifiAutocomplete.reset({ value: '', disabled: false })
     }
+  }
+
+  selectWifiProfile (event: MatAutocompleteSelectedEvent): void {
+    const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
+    if (!selectedProfiles.includes(event.option.value)) {
+      this.selectedWifiConfigs.push({ priority: this.selectedWifiConfigs.length + 1, profileName: event.option.value })
+    }
+    this.wifiAutocomplete.patchValue('')
+  }
+
+  search (value: string): string[] {
+    const filterValue = value.toLowerCase()
+    return this.wirelessConfigurations.filter(config => config.toLowerCase().includes(filterValue))
   }
 
   async cancel (): Promise<void> {
     await this.router.navigate(['/profiles'])
+  }
+
+  removeWifiProfile (wifiProfile: any): void {
+    const index = this.selectedWifiConfigs.indexOf(wifiProfile)
+
+    if (index >= 0) {
+      this.selectedWifiConfigs.splice(index, 1)
+    }
+    this.updatePriorities()
   }
 
   remove (tag: string): void {
@@ -152,6 +201,16 @@ export class ProfileDetailComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1)
     }
+  }
+
+  drop (event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.selectedWifiConfigs, event.previousIndex, event.currentIndex)
+    this.updatePriorities()
+  }
+
+  updatePriorities (): void {
+    let index = 1
+    this.selectedWifiConfigs.map(x => { x.priority = index++; return x })
   }
 
   add (event: MatChipInputEvent): void {
@@ -174,6 +233,7 @@ export class ProfileDetailComponent implements OnInit {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
       result.tags = this.tags
+      result.wifiConfigs = this.selectedWifiConfigs
       let request
       let reqType: string
       if (this.isEdit) {
@@ -183,16 +243,16 @@ export class ProfileDetailComponent implements OnInit {
         request = this.profilesService.create(result)
         reqType = 'created'
       }
-      request.pipe(
-        finalize(() => {
-          this.isLoading = false
-        }))
+      request
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }))
         .subscribe(data => {
           this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           this.router.navigate(['/profiles'])
-        },
-        error => {
+        }, error => {
           this.errorMessages = error
         })
     }

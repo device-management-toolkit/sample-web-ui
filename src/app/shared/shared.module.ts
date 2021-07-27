@@ -38,6 +38,9 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { ClipboardModule } from '@angular/cdk/clipboard'
+import { DragDropModule } from '@angular/cdk/drag-drop'
+
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CdkTableModule } from '@angular/cdk/table'
 import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
@@ -84,7 +87,8 @@ import { AddDeviceComponent } from './add-device/add-device.component'
     MatFormFieldModule,
     MatButtonModule,
     MatPaginatorModule,
-    ClipboardModule
+    ClipboardModule,
+    DragDropModule
   ],
   exports: [
     CommonModule,
@@ -122,7 +126,8 @@ import { AddDeviceComponent } from './add-device/add-device.component'
     MatPaginatorModule,
     CdkTableModule,
     MatNativeDateModule,
-    ClipboardModule
+    ClipboardModule,
+    DragDropModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
