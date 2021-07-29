@@ -89,7 +89,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isLoading = true
             this.devicesService.sendPowerAction(this.deviceId, 2).pipe().subscribe(data => {
               setTimeout(() => {
-                this.isLoading = false
                 this.readytoLoadKvm = true
               }, 4000)
             })
@@ -97,7 +96,6 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       } else {
         setTimeout(() => {
-          this.isLoading = false
           this.readytoLoadKvm = true
         }, 0)
       }
@@ -123,7 +121,12 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deviceStatus = (event: any): void => {
-    this.deviceState = event
+    if (event === 2) {
+      this.deviceState = event
+      this.isLoading = false
+    } else {
+      this.deviceState = event
+    }
   }
 
   ngOnDestroy (): void {
