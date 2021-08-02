@@ -1,28 +1,26 @@
 <mat-nav-list class="mat-nav-list">
     <a href="#" class="navbar-brand" fxLayoutAlign="center center">
-        <img alt="logo" style="margin:10px 0" height="35"
-            src="../../../assets/logo.png">
+        <img alt="logo" style="margin:10px 0" height="35" src="../../../assets/logo.png">
     </a>
 
     <mat-divider></mat-divider>
-
     <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>home</mat-icon><span i18n="navlink">Dashboard</span>
-    </a>
-    <a mat-list-item routerLink="/domains" routerLinkActive="active">
-        <mat-icon>http</mat-icon><span i18n="navlink">Domains</span>
-    </a>
-    <a mat-list-item routerLink="/ciraconfigs" routerLinkActive="active">
-        <mat-icon>settings_ethernet</mat-icon><span i18n="navlink">CIRA Configs</span>
     </a>
     <a mat-list-item routerLink="/wireless" routerLinkActive="active">
         <mat-icon>wifi</mat-icon><span i18n="navlink">Wireless</span>
     </a>
+    <a mat-list-item routerLink="/ciraconfigs" routerLinkActive="active">
+        <mat-icon>settings_ethernet</mat-icon><span i18n="navlink">CIRA Configs</span>
+    </a>
     <a mat-list-item routerLink="/profiles" routerLinkActive="active">
         <mat-icon>settings_system_daydream</mat-icon><span i18n="navlink">Profiles</span>
+    </a>
+    <a mat-list-item routerLink="/domains" routerLinkActive="active">
+        <mat-icon>http</mat-icon><span i18n="navlink">Domains</span>
     </a>
     <a mat-list-item routerLink="/devices" routerLinkActive="active">
         <mat-icon>devices</mat-icon><span i18n="navlink">Devices</span>
     </a>
-    
+
 </mat-nav-list>

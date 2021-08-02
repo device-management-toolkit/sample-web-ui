@@ -72,7 +72,7 @@ export class ProfileDetailComponent implements OnInit {
             this.pageTitle = data.profileName
             this.tags = data.tags
             this.profileForm.patchValue(data)
-            this.profileForm.controls.wifiConfigs.setValue(data.wifiConfigs.map(item => item.profileName))
+            this.profileForm.controls.wifiConfigs.setValue(data.wifiConfigs?.map(item => item.profileName))
             this.selectedWifiConfigs = data.wifiConfigs
           }, error => {
             this.errorMessages = error
@@ -233,7 +233,9 @@ export class ProfileDetailComponent implements OnInit {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
       result.tags = this.tags
-      result.wifiConfigs = this.selectedWifiConfigs
+      if (result.dhcpEnabled) {
+        result.wifiConfigs = this.selectedWifiConfigs
+      }
       let request
       let reqType: string
       if (this.isEdit) {

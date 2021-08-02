@@ -57,13 +57,6 @@
               <mat-radio-button [value]="false">STATIC</mat-radio-button><br /><br />
             </mat-radio-group>
           </div>
-          <mat-form-field fxFlex="100">
-            <mat-label>CIRA Configuration</mat-label>
-            <mat-select formControlName="ciraConfigName">
-              <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
-            </mat-select>
-            <mat-hint>CIRA cannot be configured for static network</mat-hint>
-          </mat-form-field>
           <mat-form-field fxFlex=100 style="margin-bottom:24px;">
             <mat-label>Tags</mat-label>
             <mat-chip-list #tagList aria-label="Tag selection">
@@ -75,12 +68,19 @@
             </mat-chip-list>
             <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag, then present enter or comma.</mat-hint>
           </mat-form-field>
-
+          <mat-form-field fxFlex="100">
+            <mat-label>CIRA Configuration</mat-label>
+            <mat-select formControlName="ciraConfigName">
+              <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
+            </mat-select>
+            <mat-hint>CIRA cannot be configured for static network</mat-hint>
+          </mat-form-field>
           <mat-form-field fxFlex="100">
             <mat-label>Wi-Fi Profiles</mat-label>
             <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete" [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectWifiProfile($event)">
               <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi">{{wifi}}</mat-option>
+              <mat-option *ngIf="(filteredWifiList | async)?.length==0" disabled>No Wifi Configs found</mat-option>
             </mat-autocomplete>
             <mat-hint>Wi-Fi will not work over static Network</mat-hint>
           </mat-form-field>
