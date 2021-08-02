@@ -84,7 +84,6 @@ export class SolComponent implements OnInit, AfterViewInit {
             this.isLoading = true
             this.deviceService.sendPowerAction(this.deviceId, 2).pipe().subscribe(data => {
               setTimeout(() => {
-                this.isLoading = false
                 this.readyToLoadSol = true
               }, 4000)
             })
@@ -92,7 +91,6 @@ export class SolComponent implements OnInit, AfterViewInit {
         })
       } else {
         setTimeout(() => {
-          this.isLoading = false
           this.readyToLoadSol = true
         }, 0)
       }
@@ -100,7 +98,12 @@ export class SolComponent implements OnInit, AfterViewInit {
   }
 
   deviceStatus (event: any): void {
-    this.deviceState = event
+    if (event === 3) {
+      this.deviceState = event
+      this.isLoading = false
+    } else {
+      this.deviceState = event
+    }
   }
 
   stopSol (): void {
