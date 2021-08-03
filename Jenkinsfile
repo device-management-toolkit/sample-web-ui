@@ -32,7 +32,7 @@ pipeline{
 
                         //snyk details
                         snykManifestFile        = ['package-lock.json']
-                        snykProjectName         = ['openamt-sample-web-ui ']
+                        snykProjectName         = ['openamt-sample-web-ui']
                     }
                 }
             }
