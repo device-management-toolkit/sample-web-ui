@@ -72,8 +72,7 @@ export class ProfileDetailComponent implements OnInit {
             this.pageTitle = data.profileName
             this.tags = data.tags
             this.profileForm.patchValue(data)
-            this.profileForm.controls.wifiConfigs.setValue(data.wifiConfigs?.map(item => item.profileName))
-            this.selectedWifiConfigs = data.wifiConfigs
+            this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
           }, error => {
             this.errorMessages = error
           })
@@ -235,6 +234,8 @@ export class ProfileDetailComponent implements OnInit {
       result.tags = this.tags
       if (result.dhcpEnabled) {
         result.wifiConfigs = this.selectedWifiConfigs
+      } else {
+        result.wifiConfigs = [] // Empty the wifi configs for static network
       }
       let request
       let reqType: string
