@@ -35,8 +35,8 @@ export class AuthorizeInterceptor implements HttpInterceptor {
         (error: any) => {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
-              this.authService.logout()
               if (error.error.exp === 'token expired') {
+                this.authService.logout()
                 this.dialog.open(DialogContentComponent, { data: { name: 'Session timed out. Please login again' } })
               }
             }
