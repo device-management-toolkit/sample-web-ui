@@ -3,7 +3,7 @@
   "env": {
     "BASEURL": "http://localhost:4200/",
     "ISOLATE": "Y",
-    "FQDN":"0.0.0.0",
+    "FQDN":"192.168.8.50",
     "MPSUSERNAME": "standalone",
     "MPSPASSWORD": "G@ppm0ym",
     "AMTPASSWORD": "P@ssw0rd",

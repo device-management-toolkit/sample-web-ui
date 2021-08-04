@@ -62,7 +62,7 @@ describe("Test CIRA Config Page", () => {
 
       // //Check that the config was successful
       cy.get("mat-cell").contains(ciraFixtures.default.name)
-      cy.get("mat-cell").contains(ciraFixtures.default.addr)
+      cy.get("mat-cell").contains(Cypress.env("FQDN"))
       cy.get("mat-cell").contains(Cypress.env("MPSUSERNAME"))
     })
 })
