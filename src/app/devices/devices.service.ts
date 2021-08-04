@@ -139,6 +139,15 @@ export class DevicesService {
 
   }
 
+  getAMTVersion (deviceId: string): Observable<any> {
+    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/version/${deviceId}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getAuditLog (deviceId: string, startIndex: number = 0): Observable<AuditLogResponse> {
     return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/log/audit/${deviceId}?startIndex=${startIndex}`)
       .pipe(

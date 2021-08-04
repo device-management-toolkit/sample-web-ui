@@ -19,6 +19,7 @@ import { DevicesService } from '../devices.service'
 export class DeviceDetailComponent implements OnInit {
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public hwInfo?: HardwareInformation
+  public amtVersion: any
   public amtFeatures?: AmtFeaturesResponse
   public isLoading = false
   public deviceId: string = ''
@@ -66,6 +67,15 @@ export class DeviceDetailComponent implements OnInit {
       this.isLoading = true
       this.deviceId = params.id
       const tempLoading = [true, true, true]
+      this.devicesService.getAMTVersion(this.deviceId).pipe(finalize(() => {
+        tempLoading[0] = false
+        this.isLoading = !tempLoading.every(v => !v)
+      })).subscribe(results => {
+        this.amtVersion = results
+      }, err => {
+        this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
       this.devicesService.getHardwareInformation(this.deviceId).pipe(finalize(() => {
         tempLoading[0] = false
         this.isLoading = !tempLoading.every(v => !v)
