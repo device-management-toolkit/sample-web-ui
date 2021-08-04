@@ -65,6 +65,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-bottom: 10px;
 }
 .mat-snack-bar-container {
+  &.warn {
+    text-align: center;
+    padding-left: 40px;
+    text-transform: uppercase;
+    border-top-color: #FF9800;
+    border-top-width: 5px;
+    border-top-style: solid;
+  }
+  &.warn::before {
+    @extend .material-icons;
+    content: "warning_outline";
+    position: absolute;
+    left: 8px;
+    top: 12px;
+  }
   &.error {
     text-align: center;
     padding-left: 40px;

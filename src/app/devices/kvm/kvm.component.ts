@@ -109,7 +109,7 @@ export class KvmComponent implements OnInit, AfterViewInit, OnDestroy {
   setAmtFeatures (): void {
     this.isLoading = true
     this.devicesService.setAmtFeatures(this.deviceId).pipe(catchError(() => {
-      this.snackBar.open($localize`Error Enabling kvm`, undefined, SnackbarDefaults.defaultError)
+      this.snackBar.open($localize`Unable to change user consent - code required for KVM in CCM`, undefined, SnackbarDefaults.defaultWarn)
       this.init()
       return of()
     }), finalize(() => {
