@@ -80,7 +80,7 @@
                             <p>Provisioning Mode:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            {{amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 1 ? "Admin Control Mode (ACM)" : "Client Control Mode (CCM)"}} 
+                            {{parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode)}} 
                         </div>
                         <div fxFlex="50">
                             <p>IDE Redirection:</p>

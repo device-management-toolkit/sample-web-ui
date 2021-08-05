@@ -131,6 +131,17 @@ export class DevicesService {
     113: 'Microsoft Windows Server 8'
   }
 
+  public PowerStates = {
+    2: 'On',
+    3: 'Sleep',
+    4: 'Sleep',
+    6: 'Off',
+    7: 'Hibernate',
+    8: 'Off',
+    9: 'Power Cycle',
+    13: 'Off'
+  }
+
   stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)

@@ -110,6 +110,17 @@ export class DeviceDetailComponent implements OnInit {
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])
   }
 
+  parseProvisioningMode (mode: number): string {
+    switch (mode) {
+      case 1:
+        return 'Admin Control Mode (ACM)'
+      case 4:
+        return 'Client Control Mode (CCM)'
+      default:
+        return 'Unknown'
+    }
+  }
+
   onSelectAction = (): void => {
     this.showSol = !this.showSol
   }
