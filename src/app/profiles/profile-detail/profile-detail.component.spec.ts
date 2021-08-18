@@ -175,4 +175,9 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.mebxPassword.disabled).toBe(true)
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(true)
   })
+
+  it('should set the ciraconfigname property to null when No config option selected', () => {
+    component.ciraConfigChange('No Config Selected')
+    expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
+  })
 })
