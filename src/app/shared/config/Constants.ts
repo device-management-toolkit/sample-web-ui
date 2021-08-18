@@ -8,5 +8,6 @@ export default {
   WPAPSK: 4,
   WPA2PSK: 6,
   TKIP: 3,
-  CCMP: 4
+  CCMP: 4,
+  NORESULTS: 'No Wifi Configs Found'
 }
