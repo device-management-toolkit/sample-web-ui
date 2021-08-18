@@ -77,10 +77,12 @@
           </mat-form-field>
           <mat-form-field fxFlex="100">
             <mat-label>Wi-Fi Profiles</mat-label>
-            <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete" [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectWifiProfile($event)">
-              <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi">{{wifi}}</mat-option>
-              <mat-option *ngIf="(filteredWifiList | async)?.length==0" disabled>No Wifi Configs found</mat-option>
+            <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete"
+              [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+              (optionSelected)="selectWifiProfile($event)">
+              <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi" [ngClass]="isSelectable(wifi)">
+                {{wifi}}</mat-option>
             </mat-autocomplete>
             <mat-hint>Wi-Fi will not work over static Network</mat-hint>
           </mat-form-field>

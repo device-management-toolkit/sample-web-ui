@@ -86,7 +86,7 @@ export class ProfileDetailComponent implements OnInit {
     })
     this.filteredWifiList = this.wifiAutocomplete.valueChanges.pipe(
       startWith(''),
-      map(value => this.search(value))
+      map(value => value.length > 0 ? this.search(value) : [])
     )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
     this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
@@ -169,16 +169,25 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   selectWifiProfile (event: MatAutocompleteSelectedEvent): void {
-    const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
-    if (!selectedProfiles.includes(event.option.value)) {
-      this.selectedWifiConfigs.push({ priority: this.selectedWifiConfigs.length + 1, profileName: event.option.value })
+    if (event.option.value !== Constants.NORESULTS) {
+      const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
+      if (!selectedProfiles.includes(event.option.value)) {
+        this.selectedWifiConfigs.push({ priority: this.selectedWifiConfigs.length + 1, profileName: event.option.value })
+      }
+      this.wifiAutocomplete.patchValue('')
     }
-    this.wifiAutocomplete.patchValue('')
   }
 
   search (value: string): string[] {
     const filterValue = value.toLowerCase()
-    return this.wirelessConfigurations.filter(config => config.toLowerCase().includes(filterValue))
+    const filteredValues = this.wirelessConfigurations.filter(config => config.toLowerCase().includes(filterValue))
+    return filteredValues.length > 0 ? filteredValues : [Constants.NORESULTS]
+  }
+
+  isSelectable (wifiOption: string): any {
+    return {
+      'no-results': wifiOption === Constants.NORESULTS
+    }
   }
 
   async cancel (): Promise<void> {
