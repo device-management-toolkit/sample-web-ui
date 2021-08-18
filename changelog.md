@@ -1,3 +1,65 @@
+<a name="v1.5.0"></a>
+## [v1.5.0] - 2021-08-12
+### Build
+- fixed snykProjectName
+- **deps:** Bump cypress-file-upload from 5.0.7 to 5.0.8
+- **deps:** Bump cypress from 7.5.0 to 7.6.0
+- **deps-dev:** Bump eslint from 7.30.0 to 7.31.0
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#372](https://github.com/open-amt-cloud-toolkit/rps/issues/372))
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.8.1 to 3.8.2
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin
+- **deps-dev:** Bump eslint-plugin-jsdoc from 36.0.2 to 36.0.4
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.28.4 to 4.28.5
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.5.1 to 36.0.2
+- **deps-dev:** Bump karma-jasmine-html-reporter from 1.6.0 to 1.7.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 12.1.1 to 12.1.3
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.4.1 to 35.5.1
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.28.5 to 4.29.1 ([#371](https://github.com/open-amt-cloud-toolkit/rps/issues/371))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.27.0 to 4.28.4
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.7.7 to 3.8.1
+- **deps-dev:** Bump ts-node from 10.0.0 to 10.1.0
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 12.0.5 to 12.1.1 ([#302](https://github.com/open-amt-cloud-toolkit/rps/issues/302))
+- **deps-dev:** Bump jasmine-core from 3.7.1 to 3.8.0 ([#306](https://github.com/open-amt-cloud-toolkit/rps/issues/306))
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#309](https://github.com/open-amt-cloud-toolkit/rps/issues/309))
+- **deps-dev:** Bump eslint from 7.29.0 to 7.30.0
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.4.0 to 35.4.1
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin
+- **deps-dev:** Bump eslint-plugin-jsdoc from 36.0.4 to 36.0.6 ([#352](https://github.com/open-amt-cloud-toolkit/rps/issues/352))
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 14.17.3 to 14.17.4
+- **deps-dev:** Bump eslint-plugin-jsdoc from 35.3.2 to 35.4.0
+- **version:** bump to v1.5.0
+
+### Docs
+- **security:** added SECURITY.md file
+- **security:** added security.md file
+
+### Feat
+- **device-details:** add RPC deactivation command generation dialog ([#303](https://github.com/open-amt-cloud-toolkit/rps/issues/303))
+- **devices:** add RPC activation command generation dialog
+- **wireless:** add wireless config control
+
+### Fix
+- **api:** dhcpEnabled property added instead networkconfig in profiles
+- **cira:** increased cira config name layout ([#336](https://github.com/open-amt-cloud-toolkit/rps/issues/336))
+- **kvm:** error message for user consent less alarming
+- **profiles:** fix profile editing with static network configuration
+- **sol:** sol connect and command window
+- **wireless:** fix delete button alignment and empty search result ui
+
+### Refactor
+- **cira-configs:** update text for cira config creation
+- **dashboard:** reorder steps
+- **dashboard:** update dashboard design
+- **device-detail:** api calls are fully async
+- **kvm:** use kvm-component from ui-toolkit-angular
+- **nav:** reorder menu options
+- **power actions:** added bootoptions api for power actions 100+ BREAKING CHANGE: moved power actions 100+ to bootoptions api fixes AB[#2806](https://github.com/open-amt-cloud-toolkit/rps/issues/2806)
+- **sol:** leverage [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular
+- **tests:** updated test case
+
+### Test
+- **e2e:** update expectation to work with FQDN
 
 <a name="v1.4.0"></a>
 ## [v1.4.0] - 2021-06-22
