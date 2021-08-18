@@ -32,7 +32,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="100">
-            <input [type]="amtInputType" id="amtPassword" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8 maxlength="32">
+            <input [type]="amtInputType" formControlName="amtPassword" matInput name="amtPassword" placeholder="AMT Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
             <mat-hint>The AMT Password is used for remote access of a device.</mat-hint>
             <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleAMTPassVisibility()">
@@ -43,16 +43,15 @@
               <mat-icon>loop</mat-icon>
             </button>
           </mat-form-field>
-
           <mat-form-field fxFlex="100">
-            <input [type]="mebxInputType" id="mebxPassword" formControlName="mebxPassword" matInput name="mebxPassword" placeholder="MEBX Password" required minlength=8 maxlength="32">
+            <input [type]="mebxInputType" matInput formControlName="mebxPassword" placeholder="MEBX Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
             <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device</mat-hint>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleMEBXPassVisibility()">
+            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleMEBXPassVisibility()" [disabled]='profileForm.controls.mebxPassword.disabled'>
               <mat-icon [fxHide]="mebxInputType === 'text'">visibility</mat-icon>
               <mat-icon [fxHide]="mebxInputType !== 'text'">visibility_off</mat-icon>
             </button>
-            <button mat-icon-button matSuffix type="button" matTooltip="Generate Random Password" (click)="GenerateMEBXPassword()">
+            <button mat-icon-button matSuffix type="button" matTooltip="Generate Random Password" (click)="GenerateMEBXPassword()" [disabled]='profileForm.controls.mebxPassword.disabled'>
               <mat-icon>loop</mat-icon>
             </button>
           </mat-form-field>

@@ -145,10 +145,8 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   GenerateMEBXPassword (): void {
-    if (this.profileForm.controls.mebxPassword.enabled) {
-      const password = this.generateRandomPassword()
-      this.profileForm.controls.mebxPassword.setValue(password)
-    }
+    const password = this.generateRandomPassword()
+    this.profileForm.controls.mebxPassword.setValue(password)
   }
 
   toggleAMTPassVisibility (): void {
@@ -156,9 +154,7 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   toggleMEBXPassVisibility (): void {
-    if (this.profileForm.controls.mebxPassword.enabled) {
-      this.mebxInputType = this.mebxInputType === 'password' ? 'text' : 'password'
-    }
+    this.mebxInputType = this.mebxInputType === 'password' ? 'text' : 'password'
   }
 
   networkConfigChange (value: boolean): void {

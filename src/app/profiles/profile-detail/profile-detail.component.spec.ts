@@ -176,35 +176,29 @@ describe('ProfileDetailComponent', () => {
     expect(component.amtInputType).toEqual('password')
   })
 
-  it('should turn mebx visibility on when it is off when in acm', () => {
-    component.activationChange('acmactivate')
+  it('should turn mebx visibility on when it is off', () => {
     component.amtInputType = 'password'
     component.toggleAMTPassVisibility()
 
     expect(component.amtInputType).toEqual('text')
   })
 
-  it('should turn mebx visibility off when it is on when in acm', () => {
-    component.activationChange('acmactivate')
+  it('should turn mebx visibility off when it is on', () => {
     component.amtInputType = 'text'
     component.toggleAMTPassVisibility()
 
     expect(component.amtInputType).toEqual('password')
   })
 
-  it('should not change mebx visibility when in ccm', () => {
-    component.activationChange('ccmactivate')
-    component.amtInputType = 'password'
-    component.toggleAMTPassVisibility()
-
-    expect(component.amtInputType).toEqual('password')
+  it('should generate a random password without a specified length', () => {
+    const password = component.generateRandomPassword()
+    expect(password).toBeDefined()
+    expect(password.length).toBe(16)
   })
 
   it('should generate a random password with specified length', () => {
-    let password = component.generateRandomPassword()
-    expect(password.length).toBe(16)
-
-    password = component.generateRandomPassword(10)
+    const password = component.generateRandomPassword(10)
+    expect(password).toBeDefined()
     expect(password.length).toBe(10)
   })
 
@@ -215,20 +209,28 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.amtPassword.value.length).toBe(16)
   })
 
-  it('should change the value of mebx password to a random strong password when in acm', () => {
-    component.activationChange('acmactivate')
-    component.profileForm.controls.amtPassword.setValue('!2qW')
-    component.GenerateAMTPassword()
+  it('should change the value of mebx password to a random strong password', () => {
+    component.profileForm.controls.mebxPassword.setValue('1@qW')
+    component.GenerateMEBXPassword()
 
     expect(component.profileForm.controls.mebxPassword.value.length).toBe(16)
   })
 
-  it('should not change the value of mebx password when in ccm', () => {
-    component.profileForm.controls.amtPassword.setValue('')
-    component.activationChange('ccmactivate')
-    component.GenerateMEBXPassword()
+  it('should return the search results when a search string is entered', () => {
+    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
+    const searchString = 'home'
+    const results = component.search(searchString)
 
-    expect(component.profileForm.controls.mebxPassword.value.length).toBe(0)
+    expect(results).toEqual(['homeWiFi'])
+  })
+
+  it('should update the list of tags when a tag is removed ', () => {
+    component.tags = ['acm', 'ccm', 'profile']
+    const tagName = 'ccm'
+
+    component.remove(tagName)
+
+    expect(component.tags).toEqual(['acm', 'profile'])
   })
 
   it('should return the search results when a search string is entered', () => {
