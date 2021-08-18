@@ -26,15 +26,11 @@ export interface Domain {
 export interface Profile {
   profileName: string
   amtPassword: null
-  generateRandomPassword: boolean
-  passwordLength: number
   configurationScript: null
   activation: string
   ciraConfigName: string
   dhcpEnabled: boolean
   mebxPassword: string
-  generateRandomMEBxPassword: boolean
-  mebxPasswordLength: number
   tags: string[]
   wifiConfigs: any[]
 }

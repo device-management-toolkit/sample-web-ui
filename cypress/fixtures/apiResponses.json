@@ -360,14 +360,10 @@
         "response": [
           {
             "profileName": "happyPath",
-            "generateRandomPassword": false,
-            "passwordLength": null,
             "configurationScript": null,
             "activation": "ccmactivate",
             "ciraConfigName": "default",
-            "dhcpEnabled": "true",
-            "generateRandomMEBxPassword": false,
-            "mebxPasswordLength": null
+            "dhcpEnabled": "true"
           }
         ]
       },
@@ -399,14 +395,10 @@
         "code": 201,
         "response": {
           "profileName": "happyPath",
-          "generateRandomPassword": false,
-          "passwordLength": null,
           "configurationScript": null,
           "activation": "ccmactivate",
           "ciraConfigName": "default",
-          "dhcpEnabled": true,
-          "generateRandomMEBxPassword": false,
-          "mebxPasswordLength": null
+          "dhcpEnabled": true
         }
       },
 
