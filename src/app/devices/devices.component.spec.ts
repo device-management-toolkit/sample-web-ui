@@ -18,11 +18,23 @@ describe('DevicesComponent', () => {
   let fixture: ComponentFixture<DevicesComponent>
   let getDevicesSpy: jasmine.Spy
   let getTagsSpy: jasmine.Spy
+  let getPowerStateSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags'])
-    getDevicesSpy = devicesService.getDevices.and.returnValue(of([]))
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates'])
+    devicesService.PowerStates.and.returnValue({
+      2: 'On',
+      3: 'Sleep',
+      4: 'Sleep',
+      6: 'Off',
+      7: 'Hibernate',
+      8: 'Off',
+      9: 'Power Cycle',
+      13: 'Off'
+    })
+    getDevicesSpy = devicesService.getDevices.and.returnValue(of([{ hostname: '', guid: '', connectionStatus: true, tags: [], icon: 1 }]))
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
+    getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
 
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -44,8 +56,35 @@ describe('DevicesComponent', () => {
     expect(component).toBeTruthy()
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
     expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')
+    expect(getPowerStateSpy.calls.any()).toBe(true, 'getPowerState called')
   })
 
+  it('should translate connection status - true', () => {
+    const result = component.translateConnectionStatus(true)
+    expect(result).toBe('Connected')
+  })
+  it('should determine if all selected (false)', () => {
+    const result = component.isAllSelected()
+    expect(result).toBeFalse()
+  })
+  it('should determine if all selected (true)', () => {
+    component.selection.select(component.devices[0])
+    const result = component.isAllSelected()
+    expect(result).toBeTrue()
+  })
+  it('should translate connection status - false', () => {
+    const result = component.translateConnectionStatus(false)
+    expect(result).toBe('Disconnected')
+  })
+  it('should translate connection status - null', () => {
+    const result = component.translateConnectionStatus()
+    expect(result).toBe('Unknown')
+  })
+  it('should navigate to', async () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    await component.navigateTo('guid')
+    expect(routerSpy).toHaveBeenCalledWith(['/devices/guid'])
+  })
   it('should open the add device dialog', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)

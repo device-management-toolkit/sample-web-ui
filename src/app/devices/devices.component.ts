@@ -8,8 +8,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSelectChange } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { BehaviorSubject, forkJoin, Observable, throwError } from 'rxjs'
-import { catchError, finalize, mergeMap } from 'rxjs/operators'
+import { BehaviorSubject, forkJoin, from, Observable, throwError } from 'rxjs'
+import { catchError, delay, finalize, map, mergeMap } from 'rxjs/operators'
 import { Device } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -26,13 +26,14 @@ export class DevicesComponent implements OnInit {
   public tags: string[] = []
   public selectedTags = new BehaviorSubject<string[]>([])
   public selection: SelectionModel<Device>
-
+  public powerStates: any
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService) {
     const initialSelection: Device[] = []
     const allowMultiSelect = true
     this.selection = new SelectionModel<any>(allowMultiSelect, initialSelection)
+    this.powerStates = this.devicesService.PowerStates
   }
 
   ngOnInit (): void {
@@ -53,11 +54,21 @@ export class DevicesComponent implements OnInit {
       mergeMap(tags => {
         this.isLoading = true
         return this.devicesService.getDevices(tags)
-      }),
-      finalize(() => {
       })
     ).subscribe(devices => {
       this.devices = devices
+      const deviceIds = this.devices.filter(z => z.connectionStatus).map(x => x.guid)
+      from(deviceIds).pipe(
+        map(id => {
+          return this.devicesService.getPowerState(id).pipe(map(result => {
+            return { powerstate: result.powerstate, guid: id }
+          }))
+        })
+      ).subscribe(results => {
+        results.subscribe(x => {
+          (devices.find(y => y.guid === x.guid) as any).powerstate = x.powerstate
+        })
+      })
       this.isLoading = false
     })
   }
@@ -87,14 +98,14 @@ export class DevicesComponent implements OnInit {
     await this.router.navigate([`/devices/${path}`])
   }
 
-  translateConnectionStatus (status: boolean): string {
+  translateConnectionStatus (status?: boolean): string {
     switch (status) {
       case false:
-        return 'disconnected'
+        return 'Disconnected'
       case true:
-        return 'connected'
+        return 'Connected'
       default:
-        return 'unknown'
+        return 'Unknown'
     }
   }
 
@@ -122,6 +133,9 @@ export class DevicesComponent implements OnInit {
       })
     ).subscribe(data => {
       this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      this.devicesService.getPowerState(deviceId).pipe(delay(2000)).subscribe(z => {
+        (this.devices.find(y => y.guid === deviceId) as any).powerstate = z.powerstate
+      })
       console.log(data)
     })
   }
