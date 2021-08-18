@@ -70,7 +70,7 @@
             <!-- status Column -->
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.connectionStatus) }}
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.connectionStatus) }} <span *ngIf="element.connectionStatus">&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
                 </mat-cell>
             </ng-container>
 

@@ -180,4 +180,21 @@ describe('ProfileDetailComponent', () => {
     component.ciraConfigChange('No Config Selected')
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
   })
+
+  it('should return the search results when a search string is entered', () => {
+    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
+    const searchString = 'home'
+    const results = component.search(searchString)
+
+    expect(results).toEqual(['homeWiFi'])
+  })
+
+  it('should update the list of tags when a tag is removed ', () => {
+    component.tags = ['acm', 'ccm', 'profile']
+    const tagName = 'ccm'
+
+    component.remove(tagName)
+
+    expect(component.tags).toEqual(['acm', 'profile'])
+  })
 })

@@ -9,5 +9,6 @@ export default {
   WPA2PSK: 6,
   TKIP: 3,
   CCMP: 4,
-  NOCONFIGSELECTED: 'No Config Selected'
+  NOCONFIGSELECTED: 'No Config Selected',
+  NORESULTS: 'No Wifi Configs Found'
 }
