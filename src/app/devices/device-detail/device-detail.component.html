@@ -57,6 +57,12 @@
                         <div fxFlex="50" fxLayoutAlign="end">
                             <span class="mat-h3">{{hwInfo?.CIM_Chassis?.response?.Version}}</span>
                         </div>
+                        <div fxFlex="50">
+                            <p>AMT Version: </p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            <span class="mat-h3">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
+                        </div>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -70,6 +76,12 @@
                 <mat-card-content class="amt-features">
                     <p></p>
                     <div fxLayout="row wrap">
+                        <div fxFlex="50">
+                            <p>Provisioning Mode:</p>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="end">
+                            {{parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode)}} 
+                        </div>
                         <div fxFlex="50">
                             <p>IDE Redirection:</p>
                         </div>

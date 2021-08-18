@@ -19,12 +19,14 @@ describe('DeviceDetailComponent', () => {
   let getAuditLogSpy: jasmine.Spy
   let getAMTFeaturesSpy: jasmine.Spy
   let getHardwareInformationSpy: jasmine.Spy
+  let getAMTVersionSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'sendPowerAction'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ }))
+    getAMTVersionSpy = devicesService.getAMTVersion.and.returnValue(of({ }))
     getHardwareInformationSpy = devicesService.getHardwareInformation.and.returnValue(of({ }))
 
     await TestBed.configureTestingModule({
@@ -51,11 +53,21 @@ describe('DeviceDetailComponent', () => {
     expect(getAuditLogSpy.calls.any()).toBe(true, 'getAuditLog called')
     expect(getHardwareInformationSpy.calls.any()).toBe(true, 'getHardwareInformation called')
     expect(getAMTFeaturesSpy.calls.any()).toBe(true, 'getAMTFeatures called')
+    expect(getAMTVersionSpy.calls.any()).toBe(true, 'getAMTVersion called')
   })
 
   it('should navigate to', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/devices/guid/path'])
+  })
+
+  it('should parse provisioning mode - ACM', async () => {
+    const result = component.parseProvisioningMode(1)
+    expect(result).toBe('Admin Control Mode (ACM)')
+  })
+  it('should parse provisioning mode - CCM', async () => {
+    const result = component.parseProvisioningMode(4)
+    expect(result).toBe('Client Control Mode (CCM)')
   })
 })
