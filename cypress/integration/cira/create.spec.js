@@ -42,8 +42,7 @@ describe("Test CIRA Config Page", () => {
         ciraFixtures.default.name,
         ciraFixtures.default.format,
         Cypress.env("FQDN"),
-        Cypress.env("MPSUSERNAME"),
-        Cypress.env("MPSPASSWORD")
+        Cypress.env("MPSUSERNAME")
       )
       cy.get("button[type=submit]").click({ timeout: 50000 })
       

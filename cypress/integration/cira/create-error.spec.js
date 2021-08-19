@@ -38,8 +38,7 @@ describe("Test CIRA Config Page", () => {
         ciraFixtures.wrong.name,
         ciraFixtures.default.format,
         ciraFixtures.default.addr,
-        Cypress.env("MPSUSERNAME"),
-        Cypress.env("MPSPASSWORD")
+        Cypress.env("MPSUSERNAME")
       )
     })
 
@@ -48,18 +47,7 @@ describe("Test CIRA Config Page", () => {
         ciraFixtures.wrong.name,
         ciraFixtures.default.format,
         ciraFixtures.default.addr,
-        ciraFixtures.wrong.username,
-        Cypress.env("MPSPASSWORD")
-      )
-    })
-
-    it("invalid password", () => {
-      cy.enterCiraInfo(
-        ciraFixtures.wrong.name,
-        ciraFixtures.default.format,
-        ciraFixtures.default.addr,
-        Cypress.env("MPSUSERNAME"),
-        ciraFixtures.wrong.password
+        ciraFixtures.wrong.username
       )
     })
 
