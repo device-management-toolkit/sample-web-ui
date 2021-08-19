@@ -52,17 +52,12 @@
                         <mat-error>This field is required</mat-error>
                         <mat-hint>Enter the username for accessing MPS</mat-hint>
                     </mat-form-field>
-                    <div fxFlex="50" style="margin-top:15px">
-                        <mat-checkbox formControlName="generateRandomPassword">Generate Random Password</mat-checkbox>
-                      </div>
-                    <mat-form-field fxFlex="100">
-                        <input type="password" formControlName="password" matInput name="password"
-                            placeholder="Password" required minlength=8>
-                        <mat-error>This field is required and must be at least 8 characters long</mat-error>
-                        <mat-hint>Enter the password for accessing MPS</mat-hint>
-                    </mat-form-field><br><br><br><br>
+                    <br><br><br><br>
                     <mat-slide-toggle formControlName="autoLoad">
                         Auto-load MPS Root Certificate Format
+                    </mat-slide-toggle>
+                    <mat-slide-toggle formControlName="regeneratePassword" [fxHide]="shouldShowRegenPass()">
+                        Generate New Random Password Upon Saving
                     </mat-slide-toggle>
 
                     <mat-form-field fxFlex="100" [fxHide]="shouldShowCertBox()">
