@@ -16,6 +16,11 @@ describe("Test Profile Page", () => {
         body: apiResponses.ciraConfigs.getAll.forProfile.response,
       }).as("get-configs2")
 
+      cy.myIntercept("GET", "wirelessconfigs", {
+        statusCode: apiResponses.wirelessConfigs.getAll.success.code,
+        body: apiResponses.wirelessConfigs.getAll.success.response
+      }).as("get-wireless2")
+
       cy.myIntercept("GET", "profiles", {
         statusCode: apiResponses.profiles.getAll.empty.code,
         body: apiResponses.profiles.getAll.empty.response,
@@ -33,6 +38,7 @@ describe("Test Profile Page", () => {
       cy.wait("@get-configs2")
         .its("response.statusCode")
         .should("be.oneOf", [200, 304])
+      cy.wait("@get-wireless2")
     })
 
     it("invalid profile name", () => {

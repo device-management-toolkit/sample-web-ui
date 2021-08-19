@@ -42,14 +42,13 @@ Cypress.Commands.add("login", (user, pass) => {
   cy.get("[id=btnLogin]").get("[type=submit]").click();
 });
 
-Cypress.Commands.add("enterCiraInfo", (name, format, addr, user, pass) => {
+Cypress.Commands.add("enterCiraInfo", (name, format, addr, user) => {
   cy.get("input").get("[name=configName]").type(name);
   if (format == "FQDN") {
     cy.contains("FQDN").click();
   }
   cy.get("input").get("[name=mpsServerAddress]").type(addr);
   cy.get("input").get("[name=username]").type(user);
-  cy.get("input").get("[name=password]").type(pass);
 });
 
 Cypress.Commands.add(
@@ -79,6 +78,14 @@ Cypress.Commands.add("enterDomainInfo", (name, domain, file, pass) => {
   cy.get('input[type="file"]').attachFile(file)
   cy.get('input[name="provisioningCertPassword"]').type(pass)
 });
+
+Cypress.Commands.add("enterWirelessInfo", (name, ssid, password) => {
+  cy.get('input[name="profileName"]').type(name)
+  cy.get('input[name="ssid"]').type(ssid)
+  cy.get('input[name="pskPassphrase"]').type(password)
+  cy.get("mat-select[formcontrolname=authenticationMethod]").click().get("mat-option").contains("WPA PSK").click()
+  cy.get("mat-select[formcontrolname=encryptionMethod]").click().get("mat-option").contains("TKIP").click()
+})
 
 //------------------------- Common Navigation --------------------------
 

@@ -1,0 +1,13 @@
+{
+    "happyPath": {
+        "profileName": "wireless",
+        "authenticationMethod": "WPA PSK",
+        "encryptionMethod": "TKIP",
+        "ssid": "ssid",
+        "linkPolicy": [14, 16],
+        "pskValue": "pskValue"
+    },
+    "wrong": {
+        "profileName": "wireless config"
+    }
+}
