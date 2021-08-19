@@ -42,14 +42,13 @@ Cypress.Commands.add("login", (user, pass) => {
   cy.get("[id=btnLogin]").get("[type=submit]").click();
 });
 
-Cypress.Commands.add("enterCiraInfo", (name, format, addr, user, pass) => {
+Cypress.Commands.add("enterCiraInfo", (name, format, addr, user) => {
   cy.get("input").get("[name=configName]").type(name);
   if (format == "FQDN") {
     cy.contains("FQDN").click();
   }
   cy.get("input").get("[name=mpsServerAddress]").type(addr);
   cy.get("input").get("[name=username]").type(user);
-  cy.get("input").get("[name=password]").type(pass);
 });
 
 Cypress.Commands.add(

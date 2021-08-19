@@ -33,6 +33,8 @@ export class ProfileDetailComponent implements OnInit {
   public isEdit = false
   public tags: string[] = []
   public selectedWifiConfigs: WiFiProfile[] = []
+  public amtInputType = 'password'
+  public mebxInputType = 'password'
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public errorMessages: string[] = []
   wirelessConfigurations: string[] = []
@@ -45,10 +47,6 @@ export class ProfileDetailComponent implements OnInit {
       profileName: [null, Validators.required],
       activation: [this.activationModes[0].value, Validators.required],
       amtPassword: [null, Validators.required],
-      generateRandomPassword: [false, Validators.required],
-      generateRandomMEBxPassword: [false, Validators.required],
-      mebxPasswordLength: [{ value: null, disabled: true }],
-      passwordLength: [{ value: null, disabled: true }],
       mebxPassword: [null, Validators.required],
       dhcpEnabled: [true],
       ciraConfigName: [null],
@@ -89,8 +87,6 @@ export class ProfileDetailComponent implements OnInit {
       map(value => value.length > 0 ? this.search(value) : [])
     )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
-    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
-    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
     this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => this.networkConfigChange(value))
     this.profileForm.controls.ciraConfigName?.valueChanges.subscribe(value => this.ciraConfigChange(value))
   }
@@ -100,19 +96,9 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
-      this.profileForm.controls.mebxPasswordLength.disable()
-      this.profileForm.controls.mebxPasswordLength.setValue(null)
-      this.profileForm.controls.mebxPasswordLength.clearValidators()
-      this.profileForm.controls.generateRandomMEBxPassword.setValue(false)
-      this.profileForm.controls.generateRandomMEBxPassword.disable()
-      this.profileForm.controls.generateRandomMEBxPassword.clearValidators()
     } else {
       this.profileForm.controls.mebxPassword.enable()
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
-      this.profileForm.controls.mebxPasswordLength.enable()
-      this.profileForm.controls.mebxPasswordLength.setValidators([Validators.max(32), Validators.min(8)])
-      this.profileForm.controls.generateRandomMEBxPassword.enable()
-      this.profileForm.controls.generateRandomMEBxPassword.setValidators(Validators.required)
     }
   }
 
@@ -124,38 +110,52 @@ export class ProfileDetailComponent implements OnInit {
     })
   }
 
-  generateRandomPasswordChange (value: boolean): void {
-    if (value) {
-      this.profileForm.controls.amtPassword.disable()
-      this.profileForm.controls.amtPassword.setValue(null)
-      this.profileForm.controls.amtPassword.clearValidators()
-      this.profileForm.controls.amtPassword.setValue(null)
-      this.profileForm.controls.passwordLength.setValue(8)
-      this.profileForm.controls.passwordLength.enable()
-    } else {
-      this.profileForm.controls.amtPassword.enable()
-      this.profileForm.controls.amtPassword.setValidators(Validators.required)
-      this.profileForm.controls.passwordLength.disable()
-      this.profileForm.controls.passwordLength.setValue(null)
-      this.profileForm.controls.passwordLength.clearValidators()
+  generateRandomPassword (length: number = 16): string {
+    const charset: RegExp = /[a-zA-Z0-9!$%]/
+    const requirements: RegExp[] = [/[a-z]/, /[A-Z]/, /[0-9]/, /[!$%]/]
+    const bit = new Uint8Array(1)
+    let char: string = ''
+    let password: string = ''
+    let searching: boolean = true
+
+    while (searching) {
+      for (let i = 0; i < length; i++) {
+        char = ''
+        while (!charset.test(char)) {
+          window.crypto.getRandomValues(bit)
+          char = String.fromCharCode(bit[0])
+        }
+        password += char
+      }
+
+      searching = false
+
+      for (let i = 0; i < requirements.length; i++) {
+        if (!requirements[i].test(password)) {
+          searching = true
+          password = ''
+        }
+      }
     }
+    return password
   }
 
-  generateRandomMEBxPasswordChange (value: boolean): void {
-    if (value) {
-      this.profileForm.controls.mebxPassword.disable()
-      this.profileForm.controls.mebxPassword.setValue(null)
-      this.profileForm.controls.mebxPassword.clearValidators()
-      this.profileForm.controls.mebxPassword.setValue(null)
-      this.profileForm.controls.mebxPasswordLength.setValue(8)
-      this.profileForm.controls.mebxPasswordLength.enable()
-    } else if (this.profileForm.controls.activation.value === Constants.ACMActivate) {
-      this.profileForm.controls.mebxPassword.enable()
-      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
-      this.profileForm.controls.mebxPasswordLength.disable()
-      this.profileForm.controls.mebxPasswordLength.setValue(null)
-      this.profileForm.controls.mebxPasswordLength.clearValidators()
-    }
+  GenerateAMTPassword (): void {
+    const password = this.generateRandomPassword()
+    this.profileForm.controls.amtPassword.setValue(password)
+  }
+
+  GenerateMEBXPassword (): void {
+    const password = this.generateRandomPassword()
+    this.profileForm.controls.mebxPassword.setValue(password)
+  }
+
+  toggleAMTPassVisibility (): void {
+    this.amtInputType = this.amtInputType === 'password' ? 'text' : 'password'
+  }
+
+  toggleMEBXPassVisibility (): void {
+    this.mebxInputType = this.mebxInputType === 'password' ? 'text' : 'password'
   }
 
   networkConfigChange (value: boolean): void {

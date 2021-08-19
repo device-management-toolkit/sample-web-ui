@@ -38,14 +38,10 @@ export class ConfigDetailComponent implements OnInit {
       commonName: [null, Validators.required],
       mpsPort: [4433, Validators.required],
       username: ['admin', Validators.required],
-      generateRandomPassword: [false, Validators.required],
-      passwordLength: [
-        { value: null, disabled: true }
-      ],
-      password: [null, Validators.required],
       autoLoad: [true, Validators.required],
       mpsRootCertificate: [null],
-      proxyDetails: [null]
+      proxyDetails: [null],
+      regeneratePassword: [false]
       // authMethod:2
     })
   }
@@ -89,9 +85,6 @@ export class ConfigDetailComponent implements OnInit {
     this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) =>
       this.serverAddressChange(value)
     )
-    this.configForm.controls.generateRandomPassword?.valueChanges.subscribe(
-      (value) => this.generateRandomPasswordChange(value)
-    )
   }
 
   serverAddressChange (value: string): void {
@@ -127,25 +120,12 @@ export class ConfigDetailComponent implements OnInit {
     }
   }
 
-  generateRandomPasswordChange (value: boolean): void {
-    if (value) {
-      this.configForm.controls.password.disable()
-      this.configForm.controls.password.setValue(null)
-      this.configForm.controls.password.clearValidators()
-      this.configForm.controls.password.setValue(null)
-      this.configForm.controls.passwordLength.setValue(8)
-      // this.configForm.controls.passwordLength.enable()
-    } else {
-      this.configForm.controls.password.enable()
-      this.configForm.controls.password.setValidators(Validators.required)
-      this.configForm.controls.passwordLength.disable()
-      this.configForm.controls.passwordLength.setValue(null)
-      this.configForm.controls.passwordLength.clearValidators()
-    }
-  }
-
   shouldShowCertBox (): boolean {
     return this.configForm.controls.autoLoad?.value === true
+  }
+
+  shouldShowRegenPass (): boolean {
+    return !this.isEdit
   }
 
   trimRootCert = (cert: string): string =>
