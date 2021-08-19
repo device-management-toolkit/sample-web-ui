@@ -6,7 +6,8 @@
     "domain": "domains",
     "cira": "ciraconfigs",
     "profile": "profiles",
-    "device": "devices"
+    "device": "devices",
+    "wireless": "wireless"
   },
 
   "extensions": {
