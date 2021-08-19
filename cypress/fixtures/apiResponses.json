@@ -802,5 +802,157 @@
         }
       }
     }
+  },
+
+  "wirelessConfigs": {
+    "getAll": {
+      "success": {
+        "code": 200,
+        "response": [
+          {
+            "profileName": "wireless",
+            "authenticationMethod": 4,
+            "encryptionMethod": 3,
+            "ssid": "ssid",
+            "linkPolicy": [14, 16],
+            "pskValue": "pskValue"
+          }
+        ]
+      },
+
+      "empty": {
+        "code": 200,
+        "response": []
+      },
+
+      "notFound": {
+        "code": 404,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      },
+
+      "error": {
+        "code": 500,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      }
+    },
+
+    "create": {
+      "success": {
+        "code": 201,
+        "response": {
+          "profileName": "happyPath",
+          "authenticationMethod": 4,
+          "encryptionMethod": 3,
+          "ssid": "ssid",
+          "linkPolicy": [14, 16],
+          "pskValue": "pskValue"
+        }
+      },
+
+      "badRequest": {
+        "code": 400,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      },
+
+      "error": {
+        "code": 500,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      }
+    },
+
+    "update": {
+      "success": {
+        "code": 200,
+        "response": {
+          "profileName": "happyPath",
+          "authenticationMethod": 4,
+          "encryptionMethod": 3,
+          "ssid": "ssid",
+          "linkPolicy": [14, 16],
+          "pskValue": "pskValue"
+        }
+      },
+
+      "badRequest": {
+        "code": 400,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      },
+
+      "error": {
+        "code": 500,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      }
+    },
+
+    "get": {
+      "success": {
+        "code": 200,
+        "response": {
+          "profileName": "happyPath",
+          "authenticationMethod": 4,
+          "encryptionMethod": 3,
+          "ssid": "ssid",
+          "linkPolicy": [14, 16],
+          "pskValue": "pskValue"
+        }
+      },
+
+      "notFound": {
+        "code": 404,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      },
+
+      "error": {
+        "code": 500,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      }
+    },
+
+    "delete": {
+      "success": {
+        "code": 204,
+        "response": {}
+      },
+
+      "notFound": {
+        "code": 404,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      },
+
+      "error": {
+        "code": 500,
+        "response": {
+          "error": "string",
+          "message": "string"
+        }
+      }
+    }
   }
 }

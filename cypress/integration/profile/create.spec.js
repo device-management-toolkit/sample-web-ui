@@ -16,6 +16,11 @@ describe("Test Profile Page", () => {
       body: apiResponses.ciraConfigs.getAll.forProfile.response,
     }).as("get-configs")
 
+    cy.myIntercept("GET", "wirelessconfigs", {
+      statusCode: apiResponses.wirelessConfigs.getAll.success.code,
+      body: apiResponses.wirelessConfigs.getAll.success.response
+    }).as("get-wireless")
+
     cy.myIntercept("POST", "profiles", {
       statusCode: apiResponses.profiles.create.success.code,
       body: apiResponses.profiles.create.success.response,
@@ -38,6 +43,7 @@ describe("Test Profile Page", () => {
     //Fill out the profile
     cy.get("button").contains("Add New").click()
     cy.wait("@get-configs")
+    cy.wait("@get-wireless")
     cy.enterProfileInfo(
       profileFixtures.happyPath.name,
       profileFixtures.happyPath.admin,

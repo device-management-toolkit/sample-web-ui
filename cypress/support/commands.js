@@ -79,6 +79,14 @@ Cypress.Commands.add("enterDomainInfo", (name, domain, file, pass) => {
   cy.get('input[name="provisioningCertPassword"]').type(pass)
 });
 
+Cypress.Commands.add("enterWirelessInfo", (name, ssid, password) => {
+  cy.get('input[name="profileName"]').type(name)
+  cy.get('input[name="ssid"]').type(ssid)
+  cy.get('input[name="pskPassphrase"]').type(password)
+  cy.get("mat-select[formcontrolname=authenticationMethod]").click().get("mat-option").contains("WPA PSK").click()
+  cy.get("mat-select[formcontrolname=encryptionMethod]").click().get("mat-option").contains("TKIP").click()
+})
+
 //------------------------- Common Navigation --------------------------
 
 Cypress.Commands.add("goToPage", (pageName) => {
