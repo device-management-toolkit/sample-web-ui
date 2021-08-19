@@ -233,6 +233,11 @@ describe('ProfileDetailComponent', () => {
     expect(component.tags).toEqual(['acm', 'profile'])
   })
 
+  it('should set the ciraconfigname property to null when No config option selected', () => {
+    component.ciraConfigChange('No Config Selected')
+    expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
+  })
+
   it('should return the search results when a search string is entered', () => {
     component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
     const searchString = 'home'

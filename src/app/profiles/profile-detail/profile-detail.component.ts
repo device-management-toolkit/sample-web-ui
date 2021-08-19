@@ -88,6 +88,7 @@ export class ProfileDetailComponent implements OnInit {
     )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
     this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => this.networkConfigChange(value))
+    this.profileForm.controls.ciraConfigName?.valueChanges.subscribe(value => this.ciraConfigChange(value))
   }
 
   activationChange (value: string): void {
@@ -165,6 +166,12 @@ export class ProfileDetailComponent implements OnInit {
     } else {
       this.profileForm.controls.ciraConfigName.enable()
       this.wifiAutocomplete.reset({ value: '', disabled: false })
+    }
+  }
+
+  ciraConfigChange (value: string): void {
+    if (value === Constants.NOCONFIGSELECTED) {
+      this.profileForm.controls.ciraConfigName.setValue(null)
     }
   }
 
