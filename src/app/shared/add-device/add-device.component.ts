@@ -5,7 +5,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs'
 import { timer } from 'rxjs'
 import { ProfilesService } from 'src/app/profiles/profiles.service'
 import { environment } from 'src/environments/environment'
-import { Profile } from 'src/models/models'
+import { ProfileResponse } from 'src/models/models'
 
 @Component({
   selector: 'app-add-device',
@@ -13,7 +13,7 @@ import { Profile } from 'src/models/models'
   styleUrls: ['./add-device.component.scss']
 })
 export class AddDeviceComponent implements OnInit {
-  profiles: Profile[] = []
+  profiles: ProfileResponse = { data: [], totalCount: 0 }
   activationUrl: string = ''
   rpcLinux: string = 'sudo ./rpc '
   rpcDocker: string = 'sudo docker run --device=/dev/mei0 rpc:latest '
@@ -24,12 +24,11 @@ export class AddDeviceComponent implements OnInit {
   certCheckString: string = '-n '
   isCopied: boolean = false
   selectedPlatform: string = 'linux'
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor (private readonly profilesService: ProfilesService) {
   }
 
   ngOnInit (): void {
-    this.profilesService.getData().subscribe(data => {
+    this.profilesService.getData().subscribe((data: ProfileResponse) => {
       this.profiles = data
     })
     this.formActivationUrl()

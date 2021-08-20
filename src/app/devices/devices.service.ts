@@ -7,7 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceStats, HardwareInformation, PowerState } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, HardwareInformation, PageEventOptions, PowerState } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -234,12 +234,14 @@ export class DevicesService {
       )
   }
 
-  getDevices (tags: string[] = []): Observable<Device[]> {
+  getDevices (pageEvent: PageEventOptions): Observable<DeviceResponse> {
     let query = `${environment.mpsServer}/api/v1/devices`
-    if (tags.length > 0) {
-      query += `?tags=${tags.join(',')}`
+    if (pageEvent?.tags && pageEvent.tags.length > 0) {
+      query += `?tags=${pageEvent.tags.join(',')}&$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
+    } else {
+      query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     }
-    return this.http.get<Device[]>(query)
+    return this.http.get<DeviceResponse>(query)
       .pipe(
         catchError((err) => {
           throw err

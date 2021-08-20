@@ -2,15 +2,16 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { CIRAConfig } from 'src/models/models'
+import { CIRAConfigResponse, PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
+import { MatPaginator, PageEvent } from '@angular/material/paginator'
 
 @Component({
   selector: 'app-configs',
@@ -18,22 +19,29 @@ import { ConfigsService } from './configs.service'
   styleUrls: ['./configs.component.scss']
 })
 export class ConfigsComponent implements OnInit {
-  public configs: CIRAConfig[] = []
+  public configs: CIRAConfigResponse = { data: [], totalCount: 0 }
   public isLoading = true
   displayedColumns: string[] = ['name', 'mpsserver', 'port', 'username', 'certname', 'rootcert', 'remove']
+  pageEvent: PageEventOptions = {
+    pageSize: 5,
+    startsFrom: 0,
+    count: 'true'
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly configsService: ConfigsService) { }
 
   ngOnInit (): void {
-    this.getData()
+    this.getData(this.pageEvent)
   }
 
-  getData (): void {
-    this.configsService.getData().pipe(
+  getData (pageEvent: PageEventOptions): void {
+    this.configsService.getData(pageEvent).pipe(
       finalize(() => {
         this.isLoading = false
       })
-    ).subscribe(data => {
+    ).subscribe((data: CIRAConfigResponse) => {
       this.configs = data
     }, () => {
       this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
@@ -41,7 +49,7 @@ export class ConfigsComponent implements OnInit {
   }
 
   isNoData (): boolean {
-    return !this.isLoading && this.configs.length === 0
+    return !this.isLoading && this.configs.data.length === 0
   }
 
   delete (name: string): void {
@@ -55,7 +63,7 @@ export class ConfigsComponent implements OnInit {
             this.isLoading = false
           })
         ).subscribe(data => {
-          this.getData()
+          this.getData(this.pageEvent)
           this.snackBar.open($localize`CIRA config deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         },
         () => {
@@ -63,6 +71,15 @@ export class ConfigsComponent implements OnInit {
         })
       }
     })
+  }
+
+  pageChanged (event: PageEvent): void {
+    this.pageEvent = {
+      ...this.pageEvent,
+      pageSize: event.pageSize,
+      startsFrom: event.pageIndex * event.pageSize
+    }
+    this.getData(this.pageEvent)
   }
 
   async navigateTo (path: string = 'new'): Promise<void> {

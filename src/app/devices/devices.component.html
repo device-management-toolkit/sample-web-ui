@@ -40,7 +40,7 @@
     </mat-card-header>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Devices</h3>
-        <mat-table [dataSource]="devices" [fxHide]="isNoData()">
+        <mat-table [dataSource]="devices.data" [fxHide]="isNoData()">
 
             <!-- select Column -->
             <ng-container matColumnDef="select">
@@ -104,5 +104,12 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
         </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+            [pageSize]="5"
+            [length]="devices.totalCount"
+            (page)="pageChanged($event)"
+            showFirstLastButtons
+        >
+    </mat-paginator>
     </mat-card-content>
 </mat-card>

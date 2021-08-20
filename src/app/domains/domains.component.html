@@ -15,7 +15,7 @@
 <mat-card>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Domains</h3>
-        <mat-table [dataSource]="domains" [fxHide]="isNoData()">
+        <mat-table [dataSource]="domains.data" [fxHide]="isNoData()">
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
@@ -49,5 +49,12 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
         </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+            [pageSize]="5" 
+            [length]="domains.totalCount"
+            (page) = "pageChanged($event)"
+            showFirstLastButtons
+            >
+        </mat-paginator>
     </mat-card-content>
 </mat-card>

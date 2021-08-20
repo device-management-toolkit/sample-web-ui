@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { CIRAConfig } from 'src/models/models'
+import { CIRAConfig, CIRAConfigResponse, PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -20,8 +20,14 @@ export class ConfigsService {
 
   }
 
-  getData (): Observable<CIRAConfig[]> {
-    return this.http.get<CIRAConfig[]>(this.url)
+  getData (pageEvent?: PageEventOptions): Observable<CIRAConfigResponse> {
+    let query = this.url
+    if (pageEvent) {
+      query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
+    } else {
+      query += '?$count=true'
+    }
+    return this.http.get<CIRAConfigResponse>(query)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

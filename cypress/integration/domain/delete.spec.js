@@ -19,7 +19,7 @@ describe("Test Domain Page", () => {
         body: apiResponses.domains.delete.success.response,
       }).as("delete-domain")
 
-      cy.myIntercept("GET", "domains", {
+      cy.myIntercept("GET", "domains?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.domains.getAll.success.code,
         body: apiResponses.domains.getAll.success.response,
       }).as("get-domains3")
@@ -36,7 +36,7 @@ describe("Test Domain Page", () => {
       cy.get("mat-cell").contains(domainFixtures.default.domain)
 
       //Change api response
-      cy.myIntercept("GET", "domains", {
+      cy.myIntercept("GET", "domains?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.domains.getAll.empty.code,
         body: apiResponses.domains.getAll.empty.response,
       }).as("get-domains4")

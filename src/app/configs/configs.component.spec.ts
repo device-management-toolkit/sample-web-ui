@@ -19,7 +19,22 @@ describe('ConfigsComponent', () => {
 
   beforeEach(async () => {
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
-    getDataSpy = configsService.getData.and.returnValue(of([]))
+    getDataSpy = configsService.getData.and.returnValue(of({
+      data: [{
+        authMethod: 2,
+        commonName: '52.172.14.137',
+        configName: 'ciraconfig1',
+        generateRandomPassword: false,
+        mpsPort: 4433,
+        mpsRootCertificate: 'string',
+        mpsServerAddress: '52.172.14.137',
+        passwordLength: null,
+        proxyDetails: null,
+        serverAddressFormat: 3
+
+      }],
+      totalCount: 1
+    }))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [ConfigsComponent],
@@ -38,5 +53,14 @@ describe('ConfigsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+  })
+
+  it('should change the page', () => {
+    component.pageChanged({ pageSize: 5, pageIndex: 2, length: 20 })
+    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(component.paginator.length).toBe(1)
+    expect(component.paginator.pageSize).toBe(5)
+    expect(component.paginator.pageIndex).toBe(0)
+    expect(component.paginator.showFirstLastButtons).toBe(true)
   })
 })

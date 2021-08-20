@@ -4,5 +4,7 @@
     "domain": "happyPath.com",
     "filePath": "test.pfx",
     "password": "123!@#qewQWE"
-  }
+  },
+
+  "totalCount": 20
 }

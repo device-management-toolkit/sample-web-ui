@@ -14,7 +14,8 @@
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
 <mat-card>
     <mat-card-content>
-        <mat-table [dataSource]="wirelessConfigs">
+        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Wireless Configs</h3>
+        <mat-table [dataSource]="wirelessConfigs.data">
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
@@ -62,5 +63,12 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)" ></mat-row>
         </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+            [pageSize]="5"
+            [length]="wirelessConfigs.totalCount"
+            (page) = "pageChanged($event)"
+            showFirstLastButtons
+            >
+        </mat-paginator>
     </mat-card-content>
 </mat-card>

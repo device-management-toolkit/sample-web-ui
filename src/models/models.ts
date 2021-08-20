@@ -10,6 +10,12 @@ export interface Device {
   guid: string
   tags: string[]
 }
+
+export interface DeviceResponse {
+  data: Device[]
+  totalCount: number
+}
+
 export interface DeviceStats {
   totalCount: number
   connectedCount: number
@@ -23,6 +29,11 @@ export interface Domain {
   provisioningCertStorageFormat: string
 }
 
+export interface DomainsResponse {
+  data: Domain[]
+  totalCount: number
+}
+
 export interface Profile {
   profileName: string
   amtPassword: null
@@ -34,6 +45,12 @@ export interface Profile {
   tags: string[]
   wifiConfigs: any[]
 }
+
+export interface ProfileResponse {
+  data: Profile[]
+  totalCount: number
+}
+
 export interface CIRAConfig {
   configName: string
   mpsServerAddress: string
@@ -46,6 +63,12 @@ export interface CIRAConfig {
   mpsRootCertificate: string
   proxyDetails: string
 }
+
+export interface CIRAConfigResponse {
+  data: CIRAConfig[]
+  totalCount: number
+}
+
 export interface AuditLog {
   AuditApp: string
   AuditAppID: number
@@ -235,9 +258,22 @@ export interface WirelessConfig {
   pskValue: string
   linkPolicy: number[]
 }
+
+export interface WirelessConfigResponse {
+  data: WirelessConfig[]
+  totalCount: number
+}
+
 export interface ValidatorError {
   msg: string
   param: string
   location: string
   value: string
+}
+
+export interface PageEventOptions {
+  pageSize: number
+  startsFrom: number
+  count: string
+  tags?: string[]
 }

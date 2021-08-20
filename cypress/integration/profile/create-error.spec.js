@@ -11,21 +11,21 @@ describe("Test Profile Page", () => {
     })
 
     beforeEach("", () => {
-      cy.myIntercept("GET", "ciraconfigs", {
+      cy.myIntercept("GET", "ciraconfigs?$count=true", {
         statusCode: apiResponses.ciraConfigs.getAll.forProfile.code,
         body: apiResponses.ciraConfigs.getAll.forProfile.response,
       }).as("get-configs2")
 
-      cy.myIntercept("GET", "wirelessconfigs", {
-        statusCode: apiResponses.wirelessConfigs.getAll.success.code,
-        body: apiResponses.wirelessConfigs.getAll.success.response
-      }).as("get-wireless2")
-
-      cy.myIntercept("GET", "profiles", {
+      cy.myIntercept("GET", "profiles?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.profiles.getAll.empty.code,
         body: apiResponses.profiles.getAll.empty.response,
       }).as("get-profiles5")
 
+      cy.myIntercept("GET", "wirelessconfigs?$count=true", {
+        statusCode: apiResponses.wirelessConfigs.getAll.success.code,
+        body: apiResponses.wirelessConfigs.getAll.success.response
+      }).as("get-wireless2")
+      
       cy.myIntercept("POST", "profiles", {
         statusCode: apiResponses.profiles.create.badRequest.code,
         body: apiResponses.profiles.create.badRequest.response,

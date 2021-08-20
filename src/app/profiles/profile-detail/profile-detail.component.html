@@ -79,7 +79,7 @@
             <mat-label>CIRA Configuration</mat-label>
             <mat-select formControlName="ciraConfigName">
               <mat-option value="No Config Selected">No Config</mat-option>
-              <mat-option *ngFor="let cc of ciraConfigurations" [value]="cc.configName">{{cc.configName}}</mat-option>
+              <mat-option *ngFor="let cc of ciraConfigurations.data" [value]="cc.configName">{{cc.configName}}</mat-option>
             </mat-select>
             <mat-hint align="end" *ngIf="profileForm.get('ciraConfigName')?.value === null">No config selected</mat-hint>
             <mat-hint>CIRA cannot be configured for static network</mat-hint>

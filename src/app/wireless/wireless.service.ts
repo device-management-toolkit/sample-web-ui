@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { WirelessConfig } from 'src/models/models'
+import { PageEventOptions, WirelessConfig, WirelessConfigResponse } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -13,8 +13,14 @@ export class WirelessService {
   private readonly url = `${environment.rpsServer}/api/v1/admin/wirelessconfigs`
   constructor (private readonly http: HttpClient, private readonly authService: AuthService) { }
 
-  getData (): Observable<WirelessConfig[]> {
-    return this.http.get<WirelessConfig[]>(this.url)
+  getData (pageEvent?: PageEventOptions): Observable<WirelessConfigResponse> {
+    let query = this.url
+    if (pageEvent) {
+      query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
+    } else {
+      query += '?$count=true'
+    }
+    return this.http.get<WirelessConfigResponse>(query)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
