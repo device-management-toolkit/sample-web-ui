@@ -32,7 +32,7 @@ describe('DevicesComponent', () => {
       9: 'Power Cycle',
       13: 'Off'
     })
-    getDevicesSpy = devicesService.getDevices.and.returnValue(of([{ hostname: '', guid: '', connectionStatus: true, tags: [], icon: 1 }]))
+    getDevicesSpy = devicesService.getDevices.and.returnValue(of({ data: [{ hostname: '', guid: '', connectionStatus: true, tags: [], icon: 1 }], totalCount: 1 }))
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
 
@@ -68,7 +68,7 @@ describe('DevicesComponent', () => {
     expect(result).toBeFalse()
   })
   it('should determine if all selected (true)', () => {
-    component.selection.select(component.devices[0])
+    component.selection.select(component.devices.data[0])
     const result = component.isAllSelected()
     expect(result).toBeTrue()
   })
@@ -91,5 +91,13 @@ describe('DevicesComponent', () => {
 
     component.addDevice()
     expect(dialogSpy).toHaveBeenCalled()
+  })
+  it('should change the page', () => {
+    component.pageChanged({ pageSize: 5, pageIndex: 2, length: 20 })
+    expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
+    expect(component.paginator.length).toBe(1)
+    expect(component.paginator.pageSize).toBe(5)
+    expect(component.paginator.pageIndex).toBe(0)
+    expect(component.paginator.showFirstLastButtons).toBe(true)
   })
 })

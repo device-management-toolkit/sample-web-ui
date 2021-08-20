@@ -39,8 +39,8 @@ describe('ProfileDetailComponent', () => {
     profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
     profileUpdateSpy = profilesService.update.and.returnValue(of({}))
-    configsSpy = configsService.getData.and.returnValue(of([]))
-    wirelessConfigsSpy = wirelessService.getData.and.returnValue(of([]))
+    configsSpy = configsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    wirelessConfigsSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [ProfileDetailComponent],

@@ -16,7 +16,17 @@ describe('WirelessComponent', () => {
 
   beforeEach(async () => {
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
-    getDataSpy = wirelessService.getData.and.returnValue(of([]))
+    getDataSpy = wirelessService.getData.and.returnValue(of({
+      data: [{
+        authenticationMethod: 4,
+        encryptionMethod: 4,
+        linkPolicy: [14, 16],
+        profileName: 'P1',
+        pskValue: null,
+        ssid: 'test'
+      }],
+      totalCount: 1
+    }))
     deleteSpy = wirelessService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -72,5 +82,13 @@ describe('WirelessComponent', () => {
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(deleteSpy).not.toHaveBeenCalledWith()
     expect(snackBarSpy).not.toHaveBeenCalled()
+  })
+  it('should change the page', () => {
+    component.pageChanged({ pageSize: 5, pageIndex: 2, length: 20 })
+    expect(getDataSpy).toHaveBeenCalled()
+    expect(component.paginator.length).toBe(1)
+    expect(component.paginator.pageSize).toBe(5)
+    expect(component.paginator.pageIndex).toBe(0)
+    expect(component.paginator.showFirstLastButtons).toBe(true)
   })
 })

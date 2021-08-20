@@ -17,7 +17,7 @@ describe("Test CIRA Config Page", () => {
         statusCode: apiResponses.ciraConfigs.delete.success.code
       }).as("delete-config")
 
-      cy.myIntercept("GET", "ciraconfigs", {
+      cy.myIntercept("GET", "ciraconfigs?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.ciraConfigs.getAll.success.code,
         body: apiResponses.ciraConfigs.getAll.success.response,
       }).as("get-configs")
@@ -35,7 +35,7 @@ describe("Test CIRA Config Page", () => {
       cy.get("mat-cell").contains(Cypress.env("MPSUSERNAME"))
 
       //Change api response
-      cy.myIntercept("GET", "ciraconfigs", {
+      cy.myIntercept("GET", "ciraconfigs?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.ciraConfigs.getAll.empty.code,
         body: apiResponses.ciraConfigs.getAll.empty.response,
       }).as("get-configs")

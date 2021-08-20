@@ -1,38 +1,54 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { WirelessConfig } from 'src/models/models'
+import { PageEventOptions, WirelessConfigResponse } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { WirelessService } from './wireless.service'
+import { MatPaginator, PageEvent } from '@angular/material/paginator'
 
 @Component({
   selector: 'app-wireless',
   templateUrl: './wireless.component.html',
   styleUrls: ['./wireless.component.scss']
 })
-export class WirelessComponent implements OnInit {
-  public wirelessConfigs: WirelessConfig[] = []
+export class WirelessComponent implements OnInit, AfterViewInit {
+  public wirelessConfigs: WirelessConfigResponse = { data: [], totalCount: 0 }
   public isLoading = true
   displayedColumns: string[] = ['name', 'authmethod', 'encryptionMethod', 'ssid', 'remove']
+  pageEvent: PageEventOptions = {
+    pageSize: 5,
+    startsFrom: 0,
+    count: 'true'
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator
+
   constructor (public snackBar: MatSnackBar, public readonly wirelessService: WirelessService, public router: Router, public dialog: MatDialog) { }
 
   ngOnInit (): void {
-    this.getData()
+    this.getData(this.pageEvent)
   }
 
-  getData (): void {
-    this.wirelessService.getData().pipe(
+  ngAfterViewInit (): void {
+  }
+
+  getData (pageEvent: PageEventOptions): void {
+    this.wirelessService.getData(pageEvent).pipe(
       finalize(() => {
         this.isLoading = false
       })
-    ).subscribe(data => {
+    ).subscribe((data: WirelessConfigResponse) => {
       this.wirelessConfigs = data
     }, () => {
       this.snackBar.open($localize`Unable to load Wireless Configs`, undefined, SnackbarDefaults.defaultError)
     })
+  }
+
+  isNoData (): boolean {
+    return !this.isLoading && this.wirelessConfigs.data.length === 0
   }
 
   delete (name: string): void {
@@ -46,13 +62,22 @@ export class WirelessComponent implements OnInit {
             this.isLoading = false
           })
         ).subscribe(data => {
-          this.getData()
+          this.getData(this.pageEvent)
           this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         }, () => {
           this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
         })
       }
     })
+  }
+
+  pageChanged (event: PageEvent): void {
+    this.pageEvent = {
+      ...this.pageEvent,
+      pageSize: event.pageSize,
+      startsFrom: event.pageIndex * event.pageSize
+    }
+    this.getData(this.pageEvent)
   }
 
   async navigateTo (path: string = 'new'): Promise<void> {

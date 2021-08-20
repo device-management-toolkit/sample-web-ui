@@ -14,7 +14,7 @@ describe("Test Domain Page", () => {
 
     it("creates the default domain", () => {
       //Stub the get and post requests
-      cy.myIntercept("GET", "domains", {
+      cy.myIntercept("GET", "domains?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.domains.getAll.empty.code,
         body: apiResponses.domains.getAll.empty.response,
       }).as("get-domains")
@@ -31,7 +31,7 @@ describe("Test Domain Page", () => {
       cy.get("button").contains("Add New").click()
 
       //Change api response
-      cy.myIntercept("GET", "domains", {
+      cy.myIntercept("GET", "domains?$top=5&$skip=0&$count=true", {
         statusCode: apiResponses.domains.getAll.success.code,
         body: apiResponses.domains.getAll.success.response,
       }).as("get-domains2")

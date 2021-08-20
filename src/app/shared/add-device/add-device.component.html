@@ -14,7 +14,7 @@
         <mat-form-field fxFlex="100">
             <mat-label>Choose Profile</mat-label>
             <mat-select (selectionChange)="profileChange($event)" name="profile" required>
-                <mat-option *ngFor="let profile of profiles" [value]="profile.profileName">
+                <mat-option *ngFor="let profile of profiles.data" [value]="profile.profileName">
                     {{profile.profileName}}
                 </mat-option>
             </mat-select>

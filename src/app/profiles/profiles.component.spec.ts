@@ -21,7 +21,21 @@ describe('ProfilesComponent', () => {
 
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
-    getDataSpy = profilesService.getData.and.returnValue(of([]))
+    getDataSpy = profilesService.getData.and.returnValue(of({
+      data: [{
+        activation: 'acmactivate',
+        ciraConfigName: 'ciraconfig1',
+        dhcpEnabled: true,
+        generateRandomMEBxPassword: false,
+        generateRandomPassword: false,
+        mebxPasswordLength: null,
+        passwordLength: null,
+        profileName: 'profile1',
+        tags: [],
+        wifiConfigs: []
+      }],
+      totalCount: 1
+    }))
     deleteSpy = profilesService.delete.and.returnValue(of(null))
 
     await TestBed.configureTestingModule({
@@ -78,5 +92,13 @@ describe('ProfilesComponent', () => {
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(deleteSpy).not.toHaveBeenCalledWith()
     expect(snackBarSpy).not.toHaveBeenCalled()
+  })
+  it('should change the page', () => {
+    component.pageChanged({ pageSize: 5, pageIndex: 2, length: 20 })
+    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(component.paginator.length).toBe(1)
+    expect(component.paginator.pageSize).toBe(5)
+    expect(component.paginator.pageIndex).toBe(0)
+    expect(component.paginator.showFirstLastButtons).toBe(true)
   })
 })

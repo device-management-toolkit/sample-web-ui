@@ -12,7 +12,7 @@ describe("create a wireless profile", () => {
             body: apiResponses.wirelessConfigs.create.success.response,
         }).as("post-wireless")
 
-        cy.myIntercept("GET", "wirelessconfigs", {
+        cy.myIntercept("GET", "wirelessconfigs?$top=5&$skip=0&$count=true", {
             statusCode: apiResponses.wirelessConfigs.getAll.empty.code,
             body: apiResponses.wirelessConfigs.getAll.empty.response,
         }).as("get-wireless")
@@ -21,7 +21,7 @@ describe("create a wireless profile", () => {
         cy.wait("@get-wireless")
 
         //change api response
-        cy.myIntercept("GET", "wirelessconfigs", {
+        cy.myIntercept("GET", "wirelessconfigs?$top=5&$skip=0&$count=true", {
             statusCode: apiResponses.wirelessConfigs.getAll.success.code,
             body: apiResponses.wirelessConfigs.getAll.success.response,
         }).as("get-wireless2")

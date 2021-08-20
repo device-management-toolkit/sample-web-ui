@@ -10,7 +10,7 @@ import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { CIRAConfig, WiFiProfile } from 'src/models/models'
+import { CIRAConfigResponse, WiFiProfile, WirelessConfigResponse } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipInputEvent } from '@angular/material/chips'
@@ -27,7 +27,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 export class ProfileDetailComponent implements OnInit {
   public profileForm: FormGroup
   public activationModes = [{ display: 'Admin Control Mode', value: Constants.ACMActivate }, { display: 'Client Control Mode', value: Constants.CCMActivate }]
-  public ciraConfigurations: CIRAConfig[] = []
+  public ciraConfigurations: CIRAConfigResponse = { data: [], totalCount: 0 }
   public isLoading = false
   public pageTitle = 'New Profile'
   public isEdit = false
@@ -103,8 +103,8 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   getWirelessConfigs (): void {
-    this.wirelessService.getData().subscribe(data => {
-      this.wirelessConfigurations = data.map(item => item.profileName)
+    this.wirelessService.getData().subscribe((data: WirelessConfigResponse) => {
+      this.wirelessConfigurations = data.data.map(item => item.profileName)
     }, error => {
       this.errorMessages = error
     })
