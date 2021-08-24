@@ -85,38 +85,48 @@
 </div>
 <mat-divider></mat-divider>
 <div fxLayout="row wrap" style="margin: 15px">
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex=20 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="left center">
+        <div fxFlex=100
+            matTooltip="Specify a wireless configuration for you device to wirelessly connect to the Managed Presence Server (MPS)">
+            <button mat-icon-button routerLink="/wireless">
+                <mat-icon>wifi</mat-icon>
+            </button>
+        </div>
+        <h3 class="mat-h3">1. Create Wireless Config [Optional]</h3>
+    </div>
+
+    <div fxFlex=18 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
         <div fxFlex=100
             matTooltip="Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS)">
             <button mat-icon-button routerLink="/ciraconfigs">
                 <mat-icon>phonelink_setup</mat-icon>
             </button>
         </div>
-        <h3 class="mat-h3">1. Create a CIRA Config</h3>
+        <h3 class="mat-h3">2. Create a CIRA Config</h3>
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex=18 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
         <div fxFlex=100
             matTooltip="Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings">
             <button mat-icon-button routerLink="/profiles">
                 <mat-icon>system_update</mat-icon>
             </button>
         </div>
-        <h3 class="mat-h3">2. Create a Profile</h3>
+        <h3 class="mat-h3">3. Create a Profile</h3>
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex=24 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
         <div fxFlex=100 matTooltip="Required for activation in Admin Control Mode (ACM)">
             <button mat-icon-button routerLink="/domains">
                 <mat-icon>security</mat-icon>
             </button>
         </div>
-        <h3 fxFlex=100 class="mat-h3">3. Add a Provisioning Certificate [Optional]</h3>
+        <h3 fxFlex=100 class="mat-h3">4. Add a Provisioning Certificate [Optional]</h3>
     </div>
-    <div fxFlex=25 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex=20 fxFlex.lt-md=100 fxLayout="column" fxLayoutAlign="center center">
         <div fxFlex=100 matTooltip="Use device actions to control a list of activated, connected devices">
             <button mat-icon-button routerLink="/devices">
                 <mat-icon>phonelink</mat-icon>
             </button>
         </div>
-        <h3 class="mat-h3">4. Manage Your Device</h3>
+        <h3 class="mat-h3">5. Manage Your Device</h3>
     </div>
 </div>
