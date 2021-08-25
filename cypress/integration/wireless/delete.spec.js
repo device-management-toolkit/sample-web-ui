@@ -10,7 +10,7 @@ describe("test wireless profiles page", () => {
         cy.myIntercept("DELETE", /.*wirelessconfigs.*/, {
             statusCode: apiResponses.wirelessConfigs.delete.success.code,
         }).as("delete-profile")
-        cy.myIntercept("GET", "wirelessconfigs?$top=5&$skip=0&$count=true", {
+        cy.myIntercept("GET", "wirelessconfigs?$top=25&$skip=0&$count=true", {
             statusCode: apiResponses.wirelessConfigs.getAll.success.code,
             body: apiResponses.wirelessConfigs.getAll.success.response,
         }).as("get-wireless")
@@ -26,7 +26,7 @@ describe("test wireless profiles page", () => {
         cy.get("mat-cell").contains(wirlessFixtures.happyPath.encryptionMethod)
         cy.get("mat-cell").contains(wirlessFixtures.happyPath.ssid)
 
-        cy.myIntercept("GET", "wirelessconfigs?$top=5&$skip=0&$count=true", {
+        cy.myIntercept("GET", "wirelessconfigs?$top=25&$skip=0&$count=true", {
             statusCode: apiResponses.wirelessConfigs.getAll.empty.code,
             body: apiResponses.wirelessConfigs.getAll.empty.response,
           }).as("get-wireless2")

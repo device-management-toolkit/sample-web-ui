@@ -49,8 +49,8 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
         </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-            [pageSize]="5" 
+        <mat-paginator [pageSizeOptions]="[25, 50, 100]"
+            [pageSize]="25" 
             [length]="domains.totalCount"
             (page) = "pageChanged($event)"
             showFirstLastButtons

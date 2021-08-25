@@ -16,7 +16,7 @@ describe("Test Profile Page", () => {
         body: apiResponses.ciraConfigs.getAll.forProfile.response,
       }).as("get-configs2")
 
-      cy.myIntercept("GET", "profiles?$top=5&$skip=0&$count=true", {
+      cy.myIntercept("GET", "profiles?$top=25&$skip=0&$count=true", {
         statusCode: apiResponses.profiles.getAll.empty.code,
         body: apiResponses.profiles.getAll.empty.response,
       }).as("get-profiles5")

@@ -24,7 +24,7 @@ export class ProfilesComponent implements OnInit {
   public isLoading = true
   displayedColumns: string[] = ['name', 'networkConfig', 'ciraConfig', 'activation', 'remove']
   pageEvent: PageEventOptions = {
-    pageSize: 5,
+    pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }

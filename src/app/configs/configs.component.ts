@@ -23,7 +23,7 @@ export class ConfigsComponent implements OnInit {
   public isLoading = true
   displayedColumns: string[] = ['name', 'mpsserver', 'port', 'username', 'certname', 'rootcert', 'remove']
   pageEvent: PageEventOptions = {
-    pageSize: 5,
+    pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }

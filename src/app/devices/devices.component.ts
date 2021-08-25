@@ -30,7 +30,7 @@ export class DevicesComponent implements OnInit {
   public powerStates: any
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
   pageEvent: PageEventOptions = {
-    pageSize: 5,
+    pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }

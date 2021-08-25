@@ -19,7 +19,7 @@ export class WirelessComponent implements OnInit, AfterViewInit {
   public isLoading = true
   displayedColumns: string[] = ['name', 'authmethod', 'encryptionMethod', 'ssid', 'remove']
   pageEvent: PageEventOptions = {
-    pageSize: 5,
+    pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }
