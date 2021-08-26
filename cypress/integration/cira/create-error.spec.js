@@ -22,7 +22,7 @@ describe("Test CIRA Config Page", () => {
         body: apiResponses.ciraConfigs.create.badRequest.response,
       }).as("post-config1")
 
-      cy.intercept("GET", "ciraconfigs?$top=5&$skip=0&$count=true", {
+      cy.intercept("GET", "ciraconfigs?$top=25&$skip=0&$count=true", {
         statusCode: apiResponses.ciraConfigs.getAll.empty.code,
         body: apiResponses.ciraConfigs.getAll.empty.response,
       }).as("get-configs")

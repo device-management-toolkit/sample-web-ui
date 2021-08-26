@@ -8,7 +8,7 @@ describe("Test wireless creation page", () => {
     })
 
     beforeEach("Set up the api stubs", () => {
-        cy.myIntercept("GET", "wirelessconfigs?$top=5&$skip=0&$count=true", {
+        cy.myIntercept("GET", "wirelessconfigs?$top=25&$skip=0&$count=true", {
             statuscode: apiResponses.wirelessConfigs.getAll.empty.code,
             body: apiResponses.wirelessConfigs.getAll.empty.response
         }).as("get-wireless3")

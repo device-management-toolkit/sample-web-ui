@@ -24,7 +24,7 @@ export class DomainsComponent implements OnInit {
   public isLoading = true
   displayedColumns: string[] = ['name', 'domainSuffix', 'remove']
   pageEvent: PageEventOptions = {
-    pageSize: 5,
+    pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }

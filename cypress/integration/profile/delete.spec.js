@@ -15,7 +15,7 @@ describe("Test Profile Page", () => {
         statusCode: apiResponses.profiles.delete.success.code,
       }).as("delete-profile")
 
-      cy.myIntercept("GET", "profiles?$top=5&$skip=0&$count=true", {
+      cy.myIntercept("GET", "profiles?$top=25&$skip=0&$count=true", {
         statusCode: apiResponses.profiles.getAll.success.code,
         body: apiResponses.profiles.getAll.success.response,
       }).as("get-profiles3")
@@ -34,7 +34,7 @@ describe("Test Profile Page", () => {
       cy.get("mat-cell").contains(profileFixtures.check.mode.ccm)
 
       //Change api response
-      cy.myIntercept("GET", "profiles?$top=5&$skip=0&$count=true", {
+      cy.myIntercept("GET", "profiles?$top=25&$skip=0&$count=true", {
         statusCode: apiResponses.profiles.getAll.empty.code,
         body: apiResponses.profiles.getAll.empty.response,
       }).as("get-profiles4")
