@@ -9,7 +9,7 @@ describe("Test Device Page", () => {
   })
 
     it("loads all the devices", () => {
-      cy.myIntercept("GET", 'devices?$top=5&$skip=0&$count=true', {
+      cy.myIntercept("GET", 'devices?$top=25&$skip=0&$count=true', {
         statusCode: apiResponses.devices.getAll.success.code,
         body: apiResponses.devices.getAll.success.response,
       }).as("get-devices")
@@ -27,12 +27,12 @@ describe("Test Device Page", () => {
           body: apiResponses.tags.getAll.success.response,
         }).as("get-tags")
   
-        cy.myIntercept("GET", "devices?$top=5&$skip=0&$count=true", {
+        cy.myIntercept("GET", "devices?$top=25&$skip=0&$count=true", {
           statusCode: apiResponses.devices.getAll.tags.code,
           body: apiResponses.devices.getAll.tags.response,
         }).as("get-devices2")
   
-        cy.myIntercept("GET", "**/devices?tags=Windows&$top=5&$skip=0&$count=true", {
+        cy.myIntercept("GET", "**/devices?tags=Windows&$top=25&$skip=0&$count=true", {
           statusCode: apiResponses.devices.getAll.windows.code,
           body: apiResponses.devices.getAll.windows.response,
         }).as("get-windows")
@@ -56,7 +56,7 @@ describe("Test Device Page", () => {
         body: apiResponses.tags.getAll.success.response,
       }).as("get-tags")
 
-      cy.myIntercept("GET", "devices?$top=5&$skip=0&$count=true", {
+      cy.myIntercept("GET", "devices?$top=25&$skip=0&$count=true", {
         statusCode: apiResponses.devices.getAll.success.code,
         body: apiResponses.devices.getAll.success.response,
       }).as("get-devices")

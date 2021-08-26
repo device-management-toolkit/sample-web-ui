@@ -93,10 +93,10 @@ describe('DevicesComponent', () => {
     expect(dialogSpy).toHaveBeenCalled()
   })
   it('should change the page', () => {
-    component.pageChanged({ pageSize: 5, pageIndex: 2, length: 20 })
+    component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
     expect(component.paginator.length).toBe(1)
-    expect(component.paginator.pageSize).toBe(5)
+    expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })

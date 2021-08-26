@@ -78,11 +78,11 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.configName)"></mat-row>
         </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        <mat-paginator [pageSizeOptions]="[25, 50, 100]"
             showFirstLastButtons 
             [length]="configs.totalCount"
             (page) = "pageChanged($event)"
-            [pageSize]="5">
+            [pageSize]="25">
         </mat-paginator>
     </mat-card-content>
 </mat-card>

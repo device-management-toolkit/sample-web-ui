@@ -100,7 +100,7 @@
             "provisioningCertPassword": "P@ssw0rd"
             }
           ],
-          "totalCount": 20
+          "totalCount": 100
         }
       }
     },
@@ -345,7 +345,7 @@
             "proxyDetails": ""
             }
           ],
-          "totalCount": 20
+          "totalCount": 100
         }
       }
     },
@@ -578,7 +578,7 @@
               "mebxPasswordLength": null
             }
           ],
-          "totalCount": 20
+          "totalCount": 100
         }
       }
     },
@@ -939,7 +939,7 @@
               }
             }
           ],
-          "totalCount":20
+          "totalCount":100
         }
       }
     }
@@ -1202,7 +1202,7 @@
             "linkPolicy": [14,16],
             "pskValue": "pskValue"
           }],
-          "totalCount":20
+          "totalCount":100
         }
       }
     },
