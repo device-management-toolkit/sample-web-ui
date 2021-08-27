@@ -10,5 +10,6 @@ export default {
   TKIP: 3,
   CCMP: 4,
   NOCONFIGSELECTED: 'No Config Selected',
-  NORESULTS: 'No Wifi Configs Found'
+  NORESULTS: 'No Wifi Configs Found',
+  ASSSOCIATEDERROR: 'Foreign key violation'
 }

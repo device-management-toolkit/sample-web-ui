@@ -4,6 +4,7 @@
 **********************************************************************/
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
@@ -16,9 +17,10 @@ describe('ConfigsComponent', () => {
   let component: ConfigsComponent
   let fixture: ComponentFixture<ConfigsComponent>
   let getDataSpy: jasmine.Spy
+  let deleteSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
+    const configsService = jasmine.createSpyObj('ConfigsService', ['getData', 'delete'])
     getDataSpy = configsService.getData.and.returnValue(of({
       data: [{
         authMethod: 2,
@@ -35,6 +37,7 @@ describe('ConfigsComponent', () => {
       }],
       totalCount: 1
     }))
+    deleteSpy = configsService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [ConfigsComponent],
@@ -62,5 +65,30 @@ describe('ConfigsComponent', () => {
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
+  })
+
+  it('should navigate to existing', async () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    await component.navigateTo('path')
+    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs/path'])
+  })
+
+  it('should navigate to new', async () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    await component.navigateTo()
+    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs/new'])
+  })
+
+  it('should delete', async () => {
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const snackBarSpy = spyOn(component.snackBar, 'open')
+
+    await component.delete('ciraconfig1')
+    expect(dialogSpy).toHaveBeenCalled()
+    fixture.detectChanges()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(deleteSpy).toHaveBeenCalled()
+    expect(snackBarSpy).toHaveBeenCalled()
   })
 })
