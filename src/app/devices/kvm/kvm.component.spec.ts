@@ -19,16 +19,20 @@ describe('KvmComponent', () => {
   let fixture: ComponentFixture<KvmComponent>
   let setAmtFeaturesSpy: jasmine.Spy
   let powerStateSpy: jasmine.Spy
+  let getAMTFeaturesSpy: jasmine.Spy
+  let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode'])
 
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       connectKVMSocket: new EventEmitter<boolean>(false)
     }
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({}))
+    reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of({}))
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
@@ -55,7 +59,9 @@ describe('KvmComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(tokenSpy).toHaveBeenCalled()
-    expect(setAmtFeaturesSpy.calls.any()).toBe(true)
-    expect(powerStateSpy.calls.any()).toBe(true)
+    expect(setAmtFeaturesSpy).toHaveBeenCalled()
+    expect(powerStateSpy).toHaveBeenCalled()
+    expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    expect(reqUserConsentCodeSpy).toHaveBeenCalled()
   })
 })
