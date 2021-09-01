@@ -7,7 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, HardwareInformation, PageEventOptions, PowerState } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, HardwareInformation, PageEventOptions, PowerState, userConsentResponse } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -270,6 +270,34 @@ export class DevicesService {
 
   getStats (): Observable<DeviceStats> {
     return this.http.get<DeviceStats>(`${environment.mpsServer}/api/v1/devices/stats`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  reqUserConsentCode (deviceId: string): Observable<userConsentResponse> {
+    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  cancelUserConsentCode (deviceId: string): Observable<userConsentResponse> {
+    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/${deviceId}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  sendUserConsentCode (deviceId: string, userConsentCode: number): Observable<userConsentResponse> {
+    const payload = { consentCode: userConsentCode }
+    return this.http.post<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
           throw err

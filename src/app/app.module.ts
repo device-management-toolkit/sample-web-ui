@@ -27,7 +27,6 @@ import { MomentModule } from 'ngx-moment'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
-import { PowerAlertComponent } from './devices/sol/poweralert/poweralert.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 import { AuthorizeInterceptor } from './authorize.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
@@ -35,6 +34,7 @@ import { WirelessComponent } from './wireless/wireless.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
+import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
 
 @NgModule({
   declarations: [
@@ -52,10 +52,10 @@ import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
     KvmComponent,
     SolComponent,
     AuditLogComponent,
-    PowerAlertComponent,
     DeviceToolbarComponent,
     WirelessComponent,
-    WirelessDetailComponent
+    WirelessDetailComponent,
+    DeviceUserConsentComponent
   ],
   entryComponents: [
     DialogContentComponent

@@ -94,6 +94,7 @@ export interface APIResponse {
 
 export interface AmtFeaturesResponse {
   userConsent: string
+  optInState: number
   redirection: boolean
   KVM: boolean
   SOL: boolean
@@ -276,4 +277,32 @@ export interface PageEventOptions {
   startsFrom: number
   count: string
   tags?: string[]
+}
+
+export interface Header {
+  To: string
+  RelatesTo: string
+  Action: string
+  MessageID: string
+  ResourceURI: string
+  Method: string
+}
+export interface Body {
+  ReturnValue: number
+  ReturnValueStr: string
+}
+
+export interface userConsentResponse {
+  Header: Header
+  Body: Body
+}
+
+export interface userConsentData {
+  deviceId: string
+  results: any
+}
+
+export interface errorResponse {
+  error: string
+  errorDescription: string
 }
