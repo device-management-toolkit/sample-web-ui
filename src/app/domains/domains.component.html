@@ -49,12 +49,14 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
         </mat-table>
-        <mat-paginator [pageSizeOptions]="[25, 50, 100]"
-            [pageSize]="25" 
-            [length]="domains.totalCount"
-            (page) = "pageChanged($event)"
-            showFirstLastButtons
-            >
-        </mat-paginator>
+        <div *ngIf="domains.totalCount">    
+            <mat-paginator [pageSizeOptions]="[25, 50, 100]"
+                [pageSize]="25" 
+                [length]="domains.totalCount"
+                (page) = "pageChanged($event)"
+                showFirstLastButtons>
+            </mat-paginator>
+        </div>    
+        
     </mat-card-content>
 </mat-card>
