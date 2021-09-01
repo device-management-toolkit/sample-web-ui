@@ -100,16 +100,25 @@
                     </div>
                 </mat-cell>
             </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <ng-container matColumnDef="notification">
+                <mat-header-cell *matHeaderCellDef fxFlex="50px"></mat-header-cell>
+                <mat-cell  *matCellDef="let element" fxFlex="50px">
+                    <mat-icon color="primary" matTooltip="Power action sent successfully" *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
+                    <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready" *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
+                    <mat-icon color="warn" matTooltip="Error sending power action" *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
+                </mat-cell>
+            </ng-container>
+           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
         </mat-table>
-        <mat-paginator [pageSizeOptions]="[25, 50, 100]"
-            [pageSize]="25"
-            [length]="devices.totalCount"
-            (page)="pageChanged($event)"
-            showFirstLastButtons
-        >
-    </mat-paginator>
+
+        <div *ngIf="devices.totalCount">
+            <mat-paginator [pageSizeOptions]="[25, 50, 100]"
+                [pageSize]="25"
+                [length]="devices.totalCount"
+                (page)="pageChanged($event)"
+                showFirstLastButtons>
+            </mat-paginator>
+        </div>
     </mat-card-content>
 </mat-card>
