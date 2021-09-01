@@ -15,13 +15,17 @@ describe('SolComponent', () => {
   let fixture: ComponentFixture<SolComponent>
   let setAmtFeaturesSpy: jasmine.Spy
   let getPowerStateSpy: jasmine.Spy
+  let getAMTFeaturesSpy: jasmine.Spy
+  let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getPowerState', 'setAmtFeatures'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({}))
+    reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of({}))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
     const authServiceStub = {
@@ -50,7 +54,9 @@ describe('SolComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(tokenSpy).toHaveBeenCalled()
-    expect(getPowerStateSpy).toHaveBeenCalledWith('guid')
-    expect(setAmtFeaturesSpy).toHaveBeenCalledWith('guid')
+    expect(getPowerStateSpy).toHaveBeenCalled()
+    expect(setAmtFeaturesSpy).toHaveBeenCalled()
+    expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    expect(reqUserConsentCodeSpy).toHaveBeenCalled()
   })
 })
