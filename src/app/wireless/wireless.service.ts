@@ -43,7 +43,7 @@ export class WirelessService {
     return this.http.delete(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
-          const errorMessages = this.authService.onError(err)
+          const errorMessages = this.authService.onDeleteError(err)
           return throwError(errorMessages)
         })
       )
