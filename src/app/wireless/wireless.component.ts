@@ -8,6 +8,7 @@ import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.c
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { WirelessService } from './wireless.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
+import Constants from '../shared/config/Constants'
 
 @Component({
   selector: 'app-wireless',
@@ -64,8 +65,12 @@ export class WirelessComponent implements OnInit, AfterViewInit {
         ).subscribe(data => {
           this.getData(this.pageEvent)
           this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        }, () => {
-          this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
+        }, error => {
+          if (error.error === Constants.ASSSOCIATEDERROR) {
+            this.snackBar.open(error.message, undefined, SnackbarDefaults.longError)
+          } else {
+            this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
+          }
         })
       }
     })
