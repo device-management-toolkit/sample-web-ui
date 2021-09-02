@@ -9,8 +9,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { BehaviorSubject, forkJoin, from, Observable, throwError } from 'rxjs'
-import { catchError, delay, finalize, map, mergeMap } from 'rxjs/operators'
+import { catchError, finalize, delay, map, mergeMap } from 'rxjs/operators'
+import { BehaviorSubject, forkJoin, from, Observable, of, throwError } from 'rxjs'
 import { Device, DeviceResponse, PageEventOptions } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -27,8 +27,10 @@ export class DevicesComponent implements OnInit {
   public tags: string[] = []
   public selectedTags = new BehaviorSubject<string[]>([])
   public selection: SelectionModel<Device>
+  public bulkActionResponses: any[] = []
+  public isTrue: boolean = false
   public powerStates: any
-  displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions']
+  displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions', 'notification']
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -123,33 +125,51 @@ export class DevicesComponent implements OnInit {
 
   bulkPowerAction (action: number): void {
     const requests: Array<Observable<any>> = []
+    this.isLoading = true
     this.selection.selected.forEach(z => {
-      requests.push(this.devicesService.sendPowerAction(z.guid, action))
+      requests.push(this.devicesService.sendPowerAction(z.guid, action).pipe(
+        catchError(err => of({ err })),
+        map(i => ({
+          StatusMessage: i?.Body && i.Body.ReturnValueStr ? i.Body.ReturnValueStr : 'ERROR',
+          StatusType: i?.Body && i.Body.ReturnValue !== undefined ? i.Body.ReturnValue : -1,
+          guid: z.guid
+        }))
+      ))
     })
 
     forkJoin(requests).subscribe(result => {
-      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      this.isLoading = false
+      result.forEach(res => {
+        (this.devices.data.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+      })
+      this.resetResponse()
     })
   }
 
   sendPowerAction (deviceId: string, action: number): void {
     this.isLoading = true
     this.devicesService.sendPowerAction(deviceId, action).pipe(
-      catchError(err => {
-        // TODO: handle error better
-        this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
+      catchError((): any => {
+        (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
       }),
       finalize(() => {
         this.isLoading = false
       })
     ).subscribe(data => {
-      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = data.Body.ReturnValueStr
+      this.resetResponse()
       this.devicesService.getPowerState(deviceId).pipe(delay(2000)).subscribe(z => {
         (this.devices.data.find(y => y.guid === deviceId) as any).powerstate = z.powerstate
       })
-      console.log(data)
+    }, err => {
+      console.log(err)
     })
+  }
+
+  resetResponse (): void {
+    setTimeout(() => {
+      (this.devices.data.find((items: any) => items.StatusMessage === 'SUCCESS') as any).StatusMessage = ''
+    }, 5000)
   }
 
   addDevice (): void {
