@@ -249,8 +249,7 @@ export class DevicesService {
       )
   }
 
-  setAmtFeatures (deviceId: string): Observable<AmtFeaturesResponse> {
-    const payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }
+  setAmtFeatures (deviceId: string, payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }): Observable<AmtFeaturesResponse> {
     return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
