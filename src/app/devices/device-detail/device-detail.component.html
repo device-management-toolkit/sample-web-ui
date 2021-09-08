@@ -73,7 +73,7 @@
                     </mat-card-title>
                     <mat-card-subtitle>Status of AMT Enabled Features</mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content class="amt-features">
+                <mat-card-content class="amt-features" [formGroup]="amtEnabledFeatures">
                     <p></p>
                     <div fxLayout="row wrap">
                         <div fxFlex="50">
@@ -86,25 +86,25 @@
                             <p>IDE Redirection:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <mat-icon>{{amtFeatures?.IDER === true ? "check_circle":"cancel"}}</mat-icon>
+                            <mat-checkbox formControlName="enableIDER" (change)="setAmtFeatures()"></mat-checkbox>
                         </div>
                         <div fxFlex="50">
                             <p>KVM:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <mat-icon>{{amtFeatures?.KVM === true ? "check_circle":"cancel"}}</mat-icon>
+                            <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"></mat-checkbox>
                         </div>
                         <div fxFlex="50">
                             <p>SOL:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <mat-icon>{{amtFeatures?.SOL === true ? "check_circle":"cancel"}}</mat-icon>
+                            <mat-checkbox formControlName="enableSOL" (change)="setAmtFeatures()"></mat-checkbox>
                         </div>
                         <div fxFlex="50">
                             <p>User Consent:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3"> {{amtFeatures?.userConsent}}</span>
+                            <span class="mat-h3"> {{amtEnabledFeatures.value.userConsent}}</span>
                         </div>
                     </div>
                 </mat-card-content>

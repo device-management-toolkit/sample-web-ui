@@ -3,6 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { throwError } from 'rxjs'
@@ -20,7 +21,7 @@ export class DeviceDetailComponent implements OnInit {
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public hwInfo?: HardwareInformation
   public amtVersion: any
-  public amtFeatures?: AmtFeaturesResponse
+  public amtFeatures: AmtFeaturesResponse = { KVM: false, SOL: false, IDER: false, redirection: false, optInState: 0, userConsent: 'none' }
   public isLoading = false
   public deviceId: string = ''
   public targetOS: any
@@ -58,8 +59,17 @@ export class DeviceDetailComponent implements OnInit {
   public showSol: boolean = false
   public selectedAction: string = ''
   public deviceState: number = 0
-  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService) {
+  public amtEnabledFeatures: FormGroup
+  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
     this.targetOS = this.devicesService.TargetOSMap
+    this.amtEnabledFeatures = fb.group({
+      enableIDER: false,
+      enableKVM: false,
+      enableSOL: false,
+      userConsent: 'none',
+      optInState: 0,
+      redirection: false
+    })
   }
 
   ngOnInit (): void {
@@ -98,11 +108,27 @@ export class DeviceDetailComponent implements OnInit {
         tempLoading[2] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
-        this.amtFeatures = results
+        this.amtEnabledFeatures = this.fb.group({
+          enableIDER: results.IDER,
+          enableKVM: results.KVM,
+          enableSOL: results.SOL,
+          userConsent: results.userConsent,
+          optInState: results.optInState,
+          redirection: results.redirection
+        })
       }, err => {
         this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
         return throwError(err)
       })
+    })
+  }
+
+  setAmtFeatures (): void {
+    this.isLoading = true
+    this.devicesService.setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value).pipe(finalize(() => {
+      this.isLoading = false
+    })).subscribe((results: any) => {
+      this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
     })
   }
 
