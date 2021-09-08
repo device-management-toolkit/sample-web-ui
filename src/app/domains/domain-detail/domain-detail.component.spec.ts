@@ -17,11 +17,14 @@ describe('DomainDetailComponent', () => {
   let component: DomainDetailComponent
   let fixture: ComponentFixture<DomainDetailComponent>
   let getRecordSpy: jasmine.Spy
+  let updateRecordSpy: jasmine.Spy
+  let createRecordSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const domainsService = jasmine.createSpyObj('DomainsService', ['getRecord'])
-    getRecordSpy = domainsService.getRecord.and.returnValue(of([]))
-
+    const domainsService = jasmine.createSpyObj('DomainsService', ['getRecord', 'update', 'create'])
+    getRecordSpy = domainsService.getRecord.and.returnValue(of({ profileName: 'domain' }))
+    updateRecordSpy = domainsService.update.and.returnValue(of({}))
+    createRecordSpy = domainsService.create.and.returnValue(of({}))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [DomainDetailComponent],
@@ -46,5 +49,59 @@ describe('DomainDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')
+    expect(component.isLoading).toBeFalse()
+    expect(component.isEdit).toBeTrue()
+    expect(component.pageTitle).toEqual('domain')
+  })
+
+  it('should cancel', async () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    await component.cancel()
+    expect(routerSpy).toHaveBeenCalledWith(['/domains'])
+  })
+
+  it('should submit when valid(update)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    expect(component.domainForm.valid).toBeTruthy()
+    component.onSubmit()
+
+    expect(updateRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should submit when form is valid(create)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.isEdit = false
+    expect(component.domainForm.valid).toBeTruthy()
+    component.onSubmit()
+
+    expect(createRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should read the domain certificate file contents on file upload', () => {
+    const obj = {
+      data: 'application/x-pkcs12;base64;domaincertdata'
+    }
+    const event = {
+      target: {
+        files: [new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' })]
+      }
+    }
+
+    component.onFileSelected(event)
   })
 })
