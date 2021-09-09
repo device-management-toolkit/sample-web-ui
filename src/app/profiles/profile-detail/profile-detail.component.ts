@@ -46,8 +46,10 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [this.activationModes[0].value, Validators.required],
-      amtPassword: [null, Validators.required],
-      mebxPassword: [null, Validators.required],
+      generateRandomPassword: [true, Validators.required],
+      amtPassword: [{ value: null, disabled: true }],
+      generateRandomMEBxPassword: [true, Validators.required],
+      mebxPassword: [{ value: null, disabled: true }],
       dhcpEnabled: [true],
       ciraConfigName: [null],
       wifiConfigs: [null]
@@ -87,6 +89,8 @@ export class ProfileDetailComponent implements OnInit {
       map(value => value.length > 0 ? this.search(value) : [])
     )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
+    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
+    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
     this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => this.networkConfigChange(value))
     this.profileForm.controls.ciraConfigName?.valueChanges.subscribe(value => this.ciraConfigChange(value))
   }
@@ -108,6 +112,30 @@ export class ProfileDetailComponent implements OnInit {
     }, error => {
       this.errorMessages = error
     })
+  }
+
+  generateRandomPasswordChange (value: boolean): void {
+    if (value) {
+      this.profileForm.controls.amtPassword.disable()
+      this.profileForm.controls.amtPassword.setValue(null)
+      this.profileForm.controls.amtPassword.clearValidators()
+      this.profileForm.controls.amtPassword.setValue(null)
+    } else {
+      this.profileForm.controls.amtPassword.enable()
+      this.profileForm.controls.amtPassword.setValidators(Validators.required)
+    }
+  }
+
+  generateRandomMEBxPasswordChange (value: boolean): void {
+    if (value) {
+      this.profileForm.controls.mebxPassword.disable()
+      this.profileForm.controls.mebxPassword.setValue(null)
+      this.profileForm.controls.mebxPassword.clearValidators()
+      this.profileForm.controls.mebxPassword.setValue(null)
+    } else if (this.profileForm.controls.activation.value === Constants.ACMActivate) {
+      this.profileForm.controls.mebxPassword.enable()
+      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+    }
   }
 
   generateRandomPassword (length: number = 16): string {
