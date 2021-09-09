@@ -15,7 +15,7 @@
 <mat-card>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Wireless Configs</h3>
-        <mat-table [dataSource]="wirelessConfigs.data">
+        <mat-table [dataSource]="wirelessConfigs.data" [fxHide]="isNoData()">
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
