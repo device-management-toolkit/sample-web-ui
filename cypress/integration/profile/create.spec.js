@@ -47,8 +47,8 @@ describe("Test Profile Page", () => {
     cy.enterProfileInfo(
       profileFixtures.happyPath.name,
       profileFixtures.happyPath.admin,
-      Cypress.env("AMTPASSWORD"),
-      Cypress.env("MEBXPASSWORD"),
+      true,
+      true,
       profileFixtures.happyPath.netConfig,
       profileFixtures.happyPath.ciraConfig
     )

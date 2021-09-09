@@ -34,6 +34,8 @@ describe('ProfilesService', () => {
         ciraConfigName: 'config1',
         dhcpEnabled: true,
         mebxPassword: 'password',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: true,
         tags: ['acm'],
         wifiConfigs: []
       }],
@@ -59,6 +61,8 @@ describe('ProfilesService', () => {
       ciraConfigName: 'config1',
       dhcpEnabled: true,
       mebxPassword: 'password',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
       tags: ['acm'],
       wifiConfigs: []
     }
@@ -90,6 +94,8 @@ describe('ProfilesService', () => {
       ciraConfigName: 'config1',
       dhcpEnabled: true,
       mebxPassword: 'password',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
       tags: ['acm'],
       wifiConfigs: []
     }
@@ -113,6 +119,8 @@ describe('ProfilesService', () => {
       ciraConfigName: 'config1',
       dhcpEnabled: true,
       mebxPassword: 'password',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
       tags: ['acm'],
       wifiConfigs: []
     }

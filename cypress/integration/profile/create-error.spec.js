@@ -45,30 +45,8 @@ describe("Test Profile Page", () => {
       cy.enterProfileInfo(
         profileFixtures.wrong.name,
         profileFixtures.happyPath.admin,
-        Cypress.env("AMTPASSWORD"),
-        Cypress.env("MEBXPASSWORD"),
-        profileFixtures.happyPath.netConfig,
-        profileFixtures.happyPath.ciraConfig
-      )
-    })
-
-    it("invalid amt password", () => {
-      cy.enterProfileInfo(
-        profileFixtures.happyPath.name,
-        profileFixtures.happyPath.admin,
-        profileFixtures.wrong.amtPassword,
-        Cypress.env("MEBXPASSWORD"),
-        profileFixtures.happyPath.netConfig,
-        profileFixtures.happyPath.ciraConfig
-      )
-    })
-
-    it("invalid mebx password", () => {
-      cy.enterProfileInfo(
-        profileFixtures.happyPath.name,
-        profileFixtures.happyPath.admin,
-        Cypress.env("AMTPASSWORD"),
-        profileFixtures.wrong.mebxPassword,
+        true,
+        true,
         profileFixtures.happyPath.netConfig,
         profileFixtures.happyPath.ciraConfig
       )

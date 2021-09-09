@@ -53,17 +53,21 @@ Cypress.Commands.add("enterCiraInfo", (name, format, addr, user) => {
 
 Cypress.Commands.add(
   "enterProfileInfo",
-  (name, admin, amtPass, mebxPass, network, cira) => {
+  (name, admin, randAmt, randMebx, network, cira) => {
     cy.get("input").get("[name=profileName]").type(name);
     if (!admin) {
       cy.get("mat-select[formcontrolname=activation").click();
       cy.contains("Client Control Mode").click();
     }
 
-    cy.get("input").get("[name=amtPassword]").type(amtPass);
+    if (!randAmt) {
+      cy.get("[data-cy=genAmtPass]").click();
+      cy.get("[data-cy=genStaticAmt").click();
+    }
 
-    if (admin) {
-      cy.get("input").get("[name=mebxPassword]").type(mebxPass);
+    if (!randMebx && admin) {
+      cy.get("[data-cy=genMebxPass]").click();
+      cy.get("[data-cy=genStaticMebx").click();
     }
     
     cy.contains(network).click();
