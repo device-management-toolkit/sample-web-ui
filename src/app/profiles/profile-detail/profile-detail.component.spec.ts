@@ -30,9 +30,11 @@ describe('ProfileDetailComponent', () => {
     const profileResponse = {
       profileName: 'profile1',
       amtPassword: 'P@ssw0rd',
+      generateRandomPassword: false,
       activation: 'ccmactivate',
       ciraConfigName: 'config1',
       dhcpEnabled: true,
+      generateRandomMEBxPassword: true,
       tags: ['acm'],
       wifiConfigs: [{ priority: 1, profileName: 'wifi' }]
     }
@@ -79,6 +81,24 @@ describe('ProfileDetailComponent', () => {
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
   })
+
+  it('should not toggle generateRandomMEBxPassword when false on ccm', () => {
+    component.generateRandomMEBxPasswordChange(false)
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+  })
+  it('should toggle generateRandomMEBxPassword when true', () => {
+    component.generateRandomMEBxPasswordChange(true)
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+  })
+  it('should toggle generateRandomMEBxPassword when false', () => {
+    component.generateRandomPasswordChange(false)
+    expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
+  })
+  it('should toggle generateRandomMEBxPassword when true', () => {
+    component.generateRandomPasswordChange(true)
+    expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
+  })
+
   it('should submit when valid (update)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
 
@@ -86,6 +106,8 @@ describe('ProfileDetailComponent', () => {
       profileName: 'profile',
       activation: 'acmactivate',
       amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
       ciraConfigName: null
@@ -103,6 +125,8 @@ describe('ProfileDetailComponent', () => {
       profileName: 'profile',
       activation: 'acmactivate',
       amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
       ciraConfigName: null
