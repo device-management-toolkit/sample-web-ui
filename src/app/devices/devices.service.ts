@@ -7,7 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, HardwareInformation, PageEventOptions, PowerState, userConsentResponse } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, PageEventOptions, PowerState, userConsentResponse } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
@@ -163,6 +163,15 @@ export class DevicesService {
     return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/log/audit/${deviceId}?startIndex=${startIndex}`)
       .pipe(
         catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getEventLog (deviceId: string): Observable<EventLog[]> {
+    return this.http.get<EventLog[]>(`${environment.mpsServer}/api/v1/amt/log/event/${deviceId}`)
+      .pipe(
+        catchError(err => {
           throw err
         })
       )

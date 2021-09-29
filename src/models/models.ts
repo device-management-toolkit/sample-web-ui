@@ -89,6 +89,23 @@ export interface AuditLogResponse {
   records: AuditLog[]
 }
 
+export interface EventLog {
+  DeviceAddress: number
+  EventSensorType: number
+  EventType: number
+  EventOffset: number
+  EventSourceType: number
+  EventSeverity: number
+  SensorNumber: number
+  Entity: number
+  EntityInstance: number
+  EventData: number[]
+  Time: string
+  EntityStr: string
+  Desc: string
+  eventTypeDesc: string
+}
+
 export interface APIResponse {
   error: string
   message: string

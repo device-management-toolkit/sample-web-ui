@@ -5,6 +5,7 @@ import { ConfigsComponent } from './configs/configs.component'
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { DeviceDetailComponent } from './devices/device-detail/device-detail.component'
 import { DevicesComponent } from './devices/devices.component'
+import { EventLogComponent } from './devices/event-log/event-log.component'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
 import { DomainDetailComponent } from './domains/domain-detail/domain-detail.component'
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
   { path: 'devices/:id', component: DeviceDetailComponent },
   { path: 'devices/:id/audit-log', component: AuditLogComponent },
+  { path: 'devices/:id/event-log', component: EventLogComponent },
   { path: 'devices/:id/kvm', component: KvmComponent },
   { path: 'devices/:id/sol', component: SolComponent },
   { path: 'profiles', component: ProfilesComponent },

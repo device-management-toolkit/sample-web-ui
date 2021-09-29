@@ -1319,6 +1319,98 @@
         }
       }
     }
+  },
+
+  "eventLogs": {
+    "getAll": {
+      "success": {
+        "code": 200,
+        "response": [{
+          "DeviceAddress": 255,
+        "EventSensorType": 15,
+        "EventType": 111,
+        "EventOffset": 2,
+        "EventSourceType": 104,
+        "EventSeverity": 8,
+        "SensorNumber": 255,
+        "Entity": 34,
+        "EntityInstance": 0,
+        "EventData": [64, 19, 0, 0, 0, 0, 0, 0],
+        "Time": "2021-09-08T16:31:02.000Z",
+        "EntityStr": "BIOS",
+        "Desc": "Starting operating system boot process"
+        }]
+      }
+    },
+    "devices": {
+      "success": {
+        "code": 200,
+        "response": {
+          "data": [{
+            "connectionStatus": false,
+            "guid": "guid",
+            "hostname": "DESKTOP-JF2I0UQ",
+            "mpsInstance": null,
+            "mpsusername": "admin",
+            "tags": [],
+            "tenantId":""
+        }],
+        "totalCount": 1
+      }
+      }
+    },
+    "version": {
+      "success": {
+        "code": 200,
+        "response": {
+          "CIM_SoftwareIdentity": {
+            "responses": [{}, {}, {}, {
+              "VersionString": "16.0.8"
+            }]
+          }
+        }
+      }
+    },
+    "hardwareInfo": {
+      "success": {
+        "code": 200,
+        "response": {
+          "CIM_Chassis": {
+            "response": {
+              "Manufacturer": "Intel",
+              "Model": "AMT",
+              "SerialNumber": "12",
+              "Version": "16"
+            }
+          }
+        }
+      }
+    },
+    "auditlog": {
+      "success": {
+        "code": 200,
+        "response": {
+          "records": [{
+            "Event": "KVM enabled",
+            "Time": "2021-09-08T16:31:02.000Z"
+          }],
+          "totalCnt": 1
+        }
+      }
+    },
+    "amtFeatures": {
+      "success": {
+        "code": 200,
+        "response": {
+          "userConsent": "KVM",
+          "optInState": 0,
+          "redirection": true,
+          "KVM": true,
+          "SOL": true,
+          "IDER": false
+        }
+      }
+    }
   }
 
 }

@@ -35,6 +35,7 @@ import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-det
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
+import { EventLogComponent } from './devices/event-log/event-log.component'
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DeviceUserConsentComponent } from './devices/device-user-consent/device
     DeviceToolbarComponent,
     WirelessComponent,
     WirelessDetailComponent,
-    DeviceUserConsentComponent
+    DeviceUserConsentComponent,
+    EventLogComponent
   ],
   entryComponents: [
     DialogContentComponent
