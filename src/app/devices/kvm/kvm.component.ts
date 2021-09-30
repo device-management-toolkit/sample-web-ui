@@ -27,7 +27,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   deviceId: string = ''
   powerState: any = 0
   mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  readytoLoadKvm: boolean = false
+  readyToLoadKvm: boolean = false
   authToken: string = ''
   timeInterval!: any
   selected: number = 1
@@ -76,7 +76,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.getPowerState(this.deviceId).subscribe(data => {
       this.powerState = data
       if (this.powerState.powerstate !== 2) {
-        // If device not power on, shows alert to powerup device
+        // If device not power on, shows alert to power up device
         this.isLoading = false
         const dialog = this.dialog.open(PowerUpAlertComponent)
         dialog.afterClosed().subscribe(result => {
@@ -97,7 +97,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
-        return of(err)
+        this.isLoading = false
+        return throwError(err)
       })
     )
   }
@@ -126,7 +127,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   checkUserConsent (): void {
     if (this.amtFeatures?.userConsent === 'none') {
-      this.readytoLoadKvm = true
+      this.readyToLoadKvm = true
     } else {
       if (this.amtFeatures?.optInState === 2) {
         // 2-DISPLAYED: the user consent code was displayed to the user.
@@ -144,7 +145,7 @@ export class KvmComponent implements OnInit, OnDestroy {
           }
         })
       } else if (this.amtFeatures?.optInState === 3 || this.amtFeatures?.optInState === 4) {
-        this.readytoLoadKvm = true
+        this.readyToLoadKvm = true
       }
     }
   }
@@ -187,7 +188,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   SendOptInCodeResponse (result: userConsentResponse): void {
     if (result.Body?.ReturnValue === 0) {
-      this.readytoLoadKvm = true
+      this.readyToLoadKvm = true
     } else if (result.Body?.ReturnValue === 2066) {
       // On receiving an invalid consent code. Sending multiple invalid consent codes will cause the OptInState to return to NOT STARTED
       this.snackBar.open($localize`KVM cannot be accessed - unsupported user consent code`, undefined, SnackbarDefaults.defaultError)

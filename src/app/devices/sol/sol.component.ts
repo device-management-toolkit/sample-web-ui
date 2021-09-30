@@ -56,7 +56,7 @@ export class SolComponent implements OnInit {
     this.getPowerState(this.deviceId).subscribe(data => {
       this.powerState = data as PowerState
       if (this.powerState.powerstate !== 2) {
-        // If device not power on, shows alert to powerup device
+        // If device not power on, shows alert to power up device
         this.isLoading = false
         const dialog = this.dialog.open(PowerUpAlertComponent)
         dialog.afterClosed().subscribe(result => {
@@ -76,8 +76,9 @@ export class SolComponent implements OnInit {
   setAmtFeatures (): void {
     this.deviceService.setAmtFeatures(this.deviceId)
       .pipe(catchError((err) => {
-        // this.snackBar.open($localize`Unable to change user consent - code required for SOL in CCM`, undefined, SnackbarDefaults.defaultWarn)
-        return of(err)
+
+        this.snackBar.open($localize`Unable to change user consent - code required for SOL in CCM`, undefined, SnackbarDefaults.defaultWarn)
+        return throwError(err)
       }), finalize(() => {
         this.init()
       })).subscribe()
@@ -86,8 +87,9 @@ export class SolComponent implements OnInit {
   getPowerState (guid: string): Observable<any> {
     return this.deviceService.getPowerState(guid).pipe(
       catchError((err) => {
+        this.isLoading = false
         this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
-        return of(err)
+        return throwError(err)
       })
     )
   }

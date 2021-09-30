@@ -11,4 +11,4 @@
 
 </mat-toolbar>
 <mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
-<amt-kvm *ngIf="readytoLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceStatus($event)"></amt-kvm>
+<amt-kvm *ngIf="readyToLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceStatus($event)"></amt-kvm>
