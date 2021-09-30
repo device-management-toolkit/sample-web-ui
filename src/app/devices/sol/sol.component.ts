@@ -76,7 +76,6 @@ export class SolComponent implements OnInit {
   setAmtFeatures (): void {
     this.deviceService.setAmtFeatures(this.deviceId)
       .pipe(catchError((err) => {
-
         this.snackBar.open($localize`Unable to change user consent - code required for SOL in CCM`, undefined, SnackbarDefaults.defaultWarn)
         return throwError(err)
       }), finalize(() => {

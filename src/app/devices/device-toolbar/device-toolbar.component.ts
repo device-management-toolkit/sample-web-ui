@@ -78,8 +78,11 @@ export class DeviceToolbarComponent implements OnInit {
         this.isLoading = false
       })
     ).subscribe(data => {
-      this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
-      console.log(data)
+      if (data.Body.ReturnValueStr === 'NOT_READY') {
+        this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+      } else {
+        this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      }
     })
   }
 
