@@ -16,7 +16,12 @@ describe('DeviceToolbarComponent', () => {
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({}))
+    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of(
+      {
+        Body: {
+          ReturnValueStr: 'NOT_READY'
+        }
+      }))
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({

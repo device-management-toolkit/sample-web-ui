@@ -105,7 +105,9 @@
                             <p>User Consent:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3"> {{amtEnabledFeatures.value.userConsent}}</span>
+                            <mat-select (selectionChange)="setAmtFeatures()" formControlName="userConsent" fxFlex="30">
+                                <mat-option *ngFor="let uc of userConsentValues" [value]="uc">{{uc}}</mat-option>
+                            </mat-select>
                         </div>
                     </div>
                 </mat-card-content>

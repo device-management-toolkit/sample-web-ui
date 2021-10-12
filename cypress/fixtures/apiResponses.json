@@ -1402,7 +1402,7 @@
       "success": {
         "code": 200,
         "response": {
-          "userConsent": "KVM",
+          "userConsent": "kvm",
           "optInState": 0,
           "redirection": true,
           "KVM": true,
