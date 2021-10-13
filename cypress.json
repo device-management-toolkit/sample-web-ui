@@ -9,5 +9,6 @@
     "AMTPASSWORD": "P@ssw0rd",
     "MEBXPASSWORD": "P@ssw0rd",
     "PSKPASSPHRASE": "P@ssw0rd"
-  }
+  },
+  "chromeWebSecurity": false
 }

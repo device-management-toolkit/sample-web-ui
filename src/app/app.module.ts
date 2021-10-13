@@ -35,7 +35,11 @@ import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-det
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
+import { EventChannelComponent } from './event-channel/event-channel.component'
+
+const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {}
 
 @NgModule({
   declarations: [
@@ -57,7 +61,8 @@ import { EventLogComponent } from './devices/event-log/event-log.component'
     WirelessComponent,
     WirelessDetailComponent,
     DeviceUserConsentComponent,
-    EventLogComponent
+    EventLogComponent,
+    EventChannelComponent
   ],
   entryComponents: [
     DialogContentComponent
@@ -71,6 +76,7 @@ import { EventLogComponent } from './devices/event-log/event-log.component'
     CoreModule,
     BrowserAnimationsModule,
     SolModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     SharedModule.forRoot(),
     RouterModule.forRoot([
       {
