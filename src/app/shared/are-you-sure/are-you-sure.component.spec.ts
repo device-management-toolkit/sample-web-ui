@@ -3,6 +3,8 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDialogModule } from '@angular/material/dialog'
 
 import { AreYouSureDialogComponent } from './are-you-sure.component'
 
@@ -12,9 +14,9 @@ describe('AreYouSureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatDialogModule, MatButtonModule],
       declarations: [AreYouSureDialogComponent]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {

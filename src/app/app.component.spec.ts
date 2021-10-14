@@ -2,14 +2,23 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { EventEmitter, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { EventEmitter, Component, Input } from '@angular/core'
 
 import { TestBed } from '@angular/core/testing'
+import { MatSidenavModule } from '@angular/material/sidenav'
 import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
+
+@Component({
+  selector: 'app-toolbar'
+})
+class TestToolbarComponent {
+  @Input()
+  isLoading = false
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -19,11 +28,10 @@ describe('AppComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, MatSidenavModule
       ],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       declarations: [
-        AppComponent
+        AppComponent, TestToolbarComponent
       ],
       providers: [{ provide: AuthService, useValue: authServiceStub }, {
         provide: Router,
@@ -39,11 +47,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
     expect(app).toBeTruthy()
-  })
-
-  it('should have as title \'Open AMT Cloud Toolkit\'', () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    expect(app.title).toEqual('Open AMT Cloud Toolkit')
   })
 })

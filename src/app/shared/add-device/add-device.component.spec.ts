@@ -2,6 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceComponent } from './add-device.component'
 import { ProfilesService } from '../../profiles/profiles.service'
 import { of } from 'rxjs'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTabsModule } from '@angular/material/tabs'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { MatSelectModule } from '@angular/material/select'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCardModule } from '@angular/material/card'
+import { ClipboardModule } from '@angular/cdk/clipboard'
+import { MatButtonModule } from '@angular/material/button'
+import { MatInputModule } from '@angular/material/input'
 
 describe('AddDeviceComponent', () => {
   let component: AddDeviceComponent
@@ -12,6 +22,7 @@ describe('AddDeviceComponent', () => {
     const profileService = jasmine.createSpyObj('ProfilesService', ['getData'])
     getDataSpy = profileService.getData.and.returnValue(of([]))
     await TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, MatIconModule, MatTabsModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatCardModule, ClipboardModule, MatButtonModule, MatInputModule],
       declarations: [AddDeviceComponent],
       providers: [{ provide: ProfilesService, useValue: profileService }]
     })

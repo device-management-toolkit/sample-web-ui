@@ -2,7 +2,6 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -24,10 +23,8 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, ReactiveFormsModule],
       declarations: [LoginComponent],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: Router, useValue: routerSpy }, { provide: AuthService, useValue: authService }]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {
