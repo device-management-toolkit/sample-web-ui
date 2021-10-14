@@ -27,6 +27,7 @@
     "@angular/router": "~11.2.14",
     "moment": "^2.29.1",
     "ngx-moment": "^5.0.0",
+    "ngx-mqtt": "^9.0.5",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
     "@open-amt-cloud-toolkit/ui-toolkit-angular": "^2.0.1",
