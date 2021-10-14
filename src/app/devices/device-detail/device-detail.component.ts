@@ -60,13 +60,15 @@ export class DeviceDetailComponent implements OnInit {
   public selectedAction: string = ''
   public deviceState: number = 0
   public amtEnabledFeatures: FormGroup
+  public isDisabled: boolean = false
+  public userConsentValues = ['none', 'kvm', 'all']
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
     this.targetOS = this.devicesService.TargetOSMap
     this.amtEnabledFeatures = fb.group({
       enableIDER: false,
       enableKVM: false,
       enableSOL: false,
-      userConsent: 'none',
+      userConsent: [{ value: 'none', disabled: this.isDisabled }],
       optInState: 0,
       redirection: false
     })
@@ -82,6 +84,7 @@ export class DeviceDetailComponent implements OnInit {
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.amtVersion = results
+        this.isDisabled = results?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
       }, err => {
         this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
         return throwError(err)
@@ -129,6 +132,9 @@ export class DeviceDetailComponent implements OnInit {
       this.isLoading = false
     })).subscribe((results: any) => {
       this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
+    }, err => {
+      this.snackBar.open($localize`Failed to update AMT Features`, undefined, SnackbarDefaults.defaultError)
+      return throwError(err)
     })
   }
 

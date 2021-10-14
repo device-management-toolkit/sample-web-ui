@@ -21,6 +21,7 @@ describe('DeviceDetailComponent', () => {
   let getAMTFeaturesSpy: jasmine.Spy
   let getHardwareInformationSpy: jasmine.Spy
   let getAMTVersionSpy: jasmine.Spy
+  let setAMTFeaturesSpy: jasmine.Spy
 
   @Component({
     selector: 'app-device-toolbar'
@@ -31,12 +32,13 @@ describe('DeviceDetailComponent', () => {
   }
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction', 'setAmtFeatures'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ }))
     getAMTVersionSpy = devicesService.getAMTVersion.and.returnValue(of({ }))
     getHardwareInformationSpy = devicesService.getHardwareInformation.and.returnValue(of({ }))
+    setAMTFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -63,6 +65,8 @@ describe('DeviceDetailComponent', () => {
     expect(getHardwareInformationSpy.calls.any()).toBe(true, 'getHardwareInformation called')
     expect(getAMTFeaturesSpy.calls.any()).toBe(true, 'getAMTFeatures called')
     expect(getAMTVersionSpy.calls.any()).toBe(true, 'getAMTVersion called')
+    expect(component.deviceState).toEqual(0)
+    expect(component.showSol).toBeFalse()
   })
 
   it('should navigate to', async () => {
@@ -78,5 +82,35 @@ describe('DeviceDetailComponent', () => {
   it('should parse provisioning mode - CCM', async () => {
     const result = component.parseProvisioningMode(4)
     expect(result).toBe('Client Control Mode (CCM)')
+  })
+
+  it('should trigger the set amt features api when user consent changes', () => {
+    component.amtEnabledFeatures.patchValue({
+      enableIDER: false,
+      enableKVM: false,
+      enableSOL: false,
+      userConsent: 'none',
+      optInState: 0,
+      redirection: false
+    })
+
+    component.amtEnabledFeatures.get('userConsent')?.setValue('kvm')
+    fixture.detectChanges()
+    component.setAmtFeatures()
+    expect(setAMTFeaturesSpy).toHaveBeenCalled()
+  })
+
+  it('should toggle the showSol flag when an action is selected', () => {
+    expect(component.showSol).toBeFalse()
+
+    component.onSelectAction()
+    expect(component.showSol).toBeTrue()
+  })
+
+  it('should update the deviceState variable when device status changes', () => {
+    expect(component.deviceState).toEqual(0)
+
+    component.deviceStatus(1)
+    expect(component.deviceState).toEqual(1)
   })
 })
