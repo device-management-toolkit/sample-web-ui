@@ -10,6 +10,7 @@ import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
 import { DomainDetailComponent } from './domains/domain-detail/domain-detail.component'
 import { DomainsComponent } from './domains/domains.component'
+import { EventChannelComponent } from './event-channel/event-channel.component'
 import { ProfileDetailComponent } from './profiles/profile-detail/profile-detail.component'
 import { ProfilesComponent } from './profiles/profiles.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
@@ -53,7 +54,9 @@ const routes: Routes = [
       { path: '', component: WirelessDetailComponent }
     ]
   },
-  { path: 'wireless/:name', component: WirelessDetailComponent }
+  { path: 'wireless/:name', component: WirelessDetailComponent },
+  { path: 'event-channel', component: EventChannelComponent }
+
 ]
 
 @NgModule({

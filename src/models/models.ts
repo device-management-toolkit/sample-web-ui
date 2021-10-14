@@ -325,3 +325,15 @@ export interface errorResponse {
   error: string
   errorDescription: string
 }
+
+export interface EventChannelResponse {
+  guid: string
+  message: string
+  timestamp: number
+  type: string
+  methods: string[]
+}
+
+export interface EventChannel {
+  data: EventChannelResponse[]
+}
