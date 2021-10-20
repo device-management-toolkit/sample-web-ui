@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core'
+import { Component, EventEmitter, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
@@ -32,15 +32,26 @@ describe('SolComponent', () => {
       stopwebSocket: new EventEmitter<boolean>(false),
       startwebSocket: new EventEmitter<boolean>(false)
     }
+
+    @Component({
+      selector: 'app-device-toolbar'
+    })
+    class TestDeviceToolbarComponent {
+      @Input()
+      isLoading = false
+
+      @Input()
+      deviceState: number = 0
+    }
+
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [SolComponent],
+      declarations: [SolComponent, TestDeviceToolbarComponent],
       providers: [{ provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } }, {
         provide: ActivatedRoute,
         useValue:
           { params: of({ id: 'guid' }) }
-      }, { provide: AuthService, useValue: authService }],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+      }, { provide: AuthService, useValue: authService }]
     })
       .compileComponents()
   })

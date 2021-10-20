@@ -2,8 +2,8 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { EventEmitter, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-
+import { EventEmitter, Component, Input } from '@angular/core'
+import { MatSidenavModule } from '@angular/material/sidenav'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -12,6 +12,14 @@ import { of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
 import { EventChannelService } from './event-channel/event-channel.service'
+
+@Component({
+  selector: 'app-toolbar'
+})
+class TestToolbarComponent {
+  @Input()
+  isLoading = false
+}
 
 describe('AppComponent', () => {
   let observeSpy: jasmine.Spy
@@ -47,11 +55,10 @@ describe('AppComponent', () => {
     mqttservice.state = { subscribe: () => of(2) }
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, MatSidenavModule
       ],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       declarations: [
-        AppComponent
+        AppComponent, TestToolbarComponent
       ],
       providers: [{ provide: AuthService, useValue: authServiceStub }, {
         provide: Router,

@@ -3,6 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatIconModule } from '@angular/material/icon'
+import { MatListModule } from '@angular/material/list'
+import { RouterTestingModule } from '@angular/router/testing'
 import { NavbarComponent } from './navbar.component'
 
 describe('NavbarComponent', () => {
@@ -11,9 +15,9 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatIconModule, MatDividerModule, MatListModule, RouterTestingModule],
       declarations: [NavbarComponent]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {

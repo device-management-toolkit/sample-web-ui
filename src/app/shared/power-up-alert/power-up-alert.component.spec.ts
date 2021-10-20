@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDialogModule } from '@angular/material/dialog'
 
 import { PowerUpAlertComponent } from './power-up-alert.component'
 
@@ -8,9 +10,9 @@ describe('PowerUpAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatDialogModule, MatButtonModule],
       declarations: [PowerUpAlertComponent]
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {

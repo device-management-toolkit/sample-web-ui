@@ -2,6 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
+import { Component, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
@@ -22,6 +23,14 @@ describe('DeviceDetailComponent', () => {
   let getAMTVersionSpy: jasmine.Spy
   let setAMTFeaturesSpy: jasmine.Spy
 
+  @Component({
+    selector: 'app-device-toolbar'
+  })
+  class TestDeviceToolbarComponent {
+    @Input()
+    isLoading = false
+  }
+
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction', 'setAmtFeatures'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
@@ -33,7 +42,7 @@ describe('DeviceDetailComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DeviceDetailComponent],
+      declarations: [DeviceDetailComponent, TestDeviceToolbarComponent],
       providers: [{ provide: DevicesService, useValue: devicesService }, {
         provide: ActivatedRoute,
         useValue: {

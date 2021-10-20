@@ -10,7 +10,7 @@ import { DevicesService } from '../devices.service'
 import { of } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ActivatedRoute } from '@angular/router'
-import { EventEmitter } from '@angular/core'
+import { Component, EventEmitter, Input } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AuthService } from 'src/app/auth.service'
 
@@ -22,6 +22,17 @@ describe('KvmComponent', () => {
   let getAMTFeaturesSpy: jasmine.Spy
   let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
+
+  @Component({
+    selector: 'app-device-toolbar'
+  })
+  class TestDeviceToolbarComponent {
+    @Input()
+    isLoading = false
+
+    @Input()
+    deviceState: number = 0
+  }
 
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode'])
@@ -39,7 +50,7 @@ describe('KvmComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
-      declarations: [KvmComponent],
+      declarations: [KvmComponent, TestDeviceToolbarComponent],
       providers: [{ provide: DevicesService, useValue: { ...devicesService, ...websocketStub } }, {
         provide: ActivatedRoute,
         useValue: {

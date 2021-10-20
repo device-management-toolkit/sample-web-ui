@@ -1,4 +1,3 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog'
@@ -27,7 +26,6 @@ describe('DeactivateDeviceComponent', () => {
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, ReactiveFormsModule, MatDialogModule],
       declarations: [DeactivateDeviceComponent],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }, { provide: VaultService, useValue: vaultService }]
     })
       .compileComponents()
