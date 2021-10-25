@@ -54,7 +54,8 @@ describe("Test Profile Page", () => {
 
     afterEach("Check for error", () => {
         cy.get("button[type=submit]").click()
-
+        cy.get("button").contains("Continue").click()
+        
         //Wait for requests to finish and check their responses
         cy.wait("@post-profile2").then((req) => {
             cy.wrap(req)

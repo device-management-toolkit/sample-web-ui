@@ -5,6 +5,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
@@ -12,6 +13,7 @@ import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { CIRAConfigResponse, WiFiProfile, WirelessConfigResponse } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
+import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
@@ -42,7 +44,8 @@ export class ProfileDetailComponent implements OnInit {
   wifiAutocomplete = new FormControl()
 
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
-    public profilesService: ProfilesService, private readonly configsService: ConfigsService, private readonly wirelessService: WirelessService) {
+    public profilesService: ProfilesService, private readonly configsService: ConfigsService, private readonly wirelessService: WirelessService,
+    public dialog: MatDialog) {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [this.activationModes[0].value, Validators.required],
@@ -271,37 +274,59 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  onSubmit (): void {
+  confirm (): void {
+    // Warn user of risk if using random generated passwords
     if (this.profileForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
-      result.tags = this.tags
-      if (result.dhcpEnabled) {
-        result.wifiConfigs = this.selectedWifiConfigs
-      } else {
-        result.wifiConfigs = [] // Empty the wifi configs for static network
-      }
-      let request
-      let reqType: string
-      if (this.isEdit) {
-        request = this.profilesService.update(result)
-        reqType = 'updated'
-      } else {
-        request = this.profilesService.create(result)
-        reqType = 'created'
-      }
-      request
-        .pipe(
-          finalize(() => {
-            this.isLoading = false
-          }))
-        .subscribe(data => {
-          this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          this.router.navigate(['/profiles'])
-        }, error => {
-          this.errorMessages = error
+      // When creating new
+      if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+        const dialog = this.dialog.open(RandomPassAlertComponent, {
+          height: '225px',
+          width: '450px'
         })
+        dialog.afterClosed().subscribe(data => {
+          if (data) {
+            this.onSubmit()
+          } else { // Cancel form submission
+            this.isLoading = false
+          }
+        })
+      } else {
+        this.onSubmit()
+      }
     }
+  }
+
+  onSubmit (): void {
+    this.isLoading = true
+    const result: any = Object.assign({}, this.profileForm.getRawValue())
+    result.tags = this.tags
+    if (result.dhcpEnabled) {
+      result.wifiConfigs = this.selectedWifiConfigs
+    } else {
+      result.wifiConfigs = [] // Empty the wifi configs for static network
+    }
+    let request
+    let reqType: string
+    if (this.isEdit) {
+      request = this.profilesService.update(result)
+      reqType = 'updated'
+    } else {
+      request = this.profilesService.create(result)
+      reqType = 'created'
+    }
+    request
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        }))
+      .subscribe(data => {
+        this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        this.router.navigate(['/profiles'])
+      }, error => {
+        this.errorMessages = error
+      })
   }
 }

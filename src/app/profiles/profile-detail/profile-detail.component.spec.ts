@@ -5,6 +5,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
+import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { ConfigsService } from 'src/app/configs/configs.service'
@@ -110,7 +111,7 @@ describe('ProfileDetailComponent', () => {
       dhcpEnabled: true,
       ciraConfigName: null
     })
-    component.onSubmit()
+    component.confirm()
 
     expect(profileUpdateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
@@ -129,10 +130,58 @@ describe('ProfileDetailComponent', () => {
       dhcpEnabled: true,
       ciraConfigName: null
     })
-    component.onSubmit()
+    component.confirm()
 
     expect(profileCreateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should submit when valid with random passwords (create)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: '',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
+      mebxPassword: '',
+      dhcpEnabled: true,
+      ciraConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should cancel submit with random passwords', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: '',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
+      mebxPassword: '',
+      dhcpEnabled: true,
+      ciraConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
   })
 
   it('should disable the cira config and wifi config when static network is selected', () => {
