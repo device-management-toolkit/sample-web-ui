@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cypress": "cypress open",
-    "cy-runner": "cypress run"
+    "cy-runner": "cypress run",
+    "lint:cypress": "eslint ./cypress --ext .ts"
   },
   "private": true,
   "dependencies": {
