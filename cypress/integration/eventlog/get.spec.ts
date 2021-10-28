@@ -57,7 +57,9 @@ describe('Test event logs page', () => {
     cy.wait('@get-auditlog').its('response.statusCode').should('eq', 200)
     cy.wait('@get-features').its('response.statusCode').should('eq', 200)
 
-    cy.get('button').contains('See Event Logs').click()
+    cy.get('div[role=tab]').eq(1).click()
+    cy.wait(1000)
+    cy.get('button').contains('See All Activity').click()
     cy.wait('@get-logs').its('response.statusCode').should('eq', 200)
 
     cy.get('mat-cell').contains(eventLogFixtures.happyPath.Desc)

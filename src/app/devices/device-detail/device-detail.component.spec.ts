@@ -22,6 +22,7 @@ describe('DeviceDetailComponent', () => {
   let getHardwareInformationSpy: jasmine.Spy
   let getAMTVersionSpy: jasmine.Spy
   let setAMTFeaturesSpy: jasmine.Spy
+  let getEventLogSpy: jasmine.Spy
 
   @Component({
     selector: 'app-device-toolbar'
@@ -32,13 +33,14 @@ describe('DeviceDetailComponent', () => {
   }
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction', 'setAmtFeatures'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction', 'setAmtFeatures', 'getEventLog'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ }))
     getAMTVersionSpy = devicesService.getAMTVersion.and.returnValue(of({ }))
     getHardwareInformationSpy = devicesService.getHardwareInformation.and.returnValue(of({ }))
     setAMTFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
+    getEventLogSpy = devicesService.getEventLog.and.returnValue(of([]))
 
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -65,6 +67,7 @@ describe('DeviceDetailComponent', () => {
     expect(getHardwareInformationSpy.calls.any()).toBe(true, 'getHardwareInformation called')
     expect(getAMTFeaturesSpy.calls.any()).toBe(true, 'getAMTFeatures called')
     expect(getAMTVersionSpy.calls.any()).toBe(true, 'getAMTVersion called')
+    expect(getEventLogSpy.calls.any()).toBeTrue()
     expect(component.deviceState).toEqual(0)
     expect(component.showSol).toBeFalse()
   })
