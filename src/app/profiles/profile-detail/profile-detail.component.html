@@ -134,7 +134,7 @@
             </mat-autocomplete>
             <mat-hint>Wi-Fi will not work over static Network</mat-hint>
           </mat-form-field>
-          <div [fxHide]="selectedWifiConfigs.length == 0">
+          <div [fxHide]="selectedWifiConfigs.length === 0">
             <mat-label class="mat-subheading-1">Associated Wireless Profiles (In Priority Order)</mat-label>
             <br />
             <mat-hint>Drag and Drop to reorder</mat-hint>

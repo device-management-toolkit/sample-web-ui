@@ -39,7 +39,7 @@ import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
 import { EventChannelComponent } from './event-channel/event-channel.component'
 
-const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {}
+const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
 @NgModule({
   declarations: [

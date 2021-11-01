@@ -22,7 +22,8 @@
         "project": "./tsconfig.json"
       },
       "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "@angular-eslint"
       ],
       "rules": {
         "@typescript-eslint/strict-boolean-expressions": 0
@@ -35,7 +36,8 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+      }
     }
   ]
 }

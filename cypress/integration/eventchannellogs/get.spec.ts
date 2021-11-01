@@ -8,14 +8,13 @@ describe('Test eventchannellogs', () => {
   })
 
   it('check default values', () => {
-    cy.goToPage('Event Logs')
+    cy.goToPage('MQTT Events')
     cy.get('input[name="hostname"]').invoke('val').should('eq', 'localhost')
-    cy.get('input[name="port"]').invoke('val').should('eq', '9001')
-    cy.get('input[name="path"]').invoke('val').should('eq', '/mqtt')
+    cy.get('input[name="path"]').invoke('val').should('eq', '/mosquitto/mqtt')
   })
 
   it('load all the eventchannelogs', () => {
-    cy.goToPage('Event Logs')
+    cy.goToPage('MQTT Events')
     cy.get('h3').should('have.text', 'No Events')
   })
 })

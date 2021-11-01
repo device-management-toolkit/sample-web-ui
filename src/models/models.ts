@@ -345,14 +345,10 @@ export interface errorResponse {
   errorDescription: string
 }
 
-export interface EventChannelResponse {
+export interface MQTTEvent {
   guid: string
   message: string
   timestamp: number
   type: string
   methods: string[]
-}
-
-export interface EventChannel {
-  data: EventChannelResponse[]
 }

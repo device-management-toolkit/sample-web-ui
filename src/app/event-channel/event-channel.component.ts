@@ -4,8 +4,9 @@ import { MatPaginator } from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
 import { Router } from '@angular/router'
+import { IMqttServiceOptions } from 'ngx-mqtt'
 import { Subscription } from 'rxjs'
-import { EventChannelService } from './event-channel.service'
+import { MQTTService } from './event-channel.service'
 
 @Component({
   selector: 'app-event-channel',
@@ -15,29 +16,27 @@ import { EventChannelService } from './event-channel.service'
 export class EventChannelComponent implements OnInit {
   public eventChannelForm: FormGroup
   public errorMessages: string[] = []
-
   public displayedColumns: string[] = ['guid', 'message', 'type', 'methods', 'timestamp']
-
   public mpsSubscription!: Subscription
   public rpsSubscription!: Subscription
   public dataSource = new MatTableDataSource()
-  public getDefaultConfig = localStorage.getItem('oact_config')
-  public defaultConfig = this.getDefaultConfig ? JSON.parse(this.getDefaultConfig) : { hostname: 'localhost', port: 9001, path: '/mqtt' }
+  public defaultConfig: IMqttServiceOptions
   public status: boolean = false
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: false }) sort!: MatSort
 
-  constructor (public fb: FormBuilder, public readonly router: Router, public eventChannelService: EventChannelService) {
+  constructor (public fb: FormBuilder, public readonly router: Router, public eventChannelService: MQTTService) {
+    this.defaultConfig = eventChannelService.mqttConfig
     this.eventChannelForm = fb.group({
       hostname: [this.defaultConfig.hostname, Validators.required],
-      port: [this.defaultConfig.port, Validators.required],
+      port: [this.defaultConfig.port],
       path: [this.defaultConfig.path, Validators.required]
     })
-    this.eventChannelService.currentMessage.subscribe((data: any) => {
+    this.eventChannelService.messageSource.subscribe((data: any) => {
       this.dataSource.data = data
     })
-    this.eventChannelService.getConnectionStatus.subscribe(state => {
+    this.eventChannelService.connectionStatusSubject.subscribe((state: number) => {
       this.status = state === 2
     })
   }
@@ -51,7 +50,7 @@ export class EventChannelComponent implements OnInit {
   }
 
   onSubmit (): void {
-    this.eventChannelService.changeConnection(this.eventChannelForm.value)
+    this.eventChannelService.changeConnection({ ...this.eventChannelForm.value, protocol: 'wss' })
   }
 
   isNoData (): boolean {

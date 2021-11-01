@@ -1,43 +1,82 @@
-import { EventEmitter, Injectable } from '@angular/core'
-import { IMqttMessage, IMqttServiceOptions } from 'ngx-mqtt'
-import { BehaviorSubject } from 'rxjs'
-import { EventChannel } from 'src/models/models'
+import { Injectable } from '@angular/core'
+import { IMqttMessage, IMqttServiceOptions, MqttService } from 'ngx-mqtt'
+import { BehaviorSubject, Subscription } from 'rxjs'
+import { MQTTEvent } from 'src/models/models'
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class EventChannelService {
-  storedData = localStorage.getItem('oact_telemetry')
-  private readonly cacheData = this.storedData ? JSON.parse(this.storedData) : []
-  public eventChannelLogs: EventChannel = { data: this.cacheData }
+export class MQTTService {
+  public mqttConfig: IMqttServiceOptions = { hostname: 'localhost', path: '/mosquitto/mqtt', protocol: 'wss' }
+  public mqttEvents: MQTTEvent[] = []
+  public messageSource = new BehaviorSubject<any>(this.mqttEvents)
+  public connectionStatusSubject = new BehaviorSubject<number>(0)
+  public clearData = false
+  public subscriptions: Subscription[] = []
+  constructor (public mqttService: MqttService) {
+    const localStorageData = localStorage.getItem('oact_telemetry')
+    if (localStorageData != null && localStorageData !== '') {
+      this.mqttEvents = JSON.parse(localStorageData)
+      this.messageSource.next(this.mqttEvents)
+    }
 
-  messageSource = new BehaviorSubject<any>(this.eventChannelLogs.data)
-  currentMessage = this.messageSource.asObservable()
-  reconnectMqttService: EventEmitter<IMqttServiceOptions> = new EventEmitter<IMqttServiceOptions>()
+    const localMQTTConfig = localStorage.getItem('oact_config')
+    if (localMQTTConfig != null && localMQTTConfig !== '') {
+      this.mqttConfig = JSON.parse(localMQTTConfig)
+    } else {
+      localStorage.setItem('oact_config', JSON.stringify(this.mqttConfig))
+    }
 
-  connectionStatusSource = new BehaviorSubject<number>(0)
-  getConnectionStatus = this.connectionStatusSource.asObservable()
+    this.mqttService.state.subscribe(state => {
+      this.connectionStatusSubject.next(state)
+      if (this.clearData && state === 2) {
+        this.reset()
+      }
+    })
+  }
 
   processMessage (message: IMqttMessage): void {
-    this.eventChannelLogs.data.splice(0, 0, JSON.parse(message.payload.toString()))
-    if (this.eventChannelLogs.data.length > 100) {
-      this.eventChannelLogs.data = this.eventChannelLogs.data.slice(0, 100)
+    this.mqttEvents.splice(0, 0, JSON.parse(message.payload.toString()))
+    if (this.mqttEvents.length > 100) {
+      this.mqttEvents = this.mqttEvents.slice(0, 100)
     }
-    localStorage.setItem('oact_telemetry', JSON.stringify(this.eventChannelLogs.data))
-    this.messageSource.next(this.eventChannelLogs.data)
+    localStorage.setItem('oact_telemetry', JSON.stringify(this.mqttEvents))
+    this.messageSource.next(this.mqttEvents)
   }
 
   changeConnection (mqttNewParams: IMqttServiceOptions): void {
-    this.reconnectMqttService.emit(mqttNewParams)
+    if (JSON.stringify(this.mqttConfig) !== JSON.stringify(mqttNewParams)) {
+      this.mqttConfig = mqttNewParams
+      this.clearData = true
+      this.connect()
+    }
   }
 
-  refreshData (): void {
-    this.eventChannelLogs.data = []
-    this.messageSource.next(this.eventChannelLogs.data)
+  reset (): void {
+    localStorage.setItem('oact_telemetry', '')
+    localStorage.setItem('oact_config', JSON.stringify(this.mqttConfig))
+    this.mqttEvents = []
+    this.messageSource.next(this.mqttEvents)
+    this.clearData = false
+    this.destroy()
+    this.subscribeToTopic('mps/#')
+    this.subscribeToTopic('rps/#')
   }
 
-  connectionStatus (status: number): void {
-    this.connectionStatusSource.next(status)
+  connect (): void {
+    this.mqttService.connect(this.mqttConfig)
+  }
+
+  subscribeToTopic (topic: string): void {
+    const sub = this.mqttService.observe(topic).subscribe((message: IMqttMessage) => {
+      this.processMessage(message)
+    })
+    this.subscriptions.push(sub)
+  }
+
+  destroy (): void {
+    this.subscriptions.forEach(x => x.unsubscribe())
+    this.subscriptions = []
   }
 }
