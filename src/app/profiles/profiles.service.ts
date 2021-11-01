@@ -7,13 +7,20 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { PageEventOptions, Profile, ProfileResponse } from 'src/models/models'
+import { PageEventOptions, Profile, ProfileResponse, TlsMode } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfilesService {
+  public tlsModes: TlsMode[] = [
+    { viewValue: 'Server Authentication Only', value: 1 },
+    { viewValue: 'Server & Non-TLS Authentication', value: 2 },
+    { viewValue: 'Mutual TLS Authentication Only', value: 3 },
+    { viewValue: 'Mutual and Non-TLS Authentication', value: 4 }
+  ]
+
   private readonly url = `${environment.rpsServer}/api/v1/admin/profiles`
   constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
 

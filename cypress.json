@@ -1,7 +1,7 @@
 {
   "projectId": "x5wpqh",
   "env": {
-    "BASEURL": "https://cicdoact.eastus.azurecontainer.io:8443/",
+    "BASEURL": "http://localhost:4200/",
     "ISOLATE": "Y",
     "FQDN": "192.168.8.50",
     "MPSUSERNAME": "standalone",

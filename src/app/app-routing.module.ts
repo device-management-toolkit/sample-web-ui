@@ -56,7 +56,6 @@ const routes: Routes = [
   },
   { path: 'wireless/:name', component: WirelessDetailComponent },
   { path: 'event-channel', component: EventChannelComponent }
-
 ]
 
 @NgModule({

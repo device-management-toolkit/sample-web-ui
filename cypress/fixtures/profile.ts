@@ -8,6 +8,7 @@ const profileFixtures = {
     admin: false,
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
+    connectionMode: 'CIRA (Cloud)',
     netConfig: 'DHCP',
     ciraConfig: 'happyPath'
   },
@@ -30,6 +31,15 @@ const profileFixtures = {
     }
   },
 
-  totalCount: 100
+  totalCount: 100,
+  happyPathTls: {
+    name: 'happyPath',
+    admin: false,
+    amtPassword: 'P@ssw0rd',
+    mebxPassword: 'P@ssw0rd',
+    netConfig: 'DHCP',
+    connectionMode: 'TLS (Enterprise)',
+    tlsConfig: 'Server Authentication Only'
+  }
 }
 export { profileFixtures }

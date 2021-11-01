@@ -23,16 +23,19 @@ describe('ProfileDetailComponent', () => {
   let profileCreateSpy: jasmine.Spy
   let profileUpdateSpy: jasmine.Spy
   let wirelessConfigsSpy: jasmine.Spy
+  // let tlsConfigSpy: jasmine.Spy
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord', 'update', 'create'])
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
+    // const tlsService = jasmine.createSpyObj('TLSService', ['getData'])
     const profileResponse = {
       profileName: 'profile1',
       amtPassword: 'P@ssw0rd',
       generateRandomPassword: false,
       activation: 'ccmactivate',
       ciraConfigName: 'config1',
+      tlsMode: null,
       dhcpEnabled: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
@@ -41,8 +44,9 @@ describe('ProfileDetailComponent', () => {
     profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
     profileUpdateSpy = profilesService.update.and.returnValue(of({}))
-    configsSpy = configsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    configsSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
     wirelessConfigsSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [ProfileDetailComponent],
@@ -50,6 +54,7 @@ describe('ProfileDetailComponent', () => {
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: WirelessService, useValue: wirelessService },
+        // { provide: TLSService, useValue: tlsService },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -57,9 +62,7 @@ describe('ProfileDetailComponent', () => {
           }
         }
       ]
-
-    })
-      .compileComponents()
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -70,11 +73,22 @@ describe('ProfileDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(configsSpy.calls.any()).toBe(true, 'getData called')
-    expect(profileSpy.calls.any()).toBe(true, 'getRecord called')
-    expect(wirelessConfigsSpy.calls.any()).toBe(true)
+    expect(configsSpy).toHaveBeenCalled()
+    expect(profileSpy).toHaveBeenCalledWith('profile')
+    expect(wirelessConfigsSpy).toHaveBeenCalled()
   })
-
+  it('should set connectionMode to TLS when tlsMode is not null', () => {
+    component.setConnectionMode({ tlsMode: 4 } as any)
+    expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
+  })
+  it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
+    component.setConnectionMode({ ciraConfigName: 'config1' } as any)
+    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+  })
+  it('should set connectionMode to NONE when no ciraConfigName and no tlsMode', () => {
+    component.setConnectionMode({ } as any)
+    expect(component.profileForm.controls.connectionMode.value).toBe('NONE')
+  })
   it('should cancel', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.cancel()
@@ -109,7 +123,8 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
-      ciraConfigName: null
+      ciraConfigName: null,
+      tlsConfigName: null
     })
     component.confirm()
 
@@ -128,7 +143,8 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
-      ciraConfigName: null
+      ciraConfigName: null,
+      tlsConfigName: null
     })
     component.confirm()
 
@@ -248,17 +264,17 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should turn mebx visibility on when it is off', () => {
-    component.amtInputType = 'password'
-    component.toggleAMTPassVisibility()
+    component.mebxInputType = 'password'
+    component.toggleMEBXPassVisibility()
 
-    expect(component.amtInputType).toEqual('text')
+    expect(component.mebxInputType).toEqual('text')
   })
 
   it('should turn mebx visibility off when it is on', () => {
-    component.amtInputType = 'text'
-    component.toggleAMTPassVisibility()
+    component.mebxInputType = 'text'
+    component.toggleMEBXPassVisibility()
 
-    expect(component.amtInputType).toEqual('password')
+    expect(component.mebxInputType).toEqual('password')
   })
 
   it('should generate a random password without a specified length', () => {
@@ -304,9 +320,24 @@ describe('ProfileDetailComponent', () => {
     expect(component.tags).toEqual(['acm', 'profile'])
   })
 
-  it('should set the ciraconfigname property to null when No config option selected', () => {
-    component.ciraConfigChange('No Config Selected')
+  it('should set the ciraCofigName property to null when TLS Selected', () => {
+    component.connectionModeChange('TLS')
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
+    expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
+    expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
+  })
+  it('should set the tlsMode property to null when CIRA Selected', () => {
+    component.connectionModeChange('CIRA')
+    expect(component.profileForm.controls.tlsMode.value).toEqual(null)
+    expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
+    expect(component.profileForm.controls.ciraConfigName.value).toBe('config1')
+  })
+  it('should set the tlsMode property to null when CIRA Selected', () => {
+    component.connectionModeChange('None')
+    expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
+    expect(component.profileForm.controls.tlsMode.value).toEqual(null)
+    expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
+    expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
   })
 
   it('should return the search results when a search string is entered', () => {

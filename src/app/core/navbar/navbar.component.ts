@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core'
 })
 export class NavbarComponent implements OnInit {
   // constructor () { }
-
+  showSubNav = false
   ngOnInit (): void {
   }
 }

@@ -35,10 +35,12 @@
                 </mat-cell>
             </ng-container>
 
-            <!-- cira config Column -->
-            <ng-container matColumnDef="ciraConfig">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> CIRA Config </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.ciraConfigName }}
+            <!-- connectionConfig Column -->
+            <ng-container matColumnDef="connectionConfig">
+                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Connection Config </mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="150px"> 
+                    <span>{{ element.ciraConfigName }}</span>
+                    <span>{{ parseTlsMode(element.tlsMode) }}</span>
                 </mat-cell>
             </ng-container>
 

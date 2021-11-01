@@ -53,29 +53,36 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   cy.get('input').get('[name=username]').type(user)
 })
 
-Cypress.Commands.add(
-  'enterProfileInfo',
-  (name, admin, randAmt, randMebx, network, cira) => {
-    cy.get('input').get('[name=profileName]').type(name)
-    if (!admin) {
-      cy.get('mat-select[formcontrolname=activation').click()
-      cy.contains('Client Control Mode').click()
-    }
-
-    if (!randAmt) {
-      cy.get('[data-cy=genAmtPass]').click()
-      cy.get('[data-cy=genStaticAmt').click()
-    }
-
-    if (!randMebx && admin) {
-      cy.get('[data-cy=genMebxPass]').click()
-      cy.get('[data-cy=genStaticMebx').click()
-    }
-
-    cy.contains(network).click()
-    cy.get('mat-select[formcontrolname=ciraConfigName]').click()
-    cy.contains(cira).click()
+Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, network, connection, connectionConfig) => {
+  cy.get('input').get('[name=profileName]').type(name)
+  if (!admin) {
+    cy.get('mat-select[formcontrolname=activation').click()
+    cy.contains('Client Control Mode').click()
   }
+
+  if (!randAmt) {
+    cy.get('[data-cy=genAmtPass]').click()
+    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMTPASSWORD'))
+    // cy.get('[data-cy=genStaticAmt').click()
+  }
+
+  if (!randMebx) {
+    cy.get('[data-cy=genMebxPass]').click()
+    // cy.get('[data-cy=genStaticMebx').click()
+    if (admin) {
+      cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBXPASSWORD'))
+    }
+  }
+
+  cy.contains(network).click()
+  cy.contains(connection).click()
+  if (connection === 'CIRA (Cloud)') {
+    cy.get('mat-select[formcontrolname=ciraConfigName]').click()
+  } else if (connection === 'TLS (Enterprise)') {
+    cy.get('mat-select[formcontrolname=tlsMode]').click()
+  }
+  cy.contains(connectionConfig).click()
+}
 )
 
 Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {

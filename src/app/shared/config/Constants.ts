@@ -19,6 +19,7 @@ export default {
   CCMP: 4,
   NOCONFIGSELECTED: 'No Config Selected',
   NORESULTS: 'No Wifi Configs Found',
+  NOTLSCONFIGSELECTED: 'No TLS Config Selected',
   ASSSOCIATEDERROR: 'Foreign key violation',
   EVENTTYPEMAP: EVENTTYPEMAP
 }

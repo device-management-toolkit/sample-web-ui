@@ -14,6 +14,7 @@ declare namespace Cypress {
       enterCiraInfo: (name:string, format:string, addr:string, user:string) => Chainable<Element>
       enterDomainInfo: (name:string, domain:string, file:string, pass:string) => Chainable<Element>
       enterWirelessInfo: (name:string, ssid:string, password:string) => Chainable<Element>
+      enterProfileInfo: (name:string, admin:boolean, randAmt:boolean, randMebx:boolean, network:string, connection:string, connectionConfig:string) => Chainable<Element>
     }
   }
   

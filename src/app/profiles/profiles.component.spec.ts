@@ -20,6 +20,7 @@ describe('ProfilesComponent', () => {
 
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
+    profilesService.tlsModes = [{ value: 1, viewValue: 'test' }]
     getDataSpy = profilesService.getData.and.returnValue(of({
       data: [{
         activation: 'acmactivate',
@@ -31,7 +32,8 @@ describe('ProfilesComponent', () => {
         passwordLength: null,
         profileName: 'profile1',
         tags: [],
-        wifiConfigs: []
+        wifiConfigs: [],
+        tlsMode: 1
       }],
       totalCount: 1
     }))
@@ -96,5 +98,13 @@ describe('ProfilesComponent', () => {
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
+  })
+  it('should parseTlsMode when known', () => {
+    const result = component.parseTlsMode(1)
+    expect(result).toBe('test')
+  })
+  it('should parseTlsMode when unknown', () => {
+    const result = component.parseTlsMode(null as any)
+    expect(result).toBe('')
   })
 })

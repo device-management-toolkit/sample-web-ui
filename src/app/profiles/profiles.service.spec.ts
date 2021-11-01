@@ -37,7 +37,8 @@ describe('ProfilesService', () => {
         generateRandomPassword: true,
         generateRandomMEBxPassword: true,
         tags: ['acm'],
-        wifiConfigs: []
+        wifiConfigs: [],
+        tlsMode: 1
       }],
       totalCount: 1
     }
@@ -64,7 +65,8 @@ describe('ProfilesService', () => {
       generateRandomPassword: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
-      wifiConfigs: []
+      wifiConfigs: [],
+      tlsMode: 1
     }
 
     httpClientSpy.get.and.returnValue(of(profileResponse))
@@ -97,7 +99,8 @@ describe('ProfilesService', () => {
       generateRandomPassword: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
-      wifiConfigs: []
+      wifiConfigs: [],
+      tlsMode: 1
     }
 
     httpClientSpy.post.and.returnValue(of(profileReq))
@@ -122,7 +125,8 @@ describe('ProfilesService', () => {
       generateRandomPassword: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
-      wifiConfigs: []
+      wifiConfigs: [],
+      tlsMode: 1
     }
 
     httpClientSpy.patch.and.returnValue(of(profileReq))

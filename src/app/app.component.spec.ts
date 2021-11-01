@@ -74,9 +74,12 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     eventChannelStub.reconnectMqttService.emit({ hostname: 'localhost', port: 9004, path: '/mqtt' })
+    console.log(localStorage.getItem('oact_config'), '++++++')
     expect(component).toBeTruthy()
     expect(observeSpy).toHaveBeenCalled()
+    if (localStorage.getItem('oact_config') !== JSON.stringify({ hostname: 'localhost', port: 9004, path: '/mqtt' })) {
+      expect(component.isDefault).toBeFalse()
+    }
     expect(component.isLoggedIn).toBeFalse()
-    expect(component.isDefault).toBeFalse()
   })
 })
