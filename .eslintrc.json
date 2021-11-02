@@ -37,6 +37,12 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
+        "@angular-eslint/template/eqeqeq": [
+          "error",
+          {
+            "allowNullOrUndefined": true
+          }
+        ]
       }
     }
   ]
