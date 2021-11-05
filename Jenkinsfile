@@ -8,34 +8,30 @@ pipeline{
         timeout(unit: 'HOURS', time: 2)
     }
     stages{
-        stage('Cloning Repository') {
-            steps{ 
-                script{
-                    scmCheckout {
-                        clean = true
-                    }
-                }
-            }
-        }
-        stage('Static Code Scan') {
-            steps{
-                script{
-                    staticCodeScan {
-                        // generic
-                        scanners             = ['checkmarx', 'protex', 'snyk']
-                        scannerType          = 'javascript'
+          stage('Scan'){
+              environment {
+                  PROJECT_NAME               = 'OpenAMT - sample-web-ui'
+                  SCANNERS                   = 'protex,checkmarx,snyk'
 
-                        protexProjectName    = 'OpenAMT - sample-web-ui'
-                        protexBuildName      = 'rrs-generic-protex-build'
+                  // publishArtifacts details
+                  PUBLISH_TO_ARTIFACTORY     = true
 
-                        checkmarxProjectName =  'OpenAMT - sample-web-ui'
-
-                        //snyk details
-                        snykManifestFile        = ['package-lock.json']
-                        snykProjectName         = ['openamt-sample-web-ui']
-                    }
-                }
-            }
-        }
+                  SNYK_MANIFEST_FILE         = 'package-lock.json'
+                  SNYK_PROJECT_NAME          = 'openamt-sample-web-ui'
+              }
+              when {
+                  anyOf {
+                      branch 'main';
+                  }
+              }
+              steps {
+                  script{
+                      scmCheckout { 
+                          clean = true
+                      }
+                  }
+                  rbheStaticCodeScan()
+              }
+          }
     }
 }
