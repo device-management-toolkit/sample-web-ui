@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,7 +31,7 @@
     "ngx-mqtt": "^9.0.5",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
-    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^2.0.1",
+    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^2.0.2",
     "xterm": "^4.14.1",
     "zone.js": "~0.11.4"
   },
