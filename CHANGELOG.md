@@ -2,8 +2,74 @@
 ## [Unreleased]
 
 
-<a name="2.0.0"></a>
-## [2.0.0] - 2021-09-16
+<a name="2.1.0"></a>
+## [2.1.0] - 2021-11-08
+### Build
+- **deps:** Bump cypress from 8.6.0 to 8.7.0 (#5703114) 
+- **deps:** Bump xterm from 4.13.0 to 4.14.1 (#5722034) 
+- **deps:** Bump cypress from 8.3.1 to 8.4.1 (#ab15f87) 
+- **deps:** Bump cypress from 8.4.1 to 8.5.0 (#aa30e6b) 
+- **deps:** Bump cypress from 8.5.0 to 8.6.0 (#ad15dae) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.9.0 to 3.9.1 (#8c6d08f) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin from 4.3.0 to 12.6.1 (#6e99751) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser (#21304b4) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 36.1.1 to 37.0.3 (#4a856fb) 
+- **deps-dev:** Bump karma from 6.3.5 to 6.3.6 (#86f05ad) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/builder from 4.3.0 to 12.6.1 (#c159dc0) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.10.0 to 3.10.1 (#203161c) 
+- **deps-dev:** Bump jasmine-core from 3.10.0 to 3.10.1 (#eced0dd) 
+- **deps-dev:** Bump ts-node from 10.3.0 to 10.4.0 (#5e5fdcb) 
+- **deps-dev:** Bump eslint-plugin-promise from 5.1.0 to 5.1.1 (#f5bbc78) 
+- **deps-dev:** Bump karma from 6.3.4 to 6.3.5 (#db9d940) 
+- **deps-dev:** Bump eslint-plugin-import from 2.24.2 to 2.25.2 (#64d7225) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.9.1 to 3.10.0 (#02f4811) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template (#a17d616) 
+- **deps-dev:** Bump ts-node from 10.2.1 to 10.3.0 (#e96b375) 
+- **deps-dev:** Bump jasmine-core from 3.9.0 to 3.10.0 (#1cff965) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 36.1.0 to 36.1.1 (#bec50ab) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#7493dff) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.32.0 to 4.33.0 (#53e531c) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.31.2 to 4.32.0 (#e5bd9e4) 
+- **deps-dev:** Bump karma from 6.3.6 to 6.3.7 (#1570296) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#9ce34ab) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.10.1 to 3.10.2 (#7e84c11) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/schematics from 4.3.0 to 12.6.1 (#bbc349a) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#87a8e73) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 4.31.0 to 4.31.2 (#4a13d0d) 
+- **version:** bumpt to v2.1.0 (#0bf99c5) 
+
+### Ci
+- rename master to main for jobs (#dbd5ad0) 
+- **nodejs:** replace node v15 with node v16 (#6fc4091) 
+
+### Docs
+- adds issue template (#73c7b3c) 
+- add contributing guidlines (#f374893) 
+- **github:** add pull request template (#8d9c19c) 
+
+### Feat
+- **devices:** update user consent field to a dropdown (#4fee063) 
+- **eventlog:** add event log UI ([#428](https://github.com/open-amt-cloud-toolkit/rps/issues/428)) (#dd634ac) 
+- **profile:** alert impact of random passwords (#1498067) 
+- **telemetry:** event channel logs (#3eb6ca9) 
+- **tls:** added tls option to AMT Profile ([#429](https://github.com/open-amt-cloud-toolkit/rps/issues/429)) (#92c63a1) 
+
+### Fix
+- handle NOT_READY power action (#b398668) 
+- KVM/SOL no longer tries to connect if device is offline (#0d0d4c3) 
+- **e2e:** update e2e tests to coding standards (#1691c9c) 
+- **mqtt:** protocol now defaults to wss for MQTT ([#459](https://github.com/open-amt-cloud-toolkit/rps/issues/459)) (#993b201) 
+- **userconsent:** disable user consent selection in CCM activated devices (#dbdd22a) 
+
+### Refactor
+- **eventlog:** show recent event logs in device details page (#90cba3f) 
+
+### Test
+- fix schema errors across all tested components (#a06d1c7) 
+
+
+<a name="v2.0.0"></a>
+## [v2.0.0] - 2021-09-16
 ### Build
 - update version to v2.0.0 (#b373809) 
 - **dep:** set ui-toolkit to dist branch for testing ([#417](https://github.com/open-amt-cloud-toolkit/rps/issues/417)) (#e20b457) 
@@ -31,6 +97,7 @@
 - **deps-dev:** Bump eslint from 7.31.0 to 7.32.0 (#29bd8a2) 
 
 ### Docs
+- **changelog:** update changelog (#8fde5cc) 
 - **changelog:** update changelog (#c320134) 
 
 ### Feat
@@ -420,8 +487,9 @@
 - **docker:** optimize how server is set (#b022ca2) 
 
 
-[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/2.0.0...HEAD
-[2.0.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.5.0...2.0.0
+[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.0.0...2.1.0
+[v2.0.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.5.0...v2.0.0
 [v1.5.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.3.0...v1.3.1
