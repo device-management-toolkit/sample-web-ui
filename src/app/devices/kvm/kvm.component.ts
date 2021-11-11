@@ -170,9 +170,9 @@ export class KvmComponent implements OnInit, OnDestroy {
   afterUserContentDialogClosed (data: userConsentData): void {
     const response: userConsentResponse = data?.results
     // On success to send or cancel to previous requested user consent code
-    if (response.Header?.Method === 'CancelOptIn') {
+    if (response?.Header?.Method === 'CancelOptIn') {
       this.cancelOptInCodeResponse(response)
-    } else if (response.Header?.Method === 'SendOptInCode') {
+    } else if (response?.Header?.Method === 'SendOptInCode') {
       this.SendOptInCodeResponse(response)
     }
   }

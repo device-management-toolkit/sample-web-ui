@@ -12,7 +12,6 @@ import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.c
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
-import Constants from '../shared/config/Constants'
 
 @Component({
   selector: 'app-configs',
@@ -68,8 +67,8 @@ export class ConfigsComponent implements OnInit {
           this.snackBar.open($localize`CIRA config deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
         },
         err => {
-          if (err.error === Constants.ASSSOCIATEDERROR) {
-            this.snackBar.open(err.message, undefined, SnackbarDefaults.longError)
+          if (err?.length > 0) {
+            this.snackBar.open(err, undefined, SnackbarDefaults.longError)
           } else {
             this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
           }

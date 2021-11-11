@@ -26,7 +26,8 @@ describe('AppComponent', () => {
 
   const eventChannelStub = {
     connect: jasmine.createSpy('connect'),
-    subscribeToTopic: jasmine.createSpy('connect')
+    subscribeToTopic: jasmine.createSpy('connect'),
+    destroy: jasmine.createSpy('destroy')
   }
 
   beforeEach(async () => {

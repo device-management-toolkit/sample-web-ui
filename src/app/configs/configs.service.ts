@@ -83,7 +83,7 @@ export class ConfigsService {
     return this.http.delete(`${this.url}/${name}`)
       .pipe(
         catchError((err) => {
-          const errorMessages = this.authService.onDeleteError(err)
+          const errorMessages = this.authService.onError(err)
           return throwError(errorMessages)
         })
       )

@@ -68,8 +68,4 @@ export class AuthService {
     }
     return errorMessages
   }
-
-  onDeleteError (err: any): any {
-    return err.error
-  }
 }

@@ -16,7 +16,8 @@ describe('EventChannelComponent', () => {
     subscribeToTopic: jasmine.createSpy('connect'),
     messageSource: of(),
     connectionStatusSubject: of(),
-    changeConnection: jasmine.createSpy('changeConnection')
+    changeConnection: jasmine.createSpy('changeConnection'),
+    destroy: jasmine.createSpy('destroy')
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({

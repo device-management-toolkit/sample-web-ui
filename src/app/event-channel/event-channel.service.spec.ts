@@ -32,7 +32,7 @@ describe('EventChannelService', () => {
     payload: encVal
 
   }
-  const mqttservice = jasmine.createSpyObj('mqttService', ['observe', 'connect'])
+  const mqttservice = jasmine.createSpyObj('mqttService', ['observe', 'connect', 'destroy'])
   mqttservice.state = new Subject()
   mqttservice.observe.and.returnValue(of())
 

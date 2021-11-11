@@ -42,6 +42,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy (): void {
-    this.mqttService.destroy()
+    this.mqttService?.destroy()
   }
 }
