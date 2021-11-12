@@ -49,10 +49,10 @@ describe('Test Profile Page', () => {
   it('invalid profile name', () => {
     cy.enterProfileInfo(
       profileFixtures.wrong.name,
-      profileFixtures.happyPath.admin,
+      profileFixtures.happyPath.activation,
       true,
       true,
-      profileFixtures.happyPath.netConfig,
+      profileFixtures.happyPath.dhcpEnabled,
       profileFixtures.happyPath.connectionMode,
       profileFixtures.happyPath.ciraConfig
     )

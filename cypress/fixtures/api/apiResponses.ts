@@ -1,7 +1,11 @@
+import { ciraFixtures } from '../cira'
+import { profileFixtures } from '../profile'
+
 /*********************************************************************
  * Copyright (c) Intel Corporation 2021
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
+
 const apiResponses = {
   login: {
     success: {
@@ -453,15 +457,10 @@ const apiResponses = {
         code: 200,
         response: {
           data: [
-            {
-              profileName: 'happyPath',
-              configurationScript: null,
-              activation: 'ccmactivate',
-              ciraConfigName: 'default',
-              dhcpEnabled: 'true'
-            }
+            profileFixtures.happyPath,
+            profileFixtures.happyPathTls
           ],
-          totalCount: 1
+          totalCount: 2
         }
       },
       empty: {

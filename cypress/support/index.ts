@@ -53,9 +53,9 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   cy.get('input').get('[name=username]').type(user)
 })
 
-Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, network, connection, connectionConfig) => {
+Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig) => {
   cy.get('input').get('[name=profileName]').type(name)
-  if (!admin) {
+  if (admin === 'ccmactivate') {
     cy.get('mat-select[formcontrolname=activation').click()
     cy.contains('Client Control Mode').click()
   }
@@ -69,13 +69,19 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, networ
   if (!randMebx) {
     cy.get('[data-cy=genMebxPass]').click()
     // cy.get('[data-cy=genStaticMebx').click()
-    if (admin) {
+    if (admin === 'acmactivate') {
       cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBXPASSWORD'))
     }
   }
 
-  cy.contains(network).click()
   cy.contains(connection).click()
+
+  if (dhcpEnabled) {
+    cy.contains('DHCP').click()
+  } else {
+    cy.contains('STATIC').click()
+  }
+
   if (connection === 'CIRA (Cloud)') {
     cy.get('mat-select[formcontrolname=ciraConfigName]').click()
   } else if (connection === 'TLS (Enterprise)') {

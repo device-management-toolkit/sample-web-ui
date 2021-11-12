@@ -32,7 +32,7 @@ describe('Test Profile Page', () => {
     cy.get('button').contains('No').click()
 
     // Check that the profile was not deleted
-    cy.get('mat-cell').contains(profileFixtures.happyPath.name)
+    cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
     cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
     cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
@@ -50,6 +50,6 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles4')
 
     // Check that the config was deleted properly
-    cy.contains(profileFixtures.happyPath.name).should('not.exist')
+    cy.contains(profileFixtures.happyPath.profileName).should('not.exist')
   })
 })

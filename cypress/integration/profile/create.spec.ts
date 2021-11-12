@@ -49,11 +49,11 @@ describe('Test Profile Page', () => {
 
   it('creates the default profile with static password', () => {
     cy.enterProfileInfo(
-      profileFixtures.happyPath.name,
-      profileFixtures.happyPath.admin,
+      profileFixtures.happyPath.profileName,
+      profileFixtures.happyPath.activation,
       false,
       false,
-      profileFixtures.happyPath.netConfig,
+      profileFixtures.happyPath.dhcpEnabled,
       profileFixtures.happyPath.connectionMode,
       profileFixtures.happyPath.ciraConfig
     )
@@ -67,7 +67,7 @@ describe('Test Profile Page', () => {
         .should('eq', apiResponses.profiles.create.success.code)
 
       // Check that the config was successful
-      cy.get('mat-cell').contains(profileFixtures.happyPath.name)
+      cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
       cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
       cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
       cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
@@ -80,7 +80,7 @@ describe('Test Profile Page', () => {
       .should('eq', apiResponses.profiles.getAll.success.code)
 
     // Check that the config was successful
-    cy.get('mat-cell').contains(profileFixtures.happyPath.name)
+    cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
     cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
     cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
@@ -122,11 +122,11 @@ describe('Test Profile Page', () => {
     cy.wait('@get-configs')
     cy.wait('@get-wirelessConfigs')
     cy.enterProfileInfo(
-      profileFixtures.happyPathTls.name,
-      profileFixtures.happyPathTls.admin,
+      profileFixtures.happyPathTls.profileName,
+      profileFixtures.happyPathTls.activation,
       false,
       false,
-      profileFixtures.happyPathTls.netConfig,
+      profileFixtures.happyPathTls.dhcpEnabled,
       profileFixtures.happyPathTls.connectionMode,
       profileFixtures.happyPathTls.tlsConfig
     )
@@ -139,7 +139,7 @@ describe('Test Profile Page', () => {
         .should('eq', apiResponses.profiles.create.success.code)
 
       // Check that the config was successful
-      cy.get('mat-cell').contains(profileFixtures.happyPathTls.name)
+      cy.get('mat-cell').contains(profileFixtures.happyPathTls.profileName)
       cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
       cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
     })
@@ -151,7 +151,7 @@ describe('Test Profile Page', () => {
       .should('eq', apiResponses.profiles.getAll.success.code)
 
     // Check that the config was successful
-    cy.get('mat-cell').contains(profileFixtures.happyPathTls.name)
+    cy.get('mat-cell').contains(profileFixtures.happyPathTls.profileName)
     cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
   })

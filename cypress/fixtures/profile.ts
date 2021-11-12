@@ -4,12 +4,12 @@
  **********************************************************************/
 const profileFixtures = {
   happyPath: {
-    name: 'happyPath',
-    admin: false,
+    profileName: 'happyPath',
+    activation: 'ccmactivate',
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
     connectionMode: 'CIRA (Cloud)',
-    netConfig: 'DHCP',
+    dhcpEnabled: true,
     ciraConfig: 'happyPath'
   },
 
@@ -33,11 +33,11 @@ const profileFixtures = {
 
   totalCount: 100,
   happyPathTls: {
-    name: 'happyPath',
-    admin: false,
+    profileName: 'happyPathTls',
+    activation: 'ccmactivate',
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
-    netConfig: 'DHCP',
+    dhcpEnabled: true,
     connectionMode: 'TLS (Enterprise)',
     tlsConfig: 'Server Authentication Only'
   }
