@@ -33,7 +33,7 @@ const profileFixtures = {
 
   totalCount: 100,
   happyPathTls: {
-    profileName: 'happyPathTls',
+    profileName: 'happyTlspath',
     activation: 'ccmactivate',
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
