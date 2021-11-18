@@ -88,16 +88,19 @@ describe('DomainDetailComponent', () => {
     expect(routerSpy).toHaveBeenCalled()
   })
 
-  // it('should read the domain certificate file contents on file upload', () => {
-  //   const obj = {
-  //     data: 'application/x-pkcs12;base64;domaincertdata'
-  //   }
-  //   const event = {
-  //     target: {
-  //       files: [new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' })]
-  //     }
-  //   }
+  it('should read the domain certificate file contents on file upload', () => {
+    const fileSelectedSpy = spyOn(component, 'onFileSelected')
+    const obj = {
+      data: 'application/x-pkcs12;base64;domaincertdata'
+    }
+    const event = {
+      target: {
+        files: [new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' })]
+      }
+    }
 
-  //   component.onFileSelected(event)
-  // })
+    component.onFileSelected(event)
+    fixture.detectChanges()
+    expect(fileSelectedSpy).toHaveBeenCalled()
+  })
 })

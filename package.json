@@ -32,7 +32,7 @@
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
     "@open-amt-cloud-toolkit/ui-toolkit-angular": "^2.0.2",
-    "xterm": "^4.14.1",
+    "xterm": "^4.15.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -52,14 +52,14 @@
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-with-typescript": "^21.0.1",
-    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-import": "2.25.3",
     "eslint-plugin-jsdoc": "37.0.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-promise": "^5.1.1",
     "jasmine-core": "~3.10.1",
     "jasmine-spec-reporter": "~7.0.0",
-    "karma": "~6.3.8",
+    "karma": "~6.3.9",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
@@ -69,7 +69,7 @@
     "typescript": "~4.1.6"
   },
   "optionalDependencies": {
-    "cypress": "^8.7.0",
+    "cypress": "^9.0.0",
     "cypress-file-upload": "^5.0.8"
   }
 }

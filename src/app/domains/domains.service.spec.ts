@@ -4,7 +4,8 @@
 **********************************************************************/
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
+import { environment } from 'src/environments/environment'
 import { AuthService } from '../auth.service'
 
 import { DomainsService } from './domains.service'
@@ -20,32 +21,57 @@ describe('DomainsService', () => {
     service = new DomainsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
+  const domainReq = {
+    profileName: 'testDomain',
+    domainSuffix: 'testDomain.com',
+    provisioningCert: 'domainCertLongText',
+    provisioningCertPassword: 'password',
+    provisioningCertStorageFormat: 'string'
+  }
+
+  const domainResponse = {
+    data: [domainReq],
+    totalCount: 1
+  }
+
+  const error = {
+    status: 404,
+    message: 'Not Found'
+  }
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return array of domains when get all domains called', (done: DoneFn) => {
-    const domainResponse = {
-      data: [{
-        profileName: 'testDomain',
-        domainSuffix: 'testDomain.com',
-        provisioningCert: 'domainCertLongText',
-        provisioningCertPassword: 'password',
-        provisioningCertStorageFormat: 'string'
-      }],
-      totalCount: 1
-    }
+  it('should return array of 25 domains when get all domains called ', () => {
+    httpClientSpy.get.and.returnValue(of(domainResponse))
 
+    service.getData({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(response => {
+      expect(response).toEqual(domainResponse)
+    })
+    expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$top=25&$skip=0&$count=true`)
+    expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
+  })
+
+  it('should return array of domains when get all domains called ', () => {
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
     service.getData().subscribe(response => {
       expect(response).toEqual(domainResponse)
-      done()
+    })
+    expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$count=true`)
+    expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
+  })
+  it('should throw errors when get all domains called ', () => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+
+    service.getData().subscribe(() => {}, err => {
+      expect(error.status).toBe(err[0].status)
     })
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
 
-  it('should return a single domain object detail when a single record is requested', (done: DoneFn) => {
+  it('should return a single domain object detail when a single record is requested', () => {
     const domainResponse = {
       profileName: 'testDomain',
       domainSuffix: 'testDomain.com',
@@ -58,51 +84,66 @@ describe('DomainsService', () => {
 
     service.getRecord('testDomain').subscribe(response => {
       expect(response).toEqual(domainResponse)
-      done()
     })
   })
 
-  it('should return the updated domain details when a domain is updated', (done: DoneFn) => {
-    const domainReq = {
-      profileName: 'testDomain',
-      domainSuffix: 'testDomain.com',
-      provisioningCert: 'domainCertLongText',
-      provisioningCertPassword: 'password',
-      provisioningCertStorageFormat: 'string'
-    }
+  it('should return errors on a single domain object detail when a single record is requested', () => {
+    httpClientSpy.get.and.returnValue(throwError(error))
 
+    service.getRecord('testDomain').subscribe(() => {}, err => {
+      expect(error.status).toBe(err[0].status)
+    })
+  })
+
+  it('should return the updated domain details when a domain is updated', () => {
     httpClientSpy.patch.and.returnValue(of(domainReq))
 
     service.update(domainReq).subscribe(response => {
       expect(response).toEqual(domainReq)
-      done()
     })
   })
 
-  it('should return the created domain details when a domain is created', (done: DoneFn) => {
-    const domainReq = {
-      profileName: 'testDomain',
-      domainSuffix: 'testDomain.com',
-      provisioningCert: 'domainCertLongText',
-      provisioningCertPassword: 'password',
-      provisioningCertStorageFormat: 'string'
-    }
+  it('should return errors on updated domain details when a domain is updated', () => {
+    httpClientSpy.patch.and.returnValue(throwError(error))
 
+    service.update(domainReq).subscribe(() => {}, err => {
+      expect(error.status).toBe(err[0].status)
+    })
+  })
+
+  it('should return the created domain details when a domain is created', () => {
     httpClientSpy.post.and.returnValue(of(domainReq))
 
     service.create(domainReq).subscribe(response => {
       expect(response).toEqual(domainReq)
-      done()
     })
   })
 
-  it('should delete the domain when a delete request is sent', (done: DoneFn) => {
+  it('should throw error on created domain details when a domain is created', () => {
+    httpClientSpy.post.and.returnValue(throwError(error))
+
+    service.create(domainReq).subscribe(() => {}, err => {
+      expect(error.status).toBe(err[0].status)
+    })
+  })
+
+  it('should delete the domain when a delete request is sent', () => {
     const domainName = 'testDomain'
 
     httpClientSpy.delete.and.returnValue(of({}))
 
     service.delete(domainName).subscribe(() => {
-      done()
+    })
+
+    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+  })
+
+  it('should throw error when a delete request is sent', () => {
+    const domainName = 'testDomain'
+    httpClientSpy.delete.and.returnValue(throwError(error))
+
+    service.delete(domainName).subscribe(() => {}, err => {
+      expect(error.status).toBe(err[0].status)
     })
 
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
