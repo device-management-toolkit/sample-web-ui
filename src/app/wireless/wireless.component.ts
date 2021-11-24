@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -14,7 +14,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
   templateUrl: './wireless.component.html',
   styleUrls: ['./wireless.component.scss']
 })
-export class WirelessComponent implements OnInit, AfterViewInit {
+export class WirelessComponent implements OnInit {
   public wirelessConfigs: WirelessConfigResponse = { data: [], totalCount: 0 }
   public isLoading = true
   displayedColumns: string[] = ['name', 'authmethod', 'encryptionMethod', 'ssid', 'remove']
@@ -30,9 +30,6 @@ export class WirelessComponent implements OnInit, AfterViewInit {
 
   ngOnInit (): void {
     this.getData(this.pageEvent)
-  }
-
-  ngAfterViewInit (): void {
   }
 
   getData (pageEvent: PageEventOptions): void {

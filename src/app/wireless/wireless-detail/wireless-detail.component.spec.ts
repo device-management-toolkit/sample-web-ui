@@ -64,6 +64,22 @@ describe('WirelessDetailComponent', () => {
     expect(wirelessUpdateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })
+
+  it('should not submit form when invalid', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.wirelessForm.patchValue({
+      profileName: 'profile1',
+      authenticationMethod: 4,
+      encryptionMethod: 3,
+      ssid: 'ssid1234'
+    })
+    component.onSubmit()
+
+    expect(wirelessUpdateSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+  })
+
   it('should submit when valid (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
 
