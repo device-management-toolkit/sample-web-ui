@@ -168,7 +168,10 @@ export class DevicesComponent implements OnInit {
 
   resetResponse (): void {
     setTimeout(() => {
-      (this.devices.data.find((items: any) => items.StatusMessage === 'SUCCESS') as any).StatusMessage = ''
+      const found: any = this.devices.data.find((item: any) => item.StatusMessage === 'SUCCESS')
+      if (found) {
+        found.StatusMessage = ''
+      }
     }, 5000)
   }
 

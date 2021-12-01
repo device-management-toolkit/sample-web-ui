@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialogModule } from '@angular/material/dialog'
 
 import { RandomPassAlertComponent } from './random-pass-alert.component'
 
@@ -8,6 +9,7 @@ describe('RandomPassAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatDialogModule],
       declarations: [RandomPassAlertComponent]
     })
       .compileComponents()

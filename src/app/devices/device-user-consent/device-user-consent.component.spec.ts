@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MomentModule } from 'ngx-moment'
-// import { of } from 'rxjs'
+import { of } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { DevicesService } from '../devices.service'
 
@@ -12,19 +12,23 @@ import { DeviceUserConsentComponent } from './device-user-consent.component'
 describe('DeviceUserConsentComponent', () => {
   let component: DeviceUserConsentComponent
   let fixture: ComponentFixture<DeviceUserConsentComponent>
-  // let sendUserConsentCodeSpy: jasmine.Spy
-  // let cancelUserConsentCodeSpy: jasmine.Spy
+  let sendUserConsentCodeSpy: jasmine.Spy
+  let cancelUserConsentCodeSpy: jasmine.Spy
+  const dialogMock = {
+    close: jasmine.createSpy('close')
+  }
+
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
-    // sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(of({}))
-    // cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({ }))
+    sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(of({ deviceId: 'deviceId', results: {} }))
+    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({ }))
     await TestBed.configureTestingModule({
       imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [DeviceUserConsentComponent],
       providers: [{ provide: DevicesService, useValue: devicesService },
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
+        { provide: MatDialogRef, useValue: dialogMock }
       ]
     })
       .compileComponents()
@@ -34,11 +38,38 @@ describe('DeviceUserConsentComponent', () => {
     fixture = TestBed.createComponent(DeviceUserConsentComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+    dialogMock.close = jasmine.createSpy('close')
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    // expect(cancelUserConsentCodeSpy).toHaveBeenCalledWith('guid')
-    // expect(sendUserConsentCodeSpy).toHaveBeenCalledWith('guid', 123567)
+    expect(component.userConsentForm).toBeDefined()
+  })
+
+  it('should submit userConsentForm', () => {
+    component.userConsentForm.patchValue({
+      consentCode: '123456'
+    })
+    expect(component.userConsentForm.valid).toBeTruthy()
+    component.onSubmit()
+    expect(sendUserConsentCodeSpy).toHaveBeenCalledWith('deviceId', '123456')
+    expect(component.data.results).toEqual({ deviceId: 'deviceId', results: {} })
+    expect(dialogMock.close).toHaveBeenCalled()
+  })
+
+  it('should not submit userConsentForm if invalid', () => {
+    component.userConsentForm.patchValue({
+      consentCode: '123'
+    })
+    expect(component.userConsentForm.valid).toBeFalsy()
+    component.onSubmit()
+    expect(sendUserConsentCodeSpy).not.toHaveBeenCalled()
+    expect(dialogMock.close).not.toHaveBeenCalled()
+  })
+
+  it('should cancel and close the user concent dialog', () => {
+    component.onCancel()
+    expect(cancelUserConsentCodeSpy).toHaveBeenCalledWith('deviceId')
+    expect(dialogMock.close).toHaveBeenCalled()
   })
 })

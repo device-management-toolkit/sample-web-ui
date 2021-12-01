@@ -2,7 +2,7 @@
 * Copyright (c) Intel Corporation 2021
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -18,9 +18,10 @@ describe('DevicesComponent', () => {
   let getDevicesSpy: jasmine.Spy
   let getTagsSpy: jasmine.Spy
   let getPowerStateSpy: jasmine.Spy
+  let sendPowerActionSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction'])
     devicesService.PowerStates.and.returnValue({
       2: 'On',
       3: 'Sleep',
@@ -34,7 +35,7 @@ describe('DevicesComponent', () => {
     getDevicesSpy = devicesService.getDevices.and.returnValue(of({ data: [{ hostname: '', guid: '', connectionStatus: true, tags: [], icon: 1 }], totalCount: 1 }))
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-
+    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
       declarations: [DevicesComponent],
@@ -69,6 +70,10 @@ describe('DevicesComponent', () => {
     const result = component.isAllSelected()
     expect(result).toBeTrue()
   })
+  it('should translate connection status - true', () => {
+    const result = component.translateConnectionStatus(true)
+    expect(result).toBe('Connected')
+  })
   it('should translate connection status - false', () => {
     const result = component.translateConnectionStatus(false)
     expect(result).toBe('Disconnected')
@@ -96,5 +101,46 @@ describe('DevicesComponent', () => {
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
+  })
+  it('should reset response', fakeAsync(() => {
+    expect(component.devices.data.length).toBeGreaterThan(0);
+    (component.devices.data[0] as any).StatusMessage = 'SUCCESS'
+    component.resetResponse()
+    tick(5001)
+    const result = component.devices.data.every((val: any) =>
+      val.StatusMessage === ''
+    )
+    expect(result).toBeTrue()
+  }))
+  it('should fire bulk power action', () => {
+    const resetResponseSpy = spyOn(component, 'resetResponse')
+    component.resetResponse()
+    fixture.detectChanges()
+    component.bulkPowerAction(8)
+    expect(resetResponseSpy).toHaveBeenCalled()
+  })
+  it('should fire send power action', () => {
+    component.devices.data = [{
+      hostname: 'localhost',
+      icon: 1,
+      connectionStatus: true,
+      guid: '12324-4243-ewdsd',
+      tags: ['']
+    }]
+    const resetSpy = spyOn(component, 'resetResponse')
+    component.sendPowerAction('12324-4243-ewdsd', 2)
+    expect(sendPowerActionSpy).toHaveBeenCalled()
+    expect(resetSpy).toHaveBeenCalled()
+  })
+
+  it('should select all rows on change the master toggle', () => {
+    component.masterToggle()
+    expect(component.selection.selected).toEqual(component.devices.data)
+  })
+
+  it('should clear the selection when unselect the master toggle', () => {
+    component.selection.select(component.devices.data[0])
+    component.masterToggle()
+    expect(component.selection.selected).toEqual([])
   })
 })

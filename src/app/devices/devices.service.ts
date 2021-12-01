@@ -214,16 +214,6 @@ export class DevicesService {
       )
   }
 
-  getData (): Observable<Device[]> {
-    const payload = { method: 'AllDevices', payload: {} }
-    return this.http.post<Device[]>(`${environment.mpsServer}/api/v1/devices`, payload)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
   getTags (): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
       .pipe(
