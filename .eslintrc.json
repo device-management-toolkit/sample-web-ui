@@ -26,6 +26,7 @@
         "@angular-eslint"
       ],
       "rules": {
+        "@typescript-eslint/no-namespace": 0,
         "@typescript-eslint/strict-boolean-expressions": 0
       }
     },

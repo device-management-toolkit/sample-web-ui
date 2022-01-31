@@ -1,4 +1,3 @@
-import { ciraFixtures } from '../cira'
 import { profileFixtures } from '../profile'
 
 /*********************************************************************
