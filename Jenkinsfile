@@ -8,30 +8,39 @@ pipeline{
         timeout(unit: 'HOURS', time: 2)
     }
     stages{
-          stage('Scan'){
-              environment {
-                  PROJECT_NAME               = 'OpenAMT - sample-web-ui'
-                  SCANNERS                   = 'protex,checkmarx,snyk'
+        stage('Scan'){
+            environment {
+                PROJECT_NAME               = 'OpenAMT - sample-web-ui'
+                SCANNERS                   = 'checkmarx,snyk'
 
-                  // publishArtifacts details
-                  PUBLISH_TO_ARTIFACTORY     = true
+                // publishArtifacts details
+                PUBLISH_TO_ARTIFACTORY     = true
 
-                  SNYK_MANIFEST_FILE         = 'package-lock.json'
-                  SNYK_PROJECT_NAME          = 'openamt-sample-web-ui'
-              }
-              when {
-                  anyOf {
-                      branch 'main';
-                  }
-              }
-              steps {
-                  script{
-                      scmCheckout { 
-                          clean = true
-                      }
-                  }
-                  rbheStaticCodeScan()
-              }
-          }
+                SNYK_MANIFEST_FILE         = 'package-lock.json'
+                SNYK_PROJECT_NAME          = 'openamt-sample-web-ui'
+            }
+            when {
+                anyOf {
+                    branch 'main';
+                }
+            }
+            steps {
+                script{
+                    scmCheckout { 
+                        clean = true
+                    }
+                }
+                rbheStaticCodeScan()
+            }
+        }
+    }
+    post{
+        failure {
+             script{
+                slackBuildNotify {
+                    slackFailureChannel = '#open-amt-cloud-toolkit-build'
+                }
+            }
+        }
     }
 }
