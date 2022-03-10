@@ -4,7 +4,7 @@
  **********************************************************************/
 // Tests the creation of a profile
 import { profileFixtures } from '../../fixtures/profile'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 
 // ---------------------------- Test section ----------------------------
 
@@ -15,11 +15,11 @@ describe('Test Profile Page', () => {
   it('should not delete when cancelled', () => {
     // Stub the requests
     cy.myIntercept('DELETE', /.*profiles.*/, {
-      statusCode: apiResponses.profiles.delete.success.code
+      statusCode: httpCodes.NO_CONTENT
     }).as('delete-profile')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.success.response
     }).as('get-profiles3')
 
@@ -39,11 +39,11 @@ describe('Test Profile Page', () => {
   it('deletes the default profile', () => {
     // Stub the requests
     cy.myIntercept('DELETE', /.*profiles.*/, {
-      statusCode: apiResponses.profiles.delete.success.code
+      statusCode: httpCodes.NO_CONTENT
     }).as('delete-profile')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.success.response
     }).as('get-profiles3')
 
@@ -51,7 +51,7 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles3')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.empty.response
     }).as('get-profiles4')
 

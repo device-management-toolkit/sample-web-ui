@@ -7,7 +7,7 @@
 import 'cypress-file-upload'
 
 import { domainFixtures } from '../../fixtures/domain'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 
 // ---------------------------- Test section ----------------------------
 
@@ -19,12 +19,12 @@ describe('Test Domain Page', () => {
   it('deletes the default domain', () => {
     // Stub requests
     cy.myIntercept('DELETE', /.*domains.*/, {
-      statusCode: apiResponses.domains.delete.success.code,
+      statusCode: httpCodes.NO_CONTENT,
       body: apiResponses.domains.delete.success.response
     }).as('delete-domain')
 
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.domains.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.domains.getAll.success.response
     }).as('get-domains3')
 
@@ -41,7 +41,7 @@ describe('Test Domain Page', () => {
 
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.domains.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.domains.getAll.empty.response
     }).as('get-domains4')
 

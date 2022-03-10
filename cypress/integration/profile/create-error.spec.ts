@@ -5,7 +5,7 @@
 // Tests the creation of a profile
 import { urlFixtures } from '../../fixtures/urls'
 import { profileFixtures } from '../../fixtures/profile'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------
@@ -17,22 +17,22 @@ describe('Test Profile Page', () => {
 
   beforeEach('', () => {
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
-      statusCode: apiResponses.ciraConfigs.getAll.forProfile.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.forProfile.response
     }).as('get-configs2')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.empty.response
     }).as('get-profiles5')
 
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
-      statusCode: apiResponses.wirelessConfigs.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.success.response
     }).as('get-wireless2')
 
     cy.myIntercept('POST', 'profiles', {
-      statusCode: apiResponses.profiles.create.badRequest.code,
+      statusCode: httpCodes.BAD_REQUEST,
       body: apiResponses.profiles.create.badRequest.response
     }).as('post-profile2')
 
@@ -66,7 +66,7 @@ describe('Test Profile Page', () => {
     cy.wait('@post-profile2').then((req) => {
       cy.wrap(req)
         .its('response.statusCode')
-        .should('eq', apiResponses.profiles.create.badRequest.code)
+        .should('eq', httpCodes.BAD_REQUEST)
     })
 
     // Check that the profile creation failed

@@ -4,7 +4,7 @@
  **********************************************************************/
 // Tests the creation of a cira-config
 
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { ciraFixtures } from '../../fixtures/cira'
 import { urlFixtures } from '../../fixtures/urls'
 const baseUrl: string = Cypress.env('BASEURL')
@@ -18,17 +18,17 @@ describe('Test CIRA Config Page', () => {
 
   beforeEach('fills out the config', () => {
     cy.myIntercept('GET', 'ciracert', {
-      statusCode: 200,
+      statusCode: httpCodes.SUCCESS,
       body: ciraFixtures.MpsCertificate
     }).as('certificate1')
 
     cy.intercept('POST', 'ciraconfigs', {
-      statusCode: apiResponses.ciraConfigs.create.badRequest.code,
+      statusCode: httpCodes.BAD_REQUEST,
       body: apiResponses.ciraConfigs.create.badRequest.response
     }).as('post-config1')
 
     cy.intercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.ciraConfigs.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.empty.response
     }).as('get-configs')
 

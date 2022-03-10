@@ -2,7 +2,7 @@
  * Copyright (c) Intel Corporation 2021
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { wirelessFixtures } from '../../fixtures/wireless'
 
 describe('test wireless profiles page', () => {
@@ -12,10 +12,10 @@ describe('test wireless profiles page', () => {
 
   it('deletes the default profile', () => {
     cy.myIntercept('DELETE', /.*wirelessconfigs.*/, {
-      statusCode: apiResponses.wirelessConfigs.delete.success.code
+      statusCode: httpCodes.NO_CONTENT
     }).as('delete-profile')
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.wirelessConfigs.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.success.response
     }).as('get-wireless')
 
@@ -31,7 +31,7 @@ describe('test wireless profiles page', () => {
     cy.get('mat-cell').contains(wirelessFixtures.happyPath.ssid)
 
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.wirelessConfigs.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.empty.response
     }).as('get-wireless2')
 

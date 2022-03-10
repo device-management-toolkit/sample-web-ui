@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { urlFixtures } from '../../fixtures/urls'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { wirelessFixtures } from '../../fixtures/wireless'
 const baseUrl: string = Cypress.env('BASEURL')
 
@@ -14,12 +14,12 @@ describe('Test wireless creation page', () => {
 
   beforeEach('Set up the api stubs', () => {
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
-      statuscode: apiResponses.wirelessConfigs.getAll.empty.code,
+      statuscode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.empty.response
     }).as('get-wireless3')
 
     cy.myIntercept('POST', 'wirelessconfigs', {
-      statusCode: apiResponses.wirelessConfigs.create.badRequest.code,
+      statusCode: httpCodes.BAD_REQUEST,
       body: apiResponses.wirelessConfigs.create.badRequest.response
     }).as('post-wireless')
 
@@ -44,7 +44,7 @@ describe('Test wireless creation page', () => {
     cy.wait('@post-wireless').then((req) => {
       cy.wrap(req)
         .its('response.statusCode')
-        .should('eq', apiResponses.wirelessConfigs.create.badRequest.code)
+        .should('eq', httpCodes.BAD_REQUEST)
     })
 
     // Check that the wireless config creation failed

@@ -8,7 +8,7 @@
 
 import { accountFixtures } from '../../fixtures/accounts'
 import { urlFixtures } from '../../fixtures/urls'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------
@@ -41,7 +41,7 @@ describe('Test login page', () => {
   context('Successful login', () => {
     it('logs in', () => {
       cy.myIntercept('POST', 'authorize', {
-        statusCode: apiResponses.login.success.code,
+        statusCode: httpCodes.SUCCESS,
         body: { token: '' }
       }).as('login-request')
       cy.myIntercept('GET', 'mps/api/v1/devices/stats', {
@@ -55,7 +55,7 @@ describe('Test login page', () => {
       cy.wait('@login-request').then((req) => {
         cy.wrap(req)
           .its('response.statusCode')
-          .should('eq', apiResponses.login.success.code)
+          .should('eq', httpCodes.SUCCESS)
         cy.wrap(req)
           .its('request.body.username')
           .should('eq', accountFixtures.default.username)
@@ -72,7 +72,7 @@ describe('Test login page', () => {
   context('Failed login', () => {
     function prepareIntercepts (): void {
       cy.myIntercept('POST', 'authorize', {
-        statusCode: apiResponses.login.fail.code,
+        statusCode: httpCodes.UNAUTHORIZED,
         body: apiResponses.login.fail.response
       }).as('login-request')
     }
@@ -81,7 +81,7 @@ describe('Test login page', () => {
       cy.wait('@login-request').then((req) => {
         cy.wrap(req)
           .its('response.statusCode')
-          .should('eq', apiResponses.login.fail.code)
+          .should('eq', httpCodes.UNAUTHORIZED)
         cy.wrap(req).its('response.body')
         // breaks e2e
         // .should("deep.eq", apiResponses.login.fail.response)

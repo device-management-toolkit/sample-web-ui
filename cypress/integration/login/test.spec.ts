@@ -8,7 +8,7 @@
 
 import { accountFixtures } from '../../fixtures/accounts'
 import { urlFixtures } from '../../fixtures/urls'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { httpCodes } from '../../fixtures/api/apiResponses'
 // ---------------------------- Test section ----------------------------
 const baseUrl: string = Cypress.env('BASEURL')
 
@@ -31,7 +31,7 @@ describe('Load Site', () => {
 describe('Test login page', () => {
   it('logs in', () => {
     cy.myIntercept('POST', 'authorize', {
-      statusCode: apiResponses.login.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: { token: '' }
     }).as('login-request')
 

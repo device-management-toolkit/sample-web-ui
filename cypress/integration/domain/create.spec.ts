@@ -6,7 +6,7 @@
 
 import 'cypress-file-upload'
 
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { domainFixtures } from '../../fixtures/domain'
 
 // ---------------------------- Test section ----------------------------
@@ -19,12 +19,12 @@ describe('Test Domain Page', () => {
   it('creates the default domain', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.domains.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.domains.getAll.empty.response
     }).as('get-domains')
 
     cy.myIntercept('POST', 'domains', {
-      statusCode: apiResponses.domains.create.success.code,
+      statusCode: httpCodes.CREATED,
       body: apiResponses.domains.create.success.response
     }).as('post-domain')
 
@@ -36,7 +36,7 @@ describe('Test Domain Page', () => {
 
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.domains.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.domains.getAll.success.response
     }).as('get-domains2')
 
@@ -54,7 +54,7 @@ describe('Test Domain Page', () => {
     cy.wait('@post-domain')
     cy.wait('@get-domains2')
       .its('response.statusCode')
-      .should('eq', apiResponses.domains.getAll.success.code)
+      .should('eq', httpCodes.SUCCESS)
 
     // Check that the config was successful
     cy.get('mat-cell').contains(domainFixtures.default.name)

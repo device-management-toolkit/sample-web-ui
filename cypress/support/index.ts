@@ -5,7 +5,7 @@
 // Add repetitive groups of functions here
 
 import { accountFixtures } from '../fixtures/accounts'
-import { apiResponses } from '../fixtures/api/apiResponses'
+import { httpCodes } from '../fixtures/api/apiResponses'
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -29,7 +29,7 @@ Cypress.Commands.add('setup', () => {
   })
 
   cy.myIntercept('POST', 'authorize', {
-    statusCode: apiResponses.login.success.code,
+    statusCode: httpCodes.SUCCESS,
     body: { token: '' }
   }).as('login-request')
 
@@ -43,7 +43,7 @@ Cypress.Commands.add('setup', () => {
   cy.login(accountFixtures.default.username, accountFixtures.default.password)
   cy.wait('@login-request')
     .its('response.statusCode')
-    .should('eq', apiResponses.login.success.code)
+    .should('eq', httpCodes.SUCCESS)
 })
 
 // ------------------- Enter info into a form -------------------------

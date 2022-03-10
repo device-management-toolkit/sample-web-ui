@@ -4,7 +4,7 @@
  **********************************************************************/
 // Tests the creation of a profile
 import { profileFixtures } from '../../fixtures/profile'
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 
 describe('Test Profile Page', () => {
   beforeEach('clear cache and login', () => {
@@ -16,17 +16,17 @@ describe('Test Profile Page', () => {
     }).as('get-configs')
 
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
-      statusCode: apiResponses.wirelessConfigs.getAll.forProfile.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.forProfile.response
     }).as('get-wirelessConfigs')
 
     cy.myIntercept('POST', 'profiles', {
-      statusCode: apiResponses.profiles.create.success.code,
+      statusCode: httpCodes.CREATED,
       body: apiResponses.profiles.create.success.response
     }).as('post-profile')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.empty.response
     }).as('get-profiles')
 
@@ -35,7 +35,7 @@ describe('Test Profile Page', () => {
 
     // change api response
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.success.response
     }).as('get-profiles2')
 
@@ -48,22 +48,22 @@ describe('Test Profile Page', () => {
   it('creates the default profile with tls', () => {
   // Stub the get and post requests
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
-      statusCode: apiResponses.ciraConfigs.getAll.forProfile.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.forProfile.response
     }).as('get-configs')
 
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
-      statusCode: apiResponses.wirelessConfigs.getAll.forProfile.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.wirelessConfigs.getAll.forProfile.response
     }).as('get-wirelessConfigs')
 
     cy.myIntercept('POST', 'profiles', {
-      statusCode: apiResponses.profiles.create.success.code,
+      statusCode: httpCodes.CREATED,
       body: apiResponses.profiles.create.success.response
     }).as('post-profile')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.empty.response
     }).as('get-profiles')
 
@@ -72,7 +72,7 @@ describe('Test Profile Page', () => {
 
     // change api response
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.profiles.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.profiles.getAll.success.response
     }).as('get-profiles2')
 
@@ -95,7 +95,7 @@ describe('Test Profile Page', () => {
     cy.wait('@post-profile').then((req) => {
       cy.wrap(req)
         .its('response.statusCode')
-        .should('eq', apiResponses.profiles.create.success.code)
+        .should('eq', httpCodes.CREATED)
 
       // Check that the config was successful
       cy.get('mat-cell').contains(profileFixtures.happyPathTls.profileName)
@@ -107,7 +107,7 @@ describe('Test Profile Page', () => {
     // this is currently difficult because of the format of the response
     cy.wait('@get-profiles2')
       .its('response.statusCode')
-      .should('eq', apiResponses.profiles.getAll.success.code)
+      .should('eq', httpCodes.SUCCESS)
 
     // Check that the config was successful
     cy.get('mat-cell').contains(profileFixtures.happyPathTls.profileName)

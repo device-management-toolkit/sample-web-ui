@@ -5,28 +5,26 @@ import { profileFixtures } from '../profile'
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+const httpCodes = {
+  SUCCESS: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  INTERNAL_SERVER_ERROR: 500
+}
 const apiResponses = {
   login: {
-    success: {
-      code: 200
-    },
     fail: {
-      code: 401,
       response: {
         error: 'string',
         message: 'string'
       }
     }
   },
-  logout: {
-    success: {
-      code: 200
-    }
-  },
   domains: {
     getAll: {
       success: {
-        code: 200,
         response: {
           data: [
             {
@@ -41,28 +39,24 @@ const apiResponses = {
         }
       },
       empty: {
-        code: 200,
         response: {
           data: [],
           totalCount: null
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       forPaging: {
-        code: 200,
         response: {
           data: [
             {
@@ -107,7 +101,6 @@ const apiResponses = {
     },
     create: {
       success: {
-        code: 201,
         response: {
           profileName: 'happyPath',
           domainSuffix: 'happyPath.com',
@@ -117,14 +110,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -133,7 +124,6 @@ const apiResponses = {
     },
     update: {
       success: {
-        code: 200,
         response: {
           profileName: 'NewDomain',
           domainSuffix: 'NewDomain.com',
@@ -143,14 +133,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -159,7 +147,6 @@ const apiResponses = {
     },
     get: {
       success: {
-        code: 200,
         response: {
           profileName: 'NewDomain',
           domainSuffix: 'NewDomain.com',
@@ -169,14 +156,12 @@ const apiResponses = {
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -185,18 +170,15 @@ const apiResponses = {
     },
     delete: {
       success: {
-        code: 204,
         response: {}
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -207,7 +189,6 @@ const apiResponses = {
   ciraConfigs: {
     getAll: {
       success: {
-        code: 200,
         response: {
           data: [
             {
@@ -227,28 +208,24 @@ const apiResponses = {
         }
       },
       empty: {
-        code: 200,
         response: {
           data: [],
           totalCount: null
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       forProfile: {
-        code: 200,
         response: {
           data: [
             {
@@ -268,7 +245,6 @@ const apiResponses = {
         }
       },
       forPaging: {
-        code: 200,
         response: {
           data: [
             {
@@ -338,7 +314,6 @@ const apiResponses = {
     },
     create: {
       success: {
-        code: 201,
         response: {
           configName: 'happyPath',
           mpsServerAddress: '192.168.8.50',
@@ -353,14 +328,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -369,7 +342,6 @@ const apiResponses = {
     },
     update: {
       success: {
-        code: 200,
         response: {
           configName: 'ciraconfig2',
           mpsServerAddress: '192.168.8.50',
@@ -384,14 +356,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -400,7 +370,6 @@ const apiResponses = {
     },
     get: {
       success: {
-        code: 200,
         response: {
           configName: 'ciraconfig2',
           mpsServerAddress: '192.168.8.50',
@@ -415,14 +384,12 @@ const apiResponses = {
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -431,18 +398,15 @@ const apiResponses = {
     },
     delete: {
       success: {
-        code: 204,
         response: {}
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -453,7 +417,6 @@ const apiResponses = {
   profiles: {
     getAll: {
       success: {
-        code: 200,
         response: {
           data: [
             profileFixtures.happyPath,
@@ -463,28 +426,24 @@ const apiResponses = {
         }
       },
       empty: {
-        code: 200,
         response: {
           data: [],
           totalCount: null
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       forPaging: {
-        code: 200,
         response: {
           data: [
             {
@@ -549,7 +508,6 @@ const apiResponses = {
     },
     create: {
       success: {
-        code: 201,
         response: {
           profileName: 'happyPath',
           configurationScript: null,
@@ -559,14 +517,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -575,7 +531,6 @@ const apiResponses = {
     },
     update: {
       success: {
-        code: 200,
         response: {
           profileName: 'profile6',
           amtPassword: 'Intel123!',
@@ -584,14 +539,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -600,7 +553,6 @@ const apiResponses = {
     },
     get: {
       success: {
-        code: 200,
         response: {
           profileName: 'profile6',
           amtPassword: 'Intel123!',
@@ -609,14 +561,12 @@ const apiResponses = {
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -625,18 +575,15 @@ const apiResponses = {
     },
     delete: {
       success: {
-        code: 204,
         response: {}
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -647,7 +594,6 @@ const apiResponses = {
   devices: {
     getAll: {
       success: {
-        code: 200,
         response: {
           data: [
             {
@@ -687,28 +633,24 @@ const apiResponses = {
         }
       },
       empty: {
-        code: 200,
         response: {
           data: [],
           totalCount: null
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       tags: {
-        code: 200,
         response: {
           data: [
             {
@@ -784,7 +726,6 @@ const apiResponses = {
         }
       },
       windows: {
-        code: 200,
         response: {
           data: [
             {
@@ -826,7 +767,6 @@ const apiResponses = {
         }
       },
       forPaging: {
-        code: 200,
         response: {
           data: [
             {
@@ -918,7 +858,6 @@ const apiResponses = {
   tags: {
     getAll: {
       success: {
-        code: 200,
         response: [
           'Windows',
           'Linux',
@@ -933,7 +872,6 @@ const apiResponses = {
   networkConfigs: {
     getAll: {
       success: {
-        code: 200,
         response: [
           {
             profileName: 'happyPath',
@@ -942,18 +880,15 @@ const apiResponses = {
         ]
       },
       empty: {
-        code: 200,
         response: []
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -962,21 +897,18 @@ const apiResponses = {
     },
     create: {
       success: {
-        code: 201,
         response: {
           profileName: 'profile6',
           dhcpEnabled: true
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -985,21 +917,18 @@ const apiResponses = {
     },
     update: {
       success: {
-        code: 200,
         response: {
           profileName: 'profile6',
           dhcpEnabled: true
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1008,21 +937,18 @@ const apiResponses = {
     },
     get: {
       success: {
-        code: 200,
         response: {
           profileName: 'profile6',
           dhcpEnabled: true
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1031,18 +957,15 @@ const apiResponses = {
     },
     delete: {
       success: {
-        code: 204,
         response: {}
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1053,7 +976,6 @@ const apiResponses = {
   wirelessConfigs: {
     getAll: {
       success: {
-        code: 200,
         response: {
           data: [
             {
@@ -1073,28 +995,24 @@ const apiResponses = {
         }
       },
       empty: {
-        code: 200,
         response: {
           data: [],
           totalCount: null
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       forProfile: {
-        code: 200,
         response: [
           {
             profileName: 'happyPath',
@@ -1110,7 +1028,6 @@ const apiResponses = {
         ]
       },
       forPaging: {
-        code: 200,
         response: {
           data: [
             {
@@ -1180,7 +1097,6 @@ const apiResponses = {
     },
     create: {
       success: {
-        code: 201,
         response: {
           profileName: 'happyPath',
           authenticationMethod: 4,
@@ -1194,14 +1110,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1210,7 +1124,6 @@ const apiResponses = {
     },
     update: {
       success: {
-        code: 200,
         response: {
           profileName: 'happyPath',
           authenticationMethod: 4,
@@ -1224,14 +1137,12 @@ const apiResponses = {
         }
       },
       badRequest: {
-        code: 400,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1240,7 +1151,6 @@ const apiResponses = {
     },
     get: {
       success: {
-        code: 200,
         response: {
           profileName: 'happyPath',
           authenticationMethod: 4,
@@ -1254,14 +1164,12 @@ const apiResponses = {
         }
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1270,18 +1178,15 @@ const apiResponses = {
     },
     delete: {
       success: {
-        code: 204,
         response: {}
       },
       notFound: {
-        code: 404,
         response: {
           error: 'string',
           message: 'string'
         }
       },
       error: {
-        code: 500,
         response: {
           error: 'string',
           message: 'string'
@@ -1292,7 +1197,6 @@ const apiResponses = {
   eventLogs: {
     getAll: {
       success: {
-        code: 200,
         response: [
           {
             DeviceAddress: 255,
@@ -1323,7 +1227,6 @@ const apiResponses = {
     },
     devices: {
       success: {
-        code: 200,
         response: {
           data: [
             {
@@ -1342,7 +1245,6 @@ const apiResponses = {
     },
     version: {
       success: {
-        code: 200,
         response: {
           CIM_SoftwareIdentity: {
             responses: [
@@ -1359,7 +1261,6 @@ const apiResponses = {
     },
     hardwareInfo: {
       success: {
-        code: 200,
         response: {
           CIM_Chassis: {
             response: {
@@ -1374,7 +1275,6 @@ const apiResponses = {
     },
     auditlog: {
       success: {
-        code: 200,
         response: {
           records: [
             {
@@ -1388,7 +1288,6 @@ const apiResponses = {
     },
     amtFeatures: {
       success: {
-        code: 200,
         response: {
           userConsent: 'kvm',
           optInState: 0,
@@ -1402,4 +1301,4 @@ const apiResponses = {
   }
 }
 
-export { apiResponses }
+export { apiResponses, httpCodes }

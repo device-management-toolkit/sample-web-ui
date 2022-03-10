@@ -2,7 +2,7 @@
  * Copyright (c) Intel Corporation 2021
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 
 describe('Test device details page', () => {
   beforeEach('', () => {
@@ -11,32 +11,32 @@ describe('Test device details page', () => {
 
   it('should load the amt features on the device details page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.eventLogs.devices.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.eventLogs.devices.success.response
     }).as('get-devices')
 
     cy.myIntercept('GET', /tags$/, {
-      statusCode: apiResponses.tags.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.tags.getAll.success.response
     }).as('get-tags')
 
     cy.myIntercept('GET', /.*version.*/, {
-      statusCode: apiResponses.eventLogs.version.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.eventLogs.version.success.response
     }).as('get-version')
 
     cy.myIntercept('GET', /.*hardwareInfo.*/, {
-      statusCode: apiResponses.eventLogs.hardwareInfo.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.eventLogs.hardwareInfo.success.response
     }).as('get-hwInfo')
 
     cy.myIntercept('GET', /.*audit.*/, {
-      statusCode: apiResponses.eventLogs.auditlog.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.eventLogs.auditlog.success.response
     }).as('get-auditlog')
 
     cy.myIntercept('GET', /.*features.*/, {
-      statusCode: apiResponses.eventLogs.amtFeatures.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.eventLogs.amtFeatures.success.response
     }).as('get-features')
 

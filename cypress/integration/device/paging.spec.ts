@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 // Tests the creation of a device
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { deviceFixtures } from '../../fixtures/device'
 
 // ---------------------------- Test section ----------------------------
@@ -15,17 +15,17 @@ describe('Test Device Page', () => {
 
   it('pagination for next page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices')
 
     cy.myIntercept('GET', /tags$/, {
-      statusCode: apiResponses.tags.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.tags.getAll.success.response
     }).as('get-tags')
 
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices2')
 
@@ -39,17 +39,17 @@ describe('Test Device Page', () => {
 
   it('pagination for previous page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices3')
 
     cy.myIntercept('GET', /tags$/, {
-      statusCode: apiResponses.tags.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.tags.getAll.success.response
     }).as('get-tags2')
 
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices4')
 
@@ -65,17 +65,17 @@ describe('Test Device Page', () => {
 
   it('pagination for last page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices5')
 
     cy.myIntercept('GET', /tags$/, {
-      statusCode: apiResponses.tags.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.tags.getAll.success.response
     }).as('get-tags3')
 
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices6')
 
@@ -89,17 +89,17 @@ describe('Test Device Page', () => {
 
   it('pagination for first page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices7')
 
     cy.myIntercept('GET', /tags$/, {
-      statusCode: apiResponses.tags.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.tags.getAll.success.response
     }).as('get-tags4')
 
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
-      statusCode: apiResponses.devices.getAll.forPaging.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.devices.getAll.forPaging.response
     }).as('get-devices8')
 

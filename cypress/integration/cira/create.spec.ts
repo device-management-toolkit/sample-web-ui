@@ -4,7 +4,7 @@
  **********************************************************************/
 // Tests the creation of a cira-config
 
-import { apiResponses } from '../../fixtures/api/apiResponses'
+import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { ciraFixtures } from '../../fixtures/cira'
 
 // ---------------------------- Test section ----------------------------
@@ -17,17 +17,17 @@ describe('Test CIRA Config Page', () => {
   it('creates the default CIRA config', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'ciracert', {
-      statusCode: 200,
+      statusCode: httpCodes.SUCCESS,
       body: ciraFixtures.MpsCertificate
     }).as('certificate')
 
     cy.myIntercept('POST', 'ciraconfigs', {
-      statusCode: apiResponses.ciraConfigs.create.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.create.success.response
     }).as('post-config')
 
     cy.myIntercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: apiResponses.ciraConfigs.getAll.empty.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.empty.response
     }).as('get-configs')
 
@@ -37,7 +37,7 @@ describe('Test CIRA Config Page', () => {
 
     // change api response
     cy.myIntercept('GET', /.*ciraconfigs.*/, {
-      statusCode: apiResponses.ciraConfigs.getAll.success.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.success.response
     }).as('get-configs2')
 
@@ -54,14 +54,14 @@ describe('Test CIRA Config Page', () => {
     cy.wait('@post-config').then((req) => {
       cy.wrap(req)
         .its('response.statusCode')
-        .should('eq', apiResponses.ciraConfigs.create.success.code)
+        .should('eq', httpCodes.SUCCESS)
     })
 
     // TODO: check the response to make sure that it is correct
     // this is currently difficult because of the format of the response
     cy.wait('@get-configs2')
       .its('response.statusCode')
-      .should('eq', apiResponses.ciraConfigs.getAll.success.code)
+      .should('eq', httpCodes.SUCCESS)
 
     // //Check that the config was successful
     cy.get('mat-cell').contains(ciraFixtures.default.name)
