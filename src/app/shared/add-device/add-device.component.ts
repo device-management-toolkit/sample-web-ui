@@ -19,7 +19,7 @@ export class AddDeviceComponent implements OnInit {
   rpcDocker: string = 'sudo docker run --device=/dev/mei0 rpc:latest '
   rpcWindows: string = 'rpc.exe '
   serverUrl: string = `-u wss://${this.formServerUrl()}/activate `
-  selectedProfile: string = ''
+  selectedProfile: string = 'activate'
   verboseString: string = ''
   certCheckString: string = '-n '
   isCopied: boolean = false
@@ -51,7 +51,7 @@ export class AddDeviceComponent implements OnInit {
         this.activationUrl = this.rpcDocker
         break
     }
-    this.activationUrl += `${this.serverUrl}${this.certCheckString}${this.verboseString}${this.selectedProfile}`
+    this.activationUrl += `${this.selectedProfile} ${this.serverUrl}${this.certCheckString}${this.verboseString}`
   }
 
   formServerUrl (): string {
@@ -66,7 +66,7 @@ export class AddDeviceComponent implements OnInit {
   }
 
   profileChange (event: MatSelectChange): void {
-    this.selectedProfile = `-c '-t activate --profile ${event.value as string}'`
+    this.selectedProfile = `activate -profile ${event.value as string}`
     this.formActivationUrl()
   }
 
@@ -78,7 +78,7 @@ export class AddDeviceComponent implements OnInit {
   }
 
   isActivationCommandDisabled (): boolean {
-    return this.selectedProfile === ''
+    return this.selectedProfile === 'activate'
   }
 
   updateCertCheck (event: MatCheckboxChange): void {

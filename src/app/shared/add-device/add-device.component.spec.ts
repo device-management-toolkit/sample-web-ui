@@ -75,7 +75,7 @@ describe('AddDeviceComponent', () => {
     }
 
     component.profileChange(event)
-    expect(component.selectedProfile).toBe('-c \'-t activate --profile profile1\'')
+    expect(component.selectedProfile).toBe('activate -profile profile1')
   })
 
   it('should update the cert check and verbose strings on checkbox clicks', () => {
