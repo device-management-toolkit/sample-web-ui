@@ -170,9 +170,10 @@ export class KvmComponent implements OnInit, OnDestroy {
   afterUserContentDialogClosed (data: userConsentData): void {
     const response: userConsentResponse = data?.results
     // On success to send or cancel to previous requested user consent code
-    if (response?.Header?.Method === 'CancelOptIn') {
+    const method = response.Header.Action.substring(response.Header.Action.lastIndexOf('/') + 1, response.Header.Action.length)
+    if (method === 'CancelOptInResponse') {
       this.cancelOptInCodeResponse(response)
-    } else if (response?.Header?.Method === 'SendOptInCode') {
+    } else if (method === 'SendOptInCodeResponse') {
       this.SendOptInCodeResponse(response)
     }
   }
@@ -189,6 +190,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   SendOptInCodeResponse (result: userConsentResponse): void {
     if (result.Body?.ReturnValue === 0) {
       this.readyToLoadKvm = true
+      this.getAMTFeatures()
     } else if (result.Body?.ReturnValue === 2066) {
       // On receiving an invalid consent code. Sending multiple invalid consent codes will cause the OptInState to return to NOT STARTED
       this.snackBar.open($localize`KVM cannot be accessed - unsupported user consent code`, undefined, SnackbarDefaults.defaultError)

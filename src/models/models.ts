@@ -323,7 +323,6 @@ export interface Header {
   Action: string
   MessageID: string
   ResourceURI: string
-  Method: string
 }
 export interface Body {
   ReturnValue: number

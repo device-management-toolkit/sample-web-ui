@@ -150,9 +150,10 @@ export class SolComponent implements OnInit {
   afterUserContentDialogClosed (data: userConsentData): void {
     const response: userConsentResponse = data?.results
     // On success to send or cancel to previous requested user consent code
-    if (response.Header?.Method === 'CancelOptIn') {
+    const method = response.Header.Action.substring(response.Header.Action.lastIndexOf('/') + 1, response.Header.Action.length)
+    if (method === 'CancelOptInResponse') {
       this.cancelOptInCodeResponse(response)
-    } else if (response.Header?.Method === 'SendOptInCode') {
+    } else if (method === 'SendOptInCodeResponse') {
       this.SendOptInCodeResponse(response)
     }
   }

@@ -1,5 +1,63 @@
-<a name="unreleased"></a>
-## [Unreleased]
+<a name="2.2.0"></a>
+## [2.2.0] - 2022-03-18
+### Build
+- **deps:** Bump cypress from 9.2.1 to 9.3.1 (#1d47511) 
+- **deps:** Bump xterm from 4.17.0 to 4.18.0 (#e3ebcba) 
+- **deps:** Bump zone.js from 0.11.4 to 0.11.5 (#a46241a) 
+- **deps:** Bump xterm from 4.14.1 to 4.15.0 (#74716ad) 
+- **deps:** Bump cypress from 8.7.0 to 9.0.0 (#9dfb79d) 
+- **deps:** Bump cypress from 9.0.0 to 9.1.0 (#93a82ea) 
+- **deps:** Bump cypress from 9.1.0 to 9.1.1 (#8c156ee) 
+- **deps:** Bump xterm from 4.16.0 to 4.17.0 (#b636db7) 
+- **deps:** Bump cypress from 9.3.1 to 9.4.1 (#850dfc2) 
+- **deps:** Bump xterm from 4.15.0 to 4.16.0 (#549da3f) 
+- **deps:** Bump cypress from 9.1.1 to 9.2.0 (#36f0a31) 
+- **deps:** update [@open](https://github.com/open)-amt-cloud-toolkit to v2.0.3 (#2270170) 
+- **deps:** Bump cypress from 9.2.0 to 9.2.1 (#f2a98c2) 
+- **deps-dev:** Bump karma from 6.3.9 to 6.3.10 (#2b48789) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.10.2 to 3.10.3 (#7e451dd) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.5.1 to 37.6.1 (#ae4310a) 
+- **deps-dev:** Bump jasmine-core from 3.10.1 to 4.0.0 (#8566fcb) 
+- **deps-dev:** Bump karma from 6.3.10 to 6.3.12 (#e071d24) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.4.0 to 37.5.1 (#72a8c0e) 
+- **deps-dev:** Bump karma from 6.3.12 to 6.3.13 (#684c645) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.6.1 to 37.7.0 (#ac42233) 
+- **deps-dev:** Bump eslint-plugin-import from 2.25.3 to 2.25.4 (#ad2f579) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.2.0 to 37.4.0 (#491e445) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.0.3 to 37.2.0 (#1a9d0fd) 
+- **deps-dev:** Bump eslint-plugin-promise from 5.1.1 to 5.2.0 (#dac5c14) 
+- **deps-dev:** Bump karma from 6.3.13 to 6.3.16 (#c54feeb) 
+- **deps-dev:** Bump karma-coverage from 2.0.3 to 2.1.0 (#6c7c9b9) 
+- **deps-dev:** Bump eslint-plugin-import from 2.25.2 to 2.25.3 (#2683030) 
+- **deps-dev:** Bump ts-node from 10.4.0 to 10.5.0 (#2e9eee2) 
+- **deps-dev:** Bump karma from 6.3.8 to 6.3.9 (#02a9e65) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 37.7.0 to 37.7.1 (#9c416af) 
+- **deps-dev:** Bump karma-coverage from 2.1.0 to 2.2.0 (#4a5f640) 
+- **deps-dev:** Bump karma from 6.3.7 to 6.3.8 (#6e95f65) 
+- **node:** bump from 14.x to 16.x (#5855943) 
+
+### Ci
+- Scan only main (#54083d8) 
+- **cypress:** set to run 16 only (#939950a) 
+- **cypress:** add linting to test files (#b3b55bc) 
+- **jenkinsfile:** removes protex scan (#cda4fb1) 
+- **workflow:** optimize node CI (#61a32cf) 
+
+### Refactor
+- **add-dialog:** uses rpc-go syntax (#c729709) 
+- **cypress:** consolidate http codes (#0ebdb3f) 
+
+### Test
+- **auth:** increased code coverage for auth.service.ts ([#482](https://github.com/open-amt-cloud-toolkit/rps/issues/482)) (#0e60552) 
+- **devices:** increased code coverage for devices (#ea10e60) 
+- **domains:** increased code coverage for domains (#20ef45f) 
+- **e2e:** break out tls tests (#b4f6172) 
+- **e2e:** adds rpc activation tests to cypress (#4082417) 
+- **e2e:** fix tls profile creation (#9d1c957) 
+- **profile:** increased code coverage for profiles (#08e9e07) 
+- **toolbar:** increase coverage for toolbar (#77e5425) 
+- **wireless:** increased code coverage for wireless ([#489](https://github.com/open-amt-cloud-toolkit/rps/issues/489)) (#59df479) 
+
 
 
 <a name="2.1.0"></a>
