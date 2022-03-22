@@ -40,6 +40,26 @@ const profileFixtures = {
     dhcpEnabled: true,
     connectionMode: 'TLS (Enterprise)',
     tlsConfig: 'Server Authentication Only'
+  },
+
+  happyPathStaticCIRA: {
+    profileName: 'happyPathStaticCIRA',
+    activation: 'ccmactivate',
+    amtPassword: 'P@ssw0rd',
+    mebxPassword: 'P@ssw0rd',
+    connectionMode: 'CIRA (Cloud)',
+    dhcpEnabled: false,
+    ciraConfig: 'happyPath'
+  },
+
+  happyPathStaticCIRARandomPassword: {
+    profileName: 'happyPathStaticCIRARandomPassword',
+    activation: 'ccmactivate',
+    amtPassword: 'P@ssw0rd',
+    mebxPassword: 'P@ssw0rd',
+    connectionMode: 'CIRA (Cloud)',
+    dhcpEnabled: false,
+    ciraConfig: 'happyPath'
   }
 }
 export { profileFixtures }

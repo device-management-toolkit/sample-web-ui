@@ -200,9 +200,110 @@ describe('ProfileDetailComponent', () => {
     expect(routerSpy).not.toHaveBeenCalled()
   })
 
-  it('should disable the cira config and wifi config when static network is selected', () => {
+  it('should enable the cira config and disable wifi config when static network is selected', () => {
     component.networkConfigChange(false)
-    expect(component.profileForm.controls.ciraConfigName.disabled).toBe(true)
+    expect(component.profileForm.controls.ciraConfigName.enabled).toBe(true)
+    // Add check for wifi config disabled or selected wifi config is 0
+  })
+
+  it('should submit if cira config and static network are simultaneously selected', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      mebxPassword: 'Password123',
+      dhcpEnabled: false,
+      ciraConfigName: 'config1',
+      tlsConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should cancel submit if cira config and static network are simultaneously selected', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      mebxPassword: 'Password123',
+      dhcpEnabled: false,
+      ciraConfigName: 'config1',
+      tlsConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+  })
+
+  it('should submit if cira config and static network are simultaneously selected + randomly generated password', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: '',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
+      mebxPassword: '',
+      dhcpEnabled: false,
+      ciraConfigName: 'config1',
+      tlsConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should cancel submit if cira config and static network are simultaneously selected + randomly generated password', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.isEdit = false
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: '',
+      generateRandomPassword: true,
+      generateRandomMEBxPassword: true,
+      mebxPassword: '',
+      dhcpEnabled: false,
+      ciraConfigName: 'config1',
+      tlsConfigName: null
+    })
+    component.confirm()
+
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(profileCreateSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
   })
 
   it('should update the selected wifi configs on selecting a wifi profile', () => {

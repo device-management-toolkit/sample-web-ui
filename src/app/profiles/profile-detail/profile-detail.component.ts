@@ -14,6 +14,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { CIRAConfigResponse, Profile, TLSConfigResponse, TlsMode, WiFiProfile, WirelessConfigResponse } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
+import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
@@ -206,7 +207,7 @@ export class ProfileDetailComponent implements OnInit {
 
   networkConfigChange (value: boolean): void {
     if (!value) {
-      this.profileForm.controls.ciraConfigName.disable()
+      this.profileForm.controls.ciraConfigName.enable()
       this.wifiAutocomplete.reset({ value: '', disabled: true })
       this.profileForm.controls.ciraConfigName.setValue(null)
     } else {
@@ -303,13 +304,13 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  confirm (): void {
-    // Warn user of risk if using random generated passwords
-    if (this.profileForm.valid) {
-      this.isLoading = true
-      const result: any = Object.assign({}, this.profileForm.getRawValue())
-      // When creating new
-      if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+  randPasswordCIRAStaticWarning (): void {
+    const dialog = this.dialog.open(StaticCIRAWarningComponent, {
+      height: '225px',
+      width: '450px'
+    })
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
         const dialog = this.dialog.open(RandomPassAlertComponent, {
           height: '225px',
           width: '450px'
@@ -321,6 +322,54 @@ export class ProfileDetailComponent implements OnInit {
             this.isLoading = false
           }
         })
+      } else { // Cancel form submission
+        this.isLoading = false
+      }
+    })
+  }
+
+  CIRAStaticWarning (): void {
+    const dialog = this.dialog.open(StaticCIRAWarningComponent, {
+      height: '225px',
+      width: '450px'
+    })
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.onSubmit()
+      } else { // Cancel form submission
+        this.isLoading = false
+      }
+    })
+  }
+
+  randPasswordWarning (): void {
+    const dialog = this.dialog.open(RandomPassAlertComponent, {
+      height: '225px',
+      width: '450px'
+    })
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.onSubmit()
+      } else { // Cancel form submission
+        this.isLoading = false
+      }
+    })
+  }
+
+  confirm (): void {
+    // Warn user of risk if using random generated passwords
+    // Warn user of risk if CIRA configuration and static network are selected simultaneously
+    if (this.profileForm.valid) {
+      this.isLoading = true
+      const result: any = Object.assign({}, this.profileForm.getRawValue())
+      // When creating new
+      if ((result.connectionMode === 'CIRA' && result.dhcpEnabled === false) &&
+      (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword))) {
+        this.randPasswordCIRAStaticWarning()
+      } else if (result.connectionMode === 'CIRA' && result.dhcpEnabled === false) {
+        this.CIRAStaticWarning()
+      } else if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+        this.randPasswordWarning()
       } else {
         this.onSubmit()
       }

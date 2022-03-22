@@ -120,7 +120,7 @@
               </mat-option>
             </mat-select>
             <mat-hint><span *ngIf="profileForm.get('ciraConfigName')?.value === null">No config selected.</span> CIRA
-              cannot be configured for static network
+              cannot be configured for static network if AMT version is lower than 11.6
             </mat-hint>
           </mat-form-field>
           <mat-form-field fxFlex="100">

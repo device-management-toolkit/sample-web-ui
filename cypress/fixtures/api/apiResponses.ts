@@ -420,7 +420,9 @@ const apiResponses = {
         response: {
           data: [
             profileFixtures.happyPath,
-            profileFixtures.happyPathTls
+            profileFixtures.happyPathTls,
+            profileFixtures.happyPathStaticCIRA,
+            profileFixtures.happyPathStaticCIRARandomPassword
           ],
           totalCount: 2
         }
