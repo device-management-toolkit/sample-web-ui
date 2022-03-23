@@ -22,7 +22,7 @@ describe('Test CIRA Config Page', () => {
     }).as('certificate')
 
     cy.myIntercept('POST', 'ciraconfigs', {
-      statusCode: httpCodes.SUCCESS,
+      statusCode: httpCodes.CREATED,
       body: apiResponses.ciraConfigs.create.success.response
     }).as('post-config')
 
@@ -54,7 +54,7 @@ describe('Test CIRA Config Page', () => {
     cy.wait('@post-config').then((req) => {
       cy.wrap(req)
         .its('response.statusCode')
-        .should('eq', httpCodes.SUCCESS)
+        .should('eq', httpCodes.CREATED)
     })
 
     // TODO: check the response to make sure that it is correct
