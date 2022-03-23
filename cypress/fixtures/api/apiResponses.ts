@@ -1271,6 +1271,47 @@ const apiResponses = {
               SerialNumber: '12',
               Version: '16'
             }
+          },
+          CIM_BIOSElement: {
+            response: {
+              Manufacturer: 'Intel',
+              Version: '8.8.0.6',
+              ReleaseDate: {
+                Datetime: 'Jul-4-1776'
+              },
+              TargetOperatingSystem: 'Win 95'
+            }
+          },
+          CIM_PhysicalMemory: {
+            responses: [
+              {
+                BankLabel: 'BANK 0',
+                Capacity: 4294967296,
+                CreationClassName: 'CIM_PhysicalMemory',
+                ElementName: 'Managed System Memory Chip',
+                FormFactor: 13,
+                Manufacturer: '04EF',
+                MemoryType: 26,
+                PartNumber: 'TEAMGROUP-SD4-2133  ',
+                SerialNumber: '020300C5',
+                Speed: 0,
+                Tag: 9876543210
+              },
+              {
+                BankLabel: 'BANK 2',
+                Capacity: 4294967296,
+                CreationClassName: 'CIM_PhysicalMemory',
+                ElementName: 'Managed System Memory Chip',
+                FormFactor: 13,
+                Manufacturer: '04EF',
+                MemoryType: 26,
+                PartNumber: 'TEAMGROUP-SD4-2133  ',
+                SerialNumber: '020300BD',
+                Speed: 0,
+                Tag: '9876543210 (#2)'
+              }
+            ],
+            status: 200
           }
         }
       }

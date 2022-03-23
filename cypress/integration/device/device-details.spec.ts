@@ -41,7 +41,7 @@ describe('Test device details page', () => {
     }).as('get-features')
 
     cy.myIntercept('POST', /.*features.*/, {
-      statusCode: 200,
+      statusCode: httpCodes.SUCCESS,
       body: { status: 'success' }
     }).as('post-features')
 
