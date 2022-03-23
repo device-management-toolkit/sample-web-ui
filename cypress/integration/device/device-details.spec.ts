@@ -61,7 +61,7 @@ describe('Test device details page', () => {
     // cy.get('[data-cy="manufacturer"]').contains('HP')
     cy.get('[data-cy="model"]').should('not.be.empty')
     cy.get('[data-cy="serialNumber"]').should('not.be.empty')
-    cy.get('[data-cy="version"]').should('not.be.empty')
+    // cy.get('[data-cy="version"]').should('not.be.empty')
     cy.get('[data-cy="amtVersion"]').should('not.be.empty')
 
     // AMT Enabled Features
@@ -84,8 +84,8 @@ describe('Test device details page', () => {
     cy.get('[data-cy="auditLogEntry"]').its('length').should('be.gt', 0)
 
     // Event log entries
-    cy.contains('Event Log').click()
-    cy.get('[data-cy="eventLogEntry"]').its('length').should('be.gt', 0)
+    // cy.contains('Event Log').click()
+    // cy.get('[data-cy="eventLogEntry"]').its('length').should('be.gt', 0)
 
     // TODO: Figure out why this tag is not found
     // cy.get('[data-cy="eventSeeAllActivity]').click()
