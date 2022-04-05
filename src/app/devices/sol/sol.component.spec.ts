@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { RouterTestingModule } from '@angular/router/testing'
 import { AuthService } from 'src/app/auth.service'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -69,5 +70,19 @@ describe('SolComponent', () => {
     expect(setAmtFeaturesSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(reqUserConsentCodeSpy).toHaveBeenCalled()
+  })
+  it('should show error and hide loading when disconnected', () => {
+    const snackBarSpy = spyOn(component.snackBar, 'open')
+    component.deviceStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+    expect(component.isLoading).toBeFalse()
+    expect(component.deviceState).toBe(0)
+  })
+  it('should  hide loading when connected', () => {
+    const snackBarSpy = spyOn(component.snackBar, 'open')
+    component.deviceStatus(3)
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(component.isLoading).toBeFalse()
+    expect(component.deviceState).toBe(3)
   })
 })

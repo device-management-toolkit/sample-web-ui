@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Component, EventEmitter, Input } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AuthService } from 'src/app/auth.service'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -74,5 +75,19 @@ describe('KvmComponent', () => {
     expect(powerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(reqUserConsentCodeSpy).toHaveBeenCalled()
+  })
+  it('should show error and hide loading when disconnected', () => {
+    const snackBarSpy = spyOn(component.snackBar, 'open')
+    component.deviceStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+    expect(component.isLoading).toBeFalse()
+    expect(component.deviceState).toBe(0)
+  })
+  it('should  hide loading when connected', () => {
+    const snackBarSpy = spyOn(component.snackBar, 'open')
+    component.deviceStatus(2)
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(component.isLoading).toBeFalse()
+    expect(component.deviceState).toBe(2)
   })
 })

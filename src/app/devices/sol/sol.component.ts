@@ -206,11 +206,12 @@ export class SolComponent implements OnInit {
   }
 
   deviceStatus (event: any): void {
+    this.deviceState = event
     if (event === 3) {
-      this.deviceState = event
       this.isLoading = false
-    } else {
-      this.deviceState = event
+    } else if (event === 0) {
+      this.isLoading = false
+      this.snackBar.open('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
     }
   }
 
