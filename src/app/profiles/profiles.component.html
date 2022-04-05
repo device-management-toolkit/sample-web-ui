@@ -31,7 +31,7 @@
             <!-- network config Column -->
             <ng-container matColumnDef="networkConfig">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Network Config </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.dhcpEnabled }}
+                <mat-cell *matCellDef="let element" fxFlex="150px"> <span *ngIf="element.dhcpEnabled">DHCP</span> <span *ngIf="!element.dhcpEnabled">Static</span>
                 </mat-cell>
             </ng-container>
 
