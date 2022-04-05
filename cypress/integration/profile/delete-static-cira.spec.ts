@@ -39,7 +39,7 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles4')
 
     // Check that the config was deleted properly
-    cy.contains(profileFixtures.happyPathStaticCIRA.profileName).should('not.exist')
+    cy.contains(/profileFixtures.happyPathStaticCIRA.profileName/).should('not.exist')
   })
 
   it('deletes the default profile with static+cira and random password', () => {
@@ -68,6 +68,6 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles4')
 
     // Check that the config was deleted properly
-    cy.contains(profileFixtures.happyPathStaticCIRARandomPassword.profileName).should('not.exist')
+    cy.contains(/profileFixtures.happyPathStaticCIRARandomPassword.profileName/).should('not.exist')
   })
 })

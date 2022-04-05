@@ -64,7 +64,7 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
     cy.contains('FQDN').click()
   }
   cy.get('input').get('[name=mpsServerAddress]').type(addr)
-  cy.get('input').get('[name=username]').type(user)
+  cy.get('input').get('[name=username]').clear().type(user)
 })
 
 Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig) => {

@@ -21,8 +21,8 @@ const profileFixtures = {
 
   check: {
     network: {
-      dhcp: true,
-      static: false
+      dhcp: 'DHCP',
+      static: 'Static'
     },
 
     mode: {

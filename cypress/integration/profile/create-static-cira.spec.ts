@@ -100,7 +100,7 @@ describe('Test Profile Page', () => {
 
       // Check that the config was successful
       cy.get('mat-cell').contains(profileFixtures.happyPathStaticCIRA.profileName)
-      cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+      cy.get('mat-cell').contains(profileFixtures.check.network.static.toString())
       cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
     })
 
@@ -112,7 +112,7 @@ describe('Test Profile Page', () => {
 
     // Check that the config was successful
     cy.get('mat-cell').contains(profileFixtures.happyPathStaticCIRA.profileName)
-    cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+    cy.get('mat-cell').contains(profileFixtures.check.network.static.toString())
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
   })
 
@@ -173,7 +173,7 @@ describe('Test Profile Page', () => {
 
       // Check that the config was successful
       cy.get('mat-cell').contains(profileFixtures.happyPathStaticCIRARandomPassword.profileName)
-      cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+      cy.get('mat-cell').contains(profileFixtures.check.network.static.toString())
       cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
     })
 
@@ -185,7 +185,7 @@ describe('Test Profile Page', () => {
 
     // Check that the config was successful
     cy.get('mat-cell').contains(profileFixtures.happyPathStaticCIRARandomPassword.profileName)
-    cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+    cy.get('mat-cell').contains(profileFixtures.check.network.static.toString())
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
   })
 })
