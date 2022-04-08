@@ -31,7 +31,7 @@
     "ngx-mqtt": "^9.0.5",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
-    "@open-amt-cloud-toolkit/ui-toolkit-angular": "2.0.2",
+    "@open-amt-cloud-toolkit/ui-toolkit-angular": "2.0.5",
     "xterm": "^4.18.0",
     "zone.js": "~0.11.5"
   },
