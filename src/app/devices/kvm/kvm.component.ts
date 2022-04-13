@@ -5,7 +5,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { interval, Observable, of, Subscription, throwError } from 'rxjs'
 import { catchError, finalize, mergeMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -31,6 +31,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   authToken: string = ''
   timeInterval!: any
   selected: number = 1
+  isDisconnecting: boolean = false
   @Input() deviceState: number = 0
   @Output() deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
   @Output() selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
@@ -53,6 +54,11 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.isDisconnecting = true
+      }
+    })
   }
 
   ngOnInit (): void {
@@ -66,6 +72,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.deviceConnection.emit(true)
     })
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
+      this.isDisconnecting = true
       this.deviceConnection.emit(false)
     })
     this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
@@ -232,16 +239,19 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   deviceStatus = (event: any): void => {
     this.deviceState = event
-
     if (event === 2) {
       this.isLoading = false
     } else if (event === 0) {
       this.isLoading = false
-      this.snackBar.open('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+      if (!this.isDisconnecting) {
+        this.snackBar.open('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+      }
+      this.isDisconnecting = false
     }
   }
 
   ngOnDestroy (): void {
+    this.isDisconnecting = true
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()
     }

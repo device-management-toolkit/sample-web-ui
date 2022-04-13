@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { Observable, of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
@@ -18,7 +18,7 @@ import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-al
   styleUrls: ['./sol.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SolComponent implements OnInit {
+export class SolComponent implements OnInit, OnDestroy {
   results: any
   amtFeatures?: AmtFeaturesResponse
   isLoading: boolean = false
@@ -27,13 +27,28 @@ export class SolComponent implements OnInit {
   readyToLoadSol: boolean = false
   mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   authToken: string = ''
+  isDisconnecting: boolean = false
   @Input() deviceState: number = 0
   @Output() deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
-  constructor (private readonly activatedRoute: ActivatedRoute, private readonly deviceService: DevicesService, public snackBar: MatSnackBar, public dialog: MatDialog, public readonly authService: AuthService) {
+  constructor (private readonly activatedRoute: ActivatedRoute,
+    private readonly devicesService: DevicesService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    private readonly router: Router,
+    public readonly authService: AuthService) {
     this.authToken = this.authService.getLoggedUserToken()
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.isDisconnecting = true
+      }
+    })
+  }
+
+  ngOnDestroy (): void {
+    this.isDisconnecting = true
   }
 
   ngOnInit (): void {
@@ -41,12 +56,13 @@ export class SolComponent implements OnInit {
       this.isLoading = true
       this.deviceId = params.id
     })
-    this.deviceService.startwebSocket.subscribe((data: boolean) => {
+    this.devicesService.startwebSocket.subscribe((data: boolean) => {
       this.isLoading = true
       this.setAmtFeatures()
       this.deviceConnection.emit(true)
     })
-    this.deviceService.stopwebSocket.subscribe((data: boolean) => {
+    this.devicesService.stopwebSocket.subscribe((data: boolean) => {
+      this.isDisconnecting = true
       this.deviceConnection.emit(false)
     })
     this.setAmtFeatures()
@@ -62,7 +78,7 @@ export class SolComponent implements OnInit {
         dialog.afterClosed().subscribe(result => {
           if (result) {
             this.isLoading = true
-            this.deviceService.sendPowerAction(this.deviceId, 2).pipe().subscribe(data => {
+            this.devicesService.sendPowerAction(this.deviceId, 2).pipe().subscribe(data => {
               this.getAMTFeatures()
             })
           }
@@ -74,7 +90,7 @@ export class SolComponent implements OnInit {
   }
 
   setAmtFeatures (): void {
-    this.deviceService.setAmtFeatures(this.deviceId)
+    this.devicesService.setAmtFeatures(this.deviceId)
       .pipe(catchError((err) => {
         this.snackBar.open($localize`Unable to change user consent - code required for SOL in CCM`, undefined, SnackbarDefaults.defaultWarn)
         return throwError(err)
@@ -84,7 +100,7 @@ export class SolComponent implements OnInit {
   }
 
   getPowerState (guid: string): Observable<any> {
-    return this.deviceService.getPowerState(guid).pipe(
+    return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading = false
         this.snackBar.open($localize`Error retrieving power status`, undefined, SnackbarDefaults.defaultError)
@@ -95,7 +111,7 @@ export class SolComponent implements OnInit {
 
   getAMTFeatures (): void {
     this.isLoading = true
-    this.deviceService.getAMTFeatures(this.deviceId).subscribe(results => {
+    this.devicesService.getAMTFeatures(this.deviceId).subscribe(results => {
       this.amtFeatures = results
       this.checkUserConsent()
     }, err => {
@@ -181,7 +197,7 @@ export class SolComponent implements OnInit {
   }
 
   reqUserConsentCode (guid: string): Observable<userConsentResponse> {
-    return this.deviceService.reqUserConsentCode(guid).pipe(catchError((err) => {
+    return this.devicesService.reqUserConsentCode(guid).pipe(catchError((err) => {
       // Cannot access SOL if request to user consent code fails
       this.isLoading = false
       this.snackBar.open($localize`Error requesting user consent code - retry after 3 minutes`, undefined, SnackbarDefaults.defaultError)
@@ -190,7 +206,7 @@ export class SolComponent implements OnInit {
   }
 
   cancelUserConsentCode (guid: string): void {
-    this.deviceService.cancelUserConsentCode(guid)
+    this.devicesService.cancelUserConsentCode(guid)
       .pipe(catchError((err) => {
         this.snackBar.open($localize`Error cancelling user consent code`, undefined, SnackbarDefaults.defaultError)
         return of(err)
@@ -211,7 +227,10 @@ export class SolComponent implements OnInit {
       this.isLoading = false
     } else if (event === 0) {
       this.isLoading = false
-      this.snackBar.open('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+      if (!this.isDisconnecting) {
+        this.snackBar.open('Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+      }
+      this.isDisconnecting = false
     }
   }
 

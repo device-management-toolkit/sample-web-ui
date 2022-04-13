@@ -5,11 +5,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { KvmComponent } from './kvm.component'
-
 import { DevicesService } from '../devices.service'
-import { of } from 'rxjs'
+import { of, ReplaySubject } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router'
 import { Component, EventEmitter, Input } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AuthService } from 'src/app/auth.service'
@@ -23,6 +22,8 @@ describe('KvmComponent', () => {
   let getAMTFeaturesSpy: jasmine.Spy
   let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
+  let snackBarSpy: jasmine.Spy
+  const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   @Component({
     selector: 'app-device-toolbar'
@@ -48,16 +49,22 @@ describe('KvmComponent', () => {
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
-
+    const routerMock = {
+      navigateStart: jasmine.createSpy('navigation'),
+      events: eventSubject.asObservable()
+    }
     await TestBed.configureTestingModule({
       imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
       declarations: [KvmComponent, TestDeviceToolbarComponent],
-      providers: [{ provide: DevicesService, useValue: { ...devicesService, ...websocketStub } }, {
-        provide: ActivatedRoute,
-        useValue: {
-          params: of({ id: 'guid' })
-        }
-      }, { provide: AuthService, useValue: authService }]
+      providers: [
+        { provide: DevicesService, useValue: { ...devicesService, ...websocketStub } }, {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'guid' })
+          }
+        }, { provide: AuthService, useValue: authService }, {
+          provide: Router, useValue: routerMock
+        }]
     })
       .compileComponents()
   })
@@ -66,6 +73,7 @@ describe('KvmComponent', () => {
     fixture = TestBed.createComponent(KvmComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+    snackBarSpy = spyOn(component.snackBar, 'open')
   })
 
   it('should create', () => {
@@ -76,18 +84,28 @@ describe('KvmComponent', () => {
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(reqUserConsentCodeSpy).toHaveBeenCalled()
   })
-  it('should show error and hide loading when disconnected', () => {
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+  it('should show error and hide loading when isDisconnecting is false', () => {
+    component.isDisconnecting = false
     component.deviceStatus(0)
     expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
-  it('should  hide loading when connected', () => {
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+  it('should not show error and hide loading when isDisconnecting is true', () => {
+    component.isDisconnecting = true
+    component.deviceStatus(0)
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(component.isLoading).toBeFalse()
+    expect(component.deviceState).toBe(0)
+  })
+  it('should hide loading when connected', () => {
     component.deviceStatus(2)
     expect(snackBarSpy).not.toHaveBeenCalled()
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(2)
+  })
+  it('should not show error when NavigationStart triggers', () => {
+    eventSubject.next(new NavigationStart(1, 'regular'))
+    expect(snackBarSpy).not.toHaveBeenCalled()
   })
 })
