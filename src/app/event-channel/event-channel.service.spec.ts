@@ -8,7 +8,7 @@ import { IMqttServiceOptions } from 'ngx-mqtt'
 import { of, Subject } from 'rxjs'
 import { MQTTEvent } from 'src/models/models'
 import { MQTTService } from './event-channel.service'
-
+import { Buffer } from 'buffer'
 describe('EventChannelService', () => {
   const packet: IPacket = { cmd: 'publish' }
   let service: MQTTService

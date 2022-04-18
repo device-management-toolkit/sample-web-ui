@@ -29,7 +29,7 @@ describe('DeviceDetailComponent', () => {
   })
   class TestDeviceToolbarComponent {
     @Input()
-    isLoading = false
+      isLoading = false
   }
 
   beforeEach(async () => {

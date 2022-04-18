@@ -49,10 +49,10 @@ describe('SolComponent', () => {
     })
     class TestDeviceToolbarComponent {
       @Input()
-      isLoading = false
+        isLoading = false
 
       @Input()
-      deviceState: number = 0
+        deviceState: number = 0
     }
 
     await TestBed.configureTestingModule({

@@ -30,10 +30,10 @@ describe('KvmComponent', () => {
   })
   class TestDeviceToolbarComponent {
     @Input()
-    isLoading = false
+      isLoading = false
 
     @Input()
-    deviceState: number = 0
+      deviceState: number = 0
   }
 
   beforeEach(async () => {

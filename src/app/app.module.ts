@@ -29,7 +29,6 @@ import { SolComponent } from './devices/sol/sol.component'
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 import { AuthorizeInterceptor } from './authorize.interceptor'
-import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { WirelessComponent } from './wireless/wireless.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
@@ -63,9 +62,6 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
     DeviceUserConsentComponent,
     EventLogComponent,
     EventChannelComponent
-  ],
-  entryComponents: [
-    DialogContentComponent
   ],
   imports: [
     MomentModule,

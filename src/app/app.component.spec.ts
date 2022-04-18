@@ -17,7 +17,7 @@ import { MQTTService } from './event-channel/event-channel.service'
 })
 class TestToolbarComponent {
   @Input()
-  isLoading = false
+    isLoading = false
 }
 
 describe('AppComponent', () => {
