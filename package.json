@@ -25,7 +25,7 @@
     "@angular/material": "^13.3.2",
     "@angular/platform-browser": "~13.3.2",
     "@angular/platform-browser-dynamic": "~13.3.2",
-    "@angular/router": "~13.3.2",
+    "@angular/router": "~13.3.4",
     "@open-amt-cloud-toolkit/ui-toolkit-angular": "^3.0.0",
     "moment": "^2.29.1",
     "ngx-moment": "^6.0.2",
