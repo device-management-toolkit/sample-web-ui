@@ -11,7 +11,7 @@ describe('Test Profile Page', () => {
     cy.setup()
     // Stub the get and post requests
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
-      statusCode: apiResponses.ciraConfigs.getAll.forProfile.code,
+      statusCode: httpCodes.SUCCESS,
       body: apiResponses.ciraConfigs.getAll.forProfile.response
     }).as('get-configs')
 

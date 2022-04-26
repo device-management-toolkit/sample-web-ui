@@ -1015,19 +1015,21 @@ const apiResponses = {
         }
       },
       forProfile: {
-        response: [
-          {
-            profileName: 'happyPath',
-            authenticationMethod: 4,
-            encryptionMethod: 4,
-            ssid: 'test',
-            pskPassphrase: 'Intel@123',
-            linkPolicy: [
-              14,
-              16
-            ]
-          }
-        ]
+        response: {
+          data: [
+            {
+              profileName: 'happyPath',
+              authenticationMethod: 4,
+              encryptionMethod: 4,
+              ssid: 'test',
+              pskPassphrase: 'Intel@123',
+              linkPolicy: [
+                14,
+                16
+              ]
+            }
+          ]
+        }
       },
       forPaging: {
         response: {

@@ -17,6 +17,7 @@ declare global {
       enterDomainInfo: (name: string, domain: string, file: string, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string) => Chainable<Element>
       enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
+      setAMTMEBXPasswords: (amtPassword: string, mebxPassword: string) => Chainable<Element>
     }
   }
 }
@@ -35,7 +36,7 @@ Cypress.Commands.add('setup', () => {
 
   cy.myIntercept('GET', 'mps/api/v1/devices/stats', {
     statusCode: 200,
-    body: { }
+    body: {}
   }).as('stats-request')
 
   // Login
@@ -124,6 +125,11 @@ Cypress.Commands.add('enterWirelessInfo', (name, ssid, password) => {
 
 Cypress.Commands.add('goToPage', (pageName) => {
   cy.get('.mat-list-item').contains(pageName).click()
+})
+
+Cypress.Commands.add('setAMTMEBXPasswords', (amtPassword, mebxPassword) => {
+  cy.get('input').get('[formControlName=amtPassword]').type(amtPassword, { force: true })
+  cy.get('input').get('[formControlName=mebxPassword]').type(mebxPassword, { force: true })
 })
 
 // ------------------------------- Other --------------------------------

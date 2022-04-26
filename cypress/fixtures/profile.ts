@@ -34,7 +34,7 @@ const profileFixtures = {
   totalCount: 100,
   happyPathTls: {
     profileName: 'happyTlspath',
-    activation: 'ccmactivate',
+    activation: 'acmactivate',
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
     dhcpEnabled: true,
@@ -60,6 +60,83 @@ const profileFixtures = {
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: false,
     ciraConfig: 'happyPath'
+  },
+  patchWirelessConfigHappyPath: {
+    profileName: 'happyTlspath',
+    activation: 'acmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: true,
+    tlsMode: 1,
+    tenantId: '',
+    wifiConfigs: [
+      {
+        profileName: 'happyPath',
+        priority: 1
+      }
+    ]
+  },
+  patchServerAuthentication: {
+    profileName: 'happyTlspath',
+    activation: 'acmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: true,
+    tlsMode: 1,
+    tenantId: '',
+    wifiConfigs: []
+  },
+  patchServerNonTLS: {
+    profileName: 'happyTlspath',
+    activation: 'acmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: true,
+    tlsMode: 2,
+    tenantId: '',
+    wifiConfigs: []
+  },
+  patchMutualTLS: {
+    profileName: 'happyTlspath',
+    activation: 'acmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: true,
+    tlsMode: 3,
+    tenantId: '',
+    wifiConfigs: []
+  },
+  patchMutualNonTLS: {
+    profileName: 'happyTlspath',
+    activation: 'acmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: true,
+    tlsMode: 4,
+    tenantId: '',
+    wifiConfigs: []
+  },
+  patchSTATIC: {
+    profileName: 'happyTlspath',
+    activation: 'ccmactivate',
+    ciraConfigName: null,
+    generateRandomPassword: false,
+    generateRandomMEBxPassword: false,
+    tags: [],
+    dhcpEnabled: false,
+    tlsMode: 1,
+    tenantId: '',
+    wifiConfigs: []
   }
 }
 export { profileFixtures }
