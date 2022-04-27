@@ -34,7 +34,7 @@ const profileFixtures = {
   totalCount: 100,
   happyPathTls: {
     profileName: 'happyTlspath',
-    activation: 'acmactivate',
+    activation: 'ccmactivate',
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
     dhcpEnabled: true,

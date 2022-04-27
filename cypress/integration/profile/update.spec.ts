@@ -73,7 +73,7 @@ describe('Test Update Profile Page', () => {
     cy.setAMTMEBXPasswords(Cypress.env('AMTPASSWORD'), Cypress.env('MEBXPASSWORD'))
     cy.contains('SAVE').click({ force: true })
     cy.get('mat-table').contains('mat-row', profileFixtures.happyPathTls.profileName).then(row => {
-      cy.wrap(row).contains('acmactivate').should('exist')
+      cy.wrap(row).contains('ccmactivate').should('exist')
     })
   })
   it('Update profile with WirelessConfig', () => {
