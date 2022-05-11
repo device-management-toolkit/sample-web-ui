@@ -1,3 +1,68 @@
+
+<a name="2.3.0"></a>
+## [2.3.0] - 2022-05-11
+
+### Build
+- **deps:** Bump tslib from 2.3.1 to 2.4.0 (#f636db9) 
+- **deps:** Bump follow-redirects from 1.14.7 to 1.14.9 (#52cba7c) 
+- **deps:** update to angular13 (#170a431) 
+- **deps:** Bump [@angular](https://github.com/angular)/router from 13.3.2 to 13.3.4 (#06c417c) 
+- **deps:** Bump ejs from 3.1.6 to 3.1.7 (#9161aef) 
+- **deps:** Bump [@angular](https://github.com/angular)/platform-browser from 13.3.2 to 13.3.4 (#2340cdd) 
+- **deps:** Bump [@angular](https://github.com/angular)/forms from 13.3.2 to 13.3.5 (#905eeb3) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular (#ee14911) 
+- **deps:** Bump rxjs from 6.6.7 to 7.5.5 (#d53688e) 
+- **deps:** Bump cypress from 9.5.4 to 9.6.0 (#7858a2d) 
+- **deps:** Bump moment from 2.29.1 to 2.29.3 (#90ba2c9) 
+- **deps:** Bump [@angular](https://github.com/angular)/platform-browser from 13.3.4 to 13.3.5 (#cefab6c) 
+- **deps:** Bump [@angular](https://github.com/angular)/material from 13.3.2 to 13.3.5 (#10f7758) 
+- **deps-dev:** Bump karma from 6.3.16 to 6.3.17 (#cf91bfa) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.2.6 to 39.2.9 (#5c1069e) 
+- **deps-dev:** Bump karma-chrome-launcher from 3.1.0 to 3.1.1 (#ba3501b) 
+- **deps-dev:** Bump jasmine-core from 4.0.0 to 4.1.0 (#7e0f960) 
+- **deps-dev:** Bump eslint from 8.7.0 to 8.14.0 (#1876598) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.10.3 to 4.0.3 (#2136413) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin (#d6e971f) 
+- **deps-dev:** Bump typescript from 4.5.5 to 4.6.4 (#98f7c45) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 13.3.2 to 13.3.5 (#5c320f6) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular (#23c8ac0) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/builder from 13.2.0 to 13.2.1 (#e4907a9) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#69581fc) 
+- **deps-dev:** Bump ts-node from 10.5.0 to 10.7.0 (#6c67048) 
+- **deps-dev:** Bump eslint-config-standard from 16.0.3 to 17.0.0 (#3ab9511) 
+- **deps-dev:** Bump karma-jasmine from 4.0.1 to 5.0.0 (#e564c9e) 
+- **deps-dev:** Bump eslint-plugin-import from 2.25.4 to 2.26.0 (#1794d25) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 13.3.2 to 13.3.4 (#4eaf6a1) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 5.3.0 to 5.22.0 (#07b0a92) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.2.5 to 39.2.6 (#0a33dfd) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.1.1 to 39.2.5 (#1575aec) 
+- **deps-dev:** Bump karma from 6.3.18 to 6.3.19 (#a62b347) 
+- **deps-dev:** Bump eslint-plugin-promise from 5.2.0 to 6.0.0 (#20cc726) 
+- **version:** bump to v2.3.0 (#d5f1941) 
+
+### Ci
+- **lint:** adds semantic checks to PRs ([#618](https://github.com/open-amt-cloud-toolkit/rps/issues/618)) (#3b90582) 
+
+### Feat
+- cira + static ip configuration (#9c0f06a) 
+
+### Fix
+- upgrade [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular from 2.0.2 to 2.0.5 (#9183462) 
+- Show DHCP/Static on Profiles page (#22432c2) 
+- **redirection:** adds property to track redirection state (#aaaaff8) 
+
+### Refactor
+- fix status code expectation (#2f080e9) 
+
+### Test
+- **device:** Remove flakey tests (#c404ef1) 
+- **device:** Remove flakey tests (#28223a3) 
+- **devices:** Adds Cypress attributes to HTML and adds Device Details test (#e93a46e) 
+- **profile:** automated update workflows (#b1c1ca5) 
+- **profile:** automated update workflows (#22f57d0) 
+- **static:** Fix CIRA with Static Cypress tests (#a63412a) 
+
+
 <a name="2.2.0"></a>
 ## [2.2.0] - 2022-03-18
 ### Build
