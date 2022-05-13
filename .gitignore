@@ -46,6 +46,10 @@ testem.log
 *.png
 !src/assets/*
 
+# env file to override CI/CD environment variables
+# for cypress tests in dev/local environment
+cypress.env.*
+
 # System Files
 .DS_Store
 Thumbs.db

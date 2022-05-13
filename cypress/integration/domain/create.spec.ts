@@ -16,7 +16,7 @@ describe('Test Domain Page', () => {
     cy.setup()
   })
 
-  it('creates the default domain', () => {
+  it('creates the default domain with cert from fixture file upload', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
@@ -40,23 +40,24 @@ describe('Test Domain Page', () => {
       body: apiResponses.domains.getAll.success.response
     }).as('get-domains2')
 
-    // TODO: add file path and password once cypress-upload-file is added
-    // and a spoof pfx file is created
+    // handle file on disk or in-memory file
+    const certFixtureData: Cypress.FixtureData = {
+      fileName: domainFixtures.default.fileName,
+      fileContent: Cypress.env('PROVISIONING_CERT')
+    }
+
     cy.enterDomainInfo(
       domainFixtures.default.name,
       domainFixtures.default.domain,
-      domainFixtures.default.filePath,
-      domainFixtures.default.password
+      certFixtureData,
+      Cypress.env('PROVISIONING_CERT_PASSWORD')
     )
-
     cy.get('button').contains('SAVE').click()
-
     cy.wait('@post-domain')
     cy.wait('@get-domains2')
       .its('response.statusCode')
       .should('eq', httpCodes.SUCCESS)
-
-    // Check that the config was successful
+      // Check that the config was successful
     cy.get('mat-cell').contains(domainFixtures.default.name)
     cy.get('mat-cell').contains(domainFixtures.default.domain)
   })

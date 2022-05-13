@@ -49,7 +49,7 @@ describe('Test Update Profile Page', () => {
     }).as('patch-profile')
 
     cy.get('mat-row').contains(profileFixtures.happyPathTls.profileName).click()
-    cy.setAMTMEBXPasswords(Cypress.env('AMTPASSWORD'), Cypress.env('MEBXPASSWORD'))
+    cy.setAMTMEBXPasswords(Cypress.env('AMT_PASSWORD'), Cypress.env('MEBX_PASSWORD'))
     cy.get('mat-select[formcontrolname=tlsMode]').click({ force: true })
     cy.contains('Server Authentication Only').click({ force: true })
     cy.contains('SAVE').click({ force: true })
@@ -70,7 +70,7 @@ describe('Test Update Profile Page', () => {
     cy.wait('@get-profile')
     cy.get('mat-select[formcontrolname=activation').click()
     cy.contains('Admin Control Mode').click({ force: true })
-    cy.setAMTMEBXPasswords(Cypress.env('AMTPASSWORD'), Cypress.env('MEBXPASSWORD'))
+    cy.setAMTMEBXPasswords(Cypress.env('AMT_PASSWORD'), Cypress.env('MEBX_PASSWORD'))
     cy.contains('SAVE').click({ force: true })
     cy.get('mat-table').contains('mat-row', profileFixtures.happyPathTls.profileName).then(row => {
       cy.wrap(row).contains('ccmactivate').should('exist')
@@ -86,7 +86,7 @@ describe('Test Update Profile Page', () => {
       body: profileFixtures.patchWirelessConfigHappyPath
     }).as('patch-profile')
     cy.get('mat-row').contains(profileFixtures.happyPathTls.profileName).click()
-    cy.setAMTMEBXPasswords(Cypress.env('AMTPASSWORD'), Cypress.env('MEBXPASSWORD'))
+    cy.setAMTMEBXPasswords(Cypress.env('AMT_PASSWORD'), Cypress.env('MEBX_PASSWORD'))
     cy.get('[data-placeholder="Search for Wi-Fi Profiles to Add"]').type(`${wirelessFixtures.happyPath.profileName}{enter}`)
     cy.contains('SAVE').click({ force: true })
     cy.myIntercept('GET', 'happyTlspath', {
@@ -102,7 +102,7 @@ describe('Test Update Profile Page', () => {
       body: profileFixtures.patchSTATIC
     }).as('patch-profile')
     cy.get('mat-row').contains(profileFixtures.happyPathTls.profileName).click()
-    cy.setAMTMEBXPasswords(Cypress.env('AMTPASSWORD'), Cypress.env('MEBXPASSWORD'))
+    cy.setAMTMEBXPasswords(Cypress.env('AMT_PASSWORD'), Cypress.env('MEBX_PASSWORD'))
     cy.contains('STATIC').click({ force: true })
     cy.contains('SAVE').click()
     cy.myIntercept('GET', profileFixtures.happyPathTls.profileName, {

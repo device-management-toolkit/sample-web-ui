@@ -6,8 +6,7 @@ const domainFixtures = {
   default: {
     name: 'happyPath',
     domain: 'happyPath.com',
-    filePath: 'test.pfx',
-    password: '123!@#qewQWE'
+    fileName: 'test.pfx'
   },
 
   totalCount: 100

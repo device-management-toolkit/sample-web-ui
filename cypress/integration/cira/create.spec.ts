@@ -46,7 +46,7 @@ describe('Test CIRA Config Page', () => {
       ciraFixtures.default.name,
       ciraFixtures.default.format,
       Cypress.env('FQDN'),
-      Cypress.env('MPSUSERNAME')
+      Cypress.env('MPS_USERNAME')
     )
     cy.get('button[type=submit]').click({ timeout: 50000 })
 
@@ -66,6 +66,6 @@ describe('Test CIRA Config Page', () => {
     // //Check that the config was successful
     cy.get('mat-cell').contains(ciraFixtures.default.name)
     cy.get('mat-cell').contains(Cypress.env('FQDN'))
-    cy.get('mat-cell').contains(Cypress.env('MPSUSERNAME'))
+    cy.get('mat-cell').contains(Cypress.env('MPS_USERNAME'))
   })
 })

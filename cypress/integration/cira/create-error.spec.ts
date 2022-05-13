@@ -43,7 +43,7 @@ describe('Test CIRA Config Page', () => {
       ciraFixtures.wrong.name,
       ciraFixtures.default.format,
       ciraFixtures.default.addr,
-      Cypress.env('MPSUSERNAME')
+      Cypress.env('MPS_USERNAME')
     )
   })
 

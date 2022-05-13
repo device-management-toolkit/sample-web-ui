@@ -34,7 +34,7 @@ describe('Test CIRA Config Page', () => {
     // Check that the config was not deleted
     cy.get('mat-cell').contains(ciraFixtures.default.name)
     cy.get('mat-cell').contains(Cypress.env('FQDN'))
-    cy.get('mat-cell').contains(Cypress.env('MPSUSERNAME'))
+    cy.get('mat-cell').contains(Cypress.env('MPS_USERNAME'))
 
     // Change api response
     cy.myIntercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {

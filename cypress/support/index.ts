@@ -4,7 +4,6 @@
  **********************************************************************/
 // Add repetitive groups of functions here
 
-import { accountFixtures } from '../fixtures/accounts'
 import { httpCodes } from '../fixtures/api/apiResponses'
 declare global {
   namespace Cypress {
@@ -14,7 +13,7 @@ declare global {
       myIntercept: (method: string, url: string | RegExp, body: any) => Chainable<Element>
       goToPage: (pageName: string) => Chainable<Element>
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
-      enterDomainInfo: (name: string, domain: string, file: string, pass: string) => Chainable<Element>
+      enterDomainInfo: (name: string, domain: string, file: Cypress.FixtureData, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string) => Chainable<Element>
       enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
       setAMTMEBXPasswords: (amtPassword: string, mebxPassword: string) => Chainable<Element>
@@ -41,7 +40,9 @@ Cypress.Commands.add('setup', () => {
 
   // Login
   cy.visit(Cypress.env('BASEURL'))
-  cy.login(accountFixtures.default.username, accountFixtures.default.password)
+  const mpsUsername = Cypress.env('MPS_USERNAME')
+  const mpsPassword = Cypress.env('MPS_PASSWORD')
+  cy.login(mpsUsername, mpsPassword)
   cy.wait('@login-request')
     .its('response.statusCode')
     .should('eq', httpCodes.SUCCESS)
@@ -77,7 +78,7 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
 
   if (!randAmt) {
     cy.get('[data-cy=genAmtPass]').click()
-    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMTPASSWORD'))
+    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'))
     // cy.get('[data-cy=genStaticAmt').click()
   }
 
@@ -85,7 +86,7 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
     cy.get('[data-cy=genMebxPass]').click()
     // cy.get('[data-cy=genStaticMebx').click()
     if (admin === 'acmactivate') {
-      cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBXPASSWORD'))
+      cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
     }
   }
 

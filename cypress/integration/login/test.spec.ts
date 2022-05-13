@@ -6,7 +6,6 @@
 // different combinations of invalid login info.
 // Also tests things like canceling a login and logging out after the login
 
-import { accountFixtures } from '../../fixtures/accounts'
 import { urlFixtures } from '../../fixtures/urls'
 import { httpCodes } from '../../fixtures/api/apiResponses'
 // ---------------------------- Test section ----------------------------
@@ -36,6 +35,6 @@ describe('Test login page', () => {
     }).as('login-request')
 
     // Login
-    cy.login(accountFixtures.default.username, accountFixtures.default.password)
+    cy.login(Cypress.env('MPS_USERNAME'), Cypress.env('MPS_PASSWORD'))
   })
 })
