@@ -17,7 +17,9 @@ export class AuthorizeInterceptor implements HttpInterceptor {
   constructor (public authService: AuthService, public dialog: MatDialog) { }
 
   intercept (request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!request.url.toString().includes('/authorize')) {
+    if (request.url.toString().includes('/authorize') && !request.url.toString().includes('/authorize/redirection')) {
+      // don't send auth token
+    } else {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.authService.getLoggedUserToken()}`

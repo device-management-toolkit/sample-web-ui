@@ -4,7 +4,7 @@
 **********************************************************************/
 import { Component, EventEmitter, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router'
+import { ActivatedRoute, NavigationStart, RouterEvent } from '@angular/router'
 import { of, ReplaySubject } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
@@ -12,7 +12,6 @@ import { MomentModule } from 'ngx-moment'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { RouterTestingModule } from '@angular/router/testing'
-import { AuthService } from 'src/app/auth.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 describe('SolComponent', () => {
@@ -27,21 +26,16 @@ describe('SolComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
-    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({}))
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of({}))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
+    tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
     const authServiceStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       startwebSocket: new EventEmitter<boolean>(false)
-    }
-    const routerMock = {
-      navigateStart: jasmine.createSpy('navigation'),
-      events: eventSubject.asObservable()
     }
 
     @Component({
@@ -62,8 +56,6 @@ describe('SolComponent', () => {
         provide: ActivatedRoute,
         useValue:
           { params: of({ id: 'guid' }) }
-      }, { provide: AuthService, useValue: authService }, {
-        provide: Router, useValue: routerMock
       }]
     })
       .compileComponents()

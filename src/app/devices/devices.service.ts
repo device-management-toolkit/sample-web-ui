@@ -7,8 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, PageEventOptions, PowerState, userConsentResponse } from 'src/models/models'
-import { AuthService } from '../auth.service'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, PageEventOptions, PowerState, RedirectionToken, userConsentResponse } from 'src/models/models'
 
 @Injectable({
   providedIn: 'root'
@@ -146,7 +145,7 @@ export class DevicesService {
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
 
-  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
+  constructor (private readonly http: HttpClient) {
 
   }
 
@@ -296,6 +295,16 @@ export class DevicesService {
   sendUserConsentCode (deviceId: string, userConsentCode: number): Observable<userConsentResponse> {
     const payload = { consentCode: userConsentCode }
     return this.http.post<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getRedirectionExpirationToken (guid: string): Observable<RedirectionToken> {
+    const query = `${environment.mpsServer}/api/v1/authorize/redirection/${guid}`
+    return this.http.get<RedirectionToken>(query)
       .pipe(
         catchError((err) => {
           throw err

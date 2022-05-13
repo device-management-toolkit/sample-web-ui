@@ -351,3 +351,7 @@ export interface MQTTEvent {
   type: string
   methods: string[]
 }
+
+export interface RedirectionToken {
+  token: string
+}

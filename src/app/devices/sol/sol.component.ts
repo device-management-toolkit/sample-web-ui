@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { environment } from 'src/environments/environment'
-import { AuthService } from 'src/app/auth.service'
 import { AmtFeaturesResponse, PowerState, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
@@ -34,9 +33,7 @@ export class SolComponent implements OnInit, OnDestroy {
     private readonly devicesService: DevicesService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private readonly router: Router,
-    public readonly authService: AuthService) {
-    this.authToken = this.authService.getLoggedUserToken()
+    private readonly router: Router) {
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
@@ -64,6 +61,9 @@ export class SolComponent implements OnInit, OnDestroy {
     this.devicesService.stopwebSocket.subscribe((data: boolean) => {
       this.isDisconnecting = true
       this.deviceConnection.emit(false)
+    })
+    this.devicesService.getRedirectionExpirationToken(this.deviceId).subscribe((result) => {
+      this.authToken = result.token
     })
     this.setAmtFeatures()
   }

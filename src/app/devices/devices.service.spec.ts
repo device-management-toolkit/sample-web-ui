@@ -3,7 +3,6 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { AuthService } from '../auth.service'
@@ -13,14 +12,12 @@ import { DevicesService } from './devices.service'
 describe('DevicesService', () => {
   let service: DevicesService
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
-  let routerSpy
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({
       imports: [AuthService]
     })
-    service = new DevicesService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
+    service = new DevicesService(httpClientSpy as any)
   })
   const deviceRes = {
     hostname: 'localhost',
@@ -596,6 +593,23 @@ describe('DevicesService', () => {
   it('should return error while getting hardware information', () => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getHardwareInformation('defgh-34567-poiuy').subscribe(null, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should return redirection token', () => {
+    const redirectionToken = {
+      token: '123'
+    }
+    httpClientSpy.get.and.returnValue(of(redirectionToken))
+    service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(result => {
+      expect(result).toEqual(redirectionToken)
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/authorize/redirection/defgh-34567-poiuy`)
+    })
+  })
+  it('should return error while getting redirection token', () => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+    service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
     })
   })

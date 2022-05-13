@@ -8,10 +8,9 @@ import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
 import { of, ReplaySubject } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
-import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router'
+import { ActivatedRoute, NavigationStart, RouterEvent } from '@angular/router'
 import { Component, EventEmitter, Input } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AuthService } from 'src/app/auth.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 describe('KvmComponent', () => {
@@ -37,7 +36,7 @@ describe('KvmComponent', () => {
   }
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['setAmtFeatures', 'getPowerState', 'startwebSocket', 'stopwebSocket', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
 
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
@@ -47,12 +46,7 @@ describe('KvmComponent', () => {
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({}))
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of({}))
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    const authService = jasmine.createSpyObj('AuthService', ['getLoggedUserToken'])
-    tokenSpy = authService.getLoggedUserToken.and.returnValue('123')
-    const routerMock = {
-      navigateStart: jasmine.createSpy('navigation'),
-      events: eventSubject.asObservable()
-    }
+    tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
     await TestBed.configureTestingModule({
       imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
       declarations: [KvmComponent, TestDeviceToolbarComponent],
@@ -62,8 +56,6 @@ describe('KvmComponent', () => {
           useValue: {
             params: of({ id: 'guid' })
           }
-        }, { provide: AuthService, useValue: authService }, {
-          provide: Router, useValue: routerMock
         }]
     })
       .compileComponents()

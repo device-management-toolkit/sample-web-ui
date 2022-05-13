@@ -12,7 +12,6 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
-import { AuthService } from 'src/app/auth.service'
 import { AmtFeaturesResponse, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 
@@ -48,9 +47,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private readonly devicesService: DevicesService,
     public readonly activatedRoute: ActivatedRoute,
-    public readonly authService: AuthService,
     public readonly router: Router) {
-    this.authToken = this.authService.getLoggedUserToken()
     if (environment.mpsServer.includes('/mps')) { // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
@@ -76,6 +73,9 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.deviceConnection.emit(false)
     })
     this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
+    this.devicesService.getRedirectionExpirationToken(this.deviceId).subscribe((result) => {
+      this.authToken = result.token
+    })
     this.setAmtFeatures()
   }
 
