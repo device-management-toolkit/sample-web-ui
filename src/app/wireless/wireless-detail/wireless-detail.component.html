@@ -38,8 +38,13 @@
             <input type="text" formControlName="ssid" matInput name="ssid" placeholder="SSID" required maxlength="32">
           </mat-form-field>
           <mat-form-field fxFlex="100">
-            <input type="password" formControlName="pskPassphrase" matInput name="pskPassphrase" placeholder="PSK Passphrase" required minlength=8 maxlength="63">
+            <input [type]="pskInputType" formControlName="pskPassphrase" matInput name="pskPassphrase" placeholder="PSK Passphrase" required minlength=8 maxlength="63">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
+              (click)="togglePSKPassVisibility()">
+              <mat-icon [fxHide]="pskInputType === 'text'">visibility</mat-icon>
+              <mat-icon [fxHide]="pskInputType !== 'text'">visibility_off</mat-icon>
+            </button>
           </mat-form-field>
         </div>
       </mat-card-content>

@@ -96,4 +96,18 @@ describe('WirelessDetailComponent', () => {
     expect(wirelessCreateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })
+
+  it('should turn psk pass visibility on when it is off', () => {
+    component.pskInputType = 'password'
+    component.togglePSKPassVisibility()
+
+    expect(component.pskInputType).toEqual('text')
+  })
+
+  it('should turn psk pass visibility off when it is on', () => {
+    component.pskInputType = 'text'
+    component.togglePSKPassVisibility()
+
+    expect(component.pskInputType).toEqual('password')
+  })
 })

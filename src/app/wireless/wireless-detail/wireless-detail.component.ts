@@ -15,6 +15,7 @@ import { WirelessService } from '../wireless.service'
 export class WirelessDetailComponent implements OnInit {
   public wirelessForm: FormGroup
   public pageTitle = 'New Wireless Config'
+  public pskInputType = 'password'
   public authenticationModes = [{ display: 'WPA PSK', value: Constants.WPAPSK }, { display: 'WPA2 PSK', value: Constants.WPA2PSK }]
   public encryptionModes = [{ display: 'TKIP', value: Constants.TKIP }, { display: 'CCMP', value: Constants.CCMP }]
   isLoading: boolean = true
@@ -80,6 +81,10 @@ export class WirelessDetailComponent implements OnInit {
           this.errorMessages = error
         })
     }
+  }
+
+  togglePSKPassVisibility (): void {
+    this.pskInputType = this.pskInputType === 'password' ? 'text' : 'password'
   }
 
   async cancel (): Promise<void> {

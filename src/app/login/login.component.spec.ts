@@ -40,6 +40,20 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('should turn login pass visibility on when it is off', () => {
+    component.loginPassInputType = 'password'
+    component.toggleLoginPassVisibility()
+
+    expect(component.loginPassInputType).toEqual('text')
+  })
+
+  it('should turn login pass visibility off when it is on', () => {
+    component.loginPassInputType = 'text'
+    component.toggleLoginPassVisibility()
+
+    expect(component.loginPassInputType).toEqual('password')
+  })
+
   it('onSubmit login should be successful', fakeAsync(() => {
     const userId: string = 'userId'
     const password: string = 'P@ssw0rd'

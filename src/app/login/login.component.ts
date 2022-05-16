@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   public currentYear = new Date().getFullYear()
   public isLoading = false
   public errorMessage = ''
+  public loginPassInputType = 'password'
   constructor (public snackBar: MatSnackBar, public router: Router, public fb: FormBuilder, public authService: AuthService) {
     this.loginForm = fb.group({
       userId: [null, Validators.required],
@@ -49,5 +50,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate([''])
       })
     }
+  }
+
+  toggleLoginPassVisibility (): void {
+    this.loginPassInputType = this.loginPassInputType === 'password' ? 'text' : 'password'
   }
 }

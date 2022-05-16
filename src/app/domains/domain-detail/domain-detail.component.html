@@ -45,9 +45,14 @@
           </div>
 
           <mat-form-field fxFlex="100">
-            <input type="password" formControlName="provisioningCertPassword" matInput name="provisioningCertPassword" placeholder="Provisioning Cert Password" required>
+            <input [type]="certPassInputType" formControlName="provisioningCertPassword" matInput name="provisioningCertPassword" placeholder="Provisioning Cert Password" required>
             <mat-error>This field is required</mat-error>
             <mat-hint>The password for the provisioning certificate</mat-hint>
+            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
+              (click)="toggleCertPassVisibility()">
+              <mat-icon [fxHide]="certPassInputType === 'text'">visibility</mat-icon>
+              <mat-icon [fxHide]="certPassInputType !== 'text'">visibility_off</mat-icon>
+            </button>
           </mat-form-field>
         </div>
       </mat-card-content>

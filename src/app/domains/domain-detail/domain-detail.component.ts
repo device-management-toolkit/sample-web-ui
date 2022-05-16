@@ -20,6 +20,7 @@ export class DomainDetailComponent implements OnInit {
   public isLoading = false
   public pageTitle = 'New Domain'
   public isEdit = false
+  public certPassInputType = 'password'
   public errorMessages: string[] = []
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, private readonly activeRoute: ActivatedRoute, public router: Router, public domainsService: DomainsService) {
     this.domainForm = fb.group({
@@ -94,6 +95,10 @@ export class DomainDetailComponent implements OnInit {
       }
       reader.readAsDataURL(e.target.files[0])
     }
+  }
+
+  toggleCertPassVisibility (): void {
+    this.certPassInputType = this.certPassInputType === 'password' ? 'text' : 'password'
   }
 
   async cancel (): Promise<void> {
