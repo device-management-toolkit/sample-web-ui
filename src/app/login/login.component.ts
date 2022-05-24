@@ -40,7 +40,11 @@ export class LoginComponent implements OnInit {
         catchError(err => {
         // TODO: handle error better
           console.log(err)
-          this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
+          if (err.status === 405) {
+            this.snackBar.open($localize`${err.error.message}`, undefined, SnackbarDefaults.defaultError)
+          } else {
+            this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
+          }
           return throwError(err)
         }), finalize(() => {
           this.isLoading = false

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
-import { of } from 'rxjs'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router } from '@angular/router'
+import { of, throwError } from 'rxjs'
 import { AuthService } from '../auth.service'
 import { SharedModule } from '../shared/shared.module'
 
@@ -39,7 +39,6 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
-
   it('should turn login pass visibility on when it is off', () => {
     component.loginPassInputType = 'password'
     component.toggleLoginPassVisibility()
@@ -68,4 +67,22 @@ describe('LoginComponent', () => {
     })
     tick()
   }))
+
+  it('Should fail when login service throws 405 status', async () => {
+    spyOn(authService, 'login').and.returnValue(throwError({ status: 405, error: { message: 'failed' } }))
+    Object.defineProperty(component.loginForm, 'valid', {
+      get: () => true
+    })
+    await component.onSubmit()
+    expect(authService.login).toHaveBeenCalled()
+  })
+
+  it('Should fail when login service throws an error', async () => {
+    spyOn(authService, 'login').and.returnValue(throwError({ status: 401, error: { message: 'failed' } }))
+    Object.defineProperty(component.loginForm, 'valid', {
+      get: () => true
+    })
+    await component.onSubmit()
+    expect(authService.login).toHaveBeenCalled()
+  })
 })
