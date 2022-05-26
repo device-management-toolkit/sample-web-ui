@@ -99,8 +99,8 @@
             <br />
             <mat-label>Connection Configuration</mat-label>
             <br>
-            <mat-radio-group name="connectionMode" formControlName="connectionMode"><br />
-              <mat-radio-button value="NONE" checked="true">None</mat-radio-button><br /><br />
+            <mat-radio-group name="connectionMode" formControlName="connectionMode"><br/>
+              <mat-error *ngIf="profileForm.get('connectionMode')?.touched && profileForm.get('connectionMode')?.invalid ">A CIRA or TLS Config is required</mat-error>
               <mat-radio-button [disabled]="ciraConfigurations?.data?.length === 0" value="CIRA">CIRA (Cloud) <span [fxShow]="ciraConfigurations?.data?.length === 0">
                  - No CIRA Configs Found</span> </mat-radio-button><br /><br />
               <mat-radio-button value="TLS">TLS (Enterprise)</mat-radio-button><br /><br />

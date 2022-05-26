@@ -58,7 +58,7 @@ export class ProfileDetailComponent implements OnInit {
       generateRandomMEBxPassword: [true, Validators.required],
       mebxPassword: [{ value: null, disabled: true }],
       dhcpEnabled: [true],
-      connectionMode: ['NONE'],
+      connectionMode: [null, Validators.required],
       ciraConfigName: [null],
       wifiConfigs: [null],
       tlsMode: [null]
@@ -111,8 +111,6 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.connectionMode.setValue('TLS')
     } else if (data.ciraConfigName != null) {
       this.profileForm.controls.connectionMode.setValue('CIRA')
-    } else {
-      this.profileForm.controls.connectionMode.setValue('NONE')
     }
   }
 
@@ -225,12 +223,6 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.tlsMode.clearValidators()
       this.profileForm.controls.tlsMode.setValue(null)
       this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
-    } else {
-      this.profileForm.controls.tlsMode.clearValidators()
-      this.profileForm.controls.ciraConfigName.clearValidators()
-
-      this.profileForm.controls.tlsMode.setValue(null)
-      this.profileForm.controls.ciraConfigName.setValue(null)
     }
     this.profileForm.controls.ciraConfigName.updateValueAndValidity()
     this.profileForm.controls.tlsMode.updateValueAndValidity()
@@ -373,6 +365,8 @@ export class ProfileDetailComponent implements OnInit {
       } else {
         this.onSubmit()
       }
+    } else {
+      this.profileForm.markAllAsTouched()
     }
   }
 
