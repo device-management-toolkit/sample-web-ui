@@ -4,9 +4,8 @@
  **********************************************************************/
 const domainFixtures = {
   default: {
-    name: 'happyPath',
-    domain: 'happyPath.com',
-    fileName: 'test.pfx'
+    profileName: 'happyPath',
+    domainSuffix: 'happyPath.com'
   },
 
   totalCount: 100

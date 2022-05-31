@@ -46,6 +46,7 @@ describe('EventChannelService', () => {
   afterEach(() => {
     localStorage.removeItem('oact_telemetry')
     localStorage.removeItem('oact_config')
+    TestBed.resetTestingModule()
   })
   it('should be created', () => {
     expect(service).toBeTruthy()

@@ -11,7 +11,7 @@ describe('REST API - Vault Test Suite', () => {
     if (Cypress.env('ISOLATE') === 'N') {
       const vaultAddress: string = Cypress.env('VAULT_ADDRESS')
       const vaultToken = Cypress.env('VAULT_TOKEN')
-      const vaultURL = `${vaultAddress}/v1/secret/data/certs/${domainFixtures.default.name}`
+      const vaultURL = `${vaultAddress}/v1/secret/data/certs/${domainFixtures.default.profileName}`
       cy.request({
         auth: { bearer: vaultToken },
         method: 'GET',

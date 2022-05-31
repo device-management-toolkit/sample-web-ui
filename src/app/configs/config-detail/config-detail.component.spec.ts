@@ -47,6 +47,10 @@ describe('ConfigDetailComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')

@@ -50,6 +50,10 @@ describe('DevicesComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')

@@ -21,6 +21,10 @@ describe('ConfigsService', () => {
     service = new ConfigsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

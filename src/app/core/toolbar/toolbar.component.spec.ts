@@ -39,6 +39,10 @@ describe('ToolbarComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(component.isLoggedIn).toBeFalse()

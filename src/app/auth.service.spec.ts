@@ -29,6 +29,7 @@ describe('AuthService', () => {
   })
   afterEach(() => {
     localStorage.removeItem('loggedInUser')
+    TestBed.resetTestingModule()
   })
 
   it('should be created when not logged in', () => {

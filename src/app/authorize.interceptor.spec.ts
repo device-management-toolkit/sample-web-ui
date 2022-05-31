@@ -16,6 +16,10 @@ describe('AuthorizeInterceptor', () => {
     ]
   }))
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     const interceptor: AuthorizeInterceptor = TestBed.inject(AuthorizeInterceptor)
     expect(interceptor).toBeTruthy()

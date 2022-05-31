@@ -12,13 +12,6 @@ import { DevicesService } from './devices.service'
 describe('DevicesService', () => {
   let service: DevicesService
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
-  beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
-    TestBed.configureTestingModule({
-      imports: [AuthService]
-    })
-    service = new DevicesService(httpClientSpy as any)
-  })
   const deviceRes = {
     hostname: 'localhost',
     icon: 1,
@@ -38,6 +31,18 @@ describe('DevicesService', () => {
     status: 404,
     message: 'Not Found'
   }
+
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
+    TestBed.configureTestingModule({
+      imports: [AuthService]
+    })
+    service = new DevicesService(httpClientSpy as any)
+  })
+
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
 
   it('should be created', () => {
     expect(service).toBeTruthy()

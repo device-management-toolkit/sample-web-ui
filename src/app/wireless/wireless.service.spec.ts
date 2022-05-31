@@ -39,6 +39,10 @@ describe('WirelessService', () => {
     linkPolicy: [14]
   }
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

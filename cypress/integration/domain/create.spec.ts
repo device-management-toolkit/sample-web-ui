@@ -42,13 +42,13 @@ describe('Test Domain Page', () => {
 
     // handle file on disk or in-memory file
     const certFixtureData: Cypress.FixtureData = {
-      fileName: domainFixtures.default.fileName,
+      fileName: 'test-cert.pfx',
       fileContent: Cypress.env('PROVISIONING_CERT')
     }
 
     cy.enterDomainInfo(
-      domainFixtures.default.name,
-      domainFixtures.default.domain,
+      domainFixtures.default.profileName,
+      domainFixtures.default.domainSuffix,
       certFixtureData,
       Cypress.env('PROVISIONING_CERT_PASSWORD')
     )
@@ -58,7 +58,7 @@ describe('Test Domain Page', () => {
       .its('response.statusCode')
       .should('eq', httpCodes.SUCCESS)
       // Check that the config was successful
-    cy.get('mat-cell').contains(domainFixtures.default.name)
-    cy.get('mat-cell').contains(domainFixtures.default.domain)
+    cy.get('mat-cell').contains(domainFixtures.default.profileName)
+    cy.get('mat-cell').contains(domainFixtures.default.domainSuffix)
   })
 })

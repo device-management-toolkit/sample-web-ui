@@ -48,6 +48,10 @@ describe('ProfilesService', () => {
     service = new ProfilesService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

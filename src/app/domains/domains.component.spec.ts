@@ -44,6 +44,10 @@ describe('DomainsComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDataSpy.calls.any()).toBe(true, 'getData called')

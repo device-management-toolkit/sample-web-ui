@@ -55,6 +55,10 @@ describe('AppComponent', () => {
     component = fixture.componentInstance
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create the app', () => {
     expect(component).toBeTruthy()
     expect(component.mqttService.connect).toHaveBeenCalled()

@@ -19,6 +19,10 @@ describe('VaultService', () => {
     service = new VaultService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

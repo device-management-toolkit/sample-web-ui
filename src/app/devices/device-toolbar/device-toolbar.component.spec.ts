@@ -47,6 +47,10 @@ describe('DeviceToolbarComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDeviceSpy).toHaveBeenCalledWith('guid')

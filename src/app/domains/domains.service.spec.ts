@@ -39,6 +39,10 @@ describe('DomainsService', () => {
     message: 'Not Found'
   }
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

@@ -42,6 +42,10 @@ describe('WirelessComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDataSpy).toHaveBeenCalled()

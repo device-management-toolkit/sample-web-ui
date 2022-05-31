@@ -68,6 +68,10 @@ describe('KvmComponent', () => {
     snackBarSpy = spyOn(component.snackBar, 'open')
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(tokenSpy).toHaveBeenCalled()

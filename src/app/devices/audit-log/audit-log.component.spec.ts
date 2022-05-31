@@ -36,6 +36,14 @@ describe('AuditLogComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getAuditLogSpy.calls.any()).toBe(true, 'getAuditLog called')

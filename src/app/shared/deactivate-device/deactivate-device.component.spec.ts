@@ -37,6 +37,10 @@ describe('DeactivateDeviceComponent', () => {
     fixture.detectChanges()
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(component.rpcLinux).toBe('sudo ./rpc ')

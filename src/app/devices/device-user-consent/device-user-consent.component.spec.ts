@@ -41,6 +41,10 @@ describe('DeviceUserConsentComponent', () => {
     dialogMock.close = jasmine.createSpy('close')
   })
 
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(component.userConsentForm).toBeDefined()
