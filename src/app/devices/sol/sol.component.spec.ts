@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module'
 import { RouterTestingModule } from '@angular/router/testing'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuthService } from 'src/app/auth.service'
+import { MatDialog } from '@angular/material/dialog'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -121,8 +122,12 @@ describe('SolComponent', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
     expect(snackBarSpy).not.toHaveBeenCalled()
   })
-  it('should show dialog when called', () => {
+  it('should show dialog when called (cancel)', () => {
+    const cancelSpy = spyOn(component, 'cancelUserConsentCode')
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
+    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.userConsentDialog()
     fixture.detectChanges()
+    expect(cancelSpy).toHaveBeenCalled()
   })
 })

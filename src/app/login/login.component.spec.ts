@@ -73,16 +73,22 @@ describe('LoginComponent', () => {
   }))
 
   it('Should fail when login service throws 405 status', async () => {
-    spyOn(authService, 'login').and.returnValue(throwError({ status: 405, error: { message: 'failed' } }))
+    const authSpy = spyOn(authService, 'login').and.returnValue(throwError(() => {
+      return { status: 405, error: { message: 'failed' } }
+    }))
+    const snackBarSpy = spyOn(component.snackBar, 'open')
     Object.defineProperty(component.loginForm, 'valid', {
       get: () => true
     })
+    fixture.detectChanges()
     await component.onSubmit()
-    expect(authService.login).toHaveBeenCalled()
+    fixture.detectChanges()
+    expect(authSpy).toHaveBeenCalled()
+    expect(snackBarSpy).toHaveBeenCalled()
   })
 
   it('Should fail when login service throws an error', async () => {
-    spyOn(authService, 'login').and.returnValue(throwError({ status: 401, error: { message: 'failed' } }))
+    spyOn(authService, 'login').and.returnValue(throwError(() => { return { status: 401, error: { message: 'failed' } } }))
     Object.defineProperty(component.loginForm, 'valid', {
       get: () => true
     })

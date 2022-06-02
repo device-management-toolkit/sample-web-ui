@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { throwError } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
 import { AuthService } from '../auth.service'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 
@@ -36,22 +34,23 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.loginForm.value)
-      this.authService.login(result.userId, result.password).pipe(
-        catchError(err => {
-        // TODO: handle error better
-          console.log(err)
-          if (err.status === 405) {
+      this.authService.login(result.userId, result.password).subscribe({
+        complete: () => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          this.router.navigate([''])
+        },
+        error: (err) => {
+          if (err.status === 405 || err.status === 401) {
             this.snackBar.open($localize`${err.error.message}`, undefined, SnackbarDefaults.defaultError)
           } else {
             this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
           }
-          return throwError(err)
-        }), finalize(() => {
-          this.isLoading = false
-        })
-      ).subscribe(data => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.router.navigate([''])
+        },
+        next: () => {
+
+        }
+      }).add(() => {
+        this.isLoading = false
       })
     }
   }
