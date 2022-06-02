@@ -16,7 +16,7 @@ declare global {
       enterDomainInfo: (name: string, domain: string, file: Cypress.FixtureData, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string) => Chainable<Element>
       enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
-      setAMTMEBXPasswords: (amtPassword: string, mebxPassword: string) => Chainable<Element>
+      setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
     }
   }
 }
@@ -128,18 +128,25 @@ Cypress.Commands.add('goToPage', (pageName) => {
   cy.get('.mat-list-item').contains(pageName).click()
 })
 
-Cypress.Commands.add('setAMTMEBXPasswords', (amtPassword, mebxPassword) => {
-  cy.get('input').get('[formControlName=amtPassword]').type(amtPassword, { force: true })
-  cy.get('input').get('[formControlName=mebxPassword]').type(mebxPassword, { force: true })
+Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {
+  // cy.get('[formControlName=generateRandomPassword]').click()
+  cy.get('input').get('[formControlName=amtPassword]').type(amtPassword)
+  if (mode === 'acmactivate') {
+    // cy.get('[formControlName=generateRandomMEBxPassword]').click()
+    cy.get('input').get('[formControlName=mebxPassword]').type(mebxPassword)
+  }
 })
 
 // ------------------------------- Other --------------------------------
 
 Cypress.Commands.add('myIntercept', (method, url, body) => {
   if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
-    cy.intercept(method, url, body)
+    cy.intercept({
+      method,
+      url
+    }, body)
   } else {
-    cy.intercept(method, url)
+    cy.intercept({ method, url })
   }
 })
 

@@ -39,7 +39,8 @@ const profileFixtures = {
     mebxPassword: 'P@ssw0rd',
     dhcpEnabled: true,
     connectionMode: 'TLS (Enterprise)',
-    tlsConfig: 'Server Authentication Only'
+    tlsConfig: 'Server Authentication Only',
+    generateRandomPassword: false
   },
 
   happyPathStaticCIRA: {
