@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 jobs:
   build:
@@ -15,23 +15,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run lint
-      if: ${{ matrix.node-version == '16.x' }}
-    - run: npm run lint:cypress
-      if: ${{ matrix.node-version == '16.x' }}
-    - run: npm run test-ci
-    - uses: codecov/codecov-action@v1.2.1
-      name: Upload Coverage Results
-      if: ${{ matrix.node-version == '16.x' }}
-      with:
-        directory: ./coverage/openamtui
-        
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run lint
+        if: ${{ matrix.node-version == '16.x' }}
+      - run: npm run lint:cypress
+        if: ${{ matrix.node-version == '16.x' }}
+      - run: npm run test-ci
+      - uses: codecov/codecov-action@v1.2.1
+        name: Upload Coverage Results
+        if: ${{ matrix.node-version == '16.x' }}
+        with:
+          directory: ./coverage/openamtui
