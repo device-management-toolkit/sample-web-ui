@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { throwError } from 'rxjs'
-import { finalize } from 'rxjs/operators'
+import { of, throwError } from 'rxjs'
+import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -25,34 +25,75 @@ export class DeviceDetailComponent implements OnInit {
   public isLoading = false
   public deviceId: string = ''
   public targetOS: any
-  public powerOptions = [
+  public regOobPowerOptions = [
     {
-      label: 'Hibernate',
-      action: 7
+      label: 'Power On',
+      iconlabel: 'power_on',
+      tooltip: 'Power up/on fully',
+      action: 2
     }, {
-      label: 'Sleep',
-      action: 4
+      label: 'Power Cycle',
+      iconlabel: 'power_on',
+      tooltip: 'Transition to minimal power state and then power up/on fully',
+      action: 5
+    }, {
+      label: 'Hard Power Off',
+      iconlabel: 'power_off',
+      tooltip: 'Transition to a fully powered down state',
+      action: 8
     }, {
       label: 'Reset',
+      iconlabel: 'power_off',
+      tooltip: 'Perform hardware reset on the bus',
       action: 10
+    }
+  ]
+
+  public biosPxeOobPowerOptions = [
+    {
+      label: 'Power to BIOS',
+      iconlabel: 'restart_alt',
+      tooltip: 'Power to BIOS to verify or modify system configuration',
+      action: 100
     }, {
-      label: 'Soft-Off',
+      label: 'Reset to BIOS',
+      iconlabel: 'restart_alt',
+      tooltip: 'Perform hardware reset on the bus to BIOS to verify or modify system configuration',
+      action: 101
+    }, {
+      label: 'Power to PXE',
+      iconlabel: 'restart_alt',
+      tooltip: 'Power up/on fully to pre-boot execution environment (PXE) (i.e., a network boot)',
+      action: 401
+    }, {
+      label: 'Reset to PXE',
+      iconlabel: 'restart_alt',
+      tooltip: 'Reset to pre-boot execution environment (PXE) (i.e., a network boot)',
+      action: 400
+    }
+  ]
+
+  public ibPowerOptions = [
+    {
+      label: 'Sleep',
+      iconlabel: 'power_settings_new',
+      tooltip: 'Transition to a standby state of low-power usage and store system context (e.g., open applications) in memory',
+      action: 4
+    }, {
+      label: 'Hibernate',
+      iconlabel: 'power_settings_new',
+      tooltip: 'Transition to zero power usage and store system context in non-volatile storage',
+      action: 7
+    }, {
+      label: 'Soft Power Off',
+      iconlabel: 'power_settings_new',
+      tooltip: 'Transition to a very minimal power state',
       action: 12
     }, {
       label: 'Soft Reset',
+      iconlabel: 'power_settings_new',
+      tooltip: 'Perform a shutdown and then a hardware reset',
       action: 14
-    }, {
-      label: 'Reset to BIOS',
-      action: 101
-    }, {
-      label: 'Power Up to BIOS',
-      action: 100
-    }, {
-      label: 'Reset to PXE',
-      action: 400
-    }, {
-      label: 'Power Up to PXE',
-      action: 401
     }
   ]
 
@@ -150,6 +191,31 @@ export class DeviceDetailComponent implements OnInit {
 
   async navigateTo (path: string): Promise<void> {
     await this.router.navigate([`/devices/${this.deviceId}/${path}`])
+  }
+
+  sendPowerAction (action: number): void {
+    this.isLoading = true
+    let useSOL = false
+    if (this.router.url.toString().includes('sol') && action === 101) {
+      useSOL = true
+    }
+    this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
+      catchError(err => {
+        // TODO: handle error better
+        console.log(err)
+        this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
+        return of(null)
+      }),
+      finalize(() => {
+        this.isLoading = false
+      })
+    ).subscribe(data => {
+      if (data.Body.ReturnValueStr === 'NOT_READY') {
+        this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+      } else {
+        this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      }
+    })
   }
 
   parseProvisioningMode (mode: number): string {

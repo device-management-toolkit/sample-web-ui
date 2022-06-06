@@ -1,34 +1,82 @@
-
 <app-device-toolbar [isLoading]="isLoading"></app-device-toolbar>
 <mat-sidenav-container autosize>
-    
+
     <mat-sidenav class="auditlog-sidenav" mode="side" position="end" opened>
         <mat-tab-group>
             <mat-tab label="Audit Log" class="tab">
                 <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
-        <mat-vertical-stepper #stepper>
-            <mat-step completed="false" editable="false" *ngFor="let entry of auditLogData.records.slice().reverse()">
-                <ng-template matStepLabel><span data-cy="auditLogEntry">{{entry.Event}}</span><br />{{ entry.Time | amTimeAgo:true }} ago</ng-template>
-            </mat-step>
-        </mat-vertical-stepper>
-        <div fxLayoutAlign="center" style="margin-top:12px">
-            <button mat-flat-button (click)="navigateTo('audit-log')" color="primary" style="margin: 5px">See All Activity</button>
-        </div>
+                <mat-vertical-stepper #stepper>
+                    <mat-step completed="false" editable="false"
+                        *ngFor="let entry of auditLogData.records.slice().reverse()">
+                        <ng-template matStepLabel><span data-cy="auditLogEntry">{{entry.Event}}</span><br />{{
+                            entry.Time | amTimeAgo:true }} ago</ng-template>
+                    </mat-step>
+                </mat-vertical-stepper>
+                <div fxLayoutAlign="center" style="margin-top:12px">
+                    <button mat-flat-button (click)="navigateTo('audit-log')" color="primary" style="margin: 5px">See
+                        All Activity</button>
+                </div>
             </mat-tab>
             <mat-tab label="Event Log" class="tab">
                 <h3 class="mat-h3">Device Event Log ({{eventLogData.length}} entries) </h3>
                 <mat-vertical-stepper #stepper>
                     <mat-step completed="false" editable="false" *ngFor="let entry of eventLogData.slice(0, 10)">
-                        <ng-template matStepLabel><span data-cy="eventLogEntry">{{entry.Desc}}</span><br />{{ entry.Time | amTimeAgo:true }} ago</ng-template>
+                        <ng-template matStepLabel><span data-cy="eventLogEntry">{{entry.Desc}}</span><br />{{ entry.Time
+                            | amTimeAgo:true }} ago</ng-template>
                     </mat-step>
                 </mat-vertical-stepper>
                 <div fxLayoutAlign="center" style="margin-top:12px">
-                    <button mat-flat-button (click)="navigateTo('event-log')" color="primary" style="margin: 5px"> <span><div data-cy="eventSeeAllActivity">See All Activity</div></span></button>
+                    <button mat-flat-button (click)="navigateTo('event-log')" color="primary" style="margin: 5px">
+                        <span>
+                            <div data-cy="eventSeeAllActivity">See All Activity</div>
+                        </span></button>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </mat-sidenav>
     <mat-sidenav-content>
+        <div fxLayout="row wrap">
+            <mat-card fxFlex="100">
+                <mat-card-header>
+                    <mat-card-title>
+                        Out-of-Band Power Actions
+                    </mat-card-title>
+                    <mat-card-subtitle>Actions that use Intel® AMT and occur at the hardware level</mat-card-subtitle>
+
+                </mat-card-header>
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                    <button *ngFor="let option of regOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                        <mat-icon>{{option.iconlabel}}</mat-icon>
+                        <br>
+                        {{option.label}}
+                    </button>
+                    <mat-divider style="height:100px" vertical="true"></mat-divider>
+                    <button *ngFor="let option of biosPxeOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                        <mat-icon>{{option.iconlabel}}</mat-icon>
+                        <br>
+                        {{option.label}}
+                    </button>
+                    </div>
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                    <mat-card-header>
+                        <mat-card-title>
+                            In-Band Power Actions
+                        </mat-card-title>
+                        <mat-card-subtitle>Actions requiring a running agent (e.g., Intel Local Manageability Service)</mat-card-subtitle>
+                    </mat-card-header>
+                    <div fxLayout="row wrap">
+                    <button *ngFor="let option of ibPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                        <mat-icon>{{option.iconlabel}}</mat-icon>
+                        <br>
+                        {{option.label}}
+                    </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
         <div fxLayout="row wrap">
             <mat-card fxFlex="calc(50%-24px)" fxFlex.lt-lg="100">
                 <mat-card-header>
@@ -54,7 +102,8 @@
                             <p>Manufacturer: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="manufacturer"> {{hwInfo?.CIM_Chassis?.response?.Manufacturer}}</span>
+                            <span class="mat-h3" data-cy="manufacturer">
+                                {{hwInfo?.CIM_Chassis?.response?.Manufacturer}}</span>
                         </div>
                         <div fxFlex="50">
                             <p>Model: </p>
@@ -66,7 +115,8 @@
                             <p>Serial No:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="serialNumber"> {{hwInfo?.CIM_Chassis?.response?.SerialNumber}}</span>
+                            <span class="mat-h3" data-cy="serialNumber">
+                                {{hwInfo?.CIM_Chassis?.response?.SerialNumber}}</span>
                         </div>
                         <div fxFlex="50">
                             <p>Version: </p>
@@ -78,7 +128,8 @@
                             <p>AMT Version: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="amtVersion">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
+                            <span class="mat-h3"
+                                data-cy="amtVersion">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
                         </div>
                     </div>
                 </mat-card-content>
@@ -97,7 +148,7 @@
                             <p>Provisioning Mode:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end" data-cy="provisioningMode">
-                            {{parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode)}} 
+                            {{parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode)}}
                         </div>
                         <div fxFlex="50">
                             <p>IDE Redirection:</p>
@@ -142,7 +193,8 @@
                             <p>Manufacturer: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="biosManufacturer">{{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
+                            <span class="mat-h3"
+                                data-cy="biosManufacturer">{{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
                         </div>
                         <div fxFlex="50">
                             <p>Version:</p>
@@ -154,7 +206,8 @@
                             <p>Release Date:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="biosReleaseData">{{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
+                            <span class="mat-h3"
+                                data-cy="biosReleaseData">{{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
                                 amDateFormat:'LLL'}}</span>
                         </div>
                         <div fxFlex="50">
@@ -182,7 +235,7 @@
                 <mat-card-content>
                     <div *ngFor="let bank of hwInfo?.CIM_PhysicalMemory?.responses" fxLayout="row wrap">
                         <div style="margin: 12px 0;" fxFlex=100>
-                            <mat-divider ></mat-divider>
+                            <mat-divider></mat-divider>
                         </div>
                         <div fxFlex="50">
                             <p>Slot: </p>
@@ -194,7 +247,8 @@
                             <p>Capacity: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="bankCapacity"> {{bank.Capacity / 1024 / 1024 / 1024 }} GB</span>
+                            <span class="mat-h3" data-cy="bankCapacity"> {{bank.Capacity / 1024 / 1024 / 1024 }}
+                                GB</span>
                         </div>
                         <div fxFlex="50">
                             <p>Clock Speed(Max):</p>

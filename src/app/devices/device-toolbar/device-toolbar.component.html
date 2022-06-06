@@ -37,14 +37,6 @@
         <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(5)">
             <mat-icon>restart_alt</mat-icon>
         </button>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button *ngFor="let option of powerOptions" mat-menu-item (click)="sendPowerAction(option.action)">
-                <span>{{option.label}}</span>
-            </button>
-        </mat-menu>
     </div>
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
