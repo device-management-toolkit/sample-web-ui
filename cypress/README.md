@@ -30,7 +30,7 @@ This is where data for filling out certain fields, verfiying urls and mocking ap
 
 ### Commands
 `sample-web-ui/cypress/support/commands.js`<br>
-This is where new fuctions can be added to cypress to help reduce redundancy within test cases. See [documentation](https://docs.cypress.io/api/cypress-api/custom-commands) for more information on this feature.
+This is where new functions can be added to cypress to help reduce redundancy within test cases. See [documentation](https://docs.cypress.io/api/cypress-api/custom-commands) for more information on this feature.
 
 ### Environment Variables
 `sample-web-ui/cypress.json`<br>

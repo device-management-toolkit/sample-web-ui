@@ -1,10 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="cypress" />
 /*********************************************************************
  * Copyright (c) Intel Corporation 2021
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
-// Add repetitive groups of functions here
 
-import { httpCodes } from '../fixtures/api/apiResponses'
+import { httpCodes } from '../e2e/fixtures/api/apiResponses'
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -13,7 +14,7 @@ declare global {
       myIntercept: (method: string, url: string | RegExp, body: any) => Chainable<Element>
       goToPage: (pageName: string) => Chainable<Element>
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
-      enterDomainInfo: (name: string, domain: string, file: Cypress.FixtureData, pass: string) => Chainable<Element>
+      enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string) => Chainable<Element>
       enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
       setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
@@ -110,7 +111,7 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
 Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
   cy.get('input[name="name"]').type(name)
   cy.get('input[name="domainName"]').type(domain)
-  cy.get('input[type="file"]').attachFile(file)
+  cy.get('input[type="file"]').selectFile(file, { force: true }) // force true because the file selector is always hidden
   cy.get('input[name="provisioningCertPassword"]').type(pass)
 })
 
@@ -149,19 +150,3 @@ Cypress.Commands.add('myIntercept', (method, url, body) => {
     cy.intercept({ method, url })
   }
 })
-
-// ------------------------------ Help --------------------------------
-
-// https://on.cypress.io/custom-commands
-
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })

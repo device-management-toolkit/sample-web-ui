@@ -5,7 +5,7 @@
 // Tests the update of a profile
 import { profileFixtures } from '../../fixtures/profile'
 import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { wirelessFixtures } from 'cypress/fixtures/wireless'
+import { wirelessFixtures } from '../../fixtures/wireless'
 // ---------------------------- Test section ----------------------------
 
 describe('Test Update Profile Page', () => {

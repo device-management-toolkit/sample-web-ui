@@ -4,8 +4,6 @@
  **********************************************************************/
 // https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
-import 'cypress-file-upload'
-
 import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
 import { domainFixtures } from '../../fixtures/domain'
 
@@ -41,9 +39,9 @@ describe('Test Domain Page', () => {
     }).as('get-domains2')
 
     // handle file on disk or in-memory file
-    const certFixtureData: Cypress.FixtureData = {
+    const certFixtureData: Cypress.FileReference = {
       fileName: 'test-cert.pfx',
-      fileContent: Cypress.env('PROVISIONING_CERT')
+      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'))
     }
 
     cy.enterDomainInfo(
