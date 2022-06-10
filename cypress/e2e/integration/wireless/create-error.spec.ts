@@ -33,7 +33,9 @@ describe('Test wireless creation page', () => {
     cy.enterWirelessInfo(
       wirelessFixtures.wrong.profileName,
       wirelessFixtures.happyPath.ssid,
-      Cypress.env('PSK_PASSPHRASE')
+      Cypress.env('PSK_PASSPHRASE'),
+      wirelessFixtures.happyPath.authenticationMethod,
+      wirelessFixtures.happyPath.encryptionMethod
     )
   })
 

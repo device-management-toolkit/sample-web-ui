@@ -15,7 +15,7 @@ declare global {
       goToPage: (pageName: string) => Chainable<Element>
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
       enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
-      enterWirelessInfo: (name: string, ssid: string, password: string) => Chainable<Element>
+      enterWirelessInfo: (name: string, ssid: string, password: string, authenticationMethod: string, encryptionMethod: string) => Chainable<Element>
       enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
       setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
     }
@@ -115,12 +115,12 @@ Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
   cy.get('input[name="provisioningCertPassword"]').type(pass)
 })
 
-Cypress.Commands.add('enterWirelessInfo', (name, ssid, password) => {
+Cypress.Commands.add('enterWirelessInfo', (name, ssid, password, authMethod, encryptionMethod) => {
   cy.get('input[name="profileName"]').type(name)
   cy.get('input[name="ssid"]').type(ssid)
   cy.get('input[name="pskPassphrase"]').type(password)
-  cy.get('mat-select[formcontrolname=authenticationMethod]').click().get('mat-option').contains('WPA PSK').click()
-  cy.get('mat-select[formcontrolname=encryptionMethod]').click().get('mat-option').contains('TKIP').click()
+  cy.get('mat-select[formControlName=authenticationMethod]').click().get('mat-option').contains(authMethod).click()
+  cy.get('mat-select[formControlName=encryptionMethod]').click().get('mat-option').contains(encryptionMethod).click()
 })
 
 // ------------------------- Common Navigation --------------------------

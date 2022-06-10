@@ -10,7 +10,7 @@ describe('create a wireless profile', () => {
     cy.setup()
   })
 
-  it('creates a deafault profile', () => {
+  it('creates a default profile', () => {
     cy.myIntercept('POST', 'wirelessconfigs', {
       statusCode: httpCodes.CREATED,
       body: apiResponses.wirelessConfigs.create.success.response
@@ -34,7 +34,9 @@ describe('create a wireless profile', () => {
     cy.enterWirelessInfo(
       wirelessFixtures.happyPath.profileName,
       wirelessFixtures.happyPath.ssid,
-      Cypress.env('PSK_PASSPHRASE')
+      Cypress.env('PSK_PASSPHRASE'),
+      wirelessFixtures.happyPath.authenticationMethod,
+      wirelessFixtures.happyPath.encryptionMethod
     )
     cy.get('button[type=submit]').click()
 
