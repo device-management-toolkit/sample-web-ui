@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { Observable, of, throwError } from 'rxjs'

@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog'

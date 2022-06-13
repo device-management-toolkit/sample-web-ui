@@ -23,9 +23,14 @@
       },
       "plugins": [
         "@typescript-eslint",
-        "@angular-eslint"
+        "@angular-eslint",
+        "license-header"
       ],
       "rules": {
+        "license-header/header": [
+          "error",
+          "./license-header.js"
+        ],
         "@typescript-eslint/no-namespace": 0,
         "@typescript-eslint/strict-boolean-expressions": 0
       }

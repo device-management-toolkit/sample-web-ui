@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { TestBed } from '@angular/core/testing'
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { HttpClientTestingModule } from '@angular/common/http/testing'

@@ -1,7 +1,8 @@
 /*********************************************************************
- * Copyright (c) Intel Corporation 2021
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 // Tests the login page with a multitude of fake accounts in
 // different combinations of invalid login info.
 // Also tests things like canceling a login and logging out after the login

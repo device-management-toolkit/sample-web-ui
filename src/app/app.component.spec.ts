@@ -1,7 +1,8 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2021
+* Copyright (c) Intel Corporation 2022
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
+
 import { EventEmitter, Component, Input } from '@angular/core'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { ComponentFixture, TestBed } from '@angular/core/testing'

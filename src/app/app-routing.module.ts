@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { ConfigDetailComponent } from './configs/config-detail/config-detail.component'

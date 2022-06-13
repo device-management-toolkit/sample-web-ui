@@ -1,7 +1,8 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2021
+* Copyright (c) Intel Corporation 2022
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
+
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
 import { NavigationStart, Router } from '@angular/router'
 import { AuthService } from './auth.service'

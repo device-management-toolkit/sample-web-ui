@@ -1,9 +1,10 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="cypress" />
-/*********************************************************************
- * Copyright (c) Intel Corporation 2021
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
 
 import { httpCodes } from '../e2e/fixtures/api/apiResponses'
 declare global {

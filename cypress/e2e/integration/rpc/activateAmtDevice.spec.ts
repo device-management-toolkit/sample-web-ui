@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 /* eslint-disable no-template-curly-in-string */
 describe('Activate', () => {
   if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {

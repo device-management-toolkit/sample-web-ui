@@ -1,7 +1,8 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2021
+* Copyright (c) Intel Corporation 2022
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
+
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 

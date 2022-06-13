@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { Component, OnInit } from '@angular/core'
 import { MatCheckboxChange } from '@angular/material/checkbox'
 import { MatSelectChange } from '@angular/material/select'

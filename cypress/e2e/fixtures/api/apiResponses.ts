@@ -1,9 +1,9 @@
-import { profileFixtures } from '../profile'
-
 /*********************************************************************
- * Copyright (c) Intel Corporation 2021
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
+import { profileFixtures } from '../profile'
 
 const httpCodes = {
   SUCCESS: 200,

@@ -1,3 +1,8 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
 import { Component, Input, OnInit } from '@angular/core'
 import { catchError, finalize } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
