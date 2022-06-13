@@ -61,20 +61,22 @@ describe('Test device details page', () => {
     cy.wait('@get-auditlog').its('response.statusCode').should('eq', 200)
     cy.wait('@get-features').its('response.statusCode').should('eq', 200)
 
+    // Do not run power actions on real devices
+    if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
     // Out-of-band Power Actions
-    const oobActions = ['Power On', 'Power Cycle', 'Hard Power Off', 'Reset', 'Power to BIOS', 'Reset to BIOS', 'Power to PXE', 'Reset to PXE']
-    for (let i = 0; i < oobActions.length; i++) {
-      cy.contains(oobActions[i]).click()
-      cy.wait('@post-power-action').its('response.statusCode').should('eq', 200)
-    }
+      const oobActions = ['Power On', 'Power Cycle', 'Hard Power Off', 'Reset', 'Power to BIOS', 'Reset to BIOS', 'Power to PXE', 'Reset to PXE']
+      for (let i = 0; i < oobActions.length; i++) {
+        cy.contains(oobActions[i]).click()
+        cy.wait('@post-power-action').its('response.statusCode').should('eq', 200)
+      }
 
-    // In-band Power Actions
-    const ibActions = ['Sleep', 'Hibernate', 'Soft Power Off', 'Soft Reset']
-    for (let i = 0; i < ibActions.length; i++) {
-      cy.contains(ibActions[i]).click()
-      cy.wait('@post-power-action').its('response.statusCode').should('eq', 200)
+      // In-band Power Actions
+      const ibActions = ['Sleep', 'Hibernate', 'Soft Power Off', 'Soft Reset']
+      for (let i = 0; i < ibActions.length; i++) {
+        cy.contains(ibActions[i]).click()
+        cy.wait('@post-power-action').its('response.statusCode').should('eq', 200)
+      }
     }
-
     // System Summary
     cy.get('[data-cy="chipVersion"]').should('not.be.empty')
     cy.get('[data-cy="manufacturer"]').should('not.be.empty')
