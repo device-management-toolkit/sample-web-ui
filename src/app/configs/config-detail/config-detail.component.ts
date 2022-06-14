@@ -42,8 +42,8 @@ export class ConfigDetailComponent implements OnInit {
       autoLoad: [true, Validators.required],
       mpsRootCertificate: [null],
       proxyDetails: [null],
-      regeneratePassword: [false]
-      // authMethod:2
+      regeneratePassword: [false],
+      version: [null]
     })
   }
   // IP ADDRESS REGEX

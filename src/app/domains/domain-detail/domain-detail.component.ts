@@ -28,7 +28,8 @@ export class DomainDetailComponent implements OnInit {
       profileName: [null, Validators.required],
       domainSuffix: [null, Validators.required],
       provisioningCert: [null, Validators.required],
-      provisioningCertPassword: [null, Validators.required]
+      provisioningCertPassword: [null, Validators.required],
+      version: [null]
     })
   }
 

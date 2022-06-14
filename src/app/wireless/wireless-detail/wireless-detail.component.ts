@@ -37,7 +37,8 @@ export class WirelessDetailComponent implements OnInit {
       authenticationMethod: [this.authenticationModes[0].value, Validators.required],
       encryptionMethod: [this.encryptionModes[0].value, Validators.required],
       ssid: ['', Validators.required],
-      pskPassphrase: ['', Validators.required]
+      pskPassphrase: ['', Validators.required],
+      version: [null]
     })
   }
 

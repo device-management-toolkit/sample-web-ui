@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
 
 describe('AuthorizeInterceptor', () => {
   const routerSpy: any = jasmine.createSpyObj('Router', ['navigate'])
+  let interceptor: AuthorizeInterceptor
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule, MatDialogModule],
     providers: [
@@ -20,13 +21,14 @@ describe('AuthorizeInterceptor', () => {
       { provide: Router, useValue: routerSpy }
     ]
   }))
-
+  beforeEach(() => {
+    interceptor = TestBed.inject(AuthorizeInterceptor)
+  })
   afterEach(() => {
     TestBed.resetTestingModule()
   })
 
   it('should be created', () => {
-    const interceptor: AuthorizeInterceptor = TestBed.inject(AuthorizeInterceptor)
     expect(interceptor).toBeTruthy()
   })
 })

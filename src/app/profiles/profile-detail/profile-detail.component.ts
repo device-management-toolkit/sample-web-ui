@@ -62,7 +62,8 @@ export class ProfileDetailComponent implements OnInit {
       connectionMode: [null, Validators.required],
       ciraConfigName: [null],
       wifiConfigs: [null],
-      tlsMode: [null]
+      tlsMode: [null],
+      version: [null]
     })
   }
 
