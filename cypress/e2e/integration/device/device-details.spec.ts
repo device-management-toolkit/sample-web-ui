@@ -54,7 +54,7 @@ describe('Test device details page', () => {
     cy.goToPage('Devices')
     cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
 
-    cy.get('mat-row').click()
+    cy.get('mat-row').first().click()
 
     cy.wait('@get-hwInfo').its('response.statusCode').should('eq', 200)
     cy.wait('@get-version').its('response.statusCode').should('eq', 200)
