@@ -88,7 +88,11 @@ describe('Test Profile Page', () => {
       false,
       profileFixtures.happyPathStaticCIRA.dhcpEnabled,
       profileFixtures.happyPathStaticCIRA.connectionMode,
-      profileFixtures.happyPathStaticCIRA.ciraConfig
+      profileFixtures.happyPathStaticCIRA.ciraConfig,
+      profileFixtures.happyPathStaticCIRA.userConsent,
+      profileFixtures.happyPathStaticCIRA.iderEnabled,
+      profileFixtures.happyPathStaticCIRA.kvmEnabled,
+      profileFixtures.happyPathStaticCIRA.solEnabled
     )
     cy.get('button[type=submit]').click()
     cy.get('button').contains('Continue').click()
@@ -159,7 +163,11 @@ describe('Test Profile Page', () => {
       true,
       profileFixtures.happyPathStaticCIRARandomPassword.dhcpEnabled,
       profileFixtures.happyPathStaticCIRARandomPassword.connectionMode,
-      profileFixtures.happyPathStaticCIRARandomPassword.ciraConfig
+      profileFixtures.happyPathStaticCIRARandomPassword.ciraConfig,
+      profileFixtures.happyPathStaticCIRARandomPassword.userConsent,
+      profileFixtures.happyPathStaticCIRARandomPassword.iderEnabled,
+      profileFixtures.happyPathStaticCIRARandomPassword.kvmEnabled,
+      profileFixtures.happyPathStaticCIRARandomPassword.solEnabled
     )
     cy.get('button[type=submit]').click()
     cy.get('button').contains('Continue').click()

@@ -17,7 +17,7 @@ declare global {
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
       enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string, authenticationMethod: string, encryptionMethod: string) => Chainable<Element>
-      enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string) => Chainable<Element>
+      enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string, userConsent: string, iderEnabled: boolean, kvmEnabled: boolean, solEnabled: boolean) => Chainable<Element>
       setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
     }
   }
@@ -71,7 +71,7 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   cy.get('input').get('[name=username]').clear().type(user)
 })
 
-Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig) => {
+Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig, userConsent, iderEnabled, kvmEnabled, solEnabled) => {
   cy.get('input').get('[name=profileName]').type(name)
   if (admin === 'ccmactivate') {
     cy.get('mat-select[formcontrolname=activation').click()
@@ -106,8 +106,30 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
     cy.get('mat-select[formcontrolname=tlsMode]').click()
   }
   cy.contains(connectionConfig).click()
-}
-)
+
+  if (admin !== 'ccmactivate') {
+    cy.get('mat-select[formcontrolname=userConsent').click()
+    cy.contains(userConsent).click()
+  }
+  let id = '[data-cy="redirect_ider"] input'
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((iderEnabled && !isChecked) || (isChecked && !iderEnabled)) {
+      cy.get(id).click()
+    }
+  })
+  id = '[data-cy="redirect_kvm"] input'
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((kvmEnabled && !isChecked) || (isChecked && !kvmEnabled)) {
+      cy.get(id).click()
+    }
+  })
+  id = '[data-cy="redirect_sol"] input'
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((solEnabled && !isChecked) || (isChecked && !solEnabled)) {
+      cy.get(id).click()
+    }
+  })
+})
 
 Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
   cy.get('input[name="name"]').type(name)

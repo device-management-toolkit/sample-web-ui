@@ -3,6 +3,8 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+import Constants from '../../../src/app/shared/config/Constants'
+
 const profileFixtures = {
   happyPath: {
     profileName: 'happyPath',
@@ -11,7 +13,11 @@ const profileFixtures = {
     mebxPassword: 'P@ssw0rd',
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: true,
-    ciraConfig: 'happyPath'
+    ciraConfig: 'happyPath',
+    userConsent: Constants.UserConsent_All,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true
   },
 
   wrong: {
@@ -41,7 +47,11 @@ const profileFixtures = {
     dhcpEnabled: true,
     connectionMode: 'TLS (Enterprise)',
     tlsConfig: 'Server Authentication Only',
-    generateRandomPassword: false
+    generateRandomPassword: false,
+    userConsent: Constants.UserConsent_All,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true
   },
 
   happyPathStaticCIRA: {
@@ -51,7 +61,11 @@ const profileFixtures = {
     mebxPassword: 'P@ssw0rd',
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: false,
-    ciraConfig: 'happyPath'
+    ciraConfig: 'happyPath',
+    userConsent: Constants.UserConsent_All,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true
   },
 
   happyPathStaticCIRARandomPassword: {
@@ -61,7 +75,11 @@ const profileFixtures = {
     mebxPassword: 'P@ssw0rd',
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: false,
-    ciraConfig: 'happyPath'
+    ciraConfig: 'happyPath',
+    userConsent: Constants.UserConsent_All,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true
   },
   patchWirelessConfigHappyPath: {
     profileName: 'happyTlspath',
@@ -78,7 +96,11 @@ const profileFixtures = {
         profileName: 'happyPath',
         priority: 1
       }
-    ]
+    ],
+    userConsent: Constants.UserConsent_All,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true
   },
   patchServerAuthentication: {
     profileName: 'happyTlspath',

@@ -15,6 +15,7 @@ import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
 
 import { ProfileDetailComponent } from './profile-detail.component'
+import Constants from '../../shared/config/Constants'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -84,7 +85,7 @@ describe('ProfileDetailComponent', () => {
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
     component.setConnectionMode({ tlsMode: 4 } as any)
-    expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
+    expect(component.profileForm.controls.connectionMode.value).toBe(Constants.ConnectionMode_TLS)
   })
   it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
     component.setConnectionMode({ ciraConfigName: 'config1' } as any)
@@ -222,7 +223,11 @@ describe('ProfileDetailComponent', () => {
       mebxPassword: 'Password123',
       dhcpEnabled: false,
       ciraConfigName: 'config1',
-      tlsConfigName: null
+      tlsConfigName: null,
+      userConsent: 'All',
+      iderEnabled: 'true',
+      kvmEnabled: 'true',
+      solEnabled: 'true'
     })
     component.confirm()
 
@@ -329,9 +334,14 @@ describe('ProfileDetailComponent', () => {
     expect(component.selectedWifiConfigs.length).toBe(2)
   })
 
-  it('should disable mebx related fields on selecting CCM activate mode', () => {
-    component.activationChange('ccmactivate')
+  it('should adjust related fields on selecting activation mode', () => {
+    component.activationChange(Constants.CCMActivate)
     expect(component.profileForm.controls.mebxPassword.disabled).toBe(true)
+    expect(component.profileForm.controls.userConsent.disabled).toBe(true)
+    expect(component.profileForm.controls.userConsent.value).toEqual(Constants.UserConsent_All)
+    component.activationChange(Constants.ACMActivate)
+    expect(component.profileForm.controls.mebxPassword.disabled).toBe(false)
+    expect(component.profileForm.controls.userConsent.disabled).toBe(false)
   })
 
   it('should return the search results when a search string is entered', () => {
@@ -423,7 +433,7 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should set the ciraCofigName property to null when TLS Selected', () => {
-    component.connectionModeChange('TLS')
+    component.connectionModeChange(Constants.ConnectionMode_TLS)
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
     expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
     expect(component.profileForm.controls.tlsMode.valid).toBeFalse()

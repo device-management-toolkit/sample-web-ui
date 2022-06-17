@@ -31,7 +31,30 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <div fxFlex="50" style="margin-top:15px">
+
+          <div fxFlex="100">
+            <mat-label>AMT Features - Enable/Disable redirection features of AMT</mat-label>
+          </div>
+          <div fxFlex="100" style="margin-top:10px">
+            <mat-checkbox data-cy="redirect_ider" formControlName="iderEnabled">IDE Redirect</mat-checkbox>
+          </div>
+          <div fxFlex="100">
+            <mat-checkbox data-cy="redirect_kvm" formControlName="kvmEnabled">KVM</mat-checkbox>
+          </div>
+          <div fxFlex="100">
+            <mat-checkbox data-cy="redirect_sol" formControlName="solEnabled">SOL</mat-checkbox>
+          </div>
+          <mat-form-field fxFlex="100" style="margin-top:10px">
+            <mat-label>User Consent</mat-label>
+            <mat-hint>Controls when a user must be present for select AMT features</mat-hint>
+            <mat-select formControlName="userConsent" required>
+              <mat-option *ngFor="let mode of userConsentModes" [value]="mode.value">
+                {{mode.display}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="100" style="margin-top:15px">
             <mat-checkbox data-cy="genAmtPass" formControlName="generateRandomPassword">Generate Random AMT Password For
               Each Device</mat-checkbox>
           </div>
@@ -166,3 +189,4 @@
       </mat-card-actions>
     </form>
   </mat-card>
+</div>

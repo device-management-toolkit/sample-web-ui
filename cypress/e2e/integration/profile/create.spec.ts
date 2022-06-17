@@ -56,7 +56,11 @@ describe('Test Profile Page', () => {
       false,
       profileFixtures.happyPath.dhcpEnabled,
       profileFixtures.happyPath.connectionMode,
-      profileFixtures.happyPath.ciraConfig
+      profileFixtures.happyPath.ciraConfig,
+      profileFixtures.happyPath.userConsent,
+      profileFixtures.happyPath.iderEnabled,
+      profileFixtures.happyPath.kvmEnabled,
+      profileFixtures.happyPath.solEnabled
     )
     cy.get('button[type=submit]').click()
     // cy.get('button').contains('Continue').click()

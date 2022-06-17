@@ -55,7 +55,11 @@ describe('Test Profile Page', () => {
       true,
       profileFixtures.happyPath.dhcpEnabled,
       profileFixtures.happyPath.connectionMode,
-      profileFixtures.happyPath.ciraConfig
+      profileFixtures.happyPath.ciraConfig,
+      profileFixtures.happyPath.userConsent,
+      profileFixtures.happyPath.iderEnabled,
+      profileFixtures.happyPath.kvmEnabled,
+      profileFixtures.happyPath.solEnabled
     )
   })
 
