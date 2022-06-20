@@ -90,4 +90,46 @@ describe('Test Profile Page', () => {
     cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
     cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
   })
+
+  it('creates the default profile with only random mebx password and ccm', () => {
+    cy.enterProfileInfo(
+      profileFixtures.happyPath.profileName,
+      profileFixtures.happyPath.activation,
+      false,
+      true,
+      profileFixtures.happyPath.dhcpEnabled,
+      profileFixtures.happyPath.connectionMode,
+      profileFixtures.happyPath.ciraConfig,
+      profileFixtures.happyPath.userConsent,
+      profileFixtures.happyPath.iderEnabled,
+      profileFixtures.happyPath.kvmEnabled,
+      profileFixtures.happyPath.solEnabled
+    )
+    cy.get('button[type=submit]').click()
+
+    // Wait for requests to finish and check them their responses
+    cy.wait('@post-profile').then((req) => {
+      cy.wrap(req)
+        .its('response.statusCode')
+        .should('eq', httpCodes.CREATED)
+
+      // Check that the config was successful
+      cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
+      cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+      cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
+      cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
+    })
+
+    // TODO: check the response to make sure that it is correct
+    // this is currently difficult because of the format of the response
+    cy.wait('@get-profiles2')
+      .its('response.statusCode')
+      .should('eq', httpCodes.SUCCESS)
+
+    // Check that the config was successful
+    cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
+    cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+    cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
+    cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
+  })
 })

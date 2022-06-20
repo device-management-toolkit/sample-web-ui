@@ -139,11 +139,14 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
+      this.profileForm.controls.generateRandomMEBxPassword.setValue(true)
+      this.profileForm.controls.generateRandomMEBxPassword.disable()
     } else {
       this.profileForm.controls.mebxPassword.enable()
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
+      this.profileForm.controls.generateRandomMEBxPassword.enable()
     }
   }
 
@@ -376,13 +379,19 @@ export class ProfileDetailComponent implements OnInit {
     if (this.profileForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
-      // When creating new
+      // Indicator for when activation mode is CCM and only the MEBX password is randomized
+      // Since the default for CCM is to randomize the MEBX password, no warning is necessary in this case
+      let CCMMEBXRandomOnly = false
+      if (result.activation === Constants.CCMActivate && result.generateRandomMEBxPassword && !result.generateRandomPassword) {
+        CCMMEBXRandomOnly = true
+      }
+      // Check combinations of CIRA configuration + static network & randomized password to trigger different warnings
       if ((result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) &&
-      (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword))) {
+      (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword) && !CCMMEBXRandomOnly)) {
         this.randPasswordCIRAStaticWarning()
       } else if (result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) {
         this.CIRAStaticWarning()
-      } else if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+      } else if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword) && !CCMMEBXRandomOnly) {
         this.randPasswordWarning()
       } else {
         this.onSubmit()
