@@ -236,7 +236,6 @@ export class ProfileDetailComponent implements OnInit {
     if (!value) {
       this.profileForm.controls.ciraConfigName.enable()
       this.wifiAutocomplete.reset({ value: '', disabled: true })
-      this.profileForm.controls.ciraConfigName.setValue(null)
     } else {
       this.profileForm.controls.ciraConfigName.enable()
       this.wifiAutocomplete.reset({ value: '', disabled: false })
