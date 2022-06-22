@@ -149,7 +149,7 @@
           <mat-form-field fxFlex="100">
             <mat-label>Wi-Fi Profiles</mat-label>
             <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete"
-              [matAutocomplete]="auto">
+              [matAutocomplete]="auto" data-cy="wifiAutocomplete">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
               (optionSelected)="selectWifiProfile($event)">
               <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi" [ngClass]="isSelectable(wifi)">

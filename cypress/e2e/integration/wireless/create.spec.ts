@@ -34,8 +34,8 @@ describe('create a wireless profile', () => {
     cy.get('button').contains('Add New').click()
     cy.enterWirelessInfo(
       wirelessFixtures.happyPath.profileName,
-      wirelessFixtures.happyPath.ssid,
-      Cypress.env('PSK_PASSPHRASE'),
+      Cypress.env('WIFI_SSID'),
+      Cypress.env('WIFI_PSK_PASSPHRASE'),
       wirelessFixtures.happyPath.authenticationMethod,
       wirelessFixtures.happyPath.encryptionMethod
     )

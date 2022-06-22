@@ -982,7 +982,7 @@ const apiResponses = {
           data: [
             {
               profileName: 'happyPath',
-              authenticationMethod: 4,
+              authenticationMethod: 6,
               encryptionMethod: 4,
               ssid: 'test',
               pskPassphrase: 'Intel@123',

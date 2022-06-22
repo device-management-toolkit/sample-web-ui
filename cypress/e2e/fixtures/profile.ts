@@ -17,7 +17,13 @@ const profileFixtures = {
     userConsent: Constants.UserConsent_All,
     iderEnabled: true,
     kvmEnabled: true,
-    solEnabled: true
+    solEnabled: true,
+    wifiConfigs: [
+      {
+        priority: 1,
+        profileName: 'happyPath'
+      }
+    ]
   },
 
   wrong: {
@@ -51,7 +57,13 @@ const profileFixtures = {
     userConsent: Constants.UserConsent_All,
     iderEnabled: true,
     kvmEnabled: true,
-    solEnabled: true
+    solEnabled: true,
+    wifiConfigs: [
+      {
+        profileName: 'happyPath',
+        priority: 1
+      }
+    ]
   },
 
   happyPathStaticCIRA: {
@@ -65,7 +77,13 @@ const profileFixtures = {
     userConsent: Constants.UserConsent_All,
     iderEnabled: true,
     kvmEnabled: true,
-    solEnabled: true
+    solEnabled: true,
+    wifiConfigs: [
+      {
+        profileName: 'happyPath',
+        priority: 1
+      }
+    ]
   },
 
   happyPathStaticCIRARandomPassword: {

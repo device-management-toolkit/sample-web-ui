@@ -17,7 +17,7 @@ declare global {
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
       enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
       enterWirelessInfo: (name: string, ssid: string, password: string, authenticationMethod: string, encryptionMethod: string) => Chainable<Element>
-      enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string, userConsent: string, iderEnabled: boolean, kvmEnabled: boolean, solEnabled: boolean) => Chainable<Element>
+      enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string, userConsent: string, iderEnabled: boolean, kvmEnabled: boolean, solEnabled: boolean, wifiConfigs?: Array<{ profileName: string, priority: number }>) => Chainable<Element>
       setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
     }
   }
@@ -71,7 +71,7 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   cy.get('input').get('[name=username]').clear().type(user)
 })
 
-Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig, userConsent, iderEnabled, kvmEnabled, solEnabled) => {
+Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig, userConsent, iderEnabled, kvmEnabled, solEnabled, wifiConfigs) => {
   cy.get('input').get('[name=profileName]').type(name)
   if (admin === 'ccmactivate') {
     cy.get('mat-select[formcontrolname=activation').click()
@@ -107,6 +107,12 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
   }
   cy.contains(connectionConfig).click()
 
+  if (wifiConfigs != null && wifiConfigs.length > 0) {
+    wifiConfigs.forEach(wifiProfile => {
+      cy.get('input[data-cy=wifiAutocomplete]').type(wifiProfile.profileName)
+      cy.get('mat-option').contains(wifiProfile.profileName).click()
+    })
+  }
   // if (admin !== 'ccmactivate') {
   //   cy.get('mat-select[formcontrolname=userConsent').click()
   //   cy.contains(userConsent).click()

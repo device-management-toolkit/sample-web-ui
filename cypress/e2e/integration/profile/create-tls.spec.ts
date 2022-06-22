@@ -92,7 +92,8 @@ describe('Test Profile Page', () => {
       profileFixtures.happyPathTls.userConsent,
       profileFixtures.happyPathTls.iderEnabled,
       profileFixtures.happyPathTls.kvmEnabled,
-      profileFixtures.happyPathTls.solEnabled
+      profileFixtures.happyPathTls.solEnabled,
+      profileFixtures.happyPathTls.wifiConfigs
     )
     cy.get('button[type=submit]').click()
 

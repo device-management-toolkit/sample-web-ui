@@ -6,11 +6,9 @@
 const wirelessFixtures = {
   happyPath: {
     profileName: 'happyPath',
-    authenticationMethod: 'WPA PSK',
+    authenticationMethod: 'WPA2 PSK',
     encryptionMethod: 'CCMP',
-    ssid: 'test',
-    linkPolicy: [14, 16],
-    pskValue: 'pskValue'
+    linkPolicy: [14, 16]
   },
   wrong: {
     profileName: 'wireless config'

@@ -29,7 +29,6 @@ describe('test wireless profiles page', () => {
     cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName)
     cy.get('mat-cell').contains(wirelessFixtures.happyPath.authenticationMethod)
     cy.get('mat-cell').contains(wirelessFixtures.happyPath.encryptionMethod)
-    cy.get('mat-cell').contains(wirelessFixtures.happyPath.ssid)
 
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
