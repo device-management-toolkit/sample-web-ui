@@ -170,9 +170,9 @@ describe('Test Profile Page', () => {
       profileFixtures.happyPathStaticCIRARandomPassword.solEnabled
     )
     cy.get('button[type=submit]').click()
-    cy.get('button').contains('Continue').click()
-    cy.wait(300)
-    cy.get('button').contains('Continue').click()
+
+    cy.get('button[data-cy="static-cira-alert-ok"]').click()
+    cy.get('button[data-cy="random-pass-ok"]').click()
 
     // Wait for requests to finish and check them their responses
     cy.wait('@post-profile').then((req) => {

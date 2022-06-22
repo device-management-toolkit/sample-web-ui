@@ -6,7 +6,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
@@ -20,7 +20,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { Observable, of } from 'rxjs'
+import { forkJoin, Observable, of } from 'rxjs'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 
 @Component({
@@ -53,6 +53,10 @@ export class ProfileDetailComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public errorMessages: string[] = []
   public tlsModes: TlsMode[] = []
+  matDialogConfig: MatDialogConfig = {
+    height: '225px',
+    width: '450px'
+  }
 
   wirelessConfigurations: string[] = []
   filteredWifiList: Observable<string[]> = of([])
@@ -139,7 +143,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
-      this.profileForm.controls.generateRandomMEBxPassword.setValue(true)
+      this.profileForm.controls.generateRandomMEBxPassword.setValue(false)
       this.profileForm.controls.generateRandomMEBxPassword.disable()
     } else {
       this.profileForm.controls.mebxPassword.enable()
@@ -321,56 +325,14 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  randPasswordCIRAStaticWarning (): void {
-    const dialog = this.dialog.open(StaticCIRAWarningComponent, {
-      height: '225px',
-      width: '450px'
-    })
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        const dialog = this.dialog.open(RandomPassAlertComponent, {
-          height: '225px',
-          width: '450px'
-        })
-        dialog.afterClosed().subscribe(data => {
-          if (data) {
-            this.onSubmit()
-          } else { // Cancel form submission
-            this.isLoading = false
-          }
-        })
-      } else { // Cancel form submission
-        this.isLoading = false
-      }
-    })
+  CIRAStaticWarning (): Observable<any> {
+    const dialog = this.dialog.open(StaticCIRAWarningComponent, this.matDialogConfig)
+    return dialog.afterClosed()
   }
 
-  CIRAStaticWarning (): void {
-    const dialog = this.dialog.open(StaticCIRAWarningComponent, {
-      height: '225px',
-      width: '450px'
-    })
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        this.onSubmit()
-      } else { // Cancel form submission
-        this.isLoading = false
-      }
-    })
-  }
-
-  randPasswordWarning (): void {
-    const dialog = this.dialog.open(RandomPassAlertComponent, {
-      height: '225px',
-      width: '450px'
-    })
-    dialog.afterClosed().subscribe(data => {
-      if (data) {
-        this.onSubmit()
-      } else { // Cancel form submission
-        this.isLoading = false
-      }
-    })
+  randPasswordWarning (): Observable<any> {
+    const dialog = this.dialog.open(RandomPassAlertComponent, this.matDialogConfig)
+    return dialog.afterClosed()
   }
 
   confirm (): void {
@@ -379,23 +341,24 @@ export class ProfileDetailComponent implements OnInit {
     if (this.profileForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
-      // Indicator for when activation mode is CCM and only the MEBX password is randomized
-      // Since the default for CCM is to randomize the MEBX password, no warning is necessary in this case
-      let CCMMEBXRandomOnly = false
-      if (result.activation === Constants.CCMActivate && result.generateRandomMEBxPassword && !result.generateRandomPassword) {
-        CCMMEBXRandomOnly = true
+      const dialogs = []
+      if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+        dialogs.push(this.randPasswordWarning())
       }
-      // Check combinations of CIRA configuration + static network & randomized password to trigger different warnings
-      if ((result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) &&
-      (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword) && !CCMMEBXRandomOnly)) {
-        this.randPasswordCIRAStaticWarning()
-      } else if (result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) {
-        this.CIRAStaticWarning()
-      } else if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword) && !CCMMEBXRandomOnly) {
-        this.randPasswordWarning()
-      } else {
-        this.onSubmit()
+      if (result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) {
+        dialogs.push(this.CIRAStaticWarning())
       }
+
+      if (dialogs.length === 0) {
+        return this.onSubmit()
+      }
+      forkJoin(dialogs).subscribe(data => {
+        if (data.every((x) => x === true)) {
+          this.onSubmit()
+        } else { // Cancel form submission
+          this.isLoading = false
+        }
+      })
     } else {
       this.profileForm.markAllAsTouched()
     }
@@ -420,17 +383,17 @@ export class ProfileDetailComponent implements OnInit {
       request = this.profilesService.create(result)
       reqType = 'created'
     }
-    request
-      .pipe(
-        finalize(() => {
-          this.isLoading = false
-        }))
-      .subscribe(data => {
+    request.subscribe({
+      next: (value: Profile) => {
         this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.router.navigate(['/profiles'])
-      }, error => {
+      },
+      error: error => {
         this.errorMessages = error
-      })
+      }
+    }).add(() => {
+      this.isLoading = false
+    })
   }
 }

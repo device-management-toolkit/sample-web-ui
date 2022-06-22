@@ -62,7 +62,7 @@
             <input [type]="amtInputType" formControlName="amtPassword" matInput name="amtPassword"
               placeholder="Static AMT Password" required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-            <mat-hint>The AMT Password is used for remote access of a device.</mat-hint>
+            <mat-hint>The AMT Password is used for remote access of a device. It is also required for reconfiguring/deactivating the device.</mat-hint>
             <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
               (click)="toggleAMTPassVisibility()" [disabled]='profileForm.controls.amtPassword.disabled'>
               <mat-icon [fxHide]="amtInputType === 'text'">visibility</mat-icon>
@@ -82,7 +82,7 @@
             <input [type]="mebxInputType" matInput formControlName="mebxPassword" placeholder="Static MEBX Password"
               required minlength=8 maxlength="32">
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-            <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device
+            <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device. It can only be set when the activation mode is set to Admin Control Mode.
             </mat-hint>
             <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
               (click)="toggleMEBXPassVisibility()" [disabled]='profileForm.controls.mebxPassword.disabled'>
