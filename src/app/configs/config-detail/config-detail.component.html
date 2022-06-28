@@ -53,18 +53,9 @@
                         <mat-hint>Enter the username for accessing MPS</mat-hint>
                     </mat-form-field>
                     <br><br><br><br>
-                    <mat-slide-toggle formControlName="autoLoad">
-                        Auto-load MPS Root Certificate Format
-                    </mat-slide-toggle>
                     <mat-slide-toggle formControlName="regeneratePassword" [fxHide]="shouldShowRegenPass()">
                         Generate New Random Password Upon Saving
                     </mat-slide-toggle>
-
-                    <mat-form-field fxFlex="100" [fxHide]="shouldShowCertBox()">
-                        <textarea rows=5 formControlName="mpsRootCertificate" matInput name="mpsRootCertificate"
-                            placeholder="MPS Root Cert"></textarea>
-
-                    </mat-form-field>
                 </div>
             </mat-card-content>
             <mat-card-actions>

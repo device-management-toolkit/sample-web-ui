@@ -39,7 +39,6 @@ export class ConfigDetailComponent implements OnInit {
       commonName: [null, Validators.required],
       mpsPort: [4433, Validators.required],
       username: ['admin', Validators.required],
-      autoLoad: [true, Validators.required],
       mpsRootCertificate: [null],
       proxyDetails: [null],
       regeneratePassword: [false],
@@ -80,9 +79,7 @@ export class ConfigDetailComponent implements OnInit {
     this.configForm.controls.serverAddressFormat?.valueChanges.subscribe(
       (value) => this.serverAddressFormatChange(+value)
     )
-    this.configForm.controls.autoLoad?.valueChanges.subscribe((value) =>
-      this.autoLoadChange(value)
-    )
+
     this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) =>
       this.serverAddressChange(value)
     )
@@ -98,18 +95,6 @@ export class ConfigDetailComponent implements OnInit {
     await this.router.navigate(['/ciraconfigs'])
   }
 
-  autoLoadChange (value: boolean): void {
-    if (value) {
-      this.configForm.controls.mpsRootCertificate?.disable()
-      this.configForm.controls.mpsRootCertificate?.clearValidators()
-    } else {
-      this.configForm.controls.mpsRootCertificate?.setValidators(
-        Validators.required
-      )
-      this.configForm.controls.mpsRootCertificate?.enable()
-    }
-  }
-
   serverAddressFormatChange (value: number): void {
     if (value === 3) {
       // ipv4
@@ -119,10 +104,6 @@ export class ConfigDetailComponent implements OnInit {
       this.configForm.controls.commonName?.disable()
       this.configForm.controls.commonName?.setValue(null)
     }
-  }
-
-  shouldShowCertBox (): boolean {
-    return this.configForm.controls.autoLoad?.value === true
   }
 
   shouldShowRegenPass (): boolean {
@@ -152,58 +133,32 @@ export class ConfigDetailComponent implements OnInit {
         reqType = 'created'
         rpsRequest = this.configsService.create(result)
       }
-      // todo: don't do it this way
-      if (result.autoLoad) {
-        delete result.autoLoad
-        this.configsService
-          .loadMPSRootCert()
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-            }),
-            mergeMap((data) => {
-              result.mpsRootCertificate = this.trimRootCert(data)
-              return rpsRequest
-            })
-          )
-          .subscribe(
-            (data) => {
-              this.snackBar.open(
-                $localize`CIRA ${reqType} created successfully`,
-                undefined,
-                SnackbarDefaults.defaultSuccess
-              )
-              // eslint-disable-next-line @typescript-eslint/no-floating-promises
-              this.router.navigate(['/ciraconfigs'])
-            },
-            (error) => {
-              console.log('error', error)
-              this.errorMessages = error
-            }
-          )
-      } else {
-        delete result.autoLoad
-        rpsRequest
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-            })
-          )
-          .subscribe(
-            (data) => {
-              this.snackBar.open(
-                $localize`CIRA ${reqType} created successfully`,
-                undefined,
-                SnackbarDefaults.defaultSuccess
-              )
-              // eslint-disable-next-line @typescript-eslint/no-floating-promises
-              this.router.navigate(['/ciraconfigs'])
-            },
-            (error) => {
-              this.errorMessages = error
-            }
-          )
-      }
+      this.configsService
+        .loadMPSRootCert()
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+          mergeMap((data) => {
+            result.mpsRootCertificate = this.trimRootCert(data)
+            return rpsRequest
+          })
+        )
+        .subscribe(
+          (data) => {
+            this.snackBar.open(
+              $localize`CIRA ${reqType} created successfully`,
+              undefined,
+              SnackbarDefaults.defaultSuccess
+            )
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            this.router.navigate(['/ciraconfigs'])
+          },
+          (error) => {
+            console.log('error', error)
+            this.errorMessages = error
+          }
+        )
     }
   }
 }

@@ -81,14 +81,6 @@ describe('ConfigDetailComponent', () => {
     expect(component.configForm.get('commonName')?.value).toEqual('255.255.255.1')
   }))
 
-  it('should enable the auto MPS root certification load control when autoload is set to false', fakeAsync(() => {
-    component.configForm.get('autoLoad')?.setValue(false)
-    component.configForm.get('autoLoad')?.updateValueAndValidity({ emitEvent: true })
-    tick()
-    fixture.detectChanges()
-    expect(component.configForm.get('mpsRootCertificate')?.enabled).toBeTrue()
-  }))
-
   it('should submit when valid(update)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     component.configForm.patchValue({
@@ -98,7 +90,6 @@ describe('ConfigDetailComponent', () => {
       commonName: '255.255.255.255',
       mpsPort: 4433,
       username: 'admin',
-      autoLoad: true,
       mpsRootCertificate: 'rootcert',
       proxyDetails: null,
       regeneratePassword: false
@@ -122,7 +113,6 @@ describe('ConfigDetailComponent', () => {
       commonName: '255.255.255.255',
       mpsPort: 4433,
       username: 'admin',
-      autoLoad: true,
       mpsRootCertificate: 'rootcert',
       proxyDetails: null,
       regeneratePassword: false
