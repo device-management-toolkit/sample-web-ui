@@ -5,6 +5,10 @@
 
 import { defineConfig } from 'cypress'
 export default defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'cypress-ui-test-output-[hash].xml'
+  },
   projectId: 'mxeztq',
   env: {
     BASEURL: 'http://localhost:4200/',
@@ -24,7 +28,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   e2e: {
     specPattern: 'cypress/e2e/integration/**/*.ts',
-    setupNodeEvents (on, config) {
+    setupNodeEvents(on, config) {
       // implement node event listeners here
     }
   }

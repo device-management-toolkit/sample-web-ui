@@ -37,5 +37,5 @@ jobs:
       - name: Upload Karma Results
         uses: actions/upload-artifact@v3
         with:
-          name: results
+          name: sample-web-ui-unit
           path: TESTS-Chrome_*.xml
