@@ -34,3 +34,8 @@ jobs:
         if: ${{ matrix.node-version == '16.x' }}
         with:
           directory: ./coverage/openamtui
+      - name: Upload Karma Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: TESTS-Chrome_*.xml
