@@ -1,7 +1,93 @@
+<a name="2.4.0"></a>
+## [2.4.0] - 2022-07-01
+### Build
+- fix package-lock.json (#dcc6318) 
+- **deps:** Bump [@angular](https://github.com/angular)/forms from 13.3.7 to 13.3.8 (#c5cb2da) 
+- **deps:** Bump [@angular](https://github.com/angular)/platform-browser-dynamic (#7a339b7) 
+- **deps:** Bump [@angular](https://github.com/angular)/material from 13.3.5 to 13.3.7 (#d7473cf) 
+- **deps:** Bump cypress from 10.0.2 to 10.0.3 (#06cfff5) 
+- **deps:** Bump [@angular](https://github.com/angular)/common from 13.3.5 to 13.3.7 (#80d7624) 
+- **deps:** Bump [@angular](https://github.com/angular)/forms from 13.3.5 to 13.3.7 (#1e217ce) 
+- **deps:** Bump cypress from 9.6.1 to 9.7.0 (#50a229d) 
+- **deps:** Bump cypress from 9.6.0 to 9.6.1 (#fcccbae) 
+- **deps:** update angular (#9702d27) 
+- **deps:** Bump cypress from 9.7.0 to 10.0.2 (#4ebf761) 
+- **deps:** Bump [@angular](https://github.com/angular)/common from 13.3.7 to 13.3.8 (#07b5f5a) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 13.3.7 to 13.3.8 (#fbde5ba) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#27508cb) 
+- **deps-dev:** Bump karma-jasmine from 5.0.0 to 5.0.1 (#a661529) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/compiler-cli from 13.3.7 to 13.3.8 (#eb2b555) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 5.23.0 to 5.25.0 (#fab3d62) 
+- **deps-dev:** Bump karma from 6.3.19 to 6.3.20 (#7d7eb7b) 
+- **deps-dev:** Bump eslint from 8.14.0 to 8.15.0 (#18c0886) 
+- **deps-dev:** Bump karma-jasmine-html-reporter from 1.7.0 to 2.0.0 (#7d8c68f) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 5.22.0 to 5.23.0 (#b6f25ce) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/localize from 13.3.5 to 13.3.7 (#62b0be5) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/compiler-cli from 13.3.5 to 13.3.7 (#ec3b769) 
+- **deps-dev:** Bump ts-node from 10.7.0 to 10.8.0 (#8425d77) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.2.9 to 39.3.2 (#1d3fdbf) 
+- **deps-dev:** Bump ts-node from 10.8.0 to 10.8.1 ([#737](https://github.com/open-amt-cloud-toolkit/rps/issues/737)) (#347e5af) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular (#9e42c4d) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin (#cb8229f) 
+- **deps-dev:** Bump karma from 6.3.20 to 6.4.0 (#d7c4fa7) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 13.3.4 to 13.3.5 (#4a25c31) 
+- **deps-dev:** Bump jasmine-core from 4.1.0 to 4.1.1 (#0cae631) 
+- **version:** bump to v2.3.0 (#028e0ce) 
 
-<a name="2.3.0"></a>
-## [2.3.0] - 2022-05-11
+### Ci
+- add check for copyright header and license ([#732](https://github.com/open-amt-cloud-toolkit/rps/issues/732)) (#78009dc) 
+- **nodejs:** remove node 12 and add node 18 (#ff6c063) 
 
+### Docs
+- update changelog for v2.3.0 (#9b273e0) 
+
+### Feat
+- all password fields toggle hidden ([#658](https://github.com/open-amt-cloud-toolkit/rps/issues/658)) (#4372357) 
+- **auth:** redirection expiration time is set to 5 minutes (#c11bf29) 
+- **devices:** differentiation between out-of-band and in-band power actions (#06e5d43) 
+- **etag:** handle version conflicts in UI with popup dialog (#b70c20e) 
+- **login:** MPS web_auth_enabled set to false, sample web ui cannot be ([#656](https://github.com/open-amt-cloud-toolkit/rps/issues/656)) (#6e04c77) 
+- **profile:** added user consent, ider, kvm, sol to AMT profile ([#748](https://github.com/open-amt-cloud-toolkit/rps/issues/748)) (#ae0f4d3) 
+- **profiles:** remove none connection option (#6292482) 
+
+### Fix
+- **cira:** remove auto-load slider, always auto-load certificate (#38b8b81) 
+- **profiles:** remove excess mebx random password warning (#db35499) 
+
+### Refactor
+- **profile:** hide amt features until fully implemented (#effcce5) 
+- **profile-detail:** update logic to be more readable (#b5722ab) 
+
+### Revert
+- put power menu options back on device-toolbar (#e6ba52d) 
+
+### Test
+- **cira:** fixes errors regarding unknown elements (#516ae61) 
+- **cypress:** update tests to work with cypress 10 (#b16f496) 
+- **domain:** updated domain fixture names to match the form input (#c1b5524) 
+- **domain:** automated vault read certificate and password (#012c4c1) 
+- **domains:** certificate and password into environment variables ([#657](https://github.com/open-amt-cloud-toolkit/rps/issues/657)) (#f37b51e) 
+- **e2e:** updated AMT profile with wireless config (#f0b70c0) 
+- **e2e:** make rpc commands cross platform compatible (#c84ae45) 
+- **e2e:** prevent power actions ([#740](https://github.com/open-amt-cloud-toolkit/rps/issues/740)) (#c8f5e29) 
+- **ui:** fixes update profile cypress tests (#421b630) 
+- **wireless:** remove hardcoded values (#86a6f39) 
+
+
+<a name="v2.3.1"></a>
+## [v2.3.1] - 2022-06-15
+### Build
+- **version:** bump to v2.3.0 (#d5f1941) 
+
+### Docs
+- update changelog for v2.3.0 (#4b2c14c) 
+
+### Fix
+- **dependencies:** resolve resolution errors for eslint (#0292949) 
+
+
+<a name="v2.3.0"></a>
+## [v2.3.0] - 2022-05-11
 ### Build
 - **deps:** Bump tslib from 2.3.1 to 2.4.0 (#f636db9) 
 - **deps:** Bump follow-redirects from 1.14.7 to 1.14.9 (#52cba7c) 
@@ -38,10 +124,13 @@
 - **deps-dev:** Bump eslint-plugin-jsdoc from 39.1.1 to 39.2.5 (#1575aec) 
 - **deps-dev:** Bump karma from 6.3.18 to 6.3.19 (#a62b347) 
 - **deps-dev:** Bump eslint-plugin-promise from 5.2.0 to 6.0.0 (#20cc726) 
-- **version:** bump to v2.3.0 (#d5f1941) 
+- **version:** bump to v2.3.0 (#028e0ce) 
 
 ### Ci
 - **lint:** adds semantic checks to PRs ([#618](https://github.com/open-amt-cloud-toolkit/rps/issues/618)) (#3b90582) 
+
+### Docs
+- update changelog for v2.3.0 (#9b273e0) 
 
 ### Feat
 - cira + static ip configuration (#9c0f06a) 
@@ -63,8 +152,8 @@
 - **static:** Fix CIRA with Static Cypress tests (#a63412a) 
 
 
-<a name="2.2.0"></a>
-## [2.2.0] - 2022-03-18
+<a name="v2.2.0"></a>
+## [v2.2.0] - 2022-03-18
 ### Build
 - **deps:** Bump cypress from 9.2.1 to 9.3.1 (#1d47511) 
 - **deps:** Bump xterm from 4.17.0 to 4.18.0 (#e3ebcba) 
@@ -77,7 +166,7 @@
 - **deps:** Bump cypress from 9.3.1 to 9.4.1 (#850dfc2) 
 - **deps:** Bump xterm from 4.15.0 to 4.16.0 (#549da3f) 
 - **deps:** Bump cypress from 9.1.1 to 9.2.0 (#36f0a31) 
-- **deps:** update [@open](https://github.com/open)-amt-cloud-toolkit to v2.0.3 (#2270170) 
+- **deps:** update [@open](https://github.com/open)-amt-cloud-toolkit to v2.0.5 (#e99d113) 
 - **deps:** Bump cypress from 9.2.0 to 9.2.1 (#f2a98c2) 
 - **deps-dev:** Bump karma from 6.3.9 to 6.3.10 (#2b48789) 
 - **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 3.10.2 to 3.10.3 (#7e451dd) 
@@ -124,9 +213,8 @@
 - **wireless:** increased code coverage for wireless ([#489](https://github.com/open-amt-cloud-toolkit/rps/issues/489)) (#59df479) 
 
 
-
-<a name="2.1.0"></a>
-## [2.1.0] - 2021-11-08
+<a name="v2.1.0"></a>
+## [v2.1.0] - 2021-11-08
 ### Build
 - **deps:** Bump cypress from 8.6.0 to 8.7.0 (#5703114) 
 - **deps:** Bump xterm from 4.13.0 to 4.14.1 (#5722034) 
@@ -168,6 +256,7 @@
 ### Docs
 - adds issue template (#73c7b3c) 
 - add contributing guidlines (#f374893) 
+- **changelog:** update changelog (#cfaa24f) 
 - **github:** add pull request template (#8d9c19c) 
 
 ### Feat
@@ -610,8 +699,12 @@
 - **docker:** optimize how server is set (#b022ca2) 
 
 
-[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/2.1.0...HEAD
-[2.1.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.0.0...2.1.0
+[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/2.3.0...HEAD
+[2.3.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.3.1...2.3.0
+[v2.3.1]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.3.0...v2.3.1
+[v2.3.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.2.0...v2.3.0
+[v2.2.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.1.0...v2.2.0
+[v2.1.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.0.0...v2.1.0
 [v2.0.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.5.0...v2.0.0
 [v1.5.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.3.1...v1.4.0
