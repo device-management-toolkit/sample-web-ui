@@ -5,8 +5,10 @@
 
 // https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { domainFixtures } from '../../fixtures/domain'
+import { domains } from 'cypress/e2e/fixtures/api/domain'
+import { empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { domainFixtures } from 'cypress/e2e/fixtures/formEntry/domain'
 
 // ---------------------------- Test section ----------------------------
 
@@ -19,12 +21,12 @@ describe('Test Domain Page', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.domains.getAll.empty.response
+      body: empty.response
     }).as('get-domains')
 
     cy.myIntercept('POST', 'domains', {
       statusCode: httpCodes.CREATED,
-      body: apiResponses.domains.create.success.response
+      body: domains.create.success.response
     }).as('post-domain')
 
     cy.goToPage('Domains')
@@ -36,7 +38,7 @@ describe('Test Domain Page', () => {
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.domains.getAll.success.response
+      body: domains.getAll.success.response
     }).as('get-domains2')
 
     // handle file on disk or in-memory file

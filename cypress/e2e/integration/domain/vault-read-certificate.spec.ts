@@ -3,9 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { domainFixtures } from 'cypress/e2e/fixtures/formEntry/domain'
+
 // Test REST call to Vault to verify Provisioning Certificate and Password are present
-import { httpCodes } from '../../fixtures/api/apiResponses'
-import { domainFixtures } from '../../fixtures/domain'
 
 describe('REST API - Vault Test Suite', () => {
   it('REST API - Read Provisioning Certificate and Password from Vault test case', () => {

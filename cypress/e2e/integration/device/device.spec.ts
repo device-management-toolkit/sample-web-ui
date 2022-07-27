@@ -4,67 +4,63 @@
 **********************************************************************/
 
 // Tests the creation of a profile
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { devices } from '../../fixtures/api/device'
+import { tags } from 'cypress/e2e/fixtures/api/tags'
 
 // ---------------------------- Test section ----------------------------
 
 describe('Test Device Page', () => {
   beforeEach('', () => {
     cy.setup()
+
+    cy.myIntercept('GET', /tags$/, {
+      statusCode: httpCodes.SUCCESS,
+      body: tags.getAll.success.response
+    }).as('get-tags')
+
+    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.success.response
+    }).as('get-devices')
+
+    cy.myIntercept('GET', /.*power.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { powerState: 2 }
+    }).as('get-powerstate')
   })
 
   it('loads all the devices', () => {
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: apiResponses.devices.getAll.success.response
-    }).as('get-devices')
-
     cy.goToPage('Devices')
     cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
+    cy.wait('@get-powerstate').its('response.statusCode').should('eq', 200)
   })
 
   // UI Only
   it('filters for windows devices', () => {
     if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
-      cy.myIntercept('GET', /tags$/, {
-        statusCode: httpCodes.SUCCESS,
-        body: apiResponses.tags.getAll.success.response
-      }).as('get-tags')
-
-      cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-        statusCode: httpCodes.SUCCESS,
-        body: apiResponses.devices.getAll.tags.response
-      }).as('get-devices2')
-
       cy.myIntercept('GET', '**/devices?tags=Windows&$top=25&$skip=0&$count=true', {
         statusCode: httpCodes.SUCCESS,
-        body: apiResponses.devices.getAll.windows.response
+        body: devices.getAll.windows.response.data
       }).as('get-windows')
 
       cy.goToPage('Devices')
       cy.wait('@get-tags')
-      cy.wait('@get-devices2')
+      cy.wait('@get-devices')
 
       // Filter for Windows devices
-      cy.contains('Filter Tags').click({ force: true })
+      cy.get('[data-cy="filterTags"]').click()
       cy.contains('.mat-option-text', 'Windows').click()
 
-      // TODO: find a way to click off the tags table
-      // TODO: find a good way to check if this test worked
+      cy.wait('@get-windows').its('response.statusCode').should('eq', 200)
+
+      // Remove Filter for Windows devices
+      cy.contains('.mat-option-text', 'Windows').click()
+      cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
     }
   })
 
   it('selects the first device', () => {
-    cy.myIntercept('GET', /tags$/, {
-      statusCode: httpCodes.SUCCESS,
-      body: apiResponses.tags.getAll.success.response
-    }).as('get-tags')
-
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: apiResponses.devices.getAll.success.response
-    }).as('get-devices')
-
     cy.goToPage('Devices')
     cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
     cy.wait('@get-tags').its('response.statusCode').should('eq', 200)

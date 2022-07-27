@@ -3,8 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { wirelessFixtures } from '../../fixtures/wireless'
+import { empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
+import { wirelessFixtures } from 'cypress/e2e/fixtures/formEntry/wireless'
 
 describe('test wireless profiles page', () => {
   beforeEach('clear cache and login', () => {
@@ -17,7 +19,7 @@ describe('test wireless profiles page', () => {
     }).as('delete-profile')
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.success.response
+      body: wirelessConfigs.getAll.success.response
     }).as('get-wireless')
 
     cy.goToPage('Wireless')
@@ -32,7 +34,7 @@ describe('test wireless profiles page', () => {
 
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-wireless2')
 
     cy.get('mat-cell').contains('delete').click()

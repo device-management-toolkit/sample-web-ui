@@ -3,13 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-const domainFixtures = {
-  default: {
-    profileName: 'happyPath',
-    domainSuffix: 'happyPath.com'
-  },
-
+const paging = {
   totalCount: 100
 }
-
-export { domainFixtures }
+export { paging }

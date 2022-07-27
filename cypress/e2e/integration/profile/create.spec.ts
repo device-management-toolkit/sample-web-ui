@@ -4,8 +4,12 @@
 **********************************************************************/
 
 // Tests the creation of a profile
-import { profileFixtures } from '../../fixtures/profile'
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
+import { empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { profiles } from 'cypress/e2e/fixtures/api/profile'
+import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
+import { amtProfiles } from '../../fixtures/formEntry/profile'
 
 // ---------------------------- Test section ----------------------------
 
@@ -15,22 +19,22 @@ describe('Test Profile Page', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.forProfile.response
+      body: ciraConfig.getAll.forProfile.response
     }).as('get-configs')
 
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.forProfile.response
+      body: wirelessConfigs.getAll.forProfile.response
     }).as('get-wirelessConfigs')
 
     cy.myIntercept('POST', 'profiles', {
       statusCode: httpCodes.CREATED,
-      body: apiResponses.profiles.create.success.response
+      body: profiles.create.success.response
     }).as('post-profile')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.profiles.getAll.empty.response
+      body: empty.response
     }).as('get-profiles')
 
     cy.goToPage('Profiles')
@@ -39,7 +43,7 @@ describe('Test Profile Page', () => {
     // change api response
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.profiles.getAll.success.response
+      body: profiles.getAll.success.response
     }).as('get-profiles2')
 
     // Fill out the profile
@@ -48,47 +52,38 @@ describe('Test Profile Page', () => {
     cy.wait('@get-wirelessConfigs')
   })
 
-  it('creates the default profile with static password', () => {
-    cy.enterProfileInfo(
-      profileFixtures.happyPath.profileName,
-      profileFixtures.happyPath.activation,
-      false,
-      false,
-      profileFixtures.happyPath.dhcpEnabled,
-      profileFixtures.happyPath.connectionMode,
-      profileFixtures.happyPath.ciraConfig,
-      profileFixtures.happyPath.userConsent,
-      profileFixtures.happyPath.iderEnabled,
-      profileFixtures.happyPath.kvmEnabled,
-      profileFixtures.happyPath.solEnabled,
-      profileFixtures.happyPath.wifiConfigs
-    )
-    cy.get('button[type=submit]').click()
-    // cy.get('button').contains('Continue').click()
+  amtProfiles.forEach((amtProfile) => {
+    it(`creates the profile - ${amtProfile.profileName as string}`, () => {
+      cy.log(amtProfile)
+      cy.enterProfileInfo(
+        amtProfile.profileName,
+        amtProfile.activation,
+        false,
+        false,
+        amtProfile.dhcpEnabled,
+        amtProfile.connectionMode,
+        amtProfile.ciraConfigName ?? amtProfile.tlsConfig,
+        amtProfile.userConsent,
+        amtProfile.iderEnabled,
+        amtProfile.kvmEnabled,
+        amtProfile.solEnabled,
+        amtProfile.wifiConfigs
+      )
+      cy.get('button[type=submit]').click()
+      if (!amtProfile.dhcpEnabled && amtProfile.connectionMode === 'CIRA (Cloud)') {
+        cy.get('button').contains('Continue').click()
+      }
+      cy.wait('@post-profile').then((req) => {
+        cy.wrap(req)
+          .its('response.statusCode')
+          .should('eq', httpCodes.CREATED)
 
-    // Wait for requests to finish and check them their responses
-    cy.wait('@post-profile').then((req) => {
-      cy.wrap(req)
-        .its('response.statusCode')
-        .should('eq', httpCodes.CREATED)
-
-      // Check that the config was successful
-      cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
-      cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
-      cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
-      cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
+        // Check that the config was successful
+        // cy.get('mat-cell').contains(amtProfile.profileName)
+        // cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
+        // cy.get('mat-cell').contains(amtProfile.ciraConfig)
+        // cy.get('mat-cell').contains(amtProfile.activation)
+      })
     })
-
-    // TODO: check the response to make sure that it is correct
-    // this is currently difficult because of the format of the response
-    cy.wait('@get-profiles2')
-      .its('response.statusCode')
-      .should('eq', httpCodes.SUCCESS)
-
-    // Check that the config was successful
-    cy.get('mat-cell').contains(profileFixtures.happyPath.profileName)
-    cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
-    cy.get('mat-cell').contains(profileFixtures.happyPath.ciraConfig)
-    cy.get('mat-cell').contains(profileFixtures.check.mode.ccm)
   })
 })

@@ -3,9 +3,11 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { urlFixtures } from '../../fixtures/urls'
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { wirelessFixtures } from '../../fixtures/wireless'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
+import { urlFixtures } from '../../fixtures/formEntry/urls'
+import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
+
 const baseUrl: string = Cypress.env('BASEURL')
 
 describe('Test wireless creation page', () => {
@@ -16,12 +18,12 @@ describe('Test wireless creation page', () => {
   beforeEach('Set up the api stubs', () => {
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statuscode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-wireless3')
 
     cy.myIntercept('POST', 'wirelessconfigs', {
       statusCode: httpCodes.BAD_REQUEST,
-      body: apiResponses.wirelessConfigs.create.badRequest.response
+      body: badRequest.response
     }).as('post-wireless')
 
     cy.goToPage('Wireless')

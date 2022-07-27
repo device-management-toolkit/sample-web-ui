@@ -3,12 +3,13 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
+
 // Tests the login page with a multitude of fake accounts in
 // different combinations of invalid login info.
 // Also tests things like canceling a login and logging out after the login
 
-import { urlFixtures } from '../../fixtures/urls'
-import { httpCodes } from '../../fixtures/api/apiResponses'
 // ---------------------------- Test section ----------------------------
 const baseUrl: string = Cypress.env('BASEURL')
 

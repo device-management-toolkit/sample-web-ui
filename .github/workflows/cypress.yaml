@@ -32,3 +32,9 @@ jobs:
         with:
           name: sample-web-ui-ui-test
           path: cypress-ui-test-output-*.xml
+      - name: Upload Cypress UI Images
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: sample-web-ui-ui-test-screenshots
+          path: /home/runner/work/sample-web-ui/sample-web-ui/cypress/screenshots/**/*.png

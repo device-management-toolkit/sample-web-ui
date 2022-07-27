@@ -4,9 +4,12 @@
 **********************************************************************/
 
 // Tests the creation of a profile
-import { urlFixtures } from '../../fixtures/urls'
-import { profileFixtures } from '../../fixtures/profile'
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
+import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
+import { profileFixtures } from 'cypress/e2e/fixtures/formEntry/profile'
+import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------
@@ -19,22 +22,22 @@ describe('Test Profile Page', () => {
   beforeEach('', () => {
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.forProfile.response
+      body: ciraConfig.getAll.forProfile.response
     }).as('get-configs2')
 
     cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.profiles.getAll.empty.response
+      body: empty.response
     }).as('get-profiles5')
 
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.success.response
+      body: wirelessConfigs.getAll.success.response
     }).as('get-wireless2')
 
     cy.myIntercept('POST', 'profiles', {
       statusCode: httpCodes.BAD_REQUEST,
-      body: apiResponses.profiles.create.badRequest.response
+      body: badRequest.response
     }).as('post-profile2')
 
     cy.goToPage('Profiles')

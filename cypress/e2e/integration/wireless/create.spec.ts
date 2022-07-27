@@ -3,8 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { wirelessFixtures } from '../../fixtures/wireless'
+import { empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
+import { wirelessFixtures } from 'cypress/e2e/fixtures/formEntry/wireless'
 
 describe('create a wireless profile', () => {
   beforeEach('clear cache and login', () => {
@@ -14,12 +16,12 @@ describe('create a wireless profile', () => {
   it('creates a default profile', () => {
     cy.myIntercept('POST', 'wirelessconfigs', {
       statusCode: httpCodes.CREATED,
-      body: apiResponses.wirelessConfigs.create.success.response
+      body: wirelessConfigs.create.success.response
     }).as('post-wireless')
 
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-wireless')
 
     cy.goToPage('Wireless')
@@ -28,7 +30,7 @@ describe('create a wireless profile', () => {
     // change api response
     cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.wirelessConfigs.getAll.success.response
+      body: wirelessConfigs.getAll.success.response
     }).as('get-wireless2')
 
     cy.get('button').contains('Add New').click()

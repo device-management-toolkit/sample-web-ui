@@ -5,8 +5,10 @@
 
 // Tests the creation of a cira-config
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { ciraFixtures } from '../../fixtures/cira'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { ciraFixtures } from '../../fixtures//formEntry/cira'
+import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
+import { empty } from 'cypress/e2e/fixtures/api/general'
 
 // ---------------------------- Test section ----------------------------
 
@@ -22,7 +24,7 @@ describe('Test CIRA Config Page', () => {
 
     cy.myIntercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.success.response
+      body: ciraConfig.getAll.success.response
     }).as('get-configs')
 
     // Delete CIRA Config (but cancel)
@@ -40,7 +42,7 @@ describe('Test CIRA Config Page', () => {
     // Change api response
     cy.myIntercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-configs')
 
     // Delete CIRA Config

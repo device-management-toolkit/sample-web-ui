@@ -23,13 +23,10 @@ export default defineConfig({
     VAULT_ADDRESS: 'http://localhost:8200',
     VAULT_TOKEN: 'myroot',
     PROVISIONING_CERT: 'cert',
-    PROVISIONING_CERT_PASSWORD: 'password',
+    PROVISIONING_CERT_PASSWORD: '12345678'
   },
   chromeWebSecurity: false,
   e2e: {
-    specPattern: 'cypress/e2e/integration/**/*.ts',
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    }
+    specPattern: 'cypress/e2e/integration/**/*.ts'
   }
 })

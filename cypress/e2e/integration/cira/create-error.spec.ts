@@ -5,9 +5,10 @@
 
 // Tests the creation of a cira-config
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { ciraFixtures } from '../../fixtures/cira'
-import { urlFixtures } from '../../fixtures/urls'
+import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { ciraFixtures } from '../../fixtures/formEntry/cira'
+import { urlFixtures } from '../../fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------
@@ -25,12 +26,12 @@ describe('Test CIRA Config Page', () => {
 
     cy.intercept('POST', 'ciraconfigs', {
       statusCode: httpCodes.BAD_REQUEST,
-      body: apiResponses.ciraConfigs.create.badRequest.response
+      body: badRequest.response
     }).as('post-config1')
 
     cy.intercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-configs')
 
     cy.goToPage('CIRA Configs')

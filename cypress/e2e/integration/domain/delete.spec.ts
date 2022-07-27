@@ -5,8 +5,10 @@
 
 // https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
-import { domainFixtures } from '../../fixtures/domain'
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { domains } from 'cypress/e2e/fixtures/api/domain'
+import { empty } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { domainFixtures } from 'cypress/e2e/fixtures/formEntry/domain'
 
 // ---------------------------- Test section ----------------------------
 
@@ -19,12 +21,12 @@ describe('Test Domain Page', () => {
     // Stub requests
     cy.myIntercept('DELETE', /.*domains.*/, {
       statusCode: httpCodes.NO_CONTENT,
-      body: apiResponses.domains.delete.success.response
+      body: domains.delete.success.response
     }).as('delete-domain')
 
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.domains.getAll.success.response
+      body: domains.getAll.success.response
     }).as('get-domains3')
 
     cy.goToPage('Domains')
@@ -41,7 +43,7 @@ describe('Test Domain Page', () => {
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.domains.getAll.empty.response
+      body: empty.response
     }).as('get-domains4')
 
     // Delete Domain

@@ -3,7 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { devices } from '../../fixtures/api/device'
+import { eventLogs } from '../../fixtures/api/eventlog'
+import { tags } from '../../fixtures/api/tags'
 
 describe('Test device details page', () => {
   beforeEach('', () => {
@@ -13,32 +16,47 @@ describe('Test device details page', () => {
   it('should load the amt features on the device details page', () => {
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.eventLogs.devices.success.response
+      body: devices.getAll.success.response
     }).as('get-devices')
+
+    cy.myIntercept('GET', /devices\/.*$/, {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.success.response
+    }).as('get-device-by-id')
 
     cy.myIntercept('GET', /tags$/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.tags.getAll.success.response
+      body: tags.getAll.success.response
     }).as('get-tags')
 
     cy.myIntercept('GET', /.*version.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.eventLogs.version.success.response
+      body: eventLogs.version.success.response
     }).as('get-version')
+
+    cy.myIntercept('GET', /.*log.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: eventLogs.getAll.success.response
+    }).as('get-event-logs')
 
     cy.myIntercept('GET', /.*hardwareInfo.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.eventLogs.hardwareInfo.success.response
+      body: eventLogs.hardwareInfo.success.response
     }).as('get-hwInfo')
 
     cy.myIntercept('GET', /.*audit.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.eventLogs.auditlog.success.response
+      body: eventLogs.auditlog.success.response
     }).as('get-auditlog')
+
+    cy.myIntercept('GET', /.*power.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { powerState: 2 }
+    }).as('get-powerstate')
 
     cy.myIntercept('GET', /.*features.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.eventLogs.amtFeatures.success.response
+      body: eventLogs.amtFeatures.success.response
     }).as('get-features')
 
     cy.myIntercept('POST', /.*features.*/, {
@@ -46,16 +64,18 @@ describe('Test device details page', () => {
       body: { status: 'success' }
     }).as('post-features')
 
-    cy.myIntercept('POST', /.*power.*/, {
+    cy.myIntercept('POST', /.*power*/, {
       statusCode: httpCodes.SUCCESS,
       body: { status: 'success' }
     }).as('post-power-action')
 
     cy.goToPage('Devices')
     cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
+    cy.wait('@get-powerstate').its('response.statusCode').should('eq', 200)
 
     cy.get('mat-row').first().click()
 
+    cy.wait('@get-device-by-id').its('response.statusCode').should('eq', 200)
     cy.wait('@get-hwInfo').its('response.statusCode').should('eq', 200)
     cy.wait('@get-version').its('response.statusCode').should('eq', 200)
     cy.wait('@get-auditlog').its('response.statusCode').should('eq', 200)

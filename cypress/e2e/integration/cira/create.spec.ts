@@ -5,8 +5,10 @@
 
 // Tests the creation of a cira-config
 
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
-import { ciraFixtures } from '../../fixtures/cira'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { ciraFixtures } from 'cypress/e2e/fixtures/formEntry/cira'
+import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
+import { empty } from 'cypress/e2e/fixtures/api/general'
 
 // ---------------------------- Test section ----------------------------
 
@@ -15,7 +17,7 @@ describe('Test CIRA Config Page', () => {
     cy.setup()
   })
 
-  it('creates the default CIRA config', () => {
+  beforeEach('setup intercepts for UI Testing', () => {
     // Stub the get and post requests
     cy.myIntercept('GET', 'ciracert', {
       statusCode: httpCodes.SUCCESS,
@@ -24,14 +26,16 @@ describe('Test CIRA Config Page', () => {
 
     cy.myIntercept('POST', 'ciraconfigs', {
       statusCode: httpCodes.CREATED,
-      body: apiResponses.ciraConfigs.create.success.response
+      body: ciraConfig.create.success.response
     }).as('post-config')
 
     cy.myIntercept('GET', 'ciraconfigs?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.empty.response
+      body: empty.response
     }).as('get-configs')
+  })
 
+  it('creates the default CIRA config', () => {
     // Fill out the config
     cy.goToPage('CIRA Configs')
     cy.wait('@get-configs')
@@ -39,7 +43,7 @@ describe('Test CIRA Config Page', () => {
     // change api response
     cy.myIntercept('GET', /.*ciraconfigs.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: apiResponses.ciraConfigs.getAll.success.response
+      body: ciraConfig.getAll.success.response
     }).as('get-configs2')
 
     cy.get('button').contains('Add New').click()

@@ -12,8 +12,7 @@ const wirelessFixtures = {
   },
   wrong: {
     profileName: 'wireless config'
-  },
-  totalCount: 100
+  }
 }
 
 export { wirelessFixtures }

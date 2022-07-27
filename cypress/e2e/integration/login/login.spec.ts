@@ -7,8 +7,9 @@
 // different combinations of invalid login info.
 // Also tests things like canceling a login and logging out after the login
 
-import { urlFixtures } from '../../fixtures/urls'
-import { apiResponses, httpCodes } from '../../fixtures/api/apiResponses'
+import { badRequest } from 'cypress/e2e/fixtures/api/general'
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------
@@ -76,7 +77,7 @@ describe('Test login page', () => {
     function prepareIntercepts (): void {
       cy.myIntercept('POST', 'authorize', {
         statusCode: httpCodes.UNAUTHORIZED,
-        body: apiResponses.login.fail.response
+        body: badRequest.response // same format
       }).as('login-request')
     }
 

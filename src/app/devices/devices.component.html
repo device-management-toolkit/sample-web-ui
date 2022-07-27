@@ -12,7 +12,8 @@
         <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); bulkPowerAction(2)">
             <mat-icon>power</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); bulkPowerAction(8)">
+        <button mat-icon-button matTooltip="Power off the device"
+            (click)="$event.stopPropagation(); bulkPowerAction(8)">
             <mat-icon>power_off</mat-icon>
         </button>
         <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); bulkPowerAction(5)">
@@ -27,7 +28,7 @@
         <div fxLayout="row wrap" fxFlex=100>
             <div fxFlex></div>
             <div fxFlex="33" fxLayoutAlign="end">
-                <mat-form-field>
+                <mat-form-field data-cy="filterTags">
                     <mat-label>Filter Tags</mat-label>
                     <mat-select (selectionChange)="tagChange($event)" name="tag" multiple>
                         <mat-option *ngFor="let tag of tags" [value]="tag">
@@ -45,13 +46,15 @@
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px">
-                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row" fxFlex="70px">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                    [checked]="selection.isSelected(row)">
-                </mat-checkbox>
+                        [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
                 </mat-cell>
             </ng-container>
 
@@ -70,7 +73,9 @@
             <!-- status Column -->
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ translateConnectionStatus(element.connectionStatus) }} <span *ngIf="element.connectionStatus">&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+                <mat-cell *matCellDef="let element" fxFlex="150px"> {{
+                    translateConnectionStatus(element.connectionStatus) }} <span
+                        *ngIf="element.connectionStatus">&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
                 </mat-cell>
             </ng-container>
 
@@ -88,13 +93,16 @@
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Actions</mat-header-cell>
                 <mat-cell *matCellDef="let element" fxFlex="150px">
                     <div [fxHide]="selection.isSelected(element)">
-                        <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
+                        <button mat-icon-button matTooltip="Power up the device"
+                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
                             <mat-icon>power</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
+                        <button mat-icon-button matTooltip="Power off the device"
+                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
                             <mat-icon>power_off</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
+                        <button mat-icon-button matTooltip="Restart the device"
+                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
                             <mat-icon>restart_alt</mat-icon>
                         </button>
                     </div>
@@ -102,22 +110,22 @@
             </ng-container>
             <ng-container matColumnDef="notification">
                 <mat-header-cell *matHeaderCellDef fxFlex="50px"></mat-header-cell>
-                <mat-cell  *matCellDef="let element" fxFlex="50px">
-                    <mat-icon color="primary" matTooltip="Power action sent successfully" *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
-                    <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready" *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
-                    <mat-icon color="warn" matTooltip="Error sending power action" *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
+                <mat-cell *matCellDef="let element" fxFlex="50px">
+                    <mat-icon color="primary" matTooltip="Power action sent successfully"
+                        *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
+                    <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
+                        *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
+                    <mat-icon color="warn" matTooltip="Error sending power action"
+                        *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
                 </mat-cell>
             </ng-container>
-           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
         </mat-table>
 
         <div *ngIf="devices.totalCount">
-            <mat-paginator [pageSizeOptions]="[25, 50, 100]"
-                [pageSize]="25"
-                [length]="devices.totalCount"
-                (page)="pageChanged($event)"
-                showFirstLastButtons>
+            <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="devices.totalCount"
+                (page)="pageChanged($event)" showFirstLastButtons>
             </mat-paginator>
         </div>
     </mat-card-content>
