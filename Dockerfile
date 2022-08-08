@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build --
+RUN npm run build -- --configuration=production
 
 ### STAGE 2: Run ###
 FROM nginx:latest
