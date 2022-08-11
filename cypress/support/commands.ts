@@ -128,24 +128,24 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
   //   cy.get('mat-select[formcontrolname=userConsent').click()
   //   cy.contains(userConsent).click()
   // }
-  // let id = 'input[data-cy="redirect_ider"]'
-  // cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-  //   if ((iderEnabled && !isChecked) || (isChecked && !iderEnabled)) {
-  //     cy.get(id).click()
-  //   }
-  // })
-  // id = 'input[data-cy="redirect_kvm"] '
-  // cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-  //   if ((kvmEnabled && !isChecked) || (isChecked && !kvmEnabled)) {
-  //     cy.get(id).click()
-  //   }
-  // })
-  // id = 'input[data-cy="redirect_sol"]'
-  // cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-  //   if ((solEnabled && !isChecked) || (isChecked && !solEnabled)) {
-  //     cy.get(id).click()
-  //   }
-  // })
+  let id = '[data-cy="redirect_ider"]'
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((iderEnabled && !isChecked) || (isChecked && !iderEnabled)) {
+      cy.get(id).click()
+    }
+  })
+  id = '[data-cy="redirect_kvm"] '
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((kvmEnabled && !isChecked) || (isChecked && !kvmEnabled)) {
+      cy.get(id).click()
+    }
+  })
+  id = '[data-cy="redirect_sol"]'
+  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
+    if ((solEnabled && !isChecked) || (isChecked && !solEnabled)) {
+      cy.get(id).click()
+    }
+  })
 })
 
 Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
