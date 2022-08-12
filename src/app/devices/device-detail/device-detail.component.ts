@@ -4,13 +4,13 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 
 @Component({
@@ -105,6 +105,10 @@ export class DeviceDetailComponent implements OnInit {
   public isDisabled: boolean = false
   public userConsentValues = ['none', 'kvm', 'all']
   public eventLogData: EventLog[] = []
+  public alarmOccurrences: IPSAlarmClockOccurrence[] = []
+  public newAlarmForm: FormGroup
+  public deleteOnCompletion: FormControl<any>
+
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
     this.targetOS = this.devicesService.TargetOSMap
     this.amtEnabledFeatures = fb.group({
@@ -115,6 +119,12 @@ export class DeviceDetailComponent implements OnInit {
       optInState: 0,
       redirection: false
     })
+    this.newAlarmForm = fb.group({
+      alarmName: '',
+      interval: 0,
+      startTime: new FormControl(new Date())
+    })
+    this.deleteOnCompletion = new FormControl<boolean>(true)
   }
 
   ngOnInit (): void {
@@ -173,6 +183,15 @@ export class DeviceDetailComponent implements OnInit {
         this.eventLogData = results
       }, err => {
         this.snackBar.open($localize`Error retrieving Event Logs`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
+      this.devicesService.getAlarmOccurrences(this.deviceId).pipe(finalize(() => {
+        tempLoading[3] = false
+        this.isLoading = !tempLoading.every(v => !v)
+      })).subscribe(results => {
+        this.alarmOccurrences = results
+      }, err => {
+        this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
         return throwError(err)
       })
     })
@@ -240,5 +259,46 @@ export class DeviceDetailComponent implements OnInit {
 
   onSelectedAction = (selectedAction: string): void => {
     this.selectedAction = selectedAction
+  }
+
+  reloadAlarms = (): void => {
+    window.location.reload()
+  }
+
+  deleteAlarm = (instanceID: string): void => {
+    if (!window.confirm('Deleting: ' + instanceID)) return
+
+    this.devicesService.deleteAlarmOccurrence(this.deviceId, instanceID).pipe(finalize(() => {
+
+    })).subscribe(results => {
+      this.reloadAlarms()
+    }, err => {
+      this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+      return throwError(err)
+    })
+  }
+
+  addAlarm = (): void => {
+    if (this.newAlarmForm.valid) {
+      const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
+
+      const payload = {
+        ElementName: alarm.alarmName,
+        StartTime: alarm.startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
+        Interval: alarm.interval,
+        DeleteOnCompletion: this.deleteOnCompletion.value
+      }
+      if (!window.confirm(JSON.stringify(payload, null, '\t'))) return
+
+      this.isLoading = true
+      this.devicesService.addAlarmOccurrence(this.deviceId, payload).pipe(finalize(() => {
+        this.isLoading = false
+      })).subscribe(results => {
+        this.reloadAlarms()
+      }, err => {
+        this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
+    }
   }
 }

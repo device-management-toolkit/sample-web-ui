@@ -8,7 +8,7 @@ import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, PageEventOptions, PowerState, RedirectionToken, userConsentResponse } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, IPSAlarmClockOccurrence, PageEventOptions, PowerState, RedirectionToken, userConsentResponse } from 'src/models/models'
 
 @Injectable({
   providedIn: 'root'
@@ -188,6 +188,36 @@ export class DevicesService {
 
   getAMTFeatures (guid: string): Observable<AmtFeaturesResponse> {
     return this.http.get<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getAlarmOccurrences (guid: string): Observable<IPSAlarmClockOccurrence[]> {
+    return this.http.get<IPSAlarmClockOccurrence[]>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  deleteAlarmOccurrence (guid: string, instanceID: string): Observable<any> {
+    const payload = {
+      Name: instanceID
+    }
+    return this.http.request<any>('DELETE', `${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, { body: payload })
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  addAlarmOccurrence (guid: string, alarm: any): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, alarm)
       .pipe(
         catchError((err) => {
           throw err

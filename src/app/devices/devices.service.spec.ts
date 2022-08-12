@@ -6,13 +6,14 @@
 import { TestBed } from '@angular/core/testing'
 import { of, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
+import { IPSAlarmClockOccurrence } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 import { DevicesService } from './devices.service'
 
 describe('DevicesService', () => {
   let service: DevicesService
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, request: jasmine.Spy }
   const deviceRes = {
     hostname: 'localhost',
     icon: 1,
@@ -34,7 +35,7 @@ describe('DevicesService', () => {
   }
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'request', 'patch'])
     TestBed.configureTestingModule({
       imports: [AuthService]
     })
@@ -616,6 +617,93 @@ describe('DevicesService', () => {
   it('should return error while getting redirection token', () => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(null, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should return alarm instances', () => {
+    const alarms: IPSAlarmClockOccurrence[] = [{
+      ElementName: 'Alarm name',
+      StartTime: { Datetime: new Date() },
+      InstanceID: 'Alarm instance',
+      DeleteOnCompletion: true
+    }]
+    httpClientSpy.get.and.returnValue(of(alarms))
+    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(response => {
+      expect(response).toBe(alarms)
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`)
+    })
+  })
+
+  it('should return error when requesting power state', () => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+    service.getPowerState('defgh-34567-poiuy').subscribe(() => {}, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should return alarm instances', () => {
+    const alarms: IPSAlarmClockOccurrence[] = [{
+      ElementName: 'Alarm name',
+      StartTime: { Datetime: new Date() },
+      InstanceID: 'Alarm instance',
+      DeleteOnCompletion: true
+    }]
+    httpClientSpy.get.and.returnValue(of(alarms))
+    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(response => {
+      expect(response).toBe(alarms)
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`)
+    })
+  })
+
+  it('should return error when getting alarm instances', () => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(() => {}, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should delete an alarm instance', () => {
+    httpClientSpy.request.and.returnValue(of({ Status: 'SUCCESS' }))
+    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(response => {
+      expect(response).toEqual({ Status: 'SUCCESS' })
+      expect(httpClientSpy.request).toHaveBeenCalledWith(
+        'DELETE',
+        `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`,
+        { body: { Name: 'Alarm to delete' } })
+    })
+  })
+
+  it('should return error when deleting an alarm', () => {
+    httpClientSpy.request.and.returnValue(throwError(error))
+    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(() => {}, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should add an alarm instance', () => {
+    const alarmToAdd = {
+      ElementName: 'Alarm name',
+      StartTime: { Datetime: new Date() },
+      InstanceID: 'Alarm instance',
+      DeleteOnCompletion: true
+    }
+    httpClientSpy.post.and.returnValue(of({ Status: 'SUCCESS' }))
+    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(response => {
+      expect(response).toEqual({ Status: 'SUCCESS' })
+      expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`, alarmToAdd)
+    })
+  })
+
+  it('should return error when adding an alarm', () => {
+    const alarmToAdd: IPSAlarmClockOccurrence = {
+      ElementName: 'Alarm name',
+      StartTime: { Datetime: new Date() },
+      InstanceID: 'Alarm instance',
+      DeleteOnCompletion: true
+    }
+    httpClientSpy.post.and.returnValue(throwError(error))
+    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(() => {}, err => {
       expect(error).toEqual(err)
     })
   })

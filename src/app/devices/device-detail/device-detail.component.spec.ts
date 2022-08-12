@@ -8,6 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker'
 import { MomentModule } from 'ngx-moment'
 import { of } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
@@ -25,6 +26,9 @@ describe('DeviceDetailComponent', () => {
   let getAMTVersionSpy: jasmine.Spy
   let setAMTFeaturesSpy: jasmine.Spy
   let getEventLogSpy: jasmine.Spy
+  let addAlarmOccurrenceSpy: jasmine.Spy
+  let deleteAlarmOccurrenceSpy: jasmine.Spy
+  let getAlarmOccurrencesSpy: jasmine.Spy
 
   @Component({
     selector: 'app-device-toolbar'
@@ -35,11 +39,32 @@ describe('DeviceDetailComponent', () => {
   }
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getAuditLog', 'getAMTFeatures', 'getHardwareInformation', 'getAMTVersion', 'sendPowerAction', 'setAmtFeatures', 'getEventLog'])
+    const devicesService = jasmine.createSpyObj('DevicesService', [
+      'getAuditLog',
+      'getAMTFeatures',
+      'getHardwareInformation',
+      'getAMTVersion',
+      'sendPowerAction',
+      'setAmtFeatures',
+      'getEventLog',
+      'addAlarmOccurrence',
+      'deleteAlarmOccurrence',
+      'getAlarmOccurrences'
+    ])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({
       Body: {
         ReturnValueStr: 'NOT_READY'
+      }
+    }))
+    addAlarmOccurrenceSpy = devicesService.addAlarmOccurrence.and.returnValue(of({
+      Body: {
+        Status: 'SUCCESS'
+      }
+    }))
+    deleteAlarmOccurrenceSpy = devicesService.deleteAlarmOccurrence.and.returnValue(of({
+      Body: {
+        Status: 'SUCCESS'
       }
     }))
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
@@ -48,9 +73,18 @@ describe('DeviceDetailComponent', () => {
     getHardwareInformationSpy = devicesService.getHardwareInformation.and.returnValue(of({ }))
     setAMTFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({}))
     getEventLogSpy = devicesService.getEventLog.and.returnValue(of([]))
+    getAlarmOccurrencesSpy = devicesService.getAlarmOccurrences.and.returnValue(of([]))
 
     await TestBed.configureTestingModule({
-      imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [
+        MomentModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        RouterTestingModule.withRoutes([]),
+        NgxMatDatetimePickerModule,
+        NgxMatNativeDateModule,
+        NgxMatTimepickerModule
+      ],
       declarations: [DeviceDetailComponent, TestDeviceToolbarComponent],
       providers: [{ provide: DevicesService, useValue: devicesService }, {
         provide: ActivatedRoute,
@@ -84,6 +118,7 @@ describe('DeviceDetailComponent', () => {
     expect(getAMTFeaturesSpy.calls.any()).toBe(true, 'getAMTFeatures called')
     expect(getAMTVersionSpy.calls.any()).toBe(true, 'getAMTVersion called')
     expect(getEventLogSpy.calls.any()).toBeTrue()
+    expect(getAlarmOccurrencesSpy.calls.any()).toBe(true, 'getAlarmOccurrences called')
     expect(component.deviceState).toEqual(0)
     expect(component.showSol).toBeFalse()
   })
@@ -143,5 +178,34 @@ describe('DeviceDetailComponent', () => {
 
     component.deviceStatus(1)
     expect(component.deviceState).toEqual(1)
+  })
+
+  it('should send deleteAlarm', () => {
+    spyOn(window, 'confirm').and.returnValue(true)
+    spyOn(component, 'reloadAlarms').and.callFake(function () {})
+    component.deleteAlarm('Alarm to delete')
+
+    fixture.detectChanges()
+
+    expect(deleteAlarmOccurrenceSpy).toHaveBeenCalledWith('guid', 'Alarm to delete')
+    fixture.detectChanges()
+    expect(component.isLoading).toBeFalse()
+  })
+
+  it('should send addAlarm', () => {
+    spyOn(window, 'confirm').and.returnValue(true)
+    spyOn(component, 'reloadAlarms').and.callFake(function () {})
+    component.newAlarmForm.patchValue(
+      {
+        alarmName: 'Test Alarm'
+      }
+    )
+    component.addAlarm()
+
+    fixture.detectChanges()
+
+    expect(addAlarmOccurrenceSpy).toHaveBeenCalled()
+    fixture.detectChanges()
+    expect(component.isLoading).toBeFalse()
   })
 })

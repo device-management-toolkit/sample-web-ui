@@ -38,6 +38,7 @@ import { DeviceUserConsentComponent } from './devices/device-user-consent/device
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
 import { EventChannelComponent } from './event-channel/event-channel.component'
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker'
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
@@ -85,7 +86,10 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
         component: LoginComponent
       }
     ]),
-    KvmModule
+    KvmModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule
   ],
   providers: [
     {

@@ -269,6 +269,14 @@ export interface CIMPhysicalPackage {
   ChassisPackageType?: number
 }
 
+export interface IPSAlarmClockOccurrence {
+  ElementName: string
+  InstanceID: string
+  StartTime: { Datetime: Date }
+  Interval?: { Interval: any }
+  DeleteOnCompletion: boolean
+}
+
 export interface HardwareResponse<T> {
   response: T
   responses: any
