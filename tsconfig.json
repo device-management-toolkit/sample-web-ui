@@ -1,9 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
-  // "exclude": [
-  //   "src/**/*.spec.ts"
-  // ],
   "compilerOptions": {
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
@@ -40,6 +37,6 @@
       {
         "ignore-module": "(core-js/.|zone.js/.|@angular/localize/init)$"
       }
-    ],
+    ]
   }
 }
