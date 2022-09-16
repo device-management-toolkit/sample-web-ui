@@ -67,7 +67,7 @@
             <!-- guid Column -->
             <ng-container matColumnDef="guid">
                 <mat-header-cell *matHeaderCellDef> GUID </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.guid }} </mat-cell>
+                <mat-cell data-cy="guid" *matCellDef="let element"> {{ element.guid }} </mat-cell>
             </ng-container>
 
             <!-- status Column -->

@@ -83,7 +83,7 @@ describe('Test device details page', () => {
 
     // Do not run power actions on real devices
     if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
-    // Out-of-band Power Actions
+      // Out-of-band Power Actions
       const oobActions = ['Power On', 'Power Cycle', 'Hard Power Off', 'Reset', 'Power to BIOS', 'Reset to BIOS', 'Power to PXE', 'Reset to PXE']
       for (let i = 0; i < oobActions.length; i++) {
         cy.contains(oobActions[i]).click()

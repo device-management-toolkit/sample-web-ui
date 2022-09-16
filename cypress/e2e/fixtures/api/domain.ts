@@ -10,7 +10,7 @@ const domains = {
         data: [
           {
             profileName: 'happyPath',
-            domainSuffix: 'happyPath.com',
+            domainSuffix: Cypress.env('DOMAIN_SUFFIX'),
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
             provisioningCertPassword: 'P@ssw0rd'
@@ -70,6 +70,12 @@ const domains = {
         provisioningCert: 'test',
         provisioningCertStorageFormat: 'raw',
         provisioningCertPassword: 'P@ssw0rd'
+      }
+    },
+    failure: {
+      response: {
+        error: 'Unique key violation',
+        message: 'Domain NewDomain ID or Suffix already exists'
       }
     }
   },

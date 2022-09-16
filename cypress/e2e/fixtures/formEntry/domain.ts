@@ -5,8 +5,7 @@
 
 const domainFixtures = {
   default: {
-    profileName: 'happyPath',
-    domainSuffix: 'happyPath.com'
+    profileName: 'happyPath'
   }
 }
 

@@ -38,7 +38,7 @@ describe('Test Domain Page', () => {
 
     // Check that the domain was not deleted
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
-    cy.get('mat-cell').contains(domainFixtures.default.domainSuffix)
+    cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
 
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
@@ -54,6 +54,6 @@ describe('Test Domain Page', () => {
 
     // Check that the Domain was deleted properly
     cy.contains(domainFixtures.default.profileName).should('not.exist')
-    cy.contains(domainFixtures.default.domainSuffix).should('not.exist')
+    cy.contains(Cypress.env('DOMAIN_SUFFIX')).should('not.exist')
   })
 })

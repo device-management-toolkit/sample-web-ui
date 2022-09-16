@@ -44,12 +44,12 @@ describe('Test Domain Page', () => {
     // handle file on disk or in-memory file
     const certFixtureData: Cypress.FileReference = {
       fileName: 'test-cert.pfx',
-      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'))
+      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
     }
 
     cy.enterDomainInfo(
       domainFixtures.default.profileName,
-      domainFixtures.default.domainSuffix,
+      Cypress.env('DOMAIN_SUFFIX'),
       certFixtureData,
       Cypress.env('PROVISIONING_CERT_PASSWORD')
     )
@@ -60,6 +60,6 @@ describe('Test Domain Page', () => {
       .should('eq', httpCodes.SUCCESS)
       // Check that the config was successful
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
-    cy.get('mat-cell').contains(domainFixtures.default.domainSuffix)
+    cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
   })
 })
