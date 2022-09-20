@@ -49,12 +49,13 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const profileName: string = Cypress.env('PROFILE_NAME') as string
   const password: string = Cypress.env('AMT_PASSWORD')
   const fqdn: string = Cypress.env('ACTIVATION_URL')
+  const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const parts: string[] = profileName.split('-')
   const isAdminControlModeProfile = parts[0] === 'acmactivate'
   let majorVersion: string = ''
-  let infoCommand = 'docker run --device=/dev/mei0 intel/oact-rpc-go:latest amtinfo -json'
-  let activateCommand = `docker run --device=/dev/mei0 intel/oact-rpc-go:latest activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
-  let deactivateCommand = `docker run --device=/dev/mei0 vprodemo.azurecr.io/rpc-go:latest deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
+  let infoCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} amtinfo -json`
+  let activateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
+  let deactivateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
   if (isWin) {
     activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
     infoCommand = 'rpc.exe amtinfo -json'
@@ -147,14 +148,15 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         cy.exec(deactivateCommand, execConfig).then((result) => {
           cy.log(result.stderr)
           expect(result.stderr).to.contain('Status: Deactivated')
+          cy.wait(10000)
         })
       }
-      cy.wait(10000)
     })
   })
   describe('Negative Activation Test', () => {
     if (isAdminControlModeProfile) {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
+        cy.wait(10000)
         activateCommand += ' -d dontmatch.com'
         cy.exec(activateCommand, execConfig).then((result) => {
           expect(result.stderr).to.contain('Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.')
