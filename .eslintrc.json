@@ -32,7 +32,8 @@
           "./license-header.js"
         ],
         "@typescript-eslint/no-namespace": 0,
-        "@typescript-eslint/strict-boolean-expressions": 0
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/indent": 0
       }
     },
     {

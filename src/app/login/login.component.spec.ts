@@ -62,8 +62,8 @@ describe('LoginComponent', () => {
     const userId: string = 'userId'
     const password: string = 'P@ssw0rd'
     component.loginForm.patchValue({
-      userId: userId,
-      password: password
+      userId,
+      password
     })
     spyOn(authService, 'login').and.returnValue(of(true).pipe())
     void component.onSubmit().then(() => {

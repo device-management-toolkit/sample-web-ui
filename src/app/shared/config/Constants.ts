@@ -19,7 +19,7 @@ export default {
   TKIP: 3,
   CCMP: 4,
   NORESULTS: 'No Wifi Configs Found',
-  EVENTTYPEMAP: EVENTTYPEMAP,
+  EVENTTYPEMAP,
   ConnectionMode_TLS: 'TLS',
   ConnectionMode_CIRA: 'CIRA',
   // these redirection values must match AMTUserConsent values

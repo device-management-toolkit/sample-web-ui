@@ -1,7 +1,10 @@
-@import 'xterm/css/xterm.css';
+@import "xterm/css/xterm.css";
 
-.spinner{
+.spinner {
     position: absolute;
     top: 50%;
     left: 50%;
+}
+.xterm {
+    text-align: left;
 }

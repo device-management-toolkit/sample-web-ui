@@ -29,7 +29,7 @@ export class DeactivateDeviceComponent implements OnInit {
   isCopied: boolean = false
   error: boolean = false
   selectedPlatform: string = 'linux'
-  constructor (@Inject(MAT_DIALOG_DATA) public data: {id: string}, public fb: FormBuilder, private readonly vaultService: VaultService) {
+  constructor (@Inject(MAT_DIALOG_DATA) public data: { id: string }, public fb: FormBuilder, private readonly vaultService: VaultService) {
     this.vaultForm = fb.group({
       vaultToken: [null, Validators.required]
     })

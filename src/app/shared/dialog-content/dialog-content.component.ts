@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
   styleUrls: ['./dialog-content.component.scss']
 })
 export class DialogContentComponent implements OnInit {
-  constructor (@Inject(MAT_DIALOG_DATA) public data: {name: string}) { }
+  constructor (@Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
 
   ngOnInit (): void {
   }
