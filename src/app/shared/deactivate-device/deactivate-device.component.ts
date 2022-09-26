@@ -71,7 +71,7 @@ export class DeactivateDeviceComponent implements OnInit {
       this.vaultService.getPassword(this.data.id, result.vaultToken)
         .subscribe(response => {
           this.error = false
-          this.deactivationCommand = `-c '-t deactivate --password ${response.data.data.AMT_PASSWORD as string}'`
+          this.deactivationCommand = `deactivate --password ${response.data.data.AMT_PASSWORD as string} -n`
           this.formDeactivationUrl()
           this.hasRetrievedPassword = true
         }, () => {

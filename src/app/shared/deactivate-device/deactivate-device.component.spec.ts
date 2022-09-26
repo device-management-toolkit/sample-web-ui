@@ -102,7 +102,7 @@ describe('DeactivateDeviceComponent', () => {
     component.vaultForm.controls.vaultToken.setValue('myroot')
     component.onSubmit()
     expect(getPasswordSpy).toHaveBeenCalled()
-    expect(component.deactivationCommand).toBe("-c '-t deactivate --password secret'")
+    expect(component.deactivationCommand).toBe('deactivate --password secret -n')
     expect(component.error).toBe(false)
     expect(spy).toHaveBeenCalled()
     expect(component.hasRetrievedPassword).toBe(true)
