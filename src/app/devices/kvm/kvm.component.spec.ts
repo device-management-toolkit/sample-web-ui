@@ -9,7 +9,7 @@ import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
 import { of, ReplaySubject } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
-import { ActivatedRoute, NavigationStart, RouterEvent } from '@angular/router'
+import { ActivatedRoute, NavigationStart, RouterEvent, Router } from '@angular/router'
 import { Component, EventEmitter, Input } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -23,6 +23,8 @@ describe('KvmComponent', () => {
   let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
+  let router: Router
+
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   @Component({
@@ -49,7 +51,8 @@ describe('KvmComponent', () => {
     powerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
     await TestBed.configureTestingModule({
-      imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
+      imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([
+      ])],
       declarations: [KvmComponent, TestDeviceToolbarComponent],
       providers: [
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub } }, {
@@ -58,8 +61,9 @@ describe('KvmComponent', () => {
             params: of({ id: 'guid' })
           }
         }]
-    })
-      .compileComponents()
+    }).compileComponents()
+
+    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
@@ -67,6 +71,7 @@ describe('KvmComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     snackBarSpy = spyOn(component.snackBar, 'open')
+    spyOn(router, 'navigate')
   })
 
   afterEach(() => {

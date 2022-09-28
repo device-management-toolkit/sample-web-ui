@@ -72,6 +72,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.isDisconnecting = true
       this.deviceConnection.emit(false)
+      void this.router.navigate([`/devices/${this.deviceId}`])
     })
     this.timeInterval = interval(15000).pipe(mergeMap(() => this.devicesService.getPowerState(this.deviceId))).subscribe()
     this.devicesService.getRedirectionExpirationToken(this.deviceId).subscribe((result) => {
@@ -176,14 +177,19 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   afterUserContentDialogClosed (data: userConsentData): void {
-    const response: userConsentResponse = data?.results
+    const response: userConsentResponse | any = data?.results
+    if (response.error != null) {
+      this.snackBar.open(`Unable to send code: ${response.error.Body.ReturnValueStr as string}`, undefined, SnackbarDefaults.defaultError)
+      this.isLoading = false
+    } else {
     // On success to send or cancel to previous requested user consent code
-    const method = response.Header.Action.substring(response.Header.Action.lastIndexOf('/') + 1, response.Header.Action.length)
+    const method = response.Header.Action.substring((response.Header.Action.lastIndexOf('/') as number) + 1, response.Header.Action.length)
     if (method === 'CancelOptInResponse') {
       this.cancelOptInCodeResponse(response)
     } else if (method === 'SendOptInCodeResponse') {
       this.SendOptInCodeResponse(response)
     }
+  }
   }
 
   cancelOptInCodeResponse (result: userConsentResponse): void {

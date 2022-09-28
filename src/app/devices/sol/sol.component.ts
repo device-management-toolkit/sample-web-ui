@@ -66,6 +66,7 @@ export class SolComponent implements OnInit, OnDestroy {
     this.devicesService.stopwebSocket.subscribe((data: boolean) => {
       this.isDisconnecting = true
       this.deviceConnection.emit(false)
+      void this.router.navigate([`/devices/${this.deviceId}`])
     })
     this.devicesService.getRedirectionExpirationToken(this.deviceId).subscribe((result) => {
       this.authToken = result.token

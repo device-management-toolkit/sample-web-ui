@@ -5,7 +5,7 @@
 
 import { Component, EventEmitter, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ActivatedRoute, NavigationStart, RouterEvent } from '@angular/router'
+import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router'
 import { of, ReplaySubject } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
@@ -27,6 +27,8 @@ describe('SolComponent', () => {
   let reqUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
+  let router: Router
+
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
@@ -68,8 +70,9 @@ describe('SolComponent', () => {
         provide: AuthService,
         useValue: authServiceStub
       }]
-    })
-      .compileComponents()
+    }).compileComponents()
+
+    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
@@ -77,6 +80,7 @@ describe('SolComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     snackBarSpy = spyOn(component.snackBar, 'open')
+    spyOn(router, 'navigate')
   })
 
   afterEach(() => {
