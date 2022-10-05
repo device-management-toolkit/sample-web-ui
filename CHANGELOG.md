@@ -1,7 +1,74 @@
-<a name="2.4.0"></a>
-## [2.4.0] - 2022-07-01
+<a name="2.5.0"></a>
+
+## [2.5.0] - 2022-10-05
 ### Build
-- fix package-lock.json (#dcc6318) 
+- **deps:** update angular to v14.1 (#396481d) 
+- **deps:** Bump esbuild from 0.14.48 to 0.14.49 (#32db0f2) 
+- **deps:** Bump xterm from 4.19.0 to 5.0.0 (#1ea13d9) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular (#3fd463a) 
+- **deps:** Bump moment from 2.29.3 to 2.29.4 (#cd0b83f) 
+- **deps:** Bump rxjs from 7.5.5 to 7.5.6 (#22f614a) 
+- **deps:** Bump zone.js from 0.11.6 to 0.11.7 (#b77a025) 
+- **deps:** Bump minimist from 1.2.5 to 1.2.6 (#fc8d383) 
+- **deps:** bump angular 14.2.2 ([#853](https://github.com/open-amt-cloud-toolkit/rps/issues/853)) (#e6fb9d9) 
+- **deps:** Bump cypress from 10.7.0 to 10.8.0 ([#852](https://github.com/open-amt-cloud-toolkit/rps/issues/852)) (#a0cd383) 
+- **deps:** Bump cypress from 10.4.0 to 10.7.0 (#2dbdc8b) 
+- **deps:** update angular to 14.2 (#69afe9b) 
+- **deps:** Bump esbuild from 0.14.50 to 0.14.51 (#5646ce4) 
+- **deps:** Bump zone.js from 0.11.7 to 0.11.8 ([#820](https://github.com/open-amt-cloud-toolkit/rps/issues/820)) (#46a5211) 
+- **deps:** Bump esbuild from 0.14.51 to 0.15.3 ([#818](https://github.com/open-amt-cloud-toolkit/rps/issues/818)) (#b658503) 
+- **deps:** upgrade angular to 14.1.2 ([#819](https://github.com/open-amt-cloud-toolkit/rps/issues/819)) (#3320278) 
+- **deps:** Bump cypress from 10.3.1 to 10.4.0 ([#803](https://github.com/open-amt-cloud-toolkit/rps/issues/803)) (#f203c8d) 
+- **deps:** Bump cypress from 10.8.0 to 10.9.0 (#0d37344) 
+- **deps:** upgrade to angular14 ([#769](https://github.com/open-amt-cloud-toolkit/rps/issues/769)) (#8d0280c) 
+- **deps-dev:** Bump ts-node from 10.8.2 to 10.9.1 (#0c65228) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.3.3 to 39.3.4 (#fdfbc5b) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 4.0.3 to 4.3.0 (#4ed682e) 
+- **deps-dev:** Bump karma-jasmine from 5.0.1 to 5.1.0 (#5726374) 
+- **deps-dev:** Bump karma from 6.4.0 to 6.4.1 (#6ed5220) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.3.4 to 39.3.6 (#26fdece) 
+- **deps-dev:** Bump jasmine-core from 4.3.0 to 4.4.0 (#336986e) 
+- **deps-dev:** Bump jasmine-core from 4.1.1 to 4.3.0 (#e378180) 
+- **deps-dev:** Bump typescript from 4.7.4 to 4.8.3 (#92b5c95) 
+- **deps-dev:** Bump typescript from 4.6.4 to 4.7.4 (#c436284) 
+- **deps-dev:** Bump eslint-plugin-jsdoc from 39.3.2 to 39.3.3 (#faa9f82) 
+- **deps-dev:** Bump eslint-plugin-license-header from 0.4.0 to 0.6.0 (#8007607) 
+
+### Chore
+- update changelog and package.json for v2.4.0 (#8027d3a) 
+
+### Ci
+- **cypress:** add junit output for UI Tests (#8fc65df) 
+- **karma:** add junit reporters (#08af47f) 
+
+### Docs
+- updates changelog for v2.5.0 (#5930bbd) 
+
+### Feat
+- support Alarm Service APIs ([#802](https://github.com/open-amt-cloud-toolkit/rps/issues/802)) (#ac16d71) 
+- **amtprofilefeatures:** re-enable profile features (#74ef37a) 
+
+### Fix
+- icons now display correctly on dashboard (#e604379) 
+- **build:** build now uses production config for docker (#01b1b5d) 
+- **device:** corrects device deactivation command (#2466b25) 
+- **kvm:** user consent code on enter was sending cancel ([#871](https://github.com/open-amt-cloud-toolkit/rps/issues/871)) (#28aa3cf) 
+- **profile-detail:** cira profile is now selected on edit when static network is selected (#3cbf793) 
+
+### Refactor
+- fix warnings and update angular ([#863](https://github.com/open-amt-cloud-toolkit/rps/issues/863)) (#bce1893) 
+
+### Test
+- **domain:** added-negative-domain-creation-tests (#dd1b20f) 
+- **e2e:** update activation tests for configurable docker image (#74c2059) 
+- **e2e:** update cypress tests to be data-driven (#bdb5eee) 
+
+
+<a name="v2.4.0"></a>
+
+## [v2.4.0] - 2022-07-01
+### Build
+- fix package-lock.json (#9bfba66) 
 - **deps:** Bump [@angular](https://github.com/angular)/forms from 13.3.7 to 13.3.8 (#c5cb2da) 
 - **deps:** Bump [@angular](https://github.com/angular)/platform-browser-dynamic (#7a339b7) 
 - **deps:** Bump [@angular](https://github.com/angular)/material from 13.3.5 to 13.3.7 (#d7473cf) 
@@ -75,6 +142,7 @@
 
 
 <a name="v2.3.1"></a>
+
 ## [v2.3.1] - 2022-06-15
 ### Build
 - **version:** bump to v2.3.0 (#d5f1941) 
@@ -87,6 +155,7 @@
 
 
 <a name="v2.3.0"></a>
+
 ## [v2.3.0] - 2022-05-11
 ### Build
 - **deps:** Bump tslib from 2.3.1 to 2.4.0 (#f636db9) 
@@ -153,6 +222,7 @@
 
 
 <a name="v2.2.0"></a>
+
 ## [v2.2.0] - 2022-03-18
 ### Build
 - **deps:** Bump cypress from 9.2.1 to 9.3.1 (#1d47511) 
@@ -214,6 +284,7 @@
 
 
 <a name="v2.1.0"></a>
+
 ## [v2.1.0] - 2021-11-08
 ### Build
 - **deps:** Bump cypress from 8.6.0 to 8.7.0 (#5703114) 
@@ -281,6 +352,7 @@
 
 
 <a name="v2.0.0"></a>
+
 ## [v2.0.0] - 2021-09-16
 ### Build
 - update version to v2.0.0 (#b373809) 
@@ -337,6 +409,7 @@
 
 
 <a name="v1.5.0"></a>
+
 ## [v1.5.0] - 2021-08-12
 ### Build
 - fixed snykProjectName (#172e6b2) 
@@ -401,6 +474,7 @@
 
 
 <a name="v1.4.0"></a>
+
 ## [v1.4.0] - 2021-06-23
 ### Build
 - **dep:** update ui-toolkit (#8171042) 
@@ -469,12 +543,14 @@
 
 
 <a name="v1.3.1"></a>
+
 ## [v1.3.1] - 2021-05-07
 ### Build
 - **dep:** pin ui-toolkit to v.1.3.0 (#96eb7ab) 
 
 
 <a name="v1.3.0"></a>
+
 ## [v1.3.0] - 2021-05-06
 ### Build
 - **dep:** bump ui-toolkit version to latest (#8d92a21) 
@@ -533,6 +609,7 @@
 
 
 <a name="v1.2.0"></a>
+
 ## [v1.2.0] - 2021-04-02
 ### Build
 - fix scripts for docker (#0c8cdd0) 
@@ -657,6 +734,7 @@
 
 
 <a name="v1.1.0"></a>
+
 ## v1.1.0 - 2021-02-11
 ### Build
 - **deps:** update immer (#9d70599) 
@@ -697,17 +775,3 @@
 ### Refactor
 - migrate webui from mps (#ecc05bf) 
 - **docker:** optimize how server is set (#b022ca2) 
-
-
-[Unreleased]: https://github.com/open-amt-cloud-toolkit/rps/compare/2.3.0...HEAD
-[2.3.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.3.1...2.3.0
-[v2.3.1]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.3.0...v2.3.1
-[v2.3.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.2.0...v2.3.0
-[v2.2.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.1.0...v2.2.0
-[v2.1.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v2.0.0...v2.1.0
-[v2.0.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.5.0...v2.0.0
-[v1.5.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.4.0...v1.5.0
-[v1.4.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.3.1...v1.4.0
-[v1.3.1]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.3.0...v1.3.1
-[v1.3.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.2.0...v1.3.0
-[v1.2.0]: https://github.com/open-amt-cloud-toolkit/rps/compare/v1.1.0...v1.2.0
