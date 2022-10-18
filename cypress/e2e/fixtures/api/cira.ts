@@ -158,6 +158,14 @@ const ciraConfig = {
         proxyDetails: ''
       }
     }
+  },
+  inUse: {
+    error: {
+      response: {
+        error: 'Foreign key violation',
+        message: 'CIRA Config: happyPath associated with an AMT profile'
+      }
+    }
   }
 }
 

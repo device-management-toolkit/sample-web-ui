@@ -55,7 +55,7 @@
             <ng-container matColumnDef="remove">
                 <mat-header-cell *matHeaderCellDef fxFlex="12.5"> </mat-header-cell>
                 <mat-cell *matCellDef="let row" fxFlex="12.5" (click)="$event.stopPropagation()">
-                    <button mat-icon-button (click)="delete(row.profileName)">
+                    <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </mat-cell>
