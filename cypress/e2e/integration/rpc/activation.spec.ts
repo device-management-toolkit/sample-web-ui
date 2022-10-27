@@ -142,6 +142,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       })
     })
 
+    it('should NOT deactivate device - invalid password', () => {
+      if (amtInfo.controlMode !== 'pre-provisioning state') {
+        const invalidCommand = deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
+        cy.exec(invalidCommand, execConfig).then((result) => {
+          cy.log(result.stderr)
+          expect(result.stderr).to.contain('AMT password DOES NOT match stored version for Device')
+          cy.wait(10000)
+        })
+      }
+    })
+
     it('should deactivate device', () => {
       // deactivate
       if (amtInfo.controlMode !== 'pre-provisioning state') {
