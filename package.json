@@ -28,7 +28,7 @@
     "@angular/platform-browser-dynamic": "~14.2.8",
     "@angular/router": "~14.2.8",
     "@open-amt-cloud-toolkit/ui-toolkit-angular": "^4.0.0",
-    "esbuild": "^0.15.10",
+    "esbuild": "^0.15.12",
     "moment": "^2.29.4",
     "ngx-moment": "^6.0.2",
     "ngx-mqtt": "^9.0.5",
