@@ -3,6 +3,8 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+
 interface AMTInfo {
   amt: string
   buildNumber: string
@@ -45,6 +47,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       runMode: 3
     }
   }
+
   // get environment variables
   const profileName: string = Cypress.env('PROFILE_NAME') as string
   const password: string = Cypress.env('AMT_PASSWORD')
@@ -104,6 +107,14 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           }
         }
         cy.wait(60000)
+
+        cy.wait('@stats-request')
+            .its('response.statusCode')
+            .should('eq', httpCodes.SUCCESS)
+
+        cy.get('[data-cy="totalCount"]').invoke('text').then(parseInt).should('be.gt', 0)
+        cy.get('[data-cy="connectedCount"]').invoke('text').then(parseInt).should('be.gt', 0)
+
         cy.intercept(/devices\/.*$/).as('getdevices')
         // run device tests
         cy.goToPage('Devices')
@@ -164,6 +175,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       }
     })
   })
+
   describe('Negative Activation Test', () => {
     if (isAdminControlModeProfile) {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
@@ -173,12 +185,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           expect(result.stderr).to.contain('Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.')
         })
       })
-      // it('Should NOT activate ACM when domain suffix is registered in RPS but incorrect on network', () => {
-      //   command += ' -d mlopshub.com'
-      //   cy.exec(command, { failOnNonZeroExit: false }).then((result) => {
-      //     expect(result.stderr).to.contain('Specified AMT domain suffix: mlopshub.com does not match list of available AMT domain suffixes.')
-      //   })
-      // })
     }
   })
 }

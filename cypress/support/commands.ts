@@ -7,6 +7,8 @@
 /// <reference types="cypress" />
 
 import { httpCodes } from '../e2e/fixtures/api/httpCodes'
+import stats from 'cypress/e2e/fixtures/api/stats'
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -37,7 +39,7 @@ Cypress.Commands.add('setup', () => {
 
   cy.myIntercept('GET', 'api/v1/devices/stats', {
     statusCode: 200,
-    body: {}
+    body: stats.get.success.response
   }).as('stats-request')
 
   // Login
