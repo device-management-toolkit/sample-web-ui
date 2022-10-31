@@ -67,6 +67,6 @@
     "typescript": "~4.8.4"
   },
   "optionalDependencies": {
-    "cypress": "^10.9.0"
+    "cypress": "^10.11.0"
   }
 }
