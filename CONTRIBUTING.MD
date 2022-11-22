@@ -52,13 +52,19 @@ Must be one of the following:
 
 Should be one of the following:
 Modules:
-* **common**: A change or addition to the common module
-* **tracker**: A change or addition to the tracker module
-* **server**: A change or addition to the server module
-* **msgs**: A change or addition to msgs module
-* **eval**: Any change to benchmark tools
-* **deps**: A change to any dependency or 3rd-party library
-* **all**: A change that affects all modules
+* **8021x**: A change or addition to the 802.1x page
+* **config**: A change or addition to service configuration
+* **core**: A change or addition shared UI components, routing, module loading
+* **dashboard**: A change or addition to the dashboard page
+* **deps**: A change or addition to dependencies (primarily used by dependabot)
+* **deps-dev**: A change or addition to developer dependencies (primarily used by dependabot)
+* **devices**: A change or addition to the devices page
+* **docker**: A change or addition to the docker file or configuration
+* **domains**: A change or additoin to the domains page
+* **gh-actions**: A change or addition to GitHub actions
+* **login**: A change to addition to login page or functionality
+* **profiles**: A change or addition to the profiles page
+* **wireless**: A change or addition to the wireless page
 * *no scope*:  If no scope is provided, it is assumed the PR does not apply to the above scopes
 
 ### Body
