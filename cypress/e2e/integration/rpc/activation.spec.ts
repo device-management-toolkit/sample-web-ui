@@ -3,8 +3,6 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-
 interface AMTInfo {
   amt: string
   buildNumber: string
@@ -42,7 +40,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
   const execConfig = {
     failOnNonZeroExit: false,
-    execTimeout: 120000,
+    execTimeout: 240000,
     retries: {
       runMode: 3
     }
@@ -106,14 +104,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             expect(result.stderr).to.contain('Network: Wired Network Configured.')
           }
         }
-        cy.wait(60000)
-
-        cy.wait('@stats-request')
-            .its('response.statusCode')
-            .should('eq', httpCodes.SUCCESS)
-
-        cy.get('[data-cy="totalCount"]').invoke('text').then(parseInt).should('be.gt', 0)
-        cy.get('[data-cy="connectedCount"]').invoke('text').then(parseInt).should('be.gt', 0)
+        cy.wait(120000)
 
         cy.intercept(/devices\/.*$/).as('getdevices')
         // run device tests
@@ -126,30 +117,29 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
         cy.get('[data-cy="chipVersion"]').should('not.be.empty')
         cy.get('[data-cy="manufacturer"]').should('not.be.empty')
-        // cy.get('[data-cy="manufacturer"]').contains('HP')
         cy.get('[data-cy="model"]').should('not.be.empty')
         cy.get('[data-cy="serialNumber"]').should('not.be.empty')
-        // cy.get('[data-cy="version"]').should('not.be.empty')
-        cy.get('[data-cy="amtVersion"]').should('not.be.empty')
 
         // AMT Enabled Features
         cy.get('[data-cy="provisioningMode"]').should('not.be.empty')
 
-        // BIOS Summary
-        cy.get('[data-cy="biosManufacturer"]').should('not.be.empty')
-        cy.get('[data-cy="biosVersion"]').should('not.be.empty')
-        cy.get('[data-cy="biosReleaseData"]').should('not.be.empty')
-        cy.get('[data-cy="biosTargetOS"]').should('not.be.empty')
+        if (parseInt(majorVersion) < 11) {
+          // BIOS Summary
+          cy.get('[data-cy="biosManufacturer"]').should('not.be.empty')
+          cy.get('[data-cy="biosVersion"]').should('not.be.empty')
+          cy.get('[data-cy="biosReleaseData"]').should('not.be.empty')
+          cy.get('[data-cy="biosTargetOS"]').should('not.be.empty')
 
-        // Memory Summary
-        // TODO: Check each channel reported by the device. Currently only checking the first element in the table
-        cy.get('[data-cy="bankLabel"]').first().should('not.be.empty')
-        cy.get('[data-cy="bankCapacity"]').first().should('not.be.empty')
-        cy.get('[data-cy="bankMaxClockSpeed"]').first().should('not.be.empty')
-        cy.get('[data-cy="bankSerialNumber"]').first().should('not.be.empty')
+          // Memory Summary
+          // TODO: Check each channel reported by the device. Currently only checking the first element in the table
+          cy.get('[data-cy="bankLabel"]').first().should('not.be.empty')
+          cy.get('[data-cy="bankCapacity"]').first().should('not.be.empty')
+          cy.get('[data-cy="bankMaxClockSpeed"]').first().should('not.be.empty')
+          cy.get('[data-cy="bankSerialNumber"]').first().should('not.be.empty')
 
-        // Audit log entries
-        cy.get('[data-cy="auditLogEntry"]').its('length').should('be.gt', 0)
+          // Audit log entries
+          cy.get('[data-cy="auditLogEntry"]').its('length').should('be.gt', 0)
+        }
       })
     })
 
@@ -158,8 +148,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         const invalidCommand = deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
         cy.exec(invalidCommand, execConfig).then((result) => {
           cy.log(result.stderr)
-          expect(result.stderr).to.contain('AMT password DOES NOT match stored version for Device')
-          cy.wait(10000)
+          expect(result.stderr).to.contain('Unable to authenticate with AMT. Exceeded Retry Attempts')
         })
       }
     })
@@ -170,7 +159,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         cy.exec(deactivateCommand, execConfig).then((result) => {
           cy.log(result.stderr)
           expect(result.stderr).to.contain('Status: Deactivated')
-          cy.wait(10000)
         })
       }
     })
@@ -179,7 +167,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   describe('Negative Activation Test', () => {
     if (isAdminControlModeProfile) {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
-        cy.wait(10000)
         activateCommand += ' -d dontmatch.com'
         cy.exec(activateCommand, execConfig).then((result) => {
           expect(result.stderr).to.contain('Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.')
