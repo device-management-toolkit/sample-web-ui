@@ -1,3 +1,36 @@
+<a name="2.5.1"></a>
+## [2.5.1] - 2022-12-08
+### Build
+- update version to v2.5.1, update changelog (#a08232c) 
+- **deps:** Bump cypress from 10.9.0 to 10.11.0 (#d7f0cfa) 
+- **deps:** upgrade to angular 14 dependencies (#c445318) 
+- **deps:** Bump engine.io from 6.2.0 to 6.2.1 (#64732a2) 
+- **deps:** Bump loader-utils from 2.0.3 to 2.0.4 (#5c4b867) 
+- **deps:** Bump esbuild from 0.15.12 to 0.15.13 (#7d2182f) 
+- **deps:** Bump loader-utils from 2.0.2 to 2.0.3 (#abc6a53) 
+- **deps:** update angular (#229ccba) 
+- **deps:** Bump esbuild from 0.15.8 to 0.15.10 (#0fc38b0) 
+- **deps:** Bump esbuild from 0.15.10 to 0.15.12 (#c65c551) 
+- **deps:** Bump tslib from 2.4.0 to 2.4.1 (#59a4eef) 
+- **deps:** Bump rxjs from 7.5.6 to 7.5.7 (#fbd919d) 
+- **deps-dev:** Bump jasmine-core from 4.4.0 to 4.5.0 (#02ae07e) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 16.11.59 to 18.11.9 (#97abd6b) 
+- **deps-dev:** Bump typescript from 4.8.3 to 4.8.4 (#c3d2e5c) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.9 to 18.11.10 (#a524dfe) 
+
+### Ci
+- add scope for e2e ([#937](https://github.com/open-amt-cloud-toolkit/rps/issues/937)) (#a212656) 
+- update actions/checkout, update semantic PR ([#926](https://github.com/open-amt-cloud-toolkit/rps/issues/926)) (#b08b154) 
+- add azure board sync (#abf38f4) 
+- add project sync to sample-web-ui (#2498257) 
+
+### Test
+- **ciraconfig:** added test to delete an in use config (#f6b207f) 
+- **deactivate:** invalid password negative test (#93a1792) 
+- **e2e:** update cypress and change device tests ([#934](https://github.com/open-amt-cloud-toolkit/rps/issues/934)) (#9c0e021) 
+- **e2e:** add device count test (#770905f) 
+
+
 <a name="2.5.0"></a>
 
 ## [2.5.0] - 2022-10-05
