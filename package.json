@@ -34,7 +34,7 @@
     "ngx-mqtt": "^9.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.4.1",
-    "xterm": "^5.0.0",
+    "xterm": "^5.1.0",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
