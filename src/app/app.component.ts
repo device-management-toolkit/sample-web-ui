@@ -6,7 +6,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
 import { NavigationStart, Router } from '@angular/router'
 import { AuthService } from './auth.service'
-import { MQTTService } from './event-channel/event-channel.service'
+// import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
   selector: 'app-root',
@@ -16,11 +16,10 @@ import { MQTTService } from './event-channel/event-channel.service'
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoggedIn = false
 
-  constructor (public router: Router, public authService: AuthService, public mqttService: MQTTService
-  ) {
-    this.mqttService.connect()
-    this.mqttService.subscribeToTopic('mps/#')
-    this.mqttService.subscribeToTopic('rps/#')
+  constructor (public router: Router, public authService: AuthService) {
+    // this.mqttService.connect()
+    // this.mqttService.subscribeToTopic('mps/#')
+    // this.mqttService.subscribeToTopic('rps/#')
   }
 
   ngOnInit (): void {
@@ -43,6 +42,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy (): void {
-    this.mqttService?.destroy()
+    // this.mqttService?.destroy()
   }
 }

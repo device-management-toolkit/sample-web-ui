@@ -9,6 +9,9 @@
   },
   "overrides": [
     {
+      "excludedFiles":[
+        "**/event-channel*.ts"
+      ],
       "files": [
         "*.ts"
       ],

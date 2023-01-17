@@ -11,7 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
-import { MQTTService } from './event-channel/event-channel.service'
+// import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
   selector: 'app-toolbar'
@@ -25,11 +25,11 @@ describe('AppComponent', () => {
   let component: AppComponent
   let fixture: ComponentFixture<AppComponent>
 
-  const eventChannelStub = {
-    connect: jasmine.createSpy('connect'),
-    subscribeToTopic: jasmine.createSpy('connect'),
-    destroy: jasmine.createSpy('destroy')
-  }
+  // const eventChannelStub = {
+  //   connect: jasmine.createSpy('connect'),
+  //   subscribeToTopic: jasmine.createSpy('connect'),
+  //   destroy: jasmine.createSpy('destroy')
+  // }
 
   beforeEach(async () => {
     const authServiceStub = {
@@ -48,9 +48,7 @@ describe('AppComponent', () => {
         useValue: {
           events: of({})
         }
-      },
-      { provide: MQTTService, useValue: eventChannelStub }]
-
+      }]
     }).compileComponents()
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
@@ -62,9 +60,9 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     expect(component).toBeTruthy()
-    expect(component.mqttService.connect).toHaveBeenCalled()
-    expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('mps/#')
-    expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('rps/#')
+    // expect(component.mqttService.connect).toHaveBeenCalled()
+    // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('mps/#')
+    // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('rps/#')
     expect(component.isLoggedIn).toBeFalse()
   })
 })

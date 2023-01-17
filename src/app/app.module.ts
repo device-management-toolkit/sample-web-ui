@@ -35,12 +35,12 @@ import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-det
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
-import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
+// import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
-import { EventChannelComponent } from './event-channel/event-channel.component'
+// import { EventChannelComponent } from './event-channel/event-channel.component'
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker'
 
-const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
+// const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
 @NgModule({
   declarations: [
@@ -62,8 +62,8 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
     WirelessComponent,
     WirelessDetailComponent,
     DeviceUserConsentComponent,
-    EventLogComponent,
-    EventChannelComponent
+    EventLogComponent
+    // EventChannelComponent
   ],
   imports: [
     MomentModule,
@@ -74,7 +74,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
     CoreModule,
     BrowserAnimationsModule,
     SolModule,
-    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    // MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     SharedModule.forRoot(),
     RouterModule.forRoot([
       {
