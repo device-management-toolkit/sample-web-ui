@@ -5,8 +5,8 @@
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
@@ -17,11 +17,11 @@ import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { MatChipInputEvent } from '@angular/material/chips'
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { forkJoin, Observable, of } from 'rxjs'
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete'
 
 @Component({
   selector: 'app-profile-detail',

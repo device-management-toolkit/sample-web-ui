@@ -6,7 +6,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 import { ConfigsService } from 'src/app/configs/configs.service'

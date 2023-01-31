@@ -1,5 +1,5 @@
-@use '@angular/material' as mat;
-@import "~../../_variables.scss";
+@use "@angular/material" as mat;
+@import "../../_variables.scss";
 h1,
 .mat-display-1,
 .mat-display-2 {
@@ -34,4 +34,3 @@ h3 {
 .pointer {
     cursor: pointer;
 }
-

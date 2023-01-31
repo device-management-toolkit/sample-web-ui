@@ -15,7 +15,7 @@ import {
 import { Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { catchError, tap } from 'rxjs/operators'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 @Injectable()
 export class AuthorizeInterceptor implements HttpInterceptor {

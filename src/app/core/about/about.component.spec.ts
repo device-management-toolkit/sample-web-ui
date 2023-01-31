@@ -4,9 +4,9 @@
 **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog'
 import { MatIconModule } from '@angular/material/icon'
-import { MatListModule } from '@angular/material/list'
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list'
 
 import { AboutComponent } from './about.component'
 

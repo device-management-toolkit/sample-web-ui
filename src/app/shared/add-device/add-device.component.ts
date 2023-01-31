@@ -4,9 +4,9 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { MatCheckboxChange } from '@angular/material/checkbox'
-import { MatSelectChange } from '@angular/material/select'
-import { MatTabChangeEvent } from '@angular/material/tabs'
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox'
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select'
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs'
 import { timer } from 'rxjs'
 import { ProfilesService } from 'src/app/profiles/profiles.service'
 import { environment } from 'src/environments/environment'

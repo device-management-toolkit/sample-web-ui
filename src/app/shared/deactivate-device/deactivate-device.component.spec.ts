@@ -5,7 +5,7 @@
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatLegacyDialogModule as MatDialogModule, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 import { environment } from 'src/environments/environment'

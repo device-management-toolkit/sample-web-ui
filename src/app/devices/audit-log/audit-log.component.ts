@@ -4,10 +4,10 @@
 **********************************************************************/
 
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
-import { PageEvent } from '@angular/material/paginator'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { MatSort } from '@angular/material/sort'
-import { MatTableDataSource } from '@angular/material/table'
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, switchMap } from 'rxjs/operators'

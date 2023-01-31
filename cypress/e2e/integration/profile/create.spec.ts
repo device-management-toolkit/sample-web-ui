@@ -53,6 +53,12 @@ describe('Test Profile Page', () => {
   })
 
   amtProfiles.forEach((amtProfile) => {
+    let connectProfile: any
+    if (amtProfile.ciraConfigName) {
+      connectProfile = amtProfile.ciraConfigName
+    } else if (amtProfile.tlsConfig) {
+      connectProfile = amtProfile.tlsConfig
+    }
     it(`creates the profile - ${amtProfile.profileName as string}`, () => {
       cy.log(amtProfile)
       cy.enterProfileInfo(
@@ -62,7 +68,7 @@ describe('Test Profile Page', () => {
         false,
         amtProfile.dhcpEnabled,
         amtProfile.connectionMode,
-        amtProfile.ciraConfigName ?? amtProfile.tlsConfig,
+        connectProfile,
         amtProfile.userConsent,
         amtProfile.iderEnabled,
         amtProfile.kvmEnabled,

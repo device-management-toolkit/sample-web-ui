@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { MatSnackBarConfig } from '@angular/material/snack-bar'
+import { MatLegacySnackBarConfig as MatSnackBarConfig } from '@angular/material/legacy-snack-bar'
 
 interface SnackbarConfigs {
   defaultWarn: MatSnackBarConfig

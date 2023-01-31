@@ -11,7 +11,7 @@ import { DevicesService } from '../devices.service'
 import { DeviceToolbarComponent } from './device-toolbar.component'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent

@@ -5,13 +5,13 @@
 
 import { Component, Input, OnInit } from '@angular/core'
 import { catchError, finalize } from 'rxjs/operators'
-import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
-import { MatDialog } from '@angular/material/dialog'
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { DeactivateDeviceComponent } from 'src/app/shared/deactivate-device/deactivate-device.component'
 
 @Component({

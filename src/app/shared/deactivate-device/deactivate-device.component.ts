@@ -5,8 +5,8 @@
 
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { MatTabChangeEvent } from '@angular/material/tabs'
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog'
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs'
 import { of } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
