@@ -78,7 +78,7 @@ export class ProfilesComponent implements OnInit {
     })
   }
 
-  parseTlsMode (val: Number): string {
+  parseTlsMode (val: number): string {
     return this.tlsModes.find(z => z.value === val)?.viewValue ?? ''
   }
 

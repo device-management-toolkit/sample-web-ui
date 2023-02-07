@@ -72,24 +72,24 @@ describe('ProfilesComponent', () => {
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/profiles/path'])
   })
-  it('should delete', async () => {
+  it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
-    await component.delete('profile')
+    component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(deleteSpy).toHaveBeenCalled()
     expect(snackBarSpy).toHaveBeenCalled()
   })
-  it('should not delete', async () => {
+  it('should not delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
-    await component.delete('profile')
+    component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()

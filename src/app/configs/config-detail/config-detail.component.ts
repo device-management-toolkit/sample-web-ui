@@ -77,11 +77,10 @@ export class ConfigDetailComponent implements OnInit {
     })
 
     this.configForm.controls.serverAddressFormat?.valueChanges.subscribe(
-      (value) => this.serverAddressFormatChange(+value)
+      (value) => { this.serverAddressFormatChange(+value) }
     )
 
-    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) =>
-      this.serverAddressChange(value)
+    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) => { this.serverAddressChange(value) }
     )
   }
 

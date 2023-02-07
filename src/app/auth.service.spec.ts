@@ -66,10 +66,10 @@ describe('AuthService', () => {
     expect(service.getLoggedUserToken()).toBe(token)
   })
 
-  it('should logout', async () => {
+  it('should logout', () => {
     const localStorageSetSpy = spyOn(localStorage, 'removeItem').and.callThrough()
 
-    await service.logout()
+    service.logout()
     expect(service.router.navigate).toHaveBeenCalledWith(['/login'])
     expect(service.isLoggedIn).toBeFalse()
     expect(localStorageSetSpy).toHaveBeenCalledWith('loggedInUser')

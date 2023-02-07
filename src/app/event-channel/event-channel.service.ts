@@ -81,7 +81,7 @@
 //   }
 
 //   destroy (): void {
-//     this.subscriptions.forEach(x => x.unsubscribe())
+//     this.subscriptions.forEach(x => { x.unsubscribe() })
 //     this.subscriptions = []
 //   }
 // }

@@ -120,11 +120,11 @@ export class ProfileDetailComponent implements OnInit {
       startWith(''),
       map(value => value.length > 0 ? this.search(value) : [])
     )
-    this.profileForm.controls.activation?.valueChanges.subscribe(value => this.activationChange(value))
-    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => this.generateRandomPasswordChange(value))
-    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => this.generateRandomMEBxPasswordChange(value))
-    this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => this.networkConfigChange(value))
-    this.profileForm.controls.connectionMode?.valueChanges.subscribe(value => this.connectionModeChange(value))
+    this.profileForm.controls.activation?.valueChanges.subscribe(value => { this.activationChange(value) })
+    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => { this.generateRandomPasswordChange(value) })
+    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
+    this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => { this.networkConfigChange(value) })
+    this.profileForm.controls.connectionMode?.valueChanges.subscribe(value => { this.connectionModeChange(value) })
   }
 
   setConnectionMode (data: Profile): void {
@@ -349,7 +349,7 @@ export class ProfileDetailComponent implements OnInit {
       }
 
       if (dialogs.length === 0) {
-        return this.onSubmit()
+        this.onSubmit(); return
       }
       forkJoin(dialogs).subscribe(data => {
         if (data.every((x) => x === true)) {

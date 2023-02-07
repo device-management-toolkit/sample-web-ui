@@ -75,12 +75,12 @@ describe('DomainsComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/domains/path'])
   })
 
-  it('should delete the domain on click of confirm delete', async () => {
+  it('should delete the domain on click of confirm delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
-    await component.delete('domain1')
+    component.delete('domain1')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
@@ -88,12 +88,12 @@ describe('DomainsComponent', () => {
     expect(snackBarSpy).toHaveBeenCalled()
   })
 
-  it('should not delete the domain on cancel', async () => {
+  it('should not delete the domain on cancel', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
-    await component.delete('domain')
+    component.delete('domain')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
