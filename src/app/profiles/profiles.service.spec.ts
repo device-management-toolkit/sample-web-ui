@@ -1,4 +1,4 @@
-/*********************************************************************
+  /*********************************************************************
 * Copyright (c) Intel Corporation 2022
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
@@ -28,7 +28,8 @@ describe('ProfilesService', () => {
     generateRandomMEBxPassword: true,
     tags: ['acm'],
     wifiConfigs: [],
-    tlsMode: 1
+    tlsMode: 1,
+    tlsSigningAuthority: 'SelfSigned'
   }
 
   const profileResponse = {

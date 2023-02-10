@@ -12,7 +12,15 @@ import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { CIRAConfigResponse, Profile, TLSConfigResponse, TlsMode, WiFiProfile, WirelessConfigResponse } from 'src/models/models'
+import {
+  CIRAConfigResponse,
+  Profile,
+  TLSConfigResponse,
+  TlsMode,
+  TlsSigningAuthority,
+  WiFiProfile,
+  WirelessConfigResponse
+} from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
@@ -53,6 +61,7 @@ export class ProfileDetailComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public errorMessages: string[] = []
   public tlsModes: TlsMode[] = []
+  public tlsSigningAuthorities: TlsSigningAuthority[] = []
   matDialogConfig: MatDialogConfig = {
     height: '225px',
     width: '450px'
@@ -64,7 +73,8 @@ export class ProfileDetailComponent implements OnInit {
 
   constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
     public profilesService: ProfilesService, private readonly configsService: ConfigsService, private readonly wirelessService: WirelessService, public dialog: MatDialog) {
-    this.tlsModes = profilesService.tlsModes
+    this.tlsModes = ProfilesService.TLS_MODES
+    this.tlsSigningAuthorities = ProfilesService.TLS_SIGNING_AUTHORITIES
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [Constants.ACMActivate, Validators.required],
@@ -77,6 +87,7 @@ export class ProfileDetailComponent implements OnInit {
       ciraConfigName: [null],
       wifiConfigs: [null],
       tlsMode: [null],
+      tlsSigningAuthority: [null],
       version: [null],
       // userConsent default depends on activation
       userConsent: [Constants.UserConsent_None, Validators.required],
@@ -104,6 +115,7 @@ export class ProfileDetailComponent implements OnInit {
             this.profileForm.patchValue(data)
             this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
             this.setConnectionMode(data)
+            // this.setTlsSigningAuthority(data)
           }, error => {
             this.errorMessages = error
           })
@@ -134,6 +146,12 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.connectionMode.setValue(Constants.ConnectionMode_CIRA)
     }
   }
+
+  // setTlsSigningAuthority (data: Profile): void {
+  //   if (data.tlsSigningAuthority) {
+  //     this.profileForm.controls.tlsSigningAuthority.setValue(data.tlsSigningAuthority)
+  //   }
+  // }
 
   activationChange (value: string): void {
     if (value === Constants.CCMActivate) {
@@ -247,13 +265,21 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.ciraConfigName.clearValidators()
       this.profileForm.controls.ciraConfigName.setValue(null)
       this.profileForm.controls.tlsMode.setValidators(Validators.required)
+      // set a default value if not set already
+      if (!this.profileForm.controls.tlsSigningAuthority.value) {
+        this.profileForm.controls.tlsSigningAuthority.setValue(ProfilesService.TLS_DEFAULT_SIGNING_AUTHORITY)
+      }
+      this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
     } else if (value === Constants.ConnectionMode_CIRA) {
       this.profileForm.controls.tlsMode.clearValidators()
       this.profileForm.controls.tlsMode.setValue(null)
+      this.profileForm.controls.tlsSigningAuthority.clearValidators()
+      this.profileForm.controls.tlsSigningAuthority.setValue(null)
       this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
     }
     this.profileForm.controls.ciraConfigName.updateValueAndValidity()
     this.profileForm.controls.tlsMode.updateValueAndValidity()
+    this.profileForm.controls.tlsSigningAuthority.updateValueAndValidity()
   }
 
   selectWifiProfile (event: MatAutocompleteSelectedEvent): void {

@@ -49,7 +49,9 @@ testem.log
 # env file to override CI/CD environment variables
 # for cypress tests in dev/local environment
 cypress.env.*
+cypress.config.dev.ts
 
+TESTS-*
 # System Files
 .DS_Store
 Thumbs.db

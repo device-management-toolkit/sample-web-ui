@@ -5,7 +5,12 @@
 
 export interface TlsMode {
   value: number
-  viewValue: string
+  label: string
+}
+
+export interface TlsSigningAuthority {
+  value: string
+  label: string
 }
 
 export interface Device {
@@ -52,6 +57,7 @@ export interface Profile {
   tags: string[]
   wifiConfigs: any[]
   tlsMode: number
+  tlsSigningAuthority: string
 }
 
 export interface ProfileResponse {

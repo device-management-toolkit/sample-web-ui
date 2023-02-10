@@ -38,6 +38,7 @@ describe('ProfileDetailComponent', () => {
       activation: 'ccmactivate',
       ciraConfigName: 'config1',
       tlsMode: null,
+      tlsSigningAuthority: null,
       dhcpEnabled: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
@@ -84,33 +85,46 @@ describe('ProfileDetailComponent', () => {
     expect(wirelessConfigsSpy).toHaveBeenCalled()
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
-    component.setConnectionMode({ tlsMode: 4 } as any)
+    component.setConnectionMode({ tlsMode: 4, ciraConfigName: 'config1' } as any)
     expect(component.profileForm.controls.connectionMode.value).toBe(Constants.ConnectionMode_TLS)
   })
   it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
     component.setConnectionMode({ ciraConfigName: 'config1' } as any)
-    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+    expect(component.profileForm.controls.connectionMode.value).toBe(Constants.ConnectionMode_CIRA)
   })
   it('should cancel', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
   })
-
-  it('should not toggle generateRandomMEBxPassword when false on ccm', () => {
+  it(`should not enable mebxPassword when generateRandomMEBxPassword is false and activation is ${Constants.CCMActivate}`, () => {
+    component.profileForm.patchValue({
+      activation: Constants.CCMActivate,
+      generateRandomMEBxPassword: false
+    })
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
     component.generateRandomMEBxPasswordChange(false)
     expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
   })
-  it('should toggle generateRandomMEBxPassword when true', () => {
+  it('should disable mebxPassword when generateRandomMEBxPassword is true', () => {
+    component.profileForm.patchValue({
+      activation: Constants.ACMActivate,
+      generateRandomMEBxPassword: false
+    })
+    expect(component.profileForm.controls.mebxPassword.disabled).toBeFalse()
     component.generateRandomMEBxPasswordChange(true)
     expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
   })
-  it('should toggle generateRandomMEBxPassword when false', () => {
+  it('should enable amtPassword when generateRandomPassword is false', () => {
+    component.profileForm.patchValue({ generateRandomPassword: true })
+    expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
     component.generateRandomPasswordChange(false)
     expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
   })
-  it('should toggle generateRandomMEBxPassword when true', () => {
-    component.generateRandomPasswordChange(true)
+  it('should disable amtPassword when generateRandomPassword is true', () => {
+    component.profileForm.patchValue({ generateRandomPassword: false })
+    expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
+    component.profileForm.patchValue({ generateRandomPassword: true })
     expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
   })
 
@@ -397,7 +411,6 @@ describe('ProfileDetailComponent', () => {
 
   it('should update the selected wifi configs when a selected config is removed', () => {
     component.selectedWifiConfigs = [{ priority: 1, profileName: 'home' }, { priority: 2, profileName: 'work' }]
-
     const item: any = {
       priority: 2,
       profileName: 'work'
@@ -420,44 +433,37 @@ describe('ProfileDetailComponent', () => {
     component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
     const searchString = 'home'
     const results = component.search(searchString)
-
     expect(results).toEqual(['homeWiFi'])
   })
 
   it('should update the list of tags when a tag is removed ', () => {
     component.tags = ['acm', 'ccm', 'profile']
     const tagName = 'ccm'
-
     component.remove(tagName)
-
     expect(component.tags).toEqual(['acm', 'profile'])
   })
 
   it('should turn amt visibility on when it is off', () => {
     component.amtInputType = 'password'
     component.toggleAMTPassVisibility()
-
     expect(component.amtInputType).toEqual('text')
   })
 
   it('should turn amt visibility off when it is on', () => {
     component.amtInputType = 'text'
     component.toggleAMTPassVisibility()
-
     expect(component.amtInputType).toEqual('password')
   })
 
   it('should turn mebx visibility on when it is off', () => {
     component.mebxInputType = 'password'
     component.toggleMEBXPassVisibility()
-
     expect(component.mebxInputType).toEqual('text')
   })
 
   it('should turn mebx visibility off when it is on', () => {
     component.mebxInputType = 'text'
     component.toggleMEBXPassVisibility()
-
     expect(component.mebxInputType).toEqual('password')
   })
 
@@ -476,32 +482,13 @@ describe('ProfileDetailComponent', () => {
   it('should change the value of amt password to a random strong password', () => {
     component.profileForm.controls.amtPassword.setValue('')
     component.GenerateAMTPassword()
-
     expect(component.profileForm.controls.amtPassword.value.length).toBe(16)
   })
 
   it('should change the value of mebx password to a random strong password', () => {
     component.profileForm.controls.mebxPassword.setValue('1@qW')
     component.GenerateMEBXPassword()
-
     expect(component.profileForm.controls.mebxPassword.value.length).toBe(16)
-  })
-
-  it('should return the search results when a search string is entered', () => {
-    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
-    const searchString = 'home'
-    const results = component.search(searchString)
-
-    expect(results).toEqual(['homeWiFi'])
-  })
-
-  it('should update the list of tags when a tag is removed ', () => {
-    component.tags = ['acm', 'ccm', 'profile']
-    const tagName = 'ccm'
-
-    component.remove(tagName)
-
-    expect(component.tags).toEqual(['acm', 'profile'])
   })
 
   it('should set the ciraCofigName property to null when TLS Selected', () => {
@@ -509,28 +496,13 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
     expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
     expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
+    expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(ProfilesService.TLS_DEFAULT_SIGNING_AUTHORITY)
+    expect(component.profileForm.controls.tlsSigningAuthority.valid).toBeTrue()
   })
   it('should set the tlsMode property to null when CIRA Selected', () => {
-    component.connectionModeChange('CIRA')
+    component.connectionModeChange(Constants.ConnectionMode_CIRA)
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
     expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
     expect(component.profileForm.controls.ciraConfigName.value).toBe('config1')
-  })
-
-  it('should return the search results when a search string is entered', () => {
-    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
-    const searchString = 'home'
-    const results = component.search(searchString)
-
-    expect(results).toEqual(['homeWiFi'])
-  })
-
-  it('should update the list of tags when a tag is removed ', () => {
-    component.tags = ['acm', 'ccm', 'profile']
-    const tagName = 'ccm'
-
-    component.remove(tagName)
-
-    expect(component.tags).toEqual(['acm', 'profile'])
   })
 })

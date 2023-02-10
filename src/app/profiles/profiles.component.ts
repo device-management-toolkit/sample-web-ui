@@ -8,7 +8,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { PageEventOptions, ProfileResponse, TlsMode } from 'src/models/models'
+import { PageEventOptions, ProfileResponse } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ProfilesService } from './profiles.service'
@@ -22,7 +22,6 @@ import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from
 
 export class ProfilesComponent implements OnInit {
   public profiles: ProfileResponse = { data: [], totalCount: 0 }
-  public tlsModes: TlsMode[] = []
   public isLoading = true
   displayedColumns: string[] = ['name', 'networkConfig', 'connectionConfig', 'activation', 'remove']
   pageEvent: PageEventOptions = {
@@ -34,7 +33,6 @@ export class ProfilesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly profilesService: ProfilesService) {
-    this.tlsModes = profilesService.tlsModes
   }
 
   ngOnInit (): void {
@@ -79,7 +77,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   parseTlsMode (val: number): string {
-    return this.tlsModes.find(z => z.value === val)?.viewValue ?? ''
+    return ProfilesService.TLS_MODES.find(z => z.value === val)?.label ?? ''
   }
 
   pageChanged (event: PageEvent): void {

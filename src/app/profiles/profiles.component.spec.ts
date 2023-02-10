@@ -21,7 +21,6 @@ describe('ProfilesComponent', () => {
 
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
-    profilesService.tlsModes = [{ value: 1, viewValue: 'test' }]
     getDataSpy = profilesService.getData.and.returnValue(of({
       data: [{
         activation: 'acmactivate',
@@ -106,7 +105,7 @@ describe('ProfilesComponent', () => {
   })
   it('should parseTlsMode when known', () => {
     const result = component.parseTlsMode(1)
-    expect(result).toBe('test')
+    expect(result).toBe(ProfilesService.TLS_MODES[0].label)
   })
   it('should parseTlsMode when unknown', () => {
     const result = component.parseTlsMode(null as any)
