@@ -1,3 +1,60 @@
+<a name="2.6.0"></a>
+## [2.6.0] - 2023-02-16
+### Build
+- **deps:** Bump esbuild from 0.16.13 to 0.17.1 (#be75657) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular ([#1023](https://github.com/open-amt-cloud-toolkit/rps/issues/1023)) (#22e9a35) 
+- **deps:** Bump esbuild from 0.17.7 to 0.17.8 ([#1022](https://github.com/open-amt-cloud-toolkit/rps/issues/1022)) (#0658c24) 
+- **deps:** Bump rxjs from 7.5.7 to 7.6.0 (#6c5a735) 
+- **deps:** Bump esbuild from 0.15.13 to 0.16.4 (#2b136d5) 
+- **deps:** Bump qs to 6.5.3 and minimatch to 3.0.5 (#d148f96) 
+- **deps:** Bump esbuild from 0.17.6 to 0.17.7 ([#1016](https://github.com/open-amt-cloud-toolkit/rps/issues/1016)) (#cb1ab7a) 
+- **deps:** Bump esbuild from 0.16.5 to 0.16.7 (#50ac77d) 
+- **deps:** Bump esbuild from 0.16.4 to 0.16.5 (#cb03832) 
+- **deps:** Bump zone.js from 0.11.8 to 0.12.0 (#5b85bb1) 
+- **deps:** Bump rxjs from 7.6.0 to 7.8.0 (#7fb37e3) 
+- **deps:** Bump esbuild from 0.16.7 to 0.16.9 (#5a75a59) 
+- **deps:** Bump esbuild from 0.16.9 to 0.16.10 (#f0baff4) 
+- **deps:** Bump cypress from 12.3.0 to 12.5.1 ([#1008](https://github.com/open-amt-cloud-toolkit/rps/issues/1008)) (#4f0c3ca) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular ([#998](https://github.com/open-amt-cloud-toolkit/rps/issues/998)) (#9045c29) 
+- **deps:** Bump xterm from 5.0.0 to 5.1.0 (#1c57018) 
+- **deps:** Bump esbuild from 0.16.10 to 0.16.13 (#66bc705) 
+- **deps:** Bump ua-parser-js from 0.7.31 to 0.7.33 (#b26187c) 
+- **deps:** Bump esbuild from 0.17.4 to 0.17.5 ([#1000](https://github.com/open-amt-cloud-toolkit/rps/issues/1000)) (#4da3959) 
+- **deps:** Bump tslib from 2.4.1 to 2.5.0 ([#996](https://github.com/open-amt-cloud-toolkit/rps/issues/996)) (#1dbbc5f) 
+- **deps:** upgrade to angular15 ([#997](https://github.com/open-amt-cloud-toolkit/rps/issues/997)) (#6d1d50a) 
+- **deps:** Bump esbuild from 0.17.1 to 0.17.4 ([#994](https://github.com/open-amt-cloud-toolkit/rps/issues/994)) (#6f90475) 
+- **deps:** Bump esbuild from 0.17.5 to 0.17.6 ([#1007](https://github.com/open-amt-cloud-toolkit/rps/issues/1007)) (#de05a86) 
+- **deps:** Bump cypress from 11.2.0 to 12.3.0 ([#971](https://github.com/open-amt-cloud-toolkit/rps/issues/971)) (#0ab0dc9) 
+- **deps:** Bump json5 from 1.0.1 to 1.0.2 (#a6a535c) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 15.1.3 to 15.1.4 ([#1002](https://github.com/open-amt-cloud-toolkit/rps/issues/1002)) (#64f6a82) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin ([#986](https://github.com/open-amt-cloud-toolkit/rps/issues/986)) (#6a5157f) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.17 to 18.11.18 (#0ce18f0) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#1003](https://github.com/open-amt-cloud-toolkit/rps/issues/1003)) (#da41b39) 
+- **deps-dev:** Bump typescript from 4.8.4 to 4.9.5 ([#999](https://github.com/open-amt-cloud-toolkit/rps/issues/999)) (#c43c651) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.18 to 18.11.19 ([#1006](https://github.com/open-amt-cloud-toolkit/rps/issues/1006)) (#0f336b6) 
+- **deps-dev:** Bump eslint-config-standard-with-typescript from 24.0.0 to 30.0.0 ([#983](https://github.com/open-amt-cloud-toolkit/rps/issues/983)) (#0bdf3b1) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.15 to 18.11.17 (#871755e) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 4.3.0 to 4.3.1 ([#939](https://github.com/open-amt-cloud-toolkit/rps/issues/939)) (#c8147fa) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 15.1.5 to 15.1.6 ([#1026](https://github.com/open-amt-cloud-toolkit/rps/issues/1026)) (#0ea9bc4) 
+- **deps-dev:** Bump angular to 15.1.3 (#c229d75) 
+- **deps-dev:** Bump eslint-config-standard-with-typescript (#31338b2) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.19 to 18.13.0 ([#1010](https://github.com/open-amt-cloud-toolkit/rps/issues/1010)) (#882ac56) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#1013](https://github.com/open-amt-cloud-toolkit/rps/issues/1013)) (#0f85c61) 
+- **deps-dev:** Bump angular from 15.1.4 to 15.1.5 ([#1015](https://github.com/open-amt-cloud-toolkit/rps/issues/1015)) (#4824ee6) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.10 to 18.11.13 (#be683f0) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin ([#1019](https://github.com/open-amt-cloud-toolkit/rps/issues/1019)) (#36385df) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin (#a682b36) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.11.13 to 18.11.15 (#f84249a) 
+
+### Ci
+- fix changelog build (#f89a27d) 
+
+### Feat
+- **profiles:** add tls support for Signing Authority selection ([#948](https://github.com/open-amt-cloud-toolkit/rps/issues/948)) (#d45b13f) 
+
+### Refactor
+- remove mqtt from ui (#959ab11) 
+
 <a name="2.5.1"></a>
 ## [2.5.1] - 2022-12-08
 ### Build
