@@ -39,5 +39,6 @@
         "ignore-module": "(core-js/.|zone.js/.|@angular/localize/init)$"
       }
     ]
-  }
+  },
+  "include": ["src"]
 }

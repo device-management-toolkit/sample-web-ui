@@ -50,6 +50,7 @@ testem.log
 # for cypress tests in dev/local environment
 cypress.env.*
 cypress.config.dev.ts
+cypress-ui-test-output*
 
 TESTS-*
 # System Files
