@@ -89,7 +89,7 @@
                     <p></p>
                     <div fxLayout="row wrap">
                         <div *ngFor="let chip of hwInfo?.CIM_Chip?.responses" fxFlex="100">
-                            <div *ngIf="chip.Version != null">
+                            <div *ngIf="chip.Version !== null">
                                 <div fxFlex="25">
                                     <p>CPU: </p>
                                 </div>
@@ -260,11 +260,11 @@
                         <div fxFlex="50" fxLayoutAlign="end">
                             <span class="mat-h3" data-cy="alarmDeleteOnCompletion"> {{entry.DeleteOnCompletion}}</span>
                         </div>
-                        <div *ngIf="entry.Interval != null" fxFlex="50">
+                        <div *ngIf="entry.Interval !== null" fxFlex="50">
                             <p>Interval: </p>
                         </div>
-                        <div fxFlex="50" *ngIf="entry.Interval != null" fxLayoutAlign="end">
-                            <span class="mat-h3" data-cy="alarmInterval"> {{entry.Interval.Interval}}</span>
+                        <div fxFlex="50" *ngIf="entry.Interval !== null" fxLayoutAlign="end">
+                            <span class="mat-h3" data-cy="alarmInterval"> {{entry.Interval?.Interval}}</span>
                         </div>
                     </div>
                     <div fxLayout="row wrap">

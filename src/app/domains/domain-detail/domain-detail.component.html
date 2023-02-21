@@ -33,11 +33,11 @@
               <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx">
             </div>
             <div fxFlex="50" fxLayoutAlign="start center">
-              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value == null">
+              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value === null">
                 <mat-icon    color="warn">remove_circle</mat-icon>
                 Certificate Not Yet Uploaded
               </div>
-              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value != null">
+              <div fxLayoutAlign="center center" [fxShow]="domainForm.controls.provisioningCert.value !== null">
                 <mat-icon    color="primary">check_circle</mat-icon>
                 Certificate Uploaded
               </div>
