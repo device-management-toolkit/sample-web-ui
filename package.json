@@ -48,7 +48,7 @@
     "@angular/localize": "~15.2.2",
     "@types/jasmine": "~4.3.1",
     "eslint-config-standard-with-typescript": "^34.0.0",
-    "@types/node": "^18.15.0",
+    "@types/node": "^18.15.2",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "cypress": "^12.7.0",
