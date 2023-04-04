@@ -48,13 +48,13 @@ export interface Profile {
   profileName: string
   generateRandomPassword: boolean
   amtPassword: null
-  configurationScript: null
   activation: string
   ciraConfigName: string
   dhcpEnabled: boolean
   generateRandomMEBxPassword: boolean
   mebxPassword: string
   tags: string[]
+  ieee8021xProfileName: string | null
   wifiConfigs: any[]
   tlsMode: number
   tlsSigningAuthority: string

@@ -1,0 +1,59 @@
+<mat-toolbar>
+  <div fxLayout='row' fxFlexFill>
+    <div fxLayoutAlign='start center' fxFlex='33'>
+      <span i18n>IEEE8021x Configs</span>
+    </div>
+    <div fxFlex></div>
+    <div fxFlex='33' fxLayoutAlign='end'>
+      <button [fxHide]='disableNewConfiguration()' mat-button (click)='navigateTo()'>
+        <mat-icon>add</mat-icon>
+        Add New
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-progress-bar mode='indeterminate' [fxShow]='isLoading'></mat-progress-bar>
+<mat-card>
+  <mat-card-content>
+    <h3 [fxShow]='isNoData()' fxLayoutAlign='center'>No IEEE 8021x Configs</h3>
+    <mat-table [dataSource]='pagedConfigs.data' [fxHide]='isNoData()'>
+      <ng-container matColumnDef='profileName'>
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef='let element'> {{ element.profileName }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef='authenticationProtocol'>
+        <mat-header-cell *matHeaderCellDef>Authentication Protocol</mat-header-cell>
+        <!-- map the selections to lookup values -->
+        <mat-cell *matCellDef='let element'>
+          {{ protocols.labelForValue(element.authenticationProtocol) }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef='interface'>
+        <mat-header-cell *matHeaderCellDef>Interrface</mat-header-cell>
+        <mat-cell *matCellDef='let element'> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef='remove'>
+        <mat-header-cell *matHeaderCellDef fxFlex='12.5'></mat-header-cell>
+        <mat-cell *matCellDef='let row' fxFlex='12.5' (click)='$event.stopPropagation()'>
+          <button mat-icon-button (click)='delete(row.profileName)'>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef='displayedColumns'></mat-header-row>
+      <mat-row *matRowDef='let row; columns: displayedColumns;' (click)='navigateTo(row.profileName)'></mat-row>
+    </mat-table>
+    <div *ngIf='pagedConfigs.totalCount'>
+      <mat-paginator [pageSizeOptions]='[25, 50, 100]'
+                     [pageSize]='25'
+                     [length]='pagedConfigs.totalCount'
+                     (page)='onPaginator($event)'
+                     showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

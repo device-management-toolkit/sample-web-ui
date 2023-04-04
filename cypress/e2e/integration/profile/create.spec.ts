@@ -10,6 +10,7 @@ import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { profiles } from 'cypress/e2e/fixtures/api/profile'
 import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
 import { amtProfiles } from '../../fixtures/formEntry/profile'
+import * as api8021x from '../../fixtures/api/ieee8021x'
 
 // ---------------------------- Test section ----------------------------
 
@@ -26,6 +27,10 @@ describe('Test Profile Page', () => {
       statusCode: httpCodes.SUCCESS,
       body: wirelessConfigs.getAll.forProfile.response
     }).as('get-wirelessConfigs')
+
+    api8021x
+      .interceptGetAll(httpCodes.SUCCESS, api8021x.allConfigsResponse)
+      .as('intercept8021xGetAll')
 
     cy.myIntercept('POST', 'profiles', {
       statusCode: httpCodes.CREATED,
@@ -46,10 +51,10 @@ describe('Test Profile Page', () => {
       body: profiles.getAll.success.response
     }).as('get-profiles2')
 
-    // Fill out the profile
     cy.get('button').contains('Add New').click()
     cy.wait('@get-configs')
     cy.wait('@get-wirelessConfigs')
+    cy.wait('@intercept8021xGetAll')
   })
 
   amtProfiles.forEach((amtProfile) => {
@@ -83,12 +88,6 @@ describe('Test Profile Page', () => {
         cy.wrap(req)
           .its('response.statusCode')
           .should('eq', httpCodes.CREATED)
-
-        // Check that the config was successful
-        // cy.get('mat-cell').contains(amtProfile.profileName)
-        // cy.get('mat-cell').contains(profileFixtures.check.network.dhcp.toString())
-        // cy.get('mat-cell').contains(amtProfile.ciraConfig)
-        // cy.get('mat-cell').contains(amtProfile.activation)
       })
     })
   })

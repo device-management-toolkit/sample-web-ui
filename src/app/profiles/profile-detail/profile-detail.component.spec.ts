@@ -13,6 +13,8 @@ import { ConfigsService } from 'src/app/configs/configs.service'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
+import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
+import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
 
 import { ProfileDetailComponent } from './profile-detail.component'
 import Constants from '../../shared/config/Constants'
@@ -24,11 +26,36 @@ describe('ProfileDetailComponent', () => {
   let configsSpy: jasmine.Spy
   let profileCreateSpy: jasmine.Spy
   let profileUpdateSpy: jasmine.Spy
+  const ieee8021xAvailableConfigs: IEEE8021x.Config[] = [
+    {
+      profileName: '8021x-config-1',
+      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      pxeTimeout: 120,
+      wiredInterface: true,
+      version: ''
+    },
+    {
+      profileName: '8021x-config-2',
+      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      pxeTimeout: 120,
+      wiredInterface: false,
+      version: ''
+    },
+    {
+      profileName: '8021x-config-3',
+      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      pxeTimeout: 120,
+      wiredInterface: false,
+      version: ''
+    }
+  ]
+  let ieee8021xConfigsSpy: jasmine.Spy
   let wirelessConfigsSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord', 'update', 'create'])
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
+    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
     // const tlsService = jasmine.createSpyObj('TLSService', ['getData'])
     const profileResponse = {
@@ -42,12 +69,14 @@ describe('ProfileDetailComponent', () => {
       dhcpEnabled: true,
       generateRandomMEBxPassword: true,
       tags: ['acm'],
+      ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
       wifiConfigs: [{ priority: 1, profileName: 'wifi' }]
     }
     profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
     profileUpdateSpy = profilesService.update.and.returnValue(of({}))
     configsSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
+    ieee8021xConfigsSpy = ieee8021xService.getData.and.returnValue(of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length }))
     wirelessConfigsSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
@@ -56,6 +85,7 @@ describe('ProfileDetailComponent', () => {
       providers: [
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
+        { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: WirelessService, useValue: wirelessService },
         // { provide: TLSService, useValue: tlsService },
         {
@@ -82,6 +112,7 @@ describe('ProfileDetailComponent', () => {
     expect(component).toBeTruthy()
     expect(configsSpy).toHaveBeenCalled()
     expect(profileSpy).toHaveBeenCalledWith('profile')
+    expect(ieee8021xConfigsSpy).toHaveBeenCalled()
     expect(wirelessConfigsSpy).toHaveBeenCalled()
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
@@ -139,6 +170,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
+      ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
       ciraConfigName: 'config1',
       tlsConfigName: null
     })

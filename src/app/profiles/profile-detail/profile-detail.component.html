@@ -1,199 +1,226 @@
 <mat-toolbar>
   {{ pageTitle }}
 </mat-toolbar>
-<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
-<div fxLayout="row" fxLayoutAlign="center">
-  <mat-card fxFlex="50" fxFlex.lt-md=100>
+<mat-progress-bar mode='indeterminate' [fxShow]='isLoading'></mat-progress-bar>
+<div fxLayout='row' fxLayoutAlign='center'>
+  <mat-card fxFlex='50' fxFlex.lt-md='100'>
     <mat-card-header>
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
-    <mat-list *ngIf="errorMessages.length > 0">
-      <mat-list-item *ngFor="let item of errorMessages">
-        <mat-icon color="warn" mat-list-icon>error</mat-icon>
+    <mat-list *ngIf='errorMessages.length > 0'>
+      <mat-list-item *ngFor='let item of errorMessages'>
+        <mat-icon color='warn' mat-list-icon>error</mat-icon>
         {{ item }}
       </mat-list-item>
     </mat-list>
-    <form [formGroup]="profileForm" (ngSubmit)="confirm()">
+    <form [formGroup]='profileForm' (ngSubmit)='confirm()'>
       <mat-card-content>
-        <div fxLayout="row wrap">
-          <mat-form-field fxFlex="100">
-            <input formControlName="profileName" matInput name="profileName" placeholder="Profile Name" required>
+        <div fxLayout='row wrap'>
+          <mat-form-field fxFlex='100'>
+            <input formControlName='profileName' matInput name='profileName' placeholder='Profile Name' required>
             <mat-error i18n>This field is required</mat-error>
-            <mat-hint>Provide a name for this profile. This will be the name of the profile used on the device during
-              activation.</mat-hint>
+            <mat-hint>
+              Provide a name for this profile.
+              This will be the name of the profile used on the device during activation.
+            </mat-hint>
           </mat-form-field>
-          <mat-form-field fxFlex="100">
+          <mat-form-field fxFlex='100'>
             <mat-label>Activation Mode</mat-label>
-            <mat-select formControlName="activation" required>
-              <mat-option data-cy="activationModes" *ngFor="let activationMode of activationModes"
-                [value]="activationMode.value">
+            <mat-select formControlName='activation' required>
+              <mat-option data-cy='activationModes'
+                *ngFor='let activationMode of activationModes'
+                [value]='activationMode.value'
+              >
                 {{activationMode.display}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-          <div fxFlex="100">
+          <div fxFlex='100'>
             <mat-label>AMT Features - Enable/Disable redirection features of AMT</mat-label>
           </div>
-          <div fxFlex="100" style="margin-top:10px">
-            <mat-checkbox data-cy="redirect_ider" formControlName="iderEnabled">IDE Redirect</mat-checkbox>
+          <div fxFlex='100' style='margin-top:10px'>
+            <mat-checkbox data-cy='redirect_ider' formControlName='iderEnabled'>IDE Redirect</mat-checkbox>
           </div>
-          <div fxFlex="100">
-            <mat-checkbox data-cy="redirect_kvm" formControlName="kvmEnabled">KVM</mat-checkbox>
+          <div fxFlex='100'>
+            <mat-checkbox data-cy='redirect_kvm' formControlName='kvmEnabled'>KVM</mat-checkbox>
           </div>
-          <div fxFlex="100">
-            <mat-checkbox data-cy="redirect_sol" formControlName="solEnabled">SOL</mat-checkbox>
+          <div fxFlex='100'>
+            <mat-checkbox data-cy='redirect_sol' formControlName='solEnabled'>SOL</mat-checkbox>
           </div>
-          <mat-form-field fxFlex="100" style="margin-top:10px">
+
+          <mat-form-field fxFlex='100' style='margin-top:10px'>
             <mat-label>User Consent</mat-label>
             <mat-hint>Controls when a user must be present for select AMT features</mat-hint>
-            <mat-select formControlName="userConsent" required>
-              <mat-option *ngFor="let mode of userConsentModes" [value]="mode.value">
+            <mat-select formControlName='userConsent' required>
+              <mat-option *ngFor='let mode of userConsentModes' [value]='mode.value'>
                 {{mode.display}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <div fxFlex="100" style="margin-top:15px">
-            <mat-checkbox data-cy="genAmtPass" formControlName="generateRandomPassword">Generate Random AMT Password For
-              Each Device</mat-checkbox>
+          <div fxFlex='100' style='margin-top:15px'>
+            <mat-checkbox data-cy='genAmtPass' formControlName='generateRandomPassword'>
+              Generate Random AMT Password For Each Device
+            </mat-checkbox>
           </div>
-          <mat-form-field fxFlex="100">
-            <input [type]="amtInputType" formControlName="amtPassword" matInput name="amtPassword"
-              placeholder="Static AMT Password" required minlength=8 maxlength="32">
+          <mat-form-field fxFlex='100'>
+            <input [type]='amtInputType' formControlName='amtPassword' matInput name='amtPassword'
+              placeholder='Static AMT Password' required minlength='8' maxlength='32'>
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
             <mat-hint>The AMT Password is used for remote access of a device. It is also required for
-              reconfiguring/deactivating the device.</mat-hint>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
-              (click)="toggleAMTPassVisibility()" [disabled]='profileForm.controls.amtPassword.disabled'>
+              reconfiguring/deactivating the device.
+            </mat-hint>
+            <button mat-icon-button matSuffix type='button' matTooltip='Show / Hide Password'
+              (click)='toggleAMTPassVisibility()' [disabled]='profileForm.controls.amtPassword.disabled'>
               <mat-icon [fxHide]="amtInputType === 'text'">visibility</mat-icon>
               <mat-icon [fxHide]="amtInputType !== 'text'">visibility_off</mat-icon>
             </button>
-            <button mat-icon-button matSuffix data-cy="genStaticAmt" type="button" matTooltip="Generate Random Password"
-              (click)="GenerateAMTPassword()" [disabled]='profileForm.controls.amtPassword.disabled'>
+            <button mat-icon-button matSuffix data-cy='genStaticAmt' type='button' matTooltip='Generate Random Password'
+              (click)='GenerateAMTPassword()' [disabled]='profileForm.controls.amtPassword.disabled'>
               <mat-icon>loop</mat-icon>
             </button>
           </mat-form-field>
           <br>
-          <div fxFlex="50" style="margin-top:15px">
-            <mat-checkbox data-cy="genMebxPass" formControlName="generateRandomMEBxPassword">Generate Random MEBX
-              Password For Each Device</mat-checkbox>
+          <div fxFlex='100' style='margin-top:15px'>
+            <mat-checkbox data-cy='genMebxPass' formControlName='generateRandomMEBxPassword'>
+              Generate Random MEBX Password For Each Device
+            </mat-checkbox>
           </div>
-          <mat-form-field fxFlex="100">
-            <input [type]="mebxInputType" matInput formControlName="mebxPassword" placeholder="Static MEBX Password"
-              required minlength=8 maxlength="32">
+          <mat-form-field fxFlex='100'>
+            <input [type]='mebxInputType' matInput formControlName='mebxPassword' placeholder='Static MEBX Password'
+              required minlength='8' maxlength='32'>
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-            <mat-hint>The MEBX Password is used for protecting the BIOS access when a user is present with a device. It
-              can only be set when the activation mode is set to Admin Control Mode.
+            <mat-hint>
+              The MEBX Password is used for protecting the BIOS access when a user is present with a device.
+              It can only be set when the activation mode is set to Admin Control Mode.
             </mat-hint>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
-              (click)="toggleMEBXPassVisibility()" [disabled]='profileForm.controls.mebxPassword.disabled'>
+            <button mat-icon-button matSuffix type='button' matTooltip='Show / Hide Password'
+              (click)='toggleMEBXPassVisibility()' [disabled]='profileForm.controls.mebxPassword.disabled'>
               <mat-icon [fxHide]="mebxInputType === 'text'">visibility</mat-icon>
               <mat-icon [fxHide]="mebxInputType !== 'text'">visibility_off</mat-icon>
             </button>
-            <button mat-icon-button matSuffix data-cy="genStaticMebx" type="button"
-              matTooltip="Generate Random Password" (click)="GenerateMEBXPassword()"
+            <button mat-icon-button matSuffix data-cy='genStaticMebx' type='button'
+              matTooltip='Generate Random Password' (click)='GenerateMEBXPassword()'
               [disabled]='profileForm.controls.mebxPassword.disabled'>
               <mat-icon>loop</mat-icon>
             </button>
           </mat-form-field>
-          <div>
-            <br />
-            <mat-label>Network Configuration</mat-label>
-            <br>
-            <mat-radio-group name="dhcpEnabled" formControlName="dhcpEnabled"><br />
-              <mat-radio-button [value]="true" checked="true">DHCP</mat-radio-button><br /><br />
-              <mat-radio-button [value]="false">STATIC</mat-radio-button><br /><br />
+
+          <div fxFlex='100' style='margin-top: 20px'>
+            <h3>Network Configuration</h3>
+            <mat-radio-group name='dhcpEnabled' formControlName='dhcpEnabled'>
+              <mat-radio-button [value]='true' checked='true'>DHCP</mat-radio-button>
+              <br /><br />
+              <mat-radio-button [value]='false'>STATIC</mat-radio-button>
+              <br /><br />
             </mat-radio-group>
+            <mat-checkbox data-cy='enable8021x' [formControl]='enable8021xControl' [fxShow]='!!ieee8021xProfileName'>
+              Enable Wired 802.1x Profile: <b>{{ ieee8021xProfileName }}</b>
+            </mat-checkbox>
           </div>
-          <mat-form-field fxFlex=100 style="margin-bottom:24px;">
+
+          <div fxFlex='100' style='margin-top: 20px'>
+            <mat-form-field fxFill>
+              <mat-label>Wi-Fi Profiles</mat-label>
+              <input matInput type='text'
+                data-cy='wifiAutocomplete' placeholder='Search for Wi-Fi Profiles to Add'
+                [formControl]='wifiAutocomplete'
+                [matAutocomplete]='auto'>
+              <mat-autocomplete autoActiveFirstOption #auto='matAutocomplete'
+                (optionSelected)='selectWifiProfile($event)'>
+                <mat-option *ngFor='let wifi of filteredWifiList | async' [value]='wifi' [ngClass]='isSelectable(wifi)'>
+                  {{wifi}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-hint>Wi-Fi will not work over static Network</mat-hint>
+            </mat-form-field>
+          </div>
+          <div [fxShow]='(selectedWifiConfigs.length > 0)'>
+            <mat-label class='mat-subheading-1'>Associated Wireless Profiles (In Priority Order)</mat-label>
+            <br />
+            <mat-hint>Drag and Drop to reorder</mat-hint>
+          </div>
+          <mat-list cdkDropList (cdkDropListDropped)='drop($event)' class='drag-boundary'>
+            <mat-list-item class='drag-box'
+              cdkDrag cdkDragLockAxis='y' cdkDragBoundary='.drag-boundary'
+              *ngFor='let item of selectedWifiConfigs'
+            >
+              <p matLine>{{item.priority}}. {{item.profileName}}</p>
+              <mat-icon matListIcon>drag_handle</mat-icon>
+              <button type='button' mat-icon-button (click)='removeWifiProfile(item)'>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-form-field fxFlex='100'>
             <mat-label>Tags</mat-label>
-            <mat-chip-list #tagList aria-label="Tag selection">
-              <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
+            <mat-chip-list #tagList aria-label='Tag selection'>
+              <mat-chip *ngFor='let tag of tags' [selectable]='true' [removable]='true' (removed)='remove(tag)'>
                 {{tag}}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
-              <input placeholder="New tag..." [matChipInputFor]="tagList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-                (matChipInputTokenEnd)="add($event)">
+              <input placeholder='New tag...' [matChipInputFor]='tagList'
+                [matChipInputSeparatorKeyCodes]='separatorKeysCodes' [matChipInputAddOnBlur]='true'
+                (matChipInputTokenEnd)='add($event)'>
             </mat-chip-list>
             <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices
-              grow. Type a tag, then present enter or comma.</mat-hint>
+              grow. Type a tag, then present enter or comma.
+            </mat-hint>
           </mat-form-field>
-          <div>
-            <br />
-            <mat-label>Connection Configuration</mat-label>
-            <br>
-            <mat-radio-group name="connectionMode" formControlName="connectionMode"><br />
+
+          <div fxFlex='100' style='margin-top: 20px'>
+            <h3>Connection Configuration</h3>
+            <mat-radio-group name='connectionMode' formControlName='connectionMode'>
               <mat-error
-                *ngIf="profileForm.get('connectionMode')?.touched && profileForm.get('connectionMode')?.invalid ">A CIRA
-                or TLS Config is required</mat-error>
-              <mat-radio-button [disabled]="ciraConfigurations.data.length === 0" value="CIRA">CIRA (Cloud) <span
-                  [fxShow]="ciraConfigurations.data.length === 0">
-                  - No CIRA Configs Found</span> </mat-radio-button><br /><br />
-              <mat-radio-button value="TLS">TLS (Enterprise)</mat-radio-button><br /><br />
+                [fxShow]="profileForm.get('connectionMode')?.touched && profileForm.get('connectionMode')?.invalid">
+                A CIRA or TLS Config is required
+              </mat-error>
+              <mat-radio-button [disabled]='ciraConfigurations.length === 0' value='CIRA'>
+                CIRA (Cloud)
+                <span [fxShow]='ciraConfigurations.length === 0'>- No CIRA Configs Found</span>
+              </mat-radio-button>
+              <br /><br />
+              <mat-radio-button value='TLS'>TLS (Enterprise)</mat-radio-button>
+              <br /><br />
             </mat-radio-group>
           </div>
-          <mat-form-field fxFlex="100" [fxShow]="profileForm.get('connectionMode')?.value=== 'TLS'">
+
+          <mat-form-field fxFlex='100' [fxShow]="profileForm.get('connectionMode')?.value=== 'TLS'">
             <mat-label>TLS Mode</mat-label>
-            <mat-select formControlName="tlsMode">
-              <mat-option *ngFor="let tm of tlsModes" [value]="tm.value">{{tm.label}}</mat-option>
+            <mat-select formControlName='tlsMode'>
+              <mat-option *ngFor='let tm of tlsModes' [value]='tm.value'>{{tm.label}}</mat-option>
             </mat-select>
             <mat-hint>CIRA cannot be configured, if TLS is configured</mat-hint>
           </mat-form-field>
-          <mat-form-field fxFlex="100" [fxShow]="profileForm.get('connectionMode')?.value=== 'TLS'">
+          <mat-form-field fxFlex='100' [fxShow]="profileForm.get('connectionMode')?.value=== 'TLS'">
             <mat-label>TLS Signing Authority</mat-label>
-            <mat-select formControlName="tlsSigningAuthority">
-              <mat-option *ngFor="let tm of tlsSigningAuthorities" [value]="tm.value">{{tm.label}}</mat-option>
+            <mat-select formControlName='tlsSigningAuthority'>
+              <mat-option *ngFor='let tm of tlsSigningAuthorities' [value]='tm.value'>{{tm.label}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field fxFlex="100" [fxShow]="profileForm.get('connectionMode')?.value=== 'CIRA'">
+          <mat-form-field fxFlex='100' [fxShow]="profileForm.get('connectionMode')?.value=== 'CIRA'">
             <mat-label>CIRA Configuration</mat-label>
-            <mat-select formControlName="ciraConfigName">
-              <mat-option *ngFor="let cc of ciraConfigurations.data" [value]="cc.configName">{{cc.configName}}
+            <mat-select formControlName='ciraConfigName'>
+              <mat-option *ngFor='let cc of ciraConfigurations' [value]='cc.configName'>{{cc.configName}}
               </mat-option>
             </mat-select>
             <mat-hint><span *ngIf="profileForm.get('ciraConfigName')?.value === null">No config selected.</span> CIRA
               cannot be configured for static network if AMT version is lower than 11.6
             </mat-hint>
           </mat-form-field>
-          <mat-form-field fxFlex="100">
-            <mat-label>Wi-Fi Profiles</mat-label>
-            <input matInput type="text" placeholder="Search for Wi-Fi Profiles to Add" [formControl]="wifiAutocomplete"
-              [matAutocomplete]="auto" data-cy="wifiAutocomplete">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
-              (optionSelected)="selectWifiProfile($event)">
-              <mat-option *ngFor="let wifi of filteredWifiList | async" [value]="wifi" [ngClass]="isSelectable(wifi)">
-                {{wifi}}</mat-option>
-            </mat-autocomplete>
-            <mat-hint>Wi-Fi will not work over static Network</mat-hint>
-          </mat-form-field>
-          <div [fxHide]="selectedWifiConfigs.length === 0">
-            <mat-label class="mat-subheading-1">Associated Wireless Profiles (In Priority Order)</mat-label>
-            <br />
-            <mat-hint>Drag and Drop to reorder</mat-hint>
-          </div>
-          <mat-list cdkDropList (cdkDropListDropped)="drop($event)">
-            <mat-list-item class="drag-box" cdkDrag *ngFor="let item of selectedWifiConfigs">
-              <p matLine>{{item.priority}}. {{item.profileName}}</p>
-              <mat-icon matListIcon>drag_handle</mat-icon>
-              <button type="button" mat-icon-button (click)="removeWifiProfile(item)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </mat-list-item>
-          </mat-list>
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <div fxLayout="row" fxLayout.xs="column">
-          <div fxFlex="50" fxLayoutAlign="center center">
-            <button type="button" mat-button color="primary" (click)="cancel()">
+        <div fxLayout='row' fxLayout.xs='column'>
+          <div fxFlex='50' fxLayoutAlign='center center'>
+            <button type='button' mat-button color='primary' (click)='cancel()'>
               <span i18n>CANCEL</span>
             </button>
           </div>
-          <div fxFlex="50" fxLayoutAlign="center center">
-            <button data-cy="save" type="submit" mat-flat-button color="primary">
+          <div fxFlex='50' fxLayoutAlign='center center'>
+            <button data-cy='save' type='submit' mat-flat-button color='primary'>
               <span i18n>SAVE</span>
             </button>
           </div>

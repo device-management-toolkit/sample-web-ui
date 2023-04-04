@@ -20,7 +20,6 @@ const profiles = {
             profileName: 'happyPath',
             generateRandomPassword: false,
             passwordLength: null,
-            configurationScript: null,
             activation: 'ccmactivate',
             ciraConfigName: 'default',
             dhcpEnabled: 'true',
@@ -31,7 +30,6 @@ const profiles = {
             profileName: 'happyPath',
             generateRandomPassword: false,
             passwordLength: null,
-            configurationScript: null,
             activation: 'ccmactivate',
             ciraConfigName: 'default',
             dhcpEnabled: 'true',
@@ -42,7 +40,6 @@ const profiles = {
             profileName: 'happyPath',
             generateRandomPassword: false,
             passwordLength: null,
-            configurationScript: null,
             activation: 'ccmactivate',
             ciraConfigName: 'default',
             dhcpEnabled: 'true',
@@ -53,7 +50,6 @@ const profiles = {
             profileName: 'happyPath',
             generateRandomPassword: false,
             passwordLength: null,
-            configurationScript: null,
             activation: 'ccmactivate',
             ciraConfigName: 'default',
             dhcpEnabled: 'true',
@@ -64,7 +60,6 @@ const profiles = {
             profileName: 'happyPath',
             generateRandomPassword: false,
             passwordLength: null,
-            configurationScript: null,
             activation: 'ccmactivate',
             ciraConfigName: 'default',
             dhcpEnabled: 'true',
@@ -80,7 +75,6 @@ const profiles = {
     success: {
       response: {
         profileName: 'happyPath',
-        configurationScript: null,
         activation: 'ccmactivate',
         ciraConfigName: 'default',
         dhcpEnabled: true

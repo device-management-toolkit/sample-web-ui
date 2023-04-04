@@ -10,16 +10,16 @@ import { environment } from 'src/environments/environment'
 import { AuthService } from '../auth.service'
 
 import { ProfilesService } from './profiles.service'
+  import { Profile, ProfileResponse } from '../../models/models'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
   let routerSpy
 
-  const profileReq = {
+  const profileReq: Profile = {
     profileName: 'profile1',
     amtPassword: null,
-    configurationScript: null,
     activation: 'acmactivate',
     ciraConfigName: 'config1',
     dhcpEnabled: true,
@@ -27,12 +27,13 @@ describe('ProfilesService', () => {
     generateRandomPassword: true,
     generateRandomMEBxPassword: true,
     tags: ['acm'],
+    ieee8021xProfileName: null,
     wifiConfigs: [],
     tlsMode: 1,
     tlsSigningAuthority: 'SelfSigned'
   }
 
-  const profileResponse = {
+  const profileResponse: ProfileResponse = {
     data: [profileReq],
     totalCount: 1
   }

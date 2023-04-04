@@ -36,7 +36,7 @@ amtModes.forEach((amtMode) => {
           amtPassword: '', // Cypress.env('AMT_PASSWORD'),
           mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
           dhcpEnabled: dhcp,
-          //   userConsent: Constants.UserConsent_All,
+          userConsent: Constants.UserConsent_All,
           iderEnabled: true,
           kvmEnabled: true,
           solEnabled: true

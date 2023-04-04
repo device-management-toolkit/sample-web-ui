@@ -13,9 +13,9 @@ import { ConfigsService } from 'src/app/configs/configs.service'
 import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import {
-  CIRAConfigResponse,
+  CIRAConfig,
   Profile,
-  TLSConfigResponse,
+  TLSConfig,
   TlsMode,
   TlsSigningAuthority,
   WiFiProfile,
@@ -29,7 +29,10 @@ import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { forkJoin, Observable, of } from 'rxjs'
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete'
+import {
+  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent
+} from '@angular/material/legacy-autocomplete'
+import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 
 @Component({
   selector: 'app-profile-detail',
@@ -49,8 +52,8 @@ export class ProfileDetailComponent implements OnInit {
     { display: 'KVM Only', value: Constants.UserConsent_KVM }
   ]
 
-  public ciraConfigurations: CIRAConfigResponse = { data: [], totalCount: 0 }
-  public tlsConfigurations: TLSConfigResponse = { data: [], totalCount: 0 }
+  public ciraConfigurations: CIRAConfig[] = []
+  public tlsConfigurations: TLSConfig[] = []
   public isLoading = false
   public pageTitle = 'New Profile'
   public isEdit = false
@@ -67,12 +70,23 @@ export class ProfileDetailComponent implements OnInit {
     width: '450px'
   }
 
+  enable8021xControl = new FormControl()
+  ieee8021xProfileName: string = ''
   wirelessConfigurations: string[] = []
   filteredWifiList: Observable<string[]> = of([])
   wifiAutocomplete = new FormControl()
 
-  constructor (public snackBar: MatSnackBar, public fb: FormBuilder, public router: Router, private readonly activeRoute: ActivatedRoute,
-    public profilesService: ProfilesService, private readonly configsService: ConfigsService, private readonly wirelessService: WirelessService, public dialog: MatDialog) {
+  constructor (
+    public snackBar: MatSnackBar,
+    public fb: FormBuilder,
+    public router: Router,
+    private readonly activeRoute: ActivatedRoute,
+    public profilesService: ProfilesService,
+    private readonly configsService: ConfigsService,
+    private readonly wirelessService: WirelessService,
+    private readonly ieee8021xService: IEEE8021xService,
+    public dialog: MatDialog
+  ) {
     this.tlsModes = ProfilesService.TLS_MODES
     this.tlsSigningAuthorities = ProfilesService.TLS_SIGNING_AUTHORITIES
     this.profileForm = fb.group({
@@ -85,6 +99,7 @@ export class ProfileDetailComponent implements OnInit {
       dhcpEnabled: [true],
       connectionMode: [null, Validators.required],
       ciraConfigName: [null],
+      ieee8021xProfileName: [null],
       wifiConfigs: [null],
       tlsMode: [null],
       tlsSigningAuthority: [null],
@@ -98,34 +113,16 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   ngOnInit (): void {
+    this.getIEEE8021xConfigs()
+    this.getWirelessConfigs()
+    this.getCiraConfigs()
     this.activeRoute.params.subscribe(params => {
-      this.getWirelessConfigs()
-      if (params.name != null && params.name !== '') {
+      if (params.name) {
         this.isLoading = true
-        this.profilesService.getRecord(params.name)
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-            })
-          ).subscribe(data => {
-            this.isEdit = true
-            this.profileForm.controls.profileName.disable()
-            this.pageTitle = data.profileName
-            this.tags = data.tags
-            this.profileForm.patchValue(data)
-            this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
-            this.setConnectionMode(data)
-            // this.setTlsSigningAuthority(data)
-          }, error => {
-            this.errorMessages = error
-          })
+        this.isEdit = true
+        this.profileForm.controls.profileName.disable()
+        this.getAmtProfile(params.name)
       }
-    })
-
-    this.configsService.getData().subscribe(data => {
-      this.ciraConfigurations = data
-    }, error => {
-      this.errorMessages = error
     })
 
     this.filteredWifiList = this.wifiAutocomplete.valueChanges.pipe(
@@ -137,6 +134,7 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
     this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => { this.networkConfigChange(value) })
     this.profileForm.controls.connectionMode?.valueChanges.subscribe(value => { this.connectionModeChange(value) })
+    this.enable8021xControl.valueChanges.subscribe(value => { this.enable8021xChange(value) })
   }
 
   setConnectionMode (data: Profile): void {
@@ -147,11 +145,14 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  // setTlsSigningAuthority (data: Profile): void {
-  //   if (data.tlsSigningAuthority) {
-  //     this.profileForm.controls.tlsSigningAuthority.setValue(data.tlsSigningAuthority)
-  //   }
-  // }
+  setEnable8021x (data: Profile): void {
+    this.enable8021xControl.setValue(!!data.ieee8021xProfileName)
+  }
+
+  enable8021xChange (value: boolean): void {
+    const updatedValue = value ? this.ieee8021xProfileName : null
+    this.profileForm.controls.ieee8021xProfileName.setValue(updatedValue)
+  }
 
   activationChange (value: string): void {
     if (value === Constants.CCMActivate) {
@@ -170,6 +171,65 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.userConsent.setValidators(Validators.required)
       this.profileForm.controls.generateRandomMEBxPassword.enable()
     }
+  }
+
+  getAmtProfile (name: string): void {
+    this.isLoading = true
+    this.profilesService
+      .getRecord(name)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe({
+        next: data => {
+          this.pageTitle = data.profileName
+          this.tags = data.tags
+          this.profileForm.patchValue(data)
+          this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
+          this.setConnectionMode(data)
+          this.setEnable8021x(data)
+        },
+        error: error => {
+          this.errorMessages = error
+        }
+      })
+  }
+
+  getCiraConfigs (): void {
+    this.configsService
+      .getData()
+      .subscribe({
+        next: ciraCfgRsp => {
+          this.ciraConfigurations = ciraCfgRsp.data
+        },
+        error: error => {
+          this.errorMessages = error
+        }
+      })
+  }
+
+  getIEEE8021xConfigs (): void {
+    this.ieee8021xService
+      .getData()
+      .subscribe({
+        next: (configs) => {
+          for (const config of configs.data) {
+            if (config.wiredInterface) {
+              this.ieee8021xProfileName = config.profileName
+            }
+          }
+        },
+        error: err => {
+          console.log(JSON.stringify(err))
+          if (err instanceof Array) {
+            this.errorMessages = err
+          } else {
+            this.errorMessages.push(JSON.stringify(err))
+          }
+        }
+      })
   }
 
   getWirelessConfigs (): void {
@@ -286,7 +346,10 @@ export class ProfileDetailComponent implements OnInit {
     if (event.option.value !== Constants.NORESULTS) {
       const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
       if (!selectedProfiles.includes(event.option.value)) {
-        this.selectedWifiConfigs.push({ priority: this.selectedWifiConfigs.length + 1, profileName: event.option.value })
+        this.selectedWifiConfigs.push({
+          priority: this.selectedWifiConfigs.length + 1,
+          profileName: event.option.value
+        })
       }
       this.wifiAutocomplete.patchValue('')
     }
@@ -332,7 +395,10 @@ export class ProfileDetailComponent implements OnInit {
 
   updatePriorities (): void {
     let index = 1
-    this.selectedWifiConfigs.map(x => { x.priority = index++; return x })
+    this.selectedWifiConfigs.map(x => {
+      x.priority = index++
+      return x
+    })
   }
 
   add (event: MatChipInputEvent): void {
@@ -364,7 +430,6 @@ export class ProfileDetailComponent implements OnInit {
     // Warn user of risk if using random generated passwords
     // Warn user of risk if CIRA configuration and static network are selected simultaneously
     if (this.profileForm.valid) {
-      this.isLoading = true
       const result: any = Object.assign({}, this.profileForm.getRawValue())
       const dialogs = []
       if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
@@ -375,13 +440,12 @@ export class ProfileDetailComponent implements OnInit {
       }
 
       if (dialogs.length === 0) {
-        this.onSubmit(); return
+        this.onSubmit()
+        return
       }
       forkJoin(dialogs).subscribe(data => {
         if (data.every((x) => x === true)) {
           this.onSubmit()
-        } else { // Cancel form submission
-          this.isLoading = false
         }
       })
     } else {
@@ -408,17 +472,18 @@ export class ProfileDetailComponent implements OnInit {
       request = this.profilesService.create(result)
       reqType = 'created'
     }
-    request.subscribe({
-      next: (value: Profile) => {
-        this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        this.router.navigate(['/profiles'])
-      },
-      error: error => {
-        this.errorMessages = error
-      }
-    }).add(() => {
-      this.isLoading = false
-    })
+    request
+      .pipe(
+        finalize(() => { this.isLoading = false })
+      )
+      .subscribe({
+        next: () => {
+          this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          void this.router.navigate(['/profiles'])
+        },
+        error: error => {
+          this.errorMessages = error
+        }
+      })
   }
 }

@@ -14,7 +14,7 @@ const empty = {
     data: [],
     totalCount: 0
   }
-},
+}
 const error = {
   response: {
     error: 'string',

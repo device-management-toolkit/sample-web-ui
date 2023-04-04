@@ -20,6 +20,8 @@ import { ProfileDetailComponent } from './profiles/profile-detail/profile-detail
 import { ProfilesComponent } from './profiles/profiles.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
 import { WirelessComponent } from './wireless/wireless.component'
+import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
+import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
 
 const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
@@ -59,8 +61,15 @@ const routes: Routes = [
       { path: '', component: WirelessDetailComponent }
     ]
   },
-  { path: 'wireless/:name', component: WirelessDetailComponent }
-  // { path: 'event-channel', component: EventChannelComponent }
+  { path: 'wireless/:name', component: WirelessDetailComponent },
+  { path: 'ieee8021x', component: IEEE8021xComponent },
+  {
+    path: 'ieee8021x/new',
+    children: [
+      { path: '', component: IEEE8021xDetailComponent }
+    ]
+  },
+  { path: 'ieee8021x/:name', component: IEEE8021xDetailComponent }
 ]
 
 @NgModule({

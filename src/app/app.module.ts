@@ -39,6 +39,8 @@ import { DeviceUserConsentComponent } from './devices/device-user-consent/device
 import { EventLogComponent } from './devices/event-log/event-log.component'
 // import { EventChannelComponent } from './event-channel/event-channel.component'
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker'
+import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
+import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
 
 // const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
@@ -61,9 +63,10 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     DeviceToolbarComponent,
     WirelessComponent,
     WirelessDetailComponent,
+    IEEE8021xComponent,
+    IEEE8021xDetailComponent,
     DeviceUserConsentComponent,
     EventLogComponent
-    // EventChannelComponent
   ],
   imports: [
     MomentModule,

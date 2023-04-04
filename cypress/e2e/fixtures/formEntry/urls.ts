@@ -12,7 +12,8 @@ const urlFixtures = {
     cira: 'ciraconfigs',
     profile: 'profiles',
     device: 'devices',
-    wireless: 'wireless'
+    wireless: 'wireless',
+    ieee8021x: 'ieee8021x'
   },
 
   extensions: {
