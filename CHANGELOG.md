@@ -1,3 +1,55 @@
+<a name="2.7.0"></a>
+## [2.7.0] - 2023-04-05
+### Build
+- update package.json and changelog to v2.7.0 (#08f08e5) 
+- updated Node to 18 ([#1024](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1024)) (#e39a74d) 
+- **deps:** Bump cypress from 12.8.0 to 12.8.1 ([#1053](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1053)) (#83e73b9) 
+- **deps:** Bump cypress from 12.8.1 to 12.9.0 (#c5dd3d9) 
+- **deps:** Bump cypress from 12.6.0 to 12.7.0 (#449605e) 
+- **deps:** Bump esbuild from 0.17.14 to 0.17.15 ([#1074](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1074)) (#635dae6) 
+- **deps:** Bump esbuild from 0.17.10 to 0.17.11 (#620a600) 
+- **deps:** Bump esbuild from 0.17.12 to 0.17.14 ([#1069](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1069)) (#af48916) 
+- **deps:** Bump [@angular](https://github.com/angular) cdk, core and material from 15.2.3 to 15.2.4 ([#1066](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1066)) (#6e4181c) 
+- **deps:** Bump zone.js from 0.12.0 to 0.13.0 ([#1045](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1045)) (#e85de0f) 
+- **deps:** Bump cypress from 12.7.0 to 12.8.0 (#b720ce5) 
+- **deps:** Bump [@angular](https://github.com/angular) cdk, core and material to 15.2.3, cli to 15.2.4 ([#1060](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1060)) (#53ac3f7) 
+- **deps:** Bump esbuild from 0.17.11 to 0.17.12 (#ce05bf7) 
+- **deps:** Bump angular from 15.2.4 to 15.2.5 ([#1076](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1076)) (#8fef138) 
+- **deps:** remove unused protractor ([#1067](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1067)) (#fa05ed1) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#1052](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1052)) (#72a7315) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 15.2.2 to 15.2.3 ([#1051](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1051)) (#827694d) 
+- **deps-dev:** Bump jasmine-core from 4.5.0 to 4.6.0 ([#1054](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1054)) (#f0653df) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.3 to 18.15.5 ([#1061](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1061)) (#e3cf9d5) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.2 to 18.15.3 (#2fb52df) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.0 to 18.15.2 (#21a8452) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.14.6 to 18.15.0 (#c25ed5c) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.5 to 18.15.6 ([#1065](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1065)) (#26cdf0f) 
+- **deps-dev:** Bump [@angular](https://github.com/angular) to 15.2.2 ([#1044](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1044)) (#2bb0dfe) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.6 to 18.15.10 ([#1068](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1068)) (#d56fa88) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.14.2 to 18.14.6 (#89e84f2) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-devkit/build-angular ([#1039](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1039)) (#1c06875) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.14.1 to 18.14.2 (#e9274f3) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.10 to 18.15.11 (#21cea4b) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.14.0 to 18.14.1 ([#1034](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1034)) (#3482cce) 
+- **deps-dev:** Bump eslint-config-standard-with-typescript ([#1030](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1030)) (#2fc98d1) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/schematics from 15.2.0 to 15.2.1 ([#1020](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1020)) (#c854d8c) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template ([#1021](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1021)) (#b16cbb0) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser from 15.2.0 to 15.2.1 ([#1018](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1018)) (#c4cf9b0) 
+- **deps-dev:** Bump eslint-config-standard-with-typescript (#4a26272) 
+
+### Ci
+- add ossf action and badge (#2234d49) 
+
+### Docs
+- fix changelog generation (#c2df98f) 
+- add discord info ([#1040](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1040)) (#c9805ed) 
+
+### Feat
+- **8021x:** functionality for wired configuration ([#1062](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1062)) (#2854b57) 
+
+### Refactor
+- modified project config files for clashing global test definitions ([#1025](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1025)) (#a2a5ce8) 
+
 <a name="2.6.0"></a>
 ## [2.6.0] - 2023-02-16
 ### Build
