@@ -12,7 +12,7 @@ import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
-import { DeactivateDeviceComponent } from 'src/app/shared/deactivate-device/deactivate-device.component'
+import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -104,17 +104,32 @@ export class DeviceToolbarComponent implements OnInit {
       this.devicesService.connectKVMSocket.next(true)
     } else if (this.router.url === `/devices/${this.deviceId}/sol` && path === 'sol') {
       this.devicesService.startwebSocket.next(true)
+    } else if (this.router.url === `/devices/${this.deviceId}` && path === 'devices') {
+      await this.router.navigate(['/devices'])
     } else {
       await this.router.navigate([`/devices/${this.deviceId}/${path}`])
     }
   }
 
-  deactivateADevice = (): void => {
-    this.matDialog.open(DeactivateDeviceComponent, {
-      height: '380px',
-      width: '600px',
-      data: {
-        id: this.deviceId
+  sendDeactivate (): void {
+    const dialogRef = this.matDialog.open(AreYouSureDialogComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.isLoading = true
+        this.devicesService.sendDeactivate(this.deviceId).pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        ).subscribe({
+          next: () => {
+            this.snackBar.open($localize`Deactivation sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            void this.navigateTo('devices')
+          },
+          error: (err) => {
+            console.log(err)
+            this.snackBar.open($localize`Error sending deactivation`, undefined, SnackbarDefaults.defaultError)
+          }
+        })
       }
     })
   }

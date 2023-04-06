@@ -13,7 +13,7 @@ import { DevicesService } from './devices.service'
 
 describe('DevicesService', () => {
   let service: DevicesService
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, request: jasmine.Spy }
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, request: jasmine.Spy, delete: jasmine.Spy }
   const deviceRes = {
     hostname: 'localhost',
     icon: 1,
@@ -35,7 +35,7 @@ describe('DevicesService', () => {
   }
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'request', 'patch'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'request', 'patch', 'delete'])
     TestBed.configureTestingModule({
       imports: [AuthService]
     })
@@ -704,6 +704,24 @@ describe('DevicesService', () => {
     }
     httpClientSpy.post.and.returnValue(throwError(error))
     service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(() => {}, err => {
+      expect(error).toEqual(err)
+    })
+  })
+
+  it('should send deactivate', () => {
+    const deactivateResponse = {
+      status: 'SUCCESS'
+    }
+    httpClientSpy.delete.and.returnValue(of(deactivateResponse))
+    service.sendDeactivate('defgh-34567-poiuy').subscribe(response => {
+      expect(response).toEqual(deactivateResponse)
+      expect(httpClientSpy.delete).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/deactivate/defgh-34567-poiuy`)
+    })
+  })
+
+  it('should return error when sending a deactivate', () => {
+    httpClientSpy.delete.and.returnValue(throwError(error))
+    service.sendDeactivate('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
     })
   })

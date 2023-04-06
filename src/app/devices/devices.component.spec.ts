@@ -20,9 +20,10 @@ describe('DevicesComponent', () => {
   let getTagsSpy: jasmine.Spy
   let getPowerStateSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
+  let sendDeactivateSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction'])
+    const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate'])
     devicesService.PowerStates.and.returnValue({
       2: 'On',
       3: 'Sleep',
@@ -37,10 +38,12 @@ describe('DevicesComponent', () => {
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
+    sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }])],
       declarations: [DevicesComponent],
-      providers: [{ provide: DevicesService, useValue: devicesService }]
+      providers: [
+        { provide: DevicesService, useValue: devicesService }]
 
     }).compileComponents()
   })
@@ -119,6 +122,8 @@ describe('DevicesComponent', () => {
   }))
   it('should fire bulk power action', () => {
     const resetResponseSpy = spyOn(component, 'resetResponse')
+    const checkbox = fixture.nativeElement.querySelector('.mat-checkbox-input')
+    checkbox.click()
     component.resetResponse()
     fixture.detectChanges()
     component.bulkPowerAction(8)
@@ -147,5 +152,34 @@ describe('DevicesComponent', () => {
     component.selection.select(component.devices.data[0])
     component.masterToggle()
     expect(component.selection.selected).toEqual([])
+  })
+
+  it('should fire deactivate action', () => {
+    component.devices.data = [{
+      hostname: 'localhost',
+      icon: 1,
+      connectionStatus: true,
+      guid: '12324-4243-ewdsd',
+      tags: ['']
+    }]
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    component.sendDeactivate('12324-4243-ewdsd')
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(sendDeactivateSpy).toHaveBeenCalled()
+  })
+  it('should fire bulk deactivate action', () => {
+    expect(component.devices.data.length).toBeGreaterThan(0)
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const checkbox = fixture.nativeElement.querySelector('.mat-checkbox-input')
+    checkbox.click()
+    component.bulkDeactivate()
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(sendDeactivateSpy).toHaveBeenCalledTimes(1)
   })
 })

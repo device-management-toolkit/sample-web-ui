@@ -47,7 +47,6 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { AreYouSureDialogComponent } from './are-you-sure/are-you-sure.component'
 import { PowerUpAlertComponent } from './power-up-alert/power-up-alert.component'
 import { DialogContentComponent } from './dialog-content/dialog-content.component'
-import { DeactivateDeviceComponent } from './deactivate-device/deactivate-device.component'
 import { AddDeviceComponent } from './add-device/add-device.component'
 import { RandomPassAlertComponent } from './random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from './static-cira-warning/static-cira-warning.component'
@@ -135,7 +134,7 @@ import { StaticCIRAWarningComponent } from './static-cira-warning/static-cira-wa
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } }
   ],
-  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent, DeactivateDeviceComponent, RandomPassAlertComponent, StaticCIRAWarningComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent, RandomPassAlertComponent, StaticCIRAWarningComponent]
 })
 export class OpenAMTMaterialModule {
 

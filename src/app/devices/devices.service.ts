@@ -244,6 +244,15 @@ export class DevicesService {
       )
   }
 
+  sendDeactivate (guid: string): Observable<any> {
+    return this.http.delete<any>(`${environment.mpsServer}/api/v1/amt/deactivate/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getTags (): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
       .pipe(

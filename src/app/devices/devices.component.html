@@ -19,6 +19,9 @@
         <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); bulkPowerAction(5)">
             <mat-icon>restart_alt</mat-icon>
         </button>
+        <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); bulkDeactivate()">
+            <mat-icon>delete</mat-icon>
+        </button>
     </div>
 </mat-toolbar>
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
@@ -90,8 +93,8 @@
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Actions</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px">
+                <mat-header-cell *matHeaderCellDef fxFlex="200px"> Actions</mat-header-cell>
+                <mat-cell *matCellDef="let element" fxFlex="200px">
                     <div [fxHide]="selection.isSelected(element)">
                         <button mat-icon-button matTooltip="Power up the device"
                             (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
@@ -105,17 +108,21 @@
                             (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
                             <mat-icon>restart_alt</mat-icon>
                         </button>
+                        <button mat-icon-button matTooltip="Deactivate the Device"
+                            (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </div>
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="notification">
                 <mat-header-cell *matHeaderCellDef fxFlex="50px"></mat-header-cell>
                 <mat-cell *matCellDef="let element" fxFlex="50px">
-                    <mat-icon color="primary" matTooltip="Power action sent successfully"
+                    <mat-icon color="primary" matTooltip="Action sent successfully"
                         *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
                     <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
                         *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
-                    <mat-icon color="warn" matTooltip="Error sending power action"
+                    <mat-icon color="warn" matTooltip="Error sending action"
                         *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
                 </mat-cell>
             </ng-container>

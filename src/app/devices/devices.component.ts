@@ -16,6 +16,7 @@ import { Device, DeviceResponse, PageEventOptions } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
+import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 
 @Component({
   selector: 'app-devices',
@@ -164,6 +165,59 @@ export class DevicesComponent implements OnInit {
       })
     }, err => {
       console.log(err)
+    })
+  }
+
+  sendDeactivate (deviceId: string): void {
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.isLoading = true
+        this.devicesService.sendDeactivate(deviceId).pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        ).subscribe({
+          next: (data) => {
+            (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = data.status
+            setTimeout(() => {
+              this.getData(this.pageEvent)
+            }, 3000)
+          },
+          error: (err) => {
+            (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
+            console.log(err)
+          }
+        })
+      }
+    })
+  }
+
+  bulkDeactivate (): void {
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        const requests: Array<Observable<any>> = []
+        this.isLoading = true
+        this.selection.selected.forEach(z => {
+          requests.push(this.devicesService.sendDeactivate(z.guid).pipe(
+            catchError(err => of({ err })),
+            map(i => ({
+              StatusMessage: i?.status ? i.status : 'ERROR',
+              guid: z.guid
+            }))
+          ))
+        })
+        forkJoin(requests).subscribe(result => {
+          this.isLoading = false
+          result.forEach(res => {
+            (this.devices.data.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+          })
+          setTimeout(() => {
+            this.getData(this.pageEvent)
+          }, 3000)
+        })
+      }
     })
   }
 
