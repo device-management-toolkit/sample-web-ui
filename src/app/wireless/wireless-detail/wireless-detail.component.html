@@ -21,8 +21,26 @@
           <mat-form-field fxFlex="100">
             <mat-label>Authentication Method</mat-label>
             <mat-select formControlName="authenticationMethod" required>
-              <mat-option *ngFor="let authenticationMode of authenticationModes" [value]="authenticationMode.value">
-                {{authenticationMode.display}}
+              <mat-option *ngFor="let method of authenticationMethods" [value]="method.value">
+                {{method.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="100" [fxShow]='showPSKPassPhrase'>
+            <input [type]="pskInputType" matInput
+              formControlName="pskPassphrase" name="pskPassphrase" placeholder="PSK Passphrase">
+            <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
+              (click)="togglePSKPassVisibility()">
+              <mat-icon [fxHide]="pskInputType === 'text'">visibility</mat-icon>
+              <mat-icon [fxHide]="pskInputType !== 'text'">visibility_off</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field fxFlex='100' [fxShow]='showIEEE8021x'>
+            <mat-label>802.1x Configuration</mat-label>
+            <mat-select formControlName='ieee8021xProfileName'>
+              <mat-option *ngFor='let cfgName of iee8021xConfigNames' [value]='cfgName'>
+                {{cfgName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -30,21 +48,12 @@
             <mat-label>Encryption Method</mat-label>
             <mat-select formControlName="encryptionMethod" required>
               <mat-option *ngFor="let encryptionMode of encryptionModes" [value]="encryptionMode.value">
-                {{encryptionMode.display}}
+                {{encryptionMode.label}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field fxFlex="100">
             <input type="text" formControlName="ssid" matInput name="ssid" placeholder="SSID" required maxlength="32">
-          </mat-form-field>
-          <mat-form-field fxFlex="100">
-            <input [type]="pskInputType" formControlName="pskPassphrase" matInput name="pskPassphrase" placeholder="PSK Passphrase" required minlength=8 maxlength="63">
-            <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password"
-              (click)="togglePSKPassVisibility()">
-              <mat-icon [fxHide]="pskInputType === 'text'">visibility</mat-icon>
-              <mat-icon [fxHide]="pskInputType !== 'text'">visibility_off</mat-icon>
-            </button>
           </mat-form-field>
         </div>
       </mat-card-content>

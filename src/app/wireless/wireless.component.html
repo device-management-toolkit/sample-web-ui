@@ -15,7 +15,7 @@
 <mat-card>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Wireless Configs</h3>
-        <mat-table [dataSource]="wirelessConfigs.data" [fxHide]="isNoData()">
+        <mat-table [dataSource]="configs" [fxHide]="isNoData()">
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
@@ -33,13 +33,15 @@
             <!-- server Column -->
             <ng-container matColumnDef="authmethod">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Authentication </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.authenticationMethod === 4 ? "WPA PSK": "WPA2 PSK" }}
+                <mat-cell *matCellDef="let element" fxFlex="150px">
+                  {{ authenticationMethods.labelForValue(element.authenticationMethod ) }}
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="encryptionMethod">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Encryption </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.encryptionMethod === 3 ? "TKIP": "CCMP" }}
+                <mat-cell *matCellDef="let element" fxFlex="150px">
+                  {{ encryptionMethods.labelForValue(element.encryptionMethod ) }}
                 </mat-cell>
             </ng-container>
 
@@ -63,10 +65,10 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)" ></mat-row>
         </mat-table>
-        <div *ngIf="wirelessConfigs.totalCount">
+        <div *ngIf="totalCount">
             <mat-paginator [pageSizeOptions]="[25, 50, 100]"
                 [pageSize]="25"
-                [length]="wirelessConfigs.totalCount"
+                [length]="totalCount"
                 (page) = "pageChanged($event)"
                 showFirstLastButtons>
             </mat-paginator>

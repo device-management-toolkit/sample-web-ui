@@ -19,18 +19,16 @@
           <h3>{{getInterfaceLabel()}}</h3>
         </div>
         <div [fxHide]='isEdit'>
-          <!--8021x-wired-and-wireless-->
-          <!--<mat-card-subtitle [fxHide]='isEdit'>-->
-          <!--  <mat-radio-group-->
-          <!--    name='wiredInterface'-->
-          <!--    formControlName='wiredInterface'-->
-          <!--    fxLayout='row' fxLayoutGap='30px'-->
-          <!--  >-->
-          <!--    <mat-radio-button [value]=true>Wired</mat-radio-button>-->
-          <!--    <mat-radio-button [value]=false>Wireless</mat-radio-button>-->
-          <!--  </mat-radio-group>-->
-          <!--</mat-card-subtitle>-->
-          <h3>{{getInterfaceLabel()}}</h3>
+          <mat-card-subtitle [fxHide]='isEdit'>
+            <mat-radio-group
+              name='wiredInterface'
+              formControlName='wiredInterface'
+              fxLayout='row' fxLayoutGap='30px'
+            >
+              <mat-radio-button [value]=true>Wired</mat-radio-button>
+              <mat-radio-button [value]=false>Wireless</mat-radio-button>
+            </mat-radio-group>
+          </mat-card-subtitle>
         </div>
       </div>
 
@@ -48,7 +46,7 @@
         <mat-form-field fxFlex='100'>
           <mat-label>Authentication Protocol</mat-label>
           <mat-select formControlName='authenticationProtocol'>
-            <mat-option *ngFor='let protocol of protocols' [value]='protocol.value'>
+            <mat-option *ngFor='let protocol of authenticationProtocols' [value]='protocol.value'>
               {{protocol.label}}
             </mat-option>
           </mat-select>
@@ -57,7 +55,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex='100'>
+        <mat-form-field fxFlex='100'  [fxShow]='shouldShowPxeTimeout()'>
           <input type='number' matInput
             formControlName='pxeTimeout' name='pxeTimeout' placeholder='PXE Timeout'
             required [min]='pxeTimeoutMin' [max]='pxeTimeoutMax'>
@@ -76,7 +74,7 @@
           </button>
         </div>
         <div fxFlex='50' fxLayoutAlign='center center'>
-          <button type='submit' mat-flat-button color='primary' [disabled]='ieee8021xForm.invalid'>
+          <button type='submit' mat-flat-button color='primary'>
             <span i18n>SAVE</span>
           </button>
         </div>

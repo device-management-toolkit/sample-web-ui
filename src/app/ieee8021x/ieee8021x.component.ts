@@ -46,7 +46,6 @@ export class IEEE8021xComponent implements OnInit {
 
   ngOnInit (): void {
     this.getData(this.pageEvent)
-    void this.ieee8021xService.refreshCountByInterface()
   }
 
   getData (pageEvent: PageEventOptions): void {
@@ -61,12 +60,6 @@ export class IEEE8021xComponent implements OnInit {
           this.snackBar.open($localize`Unable to load IEEE8021x Configs`, undefined, SnackbarDefaults.defaultError)
         }
       })
-  }
-
-  disableNewConfiguration (): boolean {
-    // 8021x-wired-and-wireless
-    // return this.ieee8021xService.wiredConfigExists && this.ieee8021xService.wirelessConfigExists
-    return this.ieee8021xService.wiredConfigExists
   }
 
   isNoData (): boolean {
@@ -94,9 +87,6 @@ export class IEEE8021xComponent implements OnInit {
                 } else {
                   this.snackBar.open($localize`Unable to delete Configuration`, undefined, SnackbarDefaults.defaultError)
                 }
-              },
-              complete: () => {
-                void this.ieee8021xService.refreshCountByInterface()
               }
             })
         }

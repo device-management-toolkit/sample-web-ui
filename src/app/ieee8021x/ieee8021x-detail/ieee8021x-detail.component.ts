@@ -4,13 +4,13 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms'
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { IEEE8021xService } from '../ieee8021x.service'
-import { AuthenticationProtocols, Config } from '../ieee8021x.constants'
+import { AuthenticationProtocol, AuthenticationProtocols, Config } from '../ieee8021x.constants'
 import { Observable } from 'rxjs'
 
 @Component({
@@ -23,8 +23,8 @@ export class IEEE8021xDetailComponent implements OnInit {
   pageTitle = 'New IEEE8021x Config'
   isLoading: boolean = false
   isEdit: boolean = false
+  authenticationProtocols: AuthenticationProtocol[] = []
   errorMessages: any[] = []
-  protocols = AuthenticationProtocols.toArray()
   profileNameMaxLen = 32
   pxeTimeoutMin = 0 // disables timeout
   pxeTimeoutMax = (60 * 60 * 24) // one day
@@ -41,20 +41,37 @@ export class IEEE8021xDetailComponent implements OnInit {
         null,
         [Validators.required, Validators.maxLength(this.profileNameMaxLen), Validators.pattern('[a-zA-Z0-9]*')]
       ],
-      authenticationProtocol: [null, Validators.required],
+      authenticationProtocol: [
+        null,
+        [Validators.required, this.protocolValidator]
+      ],
       pxeTimeout: [
         this.pxeTimeoutDefault,
         [Validators.required, Validators.min(this.pxeTimeoutMin), Validators.max(this.pxeTimeoutMax)]
       ],
-      wiredInterface: [true, [Validators.required]],
+      wiredInterface: [
+        null,
+        [Validators.required]
+      ],
       version: [null]
+    })
+    // add custom validation to enforce protcols appropriate to interface type
+    // unable to add this protocolValidator in the declaration becuase it causes circular form reference problems
+    this.ieee8021xForm.controls.authenticationProtocol.addValidators(this.protocolValidator())
+    this.ieee8021xForm.controls.wiredInterface.valueChanges.subscribe((isWired) => {
+      if (isWired) {
+        this.authenticationProtocols = AuthenticationProtocols.forWiredInterface()
+      } else {
+        this.authenticationProtocols = AuthenticationProtocols.forWirelessInterface()
+      }
+      this.ieee8021xForm.controls.authenticationProtocol.updateValueAndValidity()
     })
   }
 
   ngOnInit (): void {
     this.activeRoute.params.subscribe((params) => {
-      this.isLoading = true
       if (params.name) {
+        this.isLoading = true
         this.isEdit = true
         this.ieee8021xService
           .getRecord(params.name)
@@ -69,42 +86,19 @@ export class IEEE8021xDetailComponent implements OnInit {
               }
             }
           })
-      } else {
-        this.ieee8021xService
-          .getCountByInterface()
-          .pipe(finalize(() => { this.isLoading = false }))
-          .subscribe({
-            complete: () => {
-              this.onCountByInterfaceComplete()
-            }
-          })
       }
     })
   }
 
-  // only called when creating a new profile
-  onCountByInterfaceComplete (): void {
-    // 8021x-wired-and-wireless
-    // if (this.ieee8021xService.wiredConfigExists && this.ieee8021xService.wirelessConfigExists) {
-    //   this.snackBar.open(
-    //     $localize`Only 1 wired and 1 wireless profile are allowed`,
-    //     undefined,
-    //     SnackbarDefaults.defaultError)
-    //   void this.router.navigate(['/ieee8021x'])
-    // } else if (this.ieee8021xService.wiredConfigExists || this.ieee8021xService.wirelessConfigExists) {
-    //   // 'toggle' the wiredInteface value to the opposite
-    //   this.ieee8021xForm.controls.wiredInterface.setValue(!this.ieee8021xService.wiredConfigExists)
-    //   this.ieee8021xForm.controls.wiredInterface.disable()
-    //   // TODO: adjust pxeTimeout if wireless
-    // }
-
-    if (this.ieee8021xService.wiredConfigExists) {
-      this.snackBar.open(
-        $localize`Only 1 wired profile is allowed`,
-        undefined,
-        SnackbarDefaults.defaultError)
-      void this.router.navigate(['/ieee8021x'])
+  protocolValidator (): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isValid = this.authenticationProtocols.map(p => p.value).includes(control.value)
+      return isValid ? null : { protoclValue: true }
     }
+  }
+
+  shouldShowPxeTimeout (): boolean {
+    return this.ieee8021xForm.controls.wiredInterface.value
   }
 
   getInterfaceLabel (): string {
@@ -115,14 +109,18 @@ export class IEEE8021xDetailComponent implements OnInit {
     if (this.ieee8021xForm.valid) {
       this.errorMessages = []
       this.isLoading = true
-      const result: any = Object.assign({}, this.ieee8021xForm.getRawValue())
+      // disable pxeTimeout if not wired
+      if (!this.ieee8021xForm.controls.wiredInterface.value) {
+        this.ieee8021xForm.controls.pxeTimeout.setValue(this.pxeTimeoutMin)
+      }
+      const config: Config = Object.assign({}, this.ieee8021xForm.getRawValue())
       let request: Observable<Config>
       let reqType: string
       if (this.isEdit) {
-        request = this.ieee8021xService.update(result)
+        request = this.ieee8021xService.update(config)
         reqType = 'updated'
       } else {
-        request = this.ieee8021xService.create(result)
+        request = this.ieee8021xService.create(config)
         reqType = 'created'
       }
       request

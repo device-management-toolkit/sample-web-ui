@@ -15,11 +15,9 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import {
   CIRAConfig,
   Profile,
-  TLSConfig,
   TlsMode,
   TlsSigningAuthority,
-  WiFiProfile,
-  WirelessConfigResponse
+  WiFiProfile
 } from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
@@ -33,6 +31,7 @@ import {
   MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent
 } from '@angular/material/legacy-autocomplete'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
 
 @Component({
   selector: 'app-profile-detail',
@@ -53,7 +52,6 @@ export class ProfileDetailComponent implements OnInit {
   ]
 
   public ciraConfigurations: CIRAConfig[] = []
-  public tlsConfigurations: TLSConfig[] = []
   public isLoading = false
   public pageTitle = 'New Profile'
   public isEdit = false
@@ -70,11 +68,12 @@ export class ProfileDetailComponent implements OnInit {
     width: '450px'
   }
 
-  enable8021xControl = new FormControl()
-  ieee8021xProfileName: string = ''
+  iee8021xConfigurations: IEEE8021x.Config[] = []
+  showIEEE8021xConfigurations: boolean = false
   wirelessConfigurations: string[] = []
-  filteredWifiList: Observable<string[]> = of([])
-  wifiAutocomplete = new FormControl()
+  showWirelessConfigurations: boolean = false
+  filteredWirelessList: Observable<string[]> = of([])
+  wirelessAutocomplete = new FormControl()
 
   constructor (
     public snackBar: MatSnackBar,
@@ -125,7 +124,7 @@ export class ProfileDetailComponent implements OnInit {
       }
     })
 
-    this.filteredWifiList = this.wifiAutocomplete.valueChanges.pipe(
+    this.filteredWirelessList = this.wirelessAutocomplete.valueChanges.pipe(
       startWith(''),
       map(value => value.length > 0 ? this.search(value) : [])
     )
@@ -134,7 +133,6 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
     this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => { this.networkConfigChange(value) })
     this.profileForm.controls.connectionMode?.valueChanges.subscribe(value => { this.connectionModeChange(value) })
-    this.enable8021xControl.valueChanges.subscribe(value => { this.enable8021xChange(value) })
   }
 
   setConnectionMode (data: Profile): void {
@@ -143,15 +141,6 @@ export class ProfileDetailComponent implements OnInit {
     } else if (data.ciraConfigName != null) {
       this.profileForm.controls.connectionMode.setValue(Constants.ConnectionMode_CIRA)
     }
-  }
-
-  setEnable8021x (data: Profile): void {
-    this.enable8021xControl.setValue(!!data.ieee8021xProfileName)
-  }
-
-  enable8021xChange (value: boolean): void {
-    const updatedValue = value ? this.ieee8021xProfileName : null
-    this.profileForm.controls.ieee8021xProfileName.setValue(updatedValue)
   }
 
   activationChange (value: string): void {
@@ -189,7 +178,6 @@ export class ProfileDetailComponent implements OnInit {
           this.profileForm.patchValue(data)
           this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
           this.setConnectionMode(data)
-          this.setEnable8021x(data)
         },
         error: error => {
           this.errorMessages = error
@@ -214,12 +202,9 @@ export class ProfileDetailComponent implements OnInit {
     this.ieee8021xService
       .getData()
       .subscribe({
-        next: (configs) => {
-          for (const config of configs.data) {
-            if (config.wiredInterface) {
-              this.ieee8021xProfileName = config.profileName
-            }
-          }
+        next: (rsp) => {
+          this.iee8021xConfigurations = rsp.data.filter(c => c.wiredInterface)
+          this.showIEEE8021xConfigurations = this.iee8021xConfigurations.length > 0
         },
         error: err => {
           console.log(JSON.stringify(err))
@@ -233,8 +218,9 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   getWirelessConfigs (): void {
-    this.wirelessService.getData().subscribe((data: WirelessConfigResponse) => {
+    this.wirelessService.getData().subscribe((data) => {
       this.wirelessConfigurations = data.data.map(item => item.profileName)
+      this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
     }, error => {
       this.errorMessages = error
     })
@@ -313,10 +299,10 @@ export class ProfileDetailComponent implements OnInit {
   networkConfigChange (value: boolean): void {
     if (!value) {
       this.profileForm.controls.ciraConfigName.enable()
-      this.wifiAutocomplete.reset({ value: '', disabled: true })
+      this.wirelessAutocomplete.reset({ value: '', disabled: true })
     } else {
       this.profileForm.controls.ciraConfigName.enable()
-      this.wifiAutocomplete.reset({ value: '', disabled: false })
+      this.wirelessAutocomplete.reset({ value: '', disabled: false })
     }
   }
 
@@ -351,7 +337,7 @@ export class ProfileDetailComponent implements OnInit {
           profileName: event.option.value
         })
       }
-      this.wifiAutocomplete.patchValue('')
+      this.wirelessAutocomplete.patchValue('')
     }
   }
 

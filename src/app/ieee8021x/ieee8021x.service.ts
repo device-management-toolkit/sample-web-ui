@@ -6,11 +6,11 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
-import { Config, ConfigsResponse, CountByInterface } from './ieee8021x.constants'
+import { Config, ConfigsResponse } from './ieee8021x.constants'
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,6 @@ import { Config, ConfigsResponse, CountByInterface } from './ieee8021x.constants
 
 export class IEEE8021xService {
   private readonly url = `${environment.rpsServer}/api/v1/admin/ieee8021xconfigs`
-  wiredConfigExists = false
-  wirelessConfigExists = false
-
   constructor (private readonly http: HttpClient, private readonly authService: AuthService) { }
 
   getData (pageEvent?: PageEventOptions): Observable<ConfigsResponse> {
@@ -42,24 +39,6 @@ export class IEEE8021xService {
   getRecord (name: string): Observable<Config> {
     return this.http.get<Config>(`${this.url}/${name}`)
       .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
-  }
-
-  async refreshCountByInterface (): Promise<void> {
-    this.getCountByInterface().subscribe()
-  }
-
-  getCountByInterface (): Observable<CountByInterface> {
-    return this.http.get<CountByInterface>(`${this.url}/countByInterface`)
-      .pipe(
-        tap((counts) => {
-          this.wiredConfigExists = counts.wired > 0
-          this.wirelessConfigExists = counts.wireless > 0
-        }),
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
           return throwError(errorMessages)

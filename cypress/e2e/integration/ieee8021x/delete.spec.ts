@@ -6,13 +6,12 @@
 import { Config } from '../../../../src/app/ieee8021x/ieee8021x.constants'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import * as api8021x from '../../fixtures/api/ieee8021x'
-import { allConfigs } from '../../fixtures/formEntry/ieee8021x'
+import { wiredConfigs, wirelessConfigs } from '../../fixtures/formEntry/ieee8021x'
 
 describe('Test IEEE 8021x Page', () => {
   beforeEach(() => {
     cy.setup()
     api8021x.interceptDelete(httpCodes.NO_CONTENT, null)
-    api8021x.interceptCountByInterface(httpCodes.SUCCESS, { wired: 0, wireless: 0 })
   })
 
   it('should not delete when cancelled', () => {
@@ -25,10 +24,9 @@ describe('Test IEEE 8021x Page', () => {
     cy.get('button').contains('No').click()
   })
 
-  const remainingConfigs: Config[] = []
-  for (const cfg of allConfigs) {
-    remainingConfigs.push(cfg)
-  }
+  const allConfigs = [...wiredConfigs, ...wirelessConfigs]
+  const remainingConfigs = [...allConfigs]
+
   allConfigs.forEach((config) => {
     it(`should delete ${config.profileName}`, () => {
       const initialNavConfigs: Config[] = []

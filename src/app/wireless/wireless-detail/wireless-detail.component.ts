@@ -8,9 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { WirelessService } from '../wireless.service'
+import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import { AuthenticationMethods, EncryptionMethods } from '../wireless.constants'
 
 @Component({
   selector: 'app-wireless-detail',
@@ -21,28 +22,40 @@ export class WirelessDetailComponent implements OnInit {
   public wirelessForm: FormGroup
   public pageTitle = 'New Wireless Config'
   public pskInputType = 'password'
-  public authenticationModes = [{ display: 'WPA PSK', value: Constants.WPAPSK }, { display: 'WPA2 PSK', value: Constants.WPA2PSK }]
-  public encryptionModes = [{ display: 'TKIP', value: Constants.TKIP }, { display: 'CCMP', value: Constants.CCMP }]
+  public pskMinLen = 8
+  public pskMaxLen = 32
+  public authenticationMethods = AuthenticationMethods.allExceptIEEE8021X()
+  public encryptionModes = EncryptionMethods.all()
+  public iee8021xConfigNames: Set<string> = new Set<string>()
+  showPSKPassPhrase: boolean = false
+  showIEEE8021x: boolean = false
   isLoading: boolean = true
   isEdit: boolean = false
   errorMessages: any[] = []
+
   constructor (
     public snackBar: MatSnackBar,
     public fb: FormBuilder,
     private readonly activeRoute: ActivatedRoute,
     public router: Router,
-    public wirelessService: WirelessService) {
+    public wirelessService: WirelessService,
+    private readonly ieee8021xService: IEEE8021xService
+  ) {
     this.wirelessForm = fb.group({
       profileName: [null, [Validators.required]],
-      authenticationMethod: [this.authenticationModes[0].value, Validators.required],
-      encryptionMethod: [this.encryptionModes[0].value, Validators.required],
+      authenticationMethod: [null, Validators.required],
+      encryptionMethod: [null, Validators.required],
       ssid: ['', Validators.required],
-      pskPassphrase: ['', Validators.required],
+      pskPassphrase: [null, [Validators.minLength(this.pskMinLen), Validators.maxLength(this.pskMaxLen)]],
+      ieee8021xProfileName: [null],
       version: [null]
     })
+    this.wirelessForm.controls.authenticationMethod.valueChanges
+      .subscribe(value => { this.onAuthenticationMethodChange(value) })
   }
 
   ngOnInit (): void {
+    this.getIEEE8021xConfigs()
     this.activeRoute.params.subscribe((params) => {
       if (params.name != null && params.name !== '') {
         this.wirelessService.getRecord(params.name)
@@ -51,11 +64,14 @@ export class WirelessDetailComponent implements OnInit {
               this.isLoading = false
             })
           )
-          .subscribe((data) => {
+          .subscribe((config) => {
             this.isEdit = true
-            this.pageTitle = data.profileName
+            this.pageTitle = config.profileName
             this.wirelessForm.controls.profileName.disable()
-            this.wirelessForm.patchValue(data)
+            this.wirelessForm.patchValue(config)
+            if (config.ieee8021xProfileName) {
+              this.add8021xConfigurations([config.ieee8021xProfileName])
+            }
           })
       }
     })
@@ -64,6 +80,14 @@ export class WirelessDetailComponent implements OnInit {
   onSubmit (): void {
     if (this.wirelessForm.valid) {
       this.isLoading = true
+      // adjust PSK and 8021x based on authentication method
+      const value = this.wirelessForm.controls.authenticationMethod.value
+      if (!AuthenticationMethods.isPSK(value)) {
+        this.wirelessForm.controls.pskPassphrase.setValue(null)
+      }
+      if (!AuthenticationMethods.isIEEE8021X(value)) {
+        this.wirelessForm.controls.ieee8021xProfileName.setValue(null)
+      }
       const result: any = Object.assign({}, this.wirelessForm.getRawValue())
       let request
       let reqType: string
@@ -78,15 +102,65 @@ export class WirelessDetailComponent implements OnInit {
         finalize(() => {
           this.isLoading = false
         }))
-        .subscribe(data => {
-          this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          this.router.navigate(['/wireless'])
-        }, error => {
-          this.snackBar.open($localize`Error creating/updating wireless profile`, undefined, SnackbarDefaults.defaultError)
-          this.errorMessages = error
+        .subscribe({
+          next: () => {
+            this.snackBar.open(
+              $localize`Profile ${reqType} successfully`,
+              undefined,
+              SnackbarDefaults.defaultSuccess)
+            void this.router.navigate(['/wireless'])
+          },
+          error: err => {
+            this.snackBar.open(
+              $localize`Error creating/updating wireless profile`,
+              undefined,
+              SnackbarDefaults.defaultError)
+            this.errorMessages = err
+          }
         })
     }
+  }
+
+  getIEEE8021xConfigs (): void {
+    this.ieee8021xService
+      .getData()
+      .subscribe({
+        next: rsp => {
+          const cfgNames = rsp.data.filter(c => !c.wiredInterface).map(c => c.profileName)
+          if (cfgNames.length > 0) {
+            this.add8021xConfigurations(cfgNames)
+          }
+        },
+        error: err => {
+          this.errorMessages = err
+        }
+      })
+  }
+
+  add8021xConfigurations (names: string[]): void {
+    this.authenticationMethods = AuthenticationMethods.all()
+    const sorted = [...this.iee8021xConfigNames, ...names].sort()
+    this.iee8021xConfigNames = new Set(sorted)
+  }
+
+  onAuthenticationMethodChange (value: number): void {
+    const controls = this.wirelessForm.controls
+    if (AuthenticationMethods.isPSK(value)) {
+      this.showPSKPassPhrase = true
+      controls.pskPassphrase.addValidators(Validators.required)
+    } else {
+      this.showPSKPassPhrase = false
+      controls.pskPassphrase.removeValidators(Validators.required)
+    }
+    controls.pskPassphrase.updateValueAndValidity()
+    if (AuthenticationMethods.isIEEE8021X(value)) {
+      this.showIEEE8021x = true
+      controls.ieee8021xProfileName.addValidators(Validators.required)
+    } else {
+      this.showIEEE8021x = false
+      controls.ieee8021xProfileName.removeValidators(Validators.required)
+    }
+    controls.ieee8021xProfileName.updateValueAndValidity()
   }
 
   togglePSKPassVisibility (): void {

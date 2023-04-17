@@ -8,11 +8,12 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { PageEventOptions, WirelessConfigResponse } from 'src/models/models'
+import { PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { WirelessService } from './wireless.service'
 import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
+import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.constants'
 
 @Component({
   selector: 'app-wireless',
@@ -20,9 +21,12 @@ import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from
   styleUrls: ['./wireless.component.scss']
 })
 export class WirelessComponent implements OnInit {
-  public wirelessConfigs: WirelessConfigResponse = { data: [], totalCount: 0 }
-  public isLoading = true
+  configs: Config[] = []
+  isLoading = true
+  totalCount: number = 0
   displayedColumns: string[] = ['name', 'authmethod', 'encryptionMethod', 'ssid', 'remove']
+  authenticationMethods = AuthenticationMethods
+  encryptionMethods = EncryptionMethods
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -38,19 +42,26 @@ export class WirelessComponent implements OnInit {
   }
 
   getData (pageEvent: PageEventOptions): void {
-    this.wirelessService.getData(pageEvent).pipe(
-      finalize(() => {
-        this.isLoading = false
+    this.wirelessService
+      .getData(pageEvent)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe({
+        next: (rsp) => {
+          this.configs = rsp.data
+          this.totalCount = rsp.totalCount
+        },
+        error: () => {
+          this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
+        }
       })
-    ).subscribe((data: WirelessConfigResponse) => {
-      this.wirelessConfigs = data
-    }, () => {
-      this.snackBar.open($localize`Unable to load Wireless Configs`, undefined, SnackbarDefaults.defaultError)
-    })
   }
 
   isNoData (): boolean {
-    return !this.isLoading && this.wirelessConfigs.data.length === 0
+    return !this.isLoading && this.configs.length === 0
   }
 
   delete (name: string): void {
@@ -59,20 +70,26 @@ export class WirelessComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.isLoading = true
-        this.wirelessService.delete(name).pipe(
+        this.wirelessService
+          .delete(name)
+          .pipe(
           finalize(() => {
             this.isLoading = false
           })
-        ).subscribe(data => {
-          this.getData(this.pageEvent)
-          this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        }, error => {
-          if (error?.length > 0) {
-            this.snackBar.open(error, undefined, SnackbarDefaults.longError)
-          } else {
-            this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
-          }
-        })
+        )
+          .subscribe({
+             next: data => {
+              this.getData(this.pageEvent)
+              this.snackBar.open($localize`Configuration deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            },
+            error: err => {
+              if (err?.length > 0) {
+                this.snackBar.open(err, undefined, SnackbarDefaults.longError)
+              } else {
+                this.snackBar.open($localize`Unable to delete configuration`, undefined, SnackbarDefaults.defaultError)
+              }
+            }
+          })
       }
     })
   }

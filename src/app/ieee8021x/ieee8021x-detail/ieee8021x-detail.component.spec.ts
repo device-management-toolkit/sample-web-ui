@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module'
 import { IEEE8021xService } from '../ieee8021x.service'
 import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
+import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
 
 describe('IEEE8021xDetailComponent', () => {
   let component: IEEE8021xDetailComponent
@@ -96,5 +97,10 @@ describe('IEEE8021xDetailComponent', () => {
 
     expect(ieee8021xCreateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should support subsets of all autthentication protocols', () => {
+    expect(AuthenticationProtocols.forWiredInterface().length).toBeGreaterThan(0)
+    expect(AuthenticationProtocols.forWirelessInterface().length).toBeGreaterThan(0)
   })
 })

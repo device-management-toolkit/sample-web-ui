@@ -29,7 +29,7 @@ describe('Test Profile Page', () => {
     }).as('get-wirelessConfigs')
 
     api8021x
-      .interceptGetAll(httpCodes.SUCCESS, api8021x.allConfigsResponse)
+      .interceptGetAll(httpCodes.SUCCESS, api8021x.wiredConfigsResponse)
       .as('intercept8021xGetAll')
 
     cy.myIntercept('POST', 'profiles', {

@@ -68,11 +68,6 @@ export default {
   ACMActivate: 'acmactivate',
   /** @deprecated */
   CCMActivate: 'ccmactivate',
-  // todo: better naming
-  WPAPSK: 4,
-  WPA2PSK: 6,
-  TKIP: 3,
-  CCMP: 4,
   NORESULTS: 'No Wifi Configs Found',
   EVENTTYPEMAP,
   /** @deprecated */

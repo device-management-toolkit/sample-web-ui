@@ -369,3 +369,13 @@ export interface MQTTEvent {
 export interface RedirectionToken {
   token: string
 }
+
+export interface FormOption<T> {
+  value: T
+  label: string
+}
+
+export interface DataWithCount<T> {
+  data: T[]
+  totalCount: number
+}

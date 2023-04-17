@@ -98,7 +98,11 @@ Cypress.Commands.add('matSelectAssert', (selector: string, text: string) => {
 Cypress.Commands.add('matTextlikeInputType', (selector: string, value: string) => {
   cy.get(selector).invoke('is', ':disabled').then(isDisabled => {
     if (!isDisabled) {
-      cy.get(selector).clear().type(value).blur()
+      cy.get(selector).invoke('is', ':visible').then(isVisible => {
+        if (isVisible) {
+          cy.get(selector).clear().type(value).blur()
+        }
+      })
     }
   })
 })
@@ -302,12 +306,13 @@ Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
 Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod, encryptionMethod) => {
   cy.get('input[name="profileName"]').type(name)
   cy.get('input[name="ssid"]').type(userName)
-  cy.get('input[name="pskPassphrase"]').type(password)
   cy.get('mat-select[formControlName=authenticationMethod]').click().get('mat-option').contains(authMethod).click()
   cy.get('mat-select[formControlName=encryptionMethod]').click().get('mat-option').contains(encryptionMethod).click()
+  cy.get('input[name="pskPassphrase"]').type(password)
 })
 
 Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
+  cy.matRadioButtonChoose('[formControlName="wiredInterface"]', config.wiredInterface.toString())
   if (config.profileName != null) {
     cy.matTextlikeInputType('[formControlName="profileName"]', config.profileName)
   }

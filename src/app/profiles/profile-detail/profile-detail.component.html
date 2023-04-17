@@ -115,21 +115,27 @@
               <mat-radio-button [value]='false'>STATIC</mat-radio-button>
               <br /><br />
             </mat-radio-group>
-            <mat-checkbox data-cy='enable8021x' [formControl]='enable8021xControl' [fxShow]='!!ieee8021xProfileName'>
-              Enable Wired 802.1x Profile: <b>{{ ieee8021xProfileName }}</b>
-            </mat-checkbox>
           </div>
 
-          <div fxFlex='100' style='margin-top: 20px'>
+          <mat-form-field fxFlex='100' [fxShow]='showIEEE8021xConfigurations' style='margin-top:10px'>
+            <mat-label>802.1x Configuration</mat-label>
+            <mat-select formControlName='ieee8021xProfileName'>
+              <mat-option *ngFor='let cfg of iee8021xConfigurations' [value]='cfg.profileName'>
+                {{cfg.profileName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex='100' [fxShow]='showWirelessConfigurations' style='margin-top: 20px'>
             <mat-form-field fxFill>
               <mat-label>Wi-Fi Profiles</mat-label>
               <input matInput type='text'
                 data-cy='wifiAutocomplete' placeholder='Search for Wi-Fi Profiles to Add'
-                [formControl]='wifiAutocomplete'
+                [formControl]='wirelessAutocomplete'
                 [matAutocomplete]='auto'>
               <mat-autocomplete autoActiveFirstOption #auto='matAutocomplete'
                 (optionSelected)='selectWifiProfile($event)'>
-                <mat-option *ngFor='let wifi of filteredWifiList | async' [value]='wifi' [ngClass]='isSelectable(wifi)'>
+                <mat-option *ngFor='let wifi of filteredWirelessList | async' [value]='wifi' [ngClass]='isSelectable(wifi)'>
                   {{wifi}}
                 </mat-option>
               </mat-autocomplete>

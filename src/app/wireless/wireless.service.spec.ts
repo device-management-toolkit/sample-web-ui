@@ -10,6 +10,7 @@ import { PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 import { WirelessService } from './wireless.service'
+import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.constants'
 
 describe('WirelessService', () => {
   let service: WirelessService
@@ -23,25 +24,17 @@ describe('WirelessService', () => {
     service = new WirelessService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 
-  const wifiResponse = {
-    data: [{
-      profileName: 'wifi1',
-      authenticationMethod: 3,
-      encryptionMethod: 4,
-      ssid: 'ssid',
-      pskValue: 'password',
-      linkPolicy: [14]
-    }],
-    totalCount: 1
+  const config01: Config = {
+    profileName: 'wirelessConfig01',
+    ssid: 'someSSID',
+    authenticationMethod: AuthenticationMethods.WPA_PSK.value,
+    encryptionMethod: EncryptionMethods.TKIP.value,
+    pskPassphrase: 'onlyInRequestNotRESPONSE'
   }
 
-  const wifiReq = {
-    profileName: 'wifi1',
-    authenticationMethod: 3,
-    encryptionMethod: 4,
-    ssid: 'ssid',
-    pskValue: 'password',
-    linkPolicy: [14]
+  const wifiResponse = {
+    data: [config01],
+    totalCount: 1
   }
 
   afterEach(() => {
@@ -155,10 +148,10 @@ describe('WirelessService', () => {
   })
 
   it('should create the wireless config when create request gets fired', () => {
-    httpClientSpy.post.and.returnValue(of(wifiReq))
+    httpClientSpy.post.and.returnValue(of(config01))
 
-    service.create(wifiReq).subscribe(response => {
-      expect(response).toEqual(wifiReq)
+    service.create(config01).subscribe(response => {
+      expect(response).toEqual(config01)
     })
 
     expect(httpClientSpy.post.calls.count()).toEqual(1)
@@ -170,17 +163,17 @@ describe('WirelessService', () => {
     }
     httpClientSpy.post.and.returnValue(throwError(error))
 
-    service.create(wifiReq).subscribe(() => {}, err => {
+    service.create(config01).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
     })
 
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
   it('should update the wireless config when update request gets fired', () => {
-    httpClientSpy.patch.and.returnValue(of(wifiReq))
+    httpClientSpy.patch.and.returnValue(of(config01))
 
-    service.update(wifiReq).subscribe(response => {
-      expect(response).toEqual(wifiReq)
+    service.update(config01).subscribe(response => {
+      expect(response).toEqual(config01)
     })
 
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
@@ -194,7 +187,7 @@ describe('WirelessService', () => {
 
     httpClientSpy.patch.and.returnValue(throwError(error))
 
-    service.update(wifiReq).subscribe(() => {}, err => {
+    service.update(config01).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
     })
 

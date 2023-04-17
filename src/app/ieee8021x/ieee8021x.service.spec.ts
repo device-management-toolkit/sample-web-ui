@@ -73,15 +73,6 @@ describe('IEEE8021xService', () => {
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
-  it('should refresh the counts by interface', async () => {
-    expect(service.wiredConfigExists).toBeFalse()
-    expect(service.wirelessConfigExists).toBeFalse()
-    httpClientSpy.get.and.returnValue(of({ wired: 1, wireless: 1 }))
-    await service.refreshCountByInterface()
-    expect(service.wiredConfigExists).toBeTrue()
-    expect(service.wirelessConfigExists).toBeTrue()
-  })
-
   it('should throw errors when get all request fired with pageevent options', () => {
     const pageEvent: PageEventOptions = {
       count: 'true',
