@@ -1,3 +1,33 @@
+<a name="2.8.0"></a>
+## [2.8.0] - 2023-05-04
+### Build
+- update package.json and changelog to v2.8.0 (#7f6f78f) 
+- **deps:** Bump esbuild from 0.17.15 to 0.17.16 (#36497a0) 
+- **deps:** Bump esbuild from 0.17.16 to 0.17.17 ([#1090](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1090)) (#c86fc57) 
+- **deps:** bump angular core and cdk from 15.2.6 to 15.2.7 ([#1091](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1091)) (#de03ef7) 
+- **deps:** Bump cypress from 12.10.0 to 12.11.0 ([#1108](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1108)) (#7e146a6) 
+- **deps:** Bump rxjs from 7.8.0 to 7.8.1 ([#1105](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1105)) (#2ba646c) 
+- **deps:** Bump cypress from 12.9.0 to 12.10.0 ([#1092](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1092)) (#52808c4) 
+- **deps:** Bump [@angular](https://github.com/angular) cdk, core and material to 15.2.8 ([#1097](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1097)) (#c2b56c9) 
+- **deps:** Bump esbuild from 0.17.17 to 0.17.18 ([#1101](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1101)) (#1630d99) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.13 to 18.16.0 ([#1102](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1102)) (#d2b452c) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.12 to 18.15.13 ([#1100](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1100)) (#1e2d84b) 
+- **deps-dev:** Bump karma-chrome-launcher from 3.1.1 to 3.2.0 ([#1099](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1099)) (#e31fbe7) 
+- **deps-dev:** Bump karma from 6.4.1 to 6.4.2 ([#1103](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1103)) (#8e462d1) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.15.11 to 18.15.12 ([#1094](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1094)) (#4e7e071) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.16.0 to 18.16.1 ([#1104](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1104)) (#11256b4) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 15.2.6 to 15.2.7 ([#1109](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1109)) (#ad00328) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.16.1 to 18.16.2 ([#1110](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1110)) (#7455505) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.16.2 to 18.16.3 ([#1111](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1111)) (#e92c02e) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 15.2.4 to 15.2.5 ([#1082](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1082)) (#deb0c57) 
+
+### Ci
+- **deps:** bump codecov to 3.1.3 (#2c3ab27) 
+
+### Feat
+- **8021x:** functionality for wireless configuration ([#1083](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1083)) (#bec716d) 
+- **devices:** add device deactivation via cira ([#1001](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1001)) (#e4af456) 
+
 <a name="2.7.0"></a>
 ## [2.7.0] - 2023-04-05
 ### Build
