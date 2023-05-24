@@ -1,3 +1,26 @@
+<a name="2.9.0"></a>
+## [2.9.0] - 2023-05-24
+### Build
+- update version and changelog to v2.9.0 (#0f00b57) 
+- **deps:** Bump tslib from 2.5.0 to 2.5.2 ([#1139](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1139)) (#8cbd716) 
+- **deps:** Bump socket.io-parser from 4.2.2 to 4.2.3 ([#1141](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1141)) (#b29770c) 
+- **deps:** Bump esbuild from 0.17.18 to 0.17.19 (#a1eafa1) 
+- **deps:** Bump cypress from 12.11.0 to 12.12.0 ([#1136](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1136)) (#e46851e) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.2.0 to 20.2.1 (#930338f) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser (#2cf189f) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin (#d302eef) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 18.16.3 to 20.2.0 (#fb572ae) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin (#65ece67) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template ([#1137](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1137)) (#bb217d4) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser (#0527655) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template (#81f7ab0) 
+
+### Ci
+- add trivy container scan ([#1135](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1135)) (#3c3bf0b) 
+
+### Feat
+- add/expose ipSyncEnabled in amt profile for wired interface ([#1123](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1123)) (#3625bcd) 
+
 <a name="2.8.0"></a>
 ## [2.8.0] - 2023-05-04
 ### Build
