@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module'
 
 import { ProfilesComponent } from './profiles.component'
 import { ProfilesService } from './profiles.service'
+import { TlsModes } from './profiles.constants'
 
 describe('ProfilesComponent', () => {
   let component: ProfilesComponent
@@ -58,7 +59,7 @@ describe('ProfilesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(getDataSpy.calls.any()).withContext('getData called').toBeTrue()
   })
 
   it('should navigate to new', async () => {
@@ -97,15 +98,15 @@ describe('ProfilesComponent', () => {
   })
   it('should change the page', () => {
     component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(getDataSpy.calls.any()).withContext('getData called').toBeTrue()
     expect(component.paginator.length).toBe(1)
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })
   it('should parseTlsMode when known', () => {
-    const result = component.parseTlsMode(1)
-    expect(result).toBe(ProfilesService.TLS_MODES[0].label)
+    const result = component.parseTlsMode(TlsModes.MUTUAL.value)
+    expect(result).toEqual(TlsModes.MUTUAL.label)
   })
   it('should parseTlsMode when unknown', () => {
     const result = component.parseTlsMode(null as any)

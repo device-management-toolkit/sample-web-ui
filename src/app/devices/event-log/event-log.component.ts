@@ -9,10 +9,17 @@ import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/materia
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
-import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { EventLog } from 'src/models/models'
 import { DevicesService } from '../devices.service'
+
+type EventTypeMap = Record<number, string>
+const EVENTTYPEMAP: EventTypeMap = {
+  1: 'Threshold based event',
+  7: 'Generic severity event',
+  10: 'Linkup Event',
+  111: 'Sensor specific event'
+}
 
 @Component({
   selector: 'app-event-log',
@@ -52,7 +59,7 @@ export class EventLogComponent implements OnInit {
   }
 
   decodeEventType (eventType: number): string {
-    return Constants.EVENTTYPEMAP[eventType]
+    return EVENTTYPEMAP[eventType]
   }
 
   isNoData (): boolean {

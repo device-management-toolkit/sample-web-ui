@@ -8,46 +8,26 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { PageEventOptions, Profile, ProfileResponse, TlsMode, TlsSigningAuthority } from 'src/models/models'
+import { PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
+import { Profile, ProfilesResponse } from './profiles.constants'
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ProfilesService {
-  public static readonly TLS_MODES: TlsMode[] = [
-    { label: 'Server Authentication Only', value: 1 },
-    { label: 'Server & Non-TLS Authentication', value: 2 },
-    { label: 'Mutual TLS Authentication Only', value: 3 },
-    { label: 'Mutual and Non-TLS Authentication', value: 4 }
-  ]
-
-  public static readonly TLS_DEFAULT_SIGNING_AUTHORITY = 'SelfSigned'
-  public static readonly TLS_SIGNING_AUTHORITIES: TlsSigningAuthority[] = [
-    {
-      label: 'Use Self-Signed Cert',
-      value: 'SelfSigned'
-    },
-    {
-      label: 'Use Microsoft CA Signed Cert (Requires Enterprise Assistant)',
-      value: 'MicrosoftCA'
-    }
-  ]
-
   private readonly url = `${environment.rpsServer}/api/v1/admin/profiles`
-  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
+  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {}
 
-  }
-
-  getData (pageEvent?: PageEventOptions): Observable<ProfileResponse> {
+  getData (pageEvent?: PageEventOptions): Observable<ProfilesResponse> {
     let query = this.url
     if (pageEvent) {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += '?$count=true'
     }
-    return this.http.get<ProfileResponse>(query)
+    return this.http.get<ProfilesResponse>(query)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

@@ -14,7 +14,7 @@
 <mat-card>
     <mat-card-content>
         <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Profiles</h3>
-        <mat-table [dataSource]="profiles.data" [fxHide]="isNoData()">
+        <mat-table [dataSource]="profiles" [fxHide]="isNoData()">
             <!-- select Column -->
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef fxFlex="50px"> </mat-header-cell>
@@ -38,7 +38,7 @@
             <!-- connectionConfig Column -->
             <ng-container matColumnDef="connectionConfig">
                 <mat-header-cell *matHeaderCellDef fxFlex="150px"> Connection Config </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> 
+                <mat-cell *matCellDef="let element" fxFlex="150px">
                     <span>{{ element.ciraConfigName }}</span>
                     <span>{{ parseTlsMode(element.tlsMode) }}</span>
                 </mat-cell>
@@ -65,11 +65,11 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
         </mat-table>
-        <div *ngIf="profiles.totalCount">
+        <div *ngIf="totalCount">
             <mat-paginator [pageSizeOptions]="[25, 50, 100]"
                 [pageSize]="25"
-                [length]="profiles.totalCount"
-                showFirstLastButtons 
+                [length]="totalCount"
+                showFirstLastButtons
                 (page)="pageChanged($event)">
             </mat-paginator>
         </div>

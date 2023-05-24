@@ -3,7 +3,6 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-// Tests the creation of a profile
 import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
 import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
@@ -12,10 +11,8 @@ import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
 import { amtProfiles } from '../../fixtures/formEntry/profile'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 
-// ---------------------------- Test section ----------------------------
-
 describe('Test Profile Page', () => {
-  beforeEach('clear cache and login', () => {
+  beforeEach(() => {
     cy.setup()
     // Stub the get and post requests
     cy.myIntercept('GET', 'ciraconfigs?$count=true', {
@@ -58,30 +55,16 @@ describe('Test Profile Page', () => {
   })
 
   amtProfiles.forEach((amtProfile) => {
-    let connectProfile: any
-    if (amtProfile.ciraConfigName) {
-      connectProfile = amtProfile.ciraConfigName
-    } else if (amtProfile.tlsConfig) {
-      connectProfile = amtProfile.tlsConfig
-    }
     it(`creates the profile - ${amtProfile.profileName as string}`, () => {
       cy.log(amtProfile)
-      cy.enterProfileInfo(
-        amtProfile.profileName,
-        amtProfile.activation,
-        false,
-        false,
-        amtProfile.dhcpEnabled,
-        amtProfile.connectionMode,
-        connectProfile,
-        amtProfile.userConsent,
-        amtProfile.iderEnabled,
-        amtProfile.kvmEnabled,
-        amtProfile.solEnabled,
-        amtProfile.wifiConfigs
-      )
+      cy.matTextlikeInputType('[formControlName="profileName"]', amtProfile.profileName)
+
+      cy.enterProfileInfoV2(amtProfile)
       cy.get('button[type=submit]').click()
-      if (!amtProfile.dhcpEnabled && amtProfile.connectionMode === 'CIRA (Cloud)') {
+      if (!amtProfile.dhcpEnabled && amtProfile.ciraConfigName) {
+        cy.get('button').contains('Continue').click()
+      }
+      if (amtProfile.generateRandomMEBxPassword || amtProfile.generateRandomPassword) {
         cy.get('button').contains('Continue').click()
       }
       cy.wait('@post-profile').then((req) => {

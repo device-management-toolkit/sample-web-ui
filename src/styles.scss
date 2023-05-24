@@ -7,4 +7,9 @@ mat-drawer-container, mat-sidenav-container {
   height: 100%;
   overflow: auto; //font-size: 14px;
 }
-
+// adjust mat-checkbox to align
+// at the top of the label text
+// (needed for multiple line labels)
+.mat-checkbox-inner-container {
+  margin-top: 5px !important;
+}

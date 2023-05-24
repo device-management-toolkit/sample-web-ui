@@ -8,11 +8,12 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { PageEventOptions, ProfileResponse } from 'src/models/models'
+import { PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ProfilesService } from './profiles.service'
 import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
+import { Profile, TlsModes } from './profiles.constants'
 
 @Component({
   selector: 'app-profiles',
@@ -21,8 +22,9 @@ import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from
 })
 
 export class ProfilesComponent implements OnInit {
-  public profiles: ProfileResponse = { data: [], totalCount: 0 }
-  public isLoading = true
+  profiles: Profile[] = []
+  isLoading = true
+  totalCount: number = 0
   displayedColumns: string[] = ['name', 'networkConfig', 'connectionConfig', 'activation', 'remove']
   pageEvent: PageEventOptions = {
     pageSize: 25,
@@ -32,27 +34,37 @@ export class ProfilesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly profilesService: ProfilesService) {
-  }
+  constructor (
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public readonly router: Router,
+    private readonly profilesService: ProfilesService) {}
 
   ngOnInit (): void {
     this.getData(this.pageEvent)
   }
 
   getData (pageEvent: PageEventOptions): void {
-    this.profilesService.getData(pageEvent).pipe(
-      finalize(() => {
-        this.isLoading = false
+    this.profilesService
+      .getData(pageEvent)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe({
+        next: (rsp) => {
+          this.profiles = rsp.data
+          this.totalCount = rsp.totalCount
+        },
+        error: () => {
+          this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
+        }
       })
-    ).subscribe((data) => {
-      this.profiles = data
-    }, () => {
-      this.snackBar.open($localize`Unable to load profiles`, undefined, SnackbarDefaults.defaultError)
-    })
   }
 
   isNoData (): boolean {
-    return !this.isLoading && this.profiles.data.length === 0
+    return !this.isLoading && this.profiles.length === 0
   }
 
   delete (name: string): void {
@@ -61,23 +73,32 @@ export class ProfilesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.isLoading = true
-        this.profilesService.delete(name).pipe(
-          finalize(() => {
-            this.isLoading = false
+        this.profilesService
+          .delete(name)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            })
+          )
+          .subscribe({
+             next: () => {
+              this.getData(this.pageEvent)
+              this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            },
+            error: err => {
+              if (err?.length > 0) {
+                this.snackBar.open(err, undefined, SnackbarDefaults.longError)
+              } else {
+                this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
+              }
+            }
           })
-        ).subscribe(data => {
-          this.getData(this.pageEvent)
-          this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        },
-        () => {
-          this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
-        })
       }
     })
   }
 
   parseTlsMode (val: number): string {
-    return ProfilesService.TLS_MODES.find(z => z.value === val)?.label ?? ''
+    return TlsModes.labelForValue(val)
   }
 
   pageChanged (event: PageEvent): void {

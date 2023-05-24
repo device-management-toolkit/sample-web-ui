@@ -8,22 +8,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
 import { RouterTestingModule } from '@angular/router/testing'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
-
 import { ProfileDetailComponent } from './profile-detail.component'
-import Constants from '../../shared/config/Constants'
+import { ActivationModes, ConnectionModes, UserConsentModes } from '../profiles.constants'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
   let fixture: ComponentFixture<ProfileDetailComponent>
   let profileSpy: jasmine.Spy
-  let configsSpy: jasmine.Spy
+  let ciraGetDataSpy: jasmine.Spy
   let profileCreateSpy: jasmine.Spy
   let profileUpdateSpy: jasmine.Spy
   const ieee8021xAvailableConfigs: IEEE8021x.Config[] = [
@@ -49,8 +48,8 @@ describe('ProfileDetailComponent', () => {
       version: ''
     }
   ]
-  let ieee8021xConfigsSpy: jasmine.Spy
-  let wirelessConfigsSpy: jasmine.Spy
+  let ieee8021xGetDataSpy: jasmine.Spy
+  let wirelessGetDataSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord', 'update', 'create'])
@@ -75,9 +74,9 @@ describe('ProfileDetailComponent', () => {
     profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
     profileUpdateSpy = profilesService.update.and.returnValue(of({}))
-    configsSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
-    ieee8021xConfigsSpy = ieee8021xService.getData.and.returnValue(of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length }))
-    wirelessConfigsSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    ciraGetDataSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
+    ieee8021xGetDataSpy = ieee8021xService.getData.and.returnValue(of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length }))
+    wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
@@ -86,7 +85,7 @@ describe('ProfileDetailComponent', () => {
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
-        { provide: WirelessService, useValue: wirelessService },
+        { provide: WirelessService, useFactory: () => wirelessService },
         // { provide: TLSService, useValue: tlsService },
         {
           provide: ActivatedRoute,
@@ -110,27 +109,27 @@ describe('ProfileDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(configsSpy).toHaveBeenCalled()
+    expect(ciraGetDataSpy).toHaveBeenCalled()
     expect(profileSpy).toHaveBeenCalledWith('profile')
-    expect(ieee8021xConfigsSpy).toHaveBeenCalled()
-    expect(wirelessConfigsSpy).toHaveBeenCalled()
+    expect(ieee8021xGetDataSpy).toHaveBeenCalled()
+    expect(wirelessGetDataSpy).toHaveBeenCalled()
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
     component.setConnectionMode({ tlsMode: 4, ciraConfigName: 'config1' } as any)
-    expect(component.profileForm.controls.connectionMode.value).toBe(Constants.ConnectionMode_TLS)
+    expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.TLS.value)
   })
   it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
     component.setConnectionMode({ ciraConfigName: 'config1' } as any)
-    expect(component.profileForm.controls.connectionMode.value).toBe(Constants.ConnectionMode_CIRA)
+    expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.CIRA.value)
   })
   it('should cancel', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
   })
-  it(`should not enable mebxPassword when generateRandomMEBxPassword is false and activation is ${Constants.CCMActivate}`, () => {
+  it(`should not enable mebxPassword when generateRandomMEBxPassword is false and activation is ${ActivationModes.CLIENT.value}`, () => {
     component.profileForm.patchValue({
-      activation: Constants.CCMActivate,
+      activation: ActivationModes.CLIENT.value,
       generateRandomMEBxPassword: false
     })
     expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
@@ -139,7 +138,7 @@ describe('ProfileDetailComponent', () => {
   })
   it('should disable mebxPassword when generateRandomMEBxPassword is true', () => {
     component.profileForm.patchValue({
-      activation: Constants.ACMActivate,
+      activation: ActivationModes.ADMIN.value,
       generateRandomMEBxPassword: false
     })
     expect(component.profileForm.controls.mebxPassword.disabled).toBeFalse()
@@ -249,7 +248,7 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should enable the cira config and disable wifi config when static network is selected', () => {
-    component.networkConfigChange(false)
+    component.dhcpEnabledChange(false)
     expect(component.profileForm.controls.ciraConfigName.enabled).toBe(true)
     // Add check for wifi config disabled or selected wifi config is 0
   })
@@ -442,21 +441,19 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the selected wifi configs when a selected config is removed', () => {
-    component.selectedWifiConfigs = [{ priority: 1, profileName: 'home' }, { priority: 2, profileName: 'work' }]
-    const item: any = {
-      priority: 2,
-      profileName: 'work'
-    }
-    component.removeWifiProfile(item)
-    expect(component.selectedWifiConfigs.length).toBe(2)
+    const wifiCfg01 = { priority: 1, profileName: 'home' }
+    const wifiCfg02 = { priority: 2, profileName: 'work' }
+    component.selectedWifiConfigs = [wifiCfg01, wifiCfg02]
+    component.removeWifiProfile(wifiCfg02)
+    expect(component.selectedWifiConfigs.length).toBe(1)
   })
 
   it('should adjust related fields on selecting activation mode', () => {
-    component.activationChange(Constants.CCMActivate)
+    component.activationChange(ActivationModes.CLIENT.value)
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(true)
     expect(component.profileForm.controls.userConsent.disabled).toBe(true)
-    expect(component.profileForm.controls.userConsent.value).toEqual(Constants.UserConsent_All)
-    component.activationChange(Constants.ACMActivate)
+    expect(component.profileForm.controls.userConsent.value).toEqual(UserConsentModes.ALL.value)
+    component.activationChange(ActivationModes.ADMIN.value)
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(false)
     expect(component.profileForm.controls.userConsent.disabled).toBe(false)
   })
@@ -513,28 +510,49 @@ describe('ProfileDetailComponent', () => {
 
   it('should change the value of amt password to a random strong password', () => {
     component.profileForm.controls.amtPassword.setValue('')
-    component.GenerateAMTPassword()
+    component.generateAMTPassword()
     expect(component.profileForm.controls.amtPassword.value.length).toBe(16)
   })
 
   it('should change the value of mebx password to a random strong password', () => {
     component.profileForm.controls.mebxPassword.setValue('1@qW')
-    component.GenerateMEBXPassword()
+    component.generateMEBXPassword()
     expect(component.profileForm.controls.mebxPassword.value.length).toBe(16)
   })
 
   it('should set the ciraCofigName property to null when TLS Selected', () => {
-    component.connectionModeChange(Constants.ConnectionMode_TLS)
+    component.connectionModeChange(ConnectionModes.TLS.value)
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
     expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
     expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
-    expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(ProfilesService.TLS_DEFAULT_SIGNING_AUTHORITY)
+    expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(component.tlsDefaultSigningAuthority.value)
     expect(component.profileForm.controls.tlsSigningAuthority.valid).toBeTrue()
   })
   it('should set the tlsMode property to null when CIRA Selected', () => {
-    component.connectionModeChange(Constants.ConnectionMode_CIRA)
+    component.connectionModeChange(ConnectionModes.CIRA.value)
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
     expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
     expect(component.profileForm.controls.ciraConfigName.value).toBe('config1')
+  })
+  it('should return update error', () => {
+    profileUpdateSpy.and.returnValue(throwError(() => new Error('nope')))
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      amtPassword: 'Password123',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      mebxPassword: 'Password123',
+      dhcpEnabled: true,
+      ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
+      ciraConfigName: 'config1',
+      tlsConfigName: null
+    })
+    component.confirm()
+
+    expect(profileUpdateSpy).toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
   })
 })

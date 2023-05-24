@@ -101,6 +101,7 @@ export interface Profile {
   generateRandomMEBxPassword: boolean
   mebxPassword?: string
   dhcpEnabled: boolean
+  ipSyncEnabled: boolean
   ieee8021xProfileName?: string
   wifiConfigs?: WiFiConfig[]
   tags: string[]

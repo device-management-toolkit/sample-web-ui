@@ -3,60 +3,72 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import Constants from '../../../../src/app/shared/config/Constants'
+import {
+  ActivationModes, ConnectionModes,
+  TlsModes,
+  UserConsentModes
+} from '../../../../src/app/profiles/profiles.constants'
+import { wirelessFixtures } from './wireless'
+import { ciraConfig } from '../api/cira'
 
-const amtModes = ['ccmactivate', 'acmactivate']
-const dhcpEnabled = [true, false]
+const dhcpEnabledValues = [true, false]
 
-const tlsModes: any = {
-  'CIRA (Cloud)': { profileValue: 'CIRA' },
-  'Server Authentication Only': { profileValue: 'server', value: 1 },
-  'Server & Non-TLS Authentication': { profileValue: 'server-nontls', value: 2 },
-  'Mutual TLS Authentication Only': { profileValue: 'mutualtls', value: 3 },
-  'Mutual and Non-TLS Authentication': { profileValue: 'mutual-nontls', value: 4 }
-}
-const connectionMode = ['CIRA (Cloud)', 'Server Authentication Only', 'Server & Non-TLS Authentication', 'Mutual TLS Authentication Only', 'Mutual and Non-TLS Authentication']
-const ciraProfile = 'happyPath'
-const amtProfiles: any[] = []
 const wifiConfigs = [
   [{}], // support non wifi config
-  [{
-    profileName: 'happyPath'
-  }]
+  [wirelessFixtures.happyPath]
 ]
-amtModes.forEach((amtMode) => {
-  dhcpEnabled.forEach((dhcp) => {
-    connectionMode.forEach((conMode) => {
-      wifiConfigs.forEach((wifi) => {
-        const dhcpS = dhcp ? 'DHCP' : 'Static'
 
+const amtProfiles: any[] = []
+ActivationModes.all().forEach((activationMode) => {
+  dhcpEnabledValues.forEach((dhcpEnabled) => {
+    ConnectionModes.all().forEach((connection) => {
+      wifiConfigs.forEach((wifi) => {
+        const dhcpLabel = dhcpEnabled ? 'DHCP' : 'STATIC'
         const profile: any = {
-          profileName: `${amtMode}-${dhcpS}-${tlsModes[conMode].profileValue as string}`,
-          activation: amtMode,
+          profileName: `${activationMode.value}-${dhcpLabel}-${connection.value}`,
+          activation: activationMode.value,
           amtPassword: '', // Cypress.env('AMT_PASSWORD'),
           mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
-          dhcpEnabled: dhcp,
-          userConsent: Constants.UserConsent_All,
+          dhcpEnabled,
+          userConsent: UserConsentModes.ALL.value,
           iderEnabled: true,
           kvmEnabled: true,
           solEnabled: true
         }
-        if (conMode === 'CIRA (Cloud)') {
-          profile.connectionMode = conMode
-          profile.ciraConfigName = ciraProfile
+        if (connection === ConnectionModes.CIRA) {
+          profile.ciraConfigName = ciraConfig.getAll.forProfile.response.data[0].configName
         } else {
-          profile.connectionMode = 'TLS (Enterprise)'
-          profile.tlsConfig = conMode
-          profile.tlsMode = tlsModes[conMode].value
+          profile.tlsMode = TlsModes.SERVER_NON_TLS.value
         }
         if ((wifi[0] as any).profileName) {
-          if (!dhcp) { return }
+          if (!dhcpEnabled) { return }
           (profile.profileName as string) += '-WiFi'
           profile.wifiConfigs = wifi
         }
         amtProfiles.push(profile)
       })
     })
+  })
+})
+
+// create all of the TLS modes
+// (and add STATIC with ipSyncEnabled of false)
+TlsModes.all().forEach(tlsMode => {
+  const name = tlsMode.label
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+  amtProfiles.push({
+    profileName: `STATIC-${name}`,
+    activation: ActivationModes.ADMIN.value,
+    amtPassword: '', // Cypress.env('AMT_PASSWORD'),
+    mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
+    dhcpEnabled: false,
+    ipSyncEnabled: false,
+    userConsent: UserConsentModes.ALL.value,
+    iderEnabled: true,
+    kvmEnabled: true,
+    solEnabled: true,
+    tlsMode: tlsMode.value
   })
 })
 
@@ -69,7 +81,7 @@ const profileFixtures = {
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: true,
     ciraConfig: 'happyPath',
-    userConsent: Constants.UserConsent_All,
+    userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true,
@@ -109,7 +121,7 @@ const profileFixtures = {
     connectionMode: 'TLS (Enterprise)',
     tlsConfig: 'Server Authentication Only',
     generateRandomPassword: false,
-    userConsent: Constants.UserConsent_All,
+    userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true,
@@ -129,7 +141,7 @@ const profileFixtures = {
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: false,
     ciraConfig: 'happyPath',
-    userConsent: Constants.UserConsent_All,
+    userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true,
@@ -149,7 +161,7 @@ const profileFixtures = {
     connectionMode: 'CIRA (Cloud)',
     dhcpEnabled: false,
     ciraConfig: 'happyPath',
-    userConsent: Constants.UserConsent_All,
+    userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true
@@ -170,7 +182,7 @@ const profileFixtures = {
         priority: 1
       }
     ],
-    userConsent: Constants.UserConsent_All,
+    userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true

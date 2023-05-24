@@ -10,15 +10,7 @@ import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig 
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
-import Constants from 'src/app/shared/config/Constants'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import {
-  CIRAConfig,
-  Profile,
-  TlsMode,
-  TlsSigningAuthority,
-  WiFiProfile
-} from 'src/models/models'
 import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
@@ -31,7 +23,16 @@ import {
   MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent
 } from '@angular/material/legacy-autocomplete'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import * as Cira from '../../configs/configs.constants'
 import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
+import {
+  ActivationModes, Profile,
+  TlsModes, TlsSigningAuthorities,
+  UserConsentModes,
+  WiFiConfig
+} from '../profiles.constants'
+
+const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
 @Component({
   selector: 'app-profile-detail',
@@ -39,30 +40,22 @@ import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
   styleUrls: ['./profile-detail.component.scss']
 })
 export class ProfileDetailComponent implements OnInit {
-  public profileForm: FormGroup
-  public activationModes = [
-    { display: 'Admin Control Mode', value: Constants.ACMActivate },
-    { display: 'Client Control Mode', value: Constants.CCMActivate }
-  ]
-
-  public userConsentModes = [
-    { display: 'None', value: Constants.UserConsent_None },
-    { display: 'All', value: Constants.UserConsent_All },
-    { display: 'KVM Only', value: Constants.UserConsent_KVM }
-  ]
-
-  public ciraConfigurations: CIRAConfig[] = []
-  public isLoading = false
-  public pageTitle = 'New Profile'
-  public isEdit = false
-  public tags: string[] = []
-  public selectedWifiConfigs: WiFiProfile[] = []
-  public amtInputType = 'password'
-  public mebxInputType = 'password'
+  profileForm: FormGroup
+  pageTitle = 'New Profile'
+  isLoading = false
+  isEdit = false
+  activationModes = ActivationModes.all()
+  userConsentModes = UserConsentModes.all()
+  tlsModes = TlsModes.all()
+  tlsSigningAuthorities = TlsSigningAuthorities.all()
+  tlsDefaultSigningAuthority = TlsSigningAuthorities.SELF_SIGNED
+  ciraConfigurations: Cira.Config[] = []
+  tags: string[] = []
+  selectedWifiConfigs: WiFiConfig[] = []
+  amtInputType = 'password'
+  mebxInputType = 'password'
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  public errorMessages: string[] = []
-  public tlsModes: TlsMode[] = []
-  public tlsSigningAuthorities: TlsSigningAuthority[] = []
+  errorMessages: string[] = []
   matDialogConfig: MatDialogConfig = {
     height: '225px',
     width: '450px'
@@ -74,6 +67,11 @@ export class ProfileDetailComponent implements OnInit {
   showWirelessConfigurations: boolean = false
   filteredWirelessList: Observable<string[]> = of([])
   wirelessAutocomplete = new FormControl()
+  tooltipIpSyncEnabled = 'Only applicable for static wired network config'
+  connectionMode = {
+    cira: 'CIRA',
+    tls: 'TLS'
+  }
 
   constructor (
     public snackBar: MatSnackBar,
@@ -86,16 +84,15 @@ export class ProfileDetailComponent implements OnInit {
     private readonly ieee8021xService: IEEE8021xService,
     public dialog: MatDialog
   ) {
-    this.tlsModes = ProfilesService.TLS_MODES
-    this.tlsSigningAuthorities = ProfilesService.TLS_SIGNING_AUTHORITIES
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
-      activation: [Constants.ACMActivate, Validators.required],
+      activation: [ActivationModes.ADMIN.value, Validators.required],
       generateRandomPassword: [true, Validators.required],
       amtPassword: [{ value: null, disabled: true }],
       generateRandomMEBxPassword: [true, Validators.required],
       mebxPassword: [{ value: null, disabled: true }],
       dhcpEnabled: [true],
+      ipSyncEnabled: [{ value: true, disabled: true }],
       connectionMode: [null, Validators.required],
       ciraConfigName: [null],
       ieee8021xProfileName: [null],
@@ -104,7 +101,7 @@ export class ProfileDetailComponent implements OnInit {
       tlsSigningAuthority: [null],
       version: [null],
       // userConsent default depends on activation
-      userConsent: [Constants.UserConsent_None, Validators.required],
+      userConsent: [UserConsentModes.NONE.value, Validators.required],
       iderEnabled: [true, Validators.required],
       kvmEnabled: [true, Validators.required],
       solEnabled: [true, Validators.required]
@@ -129,24 +126,24 @@ export class ProfileDetailComponent implements OnInit {
       map(value => value.length > 0 ? this.search(value) : [])
     )
     this.profileForm.controls.activation?.valueChanges.subscribe(value => { this.activationChange(value) })
-    this.profileForm.controls.generateRandomPassword?.valueChanges.subscribe(value => { this.generateRandomPasswordChange(value) })
-    this.profileForm.controls.generateRandomMEBxPassword?.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
-    this.profileForm.controls.dhcpEnabled?.valueChanges.subscribe(value => { this.networkConfigChange(value) })
-    this.profileForm.controls.connectionMode?.valueChanges.subscribe(value => { this.connectionModeChange(value) })
+    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe(value => { this.generateRandomPasswordChange(value) })
+    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
+    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe(value => { this.dhcpEnabledChange(value) })
+    this.profileForm.controls.connectionMode.valueChanges.subscribe(value => { this.connectionModeChange(value) })
   }
 
   setConnectionMode (data: Profile): void {
     if (data.tlsMode != null) {
-      this.profileForm.controls.connectionMode.setValue(Constants.ConnectionMode_TLS)
+      this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
     } else if (data.ciraConfigName != null) {
-      this.profileForm.controls.connectionMode.setValue(Constants.ConnectionMode_CIRA)
+      this.profileForm.controls.connectionMode.setValue(this.connectionMode.cira)
     }
   }
 
   activationChange (value: string): void {
-    if (value === Constants.CCMActivate) {
+    if (value === ActivationModes.CLIENT.value) {
       this.profileForm.controls.userConsent.disable()
-      this.profileForm.controls.userConsent.setValue(Constants.UserConsent_All)
+      this.profileForm.controls.userConsent.setValue(UserConsentModes.ALL.value)
       this.profileForm.controls.userConsent.clearValidators()
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
@@ -218,11 +215,21 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   getWirelessConfigs (): void {
-    this.wirelessService.getData().subscribe((data) => {
-      this.wirelessConfigurations = data.data.map(item => item.profileName)
-      this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
-    }, error => {
-      this.errorMessages = error
+    this.wirelessService
+      .getData()
+      .subscribe({
+        next: (data) => {
+          this.wirelessConfigurations = data.data.map(item => item.profileName)
+          this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
+        },
+        error: err => {
+          console.log(JSON.stringify(err))
+          if (err instanceof Array) {
+            this.errorMessages = err
+          } else {
+            this.errorMessages.push(JSON.stringify(err))
+          }
+        }
     })
   }
 
@@ -242,7 +249,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
-    } else if (this.profileForm.controls.activation.value === Constants.ACMActivate) {
+    } else if (this.profileForm.controls.activation.value === ActivationModes.ADMIN.value) {
       this.profileForm.controls.mebxPassword.enable()
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
     }
@@ -278,12 +285,12 @@ export class ProfileDetailComponent implements OnInit {
     return password
   }
 
-  GenerateAMTPassword (): void {
+  generateAMTPassword (): void {
     const password = this.generateRandomPassword()
     this.profileForm.controls.amtPassword.setValue(password)
   }
 
-  GenerateMEBXPassword (): void {
+  generateMEBXPassword (): void {
     const password = this.generateRandomPassword()
     this.profileForm.controls.mebxPassword.setValue(password)
   }
@@ -296,27 +303,30 @@ export class ProfileDetailComponent implements OnInit {
     this.mebxInputType = this.mebxInputType === 'password' ? 'text' : 'password'
   }
 
-  networkConfigChange (value: boolean): void {
-    if (!value) {
-      this.profileForm.controls.ciraConfigName.enable()
-      this.wirelessAutocomplete.reset({ value: '', disabled: true })
-    } else {
+  dhcpEnabledChange (isEnabled: boolean): void {
+    if (isEnabled) {
+      this.profileForm.controls.ipSyncEnabled.disable()
+      this.profileForm.controls.ipSyncEnabled.setValue(true)
       this.profileForm.controls.ciraConfigName.enable()
       this.wirelessAutocomplete.reset({ value: '', disabled: false })
+    } else {
+      this.profileForm.controls.ipSyncEnabled.enable()
+      this.profileForm.controls.ciraConfigName.enable()
+      this.wirelessAutocomplete.reset({ value: '', disabled: true })
     }
   }
 
   connectionModeChange (value: string): void {
-    if (value === Constants.ConnectionMode_TLS) {
+    if (value === this.connectionMode.tls) {
       this.profileForm.controls.ciraConfigName.clearValidators()
       this.profileForm.controls.ciraConfigName.setValue(null)
       this.profileForm.controls.tlsMode.setValidators(Validators.required)
       // set a default value if not set already
       if (!this.profileForm.controls.tlsSigningAuthority.value) {
-        this.profileForm.controls.tlsSigningAuthority.setValue(ProfilesService.TLS_DEFAULT_SIGNING_AUTHORITY)
+        this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority.value)
       }
       this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
-    } else if (value === Constants.ConnectionMode_CIRA) {
+    } else if (value === this.connectionMode.cira) {
       this.profileForm.controls.tlsMode.clearValidators()
       this.profileForm.controls.tlsMode.setValue(null)
       this.profileForm.controls.tlsSigningAuthority.clearValidators()
@@ -329,7 +339,7 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   selectWifiProfile (event: MatAutocompleteSelectedEvent): void {
-    if (event.option.value !== Constants.NORESULTS) {
+    if (event.option.value !== NO_WIFI_CONFIGS) {
       const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
       if (!selectedProfiles.includes(event.option.value)) {
         this.selectedWifiConfigs.push({
@@ -344,12 +354,12 @@ export class ProfileDetailComponent implements OnInit {
   search (value: string): string[] {
     const filterValue = value.toLowerCase()
     const filteredValues = this.wirelessConfigurations.filter(config => config.toLowerCase().includes(filterValue))
-    return filteredValues.length > 0 ? filteredValues : [Constants.NORESULTS]
+    return filteredValues.length > 0 ? filteredValues : [NO_WIFI_CONFIGS]
   }
 
   isSelectable (wifiOption: string): any {
     return {
-      'no-results': wifiOption === Constants.NORESULTS
+      'no-results': wifiOption === NO_WIFI_CONFIGS
     }
   }
 
@@ -421,7 +431,7 @@ export class ProfileDetailComponent implements OnInit {
       if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
         dialogs.push(this.randPasswordWarning())
       }
-      if (result.connectionMode === Constants.ConnectionMode_CIRA && result.dhcpEnabled === false) {
+      if (result.connectionMode === this.connectionMode.cira && result.dhcpEnabled === false) {
         dialogs.push(this.CIRAStaticWarning())
       }
 

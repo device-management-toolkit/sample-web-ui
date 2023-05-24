@@ -10,7 +10,7 @@ import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/
 import { timer } from 'rxjs'
 import { ProfilesService } from 'src/app/profiles/profiles.service'
 import { environment } from 'src/environments/environment'
-import { ProfileResponse } from 'src/models/models'
+import { ProfilesResponse } from '../../profiles/profiles.constants'
 
 @Component({
   selector: 'app-add-device',
@@ -18,7 +18,7 @@ import { ProfileResponse } from 'src/models/models'
   styleUrls: ['./add-device.component.scss']
 })
 export class AddDeviceComponent implements OnInit {
-  profiles: ProfileResponse = { data: [], totalCount: 0 }
+  profiles: ProfilesResponse = { data: [], totalCount: 0 }
   activationUrl: string = ''
   rpcLinux: string = 'sudo ./rpc '
   rpcDocker: string = 'sudo docker run --device=/dev/mei0 rpc:latest '
@@ -33,7 +33,7 @@ export class AddDeviceComponent implements OnInit {
   }
 
   ngOnInit (): void {
-    this.profilesService.getData().subscribe((data: ProfileResponse) => {
+    this.profilesService.getData().subscribe((data: ProfilesResponse) => {
       this.profiles = data
     })
     this.formActivationUrl()

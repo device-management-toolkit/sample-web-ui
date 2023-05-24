@@ -8,7 +8,6 @@ import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
 import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-import { allConfigsResponse } from 'cypress/e2e/fixtures/api/ieee8021x'
 import { profileFixtures } from 'cypress/e2e/fixtures/formEntry/profile'
 import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
 import * as api8021x from '../../fixtures/api/ieee8021x'
@@ -38,7 +37,7 @@ describe('Test Profile Page', () => {
     }).as('get-wireless2')
 
     api8021x
-      .interceptGetAll(httpCodes.SUCCESS, allConfigsResponse)
+      .interceptGetAll(httpCodes.SUCCESS, api8021x.wiredConfigsResponse)
       .as('intercept8021xGetAll')
 
     cy.myIntercept('POST', 'profiles', {

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment'
 import { AuthService } from '../auth.service'
 
 import { ProfilesService } from './profiles.service'
-  import { Profile, ProfileResponse } from '../../models/models'
+import { Profile, ProfilesResponse } from './profiles.constants'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
@@ -19,21 +19,26 @@ describe('ProfilesService', () => {
 
   const profileReq: Profile = {
     profileName: 'profile1',
-    amtPassword: null,
     activation: 'acmactivate',
-    ciraConfigName: 'config1',
-    dhcpEnabled: true,
-    mebxPassword: 'password',
+    iderEnabled: false,
+    kvmEnabled: false,
+    solEnabled: false,
+    userConsent: '',
     generateRandomPassword: true,
+    amtPassword: '',
     generateRandomMEBxPassword: true,
-    tags: ['acm'],
-    ieee8021xProfileName: null,
+    mebxPassword: 'password',
+    dhcpEnabled: true,
+    ipSyncEnabled: false,
+    ieee8021xProfileName: '',
     wifiConfigs: [],
+    tags: ['acm'],
     tlsMode: 1,
-    tlsSigningAuthority: 'SelfSigned'
+    tlsSigningAuthority: 'SelfSigned',
+    ciraConfigName: 'config1'
   }
 
-  const profileResponse: ProfileResponse = {
+  const profileResponse: ProfilesResponse = {
     data: [profileReq],
     totalCount: 1
   }
@@ -84,18 +89,18 @@ describe('ProfilesService', () => {
       status: 404,
       message: 'Not Found'
     }
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getData().subscribe(() => {}, err => {
-      expect(error.status).toEqual(err[0].status)
-    })
-
+    httpClientSpy.get.and.returnValue(throwError(() => error))
+    service.getData().subscribe({
+        next: () => {},
+        error: (err) => {
+          expect(error.status).toEqual(err[0].status)
+        }
+      })
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
   it('should return a specific profile when a single profile is requested', () => {
     httpClientSpy.get.and.returnValue(of(profileReq))
-
     service.getRecord('profile1').subscribe(response => {
       expect(response).toEqual(profileReq)
     })
@@ -103,68 +108,70 @@ describe('ProfilesService', () => {
 
   it('should return error specific profile when a single profile is requested', () => {
     httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getRecord('profile1').subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-    })
+    service.getRecord('profile1').subscribe({
+        next: () => {},
+        error: (err) => {
+          expect(error.status).toBe(err[0].status)
+        }
+      })
   })
 
   it('should delete the specified profile when a delete request fires', () => {
     httpClientSpy.delete.and.returnValue(of({}))
-
-    service.delete('profile1').subscribe(() => {
-    })
-
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+    service.delete('profile1').subscribe({
+        next: () => {},
+        error: () => {
+          expect(httpClientSpy.delete.calls.count()).toEqual(1)
+        }
+      })
   })
 
   it('should throw error specified profile when a delete request fires', () => {
     httpClientSpy.delete.and.returnValue(throwError(error))
-
-    service.delete('profile1').subscribe(() => {}, (err) => {
-      expect(error.error).toEqual(err[0].error)
-    })
-
+    service.delete('profile1').subscribe({
+        next: () => {},
+        error: (err) => {
+          expect(error.error).toEqual(err[0].error)
+        }
+      })
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })
 
   it('should create the profile when post request gets fired', () => {
     httpClientSpy.post.and.returnValue(of(profileReq))
-
     service.create(profileReq).subscribe(response => {
       expect(response).toEqual(profileReq)
     })
-
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
 
   it('should throw error when post request gets fired', () => {
     httpClientSpy.post.and.returnValue(throwError(error))
-
-    service.create(profileReq).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-    })
-
+    service.create(profileReq).subscribe({
+        next: () => {},
+        error: (err) => {
+          expect(error.status).toBe(err[0].status)
+        }
+      })
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
 
   it('should update the profile when a patch request fired', () => {
     httpClientSpy.patch.and.returnValue(of(profileReq))
-
     service.update(profileReq).subscribe(response => {
       expect(response).toEqual(profileReq)
     })
-
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
   })
 
   it('should throw error when a patch request fired', () => {
     httpClientSpy.patch.and.returnValue(throwError(error))
-
-    service.update(profileReq).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-    })
-
+    service.update(profileReq).subscribe({
+        next: () => {},
+        error: (err) => {
+          expect(error.status).toBe(err[0].status)
+        }
+      })
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
   })
 })
