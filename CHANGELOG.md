@@ -1,3 +1,11 @@
+<a name="2.9.1"></a>
+## [2.9.1] - 2023-05-25
+### Build
+- update version and changelog to v2.9.1 (#48fd5e1) 
+
+### Fix
+- url encode get and delete REST path params ([#1144](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1144)) (#8262ba5) 
+
 <a name="2.9.0"></a>
 ## [2.9.0] - 2023-05-24
 ### Build
