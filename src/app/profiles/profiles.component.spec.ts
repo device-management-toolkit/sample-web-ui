@@ -65,12 +65,12 @@ describe('ProfilesComponent', () => {
   it('should navigate to new', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo()
-    expect(routerSpy).toHaveBeenCalledWith(['/profiles/new'])
+    expect(routerSpy).toHaveBeenCalledWith(['/profiles', 'new'])
   })
   it('should navigate to existing', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('path')
-    expect(routerSpy).toHaveBeenCalledWith(['/profiles/path'])
+    expect(routerSpy).toHaveBeenCalledWith(['/profiles', 'path'])
   })
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })

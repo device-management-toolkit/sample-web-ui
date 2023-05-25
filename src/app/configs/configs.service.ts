@@ -38,7 +38,7 @@ export class ConfigsService {
   }
 
   getRecord (name: string): Observable<CIRAConfig> {
-    return this.http.get<CIRAConfig>(`${this.url}/${name}`)
+    return this.http.get<CIRAConfig>(`${this.url}/${encodeURIComponent(name)}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -81,7 +81,7 @@ export class ConfigsService {
   }
 
   delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${name}`)
+    return this.http.delete(`${this.url}/${encodeURIComponent(name)}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

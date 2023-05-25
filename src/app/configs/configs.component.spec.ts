@@ -73,13 +73,13 @@ describe('ConfigsComponent', () => {
   it('should navigate to existing', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('path')
-    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs/path'])
+    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs', 'path'])
   })
 
   it('should navigate to new', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo()
-    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs/new'])
+    expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs', 'new'])
   })
 
   it('should delete', () => {

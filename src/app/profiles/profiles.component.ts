@@ -111,6 +111,6 @@ export class ProfilesComponent implements OnInit {
   }
 
   async navigateTo (path: string = 'new'): Promise<void> {
-    await this.router.navigate([`/profiles/${path}`])
+    await this.router.navigate(['/profiles', encodeURIComponent(path)])
   }
 }

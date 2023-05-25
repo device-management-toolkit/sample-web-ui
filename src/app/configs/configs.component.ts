@@ -88,6 +88,6 @@ export class ConfigsComponent implements OnInit {
   }
 
   async navigateTo (path: string = 'new'): Promise<void> {
-    await this.router.navigate([`/ciraconfigs/${path}`])
+    await this.router.navigate(['/ciraconfigs', encodeURIComponent(path)])
   }
 }

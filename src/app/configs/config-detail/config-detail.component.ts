@@ -50,10 +50,10 @@ export class ConfigDetailComponent implements OnInit {
 
   ngOnInit (): void {
     this.activeRoute.params.subscribe((params) => {
-      if (params.name != null && params.name !== '') {
+      if (params.name) {
         this.isLoading = true
         this.configsService
-          .getRecord(params.name)
+          .getRecord(decodeURIComponent(params.name))
           .pipe(
             finalize(() => {
               this.isLoading = false

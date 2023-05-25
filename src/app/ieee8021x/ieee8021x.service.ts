@@ -37,7 +37,7 @@ export class IEEE8021xService {
   }
 
   getRecord (name: string): Observable<Config> {
-    return this.http.get<Config>(`${this.url}/${name}`)
+    return this.http.get<Config>(`${this.url}/${encodeURIComponent(name)}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)
@@ -47,7 +47,7 @@ export class IEEE8021xService {
   }
 
   delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${name}`)
+    return this.http.delete(`${this.url}/${encodeURIComponent(name)}`)
       .pipe(
         catchError((err) => {
           const errorMessages = this.authService.onError(err)

@@ -117,7 +117,7 @@ export class ProfileDetailComponent implements OnInit {
         this.isLoading = true
         this.isEdit = true
         this.profileForm.controls.profileName.disable()
-        this.getAmtProfile(params.name)
+        this.getAmtProfile(decodeURIComponent(params.name))
       }
     })
 
