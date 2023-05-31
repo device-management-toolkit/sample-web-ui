@@ -136,7 +136,6 @@
       }
     }
   },
-  "defaultProject": "openamtui",
   "schematics": {
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true

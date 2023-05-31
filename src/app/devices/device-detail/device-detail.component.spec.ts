@@ -8,7 +8,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker'
 import { MomentModule } from 'ngx-moment'
 import { of } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
@@ -80,10 +79,7 @@ describe('DeviceDetailComponent', () => {
         MomentModule,
         BrowserAnimationsModule,
         SharedModule,
-        RouterTestingModule.withRoutes([]),
-        NgxMatDatetimePickerModule,
-        NgxMatNativeDateModule,
-        NgxMatTimepickerModule
+        RouterTestingModule.withRoutes([])
       ],
       declarations: [DeviceDetailComponent, TestDeviceToolbarComponent],
       providers: [{ provide: DevicesService, useValue: devicesService }, {

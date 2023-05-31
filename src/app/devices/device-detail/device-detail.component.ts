@@ -26,6 +26,8 @@ export class DeviceDetailComponent implements OnInit {
   public isLoading = false
   public deviceId: string = ''
   public targetOS: any
+  public hourOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+  public minuteOptions = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']
   public regOobPowerOptions = [
     {
       label: 'Power On',
@@ -122,7 +124,10 @@ export class DeviceDetailComponent implements OnInit {
     this.newAlarmForm = fb.group({
       alarmName: '',
       interval: 0,
-      startTime: new FormControl(new Date())
+      startTime: new FormControl(new Date()),
+      hour: '12',
+      minute: '00',
+      amPM: 'AM'
     })
     this.deleteOnCompletion = new FormControl<boolean>(true)
   }
@@ -281,10 +286,12 @@ export class DeviceDetailComponent implements OnInit {
   addAlarm = (): void => {
     if (this.newAlarmForm.valid) {
       const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
-
+      const startTime: Date = alarm.startTime
+      startTime.setHours(alarm.hour)
+      startTime.setMinutes(alarm.minute)
       const payload = {
         ElementName: alarm.alarmName,
-        StartTime: alarm.startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
+        StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
         Interval: alarm.interval,
         DeleteOnCompletion: this.deleteOnCompletion.value
       }

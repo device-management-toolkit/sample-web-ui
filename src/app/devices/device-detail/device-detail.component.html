@@ -6,8 +6,7 @@
             <mat-tab label="Audit Log" class="tab">
                 <h3 class="mat-h3">Device Audit Log ({{auditLogData.totalCnt}} entries)</h3>
                 <mat-vertical-stepper #stepper>
-                    <mat-step completed="false" editable="false"
-                        *ngFor="let entry of auditLogData.records.slice().reverse()">
+                    <mat-step completed="false" editable="false" *ngFor="let entry of auditLogData.records.slice().reverse()">
                         <ng-template matStepLabel><span data-cy="auditLogEntry">{{entry.Event}}</span><br />{{
                             entry.Time | amTimeAgo:true }} ago</ng-template>
                     </mat-step>
@@ -46,17 +45,17 @@
                 </mat-card-header>
                 <mat-card-content>
                     <div fxLayout="row wrap">
-                    <button *ngFor="let option of regOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
-                        <mat-icon>{{option.iconlabel}}</mat-icon>
-                        <br>
-                        {{option.label}}
-                    </button>
-                    <mat-divider style="height:100px" vertical="true"></mat-divider>
-                    <button *ngFor="let option of biosPxeOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
-                        <mat-icon>{{option.iconlabel}}</mat-icon>
-                        <br>
-                        {{option.label}}
-                    </button>
+                        <button *ngFor="let option of regOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                            <mat-icon>{{option.iconlabel}}</mat-icon>
+                            <br>
+                            {{option.label}}
+                        </button>
+                        <mat-divider style="height:100px" vertical="true"></mat-divider>
+                        <button *ngFor="let option of biosPxeOobPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                            <mat-icon>{{option.iconlabel}}</mat-icon>
+                            <br>
+                            {{option.label}}
+                        </button>
                     </div>
                     <br>
                     <mat-divider></mat-divider>
@@ -68,11 +67,11 @@
                         <mat-card-subtitle>Actions requiring a running agent (e.g., Intel Local Manageability Service)</mat-card-subtitle>
                     </mat-card-header>
                     <div fxLayout="row wrap">
-                    <button *ngFor="let option of ibPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
-                        <mat-icon>{{option.iconlabel}}</mat-icon>
-                        <br>
-                        {{option.label}}
-                    </button>
+                        <button *ngFor="let option of ibPowerOptions" mat-flat-button matTooltip="{{option.tooltip}}" fxFlex="120px" (click)="sendPowerAction(option.action)">
+                            <mat-icon>{{option.iconlabel}}</mat-icon>
+                            <br>
+                            {{option.label}}
+                        </button>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -128,8 +127,7 @@
                             <p>AMT Version: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3"
-                                data-cy="amtVersion">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
+                            <span class="mat-h3" data-cy="amtVersion">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
                         </div>
                     </div>
                 </mat-card-content>
@@ -193,8 +191,7 @@
                             <p>Manufacturer: </p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3"
-                                data-cy="biosManufacturer">{{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
+                            <span class="mat-h3" data-cy="biosManufacturer">{{hwInfo?.CIM_BIOSElement?.response?.Manufacturer}}</span>
                         </div>
                         <div fxFlex="50">
                             <p>Version:</p>
@@ -206,8 +203,7 @@
                             <p>Release Date:</p>
                         </div>
                         <div fxFlex="50" fxLayoutAlign="end">
-                            <span class="mat-h3"
-                                data-cy="biosReleaseData">{{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
+                            <span class="mat-h3" data-cy="biosReleaseData">{{hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.Datetime |
                                 amDateFormat:'LLL'}}</span>
                         </div>
                         <div fxFlex="50">
@@ -251,7 +247,7 @@
                         <div fxFlex="50">
                             <p>Start Time: </p>
                         </div>
-                                <div fxFlex="50" fxLayoutAlign="end">
+                        <div fxFlex="50" fxLayoutAlign="end">
                             <span class="mat-h3" data-cy="alarmStartTime"> {{entry.StartTime.Datetime}}</span>
                         </div>
                         <div fxFlex="50">
@@ -271,7 +267,7 @@
                         <div style="margin: 12px 0;" fxFlex=100>
                             <mat-divider></mat-divider>
                         </div>
-                        <form [formGroup]="newAlarmForm" (ngSubmit)="addAlarm()" fxLayout="row wrap" >
+                        <form [formGroup]="newAlarmForm" (ngSubmit)="addAlarm()" fxLayout="row wrap">
                             <div fxFlex="100" fxLayoutAlign="end">
                                 <button id="btnAddMale" fxHide.xs mat-button>
                                     <mat-icon>add</mat-icon> Add New
@@ -288,18 +284,34 @@
                                 <input formControlName="interval" matInput name="interval" placeholder="0">
                                 <mat-hint>Interval in minutes for a periodic alarm, 0 for single alarm</mat-hint>
                             </mat-form-field>
-                            <mat-form-field  fxFlex="100">
-                                <input formControlName="startTime" matInput [ngxMatDatetimePicker]="startTime" placeholder="Choose a date and time" required>
-                                <mat-datepicker-toggle matSuffix [for]="$any(startTime)"></mat-datepicker-toggle>
-                                <ngx-mat-datetime-picker #startTime
-                                    [showSpinners]="true" [showSeconds]="false"
-                                    [stepHour]="1" [stepMinute]="1"
-                                    [touchUi]="false" [enableMeridian]="false"
-                                    [disableMinute]="false" [hideTime]="false">
-                                </ngx-mat-datetime-picker>
+                            <mat-form-field fxFlex="100">
+                                <input formControlName="startTime" [matDatepicker]="startTime" matInput placeholder="Choose a date and time" required>
+                                <mat-datepicker-toggle matSuffix [for]="startTime"></mat-datepicker-toggle>
+                                <mat-datepicker #startTime></mat-datepicker>
                             </mat-form-field>
+                            <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="12px">
+                                <mat-form-field fxFlex="calc(33.33% - 12px)">
+                                    <mat-label>Hour</mat-label>
+                                    <mat-select formControlName="hour" >
+                                        <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{hour}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field  fxFlex="calc(33.33% - 12px)">
+                                    <mat-label>Minutes</mat-label>
+                                    <mat-select formControlName="minute">
+                                        <mat-option *ngFor="let minute of minuteOptions" [value]="minute">{{minute}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field  fxFlex="calc(33.33% - 12px)">
+                                    <mat-label>AM/PM</mat-label>
+                                    <mat-select formControlName="amPM">
+                                        <mat-option value="AM">AM</mat-option>
+                                        <mat-option value="PM">PM</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                             <br><br>
-                            <mat-slide-toggle  [formControl]="deleteOnCompletion" [checked]="deleteOnCompletion.value">Delete on completion</mat-slide-toggle>
+                            <mat-slide-toggle [formControl]="deleteOnCompletion" [checked]="deleteOnCompletion.value">Delete on completion</mat-slide-toggle>
                         </form>
                     </div>
                 </mat-card-content>
