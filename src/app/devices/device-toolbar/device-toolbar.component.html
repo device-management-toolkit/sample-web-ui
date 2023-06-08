@@ -1,50 +1,55 @@
 <mat-toolbar>
-    <div fxFlex>
-        {{ device?.hostname }} Device Control
-        <div class="mat-caption">{{deviceId}}</div>
+  <div fxFlex>
+    <span *ngIf="device?.friendlyName">{{ device?.friendlyName }}</span>
+    <span *ngIf="!device?.friendlyName">{{ device?.hostname }}</span>
+    Device Control
+    <div class="mat-caption">
+      {{deviceId}}
+      <span *ngIf="device?.friendlyName"> - {{ device?.hostname }}</span>
     </div>
-    <div fxFlex>
-        <mat-chip-list>
-            <mat-chip *ngFor="let tag of device?.tags">{{tag}}</mat-chip>
-        </mat-chip-list>
-    </div>
+  </div>
+  <div fxFlex>
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of device?.tags">{{tag}}</mat-chip>
+    </mat-chip-list>
+  </div>
 
-    <div fxFlex="50" fxLayoutAlign="end center">
-        <button fxHide.xs mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
-            <mat-icon>delete</mat-icon>
-        </button>
-        <mat-divider style="height:40px" vertical="true"></mat-divider>
+  <div fxFlex="50" fxLayoutAlign="end center">
+    <button fxHide.xs mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <mat-divider style="height:40px" vertical="true"></mat-divider>
 
-        <button mat-icon-button matTooltip="Connect KVM" (click)="navigateTo('kvm')" *ngIf="deviceState !== 2">
-            <mat-icon>tv</mat-icon>
-        </button>
-        <button *ngIf="deviceState === 2" mat-icon-button matTooltip="Disconnect KVM" (click)="stopKvm()">
-            <mat-icon>tv_off</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Connect SOL" (click)="navigateTo('sol')" *ngIf="deviceState !== 3">
-            <mat-icon>keyboard</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Disconnect SOL" (click)="stopSol()" *ngIf="deviceState === 3">
-            <mat-icon>keyboard_hide</mat-icon>
-        </button>
-        <mat-divider style="height:40px" vertical="true"></mat-divider>
-        <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
-            <mat-icon>power</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Power off the device" (click)="sendPowerAction(8)">
-            <mat-icon>power_off</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(5)">
-            <mat-icon>restart_alt</mat-icon>
-        </button>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button *ngFor="let option of powerOptions" mat-menu-item (click)="sendPowerAction(option.action)">
-                <span>{{option.label}}</span>
-            </button>
-        </mat-menu>
-    </div>
+    <button mat-icon-button matTooltip="Connect KVM" (click)="navigateTo('kvm')" *ngIf="deviceState !== 2">
+      <mat-icon>tv</mat-icon>
+    </button>
+    <button *ngIf="deviceState === 2" mat-icon-button matTooltip="Disconnect KVM" (click)="stopKvm()">
+      <mat-icon>tv_off</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Connect SOL" (click)="navigateTo('sol')" *ngIf="deviceState !== 3">
+      <mat-icon>keyboard</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Disconnect SOL" (click)="stopSol()" *ngIf="deviceState === 3">
+      <mat-icon>keyboard_hide</mat-icon>
+    </button>
+    <mat-divider style="height:40px" vertical="true"></mat-divider>
+    <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
+      <mat-icon>power</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Power off the device" (click)="sendPowerAction(8)">
+      <mat-icon>power_off</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(5)">
+      <mat-icon>restart_alt</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let option of powerOptions" mat-menu-item (click)="sendPowerAction(option.action)">
+        <span>{{option.label}}</span>
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>

@@ -16,6 +16,7 @@ describe('DevicesService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, request: jasmine.Spy, delete: jasmine.Spy }
   const deviceRes = {
     hostname: 'localhost',
+    friendlyName: '',
     icon: 1,
     connectionStatus: true,
     guid: 'defgh-34567-poiuy',

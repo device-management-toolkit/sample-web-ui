@@ -1,139 +1,138 @@
 <mat-toolbar>
-    <div fxLayoutAlign="start center" fxFlex="33">
-        <span i18n>Devices</span>
-    </div>
-    <div fxFlex fxLayoutAlign="end end">
-        <button mat-button (click)="addDevice()">
-            <mat-icon>add</mat-icon>
-            <span i18n>Add a Device</span>
-        </button>
-    </div>
-    <div [fxHide]="selection.isEmpty()">
-        <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); bulkPowerAction(2)">
-            <mat-icon>power</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Power off the device"
-            (click)="$event.stopPropagation(); bulkPowerAction(8)">
-            <mat-icon>power_off</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); bulkPowerAction(5)">
-            <mat-icon>restart_alt</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); bulkDeactivate()">
-            <mat-icon>delete</mat-icon>
-        </button>
-    </div>
+  <div fxLayoutAlign="start center" fxFlex="33">
+    <span i18n>Devices</span>
+  </div>
+  <div fxFlex fxLayoutAlign="end end">
+    <button mat-button (click)="addDevice()">
+      <mat-icon>add</mat-icon>
+      <span i18n>Add a Device</span>
+    </button>
+  </div>
+  <div [fxHide]="selection.isEmpty()">
+    <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); bulkPowerAction(2)">
+      <mat-icon>power</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); bulkPowerAction(8)">
+      <mat-icon>power_off</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); bulkPowerAction(5)">
+      <mat-icon>restart_alt</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); bulkDeactivate()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 <mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
 
 <mat-card>
-    <mat-card-header>
-        <div fxLayout="row wrap" fxFlex=100>
-            <div fxFlex></div>
-            <div fxFlex="33" fxLayoutAlign="end">
-                <mat-form-field data-cy="filterTags">
-                    <mat-label>Filter Tags</mat-label>
-                    <mat-select (selectionChange)="tagChange($event)" name="tag" multiple>
-                        <mat-option *ngFor="let tag of tags" [value]="tag">
-                            {{tag}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-    </mat-card-header>
-    <mat-card-content>
-        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Devices</h3>
-        <mat-table [dataSource]="devices.data" [fxHide]="isNoData()">
+  <mat-card-header>
+    <div fxLayout="row wrap" fxFlex=100>
+      <div fxFlex></div>
+      <div fxFlex="33" fxLayoutAlign="end">
+        <mat-form-field data-cy="filterTags">
+          <mat-label>Filter Tags</mat-label>
+          <mat-select (selectionChange)="tagChange($event)" name="tag" multiple>
+            <mat-option *ngFor="let tag of tags" [value]="tag">
+              {{tag}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Devices</h3>
+    <mat-table [dataSource]="devices.data" [fxHide]="isNoData()">
 
-            <!-- select Column -->
-            <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef fxFlex="70px">
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-                    </mat-checkbox>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row" fxFlex="70px">
-                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-                    </mat-checkbox>
-                </mat-cell>
-            </ng-container>
+      <!-- select Column -->
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef fxFlex="70px">
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" fxFlex="70px">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
 
-            <!-- host Column -->
-            <ng-container matColumnDef="hostname">
-                <mat-header-cell *matHeaderCellDef> Hostname </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.hostname }} </mat-cell>
-            </ng-container>
+      <!-- host Column -->
+      <ng-container matColumnDef="hostname">
+        <mat-header-cell *matHeaderCellDef> Hostname (Friendly Name) </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.hostname }} <span
+            *ngIf="element.friendlyName != null">&nbsp;({{element.friendlyName}})</span> </mat-cell>
+      </ng-container>
 
-            <!-- guid Column -->
-            <ng-container matColumnDef="guid">
-                <mat-header-cell *matHeaderCellDef> GUID </mat-header-cell>
-                <mat-cell data-cy="guid" *matCellDef="let element"> {{ element.guid }} </mat-cell>
-            </ng-container>
+      <!-- guid Column -->
+      <ng-container matColumnDef="guid">
+        <mat-header-cell *matHeaderCellDef> GUID </mat-header-cell>
+        <mat-cell data-cy="guid" *matCellDef="let element"> {{ element.guid }} </mat-cell>
+      </ng-container>
 
-            <!-- status Column -->
-            <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{
-                    translateConnectionStatus(element.connectionStatus) }} <span
-                        *ngIf="element.connectionStatus">&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
-                </mat-cell>
-            </ng-container>
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef fxFlex="150px"> Status</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="150px"> {{
+          translateConnectionStatus(element.connectionStatus) }} <span *ngIf="element.connectionStatus">&nbsp;(Power: {{
+            powerStates[element.powerstate] }})</span>
+        </mat-cell>
+      </ng-container>
 
-            <!-- tags Column -->
-            <ng-container matColumnDef="tags">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Tags</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px">
-                    <mat-chip-list>
-                        <mat-chip *ngFor="let tag of element?.tags">{{tag}}</mat-chip>
-                    </mat-chip-list>
-                </mat-cell>
-            </ng-container>
+      <!-- tags Column -->
+      <ng-container matColumnDef="tags">
+        <mat-header-cell *matHeaderCellDef fxFlex="150px"> Tags</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="150px">
+          <mat-chip-list>
+            <mat-chip *ngFor="let tag of element?.tags">{{tag}}</mat-chip>
+          </mat-chip-list>
+        </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef fxFlex="200px"> Actions</mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="200px">
-                    <div [fxHide]="selection.isSelected(element)">
-                        <button mat-icon-button matTooltip="Power up the device"
-                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
-                            <mat-icon>power</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="Power off the device"
-                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
-                            <mat-icon>power_off</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="Restart the device"
-                            (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
-                            <mat-icon>restart_alt</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="Deactivate the Device"
-                            (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="notification">
-                <mat-header-cell *matHeaderCellDef fxFlex="50px"></mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="50px">
-                    <mat-icon color="primary" matTooltip="Action sent successfully"
-                        *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
-                    <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
-                        *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
-                    <mat-icon color="warn" matTooltip="Error sending action"
-                        *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
-        </mat-table>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="200px"> Actions</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="200px">
+          <div [fxHide]="selection.isSelected(element)">
+            <button mat-icon-button matTooltip="Power up the device"
+              (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
+              <mat-icon>power</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Power off the device"
+              (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
+              <mat-icon>power_off</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Restart the device"
+              (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
+              <mat-icon>restart_alt</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Deactivate the Device"
+              (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="notification">
+        <mat-header-cell *matHeaderCellDef fxFlex="50px"></mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="50px">
+          <mat-icon color="primary" matTooltip="Action sent successfully"
+            *ngIf="element.StatusMessage === 'SUCCESS' ">check_circle</mat-icon>
+          <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
+            *ngIf="element.StatusMessage === 'NOT_READY'">warning</mat-icon>
+          <mat-icon color="warn" matTooltip="Error sending action"
+            *ngIf="element.StatusMessage === 'ERROR'">error</mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
+    </mat-table>
 
-        <div *ngIf="devices.totalCount">
-            <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="devices.totalCount"
-                (page)="pageChanged($event)" showFirstLastButtons>
-            </mat-paginator>
-        </div>
-    </mat-card-content>
+    <div *ngIf="devices.totalCount">
+      <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="devices.totalCount"
+        (page)="pageChanged($event)" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
 </mat-card>

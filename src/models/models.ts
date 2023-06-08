@@ -5,6 +5,7 @@
 
 export interface Device {
   hostname: string
+  friendlyName: string
   icon: number
   connectionStatus: boolean
   guid: string

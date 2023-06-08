@@ -12,8 +12,10 @@ import { SharedModule } from '../shared/shared.module'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
+import { Device } from '../../models/models'
 
 describe('DevicesComponent', () => {
+  let device: Device
   let component: DevicesComponent
   let fixture: ComponentFixture<DevicesComponent>
   let getDevicesSpy: jasmine.Spy
@@ -23,6 +25,14 @@ describe('DevicesComponent', () => {
   let sendDeactivateSpy: jasmine.Spy
 
   beforeEach(async () => {
+    device = {
+      hostname: 'device01',
+      friendlyName: '',
+      icon: 1,
+      connectionStatus: true,
+      guid: '12324-4243-ewdsd',
+      tags: ['']
+    }
     const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate'])
     devicesService.PowerStates.and.returnValue({
       2: 'On',
@@ -34,7 +44,7 @@ describe('DevicesComponent', () => {
       9: 'Power Cycle',
       13: 'Off'
     })
-    getDevicesSpy = devicesService.getDevices.and.returnValue(of({ data: [{ hostname: '', guid: '', connectionStatus: true, tags: [], icon: 1 }], totalCount: 1 }))
+    getDevicesSpy = devicesService.getDevices.and.returnValue(of({ data: [device], totalCount: 1 }))
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
@@ -130,15 +140,8 @@ describe('DevicesComponent', () => {
     expect(resetResponseSpy).toHaveBeenCalled()
   })
   it('should fire send power action', () => {
-    component.devices.data = [{
-      hostname: 'localhost',
-      icon: 1,
-      connectionStatus: true,
-      guid: '12324-4243-ewdsd',
-      tags: ['']
-    }]
     const resetSpy = spyOn(component, 'resetResponse')
-    component.sendPowerAction('12324-4243-ewdsd', 2)
+    component.sendPowerAction(device.guid, 2)
     expect(sendPowerActionSpy).toHaveBeenCalled()
     expect(resetSpy).toHaveBeenCalled()
   })
@@ -155,16 +158,9 @@ describe('DevicesComponent', () => {
   })
 
   it('should fire deactivate action', () => {
-    component.devices.data = [{
-      hostname: 'localhost',
-      icon: 1,
-      connectionStatus: true,
-      guid: '12324-4243-ewdsd',
-      tags: ['']
-    }]
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.sendDeactivate('12324-4243-ewdsd')
+    component.sendDeactivate(device.guid)
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
