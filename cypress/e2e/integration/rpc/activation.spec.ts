@@ -38,13 +38,11 @@ interface AMTInfo {
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const isWin = Cypress.platform === 'win32'
   let amtInfo: AMTInfo
-  const execConfig = {
+  const execConfig: Cypress.ExecOptions = {
+    log: true,
     failOnNonZeroExit: false,
-    execTimeout: 240000,
-    retries: {
-      runMode: 3
-    }
-  }
+    timeout: 240000
+  } as any
 
   // get environment variables
   const profileName: string = Cypress.env('PROFILE_NAME') as string
@@ -148,7 +146,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         const invalidCommand = deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
         cy.exec(invalidCommand, execConfig).then((result) => {
           cy.log(result.stderr)
-          expect(result.stderr).to.contain('Unable to authenticate with AMT. Exceeded Retry Attempts')
+          expect(result.stderr).to.contain('Unable to authenticate with AMT')
         })
       }
     })

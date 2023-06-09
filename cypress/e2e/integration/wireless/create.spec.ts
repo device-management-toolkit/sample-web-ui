@@ -7,7 +7,6 @@ import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
 import { wirelessFixtures } from 'cypress/e2e/fixtures/formEntry/wireless'
-import * as api8021x from '../../fixtures/api/ieee8021x'
 
 describe('create a wireless profile', () => {
   beforeEach('clear cache and login', () => {
@@ -15,9 +14,10 @@ describe('create a wireless profile', () => {
   })
 
   it('creates a default profile', () => {
-    api8021x
-      .interceptGetAll(httpCodes.SUCCESS, api8021x.wirelessConfigsResponse)
-      .as('intercept8021xGetAll')
+    cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: wirelessConfigs.getAll.success.response
+    }).as('wirelessconfigsGetAll')
 
     cy.myIntercept('POST', 'wirelessconfigs', {
       statusCode: httpCodes.CREATED,
@@ -39,7 +39,6 @@ describe('create a wireless profile', () => {
     }).as('get-wireless2')
 
     cy.get('button').contains('Add New').click()
-    cy.wait('@intercept8021xGetAll')
     cy.enterWirelessInfo(
       wirelessFixtures.happyPath.profileName,
       Cypress.env('WIFI_SSID'),
