@@ -1,3 +1,28 @@
+<a name="2.10.0"></a>
+## [2.10.0] - 2023-06-21
+### Build
+- **deps:** update to angular 16 (#4dbb6df) 
+- **deps:** Bump cypress from 12.12.0 to 12.13.0 (#3fc2294) 
+- **deps:** Bump angular to 16.0.4 ([#1158](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1158)) (#c576d1a) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.2.4 to 20.3.1 ([#1164](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1164)) (#513fd8a) 
+- **deps-dev:** update nightly e2e ([#1085](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1085)) (#7da87c2) 
+- **deps-dev:** Bump karma-jasmine-html-reporter from 2.0.0 to 2.1.0 (#60d82d4) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.2.1 to 20.2.4 (#70bb162) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 4.3.1 to 4.3.4 ([#1169](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1169)) (#bb30799) 
+- **docker:** set base image to nginx:mainline-alpine-slim ([#1159](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1159)) (#4148c7e) 
+
+### Builds
+- updates package.json and changelog to v2.9.2 (#c4e4975) 
+
+### Ci
+- remove node14 and add node 20 (#6582243) 
+
+### Feat
+- support device friendly name (#170f874) 
+
+### Fix
+- mps audit log now in order ([#1166](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1166)) (#be219a3) 
+
 <a name="2.9.1"></a>
 ## [2.9.1] - 2023-05-25
 ### Build
