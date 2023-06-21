@@ -69,7 +69,8 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
   }
 
   pageChange (event: PageEvent): void {
-    this.startIndex.next(event.pageIndex * event.pageSize)
+    const nextIndex = (event.pageIndex * event.pageSize) + 1
+    this.startIndex.next(nextIndex)
   }
 
   async navigateTo (path: string): Promise<void> {
