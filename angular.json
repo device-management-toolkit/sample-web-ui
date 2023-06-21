@@ -33,10 +33,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/_variables.scss",
-              "src/open-amt-theme.scss",
-              "src/styles.scss"
+              "src/styles/_variables.scss",
+              "src/styles/open-amt-theme.scss",
+              "src/styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles/"
+              ]
+            },
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -107,7 +112,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           }
