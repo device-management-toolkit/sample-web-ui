@@ -5,8 +5,8 @@
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
-import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
 import { ConfigsService } from 'src/app/configs/configs.service'
@@ -15,13 +15,13 @@ import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips'
+import { MatChipInputEvent } from '@angular/material/chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { forkJoin, Observable, of } from 'rxjs'
 import {
-  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent
-} from '@angular/material/legacy-autocomplete'
+  MatAutocompleteSelectedEvent
+} from '@angular/material/autocomplete'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import * as Cira from '../../configs/configs.constants'
 import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
@@ -57,7 +57,7 @@ export class ProfileDetailComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   errorMessages: string[] = []
   matDialogConfig: MatDialogConfig = {
-    height: '225px',
+    height: '275px',
     width: '450px'
   }
 
@@ -204,7 +204,7 @@ export class ProfileDetailComponent implements OnInit {
           this.showIEEE8021xConfigurations = this.iee8021xConfigurations.length > 0
         },
         error: err => {
-          console.log(JSON.stringify(err))
+          console.error(JSON.stringify(err))
           if (err instanceof Array) {
             this.errorMessages = err
           } else {
@@ -223,7 +223,7 @@ export class ProfileDetailComponent implements OnInit {
           this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
         },
         error: err => {
-          console.log(JSON.stringify(err))
+          console.error(JSON.stringify(err))
           if (err instanceof Array) {
             this.errorMessages = err
           } else {

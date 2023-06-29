@@ -1,77 +1,70 @@
 <mat-toolbar>
-    {{ pageTitle }}
+  {{ pageTitle }}
 </mat-toolbar>
-<mat-progress-bar mode=indeterminate [fxShow]="isLoading"></mat-progress-bar>
-<div fxLayout="row" fxLayoutAlign="center">
-    <mat-card fxFlex="50" fxFlex.lt-md=100>
-        <mat-card-header>
-            <mat-card-title></mat-card-title>
-            <mat-card-subtitle></mat-card-subtitle>
-        </mat-card-header>
-        <mat-list *ngIf="errorMessages.length > 0">
-            <mat-list-item *ngFor="let item of errorMessages">
-                <mat-icon color="warn" mat-list-icon>error</mat-icon>
-                {{ item }}
-            </mat-list-item>
-        </mat-list>
-        <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
-            <mat-card-content>
-                <div fxLayout="row wrap">
-                    <mat-form-field fxFlex="100" style="margin-bottom: 10px;">
-                        <input formControlName="configName" matInput name="configName" placeholder="Config Name"
-                            required>
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter a name for this CIRA config (e.g., Azure CIRA Config)</mat-hint>
-                    </mat-form-field>
+<mat-progress-bar mode=indeterminate *ngIf="isLoading"></mat-progress-bar>
+<div class="flex-row">
+  <div class="flex-25 hide-sm"></div>
+  <mat-card class="flex flex-50">
+    <mat-card-header>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-list *ngIf="errorMessages.length > 0">
+      <mat-list-item *ngFor="let item of errorMessages">
+        <mat-icon color="warn" mat-list-icon>error</mat-icon>
+        {{ item }}
+      </mat-list-item>
+    </mat-list>
+    <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="flex-row flex-wrap">
+        <mat-form-field class="flex flex-1" style="margin-bottom: 10px;">
+          <input formControlName="configName" matInput name="configName" placeholder="ex. ciraConfig1" required>
+          <mat-error>This field is required</mat-error>
+          <mat-hint>Enter a name for this CIRA config</mat-hint>
+        </mat-form-field>
+        <mat-radio-group class="flex-1 flex-row flex-wrap" name="serverAddressFormat" formControlName="serverAddressFormat">
+          <mat-radio-button class="flex flex-50" value="3" checked="true">IPv4</mat-radio-button>
+          <mat-radio-button class="flex flex-50" value="201">FQDN</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="flex flex-1">
+          <input formControlName="mpsServerAddress" matInput name="mpsServerAddress" placeholder="MPS Address" required>
+          <mat-error>This field is required</mat-error>
+          <mat-hint>Enter the address of where your MPS instance is hosted</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input formControlName="commonName" matInput name="commonName" placeholder="Cert Common Name (CN=)" required>
+          <mat-error>This field is required</mat-error>
+          <mat-hint>Enter the common name contained in the certificate.</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input type=number formControlName="mpsPort" matInput name="mpsPort" placeholder="Port" required>
+          <mat-error>This field is required</mat-error>
+          <mat-hint>Enter the CIRA Port for the MPS Instance. The default is 4433.</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16">
+          <mat-error>This field is required</mat-error>
+          <mat-hint>Enter the username for accessing MPS</mat-hint>
+        </mat-form-field>
+        <br><br><br><br>
+        <mat-slide-toggle formControlName="regeneratePassword" *ngIf="!shouldShowRegenPass()">
+          Generate New Random Password Upon Saving
+        </mat-slide-toggle>
 
-                    <mat-radio-group name="serverAddressFormat" formControlName="serverAddressFormat"
-                        fxLayout="row wrap">
-                        <mat-radio-button fxFlex=50 value="3" checked="true">IPv4</mat-radio-button>
-                        <mat-radio-button fxFlex=50 value="201">FQDN</mat-radio-button>
-                    </mat-radio-group>
-                    <mat-form-field fxFlex="100">
-                        <input formControlName="mpsServerAddress" matInput name="mpsServerAddress"
-                            placeholder="MPS Address" required>
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the address of where your MPS instance is hosted</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="100">
-                        <input formControlName="commonName" matInput name="commonName"
-                            placeholder="Cert Common Name (CN=)" required>
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the common name contained in the certificate.</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="100">
-                        <input type=number formControlName="mpsPort" matInput name="mpsPort" placeholder="Port"
-                            required>
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the CIRA Port for the MPS Instance. The default is 4433.</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="100">
-                        <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16">
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint>Enter the username for accessing MPS</mat-hint>
-                    </mat-form-field>
-                    <br><br><br><br>
-                    <mat-slide-toggle formControlName="regeneratePassword" [fxHide]="shouldShowRegenPass()">
-                        Generate New Random Password Upon Saving
-                    </mat-slide-toggle>
-                </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <div fxLayout="row" fxLayout.xs="column">
-                    <div fxFlex="50" fxLayoutAlign="center center">
-                        <button type="button" mat-button color="primary" (click)="cancel()">
-                            <span i18n>CANCEL</span>
-                        </button>
-                    </div>
-                    <div fxFlex="50" fxLayoutAlign="center center">
-                        <button type="submit" mat-flat-button color="primary">
-                            <span i18n>SAVE</span>
-                        </button>
-                    </div>
-                </div>
-            </mat-card-actions>
-        </form>
-    </mat-card>
+      </mat-card-content>
+      <mat-card-actions class="flex-row">
+        <div class="flex flex-50 justify-center">
+          <button type="button" mat-button color="primary" (click)="cancel()">
+            <span i18n>CANCEL</span>
+          </button>
+        </div>
+        <div class="flex flex-50 justify-center">
+          <button type="submit" mat-flat-button color="primary">
+            <span i18n>SAVE</span>
+          </button>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+  <div class="flex-25 hide-sm"></div>
 </div>

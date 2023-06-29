@@ -1,0 +1,161 @@
+// Flex row/col + grid.
+.flex-row {
+  display: flex;
+  flex-direction: row !important;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex !important;
+}
+
+// Flex-wrap utils.
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// Mostly used with flex-row, when wrapping is desired.
+.flex-col-xs {
+  @media screen and (max-width: 599px) {
+    flex-direction: column;
+  }
+}
+
+// Switch from flex-row to flex-col on mobile.
+
+// Gap.
+.gap-4 {
+  gap: 4px;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+// Justify content.
+.space-between {
+  justify-content: space-between;
+}
+
+// Used very often with flex-row.
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+// Used to center something via flexbox.
+
+// Align items. (Naming inspiration: https://tailwindcss.com/docs/align-items.)
+.items-center {
+  align-items: center;
+}
+
+// Used very often with flex-row.
+
+// Flex/grow/shrink properties https://developer.mozilla.org/en-US/docs/Web/CSS/flex.
+.flex-1 {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+// Same as flex: 1 1 0 (grow, shrink, basis 0). Has similar effect to width: 100%;
+.flex-20 {
+  flex: 20%;
+  min-width: 20%;
+}
+
+.flex-25 {
+  flex: 25%;
+  min-width: 25%;
+}
+
+.flex-33 {
+  flex: 33%;
+  min-width: 33%;
+}
+
+.flex-50 {
+  flex: 50%;
+  min-width: 50%;
+
+  &.gap-12 {
+    flex: calc(50% - 24px);
+    min-width: calc(50% - 24px);
+    ;
+
+  }
+}
+
+.flex-60 {
+  flex: 60%;
+  min-width: 60%;
+}
+
+.flex-75 {
+  flex: 75%;
+  min-width: 75%;
+}
+
+.flex-80 {
+  flex: 80%;
+  min-width: 80%;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+// Same as flex: 1 1 auto (grow, shrink, basis auto). For spacer, etc.
+
+// Hide & show for different breakpoints.
+.hide-xs {
+  @media screen and (max-width: 599px) {
+    display: none;
+  }
+}
+
+// Hide on mobile.
+.hide-gt-xs {
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
+}
+
+// Show only on mobile. Hide on desktop.
+.hide-sm {
+  @media screen and (max-width: 959px) {
+    display: none;
+  }
+}
+
+// Hide on mobile/tablet.
+.hide-gt-sm {
+  @media screen and (min-width: 960px) {
+    display: none;
+  }
+}
+
+// Show only on mobile/tablet. Hide on desktop.

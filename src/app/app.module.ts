@@ -13,7 +13,6 @@ import { SharedModule } from './shared/shared.module'
 import { CoreModule } from './core/core.module'
 import { DevicesComponent } from './devices/devices.component'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { FlexLayoutModule } from '@angular/flex-layout'
 import { DomainsComponent } from './domains/domains.component'
 import { ProfilesComponent } from './profiles/profiles.component'
 import { ConfigsComponent } from './configs/configs.component'
@@ -69,7 +68,6 @@ import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x
   ],
   imports: [
     MomentModule,
-    FlexLayoutModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

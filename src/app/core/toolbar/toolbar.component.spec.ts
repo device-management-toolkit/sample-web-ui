@@ -5,7 +5,7 @@
 
 import { EventEmitter } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
 import { SharedModule } from 'src/app/shared/shared.module'

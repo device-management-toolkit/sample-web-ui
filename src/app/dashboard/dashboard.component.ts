@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import { DeviceStats } from 'src/models/models'

@@ -4,10 +4,10 @@
 **********************************************************************/
 
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
-import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { PageEvent } from '@angular/material/paginator'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort } from '@angular/material/sort'
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
+import { MatTableDataSource } from '@angular/material/table'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
@@ -45,7 +45,7 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
           return this.devicesService.getAuditLog(this.deviceId, val).pipe(
             catchError(err => {
             // TODO: handle error better
-              console.log(err)
+              console.error(err)
               this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
               return of(this.auditLogData)
             }), finalize(() => {

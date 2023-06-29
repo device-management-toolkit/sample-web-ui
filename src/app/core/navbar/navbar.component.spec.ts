@@ -6,7 +6,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list'
+import { MatListModule } from '@angular/material/list'
 import { RouterTestingModule } from '@angular/router/testing'
 import { NavbarComponent } from './navbar.component'
 

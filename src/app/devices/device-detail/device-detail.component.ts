@@ -5,7 +5,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
@@ -26,7 +26,7 @@ export class DeviceDetailComponent implements OnInit {
   public isLoading = false
   public deviceId: string = ''
   public targetOS: any
-  public hourOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+  public hourOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']
   public minuteOptions = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']
   public regOobPowerOptions = [
     {
@@ -108,7 +108,14 @@ export class DeviceDetailComponent implements OnInit {
   public userConsentValues = ['none', 'kvm', 'all']
   public eventLogData: EventLog[] = []
   public alarmOccurrences: IPSAlarmClockOccurrence[] = []
-  public newAlarmForm: FormGroup
+  public newAlarmForm: FormGroup = this.fb.group({
+    alarmName: '',
+    interval: 0,
+    startTime: new FormControl(new Date()),
+    hour: '12',
+    minute: '00'
+  })
+
   public deleteOnCompletion: FormControl<any>
 
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
@@ -121,14 +128,7 @@ export class DeviceDetailComponent implements OnInit {
       optInState: 0,
       redirection: false
     })
-    this.newAlarmForm = fb.group({
-      alarmName: '',
-      interval: 0,
-      startTime: new FormControl(new Date()),
-      hour: '12',
-      minute: '00',
-      amPM: 'AM'
-    })
+
     this.deleteOnCompletion = new FormControl<boolean>(true)
   }
 
@@ -136,7 +136,7 @@ export class DeviceDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.isLoading = true
       this.deviceId = params.id
-      const tempLoading = [true, true, true, true]
+      const tempLoading = [true, true, true, true, true, true]
       this.devicesService.getAMTVersion(this.deviceId).pipe(finalize(() => {
         tempLoading[0] = false
         this.isLoading = !tempLoading.every(v => !v)
@@ -148,7 +148,7 @@ export class DeviceDetailComponent implements OnInit {
         return throwError(err)
       })
       this.devicesService.getHardwareInformation(this.deviceId).pipe(finalize(() => {
-        tempLoading[0] = false
+        tempLoading[1] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.hwInfo = results
@@ -157,7 +157,7 @@ export class DeviceDetailComponent implements OnInit {
         return throwError(err)
       })
       this.devicesService.getAuditLog(this.deviceId).pipe(finalize(() => {
-        tempLoading[1] = false
+        tempLoading[2] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.auditLogData = results
@@ -166,7 +166,7 @@ export class DeviceDetailComponent implements OnInit {
         return throwError(err)
       })
       this.devicesService.getAMTFeatures(this.deviceId).pipe(finalize(() => {
-        tempLoading[2] = false
+        tempLoading[3] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.amtEnabledFeatures = this.fb.group({
@@ -182,7 +182,7 @@ export class DeviceDetailComponent implements OnInit {
         return throwError(err)
       })
       this.devicesService.getEventLog(this.deviceId).pipe(finalize(() => {
-        tempLoading[3] = false
+        tempLoading[4] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.eventLogData = results
@@ -191,7 +191,7 @@ export class DeviceDetailComponent implements OnInit {
         return throwError(err)
       })
       this.devicesService.getAlarmOccurrences(this.deviceId).pipe(finalize(() => {
-        tempLoading[3] = false
+        tempLoading[5] = false
         this.isLoading = !tempLoading.every(v => !v)
       })).subscribe(results => {
         this.alarmOccurrences = results
@@ -227,7 +227,7 @@ export class DeviceDetailComponent implements OnInit {
     this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
       catchError(err => {
         // TODO: handle error better
-        console.log(err)
+        console.error(err)
         this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
         return of(null)
       }),
@@ -235,7 +235,7 @@ export class DeviceDetailComponent implements OnInit {
         this.isLoading = false
       })
     ).subscribe(data => {
-      if (data.Body.ReturnValueStr === 'NOT_READY') {
+      if (data.Body?.ReturnValueStr === 'NOT_READY') {
         this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
       } else {
         this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)

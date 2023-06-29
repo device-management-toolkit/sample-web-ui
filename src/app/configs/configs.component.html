@@ -1,90 +1,79 @@
 <mat-toolbar>
-    <div fxLayoutAlign="start center" fxFlex="33">
-        <span i18n>CIRA Configs</span>
-    </div>
-    <div fxFlex></div>
-    <div fxFlex="33" fxLayoutAlign="end">
-        <button id="btnAddMale" fxHide.xs mat-button (click)="navigateTo()">
-            <mat-icon>add</mat-icon> Add New
-        </button>
-    </div>
+  <div class="flex-33">
+    <span i18n>CIRA Configs</span>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex flex-33 justify-end">
+    <button id="btnAdd" mat-button (click)="navigateTo()">
+      <mat-icon>add</mat-icon> Add New
+    </button>
+  </div>
 </mat-toolbar>
-<mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
+<mat-progress-bar mode='indeterminate' *ngIf="isLoading!==false"></mat-progress-bar>
 <mat-card>
-    <mat-card-content>
-        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No CIRA Configs</h3>
-        <mat-table [dataSource]="configs.data" [fxHide]="isNoData()">
+  <mat-card-content>
+    <h3 *ngIf="isNoData()" class="flex justify-center">No CIRA Configs</h3>
+    <mat-table [dataSource]="configs.data" *ngIf="!isNoData()">
 
-            <!-- select Column -->
-            <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef fxFlex="70px"> </mat-header-cell>
-                <mat-cell *matCellDef="let row" fxFlex="70px">
-                    <mat-checkbox [(ngModel)]="row.isChecked" (click)="$event.stopPropagation()"></mat-checkbox>
-                </mat-cell>
-            </ng-container>
+      <!-- name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.configName }} </mat-cell>
+      </ng-container>
 
-            <!-- name Column -->
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef fxFlex="250px"> Name </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="250px"> {{ element.configName }} </mat-cell>
-            </ng-container>
+      <!-- server Column -->
+      <ng-container matColumnDef="mpsserver">
+        <mat-header-cell *matHeaderCellDef> MPS Server </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.mpsServerAddress }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- server Column -->
-            <ng-container matColumnDef="mpsserver">
-                <mat-header-cell *matHeaderCellDef fxFlex="250px"> MPS Server </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="250px"> {{ element.mpsServerAddress }}
-                </mat-cell>
-            </ng-container>
+      <!-- port Column -->
+      <ng-container matColumnDef="port">
+        <mat-header-cell *matHeaderCellDef> Port </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.mpsPort }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- port Column -->
-            <ng-container matColumnDef="port">
-                <mat-header-cell *matHeaderCellDef fxFlex="100px"> Port </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="100px"> {{ element.mpsPort }}
-                </mat-cell>
-            </ng-container>
+      <!-- activation Column -->
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.username }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- activation Column -->
-            <ng-container matColumnDef="username">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Username </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.username }}
-                </mat-cell>
-            </ng-container>
+      <!-- certname Column -->
+      <ng-container matColumnDef="certname">
+        <mat-header-cell *matHeaderCellDef> Cert Common Name (CN=) </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.commonName }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- certname Column -->
-            <ng-container matColumnDef="certname">
-                <mat-header-cell *matHeaderCellDef fxFlex="200px"> Cert Common Name (CN=) </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="200px"> {{ element.commonName }}
-                </mat-cell>
-            </ng-container>
+      <!-- rootcert Column -->
+      <ng-container matColumnDef="rootcert">
+        <mat-header-cell *matHeaderCellDef> MPS Root Cert </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.mpsRootCertificate?.substring(0,50) + '...' }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- rootcert Column -->
-            <ng-container matColumnDef="rootcert">
-                <mat-header-cell *matHeaderCellDef fxFlex> MPS Root Cert </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex> {{ element.mpsRootCertificate?.substring(0,50) + '...' }}
-                </mat-cell>
-            </ng-container>
-
-            <!-- remove Column -->
-            <ng-container matColumnDef="remove">
-                <mat-header-cell *matHeaderCellDef fxFlex="12.5"> </mat-header-cell>
-                <mat-cell *matCellDef="let row" fxFlex="12.5" (click)="$event.stopPropagation()">
-                    <button mat-icon-button data-cy="delete" (click)="delete(row.configName)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
+      <!-- remove Column -->
+      <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+          <button mat-icon-button data-cy="delete" (click)="delete(row.configName)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.configName)"></mat-row>
-        </mat-table>
-        <div *ngIf="configs.totalCount">    
-            <mat-paginator [pageSizeOptions]="[25, 50, 100]"
-                showFirstLastButtons 
-                [length]="configs.totalCount"
-                (page) = "pageChanged($event)"
-                [pageSize]="25">
-            </mat-paginator>
-        </div>
-    </mat-card-content>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.configName)"></mat-row>
+    </mat-table>
+    <div *ngIf="configs.totalCount">
+      <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons [length]="configs.totalCount"
+        (page)="pageChanged($event)" [pageSize]="25">
+      </mat-paginator>
+    </div>
+  </mat-card-content>
 </mat-card>

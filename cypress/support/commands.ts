@@ -85,7 +85,7 @@ Cypress.Commands.add('matRadioButtonAssert', (selector: string, value: string) =
 
 Cypress.Commands.add('matSelectChoose', (selector: string, text: string) => {
   const elementId = `mat-select${selector}`
-  cy.get(elementId).click().get('.mat-option-text').contains(text).click()
+  cy.get(elementId).click({ force: true }).get('mat-option').contains(text).click()
   cy.get(elementId).focus().type('{esc}')
   cy.get(elementId).should('have.text', text)
 })
@@ -100,7 +100,7 @@ Cypress.Commands.add('matTextlikeInputType', (selector: string, value: string) =
     if (!isDisabled) {
       cy.get(selector).invoke('is', ':visible').then(isVisible => {
         if (isVisible) {
-          cy.get(selector).clear().type(value).blur()
+          cy.get(selector).clear({ force: true }).type(value).blur()
         }
       })
     }
@@ -176,8 +176,7 @@ Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEn
 
   if (!randAmt) {
     cy.get('[data-cy=genAmtPass]').click()
-    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'))
-    // cy.get('[data-cy=genStaticAmt').click()
+    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
   }
   if (admin === 'acmactivate') {
     if (!randMebx) {
@@ -304,11 +303,11 @@ Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
 })
 
 Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod, encryptionMethod) => {
-  cy.get('input[name="profileName"]').type(name)
-  cy.get('input[name="ssid"]').type(userName)
-  cy.get('mat-select[formControlName=authenticationMethod]').click().get('mat-option').contains(authMethod).click()
-  cy.get('mat-select[formControlName=encryptionMethod]').click().get('mat-option').contains(encryptionMethod).click()
-  cy.get('input[name="pskPassphrase"]').type(password)
+  cy.get('input[name="profileName"]').type(name, { force: true })
+  cy.get('input[name="ssid"]').type(userName, { force: true })
+  cy.get('mat-select[formControlName=authenticationMethod]').click({ force: true }).get('mat-option').contains(authMethod).click()
+  cy.get('mat-select[formControlName=encryptionMethod]').click({ force: true }).get('mat-option').contains(encryptionMethod).click()
+  cy.get('input[name="pskPassphrase"]').type(password, { force: true })
 })
 
 Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
@@ -319,7 +318,7 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
   if (config.authenticationProtocol != null) {
     cy.matSelectChoose('[formControlName="authenticationProtocol"]', AuthenticationProtocols.labelForValue(config.authenticationProtocol))
   }
-  if (config.pxeTimeout != null) {
+  if (config.pxeTimeout != null && config.profileName.includes('wireless')) {
     cy.matTextlikeInputType('[formControlName="pxeTimeout"]', config.pxeTimeout.toString())
   }
 })
@@ -327,7 +326,7 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
 // ------------------------- Common Navigation --------------------------
 
 Cypress.Commands.add('goToPage', (pageName) => {
-  cy.get('.mat-list-item').contains(pageName).click()
+  cy.get('a').contains(pageName).click()
 })
 
 Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {

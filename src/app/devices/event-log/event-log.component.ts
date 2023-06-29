@@ -4,8 +4,8 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatTableDataSource } from '@angular/material/table'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
@@ -45,7 +45,7 @@ export class EventLogComponent implements OnInit {
       this.deviceId = params.id
       this.devicesService.getEventLog(this.deviceId).pipe(
         catchError(err => {
-          console.log(err)
+          console.error(err)
           this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
           return of(this.eventLogData)
         }), finalize(() => {

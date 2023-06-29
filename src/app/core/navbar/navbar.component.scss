@@ -1,8 +1,8 @@
-.mat-icon{
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
     margin-right: 12px;
 }
-.mat-list-item.active {
+.mat-mdc-list-item.active {
     color: #fff;
-    background-color: rgba(255,255,255,.1);
+    background-color: rgba(255, 255, 255, 0.1);
     width: calc(100%);
 }

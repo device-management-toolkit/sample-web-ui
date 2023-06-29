@@ -1,19 +1,19 @@
 <mat-toolbar color="primary">
-    <div fxFlex="50">
-        Open AMT Cloud Toolkit Sample UI
-    </div>
-    <div fxFlex="50" fxLayoutAlign="end center">
-        <span i18n>Hi</span>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>account_circle</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="logout()">
-                <mat-icon>logout</mat-icon><span i18n>Log out</span>
-            </button>
-        </mat-menu>
-        <button mat-icon-button (click)="displayAbout()">
-            <mat-icon>info</mat-icon>
-        </button>
-    </div>
+  <div class="flex-50">
+    Open AMT Cloud Toolkit Sample UI
+  </div>
+  <div class="flex flex-50 justify-end items-center">
+    <span i18n>Hi</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon><span i18n>Log out</span>
+      </button>
+    </mat-menu>
+    <button mat-icon-button (click)="displayAbout()">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

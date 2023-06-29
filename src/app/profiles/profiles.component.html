@@ -1,77 +1,64 @@
 <mat-toolbar>
-    <div fxLayoutAlign="start center" fxFlex="33">
-        <span i18n>Profiles</span>
-    </div>
-    <div fxFlex></div>
-    <div fxFlex="33" fxLayoutAlign="end">
-        <button id="btnAddMale" fxHide.xs mat-button (click)="navigateTo()">
-            <mat-icon>add</mat-icon> Add New
-        </button>
-    </div>
+  <div class="flex-33">
+    <span i18n>Profiles</span>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex flex-33 justify-end">
+    <button id="btnAdd" mat-button (click)="navigateTo()">
+      <mat-icon>add</mat-icon> Add New
+    </button>
+  </div>
 </mat-toolbar>
-<mat-progress-bar mode='indeterminate' [fxHide]="isLoading===false"></mat-progress-bar>
+<mat-progress-bar mode='indeterminate' *ngIf="isLoading!==false"></mat-progress-bar>
 
 <mat-card>
-    <mat-card-content>
-        <h3 [fxShow]="isNoData()" fxLayoutAlign="center">No Profiles</h3>
-        <mat-table [dataSource]="profiles" [fxHide]="isNoData()">
-            <!-- select Column -->
-            <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef fxFlex="50px"> </mat-header-cell>
-                <mat-cell *matCellDef="let row" fxFlex="50px">
-                    <mat-checkbox [(ngModel)]="row.isChecked" (click)="$event.stopPropagation()"></mat-checkbox>
-                </mat-cell>
-            </ng-container>
-            <!-- name Column -->
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
-            </ng-container>
+  <mat-card-content>
+    <h3 *ngIf="isNoData()" class="flex justify-center">No Profiles</h3>
+    <mat-table [dataSource]="profiles" *ngIf="!isNoData()">
+      <!-- name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef style="flex: 1 1 0;"> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="flex: 1 1 0;"> {{ element.profileName }} </mat-cell>
+      </ng-container>
 
-            <!-- network config Column -->
-            <ng-container matColumnDef="networkConfig">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Network Config </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> <span *ngIf="element.dhcpEnabled">DHCP</span> <span *ngIf="!element.dhcpEnabled">Static</span>
-                </mat-cell>
-            </ng-container>
+      <!-- network config Column -->
+      <ng-container matColumnDef="networkConfig">
+        <mat-header-cell *matHeaderCellDef> Network Config </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <span *ngIf="element.dhcpEnabled">DHCP</span> <span *ngIf="!element.dhcpEnabled">Static</span>
+        </mat-cell>
+      </ng-container>
 
-            <!-- connectionConfig Column -->
-            <ng-container matColumnDef="connectionConfig">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Connection Config </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px">
-                    <span>{{ element.ciraConfigName }}</span>
-                    <span>{{ parseTlsMode(element.tlsMode) }}</span>
-                </mat-cell>
-            </ng-container>
+      <!-- connectionConfig Column -->
+      <ng-container matColumnDef="connectionConfig">
+        <mat-header-cell *matHeaderCellDef> Connection Config </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span>{{ element.ciraConfigName }}</span>
+          <span>{{ parseTlsMode(element.tlsMode) }}</span>
+        </mat-cell>
+      </ng-container>
 
-            <!-- activation Column -->
-            <ng-container matColumnDef="activation">
-                <mat-header-cell *matHeaderCellDef fxFlex="150px"> Activation Mode </mat-header-cell>
-                <mat-cell *matCellDef="let element" fxFlex="150px"> {{ element.activation }}
-                </mat-cell>
-            </ng-container>
+      <!-- activation Column -->
+      <ng-container matColumnDef="activation">
+        <mat-header-cell *matHeaderCellDef> Activation Mode </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.activation }}
+        </mat-cell>
+      </ng-container>
 
-            <!-- remove Column -->
-            <ng-container matColumnDef="remove">
-                <mat-header-cell *matHeaderCellDef fxFlex="12.5"> </mat-header-cell>
-                <mat-cell *matCellDef="let row" fxFlex="12.5" (click)="$event.stopPropagation()">
-                    <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
-        </mat-table>
-        <div *ngIf="totalCount">
-            <mat-paginator [pageSizeOptions]="[25, 50, 100]"
-                [pageSize]="25"
-                [length]="totalCount"
-                showFirstLastButtons
-                (page)="pageChanged($event)">
-            </mat-paginator>
-        </div>
-    </mat-card-content>
+      <!-- remove Column -->
+      <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef style="flex: 0 0 75px;width:75px;"> </mat-header-cell>
+        <mat-cell *matCellDef="let row" style="flex: 0 0 75px;width:75px;" (click)="$event.stopPropagation()">
+          <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
+    </mat-table>
+    <div *ngIf="totalCount">
+      <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" showFirstLastButtons (page)="pageChanged($event)">
+      </mat-paginator>
+    </div>
+  </mat-card-content>
 </mat-card>

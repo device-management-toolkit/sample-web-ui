@@ -5,10 +5,10 @@
 
 import { SelectionModel } from '@angular/cdk/collections'
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
-import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { MatPaginator, PageEvent } from '@angular/material/paginator'
+import { MatSelectChange } from '@angular/material/select'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { catchError, finalize, delay, map, mergeMap } from 'rxjs/operators'
 import { BehaviorSubject, forkJoin, from, Observable, of, throwError } from 'rxjs'
@@ -164,7 +164,7 @@ export class DevicesComponent implements OnInit {
         (this.devices.data.find(y => y.guid === deviceId) as any).powerstate = z.powerstate
       })
     }, err => {
-      console.log(err)
+      console.error(err)
     })
   }
 
@@ -186,7 +186,7 @@ export class DevicesComponent implements OnInit {
           },
           error: (err) => {
             (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
-            console.log(err)
+            console.error(err)
           }
         })
       }
@@ -232,7 +232,7 @@ export class DevicesComponent implements OnInit {
 
   addDevice (): void {
     this.dialog.open(AddDeviceComponent, {
-      height: '400px',
+      height: '500px',
       width: '600px'
     })
   }

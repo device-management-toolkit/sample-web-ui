@@ -5,13 +5,13 @@
 
 import { Component, Input, OnInit } from '@angular/core'
 import { catchError, finalize } from 'rxjs/operators'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 
 @Component({
@@ -75,7 +75,7 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
       catchError(err => {
         // TODO: handle error better
-        console.log(err)
+        console.error(err)
         this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
         return of(null)
       }),
@@ -126,7 +126,7 @@ export class DeviceToolbarComponent implements OnInit {
             void this.navigateTo('devices')
           },
           error: (err) => {
-            console.log(err)
+            console.error(err)
             this.snackBar.open($localize`Error sending deactivation`, undefined, SnackbarDefaults.defaultError)
           }
         })

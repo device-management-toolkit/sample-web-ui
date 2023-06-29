@@ -103,7 +103,7 @@ describe('Test login page', () => {
 
       // Check that to log in fails as expected
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
-      cy.get('.mat-error').should('have.length', 1)
+      cy.get('mat-error').should('have.length', 1)
     })
 
     it('invalid username / valid password', () => {
@@ -115,7 +115,7 @@ describe('Test login page', () => {
     it('valid username / no password', () => {
       cy.login(mpsUsername, 'EMPTY')
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
-      cy.get('.mat-error').should('have.length', 1)
+      cy.get('mat-error').should('have.length', 1)
     })
 
     it('valid username / invalid password', () => {
@@ -127,13 +127,13 @@ describe('Test login page', () => {
     it('no username / invalid password', () => {
       cy.login('EMPTY', wrongPassword)
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
-      cy.get('.mat-error').should('have.length', 1)
+      cy.get('mat-error').should('have.length', 1)
     })
 
     it('no username / no password', () => {
       cy.login('EMPTY', 'EMPTY')
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
-      cy.get('.mat-error').should('have.length', 2)
+      cy.get('mat-error').should('have.length', 2)
     })
   })
 

@@ -27,11 +27,11 @@ describe('Test Profile Page', () => {
     }).as('get-wireless')
 
     cy.goToPage('Wireless')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
     cy.wait('@get-wireless')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
   })
 
   it('pagination for previous page', () => {
@@ -46,13 +46,13 @@ describe('Test Profile Page', () => {
     }).as('get-wireless4')
 
     cy.goToPage('Wireless')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
     cy.wait('@get-wireless3')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-previous.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-previous.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
   })
 
   it('pagination for last page', () => {
@@ -67,11 +67,11 @@ describe('Test Profile Page', () => {
     }).as('get-wireless6')
 
     cy.goToPage('Wireless')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
     cy.wait('@get-wireless5')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
   })
 
   it('pagination for first page', () => {
@@ -86,12 +86,12 @@ describe('Test Profile Page', () => {
     }).as('get-wireless6')
 
     cy.goToPage('Wireless')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
     cy.wait('@get-wireless5')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-first.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-first.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
   })
 })

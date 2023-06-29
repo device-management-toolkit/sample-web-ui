@@ -59,6 +59,11 @@ describe('Test device details page', () => {
       body: eventLogs.amtFeatures.success.response
     }).as('get-features')
 
+    cy.myIntercept('GET', /.*alarmOccurrences.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: eventLogs.alarmOccurrences.success.response
+    }).as('get-alarmOccurences')
+
     cy.myIntercept('POST', /.*features.*/, {
       statusCode: httpCodes.SUCCESS,
       body: { status: 'success' }
@@ -80,6 +85,7 @@ describe('Test device details page', () => {
     cy.wait('@get-version').its('response.statusCode').should('eq', 200)
     cy.wait('@get-auditlog').its('response.statusCode').should('eq', 200)
     cy.wait('@get-features').its('response.statusCode').should('eq', 200)
+    cy.wait('@get-alarmOccurences').its('response.statusCode').should('eq', 200)
 
     // Do not run power actions on real devices
     if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {

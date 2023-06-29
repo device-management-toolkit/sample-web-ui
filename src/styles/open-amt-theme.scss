@@ -1,10 +1,10 @@
-
 // Custom Theming for Angular Material
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // For more information: https://material.angular.io/guide/theming
-@import '@angular/material/theming';
+@import "@angular/material/theming";
 // Plus imports for other components in your app.
 @import "src/styles/_variables.scss";
+@import "src/styles/flex.scss";
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -15,71 +15,89 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
-
-
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$openamtui-theme: mat.define-light-theme((
-  color: (
-    primary: $openamtui-primary,
-    accent: $openamtui-accent,
-    warn: $openamtui-warn,
+$openamtui-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $openamtui-primary,
+      accent: $openamtui-accent,
+      warn: $openamtui-warn,
+    ),
   )
-));
+);
 
-$openamtui-dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $openamtui-primary,
-    accent: $openamtui-accent,
-    warn: $openamtui-warn,
+$openamtui-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $openamtui-primary,
+      accent: $openamtui-accent,
+      warn: $openamtui-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-legacy-component-themes($openamtui-dark-theme);
-
+@include mat.all-component-themes($openamtui-dark-theme);
 .light-theme {
-  @include mat.all-legacy-component-colors($openamtui-theme);
+  @include mat.all-component-colors($openamtui-theme);
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.mat-card {
-  margin: 12px;
+html,
+body {
+  height: 100%;
 }
-.mat-row{
-  -moz-transition: all .4s ease-in;
-  -webkit-transition: all .4s ease-in;
-  -o-transition: all .4s ease-in;
-  transition: all .4s ease-in;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.mat-mdc-card {
+  margin: 12px;
+  padding: 12px;
+}
+.mat-mdc-row {
+  -moz-transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
   &:hover {
     background-color: map-get($openamtui-accent, 100);
-    cursor:pointer;
-    -moz-transition: all .4s ease-in;
-    -webkit-transition: all .4s ease-in;
-    -o-transition: all .4s ease-in;
-    transition: all .4s ease-in;
+    cursor: pointer;
+    -moz-transition: all 0.4s ease-in;
+    -webkit-transition: all 0.4s ease-in;
+    -o-transition: all 0.4s ease-in;
+    transition: all 0.4s ease-in;
   }
 }
+.mat-column-remove,
+.mat-column-select {
+  flex: 0 0 75px;
+  width: 75px;
+}
+
 .mat-drawer-container {
   background-color: #fafafa;
-  color:rgba(0, 0, 0, 0.87);
+  color: rgba(0, 0, 0, 0.87);
 }
-.mat-form-field{
+.mat-mdc-form-field {
   margin-bottom: 10px;
 }
-.mat-snack-bar-container {
+.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background-color: inherit !important;
+    box-shadow: none !important;
+  }
   &.warn {
     text-align: center;
     padding-left: 40px;
     text-transform: uppercase;
-    border-top-color: #FF9800;
+    border-top-color: #ff9800;
     border-top-width: 5px;
     border-top-style: solid;
   }

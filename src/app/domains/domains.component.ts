@@ -4,8 +4,8 @@
 **********************************************************************/
 
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 
 import { finalize } from 'rxjs/operators'
@@ -13,7 +13,7 @@ import { DomainsResponse, PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DomainsService } from './domains.service'
-import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator'
+import { MatPaginator, PageEvent } from '@angular/material/paginator'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',

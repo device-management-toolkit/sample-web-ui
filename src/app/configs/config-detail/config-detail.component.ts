@@ -5,7 +5,7 @@
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
 
@@ -154,7 +154,7 @@ export class ConfigDetailComponent implements OnInit {
             this.router.navigate(['/ciraconfigs'])
           },
           (error) => {
-            console.log('error', error)
+            console.error('error', error)
             this.errorMessages = error
           }
         )

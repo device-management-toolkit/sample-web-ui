@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
+import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
@@ -132,8 +132,7 @@ describe('DevicesComponent', () => {
   }))
   it('should fire bulk power action', () => {
     const resetResponseSpy = spyOn(component, 'resetResponse')
-    const checkbox = fixture.nativeElement.querySelector('.mat-checkbox-input')
-    checkbox.click()
+    component.selection.select(component.devices.data[0])
     component.resetResponse()
     fixture.detectChanges()
     component.bulkPowerAction(8)
@@ -170,8 +169,7 @@ describe('DevicesComponent', () => {
     expect(component.devices.data.length).toBeGreaterThan(0)
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const checkbox = fixture.nativeElement.querySelector('.mat-checkbox-input')
-    checkbox.click()
+    component.selection.select(component.devices.data[0])
     component.bulkDeactivate()
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()

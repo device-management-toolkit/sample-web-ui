@@ -1,13 +1,13 @@
 <app-device-toolbar [deviceState]="deviceState"></app-device-toolbar>
-<mat-toolbar>
-    <mat-form-field>
-        <mat-label>Choose encoding type</mat-label>
-        <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
-            <mat-option *ngFor="let encode of encodings" [value]="encode.value">
-                {{ encode.viewValue }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<mat-toolbar style="height:75px">
+  <mat-form-field style="margin-bottom:0">
+    <mat-label>Choose encoding type</mat-label>
+    <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
+      <mat-option *ngFor="let encode of encodings" [value]="encode.value">
+        {{ encode.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
 </mat-toolbar>
 <mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>

@@ -16,18 +16,24 @@
 .auditlog-container {
   display: inline;
 }
+.mat-icon {
+  width: 24px;
+  height: 24px;
+}
 
-
-#memorySummary{
-  .mat-icon{
+#memorySummary {
+  .mat-icon {
     font-size: 48px;
     height: 48px;
     width: 48px;
   }
 }
-p{
-  color:map-get($openamtui-primary, 500);
-  span{
-    color:black
+p {
+  color: map-get($openamtui-primary, 500);
+  span {
+    color: black;
   }
+}
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
 }

@@ -51,11 +51,9 @@ describe('Test wireless creation page', () => {
     cy.get('button[type=submit]').click()
 
     // Wait for requests to finish and check their responses
-    cy.wait('@post-wireless').then((req) => {
-      cy.wrap(req)
+    cy.wait('@post-wireless')
         .its('response.statusCode')
         .should('eq', httpCodes.BAD_REQUEST)
-    })
 
     // Check that the wireless config creation failed
     cy.url().should('eq', baseUrl + urlFixtures.page.wireless + '/' + urlFixtures.extensions.creation)

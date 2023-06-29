@@ -136,6 +136,11 @@ const eventLogs = {
       }
     }
   },
+  alarmOccurrences: {
+    success: {
+      response: []
+    }
+  },
   amtFeatures: {
     success: {
       response: {

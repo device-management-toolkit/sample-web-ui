@@ -28,10 +28,10 @@ describe('Test CIRA Config Page', () => {
 
     // Fill out the config
     cy.goToPage('CIRA Configs')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
     cy.wait('@get-configs')
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
   })
 
   it('paging for previous page', () => {
@@ -47,13 +47,13 @@ describe('Test CIRA Config Page', () => {
 
     // Fill out the config
     cy.goToPage('CIRA Configs')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
     cy.wait('@get-configs3')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-previous.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-previous.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
   })
 
   it('paging for last page', () => {
@@ -69,11 +69,11 @@ describe('Test CIRA Config Page', () => {
 
     // Fill out the config
     cy.goToPage('CIRA Configs')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
     cy.wait('@get-configs5')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
   })
 
   it('paging for first page', () => {
@@ -89,12 +89,12 @@ describe('Test CIRA Config Page', () => {
 
     // Fill out the config
     cy.goToPage('CIRA Configs')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
     cy.wait('@get-configs7')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-first.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-first.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${ciraConfig.getAll.forPaging.response.totalCount}`)
   })
 })

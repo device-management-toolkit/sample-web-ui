@@ -50,12 +50,13 @@ describe('Test Device Page', () => {
 
       // Filter for Windows devices
       cy.get('[data-cy="filterTags"]').click()
-      cy.contains('.mat-option-text', 'Windows').click()
+
+      cy.contains('mat-option', 'Windows').click()
 
       cy.wait('@get-windows').its('response.statusCode').should('eq', 200)
 
       // Remove Filter for Windows devices
-      cy.contains('.mat-option-text', 'Windows').click()
+      cy.contains('mat-option', 'Windows').click()
       cy.wait('@get-devices').its('response.statusCode').should('eq', 200)
     }
   })

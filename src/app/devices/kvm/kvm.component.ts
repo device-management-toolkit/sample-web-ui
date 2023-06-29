@@ -4,8 +4,8 @@
 **********************************************************************/
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog'
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { interval, Observable, of, Subscription, throwError } from 'rxjs'
 import { catchError, finalize, mergeMap } from 'rxjs/operators'

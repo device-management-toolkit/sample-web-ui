@@ -33,11 +33,11 @@ describe('Test Device Page', () => {
     }).as('get-devices2')
 
     cy.goToPage('Devices')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${deviceFixtures.totalCount}`)
   })
 
   it('pagination for previous page', () => {
@@ -57,13 +57,13 @@ describe('Test Device Page', () => {
     }).as('get-devices4')
 
     cy.goToPage('Devices')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices3')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-next.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`26 – 50 of ${deviceFixtures.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-previous.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-previous.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
   })
 
   it('pagination for last page', () => {
@@ -83,11 +83,11 @@ describe('Test Device Page', () => {
     }).as('get-devices6')
 
     cy.goToPage('Devices')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices5')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${deviceFixtures.totalCount}`)
   })
 
   it('pagination for first page', () => {
@@ -107,12 +107,12 @@ describe('Test Device Page', () => {
     }).as('get-devices8')
 
     cy.goToPage('Devices')
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices7')
 
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-last.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`76 – 100 of ${deviceFixtures.totalCount}`)
-    cy.get('.mat-paginator').find('button.mat-paginator-navigation-first.mat-icon-button').click()
-    cy.get('.mat-paginator').find('.mat-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${deviceFixtures.totalCount}`)
+    cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-first.mat-mdc-icon-button').click()
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
   })
 })
