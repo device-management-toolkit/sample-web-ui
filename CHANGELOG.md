@@ -1,3 +1,35 @@
+<a name="2.12.0"></a>
+## [2.12.0] - 2023-06-30
+### Build
+- bump [@angular](https://github.com/angular)/cli to 16.1.3 ([#1195](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1195)) (#f3db564) 
+- **deps:** Bump xterm from 5.1.0 to 5.2.1 ([#1186](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1186)) (#8bb3d33) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular (#6a05072) 
+- **deps-dev:** Bump karma-coverage from 2.2.0 to 2.2.1 ([#1194](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1194)) (#738b613) 
+- **deps-dev:** Bump [@types](https://github.com/types)/jasmine from 4.3.4 to 4.3.5 (#5115145) 
+
+### Feat
+- upgraded to angular 16 (#1f40a89) 
+
+### Refactor
+- upgrade material components to mdc ([#1156](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1156)) (#e117e34) 
+- change scss import paths for node 20 (#0047bf1) 
+
+
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2023-06-28
+### Build
+- automated versioning and publishing ([#1140](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1140)) (#60bddd9) 
+- **deps:** update to angular 16.1 (#bdbcaae) 
+- **deps:** Bump esbuild from 0.17.19 to 0.18.10 (#622576d) 
+- **deps:** Bump tslib from 2.5.3 to 2.6.0 (#a498a7b) 
+- **deps:** Bump zone.js from 0.13.0 to 0.13.1 ([#1175](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1175)) (#41a5f7d) 
+- **deps:** Bump cypress from 12.13.0 to 12.16.0 ([#1177](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1177)) (#6b39379) 
+- **deps-dev:** Bump jasmine-core from 4.6.0 to 5.0.1 ([#1172](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1172)) (#2498a10) 
+- **deps-dev:** Bump eslint-config-standard-with-typescript ([#1173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1173)) (#19259e0) 
+
+### Feat
+- add MSCHAPv2 for wired and wireless (#a15e858) 
+
 <a name="2.10.0"></a>
 ## [2.10.0] - 2023-06-21
 ### Build
