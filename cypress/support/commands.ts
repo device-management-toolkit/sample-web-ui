@@ -85,7 +85,7 @@ Cypress.Commands.add('matRadioButtonAssert', (selector: string, value: string) =
 
 Cypress.Commands.add('matSelectChoose', (selector: string, text: string) => {
   const elementId = `mat-select${selector}`
-  cy.get(elementId).click({ force: true }).get('mat-option').contains(text).click()
+  cy.get(elementId).click({ force: true }).get('mat-option').contains(text).click({ force: true })
   cy.get(elementId).focus().type('{esc}')
   cy.get(elementId).should('have.text', text)
 })
