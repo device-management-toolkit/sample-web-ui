@@ -33,8 +33,7 @@ describe('Test Domain Page', () => {
     cy.wait('@get-domains')
 
     // Fill out the profile
-    cy.get('button').contains('Add New').click()
-
+    cy.get('button').contains('Add New').click({ force: true })
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
@@ -53,8 +52,10 @@ describe('Test Domain Page', () => {
       certFixtureData,
       Cypress.env('PROVISIONING_CERT_PASSWORD')
     )
-    cy.get('button').contains('SAVE').click()
+    cy.get('button').contains('SAVE').click({ force: true })
     cy.wait('@post-domain')
+      .its('response.statusCode')
+      .should('eq', httpCodes.CREATED)
     cy.wait('@get-domains2')
       .its('response.statusCode')
       .should('eq', httpCodes.SUCCESS)
