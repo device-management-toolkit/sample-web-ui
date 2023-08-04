@@ -9,7 +9,7 @@ import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { Router } from '@angular/router'
-import { ValidatorError } from 'src/models/models'
+import { ValidatorError, MpsVersion, RpsVersion } from 'src/models/models'
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,24 @@ export class AuthService {
     localStorage.removeItem('loggedInUser')
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.router.navigate(['/login'])
+  }
+
+  getMPSVersion (): Observable<any> {
+    return this.http.get<MpsVersion>(`${environment.mpsServer}/api/v1/version`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getRPSVersion (): Observable<any> {
+    return this.http.get<RpsVersion>(`${environment.rpsServer}/api/v1/admin/version`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
   }
 
   onError (err: any): string[] {

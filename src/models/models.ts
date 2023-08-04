@@ -320,3 +320,12 @@ export interface DataWithCount<T> {
   data: T[]
   totalCount: number
 }
+
+export interface MpsVersion {
+  serviceVersion: string
+}
+
+export interface RpsVersion {
+  serviceVersion: string
+  protocolVersion: string
+}

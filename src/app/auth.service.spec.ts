@@ -11,16 +11,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SharedModule } from './shared/shared.module'
 import { of } from 'rxjs'
 import { environment } from 'src/environments/environment'
-
 describe('AuthService', () => {
   let service: AuthService
-  let httpClientSpy: { post: jasmine.Spy }
+  let httpClientSpy: { post: jasmine.Spy, get: jasmine.Spy }
   let routerSpy: Router
   let loggedInSubjectSpy: jasmine.Spy
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get'])
     httpClientSpy.post.and.returnValue(of({ token: 'token' }))
+    httpClientSpy.get.and.returnValue(of({ serviceVersion: '1.1.1' }))
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])]
@@ -82,6 +82,18 @@ describe('AuthService', () => {
       expect(service.isLoggedIn).toBeTrue()
       expect(localStorage.loggedInUser).toBe(JSON.stringify({ token: 'token' }))
       expect(loggedInSubjectSpy).toHaveBeenCalledWith(true)
+    })
+  })
+
+  it('should getMPSVersion', () => {
+    service.getMPSVersion().subscribe(() => {
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/version`)
+    })
+  })
+
+  it('should getRPSVersion', () => {
+    service.getRPSVersion().subscribe(() => {
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/version`)
     })
   })
 
