@@ -1,9 +1,9 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
+  <mat-sidenav mode="side" opened *ngIf="isLoggedIn" class="dark-theme">
     <app-navbar></app-navbar>
   </mat-sidenav>
 
-  <mat-sidenav-content class="light-theme">
+  <mat-sidenav-content >
     <app-toolbar></app-toolbar>
 
     <router-outlet></router-outlet>

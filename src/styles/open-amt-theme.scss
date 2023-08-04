@@ -44,9 +44,9 @@ $openamtui-dark-theme: mat.define-dark-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($openamtui-dark-theme);
-.light-theme {
-  @include mat.all-component-colors($openamtui-theme);
+@include mat.all-component-themes($openamtui-theme);
+.dark-theme {
+  @include mat.all-component-colors($openamtui-dark-theme);
 }
 
 html,
@@ -89,56 +89,32 @@ body {
   margin-bottom: 10px;
 }
 .mat-mdc-snack-bar-container {
-  .mdc-snackbar__surface {
-    background-color: inherit !important;
-    box-shadow: none !important;
-  }
+
   &.warn {
     text-align: center;
-    padding-left: 40px;
     text-transform: uppercase;
     border-top-color: #ff9800;
     border-top-width: 5px;
     border-top-style: solid;
   }
-  &.warn::before {
-    @extend .material-icons;
-    content: "warning_outline";
-    position: absolute;
-    left: 8px;
-    top: 12px;
-  }
+
   &.error {
     text-align: center;
-    padding-left: 40px;
     text-transform: uppercase;
     border-top-color: map-get($openamtui-warn, 500);
     border-top-width: 5px;
     border-top-style: solid;
   }
-  &.error::before {
-    @extend .material-icons;
-    content: "error_outline";
-    position: absolute;
-    left: 8px;
-    top: 12px;
-  }
+
   &.success {
     text-align: center;
-    padding-left: 40px;
     text-transform: uppercase;
     //background-color: map-get($openamtui-primary, 900);
     border-top-color: map-get($openamtui-primary, 300);
     border-top-width: 5px;
     border-top-style: solid;
   }
-  &.success::before {
-    @extend .material-icons;
-    content: "check_circle";
-    position: absolute;
-    left: 8px;
-    top: 12px;
-  }
+
 }
 .material-icons {
   direction: ltr;
