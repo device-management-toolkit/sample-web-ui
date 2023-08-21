@@ -59,7 +59,7 @@
       <!-- host Column -->
       <ng-container matColumnDef="hostname">
         <mat-header-cell *matHeaderCellDef> Hostname (Friendly Name) </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.hostname }} <span *ngIf="element.friendlyName != null">&nbsp;({{element.friendlyName}})</span> </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.hostname }} <span *ngIf="element.friendlyName !== null">&nbsp;({{element.friendlyName}})</span> </mat-cell>
       </ng-container>
 
       <!-- guid Column -->
