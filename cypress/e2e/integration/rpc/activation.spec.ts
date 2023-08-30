@@ -99,7 +99,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           if (profileName.endsWith('WiFi')) {
             expect(result.stderr).to.contain('Network: Wired Network Configured. Wireless Configured')
           } else {
-            expect(result.stderr).to.contain('Network: Wired Network Configured.')
+            expect(result.stderr).to.contain('Network: Wired Network Configured')
           }
         }
         cy.wait(120000)
