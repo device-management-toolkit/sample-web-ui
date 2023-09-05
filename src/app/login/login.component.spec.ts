@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router } from '@angular/router'
@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
     expect(component.loginPassInputType).toEqual('password')
   })
 
-  it('onSubmit login should be successful', fakeAsync(() => {
+  it('onSubmit login should be successful', () => {
     const userId: string = 'userId'
     const password: string = 'P@ssw0rd'
     component.loginForm.patchValue({
@@ -66,14 +66,12 @@ describe('LoginComponent', () => {
       password
     })
     spyOn(authService, 'login').and.returnValue(of(true).pipe())
-    void component.onSubmit().then(() => {
-      expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
-      expect(component.isLoading).toBeFalse()
-    })
-    tick()
-  }))
+    component.onSubmit()
+    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
+    expect(component.isLoading).toBeFalse()
+  })
 
-  it('Should fail when login service throws 405 status', async () => {
+  it('Should fail when login service throws 405 status', () => {
     const authSpy = spyOn(authService, 'login').and.returnValue(throwError(() => {
       return { status: 405, error: { message: 'failed' } }
     }))
@@ -82,18 +80,18 @@ describe('LoginComponent', () => {
       get: () => true
     })
     fixture.detectChanges()
-    await component.onSubmit()
+    component.onSubmit()
     fixture.detectChanges()
     expect(authSpy).toHaveBeenCalled()
     expect(snackBarSpy).toHaveBeenCalled()
   })
 
-  it('Should fail when login service throws an error', async () => {
+  it('Should fail when login service throws an error', () => {
     spyOn(authService, 'login').and.returnValue(throwError(() => { return { status: 401, error: { message: 'failed' } } }))
     Object.defineProperty(component.loginForm, 'valid', {
       get: () => true
     })
-    await component.onSubmit()
+    component.onSubmit()
     expect(authService.login).toHaveBeenCalled()
   })
 })

@@ -76,24 +76,27 @@ describe('AuthService', () => {
     expect(loggedInSubjectSpy).toHaveBeenCalledWith(false)
   })
 
-  it('should login', () => {
+  it('should login', (done) => {
     service.login('username', 'password').subscribe(() => {
       expect(httpClientSpy.post).toHaveBeenCalledWith(service.url, { username: 'username', password: 'password' })
       expect(service.isLoggedIn).toBeTrue()
       expect(localStorage.loggedInUser).toBe(JSON.stringify({ token: 'token' }))
       expect(loggedInSubjectSpy).toHaveBeenCalledWith(true)
+      done()
     })
   })
 
-  it('should getMPSVersion', () => {
+  it('should getMPSVersion', (done) => {
     service.getMPSVersion().subscribe(() => {
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/version`)
+      done()
     })
   })
 
-  it('should getRPSVersion', () => {
+  it('should getRPSVersion', (done) => {
     service.getRPSVersion().subscribe(() => {
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/version`)
+      done()
     })
   })
 

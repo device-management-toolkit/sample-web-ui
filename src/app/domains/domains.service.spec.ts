@@ -48,35 +48,38 @@ describe('DomainsService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return array of 25 domains when get all domains called ', () => {
+  it('should return array of 25 domains when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
     service.getData({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(response => {
       expect(response).toEqual(domainResponse)
+      done()
     })
     expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$top=25&$skip=0&$count=true`)
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
 
-  it('should return array of domains when get all domains called ', () => {
+  it('should return array of domains when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
     service.getData().subscribe(response => {
       expect(response).toEqual(domainResponse)
+      done()
     })
     expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$count=true`)
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
-  it('should throw errors when get all domains called ', () => {
+  it('should throw errors when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
 
     service.getData().subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
 
-  it('should return a single domain object detail when a single record is requested', () => {
+  it('should return a single domain object detail when a single record is requested', (done) => {
     const domainResponse = {
       profileName: 'testDomain',
       domainSuffix: 'testDomain.com',
@@ -89,66 +92,74 @@ describe('DomainsService', () => {
 
     service.getRecord('testDomain').subscribe(response => {
       expect(response).toEqual(domainResponse)
+      done()
     })
   })
 
-  it('should return errors on a single domain object detail when a single record is requested', () => {
+  it('should return errors on a single domain object detail when a single record is requested', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
 
     service.getRecord('testDomain').subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
   })
 
-  it('should return the updated domain details when a domain is updated', () => {
+  it('should return the updated domain details when a domain is updated', (done) => {
     httpClientSpy.patch.and.returnValue(of(domainReq))
 
     service.update(domainReq).subscribe(response => {
       expect(response).toEqual(domainReq)
+      done()
     })
   })
 
-  it('should return errors on updated domain details when a domain is updated', () => {
+  it('should return errors on updated domain details when a domain is updated', (done) => {
     httpClientSpy.patch.and.returnValue(throwError(error))
 
     service.update(domainReq).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
   })
 
-  it('should return the created domain details when a domain is created', () => {
+  it('should return the created domain details when a domain is created', (done) => {
     httpClientSpy.post.and.returnValue(of(domainReq))
 
     service.create(domainReq).subscribe(response => {
       expect(response).toEqual(domainReq)
+      done()
     })
   })
 
-  it('should throw error on created domain details when a domain is created', () => {
+  it('should throw error on created domain details when a domain is created', (done) => {
     httpClientSpy.post.and.returnValue(throwError(error))
 
     service.create(domainReq).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
   })
 
-  it('should delete the domain when a delete request is sent', () => {
+  it('should delete the domain when a delete request is sent', (done) => {
     const domainName = 'testDomain'
 
     httpClientSpy.delete.and.returnValue(of({}))
 
     service.delete(domainName).subscribe(() => {
+      done()
     })
 
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })
 
-  it('should throw error when a delete request is sent', () => {
+  it('should throw error when a delete request is sent', (done) => {
     const domainName = 'testDomain'
     httpClientSpy.delete.and.returnValue(throwError(error))
 
     service.delete(domainName).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
 
     expect(httpClientSpy.delete.calls.count()).toEqual(1)

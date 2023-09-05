@@ -51,61 +51,68 @@ describe('DevicesService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return all the tags', () => {
+  it('should return all the tags', (done) => {
     const tagsResponse = ['test']
     httpClientSpy.get.and.returnValue(of(tagsResponse))
     service.getTags().subscribe(response => {
       expect(response).toEqual(tagsResponse)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/tags`)
+      done()
     })
   })
 
-  it('should NOT return tags when error received', () => {
+  it('should NOT return tags when error received', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getTags().subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return the requested device', () => {
+  it('should return the requested device', (done) => {
     httpClientSpy.get.and.returnValue(of(deviceRes))
     service.getDevice(deviceRes.guid).subscribe(response => {
       expect(response).toEqual(deviceRes)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/${deviceRes.guid}`)
+      done()
     })
   })
 
-  it('should NOT return requested device when error received', () => {
+  it('should NOT return requested device when error received', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getDevice('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return all devices', () => {
+  it('should return all devices', (done) => {
     httpClientSpy.get.and.returnValue(of(deviceListResponse))
     service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(response => {
       expect(response).toEqual(deviceListResponse)
+      done()
     })
     expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices?$top=25&$skip=0&$count=true`)
   })
 
-  it('should return all devices filtered by tags', () => {
+  it('should return all devices filtered by tags', (done) => {
     httpClientSpy.get.and.returnValue(of(deviceListResponse))
     service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true', tags: ['test'] }).subscribe(response => {
       expect(response).toEqual(deviceListResponse)
+      done()
     })
     expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices?tags=test&$top=25&$skip=0&$count=true`)
   })
 
-  it('should NOT return devices when error received', () => {
+  it('should NOT return devices when error received', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should set AMT Features', () => {
+  it('should set AMT Features', (done) => {
     const deviceResponse = {
       userConsent: 'kVM',
       optInState: 2,
@@ -118,17 +125,19 @@ describe('DevicesService', () => {
     service.setAmtFeatures('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(deviceResponse)
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/features/defgh-34567-poiuy`, { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true })
+      done()
     })
   })
 
-  it('should return error when setting AMT Features', () => {
+  it('should return error when setting AMT Features', (done) => {
     httpClientSpy.post.and.returnValue(throwError(error))
     service.setAmtFeatures('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return power state', () => {
+  it('should return power state', (done) => {
     const powerState = {
       powerstate: 2
     }
@@ -136,17 +145,19 @@ describe('DevicesService', () => {
     service.getPowerState('defgh-34567-poiuy').subscribe(response => {
       expect(response.powerstate).toBe(powerState.powerstate)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/power/state/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting power state', () => {
+  it('should return error when requesting power state', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getPowerState('defgh-34567-poiuy').subscribe(() => {}, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return device stats', () => {
+  it('should return device stats', (done) => {
     const deviceStats = {
       totalCount: 1,
       connectedCount: 1,
@@ -156,17 +167,19 @@ describe('DevicesService', () => {
     service.getStats().subscribe(response => {
       expect(response).toEqual(deviceStats)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/stats`)
+      done()
     })
   })
 
-  it('should return error when requesting device stats', () => {
+  it('should return error when requesting device stats', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getStats().subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return user consent code', () => {
+  it('should return user consent code', (done) => {
     const userConsentresponse = {
       Header: {
         To: 'string',
@@ -191,10 +204,11 @@ describe('DevicesService', () => {
     service.reqUserConsentCode('defgh-34567-poiuy').subscribe(response => {
       expect(JSON.stringify(response)).toContain(JSON.stringify(userConsentresponse))
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/userConsentCode/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting for user consent code', () => {
+  it('should return error when requesting for user consent code', (done) => {
     const error = {
       status: 404,
       message: 'Not Found'
@@ -202,10 +216,11 @@ describe('DevicesService', () => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.reqUserConsentCode('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return success when cancelling user consent code', () => {
+  it('should return success when cancelling user consent code', (done) => {
     const cancelConsentresponse = {
       Header: {
         To: 'string',
@@ -230,17 +245,19 @@ describe('DevicesService', () => {
     service.cancelUserConsentCode('defgh-34567-poiuy').subscribe(response => {
       expect(JSON.stringify(response)).toContain(JSON.stringify(cancelConsentresponse))
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when cancelling user consent code', () => {
+  it('should return error when cancelling user consent code', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.cancelUserConsentCode('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return success when sending user consent code', () => {
+  it('should return success when sending user consent code', (done) => {
     const sendUserConsentCode = {
       Header: {
         To: 'string',
@@ -265,17 +282,19 @@ describe('DevicesService', () => {
     service.sendUserConsentCode('defgh-34567-poiuy', 2).subscribe(response => {
       expect(JSON.stringify(response)).toContain(JSON.stringify(sendUserConsentCode))
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/userConsentCode/defgh-34567-poiuy`, { consentCode: 2 })
+      done()
     })
   })
 
-  it('should return error when sending user consent code', () => {
+  it('should return error when sending user consent code', (done) => {
     httpClientSpy.post.and.returnValue(throwError(error))
     service.sendUserConsentCode('defgh-34567-poiuy', 2).subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return AMT Version', () => {
+  it('should return AMT Version', (done) => {
     const amtVersion = {
       amtVersion: 2
     }
@@ -283,17 +302,19 @@ describe('DevicesService', () => {
     service.getAMTVersion('defgh-34567-poiuy').subscribe(response => {
       expect(response.amtVersion).toBe(amtVersion.amtVersion)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/version/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting power state', () => {
+  it('should return error when requesting power state', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getAMTVersion('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return Audit Log', () => {
+  it('should return Audit Log', (done) => {
     const auditLogResponse = {
       totalCnt: 1,
       records: [{
@@ -314,17 +335,19 @@ describe('DevicesService', () => {
     service.getAuditLog('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(auditLogResponse)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/log/audit/defgh-34567-poiuy?startIndex=0`)
+      done()
     })
   })
 
-  it('should return error when requesting Audit Log', () => {
+  it('should return error when requesting Audit Log', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getAuditLog('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return Event Log', () => {
+  it('should return Event Log', (done) => {
     const eventLogResponse = [{
       DeviceAddress: 123456,
       EventSensorType: 45678,
@@ -345,17 +368,19 @@ describe('DevicesService', () => {
     service.getEventLog('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(eventLogResponse)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/log/event/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting Event Log', () => {
+  it('should return error when requesting Event Log', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getEventLog('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return AMT Features', () => {
+  it('should return AMT Features', (done) => {
     const amtFeaturesResponse = {
       userConsent: 'KVM',
       optInState: 2,
@@ -368,17 +393,19 @@ describe('DevicesService', () => {
     service.getAMTFeatures('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(amtFeaturesResponse)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/features/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting AMT Features', () => {
+  it('should return error when requesting AMT Features', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getAMTFeatures('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should send power action < 100', () => {
+  it('should send power action < 100', (done) => {
     const sendPowerAction = {
       Header: {
         To: 'string',
@@ -403,10 +430,11 @@ describe('DevicesService', () => {
     service.sendPowerAction('defgh-34567-poiuy', 2).subscribe(response => {
       expect(response).toEqual(sendPowerAction)
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/power/action/defgh-34567-poiuy`, { method: 'PowerAction', action: 2, useSOL: false })
+      done()
     })
   })
 
-  it('should send power action >= 100', () => {
+  it('should send power action >= 100', (done) => {
     const sendPowerAction = {
       Header: {
         To: 'string',
@@ -431,17 +459,19 @@ describe('DevicesService', () => {
     service.sendPowerAction('defgh-34567-poiuy', 101).subscribe(response => {
       expect(response).toEqual(sendPowerAction)
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/power/bootoptions/defgh-34567-poiuy`, { method: 'PowerAction', action: 101, useSOL: false })
+      done()
     })
   })
 
-  it('should return error when sending power action', () => {
+  it('should return error when sending power action', (done) => {
     httpClientSpy.post.and.returnValue(throwError(error))
     service.sendPowerAction('defgh-34567-poiuy', 2).subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('it should return the hardware information', () => {
+  it('it should return the hardware information', (done) => {
     const getHardwareInfo = {
       CIM_Chassis: {
         response: {
@@ -595,17 +625,19 @@ describe('DevicesService', () => {
     service.getHardwareInformation('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(getHardwareInfo)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/hardwareInfo/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error while getting hardware information', () => {
+  it('should return error while getting hardware information', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getHardwareInformation('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return redirection token', () => {
+  it('should return redirection token', (done) => {
     const redirectionToken = {
       token: '123'
     }
@@ -613,16 +645,18 @@ describe('DevicesService', () => {
     service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(result => {
       expect(result).toEqual(redirectionToken)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/authorize/redirection/defgh-34567-poiuy`)
+      done()
     })
   })
-  it('should return error while getting redirection token', () => {
+  it('should return error while getting redirection token', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return alarm instances', () => {
+  it('should return alarm instances', (done) => {
     const alarms: IPSAlarmClockOccurrence[] = [{
       ElementName: 'Alarm name',
       StartTime: { Datetime: new Date() },
@@ -633,17 +667,19 @@ describe('DevicesService', () => {
     service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(response => {
       expect(response).toBe(alarms)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when requesting power state', () => {
+  it('should return error when requesting power state', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getPowerState('defgh-34567-poiuy').subscribe(() => {}, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should return alarm instances', () => {
+  it('should return alarm instances', (done) => {
     const alarms: IPSAlarmClockOccurrence[] = [{
       ElementName: 'Alarm name',
       StartTime: { Datetime: new Date() },
@@ -654,17 +690,19 @@ describe('DevicesService', () => {
     service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(response => {
       expect(response).toBe(alarms)
       expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when getting alarm instances', () => {
+  it('should return error when getting alarm instances', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
     service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(() => {}, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should delete an alarm instance', () => {
+  it('should delete an alarm instance', (done) => {
     httpClientSpy.request.and.returnValue(of({ Status: 'SUCCESS' }))
     service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(response => {
       expect(response).toEqual({ Status: 'SUCCESS' })
@@ -672,17 +710,19 @@ describe('DevicesService', () => {
         'DELETE',
         `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`,
         { body: { Name: 'Alarm to delete' } })
+      done()
     })
   })
 
-  it('should return error when deleting an alarm', () => {
+  it('should return error when deleting an alarm', (done) => {
     httpClientSpy.request.and.returnValue(throwError(error))
     service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(() => {}, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should add an alarm instance', () => {
+  it('should add an alarm instance', (done) => {
     const alarmToAdd = {
       ElementName: 'Alarm name',
       StartTime: { Datetime: new Date() },
@@ -693,10 +733,11 @@ describe('DevicesService', () => {
     service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(response => {
       expect(response).toEqual({ Status: 'SUCCESS' })
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`, alarmToAdd)
+      done()
     })
   })
 
-  it('should return error when adding an alarm', () => {
+  it('should return error when adding an alarm', (done) => {
     const alarmToAdd: IPSAlarmClockOccurrence = {
       ElementName: 'Alarm name',
       StartTime: { Datetime: new Date() },
@@ -706,10 +747,11 @@ describe('DevicesService', () => {
     httpClientSpy.post.and.returnValue(throwError(error))
     service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(() => {}, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 
-  it('should send deactivate', () => {
+  it('should send deactivate', (done) => {
     const deactivateResponse = {
       status: 'SUCCESS'
     }
@@ -717,13 +759,15 @@ describe('DevicesService', () => {
     service.sendDeactivate('defgh-34567-poiuy').subscribe(response => {
       expect(response).toEqual(deactivateResponse)
       expect(httpClientSpy.delete).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/deactivate/defgh-34567-poiuy`)
+      done()
     })
   })
 
-  it('should return error when sending a deactivate', () => {
+  it('should return error when sending a deactivate', (done) => {
     httpClientSpy.delete.and.returnValue(throwError(error))
     service.sendDeactivate('defgh-34567-poiuy').subscribe(null, err => {
       expect(error).toEqual(err)
+      done()
     })
   })
 })

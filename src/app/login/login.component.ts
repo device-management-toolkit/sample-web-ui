@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   ngOnInit (): void {
   }
 
-  async onSubmit (): Promise<void> {
+  onSubmit (): void {
     if (this.loginForm.valid) {
       this.isLoading = true
       const result: any = Object.assign({}, this.loginForm.value)

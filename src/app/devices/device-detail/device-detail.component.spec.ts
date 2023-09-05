@@ -129,7 +129,7 @@ describe('DeviceDetailComponent', () => {
     expect(component.isLoading).toBeFalse()
   })
 
-  it('should send power action - sol', async () => {
+  it('should send power action - sol', () => {
     component.sendPowerAction(101)
     fixture.detectChanges()
     expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 101, true)
@@ -137,11 +137,11 @@ describe('DeviceDetailComponent', () => {
     expect(component.isLoading).toBeFalse()
   })
 
-  it('should parse provisioning mode - ACM', async () => {
+  it('should parse provisioning mode - ACM', () => {
     const result = component.parseProvisioningMode(1)
     expect(result).toBe('Admin Control Mode (ACM)')
   })
-  it('should parse provisioning mode - CCM', async () => {
+  it('should parse provisioning mode - CCM', () => {
     const result = component.parseProvisioningMode(4)
     expect(result).toBe('Client Control Mode (CCM)')
   })

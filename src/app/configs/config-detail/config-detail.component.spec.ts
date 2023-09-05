@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -65,21 +65,20 @@ describe('ConfigDetailComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs'])
   })
 
-  it('should update the server address format on change', fakeAsync(() => {
+  it('should update the server address format on change', () => {
     component.configForm.get('serverAddressFormat')?.setValue('201')
     component.configForm.get('serverAddressFormat')?.updateValueAndValidity({ emitEvent: true })
-    tick()
     fixture.detectChanges()
     expect(component.configForm.get('commonName')?.value).toEqual(null)
-  }))
+  })
 
-  it('should set the common name same as server address when format is ip address', fakeAsync(() => {
+  it('should set the common name same as server address when format is ip address', () => {
     component.configForm.get('mpsServerAddress')?.setValue('255.255.255.1')
     component.configForm.get('mpsServerAddress')?.updateValueAndValidity({ emitEvent: true })
-    tick()
+
     fixture.detectChanges()
     expect(component.configForm.get('commonName')?.value).toEqual('255.255.255.1')
-  }))
+  })
 
   it('should submit when valid(update)', () => {
     const routerSpy = spyOn(component.router, 'navigate')

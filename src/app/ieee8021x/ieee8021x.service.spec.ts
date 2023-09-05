@@ -46,17 +46,18 @@ describe('IEEE8021xService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should load all the configs when get all request fired', () => {
+  it('should load all the configs when get all request fired', (done) => {
     httpClientSpy.get.and.returnValue(of(ieee8021ConfigsResponse))
 
     service.getData().subscribe(response => {
       expect(response).toEqual(ieee8021ConfigsResponse)
+      done()
     })
 
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
-  it('should load all the configs when get all request fired with pageevent options', () => {
+  it('should load all the configs when get all request fired with pageevent options', (done) => {
     const pageEvent: PageEventOptions = {
       count: 'true',
       pageSize: 20,
@@ -67,13 +68,14 @@ describe('IEEE8021xService', () => {
 
     service.getData(pageEvent).subscribe(response => {
       expect(response).toEqual(ieee8021ConfigsResponse)
+      done()
     })
     const params = httpClientSpy.get.calls.allArgs()[0][0].split('?')[1]
     expect('$top=20&$skip=10&$count=true').toEqual(params)
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
-  it('should throw errors when get all request fired with pageevent options', () => {
+  it('should throw errors when get all request fired with pageevent options', (done) => {
     const pageEvent: PageEventOptions = {
       count: 'true',
       pageSize: 20,
@@ -90,19 +92,21 @@ describe('IEEE8021xService', () => {
 
     service.getData(pageEvent).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
 
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
-  it('should load the specific configs when get single record request fired', () => {
+  it('should load the specific configs when get single record request fired', (done) => {
     httpClientSpy.get.and.returnValue(of(config01))
     service.getRecord(config01.profileName).subscribe(response => {
       expect(response).toEqual(config01)
+      done()
     })
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
-  it('should throw error when get single record request fired', () => {
+  it('should throw error when get single record request fired', (done) => {
     const error = {
       status: 404,
       message: 'Not Found'
@@ -112,36 +116,41 @@ describe('IEEE8021xService', () => {
 
     service.getRecord('wifi1').subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
 
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
 
-  it('should delete the config when delete request fires', () => {
+  it('should delete the config when delete request fires', (done) => {
     httpClientSpy.delete.and.returnValue(of({}))
-    service.delete(config01.profileName).subscribe(() => {})
+    service.delete(config01.profileName).subscribe(() => {
+      done()
+    })
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })
 
-  it('should throw error when delete request fires', () => {
+  it('should throw error when delete request fires', (done) => {
     const error = { error: 'Not Found' }
     httpClientSpy.delete.and.returnValue(throwError(error))
     service.delete(config01.profileName).subscribe(() => {}, (err) => {
       expect(err).toEqual([error])
+      done()
     })
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })
 
-  it('should create the ieee8021x config when create request gets fired', () => {
+  it('should create the ieee8021x config when create request gets fired', (done) => {
     httpClientSpy.post.and.returnValue(of(ieee8021xRequest))
 
     service.create(ieee8021xRequest).subscribe(response => {
       expect(response).toEqual(ieee8021xRequest)
+      done()
     })
 
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
-  it('should throw error when create request gets fired', () => {
+  it('should throw error when create request gets fired', (done) => {
     const error = {
       status: 404,
       message: 'Not Found'
@@ -150,21 +159,23 @@ describe('IEEE8021xService', () => {
 
     service.create(ieee8021xRequest).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
 
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
-  it('should update the ieee8021x config when update request gets fired', () => {
+  it('should update the ieee8021x config when update request gets fired', (done) => {
     httpClientSpy.patch.and.returnValue(of(ieee8021xRequest))
 
     service.update(ieee8021xRequest).subscribe(response => {
       expect(response).toEqual(ieee8021xRequest)
+      done()
     })
 
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
   })
 
-  it('should throw error when update request gets fired', () => {
+  it('should throw error when update request gets fired', (done) => {
     const error = {
       status: 404,
       message: 'Not Found'
@@ -174,6 +185,7 @@ describe('IEEE8021xService', () => {
 
     service.update(ieee8021xRequest).subscribe(() => {}, err => {
       expect(error.status).toBe(err[0].status)
+      done()
     })
 
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
