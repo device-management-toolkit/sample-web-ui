@@ -34,6 +34,8 @@ import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-det
 import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
 import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
+import { DeviceEnableKvmComponent } from './devices/device-enable-kvm/device-enable-kvm.component'
+import { DeviceEnableSolComponent } from './devices/device-enable-sol/device-enable-sol.component'
 // import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
 // import { EventChannelComponent } from './event-channel/event-channel.component'
@@ -64,6 +66,8 @@ import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x
     IEEE8021xComponent,
     IEEE8021xDetailComponent,
     DeviceUserConsentComponent,
+    DeviceEnableKvmComponent,
+    DeviceEnableSolComponent,
     EventLogComponent
   ],
   imports: [
