@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
-import { throwError } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
 import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
 import { MpsVersion, RpsVersion } from 'src/models/models'
@@ -20,7 +18,6 @@ import { MpsVersion, RpsVersion } from 'src/models/models'
 })
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
-  public isLoading = true
   public rpsVersions?: RpsVersion
   public mpsVersions?: MpsVersion
 
@@ -28,33 +25,26 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit (): void {
-    this.isLoading = true
     this.authService.loggedInSubject.subscribe((value: any) => {
       this.isLoggedIn = value
-    })
-    this.authService.getMPSVersion().pipe(
-      catchError(err => {
-        // TODO: handle error better
-        this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      }),
-      finalize(() => {
-        this.isLoading = false
-      })
-    ).subscribe(data => {
-      this.mpsVersions = data
-    })
-    this.authService.getRPSVersion().pipe(
-      catchError(err => {
-        // TODO: handle error better
-        this.snackBar.open($localize`Error retrieving RPS versions`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      }),
-      finalize(() => {
-        this.isLoading = false
-      })
-    ).subscribe(data => {
-      this.rpsVersions = data
+      if (this.isLoggedIn) {
+        this.authService.getMPSVersion().subscribe({
+          error: () => {
+            this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)
+          },
+          next: (data) => {
+           this.mpsVersions = data
+          }
+        })
+        this.authService.getRPSVersion().subscribe({
+          error: () => {
+            this.snackBar.open($localize`Error retrieving RPS versions`, undefined, SnackbarDefaults.defaultError)
+          },
+          next: (data) => {
+           this.rpsVersions = data
+          }
+        })
+      }
     })
   }
 

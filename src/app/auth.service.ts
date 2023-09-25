@@ -4,8 +4,8 @@
 **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
-import { EventEmitter, Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { Router } from '@angular/router'
@@ -15,7 +15,7 @@ import { ValidatorError, MpsVersion, RpsVersion } from 'src/models/models'
   providedIn: 'root'
 })
 export class AuthService {
-  loggedInSubject: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   isLoggedIn = false
   url: string = `${environment.mpsServer}/api/v1/authorize`
   constructor (private readonly http: HttpClient, public router: Router) {
@@ -39,8 +39,8 @@ export class AuthService {
       .pipe(
         map((data: any) => {
           this.isLoggedIn = true
-          this.loggedInSubject.next(this.isLoggedIn)
           localStorage.loggedInUser = JSON.stringify(data)
+          this.loggedInSubject.next(this.isLoggedIn)
         }),
         catchError((err: any) => {
           throw err

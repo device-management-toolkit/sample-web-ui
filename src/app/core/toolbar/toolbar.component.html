@@ -3,14 +3,14 @@
     Open AMT Cloud Toolkit Sample UI
   </div>
   <div class="flex flex-50 justify-end items-center">
-    <div class="version">MPS: v{{mpsVersions?.serviceVersion}}</div>
-    <div class="version">RPS: v{{rpsVersions?.serviceVersion}}</div>
+    <div *ngIf="isLoggedIn === true" class="version">MPS: v{{mpsVersions?.serviceVersion}}</div>
+    <div *ngIf="isLoggedIn === true" class="version">RPS: v{{rpsVersions?.serviceVersion}}</div>
     <mat-divider  vertical></mat-divider>
     <span i18n>Hi</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn === true">
       <mat-icon>account_circle</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu="matMenu" >
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon><span i18n>Log out</span>
       </button>

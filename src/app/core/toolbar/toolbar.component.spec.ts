@@ -3,14 +3,13 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { EventEmitter } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ToolbarComponent } from './toolbar.component'
-import { of } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent
@@ -29,7 +28,7 @@ describe('ToolbarComponent', () => {
     getMPSVerSpy = mpsService.getMPSVersion.and.returnValue(of({}))
     getRPSVerSpy = rpsService.getRPSVersion.and.returnValue(of({}))
     const authServiceStub = {
-      loggedInSubject: new EventEmitter<boolean>(false)
+      loggedInSubject: new BehaviorSubject<boolean>(true)
     }
 
     await TestBed.configureTestingModule({
@@ -41,9 +40,6 @@ describe('ToolbarComponent', () => {
       ]
     })
       .compileComponents()
-  })
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -55,7 +51,7 @@ describe('ToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(component.isLoggedIn).toBeFalse()
+    expect(component.isLoggedIn).toBeTrue()
   })
 
   it('should display dialog', () => {
