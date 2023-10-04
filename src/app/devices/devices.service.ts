@@ -6,9 +6,23 @@
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { catchError } from 'rxjs/operators'
+import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, AuditLogResponse, Device, DeviceResponse, DeviceStats, EventLog, HardwareInformation, IPSAlarmClockOccurrence, PageEventOptions, PowerState, RedirectionToken, userConsentResponse } from 'src/models/models'
+import {
+  AmtFeaturesResponse,
+  AuditLogResponse,
+  Device,
+  DeviceResponse,
+  DeviceStats,
+  EventLog,
+  HardwareInformation,
+  IPSAlarmClockOccurrence,
+  PageEventOptions,
+  PowerState,
+  RedirectionToken,
+  userConsentResponse
+} from 'src/models/models'
+import { caseInsensntiveCompare } from '../../utils'
 
 @Injectable({
   providedIn: 'root'
@@ -256,6 +270,7 @@ export class DevicesService {
   getTags (): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
       .pipe(
+        map(tags => tags.sort(caseInsensntiveCompare)),
         catchError((err) => {
           throw err
         })
@@ -287,7 +302,22 @@ export class DevicesService {
       )
   }
 
-  setAmtFeatures (deviceId: string, payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }): Observable<AmtFeaturesResponse> {
+  updateDevice (device: Device): Observable<Device> {
+    const url = `${environment.mpsServer}/api/v1/devices`
+    return this.http.patch<Device>(url, device)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  setAmtFeatures (deviceId: string, payload = {
+    userConsent: 'none',
+    enableKVM: true,
+    enableSOL: true,
+    enableIDER: true
+  }): Observable<AmtFeaturesResponse> {
     return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         catchError((err) => {

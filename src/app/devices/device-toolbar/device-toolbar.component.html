@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <div class="flex-1">
+  <span>
     <span *ngIf="device?.friendlyName">{{ device?.friendlyName }}</span>
     <span *ngIf="!device?.friendlyName">{{ device?.hostname }}</span>
     Device Control
@@ -7,14 +7,11 @@
       {{deviceId}}
       <span *ngIf="device?.friendlyName"> - {{ device?.hostname }}</span>
     </div>
-  </div>
-  <div class="flex-1">
-    <mat-chip-listbox>
-      <mat-chip-option *ngFor="let tag of device?.tags">{{tag}}</mat-chip-option>
-    </mat-chip-listbox>
-  </div>
+  </span>
+  <mat-chip-set class="flex-1 pad-15">
+    <mat-chip *ngFor="let tag of device?.tags">{{tag}}</mat-chip>
+  </mat-chip-set>
 
-  <div class="flex flex-50 justify-end items-center">
     <button mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
       <mat-icon>delete</mat-icon>
     </button>
@@ -50,6 +47,6 @@
         <span>{{option.label}}</span>
       </button>
     </mat-menu>
-  </div>
+
 </mat-toolbar>
 <mat-progress-bar mode=indeterminate *ngIf="isLoading"></mat-progress-bar>

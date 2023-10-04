@@ -41,6 +41,7 @@ import { EventLogComponent } from './devices/event-log/event-log.component'
 // import { EventChannelComponent } from './event-channel/event-channel.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
 import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
+import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component'
 
 // const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
@@ -68,6 +69,7 @@ import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x
     DeviceUserConsentComponent,
     DeviceEnableKvmComponent,
     DeviceEnableSolComponent,
+    DeviceEditTagsComponent,
     EventLogComponent
   ],
   imports: [

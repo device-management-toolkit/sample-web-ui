@@ -17,6 +17,7 @@ import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
 import { ProfileDetailComponent } from './profile-detail.component'
 import { ActivationModes, ConnectionModes, UserConsentModes } from '../profiles.constants'
+import { MatChipInputEvent } from '@angular/material/chips'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -463,6 +464,22 @@ describe('ProfileDetailComponent', () => {
     const searchString = 'home'
     const results = component.search(searchString)
     expect(results).toEqual(['homeWiFi'])
+  })
+
+  it('should update the list of tags when a tag is added ', () => {
+    component.tags = ['acm', 'ccm', 'profile']
+    const e = {
+      value: '',
+      chipInput: {
+        clear: jasmine.createSpy()
+      }
+    }
+    e.value = '  ccm '
+    component.add(e as unknown as MatChipInputEvent)
+    expect(component.tags).toEqual(['acm', 'ccm', 'profile'])
+    e.value = 'newtag'
+    component.add(e as unknown as MatChipInputEvent)
+    expect(component.tags).toEqual(['acm', 'ccm', 'newtag', 'profile'])
   })
 
   it('should update the list of tags when a tag is removed ', () => {

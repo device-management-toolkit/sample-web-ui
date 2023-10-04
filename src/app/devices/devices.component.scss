@@ -6,3 +6,15 @@
     width: 75px;
     flex: 0 0 75px;
 }
+
+mat-icon.addTag{
+  visibility: hidden;
+}
+
+mat-icon.alwaysHidden{
+  visibility: hidden;
+}
+
+mat-cell:hover mat-icon.addTag{
+  visibility: visible;
+}

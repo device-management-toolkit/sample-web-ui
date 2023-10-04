@@ -112,6 +112,23 @@ describe('DevicesService', () => {
     })
   })
 
+  it('should update a device', (done) => {
+    httpClientSpy.patch.and.returnValue(of(deviceRes))
+    service.updateDevice(deviceRes).subscribe(response => {
+      expect(response).toEqual(deviceRes)
+      done()
+    })
+    expect(httpClientSpy.patch).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices`, deviceRes)
+  })
+
+  it('should NOT return devices when error received', (done) => {
+    httpClientSpy.patch.and.returnValue(throwError(error))
+    service.updateDevice(deviceRes).subscribe(null, err => {
+      expect(error).toEqual(err)
+      done()
+    })
+  })
+
   it('should set AMT Features', (done) => {
     const deviceResponse = {
       userConsent: 'kVM',

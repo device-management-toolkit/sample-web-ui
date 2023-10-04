@@ -398,18 +398,12 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   add (event: MatChipInputEvent): void {
-    const input = event.input
-    const value = event.value
-
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.tags.push(value.trim())
+    const value = (event.value || '').trim()
+    if (value !== '' && !this.tags.includes(value)) {
+      this.tags.push(value)
+      this.tags.sort()
     }
-
-    // Reset the input value
-    if (input) {
-      input.value = ''
-    }
+    event.chipInput?.clear()
   }
 
   CIRAStaticWarning (): Observable<any> {
