@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build -- --configuration=production
 
 ### STAGE 2: Run ###
-FROM nginx:mainline-alpine-slim@sha256:97c1300332f261f2ca967d3f6ffe18822f2007c898328411ea134a39fcddd32b
+FROM nginx:mainline-alpine-slim@sha256:68e92f1705aaf3f9ff5df66da3fe2a66c2288248f14527ad15b27a218eb3b165
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
       copyright='Copyright (c) 2021: Intel'
