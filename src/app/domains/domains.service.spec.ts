@@ -27,7 +27,8 @@ describe('DomainsService', () => {
     domainSuffix: 'testDomain.com',
     provisioningCert: 'domainCertLongText',
     provisioningCertPassword: 'password',
-    provisioningCertStorageFormat: 'string'
+    provisioningCertStorageFormat: 'string',
+    expirationDate: new Date()
   }
 
   const domainResponse = {
@@ -85,7 +86,8 @@ describe('DomainsService', () => {
       domainSuffix: 'testDomain.com',
       provisioningCert: 'domainCertLongText',
       provisioningCertPassword: 'password',
-      provisioningCertStorageFormat: 'string'
+      provisioningCertStorageFormat: 'string',
+      expirationDate: new Date()
     }
 
     httpClientSpy.get.and.returnValue(of(domainResponse))

@@ -28,6 +28,7 @@ export interface Domain {
   provisioningCert: string
   provisioningCertPassword: string
   provisioningCertStorageFormat: string
+  expirationDate: Date
 }
 
 export interface DomainsResponse {

@@ -23,7 +23,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 export class DomainsComponent implements OnInit {
   public domains: DomainsResponse = { data: [], totalCount: 0 }
   public isLoading = true
-  displayedColumns: string[] = ['name', 'domainSuffix', 'remove']
+  public myDate: string = ''
+  private readonly millisecondsInADay = 86400000
+  private readonly warningPeriodInDays = 60
+  displayedColumns: string[] = ['name', 'domainSuffix', 'expirationDate', 'remove']
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -46,6 +49,7 @@ export class DomainsComponent implements OnInit {
         })
       ).subscribe((data: DomainsResponse) => {
         this.domains = data
+        this.expirationWarning()
       }, () => {
         this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
       })
@@ -87,5 +91,49 @@ export class DomainsComponent implements OnInit {
 
   async navigateTo (path: string = 'new'): Promise<void> {
     await this.router.navigate([`/domains/${path}`])
+  }
+
+  getRemainingTime (expirationDate: Date): string {
+    const today = new Date()
+    const expDate = new Date(expirationDate)
+
+    if (expDate < today) {
+      return $localize`Expired`
+    }
+
+    const daysRemaining = Math.trunc((expDate.getTime() - today.getTime()) / this.millisecondsInADay)
+
+    if (daysRemaining <= 60) {
+      return daysRemaining.toString() + $localize` days remaining`
+    } else if (daysRemaining < 730) {
+      return Math.trunc(daysRemaining / 30).toString() + $localize` months remaining`
+    } else {
+      return Math.trunc(daysRemaining / 365).toString() + $localize` years remaining`
+    }
+  }
+
+  expirationWarning (): void {
+    let countWarn = 0
+    let countExp = 0
+    const today = new Date()
+    for (let i = 0; i < this.domains.data.length; i++) {
+      const expDate = new Date(this.domains.data[i].expirationDate)
+      if (expDate < today) {
+        countExp++
+      } else if ((expDate.getTime() - today.getTime()) / this.millisecondsInADay < this.warningPeriodInDays) {
+        countWarn++
+      }
+    }
+
+    let message = ''
+    if (countWarn > 0) {
+      message += $localize`${countWarn.toString()} domain cert(s) will expire soon `
+    } if (countExp > 0) {
+      message += $localize`${countExp.toString()} domain cert(s) are expired `
+    }
+
+    if (message !== '') {
+      this.snackBar.open(message, undefined, SnackbarDefaults.longError)
+    }
   }
 }

@@ -27,6 +27,16 @@
         </mat-cell>
       </ng-container>
 
+      <!-- expiration date Column -->
+      <ng-container matColumnDef="expirationDate">
+        <mat-header-cell *matHeaderCellDef>Expiration Date</mat-header-cell>
+        <mat-cell data-cy="expCol" *matCellDef="let element"> 
+          {{ element.expirationDate | date: 'MM/dd/yyyy'}} - 
+          <mat-icon color="warn" [style.display]="getRemainingTime(element.expirationDate) === 'Expired' ? 'inline' : 'none'">warning</mat-icon>
+          {{ getRemainingTime(element.expirationDate) }}
+        </mat-cell>
+      </ng-container>
+
       <!-- remove Column -->
       <ng-container matColumnDef="remove">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>

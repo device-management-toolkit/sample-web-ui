@@ -3,6 +3,16 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+// Set dates for expiration test
+const today = new Date()
+const okayDate = new Date(today)
+const warnDate = new Date(today)
+const expDate = new Date(today)
+
+okayDate.setMonth(today.getMonth() + 3)
+warnDate.setMonth(today.getMonth() + 1)
+expDate.setMonth(today.getMonth() - 2)
+
 const domains = {
   getAll: {
     success: {
@@ -13,7 +23,8 @@ const domains = {
             domainSuffix: Cypress.env('DOMAIN_SUFFIX'),
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           }
         ],
         totalCount: 1
@@ -27,38 +38,76 @@ const domains = {
             domainSuffix: 'happyPath.com',
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           },
           {
             profileName: 'happyPath',
             domainSuffix: 'happyPath.com',
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           },
           {
             profileName: 'happyPath',
             domainSuffix: 'happyPath.com',
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           },
           {
             profileName: 'happyPath',
             domainSuffix: 'happyPath.com',
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           },
           {
             profileName: 'happyPath',
             domainSuffix: 'happyPath.com',
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
-            provisioningCertPassword: 'P@ssw0rd'
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
           }
         ],
         totalCount: 100
+      }
+    }
+  },
+  getThree: {
+    success: {
+      response: {
+        data: [
+          {
+            profileName: 'happyPath',
+            domainSuffix: Cypress.env('DOMAIN_SUFFIX'),
+            provisioningCert: 'test',
+            provisioningCertStorageFormat: 'raw',
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: okayDate
+          },
+          {
+            profileName: 'happyPath2',
+            domainSuffix: 'happyPath2.com',
+            provisioningCert: 'test',
+            provisioningCertStorageFormat: 'raw',
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: warnDate
+          },
+          {
+            profileName: 'happyPath3',
+            domainSuffix: 'happyPath3.com',
+            provisioningCert: 'test',
+            provisioningCertStorageFormat: 'raw',
+            provisioningCertPassword: 'P@ssw0rd',
+            expirationDate: expDate
+          }
+        ],
+        totalCount: 3
       }
     }
   },
@@ -69,7 +118,8 @@ const domains = {
         domainSuffix: 'happyPath.com',
         provisioningCert: 'test',
         provisioningCertStorageFormat: 'raw',
-        provisioningCertPassword: 'P@ssw0rd'
+        provisioningCertPassword: 'P@ssw0rd',
+        expirationDate: okayDate
       }
     },
     failure: {
@@ -86,7 +136,8 @@ const domains = {
         domainSuffix: 'NewDomain.com',
         provisioningCert: 'test',
         provisioningCertStorageFormat: 'raw',
-        provisioningCertPassword: 'P@ssw0rd'
+        provisioningCertPassword: 'P@ssw0rd',
+        expirationDate: okayDate
       }
     }
   },
@@ -97,7 +148,8 @@ const domains = {
         domainSuffix: 'NewDomain.com',
         provisioningCert: 'test',
         provisioningCertStorageFormat: 'raw',
-        provisioningCertPassword: 'P@ssw0rd'
+        provisioningCertPassword: 'P@ssw0rd',
+        expirationDate: okayDate
       }
     }
   },
