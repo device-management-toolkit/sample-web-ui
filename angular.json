@@ -85,18 +85,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "openamtui:build"
+            "buildTarget": "openamtui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "openamtui:build:production"
+              "buildTarget": "openamtui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "openamtui:build"
+            "buildTarget": "openamtui:build"
           }
         },
         "test": {

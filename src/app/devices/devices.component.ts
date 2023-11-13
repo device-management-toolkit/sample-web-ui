@@ -210,7 +210,7 @@ export class DevicesComponent implements OnInit {
       requests.push(this.devicesService.sendPowerAction(z.guid, action).pipe(
         catchError(err => of({ err })),
         map(i => ({
-          StatusMessage: i?.Body && i.Body.ReturnValueStr ? i.Body.ReturnValueStr : 'ERROR',
+          StatusMessage: i?.Body?.ReturnValueStr ? i.Body.ReturnValueStr : 'ERROR',
           StatusType: i?.Body && i.Body.ReturnValue !== undefined ? i.Body.ReturnValue : -1,
           guid: z.guid
         }))

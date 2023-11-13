@@ -173,7 +173,7 @@ export class ProfileDetailComponent implements OnInit {
           this.pageTitle = data.profileName
           this.tags = data.tags
           this.profileForm.patchValue(data)
-          this.selectedWifiConfigs = data.wifiConfigs != null ? data.wifiConfigs : []
+          this.selectedWifiConfigs = data.wifiConfigs ?? []
           this.setConnectionMode(data)
         },
         error: error => {
