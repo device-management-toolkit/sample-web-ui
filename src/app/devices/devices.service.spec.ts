@@ -20,7 +20,11 @@ describe('DevicesService', () => {
     icon: 1,
     connectionStatus: true,
     guid: 'defgh-34567-poiuy',
-    tags: []
+    tags: [],
+    mpsInstance: '',
+    mpsusername: '',
+    tenantId: '',
+    dnsSuffix: 'vprodemo.com'
   }
 
   const deviceResponse = [deviceRes]

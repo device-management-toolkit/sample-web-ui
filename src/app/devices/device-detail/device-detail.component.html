@@ -137,8 +137,15 @@
               <p>AMT Version: </p>
             </div>
             <div class="flex flex-50 justify-end">
-              <span class="mat-h3"
-                data-cy="amtVersion">{{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}</span>
+              @if (!isLoading){
+              <span class="mat-h3" data-cy="amtVersion">
+                @if ( amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString ) {
+                   {{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}
+                } @else {
+                   {{this.device?.deviceInfo?.fwVersion}}
+                }
+              </span>
+            }
             </div>
           </div>
         </mat-card-content>

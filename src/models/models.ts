@@ -4,14 +4,30 @@
 **********************************************************************/
 
 export interface Device {
-  hostname: string
-  friendlyName: string
-  icon: number
   connectionStatus: boolean
+  mpsInstance: string
+  hostname: string
   guid: string
+  mpsusername: string
   tags: string[]
+  tenantId: string
+  friendlyName: string
+  dnsSuffix: string
+  lastConnected?: Date
+  lastSeen?: Date
+  lastDisconnected?: Date
+  deviceInfo?: DeviceInfo
+  icon: number
 }
-
+export interface DeviceInfo {
+  fwVersion: string
+  fwBuild: string
+  fwSku: string
+  currentMode: string
+  features: string
+  ipAddress: string
+  lastUpdated?: Date
+}
 export interface DeviceResponse {
   data: Device[]
   totalCount: number

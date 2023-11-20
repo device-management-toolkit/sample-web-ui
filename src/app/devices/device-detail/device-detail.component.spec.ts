@@ -9,11 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MomentModule } from 'ngx-moment'
-import { of } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { DevicesService } from '../devices.service'
 
 import { DeviceDetailComponent } from './device-detail.component'
+import { Device } from 'src/models/models'
 
 describe('DeviceDetailComponent', () => {
   let component: DeviceDetailComponent
@@ -28,6 +29,8 @@ describe('DeviceDetailComponent', () => {
   let addAlarmOccurrenceSpy: jasmine.Spy
   let deleteAlarmOccurrenceSpy: jasmine.Spy
   let getAlarmOccurrencesSpy: jasmine.Spy
+  let devicesService: any
+  let deviceRecord: Device
 
   @Component({
     selector: 'app-device-toolbar'
@@ -38,7 +41,7 @@ describe('DeviceDetailComponent', () => {
   }
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', [
+    devicesService = jasmine.createSpyObj('DevicesService', [
       'getAuditLog',
       'getAMTFeatures',
       'getHardwareInformation',
@@ -51,6 +54,32 @@ describe('DeviceDetailComponent', () => {
       'getAlarmOccurrences'
     ])
     devicesService.TargetOSMap = { 0: 'Unknown' }
+    devicesService.device = new Subject<Device>()
+
+    deviceRecord = {
+        icon: 0,
+        guid: '111',
+        tenantId: '',
+        connectionStatus: true,
+        hostname: 'host01.test.com',
+        mpsInstance: '',
+        tags: [],
+        mpsusername: 'userName01',
+        friendlyName: '',
+        dnsSuffix: '',
+        lastConnected: undefined,
+        lastSeen: undefined,
+        lastDisconnected: undefined,
+        deviceInfo: {
+          fwVersion: '16.1',
+          fwBuild: '1111',
+          fwSku: '16392',
+          features: '',
+          currentMode: '0',
+          ipAddress: '',
+          lastUpdated: undefined
+        }
+    }
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({
       Body: {
         ReturnValueStr: 'NOT_READY'
@@ -108,6 +137,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('should create', () => {
+    devicesService.device.next(deviceRecord)
     expect(component).toBeTruthy()
     expect(getAuditLogSpy.calls.any()).toBe(true, 'getAuditLog called')
     expect(getHardwareInformationSpy.calls.any()).toBe(true, 'getHardwareInformation called')

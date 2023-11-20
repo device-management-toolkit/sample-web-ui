@@ -33,7 +33,11 @@ describe('DevicesComponent', () => {
       icon: 1,
       connectionStatus: true,
       guid: '12324-4243-ewdsd',
-      tags: ['tagA', 'tagCommon01']
+      tags: ['tagA', 'tagCommon01'],
+      mpsInstance: '',
+      mpsusername: '',
+      tenantId: '',
+      dnsSuffix: 'vprodemo.com'
     }
     device02 = {
       hostname: 'device02',
@@ -41,7 +45,11 @@ describe('DevicesComponent', () => {
       icon: 1,
       connectionStatus: true,
       guid: '12324-4243-ewdsd',
-      tags: ['tagB', 'tagCommon01']
+      tags: ['tagB', 'tagCommon01'],
+      mpsInstance: '',
+      mpsusername: '',
+      tenantId: '',
+      dnsSuffix: 'vprodemo.com'
     }
     const devicesService = jasmine.createSpyObj('DevicesService', ['getDevices', 'updateDevice', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate'])
     devicesService.PowerStates.and.returnValue({

@@ -5,7 +5,7 @@
 
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
@@ -155,6 +155,8 @@ export class DevicesService {
     9: 'Power Cycle',
     13: 'Off'
   }
+
+  public device = new Subject<Device>()
 
   stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)

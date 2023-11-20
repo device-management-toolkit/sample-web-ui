@@ -62,6 +62,7 @@ export class DeviceToolbarComponent implements OnInit {
       this.deviceId = params.id
       this.devicesService.getDevice(this.deviceId).subscribe(data => {
         this.device = data
+        this.devicesService.device.next(this.device)
       })
     })
   }

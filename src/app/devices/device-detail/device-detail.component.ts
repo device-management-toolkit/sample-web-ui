@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence, Device } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 
 @Component({
@@ -116,6 +116,8 @@ export class DeviceDetailComponent implements OnInit {
     minute: '00'
   })
 
+  public device: Device | null = null
+
   public deleteOnCompletion: FormControl<any>
 
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
@@ -137,6 +139,9 @@ export class DeviceDetailComponent implements OnInit {
       this.isLoading = true
       this.deviceId = params.id
       const tempLoading = [true, true, true, true, true, true]
+      this.devicesService.device.subscribe({
+        next: (device) => { this.device = device }
+      })
       this.devicesService.getAMTVersion(this.deviceId).pipe(finalize(() => {
         tempLoading[0] = false
         this.isLoading = !tempLoading.every(v => !v)
