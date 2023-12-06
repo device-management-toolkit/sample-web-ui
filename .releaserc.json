@@ -20,7 +20,6 @@
         "prepareCmd": "docker build -t vprodemo.azurecr.io/webui:v${nextRelease.version} .",
         "publishCmd": "docker push vprodemo.azurecr.io/webui:v${nextRelease.version}"
       }
-    ],
-    "@semantic-release/git"
+    ]
   ]
 }
