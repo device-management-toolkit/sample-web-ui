@@ -254,6 +254,16 @@ describe('ProfileDetailComponent', () => {
     // Add check for wifi config disabled or selected wifi config is 0
   })
 
+  it('should enable the localWifiSync checkbox', () => {
+    component.localWifiSyncChange(true)
+    expect(component.profileForm.controls.localWifiSyncEnabled.enabled).toBe(false)
+  })
+
+  it('should disable the localWifiSync checkbox', () => {
+    component.localWifiSyncChange(false)
+    expect(component.profileForm.controls.localWifiSyncEnabled.enabled).toBe(true)
+  })
+
   it('should submit if cira config and static network are simultaneously selected and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })

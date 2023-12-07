@@ -1,4 +1,21 @@
-test
+<a name="3.2.0"></a>
+## [3.2.0] - 2023-12-07
+### Build
+- **deps:** Bump cypress from 13.6.0 to 13.6.1 ([#1553](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1553)) (#bde4eb6) 
+- **deps:** Bump [@open](https://github.com/open)-amt-cloud-toolkit/ui-toolkit-angular ([#1550](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1550)) (#1be9c56) 
+- **deps:** Bump aquasecurity/trivy-action from 0.14.0 to 0.15.0 ([#1552](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1552)) (#30c1c70) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#1549](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1549)) (#e7ef2bd) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.13.1 to 6.13.2 ([#1551](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1551)) (#02f6d90) 
+
+### Chore
+- **release:** update changelog and package.json (#3a0dbb5) 
+
+### Feat
+- adds Wi-Fi synchronization option (#630d9ff) 
+
+### Fix
+- **ci:** test update release (#7018978) 
+
 <a name="3.1.2"></a>
 ## [3.1.2] - 2023-12-04
 ### Build

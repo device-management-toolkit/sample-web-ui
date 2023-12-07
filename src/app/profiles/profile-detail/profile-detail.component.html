@@ -95,13 +95,15 @@
         <mat-divider style="margin: 48px 0 16px 0"></mat-divider>
 
         <mat-label class="flex flex-1">Network Configuration</mat-label>
+
+        <mat-label class="flex flex-1" style="margin-top: 15px;">Wired</mat-label>
         <mat-radio-group class="flex flex-1" name='dhcpEnabled' formControlName='dhcpEnabled'>
           <mat-radio-button [value]='true' checked='true'>DHCP</mat-radio-button>
           <mat-radio-button [value]='false'>STATIC</mat-radio-button>
         </mat-radio-group>
 
         <mat-checkbox class="flex flex-1" formControlName='ipSyncEnabled'>
-          IP Synchronization Enabled
+          Enable IP Synchronization
           <p class='like-mat-hint' *ngIf='profileForm.controls.ipSyncEnabled.enabled'>
             Only applicable for the wired interface. Requires LMS to perform synchronization
           </p>
@@ -117,16 +119,29 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="flex flex-1" *ngIf='showWirelessConfigurations' style='margin-top: 20px'>
-          <mat-label>Wi-Fi Profiles</mat-label>
-          <input matInput type='text' data-cy='wifiAutocomplete' placeholder='Search for Wi-Fi Profiles to Add' [formControl]='wirelessAutocomplete' [matAutocomplete]='auto'>
-          <mat-autocomplete autoActiveFirstOption #auto='matAutocomplete' (optionSelected)='selectWifiProfile($event)'>
-            <mat-option *ngFor='let wifi of filteredWirelessList | async' [value]='wifi' [ngClass]='isSelectable(wifi)'>
-              {{wifi}}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-hint>Wi-Fi will not work over static Network</mat-hint>
-        </mat-form-field>
+          <mat-label style="margin-top: 15px;">Wireless</mat-label>
+        
+          <mat-checkbox class="flex flex-1" data-cy='localWifiSyncEnabled' formControlName='localWifiSyncEnabled' style='margin-top: 15px'>
+            Enable OS WiFi Profile Synchronization
+            <p class='like-mat-hint' *ngIf='profileForm.controls.localWifiSyncEnabled.enabled'>
+              Only applicable for the wireless interface. 
+            </p>
+            <p class='like-mat-hint' *ngIf='profileForm.controls.localWifiSyncEnabled.disabled'></p>
+          </mat-checkbox>
+        
+        <ng-container *ngIf="showWirelessConfigurations">
+            <mat-form-field class="flex flex-1" style='margin-top: 20px'>
+            <mat-label>Wi-Fi Profiles</mat-label>
+            <input matInput type='text' data-cy='wifiAutocomplete' placeholder='Search for Wi-Fi Profiles to Add' [formControl]='wirelessAutocomplete' [matAutocomplete]='auto'>
+            <mat-autocomplete autoActiveFirstOption #auto='matAutocomplete' (optionSelected)='selectWifiProfile($event)'>
+              <mat-option *ngFor='let wifi of filteredWirelessList | async' [value]='wifi' [ngClass]='isSelectable(wifi)'>
+                {{wifi}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint>Wi-Fi will not work over static Network</mat-hint>
+          </mat-form-field>
+        </ng-container>
+               
         <div *ngIf='(selectedWifiConfigs.length > 0)'>
           <mat-label class='mat-body-1'>Associated Wireless Profiles (In Priority Order)</mat-label>
           <br />

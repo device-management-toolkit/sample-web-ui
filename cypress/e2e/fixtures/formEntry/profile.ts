@@ -64,6 +64,7 @@ TlsModes.all().forEach(tlsMode => {
     mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
     dhcpEnabled: false,
     ipSyncEnabled: false,
+    localWifiSyncEnabled: false,
     userConsent: UserConsentModes.ALL.value,
     iderEnabled: true,
     kvmEnabled: true,

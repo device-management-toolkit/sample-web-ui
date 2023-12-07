@@ -93,6 +93,7 @@ export class ProfileDetailComponent implements OnInit {
       mebxPassword: [{ value: null, disabled: true }],
       dhcpEnabled: [true],
       ipSyncEnabled: [{ value: true, disabled: true }],
+      localWifiSyncEnabled: [{ value: false, disabled: false }],
       connectionMode: [null, Validators.required],
       ciraConfigName: [null],
       ieee8021xProfileName: [null],
@@ -348,6 +349,17 @@ export class ProfileDetailComponent implements OnInit {
         })
       }
       this.wirelessAutocomplete.patchValue('')
+    }
+  }
+
+  localWifiSyncChange (isEnabled: boolean): void {
+    if (isEnabled) {
+      this.profileForm.controls.localWifiSyncEnabled.disable()
+      this.profileForm.controls.localWifiSyncEnabled.setValue(true)
+      this.wirelessAutocomplete.reset({ value: '', disabled: false })
+    } else {
+      this.profileForm.controls.localWifiSyncEnabled.enable()
+      this.wirelessAutocomplete.reset({ value: '', disabled: true })
     }
   }
 

@@ -30,6 +30,7 @@ describe('ProfilesService', () => {
     mebxPassword: 'password',
     dhcpEnabled: true,
     ipSyncEnabled: false,
+    localWifiSyncEnabled: false,
     ieee8021xProfileName: '',
     wifiConfigs: [],
     tags: ['acm'],
