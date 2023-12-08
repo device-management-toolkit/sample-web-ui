@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module'
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
 import { Device } from '../../models/models'
+import { MatSelectChange } from '@angular/material/select'
 
 describe('DevicesComponent', () => {
   let device01: Device
@@ -212,5 +213,16 @@ describe('DevicesComponent', () => {
     expect(dialogSpy).toHaveBeenCalled()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(updateDeviceSpy).toHaveBeenCalledTimes(1)
+  })
+  it('should call tagFilterChange', () => {
+    const mockMatSelect = jasmine.createSpyObj('MatSelect', ['value'])
+    const mockValue = 'mockTag'
+    const matSelectChange: MatSelectChange = {
+      source: mockMatSelect,
+      value: mockValue
+    }
+
+    component.tagFilterChange(matSelectChange)
+    expect(component.filteredTags).toBe(mockValue)
   })
 })

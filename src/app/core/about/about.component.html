@@ -12,16 +12,18 @@
   <mat-divider></mat-divider>
   <br />
   <h3>This sample UI is meant for the following:</h3>
-  <mat-list dense>
-    <mat-list-item> Learn how the Open AMT Cloud Toolkit manages devices </mat-list-item>
-    <mat-list-item> Set Up Profiles, Configuration, and Domains </mat-list-item>
-    <mat-list-item> Understand Open AMT's implementation of the REST APIs and how they can be used in your own
-      application </mat-list-item>
-    <mat-list-item> How to use the UI Toolkit </mat-list-item>
-  </mat-list>
+  <ul>
+    <li> Learn how the Open AMT Cloud Toolkit manages devices </li>
+    <li> Set Up Profiles, Configuration, and Domains </li>
+    <li> Understand Open AMT's implementation of the REST APIs and how they can be used in your own
+      application </li>
+    <li> How to use the UI Toolkit </li>
+    </ul>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Got it</button>
+  <label>
+    <input type="checkbox" [(ngModel)]="doNotShowAgain"> Do not show again
+  </label>
+  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>Got it</button>
 </mat-dialog-actions>

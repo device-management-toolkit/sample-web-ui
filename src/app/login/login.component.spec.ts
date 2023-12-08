@@ -94,4 +94,34 @@ describe('LoginComponent', () => {
     component.onSubmit()
     expect(authService.login).toHaveBeenCalled()
   })
+
+  it('onSubmit login should be successful and should show about notice', () => {
+    const userId: string = 'userId'
+    const password: string = 'P@ssw0rd'
+    component.loginForm.patchValue({
+      userId,
+      password
+    })
+    spyOn(authService, 'login').and.returnValue(of(true).pipe())
+    spyOn(localStorage, 'getItem').and.returnValue('')
+    component.onSubmit()
+    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
+    expect(component.isLoading).toBeFalse()
+    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
+  })
+
+  it('onSubmit login should be successful and should not show about notice', () => {
+    const userId: string = 'userId'
+    const password: string = 'P@ssw0rd'
+    component.loginForm.patchValue({
+      userId,
+      password
+    })
+    spyOn(authService, 'login').and.returnValue(of(true).pipe())
+    spyOn(localStorage, 'getItem').and.returnValue('true')
+    component.onSubmit()
+    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
+    expect(component.isLoading).toBeFalse()
+    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
+  })
 })

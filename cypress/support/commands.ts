@@ -136,6 +136,9 @@ Cypress.Commands.add('setup', () => {
   cy.wait('@login-request')
     .its('response.statusCode')
     .should('eq', httpCodes.SUCCESS)
+
+  // Close about notice
+  cy.get('[data-cy="closeNotice"]').click()
 })
 
 // ------------------- Enter info into a form -------------------------

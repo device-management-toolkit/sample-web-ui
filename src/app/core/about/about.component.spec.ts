@@ -34,4 +34,10 @@ describe('AboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should initialize doNotShowAgain from localStorage', () => {
+    spyOn(localStorage, 'getItem').and.returnValue('true')
+    component.ngOnInit()
+    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
+  })
 })
