@@ -20,7 +20,8 @@ import {
   PageEventOptions,
   PowerState,
   RedirectionToken,
-  userConsentResponse
+  userConsentResponse,
+  RedirectionStatus
 } from 'src/models/models'
 import { caseInsensntiveCompare } from '../../utils'
 
@@ -377,6 +378,16 @@ export class DevicesService {
   getRedirectionExpirationToken (guid: string): Observable<RedirectionToken> {
     const query = `${environment.mpsServer}/api/v1/authorize/redirection/${guid}`
     return this.http.get<RedirectionToken>(query)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getRedirectionStatus (guid: string): Observable<RedirectionStatus> {
+    const query = `${environment.mpsServer}/api/v1/devices/redirectstatus/${guid}`
+    return this.http.get<RedirectionStatus>(query)
       .pipe(
         catchError((err) => {
           throw err

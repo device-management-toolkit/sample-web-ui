@@ -172,7 +172,7 @@ describe('DevicesService', () => {
 
   it('should return error when requesting power state', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
-    service.getPowerState('defgh-34567-poiuy').subscribe(() => {}, err => {
+    service.getPowerState('defgh-34567-poiuy').subscribe(() => { }, err => {
       expect(error).toEqual(err)
       done()
     })
@@ -676,7 +676,26 @@ describe('DevicesService', () => {
       done()
     })
   })
-
+  it('should return the redirection status', (done) => {
+    const redirectionStatus = {
+      isKVMConnected: false,
+      isSOLConnected: false,
+      isIDERConnected: false
+    }
+    httpClientSpy.get.and.returnValue(of(redirectionStatus))
+    service.getRedirectionStatus('defgh-34567-poiuy').subscribe(response => {
+      expect(response).toEqual(redirectionStatus)
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/redirectstatus/defgh-34567-poiuy`)
+      done()
+    })
+  })
+  it('should throw an error when the redirection status request fails', (done) => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+    service.getRedirectionStatus('defgh-34567-poiuy').subscribe(null, err => {
+      expect(error).toEqual(err)
+      done()
+    })
+  })
   it('should return alarm instances', (done) => {
     const alarms: IPSAlarmClockOccurrence[] = [{
       ElementName: 'Alarm name',
@@ -694,7 +713,7 @@ describe('DevicesService', () => {
 
   it('should return error when requesting power state', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
-    service.getPowerState('defgh-34567-poiuy').subscribe(() => {}, err => {
+    service.getPowerState('defgh-34567-poiuy').subscribe(() => { }, err => {
       expect(error).toEqual(err)
       done()
     })
@@ -717,7 +736,7 @@ describe('DevicesService', () => {
 
   it('should return error when getting alarm instances', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
-    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(() => {}, err => {
+    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(() => { }, err => {
       expect(error).toEqual(err)
       done()
     })
@@ -737,7 +756,7 @@ describe('DevicesService', () => {
 
   it('should return error when deleting an alarm', (done) => {
     httpClientSpy.request.and.returnValue(throwError(error))
-    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(() => {}, err => {
+    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(() => { }, err => {
       expect(error).toEqual(err)
       done()
     })
@@ -766,7 +785,7 @@ describe('DevicesService', () => {
       DeleteOnCompletion: true
     }
     httpClientSpy.post.and.returnValue(throwError(error))
-    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(() => {}, err => {
+    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(() => { }, err => {
       expect(error).toEqual(err)
       done()
     })

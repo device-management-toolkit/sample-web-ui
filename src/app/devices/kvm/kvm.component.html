@@ -1,14 +1,31 @@
 <app-device-toolbar [deviceState]="deviceState"></app-device-toolbar>
-<mat-toolbar style="height:75px">
-  <mat-form-field style="margin-bottom:0">
-    <mat-label>Choose encoding type</mat-label>
-    <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
-      <mat-option *ngFor="let encode of encodings" [value]="encode.value">
-        {{ encode.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
+<mat-toolbar style="height:75px" class="flex flex-row">
+  <div class="flex flex-50">
+    <mat-form-field style="margin-bottom:0">
+      <mat-label>Choose encoding type</mat-label>
+      <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
+        <mat-option *ngFor="let encode of encodings" [value]="encode.value">
+          {{ encode.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="flex flex-50 justify-end">
+    <button mat-flat-button color="primary" (click)="fileInput.click()"><mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)</button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img">
+    @if (isIDERActive) {
+      <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left:12px"><mat-icon>stop</mat-icon>Stop IDER</button>
+    }
+  </div>
 </mat-toolbar>
 <mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
-<amt-kvm *ngIf="readyToLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceStatus($event)"></amt-kvm>
+<amt-kvm *ngIf="readyToLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceKVMConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+<amt-ider class="ider"
+[deviceId]="deviceId"
+[mpsServer]="mpsServer"
+[authToken]="authToken"
+[deviceConnection]="deviceIDERConnection"
+[cdrom]="diskImage"
+[floppy]="null"
+(deviceStatus)="deviceIDERStatus($event)">
+</amt-ider>

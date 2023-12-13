@@ -13,7 +13,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, userConsentData, userConsentResponse } from 'src/models/models'
+import { AmtFeaturesResponse, RedirectionStatus, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 
@@ -33,12 +33,17 @@ export class KvmComponent implements OnInit, OnDestroy {
   timeInterval!: any
   selected: number = 1
   isDisconnecting: boolean = false
+  isIDERActive: boolean = false
   @Input() deviceState: number = 0
-  @Output() deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  @Output() deviceKVMConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  @Output() deviceIDERConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
   @Output() selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
   amtFeatures?: AmtFeaturesResponse
+  // IDER FEATURES
+  diskImage: File | null = null
+  redirectionStatus: RedirectionStatus | null = null
 
   encodings = [
     { value: 1, viewValue: 'RLE 8' },
@@ -77,13 +82,13 @@ export class KvmComponent implements OnInit, OnDestroy {
     // used for receiving messages from the kvm connect button on the toolbar
     this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe((data: boolean) => {
       this.init()
-      this.deviceConnection.emit(true)
+      this.deviceKVMConnection.emit(true)
     })
 
     // used for receiving messages from the kvm disconnect button on the toolbar
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe((data: boolean) => {
       this.isDisconnecting = true
-      this.deviceConnection.emit(false)
+      this.deviceKVMConnection.emit(false)
       void this.router.navigate([`/devices/${this.deviceId}`])
     })
 
@@ -97,9 +102,13 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   init (): void {
     this.isLoading = true
+    // switchMap((result: RedirectionStatus) => result === null ? of() : this.getRedirectionStatus(this.deviceId)),
+    // switchMap((result) => this.handleRedirectionStatus(result)),
     // device needs to be powered on in order to start KVM session
     this.getPowerState(this.deviceId).pipe(
       switchMap((powerState) => this.handlePowerState(powerState)),
+      switchMap((result) => result === null ? of() : this.getRedirectionStatus(this.deviceId)),
+      switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
       switchMap((result) => result === null ? of() : this.getAMTFeatures()),
       switchMap((results: AmtFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
       switchMap((result: boolean | any) =>
@@ -112,6 +121,17 @@ export class KvmComponent implements OnInit, OnDestroy {
     ).subscribe().add(() => {
       this.isLoading = false
     })
+  }
+
+  onFileSelected (event: Event): void {
+    const target = event.target as HTMLInputElement
+    this.diskImage = target.files?.[0] ?? null
+    this.deviceIDERConnection.emit(true)
+  }
+
+  onCancelIDER (): void {
+    // close the dialog, perform other actions as needed
+    this.deviceIDERConnection.emit(false)
   }
 
   handlePowerState (powerState: any): Observable<any> {
@@ -127,6 +147,25 @@ export class KvmComponent implements OnInit, OnDestroy {
           return of(null)
         })
       )
+    }
+    return of(true)
+  }
+
+  getRedirectionStatus (guid: string): Observable<any> {
+    return this.devicesService.getRedirectionStatus(guid).pipe(
+      catchError((err) => {
+        this.isLoading = false
+        this.displayError($localize`Error retrieving redirection status`)
+        return throwError(err)
+      })
+    )
+  }
+
+  handleRedirectionStatus (redirectionStatus: RedirectionStatus): Observable<any> {
+    this.redirectionStatus = redirectionStatus
+    if (this.redirectionStatus.isKVMConnected) {
+      this.displayError($localize`KVM cannot be accessed - another kvm session is in progress`)
+      return of(null)
     }
     return of(true)
   }
@@ -326,7 +365,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.selectedEncoding.emit(e)
   }
 
-  deviceStatus = (event: any): void => {
+  deviceKVMStatus = (event: any): void => {
     this.deviceState = event
     if (event === 2) {
       this.isLoading = false
@@ -336,6 +375,14 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.displayError('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.')
       }
       this.isDisconnecting = false
+    }
+  }
+
+  deviceIDERStatus = (event: any): void => {
+    if (event === 0) {
+      this.isIDERActive = false
+    } else if (event === 3) {
+      this.isIDERActive = true
     }
   }
 

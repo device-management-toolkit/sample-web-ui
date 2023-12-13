@@ -41,6 +41,9 @@ export class DeviceToolbarComponent implements OnInit {
       label: 'Soft Reset',
       action: 14
     }, {
+      label: 'Reset to IDE-R (CD-ROM)',
+      action: 202
+    }, {
       label: 'Reset to BIOS',
       action: 101
     }, {

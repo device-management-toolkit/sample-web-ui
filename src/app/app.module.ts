@@ -26,13 +26,13 @@ import { DeviceDetailComponent } from './devices/device-detail/device-detail.com
 import { MomentModule } from 'ngx-moment'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
+
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 import { AuthorizeInterceptor } from './authorize.interceptor'
 import { WirelessComponent } from './wireless/wireless.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
-import { SolModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/sol'
-import { KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular/kvm'
+import { SolModule, IderModule, KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from './devices/device-enable-kvm/device-enable-kvm.component'
 import { DeviceEnableSolComponent } from './devices/device-enable-sol/device-enable-sol.component'
@@ -80,6 +80,7 @@ import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component
     CoreModule,
     BrowserAnimationsModule,
     SolModule,
+    IderModule,
     // MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     SharedModule.forRoot(),
     RouterModule.forRoot([

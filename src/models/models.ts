@@ -328,6 +328,12 @@ export interface RedirectionToken {
   token: string
 }
 
+export interface RedirectionStatus {
+  isKVMConnected: boolean
+  isSOLConnected: boolean
+  isIDERConnected: boolean
+}
+
 export interface FormOption<T> {
   value: T
   label: string

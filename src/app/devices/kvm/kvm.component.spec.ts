@@ -22,6 +22,7 @@ describe('KvmComponent', () => {
   let authServiceStub: any
   let setAmtFeaturesSpy: jasmine.Spy
   let getPowerStateSpy: jasmine.Spy
+  let getRedirectionStatusSpy: jasmine.Spy
   let getAMTFeaturesSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let reqUserConsentCodeSpy: jasmine.Spy
@@ -38,9 +39,10 @@ describe('KvmComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
+    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken', 'getRedirectionStatus'])
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
+    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }))
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of({} as any))
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({} as any))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
@@ -131,6 +133,7 @@ describe('KvmComponent', () => {
     expect(tokenSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    expect(getRedirectionStatusSpy).toHaveBeenCalled()
   })
   it('should have correct state on websocket events', () => {
     authServiceStub.startwebSocket.emit(true)
@@ -140,20 +143,20 @@ describe('KvmComponent', () => {
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
-    component.deviceStatus(0)
+    component.deviceKVMStatus(0)
     expect(snackBarSpy).not.toHaveBeenCalled()
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
-    component.deviceStatus(0)
+    component.deviceKVMStatus(0)
     expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should hide loading when connected', () => {
-    component.deviceStatus(2)
+    component.deviceKVMStatus(2)
     expect(snackBarSpy).not.toHaveBeenCalled()
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(2)
@@ -198,6 +201,37 @@ describe('KvmComponent', () => {
         expect(component.isLoading).toBe(true)
         done()
       }
+    })
+  })
+  it('should call getRedirectionStatus and return expected data', (done) => {
+    component.getRedirectionStatus('test-guid').subscribe((response) => {
+      expect(devicesService.getRedirectionStatus).toHaveBeenCalledWith('test-guid')
+      expect(response).toEqual({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
+      done()
+    })
+  })
+  it('getRedirectionStatus error', (done) => {
+    component.isLoading = true
+    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(throwError(new Error('err')))
+    component.getRedirectionStatus('test-guid').subscribe({
+      error: () => {
+        expect(getRedirectionStatusSpy).toHaveBeenCalled()
+        expect(displayErrorSpy).toHaveBeenCalled()
+        done()
+      }
+    })
+  })
+  it('should set redirectionStatus correctly when handling redirection status', () => {
+    const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }
+    component.handleRedirectionStatus(mockRedirectionStatus).subscribe(() => {
+      expect(component.redirectionStatus).toEqual(mockRedirectionStatus)
+    })
+  })
+  it('should set redirectionStatus correctly and return null when handling redirection status', (done) => {
+    const mockRedirectionStatus = { isKVMConnected: true, isSOLConnected: false, isIDERConnected: false }
+    component.handleRedirectionStatus(mockRedirectionStatus).subscribe(() => {
+      expect(component.redirectionStatus).toEqual(mockRedirectionStatus)
+      done()
     })
   })
   it('getPowerState', async () => {
@@ -360,12 +394,12 @@ describe('KvmComponent', () => {
     expect(cancelUserConsentCodeSpy).toHaveBeenCalled()
   })
   it('deviceStatus 3', async () => {
-    component.deviceStatus(3)
+    component.deviceKVMStatus(3)
     expect(component.isLoading).toEqual(false)
   })
   it('deviceStatus 0', async () => {
     component.isDisconnecting = false
-    component.deviceStatus(0)
+    component.deviceKVMStatus(0)
     expect(component.isLoading).toEqual(false)
     expect(displayErrorSpy).toHaveBeenCalled()
     expect(component.isDisconnecting).toEqual(false)
@@ -377,5 +411,34 @@ describe('KvmComponent', () => {
   it('displayWarning', () => {
     component.displayWarning('test txt')
     expect(snackBarSpy).toHaveBeenCalled()
+  })
+  // IDER
+  it('should set isIDERActive to false when event is 0', () => {
+    component.deviceIDERStatus(0)
+    expect(component.isIDERActive).toBeFalse()
+  })
+  it('should set isIDERActive to true when event is 3', () => {
+    component.deviceIDERStatus(3)
+    expect(component.isIDERActive).toBeTrue()
+  })
+  it('should not change isIDERActive for other event values', () => {
+    component.deviceIDERStatus(1)
+    expect(component.isIDERActive).toBeFalse()
+  })
+  it('should set diskImage and emit true on file selection', () => {
+    const mockFile = new File([''], 'test-file.txt', { type: 'text/plain' })
+    const mockEvt = { target: { files: [mockFile] } } as unknown as Event
+
+    const deviceIDERConnectioSpy = spyOn(component.deviceIDERConnection, 'emit')
+    component.onFileSelected(mockEvt)
+
+    expect(component.diskImage).toEqual(mockFile)
+    expect(deviceIDERConnectioSpy).toHaveBeenCalledWith(true)
+  })
+  it('should emit false on canceling IDER', () => {
+    const deviceIDERConnectioSpy = spyOn(component.deviceIDERConnection, 'emit')
+    component.onCancelIDER()
+
+    expect(deviceIDERConnectioSpy).toHaveBeenCalledWith(false)
   })
 })
