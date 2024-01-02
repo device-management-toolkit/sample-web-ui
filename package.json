@@ -48,7 +48,7 @@
     "@types/jasmine": "~5.1.4",
     "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/parser": "^6.17.0",
     "cypress": "^13.6.2",
     "eslint": "^8.53.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
