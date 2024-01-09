@@ -1,3 +1,75 @@
+<a name="3.5.1"></a>
+## [3.5.1] - 2024-01-09
+### Build
+- **deps:** Bump wagoid/commitlint-github-action from 5.4.4 to 5.4.5 ([#1607](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1607)) (#924e8a1) 
+- **deps:** Bump github/codeql-action from 3.22.12 to 3.23.0 ([#1606](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1606)) (#bc8979e) 
+- **deps-dev:** Bump follow-redirects from 1.15.2 to 1.15.4 ([#1611](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1611)) (#5d40864) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/template-parser ([#1608](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1608)) (#586e824) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)-eslint/eslint-plugin-template ([#1605](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1605)) (#f061425) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.10.6 to 20.10.7 ([#1604](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1604)) (#bcbef25) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.17.0 to 6.18.0 ([#1603](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1603)) (#dc897e1) 
+
+### Fix
+- package version and changelog (#8f6983a) 
+
+
+<a name="v3.5.0"></a>
+## [v3.5.0] - 2023-12-21
+### Build
+- bump angular/core, cli to 17.0.7 and cdk, material to 17.0.4 ([#1576](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1576)) (#6b73758) 
+- bump [@angular](https://github.com/angular)/cli and [@angular](https://github.com/angular)/core to 17.0.8 ([#1590](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1590)) (#adcfedc) 
+- **deps:** Bump github/codeql-action from 2.22.10 to 3.22.11 ([#1569](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1569)) (#6d021cf) 
+- **deps:** Bump aquasecurity/trivy-action from 0.16.0 to 0.16.1 ([#1599](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1599)) (#a12267c) 
+- **deps:** Bump esbuild from 0.19.9 to 0.19.10 ([#1581](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1581)) (#5d9c7ec) 
+- **deps:** Bump actions/setup-node from 4.0.0 to 4.0.1 ([#1578](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1578)) (#75ad542) 
+- **deps:** Bump esbuild from 0.19.10 to 0.19.11 ([#1596](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1596)) (#0f946e5) 
+- **deps:** Bump cypress from 13.6.1 to 13.6.2 ([#1591](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1591)) (#612586c) 
+- **deps:** Bump nginx from `6af140b` to `d50b0d8` ([#1583](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1583)) (#eb33b5b) 
+- **deps:** Bump actions/upload-artifact from 3.1.3 to 4.0.0 ([#1574](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1574)) (#1d3fe34) 
+- **deps:** Bump moment from 2.29.4 to 2.30.1 ([#1594](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1594)) (#dee18a5) 
+- **deps:** Bump github/codeql-action from 3.22.11 to 3.22.12 ([#1589](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1589)) (#50398e6) 
+- **deps:** Bump actions/dependency-review-action from 3.1.4 to 3.1.5 ([#1602](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1602)) (#f0d248e) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.15.0 to 6.16.0 ([#1592](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1592)) (#02c44a5) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#1593](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1593)) (#cc737c7) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.16.0 to 6.17.0 ([#1597](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1597)) (#4802681) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#1580](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1580)) (#38fd84c) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#1598](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1598)) (#b15189c) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.10.4 to 20.10.5 ([#1582](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1582)) (#66a2fd4) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.10.5 to 20.10.6 ([#1595](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1595)) (#57b63ca) 
+- **deps-dev:** Bump [@angular](https://github.com/angular)/cli from 17.0.8 to 17.0.9 ([#1600](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1600)) (#85b7aff) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.14.0 to 6.15.0 ([#1579](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1579)) (#6d7388a) 
+
+### Ci
+- add trivy results to github security tab (#4af3a29) 
+
+### Feat
+- snow (#f37d707) 
+
+
+<a name="v3.4.0"></a>
+## [v3.4.0] - 2023-12-13
+### Build
+- **deps:** Bump github/codeql-action from 2.22.9 to 2.22.10 ([#1568](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1568)) (#eb0bfb8) 
+- **deps:** Bump esbuild from 0.19.8 to 0.19.9 ([#1562](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1562)) (#f9fafb3) 
+- **deps:** Bump aquasecurity/trivy-action from 0.15.0 to 0.16.0 ([#1565](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1565)) (#b462ed3) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/eslint-plugin ([#1566](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1566)) (#9d5b021) 
+- **deps-dev:** Bump [@typescript](https://github.com/typescript)-eslint/parser from 6.13.2 to 6.14.0 ([#1567](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1567)) (#52064ad) 
+- **deps-dev:** Bump ts-node from 10.9.1 to 10.9.2 ([#1563](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1563)) (#512ffe7) 
+
+### Feat
+- enable IDER functionality ([#1548](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1548)) (#dc50ec1) 
+
+
+<a name="v3.3.0"></a>
+## [v3.3.0] - 2023-12-08
+### Build
+- bump angular cli and core to 17.0.6, cdk and material to 17.0.2 ([#1559](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1559)) (#9774d76) 
+- **deps:** Bump github/codeql-action from 2.22.8 to 2.22.9 ([#1560](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1560)) (#8f3881a) 
+- **deps-dev:** Bump [@types](https://github.com/types)/node from 20.10.3 to 20.10.4 ([#1561](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1561)) (#81ff5ae) 
+
+### Feat
+- about notice appears after login ([#1554](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1554)) (#ee9f840) 
+
 <a name="3.2.0"></a>
 ## [3.2.0] - 2023-12-07
 ### Build
