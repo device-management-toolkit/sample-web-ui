@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "~17.0.9",
     "@angular/localize": "~17.0.9",
     "@types/jasmine": "~5.1.4",
-    "@types/node": "^20.11.4",
+    "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.19.0",
     "cypress": "^13.6.3",
