@@ -62,7 +62,7 @@
     "karma-jasmine-html-reporter": "^2.1.0",
     "karma-junit-reporter": "^2.0.1",
     "ts-node": "~10.9.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "optionalDependencies": {
     "cypress": "^13.6.3"
