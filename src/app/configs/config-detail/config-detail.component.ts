@@ -53,7 +53,7 @@ export class ConfigDetailComponent implements OnInit {
       if (params.name) {
         this.isLoading = true
         this.configsService
-          .getRecord(decodeURIComponent(params.name))
+          .getRecord(decodeURIComponent(params.name as string))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -80,7 +80,7 @@ export class ConfigDetailComponent implements OnInit {
       (value) => { this.serverAddressFormatChange(+value) }
     )
 
-    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) => { this.serverAddressChange(value) }
+    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value: string) => { this.serverAddressChange(value) }
     )
   }
 
@@ -118,7 +118,7 @@ export class ConfigDetailComponent implements OnInit {
   onSubmit (): void {
     if (this.configForm.valid) {
       this.isLoading = true
-      const result: any = Object.assign({}, this.configForm.getRawValue())
+      const result: CIRAConfig = Object.assign({}, this.configForm.getRawValue())
       // unsure why this is needed or what it is
       result.authMethod = 2
       // convert to number
@@ -138,7 +138,7 @@ export class ConfigDetailComponent implements OnInit {
           finalize(() => {
             this.isLoading = false
           }),
-          mergeMap((data) => {
+          mergeMap((data: string) => {
             result.mpsRootCertificate = this.trimRootCert(data)
             return rpsRequest
           })

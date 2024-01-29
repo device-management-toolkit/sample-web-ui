@@ -21,6 +21,7 @@ describe('WirelessService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'patch', 'delete'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new WirelessService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 

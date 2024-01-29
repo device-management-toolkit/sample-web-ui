@@ -21,7 +21,8 @@ import {
   PowerState,
   RedirectionToken,
   userConsentResponse,
-  RedirectionStatus
+  RedirectionStatus,
+  AmtFeaturesRequest
 } from 'src/models/models'
 import { caseInsensntiveCompare } from '../../utils'
 
@@ -315,7 +316,7 @@ export class DevicesService {
       )
   }
 
-  setAmtFeatures (deviceId: string, payload = {
+  setAmtFeatures (deviceId: string, payload: AmtFeaturesRequest = {
     userConsent: 'none',
     enableKVM: true,
     enableSOL: true,

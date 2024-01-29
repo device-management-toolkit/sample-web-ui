@@ -25,6 +25,7 @@ describe('AuthService', () => {
     TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])]
     })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new AuthService(httpClientSpy as any, routerSpy)
     loggedInSubjectSpy = spyOn(service.loggedInSubject, 'next').and.callThrough()
   })
@@ -42,6 +43,7 @@ describe('AuthService', () => {
   it('should be created when logged in', () => {
     localStorage.setItem('loggedInUser', JSON.stringify({ token: 'token' }))
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const testService = new AuthService(httpClientSpy as any, routerSpy)
 
     expect(testService).toBeTruthy()
@@ -50,18 +52,20 @@ describe('AuthService', () => {
   })
   it('should handle kong proxy route', () => {
     environment.mpsServer = './mps'
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const testService = new AuthService(httpClientSpy as any, routerSpy)
     expect(testService.url).toBe('./mps/login/api/v1/authorize')
   })
   it('should handle when non kong proxy route', () => {
     environment.mpsServer = './m'
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const testService = new AuthService(httpClientSpy as any, routerSpy)
     expect(testService.url).toBe('./m/api/v1/authorize')
   })
 
   it('should return token from localstorage', () => {
     localStorage.setItem('loggedInUser', JSON.stringify({ token: '1234567qwertsdfg' }))
-    const getToken: any = localStorage.getItem('loggedInUser')
+    const getToken: string | null = localStorage.getItem('loggedInUser') ?? ''
     const token: string = JSON.parse(getToken).token
     expect(service.getLoggedUserToken()).toBe(token)
   })

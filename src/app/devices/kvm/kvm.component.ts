@@ -13,7 +13,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, RedirectionStatus, userConsentData, userConsentResponse } from 'src/models/models'
+import { AmtFeaturesRequest, AmtFeaturesResponse, RedirectionStatus, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 
@@ -116,7 +116,7 @@ export class KvmComponent implements OnInit, OnDestroy {
         defer(() => of(null)),
         defer(() => this.checkUserConsent())
         )),
-      switchMap((result: any) => this.handleUserConsentDecision(result)),
+      switchMap((result: boolean | null) => this.handleUserConsentDecision(result)),
       switchMap((result: any | userConsentResponse) => this.handleUserConsentResponse(result))
     ).subscribe().add(() => {
       this.isLoading = false
@@ -151,7 +151,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return of(true)
   }
 
-  getRedirectionStatus (guid: string): Observable<any> {
+  getRedirectionStatus (guid: string): Observable<RedirectionStatus> {
     return this.devicesService.getRedirectionStatus(guid).pipe(
       catchError((err) => {
         this.isLoading = false
@@ -187,6 +187,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
     return this.enableKvmDialog()
       .pipe(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         catchError((err) => {
           this.displayError($localize`Unable to display KVM dialog`)
           throw err
@@ -197,11 +198,11 @@ export class KvmComponent implements OnInit, OnDestroy {
             this.cancelEnableKvmResponse()
             return of(false)
           } else {
-              const payload = {
-                userConsent: this.amtFeatures?.userConsent as string,
+              const payload: AmtFeaturesRequest = {
+                userConsent: this.amtFeatures?.userConsent ?? '',
                 enableKVM: true,
-                enableSOL: this.amtFeatures?.SOL as boolean,
-                enableIDER: this.amtFeatures?.IDER as boolean
+                enableSOL: this.amtFeatures?.SOL ?? false,
+                enableIDER: this.amtFeatures?.IDER ?? false
               }
               return this.devicesService.setAmtFeatures(this.deviceId, payload)
           }
@@ -239,9 +240,9 @@ export class KvmComponent implements OnInit, OnDestroy {
     return dialog.afterClosed()
   }
 
-  handleUserConsentDecision (result: any): Observable<any> {
+  handleUserConsentDecision (result: boolean | null): Observable<any> {
     // if user consent is not required, ready to load KVM
-    if (result == null || result === true) {
+    if (result == null || result) {
       return of(null)
     }
     //  If OptIn is KVM / All user consent is required
@@ -267,7 +268,7 @@ export class KvmComponent implements OnInit, OnDestroy {
                 // if clicked outside the dialog, call to cancel previous requested user consent code
               this.cancelUserConsentCode(this.deviceId)
             } else {
-              this.afterUserConsentDialogClosed(result)
+              this.afterUserConsentDialogClosed(result as userConsentData)
             }
           return of(null)
         })
@@ -278,7 +279,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkUserConsent (): Observable<any> {
+  checkUserConsent (): Observable<boolean> {
     if (this.amtFeatures?.userConsent === 'none' || this.amtFeatures?.optInState === 3 || this.amtFeatures?.optInState === 4) {
       this.readyToLoadKvm = true
       return of(true)
@@ -306,9 +307,9 @@ export class KvmComponent implements OnInit, OnDestroy {
     // On success to send or cancel to previous requested user consent code
     const method = response.Header.Action.substring((response.Header.Action.lastIndexOf('/') as number) + 1, response.Header.Action.length)
     if (method === 'CancelOptInResponse') {
-        this.cancelOptInCodeResponse(response)
+        this.cancelOptInCodeResponse(response as userConsentResponse)
       } else if (method === 'SendOptInCodeResponse') {
-        this.sendOptInCodeResponse(response)
+        this.sendOptInCodeResponse(response as userConsentResponse)
       }
     }
   }
@@ -361,7 +362,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       })
   }
 
-  onEncodingChange = (e: any): void => {
+  onEncodingChange = (e: number): void => {
     this.selectedEncoding.emit(e)
   }
 

@@ -120,6 +120,12 @@ export interface AmtFeaturesResponse {
   SOL: boolean
   IDER: boolean
 }
+export interface AmtFeaturesRequest {
+  userConsent: string
+  enableKVM: boolean
+  enableSOL: boolean
+  enableIDER: boolean
+}
 
 export interface PowerState {
   powerstate: number

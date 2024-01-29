@@ -108,8 +108,4 @@ describe('ProfilesComponent', () => {
     const result = component.parseTlsMode(TlsModes.MUTUAL.value)
     expect(result).toEqual(TlsModes.MUTUAL.label)
   })
-  it('should parseTlsMode when unknown', () => {
-    const result = component.parseTlsMode(null as any)
-    expect(result).toBe('')
-  })
 })

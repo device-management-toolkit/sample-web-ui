@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { WirelessService } from '../wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import { AuthenticationMethods, EncryptionMethods } from '../wireless.constants'
+import { AuthenticationMethods, Config, EncryptionMethods } from '../wireless.constants'
 
 @Component({
   selector: 'app-wireless-detail',
@@ -51,14 +51,14 @@ export class WirelessDetailComponent implements OnInit {
       version: [null]
     })
     this.wirelessForm.controls.authenticationMethod.valueChanges
-      .subscribe(value => { this.onAuthenticationMethodChange(value) })
+      .subscribe((value: number) => { this.onAuthenticationMethodChange(value) })
   }
 
   ngOnInit (): void {
     this.getIEEE8021xConfigs()
     this.activeRoute.params.subscribe((params) => {
       if (params.name != null && params.name !== '') {
-        this.wirelessService.getRecord(params.name)
+        this.wirelessService.getRecord(params.name as string)
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -81,14 +81,14 @@ export class WirelessDetailComponent implements OnInit {
     if (this.wirelessForm.valid) {
       this.isLoading = true
       // adjust PSK and 8021x based on authentication method
-      const value = this.wirelessForm.controls.authenticationMethod.value
+      const value: number = this.wirelessForm.controls.authenticationMethod.value
       if (!AuthenticationMethods.isPSK(value)) {
         this.wirelessForm.controls.pskPassphrase.setValue(null)
       }
       if (!AuthenticationMethods.isIEEE8021X(value)) {
         this.wirelessForm.controls.ieee8021xProfileName.setValue(null)
       }
-      const result: any = Object.assign({}, this.wirelessForm.getRawValue())
+      const result: Config = Object.assign({}, this.wirelessForm.getRawValue())
       let request
       let reqType: string
       if (this.isEdit) {

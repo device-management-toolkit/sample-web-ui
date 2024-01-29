@@ -87,7 +87,7 @@ export class ProfilesComponent implements OnInit {
             },
             error: err => {
               if (err?.length > 0) {
-                this.snackBar.open(err, undefined, SnackbarDefaults.longError)
+                this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
                 this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
               }

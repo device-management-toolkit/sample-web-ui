@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesResponse, PowerState, userConsentData, userConsentResponse } from 'src/models/models'
+import { AmtFeaturesRequest, AmtFeaturesResponse, PowerState, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
@@ -146,6 +146,7 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     return this.enableSolDialog()
       .pipe(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         catchError((err) => {
           this.displayError($localize`Unable to display SOL dialog`)
           throw err
@@ -156,11 +157,11 @@ export class SolComponent implements OnInit, OnDestroy {
             this.cancelEnableSolResponse()
             return of(false)
           } else {
-            const payload = {
-              userConsent: this.amtFeatures?.userConsent as string,
-              enableKVM: this.amtFeatures?.KVM as boolean,
+            const payload: AmtFeaturesRequest = {
+              userConsent: this.amtFeatures?.userConsent ?? '',
+              enableKVM: this.amtFeatures?.KVM ?? false,
               enableSOL: true,
-              enableIDER: this.amtFeatures?.IDER as boolean
+              enableIDER: this.amtFeatures?.IDER ?? false
             }
             return this.devicesService.setAmtFeatures(this.deviceId, payload)
           }
@@ -226,7 +227,7 @@ export class SolComponent implements OnInit, OnDestroy {
                 // if clicked outside the dialog, call to cancel previous requested user consent code
               this.cancelUserConsentCode(this.deviceId)
             } else {
-              this.afterUserConsentDialogClosed(result)
+              this.afterUserConsentDialogClosed(result as userConsentData)
             }
           return of(null)
         })

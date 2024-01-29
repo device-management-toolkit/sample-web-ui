@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence, Device } from 'src/models/models'
+import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence, Device, AmtFeaturesRequest } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 
 @Component({
@@ -209,7 +209,7 @@ export class DeviceDetailComponent implements OnInit {
 
   setAmtFeatures (): void {
     this.isLoading = true
-    this.devicesService.setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value).pipe(finalize(() => {
+    this.devicesService.setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value as AmtFeaturesRequest).pipe(finalize(() => {
       this.isLoading = false
     })).subscribe((results: any) => {
       this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
@@ -292,8 +292,8 @@ export class DeviceDetailComponent implements OnInit {
     if (this.newAlarmForm.valid) {
       const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
       const startTime: Date = alarm.startTime
-      startTime.setHours(alarm.hour)
-      startTime.setMinutes(alarm.minute)
+      startTime.setHours(alarm.hour as number)
+      startTime.setMinutes(alarm.minute as number)
       const payload = {
         ElementName: alarm.alarmName,
         StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),

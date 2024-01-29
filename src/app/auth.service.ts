@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   getLoggedUserToken (): string {
-    const loggedUser: any = localStorage.getItem('loggedInUser')
+    const loggedUser: string = localStorage.getItem('loggedInUser') ?? ''
     const token: string = JSON.parse(loggedUser).token
     return token
   }
@@ -81,9 +81,9 @@ export class AuthService {
         errorMessages.push(`${error.msg}: ${error.param}`)
       })
     } else if (err.error?.message != null) {
-      errorMessages.push(err.error.message)
+      errorMessages.push(err.error.message as string)
     } else {
-      errorMessages.push(err)
+      errorMessages.push(err as string)
     }
     return errorMessages
   }

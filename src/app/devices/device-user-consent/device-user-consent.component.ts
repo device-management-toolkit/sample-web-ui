@@ -51,7 +51,7 @@ export class DeviceUserConsentComponent implements OnInit {
     if (this.userConsentForm.valid) {
       const result: any = Object.assign({}, this.userConsentForm.getRawValue())
       // An additional user consent code will not be required until a timeout period of 2 minutes of inactivity has elapsed (configurable to 1 to 15 minutes in ACM)
-      this.devicesService.sendUserConsentCode(this.data.deviceId, result.consentCode)
+      this.devicesService.sendUserConsentCode(this.data.deviceId, result.consentCode as number)
         .pipe(catchError((err) => {
           this.snackBar.open($localize`Error sending user consent code`, undefined, SnackbarDefaults.defaultError)
           this.dialogRef.close()

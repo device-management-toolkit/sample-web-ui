@@ -16,13 +16,14 @@ import { LoginComponent } from './login.component'
 describe('LoginComponent', () => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
+  let httpClientSpy: any
   let routerSpy
   let authService: any
   beforeEach(async () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    authService = new AuthService(httpClientSpy as any, routerSpy)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    authService = new AuthService(httpClientSpy, routerSpy)
 
     await TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, SharedModule, ReactiveFormsModule],

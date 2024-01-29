@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DomainsService } from '../domains.service'
+import { Domain } from 'src/models/models'
 
 @Component({
   selector: 'app-domain-detail',
@@ -38,7 +39,7 @@ export class DomainDetailComponent implements OnInit {
       // hmm -- this would actually prevent editing of a domain called new
       if (params.name != null && params.name !== '') {
         this.isLoading = true
-        this.domainsService.getRecord(params.name).pipe(
+        this.domainsService.getRecord(params.name as string).pipe(
           finalize(() => {
             this.isLoading = false
           })).subscribe(data => {
@@ -55,7 +56,7 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit (): void {
-    const result: any = Object.assign({}, this.domainForm.getRawValue())
+    const result: Domain = Object.assign({}, this.domainForm.getRawValue())
     result.provisioningCertStorageFormat = 'string'
     if (this.domainForm.valid) {
       this.isLoading = true
@@ -84,18 +85,24 @@ export class DomainDetailComponent implements OnInit {
     }
   }
 
-  onFileSelected (e: any): void {
+  onFileSelected (e: Event): void {
     if (typeof (FileReader) !== 'undefined') {
       const reader = new FileReader()
 
-      reader.onload = (e2: any) => {
-        const base64 = e2.target.result
+      reader.onload = (e2: ProgressEvent<FileReader>) => {
+        const base64: string = e2.target?.result as string
         // remove prefix of "data:application/x-pkcs12;base64," returned by "readAsDataURL()"
         const index: number = base64.indexOf('base64,')
         const cert = base64.substring(index + 7, base64.length)
         this.domainForm.patchValue({ provisioningCert: cert })
       }
-      reader.readAsDataURL(e.target.files[0])
+      if (e.target != null) {
+        const target = e.target as HTMLInputElement
+        const files = target.files
+        if (files != null) {
+          reader.readAsDataURL(files[0])
+        }
+      }
     }
   }
 

@@ -16,8 +16,9 @@ import { ProfilesService } from '../profiles.service'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
 import { ProfileDetailComponent } from './profile-detail.component'
-import { ActivationModes, ConnectionModes, UserConsentModes } from '../profiles.constants'
+import { ActivationModes, ConnectionModes, Profile, UserConsentModes } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -116,11 +117,13 @@ describe('ProfileDetailComponent', () => {
     expect(wirelessGetDataSpy).toHaveBeenCalled()
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
-    component.setConnectionMode({ tlsMode: 4, ciraConfigName: 'config1' } as any)
+    const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
     expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.TLS.value)
   })
   it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
-    component.setConnectionMode({ ciraConfigName: 'config1' } as any)
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
     expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.CIRA.value)
   })
   it('should cancel', async () => {
@@ -442,11 +445,11 @@ describe('ProfileDetailComponent', () => {
 
   it('should update the selected wifi configs on selecting a wifi profile', () => {
     component.selectedWifiConfigs = [{ priority: 1, profileName: 'home' }]
-    const option: any = {
+    const option: MatAutocompleteSelectedEvent = {
       option: {
         value: 'work'
       }
-    }
+    } as any
     component.selectWifiProfile(option)
     expect(component.selectedWifiConfigs.length).toBe(2)
   })

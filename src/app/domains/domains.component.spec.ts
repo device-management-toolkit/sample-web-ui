@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module'
 
 import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
+import { Domain, DomainsResponse } from 'src/models/models'
 
 describe('DomainsComponent', () => {
   let component: DomainsComponent
@@ -31,29 +32,29 @@ describe('DomainsComponent', () => {
     okayDate.setMonth(today.getMonth() + 3)
     warnDate.setMonth(today.getMonth() + 1)
     expDate.setMonth(today.getMonth() - 2)
+    const domains: Domain[] = [{
+      domainSuffix: 'vprodemo1.com',
+      profileName: 'domain1',
+      provisioningCertStorageFormat: 'string',
+      expirationDate: okayDate
+    },
+    {
+      domainSuffix: 'vprodemo2.com',
+      profileName: 'domain2',
+      provisioningCertStorageFormat: 'string',
+      expirationDate: warnDate
+    },
+    {
+      domainSuffix: 'vprodemo3.com',
+      profileName: 'domain3',
+      provisioningCertStorageFormat: 'string',
+      expirationDate: expDate
+    }] as any
 
     getDataSpy = domainsService.getData.and.returnValue(of({
-      data: [{
-        domainSuffix: 'vprodemo1.com',
-        profileName: 'domain1',
-        provisioningCertStorageFormat: 'string',
-        expirationDate: okayDate
-      },
-      {
-        domainSuffix: 'vprodemo2.com',
-        profileName: 'domain2',
-        provisioningCertStorageFormat: 'string',
-        expirationDate: warnDate
-      },
-      {
-        domainSuffix: 'vprodemo3.com',
-        profileName: 'domain3',
-        provisioningCertStorageFormat: 'string',
-        expirationDate: expDate
-      }
-      ],
+      data: domains,
       totalCount: 3
-    }) as any)
+    } satisfies DomainsResponse))
 
     deleteSpy = domainsService.delete.and.returnValue(of({}))
 

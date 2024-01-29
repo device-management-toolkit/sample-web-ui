@@ -21,6 +21,7 @@ describe('IEEE8021xService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'patch', 'delete'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new IEEE8021xService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 

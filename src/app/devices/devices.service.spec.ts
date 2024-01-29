@@ -44,6 +44,7 @@ describe('DevicesService', () => {
     TestBed.configureTestingModule({
       imports: [AuthService]
     })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new DevicesService(httpClientSpy as any)
   })
 

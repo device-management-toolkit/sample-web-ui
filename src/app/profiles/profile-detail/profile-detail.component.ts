@@ -118,19 +118,20 @@ export class ProfileDetailComponent implements OnInit {
         this.isLoading = true
         this.isEdit = true
         this.profileForm.controls.profileName.disable()
-        this.getAmtProfile(decodeURIComponent(params.name))
+        this.getAmtProfile(decodeURIComponent(params.name as string))
       }
     })
 
     this.filteredWirelessList = this.wirelessAutocomplete.valueChanges.pipe(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       startWith(''),
-      map(value => value.length > 0 ? this.search(value) : [])
+      map((value: string) => value.length > 0 ? this.search(value) : [])
     )
-    this.profileForm.controls.activation?.valueChanges.subscribe(value => { this.activationChange(value) })
-    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe(value => { this.generateRandomPasswordChange(value) })
-    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe(value => { this.generateRandomMEBxPasswordChange(value) })
-    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe(value => { this.dhcpEnabledChange(value) })
-    this.profileForm.controls.connectionMode.valueChanges.subscribe(value => { this.connectionModeChange(value) })
+    this.profileForm.controls.activation?.valueChanges.subscribe((value: string) => { this.activationChange(value) })
+    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value: boolean) => { this.generateRandomPasswordChange(value) })
+    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value: boolean) => { this.generateRandomMEBxPasswordChange(value) })
+    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value: boolean) => { this.dhcpEnabledChange(value) })
+    this.profileForm.controls.connectionMode.valueChanges.subscribe((value: string) => { this.connectionModeChange(value) })
   }
 
   setConnectionMode (data: Profile): void {
@@ -342,7 +343,7 @@ export class ProfileDetailComponent implements OnInit {
   selectWifiProfile (event: MatAutocompleteSelectedEvent): void {
     if (event.option.value !== NO_WIFI_CONFIGS) {
       const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
-      if (!selectedProfiles.includes(event.option.value)) {
+      if (!selectedProfiles.includes(event.option.value as string)) {
         this.selectedWifiConfigs.push({
           priority: this.selectedWifiConfigs.length + 1,
           profileName: event.option.value
@@ -379,7 +380,7 @@ export class ProfileDetailComponent implements OnInit {
     await this.router.navigate(['/profiles'])
   }
 
-  removeWifiProfile (wifiProfile: any): void {
+  removeWifiProfile (wifiProfile: WiFiConfig): void {
     const index = this.selectedWifiConfigs.indexOf(wifiProfile)
 
     if (index >= 0) {
@@ -457,9 +458,9 @@ export class ProfileDetailComponent implements OnInit {
 
   onSubmit (): void {
     this.isLoading = true
-    const result: any = Object.assign({}, this.profileForm.getRawValue())
+    const result: Profile = Object.assign({}, this.profileForm.getRawValue())
     result.tags = this.tags
-    delete result.connectionMode
+    delete (result as any).connectionMode
     if (result.dhcpEnabled) {
       result.wifiConfigs = this.selectedWifiConfigs
     } else {

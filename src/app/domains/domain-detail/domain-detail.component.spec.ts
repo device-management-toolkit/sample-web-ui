@@ -102,11 +102,11 @@ describe('DomainDetailComponent', () => {
     const obj = {
       data: 'application/x-pkcs12;base64;domaincertdata'
     }
-    const event = {
+    const event: Event = {
       target: {
         files: [new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' })]
       }
-    }
+    } as any
     component.onFileSelected(event)
     fixture.detectChanges()
     expect(component.domainForm.controls.provisioningCert).toBeTruthy()

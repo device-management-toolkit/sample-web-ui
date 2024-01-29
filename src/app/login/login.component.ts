@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   onSubmit (): void {
     if (this.loginForm.valid) {
       this.isLoading = true
-      const result: any = Object.assign({}, this.loginForm.value)
+      const result: { userId: string, password: string } = Object.assign({}, this.loginForm.value)
       this.authService.login(result.userId, result.password).subscribe({
         complete: () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises

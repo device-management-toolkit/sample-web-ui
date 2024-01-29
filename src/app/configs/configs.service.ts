@@ -70,6 +70,7 @@ export class ConfigsService {
   loadMPSRootCert (): Observable<any> {
     // ToDo: Need to pass the mps server address to get the certs for each specific mps server
     const options = { responseType: 'text' } as any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this.http.get<string>(`${environment.mpsServer}/api/v1/ciracert`, options)
       .pipe(
         catchError((err) => {

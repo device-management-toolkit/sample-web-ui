@@ -69,7 +69,7 @@ export class ConfigsComponent implements OnInit {
         },
         err => {
           if (err?.length > 0) {
-            this.snackBar.open(err, undefined, SnackbarDefaults.longError)
+            this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
           } else {
             this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
           }

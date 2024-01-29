@@ -154,7 +154,8 @@ export class DevicesComponent implements OnInit {
   }
 
   editTagsForDevice (deviceId: string): void {
-    const device = this.devices.find(d => d.guid === deviceId) as Device
+    const device = this.devices.find(d => d.guid === deviceId)
+    if (!device) return // device not found
     const editedTags = [...device.tags]
     const dialogRef = this.dialog.open(DeviceEditTagsComponent, { data: editedTags })
     dialogRef.afterClosed().subscribe(tagsChanged => {

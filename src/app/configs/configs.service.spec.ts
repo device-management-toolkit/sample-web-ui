@@ -19,6 +19,7 @@ describe('ConfigsService', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new ConfigsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 

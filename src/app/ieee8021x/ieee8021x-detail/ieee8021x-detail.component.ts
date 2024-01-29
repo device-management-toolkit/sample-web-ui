@@ -74,7 +74,7 @@ export class IEEE8021xDetailComponent implements OnInit {
         this.isLoading = true
         this.isEdit = true
         this.ieee8021xService
-          .getRecord(params.name)
+          .getRecord(params.name as string)
           .pipe(finalize(() => { this.isLoading = false }))
           .subscribe({
             next: (config) => {
@@ -92,7 +92,7 @@ export class IEEE8021xDetailComponent implements OnInit {
 
   protocolValidator (): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const isValid = this.authenticationProtocols.map(p => p.value).includes(control.value)
+      const isValid = this.authenticationProtocols.map(p => p.value).includes(control.value as number)
       return isValid ? null : { protoclValue: true }
     }
   }

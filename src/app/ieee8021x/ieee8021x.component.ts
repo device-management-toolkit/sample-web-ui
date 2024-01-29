@@ -83,7 +83,7 @@ export class IEEE8021xComponent implements OnInit {
               },
               error: error => {
                 if (error?.length > 0) {
-                  this.snackBar.open(error, undefined, SnackbarDefaults.longError)
+                  this.snackBar.open(error as string, undefined, SnackbarDefaults.longError)
                 } else {
                   this.snackBar.open($localize`Unable to delete Configuration`, undefined, SnackbarDefaults.defaultError)
                 }

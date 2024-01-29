@@ -19,6 +19,7 @@ describe('DomainsService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'patch', 'post', 'delete'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new DomainsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
