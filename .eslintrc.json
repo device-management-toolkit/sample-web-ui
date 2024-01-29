@@ -10,7 +10,8 @@
   "overrides": [
     {
       "excludedFiles": [
-        "**/event-channel*.ts"
+        "**/event-channel*.ts",
+        "**/cypress/**/*.ts"
       ],
       "files": [
         "*.ts"
@@ -41,6 +42,39 @@
         "@typescript-eslint/indent": 0,
         "@typescript-eslint/consistent-type-imports": 0,
         "@typescript-eslint/unbound-method": 0
+      }
+    },
+    {
+      "files": [
+        "**/cypress/**/*.ts"
+      ],
+      "extends": [
+        "standard-with-typescript"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "project": [
+          "tsconfig.eslint.json"
+        ]
+      },
+      "plugins": [
+        "@typescript-eslint",
+        "@angular-eslint",
+        "license-header"
+      ],
+      "rules": {
+        "license-header/header": [
+          "error",
+          "./license-header.js"
+        ],
+        "@typescript-eslint/no-namespace": 0,
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/indent": 0,
+        "@typescript-eslint/consistent-type-imports": 0,
+        "@typescript-eslint/unbound-method": 0,
+        "@typescript-eslint/no-unsafe-argument": 0
       }
     },
     {
