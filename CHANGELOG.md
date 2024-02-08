@@ -1,3 +1,10 @@
+## [3.5.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.1...v3.5.2) (2024-02-08)
+
+
+### Bug Fixes
+
+* update build tasks ([#1678](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1678)) ([39d1b42](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/39d1b42fcf48d9f842a55e31b260c0ef1f8f2571))
+
 <a name="3.5.2"></a>
 ## [3.5.1] - 2024-02-08
 ### Build
@@ -1512,4 +1519,4 @@ Node 16 is no longer supported
 
 ### Refactor
 - migrate webui from mps (#ecc05bf) 
-- **docker:** optimize how server is set (#b022ca2) 
+- **docker:** optimize how server is set (#b022ca2)
