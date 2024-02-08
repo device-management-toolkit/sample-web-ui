@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,7 +26,7 @@
     "@angular/platform-browser": "~17.1.2",
     "@angular/platform-browser-dynamic": "~17.1.2",
     "@angular/router": "~17.1.2",
-    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^7.2.3",
+    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^7.2.4",
     "esbuild": "^0.20.0",
     "moment": "^2.30.1",
     "ngx-moment": "^6.0.2",
