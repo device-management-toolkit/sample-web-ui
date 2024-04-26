@@ -1,3 +1,5 @@
+## [3.5.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.4...v3.5.5) (2024-04-26)
+
 ## [3.5.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.3...v3.5.4) (2024-04-08)
 
 ## [3.5.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.2...v3.5.3) (2024-03-12)
