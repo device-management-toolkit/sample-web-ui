@@ -35,7 +35,8 @@
             "styles": [
               "src/styles/_variables.scss",
               "src/styles/open-amt-theme.scss",
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "src/styles/css2.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -52,6 +53,22 @@
             "preserveSymlinks": true
           },
           "configurations": {
+            "enterprise":{
+              "outputPath": "ui",
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.enterprise.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -112,7 +129,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "src/styles/css2.css"
             ],
             "scripts": []
           }

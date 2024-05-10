@@ -9,6 +9,7 @@
 
 export const environment = {
   production: false,
+  cloud: true,
   mpsServer: 'http://localhost:3000',
   rpsServer: 'http://localhost:8081',
   vault: 'http://localhost/vault'

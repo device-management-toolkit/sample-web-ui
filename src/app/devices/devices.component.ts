@@ -18,7 +18,9 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
-import { caseInsensntiveCompare } from '../../utils'
+import { caseInsensitiveCompare } from '../../utils'
+import { environment } from 'src/environments/environment'
+import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
 
 @Component({
   selector: 'app-devices',
@@ -118,7 +120,7 @@ export class DevicesComponent implements OnInit {
       originalTags = originalTags.filter(t => device.tags.includes(t))
     })
     const editedTags: string[] = originalTags.slice()
-    editedTags.sort(caseInsensntiveCompare)
+    editedTags.sort(caseInsensitiveCompare)
 
     const dialogRef = this.dialog.open(DeviceEditTagsComponent, { data: editedTags })
     dialogRef.afterClosed().subscribe(tagsChanged => {
@@ -132,7 +134,7 @@ export class DevicesComponent implements OnInit {
         this.selectedDevices.selected.forEach(device => {
           device.tags = device.tags.filter(t => !removedTags.includes(t))
           device.tags.push(...addedTags.filter(t => !device.tags.includes(t)))
-          device.tags.sort(caseInsensntiveCompare)
+          device.tags.sort(caseInsensitiveCompare)
           const req = this.devicesService
             .updateDevice(device)
             .pipe(
@@ -160,7 +162,7 @@ export class DevicesComponent implements OnInit {
     const dialogRef = this.dialog.open(DeviceEditTagsComponent, { data: editedTags })
     dialogRef.afterClosed().subscribe(tagsChanged => {
       if (tagsChanged) {
-        device.tags = editedTags.sort(caseInsensntiveCompare)
+        device.tags = editedTags.sort(caseInsensitiveCompare)
         this.devicesService
           .updateDevice(device)
           .subscribe(() => {
@@ -258,7 +260,7 @@ export class DevicesComponent implements OnInit {
           })
         ).subscribe({
           next: (data) => {
-            (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = data.status
+            (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = data?.status ?? ''
             setTimeout(() => {
               this.getTagsThenDevices()
             }, 3000)
@@ -310,10 +312,20 @@ export class DevicesComponent implements OnInit {
   }
 
   addDevice (): void {
-    this.dialog.open(AddDeviceComponent, {
-      height: '500px',
-      width: '600px'
-    })
+    if (!environment.cloud) {
+      const sub = this.dialog.open(AddDeviceEnterpriseComponent, {
+        height: '500px',
+        width: '600px'
+      })
+      sub.afterClosed().subscribe(() => {
+        this.getDevices()
+      })
+    } else {
+      this.dialog.open(AddDeviceComponent, {
+        height: '500px',
+        width: '600px'
+      })
+    }
   }
 
   pageChanged (event: PageEvent): void {

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Add a New Device</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="submitForm()" >
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>Hostname</mat-label>
+      <input matInput title="hostname" formControlName="hostname">
+      <mat-hint>Enter the hostname</mat-hint>
+      <mat-error *ngIf="form.get('hostname')?.errors?.required">Hostname is required</mat-error>
+      <mat-error *ngIf="form.get('hostname')?.errors?.pattern">Invalid hostname format</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>Friendly Name</mat-label>
+      <input matInput title="friendlyName" formControlName="friendlyName">
+      <mat-hint>Enter a friendly name</mat-hint>
+      <mat-error *ngIf="form.get('friendlyName')?.errors?.required">Friendly Name is required</mat-error>
+      <mat-error *ngIf="form.get('friendlyName')?.errors?.maxlength">Friendly Name cannot be longer than 50 characters</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>Username</mat-label>
+      <input matInput title="username" formControlName="username">
+      <mat-hint>Enter your username</mat-hint>
+      <mat-error *ngIf="form.get('username')?.errors?.required">Username is required</mat-error>
+      <mat-error *ngIf="form.get('username')?.errors?.minlength">Username must be at least 5 characters long</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>Password</mat-label>
+      <input matInput title="password" formControlName="password" type="password">
+      <mat-hint>Enter your password</mat-hint>
+      <mat-error *ngIf="form.get('password')?.errors?.required">Password is required</mat-error>
+      <mat-error *ngIf="form.get('password')?.errors?.minlength">Password must be at least 8 characters long</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="useTls" class="flex flex-1">Use TLS</mat-checkbox>
+    <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">Allow Self-Signed Certificates</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="submit" >Submit</button>
+  </form>
+
+</div>

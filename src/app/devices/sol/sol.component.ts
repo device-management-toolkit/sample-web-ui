@@ -31,7 +31,7 @@ export class SolComponent implements OnInit, OnDestroy {
   powerState: PowerState = { powerstate: 0 }
   readyToLoadSol: boolean = false
   mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  authToken: string = ''
+  authToken: string = environment.cloud ? '' : 'direct'
   isDisconnecting: boolean = false
   @Input() deviceState: number = 0
   @Output() deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)

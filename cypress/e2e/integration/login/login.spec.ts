@@ -45,10 +45,6 @@ describe('Test login page', () => {
         statusCode: httpCodes.SUCCESS,
         body: { token: '' }
       }).as('login-request')
-      cy.myIntercept('GET', 'mps/api/v1/devices/stats', {
-        statusCode: 200,
-        body: { }
-      }).as('stats-request')
 
       // Login
       const mpsUsername = Cypress.env('MPS_USERNAME')

@@ -5,8 +5,8 @@
 
 export const environment = {
   production: true,
-  cloud: true,
-  mpsServer: '##MPS_SERVER##',
-  rpsServer: '##RPS_SERVER##',
+  cloud: false,
+  mpsServer: 'http://localhost:8181',
+  rpsServer: 'http://localhost:8181',
   vault: '##VAULT_SERVER##'
 }

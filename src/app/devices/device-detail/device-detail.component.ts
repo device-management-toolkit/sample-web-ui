@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { catchError, concatMap, delay, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AmtFeaturesResponse, AuditLogResponse, EventLog, HardwareInformation, IPSAlarmClockOccurrence, Device, AmtFeaturesRequest } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -138,42 +138,68 @@ export class DeviceDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.isLoading = true
       this.deviceId = params.id
+      const delayTime = 0
+
       const tempLoading = [true, true, true, true, true, true]
       this.devicesService.device.subscribe({
         next: (device) => { this.device = device }
       })
-      this.devicesService.getAMTVersion(this.deviceId).pipe(finalize(() => {
-        tempLoading[0] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
-        this.amtVersion = results
-        this.isDisabled = results?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
-      }, err => {
-        this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
-      this.devicesService.getHardwareInformation(this.deviceId).pipe(finalize(() => {
-        tempLoading[1] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
-        this.hwInfo = results
-      }, err => {
-        this.snackBar.open($localize`Error retrieving HW Info`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
-      this.devicesService.getAuditLog(this.deviceId).pipe(finalize(() => {
-        tempLoading[2] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
-        this.auditLogData = results
-      }, err => {
-        this.snackBar.open($localize`Error retrieving Audit Log`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
-      this.devicesService.getAMTFeatures(this.deviceId).pipe(finalize(() => {
-        tempLoading[3] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
+      of(null).pipe(
+        concatMap(() => this.devicesService.getAMTVersion(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[0] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )),
+        delay(delayTime), // Delay for 2 seconds
+        concatMap((results) => {
+          this.amtVersion = results
+          this.isDisabled = results?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
+          return this.devicesService.getHardwareInformation(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving HW Info`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[1] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )
+      }),
+        delay(delayTime), // Delay for 2 seconds
+        concatMap((results) => {
+          this.hwInfo = results
+          return this.devicesService.getAuditLog(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving Audit Log`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[2] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )
+        }),
+        delay(delayTime), // Delay for 2 seconds
+        concatMap((results) => {
+          this.auditLogData = results
+          return this.devicesService.getAMTFeatures(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[3] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )
+      }),
+      delay(delayTime), // Delay for 2 seconds
+      concatMap((results) => {
         this.amtEnabledFeatures = this.fb.group({
           enableIDER: results.IDER,
           enableKVM: results.KVM,
@@ -182,28 +208,43 @@ export class DeviceDetailComponent implements OnInit {
           optInState: results.optInState,
           redirection: results.redirection
         })
-      }, err => {
-        this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
+        return this.devicesService.getEventLog(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving Event Logs`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[4] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )
+      }),
+      delay(delayTime), // Delay for 2 seconds
+      concatMap((results) => {
+       //  this.eventLogData = results
+        return this.devicesService.getAlarmOccurrences(this.deviceId).pipe(
+          catchError(err => {
+            this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }),
+          finalize(() => {
+            tempLoading[5] = false
+            this.isLoading = !tempLoading.every(v => !v)
+          })
+        )
       })
-      this.devicesService.getEventLog(this.deviceId).pipe(finalize(() => {
-        tempLoading[4] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
-        this.eventLogData = results
-      }, err => {
-        this.snackBar.open($localize`Error retrieving Event Logs`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
-      this.devicesService.getAlarmOccurrences(this.deviceId).pipe(finalize(() => {
-        tempLoading[5] = false
-        this.isLoading = !tempLoading.every(v => !v)
-      })).subscribe(results => {
-        this.alarmOccurrences = results
-      }, err => {
-        this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
+      ).subscribe({
+        error: () => {
+          this.isLoading = false
+          this.snackBar.open($localize`Error retrieving Hardware Information`, undefined, SnackbarDefaults.defaultError)
+        },
+        next: (results) => {
+          this.alarmOccurrences = results as any
+        },
+        complete: () => {
+          this.isLoading = false
+      }
+    })
     })
   }
 

@@ -147,6 +147,30 @@
               </span>
             }
             </div>
+            <div class="flex flex-50">
+              <p>AMT Build: </p>
+            </div>
+            <div class="flex flex-50 justify-end">
+              @if (!isLoading){
+              <span class="mat-h3" data-cy="amtSku">
+                @if ( amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ) {
+                   {{amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString}}
+                }
+              </span>
+            }
+            </div>
+            <div class="flex flex-50">
+              <p>AMT SKU: </p>
+            </div>
+            <div class="flex flex-50 justify-end">
+              @if (!isLoading){
+              <span class="mat-h3" data-cy="amtSku">
+                @if ( amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ) {
+                   {{amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString}}
+                }
+              </span>
+            }
+            </div>
           </div>
         </mat-card-content>
       </mat-card>

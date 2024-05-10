@@ -7,7 +7,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { caseInsensntiveCompare } from '../../../utils'
+import { caseInsensitiveCompare } from '../../../utils'
 
 @Component({
   selector: 'device-edit-tags',
@@ -32,7 +32,7 @@ export class DeviceEditTagsComponent implements OnInit {
     const value = (event.value || '').trim()
     if (value !== '' && !this.tags.includes(value)) {
       this.tags.push(value)
-      this.tags.sort(caseInsensntiveCompare)
+      this.tags.sort(caseInsensitiveCompare)
       this.tagsHaveChanged = true
     }
     event.chipInput?.clear()

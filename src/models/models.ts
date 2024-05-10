@@ -18,6 +18,10 @@ export interface Device {
   lastDisconnected?: Date
   deviceInfo?: DeviceInfo
   icon: number
+  username?: string
+  password?: string
+  useTls?: boolean
+  allowSelfSigned?: boolean
 }
 export interface DeviceInfo {
   fwVersion: string

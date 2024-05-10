@@ -10,6 +10,7 @@ import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
 import { MpsVersion, RpsVersion } from 'src/models/models'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-toolbar',
@@ -18,6 +19,7 @@ import { MpsVersion, RpsVersion } from 'src/models/models'
 })
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
+  cloudMode: boolean = environment.cloud
   public rpsVersions?: RpsVersion
   public mpsVersions?: MpsVersion
 
@@ -27,7 +29,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit (): void {
     this.authService.loggedInSubject.subscribe((value: any) => {
       this.isLoggedIn = value
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn && environment.cloud) {
         this.authService.getMPSVersion().subscribe({
           error: () => {
             this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)

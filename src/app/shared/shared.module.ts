@@ -49,6 +49,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
 import { AddDeviceComponent } from './add-device/add-device.component'
 import { RandomPassAlertComponent } from './random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from './static-cira-warning/static-cira-warning.component'
+import { AddDeviceEnterpriseComponent } from './add-device-enterprise/add-device-enterprise.component'
 
 @NgModule({
   imports: [
@@ -132,7 +133,7 @@ import { StaticCIRAWarningComponent } from './static-cira-warning/static-cira-wa
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 30000, panelClass: ['success', 'mat-elevation-z12'] } },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
   ],
-  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent, RandomPassAlertComponent, StaticCIRAWarningComponent]
+  declarations: [AreYouSureDialogComponent, PowerUpAlertComponent, DialogContentComponent, AddDeviceComponent, AddDeviceEnterpriseComponent, RandomPassAlertComponent, StaticCIRAWarningComponent]
 })
 export class OpenAMTMaterialModule {
 

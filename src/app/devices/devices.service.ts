@@ -24,7 +24,7 @@ import {
   RedirectionStatus,
   AmtFeaturesRequest
 } from 'src/models/models'
-import { caseInsensntiveCompare } from '../../utils'
+import { caseInsensitiveCompare } from '../../utils'
 
 @Injectable({
   providedIn: 'root'
@@ -263,18 +263,37 @@ export class DevicesService {
   }
 
   sendDeactivate (guid: string): Observable<any> {
+    if (environment.cloud) {
     return this.http.delete<any>(`${environment.mpsServer}/api/v1/amt/deactivate/${guid}`)
       .pipe(
         catchError((err) => {
           throw err
         })
       )
+    } else {
+      const url = `${environment.mpsServer}/api/v1/devices/${guid}`
+      return this.http.delete<never>(url)
+        .pipe(
+          catchError((err) => {
+            throw err
+          })
+        )
+    }
   }
 
   getTags (): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
       .pipe(
-        map(tags => tags.sort(caseInsensntiveCompare)),
+        map(tags => tags.sort(caseInsensitiveCompare)),
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  addDevice (device: Device): Observable<Device> {
+    return this.http.post<Device>(`${environment.mpsServer}/api/v1/devices`, device)
+      .pipe(
         catchError((err) => {
           throw err
         })
