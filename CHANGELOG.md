@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.5...v3.6.0) (2024-05-10)
+
+
+### Features
+
+* enable enterprise mode ([f3ea728](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/f3ea7282ff0702b98c88dc2b58477b3bbfcaec74))
+
 ## [3.5.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.4...v3.5.5) (2024-04-26)
 
 ## [3.5.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.3...v3.5.4) (2024-04-08)
