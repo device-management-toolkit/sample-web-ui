@@ -425,6 +425,15 @@ export class DevicesService {
       )
   }
 
+  getWsmanOperations (): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/amt/explorer`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   executeExplorerCall (guid: string, call: string): Observable<any> {
     const query = `${environment.mpsServer}/api/v1/amt/explorer/${guid}/${call}`
     return this.http.get<any>(query)

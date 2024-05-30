@@ -18,13 +18,26 @@ import { DevicesService } from '../devices/devices.service'
 export class ExplorerComponent {
   XMLData: any
   editorOptions = { theme: 'vs-dark', language: 'xml', minimap: { enabled: false } }
-  wsmanOperations = ['AMT_AlarmClockService']
-  selectedWsmanOperation = 'AMT_AlarmClockService'
+  wsmanOperations: string[] = []
+  selectedWsmanOperation = ''
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService, public readonly activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit (): void {
+    this.devicesService.getWsmanOperations().subscribe(data => {
+      this.wsmanOperations = data
+      this.selectedWsmanOperation = this.wsmanOperations[0]
+      this.activatedRoute.params.subscribe(params => {
+        this.devicesService.executeExplorerCall(params.id as string, this.selectedWsmanOperation).subscribe(data => {
+          this.XMLData = data
+        })
+      })
+    })
+  }
+
+  inputChanged (value: any): void {
+    this.selectedWsmanOperation = value
     this.activatedRoute.params.subscribe(params => {
       this.devicesService.executeExplorerCall(params.id as string, this.selectedWsmanOperation).subscribe(data => {
         this.XMLData = data

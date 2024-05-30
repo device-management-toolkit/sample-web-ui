@@ -2,7 +2,7 @@
   <div class="flex flex-row" style="width: 100%;">
     <div class="flex-50">WSMAN Explorer</div>
     <div class="flex flex-50 items-center justify-end">
-      <mat-select style="width:350px" [(ngModel)]="selectedWsmanOperation">
+      <mat-select style="width:350px" [(ngModel)]="selectedWsmanOperation" (selectionChange)="inputChanged($event.value)">
         <mat-option *ngFor="let item of wsmanOperations" [value]="item">{{item}}</mat-option>
       </mat-select>
     </div>
