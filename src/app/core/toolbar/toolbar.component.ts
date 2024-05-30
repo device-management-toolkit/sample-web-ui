@@ -46,6 +46,22 @@ export class ToolbarComponent implements OnInit {
            this.rpsVersions = data
           }
         })
+      } else if (this.isLoggedIn && !environment.cloud) {
+        this.authService.getConsoleVersion().subscribe({
+          error: () => {
+            // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
+          },
+          next: (data) => {
+            if (data.current !== 'DEVELOPMENT') {
+              if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
+                const ref = this.snackBar.open('A new version of console is available!', 'Download', SnackbarDefaults.longSuccess)
+                ref.onAction().subscribe(() => {
+                  window.open(data.latest.html_url as string)
+                })
+              }
+            }
+          }
+        })
       }
     })
   }

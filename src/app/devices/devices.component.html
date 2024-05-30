@@ -57,17 +57,11 @@
       <!-- select Column -->
       <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [checked]="areAllDevicesSelected()"
-            [indeterminate]="areOnlySomeDevicesSelected()">
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="areAllDevicesSelected()" [indeterminate]="areOnlySomeDevicesSelected()">
           </mat-checkbox>
         </mat-header-cell>
         <mat-cell *matCellDef="let device">
-          <mat-checkbox
-            (click)="$event.stopPropagation()"
-            (change)="$event ? selectedDevices.toggle(device) : null"
-            [checked]="selectedDevices.isSelected(device)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectedDevices.toggle(device) : null" [checked]="selectedDevices.isSelected(device)">
           </mat-checkbox>
         </mat-cell>
       </ng-container>
@@ -92,8 +86,13 @@
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+          @if(isCloudMode){
           {{ translateConnectionStatus(element.connectionStatus) }}
           <span *ngIf="element.connectionStatus">&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+          }@else{
+          Power: {{ powerStates[element.powerstate] }}
+          }
+
         </mat-cell>
       </ng-container>
 
@@ -129,6 +128,9 @@
             </button>
             <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
               <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">
+              <mat-icon>search</mat-icon>
             </button>
           </div>
         </mat-cell>

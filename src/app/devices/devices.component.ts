@@ -37,8 +37,9 @@ export class DevicesComponent implements OnInit {
   public bulkActionResponses: any[] = []
   public isTrue: boolean = false
   public powerStates: any
-
+  public isCloudMode: boolean = true
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions', 'notification']
+
   pageEventOptions: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -50,6 +51,10 @@ export class DevicesComponent implements OnInit {
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService) {
     this.selectedDevices = new SelectionModel<Device>(true, [])
     this.powerStates = this.devicesService.PowerStates
+    this.isCloudMode = environment.cloud
+    if (!this.isCloudMode) {
+      this.displayedColumns = ['select', 'hostname', 'status', 'tags', 'actions', 'notification']
+    }
   }
 
   ngOnInit (): void {
@@ -93,7 +98,10 @@ export class DevicesComponent implements OnInit {
       .subscribe(res => {
         this.devices = res.data
         this.totalCount = res.totalCount
-        const deviceIds = this.devices.filter(z => z.connectionStatus).map(x => x.guid)
+        let deviceIds = this.devices.map(x => x.guid)
+        if (environment.cloud) {
+        deviceIds = this.devices.filter(z => z.connectionStatus).map(x => x.guid)
+        }
         from(deviceIds)
           .pipe(
             map(id => {

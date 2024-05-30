@@ -22,6 +22,7 @@ import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-det
 import { WirelessComponent } from './wireless/wireless.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
 import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
+import { ExplorerComponent } from './explorer/explorer.component'
 
 const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'devices/:id/event-log', component: EventLogComponent },
   { path: 'devices/:id/kvm', component: KvmComponent },
   { path: 'devices/:id/sol', component: SolComponent },
+  { path: 'devices/:id/explorer', component: ExplorerComponent },
   { path: 'profiles', component: ProfilesComponent },
   {
     path: 'profiles/new',

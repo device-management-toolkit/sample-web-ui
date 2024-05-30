@@ -20,10 +20,14 @@ import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sur
   styleUrls: ['./device-toolbar.component.scss']
 })
 export class DeviceToolbarComponent implements OnInit {
-  @Input() deviceState: number = 0
-  @Input() public isLoading = false
-  public device: Device | null = null
+  @Input()
+  public isLoading = false
+
+  @Input()
   public deviceId: string = ''
+
+  deviceState: number = 0
+  public device: Device | null = null
   public powerOptions = [
     {
       label: 'Hibernate',
@@ -61,13 +65,13 @@ export class DeviceToolbarComponent implements OnInit {
   constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, private readonly matDialog: MatDialog) { }
 
   ngOnInit (): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.deviceId = params.id
       this.devicesService.getDevice(this.deviceId).subscribe(data => {
         this.device = data
         this.devicesService.device.next(this.device)
       })
-    })
+      this.devicesService.deviceState.subscribe(state => {
+        this.deviceState = state
+      })
   }
 
   sendPowerAction (action: number): void {

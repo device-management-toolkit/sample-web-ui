@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/ui
 /tmp
 /out-tsc
 *.exe

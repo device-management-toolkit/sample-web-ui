@@ -26,7 +26,6 @@ import { DeviceDetailComponent } from './devices/device-detail/device-detail.com
 import { MomentModule } from 'ngx-moment'
 import { KvmComponent } from './devices/kvm/kvm.component'
 import { SolComponent } from './devices/sol/sol.component'
-
 import { AuditLogComponent } from './devices/audit-log/audit-log.component'
 import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.component'
 import { AuthorizeInterceptor } from './authorize.interceptor'
@@ -36,12 +35,17 @@ import { SolModule, IderModule, KvmModule } from '@open-amt-cloud-toolkit/ui-too
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from './devices/device-enable-kvm/device-enable-kvm.component'
 import { DeviceEnableSolComponent } from './devices/device-enable-sol/device-enable-sol.component'
+import { AlarmsComponent } from './devices/alarms/alarms.component'
 // import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt'
 import { EventLogComponent } from './devices/event-log/event-log.component'
 // import { EventChannelComponent } from './event-channel/event-channel.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
 import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
 import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component'
+import { HardwareInformationComponent } from './devices/hardware-information/hardware-information.component'
+import { GeneralComponent } from './devices/general/general.component'
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2'
+import { ExplorerComponent } from './explorer/explorer.component'
 
 // const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
@@ -58,6 +62,8 @@ import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component
     DomainDetailComponent,
     ConfigDetailComponent,
     DeviceDetailComponent,
+    ExplorerComponent,
+    AlarmsComponent,
     KvmComponent,
     SolComponent,
     AuditLogComponent,
@@ -81,7 +87,10 @@ import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component
     BrowserAnimationsModule,
     SolModule,
     IderModule,
+    GeneralComponent,
+    HardwareInformationComponent,
     // MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    MonacoEditorModule.forRoot(),
     SharedModule.forRoot(),
     RouterModule.forRoot([
       {

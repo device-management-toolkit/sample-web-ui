@@ -1,3 +1,2 @@
-<app-device-toolbar [deviceState]="deviceState" (stopSol)="stopSol()" [isLoading]="isLoading"></app-device-toolbar>
 <amt-sol *ngIf="readyToLoadSol" [deviceConnection]="deviceConnection" (deviceStatus)="deviceStatus($event)" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken">
 </amt-sol>

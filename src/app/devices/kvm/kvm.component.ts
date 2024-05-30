@@ -23,9 +23,21 @@ import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm
   styleUrls: ['./kvm.component.scss']
 })
 export class KvmComponent implements OnInit, OnDestroy {
+  @Input()
+  public deviceId = ''
+
+  @Output()
+  deviceKVMConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+
+  @Output()
+  deviceIDERConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+
+  @Output()
+  selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
+
+  deviceState: number = 0
   results: any
   isLoading: boolean = false
-  deviceId: string = ''
   powerState: any = 0
   mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   readyToLoadKvm: boolean = false
@@ -34,10 +46,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   selected: number = 1
   isDisconnecting: boolean = false
   isIDERActive: boolean = false
-  @Input() deviceState: number = 0
-  @Output() deviceKVMConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
-  @Output() deviceIDERConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
-  @Output() selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
+
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
   amtFeatures?: AmtFeaturesResponse
@@ -381,6 +390,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       }
       this.isDisconnecting = false
     }
+    this.devicesService.deviceState.emit(this.deviceState)
   }
 
   deviceIDERStatus = (event: any): void => {

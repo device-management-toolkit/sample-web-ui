@@ -1,0 +1,96 @@
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
+
+import { Component, Input, OnInit } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { IPSAlarmClockOccurrence } from 'src/models/models'
+import { DevicesService } from '../devices.service'
+import { catchError, finalize, throwError } from 'rxjs'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+
+@Component({
+  selector: 'app-alarms',
+  templateUrl: './alarms.component.html',
+  styleUrl: './alarms.component.scss'
+})
+export class AlarmsComponent implements OnInit {
+  @Input()
+  public deviceId = ''
+
+  public alarmOccurrences: IPSAlarmClockOccurrence[] = []
+  public newAlarmForm: FormGroup = this.fb.group({
+    alarmName: '',
+    interval: 0,
+    startTime: new FormControl(new Date()),
+    hour: '12',
+    minute: '00'
+  })
+
+  public hourOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']
+  public minuteOptions = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']
+  public deleteOnCompletion: FormControl<any>
+  public isLoading: boolean = true
+
+  constructor (public snackBar: MatSnackBar, private readonly devicesService: DevicesService, public fb: FormBuilder) {
+    this.deleteOnCompletion = new FormControl<boolean>(true)
+  }
+
+  ngOnInit (): void {
+    this.loadAlarms()
+  }
+
+  loadAlarms (): void {
+    this.devicesService.getAlarmOccurrences(this.deviceId).pipe(
+      catchError(err => {
+        this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      }),
+      finalize(() => {
+        this.isLoading = false
+      })
+    ).subscribe(results => {
+      this.alarmOccurrences = results
+    })
+  }
+
+  deleteAlarm = (instanceID: string): void => {
+    if (!window.confirm('Deleting: ' + instanceID)) return
+
+    this.devicesService.deleteAlarmOccurrence(this.deviceId, instanceID).pipe(finalize(() => {
+
+    })).subscribe(results => {
+      this.loadAlarms()
+    }, err => {
+      this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+      return throwError(err)
+    })
+  }
+
+  addAlarm = (): void => {
+    if (this.newAlarmForm.valid) {
+      const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
+      const startTime: Date = alarm.startTime
+      startTime.setHours(alarm.hour as number)
+      startTime.setMinutes(alarm.minute as number)
+      const payload = {
+        ElementName: alarm.alarmName,
+        StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
+        Interval: alarm.interval,
+        DeleteOnCompletion: this.deleteOnCompletion.value
+      }
+
+      this.isLoading = true
+      this.devicesService.addAlarmOccurrence(this.deviceId, payload).pipe(finalize(() => {
+        this.isLoading = false
+      })).subscribe(results => {
+        this.loadAlarms()
+      }, err => {
+        this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+        return throwError(err)
+      })
+    }
+  }
+}
