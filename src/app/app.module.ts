@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { SharedModule } from './shared/shared.module'
 import { CoreModule } from './core/core.module'
 import { DevicesComponent } from './devices/devices.component'
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { DomainsComponent } from './domains/domains.component'
 import { ProfilesComponent } from './profiles/profiles.component'
 import { ConfigsComponent } from './configs/configs.component'
@@ -32,7 +32,7 @@ import { DeviceToolbarComponent } from './devices/device-toolbar/device-toolbar.
 import { AuthorizeInterceptor } from './authorize.interceptor'
 import { WirelessComponent } from './wireless/wireless.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
-import { SolModule, IderModule, KvmModule } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { SOLComponent, IDERComponent, KVMComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
 import { DeviceUserConsentComponent } from './devices/device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from './devices/device-enable-kvm/device-enable-kvm.component'
 import { DeviceEnableSolComponent } from './devices/device-enable-sol/device-enable-sol.component'
@@ -46,62 +46,60 @@ import { DeviceEditTagsComponent } from './devices/edit-tags/edit-tags.component
 // const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = { protocol: 'wss' }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DevicesComponent,
-    DomainsComponent,
-    ProfilesComponent,
-    ConfigsComponent,
-    LoginComponent,
-    DashboardComponent,
-    ProfileDetailComponent,
-    DomainDetailComponent,
-    ConfigDetailComponent,
-    DeviceDetailComponent,
-    KvmComponent,
-    SolComponent,
-    AuditLogComponent,
-    DeviceToolbarComponent,
-    WirelessComponent,
-    WirelessDetailComponent,
-    IEEE8021xComponent,
-    IEEE8021xDetailComponent,
-    DeviceUserConsentComponent,
-    DeviceEnableKvmComponent,
-    DeviceEnableSolComponent,
-    DeviceEditTagsComponent,
-    EventLogComponent
-  ],
-  imports: [
-    MomentModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    CoreModule,
-    BrowserAnimationsModule,
-    SolModule,
-    IderModule,
-    // MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-    SharedModule.forRoot(),
-    RouterModule.forRoot([
-      {
-        path: '',
-        component: DashboardComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      }
-    ]),
-    KvmModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthorizeInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+ declarations: [
+        AppComponent,
+        DevicesComponent,
+        DomainsComponent,
+        ProfilesComponent,
+        ConfigsComponent,
+        LoginComponent,
+        DashboardComponent,
+        ProfileDetailComponent,
+        DomainDetailComponent,
+        ConfigDetailComponent,
+        DeviceDetailComponent,
+        KvmComponent,
+        SolComponent,
+        AuditLogComponent,
+        DeviceToolbarComponent,
+        WirelessComponent,
+        WirelessDetailComponent,
+        IEEE8021xComponent,
+        IEEE8021xDetailComponent,
+        DeviceUserConsentComponent,
+        DeviceEnableKvmComponent,
+        DeviceEnableSolComponent,
+        DeviceEditTagsComponent,
+        EventLogComponent
+    ],
+    bootstrap: [AppComponent],
+imports: [MomentModule,
+        BrowserModule,
+        AppRoutingModule,
+        CoreModule,
+        BrowserAnimationsModule,
+        SOLComponent,
+        IDERComponent,
+        // MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+        SharedModule.forRoot(),
+        RouterModule.forRoot([
+            {
+                path: '',
+                component: DashboardComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            }
+        ]),
+        KVMComponent],
+providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthorizeInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule { }

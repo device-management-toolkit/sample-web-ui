@@ -4,14 +4,7 @@
 **********************************************************************/
 
 import { Injectable } from '@angular/core'
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-  HttpResponse
-} from '@angular/common/http'
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { catchError, tap } from 'rxjs/operators'
