@@ -16,15 +16,15 @@ h1,
   height: 48px;
   line-height: 1;
   width: 48px;
-  color: mat.get-color-from-palette($openamtui-primary, A200);
+  color: mat.m2-get-color-from-palette($openamtui-primary, A200);
 }
 .mat-mdc-icon-button {
     width: 100px;
     height: 100px;
-    border: 2px solid mat.get-color-from-palette($openamtui-accent, A100);
+    border: 2px solid mat.m2-get-color-from-palette($openamtui-accent, A100);
 }
 .mat-mdc-card {
-    background-color: mat.get-color-from-palette($openamtui-accent, A100);
+    background-color: mat.m2-get-color-from-palette($openamtui-accent, A100);
 }
 
 mat-divider {
