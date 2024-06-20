@@ -37,6 +37,7 @@ export class DevicesComponent implements OnInit {
   public bulkActionResponses: any[] = []
   public isTrue: boolean = false
   public powerStates: any
+  public deleteDeviceLabel: string = environment.cloud ? 'Deactivate the Device' : 'Remove the Device'
 
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions', 'notification']
   pageEventOptions: PageEventOptions = {
