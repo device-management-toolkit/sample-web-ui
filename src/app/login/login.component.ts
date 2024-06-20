@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
 import { AuthService } from '../auth.service'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { AboutComponent } from '../core/about/about.component'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
 
           const storedValue = localStorage.getItem('doNotShowAgain')
           const doNotShowNotice = storedValue ? JSON.parse(storedValue) : false
-          if (!doNotShowNotice) {
+          if (!doNotShowNotice && environment.cloud) {
             this.dialog.open(AboutComponent)
           }
         },
