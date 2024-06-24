@@ -1,6 +1,10 @@
 <mat-toolbar color="primary">
   <div class="flex-50">
-    Open AMT Cloud Toolkit Sample UI
+    @if(cloudMode === true) {
+      Open AMT Cloud Toolkit Sample UI
+    } @else {
+      Console
+    }
   </div>
   <div class="flex flex-50 justify-end items-center">
     @if(cloudMode === true){

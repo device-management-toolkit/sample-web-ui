@@ -1,3 +1,5 @@
+## [3.6.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.6.0...v3.6.1) (2024-06-05)
+
 # [3.6.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.5...v3.6.0) (2024-05-10)
 
 

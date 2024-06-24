@@ -1,29 +1,50 @@
 <h2 mat-dialog-title>
-  <mat-icon color="warn">warning</mat-icon>
-  About the Open AMT Sample Web UI
+  @if(cloudMode === true) {
+    <mat-icon color="warn">warning</mat-icon>
+    About the Open AMT Sample Web UI
+  } @else {
+    About Console 
+  }
 </h2>
 <mat-dialog-content class="mat-typography">
 
-  <br />
-  <p>
-    This reference implementation demonstrates the APIs and general functionality of the Open Active Management
-    Technology Cloud Toolkit and is NOT meant for production use.
-  </p>
-  <mat-divider></mat-divider>
-  <br />
-  <h3>This sample UI is meant for the following:</h3>
-  <ul>
-    <li> Learn how the Open AMT Cloud Toolkit manages devices </li>
-    <li> Set Up Profiles, Configuration, and Domains </li>
-    <li> Understand Open AMT's implementation of the REST APIs and how they can be used in your own
-      application </li>
-    <li> How to use the UI Toolkit </li>
+  @if(cloudMode === true) {
+    <br />
+    <p>
+      This reference implementation demonstrates the APIs and general functionality of the Open Active Management
+      Technology Cloud Toolkit and is NOT meant for production use.
+    </p>
+    <mat-divider></mat-divider>
+    <br />
+    <h3>This sample UI is meant for the following:</h3>
+    <ul>
+      <li> Learn how the Open AMT Cloud Toolkit manages devices </li>
+      <li> Set Up Profiles, Configuration, and Domains </li>
+      <li> Understand Open AMT's implementation of the REST APIs and how they can be used in your own
+        application </li>
+      <li> How to use the UI Toolkit </li>
     </ul>
-
+  } @else {
+    <p>
+      Console is a 1:1 out-of-band management tool for managing Intel AMT on on-premises style networks.
+      After a device is added, Console communicates with AMT directly over the local network providing a 
+      quick and easy way to connect and manage all of your AMT devices.
+    </p>
+    <mat-divider></mat-divider>
+    <br />
+    <h3>Console provides the following features and more:</h3>
+    <ul>
+      <li> Remote power actions </li>
+      <li> Redirection features like Remote Keyboard, Video, Mouse (KVM) and Serial-over-LAN (SOL) </li>
+      <li> Device hardware information and logging </li>
+    </ul>
+  }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <label>
-    <input type="checkbox" [(ngModel)]="doNotShowAgain"> Do not show again
-  </label>
+  @if (cloudMode === true) {
+    <label>
+      <input type="checkbox" [(ngModel)]="doNotShowAgain"> Do not show again
+    </label>
+  }
   <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>Got it</button>
 </mat-dialog-actions>

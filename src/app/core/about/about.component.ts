@@ -4,6 +4,7 @@
 **********************************************************************/
 
 import { Component, OnDestroy } from '@angular/core'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-about',
@@ -12,6 +13,7 @@ import { Component, OnDestroy } from '@angular/core'
 })
 export class AboutComponent implements OnDestroy {
   doNotShowAgain: boolean = false
+  cloudMode: boolean = environment.cloud
 
   ngOnInit (): void {
     const storedValue = localStorage.getItem('doNotShowAgain')
