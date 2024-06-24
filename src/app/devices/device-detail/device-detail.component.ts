@@ -73,10 +73,13 @@ ngOnInit (): void {
   this.activatedRoute.params.subscribe(params => {
     this.isLoading = true
     this.deviceId = params.id
+    this.currentView = params.component || 'general'
   })
 }
 
 setCurrentView (category: any): void {
   this.currentView = category.component
+  // update current URL
+  void this.router.navigate([`/devices/${this.deviceId}/${category.component}`])
 }
 }

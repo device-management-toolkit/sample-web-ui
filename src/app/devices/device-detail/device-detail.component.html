@@ -3,7 +3,7 @@
   <mat-sidenav mode="side" position="end" opened style="width: 250px">
     <mat-list>
       @for(item of categories; track item){
-      <a mat-list-item (click)="setCurrentView(item)">
+      <a mat-list-item (click)="setCurrentView(item)" style="cursor: pointer;">
         <h3 matListItemTitle>{{item.name}}</h3>
         <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
         <p matListItemLine>{{item.description}}</p>
@@ -13,6 +13,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     @switch (currentView) {
+    @default{
+    <app-general [deviceId]="deviceId"></app-general>
+    }
     @case('general'){
     <app-general [deviceId]="deviceId"></app-general>
     }
@@ -32,6 +35,8 @@
     <app-event-log [deviceId]="deviceId"></app-event-log>
     } @case('alarms'){
     <app-alarms [deviceId]="deviceId"></app-alarms>
+    } @case('explorer'){
+    <app-explorer></app-explorer>
     }
     }
   </mat-sidenav-content>

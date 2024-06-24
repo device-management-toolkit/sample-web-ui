@@ -129,9 +129,9 @@
             <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
               <mat-icon>delete</mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">
+            <!-- <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">
               <mat-icon>search</mat-icon>
-            </button>
+            </button> -->
           </div>
         </mat-cell>
       </ng-container>
