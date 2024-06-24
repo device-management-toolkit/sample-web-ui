@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { SelectionModel } from '@angular/cdk/collections'
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange } from '@angular/material/select'
@@ -21,14 +21,17 @@ import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
 import { caseInsensitiveCompare } from '../../utils'
 import { environment } from 'src/environments/environment'
 import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
+import { MatTableDataSource } from '@angular/material/table'
+import { MatSort } from '@angular/material/sort'
 
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
   styleUrls: ['./devices.component.scss']
 })
-export class DevicesComponent implements OnInit {
-  public devices: Device[] = []
+export class DevicesComponent implements OnInit, AfterViewInit {
+  public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
+
   public totalCount: number = 0
   public isLoading = true
   public tags: string[] = []
@@ -47,6 +50,7 @@ export class DevicesComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
+  @ViewChild(MatSort) sort!: MatSort
 
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService) {
     this.selectedDevices = new SelectionModel<Device>(true, [])
@@ -59,6 +63,16 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit (): void {
     this.getTagsThenDevices()
+  }
+
+  ngAfterViewInit (): void {
+    this.devices.paginator = this.paginator
+    this.devices.sort = this.sort
+  }
+
+  applyFilter (event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value
+    this.devices.filter = filterValue.trim().toLowerCase()
   }
 
   // in order to maintain tag filtering when editing tags,
@@ -91,16 +105,16 @@ export class DevicesComponent implements OnInit {
         finalize(() => {
           const prevSelected = this.selectedDevices.selected.map(d => d.guid)
           this.selectedDevices.clear()
-          const stillSelected = this.devices.filter(d => prevSelected.includes(d.guid))
+          const stillSelected = this.devices.data.filter(d => prevSelected.includes(d.guid))
           this.selectedDevices.select(...stillSelected)
           this.isLoading = false
         }))
       .subscribe(res => {
-        this.devices = res.data
+        this.devices.data = res.data
         this.totalCount = res.totalCount
-        let deviceIds = this.devices.map(x => x.guid)
+        let deviceIds = this.devices.data.map(x => x.guid)
         if (environment.cloud) {
-        deviceIds = this.devices.filter(z => z.connectionStatus).map(x => x.guid)
+        deviceIds = this.devices.data.filter(z => z.connectionStatus).map(x => x.guid)
         }
         from(deviceIds)
           .pipe(
@@ -111,7 +125,7 @@ export class DevicesComponent implements OnInit {
             }))
           .subscribe(results => {
             results.subscribe(x => {
-              (this.devices.find(y => y.guid === x.guid) as any).powerstate = x.powerstate
+              (this.devices.data.find(y => y.guid === x.guid) as any).powerstate = x.powerstate
             })
           })
       })
@@ -154,7 +168,7 @@ export class DevicesComponent implements OnInit {
         forkJoin(requests).subscribe(result => {
           this.isLoading = false
           result.forEach(res => {
-            (this.devices.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+            (this.devices.data.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
           })
           this.resetResponse()
           this.getTagsThenDevices()
@@ -164,7 +178,7 @@ export class DevicesComponent implements OnInit {
   }
 
   editTagsForDevice (deviceId: string): void {
-    const device = this.devices.find(d => d.guid === deviceId)
+    const device = this.devices.data.find(d => d.guid === deviceId)
     if (!device) return // device not found
     const editedTags = [...device.tags]
     const dialogRef = this.dialog.open(DeviceEditTagsComponent, { data: editedTags })
@@ -181,22 +195,22 @@ export class DevicesComponent implements OnInit {
   }
 
   areOnlySomeDevicesSelected (): boolean {
-    return !this.areAllDevicesSelected() && this.selectedDevices.selected.length > 0
+    return !this.isAllSelected() && this.selectedDevices.selected.length > 0
   }
 
-  areAllDevicesSelected (): boolean {
-    return this.selectedDevices.selected.length === this.devices.length
+  isAllSelected (): boolean {
+    return this.selectedDevices.selected.length === this.devices.data.length
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle (): void {
-    this.areAllDevicesSelected()
+    this.isAllSelected()
       ? this.selectedDevices.clear()
-      : this.devices.forEach(device => this.selectedDevices.select(device))
+      : this.devices.data.forEach(device => this.selectedDevices.select(device))
   }
 
   isNoData (): boolean {
-    return !this.isLoading && this.devices.length === 0
+    return !this.isLoading && this.devices.data.length === 0
   }
 
   async navigateTo (path: string): Promise<void> {
@@ -231,7 +245,7 @@ export class DevicesComponent implements OnInit {
     forkJoin(requests).subscribe(result => {
       this.isLoading = false
       result.forEach(res => {
-        (this.devices.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+        (this.devices.data.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
       })
       this.resetResponse()
     })
@@ -241,16 +255,16 @@ export class DevicesComponent implements OnInit {
     this.isLoading = true
     this.devicesService.sendPowerAction(deviceId, action).pipe(
       catchError((): any => {
-        (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
+        (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
       }),
       finalize(() => {
         this.isLoading = false
       })
     ).subscribe(data => {
-      (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = data.Body.ReturnValueStr
+      (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = data.Body.ReturnValueStr
       this.resetResponse()
       this.devicesService.getPowerState(deviceId).pipe(delay(2000)).subscribe(z => {
-        (this.devices.find(y => y.guid === deviceId) as any).powerstate = z.powerstate
+        (this.devices.data.find(y => y.guid === deviceId) as any).powerstate = z.powerstate
       })
     }, err => {
       console.error(err)
@@ -268,13 +282,17 @@ export class DevicesComponent implements OnInit {
           })
         ).subscribe({
           next: (data) => {
-            (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = data?.status ?? ''
-            setTimeout(() => {
-              this.getTagsThenDevices()
-            }, 3000)
+            (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = data?.status ?? ''
+            if (environment.cloud) {
+              setTimeout(() => {
+                this.getTagsThenDevices()
+              }, 3000)
+            } else {
+              this.getDevices()
+            }
           },
           error: (err) => {
-            (this.devices.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
+            (this.devices.data.find(x => x.guid === deviceId) as any).StatusMessage = 'ERROR'
             console.error(err)
           }
         })
@@ -300,7 +318,7 @@ export class DevicesComponent implements OnInit {
         forkJoin(requests).subscribe(result => {
           this.isLoading = false
           result.forEach(res => {
-            (this.devices.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+            (this.devices.data.find(i => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
           })
           setTimeout(() => {
             this.getTagsThenDevices()
@@ -312,7 +330,7 @@ export class DevicesComponent implements OnInit {
 
   resetResponse (): void {
     setTimeout(() => {
-      const found: any = this.devices.find((item: any) => item.StatusMessage === 'SUCCESS')
+      const found: any = this.devices.data.find((item: any) => item.StatusMessage === 'SUCCESS')
       if (found) {
         found.StatusMessage = ''
       }

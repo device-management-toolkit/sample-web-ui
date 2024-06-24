@@ -34,6 +34,12 @@
 <mat-card>
   <mat-card-header>
     <div class="flex-row flex-wrap flex-1">
+      <div class="flex flex-66" style="width: 66%;">
+        <mat-form-field data-cy="filterSearch" style="width: 100%;">
+          <input matInput  (keyup)="applyFilter($event)"  placeholder="Filter Devices...." />
+          <mat-hint>Enter text to filter current page</mat-hint>
+        </mat-form-field>
+      </div>
       <div class="flex flex-33 justify-end">
         <mat-form-field data-cy="filterTags">
           <mat-label>Filter Tags</mat-label>
@@ -52,12 +58,12 @@
       <span *ngIf="filteredTags.length">No Devices Match Filter Selection</span>
     </h3>
 
-    <mat-table [dataSource]="devices" *ngIf="!isNoData()">
+    <mat-table [dataSource]="devices" *ngIf="!isNoData()" matSort>
 
       <!-- select Column -->
       <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="areAllDevicesSelected()" [indeterminate]="areOnlySomeDevicesSelected()">
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected()" [indeterminate]="areOnlySomeDevicesSelected()">
           </mat-checkbox>
         </mat-header-cell>
         <mat-cell *matCellDef="let device">
@@ -98,7 +104,7 @@
 
       <!-- tags Column -->
       <ng-container matColumnDef="tags">
-        <mat-header-cell *matHeaderCellDef>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           <!-- include this always hidden icon to match spacing in the cell -->
           <mat-icon class="alwaysHidden">edit</mat-icon>
           Tags

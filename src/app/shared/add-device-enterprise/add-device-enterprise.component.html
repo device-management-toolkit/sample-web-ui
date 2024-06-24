@@ -33,7 +33,7 @@
       <mat-error *ngIf="form.get('password')?.errors?.minlength">Password must be at least 8 characters long</mat-error>
     </mat-form-field>
 
-    <mat-checkbox formControlName="useTls" class="flex flex-1">Use TLS</mat-checkbox>
+    <mat-checkbox formControlName="useTLS" class="flex flex-1">Use TLS</mat-checkbox>
     <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">Allow Self-Signed Certificates</mat-checkbox>
 
     <button mat-raised-button color="primary" type="submit" >Submit</button>

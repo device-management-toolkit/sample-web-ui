@@ -100,12 +100,12 @@ describe('DevicesComponent', () => {
     expect(result).toBe('Connected')
   })
   it('should determine if all selected (false)', () => {
-    const result = component.areAllDevicesSelected()
+    const result = component.isAllSelected()
     expect(result).toBeFalse()
   })
   it('should determine if all selected (true)', () => {
     component.devices.forEach(d => component.selectedDevices.select(d))
-    const result = component.areAllDevicesSelected()
+    const result = component.isAllSelected()
     expect(result).toBeTrue()
   })
   it('should translate connection status - true', () => {

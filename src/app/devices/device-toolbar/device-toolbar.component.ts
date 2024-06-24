@@ -13,6 +13,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
+import { environment } from 'src/environments/environment'
+import { AddDeviceEnterpriseComponent } from 'src/app/shared/add-device-enterprise/add-device-enterprise.component'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -62,7 +64,11 @@ export class DeviceToolbarComponent implements OnInit {
     }
   ]
 
-  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, private readonly matDialog: MatDialog) { }
+  constructor (public snackBar: MatSnackBar,
+    public readonly activatedRoute: ActivatedRoute,
+    public readonly router: Router,
+    private readonly devicesService: DevicesService,
+    private readonly matDialog: MatDialog) { }
 
   ngOnInit (): void {
       this.devicesService.getDevice(this.deviceId).subscribe(data => {
@@ -72,6 +78,21 @@ export class DeviceToolbarComponent implements OnInit {
       this.devicesService.deviceState.subscribe(state => {
         this.deviceState = state
       })
+  }
+
+  editDevice (): void {
+    if (!environment.cloud) {
+      const sub = this.matDialog.open(AddDeviceEnterpriseComponent, {
+        height: '500px',
+        width: '600px',
+        data: this.device
+
+      })
+      sub.afterClosed().subscribe(() => {
+        window.location.reload()
+        this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+      })
+    }
   }
 
   sendPowerAction (action: number): void {

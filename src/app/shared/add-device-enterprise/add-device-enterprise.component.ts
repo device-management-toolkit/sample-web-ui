@@ -3,9 +3,9 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { Component } from '@angular/core'
+import { Component, Inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatDialogRef } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from 'src/app/devices/devices.service'
 import { Device } from 'src/models/models'
 
@@ -21,11 +21,18 @@ export class AddDeviceEnterpriseComponent {
     username: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
-    useTls: [false],
+    useTLS: [false],
     allowSelfSigned: [false]
   })
 
-  constructor (private readonly fb: FormBuilder, readonly dialog: MatDialogRef<AddDeviceEnterpriseComponent>, private readonly deviceService: DevicesService) {}
+  deviceOrig: Device
+  constructor (private readonly fb: FormBuilder,
+    readonly dialog: MatDialogRef<AddDeviceEnterpriseComponent>,
+    @Inject(MAT_DIALOG_DATA) public device: Device,
+    private readonly deviceService: DevicesService) {
+      this.deviceOrig = device
+      this.form.patchValue(device)
+  }
 
   ngOnInit (): void {
 
@@ -35,10 +42,16 @@ export class AddDeviceEnterpriseComponent {
   submitForm (): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
-      this.deviceService.addDevice(device).subscribe((res) => {
-        this.dialog.close()
-      })
-      // Here, handle your form submission (e.g., send to an API)
+      if (this.deviceOrig.guid != null && this.deviceOrig.guid !== '') {
+        device.guid = this.deviceOrig.guid
+        this.deviceService.editDevice(device).subscribe((res) => {
+          this.dialog.close()
+        })
+      } else {
+        this.deviceService.addDevice(device).subscribe((res) => {
+          this.dialog.close()
+        })
+      }
     }
   }
 }

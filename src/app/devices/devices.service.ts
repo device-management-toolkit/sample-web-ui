@@ -310,6 +310,15 @@ export class DevicesService {
       )
   }
 
+  editDevice (device: Device): Observable<Device> {
+    return this.http.patch<Device>(`${environment.mpsServer}/api/v1/devices`, device)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getDevice (guid: string): Observable<Device> {
     const query = `${environment.mpsServer}/api/v1/devices/${guid}`
     return this.http.get<Device>(query)
