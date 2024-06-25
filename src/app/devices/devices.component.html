@@ -132,7 +132,7 @@
             <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
               <mat-icon>restart_alt</mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Deactivate the Device" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
+            <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
               <mat-icon>delete</mat-icon>
             </button>
             <!-- <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">

@@ -40,7 +40,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public bulkActionResponses: any[] = []
   public isTrue: boolean = false
   public powerStates: any
-  public isCloudMode: boolean = true
+  public isCloudMode: boolean = environment.cloud
+  public deleteDeviceLabel: string = this.isCloudMode ? 'Deactivate the Device' : 'Remove the Device'
   displayedColumns: string[] = ['select', 'hostname', 'guid', 'status', 'tags', 'actions', 'notification']
 
   pageEventOptions: PageEventOptions = {
@@ -55,7 +56,6 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public readonly router: Router, private readonly devicesService: DevicesService) {
     this.selectedDevices = new SelectionModel<Device>(true, [])
     this.powerStates = this.devicesService.PowerStates
-    this.isCloudMode = environment.cloud
     if (!this.isCloudMode) {
       this.displayedColumns = ['select', 'hostname', 'status', 'tags', 'actions', 'notification']
     }
