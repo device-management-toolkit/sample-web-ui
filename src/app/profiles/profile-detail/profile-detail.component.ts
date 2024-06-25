@@ -389,14 +389,6 @@ export class ProfileDetailComponent implements OnInit {
     this.updatePriorities()
   }
 
-  remove (tag: string): void {
-    const index = this.tags.indexOf(tag)
-
-    if (index >= 0) {
-      this.tags.splice(index, 1)
-    }
-  }
-
   drop (event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.selectedWifiConfigs, event.previousIndex, event.currentIndex)
     this.updatePriorities()
@@ -417,6 +409,14 @@ export class ProfileDetailComponent implements OnInit {
       this.tags.sort()
     }
     event.chipInput?.clear()
+  }
+
+  remove (tag: string): void {
+    const index = this.tags.indexOf(tag)
+
+    if (index >= 0) {
+      this.tags.splice(index, 1)
+    }
   }
 
   CIRAStaticWarning (): Observable<any> {

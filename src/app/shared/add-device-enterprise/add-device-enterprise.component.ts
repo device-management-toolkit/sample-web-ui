@@ -3,8 +3,10 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { Component, Inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatChipInputEvent } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from 'src/app/devices/devices.service'
 import { Device } from 'src/models/models'
@@ -25,12 +27,17 @@ export class AddDeviceEnterpriseComponent {
     allowSelfSigned: [false]
   })
 
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA]
+  tags: string[] = []
   deviceOrig: Device
   constructor (private readonly fb: FormBuilder,
     readonly dialog: MatDialogRef<AddDeviceEnterpriseComponent>,
     @Inject(MAT_DIALOG_DATA) public device: Device,
     private readonly deviceService: DevicesService) {
       this.deviceOrig = device
+      if (device != null) {
+        this.tags = device.tags || []
+      }
       this.form.patchValue(device)
   }
 
@@ -38,10 +45,28 @@ export class AddDeviceEnterpriseComponent {
 
   }
 
+  add (event: MatChipInputEvent): void {
+    const value = (event.value || '').trim()
+    if (value !== '' && !this.tags.includes(value)) {
+      this.tags.push(value)
+      this.tags.sort()
+    }
+    event.chipInput?.clear()
+  }
+
+  remove (tag: string): void {
+    const index = this.tags.indexOf(tag)
+
+    if (index >= 0) {
+      this.tags.splice(index, 1)
+    }
+  }
+
   // Method to submit form
   submitForm (): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
+      device.tags = this.tags
       if (this.deviceOrig.guid != null && this.deviceOrig.guid !== '') {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe((res) => {
