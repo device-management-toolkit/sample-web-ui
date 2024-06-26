@@ -1,23 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
 
-import { GeneralComponent } from './general.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+
+import { GeneralComponent } from './general.component'
 
 describe('GeneralComponent', () => {
-  let component: GeneralComponent;
-  let fixture: ComponentFixture<GeneralComponent>;
+  let component: GeneralComponent
+  let fixture: ComponentFixture<GeneralComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [GeneralComponent]
     })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(GeneralComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    .compileComponents()
+
+    fixture = TestBed.createComponent(GeneralComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

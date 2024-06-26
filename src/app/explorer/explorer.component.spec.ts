@@ -1,23 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*********************************************************************
+* Copyright (c) Intel Corporation 2022
+* SPDX-License-Identifier: Apache-2.0
+**********************************************************************/
 
-import { ExplorerComponent } from './explorer.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+
+import { ExplorerComponent } from './explorer.component'
 
 describe('ExplorerComponent', () => {
-  let component: ExplorerComponent;
-  let fixture: ComponentFixture<ExplorerComponent>;
+  let component: ExplorerComponent
+  let fixture: ComponentFixture<ExplorerComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ExplorerComponent]
     })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(ExplorerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    .compileComponents()
+
+    fixture = TestBed.createComponent(ExplorerComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
