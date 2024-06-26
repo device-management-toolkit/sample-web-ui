@@ -9,55 +9,58 @@
     </button>
   </div>
 </mat-toolbar>
-<mat-progress-bar mode='indeterminate' *ngIf="isLoading!==false"></mat-progress-bar>
+@if (isLoading!==false) {
+  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+}
 <mat-card>
   <mat-card-content>
-    <h3 *ngIf="isNoData()" class="flex justify-center">No Wireless Configs</h3>
-    <mat-table [dataSource]="configs" *ngIf="!isNoData()">
-      <!-- name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
-      </ng-container>
-
-      <!-- server Column -->
-      <ng-container matColumnDef="authmethod">
-        <mat-header-cell *matHeaderCellDef> Authentication </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          {{ authenticationMethods.labelForValue(element.authenticationMethod ) }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="encryptionMethod">
-        <mat-header-cell *matHeaderCellDef> Encryption </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          {{ encryptionMethods.labelForValue(element.encryptionMethod ) }}
-        </mat-cell>
-      </ng-container>
-
-      <!-- activation Column -->
-      <ng-container matColumnDef="ssid">
-        <mat-header-cell *matHeaderCellDef> SSID </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.ssid }}
-        </mat-cell>
-      </ng-container>
-
-      <!-- remove Column -->
-      <ng-container matColumnDef="remove">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
-          <button mat-icon-button (click)="delete(row.profileName)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
-    </mat-table>
-    <div *ngIf="totalCount">
-      <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" (page)="pageChanged($event)" showFirstLastButtons>
-      </mat-paginator>
-    </div>
+    @if (isNoData()) {
+      <h3 class="flex justify-center">No Wireless Configs</h3>
+    }
+    @else {
+      <mat-table [dataSource]="configs">
+        <!-- name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
+        </ng-container>
+        <!-- server Column -->
+        <ng-container matColumnDef="authmethod">
+          <mat-header-cell *matHeaderCellDef> Authentication </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ authenticationMethods.labelForValue(element.authenticationMethod ) }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="encryptionMethod">
+          <mat-header-cell *matHeaderCellDef> Encryption </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ encryptionMethods.labelForValue(element.encryptionMethod ) }}
+          </mat-cell>
+        </ng-container>
+        <!-- activation Column -->
+        <ng-container matColumnDef="ssid">
+          <mat-header-cell *matHeaderCellDef> SSID </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.ssid }}
+          </mat-cell>
+        </ng-container>
+        <!-- remove Column -->
+        <ng-container matColumnDef="remove">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="delete(row.profileName)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
+      </mat-table>
+    }
+    @if (totalCount) {
+      <div>
+        <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" (page)="pageChanged($event)" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    }
   </mat-card-content>
 </mat-card>

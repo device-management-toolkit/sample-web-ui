@@ -4,9 +4,11 @@
     <mat-form-field style="margin-bottom:0">
       <mat-label>Choose encoding type</mat-label>
       <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
-        <mat-option *ngFor="let encode of encodings" [value]="encode.value">
-          {{ encode.viewValue }}
-        </mat-option>
+        @for (encode of encodings; track encode) {
+          <mat-option [value]="encode.value">
+            {{ encode.viewValue }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
   </div>
@@ -18,14 +20,18 @@
     }
   </div>
 </mat-toolbar>
-<mat-progress-spinner class="spinner" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
-<amt-kvm *ngIf="readyToLoadKvm" class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceKVMConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+@if (isLoading) {
+  <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+}
+@if (readyToLoadKvm) {
+  <amt-kvm class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceKVMConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+}
 <amt-ider class="ider"
-[deviceId]="deviceId"
-[mpsServer]="mpsServer"
-[authToken]="authToken"
-[deviceConnection]="deviceIDERConnection"
-[cdrom]="diskImage"
-[floppy]="null"
-(deviceStatus)="deviceIDERStatus($event)">
+  [deviceId]="deviceId"
+  [mpsServer]="mpsServer"
+  [authToken]="authToken"
+  [deviceConnection]="deviceIDERConnection"
+  [cdrom]="diskImage"
+  [floppy]="null"
+  (deviceStatus)="deviceIDERStatus($event)">
 </amt-ider>

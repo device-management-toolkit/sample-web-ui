@@ -19,14 +19,19 @@
             <input formControlName="password" [type]="loginPassInputType" matInput name="Password" placeholder="Password" minlength="7">
             <mat-error i18n=@@field.required>This field is required</mat-error>
             <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleLoginPassVisibility()">
-              <mat-icon *ngIf="loginPassInputType !== 'text'">visibility</mat-icon>
-              <mat-icon *ngIf="loginPassInputType === 'text'">visibility_off</mat-icon>
+              @if (loginPassInputType !== 'text') {
+                <mat-icon>visibility</mat-icon>
+              } @else {
+                <mat-icon>visibility_off</mat-icon>
+              }
             </button>
           </mat-form-field>
           <div class="flex flex-1 justify-center">
-            <mat-chip-listbox *ngIf="errorMessage !== ''">
-              <mat-chip-option color="accent">{{ errorMessage }}</mat-chip-option>
-            </mat-chip-listbox>
+            @if (errorMessage !== '') {
+              <mat-chip-listbox>
+                <mat-chip-option color="accent">{{ errorMessage }}</mat-chip-option>
+              </mat-chip-listbox>
+            }
           </div>
         </mat-card-content>
         <mat-card-actions class="flex-row">
