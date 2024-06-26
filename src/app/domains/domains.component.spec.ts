@@ -6,13 +6,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
 import { Domain, DomainsResponse } from 'src/models/models'
+import { RouterModule } from '@angular/router'
 
 describe('DomainsComponent', () => {
   let component: DomainsComponent
@@ -59,10 +58,9 @@ describe('DomainsComponent', () => {
     deleteSpy = domainsService.delete.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DomainsComponent],
-      providers: [{ provide: DomainsService, useValue: domainsService }]
-    }).compileComponents()
+    imports: [BrowserAnimationsModule, RouterModule, DomainsComponent],
+    providers: [{ provide: DomainsService, useValue: domainsService }]
+}).compileComponents()
   })
 
   beforeEach(() => {

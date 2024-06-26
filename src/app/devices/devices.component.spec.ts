@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
@@ -70,12 +69,11 @@ describe('DevicesComponent', () => {
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }])],
-      declarations: [DevicesComponent],
-      providers: [
-        { provide: DevicesService, useValue: devicesService }]
-
-    }).compileComponents()
+    imports: [BrowserAnimationsModule, RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]), DevicesComponent],
+    providers: [
+        { provide: DevicesService, useValue: devicesService }
+    ]
+}).compileComponents()
   })
 
   beforeEach(() => {

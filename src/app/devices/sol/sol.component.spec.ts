@@ -5,16 +5,14 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
-import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router'
-import { of, ReplaySubject, throwError } from 'rxjs'
+import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
+import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { SharedModule } from 'src/app/shared/shared.module'
-import { RouterTestingModule } from '@angular/router/testing'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
-import { userConsentData, userConsentResponse } from 'src/models/models'
+import { Device, userConsentData, userConsentResponse } from 'src/models/models'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -38,11 +36,13 @@ describe('SolComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
+    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'getDevice', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
+    devicesService.getDevice.and.returnValue(of({ hostname: 'test-hostname', guid: 'test-guid', mpsInstance: 'test-mps', mpsusername: 'admin', tags: [''], connectionStatus: true, friendlyName: 'test-friendlyName', tenantId: '1', dnsSuffix: 'dns', icon: 0 }))
     const reqUserConsentResponse: userConsentResponse = {} as any
+    devicesService.device = new Subject<Device>()
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of(reqUserConsentResponse))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
@@ -55,8 +55,10 @@ describe('SolComponent', () => {
     }
 
     @Component({
-      selector: 'amt-sol'
-    })
+    selector: 'amt-sol',
+    standalone: true,
+    imports: []
+})
     class TestAMTSOLComponent {
       @Input()
       deviceConnection: string = ''
@@ -74,8 +76,10 @@ describe('SolComponent', () => {
       deviceStatusChange = new EventEmitter<number>()
     }
     @Component({
-      selector: 'app-device-toolbar'
-    })
+    selector: 'app-device-toolbar',
+    standalone: true,
+    imports: []
+})
     class TestDeviceToolbarComponent {
       @Input()
       isLoading = false
@@ -85,14 +89,13 @@ describe('SolComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [SolComponent, TestDeviceToolbarComponent, TestAMTSOLComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, SolComponent, TestDeviceToolbarComponent, TestAMTSOLComponent],
+    providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
-      ]
-    }).compileComponents()
+    ]
+}).compileComponents()
 
     router = TestBed.inject(Router)
   })

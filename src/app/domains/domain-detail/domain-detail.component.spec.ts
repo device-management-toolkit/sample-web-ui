@@ -5,10 +5,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { DomainsService } from '../domains.service'
 
 import { DomainDetailComponent } from './domain-detail.component'
@@ -26,15 +24,15 @@ describe('DomainDetailComponent', () => {
     updateRecordSpy = domainsService.update.and.returnValue(of({}))
     createRecordSpy = domainsService.create.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DomainDetailComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, DomainDetailComponent],
+    providers: [
         { provide: DomainsService, useValue: domainsService },
         {
-          provide: ActivatedRoute,
-          useValue: { params: of({ name: 'name' }) }
-        }]
-    }).compileComponents()
+            provide: ActivatedRoute,
+            useValue: { params: of({ name: 'name' }) }
+        }
+    ]
+}).compileComponents()
   })
 
   beforeEach(() => {

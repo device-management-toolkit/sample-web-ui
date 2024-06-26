@@ -6,13 +6,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { ProfilesComponent } from './profiles.component'
 import { ProfilesService } from './profiles.service'
 import { TlsModes } from './profiles.constants'
+import { RouterModule } from '@angular/router'
 
 describe('ProfilesComponent', () => {
   let component: ProfilesComponent
@@ -41,10 +40,9 @@ describe('ProfilesComponent', () => {
     deleteSpy = profilesService.delete.and.returnValue(of(null))
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [ProfilesComponent],
-      providers: [{ provide: ProfilesService, useValue: profilesService }]
-    }).compileComponents()
+    imports: [BrowserAnimationsModule, RouterModule, ProfilesComponent],
+    providers: [{ provide: ProfilesService, useValue: profilesService }]
+}).compileComponents()
   })
 
   beforeEach(() => {

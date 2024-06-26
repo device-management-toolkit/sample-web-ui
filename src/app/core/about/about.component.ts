@@ -5,11 +5,19 @@
 
 import { Component, OnDestroy } from '@angular/core'
 import { environment } from 'src/environments/environment'
+import { MatButton } from '@angular/material/button'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { MatDivider } from '@angular/material/divider'
+import { CdkScrollable } from '@angular/cdk/scrolling'
+import { MatIcon } from '@angular/material/icon'
+import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+    selector: 'app-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, MatIcon, CdkScrollable, MatDialogContent, MatDivider, MatDialogActions, ReactiveFormsModule, FormsModule, MatButton, MatDialogClose]
 })
 export class AboutComponent implements OnDestroy {
   doNotShowAgain: boolean = false

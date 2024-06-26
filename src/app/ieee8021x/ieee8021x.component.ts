@@ -14,11 +14,19 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { IEEE8021xService } from './ieee8021x.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { AuthenticationProtocols, ConfigsResponse } from './ieee8021x.constants'
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-ieee8021x',
-  templateUrl: './ieee8021x.component.html',
-  styleUrls: ['./ieee8021x.component.scss']
+    selector: 'app-ieee8021x',
+    templateUrl: './ieee8021x.component.html',
+    styleUrls: ['./ieee8021x.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class IEEE8021xComponent implements OnInit {
   pagedConfigs: ConfigsResponse = {

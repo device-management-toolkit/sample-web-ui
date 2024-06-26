@@ -13,11 +13,19 @@ import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.c
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-configs',
-  templateUrl: './configs.component.html',
-  styleUrls: ['./configs.component.scss']
+    selector: 'app-configs',
+    templateUrl: './configs.component.html',
+    styleUrls: ['./configs.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class ConfigsComponent implements OnInit {
   public configs: CIRAConfigResponse = { data: [], totalCount: 0 }

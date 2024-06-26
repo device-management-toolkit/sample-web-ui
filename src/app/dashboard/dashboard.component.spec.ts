@@ -6,8 +6,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices/devices.service'
-import { SharedModule } from '../shared/shared.module'
 import { DashboardComponent } from './dashboard.component'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent
@@ -19,11 +19,12 @@ describe('DashboardComponent', () => {
 
     getStatsSpy = devicesService.getStats.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
-      declarations: [DashboardComponent],
-      providers: [{ provide: DevicesService, useValue: devicesService }]
-
-    })
+    imports: [RouterModule, DashboardComponent],
+    providers: [{ provide: DevicesService, useValue: devicesService }, {
+      provide: ActivatedRoute,
+      useValue: {}
+    }]
+})
       .compileComponents()
   })
 

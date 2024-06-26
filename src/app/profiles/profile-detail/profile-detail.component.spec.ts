@@ -5,12 +5,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of, throwError } from 'rxjs'
 import { ConfigsService } from 'src/app/configs/configs.service'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
@@ -81,22 +79,21 @@ describe('ProfileDetailComponent', () => {
     wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [ProfileDetailComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, ProfileDetailComponent],
+    providers: [
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: WirelessService, useFactory: () => wirelessService },
         // { provide: TLSService, useValue: tlsService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ name: 'profile' })
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                params: of({ name: 'profile' })
+            }
         }
-      ]
-    }).compileComponents()
+    ]
+}).compileComponents()
   })
 
   beforeEach(() => {

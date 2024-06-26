@@ -4,18 +4,28 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { MatCheckboxChange } from '@angular/material/checkbox'
-import { MatSelectChange } from '@angular/material/select'
-import { MatTabChangeEvent } from '@angular/material/tabs'
+import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox'
+import { MatSelectChange, MatSelect } from '@angular/material/select'
+import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
 import { timer } from 'rxjs'
 import { ProfilesService } from 'src/app/profiles/profiles.service'
 import { environment } from 'src/environments/environment'
 import { ProfilesResponse } from '../../profiles/profiles.constants'
+import { MatIcon } from '@angular/material/icon'
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard'
+import { MatIconButton } from '@angular/material/button'
+import { MatInput } from '@angular/material/input'
+import { MatOption } from '@angular/material/core'
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field'
+import { CdkScrollable } from '@angular/cdk/scrolling'
+import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 
 @Component({
-  selector: 'app-add-device',
-  templateUrl: './add-device.component.html',
-  styleUrls: ['./add-device.component.scss']
+    selector: 'app-add-device',
+    templateUrl: './add-device.component.html',
+    styleUrls: ['./add-device.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatCheckbox, MatFormField, MatLabel, MatSelect, MatOption, MatError, MatTabGroup, MatTab, MatInput, MatIconButton, MatSuffix, CdkCopyToClipboard, MatIcon]
 })
 export class AddDeviceComponent implements OnInit {
   profiles: ProfilesResponse = { data: [], totalCount: 0 }

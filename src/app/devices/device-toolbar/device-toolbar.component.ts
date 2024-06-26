@@ -13,11 +13,21 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
+import { MatDivider } from '@angular/material/divider'
+import { MatIcon } from '@angular/material/icon'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatIconButton } from '@angular/material/button'
+import { MatChipSet, MatChip } from '@angular/material/chips'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-device-toolbar',
-  templateUrl: './device-toolbar.component.html',
-  styleUrls: ['./device-toolbar.component.scss']
+    selector: 'app-device-toolbar',
+    templateUrl: './device-toolbar.component.html',
+    styleUrls: ['./device-toolbar.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatChipSet, MatChip, MatIconButton, MatTooltip, MatIcon, MatDivider, MatMenuTrigger, MatMenu, MatMenuItem, MatProgressBar]
 })
 export class DeviceToolbarComponent implements OnInit {
   @Input() deviceState: number = 0
@@ -78,7 +88,6 @@ export class DeviceToolbarComponent implements OnInit {
     }
     this.devicesService.sendPowerAction(this.deviceId, action, useSOL).pipe(
       catchError(err => {
-        // TODO: handle error better
         console.error(err)
         this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
         return of(null)

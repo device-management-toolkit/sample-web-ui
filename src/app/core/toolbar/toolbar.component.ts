@@ -11,11 +11,18 @@ import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
 import { MpsVersion, RpsVersion } from 'src/models/models'
 import { environment } from 'src/environments/environment'
+import { MatIcon } from '@angular/material/icon'
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
+import { MatIconButton } from '@angular/material/button'
+import { MatDivider } from '@angular/material/divider'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatDivider, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem]
 })
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false

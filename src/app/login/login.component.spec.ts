@@ -5,12 +5,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { AuthService } from '../auth.service'
-import { SharedModule } from '../shared/shared.module'
-
 import { LoginComponent } from './login.component'
 
 describe('LoginComponent', () => {
@@ -26,10 +24,9 @@ describe('LoginComponent', () => {
     authService = new AuthService(httpClientSpy, routerSpy)
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, ReactiveFormsModule],
-      declarations: [LoginComponent],
-      providers: [{ provide: Router, useValue: routerSpy }, { provide: AuthService, useValue: authService }]
-    }).compileComponents()
+    imports: [NoopAnimationsModule, ReactiveFormsModule, LoginComponent],
+    providers: [{ provide: Router, useValue: routerSpy }, { provide: AuthService, useValue: authService }]
+}).compileComponents()
   })
 
   beforeEach(() => {

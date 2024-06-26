@@ -5,18 +5,28 @@
 
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { AuthService } from '../auth.service'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { AboutComponent } from '../core/about/about.component'
 import { environment } from 'src/environments/environment'
+import { MatChipListbox, MatChipOption } from '@angular/material/chips'
+import { MatIcon } from '@angular/material/icon'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatIconButton, MatButton } from '@angular/material/button'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatError, MatSuffix } from '@angular/material/form-field'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter } from '@angular/material/card'
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatProgressBar, ReactiveFormsModule, MatCardContent, MatFormField, MatInput, MatError, MatIconButton, MatSuffix, MatTooltip, MatIcon, MatChipListbox, MatChipOption, MatCardActions, MatButton, MatCardFooter]
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup

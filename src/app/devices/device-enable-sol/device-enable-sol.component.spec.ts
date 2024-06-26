@@ -6,11 +6,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { MomentModule } from 'ngx-moment'
-import { SharedModule } from 'src/app/shared/shared.module'
-
 import { DeviceEnableSolComponent } from './device-enable-sol.component'
+import { RouterModule } from '@angular/router'
 
 describe('DeviceEnableSolComponent', () => {
   let component: DeviceEnableSolComponent
@@ -21,12 +19,11 @@ describe('DeviceEnableSolComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DeviceEnableSolComponent],
-      providers: [
+    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceEnableSolComponent],
+    providers: [
         { provide: MatDialogRef, useValue: dialogMock }
-      ]
-    })
+    ]
+})
       .compileComponents()
   })
 

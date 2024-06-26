@@ -8,8 +8,9 @@ import { AddDeviceEnterpriseComponent } from './add-device-enterprise.component'
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from 'src/app/devices/devices.service'
 import { of } from 'rxjs'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
-fdescribe('AddDeviceEnterpriseComponent', () => {
+describe('AddDeviceEnterpriseComponent', () => {
   let component: AddDeviceEnterpriseComponent
   let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
   let addDeviceSpy: jasmine.Spy
@@ -19,13 +20,12 @@ fdescribe('AddDeviceEnterpriseComponent', () => {
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [AddDeviceEnterpriseComponent],
-      providers: [
+    imports: [NoopAnimationsModule, MatDialogModule, AddDeviceEnterpriseComponent],
+    providers: [
         { provide: DevicesService, useValue: deviceService },
-        { provide: MatDialogRef, useValue: { close: () => {} } }
-      ]
-    })
+        { provide: MatDialogRef, useValue: { close: () => { } } }
+    ]
+})
     .compileComponents()
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance

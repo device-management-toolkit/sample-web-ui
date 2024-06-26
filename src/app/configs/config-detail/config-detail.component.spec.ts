@@ -5,10 +5,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { ConfigsService } from '../configs.service'
 
 import { ConfigDetailComponent } from './config-detail.component'
@@ -29,16 +27,15 @@ describe('ConfigDetailComponent', () => {
     createRecordSpy = configsService.create.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [ConfigDetailComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, ConfigDetailComponent],
+    providers: [
         { provide: ConfigsService, useValue: configsService },
         {
-          provide: ActivatedRoute,
-          useValue: { params: of({ name: 'name' }) }
-        }]
-
-    })
+            provide: ActivatedRoute,
+            useValue: { params: of({ name: 'name' }) }
+        }
+    ]
+})
       .compileComponents()
   })
 

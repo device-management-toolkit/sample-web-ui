@@ -6,12 +6,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
+import { RouterModule } from '@angular/router'
 
 describe('WirelessComponent', () => {
   let component: WirelessComponent
@@ -34,10 +33,9 @@ describe('WirelessComponent', () => {
     }))
     deleteSpy = wirelessService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [WirelessComponent],
-      providers: [{ provide: WirelessService, useValue: wirelessService }]
-    })
+    imports: [BrowserAnimationsModule, RouterModule, WirelessComponent],
+    providers: [{ provide: WirelessService, useValue: wirelessService }]
+})
       .compileComponents()
   })
 

@@ -16,9 +16,8 @@ describe('AboutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatListModule, MatIconModule, MatDialogModule],
-      declarations: [AboutComponent]
-    }).compileComponents()
+    imports: [MatListModule, MatIconModule, MatDialogModule, AboutComponent]
+}).compileComponents()
   })
 
   beforeEach(() => {

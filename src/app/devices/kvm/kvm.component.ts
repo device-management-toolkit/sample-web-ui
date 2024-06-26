@@ -16,11 +16,23 @@ import { environment } from 'src/environments/environment'
 import { AmtFeaturesRequest, AmtFeaturesResponse, RedirectionStatus, userConsentData, userConsentResponse } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
+import { KVMComponent, IDERComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton } from '@angular/material/button'
+import { MatOption } from '@angular/material/core'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { MatSelect } from '@angular/material/select'
+import { MatFormField, MatLabel } from '@angular/material/form-field'
+import { MatToolbar } from '@angular/material/toolbar'
+import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 
 @Component({
-  selector: 'app-kvm',
-  templateUrl: './kvm.component.html',
-  styleUrls: ['./kvm.component.scss']
+    selector: 'app-kvm',
+    templateUrl: './kvm.component.html',
+    styleUrls: ['./kvm.component.scss'],
+    standalone: true,
+    imports: [DeviceToolbarComponent, MatToolbar, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatButton, MatIcon, MatProgressSpinner, KVMComponent, IDERComponent]
 })
 export class KvmComponent implements OnInit, OnDestroy {
   results: any

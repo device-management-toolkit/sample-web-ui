@@ -6,12 +6,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { ConfigsComponent } from './configs.component'
 import { ConfigsService } from './configs.service'
+import { RouterModule } from '@angular/router'
 
 describe('ConfigsComponent', () => {
   let component: ConfigsComponent
@@ -39,10 +38,9 @@ describe('ConfigsComponent', () => {
     }))
     deleteSpy = configsService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [ConfigsComponent],
-      providers: [{ provide: ConfigsService, useValue: configsService }]
-    })
+    imports: [BrowserAnimationsModule, RouterModule, ConfigsComponent],
+    providers: [{ provide: ConfigsService, useValue: configsService }]
+})
       .compileComponents()
   })
 

@@ -4,19 +4,25 @@
 **********************************************************************/
 
 import { Component, Inject, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { userConsentData } from 'src/models/models'
 import { DevicesService } from '../devices.service'
+import { MatButton } from '@angular/material/button'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
+import { CdkScrollable } from '@angular/cdk/scrolling'
 
 @Component({
-  selector: 'app-device-user-consent',
-  templateUrl: './device-user-consent.component.html',
-  styleUrls: ['./device-user-consent.component.scss']
+    selector: 'app-device-user-consent',
+    templateUrl: './device-user-consent.component.html',
+    styleUrls: ['./device-user-consent.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, ReactiveFormsModule, CdkScrollable, MatDialogContent, MatFormField, MatInput, MatError, MatHint, MatDialogActions, MatButton]
 })
 export class DeviceUserConsentComponent implements OnInit {
   public userConsentForm: FormGroup

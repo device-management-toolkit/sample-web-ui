@@ -15,9 +15,8 @@ describe('PowerUpAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, MatButtonModule],
-      declarations: [PowerUpAlertComponent]
-    }).compileComponents()
+    imports: [MatDialogModule, MatButtonModule, PowerUpAlertComponent]
+}).compileComponents()
   })
 
   beforeEach(() => {

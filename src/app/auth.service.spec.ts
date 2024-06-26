@@ -4,11 +4,9 @@
 **********************************************************************/
 
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
-import { RouterTestingModule } from '@angular/router/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { SharedModule } from './shared/shared.module'
 import { of } from 'rxjs'
 import { environment } from 'src/environments/environment'
 describe('AuthService', () => {
@@ -23,7 +21,7 @@ describe('AuthService', () => {
     httpClientSpy.get.and.returnValue(of({ serviceVersion: '1.1.1' }))
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])]
+      imports: [BrowserAnimationsModule, RouterModule]
     })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     service = new AuthService(httpClientSpy as any, routerSpy)

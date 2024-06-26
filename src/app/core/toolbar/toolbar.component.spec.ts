@@ -7,7 +7,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { ToolbarComponent } from './toolbar.component'
 import { BehaviorSubject, of } from 'rxjs'
 
@@ -32,13 +31,12 @@ describe('ToolbarComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
-      declarations: [ToolbarComponent],
-      providers: [
+    imports: [ToolbarComponent],
+    providers: [
         { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: { ...authServiceStub, ...authService, ...mpsService, ...rpsService } }
-      ]
-    })
+    ]
+})
       .compileComponents()
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance

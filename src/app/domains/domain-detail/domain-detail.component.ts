@@ -4,18 +4,29 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DomainsService } from '../domains.service'
 import { Domain } from 'src/models/models'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
+import { MatIcon } from '@angular/material/icon'
+import { MatList, MatListItem } from '@angular/material/list'
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-domain-detail',
-  templateUrl: './domain-detail.component.html',
-  styleUrls: ['./domain-detail.component.scss']
+    selector: 'app-domain-detail',
+    templateUrl: './domain-detail.component.html',
+    styleUrls: ['./domain-detail.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardContent, MatFormField, MatInput, MatError, MatHint, MatButton, MatIconButton, MatSuffix, MatTooltip, MatCardActions]
 })
 export class DomainDetailComponent implements OnInit {
   public domainForm: FormGroup

@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -15,13 +15,11 @@ import { ProfilesService } from '../profiles.service'
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { MatChipInputEvent } from '@angular/material/chips'
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips'
 import { WirelessService } from 'src/app/wireless/wireless.service'
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
 import { forkJoin, Observable, of } from 'rxjs'
-import {
-  MatAutocompleteSelectedEvent
-} from '@angular/material/autocomplete'
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import * as Cira from '../../configs/configs.constants'
 import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
@@ -31,13 +29,30 @@ import {
   UserConsentModes,
   WiFiConfig
 } from '../profiles.constants'
+import { NgClass, AsyncPipe } from '@angular/common'
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatIconButton, MatButton } from '@angular/material/button'
+import { MatDivider } from '@angular/material/divider'
+import { MatCheckbox } from '@angular/material/checkbox'
+import { MatOption } from '@angular/material/core'
+import { MatSelect } from '@angular/material/select'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
+import { MatIcon } from '@angular/material/icon'
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
 @Component({
-  selector: 'app-profile-detail',
-  templateUrl: './profile-detail.component.html',
-  styleUrls: ['./profile-detail.component.scss']
+    selector: 'app-profile-detail',
+    templateUrl: './profile-detail.component.html',
+    styleUrls: ['./profile-detail.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatList, MatListItem, MatIcon, MatListItemIcon, MatListItemTitle, ReactiveFormsModule, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatHint, MatSelect, MatOption, MatCheckbox, MatDivider, MatIconButton, MatSuffix, MatTooltip, MatRadioGroup, MatRadioButton, MatAutocompleteTrigger, MatAutocomplete, NgClass, CdkDropList, CdkDrag, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput, MatCardActions, MatButton, AsyncPipe]
 })
 export class ProfileDetailComponent implements OnInit {
   profileForm: FormGroup
