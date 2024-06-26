@@ -164,7 +164,7 @@ describe('DevicesComponent', () => {
 
   it('should select all rows on change the master toggle', () => {
     component.masterToggle()
-    expect(component.selectedDevices.selected).toEqual(component.devices)
+    expect(component.selectedDevices.selected).toEqual(component.devices.data)
   })
 
   it('should clear the selection when unselect the master toggle', () => {
