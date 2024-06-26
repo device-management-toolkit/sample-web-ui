@@ -5,9 +5,7 @@
 
 // import { ComponentFixture, TestBed } from '@angular/core/testing'
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-// import { RouterTestingModule } from '@angular/router/testing'
-// import { SharedModule } from '../shared/shared.module'
-// import { EventChannelComponent } from './event-channel.component'
+// // // import { EventChannelComponent } from './event-channel.component'
 // import { MomentModule } from 'ngx-moment'
 // import { MQTTService } from './event-channel.service'
 // import { of } from 'rxjs'
@@ -26,7 +24,7 @@
 //   }
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([]), MomentModule],
+//       imports: [BrowserAnimationsModule, RouterModule, MomentModule],
 //       declarations: [EventChannelComponent],
 //       providers: [{ provide: MQTTService, useValue: eventChannelStub }]
 //     }).compileComponents()

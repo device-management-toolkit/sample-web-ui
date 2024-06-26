@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
@@ -12,11 +12,24 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { IEEE8021xService } from '../ieee8021x.service'
 import { AuthenticationProtocol, AuthenticationProtocols, Config } from '../ieee8021x.constants'
 import { Observable } from 'rxjs'
+import { MatButton } from '@angular/material/button'
+import { MatOption } from '@angular/material/core'
+import { MatSelect } from '@angular/material/select'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field'
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
+import { MatIcon } from '@angular/material/icon'
+import { MatList, MatListItem } from '@angular/material/list'
+import { MatCard, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-ieee8021x-detail',
-  templateUrl: './ieee8021x-detail.component.html',
-  styleUrls: ['./ieee8021x-detail.component.scss']
+    selector: 'app-ieee8021x-detail',
+    templateUrl: './ieee8021x-detail.component.html',
+    styleUrls: ['./ieee8021x-detail.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardSubtitle, MatRadioGroup, MatRadioButton, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatSelect, MatOption, MatCardActions, MatButton]
 })
 export class IEEE8021xDetailComponent implements OnInit {
   ieee8021xForm: FormGroup

@@ -25,14 +25,13 @@ describe('AddDeviceEnterpriseComponent', () => {
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatChipsModule],
-      declarations: [AddDeviceEnterpriseComponent],
-      providers: [
+    imports: [NoopAnimationsModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatChipsModule, AddDeviceEnterpriseComponent],
+    providers: [
         { provide: DevicesService, useValue: deviceService },
         { provide: MAT_DIALOG_DATA, useValue: { tags: [''] } },
-        { provide: MatDialogRef, useValue: { close: () => {} } }
-      ]
-    })
+        { provide: MatDialogRef, useValue: { close: () => { } } }
+    ]
+})
     .compileComponents()
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance

@@ -6,26 +6,27 @@
     <mat-card-subtitle>Alarms ({{alarmOccurrences.length}} entries)</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <mat-list *ngFor="let entry of alarmOccurrences">
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <div class="flex flex-row">
-          <div class="flex-75">
-            <span matListItemTitle data-cy="alarmElementName">{{entry.ElementName}} (InstanceID:
+    @for (entry of alarmOccurrences; track entry) {
+      <mat-list>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="flex flex-row">
+            <div class="flex-75">
+              <span matListItemTitle data-cy="alarmElementName">{{entry.ElementName}} (InstanceID:
               {{entry.InstanceID}})</span>
-            <span matListItemLine data-cy="alarmStartTime">Start Time: {{entry.StartTime.Datetime | date:
+              <span matListItemLine data-cy="alarmStartTime">Start Time: {{entry.StartTime.Datetime | date:
               'short'}}</span>
-            <span matListItemLine data-cy="alarmDeleteOnCompletion">Delete on Completion:
+              <span matListItemLine data-cy="alarmDeleteOnCompletion">Delete on Completion:
               {{entry.DeleteOnCompletion}}</span>
-            <span matListItemLine data-cy="alarmInterval">Interval: {{entry.Interval?.Interval ?? 'None'}}</span>
+              <span matListItemLine data-cy="alarmInterval">Interval: {{entry.Interval?.Interval ?? 'None'}}</span>
+            </div>
+            <div class="flex flex-25 justify-end">
+              <button mat-icon-button matTooltip="Delete alarm occurrence" (click)="deleteAlarm(entry.InstanceID)"><mat-icon>delete</mat-icon></button>
+            </div>
           </div>
-          <div class="flex flex-25 justify-end">
-            <button mat-icon-button matTooltip="Delete alarm occurrence" (click)="deleteAlarm(entry.InstanceID)"><mat-icon>delete</mat-icon></button>
-          </div>
-        </div>
-
-      </mat-list-item>
-    </mat-list>
+        </mat-list-item>
+      </mat-list>
+    }
 
     <div class="flex-row flex-wrap">
       <div class="flex-1">
@@ -57,20 +58,24 @@
           <mat-form-field class="flex-50">
             <mat-label>Hour</mat-label>
             <mat-select formControlName="hour">
-              <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{hour}}</mat-option>
+              @for (hour of hourOptions; track hour) {
+                <mat-option [value]="hour">{{hour}}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
           <mat-form-field class="flex-50">
             <mat-label>Minutes</mat-label>
             <mat-select formControlName="minute">
-              <mat-option *ngFor="let minute of minuteOptions" [value]="minute">{{minute}}</mat-option>
+              @for (minute of minuteOptions; track minute) {
+                <mat-option [value]="minute">{{minute}}</mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
         </div>
         <br><br>
         <mat-slide-toggle [formControl]="deleteOnCompletion" [checked]="deleteOnCompletion.value">Delete on
-          completion</mat-slide-toggle>
+        completion</mat-slide-toggle>
       </form>
     </div>
   </mat-card-content>

@@ -4,12 +4,16 @@
 **********************************************************************/
 
 import { Component } from '@angular/core'
-import { MatDialogRef } from '@angular/material/dialog'
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { MatButton } from '@angular/material/button'
+import { MatCardContent } from '@angular/material/card'
 
 @Component({
-  selector: 'app-device-enable-sol',
-  templateUrl: './device-enable-sol.component.html',
-  styleUrls: ['./device-enable-sol.component.scss']
+    selector: 'app-device-enable-sol',
+    templateUrl: './device-enable-sol.component.html',
+    styleUrls: ['./device-enable-sol.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, MatCardContent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class DeviceEnableSolComponent {
   constructor (public dialogRef: MatDialogRef<DeviceEnableSolComponent>) { }

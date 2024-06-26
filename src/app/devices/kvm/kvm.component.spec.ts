@@ -5,16 +5,14 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
-import { ActivatedRoute, NavigationStart, RouterEvent, Router } from '@angular/router'
-import { of, ReplaySubject, throwError } from 'rxjs'
+import { ActivatedRoute, NavigationStart, RouterEvent, Router, RouterModule } from '@angular/router'
+import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { SharedModule } from 'src/app/shared/shared.module'
-import { RouterTestingModule } from '@angular/router/testing'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
-import { userConsentData, userConsentResponse } from 'src/models/models'
+import { Device, userConsentData, userConsentResponse } from 'src/models/models'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -39,9 +37,10 @@ describe('KvmComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken', 'getRedirectionStatus'])
+    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken', 'getRedirectionStatus'])
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
+    devicesService.getDevice.and.returnValue(of({ hostname: 'test-hostname', guid: 'test-guid', mpsInstance: 'test-mps', mpsusername: 'admin', tags: [''], connectionStatus: true, friendlyName: 'test-friendlyName', tenantId: '1', dnsSuffix: 'dns', icon: 0 }))
     getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }))
     const reqUserConsentResponse: userConsentResponse = {} as any
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
@@ -49,7 +48,7 @@ describe('KvmComponent', () => {
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
-
+    devicesService.device = new Subject<Device>()
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       connectKVMSocket: new EventEmitter<boolean>(false)
@@ -60,8 +59,10 @@ describe('KvmComponent', () => {
     }
 
     @Component({
-      selector: 'amt-kvm'
-    })
+    selector: 'amt-kvm',
+    standalone: true,
+    imports: []
+})
     class TestAMTKVMComponent {
       @Input()
       deviceId: string = ''
@@ -83,8 +84,10 @@ describe('KvmComponent', () => {
     }
 
     @Component({
-      selector: 'app-device-toolbar'
-    })
+    selector: 'app-device-toolbar',
+    standalone: true,
+    imports: []
+})
     class TestDeviceToolbarComponent {
       @Input()
       isLoading = false
@@ -94,14 +97,13 @@ describe('KvmComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-      imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes([])],
-      declarations: [KvmComponent, TestDeviceToolbarComponent, TestAMTKVMComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, KvmComponent, TestDeviceToolbarComponent, TestAMTKVMComponent],
+    providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
-      ]
-    }).compileComponents()
+    ]
+}).compileComponents()
 
     router = TestBed.inject(Router)
   })

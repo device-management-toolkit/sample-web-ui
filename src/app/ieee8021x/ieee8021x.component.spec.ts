@@ -6,12 +6,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
-import { SharedModule } from '../shared/shared.module'
 
 import { IEEE8021xComponent } from './ieee8021x.component'
 import { IEEE8021xService } from './ieee8021x.service'
+import { RouterModule } from '@angular/router'
 
 describe('IEEE8021xComponent', () => {
   let component: IEEE8021xComponent
@@ -28,10 +27,9 @@ describe('IEEE8021xComponent', () => {
     deleteSpy = ieee8021xService.delete.and.returnValue(of(null))
     ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [IEEE8021xComponent],
-      providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }]
-    })
+    imports: [BrowserAnimationsModule, RouterModule, IEEE8021xComponent],
+    providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }]
+})
       .compileComponents()
   })
 

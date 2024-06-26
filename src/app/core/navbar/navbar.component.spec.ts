@@ -7,8 +7,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
-import { RouterTestingModule } from '@angular/router/testing'
 import { NavbarComponent } from './navbar.component'
+import { ActivatedRoute, RouterModule } from '@angular/router'
+import { of } from 'rxjs'
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent
@@ -16,12 +17,9 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatIconModule, MatDividerModule, MatListModule, RouterTestingModule],
-      declarations: [NavbarComponent]
+    imports: [MatIconModule, MatDividerModule, MatListModule, RouterModule, NavbarComponent],
+    providers: [{ provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }]
     }).compileComponents()
-  })
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(NavbarComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

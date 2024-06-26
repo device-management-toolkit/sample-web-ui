@@ -4,15 +4,27 @@
 **********************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { IPSAlarmClockOccurrence } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { catchError, finalize, throwError } from 'rxjs'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatSelectModule } from '@angular/material/select'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatIconModule } from '@angular/material/icon'
+import { MatDividerModule } from '@angular/material/divider'
+import { DatePipe } from '@angular/common'
+import { MatListModule } from '@angular/material/list'
+import { MatCardModule } from '@angular/material/card'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-alarms',
+  standalone: true,
+  imports: [MatSlideToggleModule, FormsModule, ReactiveFormsModule, MatSelectModule, MatDatepickerModule, MatIconModule, MatDividerModule, DatePipe, MatListModule, MatCardModule, MatInputModule, MatButtonModule],
   templateUrl: './alarms.component.html',
   styleUrl: './alarms.component.scss'
 })

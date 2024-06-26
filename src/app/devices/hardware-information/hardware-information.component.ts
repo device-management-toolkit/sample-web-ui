@@ -15,12 +15,11 @@ import { HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MomentModule } from 'ngx-moment'
-import { NgFor, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-hardware-information',
   standalone: true,
-  imports: [NgIf, NgFor, MatSnackBarModule, MatCardModule, MatDividerModule, MatIconModule, MomentModule],
+  imports: [MatSnackBarModule, MatCardModule, MatDividerModule, MatIconModule, MomentModule],
   templateUrl: './hardware-information.component.html',
   styleUrl: './hardware-information.component.scss'
 })

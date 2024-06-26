@@ -14,9 +14,8 @@ describe('StaticCIRAWarningComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [StaticCIRAWarningComponent]
-    })
+    imports: [MatDialogModule, StaticCIRAWarningComponent]
+})
       .compileComponents()
   })
 

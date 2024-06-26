@@ -6,11 +6,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { MomentModule } from 'ngx-moment'
-import { SharedModule } from 'src/app/shared/shared.module'
-
 import { DeviceEnableKvmComponent } from './device-enable-kvm.component'
+import { RouterModule } from '@angular/router'
 
 describe('DeviceEnableKvmComponent', () => {
   let component: DeviceEnableKvmComponent
@@ -21,12 +19,11 @@ describe('DeviceEnableKvmComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DeviceEnableKvmComponent],
-      providers: [
+    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceEnableKvmComponent],
+    providers: [
         { provide: MatDialogRef, useValue: dialogMock }
-      ]
-    })
+    ]
+})
       .compileComponents()
   })
 

@@ -15,9 +15,8 @@ describe('AreYouSureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, MatButtonModule],
-      declarations: [AreYouSureDialogComponent]
-    }).compileComponents()
+    imports: [MatDialogModule, MatButtonModule, AreYouSureDialogComponent]
+}).compileComponents()
   })
 
   beforeEach(() => {

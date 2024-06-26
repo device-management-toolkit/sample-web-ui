@@ -4,14 +4,19 @@
 **********************************************************************/
 
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
-import { NavigationStart, Router } from '@angular/router'
+import { NavigationStart, Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
+import { ToolbarComponent } from './core/toolbar/toolbar.component'
+import { NavbarComponent } from './core/navbar/navbar.component'
+import { MatSidenavModule } from '@angular/material/sidenav'
 // import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [RouterModule, ToolbarComponent, NavbarComponent, MatSidenavModule],
+    standalone: true
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoggedIn = false

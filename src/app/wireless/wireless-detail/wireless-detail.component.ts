@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
@@ -12,11 +12,23 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { WirelessService } from '../wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import { AuthenticationMethods, Config, EncryptionMethods } from '../wireless.constants'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatIconButton, MatButton } from '@angular/material/button'
+import { MatOption } from '@angular/material/core'
+import { MatSelect } from '@angular/material/select'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
+import { MatIcon } from '@angular/material/icon'
+import { MatList, MatListItem } from '@angular/material/list'
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-wireless-detail',
-  templateUrl: './wireless-detail.component.html',
-  styleUrls: ['./wireless-detail.component.scss']
+    selector: 'app-wireless-detail',
+    templateUrl: './wireless-detail.component.html',
+    styleUrls: ['./wireless-detail.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatCard, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatHint, MatSelect, MatOption, MatIconButton, MatSuffix, MatTooltip, MatCardActions, MatButton]
 })
 export class WirelessDetailComponent implements OnInit {
   public wirelessForm: FormGroup

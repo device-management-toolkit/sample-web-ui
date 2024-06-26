@@ -14,9 +14,8 @@ describe('RandomPassAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [RandomPassAlertComponent]
-    })
+    imports: [MatDialogModule, RandomPassAlertComponent]
+})
       .compileComponents()
   })
 

@@ -6,13 +6,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
 import { MomentModule } from 'ngx-moment'
 import { of } from 'rxjs'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { DevicesService } from '../devices.service'
-
 import { DeviceUserConsentComponent } from './device-user-consent.component'
+import { RouterModule } from '@angular/router'
 
 describe('DeviceUserConsentComponent', () => {
   let component: DeviceUserConsentComponent
@@ -29,13 +27,12 @@ describe('DeviceUserConsentComponent', () => {
     sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(of({ deviceId: 'deviceId', results: {} }))
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({ }))
     await TestBed.configureTestingModule({
-      imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [DeviceUserConsentComponent],
-      providers: [{ provide: DevicesService, useValue: devicesService },
+    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceUserConsentComponent],
+    providers: [{ provide: DevicesService, useValue: devicesService },
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
         { provide: MatDialogRef, useValue: dialogMock }
-      ]
-    })
+    ]
+})
       .compileComponents()
   })
 

@@ -4,15 +4,22 @@
 **********************************************************************/
 
 import { Component, Inject, OnInit } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { MatChipInputEvent } from '@angular/material/chips'
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog'
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { caseInsensitiveCompare } from '../../../utils'
+import { MatButton } from '@angular/material/button'
+import { MatIcon } from '@angular/material/icon'
+import { MatFormField, MatLabel } from '@angular/material/form-field'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { CdkScrollable } from '@angular/cdk/scrolling'
 
 @Component({
-  selector: 'device-edit-tags',
-  templateUrl: './edit-tags.component.html',
-  styleUrls: ['./edit-tags.component.css']
+    selector: 'device-edit-tags',
+    templateUrl: './edit-tags.component.html',
+    styleUrls: ['./edit-tags.component.css'],
+    standalone: true,
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatChipGrid, MatChipRow, MatIcon, MatChipRemove, MatChipInput, MatDialogActions, MatButton]
 })
 export class DeviceEditTagsComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]

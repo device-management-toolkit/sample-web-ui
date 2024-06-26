@@ -14,12 +14,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { NgFor, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [NgFor, NgIf, MatCardModule, MatSelectModule, MatCheckboxModule, FormsModule, ReactiveFormsModule],
+  imports: [MatCardModule, MatSelectModule, MatCheckboxModule, FormsModule, ReactiveFormsModule],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
 })

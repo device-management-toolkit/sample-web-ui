@@ -4,7 +4,7 @@
 **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
@@ -13,11 +13,23 @@ import { finalize, mergeMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { CIRAConfig } from 'src/models/models'
 import { ConfigsService } from '../configs.service'
+import { MatButton } from '@angular/material/button'
+import { MatSlideToggle } from '@angular/material/slide-toggle'
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
+import { MatInput } from '@angular/material/input'
+import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
+import { MatIcon } from '@angular/material/icon'
+import { MatList, MatListItem } from '@angular/material/list'
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-config-detail',
-  templateUrl: './config-detail.component.html',
-  styleUrls: ['./config-detail.component.scss']
+    selector: 'app-config-detail',
+    templateUrl: './config-detail.component.html',
+    styleUrls: ['./config-detail.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardContent, MatFormField, MatInput, MatError, MatHint, MatRadioGroup, MatRadioButton, MatSlideToggle, MatCardActions, MatButton]
 })
 export class ConfigDetailComponent implements OnInit {
   public configForm: FormGroup

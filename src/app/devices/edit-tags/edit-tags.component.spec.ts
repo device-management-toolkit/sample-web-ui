@@ -7,10 +7,9 @@ import { DeviceEditTagsComponent } from './edit-tags.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MomentModule } from 'ngx-moment'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { SharedModule } from '../../shared/shared.module'
-import { RouterTestingModule } from '@angular/router/testing'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatChipInputEvent } from '@angular/material/chips'
+import { RouterModule } from '@angular/router'
 
 describe('EditTagsComponent', () => {
   let component: DeviceEditTagsComponent
@@ -24,13 +23,12 @@ describe('EditTagsComponent', () => {
     tags = ['tag1', 'tag2']
     await TestBed
       .configureTestingModule({
-        imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-        declarations: [DeviceEditTagsComponent],
-        providers: [
-          { provide: MAT_DIALOG_DATA, useValue: tags },
-          { provide: MatDialogRef, useValue: dialogMock }
-        ]
-      })
+    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceEditTagsComponent],
+    providers: [
+        { provide: MAT_DIALOG_DATA, useValue: tags },
+        { provide: MatDialogRef, useValue: dialogMock }
+    ]
+})
       .compileComponents()
     fixture = TestBed.createComponent(DeviceEditTagsComponent)
     component = fixture.componentInstance

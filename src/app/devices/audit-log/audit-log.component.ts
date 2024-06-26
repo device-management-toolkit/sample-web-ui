@@ -4,21 +4,27 @@
 **********************************************************************/
 
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core'
-import { PageEvent } from '@angular/material/paginator'
+import { PageEvent, MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatSort } from '@angular/material/sort'
-import { MatTableDataSource } from '@angular/material/table'
+import { MatSort, MatSortHeader } from '@angular/material/sort'
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
 import { DevicesService } from '../devices.service'
+import { MomentModule } from 'ngx-moment'
+import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-audit-log',
-  templateUrl: './audit-log.component.html',
-  styleUrls: ['./audit-log.component.scss']
+    selector: 'app-audit-log',
+    templateUrl: './audit-log.component.html',
+    styleUrls: ['./audit-log.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatCardContent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSortHeader, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MomentModule]
 })
 export class AuditLogComponent implements OnInit, AfterViewInit {
   @Input()

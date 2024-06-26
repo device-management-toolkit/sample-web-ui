@@ -7,7 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
-import { MatSelectChange } from '@angular/material/select'
+import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { catchError, delay, finalize, map } from 'rxjs/operators'
@@ -21,13 +21,27 @@ import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
 import { caseInsensitiveCompare } from '../../utils'
 import { environment } from 'src/environments/environment'
 import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
-import { MatTableDataSource } from '@angular/material/table'
+import { MatChipSet, MatChip } from '@angular/material/chips'
+import { MatCheckbox } from '@angular/material/checkbox'
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatTableDataSource } from '@angular/material/table'
+import { MatOption } from '@angular/material/core'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
+import { MatInput } from '@angular/material/input'
 
 @Component({
-  selector: 'app-devices',
-  templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.scss']
+    selector: 'app-devices',
+    templateUrl: './devices.component.html',
+    styleUrls: ['./devices.component.scss'],
+    standalone: true,
+    imports: [MatInput, MatToolbar, MatButton, MatIcon, MatSort, MatIconButton, MatTooltip, MatProgressBar, MatCard, MatCardHeader, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatChipSet, MatChip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatHint]
 })
 export class DevicesComponent implements OnInit, AfterViewInit {
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()

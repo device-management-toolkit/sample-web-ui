@@ -10,11 +10,20 @@ import { catchError, finalize } from 'rxjs/operators'
 import { DeviceStats } from 'src/models/models'
 import { DevicesService } from '../devices/devices.service'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
+import { RouterLink } from '@angular/router'
+import { MatIconButton } from '@angular/material/button'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatDivider } from '@angular/material/divider'
+import { MatIcon } from '@angular/material/icon'
+import { MatCard } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    standalone: true,
+    imports: [MatProgressBar, MatCard, MatIcon, MatDivider, MatTooltip, MatIconButton, RouterLink]
 })
 export class DashboardComponent implements OnInit {
   public isLoading = true

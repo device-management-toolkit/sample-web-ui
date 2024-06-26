@@ -5,11 +5,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { DevicesService } from '../devices.service'
 import { DeviceToolbarComponent } from './device-toolbar.component'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
 
@@ -39,15 +37,14 @@ describe('DeviceToolbarComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-      declarations: [DeviceToolbarComponent],
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      providers: [{ provide: DevicesService, useValue: { ...deviceServiceStub, ...devicesService } }, {
-        provide: ActivatedRoute,
-        useValue: {
-          params: of({ id: 'guid' })
-        }
-      }]
-    })
+    imports: [BrowserAnimationsModule, RouterModule, DeviceToolbarComponent],
+    providers: [{ provide: DevicesService, useValue: { ...deviceServiceStub, ...devicesService } }, {
+            provide: ActivatedRoute,
+            useValue: {
+                params: of({ id: 'guid' })
+            }
+        }]
+})
       .compileComponents()
   })
 

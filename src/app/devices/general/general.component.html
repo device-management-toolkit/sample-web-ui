@@ -25,13 +25,13 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading){
-          <span class="mat-h3" data-cy="amtVersion">
-            @if ( amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString ) {
-            {{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}
-            } @else {
-            {{this.device?.deviceInfo?.fwVersion}}
-            }
-          </span>
+            <span class="mat-h3" data-cy="amtVersion">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}
+              } @else {
+                {{this.device?.deviceInfo?.fwVersion}}
+              }
+            </span>
           }
         </div>
         <div class="flex flex-50">
@@ -39,11 +39,11 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading){
-          <span class="mat-h3" data-cy="amtSku">
-            @if ( amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ) {
-            {{amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString}}
-            }
-          </span>
+            <span class="mat-h3" data-cy="amtSku">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString}}
+              }
+            </span>
           }
         </div>
         <div class="flex flex-50">
@@ -51,11 +51,11 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading){
-          <span class="mat-h3" data-cy="amtSku">
-            @if ( amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ) {
-            {{amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString}}
-            }
-          </span>
+            <span class="mat-h3" data-cy="amtSku">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString}}
+              }
+            </span>
           }
         </div>
       </div>
@@ -100,7 +100,9 @@
         </div>
         <div class="flex flex-50 justify-end">
           <mat-select (selectionChange)="setAmtFeatures()" formControlName="userConsent" style="width:200px">
-            <mat-option *ngFor="let uc of userConsentValues" [value]="uc">{{uc}}</mat-option>
+            @for (uc of userConsentValues; track uc) {
+              <mat-option [value]="uc">{{uc}}</mat-option>
+            }
           </mat-select>
         </div>
       </div>

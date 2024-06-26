@@ -8,10 +8,16 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DevicesService } from '../devices/devices.service'
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2'
+import { FormsModule } from '@angular/forms'
+import { MatCardModule } from '@angular/material/card'
+import { MatSelectModule } from '@angular/material/select'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 @Component({
   selector: 'app-explorer',
-  standalone: false,
+  standalone: true,
+  imports: [MonacoEditorModule, FormsModule, MatCardModule, MatSelectModule, MatToolbarModule],
   templateUrl: './explorer.component.html',
   styleUrl: './explorer.component.scss'
 })

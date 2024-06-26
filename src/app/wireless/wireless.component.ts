@@ -14,11 +14,19 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { WirelessService } from './wireless.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.constants'
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-  selector: 'app-wireless',
-  templateUrl: './wireless.component.html',
-  styleUrls: ['./wireless.component.scss']
+    selector: 'app-wireless',
+    templateUrl: './wireless.component.html',
+    styleUrls: ['./wireless.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class WirelessComponent implements OnInit {
   configs: Config[] = []

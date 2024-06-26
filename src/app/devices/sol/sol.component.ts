@@ -16,12 +16,16 @@ import { AmtFeaturesRequest, AmtFeaturesResponse, PowerState, userConsentData, u
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
+import { SOLComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 
 @Component({
-  selector: 'app-sol',
-  templateUrl: './sol.component.html',
-  styleUrls: ['./sol.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-sol',
+    templateUrl: './sol.component.html',
+    styleUrls: ['./sol.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [DeviceToolbarComponent, SOLComponent]
 })
 export class SolComponent implements OnInit, OnDestroy {
   @Input()

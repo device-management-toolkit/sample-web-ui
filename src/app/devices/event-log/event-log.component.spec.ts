@@ -5,11 +5,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { MomentModule } from 'ngx-moment'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { DevicesService } from '../devices.service'
 
 import { EventLogComponent } from './event-log.component'
@@ -76,15 +74,14 @@ describe('EventLogComponent', () => {
     }]))
 
     await TestBed.configureTestingModule({
-      imports: [MomentModule, BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [EventLogComponent],
-      providers: [{ provide: DevicesService, useValue: devicesService }, {
-        provide: ActivatedRoute,
-        useValue: {
-          params: of({ id: 'guid' })
-        }
-      }]
-    })
+    imports: [MomentModule, BrowserAnimationsModule, RouterModule, EventLogComponent],
+    providers: [{ provide: DevicesService, useValue: devicesService }, {
+            provide: ActivatedRoute,
+            useValue: {
+                params: of({ id: 'guid' })
+            }
+        }]
+})
       .compileComponents()
   })
 

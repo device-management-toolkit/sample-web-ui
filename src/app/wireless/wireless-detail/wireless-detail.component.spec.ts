@@ -5,10 +5,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
-import { SharedModule } from 'src/app/shared/shared.module'
 import { WirelessService } from '../wireless.service'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 
@@ -41,14 +39,13 @@ describe('WirelessDetailComponent', () => {
       totalCount: 1
     }))
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, SharedModule, RouterTestingModule.withRoutes([])],
-      declarations: [WirelessDetailComponent],
-      providers: [
+    imports: [BrowserAnimationsModule, RouterModule, WirelessDetailComponent],
+    providers: [
         { provide: WirelessService, useValue: wirelessService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } }
-      ]
-    })
+    ]
+})
       .compileComponents()
   })
 

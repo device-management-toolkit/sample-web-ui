@@ -5,13 +5,17 @@
 
 import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatTableDataSource } from '@angular/material/table'
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { EventLog } from 'src/models/models'
 import { DevicesService } from '../devices.service'
+import { MomentModule } from 'ngx-moment'
+import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatToolbar } from '@angular/material/toolbar'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -22,9 +26,11 @@ const EVENTTYPEMAP: EventTypeMap = {
 }
 
 @Component({
-  selector: 'app-event-log',
-  templateUrl: './event-log.component.html',
-  styleUrls: ['./event-log.component.scss']
+    selector: 'app-event-log',
+    templateUrl: './event-log.component.html',
+    styleUrls: ['./event-log.component.scss'],
+    standalone: true,
+    imports: [MatToolbar, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MomentModule]
 })
 export class EventLogComponent implements OnInit {
   @Input()
