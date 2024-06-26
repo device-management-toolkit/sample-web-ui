@@ -5,12 +5,16 @@
 <div class="flex-row flex-1">
   <div class="flex-25 hide-sm"></div>
   <mat-card class="flex flex-50">
-    <mat-list *ngIf="errorMessages.length > 0">
-      <mat-list-item *ngFor="let item of errorMessages">
-        <mat-icon color="warn" mat-list-icon>error</mat-icon>
-        {{ item }}
-      </mat-list-item>
-    </mat-list>
+    @if (errorMessages.length > 0) {
+      <mat-list>
+        @for (item of errorMessages; track item) {
+          <mat-list-item>
+            <mat-icon color="warn" mat-list-icon>error</mat-icon>
+            {{ item }}
+          </mat-list-item>
+        }
+      </mat-list>
+    }
     <form [formGroup]="wirelessForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
 
@@ -23,34 +27,48 @@
         <mat-form-field class="flex flex-1">
           <mat-label>Authentication Method</mat-label>
           <mat-select formControlName="authenticationMethod" required>
-            <mat-option *ngFor="let method of authenticationMethods" [value]="method.value">
-              {{method.label}}
-            </mat-option>
+            @for (method of authenticationMethods; track method) {
+              <mat-option [value]="method.value">
+                {{method.label}}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="flex flex-1" *ngIf='showPSKPassPhrase'>
-          <mat-label>PSK Passphrase</mat-label>
-          <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase">
-          <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-          <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="togglePSKPassVisibility()">
-            <mat-icon *ngIf="pskInputType === 'text'">visibility</mat-icon>
-            <mat-icon *ngIf="pskInputType !== 'text'">visibility_off</mat-icon>
-          </button>
-        </mat-form-field>
-        <mat-form-field class="flex flex-1" *ngIf='showIEEE8021x'>
-          <mat-label>802.1x Configuration</mat-label>
-          <mat-select formControlName='ieee8021xProfileName'>
-            <mat-option *ngFor='let cfgName of iee8021xConfigNames' [value]='cfgName'>
-              {{cfgName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        @if (showPSKPassPhrase) {
+          <mat-form-field class="flex flex-1">
+            <mat-label>PSK Passphrase</mat-label>
+            <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase">
+            <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="togglePSKPassVisibility()">
+              @if (pskInputType === 'text') {
+                <mat-icon>visibility</mat-icon>
+              }
+              @if (pskInputType !== 'text') {
+                <mat-icon>visibility_off</mat-icon>
+              }
+            </button>
+          </mat-form-field>
+        }
+        @if (showIEEE8021x) {
+          <mat-form-field class="flex flex-1">
+            <mat-label>802.1x Configuration</mat-label>
+            <mat-select formControlName='ieee8021xProfileName'>
+              @for (cfgName of iee8021xConfigNames; track cfgName) {
+                <mat-option [value]='cfgName'>
+                  {{cfgName}}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
         <mat-form-field class="flex flex-1">
           <mat-label>Encryption Method</mat-label>
           <mat-select formControlName="encryptionMethod" required>
-            <mat-option *ngFor="let encryptionMode of encryptionModes" [value]="encryptionMode.value">
-              {{encryptionMode.label}}
-            </mat-option>
+            @for (encryptionMode of encryptionModes; track encryptionMode) {
+              <mat-option [value]="encryptionMode.value">
+                {{encryptionMode.label}}
+              </mat-option>
+            }
           </mat-select>
           <mat-error>This field is required</mat-error>
         </mat-form-field>

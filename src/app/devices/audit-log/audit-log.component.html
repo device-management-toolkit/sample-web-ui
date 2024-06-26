@@ -1,31 +1,29 @@
 <mat-toolbar>
   Audit Log ({{auditLogData.totalCnt}})
 </mat-toolbar>
-<mat-progress-bar mode='indeterminate' *ngIf="isLoading!==false"></mat-progress-bar>
+@if (isLoading!==false) {
+  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+}
 <mat-card>
   <mat-card-content>
-    <h3 *ngIf="isNoData()" class="flex justify-center">No Audit Log</h3>
-    <mat-table [dataSource]="dataSource" matSort *ngIf="!isNoData()">
-
-
-
-      <!-- host Column -->
-      <ng-container matColumnDef="Event">
-        <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.Event }} </mat-cell>
-      </ng-container>
-      <!-- host Column -->
-      <ng-container matColumnDef="timestamp">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.Time | amDateFormat:'LLL' }} ({{ element.Time | amTimeAgo:true }} ago) </mat-cell>
-      </ng-container>
-
-
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-    </mat-table>
+    @if (isNoData()) {
+      <h3 class="flex justify-center">No Audit Log</h3>
+    } @else{
+      <mat-table [dataSource]="dataSource" matSort>
+        <!-- host Column -->
+        <ng-container matColumnDef="Event">
+          <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.Event }} </mat-cell>
+        </ng-container>
+        <!-- host Column -->
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.Time | amDateFormat:'LLL' }} ({{ element.Time | amTimeAgo:true }} ago) </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    }
 
     <mat-paginator [pageSizeOptions]="[120]" [length]="auditLogData.totalCnt" (page)="pageChange($event)" showFirstLastButtons></mat-paginator>
   </mat-card-content>

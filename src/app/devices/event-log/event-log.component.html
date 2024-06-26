@@ -1,29 +1,30 @@
 <mat-toolbar>
   Event Log ({{eventLogData.length}} entries)
 </mat-toolbar>
-<mat-progress-bar mode="indeterminate" *ngIf="isLoading !== false"></mat-progress-bar>
+@if (isLoading !== false) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <mat-card>
   <mat-card-content>
-    <h3 *ngIf="isNoData()" class="flex justify-center">No Event Log</h3>
-
-    <mat-table [dataSource]="dataSource" *ngIf="!isNoData()">
-      <ng-container matColumnDef="Event">
-        <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="Event Type">
-        <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="timestamp">
-        <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.Time | amDateFormat:'LLL' }} ({{ element.Time | amTimeAgo:true }} ago) </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    @if (isNoData()) {
+      <h3 class="flex justify-center">No Event Log</h3>
+    } @else{
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Event">
+          <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Event Type">
+          <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.Time | amDateFormat:'LLL' }} ({{ element.Time | amTimeAgo:true }} ago) </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    }
   </mat-card-content>
 </mat-card>

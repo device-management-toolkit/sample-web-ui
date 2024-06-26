@@ -1,4 +1,6 @@
-<mat-progress-bar mode='indeterminate' *ngIf="isLoading!==false"></mat-progress-bar>
+@if (isLoading!==false) {
+  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+}
 
 <div class="flex-row flex-wrap">
   <div class="flex-33">

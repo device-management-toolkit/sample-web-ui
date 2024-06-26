@@ -5,24 +5,36 @@
       <mat-label>Hostname</mat-label>
       <input matInput title="hostname" formControlName="hostname">
       <mat-hint>Enter the hostname</mat-hint>
-      <mat-error *ngIf="form.get('hostname')?.errors?.required">Hostname is required</mat-error>
-      <mat-error *ngIf="form.get('hostname')?.errors?.pattern">Invalid hostname format</mat-error>
+      @if (form.get('hostname')?.errors?.required) {
+        <mat-error>Hostname is required</mat-error>
+      }
+      @if (form.get('hostname')?.errors?.pattern) {
+        <mat-error>Invalid hostname format</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Friendly Name</mat-label>
       <input matInput title="friendlyName" formControlName="friendlyName">
       <mat-hint>Enter a friendly name</mat-hint>
-      <mat-error *ngIf="form.get('friendlyName')?.errors?.required">Friendly Name is required</mat-error>
-      <mat-error *ngIf="form.get('friendlyName')?.errors?.maxlength">Friendly Name cannot be longer than 50 characters</mat-error>
+      @if (form.get('friendlyName')?.errors?.required) {
+        <mat-error>Friendly Name is required</mat-error>
+      }
+      @if (form.get('friendlyName')?.errors?.maxlength) {
+        <mat-error>Friendly Name cannot be longer than 50 characters</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Username</mat-label>
       <input matInput title="username" formControlName="username">
       <mat-hint>Enter your username</mat-hint>
-      <mat-error *ngIf="form.get('username')?.errors?.required">Username is required</mat-error>
-      <mat-error *ngIf="form.get('username')?.errors?.minlength">Username must be at least 5 characters long</mat-error>
+      @if (form.get('username')?.errors?.required) {
+        <mat-error>Username is required</mat-error>
+      }
+      @if (form.get('username')?.errors?.minlength) {
+        <mat-error>Username must be at least 5 characters long</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">

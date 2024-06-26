@@ -1,7 +1,9 @@
 <mat-toolbar>
   {{ pageTitle }}
 </mat-toolbar>
-<mat-progress-bar mode=indeterminate *ngIf="isLoading"></mat-progress-bar>
+@if (isLoading) {
+  <mat-progress-bar mode=indeterminate></mat-progress-bar>
+}
 <div class="flex-row">
   <div class="flex-25 hide-sm"></div>
   <mat-card class="flex flex-50">
@@ -9,12 +11,16 @@
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
-    <mat-list *ngIf="errorMessages.length > 0">
-      <mat-list-item *ngFor="let item of errorMessages">
-        <mat-icon color="warn" mat-list-icon>error</mat-icon>
-        {{ item }}
-      </mat-list-item>
-    </mat-list>
+    @if (errorMessages.length > 0) {
+      <mat-list>
+        @for (item of errorMessages; track item) {
+          <mat-list-item>
+            <mat-icon color="warn" mat-list-icon>error</mat-icon>
+            {{ item }}
+          </mat-list-item>
+        }
+      </mat-list>
+    }
     <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1" style="margin-bottom: 10px;">
@@ -47,9 +53,11 @@
           <mat-hint>Enter the username for accessing MPS</mat-hint>
         </mat-form-field>
         <br><br><br><br>
-        <mat-slide-toggle formControlName="regeneratePassword" *ngIf="!shouldShowRegenPass()">
-          Generate New Random Password Upon Saving
-        </mat-slide-toggle>
+        @if (!shouldShowRegenPass()) {
+          <mat-slide-toggle formControlName="regeneratePassword">
+            Generate New Random Password Upon Saving
+          </mat-slide-toggle>
+        }
 
       </mat-card-content>
       <mat-card-actions class="flex-row">

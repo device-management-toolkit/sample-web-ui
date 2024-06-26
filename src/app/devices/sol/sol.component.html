@@ -1,2 +1,4 @@
-<amt-sol *ngIf="readyToLoadSol" [deviceConnection]="deviceConnection" (deviceStatus)="deviceStatus($event)" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken">
+@if (readyToLoadSol) {
+<amt-sol [deviceConnection]="deviceConnection" (deviceStatus)="deviceStatus($event)" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken">
 </amt-sol>
+}
