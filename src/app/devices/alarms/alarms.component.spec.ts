@@ -6,14 +6,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AlarmsComponent } from './alarms.component'
+import { DevicesService } from '../devices.service'
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { of } from 'rxjs'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('AlarmsComponent', () => {
   let component: AlarmsComponent
   let fixture: ComponentFixture<AlarmsComponent>
+  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
   beforeEach(async () => {
+    devicesServiceSpy = jasmine.createSpyObj('DevicesService', ['getDevices', 'updateDevice', 'getAlarmOccurrences', 'getTags', 'getPowerState', 'getAMTVersion', 'getAMTFeatures', 'getGeneralSettings', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate', 'getWsmanOperations'])
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
     await TestBed.configureTestingModule({
-      imports: [AlarmsComponent]
+      imports: [NoopAnimationsModule, AlarmsComponent],
+      providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesServiceSpy }]
     })
     .compileComponents()
 

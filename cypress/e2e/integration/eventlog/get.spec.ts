@@ -66,7 +66,7 @@ describe('Test event logs page', () => {
     cy.get('mat-row').click()
     cy.wait('@get-device-by-id').its('response.statusCode').should('eq', 200)
 
-    cy.get('.mdc-tab__text-label').contains('Event Log').click()
+    cy.get('.mat-mdc-list-item-title').contains('Event Log').click()
     // cy.wait(1000)
     // cy.get('button').contains('See All Event Activity').click()
     cy.wait('@get-logs').its('response.statusCode').should('eq', 200)

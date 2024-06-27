@@ -130,7 +130,7 @@
           </span>
           <mat-chip-set>
             @for (tag of element?.tags; track tag) {
-              <mat-chip (click)="$event.stopPropagation();">{{tag}}</mat-chip>
+              <mat-chip disabled (click)="$event.stopPropagation();">{{tag}}</mat-chip>
             }
           </mat-chip-set>
         </mat-cell>

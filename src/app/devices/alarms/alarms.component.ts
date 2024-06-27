@@ -46,7 +46,9 @@ export class AlarmsComponent implements OnInit {
   public deleteOnCompletion: FormControl<any>
   public isLoading: boolean = true
 
-  constructor (public snackBar: MatSnackBar, private readonly devicesService: DevicesService, public fb: FormBuilder) {
+  constructor (public snackBar: MatSnackBar,
+    private readonly devicesService: DevicesService,
+    public fb: FormBuilder) {
     this.deleteOnCompletion = new FormControl<boolean>(true)
   }
 

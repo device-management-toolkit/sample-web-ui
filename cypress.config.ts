@@ -30,6 +30,7 @@ export default defineConfig({
   },
   chromeWebSecurity: false,
   e2e: {
+    experimentalStudio: true,
     screenshotOnRunFailure: false,
     specPattern: 'cypress/e2e/integration/**/*.ts'
   }
