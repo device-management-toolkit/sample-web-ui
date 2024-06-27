@@ -15,13 +15,14 @@ import { MatCheckbox } from '@angular/material/checkbox'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { MatIcon } from '@angular/material/icon'
 
 @Component({
     selector: 'app-add-device-enterprise',
     templateUrl: './add-device-enterprise.component.html',
     styleUrl: './add-device-enterprise.component.scss',
     standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatChipsModule, MatHint, MatError, MatCheckbox, MatButton]
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatIcon, MatInput, MatChipsModule, MatHint, MatError, MatCheckbox, MatButton]
 })
 export class AddDeviceEnterpriseComponent {
   form: FormGroup = this.fb.group({
@@ -74,7 +75,7 @@ export class AddDeviceEnterpriseComponent {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
       device.tags = this.tags
-      if (this.deviceOrig.guid != null && this.deviceOrig.guid !== '') {
+      if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe((res) => {
           this.dialog.close()

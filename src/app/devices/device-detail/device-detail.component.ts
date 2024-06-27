@@ -49,45 +49,45 @@ export class DeviceDetailComponent implements OnInit {
 
   categories = [
     {
-      name: 'General AMT Information',
+      name: 'General AMT Info',
       description: 'AMT Version and Features',
+      description2: '',
       component: 'general',
       icon: 'info'
     },
     {
       name: 'KVM',
-      description: 'Remotely view/control the device',
+      description: 'Remotely control device',
       component: 'kvm',
       icon: 'tv'
-
       },
       {
       name: 'SOL',
-      description: 'Remotely manage the device with Serial Over LAN',
+      description: 'Serial Over LAN',
       component: 'sol',
       icon: 'keyboard'
       },
     {
       name: 'Hardware Information',
-      description: 'Memory, CPU, and other hardware information about the device',
+      description: 'Memory, CPU, etc...',
       component: 'hardware-info',
       icon: 'memory'
       },
     {
     name: 'Audit Log',
-    description: 'View the audit log of the device',
+    description: 'View device audit log',
     component: 'audit-log',
     icon: 'history'
   },
   {
   name: 'Event Log',
-  description: 'View events that have occurred on the device',
+  description: 'View device events',
   component: 'event-log',
   icon: 'event_list'
   },
   {
     name: 'Alarms',
-    description: 'Manage alarms for the device',
+    description: 'Manage device alarms',
     component: 'alarms',
     icon: 'alarm'
     }
@@ -99,12 +99,18 @@ constructor (public snackBar: MatSnackBar, public readonly activatedRoute: Activ
 
 public currentView = 'general'
 public isLoading = false
+isCollapsed = false
+
 ngOnInit (): void {
   this.activatedRoute.params.subscribe(params => {
     this.isLoading = true
     this.deviceId = params.id
     this.currentView = params.component || 'general'
   })
+}
+
+toggleSidenav (): void {
+  this.isCollapsed = !this.isCollapsed
 }
 
 setCurrentView (category: any): void {
