@@ -15,13 +15,14 @@ import { MatCheckbox } from '@angular/material/checkbox'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { MatIcon } from '@angular/material/icon'
 
 @Component({
     selector: 'app-add-device-enterprise',
     templateUrl: './add-device-enterprise.component.html',
     styleUrl: './add-device-enterprise.component.scss',
     standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatChipsModule, MatHint, MatError, MatCheckbox, MatButton]
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatIcon, MatInput, MatChipsModule, MatHint, MatError, MatCheckbox, MatButton]
 })
 export class AddDeviceEnterpriseComponent {
   form: FormGroup = this.fb.group({
