@@ -148,23 +148,24 @@ describe('Test device details page', () => {
   })
 
   /* ==== Test Created with Cypress Studio ==== */
-  it('Hardware Information', function () {
-    cy.myIntercept('GET', /.*hardwareInfo.*/, {
-      statusCode: httpCodes.SUCCESS,
-      body: eventLogs.hardwareInfo.success.response
-    }).as('get-hwInfo')
 
-    /* ==== Generated with Cypress Studio ==== */
-    cy.get('[routerlink="/devices"] > .mdc-list-item__content > .mat-mdc-list-item-unscoped-content > span').click()
-    cy.get(':nth-child(2) > [data-cy="guid"]').click()
-    cy.get(':nth-child(4) > .mdc-list-item__content > .mat-mdc-list-item-title').click()
-    /* ==== End Cypress Studio ==== */
-    /* ==== Generated with Cypress Studio ==== */
-    cy.get('[data-cy="biosManufacturer"]').should('have.text', 'Intel');
-    cy.get('[data-cy="biosVersion"]').should('have.text', ' 8.8.0.6');
-    cy.get('[data-cy="biosReleaseData"]').should('have.text', 'July 4, 1776 12:00 AM');
-    cy.get(':nth-child(1) > :nth-child(3) > [data-cy="bankLabel"]').should('have.text', ' BANK 0');
-    cy.get(':nth-child(2) > :nth-child(3) > [data-cy="bankLabel"]').should('have.text', ' BANK 2');
-    /* ==== End Cypress Studio ==== */
+  it('Hardware Information', function () {
+    if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
+      cy.myIntercept('GET', /.*hardwareInfo.*/, {
+        statusCode: httpCodes.SUCCESS,
+        body: eventLogs.hardwareInfo.success.response
+      }).as('get-hwInfo')
+
+      /* ==== Generated with Cypress Studio ==== */
+      cy.get('[routerlink="/devices"] > .mdc-list-item__content > .mat-mdc-list-item-unscoped-content > span').click()
+      cy.get(':nth-child(2) > [data-cy="guid"]').click()
+      cy.get(':nth-child(4) > .mdc-list-item__content > .mat-mdc-list-item-title').click()
+      cy.get('[data-cy="biosManufacturer"]').should('have.text', 'Intel')
+      cy.get('[data-cy="biosVersion"]').should('have.text', ' 8.8.0.6')
+      cy.get('[data-cy="biosReleaseData"]').should('have.text', 'July 4, 1776 12:00 AM')
+      cy.get(':nth-child(1) > :nth-child(3) > [data-cy="bankLabel"]').should('have.text', ' BANK 0')
+      cy.get(':nth-child(2) > :nth-child(3) > [data-cy="bankLabel"]').should('have.text', ' BANK 2')
+      /* ==== End Cypress Studio ==== */
+    }
   })
 })

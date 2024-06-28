@@ -75,7 +75,7 @@ export class AddDeviceEnterpriseComponent {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
       device.tags = this.tags
-      if (this.deviceOrig.guid != null && this.deviceOrig.guid !== '') {
+      if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe((res) => {
           this.dialog.close()
