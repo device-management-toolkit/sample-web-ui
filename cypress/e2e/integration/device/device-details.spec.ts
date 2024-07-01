@@ -159,7 +159,7 @@ describe('Test device details page', () => {
       /* ==== Generated with Cypress Studio ==== */
       cy.get('[routerlink="/devices"] > .mdc-list-item__content > .mat-mdc-list-item-unscoped-content > span').click()
       cy.get(':nth-child(2) > [data-cy="guid"]').click()
-      cy.get(':nth-child(4) > .mdc-list-item__content > .mat-mdc-list-item-title').click()
+      cy.get(':nth-child(5) > .mdc-list-item__content > .mat-mdc-list-item-title').click()
       cy.get('[data-cy="biosManufacturer"]').should('have.text', 'Intel')
       cy.get('[data-cy="biosVersion"]').should('have.text', ' 8.8.0.6')
       cy.get('[data-cy="biosReleaseData"]').should('have.text', 'July 4, 1776 12:00 AM')
