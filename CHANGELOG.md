@@ -1,3 +1,22 @@
+# [3.7.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.6.1...v3.7.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* enables multiple explorer calls ([74490f9](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/74490f94b6661886d37f00b39101fdefe7d1a95b))
+* hide generate random password in local mode ([69d74e6](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/69d74e6da75c8e6847108a3bdcb5b54b953e572c))
+* xterm css ([a3ff046](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/a3ff0467cf347d8d7138aa90e2c3783e4c1492ec))
+
+
+### Features
+
+* add tag management to add/edit device ([7776742](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/7776742c13cf1bc79d64130c0767e8edaa61211f))
+* enable enterprise support ([20b859c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/20b859cecaea1403df56147265585139528aa335))
+* enable filtering by tag, and sorting by tag, filtering devices, and edit device ([7d00989](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/7d00989280be3e2b899480da107650508e7adbf8))
+* enable menu collapse ([2223bb4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/2223bb49500aef6b69454328528cef88c2427893))
+* enable menu collapse ([5656707](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5656707b14ce17dc017b709d65d44b6b11718622))
+* enable routing between device-detail components ([b4fce50](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4fce5044b13c45b25bbb345d6aab0333340d9c4))
+
 ## [3.6.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.6.0...v3.6.1) (2024-06-05)
 
 # [3.6.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.5.5...v3.6.0) (2024-05-10)
