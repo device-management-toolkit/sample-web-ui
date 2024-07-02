@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
 import { ActivatedRoute } from '@angular/router'
@@ -33,8 +33,10 @@ const EVENTTYPEMAP: EventTypeMap = {
     imports: [MatToolbar, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MomentModule]
 })
 export class EventLogComponent implements OnInit {
+  @Input()
+  public deviceId = ''
+
   public isLoading = true
-  public deviceId: string = ''
   public displayedColumns = ['Event', 'Event Type', 'timestamp']
 
   public eventLogData: EventLog[] = []

@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: Apache-2.0
 **********************************************************************/
 
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core'
 import { PageEvent, MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortHeader } from '@angular/material/sort'
@@ -27,9 +27,11 @@ import { MatToolbar } from '@angular/material/toolbar'
     imports: [MatToolbar, MatProgressBar, MatCard, MatCardContent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSortHeader, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MomentModule]
 })
 export class AuditLogComponent implements OnInit, AfterViewInit {
+  @Input()
+  public deviceId = ''
+
   public devices: Device[] = []
   public isLoading = true
-  public deviceId: string = ''
   public displayedColumns = ['Event', 'timestamp']
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public dataSource = new MatTableDataSource(this.auditLogData.records)

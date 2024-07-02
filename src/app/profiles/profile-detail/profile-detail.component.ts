@@ -44,6 +44,7 @@ import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angula
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { environment } from 'src/environments/environment'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
@@ -76,6 +77,7 @@ export class ProfileDetailComponent implements OnInit {
     width: '450px'
   }
 
+  cloudMode = environment.cloud
   iee8021xConfigurations: IEEE8021x.Config[] = []
   showIEEE8021xConfigurations: boolean = false
   wirelessConfigurations: string[] = []
@@ -102,10 +104,10 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [ActivationModes.ADMIN.value, Validators.required],
-      generateRandomPassword: [true, Validators.required],
-      amtPassword: [{ value: null, disabled: true }],
-      generateRandomMEBxPassword: [true, Validators.required],
-      mebxPassword: [{ value: null, disabled: true }],
+      generateRandomPassword: [{ value: this.cloudMode, disabled: !this.cloudMode }, Validators.required],
+      amtPassword: [{ value: null, disabled: this.cloudMode }],
+      generateRandomMEBxPassword: [{ value: this.cloudMode, disabled: !this.cloudMode }, Validators.required],
+      mebxPassword: [{ value: null, disabled: this.cloudMode }],
       dhcpEnabled: [true],
       ipSyncEnabled: [{ value: true, disabled: true }],
       localWifiSyncEnabled: [{ value: false, disabled: false }],
@@ -172,7 +174,9 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
+      if (this.cloudMode) {
       this.profileForm.controls.generateRandomMEBxPassword.enable()
+      }
     }
   }
 
@@ -404,14 +408,6 @@ export class ProfileDetailComponent implements OnInit {
     this.updatePriorities()
   }
 
-  remove (tag: string): void {
-    const index = this.tags.indexOf(tag)
-
-    if (index >= 0) {
-      this.tags.splice(index, 1)
-    }
-  }
-
   drop (event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.selectedWifiConfigs, event.previousIndex, event.currentIndex)
     this.updatePriorities()
@@ -432,6 +428,14 @@ export class ProfileDetailComponent implements OnInit {
       this.tags.sort()
     }
     event.chipInput?.clear()
+  }
+
+  remove (tag: string): void {
+    const index = this.tags.indexOf(tag)
+
+    if (index >= 0) {
+      this.tags.splice(index, 1)
+    }
   }
 
   CIRAStaticWarning (): Observable<any> {

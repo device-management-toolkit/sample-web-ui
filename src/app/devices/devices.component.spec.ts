@@ -98,12 +98,12 @@ describe('DevicesComponent', () => {
     expect(result).toBe('Connected')
   })
   it('should determine if all selected (false)', () => {
-    const result = component.areAllDevicesSelected()
+    const result = component.isAllSelected()
     expect(result).toBeFalse()
   })
   it('should determine if all selected (true)', () => {
-    component.devices.forEach(d => component.selectedDevices.select(d))
-    const result = component.areAllDevicesSelected()
+    component.devices.data.forEach(d => component.selectedDevices.select(d))
+    const result = component.isAllSelected()
     expect(result).toBeTrue()
   })
   it('should translate connection status - true', () => {
@@ -139,15 +139,15 @@ describe('DevicesComponent', () => {
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })
   it('should reset response', fakeAsync(() => {
-    expect(component.devices.length).toBeGreaterThan(0);
-    (component.devices[0] as any).StatusMessage = 'SUCCESS'
+    expect(component.devices.data.length).toBeGreaterThan(0);
+    (component.devices.data[0] as any).StatusMessage = 'SUCCESS'
     component.resetResponse()
     tick(5001)
-    expect((component.devices[0] as any).StatusMessage).toEqual('')
+    expect((component.devices.data[0] as any).StatusMessage).toEqual('')
   }))
   it('should fire bulk power action', () => {
     const resetResponseSpy = spyOn(component, 'resetResponse')
-    component.selectedDevices.select(component.devices[0])
+    component.selectedDevices.select(component.devices.data[0])
     component.resetResponse()
     fixture.detectChanges()
     component.bulkPowerAction(8)
@@ -162,11 +162,11 @@ describe('DevicesComponent', () => {
 
   it('should select all rows on change the master toggle', () => {
     component.masterToggle()
-    expect(component.selectedDevices.selected).toEqual(component.devices)
+    expect(component.selectedDevices.selected).toEqual(component.devices.data)
   })
 
   it('should clear the selection when unselect the master toggle', () => {
-    component.devices.forEach(d => component.selectedDevices.select(d))
+    component.devices.data.forEach(d => component.selectedDevices.select(d))
     component.masterToggle()
     expect(component.selectedDevices.selected).toEqual([])
   })
@@ -181,10 +181,10 @@ describe('DevicesComponent', () => {
     expect(sendDeactivateSpy).toHaveBeenCalled()
   })
   it('should fire bulk deactivate action', () => {
-    expect(component.devices.length).toBeGreaterThan(0)
+    expect(component.devices.data.length).toBeGreaterThan(0)
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.selectedDevices.select(component.devices[0])
+    component.selectedDevices.select(component.devices.data[0])
     component.bulkDeactivate()
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()
@@ -192,10 +192,10 @@ describe('DevicesComponent', () => {
     expect(sendDeactivateSpy).toHaveBeenCalledTimes(1)
   })
   it('should fire bulk edit tags', () => {
-    expect(component.devices.length).toBeGreaterThan(0)
+    expect(component.devices.data.length).toBeGreaterThan(0)
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.devices.forEach(d => component.selectedDevices.select(d))
+    component.devices.data.forEach(d => component.selectedDevices.select(d))
     component.bulkEditTags()
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()
@@ -205,7 +205,7 @@ describe('DevicesComponent', () => {
   it('should fire device edit tags', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.devices.forEach(d => component.selectedDevices.select(d))
+    component.devices.data.forEach(d => component.selectedDevices.select(d))
     component.editTagsForDevice(device01.guid)
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()

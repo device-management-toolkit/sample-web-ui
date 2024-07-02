@@ -163,9 +163,19 @@ export class DevicesService {
   stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
+  deviceState: EventEmitter<number> = new EventEmitter<number>()
 
   constructor (private readonly http: HttpClient) {
 
+  }
+
+  getGeneralSettings (deviceId: string): Observable<any> {
+    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/generalSettings/${deviceId}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
   }
 
   getAMTVersion (deviceId: string): Observable<any> {
@@ -300,6 +310,15 @@ export class DevicesService {
       )
   }
 
+  editDevice (device: Device): Observable<Device> {
+    return this.http.patch<Device>(`${environment.mpsServer}/api/v1/devices`, device)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getDevice (guid: string): Observable<Device> {
     const query = `${environment.mpsServer}/api/v1/devices/${guid}`
     return this.http.get<Device>(query)
@@ -408,6 +427,25 @@ export class DevicesService {
   getRedirectionStatus (guid: string): Observable<RedirectionStatus> {
     const query = `${environment.mpsServer}/api/v1/devices/redirectstatus/${guid}`
     return this.http.get<RedirectionStatus>(query)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getWsmanOperations (): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/amt/explorer`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  executeExplorerCall (guid: string, call: string): Observable<any> {
+    const query = `${environment.mpsServer}/api/v1/amt/explorer/${guid}/${call}`
+    return this.http.get<any>(query)
       .pipe(
         catchError((err) => {
           throw err

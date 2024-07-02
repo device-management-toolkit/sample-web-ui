@@ -13,19 +13,17 @@ import { BehaviorSubject, of } from 'rxjs'
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent
   let fixture: ComponentFixture<ToolbarComponent>
-  let authService: { logout: any }
-  let mpsService: { getMPSVersion: any }
-  let getMPSVerSpy: jasmine.Spy
-  let rpsService: { getRPSVersion: any }
-  let getRPSVerSpy: jasmine.Spy
+  let authService: jasmine.SpyObj<AuthService>
+  let getMPSVersionSpy: jasmine.Spy
+  let getRPSVersionSpy: jasmine.Spy
+  // let getConsoleVersionSpy: jasmine.Spy
   // let logoutSpy: jasmine.Spy
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    authService = jasmine.createSpyObj('AuthService', ['logout'])
-    mpsService = jasmine.createSpyObj('AuthService', ['getMPSVersion'])
-    rpsService = jasmine.createSpyObj('AuthService', ['getRPSVersion'])
-    getMPSVerSpy = mpsService.getMPSVersion.and.returnValue(of({}))
-    getRPSVerSpy = rpsService.getRPSVersion.and.returnValue(of({}))
+    authService = jasmine.createSpyObj('AuthService', ['logout', 'getMPSVersion', 'getRPSVersion', 'getConsoleVersion'])
+    getMPSVersionSpy = authService.getMPSVersion.and.returnValue(of({}))
+    getRPSVersionSpy = authService.getRPSVersion.and.returnValue(of({}))
+    // getConsoleVersionSpy = authService.getConsoleVersion.and.returnValue(of({}))
     const authServiceStub = {
       loggedInSubject: new BehaviorSubject<boolean>(true)
     }
@@ -34,9 +32,9 @@ describe('ToolbarComponent', () => {
     imports: [ToolbarComponent],
     providers: [
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: { ...authServiceStub, ...authService, ...mpsService, ...rpsService } }
-    ]
-})
+        { provide: AuthService, useValue: { ...authServiceStub, ...authService } }
+        ]
+      })
       .compileComponents()
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
@@ -65,12 +63,12 @@ describe('ToolbarComponent', () => {
 
   it('should call getMPSVersion', () => {
     expect(component).toBeTruthy()
-    expect(getMPSVerSpy).toHaveBeenCalled()
+    expect(getMPSVersionSpy).toHaveBeenCalled()
   })
 
   it('should call getRPSVersion', () => {
     expect(component).toBeTruthy()
-    expect(getRPSVerSpy).toHaveBeenCalled()
+    expect(getRPSVersionSpy).toHaveBeenCalled()
   })
 
   it('should subscribe to loggedInSubject on init', () => {

@@ -28,17 +28,23 @@ import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.compone
     imports: [DeviceToolbarComponent, SOLComponent]
 })
 export class SolComponent implements OnInit, OnDestroy {
+  @Input()
+  public deviceId = ''
+
+  @Input()
+  deviceState: number = 0
+
+  @Output()
+  deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+
   results: any
   amtFeatures?: AmtFeaturesResponse
   isLoading: boolean = false
-  deviceId: string = ''
   powerState: PowerState = { powerstate: 0 }
   readyToLoadSol: boolean = false
   mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
   authToken: string = environment.cloud ? '' : 'direct'
   isDisconnecting: boolean = false
-  @Input() deviceState: number = 0
-  @Output() deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
 

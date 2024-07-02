@@ -49,6 +49,7 @@ describe('KvmComponent', () => {
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
     devicesService.device = new Subject<Device>()
+    devicesService.deviceState = new EventEmitter<number>()
     const websocketStub = {
       stopwebSocket: new EventEmitter<boolean>(false),
       connectKVMSocket: new EventEmitter<boolean>(false)

@@ -13,6 +13,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { Device } from 'src/models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
+import { environment } from 'src/environments/environment'
+import { AddDeviceEnterpriseComponent } from 'src/app/shared/add-device-enterprise/add-device-enterprise.component'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatDivider } from '@angular/material/divider'
@@ -30,10 +32,14 @@ import { MatToolbar } from '@angular/material/toolbar'
     imports: [MatToolbar, MatChipSet, MatChip, MatIconButton, MatTooltip, MatIcon, MatDivider, MatMenuTrigger, MatMenu, MatMenuItem, MatProgressBar]
 })
 export class DeviceToolbarComponent implements OnInit {
-  @Input() deviceState: number = 0
-  @Input() public isLoading = false
-  public device: Device | null = null
+  @Input()
+  public isLoading = false
+
+  @Input()
   public deviceId: string = ''
+
+  deviceState: number = 0
+  public device: Device | null = null
   public powerOptions = [
     {
       label: 'Hibernate',
@@ -68,16 +74,35 @@ export class DeviceToolbarComponent implements OnInit {
     }
   ]
 
-  constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, private readonly matDialog: MatDialog) { }
+  constructor (public snackBar: MatSnackBar,
+    public readonly activatedRoute: ActivatedRoute,
+    public readonly router: Router,
+    private readonly devicesService: DevicesService,
+    private readonly matDialog: MatDialog) { }
 
   ngOnInit (): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.deviceId = params.id
       this.devicesService.getDevice(this.deviceId).subscribe(data => {
         this.device = data
         this.devicesService.device.next(this.device)
       })
-    })
+      this.devicesService.deviceState.subscribe(state => {
+        this.deviceState = state
+      })
+  }
+
+  editDevice (): void {
+    if (!environment.cloud) {
+      const sub = this.matDialog.open(AddDeviceEnterpriseComponent, {
+        height: '500px',
+        width: '600px',
+        data: this.device
+
+      })
+      sub.afterClosed().subscribe(() => {
+        window.location.reload()
+        this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+      })
+    }
   }
 
   sendPowerAction (action: number): void {

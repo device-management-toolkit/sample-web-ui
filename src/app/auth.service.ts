@@ -78,6 +78,15 @@ export class AuthService {
       )
   }
 
+  getConsoleVersion (): Observable<any> {
+    return this.http.get<RpsVersion>(`${environment.rpsServer}/version`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   onError (err: any): string[] {
     const errorMessages: string[] = []
     if (err.error?.errors != null) {
@@ -90,5 +99,24 @@ export class AuthService {
       errorMessages.push(err as string)
     }
     return errorMessages
+  }
+
+  compareSemver (current: string, latest: string): number {
+    const parseVersion = (version: string): number[] => {
+      return version.replace('v', '').split('.').map(Number)
+    }
+
+    const [currentMajor, currentMinor, currentPatch] = parseVersion(current)
+    const [latestMajor, latestMinor, latestPatch] = parseVersion(latest)
+
+    if (currentMajor !== latestMajor) {
+      return currentMajor - latestMajor
+    }
+
+    if (currentMinor !== latestMinor) {
+      return currentMinor - latestMinor
+    }
+
+    return currentPatch - latestPatch
   }
 }

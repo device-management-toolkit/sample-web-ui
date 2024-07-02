@@ -5,9 +5,14 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceEnterpriseComponent } from './add-device-enterprise.component'
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from 'src/app/devices/devices.service'
 import { of } from 'rxjs'
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('AddDeviceEnterpriseComponent', () => {
@@ -20,9 +25,10 @@ describe('AddDeviceEnterpriseComponent', () => {
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, MatDialogModule, AddDeviceEnterpriseComponent],
+    imports: [NoopAnimationsModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatChipsModule, AddDeviceEnterpriseComponent],
     providers: [
         { provide: DevicesService, useValue: deviceService },
+        { provide: MAT_DIALOG_DATA, useValue: { tags: [''] } },
         { provide: MatDialogRef, useValue: { close: () => { } } }
     ]
 })
@@ -43,7 +49,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      useTls: false,
+      useTLS: false,
       allowSelfSigned: false
     })
     component.submitForm()
@@ -54,8 +60,9 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      useTls: false,
-      allowSelfSigned: false
+      useTLS: false,
+      allowSelfSigned: false,
+      tags: ['']
     })
     expect(dialogCloseSpy).toHaveBeenCalled()
   })
@@ -67,7 +74,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: '',
       password: '',
       tenantId: '',
-      useTls: false,
+      useTLS: false,
       allowSelfSigned: false
     })
     component.submitForm()

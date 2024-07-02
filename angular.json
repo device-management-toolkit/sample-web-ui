@@ -30,7 +30,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "/assets/monaco/"
+              }
             ],
             "styles": [
               "src/styles/_variables.scss",
@@ -53,7 +58,7 @@
             "preserveSymlinks": true
           },
           "configurations": {
-            "enterprise":{
+            "enterprise": {
               "outputPath": "ui",
               "optimization": true,
               "outputHashing": "none",

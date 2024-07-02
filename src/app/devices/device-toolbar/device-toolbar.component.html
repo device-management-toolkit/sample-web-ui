@@ -18,7 +18,9 @@
       <mat-chip>{{tag}}</mat-chip>
     }
   </mat-chip-set>
-
+  <button mat-icon-button matTooltip="Edit device" (click)="editDevice()">
+    <mat-icon>edit</mat-icon>
+  </button>
   <button mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
     <mat-icon>delete</mat-icon>
   </button>

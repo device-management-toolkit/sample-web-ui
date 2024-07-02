@@ -8,8 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DevicesService } from '../devices.service'
 import { DeviceToolbarComponent } from './device-toolbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { of, throwError } from 'rxjs'
+import { Subject, of, throwError } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
+import { Device } from 'src/models/models'
+import { EventEmitter } from '@angular/core'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
@@ -18,39 +20,50 @@ describe('DeviceToolbarComponent', () => {
   let getDeviceSpy: jasmine.Spy
   let sendDeactivateSpy: jasmine.Spy
   let sendDeactivateErrorSpy: jasmine.Spy
-  let deviceServiceStub: { stopwebSocket: { next: any }, startwebSocket: { next: any }, connectKVMSocket: { next: any } }
+  let devicesService: jasmine.SpyObj<DevicesService>
+  let stopSpy: jasmine.Spy
+  let startSpy: jasmine.Spy
+  let connectSpy: jasmine.Spy
+
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice', 'sendDeactivate'])
-    devicesService.TargetOSMap = { 0: 'Unknown' }
+    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice', 'sendDeactivate'])
+    devicesService.deviceState = new EventEmitter<number>()
+
+    devicesService.TargetOSMap = { 0: 'Unknown' } as any
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({
       Body: {
         ReturnValueStr: 'NOT_READY'
       }
     }))
-    getDeviceSpy = devicesService.getDevice.and.returnValue(of({}))
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
-    deviceServiceStub = {
-      stopwebSocket: { next: jasmine.createSpy('stopwebSocket next') },
-      startwebSocket: { next: jasmine.createSpy('startwebSocket next') },
-      connectKVMSocket: { next: jasmine.createSpy('connectKVMSocket next') }
-    }
+
+    devicesService.stopwebSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('stopwebSocket next') }
+    devicesService.startwebSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('startwebSocket next') }
+    devicesService.connectKVMSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('connectKVMSocket next') }
+    stopSpy = spyOn(devicesService.stopwebSocket, 'next')
+    startSpy = spyOn(devicesService.startwebSocket, 'next')
+    connectSpy = spyOn(devicesService.connectKVMSocket, 'next')
+    devicesService.device = new Subject<Device>()
 
     await TestBed.configureTestingModule({
     imports: [BrowserAnimationsModule, RouterModule, DeviceToolbarComponent],
-    providers: [{ provide: DevicesService, useValue: { ...deviceServiceStub, ...devicesService } }, {
+    providers: [{ provide: DevicesService, useValue: devicesService }, {
             provide: ActivatedRoute,
             useValue: {
                 params: of({ id: 'guid' })
             }
         }]
-})
+    })
       .compileComponents()
-  })
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(DeviceToolbarComponent)
     component = fixture.componentInstance
+    component.deviceId = 'guid'
+
     fixture.detectChanges()
   })
 
@@ -63,6 +76,7 @@ describe('DeviceToolbarComponent', () => {
     expect(getDeviceSpy).toHaveBeenCalledWith('guid')
   })
   it('should send power action', () => {
+    component.deviceId = 'guid'
     component.sendPowerAction(4)
 
     fixture.detectChanges()
@@ -81,13 +95,13 @@ describe('DeviceToolbarComponent', () => {
     component.deviceId = '12345-pokli-456772'
     spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}/kvm`)
     await component.navigateTo('kvm')
-    expect(deviceServiceStub.connectKVMSocket.next).toHaveBeenCalled()
+    expect(connectSpy).toHaveBeenCalled()
   })
   it('should navigate to sol', async () => {
     component.deviceId = '12345-pokli-456772'
     spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}/sol`)
     await component.navigateTo('sol')
-    expect(deviceServiceStub.startwebSocket.next).toHaveBeenCalled()
+    expect(startSpy).toHaveBeenCalled()
   })
   it('should navigate to devices', async () => {
     component.deviceId = '12345-pokli-456772'
@@ -109,11 +123,11 @@ describe('DeviceToolbarComponent', () => {
   it('should stop sol ', () => {
     component.stopSol()
     fixture.detectChanges()
-    expect(deviceServiceStub.stopwebSocket.next).toHaveBeenCalled()
+    expect(stopSpy).toHaveBeenCalled()
   })
   it('should stop kvm', () => {
     component.stopKvm()
     fixture.detectChanges()
-    expect(deviceServiceStub.stopwebSocket.next).toHaveBeenCalled()
+    expect(stopSpy).toHaveBeenCalled()
   })
 })

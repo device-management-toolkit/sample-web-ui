@@ -1,0 +1,111 @@
+<div class="flex-1 flex-row">
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>
+        AMT Summary
+      </mat-card-title>
+      <mat-card-subtitle>Summary of AMT information</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex-row flex-wrap">
+        <div class="flex flex-50">
+          <p>AMT DHCP DNS Suffix: </p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          {{amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix}}
+        </div>
+        <div class="flex flex-50">
+          <p>AMT Trusted DNS Suffix (MEBx): </p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          {{amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix}}
+        </div>
+        <div class="flex flex-50">
+          <p>AMT Version: </p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          @if (!isLoading){
+            <span class="mat-h3" data-cy="amtVersion">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString}}
+              } @else {
+                {{this.device?.deviceInfo?.fwVersion}}
+              }
+            </span>
+          }
+        </div>
+        <div class="flex flex-50">
+          <p>AMT Build: </p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          @if (!isLoading){
+            <span class="mat-h3" data-cy="amtSku">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString}}
+              }
+            </span>
+          }
+        </div>
+        <div class="flex flex-50">
+          <p>AMT SKU: </p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          @if (!isLoading){
+            <span class="mat-h3" data-cy="amtSku">
+              @if ( amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ) {
+                {{amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString}}
+              }
+            </span>
+          }
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>
+        AMT Enabled Features
+      </mat-card-title>
+      <mat-card-subtitle>Status of AMT Enabled Features</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="amt-features" [formGroup]="amtEnabledFeatures">
+      <p></p>
+      <div class="flex-row flex-wrap">
+        <div class="flex flex-50">
+          <p>Provisioning Mode:</p>
+        </div>
+        <div class="flex flex-50 justify-end" data-cy="provisioningMode">
+          {{parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode)}}
+        </div>
+        <div class="flex flex-50">
+          <p>IDE Redirection:</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox formControlName="enableIDER" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
+          <p>KVM:</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
+          <p>SOL:</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox formControlName="enableSOL" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
+          <p>User Consent:</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-select (selectionChange)="setAmtFeatures()" formControlName="userConsent" style="width:200px">
+            @for (uc of userConsentValues; track uc) {
+              <mat-option [value]="uc">{{uc}}</mat-option>
+            }
+          </mat-select>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

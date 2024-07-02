@@ -38,6 +38,12 @@
 <mat-card>
   <mat-card-header>
     <div class="flex-row flex-wrap flex-1">
+      <div class="flex flex-66" style="width: 66%;">
+        <mat-form-field data-cy="filterSearch" style="width: 100%;">
+          <input matInput  (keyup)="applyFilter($event)"  placeholder="Filter Devices...." />
+          <mat-hint>Enter text to filter current page</mat-hint>
+        </mat-form-field>
+      </div>
       <div class="flex flex-33 justify-end">
         <mat-form-field data-cy="filterTags">
           <mat-label>Filter Tags</mat-label>
@@ -63,13 +69,13 @@
         }
       </h3>
     } @else{
-      <mat-table [dataSource]="devices">
+      <mat-table [dataSource]="devices" matSort>
         <!-- select Column -->
         <ng-container matColumnDef="select">
           <mat-header-cell *matHeaderCellDef>
             <mat-checkbox
               (change)="$event ? masterToggle() : null"
-              [checked]="areAllDevicesSelected()"
+              [checked]="isAllSelected()"
               [indeterminate]="areOnlySomeDevicesSelected()">
             </mat-checkbox>
           </mat-header-cell>
@@ -83,7 +89,7 @@
         </ng-container>
         <!-- host Column -->
         <ng-container matColumnDef="hostname">
-          <mat-header-cell *matHeaderCellDef> Hostname (Friendly Name)</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Hostname (Friendly Name)</mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
             {{ element.hostname }} @if (element.friendlyName !== null) {
             <span>&nbsp;({{element.friendlyName}})</span>
@@ -101,15 +107,19 @@
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
-          {{ translateConnectionStatus(element.connectionStatus) }}
-          @if (element.connectionStatus) {
-            <span>&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+          @if(isCloudMode){
+            {{ translateConnectionStatus(element.connectionStatus) }}
+            @if (element.connectionStatus) {
+              <span>&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+            }
+          } @else{
+            Power: {{ powerStates[element.powerstate] }}
           }
         </mat-cell>
       </ng-container>
       <!-- tags Column -->
       <ng-container matColumnDef="tags">
-        <mat-header-cell *matHeaderCellDef>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           <!-- include this always hidden icon to match spacing in the cell -->
           <mat-icon class="alwaysHidden">edit</mat-icon>
           Tags
@@ -120,7 +130,7 @@
           </span>
           <mat-chip-set>
             @for (tag of element?.tags; track tag) {
-              <mat-chip (click)="$event.stopPropagation();">{{tag}}</mat-chip>
+              <mat-chip disabled (click)="$event.stopPropagation();">{{tag}}</mat-chip>
             }
           </mat-chip-set>
         </mat-cell>
@@ -142,6 +152,9 @@
               <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
                 <mat-icon>delete</mat-icon>
               </button>
+                         <!-- <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">
+              <mat-icon>search</mat-icon>
+            </button> -->
             </div>
           }
         </mat-cell>
