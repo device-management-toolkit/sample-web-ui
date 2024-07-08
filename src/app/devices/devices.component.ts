@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { Router } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { catchError, delay, finalize, map } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
 import { Device, PageEventOptions } from 'src/models/models'
@@ -41,7 +41,7 @@ import { MatInput } from '@angular/material/input'
     templateUrl: './devices.component.html',
     styleUrls: ['./devices.component.scss'],
     standalone: true,
-    imports: [MatInput, MatToolbar, MatButton, MatIcon, MatSort, MatIconButton, MatTooltip, MatProgressBar, MatCard, MatCardHeader, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatChipSet, MatChip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatHint]
+    imports: [MatInput, MatToolbar, MatButton, MatIcon, MatSort, MatIconButton, MatTooltip, MatProgressBar, MatCard, MatCardHeader, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatChipSet, MatChip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatHint, RouterModule]
 })
 export class DevicesComponent implements OnInit, AfterViewInit {
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()

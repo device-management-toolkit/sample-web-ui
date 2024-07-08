@@ -19,6 +19,7 @@ import { WirelessComponent } from './wireless/wireless.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
 import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
 import { ExplorerComponent } from './explorer/explorer.component'
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2'
 
 const routes: Routes = [
   { path: 'devices', component: DevicesComponent },
@@ -68,7 +69,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), MonacoEditorModule.forRoot()],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
