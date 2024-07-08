@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.7.0...v3.8.0) (2024-07-08)
+
+
+### Features
+
+* adds amt explorer ([#1984](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1984)) ([2c804b5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/2c804b5bf9e81b6fff526dcbee2ac9cc8403e10a))
+
 # [3.7.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.6.1...v3.7.0) (2024-07-02)
 
 
