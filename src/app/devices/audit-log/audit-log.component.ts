@@ -18,6 +18,7 @@ import { MomentModule } from 'ngx-moment'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { environment } from 'src/environments/environment'
 
 @Component({
     selector: 'app-audit-log',
@@ -35,13 +36,18 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
   public displayedColumns = ['Event', 'timestamp']
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
   public dataSource = new MatTableDataSource(this.auditLogData.records)
+  public isCloudMode: boolean = environment.cloud
   public startIndex = new BehaviorSubject<number>(1)
   @ViewChild(MatSort, { static: true }) sort!: MatSort
 
   constructor (public snackBar: MatSnackBar,
     public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
-    private readonly devicesService: DevicesService) { }
+    private readonly devicesService: DevicesService) {
+      if (!this.isCloudMode) {
+        this.displayedColumns = ['Event', 'Description', 'timestamp']
+      }
+    }
 
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {

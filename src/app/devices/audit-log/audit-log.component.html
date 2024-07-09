@@ -15,6 +15,13 @@
           <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Event }} </mat-cell>
         </ng-container>
+        @if (!isCloudMode) {
+        <!-- host Column -->
+        <ng-container matColumnDef="Description">
+          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.ExStr }} </mat-cell>
+        </ng-container>
+      }
         <!-- host Column -->
         <ng-container matColumnDef="timestamp">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
