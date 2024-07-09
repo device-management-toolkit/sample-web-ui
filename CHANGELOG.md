@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.8.0...v3.9.0) (2024-07-09)
+
+
+### Features
+
+* adds audit log exstr data to table ([#1994](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1994)) ([38b7ec0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/38b7ec0ae2357a7d28c4aa93ec7e9a7b26ed1558))
+
 # [3.8.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.7.0...v3.8.0) (2024-07-08)
 
 
