@@ -24,8 +24,10 @@ import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import * as Cira from '../../configs/configs.constants'
 import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
 import {
-  ActivationModes, Profile,
-  TlsModes, TlsSigningAuthorities,
+  ActivationModes,
+  Profile,
+  TlsModes,
+  TlsSigningAuthorities,
   UserConsentModes,
   WiFiConfig
 } from '../profiles.constants'
@@ -49,11 +51,48 @@ import { environment } from 'src/environments/environment'
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
 @Component({
-    selector: 'app-profile-detail',
-    templateUrl: './profile-detail.component.html',
-    styleUrls: ['./profile-detail.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatProgressBar, MatCard, MatList, MatListItem, MatIcon, MatListItemIcon, MatListItemTitle, ReactiveFormsModule, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatHint, MatSelect, MatOption, MatCheckbox, MatDivider, MatIconButton, MatSuffix, MatTooltip, MatRadioGroup, MatRadioButton, MatAutocompleteTrigger, MatAutocomplete, NgClass, CdkDropList, CdkDrag, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput, MatCardActions, MatButton, AsyncPipe]
+  selector: 'app-profile-detail',
+  templateUrl: './profile-detail.component.html',
+  styleUrls: ['./profile-detail.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatProgressBar,
+    MatCard,
+    MatList,
+    MatListItem,
+    MatIcon,
+    MatListItemIcon,
+    MatListItemTitle,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatHint,
+    MatSelect,
+    MatOption,
+    MatCheckbox,
+    MatDivider,
+    MatIconButton,
+    MatSuffix,
+    MatTooltip,
+    MatRadioGroup,
+    MatRadioButton,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    NgClass,
+    CdkDropList,
+    CdkDrag,
+    MatChipGrid,
+    MatChipRow,
+    MatChipRemove,
+    MatChipInput,
+    MatCardActions,
+    MatButton,
+    AsyncPipe
+  ]
 })
 export class ProfileDetailComponent implements OnInit {
   profileForm: FormGroup
@@ -87,7 +126,8 @@ export class ProfileDetailComponent implements OnInit {
   tooltipIpSyncEnabled = 'Only applicable for static wired network config'
   connectionMode = {
     cira: 'CIRA',
-    tls: 'TLS'
+    tls: 'TLS',
+    direct: 'DIRECT'
   }
 
   constructor (
@@ -104,9 +144,15 @@ export class ProfileDetailComponent implements OnInit {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
       activation: [ActivationModes.ADMIN.value, Validators.required],
-      generateRandomPassword: [{ value: this.cloudMode, disabled: !this.cloudMode }, Validators.required],
+      generateRandomPassword: [
+        { value: this.cloudMode, disabled: !this.cloudMode },
+        Validators.required
+      ],
       amtPassword: [{ value: null, disabled: this.cloudMode }],
-      generateRandomMEBxPassword: [{ value: this.cloudMode, disabled: !this.cloudMode }, Validators.required],
+      generateRandomMEBxPassword: [
+        { value: this.cloudMode, disabled: !this.cloudMode },
+        Validators.required
+      ],
       mebxPassword: [{ value: null, disabled: this.cloudMode }],
       dhcpEnabled: [true],
       ipSyncEnabled: [{ value: true, disabled: true }],
@@ -130,7 +176,7 @@ export class ProfileDetailComponent implements OnInit {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
     this.getCiraConfigs()
-    this.activeRoute.params.subscribe(params => {
+    this.activeRoute.params.subscribe((params) => {
       if (params.name) {
         this.isLoading = true
         this.isEdit = true
@@ -142,13 +188,23 @@ export class ProfileDetailComponent implements OnInit {
     this.filteredWirelessList = this.wirelessAutocomplete.valueChanges.pipe(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       startWith(''),
-      map((value: string) => value.length > 0 ? this.search(value) : [])
+      map((value: string) => (value.length > 0 ? this.search(value) : []))
     )
-    this.profileForm.controls.activation?.valueChanges.subscribe((value: string) => { this.activationChange(value) })
-    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value: boolean) => { this.generateRandomPasswordChange(value) })
-    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value: boolean) => { this.generateRandomMEBxPasswordChange(value) })
-    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value: boolean) => { this.dhcpEnabledChange(value) })
-    this.profileForm.controls.connectionMode.valueChanges.subscribe((value: string) => { this.connectionModeChange(value) })
+    this.profileForm.controls.activation?.valueChanges.subscribe((value: string) => {
+      this.activationChange(value)
+    })
+    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value: boolean) => {
+      this.generateRandomPasswordChange(value)
+    })
+    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value: boolean) => {
+      this.generateRandomMEBxPasswordChange(value)
+    })
+    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value: boolean) => {
+      this.dhcpEnabledChange(value)
+    })
+    this.profileForm.controls.connectionMode.valueChanges.subscribe((value: string) => {
+      this.connectionModeChange(value)
+    })
   }
 
   setConnectionMode (data: Profile): void {
@@ -175,7 +231,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
       if (this.cloudMode) {
-      this.profileForm.controls.generateRandomMEBxPassword.enable()
+        this.profileForm.controls.generateRandomMEBxPassword.enable()
       }
     }
   }
@@ -190,67 +246,61 @@ export class ProfileDetailComponent implements OnInit {
         })
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.pageTitle = data.profileName
           this.tags = data.tags
           this.profileForm.patchValue(data)
           this.selectedWifiConfigs = data.wifiConfigs ?? []
           this.setConnectionMode(data)
         },
-        error: error => {
+        error: (error) => {
           this.errorMessages = error
         }
       })
   }
 
   getCiraConfigs (): void {
-    this.configsService
-      .getData()
-      .subscribe({
-        next: ciraCfgRsp => {
-          this.ciraConfigurations = ciraCfgRsp.data
-        },
-        error: error => {
-          this.errorMessages = error
-        }
-      })
+    this.configsService.getData().subscribe({
+      next: (ciraCfgRsp) => {
+        this.ciraConfigurations = ciraCfgRsp.data
+      },
+      error: (error) => {
+        this.errorMessages = error
+      }
+    })
   }
 
   getIEEE8021xConfigs (): void {
-    this.ieee8021xService
-      .getData()
-      .subscribe({
-        next: (rsp) => {
-          this.iee8021xConfigurations = rsp.data.filter(c => c.wiredInterface)
-          this.showIEEE8021xConfigurations = this.iee8021xConfigurations.length > 0
-        },
-        error: err => {
-          console.error(JSON.stringify(err))
-          if (err instanceof Array) {
-            this.errorMessages = err
-          } else {
-            this.errorMessages.push(JSON.stringify(err))
-          }
+    this.ieee8021xService.getData().subscribe({
+      next: (rsp) => {
+        this.iee8021xConfigurations = rsp.data.filter((c) => c.wiredInterface)
+        this.showIEEE8021xConfigurations = this.iee8021xConfigurations.length > 0
+      },
+      error: (err) => {
+        console.error(JSON.stringify(err))
+        if (err instanceof Array) {
+          this.errorMessages = err
+        } else {
+          this.errorMessages.push(JSON.stringify(err))
         }
-      })
+      }
+    })
   }
 
   getWirelessConfigs (): void {
-    this.wirelessService
-      .getData()
-      .subscribe({
-        next: (data) => {
-          this.wirelessConfigurations = data.data.map(item => item.profileName)
-          this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
-        },
-        error: err => {
-          console.error(JSON.stringify(err))
-          if (err instanceof Array) {
-            this.errorMessages = err
-          } else {
-            this.errorMessages.push(JSON.stringify(err))
-          }
+    this.wirelessService.getData().subscribe({
+      next: (data) => {
+        this.wirelessConfigurations = data.data.map((item) => item.profileName)
+        this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
+      },
+      error: (err) => {
+        console.error(JSON.stringify(err))
+        if (err instanceof Array) {
+          this.errorMessages = err
+        } else {
+          this.errorMessages.push(JSON.stringify(err))
         }
+      }
     })
   }
 
@@ -278,7 +328,12 @@ export class ProfileDetailComponent implements OnInit {
 
   generateRandomPassword (length: number = 16): string {
     const charset: RegExp = /[a-zA-Z0-9!$%]/
-    const requirements: RegExp[] = [/[a-z]/, /[A-Z]/, /[0-9]/, /[!$%]/]
+    const requirements: RegExp[] = [
+      /[a-z]/,
+      /[A-Z]/,
+      /[0-9]/,
+      /[!$%]/
+    ]
     const bit = new Uint8Array(1)
     let char: string = ''
     let password: string = ''
@@ -338,30 +393,32 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   connectionModeChange (value: string): void {
-    if (value === this.connectionMode.tls) {
-      this.profileForm.controls.ciraConfigName.clearValidators()
-      this.profileForm.controls.ciraConfigName.setValue(null)
-      this.profileForm.controls.tlsMode.setValidators(Validators.required)
-      // set a default value if not set already
-      if (!this.profileForm.controls.tlsSigningAuthority.value) {
-        this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority.value)
+    if (this.cloudMode) {
+      if (value === this.connectionMode.tls) {
+        this.profileForm.controls.ciraConfigName.clearValidators()
+        this.profileForm.controls.ciraConfigName.setValue(null)
+        this.profileForm.controls.tlsMode.setValidators(Validators.required)
+        // set a default value if not set already
+        if (!this.profileForm.controls.tlsSigningAuthority.value) {
+          this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority.value)
+        }
+        this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
+      } else if (value === this.connectionMode.cira) {
+        this.profileForm.controls.tlsMode.clearValidators()
+        this.profileForm.controls.tlsMode.setValue(null)
+        this.profileForm.controls.tlsSigningAuthority.clearValidators()
+        this.profileForm.controls.tlsSigningAuthority.setValue(null)
+        this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
       }
-      this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
-    } else if (value === this.connectionMode.cira) {
-      this.profileForm.controls.tlsMode.clearValidators()
-      this.profileForm.controls.tlsMode.setValue(null)
-      this.profileForm.controls.tlsSigningAuthority.clearValidators()
-      this.profileForm.controls.tlsSigningAuthority.setValue(null)
-      this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
+      this.profileForm.controls.ciraConfigName.updateValueAndValidity()
+      this.profileForm.controls.tlsMode.updateValueAndValidity()
+      this.profileForm.controls.tlsSigningAuthority.updateValueAndValidity()
     }
-    this.profileForm.controls.ciraConfigName.updateValueAndValidity()
-    this.profileForm.controls.tlsMode.updateValueAndValidity()
-    this.profileForm.controls.tlsSigningAuthority.updateValueAndValidity()
   }
 
   selectWifiProfile (event: MatAutocompleteSelectedEvent): void {
     if (event.option.value !== NO_WIFI_CONFIGS) {
-      const selectedProfiles = this.selectedWifiConfigs.map(wifi => wifi.profileName)
+      const selectedProfiles = this.selectedWifiConfigs.map((wifi) => wifi.profileName)
       if (!selectedProfiles.includes(event.option.value as string)) {
         this.selectedWifiConfigs.push({
           priority: this.selectedWifiConfigs.length + 1,
@@ -385,7 +442,7 @@ export class ProfileDetailComponent implements OnInit {
 
   search (value: string): string[] {
     const filterValue = value.toLowerCase()
-    const filteredValues = this.wirelessConfigurations.filter(config => config.toLowerCase().includes(filterValue))
+    const filteredValues = this.wirelessConfigurations.filter((config) => config.toLowerCase().includes(filterValue))
     return filteredValues.length > 0 ? filteredValues : [NO_WIFI_CONFIGS]
   }
 
@@ -415,7 +472,7 @@ export class ProfileDetailComponent implements OnInit {
 
   updatePriorities (): void {
     let index = 1
-    this.selectedWifiConfigs.map(x => {
+    this.selectedWifiConfigs.map((x) => {
       x.priority = index++
       return x
     })
@@ -465,7 +522,7 @@ export class ProfileDetailComponent implements OnInit {
         this.onSubmit()
         return
       }
-      forkJoin(dialogs).subscribe(data => {
+      forkJoin(dialogs).subscribe((data) => {
         if (data.every((x) => x === true)) {
           this.onSubmit()
         }
@@ -496,14 +553,16 @@ export class ProfileDetailComponent implements OnInit {
     }
     request
       .pipe(
-        finalize(() => { this.isLoading = false })
+        finalize(() => {
+          this.isLoading = false
+        })
       )
       .subscribe({
         next: () => {
           this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
           void this.router.navigate(['/profiles'])
         },
-        error: error => {
+        error: (error) => {
           this.errorMessages = error
         }
       })
