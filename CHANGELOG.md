@@ -1,3 +1,10 @@
+# [3.10.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.9.1...v3.10.0) (2024-07-10)
+
+
+### Features
+
+* allow nontls option for console ([#1999](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1999)) ([1ad376a](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/1ad376a669dc471f9412d47f3206b4cbca5421a9))
+
 ## [3.9.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.9.0...v3.9.1) (2024-07-10)
 
 
