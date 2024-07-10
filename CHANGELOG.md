@@ -1,3 +1,10 @@
+## [3.9.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.9.0...v3.9.1) (2024-07-10)
+
+
+### Bug Fixes
+
+* updates event log to show decoded event information ([#1996](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/1996)) ([74aeca2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/74aeca205caa641ba6b3218f435e8973eaabc0d0))
+
 # [3.9.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.8.0...v3.9.0) (2024-07-09)
 
 
