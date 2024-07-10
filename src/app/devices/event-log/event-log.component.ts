@@ -16,6 +16,7 @@ import { MomentModule } from 'ngx-moment'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { environment } from 'src/environments/environment'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -40,12 +41,16 @@ export class EventLogComponent implements OnInit {
   public displayedColumns = ['Event', 'Event Type', 'timestamp']
 
   public eventLogData: EventLog[] = []
-
+  public isCloudMode: boolean = environment.cloud
   public dataSource = new MatTableDataSource(this.eventLogData)
   constructor (
     public snackBar: MatSnackBar,
     public readonly activatedRoute: ActivatedRoute,
-    private readonly devicesService: DevicesService) {}
+    private readonly devicesService: DevicesService) {
+      if (!this.isCloudMode) {
+        this.displayedColumns = ['Event', 'Source', 'Severity', 'timestamp']
+      }
+    }
 
   ngOnInit (): void {
     this.activatedRoute.params.subscribe(params => {

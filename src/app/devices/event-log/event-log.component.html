@@ -14,10 +14,21 @@
           <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="Event Type">
-          <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
-        </ng-container>
+        @if (isCloudMode) {
+          <ng-container matColumnDef="Event Type">
+            <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
+          </ng-container>
+        } @else {
+          <ng-container matColumnDef="Source">
+            <mat-header-cell *matHeaderCellDef> Source </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.Entity }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Severity">
+            <mat-header-cell *matHeaderCellDef> Severity </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.EventSeverity }} </mat-cell>
+          </ng-container>
+        }
         <ng-container matColumnDef="timestamp">
           <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Time | amDateFormat:'LLL' }} ({{ element.Time | amTimeAgo:true }} ago) </mat-cell>
