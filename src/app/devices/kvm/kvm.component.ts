@@ -361,15 +361,28 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.displayError(`Unable to send code: ${response.error.Body.ReturnValueStr as string}`)
       this.isLoading = false
     } else {
-      // On success to send or cancel to previous requested user consent code
-      const method = response.Header.Action.substring(
-        (response.Header.Action.lastIndexOf('/') as number) + 1,
-        response.Header.Action.length
-      )
-      if (method === 'CancelOptInResponse') {
-        this.cancelOptInCodeResponse(response as userConsentResponse)
-      } else if (method === 'SendOptInCodeResponse') {
-        this.sendOptInCodeResponse(response as userConsentResponse)
+      if (environment.cloud) {
+        // On success to send or cancel to previous requested user consent code
+        const method = response.Header.Action.substring(
+          (response.Header.Action.lastIndexOf('/') as number) + 1,
+          response.Header.Action.length
+        )
+        if (method === 'CancelOptInResponse') {
+          this.cancelOptInCodeResponse(response as userConsentResponse)
+        } else if (method === 'SendOptInCodeResponse') {
+          this.sendOptInCodeResponse(response as userConsentResponse)
+        }
+      } else {
+        const method = (response as any).XMLName.Local
+        if (method === 'CancelOptIn_OUTPUT') {
+          this.cancelOptInCodeResponse({
+            Body: response
+          } as any)
+        } else if (method === 'SendOptInCode_OUTPUT') {
+          this.sendOptInCodeResponse({
+            Body: response
+          } as any)
+        }
       }
     }
   }
