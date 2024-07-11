@@ -1,3 +1,10 @@
+## [3.10.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.10.0...v3.10.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* user consent flow for redirection ([#2004](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2004)) ([7fa1633](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/7fa163335ee945fa7538798615aa347280fd64a8))
+
 # [3.10.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.9.1...v3.10.0) (2024-07-10)
 
 ### Features
