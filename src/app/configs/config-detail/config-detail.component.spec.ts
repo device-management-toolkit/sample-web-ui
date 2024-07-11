@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -20,23 +20,31 @@ describe('ConfigDetailComponent', () => {
   let createRecordSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const configsService = jasmine.createSpyObj('ConfigsService', ['getRecord', 'update', 'loadMPSRootCert', 'create'])
+    const configsService = jasmine.createSpyObj('ConfigsService', [
+      'getRecord',
+      'update',
+      'loadMPSRootCert',
+      'create'
+    ])
     getRecordSpy = configsService.getRecord.and.returnValue(of({ serverAddressFormat: 3, configName: 'ciraConfig1' }))
     updateRecordSpy = configsService.update.and.returnValue(of({}))
     loadMpsRootCertSpy = configsService.loadMPSRootCert.and.returnValue(of('root certificate'))
     createRecordSpy = configsService.create.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, ConfigDetailComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        ConfigDetailComponent
+      ],
+      providers: [
         { provide: ConfigsService, useValue: configsService },
         {
-            provide: ActivatedRoute,
-            useValue: { params: of({ name: 'name' }) }
+          provide: ActivatedRoute,
+          useValue: { params: of({ name: 'name' }) }
         }
-    ]
-})
-      .compileComponents()
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // Tests the login page with a multitude of fake accounts in
 // different combinations of invalid login info.
@@ -53,15 +53,9 @@ describe('Test login page', () => {
 
       // Check that correct post request is made
       cy.wait('@login-request').then((req) => {
-        cy.wrap(req)
-          .its('response.statusCode')
-          .should('eq', httpCodes.SUCCESS)
-        cy.wrap(req)
-          .its('request.body.username')
-          .should('eq', mpsUsername)
-        cy.wrap(req)
-          .its('request.body.password')
-          .should('eq', mpsPassword)
+        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.SUCCESS)
+        cy.wrap(req).its('request.body.username').should('eq', mpsUsername)
+        cy.wrap(req).its('request.body.password').should('eq', mpsPassword)
       })
 
       // Check that the login was successful
@@ -70,18 +64,16 @@ describe('Test login page', () => {
   })
 
   context('Failed login', () => {
-    function prepareIntercepts (): void {
+    function prepareIntercepts(): void {
       cy.myIntercept('POST', 'authorize', {
         statusCode: httpCodes.UNAUTHORIZED,
         body: badRequest.response // same format
       }).as('login-request')
     }
 
-    function checkFailState (): void {
+    function checkFailState(): void {
       cy.wait('@login-request').then((req) => {
-        cy.wrap(req)
-          .its('response.statusCode')
-          .should('eq', httpCodes.UNAUTHORIZED)
+        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.UNAUTHORIZED)
         cy.wrap(req).its('response.body')
         // breaks e2e
         // .should("deep.eq", apiResponses.login.fail.response)

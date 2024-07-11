@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,20 +19,28 @@ describe('DomainDetailComponent', () => {
   let createRecordSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const domainsService = jasmine.createSpyObj('DomainsService', ['getRecord', 'update', 'create'])
+    const domainsService = jasmine.createSpyObj('DomainsService', [
+      'getRecord',
+      'update',
+      'create'
+    ])
     getRecordSpy = domainsService.getRecord.and.returnValue(of({ profileName: 'domain' }))
     updateRecordSpy = domainsService.update.and.returnValue(of({}))
     createRecordSpy = domainsService.create.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, DomainDetailComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        DomainDetailComponent
+      ],
+      providers: [
         { provide: DomainsService, useValue: domainsService },
         {
-            provide: ActivatedRoute,
-            useValue: { params: of({ name: 'name' }) }
+          provide: ActivatedRoute,
+          useValue: { params: of({ name: 'name' }) }
         }
-    ]
-}).compileComponents()
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

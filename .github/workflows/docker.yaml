@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       docker_registry:
-        description: "Registry URL"
+        description: 'Registry URL'
         required: true
-        default: "docker.io/username"
+        default: 'docker.io/username'
       docker_tag_name:
-        description: "Tag you wish to use on the docker image"
+        description: 'Tag you wish to use on the docker image'
         required: true
-        default: "webui:latest"
+        default: 'webui:latest'
 permissions:
   contents: read
 

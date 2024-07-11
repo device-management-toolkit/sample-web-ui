@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // Tests the creation of a profile
 import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
@@ -36,9 +36,7 @@ describe('Test Profile Page', () => {
       body: wirelessConfigs.getAll.success.response
     }).as('get-wireless2')
 
-    api8021x
-      .interceptGetAll(httpCodes.SUCCESS, api8021x.wiredConfigsResponse)
-      .as('intercept8021xGetAll')
+    api8021x.interceptGetAll(httpCodes.SUCCESS, api8021x.wiredConfigsResponse).as('intercept8021xGetAll')
 
     cy.myIntercept('POST', 'profiles', {
       statusCode: httpCodes.BAD_REQUEST,
@@ -49,9 +47,7 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles5')
 
     cy.get('button').contains('Add New').click()
-    cy.wait('@get-configs2')
-      .its('response.statusCode')
-      .should('be.oneOf', [200, 304])
+    cy.wait('@get-configs2').its('response.statusCode').should('be.oneOf', [200, 304])
     cy.wait('@get-wireless2')
     cy.wait('@intercept8021xGetAll')
   })
@@ -78,9 +74,7 @@ describe('Test Profile Page', () => {
 
     // Wait for requests to finish and check their responses
     cy.wait('@post-profile2').then((req) => {
-      cy.wrap(req)
-        .its('response.statusCode')
-        .should('eq', httpCodes.BAD_REQUEST)
+      cy.wrap(req).its('response.statusCode').should('eq', httpCodes.BAD_REQUEST)
     })
 
     // Check that the profile creation failed

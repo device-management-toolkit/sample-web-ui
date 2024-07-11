@@ -1,11 +1,23 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
@@ -27,55 +39,85 @@ const EVENTTYPEMAP: EventTypeMap = {
 }
 
 @Component({
-    selector: 'app-event-log',
-    templateUrl: './event-log.component.html',
-    styleUrls: ['./event-log.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MomentModule]
+  selector: 'app-event-log',
+  templateUrl: './event-log.component.html',
+  styleUrls: ['./event-log.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatProgressBar,
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MomentModule
+  ]
 })
 export class EventLogComponent implements OnInit {
   @Input()
   public deviceId = ''
 
   public isLoading = true
-  public displayedColumns = ['Event', 'Event Type', 'timestamp']
+  public displayedColumns = [
+    'Event',
+    'Event Type',
+    'timestamp'
+  ]
 
   public eventLogData: EventLog[] = []
   public isCloudMode: boolean = environment.cloud
   public dataSource = new MatTableDataSource(this.eventLogData)
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public readonly activatedRoute: ActivatedRoute,
-    private readonly devicesService: DevicesService) {
-      if (!this.isCloudMode) {
-        this.displayedColumns = ['Event', 'Source', 'Severity', 'timestamp']
-      }
+    private readonly devicesService: DevicesService
+  ) {
+    if (!this.isCloudMode) {
+      this.displayedColumns = [
+        'Event',
+        'Source',
+        'Severity',
+        'timestamp'
+      ]
     }
+  }
 
-  ngOnInit (): void {
-    this.activatedRoute.params.subscribe(params => {
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
       this.isLoading = true
       this.deviceId = params.id
-      this.devicesService.getEventLog(this.deviceId).pipe(
-        catchError(err => {
-          console.error(err)
-          this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
-          return of(this.eventLogData)
-        }), finalize(() => {
-          this.isLoading = false
+      this.devicesService
+        .getEventLog(this.deviceId)
+        .pipe(
+          catchError((err) => {
+            console.error(err)
+            this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+            return of(this.eventLogData)
+          }),
+          finalize(() => {
+            this.isLoading = false
+          })
+        )
+        .subscribe((data) => {
+          this.eventLogData = data || []
+          this.dataSource.data = this.eventLogData
         })
-      ).subscribe(data => {
-        this.eventLogData = data || []
-        this.dataSource.data = this.eventLogData
-      })
     })
   }
 
-  decodeEventType (eventType: number): string {
+  decodeEventType(eventType: number): string {
     return EVENTTYPEMAP[eventType]
   }
 
-  isNoData (): boolean {
+  isNoData(): boolean {
     return this.isLoading || this.eventLogData?.length === 0
   }
 }

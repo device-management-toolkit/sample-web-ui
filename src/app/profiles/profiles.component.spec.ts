@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -21,28 +21,36 @@ describe('ProfilesComponent', () => {
 
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
-    getDataSpy = profilesService.getData.and.returnValue(of({
-      data: [{
-        activation: 'acmactivate',
-        ciraConfigName: 'ciraconfig1',
-        dhcpEnabled: true,
-        generateRandomMEBxPassword: false,
-        generateRandomPassword: false,
-        mebxPasswordLength: null,
-        passwordLength: null,
-        profileName: 'profile1',
-        tags: [],
-        wifiConfigs: [],
-        tlsMode: 1
-      }],
-      totalCount: 1
-    }))
+    getDataSpy = profilesService.getData.and.returnValue(
+      of({
+        data: [
+          {
+            activation: 'acmactivate',
+            ciraConfigName: 'ciraconfig1',
+            dhcpEnabled: true,
+            generateRandomMEBxPassword: false,
+            generateRandomPassword: false,
+            mebxPasswordLength: null,
+            passwordLength: null,
+            profileName: 'profile1',
+            tags: [],
+            wifiConfigs: [],
+            tlsMode: 1
+          }
+        ],
+        totalCount: 1
+      })
+    )
     deleteSpy = profilesService.delete.and.returnValue(of(null))
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, ProfilesComponent],
-    providers: [{ provide: ProfilesService, useValue: profilesService }]
-}).compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        ProfilesComponent
+      ],
+      providers: [{ provide: ProfilesService, useValue: profilesService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

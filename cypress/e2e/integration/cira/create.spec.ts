@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // Tests the creation of a cira-config
 
@@ -57,16 +57,12 @@ describe('Test CIRA Config Page', () => {
 
     // Wait for requests to finish and check them their responses
     cy.wait('@post-config').then((req) => {
-      cy.wrap(req)
-        .its('response.statusCode')
-        .should('eq', httpCodes.CREATED)
+      cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
     })
 
     // TODO: check the response to make sure that it is correct
     // this is currently difficult because of the format of the response
-    cy.wait('@get-configs2')
-      .its('response.statusCode')
-      .should('eq', httpCodes.SUCCESS)
+    cy.wait('@get-configs2').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
     // //Check that the config was successful
     cy.get('mat-cell').contains(ciraFixtures.default.name)

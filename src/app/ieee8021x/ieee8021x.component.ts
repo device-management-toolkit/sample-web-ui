@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -14,7 +14,18 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { IEEE8021xService } from './ieee8021x.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { AuthenticationProtocols, ConfigsResponse } from './ieee8021x.constants'
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
@@ -22,11 +33,30 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-ieee8021x',
-    templateUrl: './ieee8021x.component.html',
-    styleUrls: ['./ieee8021x.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
+  selector: 'app-ieee8021x',
+  templateUrl: './ieee8021x.component.html',
+  styleUrls: ['./ieee8021x.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatButton,
+    MatIcon,
+    MatProgressBar,
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatIconButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator
+  ]
 })
 export class IEEE8021xComponent implements OnInit {
   pagedConfigs: ConfigsResponse = {
@@ -36,7 +66,12 @@ export class IEEE8021xComponent implements OnInit {
 
   protocols = AuthenticationProtocols
   isLoading = true
-  displayedColumns: string[] = ['profileName', 'authenticationProtocol', 'interface', 'remove']
+  displayedColumns: string[] = [
+    'profileName',
+    'authenticationProtocol',
+    'interface',
+    'remove'
+  ]
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -45,21 +80,25 @@ export class IEEE8021xComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public readonly ieee8021xService: IEEE8021xService,
     public router: Router,
     public dialog: MatDialog
   ) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getData(this.pageEvent)
   }
 
-  getData (pageEvent: PageEventOptions): void {
+  getData(pageEvent: PageEventOptions): void {
     this.ieee8021xService
       .getData(pageEvent)
-      .pipe(finalize(() => { this.isLoading = false }))
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
       .subscribe({
         next: (pagedConfigs: ConfigsResponse) => {
           this.pagedConfigs = pagedConfigs
@@ -70,30 +109,42 @@ export class IEEE8021xComponent implements OnInit {
       })
   }
 
-  isNoData (): boolean {
+  isNoData(): boolean {
     return !this.isLoading && this.pagedConfigs.data.length === 0
   }
 
-  delete (name: string): void {
+  delete(name: string): void {
     this.dialog
       .open(AreYouSureDialogComponent)
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result === true) {
           this.isLoading = true
           this.ieee8021xService
             .delete(name)
-            .pipe(finalize(() => { this.isLoading = false }))
+            .pipe(
+              finalize(() => {
+                this.isLoading = false
+              })
+            )
             .subscribe({
               next: () => {
                 this.getData(this.pageEvent)
-                this.snackBar.open($localize`Configuration deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+                this.snackBar.open(
+                  $localize`Configuration deleted successfully`,
+                  undefined,
+                  SnackbarDefaults.defaultSuccess
+                )
               },
-              error: error => {
+              error: (error) => {
                 if (error?.length > 0) {
                   this.snackBar.open(error as string, undefined, SnackbarDefaults.longError)
                 } else {
-                  this.snackBar.open($localize`Unable to delete Configuration`, undefined, SnackbarDefaults.defaultError)
+                  this.snackBar.open(
+                    $localize`Unable to delete Configuration`,
+                    undefined,
+                    SnackbarDefaults.defaultError
+                  )
                 }
               }
             })
@@ -101,7 +152,7 @@ export class IEEE8021xComponent implements OnInit {
       })
   }
 
-  onPaginator (event: PageEvent): void {
+  onPaginator(event: PageEvent): void {
     this.pageEvent = {
       ...this.pageEvent,
       pageSize: event.pageSize,
@@ -110,7 +161,7 @@ export class IEEE8021xComponent implements OnInit {
     this.getData(this.pageEvent)
   }
 
-  async navigateTo (path: string = 'new'): Promise<void> {
+  async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate([`/ieee8021x/${path}`])
   }
 }

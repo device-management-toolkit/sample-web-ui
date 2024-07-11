@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -52,7 +52,11 @@ describe('ProfileDetailComponent', () => {
   let wirelessGetDataSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
   beforeEach(async () => {
-    const profilesService = jasmine.createSpyObj('ProfilesService', ['getRecord', 'update', 'create'])
+    const profilesService = jasmine.createSpyObj('ProfilesService', [
+      'getRecord',
+      'update',
+      'create'
+    ])
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
@@ -75,25 +79,31 @@ describe('ProfileDetailComponent', () => {
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
     profileUpdateSpy = profilesService.update.and.returnValue(of({}))
     ciraGetDataSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
-    ieee8021xGetDataSpy = ieee8021xService.getData.and.returnValue(of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length }))
+    ieee8021xGetDataSpy = ieee8021xService.getData.and.returnValue(
+      of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length })
+    )
     wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, ProfileDetailComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        ProfileDetailComponent
+      ],
+      providers: [
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: WirelessService, useFactory: () => wirelessService },
         // { provide: TLSService, useValue: tlsService },
         {
-            provide: ActivatedRoute,
-            useValue: {
-                params: of({ name: 'profile' })
-            }
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ name: 'profile' })
+          }
         }
-    ]
-}).compileComponents()
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -477,7 +487,11 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the list of tags when a tag is added ', () => {
-    component.tags = ['acm', 'ccm', 'profile']
+    component.tags = [
+      'acm',
+      'ccm',
+      'profile'
+    ]
     const e = {
       value: '',
       chipInput: {
@@ -486,14 +500,27 @@ describe('ProfileDetailComponent', () => {
     }
     e.value = '  ccm '
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual(['acm', 'ccm', 'profile'])
+    expect(component.tags).toEqual([
+      'acm',
+      'ccm',
+      'profile'
+    ])
     e.value = 'newtag'
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual(['acm', 'ccm', 'newtag', 'profile'])
+    expect(component.tags).toEqual([
+      'acm',
+      'ccm',
+      'newtag',
+      'profile'
+    ])
   })
 
   it('should update the list of tags when a tag is removed ', () => {
-    component.tags = ['acm', 'ccm', 'profile']
+    component.tags = [
+      'acm',
+      'ccm',
+      'profile'
+    ]
     const tagName = 'ccm'
     component.remove(tagName)
     expect(component.tags).toEqual(['acm', 'profile'])

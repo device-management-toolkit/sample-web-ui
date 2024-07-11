@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,70 +19,120 @@ describe('EventLogComponent', () => {
 
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['getEventLog'])
-    eventLogSpy = devicesService.getEventLog.and.returnValue(of([{
-      DeviceAddress: 255,
-      EventSensorType: 15,
-      EventType: 111,
-      EventOffset: 2,
-      EventSourceType: 104,
-      EventSeverity: 8,
-      SensorNumber: 255,
-      Entity: 34,
-      EntityInstance: 0,
-      EventData: [64, 19, 0, 0, 0, 0, 0, 0],
-      EntityStr: 'BIOS',
-      Desc: 'Starting operating system boot process'
-    }, {
-      DeviceAddress: 255,
-      EventSensorType: 15,
-      EventType: 10,
-      EventOffset: 2,
-      EventSourceType: 104,
-      EventSeverity: 8,
-      SensorNumber: 255,
-      Entity: 34,
-      EntityInstance: 0,
-      EventData: [64, 19, 0, 0, 0, 0, 0, 0],
-      EntityStr: 'BIOS',
-      Desc: 'PCI resource configuration'
-    }, {
-      DeviceAddress: 255,
-      EventSensorType: 15,
-      EventType: 7,
-      EventOffset: 2,
-      EventSourceType: 104,
-      EventSeverity: 8,
-      SensorNumber: 255,
-      Entity: 34,
-      EntityInstance: 0,
-      EventData: [64, 19, 0, 0, 0, 0, 0, 0],
-      EntityStr: 'BIOS',
-      Desc: 'PCI resource configuration'
-    }, {
-      DeviceAddress: 255,
-      EventSensorType: 15,
-      EventType: 1,
-      EventOffset: 2,
-      EventSourceType: 104,
-      EventSeverity: 8,
-      SensorNumber: 255,
-      Entity: 34,
-      EntityInstance: 0,
-      EventData: [64, 19, 0, 0, 0, 0, 0, 0],
-      EntityStr: 'BIOS',
-      Desc: 'PCI resource configuration'
-    }]))
+    eventLogSpy = devicesService.getEventLog.and.returnValue(
+      of([
+        {
+          DeviceAddress: 255,
+          EventSensorType: 15,
+          EventType: 111,
+          EventOffset: 2,
+          EventSourceType: 104,
+          EventSeverity: 8,
+          SensorNumber: 255,
+          Entity: 34,
+          EntityInstance: 0,
+          EventData: [
+            64,
+            19,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          EntityStr: 'BIOS',
+          Desc: 'Starting operating system boot process'
+        },
+        {
+          DeviceAddress: 255,
+          EventSensorType: 15,
+          EventType: 10,
+          EventOffset: 2,
+          EventSourceType: 104,
+          EventSeverity: 8,
+          SensorNumber: 255,
+          Entity: 34,
+          EntityInstance: 0,
+          EventData: [
+            64,
+            19,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          EntityStr: 'BIOS',
+          Desc: 'PCI resource configuration'
+        },
+        {
+          DeviceAddress: 255,
+          EventSensorType: 15,
+          EventType: 7,
+          EventOffset: 2,
+          EventSourceType: 104,
+          EventSeverity: 8,
+          SensorNumber: 255,
+          Entity: 34,
+          EntityInstance: 0,
+          EventData: [
+            64,
+            19,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          EntityStr: 'BIOS',
+          Desc: 'PCI resource configuration'
+        },
+        {
+          DeviceAddress: 255,
+          EventSensorType: 15,
+          EventType: 1,
+          EventOffset: 2,
+          EventSourceType: 104,
+          EventSeverity: 8,
+          SensorNumber: 255,
+          Entity: 34,
+          EntityInstance: 0,
+          EventData: [
+            64,
+            19,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          EntityStr: 'BIOS',
+          Desc: 'PCI resource configuration'
+        }
+      ])
+    )
 
     await TestBed.configureTestingModule({
-    imports: [MomentModule, BrowserAnimationsModule, RouterModule, EventLogComponent],
-    providers: [{ provide: DevicesService, useValue: devicesService }, {
-            provide: ActivatedRoute,
-            useValue: {
-                params: of({ id: 'guid' })
-            }
-        }]
-})
-      .compileComponents()
+      imports: [
+        MomentModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        EventLogComponent
+      ],
+      providers: [
+        { provide: DevicesService, useValue: devicesService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'guid' })
+          }
+        }
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

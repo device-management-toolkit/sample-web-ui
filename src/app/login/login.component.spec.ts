@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -18,15 +18,27 @@ describe('LoginComponent', () => {
   let routerSpy
   let authService: any
   beforeEach(async () => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'patch'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', [
+      'get',
+      'post',
+      'delete',
+      'patch'
+    ])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
     authService = new AuthService(httpClientSpy, routerSpy)
 
     await TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, ReactiveFormsModule, LoginComponent],
-    providers: [{ provide: Router, useValue: routerSpy }, { provide: AuthService, useValue: authService }]
-}).compileComponents()
+      imports: [
+        NoopAnimationsModule,
+        ReactiveFormsModule,
+        LoginComponent
+      ],
+      providers: [
+        { provide: Router, useValue: routerSpy },
+        { provide: AuthService, useValue: authService }
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -57,8 +69,8 @@ describe('LoginComponent', () => {
   })
 
   it('onSubmit login should be successful', () => {
-    const userId: string = 'userId'
-    const password: string = 'P@ssw0rd'
+    const userId = 'userId'
+    const password = 'P@ssw0rd'
     component.loginForm.patchValue({
       userId,
       password
@@ -70,9 +82,11 @@ describe('LoginComponent', () => {
   })
 
   it('Should fail when login service throws 405 status', () => {
-    const authSpy = spyOn(authService, 'login').and.returnValue(throwError(() => {
-      return { status: 405, error: { message: 'failed' } }
-    }))
+    const authSpy = spyOn(authService, 'login').and.returnValue(
+      throwError(() => {
+        return { status: 405, error: { message: 'failed' } }
+      })
+    )
     const snackBarSpy = spyOn(component.snackBar, 'open')
     Object.defineProperty(component.loginForm, 'valid', {
       get: () => true
@@ -85,7 +99,11 @@ describe('LoginComponent', () => {
   })
 
   it('Should fail when login service throws an error', () => {
-    spyOn(authService, 'login').and.returnValue(throwError(() => { return { status: 401, error: { message: 'failed' } } }))
+    spyOn(authService, 'login').and.returnValue(
+      throwError(() => {
+        return { status: 401, error: { message: 'failed' } }
+      })
+    )
     Object.defineProperty(component.loginForm, 'valid', {
       get: () => true
     })
@@ -94,8 +112,8 @@ describe('LoginComponent', () => {
   })
 
   it('onSubmit login should be successful and should show about notice', () => {
-    const userId: string = 'userId'
-    const password: string = 'P@ssw0rd'
+    const userId = 'userId'
+    const password = 'P@ssw0rd'
     component.loginForm.patchValue({
       userId,
       password
@@ -109,8 +127,8 @@ describe('LoginComponent', () => {
   })
 
   it('onSubmit login should be successful and should not show about notice', () => {
-    const userId: string = 'userId'
-    const password: string = 'P@ssw0rd'
+    const userId = 'userId'
+    const password = 'P@ssw0rd'
     component.loginForm.patchValue({
       userId,
       password

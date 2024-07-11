@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
@@ -16,17 +16,33 @@ describe('GeneralComponent', () => {
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
   beforeEach(async () => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', ['getDevices', 'updateDevice', 'getTags', 'getPowerState', 'getAMTVersion', 'getAMTFeatures', 'getGeneralSettings', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate', 'getWsmanOperations'])
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ userConsent: 'ALL', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 1 }))
-    devicesServiceSpy.getGeneralSettings.and.returnValue(of({ }))
+    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+      'getDevices',
+      'updateDevice',
+      'getTags',
+      'getPowerState',
+      'getAMTVersion',
+      'getAMTFeatures',
+      'getGeneralSettings',
+      'PowerStates',
+      'sendPowerAction',
+      'bulkPowerAction',
+      'sendDeactivate',
+      'sendBulkDeactivate',
+      'getWsmanOperations'
+    ])
+    devicesServiceSpy.getAMTFeatures.and.returnValue(
+      of({ userConsent: 'ALL', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 1 })
+    )
+    devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     await TestBed.configureTestingModule({
       imports: [GeneralComponent],
-      providers: [{ provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
+      providers: [
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
-    })
-    .compileComponents()
+    }).compileComponents()
 
     fixture = TestBed.createComponent(GeneralComponent)
     component = fixture.componentInstance

@@ -1,4 +1,9 @@
 @if (readyToLoadSol) {
-<amt-sol [deviceConnection]="deviceConnection" (deviceStatus)="deviceStatus($event)" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken">
-</amt-sol>
+  <amt-sol
+    [deviceConnection]="deviceConnection"
+    (deviceStatus)="deviceStatus($event)"
+    [deviceId]="deviceId"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken">
+  </amt-sol>
 }

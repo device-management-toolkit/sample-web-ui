@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
@@ -21,7 +21,7 @@ xdescribe('DeviceDetailComponent', () => {
     selector: 'app-device-toolbar',
     standalone: true,
     imports: [MomentModule]
-})
+  })
   class TestDeviceToolbarComponent {
     @Input()
     isLoading = false
@@ -29,26 +29,30 @@ xdescribe('DeviceDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MomentModule,
         NoopAnimationsModule,
         RouterModule,
         DeviceDetailComponent,
         TestDeviceToolbarComponent
-    ],
-    providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesService }, {
-            provide: ActivatedRoute,
-            useValue: {
-                params: of({ id: 'guid' })
-            }
-        }, {
-            provide: Router,
-            useValue: {
-                url: 'sol'
-            }
-        }]
-    })
-      .compileComponents()
+      ],
+      providers: [
+        provideNativeDateAdapter(),
+        { provide: DevicesService, useValue: devicesService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'guid' })
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            url: 'sol'
+          }
+        }
+      ]
+    }).compileComponents()
 
     fixture = TestBed.createComponent(DeviceDetailComponent)
     component = fixture.componentInstance

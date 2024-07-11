@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
@@ -37,11 +37,40 @@ describe('KvmComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice', 'getPowerState', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken', 'getRedirectionStatus'])
-    setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
-    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
-    devicesService.getDevice.and.returnValue(of({ hostname: 'test-hostname', guid: 'test-guid', mpsInstance: 'test-mps', mpsusername: 'admin', tags: [''], connectionStatus: true, friendlyName: 'test-friendlyName', tenantId: '1', dnsSuffix: 'dns', icon: 0 }))
-    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }))
+    devicesService = jasmine.createSpyObj('DevicesService', [
+      'sendPowerAction',
+      'getDevice',
+      'getPowerState',
+      'setAmtFeatures',
+      'getAMTFeatures',
+      'reqUserConsentCode',
+      'cancelUserConsentCode',
+      'getRedirectionExpirationToken',
+      'getRedirectionStatus'
+    ])
+    setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(
+      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+    )
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
+      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+    )
+    devicesService.getDevice.and.returnValue(
+      of({
+        hostname: 'test-hostname',
+        guid: 'test-guid',
+        mpsInstance: 'test-mps',
+        mpsusername: 'admin',
+        tags: [''],
+        connectionStatus: true,
+        friendlyName: 'test-friendlyName',
+        tenantId: '1',
+        dnsSuffix: 'dns',
+        icon: 0
+      })
+    )
+    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(
+      of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
+    )
     const reqUserConsentResponse: userConsentResponse = {} as any
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of(reqUserConsentResponse))
@@ -60,51 +89,57 @@ describe('KvmComponent', () => {
     }
 
     @Component({
-    selector: 'amt-kvm',
-    standalone: true,
-    imports: []
-})
+      selector: 'app-kvm',
+      standalone: true,
+      imports: []
+    })
     class TestAMTKVMComponent {
       @Input()
-      deviceId: string = ''
+      deviceId = ''
 
       @Input()
-      mpsServer: string = ''
+      mpsServer = ''
 
       @Input()
-      authToken: string = ''
+      authToken = ''
 
       @Input()
-      deviceConnection: string = ''
+      deviceConnection = ''
 
       @Input()
-      selectedEncoding: string = ''
+      selectedEncoding = ''
 
       @Output()
       deviceStatus = new EventEmitter<number>()
     }
 
     @Component({
-    selector: 'app-device-toolbar',
-    standalone: true,
-    imports: []
-})
+      selector: 'app-device-toolbar',
+      standalone: true,
+      imports: []
+    })
     class TestDeviceToolbarComponent {
       @Input()
       isLoading = false
 
       @Input()
-      deviceState: number = 0
+      deviceState = 0
     }
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, KvmComponent, TestDeviceToolbarComponent, TestAMTKVMComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        KvmComponent,
+        TestDeviceToolbarComponent,
+        TestAMTKVMComponent
+      ],
+      providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
-    ]
-}).compileComponents()
+      ]
+    }).compileComponents()
 
     router = TestBed.inject(Router)
   })
@@ -155,7 +190,11 @@ describe('KvmComponent', () => {
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
     component.deviceKVMStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith(
+      'Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.',
+      undefined,
+      SnackbarDefaults.defaultError
+    )
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
@@ -201,7 +240,14 @@ describe('KvmComponent', () => {
     component.getAMTFeatures().subscribe({
       next: (result) => {
         expect(getAMTFeaturesSpy).toHaveBeenCalled()
-        expect(result).toEqual({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+        expect(result).toEqual({
+          userConsent: 'none',
+          KVM: true,
+          SOL: true,
+          IDER: true,
+          redirection: true,
+          optInState: 0
+        })
         expect(component.isLoading).toBe(true)
         done()
       }
@@ -360,7 +406,8 @@ describe('KvmComponent', () => {
     expect(optInCodeResponseSpy).toHaveBeenCalled()
   })
   it('afterUserContentDialogClosed Cancel', async () => {
-    userConsentData.results.Header.Action = 'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/CancelOptInResponse'
+    userConsentData.results.Header.Action =
+      'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/CancelOptInResponse'
     optInCodeResponseSpy = spyOn(component, 'cancelOptInCodeResponse')
     component.afterUserConsentDialogClosed(userConsentData)
     expect(optInCodeResponseSpy).toHaveBeenCalled()

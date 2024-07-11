@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
@@ -36,11 +36,37 @@ describe('SolComponent', () => {
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getPowerState', 'getDevice', 'setAmtFeatures', 'getAMTFeatures', 'reqUserConsentCode', 'cancelUserConsentCode', 'getRedirectionExpirationToken'])
+    devicesService = jasmine.createSpyObj('DevicesService', [
+      'sendPowerAction',
+      'getPowerState',
+      'getDevice',
+      'setAmtFeatures',
+      'getAMTFeatures',
+      'reqUserConsentCode',
+      'cancelUserConsentCode',
+      'getRedirectionExpirationToken'
+    ])
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
-    setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
-    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }))
-    devicesService.getDevice.and.returnValue(of({ hostname: 'test-hostname', guid: 'test-guid', mpsInstance: 'test-mps', mpsusername: 'admin', tags: [''], connectionStatus: true, friendlyName: 'test-friendlyName', tenantId: '1', dnsSuffix: 'dns', icon: 0 }))
+    setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(
+      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+    )
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
+      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+    )
+    devicesService.getDevice.and.returnValue(
+      of({
+        hostname: 'test-hostname',
+        guid: 'test-guid',
+        mpsInstance: 'test-mps',
+        mpsusername: 'admin',
+        tags: [''],
+        connectionStatus: true,
+        friendlyName: 'test-friendlyName',
+        tenantId: '1',
+        dnsSuffix: 'dns',
+        icon: 0
+      })
+    )
     const reqUserConsentResponse: userConsentResponse = {} as any
     devicesService.device = new Subject<Device>()
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
@@ -55,47 +81,53 @@ describe('SolComponent', () => {
     }
 
     @Component({
-    selector: 'amt-sol',
-    standalone: true,
-    imports: []
-})
+      selector: 'app-sol',
+      standalone: true,
+      imports: []
+    })
     class TestAMTSOLComponent {
       @Input()
-      deviceConnection: string = ''
+      deviceConnection = ''
 
       @Input()
-      deviceId: string = ''
+      deviceId = ''
 
       @Input()
-      mpsServer: string = ''
+      mpsServer = ''
 
       @Input()
-      authToken: string = ''
+      authToken = ''
 
       @Output()
       deviceStatusChange = new EventEmitter<number>()
     }
     @Component({
-    selector: 'app-device-toolbar',
-    standalone: true,
-    imports: []
-})
+      selector: 'app-device-toolbar',
+      standalone: true,
+      imports: []
+    })
     class TestDeviceToolbarComponent {
       @Input()
       isLoading = false
 
       @Input()
-      deviceState: number = 0
+      deviceState = 0
     }
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, SolComponent, TestDeviceToolbarComponent, TestAMTSOLComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        SolComponent,
+        TestDeviceToolbarComponent,
+        TestAMTSOLComponent
+      ],
+      providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
-    ]
-}).compileComponents()
+      ]
+    }).compileComponents()
 
     router = TestBed.inject(Router)
   })
@@ -145,7 +177,11 @@ describe('SolComponent', () => {
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
     component.deviceStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith('Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.', undefined, SnackbarDefaults.defaultError)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith(
+      'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.',
+      undefined,
+      SnackbarDefaults.defaultError
+    )
     expect(component.isLoading).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
@@ -192,7 +228,14 @@ describe('SolComponent', () => {
     component.getAMTFeatures().subscribe({
       next: (result) => {
         expect(getAMTFeaturesSpy).toHaveBeenCalled()
-        expect(result).toEqual({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+        expect(result).toEqual({
+          userConsent: 'none',
+          KVM: true,
+          SOL: true,
+          IDER: true,
+          redirection: true,
+          optInState: 0
+        })
         expect(component.isLoading).toBe(true)
         done()
       }
@@ -225,8 +268,8 @@ describe('SolComponent', () => {
     expect(component.readyToLoadSol).toBe(false)
   })
   it('handlePowerState 2', async () => {
-    component.handlePowerState({ powerstate: 2 }).subscribe(results => {
-    expect(results).toBe(true)
+    component.handlePowerState({ powerstate: 2 }).subscribe((results) => {
+      expect(results).toBe(true)
     })
   })
   it('handlePowerState 0', (done) => {
@@ -321,7 +364,8 @@ describe('SolComponent', () => {
     expect(optInCodeResponseSpy).toHaveBeenCalled()
   })
   it('afterUserContentDialogClosed Cancel', async () => {
-    userConsentData.results.Header.Action = 'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/CancelOptInResponse'
+    userConsentData.results.Header.Action =
+      'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/CancelOptInResponse'
     optInCodeResponseSpy = spyOn(component, 'cancelOptInCodeResponse')
     component.afterUserConsentDialogClosed(userConsentData)
     expect(optInCodeResponseSpy).toHaveBeenCalled()

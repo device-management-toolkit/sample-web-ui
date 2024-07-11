@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
@@ -30,40 +30,35 @@ const routes: Routes = [
   {
     path: 'profiles/new',
     children: [
-      { path: '', component: ProfileDetailComponent }
-    ]
+      { path: '', component: ProfileDetailComponent }]
   },
   { path: 'profiles/:name', component: ProfileDetailComponent },
   { path: 'ciraconfigs', component: ConfigsComponent },
   {
     path: 'ciraconfigs/new',
     children: [
-      { path: '', component: ConfigDetailComponent }
-    ]
+      { path: '', component: ConfigDetailComponent }]
   },
   { path: 'ciraconfigs/:name', component: ConfigDetailComponent },
   { path: 'domains', component: DomainsComponent },
   {
     path: 'domains/new',
     children: [
-      { path: '', component: DomainDetailComponent }
-    ]
+      { path: '', component: DomainDetailComponent }]
   },
   { path: 'domains/:name', component: DomainDetailComponent },
   { path: 'wireless', component: WirelessComponent },
   {
     path: 'wireless/new',
     children: [
-      { path: '', component: WirelessDetailComponent }
-    ]
+      { path: '', component: WirelessDetailComponent }]
   },
   { path: 'wireless/:name', component: WirelessDetailComponent },
   { path: 'ieee8021x', component: IEEE8021xComponent },
   {
     path: 'ieee8021x/new',
     children: [
-      { path: '', component: IEEE8021xDetailComponent }
-    ]
+      { path: '', component: IEEE8021xDetailComponent }]
   },
   { path: 'ieee8021x/:name', component: IEEE8021xDetailComponent }
 ]
@@ -72,4 +67,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes), MonacoEditorModule.forRoot()],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

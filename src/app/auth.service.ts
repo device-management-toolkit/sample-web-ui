@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
@@ -17,8 +17,11 @@ import { ValidatorError, MpsVersion, RpsVersion } from 'src/models/models'
 export class AuthService {
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   isLoggedIn = false
-  url: string = `${environment.mpsServer}/api/v1/authorize`
-  constructor (private readonly http: HttpClient, public router: Router) {
+  url = `${environment.mpsServer}/api/v1/authorize`
+  constructor(
+    private readonly http: HttpClient,
+    public router: Router
+  ) {
     if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
@@ -27,67 +30,64 @@ export class AuthService {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
     }
-    if (environment.mpsServer.includes('/mps')) { // handles kong route
+    if (environment.mpsServer.includes('/mps')) {
+      // handles kong route
       this.url = `${environment.mpsServer}/login/api/v1/authorize`
     }
   }
 
-  getLoggedUserToken (): string {
+  getLoggedUserToken(): string {
     const loggedUser: string = localStorage.getItem('loggedInUser') ?? ''
     const token: string = JSON.parse(loggedUser).token
     return token
   }
 
-  login (username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.url, { username, password })
-      .pipe(
-        map((data: any) => {
-          this.isLoggedIn = true
-          localStorage.loggedInUser = JSON.stringify(data)
-          this.loggedInSubject.next(this.isLoggedIn)
-        }),
-        catchError((err: any) => {
-          throw err
-        })
-      )
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(this.url, { username, password }).pipe(
+      map((data: any) => {
+        this.isLoggedIn = true
+        localStorage.loggedInUser = JSON.stringify(data)
+        this.loggedInSubject.next(this.isLoggedIn)
+      }),
+      catchError((err: any) => {
+        throw err
+      })
+    )
   }
 
-  logout (): void {
+  logout(): void {
     this.isLoggedIn = false
     this.loggedInSubject.next(this.isLoggedIn)
     localStorage.removeItem('loggedInUser')
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
     this.router.navigate(['/login'])
   }
 
-  getMPSVersion (): Observable<any> {
-    return this.http.get<MpsVersion>(`${environment.mpsServer}/api/v1/version`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  getMPSVersion(): Observable<any> {
+    return this.http.get<MpsVersion>(`${environment.mpsServer}/api/v1/version`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getRPSVersion (): Observable<any> {
-    return this.http.get<RpsVersion>(`${environment.rpsServer}/api/v1/admin/version`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  getRPSVersion(): Observable<any> {
+    return this.http.get<RpsVersion>(`${environment.rpsServer}/api/v1/admin/version`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getConsoleVersion (): Observable<any> {
-    return this.http.get<RpsVersion>(`${environment.rpsServer}/version`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  getConsoleVersion(): Observable<any> {
+    return this.http.get<RpsVersion>(`${environment.rpsServer}/version`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  onError (err: any): string[] {
+  onError(err: any): string[] {
     const errorMessages: string[] = []
     if (err.error?.errors != null) {
       err.error.errors.forEach((error: ValidatorError) => {
@@ -101,13 +101,21 @@ export class AuthService {
     return errorMessages
   }
 
-  compareSemver (current: string, latest: string): number {
+  compareSemver(current: string, latest: string): number {
     const parseVersion = (version: string): number[] => {
       return version.replace('v', '').split('.').map(Number)
     }
 
-    const [currentMajor, currentMinor, currentPatch] = parseVersion(current)
-    const [latestMajor, latestMinor, latestPatch] = parseVersion(latest)
+    const [
+      currentMajor,
+      currentMinor,
+      currentPatch
+    ] = parseVersion(current)
+    const [
+      latestMajor,
+      latestMinor,
+      latestPatch
+    ] = parseVersion(latest)
 
     if (currentMajor !== latestMajor) {
       return currentMajor - latestMajor

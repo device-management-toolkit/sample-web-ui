@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 const eventLogFixtures = {
   happyPath: {
@@ -14,7 +14,16 @@ const eventLogFixtures = {
     SensorNumber: 255,
     Entity: 34,
     EntityInstance: 0,
-    EventData: [64, 19, 0, 0, 0, 0, 0, 0],
+    EventData: [
+      64,
+      19,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     Time: '2021-09-08T16:31:02.000Z',
     EntityStr: 'BIOS',
     Desc: 'Starting operating system boot process'

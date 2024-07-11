@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { DataWithCount, FormOption } from '../../models/models'
 
@@ -18,10 +18,12 @@ export type AuthMethod = FormOption<number>
 export const AuthMethods = {
   MUTUAL: { value: 1, label: 'Mutual Authentication' },
   USERNAME_PASSWORD: { value: 2, label: 'Username Password Authentication' },
-  labelForValue (value: number): string {
-    return this.all().filter(p => p.value === value).map(p => p.label)[0]
+  labelForValue(value: number): string {
+    return this.all()
+      .filter((p) => p.value === value)
+      .map((p) => p.label)[0]
   },
-  all (): ServerAddressFormat[] {
+  all(): ServerAddressFormat[] {
     return [this.MUTUAL, this.USERNAME_PASSWORD]
   }
 }
@@ -32,10 +34,12 @@ export const ServerAddressFormats = {
   IPv4: { value: 3, label: 'IPv4' },
   IPv6: { value: 4, label: 'IPv6' },
   FQDN: { value: 201, label: 'FQDN' },
-  labelForValue (value: number): string {
-    return this.all().filter(p => p.value === value).map(p => p.label)[0]
+  labelForValue(value: number): string {
+    return this.all()
+      .filter((p) => p.value === value)
+      .map((p) => p.label)[0]
   },
-  all (): ServerAddressFormat[] {
+  all(): ServerAddressFormat[] {
     return [this.IPv4, this.FQDN]
   }
 }

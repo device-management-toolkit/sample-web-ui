@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 interface AMTInfo {
   amt: string
@@ -51,7 +51,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const parts: string[] = profileName.split('-')
   const isAdminControlModeProfile = parts[0] === 'acmactivate'
-  let majorVersion: string = ''
+  let majorVersion = ''
   let infoCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} amtinfo -json`
   let activateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
   let deactivateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
@@ -81,7 +81,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       cy.exec(activateCommand, execConfig).then((result) => {
         cy.log(result.stderr)
         if (parseInt(majorVersion) < 12 && parseInt(amtInfo.buildNumber) < 3000) {
-          expect(result.stderr).to.contain('Only version 10.0.47 with build greater than 3000 can be remotely configured')
+          expect(result.stderr).to.contain(
+            'Only version 10.0.47 with build greater than 3000 can be remotely configured'
+          )
           return null
         } else {
           if (isAdminControlModeProfile) {
@@ -143,7 +145,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     it('should NOT deactivate device - invalid password', () => {
       if (amtInfo.controlMode !== 'pre-provisioning state') {
-        const invalidCommand = deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
+        const invalidCommand =
+          deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
         cy.exec(invalidCommand, execConfig).then((result) => {
           cy.log(result.stderr)
           expect(result.stderr).to.contain('Unable to authenticate with AMT')
@@ -167,7 +170,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
         activateCommand += ' -d dontmatch.com'
         cy.exec(activateCommand, execConfig).then((result) => {
-          expect(result.stderr).to.contain('Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.')
+          expect(result.stderr).to.contain(
+            'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
+          )
         })
       })
     }

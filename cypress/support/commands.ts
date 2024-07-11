@@ -1,10 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
-
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference types="cypress" />
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import stats from 'cypress/e2e/fixtures/api/stats'
@@ -12,6 +9,7 @@ import { AuthenticationProtocols, Config } from 'src/app/ieee8021x/ieee8021x.con
 import { ActivationModes, ConnectionModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       matCheckboxSet: (selector: string, checked: boolean) => Chainable<Element>
@@ -30,9 +28,28 @@ declare global {
       goToPage: (pageName: string) => Chainable<Element>
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
       enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
-      enterWirelessInfo: (name: string, ssid: string, password: string, authenticationMethod: string, encryptionMethod: string) => Chainable<Element>
+      enterWirelessInfo: (
+        name: string,
+        ssid: string,
+        password: string,
+        authenticationMethod: string,
+        encryptionMethod: string
+      ) => Chainable<Element>
       enterIEEE8021xInfo: (profile: any) => Chainable<Element>
-      enterProfileInfo: (name: string, activation: string, randAmt: boolean, randMebx: boolean, network: boolean, connection: string, connectionConfig: string, userConsent: string, iderEnabled: boolean, kvmEnabled: boolean, solEnabled: boolean, wifiConfigs?: Array<{ profileName: string, priority: number }>) => Chainable<Element>
+      enterProfileInfo: (
+        name: string,
+        activation: string,
+        randAmt: boolean,
+        randMebx: boolean,
+        network: boolean,
+        connection: string,
+        connectionConfig: string,
+        userConsent: string,
+        iderEnabled: boolean,
+        kvmEnabled: boolean,
+        solEnabled: boolean,
+        wifiConfigs?: { profileName: string; priority: number }[]
+      ) => Chainable<Element>
       enterProfileInfoV2: (formData: any) => Chainable<Element>
       assertProfileInfo: (profile: any) => Chainable<Element>
       setAMTMEBXPasswords: (mode: string, amtPassword: string, mebxPassword: string) => Chainable<Element>
@@ -42,25 +59,31 @@ declare global {
 
 Cypress.Commands.add('matCheckboxSet', (selector: string, checked: boolean) => {
   const elementId = `mat-checkbox${selector}`
-  cy.get(elementId).invoke('is', ':disabled').then(isDisabled => {
-    if (!isDisabled) {
-      // material checkbox input elements are hidden/covered so not 'checkable' without forcing
-      if (checked) {
-        cy.get(elementId).find('[type="checkbox"]').check({ force: true })
-      } else {
-        cy.get(elementId).find('[type="checkbox"]').uncheck({ force: true })
+  cy.get(elementId)
+    .invoke('is', ':disabled')
+    .then((isDisabled) => {
+      if (!isDisabled) {
+        // material checkbox input elements are hidden/covered so not 'checkable' without forcing
+        if (checked) {
+          cy.get(elementId).find('[type="checkbox"]').check({ force: true })
+        } else {
+          cy.get(elementId).find('[type="checkbox"]').uncheck({ force: true })
+        }
       }
-    }
-  })
+    })
 })
 
 Cypress.Commands.add('matCheckboxAssert', (selector: string, checked: boolean) => {
-  cy.get(`mat-checkbox${selector}`).find('[type="checkbox"]').should(checked ? 'be.checked' : 'not.be.checked')
+  cy.get(`mat-checkbox${selector}`)
+    .find('[type="checkbox"]')
+    .should(checked ? 'be.checked' : 'not.be.checked')
 })
 
 Cypress.Commands.add('matFormFieldAssertInvalid', (formControlName: string, expected: boolean) => {
   const expectedCondition = expected ? 'have.class' : 'not.have.class'
-  cy.get(`[formcontrolname="${formControlName}"]`).parents('mat-form-field').should(expectedCondition, 'mat-form-field-invalid')
+  cy.get(`[formcontrolname="${formControlName}"]`)
+    .parents('mat-form-field')
+    .should(expectedCondition, 'mat-form-field-invalid')
 })
 
 Cypress.Commands.add('matListAssert', (selector: string, value: string) => {
@@ -69,12 +92,14 @@ Cypress.Commands.add('matListAssert', (selector: string, value: string) => {
 
 Cypress.Commands.add('matRadioButtonChoose', (selector: string, value: string) => {
   const elementId = `mat-radio-group${selector}`
-  cy.get(elementId).invoke('is', ':disabled').then(isDisabled => {
-    if (!isDisabled) {
-      // these low level radio buttons are hidden so need to force
-      cy.get(elementId).find(`[value="${value}"]`).click({ force: true })
-    }
-  })
+  cy.get(elementId)
+    .invoke('is', ':disabled')
+    .then((isDisabled) => {
+      if (!isDisabled) {
+        // these low level radio buttons are hidden so need to force
+        cy.get(elementId).find(`[value="${value}"]`).click({ force: true })
+      }
+    })
 })
 
 Cypress.Commands.add('matRadioButtonAssert', (selector: string, value: string) => {
@@ -96,15 +121,19 @@ Cypress.Commands.add('matSelectAssert', (selector: string, text: string) => {
 })
 
 Cypress.Commands.add('matTextlikeInputType', (selector: string, value: string) => {
-  cy.get(selector).invoke('is', ':disabled').then(isDisabled => {
-    if (!isDisabled) {
-      cy.get(selector).invoke('is', ':visible').then(isVisible => {
-        if (isVisible) {
-          cy.get(selector).clear({ force: true }).type(value).blur()
-        }
-      })
-    }
-  })
+  cy.get(selector)
+    .invoke('is', ':disabled')
+    .then((isDisabled) => {
+      if (!isDisabled) {
+        cy.get(selector)
+          .invoke('is', ':visible')
+          .then((isVisible) => {
+            if (isVisible) {
+              cy.get(selector).clear({ force: true }).type(value).blur()
+            }
+          })
+      }
+    })
 })
 
 Cypress.Commands.add('matTextlikeInputAssert', (selector: string, value: string) => {
@@ -133,9 +162,7 @@ Cypress.Commands.add('setup', () => {
   const mpsUsername = Cypress.env('MPS_USERNAME')
   const mpsPassword = Cypress.env('MPS_PASSWORD')
   cy.login(mpsUsername, mpsPassword)
-  cy.wait('@login-request')
-    .its('response.statusCode')
-    .should('eq', httpCodes.SUCCESS)
+  cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
   // Close about notice
   cy.get('[data-cy="closeNotice"]').click()
@@ -162,81 +189,108 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   cy.get('input').get('[name=username]').clear().type(user)
 })
 
-Cypress.Commands.add('enterProfileInfo', (name, admin, randAmt, randMebx, dhcpEnabled, connection, connectionConfig, userConsent, iderEnabled, kvmEnabled, solEnabled, wifiConfigs) => {
-  cy.get('[name=profileName]').then((x) => {
-    if (!x.is(':disabled')) {
-      cy.get('[name=profileName]').type(name)
+Cypress.Commands.add(
+  'enterProfileInfo',
+  (
+    name,
+    admin,
+    randAmt,
+    randMebx,
+    dhcpEnabled,
+    connection,
+    connectionConfig,
+    userConsent,
+    iderEnabled,
+    kvmEnabled,
+    solEnabled,
+    wifiConfigs
+  ) => {
+    cy.get('[name=profileName]').then((x) => {
+      if (!x.is(':disabled')) {
+        cy.get('[name=profileName]').type(name)
+      }
+    })
+
+    cy.get('mat-select[formcontrolname=activation]').click()
+
+    if (admin === 'ccmactivate') {
+      cy.get('mat-option').contains('Client Control Mode').click()
+    } else {
+      cy.get('mat-option').contains('Admin Control Mode').click()
     }
-  })
 
-  cy.get('mat-select[formcontrolname=activation]').click()
+    if (!randAmt) {
+      cy.get('[data-cy=genAmtPass]').click()
+      cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
+    }
+    if (admin === 'acmactivate') {
+      if (!randMebx) {
+        cy.get('[data-cy=genMebxPass]')
+          .find('input[type=checkbox]')
+          .then((x) => {
+            if (x.is(':checked')) {
+              cy.get('[data-cy=genMebxPass]').click()
+            }
 
-  if (admin === 'ccmactivate') {
-    cy.get('mat-option').contains('Client Control Mode').click()
-  } else {
-    cy.get('mat-option').contains('Admin Control Mode').click()
-  }
+            cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
+          })
+      }
+    }
+    cy.contains(connection).click()
 
-  if (!randAmt) {
-    cy.get('[data-cy=genAmtPass]').click()
-    cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
-  }
-  if (admin === 'acmactivate') {
-    if (!randMebx) {
-      cy.get('[data-cy=genMebxPass]').find('input[type=checkbox]').then((x) => {
-        if (x.is(':checked')) {
-          cy.get('[data-cy=genMebxPass]').click()
-        }
+    if (dhcpEnabled) {
+      cy.contains('DHCP').click()
+    } else {
+      cy.contains('STATIC').click()
+    }
 
-        cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
+    if (connection === 'CIRA (Cloud)') {
+      cy.get('mat-select[formcontrolname=ciraConfigName]').click()
+    } else if (connection === 'TLS (Enterprise)') {
+      cy.get('mat-select[formcontrolname=tlsMode]').click()
+    }
+
+    cy.get('mat-option').contains(connectionConfig).click()
+
+    if (wifiConfigs != null && wifiConfigs.length > 0) {
+      wifiConfigs.forEach((wifiProfile) => {
+        cy.get('input[data-cy=wifiAutocomplete]').type(wifiProfile.profileName)
+        cy.get('mat-option').contains(wifiProfile.profileName).click()
       })
     }
+    // if (admin !== 'ccmactivate') {
+    //   cy.get('mat-select[formcontrolname=userConsent').click()
+    //   cy.contains(userConsent).click()
+    // }
+    let id = '[data-cy="redirect_ider"]'
+    cy.get(id)
+      .as('checkbox')
+      .invoke('is', ':checked')
+      .then((isChecked) => {
+        if ((iderEnabled && !isChecked) || (isChecked && !iderEnabled)) {
+          cy.get(id).click()
+        }
+      })
+    id = '[data-cy="redirect_kvm"] '
+    cy.get(id)
+      .as('checkbox')
+      .invoke('is', ':checked')
+      .then((isChecked) => {
+        if ((kvmEnabled && !isChecked) || (isChecked && !kvmEnabled)) {
+          cy.get(id).click()
+        }
+      })
+    id = '[data-cy="redirect_sol"]'
+    cy.get(id)
+      .as('checkbox')
+      .invoke('is', ':checked')
+      .then((isChecked) => {
+        if ((solEnabled && !isChecked) || (isChecked && !solEnabled)) {
+          cy.get(id).click()
+        }
+      })
   }
-  cy.contains(connection).click()
-
-  if (dhcpEnabled) {
-    cy.contains('DHCP').click()
-  } else {
-    cy.contains('STATIC').click()
-  }
-
-  if (connection === 'CIRA (Cloud)') {
-    cy.get('mat-select[formcontrolname=ciraConfigName]').click()
-  } else if (connection === 'TLS (Enterprise)') {
-    cy.get('mat-select[formcontrolname=tlsMode]').click()
-  }
-
-  cy.get('mat-option').contains(connectionConfig).click()
-
-  if (wifiConfigs != null && wifiConfigs.length > 0) {
-    wifiConfigs.forEach(wifiProfile => {
-      cy.get('input[data-cy=wifiAutocomplete]').type(wifiProfile.profileName)
-      cy.get('mat-option').contains(wifiProfile.profileName).click()
-    })
-  }
-  // if (admin !== 'ccmactivate') {
-  //   cy.get('mat-select[formcontrolname=userConsent').click()
-  //   cy.contains(userConsent).click()
-  // }
-  let id = '[data-cy="redirect_ider"]'
-  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-    if ((iderEnabled && !isChecked) || (isChecked && !iderEnabled)) {
-      cy.get(id).click()
-    }
-  })
-  id = '[data-cy="redirect_kvm"] '
-  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-    if ((kvmEnabled && !isChecked) || (isChecked && !kvmEnabled)) {
-      cy.get(id).click()
-    }
-  })
-  id = '[data-cy="redirect_sol"]'
-  cy.get(id).as('checkbox').invoke('is', ':checked').then(isChecked => {
-    if ((solEnabled && !isChecked) || (isChecked && !solEnabled)) {
-      cy.get(id).click()
-    }
-  })
-})
+)
 
 Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   if (formData.activation) {
@@ -308,8 +362,16 @@ Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
 Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod, encryptionMethod) => {
   cy.get('input[name="profileName"]').type(name, { force: true })
   cy.get('input[name="ssid"]').type(userName, { force: true })
-  cy.get('mat-select[formControlName=authenticationMethod]').click({ force: true }).get('mat-option').contains(authMethod).click()
-  cy.get('mat-select[formControlName=encryptionMethod]').click({ force: true }).get('mat-option').contains(encryptionMethod).click()
+  cy.get('mat-select[formControlName=authenticationMethod]')
+    .click({ force: true })
+    .get('mat-option')
+    .contains(authMethod)
+    .click()
+  cy.get('mat-select[formControlName=encryptionMethod]')
+    .click({ force: true })
+    .get('mat-option')
+    .contains(encryptionMethod)
+    .click()
   cy.get('input[name="pskPassphrase"]').type(password, { force: true })
 })
 
@@ -319,7 +381,10 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
     cy.matTextlikeInputType('[formControlName="profileName"]', config.profileName)
   }
   if (config.authenticationProtocol != null) {
-    cy.matSelectChoose('[formControlName="authenticationProtocol"]', AuthenticationProtocols.labelForValue(config.authenticationProtocol))
+    cy.matSelectChoose(
+      '[formControlName="authenticationProtocol"]',
+      AuthenticationProtocols.labelForValue(config.authenticationProtocol)
+    )
   }
   if (config.pxeTimeout != null && config.profileName.includes('wireless')) {
     cy.matTextlikeInputType('[formControlName="pxeTimeout"]', config.pxeTimeout.toString())
@@ -345,10 +410,13 @@ Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) =>
 
 Cypress.Commands.add('myIntercept', (method, url, body) => {
   if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
-    cy.intercept({
-      method,
-      url
-    }, body)
+    cy.intercept(
+      {
+        method,
+        url
+      },
+      body
+    )
   } else {
     cy.intercept({ method, url })
   }

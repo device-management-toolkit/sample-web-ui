@@ -1,10 +1,17 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Injectable } from '@angular/core'
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpResponse } from '@angular/common/http'
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse,
+  HttpResponse
+} from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { AuthService } from './auth.service'
 import { catchError, tap } from 'rxjs/operators'
@@ -12,9 +19,12 @@ import { MatDialog } from '@angular/material/dialog'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 @Injectable()
 export class AuthorizeInterceptor implements HttpInterceptor {
-  constructor (public authService: AuthService, public dialog: MatDialog) { }
+  constructor(
+    public authService: AuthService,
+    public dialog: MatDialog
+  ) {}
 
-  intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (request.url.toString().includes('/authorize') && !request.url.toString().includes('/authorize/redirection')) {
       // don't send auth token
     } else {
@@ -43,10 +53,14 @@ export class AuthorizeInterceptor implements HttpInterceptor {
               this.dialog.open(DialogContentComponent, { data: { name: 'Session timed out. Please login again' } })
             }
           } else if (error.status === 412 || error.status === 409) {
-            this.dialog.open(DialogContentComponent, { data: { name: 'This item has been modified since it has been loaded. Please reload.' } })
+            this.dialog.open(DialogContentComponent, {
+              data: { name: 'This item has been modified since it has been loaded. Please reload.' }
+            })
           }
         }
-        return throwError(() => { return error })
+        return throwError(() => {
+          return error
+        })
       })
     )
   }

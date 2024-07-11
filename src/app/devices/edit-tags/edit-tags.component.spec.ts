@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { DeviceEditTagsComponent } from './edit-tags.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
@@ -21,15 +21,18 @@ describe('EditTagsComponent', () => {
 
   beforeEach(async () => {
     tags = ['tag1', 'tag2']
-    await TestBed
-      .configureTestingModule({
-    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceEditTagsComponent],
-    providers: [
+    await TestBed.configureTestingModule({
+      imports: [
+        MomentModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        DeviceEditTagsComponent
+      ],
+      providers: [
         { provide: MAT_DIALOG_DATA, useValue: tags },
         { provide: MatDialogRef, useValue: dialogMock }
-    ]
-})
-      .compileComponents()
+      ]
+    }).compileComponents()
     fixture = TestBed.createComponent(DeviceEditTagsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -63,7 +66,11 @@ describe('EditTagsComponent', () => {
       }
     }
     component.add(e as unknown as MatChipInputEvent)
-    expect(tags).toEqual(['newtag', 'tag1', 'tag2'])
+    expect(tags).toEqual([
+      'newtag',
+      'tag1',
+      'tag2'
+    ])
     component.remove('tag2')
     component.remove('newtag')
     expect(tags).toEqual(['tag1'])

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // Tests the creation of a device
 import { domains } from 'cypress/e2e/fixtures/api/domain'
@@ -77,7 +77,7 @@ describe('Test Domain Page', () => {
   it('pagination for first page', () => {
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
-    body: domains.getAll.forPaging.response
+      body: domains.getAll.forPaging.response
     }).as('get-domains7')
 
     cy.myIntercept('GET', 'domains?$top=25&$skip=75&$count=true', {

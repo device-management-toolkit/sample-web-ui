@@ -31,10 +31,14 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' },
-        { type: 'lcov' }
-      ]
+        { type: 'lcov' }]
     },
-    reporters: ['progress', 'coverage', 'junit', 'kjhtml'],
+    reporters: [
+      'progress',
+      'coverage',
+      'junit',
+      'kjhtml'
+    ],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -42,5 +46,5 @@ module.exports = function (config) {
     browsers: ['ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true
-  });
-};
+  })
+}

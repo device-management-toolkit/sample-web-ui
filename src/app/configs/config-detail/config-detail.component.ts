@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
@@ -20,16 +20,44 @@ import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
 import { MatIcon } from '@angular/material/icon'
 import { MatList, MatListItem } from '@angular/material/list'
-import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardContent,
+  MatCardActions
+} from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-config-detail',
-    templateUrl: './config-detail.component.html',
-    styleUrls: ['./config-detail.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatProgressBar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardContent, MatFormField, MatInput, MatError, MatHint, MatRadioGroup, MatRadioButton, MatSlideToggle, MatCardActions, MatButton]
+  selector: 'app-config-detail',
+  templateUrl: './config-detail.component.html',
+  styleUrls: ['./config-detail.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatProgressBar,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatList,
+    MatListItem,
+    MatIcon,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatInput,
+    MatError,
+    MatHint,
+    MatRadioGroup,
+    MatRadioButton,
+    MatSlideToggle,
+    MatCardActions,
+    MatButton
+  ]
 })
 export class ConfigDetailComponent implements OnInit {
   public configForm: FormGroup
@@ -37,7 +65,7 @@ export class ConfigDetailComponent implements OnInit {
   public pageTitle = 'New CIRA Config'
   public isEdit = false
   public errorMessages: string[] = []
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public fb: FormBuilder,
     private readonly activeRoute: ActivatedRoute,
@@ -60,7 +88,7 @@ export class ConfigDetailComponent implements OnInit {
   // IP ADDRESS REGEX
   // ^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
         this.isLoading = true
@@ -88,25 +116,26 @@ export class ConfigDetailComponent implements OnInit {
       }
     })
 
-    this.configForm.controls.serverAddressFormat?.valueChanges.subscribe(
-      (value) => { this.serverAddressFormatChange(+value) }
-    )
+    this.configForm.controls.serverAddressFormat?.valueChanges.subscribe((value) => {
+      this.serverAddressFormatChange(+value)
+    })
 
-    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value: string) => { this.serverAddressChange(value) }
-    )
+    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value: string) => {
+      this.serverAddressChange(value)
+    })
   }
 
-  serverAddressChange (value: string): void {
+  serverAddressChange(value: string): void {
     if (this.configForm.controls.serverAddressFormat?.value === '3') {
       this.configForm.controls.commonName?.setValue(value)
     }
   }
 
-  async cancel (): Promise<void> {
+  async cancel(): Promise<void> {
     await this.router.navigate(['/ciraconfigs'])
   }
 
-  serverAddressFormatChange (value: number): void {
+  serverAddressFormatChange(value: number): void {
     if (value === 3) {
       // ipv4
       this.configForm.controls.commonName?.enable()
@@ -117,17 +146,14 @@ export class ConfigDetailComponent implements OnInit {
     }
   }
 
-  shouldShowRegenPass (): boolean {
+  shouldShowRegenPass(): boolean {
     return !this.isEdit
   }
 
   trimRootCert = (cert: string): string =>
-    cert
-      .replace('-----BEGIN CERTIFICATE-----', '')
-      .replace('-----END CERTIFICATE-----', '')
-      .replace(/\s/g, '')
+    cert.replace('-----BEGIN CERTIFICATE-----', '').replace('-----END CERTIFICATE-----', '').replace(/\s/g, '')
 
-  onSubmit (): void {
+  onSubmit(): void {
     if (this.configForm.valid) {
       this.isLoading = true
       const result: CIRAConfig = Object.assign({}, this.configForm.getRawValue())
@@ -162,7 +188,7 @@ export class ConfigDetailComponent implements OnInit {
               undefined,
               SnackbarDefaults.defaultSuccess
             )
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
             this.router.navigate(['/ciraconfigs'])
           },
           (error) => {

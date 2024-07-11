@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -31,36 +31,44 @@ describe('DomainsComponent', () => {
     okayDate.setMonth(today.getMonth() + 3)
     warnDate.setMonth(today.getMonth() + 1)
     expDate.setMonth(today.getMonth() - 2)
-    const domains: Domain[] = [{
-      domainSuffix: 'vprodemo1.com',
-      profileName: 'domain1',
-      provisioningCertStorageFormat: 'string',
-      expirationDate: okayDate
-    },
-    {
-      domainSuffix: 'vprodemo2.com',
-      profileName: 'domain2',
-      provisioningCertStorageFormat: 'string',
-      expirationDate: warnDate
-    },
-    {
-      domainSuffix: 'vprodemo3.com',
-      profileName: 'domain3',
-      provisioningCertStorageFormat: 'string',
-      expirationDate: expDate
-    }] as any
+    const domains: Domain[] = [
+      {
+        domainSuffix: 'vprodemo1.com',
+        profileName: 'domain1',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: okayDate
+      },
+      {
+        domainSuffix: 'vprodemo2.com',
+        profileName: 'domain2',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: warnDate
+      },
+      {
+        domainSuffix: 'vprodemo3.com',
+        profileName: 'domain3',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: expDate
+      }
+    ] as any
 
-    getDataSpy = domainsService.getData.and.returnValue(of({
-      data: domains,
-      totalCount: 3
-    } satisfies DomainsResponse))
+    getDataSpy = domainsService.getData.and.returnValue(
+      of({
+        data: domains,
+        totalCount: 3
+      } satisfies DomainsResponse)
+    )
 
     deleteSpy = domainsService.delete.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, DomainsComponent],
-    providers: [{ provide: DomainsService, useValue: domainsService }]
-}).compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        DomainsComponent
+      ],
+      providers: [{ provide: DomainsService, useValue: domainsService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

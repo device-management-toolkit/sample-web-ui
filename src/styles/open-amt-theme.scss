@@ -1,8 +1,8 @@
 // Custom Theming for Angular Material
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 // Plus imports for other components in your app.
-@import "src/styles/_variables.scss";
-@import "src/styles/flex.scss";
+@import 'src/styles/_variables.scss';
+@import 'src/styles/flex.scss';
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -24,8 +24,8 @@ $openamtui-theme: mat.m2-define-light-theme(
     color: (
       primary: $openamtui-primary,
       accent: $openamtui-accent,
-      warn: $openamtui-warn,
-    ),
+      warn: $openamtui-warn
+    )
   )
 );
 
@@ -34,8 +34,8 @@ $openamtui-dark-theme: mat.m2-define-dark-theme(
     color: (
       primary: $openamtui-primary,
       accent: $openamtui-accent,
-      warn: $openamtui-warn,
-    ),
+      warn: $openamtui-warn
+    )
   )
 );
 
@@ -53,7 +53,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 .mat-mdc-card {
   margin: 12px;
@@ -87,7 +87,6 @@ body {
   margin-bottom: 10px;
 }
 .mat-mdc-snack-bar-container {
-
   &.warn {
     text-align: center;
     text-transform: uppercase;
@@ -112,12 +111,11 @@ body {
     border-top-width: 5px;
     border-top-style: solid;
   }
-
 }
 .material-icons {
   direction: ltr;
   display: inline-block;
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-size: 24px;
   font-style: normal;
   font-weight: normal;
@@ -126,6 +124,6 @@ body {
   text-transform: none;
   white-space: nowrap;
   word-wrap: normal;
-  -webkit-font-feature-settings: "liga";
+  -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }

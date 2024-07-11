@@ -1,10 +1,18 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms'
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
@@ -25,34 +33,58 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-ieee8021x-detail',
-    templateUrl: './ieee8021x-detail.component.html',
-    styleUrls: ['./ieee8021x-detail.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatProgressBar, MatCard, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardSubtitle, MatRadioGroup, MatRadioButton, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatSelect, MatOption, MatCardActions, MatButton]
+  selector: 'app-ieee8021x-detail',
+  templateUrl: './ieee8021x-detail.component.html',
+  styleUrls: ['./ieee8021x-detail.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatProgressBar,
+    MatCard,
+    MatList,
+    MatListItem,
+    MatIcon,
+    ReactiveFormsModule,
+    MatCardSubtitle,
+    MatRadioGroup,
+    MatRadioButton,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatSelect,
+    MatOption,
+    MatCardActions,
+    MatButton
+  ]
 })
 export class IEEE8021xDetailComponent implements OnInit {
   ieee8021xForm: FormGroup
   pageTitle = 'New IEEE8021x Config'
-  isLoading: boolean = false
-  isEdit: boolean = false
+  isLoading = false
+  isEdit = false
   authenticationProtocols: AuthenticationProtocol[] = []
   errorMessages: any[] = []
   profileNameMaxLen = 32
   pxeTimeoutMin = 0 // disables timeout
-  pxeTimeoutMax = (60 * 60 * 24) // one day
-  pxeTimeoutDefault = (60 * 2) // two mninutes
+  pxeTimeoutMax = 60 * 60 * 24 // one day
+  pxeTimeoutDefault = 60 * 2 // two mninutes
 
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public fb: FormBuilder,
     private readonly activeRoute: ActivatedRoute,
     public router: Router,
-    public ieee8021xService: IEEE8021xService) {
+    public ieee8021xService: IEEE8021xService
+  ) {
     this.ieee8021xForm = fb.group({
       profileName: [
         null,
-        [Validators.required, Validators.maxLength(this.profileNameMaxLen), Validators.pattern('[a-zA-Z0-9]*')]
+        [
+          Validators.required,
+          Validators.maxLength(this.profileNameMaxLen),
+          Validators.pattern('[a-zA-Z0-9]*')]
       ],
       authenticationProtocol: [
         null,
@@ -60,7 +92,10 @@ export class IEEE8021xDetailComponent implements OnInit {
       ],
       pxeTimeout: [
         this.pxeTimeoutDefault,
-        [Validators.required, Validators.min(this.pxeTimeoutMin), Validators.max(this.pxeTimeoutMax)]
+        [
+          Validators.required,
+          Validators.min(this.pxeTimeoutMin),
+          Validators.max(this.pxeTimeoutMax)]
       ],
       wiredInterface: [
         null,
@@ -81,14 +116,18 @@ export class IEEE8021xDetailComponent implements OnInit {
     })
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
         this.isLoading = true
         this.isEdit = true
         this.ieee8021xService
           .getRecord(params.name as string)
-          .pipe(finalize(() => { this.isLoading = false }))
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            })
+          )
           .subscribe({
             next: (config) => {
               this.pageTitle = 'IEEE8021x Config'
@@ -103,22 +142,22 @@ export class IEEE8021xDetailComponent implements OnInit {
     })
   }
 
-  protocolValidator (): ValidatorFn {
+  protocolValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const isValid = this.authenticationProtocols.map(p => p.value).includes(control.value as number)
+      const isValid = this.authenticationProtocols.map((p) => p.value).includes(control.value as number)
       return isValid ? null : { protoclValue: true }
     }
   }
 
-  shouldShowPxeTimeout (): boolean {
+  shouldShowPxeTimeout(): boolean {
     return this.ieee8021xForm.controls.wiredInterface.value
   }
 
-  getInterfaceLabel (): string {
+  getInterfaceLabel(): string {
     return this.ieee8021xForm.controls.wiredInterface.value ? 'Wired' : 'Wireless'
   }
 
-  onSubmit (): void {
+  onSubmit(): void {
     if (this.ieee8021xForm.valid) {
       this.errorMessages = []
       this.isLoading = true
@@ -137,21 +176,29 @@ export class IEEE8021xDetailComponent implements OnInit {
         reqType = 'created'
       }
       request
-        .pipe(finalize(() => { this.isLoading = false }))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        )
         .subscribe({
           complete: () => {
             this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
             void this.router.navigate(['/ieee8021x'])
           },
-          error: error => {
-            this.snackBar.open($localize`Error creating/updating ieee8021x profile`, undefined, SnackbarDefaults.defaultError)
+          error: (error) => {
+            this.snackBar.open(
+              $localize`Error creating/updating ieee8021x profile`,
+              undefined,
+              SnackbarDefaults.defaultError
+            )
             this.errorMessages = error
           }
         })
     }
   }
 
-  async cancel (): Promise<void> {
+  async cancel(): Promise<void> {
     await this.router.navigate(['/ieee8021x'])
   }
 }

@@ -1,6 +1,6 @@
-<mat-toolbar style="height:100px" class="flex flex-row">
+<mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50">
-    <mat-form-field style="margin-bottom:0">
+    <mat-form-field style="margin-bottom: 0">
       <mat-label>Choose encoding type</mat-label>
       <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
         @for (encode of encodings; track encode) {
@@ -12,10 +12,14 @@
     </mat-form-field>
   </div>
   <div class="flex flex-50 justify-end">
-    <button mat-flat-button color="primary" (click)="fileInput.click()"><mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)</button>
-    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img">
+    <button mat-flat-button color="primary" (click)="fileInput.click()">
+      <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
+    </button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
     @if (isIDERActive) {
-      <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left:12px"><mat-icon>stop</mat-icon>Stop IDER</button>
+      <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left: 12px">
+        <mat-icon>stop</mat-icon>Stop IDER
+      </button>
     }
   </div>
 </mat-toolbar>
@@ -23,9 +27,17 @@
   <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
 }
 @if (readyToLoadKvm) {
-  <amt-kvm class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceKVMConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+  <amt-kvm
+    class="kvm"
+    [deviceId]="deviceId"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken"
+    [deviceConnection]="deviceKVMConnection"
+    [selectedEncoding]="selectedEncoding"
+    (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
-<amt-ider class="ider"
+<amt-ider
+  class="ider"
   [deviceId]="deviceId"
   [mpsServer]="mpsServer"
   [authToken]="authToken"

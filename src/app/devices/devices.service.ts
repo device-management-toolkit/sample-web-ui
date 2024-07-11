@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable } from '@angular/core'
@@ -165,12 +165,27 @@ export class DevicesService {
   connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   deviceState: EventEmitter<number> = new EventEmitter<number>()
 
-  constructor (private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient) {}
 
+  getGeneralSettings(deviceId: string): Observable<any> {
+    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/generalSettings/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getGeneralSettings (deviceId: string): Observable<any> {
-    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/generalSettings/${deviceId}`)
+  getAMTVersion(deviceId: string): Observable<any> {
+    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/version/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getAuditLog(deviceId: string, startIndex = 0): Observable<AuditLogResponse> {
+    return this.http
+      .get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/log/audit/${deviceId}?startIndex=${startIndex}`)
       .pipe(
         catchError((err) => {
           throw err
@@ -178,8 +193,33 @@ export class DevicesService {
       )
   }
 
-  getAMTVersion (deviceId: string): Observable<any> {
-    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/version/${deviceId}`)
+  getEventLog(deviceId: string): Observable<EventLog[]> {
+    return this.http.get<EventLog[]>(`${environment.mpsServer}/api/v1/amt/log/event/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getHardwareInformation(guid: string): Observable<HardwareInformation> {
+    return this.http.get<HardwareInformation>(`${environment.mpsServer}/api/v1/amt/hardwareInfo/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getAMTFeatures(guid: string): Observable<AmtFeaturesResponse> {
+    return this.http.get<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getAlarmOccurrences(guid: string): Observable<IPSAlarmClockOccurrence[]> {
+    return this.http
+      .get<IPSAlarmClockOccurrence[]>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`)
       .pipe(
         catchError((err) => {
           throw err
@@ -187,56 +227,12 @@ export class DevicesService {
       )
   }
 
-  getAuditLog (deviceId: string, startIndex: number = 0): Observable<AuditLogResponse> {
-    return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/log/audit/${deviceId}?startIndex=${startIndex}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  getEventLog (deviceId: string): Observable<EventLog[]> {
-    return this.http.get<EventLog[]>(`${environment.mpsServer}/api/v1/amt/log/event/${deviceId}`)
-      .pipe(
-        catchError(err => {
-          throw err
-        })
-      )
-  }
-
-  getHardwareInformation (guid: string): Observable<HardwareInformation> {
-    return this.http.get<HardwareInformation>(`${environment.mpsServer}/api/v1/amt/hardwareInfo/${guid}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  getAMTFeatures (guid: string): Observable<AmtFeaturesResponse> {
-    return this.http.get<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  getAlarmOccurrences (guid: string): Observable<IPSAlarmClockOccurrence[]> {
-    return this.http.get<IPSAlarmClockOccurrence[]>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  deleteAlarmOccurrence (guid: string, instanceID: string): Observable<any> {
+  deleteAlarmOccurrence(guid: string, instanceID: string): Observable<any> {
     const payload = {
       Name: instanceID
     }
-    return this.http.request<any>('DELETE', `${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, { body: payload })
+    return this.http
+      .request<any>('DELETE', `${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, { body: payload })
       .pipe(
         catchError((err) => {
           throw err
@@ -244,109 +240,118 @@ export class DevicesService {
       )
   }
 
-  addAlarmOccurrence (guid: string, alarm: any): Observable<any> {
-    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, alarm)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  addAlarmOccurrence(guid: string, alarm: any): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, alarm).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  sendPowerAction (deviceId: string, action: number, useSOL: boolean = false): Observable<any> {
+  sendPowerAction(deviceId: string, action: number, useSOL = false): Observable<any> {
     const payload = {
       method: 'PowerAction',
       action,
       useSOL
     }
 
-    const url: string = action < 100
-      ? `${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`
-      : `${environment.mpsServer}/api/v1/amt/power/bootoptions/${deviceId}`
+    const url: string =
+      action < 100
+        ? `${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`
+        : `${environment.mpsServer}/api/v1/amt/power/bootoptions/${deviceId}`
 
-    return this.http.post<any>(url, payload)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.post<any>(url, payload).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  sendDeactivate (guid: string): Observable<any> {
+  sendDeactivate(guid: string): Observable<any> {
     if (environment.cloud) {
-    return this.http.delete<any>(`${environment.mpsServer}/api/v1/amt/deactivate/${guid}`)
-      .pipe(
+      return this.http.delete<any>(`${environment.mpsServer}/api/v1/amt/deactivate/${guid}`).pipe(
         catchError((err) => {
           throw err
         })
       )
     } else {
       const url = `${environment.mpsServer}/api/v1/devices/${guid}`
-      return this.http.delete<never>(url)
-        .pipe(
-          catchError((err) => {
-            throw err
-          })
-        )
+      return this.http.delete<never>(url).pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
     }
   }
 
-  getTags (): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`)
-      .pipe(
-        map(tags => tags.sort(caseInsensitiveCompare)),
-        catchError((err) => {
-          throw err
-        })
-      )
+  getTags(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
+      map((tags) => tags.sort(caseInsensitiveCompare)),
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  addDevice (device: Device): Observable<Device> {
-    return this.http.post<Device>(`${environment.mpsServer}/api/v1/devices`, device)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  addDevice(device: Device): Observable<Device> {
+    return this.http.post<Device>(`${environment.mpsServer}/api/v1/devices`, device).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  editDevice (device: Device): Observable<Device> {
-    return this.http.patch<Device>(`${environment.mpsServer}/api/v1/devices`, device)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  editDevice(device: Device): Observable<Device> {
+    return this.http.patch<Device>(`${environment.mpsServer}/api/v1/devices`, device).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getDevice (guid: string): Observable<Device> {
+  getDevice(guid: string): Observable<Device> {
     const query = `${environment.mpsServer}/api/v1/devices/${guid}`
-    return this.http.get<Device>(query)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.get<Device>(query).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getDevices (pageEvent: PageEventOptions): Observable<DeviceResponse> {
+  getDevices(pageEvent: PageEventOptions): Observable<DeviceResponse> {
     let query = `${environment.mpsServer}/api/v1/devices`
     if (pageEvent?.tags && pageEvent.tags.length > 0) {
       query += `?tags=${pageEvent.tags.join(',')}&$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     }
-    return this.http.get<DeviceResponse>(query)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.get<DeviceResponse>(query).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  updateDevice (device: Device): Observable<Device> {
+  updateDevice(device: Device): Observable<Device> {
     const url = `${environment.mpsServer}/api/v1/devices`
-    return this.http.patch<Device>(url, device)
+    return this.http.patch<Device>(url, device).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  setAmtFeatures(
+    deviceId: string,
+    payload: AmtFeaturesRequest = {
+      userConsent: 'none',
+      enableKVM: true,
+      enableSOL: true,
+      enableIDER: true
+    }
+  ): Observable<AmtFeaturesResponse> {
+    return this.http
+      .post<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
           throw err
@@ -354,13 +359,33 @@ export class DevicesService {
       )
   }
 
-  setAmtFeatures (deviceId: string, payload: AmtFeaturesRequest = {
-    userConsent: 'none',
-    enableKVM: true,
-    enableSOL: true,
-    enableIDER: true
-  }): Observable<AmtFeaturesResponse> {
-    return this.http.post<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
+  getPowerState(deviceId: string): Observable<PowerState> {
+    return this.http.get<PowerState>(`${environment.mpsServer}/api/v1/amt/power/state/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getStats(): Observable<DeviceStats> {
+    return this.http.get<DeviceStats>(`${environment.mpsServer}/api/v1/devices/stats`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  reqUserConsentCode(deviceId: string): Observable<userConsentResponse> {
+    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  cancelUserConsentCode(deviceId: string): Observable<userConsentResponse> {
+    return this.http
+      .get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/${deviceId}`)
       .pipe(
         catchError((err) => {
           throw err
@@ -368,45 +393,10 @@ export class DevicesService {
       )
   }
 
-  getPowerState (deviceId: string): Observable<PowerState> {
-    return this.http.get<PowerState>(`${environment.mpsServer}/api/v1/amt/power/state/${deviceId}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  getStats (): Observable<DeviceStats> {
-    return this.http.get<DeviceStats>(`${environment.mpsServer}/api/v1/devices/stats`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  reqUserConsentCode (deviceId: string): Observable<userConsentResponse> {
-    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  cancelUserConsentCode (deviceId: string): Observable<userConsentResponse> {
-    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/${deviceId}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  sendUserConsentCode (deviceId: string, userConsentCode: number): Observable<userConsentResponse> {
+  sendUserConsentCode(deviceId: string, userConsentCode: number): Observable<userConsentResponse> {
     const payload = { consentCode: userConsentCode }
-    return this.http.post<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
+    return this.http
+      .post<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
           throw err
@@ -414,42 +404,38 @@ export class DevicesService {
       )
   }
 
-  getRedirectionExpirationToken (guid: string): Observable<RedirectionToken> {
+  getRedirectionExpirationToken(guid: string): Observable<RedirectionToken> {
     const query = `${environment.mpsServer}/api/v1/authorize/redirection/${guid}`
-    return this.http.get<RedirectionToken>(query)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.get<RedirectionToken>(query).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getRedirectionStatus (guid: string): Observable<RedirectionStatus> {
+  getRedirectionStatus(guid: string): Observable<RedirectionStatus> {
     const query = `${environment.mpsServer}/api/v1/devices/redirectstatus/${guid}`
-    return this.http.get<RedirectionStatus>(query)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.get<RedirectionStatus>(query).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  getWsmanOperations (): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/amt/explorer`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+  getWsmanOperations(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.mpsServer}/api/v1/amt/explorer`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 
-  executeExplorerCall (guid: string, call: string): Observable<any> {
+  executeExplorerCall(guid: string, call: string): Observable<any> {
     const query = `${environment.mpsServer}/api/v1/amt/explorer/${guid}/${call}`
-    return this.http.get<any>(query)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
+    return this.http.get<any>(query).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
   }
 }

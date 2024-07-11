@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
@@ -14,9 +14,7 @@ const baseUrl: string = Cypress.env('BASEURL')
 describe('Test wireless creation page', () => {
   beforeEach('clear cache and login', () => {
     cy.setup()
-    api8021x
-      .interceptGetAll(httpCodes.SUCCESS, api8021x.wirelessConfigsResponse)
-      .as('intercept8021xGetAll')
+    api8021x.interceptGetAll(httpCodes.SUCCESS, api8021x.wirelessConfigsResponse).as('intercept8021xGetAll')
   })
 
   beforeEach('Set up the api stubs', () => {
@@ -51,9 +49,7 @@ describe('Test wireless creation page', () => {
     cy.get('button[type=submit]').click()
 
     // Wait for requests to finish and check their responses
-    cy.wait('@post-wireless')
-        .its('response.statusCode')
-        .should('eq', httpCodes.BAD_REQUEST)
+    cy.wait('@post-wireless').its('response.statusCode').should('eq', httpCodes.BAD_REQUEST)
 
     // Check that the wireless config creation failed
     cy.url().should('eq', baseUrl + urlFixtures.page.wireless + '/' + urlFixtures.extensions.creation)

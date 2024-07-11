@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox'
@@ -21,40 +21,56 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 
 @Component({
-    selector: 'app-add-device',
-    templateUrl: './add-device.component.html',
-    styleUrls: ['./add-device.component.scss'],
-    standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatCheckbox, MatFormField, MatLabel, MatSelect, MatOption, MatError, MatTabGroup, MatTab, MatInput, MatIconButton, MatSuffix, CdkCopyToClipboard, MatIcon]
+  selector: 'app-add-device',
+  templateUrl: './add-device.component.html',
+  styleUrls: ['./add-device.component.scss'],
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatCheckbox,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatError,
+    MatTabGroup,
+    MatTab,
+    MatInput,
+    MatIconButton,
+    MatSuffix,
+    CdkCopyToClipboard,
+    MatIcon
+  ]
 })
 export class AddDeviceComponent implements OnInit {
   profiles: ProfilesResponse = { data: [], totalCount: 0 }
-  activationUrl: string = ''
-  rpcLinux: string = 'sudo ./rpc '
-  rpcDocker: string = 'sudo docker run --device=/dev/mei0 rpc:latest '
-  rpcWindows: string = 'rpc.exe '
-  serverUrl: string = `-u wss://${this.formServerUrl()}/activate `
-  selectedProfile: string = 'activate'
-  verboseString: string = ''
-  certCheckString: string = '-n '
-  isCopied: boolean = false
-  selectedPlatform: string = 'linux'
-  constructor (private readonly profilesService: ProfilesService) {
-  }
+  activationUrl = ''
+  rpcLinux = 'sudo ./rpc '
+  rpcDocker = 'sudo docker run --device=/dev/mei0 rpc:latest '
+  rpcWindows = 'rpc.exe '
+  serverUrl = `-u wss://${this.formServerUrl()}/activate `
+  selectedProfile = 'activate'
+  verboseString = ''
+  certCheckString = '-n '
+  isCopied = false
+  selectedPlatform = 'linux'
+  constructor(private readonly profilesService: ProfilesService) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.profilesService.getData().subscribe((data: ProfilesResponse) => {
       this.profiles = data
     })
     this.formActivationUrl()
   }
 
-  tabChange (event: MatTabChangeEvent): void {
+  tabChange(event: MatTabChangeEvent): void {
     this.selectedPlatform = event.tab.textLabel.toLowerCase()
     this.formActivationUrl()
   }
 
-  formActivationUrl (): void {
+  formActivationUrl(): void {
     switch (this.selectedPlatform) {
       case 'linux':
         this.activationUrl = this.rpcLinux
@@ -69,8 +85,8 @@ export class AddDeviceComponent implements OnInit {
     this.activationUrl += `${this.selectedProfile} ${this.serverUrl}${this.certCheckString}${this.verboseString}`
   }
 
-  formServerUrl (): string {
-    let serverUrl: string = ''
+  formServerUrl(): string {
+    let serverUrl = ''
     const url = environment.rpsServer.substring(environment.rpsServer.indexOf('://') + 3)
     if (url.includes(':')) {
       serverUrl += url.substring(0, url.indexOf(':'))
@@ -80,28 +96,28 @@ export class AddDeviceComponent implements OnInit {
     return serverUrl
   }
 
-  profileChange (event: MatSelectChange): void {
+  profileChange(event: MatSelectChange): void {
     this.selectedProfile = `activate -profile ${event.value as string}`
     this.formActivationUrl()
   }
 
-  onCopy (): void {
+  onCopy(): void {
     this.isCopied = true
     timer(2000).subscribe(() => {
       this.isCopied = false
     })
   }
 
-  isActivationCommandDisabled (): boolean {
+  isActivationCommandDisabled(): boolean {
     return this.selectedProfile === 'activate'
   }
 
-  updateCertCheck (event: MatCheckboxChange): void {
+  updateCertCheck(event: MatCheckboxChange): void {
     this.certCheckString = event.checked ? '-n ' : ''
     this.formActivationUrl()
   }
 
-  updateVerboseCheck (event: MatCheckboxChange): void {
+  updateVerboseCheck(event: MatCheckboxChange): void {
     this.verboseString = event.checked ? '-v ' : ''
     this.formActivationUrl()
   }

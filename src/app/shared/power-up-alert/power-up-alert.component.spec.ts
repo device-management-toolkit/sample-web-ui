@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatButtonModule } from '@angular/material/button'
@@ -15,8 +15,12 @@ describe('PowerUpAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [MatDialogModule, MatButtonModule, PowerUpAlertComponent]
-}).compileComponents()
+      imports: [
+        MatDialogModule,
+        MatButtonModule,
+        PowerUpAlertComponent
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

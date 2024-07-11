@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
@@ -17,77 +17,72 @@ import { AuthService } from '../auth.service'
 export class ConfigsService {
   private readonly url = `${environment.rpsServer}/api/v1/admin/ciraconfigs`
 
-  constructor (private readonly authService: AuthService, private readonly http: HttpClient) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly http: HttpClient
+  ) {}
 
-  }
-
-  getData (pageEvent?: PageEventOptions): Observable<CIRAConfigResponse> {
+  getData(pageEvent?: PageEventOptions): Observable<CIRAConfigResponse> {
     let query = this.url
     if (pageEvent) {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += '?$count=true'
     }
-    return this.http.get<CIRAConfigResponse>(query)
-      .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
+    return this.http.get<CIRAConfigResponse>(query).pipe(
+      catchError((err) => {
+        const errorMessages = this.authService.onError(err)
+        return throwError(errorMessages)
+      })
+    )
   }
 
-  getRecord (name: string): Observable<CIRAConfig> {
-    return this.http.get<CIRAConfig>(`${this.url}/${encodeURIComponent(name)}`)
-      .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
+  getRecord(name: string): Observable<CIRAConfig> {
+    return this.http.get<CIRAConfig>(`${this.url}/${encodeURIComponent(name)}`).pipe(
+      catchError((err) => {
+        const errorMessages = this.authService.onError(err)
+        return throwError(errorMessages)
+      })
+    )
   }
 
-  update (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
-    return this.http.patch<CIRAConfig>(this.url, ciraConfig)
-      .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
+  update(ciraConfig: CIRAConfig): Observable<CIRAConfig> {
+    return this.http.patch<CIRAConfig>(this.url, ciraConfig).pipe(
+      catchError((err) => {
+        const errorMessages = this.authService.onError(err)
+        return throwError(errorMessages)
+      })
+    )
   }
 
-  create (ciraConfig: CIRAConfig): Observable<CIRAConfig> {
-    return this.http.post<CIRAConfig>(this.url, ciraConfig)
-      .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
+  create(ciraConfig: CIRAConfig): Observable<CIRAConfig> {
+    return this.http.post<CIRAConfig>(this.url, ciraConfig).pipe(
+      catchError((err) => {
+        const errorMessages = this.authService.onError(err)
+        return throwError(errorMessages)
+      })
+    )
   }
 
-  loadMPSRootCert (): Observable<any> {
+  loadMPSRootCert(): Observable<any> {
     // ToDo: Need to pass the mps server address to get the certs for each specific mps server
     const options = { responseType: 'text' } as any
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return this.http.get<string>(`${environment.mpsServer}/api/v1/ciracert`, options)
-      .pipe(
-        catchError((err) => {
-          const errorMessages: string[] = []
-          errorMessages.push('Error loading CIRA config')
-          return throwError(err)
-        })
-      )
+
+    return this.http.get<string>(`${environment.mpsServer}/api/v1/ciracert`, options).pipe(
+      catchError((err) => {
+        const errorMessages: string[] = []
+        errorMessages.push('Error loading CIRA config')
+        return throwError(err)
+      })
+    )
   }
 
-  delete (name: string): Observable<any> {
-    return this.http.delete(`${this.url}/${encodeURIComponent(name)}`)
-      .pipe(
-        catchError((err) => {
-          const errorMessages = this.authService.onError(err)
-          return throwError(errorMessages)
-        })
-      )
+  delete(name: string): Observable<any> {
+    return this.http.delete(`${this.url}/${encodeURIComponent(name)}`).pipe(
+      catchError((err) => {
+        const errorMessages = this.authService.onError(err)
+        return throwError(errorMessages)
+      })
+    )
   }
 }

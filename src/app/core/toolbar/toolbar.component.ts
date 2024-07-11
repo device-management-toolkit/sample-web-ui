@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -18,11 +18,19 @@ import { MatDivider } from '@angular/material/divider'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatDivider, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem]
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatDivider,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    MatMenu,
+    MatMenuItem
+  ]
 })
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
@@ -30,10 +38,13 @@ export class ToolbarComponent implements OnInit {
   public rpsVersions?: RpsVersion
   public mpsVersions?: MpsVersion
 
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public authService: AuthService) {
-  }
+  constructor(
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public authService: AuthService
+  ) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.authService.loggedInSubject.subscribe((value: any) => {
       this.isLoggedIn = value
       if (this.isLoggedIn && environment.cloud) {
@@ -42,7 +53,7 @@ export class ToolbarComponent implements OnInit {
             this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
-           this.mpsVersions = data
+            this.mpsVersions = data
           }
         })
         this.authService.getRPSVersion().subscribe({
@@ -50,7 +61,7 @@ export class ToolbarComponent implements OnInit {
             this.snackBar.open($localize`Error retrieving RPS versions`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
-           this.rpsVersions = data
+            this.rpsVersions = data
           }
         })
       } else if (this.isLoggedIn && !environment.cloud) {
@@ -61,7 +72,11 @@ export class ToolbarComponent implements OnInit {
           next: (data) => {
             if (data.current !== 'DEVELOPMENT') {
               if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
-                const ref = this.snackBar.open('A new version of console is available!', 'Download', SnackbarDefaults.longSuccess)
+                const ref = this.snackBar.open(
+                  'A new version of console is available!',
+                  'Download',
+                  SnackbarDefaults.longSuccess
+                )
                 ref.onAction().subscribe(() => {
                   window.open(data.latest.html_url as string)
                 })
@@ -73,11 +88,11 @@ export class ToolbarComponent implements OnInit {
     })
   }
 
-  logout (): void {
+  logout(): void {
     this.authService.logout()
   }
 
-  displayAbout (): void {
+  displayAbout(): void {
     this.dialog.open(AboutComponent)
   }
 }

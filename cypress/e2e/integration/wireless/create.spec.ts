@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
@@ -49,9 +49,7 @@ describe('create a wireless profile', () => {
     cy.get('button[type=submit]').click()
 
     cy.wait('@post-wireless').then((req) => {
-      cy.wrap(req)
-        .its('response.statusCode')
-        .should('eq', httpCodes.CREATED)
+      cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
 
       // Check that the wireless config was successful
       cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName)

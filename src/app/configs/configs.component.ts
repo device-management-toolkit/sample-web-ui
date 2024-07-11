@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -13,7 +13,18 @@ import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.c
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
@@ -21,16 +32,43 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-configs',
-    templateUrl: './configs.component.html',
-    styleUrls: ['./configs.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
+  selector: 'app-configs',
+  templateUrl: './configs.component.html',
+  styleUrls: ['./configs.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatButton,
+    MatIcon,
+    MatProgressBar,
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatIconButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator
+  ]
 })
 export class ConfigsComponent implements OnInit {
   public configs: CIRAConfigResponse = { data: [], totalCount: 0 }
   public isLoading = true
-  displayedColumns: string[] = ['name', 'mpsserver', 'port', 'username', 'certname', 'rootcert', 'remove']
+  displayedColumns: string[] = [
+    'name',
+    'mpsserver',
+    'port',
+    'username',
+    'certname',
+    'rootcert',
+    'remove'
+  ]
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -39,54 +77,74 @@ export class ConfigsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly configsService: ConfigsService) { }
+  constructor(
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public router: Router,
+    private readonly configsService: ConfigsService
+  ) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getData(this.pageEvent)
   }
 
-  getData (pageEvent: PageEventOptions): void {
-    this.configsService.getData(pageEvent).pipe(
-      finalize(() => {
-        this.isLoading = false
-      })
-    ).subscribe((data: CIRAConfigResponse) => {
-      this.configs = data
-    }, () => {
-      this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
-    })
+  getData(pageEvent: PageEventOptions): void {
+    this.configsService
+      .getData(pageEvent)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe(
+        (data: CIRAConfigResponse) => {
+          this.configs = data
+        },
+        () => {
+          this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
+        }
+      )
   }
 
-  isNoData (): boolean {
+  isNoData(): boolean {
     return !this.isLoading && this.configs.data.length === 0
   }
 
-  delete (name: string): void {
+  delete(name: string): void {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.isLoading = true
-        this.configsService.delete(name).pipe(
-          finalize(() => {
-            this.isLoading = false
-          })
-        ).subscribe(data => {
-          this.getData(this.pageEvent)
-          this.snackBar.open($localize`CIRA config deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        },
-        err => {
-          if (err?.length > 0) {
-            this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
-          } else {
-            this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
-          }
-        })
+        this.configsService
+          .delete(name)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            })
+          )
+          .subscribe(
+            (data) => {
+              this.getData(this.pageEvent)
+              this.snackBar.open(
+                $localize`CIRA config deleted successfully`,
+                undefined,
+                SnackbarDefaults.defaultSuccess
+              )
+            },
+            (err) => {
+              if (err?.length > 0) {
+                this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
+              } else {
+                this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
+              }
+            }
+          )
       }
     })
   }
 
-  pageChanged (event: PageEvent): void {
+  pageChanged(event: PageEvent): void {
     this.pageEvent = {
       ...this.pageEvent,
       pageSize: event.pageSize,
@@ -95,7 +153,7 @@ export class ConfigsComponent implements OnInit {
     this.getData(this.pageEvent)
   }
 
-  async navigateTo (path: string = 'new'): Promise<void> {
+  async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate(['/ciraconfigs', encodeURIComponent(path)])
   }
 }

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -23,30 +23,41 @@ describe('WirelessDetailComponent', () => {
   let routerSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const wirelessService = jasmine.createSpyObj('WirelessService', ['getRecord', 'update', 'create'])
+    const wirelessService = jasmine.createSpyObj('WirelessService', [
+      'getRecord',
+      'update',
+      'create'
+    ])
     wirelessSpy = wirelessService.getRecord.and.returnValue(of({}))
     wirelessCreateSpy = wirelessService.create.and.returnValue(of({}))
     wirelessUpdateSpy = wirelessService.update.and.returnValue(of({}))
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
-    ieee8021xService.getData.and.returnValue(of({
-      data: [{
-        profileName: '8021xConfig',
-        authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
-        pxeTimeout: 0,
-        wiredInterface: false,
-        version: 'one'
-      }],
-      totalCount: 1
-    }))
+    ieee8021xService.getData.and.returnValue(
+      of({
+        data: [
+          {
+            profileName: '8021xConfig',
+            authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+            pxeTimeout: 0,
+            wiredInterface: false,
+            version: 'one'
+          }
+        ],
+        totalCount: 1
+      })
+    )
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, WirelessDetailComponent],
-    providers: [
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        WirelessDetailComponent
+      ],
+      providers: [
         { provide: WirelessService, useValue: wirelessService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } }
-    ]
-})
-      .compileComponents()
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -163,13 +174,13 @@ describe('WirelessDetailComponent', () => {
     expect(component.showIEEE8021x).toBeTrue()
   })
 
-  AuthenticationMethods.all().forEach(m => {
+  AuthenticationMethods.all().forEach((m) => {
     it(`should have expected labels and values ${m.label}`, () => {
       expect(AuthenticationMethods.labelForValue(m.value)).toEqual(m.label)
     })
   })
 
-  EncryptionMethods.all().forEach(m => {
+  EncryptionMethods.all().forEach((m) => {
     it(`should have expected labels and values ${m.label}`, () => {
       expect(EncryptionMethods.labelForValue(m.value)).toEqual(m.label)
     })

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
@@ -13,13 +13,18 @@ import { DomainsService } from './domains.service'
 
 describe('DomainsService', () => {
   let service: DomainsService
-  let httpClientSpy: { get: jasmine.Spy, patch: jasmine.Spy, post: jasmine.Spy, delete: jasmine.Spy }
+  let httpClientSpy: { get: jasmine.Spy; patch: jasmine.Spy; post: jasmine.Spy; delete: jasmine.Spy }
   let routerSpy
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'patch', 'post', 'delete'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', [
+      'get',
+      'patch',
+      'post',
+      'delete'
+    ])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
     service = new DomainsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
   })
 
@@ -53,18 +58,20 @@ describe('DomainsService', () => {
   it('should return array of 25 domains when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
-    service.getData({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(response => {
+    service.getData({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe((response) => {
       expect(response).toEqual(domainResponse)
       done()
     })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$top=25&$skip=0&$count=true`)
+    expect(httpClientSpy.get).toHaveBeenCalledWith(
+      `${environment.rpsServer}/api/v1/admin/domains?$top=25&$skip=0&$count=true`
+    )
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
 
   it('should return array of domains when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
-    service.getData().subscribe(response => {
+    service.getData().subscribe((response) => {
       expect(response).toEqual(domainResponse)
       done()
     })
@@ -74,10 +81,13 @@ describe('DomainsService', () => {
   it('should throw errors when get all domains called ', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
 
-    service.getData().subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.getData().subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
     expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
   })
 
@@ -93,7 +103,7 @@ describe('DomainsService', () => {
 
     httpClientSpy.get.and.returnValue(of(domainResponse))
 
-    service.getRecord('testDomain').subscribe(response => {
+    service.getRecord('testDomain').subscribe((response) => {
       expect(response).toEqual(domainResponse)
       done()
     })
@@ -102,16 +112,19 @@ describe('DomainsService', () => {
   it('should return errors on a single domain object detail when a single record is requested', (done) => {
     httpClientSpy.get.and.returnValue(throwError(error))
 
-    service.getRecord('testDomain').subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.getRecord('testDomain').subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
   })
 
   it('should return the updated domain details when a domain is updated', (done) => {
     httpClientSpy.patch.and.returnValue(of(domainReq))
 
-    service.update(domainReq).subscribe(response => {
+    service.update(domainReq).subscribe((response) => {
       expect(response).toEqual(domainReq)
       done()
     })
@@ -120,16 +133,19 @@ describe('DomainsService', () => {
   it('should return errors on updated domain details when a domain is updated', (done) => {
     httpClientSpy.patch.and.returnValue(throwError(error))
 
-    service.update(domainReq).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.update(domainReq).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
   })
 
   it('should return the created domain details when a domain is created', (done) => {
     httpClientSpy.post.and.returnValue(of(domainReq))
 
-    service.create(domainReq).subscribe(response => {
+    service.create(domainReq).subscribe((response) => {
       expect(response).toEqual(domainReq)
       done()
     })
@@ -138,10 +154,13 @@ describe('DomainsService', () => {
   it('should throw error on created domain details when a domain is created', (done) => {
     httpClientSpy.post.and.returnValue(throwError(error))
 
-    service.create(domainReq).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.create(domainReq).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
   })
 
   it('should delete the domain when a delete request is sent', (done) => {
@@ -160,10 +179,13 @@ describe('DomainsService', () => {
     const domainName = 'testDomain'
     httpClientSpy.delete.and.returnValue(throwError(error))
 
-    service.delete(domainName).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.delete(domainName).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
 
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })

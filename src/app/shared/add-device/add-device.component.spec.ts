@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceComponent } from './add-device.component'
@@ -27,10 +27,21 @@ describe('AddDeviceComponent', () => {
     const profileService = jasmine.createSpyObj('ProfilesService', ['getData'])
     getDataSpy = profileService.getData.and.returnValue(of([]))
     await TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, MatIconModule, MatTabsModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatCardModule, ClipboardModule, MatButtonModule, MatInputModule, AddDeviceComponent],
-    providers: [{ provide: ProfilesService, useValue: profileService }]
-})
-      .compileComponents()
+      imports: [
+        NoopAnimationsModule,
+        MatIconModule,
+        MatTabsModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
+        MatCardModule,
+        ClipboardModule,
+        MatButtonModule,
+        MatInputModule,
+        AddDeviceComponent
+      ],
+      providers: [{ provide: ProfilesService, useValue: profileService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

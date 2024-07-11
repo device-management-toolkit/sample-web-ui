@@ -1,10 +1,11 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import {
-  ActivationModes, ConnectionModes,
+  ActivationModes,
+  ConnectionModes,
   TlsModes,
   UserConsentModes
 } from '../../../../src/app/profiles/profiles.constants'
@@ -16,6 +17,7 @@ const dhcpEnabledValues = [true, false]
 const wifiConfigs = [
   [{}], // support non wifi config
   [wirelessFixtures.happyPath]
+
 ]
 
 const amtProfiles: any[] = []
@@ -41,8 +43,10 @@ ActivationModes.all().forEach((activationMode) => {
           profile.tlsMode = TlsModes.SERVER_NON_TLS.value
         }
         if ((wifi[0] as any).profileName) {
-          if (!dhcpEnabled) { return }
-          (profile.profileName as string) += '-WiFi'
+          if (!dhcpEnabled) {
+            return
+          }
+          ;(profile.profileName as string) += '-WiFi'
           profile.wifiConfigs = wifi
         }
         amtProfiles.push(profile)
@@ -53,10 +57,8 @@ ActivationModes.all().forEach((activationMode) => {
 
 // create all of the TLS modes
 // (and add STATIC with ipSyncEnabled of false)
-TlsModes.all().forEach(tlsMode => {
-  const name = tlsMode.label
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+TlsModes.all().forEach((tlsMode) => {
+  const name = tlsMode.label.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
   amtProfiles.push({
     profileName: `STATIC-${name}`,
     activation: ActivationModes.ADMIN.value,

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
@@ -53,13 +53,9 @@ describe('Test Domain Page', () => {
       Cypress.env('PROVISIONING_CERT_PASSWORD')
     )
     cy.get('button').contains('SAVE').click({ force: true })
-    cy.wait('@post-domain')
-      .its('response.statusCode')
-      .should('eq', httpCodes.CREATED)
-    cy.wait('@get-domains2')
-      .its('response.statusCode')
-      .should('eq', httpCodes.SUCCESS)
-      // Check that the config was successful
+    cy.wait('@post-domain').its('response.statusCode').should('eq', httpCodes.CREATED)
+    cy.wait('@get-domains2').its('response.statusCode').should('eq', httpCodes.SUCCESS)
+    // Check that the config was successful
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
     cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
   })

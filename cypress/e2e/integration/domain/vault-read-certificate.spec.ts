@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { domainFixtures } from 'cypress/e2e/fixtures/formEntry/domain'
@@ -18,10 +18,12 @@ describe('REST API - Vault Test Suite', () => {
         auth: { bearer: vaultToken },
         method: 'GET',
         url: vaultURL
-      }).should(response => {
+      }).should((response) => {
         expect(response.status).to.equal(httpCodes.SUCCESS)
         expect(JSON.stringify(response.body.data.data.CERT)).contains(Cypress.env('PROVISIONING_CERT'))
-        expect(JSON.stringify(response.body.data.data.CERT_PASSWORD)).contains(Cypress.env('PROVISIONING_CERT_PASSWORD'))
+        expect(JSON.stringify(response.body.data.data.CERT_PASSWORD)).contains(
+          Cypress.env('PROVISIONING_CERT_PASSWORD')
+        )
       })
     }
   })

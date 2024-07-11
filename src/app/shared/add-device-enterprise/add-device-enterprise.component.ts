@@ -1,10 +1,10 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { Component, Inject } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
@@ -18,11 +18,25 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 
 @Component({
-    selector: 'app-add-device-enterprise',
-    templateUrl: './add-device-enterprise.component.html',
-    styleUrl: './add-device-enterprise.component.scss',
-    standalone: true,
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatFormField, MatLabel, MatIcon, MatInput, MatChipsModule, MatHint, MatError, MatCheckbox, MatButton]
+  selector: 'app-add-device-enterprise',
+  templateUrl: './add-device-enterprise.component.html',
+  styleUrl: './add-device-enterprise.component.scss',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatIcon,
+    MatInput,
+    MatChipsModule,
+    MatHint,
+    MatError,
+    MatCheckbox,
+    MatButton
+  ]
 })
 export class AddDeviceEnterpriseComponent {
   form: FormGroup = this.fb.group({
@@ -38,22 +52,20 @@ export class AddDeviceEnterpriseComponent {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   tags: string[] = []
   deviceOrig: Device
-  constructor (private readonly fb: FormBuilder,
+  constructor(
+    private readonly fb: FormBuilder,
     readonly dialog: MatDialogRef<AddDeviceEnterpriseComponent>,
     @Inject(MAT_DIALOG_DATA) public device: Device,
-    private readonly deviceService: DevicesService) {
-      this.deviceOrig = device
-      if (device != null) {
-        this.tags = device.tags || []
-      }
-      this.form.patchValue(device)
+    private readonly deviceService: DevicesService
+  ) {
+    this.deviceOrig = device
+    if (device != null) {
+      this.tags = device.tags || []
+    }
+    this.form.patchValue(device)
   }
 
-  ngOnInit (): void {
-
-  }
-
-  add (event: MatChipInputEvent): void {
+  add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim()
     if (value !== '' && !this.tags.includes(value)) {
       this.tags.push(value)
@@ -62,7 +74,7 @@ export class AddDeviceEnterpriseComponent {
     event.chipInput?.clear()
   }
 
-  remove (tag: string): void {
+  remove(tag: string): void {
     const index = this.tags.indexOf(tag)
 
     if (index >= 0) {
@@ -71,7 +83,7 @@ export class AddDeviceEnterpriseComponent {
   }
 
   // Method to submit form
-  submitForm (): void {
+  submitForm(): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
       device.tags = this.tags

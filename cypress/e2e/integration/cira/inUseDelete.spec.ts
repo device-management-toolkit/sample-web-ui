@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // Tests the creation of a cira-config
 
@@ -59,14 +59,10 @@ describe('Test CIRA Config Page', () => {
 
     // Wait for requests to finish and check them their responses
     cy.wait('@post-config').then((req) => {
-      cy.wrap(req)
-        .its('response.statusCode')
-        .should('eq', httpCodes.CREATED)
+      cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
     })
 
-    cy.wait('@get-configs2')
-      .its('response.statusCode')
-      .should('eq', httpCodes.SUCCESS)
+    cy.wait('@get-configs2').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
     // //Check that the config was successful
     cy.get('mat-cell').contains(ciraFixtures.default.name)
@@ -106,7 +102,7 @@ describe('Test CIRA Config Page', () => {
       profileFixtures.happyPath.iderEnabled,
       profileFixtures.happyPath.kvmEnabled,
       profileFixtures.happyPath.solEnabled
-      )
+    )
     cy.get('button').contains('SAVE').click()
     cy.wait('@get-profiles2')
 

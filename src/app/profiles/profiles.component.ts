@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -14,7 +14,18 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ProfilesService } from './profiles.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { Profile, TlsModes } from './profiles.constants'
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
@@ -22,18 +33,42 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-profiles',
-    templateUrl: './profiles.component.html',
-    styleUrls: ['./profiles.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
+  selector: 'app-profiles',
+  templateUrl: './profiles.component.html',
+  styleUrls: ['./profiles.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatButton,
+    MatIcon,
+    MatProgressBar,
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatIconButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator
+  ]
 })
-
 export class ProfilesComponent implements OnInit {
   profiles: Profile[] = []
   isLoading = true
-  totalCount: number = 0
-  displayedColumns: string[] = ['name', 'networkConfig', 'connectionConfig', 'activation', 'remove']
+  totalCount = 0
+  displayedColumns: string[] = [
+    'name',
+    'networkConfig',
+    'connectionConfig',
+    'activation',
+    'remove'
+  ]
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -42,17 +77,18 @@ export class ProfilesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public readonly router: Router,
-    private readonly profilesService: ProfilesService) {}
+    private readonly profilesService: ProfilesService
+  ) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getData(this.pageEvent)
   }
 
-  getData (pageEvent: PageEventOptions): void {
+  getData(pageEvent: PageEventOptions): void {
     this.profilesService
       .getData(pageEvent)
       .pipe(
@@ -71,14 +107,14 @@ export class ProfilesComponent implements OnInit {
       })
   }
 
-  isNoData (): boolean {
+  isNoData(): boolean {
     return !this.isLoading && this.profiles.length === 0
   }
 
-  delete (name: string): void {
+  delete(name: string): void {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.isLoading = true
         this.profilesService
@@ -89,11 +125,11 @@ export class ProfilesComponent implements OnInit {
             })
           )
           .subscribe({
-             next: () => {
+            next: () => {
               this.getData(this.pageEvent)
               this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
             },
-            error: err => {
+            error: (err) => {
               if (err?.length > 0) {
                 this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
@@ -105,11 +141,11 @@ export class ProfilesComponent implements OnInit {
     })
   }
 
-  parseTlsMode (val: number): string {
+  parseTlsMode(val: number): string {
     return TlsModes.labelForValue(val)
   }
 
-  pageChanged (event: PageEvent): void {
+  pageChanged(event: PageEvent): void {
     this.pageEvent = {
       ...this.pageEvent,
       pageSize: event.pageSize,
@@ -118,7 +154,7 @@ export class ProfilesComponent implements OnInit {
     this.getData(this.pageEvent)
   }
 
-  async navigateTo (path: string = 'new'): Promise<void> {
+  async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate(['/profiles', encodeURIComponent(path)])
   }
 }

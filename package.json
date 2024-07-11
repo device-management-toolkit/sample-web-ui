@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "3.10.0",
+  "version": "3.7.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,10 +9,12 @@
     "test": "ng test",
     "test-ci": "ng test --no-watch --no-progress",
     "lint": "ng lint",
+    "prettify": "npx prettier --write '**/*.{ts,js,yaml,css,scss,json,md}'",
+    "ci-prettify": "npx prettier --check '**/*.{ts,js,yaml,css,scss,json,md}'",
     "e2e": "ng e2e",
     "cypress": "cypress open",
     "cy-runner": "cypress run",
-    "lint:cypress": "eslint ./cypress --ext .ts"
+    "lint:cypress": "eslint ./cypress"
   },
   "private": true,
   "dependencies": {
@@ -40,8 +42,6 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~18.0.7",
     "@angular-eslint/builder": "~18.1.0",
-    "@angular-eslint/eslint-plugin": "~18.1.0",
-    "@angular-eslint/eslint-plugin-template": "~18.1.0",
     "@angular-eslint/schematics": "~18.1.0",
     "@angular-eslint/template-parser": "~18.1.0",
     "@angular/cli": "~18.0.7",
@@ -49,11 +49,10 @@
     "@angular/localize": "~18.0.6",
     "@types/jasmine": "~5.1.4",
     "@types/node": "^20.14.9",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.4.0",
+    "angular-eslint": "18.0.1",
     "cypress": "^13.13.0",
-    "eslint": "^8.57.0",
-    "eslint-config-love": "^43.1.0",
+    "eslint": "^9.3.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-license-header": "^0.6.1",
     "jasmine-core": "~5.1.2",
     "jasmine-spec-reporter": "~7.0.0",
@@ -63,8 +62,11 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
     "karma-junit-reporter": "^2.0.1",
+    "prettier-config-standard": "^7.0.0",
+    "prettier-plugin-multiline-arrays": "^3.0.6",
     "ts-node": "~10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "typescript-eslint": "8.0.0-alpha.20"
   },
   "optionalDependencies": {
     "cypress": "^13.13.0"

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { EventEmitter, Component, Input } from '@angular/core'
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -13,9 +13,9 @@ import { AuthService } from './auth.service'
 // import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
-    selector: 'app-toolbar',
-    standalone: true,
-    imports: [RouterModule, MatSidenavModule]
+  selector: 'app-toolbar',
+  standalone: true,
+  imports: [RouterModule, MatSidenavModule]
 })
 class TestToolbarComponent {
   @Input()
@@ -38,18 +38,22 @@ describe('AppComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-    imports: [
-        RouterModule, MatSidenavModule,
+      imports: [
+        RouterModule,
+        MatSidenavModule,
         TestToolbarComponent,
         AppComponent
-    ],
-    providers: [{ provide: AuthService, useValue: authServiceStub }, {
-            provide: Router,
-            useValue: {
-                events: of({})
-            }
-        }]
-}).compileComponents()
+      ],
+      providers: [
+        { provide: AuthService, useValue: authServiceStub },
+        {
+          provide: Router,
+          useValue: {
+            events: of({})
+          }
+        }
+      ]
+    }).compileComponents()
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
   })

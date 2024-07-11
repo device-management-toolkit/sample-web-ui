@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -13,7 +13,13 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
-import { AmtFeaturesRequest, AmtFeaturesResponse, RedirectionStatus, userConsentData, userConsentResponse } from 'src/models/models'
+import {
+  AmtFeaturesRequest,
+  AmtFeaturesResponse,
+  RedirectionStatus,
+  userConsentData,
+  userConsentResponse
+} from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 import { KVMComponent, IDERComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
@@ -28,11 +34,25 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 
 @Component({
-    selector: 'app-kvm',
-    templateUrl: './kvm.component.html',
-    styleUrls: ['./kvm.component.scss'],
-    standalone: true,
-    imports: [DeviceToolbarComponent, MatToolbar, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, FormsModule, MatOption, MatButton, MatIcon, MatProgressSpinner, KVMComponent, IDERComponent]
+  selector: 'app-kvm',
+  templateUrl: './kvm.component.html',
+  styleUrls: ['./kvm.component.scss'],
+  standalone: true,
+  imports: [
+    DeviceToolbarComponent,
+    MatToolbar,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    FormsModule,
+    MatOption,
+    MatButton,
+    MatIcon,
+    MatProgressSpinner,
+    KVMComponent,
+    IDERComponent
+  ]
 })
 export class KvmComponent implements OnInit, OnDestroy {
   @Input()
@@ -47,17 +67,17 @@ export class KvmComponent implements OnInit, OnDestroy {
   @Output()
   selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
 
-  deviceState: number = 0
+  deviceState = 0
   results: any
-  isLoading: boolean = false
+  isLoading = false
   powerState: any = 0
-  mpsServer: string = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  readyToLoadKvm: boolean = false
+  mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
+  readyToLoadKvm = false
   authToken: string = environment.cloud ? '' : 'direct'
   timeInterval!: any
-  selected: number = 1
-  isDisconnecting: boolean = false
-  isIDERActive: boolean = false
+  selected = 1
+  isDisconnecting = false
+  isIDERActive = false
 
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
@@ -71,12 +91,15 @@ export class KvmComponent implements OnInit, OnDestroy {
     { value: 2, viewValue: 'RLE 16' }
   ]
 
-  constructor (public snackBar: MatSnackBar,
+  constructor(
+    public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private readonly devicesService: DevicesService,
     public readonly activatedRoute: ActivatedRoute,
-    public readonly router: Router) {
-    if (environment.mpsServer.includes('/mps')) { // handles kong route
+    public readonly router: Router
+  ) {
+    if (environment.mpsServer.includes('/mps')) {
+      // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
     this.router.events.subscribe((event) => {
@@ -86,23 +109,25 @@ export class KvmComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     // grab the device id from the url
-    this.activatedRoute.params.pipe(
-      switchMap(params => {
-        this.deviceId = params.id
-        if (environment.cloud) {
-          // request token from MPS
-          return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
-            tap((result) => {
-              this.authToken = result.token
-            })
-          )
-        } else {
-          return of()
-        }
-      })
-    ).subscribe()
+    this.activatedRoute.params
+      .pipe(
+        switchMap((params) => {
+          this.deviceId = params.id
+          if (environment.cloud) {
+            // request token from MPS
+            return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
+              tap((result) => {
+                this.authToken = result.token
+              })
+            )
+          } else {
+            return of()
+          }
+        })
+      )
+      .subscribe()
 
     // used for receiving messages from the kvm connect button on the toolbar
     this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe((data: boolean) => {
@@ -118,48 +143,53 @@ export class KvmComponent implements OnInit, OnDestroy {
     })
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
-    this.timeInterval = interval(15000).pipe(
-      mergeMap(() => this.getPowerState(this.deviceId))
-    ).subscribe()
+    this.timeInterval = interval(15000)
+      .pipe(mergeMap(() => this.getPowerState(this.deviceId)))
+      .subscribe()
 
     this.init()
   }
 
-  init (): void {
+  init(): void {
     this.isLoading = true
     // switchMap((result: RedirectionStatus) => result === null ? of() : this.getRedirectionStatus(this.deviceId)),
     // switchMap((result) => this.handleRedirectionStatus(result)),
     // device needs to be powered on in order to start KVM session
-    this.getPowerState(this.deviceId).pipe(
-      switchMap((powerState) => this.handlePowerState(powerState)),
-      switchMap((result) => result === null ? of() : this.getRedirectionStatus(this.deviceId)),
-      switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
-      switchMap((result) => result === null ? of() : this.getAMTFeatures()),
-      switchMap((results: AmtFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
-      switchMap((result: boolean | any) =>
-        iif(() => result === false,
-        defer(() => of(null)),
-        defer(() => this.checkUserConsent())
-        )),
-      switchMap((result: boolean | null) => this.handleUserConsentDecision(result)),
-      switchMap((result: any | userConsentResponse) => this.handleUserConsentResponse(result))
-    ).subscribe().add(() => {
-      this.isLoading = false
-    })
+    this.getPowerState(this.deviceId)
+      .pipe(
+        switchMap((powerState) => this.handlePowerState(powerState)),
+        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId))),
+        switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
+        switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
+        switchMap((results: AmtFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        switchMap((result: boolean | any) =>
+          iif(
+            () => result === false,
+            defer(() => of(null)),
+            defer(() => this.checkUserConsent())
+          )
+        ),
+        switchMap((result: boolean | null) => this.handleUserConsentDecision(result)),
+        switchMap((result: any | userConsentResponse) => this.handleUserConsentResponse(result))
+      )
+      .subscribe()
+      .add(() => {
+        this.isLoading = false
+      })
   }
 
-  onFileSelected (event: Event): void {
+  onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null
     this.deviceIDERConnection.emit(true)
   }
 
-  onCancelIDER (): void {
+  onCancelIDER(): void {
     // close the dialog, perform other actions as needed
     this.deviceIDERConnection.emit(false)
   }
 
-  handlePowerState (powerState: any): Observable<any> {
+  handlePowerState(powerState: any): Observable<any> {
     this.powerState = powerState
     // If device is not powered on, shows alert to power up device
     if (this.powerState.powerstate !== 2) {
@@ -176,7 +206,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return of(true)
   }
 
-  getRedirectionStatus (guid: string): Observable<RedirectionStatus> {
+  getRedirectionStatus(guid: string): Observable<RedirectionStatus> {
     return this.devicesService.getRedirectionStatus(guid).pipe(
       catchError((err) => {
         this.isLoading = false
@@ -186,7 +216,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     )
   }
 
-  handleRedirectionStatus (redirectionStatus: RedirectionStatus): Observable<any> {
+  handleRedirectionStatus(redirectionStatus: RedirectionStatus): Observable<any> {
     this.redirectionStatus = redirectionStatus
     if (this.redirectionStatus.isKVMConnected) {
       this.displayError($localize`KVM cannot be accessed - another kvm session is in progress`)
@@ -195,7 +225,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return of(true)
   }
 
-  getPowerState (guid: string): Observable<any> {
+  getPowerState(guid: string): Observable<any> {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading = false
@@ -205,42 +235,40 @@ export class KvmComponent implements OnInit, OnDestroy {
     )
   }
 
-  handleAMTFeaturesResponse (results: AmtFeaturesResponse): Observable<any> {
+  handleAMTFeaturesResponse(results: AmtFeaturesResponse): Observable<any> {
     this.amtFeatures = results
     if (this.amtFeatures.KVM) {
       return of(true)
     }
-    return this.enableKvmDialog()
-      .pipe(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        catchError((err) => {
-          this.displayError($localize`Unable to display KVM dialog`)
-          throw err
-        }),
-        switchMap((data?: boolean) => {
-          if (data == null || !data) {
-            // if clicked outside the dialog/or clicked "No", call to cancel previous requested user consent code
-            this.cancelEnableKvmResponse()
-            return of(false)
-          } else {
-              const payload: AmtFeaturesRequest = {
-                userConsent: this.amtFeatures?.userConsent ?? '',
-                enableKVM: true,
-                enableSOL: this.amtFeatures?.SOL ?? false,
-                enableIDER: this.amtFeatures?.IDER ?? false
-              }
-              return this.devicesService.setAmtFeatures(this.deviceId, payload)
+    return this.enableKvmDialog().pipe(
+      catchError((err) => {
+        this.displayError($localize`Unable to display KVM dialog`)
+        throw err
+      }),
+      switchMap((data?: boolean) => {
+        if (data == null || !data) {
+          // if clicked outside the dialog/or clicked "No", call to cancel previous requested user consent code
+          this.cancelEnableKvmResponse()
+          return of(false)
+        } else {
+          const payload: AmtFeaturesRequest = {
+            userConsent: this.amtFeatures?.userConsent ?? '',
+            enableKVM: true,
+            enableSOL: this.amtFeatures?.SOL ?? false,
+            enableIDER: this.amtFeatures?.IDER ?? false
           }
-        })
-      )
+          return this.devicesService.setAmtFeatures(this.deviceId, payload)
+        }
+      })
+    )
   }
 
-  getAMTFeatures (): Observable<AmtFeaturesResponse> {
+  getAMTFeatures(): Observable<AmtFeaturesResponse> {
     this.isLoading = true
     return this.devicesService.getAMTFeatures(this.deviceId)
   }
 
-  enableKvmDialog (): Observable<any> {
+  enableKvmDialog(): Observable<any> {
     // Open enable KVM dialog
     const userEnableKvmDialog = this.dialog.open(DeviceEnableKvmComponent, {
       height: '200px',
@@ -250,7 +278,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return userEnableKvmDialog.afterClosed()
   }
 
-  cancelEnableKvmResponse (result?: boolean): void {
+  cancelEnableKvmResponse(result?: boolean): void {
     this.isLoading = false
     if (!result) {
       this.displayError($localize`KVM cannot be accessed - request to enable KVM is cancelled`)
@@ -260,12 +288,12 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.readyToLoadKvm = false
   }
 
-  showPowerUpAlert (): Observable<boolean> {
+  showPowerUpAlert(): Observable<boolean> {
     const dialog = this.dialog.open(PowerUpAlertComponent)
     return dialog.afterClosed()
   }
 
-  handleUserConsentDecision (result: boolean | null): Observable<any> {
+  handleUserConsentDecision(result: boolean | null): Observable<any> {
     // if user consent is not required, ready to load KVM
     if (result == null || result) {
       return of(null)
@@ -281,20 +309,20 @@ export class KvmComponent implements OnInit, OnDestroy {
     return of(true)
   }
 
-  handleUserConsentResponse (result: any | userConsentResponse): Observable<any> {
+  handleUserConsentResponse(result: any | userConsentResponse): Observable<any> {
     if (result == null) return of(null)
 
-      // show user consent dialog if the user consent has been requested successfully
-      // or if the user consent is already in session, or recieved, or displayed
+    // show user consent dialog if the user consent has been requested successfully
+    // or if the user consent is already in session, or recieved, or displayed
     if (result === true || result.Body?.ReturnValue === 0) {
       return this.userConsentDialog().pipe(
         switchMap((result: any) => {
           if (result == null) {
-                // if clicked outside the dialog, call to cancel previous requested user consent code
-              this.cancelUserConsentCode(this.deviceId)
-            } else {
-              this.afterUserConsentDialogClosed(result as userConsentData)
-            }
+            // if clicked outside the dialog, call to cancel previous requested user consent code
+            this.cancelUserConsentCode(this.deviceId)
+          } else {
+            this.afterUserConsentDialogClosed(result as userConsentData)
+          }
           return of(null)
         })
       )
@@ -304,15 +332,19 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkUserConsent (): Observable<boolean> {
-    if (this.amtFeatures?.userConsent === 'none' || this.amtFeatures?.optInState === 3 || this.amtFeatures?.optInState === 4) {
+  checkUserConsent(): Observable<boolean> {
+    if (
+      this.amtFeatures?.userConsent === 'none' ||
+      this.amtFeatures?.optInState === 3 ||
+      this.amtFeatures?.optInState === 4
+    ) {
       this.readyToLoadKvm = true
       return of(true)
     }
     return of(false)
   }
 
-  userConsentDialog (): Observable<any> {
+  userConsentDialog(): Observable<any> {
     // Open user consent dialog
     const userConsentDialog = this.dialog.open(DeviceUserConsentComponent, {
       height: '350px',
@@ -323,15 +355,18 @@ export class KvmComponent implements OnInit, OnDestroy {
     return userConsentDialog.afterClosed()
   }
 
-  afterUserConsentDialogClosed (data: userConsentData): void {
+  afterUserConsentDialogClosed(data: userConsentData): void {
     const response: userConsentResponse | any = data?.results
     if (response.error != null) {
       this.displayError(`Unable to send code: ${response.error.Body.ReturnValueStr as string}`)
       this.isLoading = false
     } else {
-    // On success to send or cancel to previous requested user consent code
-    const method = response.Header.Action.substring((response.Header.Action.lastIndexOf('/') as number) + 1, response.Header.Action.length)
-    if (method === 'CancelOptInResponse') {
+      // On success to send or cancel to previous requested user consent code
+      const method = response.Header.Action.substring(
+        (response.Header.Action.lastIndexOf('/') as number) + 1,
+        response.Header.Action.length
+      )
+      if (method === 'CancelOptInResponse') {
         this.cancelOptInCodeResponse(response as userConsentResponse)
       } else if (method === 'SendOptInCodeResponse') {
         this.sendOptInCodeResponse(response as userConsentResponse)
@@ -339,7 +374,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancelOptInCodeResponse (result: userConsentResponse): void {
+  cancelOptInCodeResponse(result: userConsentResponse): void {
     this.isLoading = false
     if (result.Body?.ReturnValue === 0) {
       this.displayError($localize`KVM cannot be accessed - requested user consent code is cancelled`)
@@ -348,7 +383,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendOptInCodeResponse (result: userConsentResponse): void {
+  sendOptInCodeResponse(result: userConsentResponse): void {
     if (result.Body?.ReturnValue === 0) {
       this.readyToLoadKvm = true
       this.getAMTFeatures()
@@ -362,23 +397,30 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  reqUserConsentCode (guid: string): Observable<userConsentResponse> {
-    return this.devicesService.reqUserConsentCode(guid).pipe(catchError((err) => {
-      // Cannot access KVM if request to user consent code fails
-      this.isLoading = false
-      this.displayError($localize`Error requesting user consent code - retry after 3 minutes`)
-      return of(err)
-    }))
+  reqUserConsentCode(guid: string): Observable<userConsentResponse> {
+    return this.devicesService.reqUserConsentCode(guid).pipe(
+      catchError((err) => {
+        // Cannot access KVM if request to user consent code fails
+        this.isLoading = false
+        this.displayError($localize`Error requesting user consent code - retry after 3 minutes`)
+        return of(err)
+      })
+    )
   }
 
-  cancelUserConsentCode (guid: string): void {
-    this.devicesService.cancelUserConsentCode(guid)
-      .pipe(catchError((err) => {
-        this.displayError($localize`Error cancelling user consent code`)
-        return of(err)
-      }), finalize(() => {
-        this.isLoading = false
-      })).subscribe((data: userConsentResponse) => {
+  cancelUserConsentCode(guid: string): void {
+    this.devicesService
+      .cancelUserConsentCode(guid)
+      .pipe(
+        catchError((err) => {
+          this.displayError($localize`Error cancelling user consent code`)
+          return of(err)
+        }),
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe((data: userConsentResponse) => {
         if (data.Body?.ReturnValue === 0) {
           this.displayWarning($localize`KVM cannot be accessed - previously requested user consent code is cancelled`)
         } else {
@@ -398,7 +440,9 @@ export class KvmComponent implements OnInit, OnDestroy {
     } else if (event === 0) {
       this.isLoading = false
       if (!this.isDisconnecting) {
-        this.displayError('Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.')
+        this.displayError(
+          'Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
+        )
       }
       this.isDisconnecting = false
     }
@@ -413,15 +457,15 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayError (message: string): void {
+  displayError(message: string): void {
     this.snackBar.open(message, undefined, SnackbarDefaults.defaultError)
   }
 
-  displayWarning (message: string): void {
+  displayWarning(message: string): void {
     this.snackBar.open(message, undefined, SnackbarDefaults.defaultWarn)
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     this.isDisconnecting = true
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
@@ -24,16 +24,23 @@ describe('DeviceUserConsentComponent', () => {
   beforeEach(async () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
-    sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(of({ deviceId: 'deviceId', results: {} }))
-    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({ }))
+    sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(
+      of({ deviceId: 'deviceId', results: {} })
+    )
+    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceUserConsentComponent],
-    providers: [{ provide: DevicesService, useValue: devicesService },
+      imports: [
+        MomentModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        DeviceUserConsentComponent
+      ],
+      providers: [
+        { provide: DevicesService, useValue: devicesService },
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
         { provide: MatDialogRef, useValue: dialogMock }
-    ]
-})
-      .compileComponents()
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

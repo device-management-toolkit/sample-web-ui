@@ -1,20 +1,20 @@
 .mat-column-actions {
-    width: 275px;
-    flex: 0 0 275px;
+  width: 275px;
+  flex: 0 0 275px;
 }
 .mat-column-notification {
-    width: 75px;
-    flex: 0 0 75px;
+  width: 75px;
+  flex: 0 0 75px;
 }
 
-mat-icon.addTag{
+mat-icon.addTag {
   visibility: hidden;
 }
 
-mat-icon.alwaysHidden{
+mat-icon.alwaysHidden {
   visibility: hidden;
 }
 
-mat-cell:hover mat-icon.addTag{
+mat-cell:hover mat-icon.addTag {
   visibility: visible;
 }

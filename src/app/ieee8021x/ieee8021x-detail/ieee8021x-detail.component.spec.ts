@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -27,22 +27,32 @@ describe('IEEE8021xDetailComponent', () => {
   }
 
   beforeEach(async () => {
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService',
-      ['getRecord', 'update', 'create', 'refreshCountByInterface'])
+    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
+      'getRecord',
+      'update',
+      'create',
+      'refreshCountByInterface'
+    ])
     ieee8021xGetRecordSpy = ieee8021xService.getRecord.and.returnValue(of({}))
     ieee8021xCreateSpy = ieee8021xService.create.and.returnValue(of({}))
     ieee8021xUpdateSpy = ieee8021xService.update.and.returnValue(of({}))
     ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, IEEE8021xDetailComponent],
-    providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }, {
-            provide: ActivatedRoute,
-            useValue: {
-                params: of({ name: 'profile' })
-            }
-        }]
-})
-      .compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        IEEE8021xDetailComponent
+      ],
+      providers: [
+        { provide: IEEE8021xService, useValue: ieee8021xService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ name: 'profile' })
+          }
+        }
+      ]
+    }).compileComponents()
   })
 
   beforeEach(() => {

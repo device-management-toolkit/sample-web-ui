@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -20,23 +20,30 @@ describe('WirelessComponent', () => {
 
   beforeEach(async () => {
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
-    getDataSpy = wirelessService.getData.and.returnValue(of({
-      data: [{
-        authenticationMethod: 4,
-        encryptionMethod: 4,
-        linkPolicy: [14, 16],
-        profileName: 'P1',
-        pskValue: null,
-        ssid: 'test'
-      }],
-      totalCount: 1
-    }))
+    getDataSpy = wirelessService.getData.and.returnValue(
+      of({
+        data: [
+          {
+            authenticationMethod: 4,
+            encryptionMethod: 4,
+            linkPolicy: [14, 16],
+            profileName: 'P1',
+            pskValue: null,
+            ssid: 'test'
+          }
+        ],
+        totalCount: 1
+      })
+    )
     deleteSpy = wirelessService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, WirelessComponent],
-    providers: [{ provide: WirelessService, useValue: wirelessService }]
-})
-      .compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        WirelessComponent
+      ],
+      providers: [{ provide: WirelessService, useValue: wirelessService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

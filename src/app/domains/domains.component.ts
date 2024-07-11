@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -15,27 +15,62 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DomainsService } from './domains.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { DatePipe } from '@angular/common'
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 @Component({
-    selector: 'app-domains',
-    templateUrl: './domains.component.html',
-    styleUrls: ['./domains.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatButton, MatIcon, MatProgressBar, MatCard, MatCardContent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
+  selector: 'app-domains',
+  templateUrl: './domains.component.html',
+  styleUrls: ['./domains.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatButton,
+    MatIcon,
+    MatProgressBar,
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatIconButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    DatePipe
+  ]
 })
-
 export class DomainsComponent implements OnInit {
   public domains: DomainsResponse = { data: [], totalCount: 0 }
   public isLoading = true
-  public myDate: string = ''
+  public myDate = ''
   private readonly millisecondsInADay = 86400000
   private readonly warningPeriodInDays = 60
-  displayedColumns: string[] = ['name', 'domainSuffix', 'expirationDate', 'remove']
+  displayedColumns: string[] = [
+    'name',
+    'domainSuffix',
+    'expirationDate',
+    'remove'
+  ]
   pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -44,52 +79,67 @@ export class DomainsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, private readonly domainsService: DomainsService) { }
+  constructor(
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public router: Router,
+    private readonly domainsService: DomainsService
+  ) {}
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getData(this.pageEvent)
   }
 
-  getData (pageEvent: PageEventOptions): void {
-    this.domainsService.getData(pageEvent)
+  getData(pageEvent: PageEventOptions): void {
+    this.domainsService
+      .getData(pageEvent)
       .pipe(
         finalize(() => {
           this.isLoading = false
         })
-      ).subscribe((data: DomainsResponse) => {
-        this.domains = data
-        this.expirationWarning()
-      }, () => {
-        this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
-      })
+      )
+      .subscribe(
+        (data: DomainsResponse) => {
+          this.domains = data
+          this.expirationWarning()
+        },
+        () => {
+          this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
+        }
+      )
   }
 
-  isNoData (): boolean {
+  isNoData(): boolean {
     return !this.isLoading && this.domains.data.length === 0
   }
 
-  delete (name: string): void {
+  delete(name: string): void {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.isLoading = true
-        this.domainsService.delete(name).pipe(
-          finalize(() => {
-            this.isLoading = false
-          })
-        ).subscribe(data => {
-          this.getData(this.pageEvent)
-          this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
-        },
-        () => {
-          this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
-        })
+        this.domainsService
+          .delete(name)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            })
+          )
+          .subscribe(
+            (data) => {
+              this.getData(this.pageEvent)
+              this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            },
+            () => {
+              this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
+            }
+          )
       }
     })
   }
 
-  pageChanged (event: PageEvent): void {
+  pageChanged(event: PageEvent): void {
     this.pageEvent = {
       ...this.pageEvent,
       startsFrom: event.pageIndex * event.pageSize,
@@ -98,11 +148,11 @@ export class DomainsComponent implements OnInit {
     this.getData(this.pageEvent)
   }
 
-  async navigateTo (path: string = 'new'): Promise<void> {
+  async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate([`/domains/${path}`])
   }
 
-  getRemainingTime (expirationDate: Date): string {
+  getRemainingTime(expirationDate: Date): string {
     const today = new Date()
     const expDate = new Date(expirationDate)
 
@@ -121,12 +171,13 @@ export class DomainsComponent implements OnInit {
     }
   }
 
-  expirationWarning (): void {
+  expirationWarning(): void {
     let countWarn = 0
     let countExp = 0
     const today = new Date()
-    for (let i = 0; i < this.domains.data.length; i++) {
-      const expDate = new Date(this.domains.data[i].expirationDate)
+
+    for (const domain of this.domains.data) {
+      const expDate = new Date(domain.expirationDate)
       if (expDate < today) {
         countExp++
       } else if ((expDate.getTime() - today.getTime()) / this.millisecondsInADay < this.warningPeriodInDays) {
@@ -137,7 +188,8 @@ export class DomainsComponent implements OnInit {
     let message = ''
     if (countWarn > 0) {
       message += $localize`${countWarn.toString()} domain cert(s) will expire soon `
-    } if (countExp > 0) {
+    }
+    if (countExp > 0) {
       message += $localize`${countExp.toString()} domain cert(s) are expired `
     }
 

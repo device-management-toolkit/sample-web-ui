@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -24,7 +24,20 @@ import { MatButtonModule } from '@angular/material/button'
 @Component({
   selector: 'app-alarms',
   standalone: true,
-  imports: [MatSlideToggleModule, FormsModule, ReactiveFormsModule, MatSelectModule, MatDatepickerModule, MatIconModule, MatDividerModule, DatePipe, MatListModule, MatCardModule, MatInputModule, MatButtonModule],
+  imports: [
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatDividerModule,
+    DatePipe,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule
+  ],
   templateUrl: './alarms.component.html',
   styleUrl: './alarms.component.scss'
 })
@@ -41,46 +54,141 @@ export class AlarmsComponent implements OnInit {
     minute: '00'
   })
 
-  public hourOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']
-  public minuteOptions = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']
+  public hourOptions = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24'
+  ]
+  public minuteOptions = [
+    '00',
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+    '36',
+    '37',
+    '38',
+    '39',
+    '40',
+    '41',
+    '42',
+    '43',
+    '44',
+    '45',
+    '46',
+    '47',
+    '48',
+    '49',
+    '50',
+    '51',
+    '52',
+    '53',
+    '54',
+    '55',
+    '56',
+    '57',
+    '58',
+    '59'
+  ]
   public deleteOnCompletion: FormControl<any>
-  public isLoading: boolean = true
+  public isLoading = true
 
-  constructor (public snackBar: MatSnackBar,
+  constructor(
+    public snackBar: MatSnackBar,
     private readonly devicesService: DevicesService,
-    public fb: FormBuilder) {
+    public fb: FormBuilder
+  ) {
     this.deleteOnCompletion = new FormControl<boolean>(true)
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.loadAlarms()
   }
 
-  loadAlarms (): void {
-    this.devicesService.getAlarmOccurrences(this.deviceId).pipe(
-      catchError(err => {
-        this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      }),
-      finalize(() => {
-        this.isLoading = false
+  loadAlarms(): void {
+    this.devicesService
+      .getAlarmOccurrences(this.deviceId)
+      .pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe((results) => {
+        this.alarmOccurrences = results
       })
-    ).subscribe(results => {
-      this.alarmOccurrences = results
-    })
   }
 
   deleteAlarm = (instanceID: string): void => {
     if (!window.confirm('Deleting: ' + instanceID)) return
 
-    this.devicesService.deleteAlarmOccurrence(this.deviceId, instanceID).pipe(finalize(() => {
-
-    })).subscribe(results => {
-      this.loadAlarms()
-    }, err => {
-      this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
-      return throwError(err)
-    })
+    this.devicesService
+      .deleteAlarmOccurrence(this.deviceId, instanceID)
+      .pipe(finalize(() => {}))
+      .subscribe(
+        (results) => {
+          this.loadAlarms()
+        },
+        (err) => {
+          this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }
+      )
   }
 
   addAlarm = (): void => {
@@ -97,14 +205,22 @@ export class AlarmsComponent implements OnInit {
       }
 
       this.isLoading = true
-      this.devicesService.addAlarmOccurrence(this.deviceId, payload).pipe(finalize(() => {
-        this.isLoading = false
-      })).subscribe(results => {
-        this.loadAlarms()
-      }, err => {
-        this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
-        return throwError(err)
-      })
+      this.devicesService
+        .addAlarmOccurrence(this.deviceId, payload)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        )
+        .subscribe(
+          (results) => {
+            this.loadAlarms()
+          },
+          (err) => {
+            this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+            return throwError(err)
+          }
+        )
     }
   }
 }

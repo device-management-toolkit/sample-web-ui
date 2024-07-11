@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
@@ -14,14 +14,19 @@ import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.con
 
 describe('WirelessService', () => {
   let service: WirelessService
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy, patch: jasmine.Spy, delete: jasmine.Spy }
+  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; patch: jasmine.Spy; delete: jasmine.Spy }
   let routerSpy
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'patch', 'delete'])
+    httpClientSpy = jasmine.createSpyObj('HttpClient', [
+      'get',
+      'post',
+      'patch',
+      'delete'
+    ])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     TestBed.configureTestingModule({})
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
     service = new WirelessService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 
@@ -49,7 +54,7 @@ describe('WirelessService', () => {
   it('should load all the wifi configs when get all request fired', (done) => {
     httpClientSpy.get.and.returnValue(of(wifiResponse))
 
-    service.getData().subscribe(response => {
+    service.getData().subscribe((response) => {
       expect(response).toEqual(wifiResponse)
       done()
     })
@@ -66,7 +71,7 @@ describe('WirelessService', () => {
     }
     httpClientSpy.get.and.returnValue(of(wifiResponse))
 
-    service.getData(pageEvent).subscribe(response => {
+    service.getData(pageEvent).subscribe((response) => {
       expect(response).toEqual(wifiResponse)
       done()
     })
@@ -90,10 +95,13 @@ describe('WirelessService', () => {
 
     httpClientSpy.get.and.returnValue(throwError(error))
 
-    service.getData(pageEvent).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.getData(pageEvent).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
 
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
@@ -110,7 +118,7 @@ describe('WirelessService', () => {
 
     httpClientSpy.get.and.returnValue(of(wifiResponse))
 
-    service.getRecord('wifi1').subscribe(response => {
+    service.getRecord('wifi1').subscribe((response) => {
       expect(response).toEqual(wifiResponse)
       done()
     })
@@ -125,10 +133,13 @@ describe('WirelessService', () => {
 
     httpClientSpy.get.and.returnValue(throwError(error))
 
-    service.getRecord('wifi1').subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.getRecord('wifi1').subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
 
     expect(httpClientSpy.get.calls.count()).toEqual(1)
   })
@@ -147,10 +158,13 @@ describe('WirelessService', () => {
     const error = { error: 'Not Found' }
     httpClientSpy.delete.and.returnValue(throwError(error))
 
-    service.delete('wifi1').subscribe(() => {}, (err) => {
-      expect(err).toEqual([error])
-      done()
-    })
+    service.delete('wifi1').subscribe(
+      () => {},
+      (err) => {
+        expect(err).toEqual([error])
+        done()
+      }
+    )
 
     expect(httpClientSpy.delete.calls.count()).toEqual(1)
   })
@@ -158,7 +172,7 @@ describe('WirelessService', () => {
   it('should create the wireless config when create request gets fired', (done) => {
     httpClientSpy.post.and.returnValue(of(config01))
 
-    service.create(config01).subscribe(response => {
+    service.create(config01).subscribe((response) => {
       expect(response).toEqual(config01)
       done()
     })
@@ -172,17 +186,20 @@ describe('WirelessService', () => {
     }
     httpClientSpy.post.and.returnValue(throwError(error))
 
-    service.create(config01).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.create(config01).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
 
     expect(httpClientSpy.post.calls.count()).toEqual(1)
   })
   it('should update the wireless config when update request gets fired', (done) => {
     httpClientSpy.patch.and.returnValue(of(config01))
 
-    service.update(config01).subscribe(response => {
+    service.update(config01).subscribe((response) => {
       expect(response).toEqual(config01)
       done()
     })
@@ -198,10 +215,13 @@ describe('WirelessService', () => {
 
     httpClientSpy.patch.and.returnValue(throwError(error))
 
-    service.update(config01).subscribe(() => {}, err => {
-      expect(error.status).toBe(err[0].status)
-      done()
-    })
+    service.update(config01).subscribe(
+      () => {},
+      (err) => {
+        expect(error.status).toBe(err[0].status)
+        done()
+      }
+    )
 
     expect(httpClientSpy.patch.calls.count()).toEqual(1)
   })

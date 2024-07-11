@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -19,63 +19,94 @@ import { MatIconButton, MatButton } from '@angular/material/button'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatSuffix } from '@angular/material/form-field'
 import { MatProgressBar } from '@angular/material/progress-bar'
-import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter } from '@angular/material/card'
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardContent,
+  MatCardActions,
+  MatCardFooter
+} from '@angular/material/card'
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatProgressBar, ReactiveFormsModule, MatCardContent, MatFormField, MatInput, MatError, MatIconButton, MatSuffix, MatTooltip, MatIcon, MatChipListbox, MatChipOption, MatCardActions, MatButton, MatCardFooter]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatProgressBar,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatInput,
+    MatError,
+    MatIconButton,
+    MatSuffix,
+    MatTooltip,
+    MatIcon,
+    MatChipListbox,
+    MatChipOption,
+    MatCardActions,
+    MatButton,
+    MatCardFooter
+  ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public loginForm: FormGroup
   public currentYear = new Date().getFullYear()
   public isLoading = false
   public errorMessage = ''
   public loginPassInputType = 'password'
-  constructor (public snackBar: MatSnackBar, public dialog: MatDialog, public router: Router, public fb: FormBuilder, public authService: AuthService) {
+  constructor(
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public router: Router,
+    public fb: FormBuilder,
+    public authService: AuthService
+  ) {
     this.loginForm = fb.group({
       userId: [null, Validators.required],
       password: [null, Validators.required]
     })
   }
 
-  ngOnInit (): void {
-  }
-
-  onSubmit (): void {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       this.isLoading = true
-      const result: { userId: string, password: string } = Object.assign({}, this.loginForm.value)
-      this.authService.login(result.userId, result.password).subscribe({
-        complete: () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          this.router.navigate([''])
+      const result: { userId: string; password: string } = Object.assign({}, this.loginForm.value)
+      this.authService
+        .login(result.userId, result.password)
+        .subscribe({
+          complete: () => {
+            this.router.navigate([''])
 
-          const storedValue = localStorage.getItem('doNotShowAgain')
-          const doNotShowNotice = storedValue ? JSON.parse(storedValue) : false
-          if (!doNotShowNotice && environment.cloud) {
-            this.dialog.open(AboutComponent)
-          }
-        },
-        error: (err) => {
-          if (err.status === 405 || err.status === 401) {
-            this.snackBar.open($localize`${err.error.message}`, undefined, SnackbarDefaults.defaultError)
-          } else {
-            this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
-          }
-        },
-        next: () => {
-
-        }
-      }).add(() => {
-        this.isLoading = false
-      })
+            const storedValue = localStorage.getItem('doNotShowAgain')
+            const doNotShowNotice = storedValue ? JSON.parse(storedValue) : false
+            if (!doNotShowNotice && environment.cloud) {
+              this.dialog.open(AboutComponent)
+            }
+          },
+          error: (err) => {
+            if (err.status === 405 || err.status === 401) {
+              this.snackBar.open($localize`${err.error.message}`, undefined, SnackbarDefaults.defaultError)
+            } else {
+              this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
+            }
+          },
+          next: () => {}
+        })
+        .add(() => {
+          this.isLoading = false
+        })
     }
   }
 
-  toggleLoginPassVisibility (): void {
+  toggleLoginPassVisibility(): void {
     this.loginPassInputType = this.loginPassInputType === 'password' ? 'text' : 'password'
   }
 }

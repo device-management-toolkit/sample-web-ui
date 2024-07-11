@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms'
@@ -37,15 +37,64 @@ import { KvmComponent } from '../kvm/kvm.component'
 import { GeneralComponent } from '../general/general.component'
 
 @Component({
-    selector: 'app-device-detail',
-    templateUrl: './device-detail.component.html',
-    styleUrls: ['./device-detail.component.scss'],
-    standalone: true,
-    providers: [provideNativeDateAdapter()],
-    imports: [AlarmsComponent, EventLogComponent, AuditLogComponent, HardwareInformationComponent, SolComponent, KvmComponent, GeneralComponent, ExplorerComponent, DeviceToolbarComponent, MatSidenavContainer, MatListModule, MatSidenav, MatTabGroup, MatTab, MatStepper, MatStep, MatStepLabel, MatButton, MatSidenavContent, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatTooltip, MatIcon, MatDivider, ReactiveFormsModule, MatCheckbox, MatSelect, MatOption, MatList, MatListItem, MatListItemTitle, MatListItemLine, MatIconButton, MatFormField, MatInput, MatError, MatHint, MatLabel, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSlideToggle, MomentModule, DatePipe]
+  selector: 'app-device-detail',
+  templateUrl: './device-detail.component.html',
+  styleUrls: ['./device-detail.component.scss'],
+  standalone: true,
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    AlarmsComponent,
+    EventLogComponent,
+    AuditLogComponent,
+    HardwareInformationComponent,
+    SolComponent,
+    KvmComponent,
+    GeneralComponent,
+    ExplorerComponent,
+    DeviceToolbarComponent,
+    MatSidenavContainer,
+    MatListModule,
+    MatSidenav,
+    MatTabGroup,
+    MatTab,
+    MatStepper,
+    MatStep,
+    MatStepLabel,
+    MatButton,
+    MatSidenavContent,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardContent,
+    MatTooltip,
+    MatIcon,
+    MatDivider,
+    ReactiveFormsModule,
+    MatCheckbox,
+    MatSelect,
+    MatOption,
+    MatList,
+    MatListItem,
+    MatListItemTitle,
+    MatListItemLine,
+    MatIconButton,
+    MatFormField,
+    MatInput,
+    MatError,
+    MatHint,
+    MatLabel,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatSlideToggle,
+    MomentModule,
+    DatePipe
+  ]
 })
 export class DeviceDetailComponent implements OnInit {
-  public deviceId: string = ''
+  public deviceId = ''
 
   categories = [
     {
@@ -60,62 +109,66 @@ export class DeviceDetailComponent implements OnInit {
       description: 'Remotely control device',
       component: 'kvm',
       icon: 'tv'
-      },
-      {
+    },
+    {
       name: 'SOL',
       description: 'Serial Over LAN',
       component: 'sol',
       icon: 'keyboard'
-      },
+    },
     {
       name: 'Hardware Information',
       description: 'Memory, CPU, etc...',
       component: 'hardware-info',
       icon: 'memory'
-      },
+    },
     {
-    name: 'Audit Log',
-    description: 'View device audit log',
-    component: 'audit-log',
-    icon: 'history'
-  },
-  {
-  name: 'Event Log',
-  description: 'View device events',
-  component: 'event-log',
-  icon: 'event_list'
-  },
-  {
-    name: 'Alarms',
-    description: 'Manage device alarms',
-    component: 'alarms',
-    icon: 'alarm'
+      name: 'Audit Log',
+      description: 'View device audit log',
+      component: 'audit-log',
+      icon: 'history'
+    },
+    {
+      name: 'Event Log',
+      description: 'View device events',
+      component: 'event-log',
+      icon: 'event_list'
+    },
+    {
+      name: 'Alarms',
+      description: 'Manage device alarms',
+      component: 'alarms',
+      icon: 'alarm'
     }
-]
+  ]
 
-constructor (public snackBar: MatSnackBar, public readonly activatedRoute: ActivatedRoute, public readonly router: Router, private readonly devicesService: DevicesService, public fb: FormBuilder) {
+  constructor(
+    public snackBar: MatSnackBar,
+    public readonly activatedRoute: ActivatedRoute,
+    public readonly router: Router,
+    private readonly devicesService: DevicesService,
+    public fb: FormBuilder
+  ) {}
 
-}
+  public currentView = 'general'
+  public isLoading = false
+  isCollapsed = false
 
-public currentView = 'general'
-public isLoading = false
-isCollapsed = false
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      this.isLoading = true
+      this.deviceId = params.id
+      this.currentView = params.component || 'general'
+    })
+  }
 
-ngOnInit (): void {
-  this.activatedRoute.params.subscribe(params => {
-    this.isLoading = true
-    this.deviceId = params.id
-    this.currentView = params.component || 'general'
-  })
-}
+  toggleSidenav(): void {
+    this.isCollapsed = !this.isCollapsed
+  }
 
-toggleSidenav (): void {
-  this.isCollapsed = !this.isCollapsed
-}
-
-setCurrentView (category: any): void {
-  this.currentView = category.component
-  // update current URL
-  void this.router.navigate([`/devices/${this.deviceId}/${category.component}`])
-}
+  setCurrentView(category: any): void {
+    this.currentView = category.component
+    // update current URL
+    void this.router.navigate([`/devices/${this.deviceId}/${category.component}`])
+  }
 }

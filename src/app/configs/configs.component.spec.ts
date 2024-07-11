@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -20,28 +20,34 @@ describe('ConfigsComponent', () => {
 
   beforeEach(async () => {
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData', 'delete'])
-    getDataSpy = configsService.getData.and.returnValue(of({
-      data: [{
-        authMethod: 2,
-        commonName: '52.172.14.137',
-        configName: 'ciraconfig1',
-        generateRandomPassword: false,
-        mpsPort: 4433,
-        mpsRootCertificate: 'string',
-        mpsServerAddress: '52.172.14.137',
-        passwordLength: null,
-        proxyDetails: null,
-        serverAddressFormat: 3
-
-      }],
-      totalCount: 1
-    }))
+    getDataSpy = configsService.getData.and.returnValue(
+      of({
+        data: [
+          {
+            authMethod: 2,
+            commonName: '52.172.14.137',
+            configName: 'ciraconfig1',
+            generateRandomPassword: false,
+            mpsPort: 4433,
+            mpsRootCertificate: 'string',
+            mpsServerAddress: '52.172.14.137',
+            passwordLength: null,
+            proxyDetails: null,
+            serverAddressFormat: 3
+          }
+        ],
+        totalCount: 1
+      })
+    )
     deleteSpy = configsService.delete.and.returnValue(of(null))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, ConfigsComponent],
-    providers: [{ provide: ConfigsService, useValue: configsService }]
-})
-      .compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        ConfigsComponent
+      ],
+      providers: [{ provide: ConfigsService, useValue: configsService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

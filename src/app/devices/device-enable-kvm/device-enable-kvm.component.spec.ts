@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
@@ -19,12 +19,15 @@ describe('DeviceEnableKvmComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [MomentModule, BrowserAnimationsModule, RouterModule, DeviceEnableKvmComponent],
-    providers: [
-        { provide: MatDialogRef, useValue: dialogMock }
-    ]
-})
-      .compileComponents()
+      imports: [
+        MomentModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        DeviceEnableKvmComponent
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: dialogMock }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

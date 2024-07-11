@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -19,18 +19,27 @@ describe('IEEE8021xComponent', () => {
   let deleteSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData', 'delete', 'refreshCountByInterface'])
-    getDataSpy = ieee8021xService.getData.and.returnValue(of({
-      data: [{ }],
-      totalCount: 1
-    }))
+    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
+      'getData',
+      'delete',
+      'refreshCountByInterface'
+    ])
+    getDataSpy = ieee8021xService.getData.and.returnValue(
+      of({
+        data: [{}],
+        totalCount: 1
+      })
+    )
     deleteSpy = ieee8021xService.delete.and.returnValue(of(null))
     ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, IEEE8021xComponent],
-    providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }]
-})
-      .compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        IEEE8021xComponent
+      ],
+      providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }]
+    }).compileComponents()
   })
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
 import { empty } from 'cypress/e2e/fixtures/api/general'
@@ -69,9 +69,7 @@ describe('Test Profile Page', () => {
         cy.get('button').contains('Continue').click()
       }
       cy.wait('@post-profile').then((req) => {
-        cy.wrap(req)
-          .its('response.statusCode')
-          .should('eq', httpCodes.CREATED)
+        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
       })
     })
   })

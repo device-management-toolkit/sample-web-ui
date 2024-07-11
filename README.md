@@ -1,4 +1,5 @@
 # Open AMT Sample Web UI
+
 ![CodeQL](https://img.shields.io/github/actions/workflow/status/open-amt-cloud-toolkit/sample-web-ui/codeql-analysis.yml?style=for-the-badge&label=CodeQL&logo=github)
 ![Build](https://img.shields.io/github/actions/workflow/status/open-amt-cloud-toolkit/sample-web-ui/nodejs.yaml?style=for-the-badge&logo=github)
 ![Codecov](https://img.shields.io/codecov/c/github/open-amt-cloud-toolkit/sample-web-ui?style=for-the-badge&logo=codecov)
@@ -6,9 +7,7 @@
 [![Discord](https://img.shields.io/discord/1063200098680582154?style=for-the-badge&label=Discord&logo=discord&logoColor=white&labelColor=%235865F2&link=https%3A%2F%2Fdiscord.gg%2FDKHeUNEWVH)](https://discord.gg/DKHeUNEWVH)
 [![Docker Pulls](https://img.shields.io/docker/pulls/intel/oact-webui?style=for-the-badge&logo=docker)](https://hub.docker.com/r/intel/oact-webui)
 
-
-
-> Disclaimer: Production viable releases are tagged and listed under 'Releases'.  All other check-ins should be considered 'in-development' and should not be used in production
+> Disclaimer: Production viable releases are tagged and listed under 'Releases'. All other check-ins should be considered 'in-development' and should not be used in production
 
 The Sample Web UI provides a reference UI solution to help demonstrate the core APIs and features of the Open AMT Cloud Toolkit. Use it to help troubleshoot or try out new release features. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
@@ -54,4 +53,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - Need additional support or want to get the latest news and events about Open AMT? Connect with the team directly through Discord.
 
-    [![Discord Banner 1](https://discordapp.com/api/guilds/1063200098680582154/widget.png?style=banner2)](https://discord.gg/DKHeUNEWVH)
+  [![Discord Banner 1](https://discordapp.com/api/guilds/1063200098680582154/widget.png?style=banner2)](https://discord.gg/DKHeUNEWVH)

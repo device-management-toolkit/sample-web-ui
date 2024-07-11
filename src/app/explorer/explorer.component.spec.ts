@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
@@ -17,15 +17,27 @@ describe('ExplorerComponent', () => {
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
   beforeEach(async () => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', ['getDevices', 'updateDevice', 'getTags', 'getPowerState', 'PowerStates', 'sendPowerAction', 'bulkPowerAction', 'sendDeactivate', 'sendBulkDeactivate', 'getWsmanOperations'])
+    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+      'getDevices',
+      'updateDevice',
+      'getTags',
+      'getPowerState',
+      'PowerStates',
+      'sendPowerAction',
+      'bulkPowerAction',
+      'sendDeactivate',
+      'sendBulkDeactivate',
+      'getWsmanOperations'
+    ])
 
     await TestBed.configureTestingModule({
       imports: [ExplorerComponent, MonacoEditorModule],
-      providers: [{ provide: DevicesService, useValue: devicesServiceSpy },
+      providers: [
+        { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },
-        { provide: ActivatedRoute, useValue: { params: { subscribe: () => {} } } }]
-    })
-    .compileComponents()
+        { provide: ActivatedRoute, useValue: { params: { subscribe: () => {} } } }
+      ]
+    }).compileComponents()
     devicesServiceSpy.getWsmanOperations.and.returnValue(of(['']))
 
     fixture = TestBed.createComponent(ExplorerComponent)

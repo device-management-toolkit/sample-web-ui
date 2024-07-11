@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 // https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
 
@@ -56,9 +56,7 @@ describe('Test Domain Page', () => {
 
     cy.get('button').contains('SAVE').click()
     cy.wait('@post-domain')
-    cy.wait('@get-domains2')
-      .its('response.statusCode')
-      .should('eq', httpCodes.SUCCESS)
+    cy.wait('@get-domains2').its('response.statusCode').should('eq', httpCodes.SUCCESS)
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
     cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
 
@@ -87,9 +85,7 @@ describe('Test Domain Page', () => {
 
     // Attempt to save the duplicate domain name
     cy.get('button').contains('SAVE').click()
-    cy.wait('@post-domain3')
-      .its('response.statusCode')
-      .should('eq', httpCodes.BAD_REQUEST)
+    cy.wait('@post-domain3').its('response.statusCode').should('eq', httpCodes.BAD_REQUEST)
     // Check that the config was unsuccessful
     cy.contains('Suffix already exists')
     cy.get('button').contains('CANCEL').click()
@@ -138,9 +134,7 @@ describe('Test Domain Page', () => {
     }).as('get-domain3')
 
     cy.get('button').contains('SAVE').click()
-    cy.wait('@get-domain3')
-      .its('response.statusCode')
-      .should('eq', httpCodes.BAD_REQUEST)
+    cy.wait('@get-domain3').its('response.statusCode').should('eq', httpCodes.BAD_REQUEST)
     // Check that the config was unsuccessful
     cy.contains('Suffix already exists')
     cy.get('button').contains('CANCEL').click()

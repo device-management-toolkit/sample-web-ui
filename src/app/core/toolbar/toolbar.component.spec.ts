@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
@@ -20,7 +20,12 @@ describe('ToolbarComponent', () => {
   // let logoutSpy: jasmine.Spy
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    authService = jasmine.createSpyObj('AuthService', ['logout', 'getMPSVersion', 'getRPSVersion', 'getConsoleVersion'])
+    authService = jasmine.createSpyObj('AuthService', [
+      'logout',
+      'getMPSVersion',
+      'getRPSVersion',
+      'getConsoleVersion'
+    ])
     getMPSVersionSpy = authService.getMPSVersion.and.returnValue(of({}))
     getRPSVersionSpy = authService.getRPSVersion.and.returnValue(of({}))
     // getConsoleVersionSpy = authService.getConsoleVersion.and.returnValue(of({}))
@@ -29,13 +34,12 @@ describe('ToolbarComponent', () => {
     }
 
     await TestBed.configureTestingModule({
-    imports: [ToolbarComponent],
-    providers: [
+      imports: [ToolbarComponent],
+      providers: [
         { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: { ...authServiceStub, ...authService } }
-        ]
-      })
-      .compileComponents()
+      ]
+    }).compileComponents()
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

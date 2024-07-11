@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -26,17 +26,22 @@ describe('DeviceToolbarComponent', () => {
   let connectSpy: jasmine.Spy
 
   beforeEach(async () => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['sendPowerAction', 'getDevice', 'sendDeactivate'])
+    devicesService = jasmine.createSpyObj('DevicesService', [
+      'sendPowerAction',
+      'getDevice',
+      'sendDeactivate'
+    ])
     devicesService.deviceState = new EventEmitter<number>()
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({
-      Body: {
-        ReturnValueStr: 'NOT_READY'
-      }
-    }))
+    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(
+      of({
+        Body: {
+          ReturnValueStr: 'NOT_READY'
+        }
+      })
+    )
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
@@ -50,15 +55,21 @@ describe('DeviceToolbarComponent', () => {
     devicesService.device = new Subject<Device>()
 
     await TestBed.configureTestingModule({
-    imports: [BrowserAnimationsModule, RouterModule, DeviceToolbarComponent],
-    providers: [{ provide: DevicesService, useValue: devicesService }, {
-            provide: ActivatedRoute,
-            useValue: {
-                params: of({ id: 'guid' })
-            }
-        }]
-    })
-      .compileComponents()
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
+        DeviceToolbarComponent
+      ],
+      providers: [
+        { provide: DevicesService, useValue: devicesService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'guid' })
+          }
+        }
+      ]
+    }).compileComponents()
 
     fixture = TestBed.createComponent(DeviceToolbarComponent)
     component = fixture.componentInstance

@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { enableProdMode, importProvidersFrom } from '@angular/core'
 import { environment } from './environments/environment'
@@ -21,25 +21,27 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(MomentModule, BrowserModule, AppRoutingModule),
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthorizeInterceptor,
-            multi: true
-        },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations(),
-        provideRouter([
-            {
-                path: '',
-                component: DashboardComponent
-            },
-            {
-                path: 'login',
-                component: LoginComponent
-            }
-        ])
-    ]
+  providers: [
+    importProvidersFrom(MomentModule, BrowserModule, AppRoutingModule),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizeInterceptor,
+      multi: true
+    },
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideRouter([
+      {
+        path: '',
+        component: DashboardComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      }
+    ])
+
+  ]
+}).catch((err) => {
+  console.error(err)
 })
-  .catch(err => { console.error(err) })

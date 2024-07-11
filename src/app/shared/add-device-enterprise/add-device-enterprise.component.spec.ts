@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceEnterpriseComponent } from './add-device-enterprise.component'
@@ -25,14 +25,23 @@ describe('AddDeviceEnterpriseComponent', () => {
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatChipsModule, AddDeviceEnterpriseComponent],
-    providers: [
+      imports: [
+        NoopAnimationsModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        AddDeviceEnterpriseComponent
+      ],
+      providers: [
         { provide: DevicesService, useValue: deviceService },
         { provide: MAT_DIALOG_DATA, useValue: { tags: [''] } },
-        { provide: MatDialogRef, useValue: { close: () => { } } }
-    ]
-})
-    .compileComponents()
+        { provide: MatDialogRef, useValue: { close: () => {} } }
+      ]
+    }).compileComponents()
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance
     dialogCloseSpy = spyOn(component.dialog, 'close')

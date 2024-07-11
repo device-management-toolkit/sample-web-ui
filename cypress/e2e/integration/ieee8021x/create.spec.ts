@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { AuthenticationProtocols, Config } from '../../../../src/app/ieee8021x/ieee8021x.constants'
 import { httpCodes } from '../../fixtures/api/httpCodes'
@@ -27,9 +27,7 @@ describe('test ieee8021x wired config creation', () => {
       cy.enterIEEE8021xInfo(config)
       cy.get('button[type=submit]').click()
       cy.wait('@interceptPost').then((rsp) => {
-        cy.wrap(rsp)
-          .its('response.statusCode')
-          .should('eq', httpCodes.CREATED)
+        cy.wrap(rsp).its('response.statusCode').should('eq', httpCodes.CREATED)
       })
       cy.wait('@getAll')
       // Check that the ieee8021x config was successful
@@ -50,9 +48,7 @@ describe('test ieee8021x wireless config creation', () => {
       cy.enterIEEE8021xInfo(config)
       cy.get('button[type=submit]').click()
       cy.wait('@interceptPost').then((rsp) => {
-        cy.wrap(rsp)
-          .its('response.statusCode')
-          .should('eq', httpCodes.CREATED)
+        cy.wrap(rsp).its('response.statusCode').should('eq', httpCodes.CREATED)
       })
       cy.wait('@getAll')
       // Check that the ieee8021x config was successful

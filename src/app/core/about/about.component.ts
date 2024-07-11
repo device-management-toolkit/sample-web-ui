@@ -1,9 +1,9 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
-import { Component, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { MatButton } from '@angular/material/button'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -13,22 +13,33 @@ import { MatIcon } from '@angular/material/icon'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 
 @Component({
-    selector: 'app-about',
-    templateUrl: './about.component.html',
-    styleUrls: ['./about.component.scss'],
-    standalone: true,
-    imports: [MatDialogTitle, MatIcon, CdkScrollable, MatDialogContent, MatDivider, MatDialogActions, ReactiveFormsModule, FormsModule, MatButton, MatDialogClose]
+  selector: 'app-about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.scss'],
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatIcon,
+    CdkScrollable,
+    MatDialogContent,
+    MatDivider,
+    MatDialogActions,
+    ReactiveFormsModule,
+    FormsModule,
+    MatButton,
+    MatDialogClose
+  ]
 })
-export class AboutComponent implements OnDestroy {
-  doNotShowAgain: boolean = false
+export class AboutComponent implements OnDestroy, OnInit {
+  doNotShowAgain = false
   cloudMode: boolean = environment.cloud
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     const storedValue = localStorage.getItem('doNotShowAgain')
     this.doNotShowAgain = storedValue ? JSON.parse(storedValue) : false
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     localStorage.setItem('doNotShowAgain', JSON.stringify(this.doNotShowAgain))
   }
 }

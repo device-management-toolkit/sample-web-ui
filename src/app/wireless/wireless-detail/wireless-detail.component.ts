@@ -1,7 +1,7 @@
 /*********************************************************************
-* Copyright (c) Intel Corporation 2022
-* SPDX-License-Identifier: Apache-2.0
-**********************************************************************/
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
@@ -24,11 +24,31 @@ import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatToolbar } from '@angular/material/toolbar'
 
 @Component({
-    selector: 'app-wireless-detail',
-    templateUrl: './wireless-detail.component.html',
-    styleUrls: ['./wireless-detail.component.scss'],
-    standalone: true,
-    imports: [MatToolbar, MatCard, MatList, MatListItem, MatIcon, ReactiveFormsModule, MatCardContent, MatFormField, MatLabel, MatInput, MatError, MatHint, MatSelect, MatOption, MatIconButton, MatSuffix, MatTooltip, MatCardActions, MatButton]
+  selector: 'app-wireless-detail',
+  templateUrl: './wireless-detail.component.html',
+  styleUrls: ['./wireless-detail.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbar,
+    MatCard,
+    MatList,
+    MatListItem,
+    MatIcon,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatHint,
+    MatSelect,
+    MatOption,
+    MatIconButton,
+    MatSuffix,
+    MatTooltip,
+    MatCardActions,
+    MatButton
+  ]
 })
 export class WirelessDetailComponent implements OnInit {
   public wirelessForm: FormGroup
@@ -39,13 +59,13 @@ export class WirelessDetailComponent implements OnInit {
   public authenticationMethods = AuthenticationMethods.allExceptIEEE8021X()
   public encryptionModes = EncryptionMethods.all()
   public iee8021xConfigNames: Set<string> = new Set<string>()
-  showPSKPassPhrase: boolean = false
-  showIEEE8021x: boolean = false
-  isLoading: boolean = true
-  isEdit: boolean = false
+  showPSKPassPhrase = false
+  showIEEE8021x = false
+  isLoading = true
+  isEdit = false
   errorMessages: any[] = []
 
-  constructor (
+  constructor(
     public snackBar: MatSnackBar,
     public fb: FormBuilder,
     private readonly activeRoute: ActivatedRoute,
@@ -62,15 +82,17 @@ export class WirelessDetailComponent implements OnInit {
       ieee8021xProfileName: [null],
       version: [null]
     })
-    this.wirelessForm.controls.authenticationMethod.valueChanges
-      .subscribe((value: number) => { this.onAuthenticationMethodChange(value) })
+    this.wirelessForm.controls.authenticationMethod.valueChanges.subscribe((value: number) => {
+      this.onAuthenticationMethodChange(value)
+    })
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getIEEE8021xConfigs()
     this.activeRoute.params.subscribe((params) => {
       if (params.name != null && params.name !== '') {
-        this.wirelessService.getRecord(params.name as string)
+        this.wirelessService
+          .getRecord(params.name as string)
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -89,7 +111,7 @@ export class WirelessDetailComponent implements OnInit {
     })
   }
 
-  onSubmit (): void {
+  onSubmit(): void {
     if (this.wirelessForm.valid) {
       this.isLoading = true
       // adjust PSK and 8021x based on authentication method
@@ -110,52 +132,50 @@ export class WirelessDetailComponent implements OnInit {
         request = this.wirelessService.create(result)
         reqType = 'created'
       }
-      request.pipe(
-        finalize(() => {
-          this.isLoading = false
-        }))
+      request
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        )
         .subscribe({
           next: () => {
-            this.snackBar.open(
-              $localize`Profile ${reqType} successfully`,
-              undefined,
-              SnackbarDefaults.defaultSuccess)
+            this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
             void this.router.navigate(['/wireless'])
           },
-          error: err => {
+          error: (err) => {
             this.snackBar.open(
               $localize`Error creating/updating wireless profile`,
               undefined,
-              SnackbarDefaults.defaultError)
+              SnackbarDefaults.defaultError
+            )
             this.errorMessages = err
           }
         })
     }
   }
 
-  getIEEE8021xConfigs (): void {
-    this.ieee8021xService
-      .getData()
-      .subscribe({
-        next: rsp => {
-          const cfgNames = rsp.data.filter(c => !c.wiredInterface).map(c => c.profileName)
-          if (cfgNames.length > 0) {
-            this.add8021xConfigurations(cfgNames)
-          }
-        },
-        error: err => {
-          this.errorMessages = err
+  getIEEE8021xConfigs(): void {
+    this.ieee8021xService.getData().subscribe({
+      next: (rsp) => {
+        const cfgNames = rsp.data.filter((c) => !c.wiredInterface).map((c) => c.profileName)
+        if (cfgNames.length > 0) {
+          this.add8021xConfigurations(cfgNames)
         }
-      })
+      },
+      error: (err) => {
+        this.errorMessages = err
+      }
+    })
   }
 
-  add8021xConfigurations (names: string[]): void {
+  add8021xConfigurations(names: string[]): void {
     this.authenticationMethods = AuthenticationMethods.all()
     const sorted = [...this.iee8021xConfigNames, ...names].sort()
     this.iee8021xConfigNames = new Set(sorted)
   }
 
-  onAuthenticationMethodChange (value: number): void {
+  onAuthenticationMethodChange(value: number): void {
     const controls = this.wirelessForm.controls
     if (AuthenticationMethods.isPSK(value)) {
       this.showPSKPassPhrase = true
@@ -175,11 +195,11 @@ export class WirelessDetailComponent implements OnInit {
     controls.ieee8021xProfileName.updateValueAndValidity()
   }
 
-  togglePSKPassVisibility (): void {
+  togglePSKPassVisibility(): void {
     this.pskInputType = this.pskInputType === 'password' ? 'text' : 'password'
   }
 
-  async cancel (): Promise<void> {
+  async cancel(): Promise<void> {
     await this.router.navigate(['/wireless'])
   }
 }
