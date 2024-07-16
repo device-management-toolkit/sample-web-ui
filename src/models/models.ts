@@ -56,7 +56,6 @@ export interface DomainsResponse {
   totalCount: number
 }
 
-/**  @deprecated see src/app/configs/configs.constants */
 export interface CIRAConfig {
   configName: string
   mpsServerAddress: string
@@ -68,12 +67,6 @@ export interface CIRAConfig {
   authMethod: number
   mpsRootCertificate: string
   proxyDetails: string
-}
-
-/**  @deprecated see src/app/configs/configs.constants */
-export interface CIRAConfigResponse {
-  data: CIRAConfig[]
-  totalCount: number
 }
 
 export interface AuditLog {
@@ -116,7 +109,7 @@ export interface APIResponse {
   message: string
 }
 
-export interface AmtFeaturesResponse {
+export interface AMTFeaturesResponse {
   userConsent: string
   optInState: number
   redirection: boolean
@@ -124,7 +117,7 @@ export interface AmtFeaturesResponse {
   SOL: boolean
   IDER: boolean
 }
-export interface AmtFeaturesRequest {
+export interface AMTFeaturesRequest {
   userConsent: string
   enableKVM: boolean
   enableSOL: boolean
@@ -354,11 +347,11 @@ export interface DataWithCount<T> {
   totalCount: number
 }
 
-export interface MpsVersion {
+export interface MPSVersion {
   serviceVersion: string
 }
 
-export interface RpsVersion {
+export interface RPSVersion {
   serviceVersion: string
   protocolVersion: string
 }

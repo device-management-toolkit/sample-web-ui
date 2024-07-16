@@ -13,8 +13,8 @@ import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { environment } from 'src/environments/environment'
 import {
-  AmtFeaturesRequest,
-  AmtFeaturesResponse,
+  AMTFeaturesRequest,
+  AMTFeaturesResponse,
   PowerState,
   userConsentData,
   userConsentResponse
@@ -44,7 +44,7 @@ export class SolComponent implements OnInit, OnDestroy {
   deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
 
   results: any
-  amtFeatures?: AmtFeaturesResponse
+  amtFeatures?: AMTFeaturesResponse
   isLoading = false
   powerState: PowerState = { powerstate: 0 }
   readyToLoadSol = false
@@ -121,7 +121,7 @@ export class SolComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((powerState) => this.handlePowerState(powerState)),
         switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
-        switchMap((results: AmtFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
         switchMap((result: boolean | any) =>
           iif(
             () => result === false,
@@ -165,7 +165,7 @@ export class SolComponent implements OnInit, OnDestroy {
     )
   }
 
-  handleAMTFeaturesResponse(results: AmtFeaturesResponse): Observable<any> {
+  handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
     this.amtFeatures = results
     if (this.amtFeatures.SOL) {
       return of(true)
@@ -181,7 +181,7 @@ export class SolComponent implements OnInit, OnDestroy {
           this.cancelEnableSolResponse()
           return of(false)
         } else {
-          const payload: AmtFeaturesRequest = {
+          const payload: AMTFeaturesRequest = {
             userConsent: this.amtFeatures?.userConsent ?? '',
             enableKVM: this.amtFeatures?.KVM ?? false,
             enableSOL: true,
@@ -193,7 +193,7 @@ export class SolComponent implements OnInit, OnDestroy {
     )
   }
 
-  getAMTFeatures(): Observable<AmtFeaturesResponse> {
+  getAMTFeatures(): Observable<AMTFeaturesResponse> {
     this.isLoading = true
     return this.devicesService.getAMTFeatures(this.deviceId)
   }

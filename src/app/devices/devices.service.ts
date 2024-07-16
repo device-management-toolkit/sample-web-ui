@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
-  AmtFeaturesResponse,
+  AMTFeaturesResponse,
   AuditLogResponse,
   Device,
   DeviceResponse,
@@ -22,7 +22,7 @@ import {
   RedirectionToken,
   userConsentResponse,
   RedirectionStatus,
-  AmtFeaturesRequest
+  AMTFeaturesRequest
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -209,8 +209,8 @@ export class DevicesService {
     )
   }
 
-  getAMTFeatures(guid: string): Observable<AmtFeaturesResponse> {
-    return this.http.get<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
+  getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
+    return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
       catchError((err) => {
         throw err
       })
@@ -343,15 +343,15 @@ export class DevicesService {
 
   setAmtFeatures(
     deviceId: string,
-    payload: AmtFeaturesRequest = {
+    payload: AMTFeaturesRequest = {
       userConsent: 'none',
       enableKVM: true,
       enableSOL: true,
       enableIDER: true
     }
-  ): Observable<AmtFeaturesResponse> {
+  ): Observable<AMTFeaturesResponse> {
     return this.http
-      .post<AmtFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
+      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
           throw err

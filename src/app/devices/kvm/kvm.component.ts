@@ -14,8 +14,8 @@ import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
 import {
-  AmtFeaturesRequest,
-  AmtFeaturesResponse,
+  AMTFeaturesRequest,
+  AMTFeaturesResponse,
   RedirectionStatus,
   userConsentData,
   userConsentResponse
@@ -81,7 +81,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
-  amtFeatures?: AmtFeaturesResponse
+  amtFeatures?: AMTFeaturesResponse
   // IDER FEATURES
   diskImage: File | null = null
   redirectionStatus: RedirectionStatus | null = null
@@ -161,7 +161,7 @@ export class KvmComponent implements OnInit, OnDestroy {
         switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId))),
         switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
         switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
-        switchMap((results: AmtFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
         switchMap((result: boolean | any) =>
           iif(
             () => result === false,
@@ -235,7 +235,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     )
   }
 
-  handleAMTFeaturesResponse(results: AmtFeaturesResponse): Observable<any> {
+  handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
     this.amtFeatures = results
     if (this.amtFeatures.KVM) {
       return of(true)
@@ -251,7 +251,7 @@ export class KvmComponent implements OnInit, OnDestroy {
           this.cancelEnableKvmResponse()
           return of(false)
         } else {
-          const payload: AmtFeaturesRequest = {
+          const payload: AMTFeaturesRequest = {
             userConsent: this.amtFeatures?.userConsent ?? '',
             enableKVM: true,
             enableSOL: this.amtFeatures?.SOL ?? false,
@@ -263,7 +263,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     )
   }
 
-  getAMTFeatures(): Observable<AmtFeaturesResponse> {
+  getAMTFeatures(): Observable<AMTFeaturesResponse> {
     this.isLoading = true
     return this.devicesService.getAMTFeatures(this.deviceId)
   }

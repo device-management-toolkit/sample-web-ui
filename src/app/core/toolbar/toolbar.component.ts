@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
-import { MpsVersion, RpsVersion } from 'src/models/models'
+import { MPSVersion, RPSVersion } from 'src/models/models'
 import { environment } from 'src/environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
@@ -35,8 +35,8 @@ import { MatToolbar } from '@angular/material/toolbar'
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false
   cloudMode: boolean = environment.cloud
-  public rpsVersions?: RpsVersion
-  public mpsVersions?: MpsVersion
+  public rpsVersions?: RPSVersion
+  public mpsVersions?: MPSVersion
 
   constructor(
     public snackBar: MatSnackBar,

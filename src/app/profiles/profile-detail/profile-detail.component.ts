@@ -47,6 +47,7 @@ import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
+import { CIRAConfig } from 'src/models/models'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
@@ -104,7 +105,7 @@ export class ProfileDetailComponent implements OnInit {
   tlsModes = TlsModes.all()
   tlsSigningAuthorities = TlsSigningAuthorities.all()
   tlsDefaultSigningAuthority = TlsSigningAuthorities.SELF_SIGNED
-  ciraConfigurations: Cira.Config[] = []
+  ciraConfigurations: CIRAConfig[] = []
   tags: string[] = []
   selectedWifiConfigs: WiFiConfig[] = []
   amtInputType = 'password'

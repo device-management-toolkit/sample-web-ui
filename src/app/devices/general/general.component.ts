@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
 import { ActivatedRoute, Router } from '@angular/router'
-import { AmtFeaturesRequest, AmtFeaturesResponse, Device, HardwareInformation } from 'src/models/models'
+import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -32,7 +32,7 @@ export class GeneralComponent implements OnInit {
   @Input()
   public deviceId = ''
 
-  public amtFeatures: AmtFeaturesResponse = {
+  public amtFeatures: AMTFeaturesResponse = {
     KVM: false,
     SOL: false,
     IDER: false,
@@ -116,7 +116,7 @@ export class GeneralComponent implements OnInit {
   setAmtFeatures(): void {
     this.isLoading = true
     this.devicesService
-      .setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value as AmtFeaturesRequest)
+      .setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.isLoading = false

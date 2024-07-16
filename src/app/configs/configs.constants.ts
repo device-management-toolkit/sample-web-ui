@@ -43,19 +43,3 @@ export const ServerAddressFormats = {
     return [this.IPv4, this.FQDN]
   }
 }
-
-export interface Config {
-  configName: string
-  mpsServerAddress: string
-  mpsPort: number
-  username: string
-  password?: string
-  commonName: string
-  serverAddressFormat: number
-  authMethod: number
-  mpsRootCertificate: string
-  regeneratePassword?: boolean
-  version?: string
-}
-
-export type ConfigsResponse = DataWithCount<Config>

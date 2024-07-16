@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { CIRAConfigResponse, PageEventOptions } from 'src/models/models'
+import { CIRAConfig, DataWithCount, PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
@@ -58,7 +58,7 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class ConfigsComponent implements OnInit {
-  public configs: CIRAConfigResponse = { data: [], totalCount: 0 }
+  public configs: DataWithCount<CIRAConfig> = { data: [], totalCount: 0 }
   public isLoading = true
   displayedColumns: string[] = [
     'name',
@@ -96,14 +96,14 @@ export class ConfigsComponent implements OnInit {
           this.isLoading = false
         })
       )
-      .subscribe(
-        (data: CIRAConfigResponse) => {
+      .subscribe({
+        next: (data: DataWithCount<CIRAConfig>) => {
           this.configs = data
         },
-        () => {
+        error: () => {
           this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
         }
-      )
+      })
   }
 
   isNoData(): boolean {
@@ -123,8 +123,8 @@ export class ConfigsComponent implements OnInit {
               this.isLoading = false
             })
           )
-          .subscribe(
-            (data) => {
+          .subscribe({
+            next: (data) => {
               this.getData(this.pageEvent)
               this.snackBar.open(
                 $localize`CIRA config deleted successfully`,
@@ -132,14 +132,14 @@ export class ConfigsComponent implements OnInit {
                 SnackbarDefaults.defaultSuccess
               )
             },
-            (err) => {
+            error: (err) => {
               if (err?.length > 0) {
                 this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
                 this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
               }
             }
-          )
+          })
       }
     })
   }

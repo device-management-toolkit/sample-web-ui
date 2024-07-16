@@ -1,9 +1,8 @@
 ## [3.11.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.0...v3.11.1) (2024-07-16)
 
-
 ### Bug Fixes
 
-* update audit log paging to use paginator correctly ([#2017](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2017)) ([c9141f8](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/c9141f8f27a77057587d2035f80711a0d24f7294))
+- update audit log paging to use paginator correctly ([#2017](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2017)) ([c9141f8](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/c9141f8f27a77057587d2035f80711a0d24f7294))
 
 # [3.11.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.10.2...v3.11.0) (2024-07-16)
 
