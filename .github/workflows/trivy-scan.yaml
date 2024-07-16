@@ -8,11 +8,11 @@ on:
     branches: [main]
 permissions:
   contents: read
-  security-events: write
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      security-events: write
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
