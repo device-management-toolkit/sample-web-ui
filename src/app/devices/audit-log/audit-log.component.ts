@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, Input, OnInit, signal, ViewChild } from '@angular/core'
 import { PageEvent, MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortHeader } from '@angular/material/sort'
@@ -21,8 +21,8 @@ import {
   MatRow
 } from '@angular/material/table'
 import { ActivatedRoute, Router } from '@angular/router'
-import { BehaviorSubject, of } from 'rxjs'
-import { catchError, finalize, switchMap } from 'rxjs/operators'
+import { BehaviorSubject, merge, of } from 'rxjs'
+import { catchError, finalize, startWith, switchMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -63,13 +63,15 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
   public deviceId = ''
 
   public devices: Device[] = []
-  public isLoading = true
+  public isLoading = signal(true)
   public displayedColumns = ['Event', 'timestamp']
   public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
-  public dataSource = new MatTableDataSource(this.auditLogData.records)
   public isCloudMode: boolean = environment.cloud
-  public startIndex = new BehaviorSubject<number>(1)
-  @ViewChild(MatSort, { static: true }) sort!: MatSort
+  public pageSizes = [
+    120
+  ]
+  @ViewChild(MatSort) sort!: MatSort
+  @ViewChild(MatPaginator) paginator!: MatPaginator
 
   constructor(
     public snackBar: MatSnackBar,
@@ -85,46 +87,43 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
       ]
     }
   }
-
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.isLoading = true
       this.deviceId = params.id
-      this.startIndex
-        .pipe(
-          switchMap((val) => {
-            this.isLoading = true
-            return this.devicesService.getAuditLog(this.deviceId, val).pipe(
-              catchError((err) => {
-                // TODO: handle error better
-                console.error(err)
-                this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
-                return of(this.auditLogData)
-              }),
-              finalize(() => {
-                this.isLoading = false
-              })
-            )
-          })
-        )
-        .subscribe((data) => {
-          this.auditLogData = data
-          this.dataSource.data = this.auditLogData.records
-        })
     })
   }
-
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0))
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          return this.devicesService
+            .getAuditLog(this.deviceId, (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
+            .pipe(catchError(() => of(null)))
+        }),
+        catchError((err) => {
+          console.error(err)
+          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+          return of(this.auditLogData)
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          this.auditLogData = data ?? { totalCnt: 0, records: [] }
+          this.isLoading.set(false)
+        },
+        error: (err) => {
+          console.error(err)
+          this.isLoading.set(false)
+          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+        }
+      })
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.auditLogData.records.length === 0
-  }
-
-  pageChange(event: PageEvent): void {
-    const nextIndex = event.pageIndex * event.pageSize + 1
-    this.startIndex.next(nextIndex)
+    return !this.isLoading() && this.auditLogData.records.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {

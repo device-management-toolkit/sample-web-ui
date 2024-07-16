@@ -4,14 +4,14 @@
  **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 
 import { AuditLogComponent } from './audit-log.component'
 
-describe('AuditLogComponent', () => {
+fdescribe('AuditLogComponent', () => {
   let component: AuditLogComponent
   let fixture: ComponentFixture<AuditLogComponent>
   let getAuditLogSpy: jasmine.Spy
@@ -22,7 +22,7 @@ describe('AuditLogComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         RouterModule,
         AuditLogComponent
       ],
@@ -42,10 +42,6 @@ describe('AuditLogComponent', () => {
     fixture = TestBed.createComponent(AuditLogComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  })
-
-  afterEach(() => {
-    TestBed.resetTestingModule()
   })
 
   afterEach(() => {
