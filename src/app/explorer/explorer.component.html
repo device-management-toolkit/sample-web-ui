@@ -1,15 +1,18 @@
-<mat-toolbar>
+<mat-toolbar style="height:80px">
   <div class="flex flex-row" style="width: 100%;">
-    <div class="flex-50">WSMAN Explorer</div>
+    <div class="flex flex-50 items-center justify-start">WSMAN Explorer</div>
     <div class="flex flex-50 items-center justify-end">
-      <mat-select style="width:350px" [(ngModel)]="selectedWsmanOperation" (selectionChange)="inputChanged($event.value)">
-        @for (item of wsmanOperations; track item) {
-          <mat-option [value]="item">{{item}}</mat-option>
-        }
-      </mat-select>
+      <mat-form-field>
+        <mat-label>WSMAN Call</mat-label>
+        <input type="text" placeholder="Select..." matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (item of filteredOptions | async; track item) {
+            <mat-option [value]="item" (onSelectionChange)="inputChanged($event.source.value)">{{item}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
   </div>
-
 </mat-toolbar>
 <div class="flex flex-row flex-wrap" style="min-height:calc(100% - 128px - 48px);height:calc(100% - 128px - 48px)">
   <div class="flex-50">

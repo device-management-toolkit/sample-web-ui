@@ -10,6 +10,7 @@ import { DevicesService } from '../devices/devices.service'
 import { ActivatedRoute } from '@angular/router'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
 import { of } from 'rxjs'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
@@ -31,7 +32,11 @@ describe('ExplorerComponent', () => {
     ])
 
     await TestBed.configureTestingModule({
-      imports: [ExplorerComponent, MonacoEditorModule],
+      imports: [
+        NoopAnimationsModule,
+        ExplorerComponent,
+        MonacoEditorModule
+      ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },
