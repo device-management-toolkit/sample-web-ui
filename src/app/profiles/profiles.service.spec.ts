@@ -10,7 +10,8 @@ import { environment } from 'src/environments/environment'
 import { AuthService } from '../auth.service'
 
 import { ProfilesService } from './profiles.service'
-import { Profile, ProfilesResponse } from './profiles.constants'
+import { Profile } from './profiles.constants'
+import { DataWithCount } from 'src/models/models'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
@@ -39,7 +40,7 @@ describe('ProfilesService', () => {
     ciraConfigName: 'config1'
   }
 
-  const profileResponse: ProfilesResponse = {
+  const profileResponse: DataWithCount<Profile> = {
     data: [profileReq],
     totalCount: 1
   }

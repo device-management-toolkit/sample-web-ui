@@ -8,9 +8,9 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { PageEventOptions } from 'src/models/models'
+import { DataWithCount, PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
-import { Profile, ProfilesResponse } from './profiles.constants'
+import { Profile } from './profiles.constants'
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +22,14 @@ export class ProfilesService {
     private readonly http: HttpClient
   ) {}
 
-  getData(pageEvent?: PageEventOptions): Observable<ProfilesResponse> {
+  getData(pageEvent?: PageEventOptions): Observable<DataWithCount<Profile>> {
     let query = this.url
     if (pageEvent) {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += '?$count=true'
     }
-    return this.http.get<ProfilesResponse>(query).pipe(
+    return this.http.get<DataWithCount<Profile>>(query).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)

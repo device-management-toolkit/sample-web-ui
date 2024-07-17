@@ -5,101 +5,28 @@
 
 import { DataWithCount, FormOption } from 'src/models/models'
 
-export type ActivationMode = FormOption<string>
-export const ActivationModes = {
-  ADMIN: { value: 'acmactivate', label: 'Admin Control Mode' },
-  CLIENT: { value: 'ccmactivate', label: 'Client Control Mode' },
-  labelForValue(value: string): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): ActivationMode[] {
-    return [this.ADMIN, this.CLIENT]
-  }
-}
+export const ActivationModes: FormOption<string>[] = [
+  { value: 'acmactivate', label: 'Admin Control Mode' },
+  { value: 'ccmactivate', label: 'Client Control Mode' }
+]
 
-export type ConnectionMode = FormOption<string>
-export const ConnectionModes = {
-  CIRA: { value: 'CIRA', label: 'CIRA (Cloud)' },
-  TLS: { value: 'TLS', label: 'TLS (Enterprise)' },
-  labelForValue(value: string): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): ConnectionMode[] {
-    return [this.CIRA, this.TLS]
-  }
-}
+export const TlsModes: FormOption<number>[] = [
+  { value: 1, label: 'Server Authentication Only' },
+  { value: 2, label: 'Server & Non-TLS Authentication' },
+  { value: 3, label: 'Mutual TLS Authentication Only' },
+  { value: 4, label: 'Mutual and Non-TLS Authentication' }
+]
 
-export type DhcpMode = FormOption<boolean>
-export const DhcpModes = {
-  DHCP: { value: true, label: 'DHCP' },
-  STATIC: { value: false, label: 'Static' },
-  labelForValue(value: boolean): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): DhcpMode[] {
-    return [this.DHCP, this.STATIC]
-  }
-}
+export const TlsSigningAuthorities: FormOption<string>[] = [
+  { value: 'SelfSigned', label: 'Use Self-Signed Cert' },
+  { value: 'MicrosoftCA', label: 'Use Microsoft CA Signed Cert (Requires Enterprise Assistant)' }
+]
 
-export type TlsMode = FormOption<number>
-export const TlsModes = {
-  SERVER: { value: 1, label: 'Server Authentication Only' },
-  SERVER_NON_TLS: { value: 2, label: 'Server & Non-TLS Authentication' },
-  MUTUAL: { value: 3, label: 'Mutual TLS Authentication Only' },
-  MUTUAL_NON_TLS: { value: 4, label: 'Mutual and Non-TLS Authentication' },
-  labelForValue(value: number): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): TlsMode[] {
-    return [
-      this.SERVER,
-      this.SERVER_NON_TLS,
-      this.MUTUAL,
-      this.MUTUAL_NON_TLS
-    ]
-  }
-}
-
-export type TlsSigningAuthority = FormOption<string>
-export const TlsSigningAuthorities = {
-  SELF_SIGNED: {
-    label: 'Use Self-Signed Cert',
-    value: 'SelfSigned'
-  },
-  MICROSOFT_CA: {
-    label: 'Use Microsoft CA Signed Cert (Requires Enterprise Assistant)',
-    value: 'MicrosoftCA'
-  },
-  labelForValue(value: string): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): TlsSigningAuthority[] {
-    return [this.SELF_SIGNED, this.MICROSOFT_CA]
-  }
-}
-
-export type UserConsent = FormOption<string>
-export const UserConsentModes = {
-  ALL: { value: 'All', label: 'All' },
-  KVM: { value: 'KVM', label: 'KVM Only' },
-  NONE: { value: 'None', label: 'None' },
-  labelForValue(value: string): string {
-    const e = this.all().find((e) => e.value === value)
-    return e ? e.label : ''
-  },
-  all(): UserConsent[] {
-    return [
-      this.ALL,
-      this.KVM,
-      this.NONE
-    ]
-  }
-}
+export const UserConsentModes: FormOption<string>[] = [
+  { value: 'All', label: 'All' },
+  { value: 'KVM', label: 'KVM Only' },
+  { value: 'None', label: 'None' }
+]
 
 // unfortunately wifiConfigs is what the REST interface expects
 // even though not really a wireless config
@@ -107,7 +34,6 @@ export interface WiFiConfig {
   profileName: string
   priority: number
 }
-
 export interface Profile {
   profileName: string
   activation: string
@@ -130,5 +56,3 @@ export interface Profile {
   ciraConfigName?: string
   version?: string
 }
-
-export type ProfilesResponse = DataWithCount<Profile>

@@ -31,6 +31,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 
 @Component({
   selector: 'app-profiles',
@@ -38,6 +39,7 @@ import { MatToolbar } from '@angular/material/toolbar'
   styleUrls: ['./profiles.component.scss'],
   standalone: true,
   imports: [
+    ToolkitPipe,
     MatToolbar,
     MatButton,
     MatIcon,
@@ -62,6 +64,7 @@ export class ProfilesComponent implements OnInit {
   profiles: Profile[] = []
   isLoading = true
   totalCount = 0
+  tlsModes = TlsModes
   displayedColumns: string[] = [
     'name',
     'networkConfig',
@@ -139,10 +142,6 @@ export class ProfilesComponent implements OnInit {
           })
       }
     })
-  }
-
-  parseTlsMode(val: number): string {
-    return TlsModes.labelForValue(val)
   }
 
   pageChanged(event: PageEvent): void {

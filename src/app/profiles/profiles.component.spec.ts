@@ -110,8 +110,4 @@ describe('ProfilesComponent', () => {
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })
-  it('should parseTlsMode when known', () => {
-    const result = component.parseTlsMode(TlsModes.MUTUAL.value)
-    expect(result).toEqual(TlsModes.MUTUAL.label)
-  })
 })

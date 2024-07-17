@@ -11,10 +11,9 @@ import { of, throwError } from 'rxjs'
 import { ConfigsService } from 'src/app/configs/configs.service'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
-import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
 import { ProfileDetailComponent } from './profile-detail.component'
-import { ActivationModes, ConnectionModes, Profile, UserConsentModes } from '../profiles.constants'
+import { Profile, UserConsentModes } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
@@ -127,21 +126,21 @@ describe('ProfileDetailComponent', () => {
   it('should set connectionMode to TLS when tlsMode is not null', () => {
     const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
-    expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.TLS.value)
+    expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
   })
   it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
     const profile: Profile = { ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
-    expect(component.profileForm.controls.connectionMode.value).toBe(ConnectionModes.CIRA.value)
+    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
   })
   it('should cancel', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
   })
-  it(`should not enable mebxPassword when generateRandomMEBxPassword is false and activation is ${ActivationModes.CLIENT.value}`, () => {
+  it(`should not enable mebxPassword when generateRandomMEBxPassword is false and activation is ccmactivate`, () => {
     component.profileForm.patchValue({
-      activation: ActivationModes.CLIENT.value,
+      activation: 'ccmactivate',
       generateRandomMEBxPassword: false
     })
     expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
@@ -150,7 +149,7 @@ describe('ProfileDetailComponent', () => {
   })
   it('should disable mebxPassword when generateRandomMEBxPassword is true', () => {
     component.profileForm.patchValue({
-      activation: ActivationModes.ADMIN.value,
+      activation: 'acmactivate',
       generateRandomMEBxPassword: false
     })
     expect(component.profileForm.controls.mebxPassword.disabled).toBeFalse()
@@ -471,11 +470,11 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should adjust related fields on selecting activation mode', () => {
-    component.activationChange(ActivationModes.CLIENT.value)
+    component.activationChange('ccmactivate')
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(true)
     expect(component.profileForm.controls.userConsent.disabled).toBe(true)
-    expect(component.profileForm.controls.userConsent.value).toEqual(UserConsentModes.ALL.value)
-    component.activationChange(ActivationModes.ADMIN.value)
+    expect(component.profileForm.controls.userConsent.value).toEqual('All')
+    component.activationChange('acmactivate')
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(false)
     expect(component.profileForm.controls.userConsent.disabled).toBe(false)
   })
@@ -576,15 +575,15 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should set the ciraCofigName property to null when TLS Selected', () => {
-    component.connectionModeChange(ConnectionModes.TLS.value)
+    component.connectionModeChange('TLS')
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
     expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
     expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
-    expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(component.tlsDefaultSigningAuthority.value)
+    expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(component.tlsDefaultSigningAuthority)
     expect(component.profileForm.controls.tlsSigningAuthority.valid).toBeTrue()
   })
   it('should set the tlsMode property to null when CIRA Selected', () => {
-    component.connectionModeChange(ConnectionModes.CIRA.value)
+    component.connectionModeChange('CIRA')
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
     expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
     expect(component.profileForm.controls.ciraConfigName.value).toBe('config1')

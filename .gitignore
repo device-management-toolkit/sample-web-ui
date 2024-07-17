@@ -45,6 +45,7 @@ testem.log
 /typings
 *.mp4
 *.png
+*.log
 !src/assets/*
 
 # env file to override CI/CD environment variables

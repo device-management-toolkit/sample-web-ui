@@ -100,11 +100,11 @@ export class ProfileDetailComponent implements OnInit {
   pageTitle = 'New Profile'
   isLoading = false
   isEdit = false
-  activationModes = ActivationModes.all()
-  userConsentModes = UserConsentModes.all()
-  tlsModes = TlsModes.all()
-  tlsSigningAuthorities = TlsSigningAuthorities.all()
-  tlsDefaultSigningAuthority = TlsSigningAuthorities.SELF_SIGNED
+  activationModes = ActivationModes
+  userConsentModes = UserConsentModes
+  tlsModes = TlsModes
+  tlsSigningAuthorities = TlsSigningAuthorities
+  tlsDefaultSigningAuthority = 'SelfSigned'
   ciraConfigurations: CIRAConfig[] = []
   tags: string[] = []
   selectedWifiConfigs: WiFiConfig[] = []
@@ -144,7 +144,7 @@ export class ProfileDetailComponent implements OnInit {
   ) {
     this.profileForm = fb.group({
       profileName: [null, Validators.required],
-      activation: [ActivationModes.ADMIN.value, Validators.required],
+      activation: ['acmactivate', Validators.required],
       generateRandomPassword: [
         { value: this.cloudMode, disabled: !this.cloudMode },
         Validators.required
@@ -166,7 +166,7 @@ export class ProfileDetailComponent implements OnInit {
       tlsSigningAuthority: [null],
       version: [null],
       // userConsent default depends on activation
-      userConsent: [UserConsentModes.NONE.value, Validators.required],
+      userConsent: ['None', Validators.required],
       iderEnabled: [true, Validators.required],
       kvmEnabled: [true, Validators.required],
       solEnabled: [true, Validators.required]
@@ -216,9 +216,9 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   activationChange(value: string): void {
-    if (value === ActivationModes.CLIENT.value) {
+    if (value === 'ccmactivate') {
       this.profileForm.controls.userConsent.disable()
-      this.profileForm.controls.userConsent.setValue(UserConsentModes.ALL.value)
+      this.profileForm.controls.userConsent.setValue('All')
       this.profileForm.controls.userConsent.clearValidators()
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
@@ -320,7 +320,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
-    } else if (this.profileForm.controls.activation.value === ActivationModes.ADMIN.value) {
+    } else if (this.profileForm.controls.activation.value === 'acmactivate') {
       this.profileForm.controls.mebxPassword.enable()
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
     }
@@ -401,7 +401,7 @@ export class ProfileDetailComponent implements OnInit {
         this.profileForm.controls.tlsMode.setValidators(Validators.required)
         // set a default value if not set already
         if (!this.profileForm.controls.tlsSigningAuthority.value) {
-          this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority.value)
+          this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority)
         }
         this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
       } else if (value === this.connectionMode.cira) {

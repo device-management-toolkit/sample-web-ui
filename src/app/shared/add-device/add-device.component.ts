@@ -10,7 +10,6 @@ import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
 import { timer } from 'rxjs'
 import { ProfilesService } from 'src/app/profiles/profiles.service'
 import { environment } from 'src/environments/environment'
-import { ProfilesResponse } from '../../profiles/profiles.constants'
 import { MatIcon } from '@angular/material/icon'
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard'
 import { MatIconButton } from '@angular/material/button'
@@ -19,6 +18,8 @@ import { MatOption } from '@angular/material/core'
 import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
+import { DataWithCount } from 'src/models/models'
+import { Profile } from 'src/app/profiles/profiles.constants'
 
 @Component({
   selector: 'app-add-device',
@@ -45,7 +46,7 @@ import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
   ]
 })
 export class AddDeviceComponent implements OnInit {
-  profiles: ProfilesResponse = { data: [], totalCount: 0 }
+  profiles: DataWithCount<Profile> = { data: [], totalCount: 0 }
   activationUrl = ''
   rpcLinux = 'sudo ./rpc '
   rpcDocker = 'sudo docker run --device=/dev/mei0 rpc:latest '
@@ -59,7 +60,7 @@ export class AddDeviceComponent implements OnInit {
   constructor(private readonly profilesService: ProfilesService) {}
 
   ngOnInit(): void {
-    this.profilesService.getData().subscribe((data: ProfilesResponse) => {
+    this.profilesService.getData().subscribe((data) => {
       this.profiles = data
     })
     this.formActivationUrl()

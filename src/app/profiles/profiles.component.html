@@ -4,13 +4,11 @@
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
-    <button id="btnAdd" mat-button (click)="navigateTo()">
-      <mat-icon>add</mat-icon> Add New
-    </button>
+    <button id="btnAdd" mat-button (click)="navigateTo()"><mat-icon>add</mat-icon> Add New</button>
   </div>
 </mat-toolbar>
-@if (isLoading!==false) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+@if (isLoading !== false) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
 <mat-card>
@@ -21,51 +19,56 @@
       <mat-table [dataSource]="profiles">
         <!-- name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef style="flex: 1 1 0;"> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element" style="flex: 1 1 0;"> {{ element.profileName }} </mat-cell>
+          <mat-header-cell *matHeaderCellDef style="flex: 1 1 0"> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element" style="flex: 1 1 0"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <!-- network config Column -->
         <ng-container matColumnDef="networkConfig">
           <mat-header-cell *matHeaderCellDef> Network Config </mat-header-cell>
-          <mat-cell *matCellDef="let element"> @if (element.dhcpEnabled) {
-            <span>DHCP</span>
+          <mat-cell *matCellDef="let element">
+            @if (element.dhcpEnabled) {
+              <span>DHCP</span>
             } @else {
-            <span>Static</span>
-          }
-        </mat-cell>
-      </ng-container>
-      <!-- connectionConfig Column -->
-      <ng-container matColumnDef="connectionConfig">
-        <mat-header-cell *matHeaderCellDef> Connection Config </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <span>{{ element.ciraConfigName }}</span>
-          <span>{{ parseTlsMode(element.tlsMode) }}</span>
-        </mat-cell>
-      </ng-container>
-      <!-- activation Column -->
-      <ng-container matColumnDef="activation">
-        <mat-header-cell *matHeaderCellDef> Activation Mode </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.activation }}
-        </mat-cell>
-      </ng-container>
-      <!-- remove Column -->
-      <ng-container matColumnDef="remove">
-        <mat-header-cell *matHeaderCellDef style="flex: 0 0 75px;width:75px;"> </mat-header-cell>
-        <mat-cell *matCellDef="let row" style="flex: 0 0 75px;width:75px;" (click)="$event.stopPropagation()">
-          <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
-    </mat-table>
-  }
-  @if (totalCount) {
-    <div>
-      <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" showFirstLastButtons (page)="pageChanged($event)">
-      </mat-paginator>
-    </div>
-  }
-</mat-card-content>
+              <span>Static</span>
+            }
+          </mat-cell>
+        </ng-container>
+        <!-- connectionConfig Column -->
+        <ng-container matColumnDef="connectionConfig">
+          <mat-header-cell *matHeaderCellDef> Connection Config </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span>{{ element.ciraConfigName }}</span>
+            <span>{{ element.tlsMode | toolkit: tlsModes }}</span>
+          </mat-cell>
+        </ng-container>
+        <!-- activation Column -->
+        <ng-container matColumnDef="activation">
+          <mat-header-cell *matHeaderCellDef> Activation Mode </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.activation }} </mat-cell>
+        </ng-container>
+        <!-- remove Column -->
+        <ng-container matColumnDef="remove">
+          <mat-header-cell *matHeaderCellDef style="flex: 0 0 75px; width: 75px"> </mat-header-cell>
+          <mat-cell *matCellDef="let row" style="flex: 0 0 75px; width: 75px" (click)="$event.stopPropagation()">
+            <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
+      </mat-table>
+    }
+    @if (totalCount) {
+      <div>
+        <mat-paginator
+          [pageSizeOptions]="[25, 50, 100]"
+          [pageSize]="25"
+          [length]="totalCount"
+          showFirstLastButtons
+          (page)="pageChanged($event)">
+        </mat-paginator>
+      </div>
+    }
+  </mat-card-content>
 </mat-card>

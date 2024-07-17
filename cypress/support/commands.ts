@@ -6,7 +6,7 @@
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import stats from 'cypress/e2e/fixtures/api/stats'
 import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
-import { ActivationModes, ConnectionModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
+import { ActivationModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
 import { IEEE8021xConfig } from 'src/models/models'
 
 declare global {
@@ -295,10 +295,16 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   if (formData.activation) {
-    cy.matSelectChoose('[formControlName="activation"]', ActivationModes.labelForValue(formData.activation))
+    cy.matSelectChoose(
+      '[formControlName="activation"]',
+      ActivationModes.find((z) => z.value === formData.activation)?.label ?? 'error'
+    )
   }
-  if (formData.userConsent && formData.activation !== ActivationModes.CLIENT.value) {
-    cy.matSelectChoose('[formControlName="userConsent"]', UserConsentModes.labelForValue(formData.userConsent))
+  if (formData.userConsent && formData.activation !== 'ccmactivate') {
+    cy.matSelectChoose(
+      '[formControlName="userConsent"]',
+      UserConsentModes.find((z) => z.value === formData.userConsent)?.label ?? 'error'
+    )
   }
 
   cy.matCheckboxSet('[formControlName="iderEnabled"]', formData.iderEnabled)
@@ -315,11 +321,15 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   // selectors need string values so convert booleans
   cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', formData.dhcpEnabled ? 'true' : 'false')
   if (formData.ciraConfigName) {
-    cy.matRadioButtonChoose('[formControlName="connectionMode"]', ConnectionModes.CIRA.value)
+    cy.matRadioButtonChoose('[formControlName="connectionMode"]', 'CIRA')
     cy.matSelectChoose('[formControlName="ciraConfigName"]', formData.ciraConfigName)
   } else if (formData.tlsMode) {
-    cy.matRadioButtonChoose('[formControlName="connectionMode"]', ConnectionModes.TLS.value)
-    cy.matSelectChoose('[formControlName="tlsMode"]', TlsModes.labelForValue(formData.tlsMode))
+    cy.matRadioButtonChoose('[formControlName="connectionMode"]', 'TLS')
+
+    cy.matSelectChoose(
+      '[formControlName="tlsMode"]',
+      TlsModes.find((z) => z.value === formData.tlsMode)?.label ?? 'error'
+    )
   }
   if (formData.wifiConfigs != null && formData.wifiConfigs.length > 0) {
     formData.wifiConfigs.forEach((wifiProfile: { profileName: string | number | RegExp }) => {
@@ -339,11 +349,11 @@ Cypress.Commands.add('assertProfileInfo', (profile: any) => {
   cy.matCheckboxAssert('[formControlName="solEnabled"]', profile.solEnabled)
   cy.matRadioButtonAssert('[formControlName="dhcpEnabled"]', profile.dhcpEnabled ? 'true' : 'false')
   if (profile.ciraConfigName) {
-    cy.matRadioButtonAssert('[formControlName="connectionMode"]', ConnectionModes.CIRA.value)
+    cy.matRadioButtonAssert('[formControlName="connectionMode"]', 'CIRA')
     cy.matSelectAssert('[formControlName="ciraConfigName"]', profile.ciraConfigName)
   }
   if (profile.tlsMode) {
-    cy.matRadioButtonAssert('[formControlName="connectionMode"]', ConnectionModes.TLS.value)
+    cy.matRadioButtonAssert('[formControlName="connectionMode"]', 'TLS')
     cy.matSelectAssert('[formControlName="tlsMode"]', profile.tlsMode)
   }
   if (profile.wifiConfigs != null && profile.wifiConfigs.length > 0) {
