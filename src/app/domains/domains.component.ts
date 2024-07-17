@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 
 import { finalize } from 'rxjs/operators'
-import { DomainsResponse, PageEventOptions } from 'src/models/models'
+import { DataWithCount, Domain, PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DomainsService } from './domains.service'
@@ -60,7 +60,7 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class DomainsComponent implements OnInit {
-  public domains: DomainsResponse = { data: [], totalCount: 0 }
+  public domains: DataWithCount<Domain> = { data: [], totalCount: 0 }
   public isLoading = true
   public myDate = ''
   private readonly millisecondsInADay = 86400000
@@ -98,15 +98,15 @@ export class DomainsComponent implements OnInit {
           this.isLoading = false
         })
       )
-      .subscribe(
-        (data: DomainsResponse) => {
+      .subscribe({
+        next: (data: DataWithCount<Domain>) => {
           this.domains = data
           this.expirationWarning()
         },
-        () => {
+        complete: () => {
           this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
         }
-      )
+      })
   }
 
   isNoData(): boolean {
@@ -126,15 +126,15 @@ export class DomainsComponent implements OnInit {
               this.isLoading = false
             })
           )
-          .subscribe(
-            (data) => {
+          .subscribe({
+            next: (data) => {
               this.getData(this.pageEvent)
               this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
             },
-            () => {
+            complete: () => {
               this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
             }
-          )
+          })
       }
     })
   }

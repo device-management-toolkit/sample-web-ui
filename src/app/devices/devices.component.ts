@@ -349,8 +349,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
           this.isLoading = false
         })
       )
-      .subscribe(
-        (data) => {
+      .subscribe({
+        next: (data) => {
           ;(this.devices.data.find((x) => x.guid === deviceId) as any).StatusMessage = data.Body.ReturnValueStr
           this.resetResponse()
           this.devicesService
@@ -360,10 +360,10 @@ export class DevicesComponent implements OnInit, AfterViewInit {
               ;(this.devices.data.find((y) => y.guid === deviceId) as any).powerstate = z.powerstate
             })
         },
-        (err) => {
+        error: (err) => {
           console.error(err)
         }
-      )
+      })
   }
 
   sendDeactivate(deviceId: string): void {

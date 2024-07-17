@@ -122,15 +122,15 @@ export class GeneralComponent implements OnInit {
           this.isLoading = false
         })
       )
-      .subscribe(
-        (results: any) => {
+      .subscribe({
+        next: (results: any) => {
           this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
         },
-        (err) => {
+        error: (err) => {
           this.snackBar.open($localize`Failed to update AMT Features`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }
-      )
+      })
   }
 
   parseProvisioningMode(mode: number): string {

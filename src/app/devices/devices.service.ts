@@ -12,7 +12,7 @@ import {
   AMTFeaturesResponse,
   AuditLogResponse,
   Device,
-  DeviceResponse,
+  DataWithCount,
   DeviceStats,
   EventLog,
   HardwareInformation,
@@ -318,14 +318,14 @@ export class DevicesService {
     )
   }
 
-  getDevices(pageEvent: PageEventOptions): Observable<DeviceResponse> {
+  getDevices(pageEvent: PageEventOptions): Observable<DataWithCount<Device>> {
     let query = `${environment.mpsServer}/api/v1/devices`
     if (pageEvent?.tags && pageEvent.tags.length > 0) {
       query += `?tags=${pageEvent.tags.join(',')}&$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     }
-    return this.http.get<DeviceResponse>(query).pipe(
+    return this.http.get<DataWithCount<Device>>(query).pipe(
       catchError((err) => {
         throw err
       })

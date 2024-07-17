@@ -99,8 +99,8 @@ export class ConfigDetailComponent implements OnInit {
               this.isLoading = false
             })
           )
-          .subscribe(
-            (data) => {
+          .subscribe({
+            next: (data) => {
               this.isEdit = true
               this.pageTitle = data.configName
               this.configForm.controls.configName.disable()
@@ -109,10 +109,10 @@ export class ConfigDetailComponent implements OnInit {
                 serverAddressFormat: data.serverAddressFormat.toString()
               })
             },
-            (error) => {
+            error: (error) => {
               this.errorMessages = error
             }
-          )
+          })
       }
     })
 
@@ -181,8 +181,8 @@ export class ConfigDetailComponent implements OnInit {
             return rpsRequest
           })
         )
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.snackBar.open(
               $localize`CIRA ${reqType} created successfully`,
               undefined,
@@ -191,11 +191,11 @@ export class ConfigDetailComponent implements OnInit {
 
             this.router.navigate(['/ciraconfigs'])
           },
-          (error) => {
+          error: (error) => {
             console.error('error', error)
             this.errorMessages = error
           }
-        )
+        })
     }
   }
 }

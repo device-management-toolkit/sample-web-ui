@@ -10,7 +10,7 @@ import { of } from 'rxjs'
 
 import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
-import { Domain, DomainsResponse } from 'src/models/models'
+import { Domain, DataWithCount } from 'src/models/models'
 import { RouterModule } from '@angular/router'
 
 describe('DomainsComponent', () => {
@@ -56,7 +56,7 @@ describe('DomainsComponent', () => {
       of({
         data: domains,
         totalCount: 3
-      } satisfies DomainsResponse)
+      } satisfies DataWithCount<Domain>)
     )
 
     deleteSpy = domainsService.delete.and.returnValue(of({}))

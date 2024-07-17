@@ -32,11 +32,6 @@ export interface DeviceInfo {
   ipAddress: string
   lastUpdated?: Date
 }
-export interface DeviceResponse {
-  data: Device[]
-  totalCount: number
-}
-
 export interface DeviceStats {
   totalCount: number
   connectedCount: number
@@ -49,11 +44,6 @@ export interface Domain {
   provisioningCertPassword: string
   provisioningCertStorageFormat: string
   expirationDate: Date
-}
-
-export interface DomainsResponse {
-  data: Domain[]
-  totalCount: number
 }
 
 export interface CIRAConfig {

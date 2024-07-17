@@ -180,15 +180,15 @@ export class AlarmsComponent implements OnInit {
     this.devicesService
       .deleteAlarmOccurrence(this.deviceId, instanceID)
       .pipe(finalize(() => {}))
-      .subscribe(
-        (results) => {
+      .subscribe({
+        next: (results) => {
           this.loadAlarms()
         },
-        (err) => {
+        error: (err) => {
           this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }
-      )
+      })
   }
 
   addAlarm = (): void => {
@@ -212,15 +212,15 @@ export class AlarmsComponent implements OnInit {
             this.isLoading = false
           })
         )
-        .subscribe(
-          (results) => {
+        .subscribe({
+          next: (results) => {
             this.loadAlarms()
           },
-          (err) => {
+          error: (err) => {
             this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
             return throwError(err)
           }
-        )
+        })
     }
   }
 }

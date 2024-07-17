@@ -91,17 +91,17 @@ export class DomainDetailComponent implements OnInit {
               this.isLoading = false
             })
           )
-          .subscribe(
-            (data) => {
+          .subscribe({
+            next: (data) => {
               this.isEdit = true
               this.domainForm.controls.profileName.disable()
               this.pageTitle = data.profileName
               this.domainForm.patchValue(data)
             },
-            (err) => {
+            error: (err) => {
               this.errorMessages = err
             }
-          )
+          })
       }
     })
   }
@@ -126,8 +126,8 @@ export class DomainDetailComponent implements OnInit {
             this.isLoading = false
           })
         )
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.snackBar.open(
               $localize`Domain profile ${reqType} successfully`,
               undefined,
@@ -136,7 +136,7 @@ export class DomainDetailComponent implements OnInit {
 
             this.router.navigate(['/domains'])
           },
-          (err) => {
+          error: (err) => {
             this.snackBar.open(
               $localize`Error creating/updating domain profile`,
               undefined,
@@ -144,7 +144,7 @@ export class DomainDetailComponent implements OnInit {
             )
             this.errorMessages = err
           }
-        )
+        })
     }
   }
 
