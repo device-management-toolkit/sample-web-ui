@@ -21,7 +21,7 @@ describe('IEEE8021xDetailComponent', () => {
   let ieee8021xUpdateSpy: jasmine.Spy
   const config01: IEEE8021xConfig = {
     profileName: 'name 1',
-    authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+    authenticationProtocol: 0, // EAP-TLS
     pxeTimeout: 120,
     wiredInterface: false,
     version: ''
@@ -108,7 +108,7 @@ describe('IEEE8021xDetailComponent', () => {
   })
 
   it('should support subsets of all autthentication protocols', () => {
-    expect(AuthenticationProtocols.forWiredInterface().length).toBeGreaterThan(0)
-    expect(AuthenticationProtocols.forWirelessInterface().length).toBeGreaterThan(0)
+    expect(AuthenticationProtocols.filter((z) => z.mode === 'both').length).toBe(2)
+    expect(AuthenticationProtocols.filter((z) => z.mode === 'wired').length).toBe(9)
   })
 })

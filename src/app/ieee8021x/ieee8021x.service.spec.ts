@@ -32,7 +32,7 @@ describe('IEEE8021xService', () => {
 
   const config01: IEEE8021xConfig = {
     profileName: 'name 1',
-    authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+    authenticationProtocol: 0, // EAP-TLS,
     pxeTimeout: 120,
     wiredInterface: true,
     version: 'one'

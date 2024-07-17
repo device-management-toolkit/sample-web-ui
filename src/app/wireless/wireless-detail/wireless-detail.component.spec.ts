@@ -37,7 +37,7 @@ describe('WirelessDetailComponent', () => {
         data: [
           {
             profileName: '8021xConfig',
-            authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+            authenticationProtocol: 0, // EAP-TLS
             pxeTimeout: 0,
             wiredInterface: false,
             version: 'one'

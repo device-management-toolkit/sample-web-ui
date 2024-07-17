@@ -1,54 +1,59 @@
 <mat-toolbar>
-  <div class='flex-33'>
+  <div class="flex-33">
     <span i18n>IEEE8021x Configs</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
-    <button mat-button (click)='navigateTo()'>
+    <button mat-button (click)="navigateTo()">
       <mat-icon>add</mat-icon>
       Add New
     </button>
   </div>
 </mat-toolbar>
 @if (isLoading) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
       <h3 class="flex justify-center">No IEEE 8021x Configs</h3>
     } @else {
-      <mat-table [dataSource]='pagedConfigs.data'>
-        <ng-container matColumnDef='profileName'>
+      <mat-table [dataSource]="pagedConfigs.data">
+        <ng-container matColumnDef="profileName">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef='let element'> {{ element.profileName }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef='authenticationProtocol'>
+        <ng-container matColumnDef="authenticationProtocol">
           <mat-header-cell *matHeaderCellDef>Authentication Protocol</mat-header-cell>
           <!-- map the selections to lookup values -->
-          <mat-cell *matCellDef='let element'>
-            {{ protocols.labelForValue(element.authenticationProtocol) }}
+          <mat-cell *matCellDef="let element">
+            {{ element.authenticationProtocol | toolkit: protocols }}
           </mat-cell>
         </ng-container>
-        <ng-container matColumnDef='interface'>
+        <ng-container matColumnDef="interface">
           <mat-header-cell *matHeaderCellDef>Interface</mat-header-cell>
-          <mat-cell *matCellDef='let element'> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef='remove'>
+        <ng-container matColumnDef="remove">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef='let row' (click)='$event.stopPropagation()'>
-            <button mat-icon-button (click)='delete(row.profileName)'>
+          <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="delete(row.profileName)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>
         </ng-container>
-        <mat-header-row *matHeaderRowDef='displayedColumns'></mat-header-row>
-        <mat-row *matRowDef='let row; columns: displayedColumns;' (click)='navigateTo(row.profileName)'></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
     @if (pagedConfigs.totalCount) {
       <div>
-        <mat-paginator [pageSizeOptions]='[25, 50, 100]' [pageSize]='25' [length]='pagedConfigs.totalCount' (page)='onPaginator($event)' showFirstLastButtons>
+        <mat-paginator
+          [pageSizeOptions]="[25, 50, 100]"
+          [pageSize]="25"
+          [length]="pagedConfigs.totalCount"
+          (page)="onPaginator($event)"
+          showFirstLastButtons>
         </mat-paginator>
       </div>
     }

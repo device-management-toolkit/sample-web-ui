@@ -31,6 +31,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 
 @Component({
   selector: 'app-ieee8021x',
@@ -38,6 +39,7 @@ import { MatToolbar } from '@angular/material/toolbar'
   styleUrls: ['./ieee8021x.component.scss'],
   standalone: true,
   imports: [
+    ToolkitPipe,
     MatToolbar,
     MatButton,
     MatIcon,

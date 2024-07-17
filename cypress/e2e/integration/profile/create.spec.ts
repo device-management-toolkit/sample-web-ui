@@ -27,7 +27,7 @@ describe('Test Profile Page', () => {
 
     cy.myIntercept('GET', 'ieee8021xconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
-      body: api8021x.allConfigsResponse
+      body: api8021x.wiredConfigsResponse
     }).as('intercept8021xGetAll')
 
     cy.myIntercept('POST', 'profiles', {

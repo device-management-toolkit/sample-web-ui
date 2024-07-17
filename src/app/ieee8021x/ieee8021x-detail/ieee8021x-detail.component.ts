@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { IEEE8021xService } from '../ieee8021x.service'
-import { AuthenticationProtocol, AuthenticationProtocols } from '../ieee8021x.constants'
+import { AuthenticationProtocols } from '../ieee8021x.constants'
 import { Observable } from 'rxjs'
 import { MatButton } from '@angular/material/button'
 import { MatOption } from '@angular/material/core'
@@ -31,6 +31,7 @@ import { MatList, MatListItem } from '@angular/material/list'
 import { MatCard, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { FormOption } from 'src/models/models'
 import { IEEE8021xConfig } from 'src/models/models'
 
 @Component({
@@ -65,7 +66,7 @@ export class IEEE8021xDetailComponent implements OnInit {
   pageTitle = 'New IEEE8021x Config'
   isLoading = false
   isEdit = false
-  authenticationProtocols: AuthenticationProtocol[] = []
+  authenticationProtocols: FormOption<number>[] = []
   errorMessages: any[] = []
   profileNameMaxLen = 32
   pxeTimeoutMin = 0 // disables timeout
@@ -109,9 +110,9 @@ export class IEEE8021xDetailComponent implements OnInit {
     this.ieee8021xForm.controls.authenticationProtocol.addValidators(this.protocolValidator())
     this.ieee8021xForm.controls.wiredInterface.valueChanges.subscribe((isWired) => {
       if (isWired) {
-        this.authenticationProtocols = AuthenticationProtocols.forWiredInterface()
+        this.authenticationProtocols = AuthenticationProtocols.filter((z) => z.mode === 'wired' || z.mode === 'both')
       } else {
-        this.authenticationProtocols = AuthenticationProtocols.forWirelessInterface()
+        this.authenticationProtocols = AuthenticationProtocols.filter((z) => z.mode === 'both')
       }
       this.ieee8021xForm.controls.authenticationProtocol.updateValueAndValidity()
     })

@@ -29,21 +29,21 @@ describe('ProfileDetailComponent', () => {
   const ieee8021xAvailableConfigs: IEEE8021xConfig[] = [
     {
       profileName: '8021x-config-1',
-      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      authenticationProtocol: 0, // EAP-TLS
       pxeTimeout: 120,
       wiredInterface: true,
       version: ''
     },
     {
       profileName: '8021x-config-2',
-      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      authenticationProtocol: 0, // EAP-TLS
       pxeTimeout: 120,
       wiredInterface: false,
       version: ''
     },
     {
       profileName: '8021x-config-3',
-      authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
+      authenticationProtocol: 0, // EAP-TLS
       pxeTimeout: 120,
       wiredInterface: false,
       version: ''

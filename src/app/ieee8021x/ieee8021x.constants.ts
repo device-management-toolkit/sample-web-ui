@@ -27,53 +27,16 @@ import { DataWithCount, FormOption } from '../../models/models'
 // 10 |                  | EAP-FAST/TLS        | EAP-FAST/TLS
 // 11 |                  | DMTF Reserved       | DMTF Reserved
 
-export type AuthenticationProtocol = FormOption<number>
-
-export const AuthenticationProtocols = {
-  EAP_TLS: { value: 0, label: 'EAP-TLS' },
-  EAP_TTLS_MSCHAPv2: { value: 1, label: 'EAP-TTLS/MSCHAPv2' },
-  PEAP_MSCHAPv2: { value: 2, label: 'PEAPv0/EAP-MSCHAPv2' },
-  PEAP_GTC: { value: 3, label: 'PEAPv1/EAP-GTC' },
-  EAP_FAST_MSCHAPv2: { value: 4, label: 'EAP-FAST/MSCHAPv2' },
-  EAP_FAST_GTC: { value: 5, label: 'EAP-FAST/GTC' },
-  EAP_MD5: { value: 6, label: 'EAP-MD5 ' },
-  EAP_PSK: { value: 7, label: 'EAP-PSK ' },
-  EAP_SIM: { value: 8, label: 'EAP-SIM ' },
-  EAP_AKA: { value: 9, label: 'EAP-AKA ' },
-  EAP_FAST_TLS: { value: 10, label: 'EAP-FAST/TLS' },
-  labelForValue(value: number): string {
-    return this.all()
-      .filter((p) => p.value === value)
-      .map((p) => p.label)[0]
-  },
-  all(): AuthenticationProtocol[] {
-    return [
-      this.EAP_TLS,
-      this.EAP_TTLS_MSCHAPv2,
-      this.PEAP_MSCHAPv2,
-      this.PEAP_GTC,
-      this.EAP_FAST_MSCHAPv2,
-      this.EAP_FAST_GTC,
-      this.EAP_MD5,
-      this.EAP_PSK,
-      this.EAP_SIM,
-      this.EAP_AKA,
-      this.EAP_FAST_TLS
-    ]
-  },
-  forWiredInterface(): AuthenticationProtocol[] {
-    return [
-      this.EAP_TLS,
-      this.PEAP_GTC,
-      this.EAP_FAST_GTC,
-      this.EAP_FAST_TLS,
-      this.PEAP_MSCHAPv2
-    ]
-  },
-  forWirelessInterface(): AuthenticationProtocol[] {
-    return [
-      this.EAP_TLS,
-      this.PEAP_MSCHAPv2
-    ]
-  }
-}
+export const AuthenticationProtocols: FormOption<number>[] = [
+  { value: 0, mode: 'both', label: 'EAP-TLS' },
+  { value: 1, mode: 'wired', label: 'EAP-TTLS/MSCHAPv2' },
+  { value: 2, mode: 'both', label: 'PEAPv0/EAP-MSCHAPv2' },
+  { value: 3, mode: 'wired', label: 'PEAPv1/EAP-GTC' },
+  { value: 4, mode: 'wired', label: 'EAP-FAST/MSCHAPv2' },
+  { value: 5, mode: 'wired', label: 'EAP-FAST/GTC' },
+  { value: 6, mode: 'wired', label: 'EAP-MD5' },
+  { value: 7, mode: 'wired', label: 'EAP-PSK' },
+  { value: 8, mode: 'wired', label: 'EAP-SIM' },
+  { value: 9, mode: 'wired', label: 'EAP-AKA' },
+  { value: 10, mode: 'wired', label: 'EAP-FAST/TLS' }
+]

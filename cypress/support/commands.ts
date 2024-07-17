@@ -5,8 +5,9 @@
 
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import stats from 'cypress/e2e/fixtures/api/stats'
-import { AuthenticationProtocols, Config } from 'src/app/ieee8021x/ieee8021x.constants'
+import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
 import { ActivationModes, ConnectionModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
+import { IEEE8021xConfig } from 'src/models/models'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -375,7 +376,7 @@ Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod,
   cy.get('input[name="pskPassphrase"]').type(password, { force: true })
 })
 
-Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
+Cypress.Commands.add('enterIEEE8021xInfo', (config: IEEE8021xConfig) => {
   cy.matRadioButtonChoose('[formControlName="wiredInterface"]', config.wiredInterface.toString())
   if (config.profileName != null) {
     cy.matTextlikeInputType('[formControlName="profileName"]', config.profileName)
@@ -383,7 +384,7 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: Config) => {
   if (config.authenticationProtocol != null) {
     cy.matSelectChoose(
       '[formControlName="authenticationProtocol"]',
-      AuthenticationProtocols.labelForValue(config.authenticationProtocol)
+      AuthenticationProtocols.find((x) => x.value === config.authenticationProtocol)?.label ?? 'error'
     )
   }
   if (config.pxeTimeout != null && config.profileName.includes('wireless')) {

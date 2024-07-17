@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AuthenticationProtocols, Config } from 'src/app/ieee8021x/ieee8021x.constants'
+import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
+import { IEEE8021xConfig } from 'src/models/models'
 
-export const wiredConfigs: Config[] = []
-AuthenticationProtocols.forWiredInterface().forEach((authProtocol) => {
+export const wiredConfigs: IEEE8021xConfig[] = []
+AuthenticationProtocols.filter((x) => x.mode === 'wired').forEach((authProtocol) => {
   ;[0, 60 * 60 * 24].forEach((pxeTimeout) => {
     wiredConfigs.push({
       profileName: `8021xWiredProto${authProtocol.value}Pxe${pxeTimeout}`,
@@ -17,8 +18,8 @@ AuthenticationProtocols.forWiredInterface().forEach((authProtocol) => {
   })
 })
 
-export const wirelessConfigs: Config[] = []
-AuthenticationProtocols.forWirelessInterface().forEach((authProtocol) => {
+export const wirelessConfigs: IEEE8021xConfig[] = []
+AuthenticationProtocols.filter((x) => x.mode === 'both').forEach((authProtocol) => {
   // at this release, only one protocol is supported, but would like to ensure
   // multiple wireless configurations can be created, so use a couple of names
   ;[

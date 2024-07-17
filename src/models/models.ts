@@ -347,6 +347,7 @@ export interface RedirectionStatus {
 
 export interface FormOption<T> {
   value: T
+  mode?: string
   label: string
 }
 
