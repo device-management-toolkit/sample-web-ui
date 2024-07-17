@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { WirelessService } from '../wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import { AuthenticationMethods, Config, EncryptionMethods } from '../wireless.constants'
+import { AuthenticationMethods, EncryptionMethods } from '../wireless.constants'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIconButton, MatButton } from '@angular/material/button'
 import { MatOption } from '@angular/material/core'
@@ -22,6 +22,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatList, MatListItem } from '@angular/material/list'
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatToolbar } from '@angular/material/toolbar'
+import { WirelessConfig } from 'src/models/models'
 
 @Component({
   selector: 'app-wireless-detail',
@@ -122,7 +123,7 @@ export class WirelessDetailComponent implements OnInit {
       if (!AuthenticationMethods.isIEEE8021X(value)) {
         this.wirelessForm.controls.ieee8021xProfileName.setValue(null)
       }
-      const result: Config = Object.assign({}, this.wirelessForm.getRawValue())
+      const result: WirelessConfig = Object.assign({}, this.wirelessForm.getRawValue())
       let request
       let reqType: string
       if (this.isEdit) {

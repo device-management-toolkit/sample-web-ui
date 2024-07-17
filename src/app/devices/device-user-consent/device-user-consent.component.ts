@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { userConsentData } from 'src/models/models'
+import { UserConsentData } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { MatButton } from '@angular/material/button'
 import { MatInput } from '@angular/material/input'
@@ -47,7 +47,7 @@ export class DeviceUserConsentComponent {
     private readonly formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DeviceUserConsentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: userConsentData,
+    @Inject(MAT_DIALOG_DATA) public data: UserConsentData,
     private readonly devicesService: DevicesService
   ) {
     this.userConsentForm = this.formBuilder.group({

@@ -17,8 +17,8 @@ import {
   AMTFeaturesRequest,
   AMTFeaturesResponse,
   RedirectionStatus,
-  userConsentData,
-  userConsentResponse
+  UserConsentData,
+  UserConsentResponse
 } from 'src/models/models'
 import { DeviceUserConsentComponent } from '../device-user-consent/device-user-consent.component'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
@@ -170,7 +170,7 @@ export class KvmComponent implements OnInit, OnDestroy {
           )
         ),
         switchMap((result: boolean | null) => this.handleUserConsentDecision(result)),
-        switchMap((result: any | userConsentResponse) => this.handleUserConsentResponse(result))
+        switchMap((result: any | UserConsentResponse) => this.handleUserConsentResponse(result))
       )
       .subscribe()
       .add(() => {
@@ -309,7 +309,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return of(true)
   }
 
-  handleUserConsentResponse(result: any | userConsentResponse): Observable<any> {
+  handleUserConsentResponse(result: any | UserConsentResponse): Observable<any> {
     if (result == null) return of(null)
 
     // show user consent dialog if the user consent has been requested successfully
@@ -321,7 +321,7 @@ export class KvmComponent implements OnInit, OnDestroy {
             // if clicked outside the dialog, call to cancel previous requested user consent code
             this.cancelUserConsentCode(this.deviceId)
           } else {
-            this.afterUserConsentDialogClosed(result as userConsentData)
+            this.afterUserConsentDialogClosed(result as UserConsentData)
           }
           return of(null)
         })
@@ -355,8 +355,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     return userConsentDialog.afterClosed()
   }
 
-  afterUserConsentDialogClosed(data: userConsentData): void {
-    const response: userConsentResponse | any = data?.results
+  afterUserConsentDialogClosed(data: UserConsentData): void {
+    const response: UserConsentResponse | any = data?.results
     if (response.error != null) {
       this.displayError(`Unable to send code: ${response.error.Body.ReturnValueStr as string}`)
       this.isLoading = false
@@ -368,9 +368,9 @@ export class KvmComponent implements OnInit, OnDestroy {
           response.Header.Action.length
         )
         if (method === 'CancelOptInResponse') {
-          this.cancelOptInCodeResponse(response as userConsentResponse)
+          this.cancelOptInCodeResponse(response as UserConsentResponse)
         } else if (method === 'SendOptInCodeResponse') {
-          this.sendOptInCodeResponse(response as userConsentResponse)
+          this.sendOptInCodeResponse(response as UserConsentResponse)
         }
       } else {
         const method = (response as any).XMLName.Local
@@ -387,7 +387,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancelOptInCodeResponse(result: userConsentResponse): void {
+  cancelOptInCodeResponse(result: UserConsentResponse): void {
     this.isLoading = false
     if (result.Body?.ReturnValue === 0) {
       this.displayError($localize`KVM cannot be accessed - requested user consent code is cancelled`)
@@ -396,7 +396,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendOptInCodeResponse(result: userConsentResponse): void {
+  sendOptInCodeResponse(result: UserConsentResponse): void {
     if (result.Body?.ReturnValue === 0) {
       this.readyToLoadKvm = true
       this.getAMTFeatures()
@@ -410,7 +410,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  reqUserConsentCode(guid: string): Observable<userConsentResponse> {
+  reqUserConsentCode(guid: string): Observable<UserConsentResponse> {
     return this.devicesService.reqUserConsentCode(guid).pipe(
       catchError((err) => {
         // Cannot access KVM if request to user consent code fails
@@ -433,7 +433,7 @@ export class KvmComponent implements OnInit, OnDestroy {
           this.isLoading = false
         })
       )
-      .subscribe((data: userConsentResponse) => {
+      .subscribe((data: UserConsentResponse) => {
         if (data.Body?.ReturnValue === 0) {
           this.displayWarning($localize`KVM cannot be accessed - previously requested user consent code is cancelled`)
         } else {

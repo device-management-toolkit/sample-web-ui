@@ -8,9 +8,8 @@ import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { PageEventOptions } from 'src/models/models'
+import { DataWithCount, IEEE8021xConfig, PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
-import { Config, ConfigsResponse } from './ieee8021x.constants'
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +21,14 @@ export class IEEE8021xService {
     private readonly authService: AuthService
   ) {}
 
-  getData(pageEvent?: PageEventOptions): Observable<ConfigsResponse> {
+  getData(pageEvent?: PageEventOptions): Observable<DataWithCount<IEEE8021xConfig>> {
     let query = this.url
     if (pageEvent) {
-      query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
+      query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=true`
     } else {
       query += '?$count=true'
     }
-    return this.http.get<ConfigsResponse>(query).pipe(
+    return this.http.get<DataWithCount<IEEE8021xConfig>>(query).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)
@@ -37,8 +36,8 @@ export class IEEE8021xService {
     )
   }
 
-  getRecord(name: string): Observable<Config> {
-    return this.http.get<Config>(`${this.url}/${encodeURIComponent(name)}`).pipe(
+  getRecord(name: string): Observable<IEEE8021xConfig> {
+    return this.http.get<IEEE8021xConfig>(`${this.url}/${encodeURIComponent(name)}`).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)
@@ -55,8 +54,8 @@ export class IEEE8021xService {
     )
   }
 
-  update(config: Config): Observable<Config> {
-    return this.http.patch<Config>(this.url, config).pipe(
+  update(config: IEEE8021xConfig): Observable<IEEE8021xConfig> {
+    return this.http.patch<IEEE8021xConfig>(this.url, config).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)
@@ -64,8 +63,8 @@ export class IEEE8021xService {
     )
   }
 
-  create(config: Config): Observable<Config> {
-    return this.http.post<Config>(this.url, config).pipe(
+  create(config: IEEE8021xConfig): Observable<IEEE8021xConfig> {
+    return this.http.post<IEEE8021xConfig>(this.url, config).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)

@@ -11,7 +11,7 @@ import { DevicesService } from '../devices.service'
 
 import { AuditLogComponent } from './audit-log.component'
 
-fdescribe('AuditLogComponent', () => {
+describe('AuditLogComponent', () => {
   let component: AuditLogComponent
   let fixture: ComponentFixture<AuditLogComponent>
   let getAuditLogSpy: jasmine.Spy

@@ -46,6 +46,24 @@ export interface Domain {
   expirationDate: Date
 }
 
+export interface WirelessConfig {
+  profileName: string
+  authenticationMethod: number
+  encryptionMethod: number
+  ssid: string
+  pskPassphrase?: string
+  ieee8021xProfileName?: string
+  version?: string
+}
+
+export interface IEEE8021xConfig {
+  profileName: string
+  authenticationProtocol: number
+  pxeTimeout: number
+  wiredInterface: boolean
+  version?: string
+}
+
 export interface CIRAConfig {
   configName: string
   mpsServerAddress: string
@@ -294,12 +312,12 @@ export interface Body {
   ReturnValueStr: string
 }
 
-export interface userConsentResponse {
+export interface UserConsentResponse {
   Header: Header
   Body: Body
 }
 
-export interface userConsentData {
+export interface UserConsentData {
   deviceId: string
   results: any
 }

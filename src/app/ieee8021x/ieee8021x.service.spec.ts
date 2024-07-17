@@ -6,7 +6,7 @@
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
-import { PageEventOptions } from 'src/models/models'
+import { DataWithCount, IEEE8021xConfig, PageEventOptions } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 import { IEEE8021xService } from './ieee8021x.service'
@@ -30,14 +30,14 @@ describe('IEEE8021xService', () => {
     service = new IEEE8021xService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 
-  const config01: IEEE8021x.Config = {
+  const config01: IEEE8021xConfig = {
     profileName: 'name 1',
     authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
     pxeTimeout: 120,
     wiredInterface: true,
     version: 'one'
   }
-  const ieee8021ConfigsResponse: IEEE8021x.ConfigsResponse = {
+  const ieee8021ConfigsResponse: DataWithCount<IEEE8021xConfig> = {
     data: [config01],
     totalCount: 1
   }

@@ -6,11 +6,11 @@
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
-import { PageEventOptions } from 'src/models/models'
+import { PageEventOptions, WirelessConfig } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 import { WirelessService } from './wireless.service'
-import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.constants'
+import { AuthenticationMethods, EncryptionMethods } from './wireless.constants'
 
 describe('WirelessService', () => {
   let service: WirelessService
@@ -30,7 +30,7 @@ describe('WirelessService', () => {
     service = new WirelessService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
   })
 
-  const config01: Config = {
+  const config01: WirelessConfig = {
     profileName: 'wirelessConfig01',
     ssid: 'someSSID',
     authenticationMethod: AuthenticationMethods.WPA_PSK.value,

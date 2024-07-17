@@ -8,12 +8,12 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { PageEventOptions } from 'src/models/models'
+import { PageEventOptions, WirelessConfig } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { WirelessService } from './wireless.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
-import { AuthenticationMethods, Config, EncryptionMethods } from './wireless.constants'
+import { AuthenticationMethods, EncryptionMethods } from './wireless.constants'
 import {
   MatTable,
   MatColumnDef,
@@ -59,7 +59,7 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class WirelessComponent implements OnInit {
-  configs: Config[] = []
+  configs: WirelessConfig[] = []
   isLoading = true
   totalCount = 0
   displayedColumns: string[] = [

@@ -12,7 +12,7 @@ import { DevicesService } from '../devices.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
-import { Device, userConsentData, userConsentResponse } from 'src/models/models'
+import { Device, UserConsentData, UserConsentResponse } from 'src/models/models'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -27,8 +27,8 @@ describe('SolComponent', () => {
   let tokenSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
   let router: Router
-  let userConsentData: userConsentData
-  let userConsentResponse: userConsentResponse
+  let userConsentData: UserConsentData
+  let userConsentResponse: UserConsentResponse
   let optInCodeResponseSpy: jasmine.Spy
   let displayErrorSpy: jasmine.Spy
   let devicesService: jasmine.SpyObj<DevicesService>
@@ -67,7 +67,7 @@ describe('SolComponent', () => {
         icon: 0
       })
     )
-    const reqUserConsentResponse: userConsentResponse = {} as any
+    const reqUserConsentResponse: UserConsentResponse = {} as any
     devicesService.device = new Subject<Device>()
     reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of(reqUserConsentResponse))

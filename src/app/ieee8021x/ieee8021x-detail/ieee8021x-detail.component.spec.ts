@@ -11,6 +11,7 @@ import { IEEE8021xService } from '../ieee8021x.service'
 import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
 import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
+import { IEEE8021xConfig } from 'src/models/models'
 
 describe('IEEE8021xDetailComponent', () => {
   let component: IEEE8021xDetailComponent
@@ -18,7 +19,7 @@ describe('IEEE8021xDetailComponent', () => {
   let ieee8021xGetRecordSpy: jasmine.Spy
   let ieee8021xCreateSpy: jasmine.Spy
   let ieee8021xUpdateSpy: jasmine.Spy
-  const config01: IEEE8021x.Config = {
+  const config01: IEEE8021xConfig = {
     profileName: 'name 1',
     authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,
     pxeTimeout: 120,

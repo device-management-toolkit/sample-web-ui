@@ -20,7 +20,7 @@ import {
   PageEventOptions,
   PowerState,
   RedirectionToken,
-  userConsentResponse,
+  UserConsentResponse,
   RedirectionStatus,
   AMTFeaturesRequest
 } from 'src/models/models'
@@ -375,17 +375,17 @@ export class DevicesService {
     )
   }
 
-  reqUserConsentCode(deviceId: string): Observable<userConsentResponse> {
-    return this.http.get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`).pipe(
+  reqUserConsentCode(deviceId: string): Observable<UserConsentResponse> {
+    return this.http.get<UserConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`).pipe(
       catchError((err) => {
         throw err
       })
     )
   }
 
-  cancelUserConsentCode(deviceId: string): Observable<userConsentResponse> {
+  cancelUserConsentCode(deviceId: string): Observable<UserConsentResponse> {
     return this.http
-      .get<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/${deviceId}`)
+      .get<UserConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/${deviceId}`)
       .pipe(
         catchError((err) => {
           throw err
@@ -393,10 +393,10 @@ export class DevicesService {
       )
   }
 
-  sendUserConsentCode(deviceId: string, userConsentCode: number): Observable<userConsentResponse> {
+  sendUserConsentCode(deviceId: string, userConsentCode: number): Observable<UserConsentResponse> {
     const payload = { consentCode: userConsentCode }
     return this.http
-      .post<userConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
+      .post<UserConsentResponse>(`${environment.mpsServer}/api/v1/amt/userConsentCode/${deviceId}`, payload)
       .pipe(
         catchError((err) => {
           throw err

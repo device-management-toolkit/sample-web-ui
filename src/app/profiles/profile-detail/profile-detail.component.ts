@@ -47,7 +47,7 @@ import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
-import { CIRAConfig } from 'src/models/models'
+import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
@@ -118,7 +118,7 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   cloudMode = environment.cloud
-  iee8021xConfigurations: IEEE8021x.Config[] = []
+  iee8021xConfigurations: IEEE8021xConfig[] = []
   showIEEE8021xConfigurations = false
   wirelessConfigurations: string[] = []
   showWirelessConfigurations = false

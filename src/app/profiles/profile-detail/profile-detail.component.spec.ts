@@ -17,6 +17,7 @@ import { ProfileDetailComponent } from './profile-detail.component'
 import { ActivationModes, ConnectionModes, Profile, UserConsentModes } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
+import { IEEE8021xConfig } from 'src/models/models'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -25,7 +26,7 @@ describe('ProfileDetailComponent', () => {
   let ciraGetDataSpy: jasmine.Spy
   let profileCreateSpy: jasmine.Spy
   let profileUpdateSpy: jasmine.Spy
-  const ieee8021xAvailableConfigs: IEEE8021x.Config[] = [
+  const ieee8021xAvailableConfigs: IEEE8021xConfig[] = [
     {
       profileName: '8021x-config-1',
       authenticationProtocol: IEEE8021x.AuthenticationProtocols.EAP_TLS.value,

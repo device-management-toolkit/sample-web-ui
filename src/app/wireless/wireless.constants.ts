@@ -52,15 +52,3 @@ export const EncryptionMethods = {
     ]
   }
 }
-
-export interface Config {
-  profileName: string
-  authenticationMethod: number
-  encryptionMethod: number
-  ssid: string
-  pskPassphrase?: string
-  ieee8021xProfileName?: string
-  version?: string
-}
-
-export type ConfigsResponse = DataWithCount<Config>

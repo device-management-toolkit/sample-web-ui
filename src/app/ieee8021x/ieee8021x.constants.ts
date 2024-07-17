@@ -77,13 +77,3 @@ export const AuthenticationProtocols = {
     ]
   }
 }
-
-export interface Config {
-  profileName: string
-  authenticationProtocol: number
-  pxeTimeout: number
-  wiredInterface: boolean
-  version?: string
-}
-
-export type ConfigsResponse = DataWithCount<Config>

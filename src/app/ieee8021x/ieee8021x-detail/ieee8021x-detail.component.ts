@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { IEEE8021xService } from '../ieee8021x.service'
-import { AuthenticationProtocol, AuthenticationProtocols, Config } from '../ieee8021x.constants'
+import { AuthenticationProtocol, AuthenticationProtocols } from '../ieee8021x.constants'
 import { Observable } from 'rxjs'
 import { MatButton } from '@angular/material/button'
 import { MatOption } from '@angular/material/core'
@@ -31,6 +31,7 @@ import { MatList, MatListItem } from '@angular/material/list'
 import { MatCard, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { IEEE8021xConfig } from 'src/models/models'
 
 @Component({
   selector: 'app-ieee8021x-detail',
@@ -165,8 +166,8 @@ export class IEEE8021xDetailComponent implements OnInit {
       if (!this.ieee8021xForm.controls.wiredInterface.value) {
         this.ieee8021xForm.controls.pxeTimeout.setValue(this.pxeTimeoutMin)
       }
-      const config: Config = Object.assign({}, this.ieee8021xForm.getRawValue())
-      let request: Observable<Config>
+      const config: IEEE8021xConfig = Object.assign({}, this.ieee8021xForm.getRawValue())
+      let request: Observable<IEEE8021xConfig>
       let reqType: string
       if (this.isEdit) {
         request = this.ieee8021xService.update(config)
