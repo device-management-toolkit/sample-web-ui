@@ -33,8 +33,8 @@ describe('WirelessService', () => {
   const config01: WirelessConfig = {
     profileName: 'wirelessConfig01',
     ssid: 'someSSID',
-    authenticationMethod: AuthenticationMethods.WPA_PSK.value,
-    encryptionMethod: EncryptionMethods.TKIP.value,
+    authenticationMethod: 4, // WPA PSK
+    encryptionMethod: 3, // TKIP
     pskPassphrase: 'onlyInRequestNotRESPONSE'
   }
 

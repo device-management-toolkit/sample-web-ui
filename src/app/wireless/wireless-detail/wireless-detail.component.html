@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{pageTitle}}
+  {{ pageTitle }}
 </mat-toolbar>
 
 <div class="flex-row flex-1">
@@ -17,10 +17,9 @@
     }
     <form [formGroup]="wirelessForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
-
         <mat-form-field class="flex flex-1">
           <mat-label>Wireless Profile Name</mat-label>
-          <input formControlName="profileName" matInput name="profileName" placeholder="ex. wifiSSID" required>
+          <input formControlName="profileName" matInput name="profileName" placeholder="ex. wifiSSID" required />
           <mat-error i18n>This field is required and must be alphanumeric with no spaces or symbols.</mat-error>
           <mat-hint>Provide a name for this wireless profile.</mat-hint>
         </mat-form-field>
@@ -29,7 +28,7 @@
           <mat-select formControlName="authenticationMethod" required>
             @for (method of authenticationMethods; track method) {
               <mat-option [value]="method.value">
-                {{method.label}}
+                {{ method.label }}
               </mat-option>
             }
           </mat-select>
@@ -37,9 +36,14 @@
         @if (showPSKPassPhrase) {
           <mat-form-field class="flex flex-1">
             <mat-label>PSK Passphrase</mat-label>
-            <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase">
+            <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase" />
             <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="togglePSKPassVisibility()">
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              matTooltip="Show / Hide Password"
+              (click)="togglePSKPassVisibility()">
               @if (pskInputType === 'text') {
                 <mat-icon>visibility</mat-icon>
               }
@@ -52,10 +56,10 @@
         @if (showIEEE8021x) {
           <mat-form-field class="flex flex-1">
             <mat-label>802.1x Configuration</mat-label>
-            <mat-select formControlName='ieee8021xProfileName'>
+            <mat-select formControlName="ieee8021xProfileName">
               @for (cfgName of iee8021xConfigNames; track cfgName) {
-                <mat-option [value]='cfgName'>
-                  {{cfgName}}
+                <mat-option [value]="cfgName">
+                  {{ cfgName }}
                 </mat-option>
               }
             </mat-select>
@@ -66,7 +70,7 @@
           <mat-select formControlName="encryptionMethod" required>
             @for (encryptionMode of encryptionModes; track encryptionMode) {
               <mat-option [value]="encryptionMode.value">
-                {{encryptionMode.label}}
+                {{ encryptionMode.label }}
               </mat-option>
             }
           </mat-select>
@@ -75,10 +79,16 @@
         <mat-form-field class="flex flex-1">
           <mat-label>SSID</mat-label>
 
-          <input type="text" formControlName="ssid" matInput name="ssid" placeholder="ex. wifi-ssid" required maxlength="32">
+          <input
+            type="text"
+            formControlName="ssid"
+            matInput
+            name="ssid"
+            placeholder="ex. wifi-ssid"
+            required
+            maxlength="32" />
           <mat-error>This field is required</mat-error>
         </mat-form-field>
-
       </mat-card-content>
       <mat-card-actions class="flex-row flex-wrap">
         <div class="flex flex-50 justify-center">
@@ -95,5 +105,4 @@
     </form>
   </mat-card>
   <div class="flex-25 hide-sm"></div>
-
 </div>

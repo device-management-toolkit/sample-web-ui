@@ -8,11 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { WirelessService } from '../wireless.service'
-import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
-
 import { WirelessDetailComponent } from './wireless-detail.component'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import { AuthenticationMethods, EncryptionMethods } from '../wireless.constants'
 
 describe('WirelessDetailComponent', () => {
   let component: WirelessDetailComponent
@@ -97,15 +94,15 @@ describe('WirelessDetailComponent', () => {
   it('should not submit if missing PSKPassphrase', () => {
     component.wirelessForm.patchValue({
       profileName: 'profile1',
-      authenticationMethod: AuthenticationMethods.WPA_PSK.value,
-      encryptionMethod: EncryptionMethods.TKIP.value,
+      authenticationMethod: 4, // WPA PSK
+      encryptionMethod: 3, // TKIP
       ssid: 'ssid1234'
     })
     component.onSubmit()
     expect(wirelessUpdateSpy).not.toHaveBeenCalled()
     expect(routerSpy).not.toHaveBeenCalled()
     component.wirelessForm.patchValue({
-      authenticationMethod: AuthenticationMethods.WPA2_PSK.value
+      authenticationMethod: 6 // WPA2 PSK
     })
     component.onSubmit()
     expect(wirelessUpdateSpy).not.toHaveBeenCalled()
@@ -115,15 +112,15 @@ describe('WirelessDetailComponent', () => {
   it('should not submit if missing ieee8021x', () => {
     component.wirelessForm.patchValue({
       profileName: 'profile1',
-      authenticationMethod: AuthenticationMethods.WPA_IEEE8021X.value,
-      encryptionMethod: EncryptionMethods.TKIP.value,
+      authenticationMethod: 5, // WPA IEEE8021X
+      encryptionMethod: 3, // TKIP
       ssid: 'ssid1234'
     })
     component.onSubmit()
     expect(wirelessUpdateSpy).not.toHaveBeenCalled()
     expect(routerSpy).not.toHaveBeenCalled()
     component.wirelessForm.patchValue({
-      authenticationMethod: AuthenticationMethods.WPA2_IEEE8021X.value
+      authenticationMethod: 7 // WPA2 IEEE8021X
     })
     component.onSubmit()
     expect(wirelessUpdateSpy).not.toHaveBeenCalled()
@@ -134,8 +131,8 @@ describe('WirelessDetailComponent', () => {
     component.isEdit = false
     component.wirelessForm.patchValue({
       profileName: 'profile1',
-      authenticationMethod: AuthenticationMethods.WPA_PSK.value,
-      encryptionMethod: EncryptionMethods.TKIP.value,
+      authenticationMethod: 4, // WPA PSK
+      encryptionMethod: 3, // TKIP
       ssid: 'ssid1234',
       pskPassphrase: 'passphrase1'
     })
@@ -160,29 +157,17 @@ describe('WirelessDetailComponent', () => {
   })
 
   it('should support PSK passphrase and ieee8021x visibility', () => {
-    component.onAuthenticationMethodChange(AuthenticationMethods.WPA_PSK.value)
+    component.onAuthenticationMethodChange(4) // WPA PSK
     expect(component.showPSKPassPhrase).toBeTrue()
     expect(component.showIEEE8021x).toBeFalse()
-    component.onAuthenticationMethodChange(AuthenticationMethods.WPA2_PSK.value)
+    component.onAuthenticationMethodChange(6) // WPA2 PSK
     expect(component.showPSKPassPhrase).toBeTrue()
     expect(component.showIEEE8021x).toBeFalse()
-    component.onAuthenticationMethodChange(AuthenticationMethods.WPA_IEEE8021X.value)
+    component.onAuthenticationMethodChange(5) // WPA IEEE8021X
     expect(component.showPSKPassPhrase).toBeFalse()
     expect(component.showIEEE8021x).toBeTrue()
-    component.onAuthenticationMethodChange(AuthenticationMethods.WPA2_IEEE8021X.value)
+    component.onAuthenticationMethodChange(7) // WPA2 IEEE8021X
     expect(component.showPSKPassPhrase).toBeFalse()
     expect(component.showIEEE8021x).toBeTrue()
-  })
-
-  AuthenticationMethods.all().forEach((m) => {
-    it(`should have expected labels and values ${m.label}`, () => {
-      expect(AuthenticationMethods.labelForValue(m.value)).toEqual(m.label)
-    })
-  })
-
-  EncryptionMethods.all().forEach((m) => {
-    it(`should have expected labels and values ${m.label}`, () => {
-      expect(EncryptionMethods.labelForValue(m.value)).toEqual(m.label)
-    })
   })
 })

@@ -4,20 +4,17 @@
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
-    <button id="btnAdd" mat-button (click)="navigateTo()">
-      <mat-icon>add</mat-icon> Add New
-    </button>
+    <button id="btnAdd" mat-button (click)="navigateTo()"><mat-icon>add</mat-icon> Add New</button>
   </div>
 </mat-toolbar>
-@if (isLoading!==false) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+@if (isLoading !== false) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
       <h3 class="flex justify-center">No Wireless Configs</h3>
-    }
-    @else {
+    } @else {
       <mat-table [dataSource]="configs">
         <!-- name Column -->
         <ng-container matColumnDef="name">
@@ -28,20 +25,19 @@
         <ng-container matColumnDef="authmethod">
           <mat-header-cell *matHeaderCellDef> Authentication </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ authenticationMethods.labelForValue(element.authenticationMethod ) }}
+            {{ element.authenticationMethod | toolkit: authenticationMethods }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="encryptionMethod">
           <mat-header-cell *matHeaderCellDef> Encryption </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ encryptionMethods.labelForValue(element.encryptionMethod ) }}
+            {{ element.encryptionMethod | toolkit: encryptionMethods }}
           </mat-cell>
         </ng-container>
         <!-- activation Column -->
         <ng-container matColumnDef="ssid">
           <mat-header-cell *matHeaderCellDef> SSID </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.ssid }}
-          </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ element.ssid }} </mat-cell>
         </ng-container>
         <!-- remove Column -->
         <ng-container matColumnDef="remove">
@@ -53,12 +49,17 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
     @if (totalCount) {
       <div>
-        <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" (page)="pageChanged($event)" showFirstLastButtons>
+        <mat-paginator
+          [pageSizeOptions]="[25, 50, 100]"
+          [pageSize]="25"
+          [length]="totalCount"
+          (page)="pageChanged($event)"
+          showFirstLastButtons>
         </mat-paginator>
       </div>
     }
