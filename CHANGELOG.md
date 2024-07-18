@@ -1,3 +1,10 @@
+# [3.12.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.1...v3.12.0) (2024-07-18)
+
+
+### Features
+
+* add loading indicators for hwinfo and general info ([#2035](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2035)) ([d7bed7e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d7bed7e0aa6d8112e6b044415d25a23b4bc49d14))
+
 ## [3.11.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.0...v3.11.1) (2024-07-16)
 
 ### Bug Fixes
