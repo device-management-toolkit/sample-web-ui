@@ -15,11 +15,13 @@ import { HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MomentModule } from 'ngx-moment'
+import { MatProgressBar } from '@angular/material/progress-bar'
 
 @Component({
   selector: 'app-hardware-information',
   standalone: true,
   imports: [
+    MatProgressBar,
     MatSnackBarModule,
     MatCardModule,
     MatDividerModule,

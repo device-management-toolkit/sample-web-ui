@@ -20,7 +20,7 @@ import {
 } from '@angular/material/table'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { catchError, finalize, take } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { EventLog } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -91,7 +91,7 @@ export class EventLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.params.pipe(take(1)).subscribe((params) => {
       this.isLoading = true
       this.deviceId = params.id
       this.devicesService

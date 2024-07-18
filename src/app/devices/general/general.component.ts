@@ -12,13 +12,15 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } 
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { catchError, finalize, throwError } from 'rxjs'
+import { catchError, finalize, forkJoin, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { MatProgressBar } from '@angular/material/progress-bar'
 
 @Component({
   selector: 'app-general',
   standalone: true,
   imports: [
+    MatProgressBar,
     MatCardModule,
     MatSelectModule,
     MatCheckboxModule,
@@ -71,45 +73,43 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.devicesService
-      .getAMTFeatures(this.deviceId)
-      .pipe(
+    forkJoin({
+      amtFeatures: this.devicesService.getAMTFeatures(this.deviceId).pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
-        }),
-        finalize(() => {
-          this.isLoading = false
         })
-      )
-      .subscribe((results) => {
-        this.amtEnabledFeatures = this.fb.group({
-          enableIDER: results.IDER,
-          enableKVM: results.KVM,
-          enableSOL: results.SOL,
-          userConsent: results.userConsent,
-          optInState: results.optInState,
-          redirection: results.redirection
+      ),
+      generalSettings: this.devicesService.getGeneralSettings(this.deviceId).pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error retrieving General Settings`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
         })
-      })
-    this.devicesService.getGeneralSettings(this.deviceId).subscribe((data: any) => {
-      this.generalSettings = data
-      this.isLoading = false
-    })
-    this.devicesService
-      .getAMTVersion(this.deviceId)
-      .pipe(
+      ),
+      amtVersion: this.devicesService.getAMTVersion(this.deviceId).pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
-        }),
+        })
+      )
+    })
+      .pipe(
         finalize(() => {
           this.isLoading = false
         })
       )
-      .subscribe((results) => {
-        this.amtVersion = results
-        this.isDisabled = results?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
+      .subscribe((results: any) => {
+        this.amtEnabledFeatures = this.fb.group({
+          enableIDER: results.amtFeatures.IDER,
+          enableKVM: results.amtFeatures.KVM,
+          enableSOL: results.amtFeatures.SOL,
+          userConsent: results.amtFeatures.userConsent,
+          optInState: results.amtFeatures.optInState,
+          redirection: results.amtFeatures.redirection
+        })
+        this.generalSettings = results.generalSettings
+        this.amtVersion = results.amtVersion
+        this.isDisabled = results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
       })
   }
 
