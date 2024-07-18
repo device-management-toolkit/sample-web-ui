@@ -24,6 +24,9 @@ import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-al
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
 import { SOLComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
+import { MatToolbar } from '@angular/material/toolbar'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton } from '@angular/material/button'
 
 @Component({
   selector: 'app-sol',
@@ -31,7 +34,13 @@ import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.compone
   styleUrls: ['./sol.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [DeviceToolbarComponent, SOLComponent]
+  imports: [
+    MatToolbar,
+    MatIcon,
+    DeviceToolbarComponent,
+    MatButton,
+    SOLComponent
+  ]
 })
 export class SolComponent implements OnInit, OnDestroy {
   @Input()
@@ -108,7 +117,6 @@ export class SolComponent implements OnInit, OnDestroy {
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe((data: boolean) => {
       this.isDisconnecting = true
       this.deviceConnection.emit(false)
-      void this.router.navigate([`/devices/${this.deviceId}`])
     })
 
     this.init()
@@ -137,7 +145,12 @@ export class SolComponent implements OnInit, OnDestroy {
         this.isLoading = false
       })
   }
-
+  connect(): void {
+    this.devicesService.startwebSocket.emit(true)
+  }
+  disconnect(): void {
+    this.devicesService.stopwebSocket.emit(true)
+  }
   handlePowerState(powerState: any): Observable<any> {
     this.powerState = powerState
     // If device is not powered on, shows alert to power up device

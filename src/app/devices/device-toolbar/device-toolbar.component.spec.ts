@@ -45,13 +45,6 @@ describe('DeviceToolbarComponent', () => {
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
-
-    devicesService.stopwebSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('stopwebSocket next') }
-    devicesService.startwebSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('startwebSocket next') }
-    devicesService.connectKVMSocket = new EventEmitter<boolean>() // { next: jasmine.createSpy('connectKVMSocket next') }
-    stopSpy = spyOn(devicesService.stopwebSocket, 'next')
-    startSpy = spyOn(devicesService.startwebSocket, 'next')
-    connectSpy = spyOn(devicesService.connectKVMSocket, 'next')
     devicesService.device = new Subject<Device>()
 
     await TestBed.configureTestingModule({
@@ -102,18 +95,6 @@ describe('DeviceToolbarComponent', () => {
     await component.navigateTo('guid')
     expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId}/guid`])
   })
-  it('should navigate to kvm', async () => {
-    component.deviceId = '12345-pokli-456772'
-    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}/kvm`)
-    await component.navigateTo('kvm')
-    expect(connectSpy).toHaveBeenCalled()
-  })
-  it('should navigate to sol', async () => {
-    component.deviceId = '12345-pokli-456772'
-    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}/sol`)
-    await component.navigateTo('sol')
-    expect(startSpy).toHaveBeenCalled()
-  })
   it('should navigate to devices', async () => {
     component.deviceId = '12345-pokli-456772'
     const routerSpy = spyOn(component.router, 'navigate')
@@ -130,15 +111,5 @@ describe('DeviceToolbarComponent', () => {
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(sendDeactivateSpy).toHaveBeenCalled()
     expect(sendDeactivateErrorSpy).toHaveBeenCalled()
-  })
-  it('should stop sol ', () => {
-    component.stopSol()
-    fixture.detectChanges()
-    expect(stopSpy).toHaveBeenCalled()
-  })
-  it('should stop kvm', () => {
-    component.stopKvm()
-    fixture.detectChanges()
-    expect(stopSpy).toHaveBeenCalled()
   })
 })

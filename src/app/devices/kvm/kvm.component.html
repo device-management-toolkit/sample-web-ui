@@ -1,5 +1,5 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
-  <div class="flex flex-50">
+  <div class="flex flex-50 items-center">
     <mat-form-field style="margin-bottom: 0">
       <mat-label>Choose encoding type</mat-label>
       <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
@@ -12,6 +12,15 @@
     </mat-form-field>
   </div>
   <div class="flex flex-50 justify-end">
+    @if (deviceState !== 2) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <mat-icon>tv_on</mat-icon>Connect KVM
+      </button>
+    } @else {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+        <mat-icon>tv_off</mat-icon>Disconnect KVM
+      </button>
+    }
     <button mat-flat-button color="primary" (click)="fileInput.click()">
       <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
     </button>

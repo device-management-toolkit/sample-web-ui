@@ -1,3 +1,17 @@
+<mat-toolbar style="height: 100px" class="flex flex-row">
+  <div class="flex flex-50 items-center"></div>
+  <div class="flex flex-50 justify-end">
+    @if (deviceState !== 2) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <mat-icon>tv_on</mat-icon>Connect SOL
+      </button>
+    } @else {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+        <mat-icon>tv_off</mat-icon>Disconnect SOL
+      </button>
+    }
+  </div>
+</mat-toolbar>
 @if (readyToLoadSol) {
   <amt-sol
     [deviceConnection]="deviceConnection"

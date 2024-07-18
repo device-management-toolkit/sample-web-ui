@@ -50,7 +50,6 @@ export class DeviceToolbarComponent implements OnInit {
   @Input()
   public deviceId = ''
 
-  deviceState = 0
   public device: Device | null = null
   public powerOptions = [
     {
@@ -108,9 +107,6 @@ export class DeviceToolbarComponent implements OnInit {
       this.device = data
       this.devicesService.device.next(this.device)
     })
-    this.devicesService.deviceState.subscribe((state) => {
-      this.deviceState = state
-    })
   }
 
   editDevice(): void {
@@ -154,20 +150,8 @@ export class DeviceToolbarComponent implements OnInit {
       })
   }
 
-  stopSol(): void {
-    this.devicesService.stopwebSocket.next(true)
-  }
-
-  stopKvm(): void {
-    this.devicesService.stopwebSocket.next(true)
-  }
-
   async navigateTo(path: string): Promise<void> {
-    if (this.router.url === `/devices/${this.deviceId}/kvm` && path === 'kvm') {
-      this.devicesService.connectKVMSocket.next(true)
-    } else if (this.router.url === `/devices/${this.deviceId}/sol` && path === 'sol') {
-      this.devicesService.startwebSocket.next(true)
-    } else if (this.router.url === `/devices/${this.deviceId}` && path === 'devices') {
+    if (this.router.url === `/devices/${this.deviceId}` && path === 'devices') {
       await this.router.navigate(['/devices'])
     } else {
       await this.router.navigate([`/devices/${this.deviceId}/${path}`])

@@ -139,7 +139,6 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe((data: boolean) => {
       this.isDisconnecting = true
       this.deviceKVMConnection.emit(false)
-      void this.router.navigate([`/devices/${this.deviceId}`])
     })
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
@@ -177,7 +176,12 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.isLoading = false
       })
   }
-
+  connect(): void {
+    this.devicesService.connectKVMSocket.emit(true)
+  }
+  disconnect(): void {
+    this.devicesService.stopwebSocket.emit(true)
+  }
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null

@@ -7,7 +7,7 @@
     }
     Device Control
     <div class="mat-caption">
-      {{deviceId}}
+      {{ deviceId }}
       @if (device?.friendlyName) {
         <span> - {{ device?.hostname }}</span>
       }
@@ -15,7 +15,7 @@
   </span>
   <mat-chip-set class="flex-1 pad-15">
     @for (tag of device?.tags; track tag) {
-      <mat-chip>{{tag}}</mat-chip>
+      <mat-chip>{{ tag }}</mat-chip>
     }
   </mat-chip-set>
   <button mat-icon-button matTooltip="Edit device" (click)="editDevice()">
@@ -24,27 +24,9 @@
   <button mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
     <mat-icon>delete</mat-icon>
   </button>
-  <mat-divider style="height:40px" vertical="true"></mat-divider>
+  <mat-divider style="height: 40px" vertical="true"></mat-divider>
 
-  @if (deviceState !== 2) {
-    <button mat-icon-button matTooltip="Connect KVM" (click)="navigateTo('kvm')">
-      <mat-icon>tv</mat-icon>
-    </button>
-  } @else if (deviceState === 2) {
-    <button mat-icon-button matTooltip="Disconnect KVM" (click)="stopKvm()">
-      <mat-icon>tv_off</mat-icon>
-    </button>
-  }
-  @if (deviceState !== 3) {
-    <button mat-icon-button matTooltip="Connect SOL" (click)="navigateTo('sol')">
-      <mat-icon>keyboard</mat-icon>
-    </button>
-  } @else if (deviceState === 3) {
-    <button mat-icon-button matTooltip="Disconnect SOL" (click)="stopSol()">
-      <mat-icon>keyboard_hide</mat-icon>
-    </button>
-  }
-  <mat-divider style="height:40px" vertical="true"></mat-divider>
+  <mat-divider style="height: 40px" vertical="true"></mat-divider>
   <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
     <mat-icon>power</mat-icon>
   </button>
@@ -60,12 +42,11 @@
   <mat-menu #menu="matMenu">
     @for (option of powerOptions; track option) {
       <button mat-menu-item (click)="sendPowerAction(option.action)">
-        <span>{{option.label}}</span>
+        <span>{{ option.label }}</span>
       </button>
     }
   </mat-menu>
-
 </mat-toolbar>
 @if (isLoading) {
-  <mat-progress-bar mode=indeterminate></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
