@@ -1,3 +1,10 @@
+## [3.12.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.0...v3.12.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* loading domains successfully no longer shows error ([#2038](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2038)) ([4b33b90](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4b33b90a68e71e0a7ace04905d5579d26b201460))
+
 # [3.12.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.1...v3.12.0) (2024-07-18)
 
 
