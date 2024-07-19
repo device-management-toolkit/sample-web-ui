@@ -103,7 +103,7 @@ export class DomainsComponent implements OnInit {
           this.domains = data
           this.expirationWarning()
         },
-        complete: () => {
+        error: () => {
           this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
         }
       })
@@ -131,7 +131,7 @@ export class DomainsComponent implements OnInit {
               this.getData(this.pageEvent)
               this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
             },
-            complete: () => {
+            error: () => {
               this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
             }
           })
