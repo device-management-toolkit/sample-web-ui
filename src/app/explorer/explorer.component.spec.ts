@@ -4,18 +4,22 @@
  **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { ExplorerComponent } from './explorer.component'
 import { DevicesService } from '../devices/devices.service'
 import { ActivatedRoute } from '@angular/router'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatDialogModule } from '@angular/material/dialog'
 import { of } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { ReactiveFormsModule } from '@angular/forms'
+import { BrowserModule } from '@angular/platform-browser'
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
   let fixture: ComponentFixture<ExplorerComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let activatedRouteSpy: jasmine.SpyObj<ActivatedRoute>
 
   beforeEach(async () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
@@ -28,22 +32,31 @@ describe('ExplorerComponent', () => {
       'bulkPowerAction',
       'sendDeactivate',
       'sendBulkDeactivate',
-      'getWsmanOperations'
+      'getWsmanOperations',
+      'executeExplorerCall'
     ])
+
+    activatedRouteSpy = jasmine.createSpyObj('ActivatedRoute', ['params'])
 
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        ExplorerComponent,
-        MonacoEditorModule
+        BrowserModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MonacoEditorModule,
+        ExplorerComponent
       ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },
-        { provide: ActivatedRoute, useValue: { params: { subscribe: () => {} } } }
+        { provide: ActivatedRoute, useValue: { params: of({ id: '123' }) } }
       ]
     }).compileComponents()
-    devicesServiceSpy.getWsmanOperations.and.returnValue(of(['']))
+
+    devicesServiceSpy.getWsmanOperations.and.returnValue(of(['Operation1', 'Operation2']))
+    devicesServiceSpy.executeExplorerCall.and.returnValue(of('<xml>Data</xml>'))
 
     fixture = TestBed.createComponent(ExplorerComponent)
     component = fixture.componentInstance
@@ -52,5 +65,23 @@ describe('ExplorerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should initialize wsmanOperations and filteredOptions on ngOnInit', () => {
+    expect(component.wsmanOperations).toEqual(['Operation1', 'Operation2'])
+    expect(component.filteredOptions).toBeTruthy()
+  })
+
+  it('should handle ActivatedRoute parameters', () => {
+    expect(component.deviceId).toBe('123')
+    expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation1')
+    expect(component.XMLData).toBe('<xml>Data</xml>')
+  })
+
+  it('should update XMLData on input change', () => {
+    component.inputChanged('Operation2')
+    expect(component.selectedWsmanOperation).toBe('Operation2')
+    expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation2')
+    expect(component.XMLData).toBe('<xml>Data</xml>')
   })
 })

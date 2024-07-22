@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -18,6 +18,7 @@ import { Observable, startWith, map } from 'rxjs'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 @Component({
   selector: 'app-explorer',
@@ -39,6 +40,9 @@ import { AsyncPipe } from '@angular/common'
   styleUrl: './explorer.component.scss'
 })
 export class ExplorerComponent implements OnInit {
+  @Input()
+  public deviceId = ''
+
   XMLData: any
   myControl = new FormControl('')
   editorOptions = { theme: 'vs-dark', language: 'xml', minimap: { enabled: false } }
@@ -62,8 +66,15 @@ export class ExplorerComponent implements OnInit {
         map((value) => this._filter(value ?? ''))
       )
       this.activatedRoute.params.subscribe((params) => {
-        this.devicesService.executeExplorerCall(params.id as string, this.selectedWsmanOperation).subscribe((data) => {
-          this.XMLData = data
+        this.deviceId = params.id
+        this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+          next: (data) => {
+            this.XMLData = data
+          },
+          error: (err) => {
+            console.error(err)
+            this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+          }
         })
       })
     })
@@ -77,10 +88,14 @@ export class ExplorerComponent implements OnInit {
 
   inputChanged(value: any): void {
     this.selectedWsmanOperation = value
-    this.activatedRoute.params.subscribe((params) => {
-      this.devicesService.executeExplorerCall(params.id as string, this.selectedWsmanOperation).subscribe((data) => {
+    this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+      next: (data) => {
         this.XMLData = data
-      })
+      },
+      error: (err) => {
+        console.error(err)
+        this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+      }
     })
   }
 }

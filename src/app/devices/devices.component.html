@@ -152,11 +152,6 @@
               <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
                 <mat-icon>delete</mat-icon>
               </button>
-              @if (!isCloudMode) {
-              <button mat-icon-button matTooltip="Explore the Device" [routerLink]="[element.guid, 'explorer']" (click)="$event.stopPropagation()">
-                <mat-icon>search</mat-icon>
-              </button>
-            }
             </div>
           }
         </mat-cell>

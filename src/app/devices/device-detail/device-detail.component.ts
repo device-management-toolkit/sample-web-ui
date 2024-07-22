@@ -35,6 +35,7 @@ import { HardwareInformationComponent } from '../hardware-information/hardware-i
 import { SolComponent } from '../sol/sol.component'
 import { KvmComponent } from '../kvm/kvm.component'
 import { GeneralComponent } from '../general/general.component'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-device-detail',
@@ -95,6 +96,7 @@ import { GeneralComponent } from '../general/general.component'
 })
 export class DeviceDetailComponent implements OnInit {
   public deviceId = ''
+  public isCloudMode: boolean = environment.cloud
 
   categories = [
     {
@@ -157,6 +159,14 @@ export class DeviceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.isLoading = true
+      if (this.isCloudMode) {
+        this.categories.push({
+          name: 'Explorer',
+          description: 'Send WSMAN commands',
+          component: 'explorer',
+          icon: 'search'
+        })
+      }
       this.deviceId = params.id
       this.currentView = params.component || 'general'
     })

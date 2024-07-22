@@ -20,31 +20,33 @@
   </mat-sidenav>
   <mat-sidenav-content>
     @switch (currentView) {
-    @default{
-    <app-general [deviceId]="deviceId"></app-general>
-    }
-    @case('general'){
-    <app-general [deviceId]="deviceId"></app-general>
-    }
-    @case('kvm'){
-    <app-kvm [deviceId]="deviceId"></app-kvm>
-    }
-    @case('sol'){
-    <app-sol [deviceId]="deviceId"></app-sol>
-    }
-    @case('hardware-info'){
-    <app-hardware-information [deviceId]="deviceId"></app-hardware-information>
-    }
-    @case('audit-log'){
-    <app-audit-log [deviceId]="deviceId"></app-audit-log>
-    }
-    @case('event-log'){
-    <app-event-log [deviceId]="deviceId"></app-event-log>
-    } @case('alarms'){
-    <app-alarms [deviceId]="deviceId"></app-alarms>
-    } @case('explorer'){
-    <app-explorer></app-explorer>
-    }
+      @default{
+      <app-general [deviceId]="deviceId"></app-general>
+      }
+      @case('general'){
+      <app-general [deviceId]="deviceId"></app-general>
+      }
+      @case('kvm'){
+      <app-kvm [deviceId]="deviceId"></app-kvm>
+      }
+      @case('sol'){
+      <app-sol [deviceId]="deviceId"></app-sol>
+      }
+      @case('hardware-info'){
+      <app-hardware-information [deviceId]="deviceId"></app-hardware-information>
+      }
+      @case('audit-log'){
+      <app-audit-log [deviceId]="deviceId"></app-audit-log>
+      }
+      @case('event-log'){
+      <app-event-log [deviceId]="deviceId"></app-event-log>
+      }
+      @case('alarms'){
+      <app-alarms [deviceId]="deviceId"></app-alarms>
+      }
+      @case('explorer'){
+      <app-explorer [deviceId]="deviceId"></app-explorer>
+      }
     }
   </mat-sidenav-content>
 </mat-sidenav-container>
