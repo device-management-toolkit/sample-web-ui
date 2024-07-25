@@ -286,6 +286,15 @@ export interface HardwareInformation {
   CIM_PhysicalPackage: HardwareResponse<CIMPhysicalPackage[]>
 }
 
+export interface DiskResponse<T> {
+  responses: any
+}
+
+export interface DiskInformation {
+  CIM_MediaAccessDevice: DiskResponse<CIMMediaAccessDevice[]>
+  CIM_PhysicalPackage: DiskResponse<CIMPhysicalPackage[]>
+}
+
 export interface ValidatorError {
   msg: string
   param: string

@@ -22,7 +22,8 @@ import {
   RedirectionToken,
   UserConsentResponse,
   RedirectionStatus,
-  AMTFeaturesRequest
+  AMTFeaturesRequest,
+  DiskInformation
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -158,6 +159,47 @@ export class DevicesService {
     13: 'Off'
   }
 
+  public MemoryTypeMap = {
+    0: 'Unknown',
+    1: 'Other',
+    2: 'DRAM',
+    3: 'Synchronous DRAM',
+    4: 'Cache DRAM',
+    5: 'EDO',
+    6: 'EDRAM',
+    7: 'VRAM',
+    8: 'SRAM',
+    9: 'RAM',
+    10: 'ROM',
+    11: 'Flash',
+    12: 'EEPROM',
+    13: 'FEPROM',
+    14: 'EPROM',
+    15: 'CDRAM',
+    16: '3DRAM',
+    17: 'SDRAM',
+    18: 'SGRAM',
+    19: 'RDRAM',
+    20: 'DDR',
+    21: 'DDR-2',
+    22: 'BRAM',
+    23: 'FB-DIMM',
+    24: 'DDR3',
+    25: 'FBD2',
+    26: 'DDR4',
+    27: 'LPDDR',
+    28: 'LPDDR2',
+    29: 'LPDDR3',
+    30: 'LPDDR4',
+    31: 'Logical non-volatile device',
+    32: 'HBM (High Bandwidth Memory)',
+    33: 'HBM2 (High Bandwidth Memory Generation 2)',
+    34: 'DDR5',
+    35: 'LPDDR5',
+    36: 'HBM3 (High Bandwidth Memory Generation 3)',
+    37: 'DMTF Reserved'
+  }
+
   public device = new Subject<Device>()
 
   stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
@@ -203,6 +245,14 @@ export class DevicesService {
 
   getHardwareInformation(guid: string): Observable<HardwareInformation> {
     return this.http.get<HardwareInformation>(`${environment.mpsServer}/api/v1/amt/hardwareInfo/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getDiskInformation(guid: string): Observable<DiskInformation> {
+    return this.http.get<DiskInformation>(`${environment.mpsServer}/api/v1/amt/diskInfo/${guid}`).pipe(
       catchError((err) => {
         throw err
       })

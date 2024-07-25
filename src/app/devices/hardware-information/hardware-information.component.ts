@@ -11,11 +11,12 @@ import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { FormBuilder } from '@angular/forms'
-import { HardwareInformation } from 'src/models/models'
+import { DiskInformation, HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MomentModule } from 'ngx-moment'
 import { MatProgressBar } from '@angular/material/progress-bar'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-hardware-information',
@@ -37,7 +38,10 @@ export class HardwareInformationComponent implements OnInit {
 
   isLoading = true
   public hwInfo?: HardwareInformation
+  public diskInfo?: DiskInformation
   public targetOS: any
+  public memoryType: any
+  public isCloudMode: boolean = environment.cloud
 
   constructor(
     public snackBar: MatSnackBar,
@@ -47,6 +51,7 @@ export class HardwareInformationComponent implements OnInit {
     public fb: FormBuilder
   ) {
     this.targetOS = this.devicesService.TargetOSMap
+    this.memoryType = this.devicesService.MemoryTypeMap
   }
 
   ngOnInit(): void {
@@ -63,6 +68,31 @@ export class HardwareInformationComponent implements OnInit {
       )
       .subscribe((results) => {
         this.hwInfo = results
+        if (!this.isCloudMode) {
+          this.getDiskInformation()
+        }
       })
+  }
+
+  getDiskInformation(): void {
+    this.devicesService
+      .getDiskInformation(this.deviceId)
+      .pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error retrieving additional info`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe((diskInfo) => {
+        this.diskInfo = diskInfo
+      })
+  }
+
+  calculateMediaSize(maxMediaSize: number): string {
+    const sizeInMB = (maxMediaSize / (1000 * 1000)).toFixed(0)
+    return `${sizeInMB} GB`
   }
 }

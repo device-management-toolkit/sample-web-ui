@@ -909,4 +909,74 @@ describe('DevicesService', () => {
       done()
     })
   })
+
+  it('it should return the disk information', (done) => {
+    const getDiskInfo = {
+      CIM_MediaAccessDevice: {
+        responses: [
+          [
+            {
+              Capabilities: [
+                4,
+                10,
+                7
+              ],
+              CreationClassName: 'CIM_MediaAccessDevice',
+              DeviceID: 'MEDIA DEV 0',
+              ElementName: 'Managed System Media Access Device',
+              EnabledDefault: 2,
+              EnabledState: 0,
+              MaxMediaSize: 256060514,
+              OperationalStatus: [
+                0
+              ],
+              RequestedState: 12,
+              Security: 2,
+              SystemCreationClassName: 'CIM_ComputerSystem',
+              SystemName: 'ManagedSystem'
+            }
+          ]
+
+        ]
+      },
+      CIM_PhysicalPackage: {
+        responses: [
+          [
+            {
+              CanBeFRUed: false,
+              VendorEquipmentType: '',
+              ManufactureDate: '',
+              OtherIdentifyingInfo: '',
+              SerialNumber: '50026B76866D839D',
+              SKU: '',
+              Model: 'KINGSTON OM8PGP4256Q-A0                 ',
+              Manufacturer: '',
+              ElementName: 'Managed System Storage Media Package',
+              CreationClassName: 'CIM_PhysicalPackage',
+              Tag: 'Storage Media Package 0',
+              OperationalStatus: [
+                0
+              ],
+              PackageType: 15
+            }
+          ]
+
+        ]
+      }
+    }
+    httpClientSpy.get.and.returnValue(of(getDiskInfo))
+    service.getDiskInformation('defgh-34567-poiuy').subscribe((response) => {
+      expect(response).toEqual(getDiskInfo)
+      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/diskInfo/defgh-34567-poiuy`)
+      done()
+    })
+  })
+
+  it('should return error while getting disk information', (done) => {
+    httpClientSpy.get.and.returnValue(throwError(error))
+    service.getDiskInformation('defgh-34567-poiuy').subscribe(null, (err) => {
+      expect(error).toEqual(err)
+      done()
+    })
+  })
 })
