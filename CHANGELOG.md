@@ -1,3 +1,10 @@
+## [3.12.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.1...v3.12.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* update hardware information component ([#2050](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2050)) ([9fa5f86](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9fa5f86e2d401abb52a2b26c4c06b1aee05b1230))
+
 ## [3.12.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.0...v3.12.1) (2024-07-19)
 
 
