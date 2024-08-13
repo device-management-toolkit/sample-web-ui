@@ -1,8 +1,10 @@
-<mat-toolbar> Audit Log ({{ auditLogData.totalCnt }}) </mat-toolbar>
 @if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
+  <mat-card-header>
+    <mat-card-title> Audit Log ({{ auditLogData.totalCnt }}) </mat-card-title>
+  </mat-card-header>
   <mat-card-content>
     @if (isNoData()) {
       <h3 class="flex justify-center">No Audit Log</h3>

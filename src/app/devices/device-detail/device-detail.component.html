@@ -1,51 +1,64 @@
 <app-device-toolbar [deviceId]="deviceId"></app-device-toolbar>
 <mat-sidenav-container autosize>
-  <mat-sidenav mode="side" position="end" opened  [style.width.px]="isCollapsed ? 60 : 250">
+  <mat-sidenav mode="side" position="end" opened [style.width.px]="isCollapsed ? 60 : 250">
     <mat-list>
-      <a mat-list-item style="cursor: pointer;" (click)="toggleSidenav()" [matTooltip]="isCollapsed ? 'Expand' : 'Collapse'" matTooltipPosition="left">
+      <a
+        mat-list-item
+        style="cursor: pointer"
+        (click)="toggleSidenav()"
+        [matTooltip]="isCollapsed ? 'Expand' : 'Collapse'"
+        matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
-      @for(item of categories; track item){
-      <a mat-list-item (click)="setCurrentView(item)" style="cursor: pointer;" [matTooltip]="item.name" matTooltipPosition="left">
-        @if(!isCollapsed){
-        <h3 matListItemTitle>{{item.name}}</h3>
-        }
-        <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
-        @if(!isCollapsed){
-        <p matListItemLine>{{item.description}}</p>
-        }
-      </a>
+      @for (item of categories; track item) {
+        <a
+          mat-list-item
+          (click)="setCurrentView(item)"
+          style="cursor: pointer"
+          [matTooltip]="item.name"
+          matTooltipPosition="left">
+          @if (!isCollapsed) {
+            <h3 matListItemTitle>{{ item.name }}</h3>
+          }
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          @if (!isCollapsed) {
+            <p matListItemLine>{{ item.description }}</p>
+          }
+        </a>
       }
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
     @switch (currentView) {
-      @default{
-      <app-general [deviceId]="deviceId"></app-general>
+      @default {
+        <app-general [deviceId]="deviceId"></app-general>
       }
-      @case('general'){
-      <app-general [deviceId]="deviceId"></app-general>
+      @case ('general') {
+        <app-general [deviceId]="deviceId"></app-general>
       }
-      @case('kvm'){
-      <app-kvm [deviceId]="deviceId"></app-kvm>
+      @case ('kvm') {
+        <app-kvm [deviceId]="deviceId"></app-kvm>
       }
-      @case('sol'){
-      <app-sol [deviceId]="deviceId"></app-sol>
+      @case ('sol') {
+        <app-sol [deviceId]="deviceId"></app-sol>
       }
-      @case('hardware-info'){
-      <app-hardware-information [deviceId]="deviceId"></app-hardware-information>
+      @case ('hardware-info') {
+        <app-hardware-information [deviceId]="deviceId"></app-hardware-information>
       }
-      @case('audit-log'){
-      <app-audit-log [deviceId]="deviceId"></app-audit-log>
+      @case ('audit-log') {
+        <app-audit-log [deviceId]="deviceId"></app-audit-log>
       }
-      @case('event-log'){
-      <app-event-log [deviceId]="deviceId"></app-event-log>
+      @case ('event-log') {
+        <app-event-log [deviceId]="deviceId"></app-event-log>
       }
-      @case('alarms'){
-      <app-alarms [deviceId]="deviceId"></app-alarms>
+      @case ('alarms') {
+        <app-alarms [deviceId]="deviceId"></app-alarms>
       }
-      @case('explorer'){
-      <app-explorer [deviceId]="deviceId"></app-explorer>
+      @case ('explorer') {
+        <app-explorer [deviceId]="deviceId"></app-explorer>
+      }
+      @case ('network-settings') {
+        <app-network-settings [deviceId]="deviceId"></app-network-settings>
       }
     }
   </mat-sidenav-content>

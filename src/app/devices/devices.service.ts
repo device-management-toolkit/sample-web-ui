@@ -488,4 +488,12 @@ export class DevicesService {
       })
     )
   }
+
+  getNetworkSettings(guid: string): Observable<any> {
+    return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/networkSettings/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
 }

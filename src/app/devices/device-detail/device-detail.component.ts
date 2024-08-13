@@ -35,6 +35,7 @@ import { HardwareInformationComponent } from '../hardware-information/hardware-i
 import { SolComponent } from '../sol/sol.component'
 import { KvmComponent } from '../kvm/kvm.component'
 import { GeneralComponent } from '../general/general.component'
+import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -91,7 +92,8 @@ import { environment } from 'src/environments/environment'
     MatDatepicker,
     MatSlideToggle,
     MomentModule,
-    DatePipe
+    DatePipe,
+    NetworkSettingsComponent
   ]
 })
 export class DeviceDetailComponent implements OnInit {
@@ -159,12 +161,18 @@ export class DeviceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.isLoading = true
-      if (this.isCloudMode) {
+      if (!this.isCloudMode) {
         this.categories.push({
           name: 'Explorer',
           description: 'Send WSMAN commands',
           component: 'explorer',
           icon: 'search'
+        })
+        this.categories.push({
+          name: 'Network Settings',
+          description: 'View network settings',
+          component: 'network-settings',
+          icon: 'lan'
         })
       }
       this.deviceId = params.id

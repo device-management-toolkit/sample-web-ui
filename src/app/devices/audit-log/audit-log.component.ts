@@ -27,7 +27,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { MomentModule } from 'ngx-moment'
-import { MatCard, MatCardContent } from '@angular/material/card'
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
@@ -38,9 +38,10 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./audit-log.component.scss'],
   standalone: true,
   imports: [
-    MatToolbar,
     MatProgressBar,
     MatCard,
+    MatCardHeader,
+    MatCardTitle,
     MatCardContent,
     MatTable,
     MatSort,
