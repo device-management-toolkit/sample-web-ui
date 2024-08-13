@@ -1,3 +1,10 @@
+# [3.13.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.3...v3.13.0) (2024-08-13)
+
+
+### Features
+
+* display network settings ([#2043](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2043)) ([3a51275](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3a5127516bd1c71be7d027196d1ac8104fcff9a9))
+
 ## [3.12.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.2...v3.12.3) (2024-08-12)
 
 ## [3.12.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.1...v3.12.2) (2024-07-25)
