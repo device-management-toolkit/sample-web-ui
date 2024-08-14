@@ -152,7 +152,22 @@ export class DeviceDetailComponent implements OnInit {
     public readonly router: Router,
     private readonly devicesService: DevicesService,
     public fb: FormBuilder
-  ) {}
+  ) {
+    if (!this.isCloudMode) {
+      this.categories.push({
+        name: 'Explorer',
+        description: 'Send WSMAN commands',
+        component: 'explorer',
+        icon: 'search'
+      })
+      this.categories.push({
+        name: 'Network Settings',
+        description: 'View network settings',
+        component: 'network-settings',
+        icon: 'lan'
+      })
+    }
+  }
 
   public currentView = 'general'
   public isLoading = false
@@ -161,20 +176,7 @@ export class DeviceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.isLoading = true
-      if (!this.isCloudMode) {
-        this.categories.push({
-          name: 'Explorer',
-          description: 'Send WSMAN commands',
-          component: 'explorer',
-          icon: 'search'
-        })
-        this.categories.push({
-          name: 'Network Settings',
-          description: 'View network settings',
-          component: 'network-settings',
-          icon: 'lan'
-        })
-      }
+
       this.deviceId = params.id
       this.currentView = params.component || 'general'
     })
