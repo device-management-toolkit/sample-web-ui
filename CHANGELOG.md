@@ -1,3 +1,10 @@
+## [3.13.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.0...v3.13.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* menu options no longer duplicate ([dc0ff10](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/dc0ff107628371fa2431c3c138c36ab2835d13b3))
+
 # [3.13.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.3...v3.13.0) (2024-08-13)
 
 
