@@ -14,6 +14,8 @@
         <a
           mat-list-item
           (click)="setCurrentView(item)"
+          [routerLink]="'/devices/' + deviceId + '/' + item.component"
+          routerLinkActive="active"
           style="cursor: pointer"
           [matTooltip]="item.name"
           matTooltipPosition="left">

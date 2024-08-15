@@ -26,7 +26,7 @@ import { MatStepper, MatStep, MatStepLabel } from '@angular/material/stepper'
 import { MatTabGroup, MatTab } from '@angular/material/tabs'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { ExplorerComponent } from 'src/app/explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
 import { EventLogComponent } from '../event-log/event-log.component'
@@ -93,6 +93,8 @@ import { environment } from 'src/environments/environment'
     MatSlideToggle,
     MomentModule,
     DatePipe,
+    RouterLink,
+    RouterLinkActive,
     NetworkSettingsComponent
   ]
 })
@@ -188,7 +190,5 @@ export class DeviceDetailComponent implements OnInit {
 
   setCurrentView(category: any): void {
     this.currentView = category.component
-    // update current URL
-    void this.router.navigate([`/devices/${this.deviceId}/${category.component}`])
   }
 }
