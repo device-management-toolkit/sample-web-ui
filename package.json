@@ -49,7 +49,7 @@
     "@angular/localize": "~18.1.4",
     "@types/jasmine": "~5.1.4",
     "@types/node": "^22.2.0",
-    "angular-eslint": "18.2.0",
+    "angular-eslint": "18.3.0",
     "cypress": "^13.13.2",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
