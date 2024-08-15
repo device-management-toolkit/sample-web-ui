@@ -1,3 +1,10 @@
+# [3.14.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.1...v3.14.0) (2024-08-15)
+
+
+### Features
+
+* add active indicator to device-detail page ([35c3c77](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/35c3c77b5738ac4018fff84c2ec2ee14207558cc))
+
 ## [3.13.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.0...v3.13.1) (2024-08-14)
 
 
