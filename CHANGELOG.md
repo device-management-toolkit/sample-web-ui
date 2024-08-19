@@ -1,67 +1,58 @@
 ## [3.14.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.2...v3.14.3) (2024-08-19)
 
-
 ### Bug Fixes
 
-* bulk delete is now throttled ([d113890](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d113890db7d48815bd2f5ce757b4e0e62195e6b2)), closes [#2116](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2116) [#2117](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2117)
+- bulk delete is now throttled ([d113890](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d113890db7d48815bd2f5ce757b4e0e62195e6b2)), closes [#2116](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2116) [#2117](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2117)
 
 ## [3.14.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.1...v3.14.2) (2024-08-19)
 
-
 ### Bug Fixes
 
-* remove disabled attribute from tag and instead use disableRipple ([#2115](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2115)) ([aee2cf0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/aee2cf0ee40ec9f35697a1975c7793a2f33e9808))
+- remove disabled attribute from tag and instead use disableRipple ([#2115](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2115)) ([aee2cf0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/aee2cf0ee40ec9f35697a1975c7793a2f33e9808))
 
 ## [3.14.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.0...v3.14.1) (2024-08-19)
 
-
 ### Bug Fixes
 
-* tooltip for bulk action ([9e61594](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9e61594c6f2026b0009df4d1f550382de03d9570)), closes [#2112](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2112)
+- tooltip for bulk action ([9e61594](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9e61594c6f2026b0009df4d1f550382de03d9570)), closes [#2112](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2112)
 
 # [3.14.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.1...v3.14.0) (2024-08-15)
 
-
 ### Features
 
-* add active indicator to device-detail page ([35c3c77](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/35c3c77b5738ac4018fff84c2ec2ee14207558cc))
+- add active indicator to device-detail page ([35c3c77](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/35c3c77b5738ac4018fff84c2ec2ee14207558cc))
 
 ## [3.13.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.0...v3.13.1) (2024-08-14)
 
-
 ### Bug Fixes
 
-* menu options no longer duplicate ([dc0ff10](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/dc0ff107628371fa2431c3c138c36ab2835d13b3))
+- menu options no longer duplicate ([dc0ff10](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/dc0ff107628371fa2431c3c138c36ab2835d13b3))
 
 # [3.13.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.3...v3.13.0) (2024-08-13)
 
-
 ### Features
 
-* display network settings ([#2043](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2043)) ([3a51275](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3a5127516bd1c71be7d027196d1ac8104fcff9a9))
+- display network settings ([#2043](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2043)) ([3a51275](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3a5127516bd1c71be7d027196d1ac8104fcff9a9))
 
 ## [3.12.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.2...v3.12.3) (2024-08-12)
 
 ## [3.12.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.1...v3.12.2) (2024-07-25)
 
-
 ### Bug Fixes
 
-* update hardware information component ([#2050](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2050)) ([9fa5f86](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9fa5f86e2d401abb52a2b26c4c06b1aee05b1230))
+- update hardware information component ([#2050](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2050)) ([9fa5f86](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9fa5f86e2d401abb52a2b26c4c06b1aee05b1230))
 
 ## [3.12.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.12.0...v3.12.1) (2024-07-19)
 
-
 ### Bug Fixes
 
-* loading domains successfully no longer shows error ([#2038](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2038)) ([4b33b90](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4b33b90a68e71e0a7ace04905d5579d26b201460))
+- loading domains successfully no longer shows error ([#2038](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2038)) ([4b33b90](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4b33b90a68e71e0a7ace04905d5579d26b201460))
 
 # [3.12.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.1...v3.12.0) (2024-07-18)
 
-
 ### Features
 
-* add loading indicators for hwinfo and general info ([#2035](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2035)) ([d7bed7e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d7bed7e0aa6d8112e6b044415d25a23b4bc49d14))
+- add loading indicators for hwinfo and general info ([#2035](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2035)) ([d7bed7e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d7bed7e0aa6d8112e6b044415d25a23b4bc49d14))
 
 ## [3.11.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.11.0...v3.11.1) (2024-07-16)
 

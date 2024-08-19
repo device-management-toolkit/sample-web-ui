@@ -62,6 +62,9 @@
       @case ('network-settings') {
         <app-network-settings [deviceId]="deviceId"></app-network-settings>
       }
+      @case ('tls') {
+        <app-tls [deviceId]="deviceId"></app-tls>
+      }
     }
   </mat-sidenav-content>
 </mat-sidenav-container>

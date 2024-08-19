@@ -7,6 +7,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatListModule } from '@angular/material/list'
 import { MatIcon } from '@angular/material/icon'
 import { MatDivider } from '@angular/material/divider'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @Component({
   selector: 'app-network-settings',
@@ -15,7 +16,8 @@ import { MatDivider } from '@angular/material/divider'
     MatCardModule,
     MatListModule,
     MatDivider,
-    MatIcon
+    MatIcon,
+    MatProgressBarModule
   ],
   templateUrl: './network-settings.component.html',
   styleUrl: './network-settings.component.scss'

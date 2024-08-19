@@ -496,4 +496,11 @@ export class DevicesService {
       })
     )
   }
+  getTLSSettings(guid: string): Observable<any> {
+    return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/tls/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
 }

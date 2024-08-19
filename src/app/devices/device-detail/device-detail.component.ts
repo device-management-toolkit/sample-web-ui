@@ -37,6 +37,7 @@ import { KvmComponent } from '../kvm/kvm.component'
 import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from 'src/environments/environment'
+import { TLSComponent } from '../tls/tls.component'
 
 @Component({
   selector: 'app-device-detail',
@@ -95,7 +96,8 @@ import { environment } from 'src/environments/environment'
     DatePipe,
     RouterLink,
     RouterLinkActive,
-    NetworkSettingsComponent
+    NetworkSettingsComponent,
+    TLSComponent
   ]
 })
 export class DeviceDetailComponent implements OnInit {
@@ -167,6 +169,12 @@ export class DeviceDetailComponent implements OnInit {
         description: 'View network settings',
         component: 'network-settings',
         icon: 'lan'
+      })
+      this.categories.push({
+        name: 'TLS Settings',
+        description: 'View TLS configuration',
+        component: 'tls',
+        icon: 'license'
       })
     }
   }
