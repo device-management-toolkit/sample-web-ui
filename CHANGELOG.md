@@ -1,3 +1,10 @@
+# [3.15.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.3...v3.15.0) (2024-08-19)
+
+
+### Features
+
+* display TLS settings ([#2105](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2105)) ([807b173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/807b173c24fa33082c460170dee7bb6405e93324))
+
 ## [3.14.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.2...v3.14.3) (2024-08-19)
 
 ### Bug Fixes
