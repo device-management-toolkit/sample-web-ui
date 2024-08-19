@@ -25,22 +25,22 @@
       <button mat-icon-button matTooltip="Restart selected devices" (click)="bulkPowerAction(5)">
         <mat-icon>restart_alt</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Deactivate selected devices" (click)="bulkDeactivate()">
+      <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="bulkDeactivate()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   }
 </mat-toolbar>
 @if (isLoading) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
 <mat-card>
   <mat-card-header>
     <div class="flex-row flex-wrap flex-1">
-      <div class="flex flex-66" style="width: 66%;">
-        <mat-form-field data-cy="filterSearch" style="width: 100%;">
-          <input matInput  (keyup)="applyFilter($event)"  placeholder="Filter Devices...." />
+      <div class="flex flex-66" style="width: 66%">
+        <mat-form-field data-cy="filterSearch" style="width: 100%">
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filter Devices...." />
           <mat-hint>Enter text to filter current page</mat-hint>
         </mat-form-field>
       </div>
@@ -50,7 +50,7 @@
           <mat-select [(ngModel)]="filteredTags" (selectionChange)="tagFilterChange($event)" name="tag" multiple>
             @for (tag of tags; track tag) {
               <mat-option [value]="tag">
-                {{tag}}
+                {{ tag }}
               </mat-option>
             }
           </mat-select>
@@ -63,12 +63,11 @@
       <h3 class="flex justify-center">
         @if (!filteredTags.length) {
           <span>No Devices</span>
-        }
-        @else {
+        } @else {
           <span>No Devices Match Filter Selection</span>
         }
       </h3>
-    } @else{
+    } @else {
       <mat-table [dataSource]="devices" matSort>
         <!-- select Column -->
         <ng-container matColumnDef="select">
@@ -91,96 +90,116 @@
         <ng-container matColumnDef="hostname">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Hostname (Friendly Name)</mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
-            {{ element.hostname }} @if (element.friendlyName !== null) {
-            <span>&nbsp;({{element.friendlyName}})</span>
-          }
-        </mat-cell>
-      </ng-container>
-      <!-- guid Column -->
-      <ng-container matColumnDef="guid">
-        <mat-header-cell *matHeaderCellDef> GUID</mat-header-cell>
-        <mat-cell data-cy="guid" *matCellDef="let element" (click)="navigateTo(element.guid)">
-          {{ element.guid }}
-        </mat-cell>
-      </ng-container>
-      <!-- status Column -->
-      <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
-          @if(isCloudMode){
-            {{ translateConnectionStatus(element.connectionStatus) }}
-            @if (element.connectionStatus) {
-              <span>&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+            {{ element.hostname }}
+            @if (element.friendlyName !== null) {
+              <span>&nbsp;({{ element.friendlyName }})</span>
             }
-          } @else{
-            Power: {{ powerStates[element.powerstate] }}
-          }
-        </mat-cell>
-      </ng-container>
-      <!-- tags Column -->
-      <ng-container matColumnDef="tags">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <!-- include this always hidden icon to match spacing in the cell -->
-          <mat-icon class="alwaysHidden">edit</mat-icon>
-          Tags
-        </mat-header-cell>
-        <mat-cell class="tags" *matCellDef="let element">
-          <span>
-            <mat-icon class="addTag" (click)="$event.stopPropagation(); editTagsForDevice(element.guid)">edit</mat-icon>
-          </span>
-          <mat-chip-set>
-            @for (tag of element?.tags; track tag) {
-              <mat-chip disabled (click)="$event.stopPropagation();">{{tag}}</mat-chip>
+          </mat-cell>
+        </ng-container>
+        <!-- guid Column -->
+        <ng-container matColumnDef="guid">
+          <mat-header-cell *matHeaderCellDef> GUID</mat-header-cell>
+          <mat-cell data-cy="guid" *matCellDef="let element" (click)="navigateTo(element.guid)">
+            {{ element.guid }}
+          </mat-cell>
+        </ng-container>
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            @if (isCloudMode) {
+              {{ translateConnectionStatus(element.connectionStatus) }}
+              @if (element.connectionStatus) {
+                <span>&nbsp;(Power: {{ powerStates[element.powerstate] }})</span>
+              }
+            } @else {
+              Power: {{ powerStates[element.powerstate] }}
             }
-          </mat-chip-set>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          @if (!selectedDevices.isSelected(element)) {
-            <div>
-              <button mat-icon-button matTooltip="Power up the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,2)">
-                <mat-icon>power</mat-icon>
-              </button>
-              <button mat-icon-button matTooltip="Power off the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,8)">
-                <mat-icon>power_off</mat-icon>
-              </button>
-              <button mat-icon-button matTooltip="Restart the device" (click)="$event.stopPropagation(); sendPowerAction(element.guid,5)">
-                <mat-icon>restart_alt</mat-icon>
-              </button>
-              <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          }
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="notification">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          @if (element.StatusMessage === 'SUCCESS' ) {
-            <mat-icon color="primary" matTooltip="Action sent successfully">check_circle</mat-icon>
-          }
-          @else if (element.StatusMessage === 'NOT_READY') {
-            <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready">warning</mat-icon>
-          }
-          @else if (element.StatusMessage === 'ERROR') {
-            <mat-icon color="warn" matTooltip="Error sending action">error</mat-icon>
-          }
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <!--      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.guid)"></mat-row>
-    </mat-table>
-  }
+          </mat-cell>
+        </ng-container>
+        <!-- tags Column -->
+        <ng-container matColumnDef="tags">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <!-- include this always hidden icon to match spacing in the cell -->
+            <mat-icon class="alwaysHidden">edit</mat-icon>
+            Tags
+          </mat-header-cell>
+          <mat-cell class="tags" *matCellDef="let element">
+            <span>
+              <mat-icon class="addTag" (click)="$event.stopPropagation(); editTagsForDevice(element.guid)"
+                >edit</mat-icon
+              >
+            </span>
+            <mat-chip-set>
+              @for (tag of element?.tags; track tag) {
+                <mat-chip disabled (click)="$event.stopPropagation()">{{ tag }}</mat-chip>
+              }
+            </mat-chip-set>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            @if (!selectedDevices.isSelected(element)) {
+              <div>
+                <button
+                  mat-icon-button
+                  matTooltip="Power up the device"
+                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 2)">
+                  <mat-icon>power</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  matTooltip="Power off the device"
+                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 8)">
+                  <mat-icon>power_off</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  matTooltip="Restart the device"
+                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
+                  <mat-icon>restart_alt</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  [matTooltip]="deleteDeviceLabel"
+                  (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="notification">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            @if (element.StatusMessage === 'SUCCESS') {
+              <mat-icon color="primary" matTooltip="Action sent successfully">check_circle</mat-icon>
+            } @else if (element.StatusMessage === 'NOT_READY') {
+              <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
+                >warning</mat-icon
+              >
+            } @else if (element.StatusMessage === 'ERROR') {
+              <mat-icon color="warn" matTooltip="Error sending action">error</mat-icon>
+            }
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <!--      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.guid)"></mat-row>
+      </mat-table>
+    }
 
-  @if (totalCount) {
-    <div>
-      <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="totalCount" (page)="pageChanged($event)" showFirstLastButtons>
-      </mat-paginator>
-    </div>
-  }
-</mat-card-content>
+    @if (totalCount) {
+      <div>
+        <mat-paginator
+          [pageSizeOptions]="[25, 50, 100]"
+          [pageSize]="25"
+          [length]="totalCount"
+          (page)="pageChanged($event)"
+          showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    }
+  </mat-card-content>
 </mat-card>
