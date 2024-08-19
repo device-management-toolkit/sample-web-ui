@@ -1,3 +1,10 @@
+## [3.14.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.0...v3.14.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* tooltip for bulk action ([9e61594](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9e61594c6f2026b0009df4d1f550382de03d9570)), closes [#2112](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2112)
+
 # [3.14.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.13.1...v3.14.0) (2024-08-15)
 
 
