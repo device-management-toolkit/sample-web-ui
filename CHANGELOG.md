@@ -1,3 +1,10 @@
+## [3.14.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.1...v3.14.2) (2024-08-19)
+
+
+### Bug Fixes
+
+* remove disabled attribute from tag and instead use disableRipple ([#2115](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2115)) ([aee2cf0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/aee2cf0ee40ec9f35697a1975c7793a2f33e9808))
+
 ## [3.14.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.0...v3.14.1) (2024-08-19)
 
 
