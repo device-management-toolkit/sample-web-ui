@@ -10,7 +10,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
-import { catchError, delay, finalize, map } from 'rxjs/operators'
+import { catchError, concatMap, delay, finalize, map } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
 import { Device, PageEventOptions } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
@@ -133,7 +133,6 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       this.displayedColumns = [
         'select',
         'hostname',
-        'status',
         'tags',
         'actions',
         'notification'
@@ -200,22 +199,22 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         let deviceIds = this.devices.data.map((x) => x.guid)
         if (environment.cloud) {
           deviceIds = this.devices.data.filter((z) => z.connectionStatus).map((x) => x.guid)
+          from(deviceIds)
+            .pipe(
+              map((id) => {
+                return this.devicesService.getPowerState(id).pipe(
+                  map((result) => {
+                    return { powerstate: result.powerstate, guid: id }
+                  })
+                )
+              })
+            )
+            .subscribe((results) => {
+              results.subscribe((x) => {
+                ;(this.devices.data.find((y) => y.guid === x.guid) as any).powerstate = x.powerstate
+              })
+            })
         }
-        from(deviceIds)
-          .pipe(
-            map((id) => {
-              return this.devicesService.getPowerState(id).pipe(
-                map((result) => {
-                  return { powerstate: result.powerstate, guid: id }
-                })
-              )
-            })
-          )
-          .subscribe((results) => {
-            results.subscribe((x) => {
-              ;(this.devices.data.find((y) => y.guid === x.guid) as any).powerstate = x.powerstate
-            })
-          })
       })
   }
 
@@ -404,26 +403,31 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       if (result === true) {
         const requests: Observable<any>[] = []
         this.isLoading = true
-        this.selectedDevices.selected.forEach((z) => {
-          requests.push(
-            this.devicesService.sendDeactivate(z.guid).pipe(
-              catchError((err) => of({ err })),
-              map((i) => ({
-                StatusMessage: i?.status ? i.status : 'ERROR',
-                guid: z.guid
-              }))
+        from(this.selectedDevices.selected)
+          .pipe(
+            concatMap((device) =>
+              this.devicesService.sendDeactivate(device.guid).pipe(
+                catchError((err) => of({ err })),
+                map((i) => ({
+                  StatusMessage: i?.status ? i.status : 'ERROR',
+                  guid: device.guid
+                })),
+                this.isCloudMode ? map((res) => res) : delay(500) // Delay after each request if not in cloud mode
+              )
             )
           )
-        })
-        forkJoin(requests).subscribe((result) => {
-          this.isLoading = false
-          result.forEach((res) => {
-            ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+          .subscribe({
+            next: (res) => {
+              ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+            },
+            error: () => {},
+            complete: () => {
+              this.isLoading = false
+              setTimeout(() => {
+                this.getTagsThenDevices()
+              }, 1500)
+            }
           })
-          setTimeout(() => {
-            this.getTagsThenDevices()
-          }, 3000)
-        })
       }
     })
   }
