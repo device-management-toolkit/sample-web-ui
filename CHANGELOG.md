@@ -1,3 +1,10 @@
+## [3.14.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.2...v3.14.3) (2024-08-19)
+
+
+### Bug Fixes
+
+* bulk delete is now throttled ([d113890](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d113890db7d48815bd2f5ce757b4e0e62195e6b2)), closes [#2116](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2116) [#2117](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2117)
+
 ## [3.14.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.1...v3.14.2) (2024-08-19)
 
 
