@@ -2,6 +2,59 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="1b8c2008ce5428bd8dabf6980d3163af4c7b02f0" datatype="html">
+        <source>CANCEL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/configs/config-detail/config-detail.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
+          <context context-type="linenumber">283</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cf272d006ff8c0b60e61b14e17fa6a39b30d614a" datatype="html">
+        <source>SAVE</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/configs/config-detail/config-detail.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
+          <context context-type="linenumber">288</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8727658283503841289" datatype="html">
+        <source>CIRA <x id="PH" equiv-text="reqType"/> created successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/configs/config-detail/config-detail.component.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="35dbfee37ddc00d6882831f5b0a5aa7a7f66b4c7" datatype="html">
         <source>CIRA Configs</source>
         <context-group purpose="location">
@@ -10,107 +63,765 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3e24569eca61d598c8b01defbbbb1fa8bd5222bc" datatype="html">
-        <source>Devices</source>
+      <trans-unit id="5278741053497536359" datatype="html">
+        <source>Unable to load CIRA Configs</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/devices/devices.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="sourcefile">src/app/configs/configs.component.ts</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3ffd5f2c6c615c4d0f94ad132940a1467a95e7e1" datatype="html">
-        <source>Domains</source>
+      <trans-unit id="1794783826026260011" datatype="html">
+        <source>CIRA config deleted successfully</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/domains/domains.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="sourcefile">src/app/configs/configs.component.ts</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c58e33e048cf147451754a7b6509455e3931bc91" datatype="html">
-        <source>Profiles</source>
+      <trans-unit id="1994588462620962070" datatype="html">
+        <source>Unable to delete CIRA Config</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profiles/profiles.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8e0ea7ccb2e56643bface7c9479a741d5eb711ee" datatype="html">
-        <source>FORGOT PASSWORD</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6cb857e1d3a55e79e06249de89417e85ffa4b78c" datatype="html">
-        <source>LOG IN</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1b8c2008ce5428bd8dabf6980d3163af4c7b02f0" datatype="html">
-        <source>CANCEL</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/configs/config-detail/config-detail.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cf272d006ff8c0b60e61b14e17fa6a39b30d614a" datatype="html">
-        <source>SAVE</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/configs/config-detail/config-detail.component.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="65cc4ab3b4c438e07c89be2b677d08369fb62da2" datatype="html">
-        <source>Welcome</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3fdc751b264ca9998e1542fcf5794e274cd56344" datatype="html">
-        <source>Log out</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="sourcefile">src/app/configs/configs.component.ts</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f65253954b66e929a8b4d5ecaf61f9129f8cec64" datatype="html">
         <source>Dashboard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="967b06da0d6979c20118974dc69719a92c5e27d8" datatype="html">
+        <source>IEEE 802.1x</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="8aa9788b2047419c4f0adfcba224464a3e11f11d" datatype="html">
+        <source>Wireless</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="c58e33e048cf147451754a7b6509455e3931bc91" datatype="html">
+        <source>Profiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profiles.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="3ffd5f2c6c615c4d0f94ad132940a1467a95e7e1" datatype="html">
+        <source>Domains</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="3e24569eca61d598c8b01defbbbb1fa8bd5222bc" datatype="html">
+        <source>Devices</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/navbar/navbar.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/devices.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">navlink</note>
+      </trans-unit>
+      <trans-unit id="3461ab23157a9153867c05a78c719b0d49cf1ad0" datatype="html">
+        <source>Hi</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3fdc751b264ca9998e1542fcf5794e274cd56344" datatype="html">
+        <source>Log out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2746480140326312867" datatype="html">
+        <source>Error retrieving MPS versions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7804399068773454992" datatype="html">
+        <source>Error retrieving RPS versions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1823820251264908796" datatype="html">
+        <source>Error retrieving device stats</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="557a188b1051d83381a283e9cdd1a3e1163b1a0a" datatype="html">
+        <source>This field is required and must be alphanumeric with no symbols.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/alarms/alarms.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9202192978968026632" datatype="html">
+        <source>Error retrieving Alarm Occurrences</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/alarms/alarms.component.ts</context>
+          <context context-type="linenumber">165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6602209911529561416" datatype="html">
+        <source>Error deleting Alarm Occurrence</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/alarms/alarms.component.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5556968521032019242" datatype="html">
+        <source>Error adding Alarm Occurrence</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/alarms/alarms.component.ts</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9046362038989711565" datatype="html">
+        <source>Error retrieving audit log</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/audit-log/audit-log.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/audit-log/audit-log.component.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7538460655580261740" datatype="html">
+        <source>Error sending power action</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-toolbar/device-toolbar.component.ts</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1620419853910277492" datatype="html">
+        <source>Power action sent but is not ready</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-toolbar/device-toolbar.component.ts</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3945278768174346417" datatype="html">
+        <source>Power action sent successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-toolbar/device-toolbar.component.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7308923815279731872" datatype="html">
+        <source>Deactivation sent successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-toolbar/device-toolbar.component.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1932409167244660363" datatype="html">
+        <source>Error sending deactivation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-toolbar/device-toolbar.component.ts</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6e338bd8caec76ebcdbc21322c36cb028d2cc9cf" datatype="html">
+        <source>This field is required and value must be six digit number.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-user-consent/device-user-consent.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1310156131314684039" datatype="html">
+        <source>Error cancelling user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-user-consent/device-user-consent.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">433</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4346912688897405912" datatype="html">
+        <source>Error sending user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/device-user-consent/device-user-consent.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c63d90296a81632d590530a77062ab9b6497481f" datatype="html">
+        <source>Add a Device</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/devices.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b762c1416866e09953b81c2579d396f3f56f5e4c" datatype="html">
+        <source>Edit Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/devices.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3847641334625839279" datatype="html">
+        <source>Error loading tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/devices.component.ts</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8563291108446859420" datatype="html">
+        <source>Error loading devices</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/devices.component.ts</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="317597249084995969" datatype="html">
+        <source>Error retrieving event log</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/event-log/event-log.component.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3648483730677310782" datatype="html">
+        <source>Error retrieving AMT Features</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/general/general.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1791772150921998749" datatype="html">
+        <source>Error retrieving General Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/general/general.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3470563057961476545" datatype="html">
+        <source>Error retrieving AMT Version</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/general/general.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1737753151350322492" datatype="html">
+        <source><x id="PH" equiv-text="results.status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/general/general.component.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3373260269954795490" datatype="html">
+        <source>Failed to update AMT Features</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/general/general.component.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6066513201783904541" datatype="html">
+        <source>Error retrieving HW Info</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/hardware-information/hardware-information.component.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5963465293308615276" datatype="html">
+        <source>Error retrieving additional info</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/hardware-information/hardware-information.component.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5284550433975879593" datatype="html">
+        <source>Error retrieving redirection status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">217</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8911349328476635668" datatype="html">
+        <source>KVM cannot be accessed - another kvm session is in progress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">226</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6737652846328638608" datatype="html">
+        <source>Error retrieving power status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">236</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3313859250744575408" datatype="html">
+        <source>Unable to display KVM dialog</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">249</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="226622049678679964" datatype="html">
+        <source>KVM cannot be accessed - request to enable KVM is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">288</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6213554060643744993" datatype="html">
+        <source>KVM cannot be accessed - failed to enable KVM</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">290</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2976747243288575975" datatype="html">
+        <source>KVM cannot be accessed - failed to request user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">334</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2038801309072309649" datatype="html">
+        <source>KVM cannot be accessed - requested user consent code is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">397</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5330060564673919731" datatype="html">
+        <source>KVM cannot be accessed - failed to cancel requested user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">399</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="321537694014631164" datatype="html">
+        <source>KVM cannot be accessed - unsupported user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">409</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8302788927171308061" datatype="html">
+        <source>KVM cannot be accessed - failed to send user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">413</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3026995033685589752" datatype="html">
+        <source>Error requesting user consent code - retry after 3 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">422</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">360</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4505015623393414179" datatype="html">
+        <source>KVM cannot be accessed - previously requested user consent code is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">442</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9138662217316399719" datatype="html">
+        <source>KVM cannot be accessed - failed to cancel previous requested user content code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/kvm/kvm.component.ts</context>
+          <context context-type="linenumber">444</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7122362144810006450" datatype="html">
+        <source>Error retrieving network settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/network-settings/network-settings.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5221671842451749420" datatype="html">
+        <source>Unable to display SOL dialog</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1670222275101745473" datatype="html">
+        <source>SOL cannot be accessed - request to enable SOL is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2932560391181697484" datatype="html">
+        <source>SOL cannot be accessed - failed to enable SOL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">229</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3079854498748175055" datatype="html">
+        <source>SOL cannot be accessed - failed to request user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">273</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3454980251256354734" datatype="html">
+        <source>SOL cannot be accessed - requested user consent code is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">336</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5758345827658380935" datatype="html">
+        <source>SOL cannot be accessed - failed to cancel requested user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">338</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1762164987341105833" datatype="html">
+        <source>SOL cannot be accessed - unsupported user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">347</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7250249070841335003" datatype="html">
+        <source>SOL cannot be accessed - failed to send user consent code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">351</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5530204157217319624" datatype="html">
+        <source>SOL cannot be accessed - previously requested user consent code is cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">380</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4660591540611579986" datatype="html">
+        <source>SOL cannot be accessed - failed to cancel previous requested user content code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/sol/sol.component.ts</context>
+          <context context-type="linenumber">382</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1754413291563209068" datatype="html">
+        <source>Error retrieving tls settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/devices/tls/tls.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7979246877571688802" datatype="html">
+        <source>Domain profile <x id="PH" equiv-text="reqType"/> successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8536029413956596176" datatype="html">
+        <source>Error creating/updating domain profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domain-detail/domain-detail.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2539539016829519499" datatype="html">
+        <source>Unable to load domains</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8441299246447660614" datatype="html">
+        <source>Domain deleted successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6833284420433736025" datatype="html">
+        <source>Unable to delete domain</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="464749780222721589" datatype="html">
+        <source>Expired</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7575193358830686200" datatype="html">
+        <source> days remaining</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2855459800561705390" datatype="html">
+        <source> months remaining</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8974164156500778620" datatype="html">
+        <source> years remaining</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7200586451088014582" datatype="html">
+        <source><x id="PH" equiv-text="countWarn.toString()"/> domain cert(s) will expire soon </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5745130777695825661" datatype="html">
+        <source><x id="PH" equiv-text="countExp.toString()"/> domain cert(s) are expired </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/domains/domains.component.ts</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8430720014139982282" datatype="html">
+        <source>Error retrieving explorer response</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/explorer/explorer.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/explorer/explorer.component.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="11d024a808664253f4d93bc37bad4de48c2a81dc" datatype="html">
+        <source> This field is required, must be alphanumeric (no spaces), and no longer than <x id="INTERPOLATION" equiv-text="{{profileNameMaxLen}}"/> characters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9bbb9be366d95205bcaa7d71552aea2b7abc55a9" datatype="html">
+        <source> This field is required </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.html</context>
+          <context context-type="linenumber">61,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5038100542433509403" datatype="html">
+        <source>Profile <x id="PH" equiv-text="reqType"/> successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.ts</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.ts</context>
+          <context context-type="linenumber">563</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7441514966749232243" datatype="html">
+        <source>Error creating/updating ieee8021x profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x-detail/ieee8021x-detail.component.ts</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dd7c18c9fc0ca007f0a1cfd4988dbb602d886468" datatype="html">
+        <source>IEEE8021x Configs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8610355652179756546" datatype="html">
+        <source>Unable to load IEEE8021x Configs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2403755764442357131" datatype="html">
+        <source>Configuration deleted successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless.component.ts</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1128336176221928005" datatype="html">
+        <source>Unable to delete Configuration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ieee8021x/ieee8021x.component.ts</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="field.required" datatype="html">
+        <source>This field is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6cb857e1d3a55e79e06249de89417e85ffa4b78c" datatype="html">
+        <source>LOG IN</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1171562059044474178" datatype="html">
+        <source>Error logging in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5e6548eb9cbb0467c307b4079bc989cd21f44355" datatype="html">
+        <source>This field is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="730ec9a970459677fec004108bd7fae116098f02" datatype="html">
+        <source>This field is required and must be between 8 and 32 characters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profile-detail/profile-detail.component.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/add-device-enterprise/add-device-enterprise.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6997258888099687379" datatype="html">
+        <source>Unable to load configurations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profiles.component.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3014124621217767280" datatype="html">
+        <source>Profile deleted successfully</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profiles.component.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4938230226288095024" datatype="html">
+        <source>Unable to delete profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/profiles/profiles.component.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ddff2888617f7657dc9d0ee1d129ca12ae4f04dd" datatype="html">
+        <source>This field is required and must be alphanumeric with no spaces or symbols.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7605415367262573368" datatype="html">
+        <source>Error creating/updating wireless profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless-detail/wireless-detail.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="67b20645bcb2e5c3bafd4bda1e8ae8936483819a" datatype="html">
+        <source>Wireless Configs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9080659484098043367" datatype="html">
+        <source>Unable to delete configuration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wireless/wireless.component.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
       </trans-unit>
     </body>
   </file>
