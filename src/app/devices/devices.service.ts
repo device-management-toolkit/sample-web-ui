@@ -503,4 +503,27 @@ export class DevicesService {
       })
     )
   }
+  getDeviceCertificate(guid: string): Observable<any> {
+    return this.http.get<any>(`${environment.mpsServer}/api/v1/devices/cert/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+  pinDeviceCertificate(guid: string, fingerprint: string): Observable<any> {
+    return this.http
+      .post<any>(`${environment.mpsServer}/api/v1/devices/cert/${guid}`, { sha256Fingerprint: fingerprint })
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+  deleteDeviceCertificate(guid: string): Observable<any> {
+    return this.http.delete<any>(`${environment.mpsServer}/api/v1/devices/cert/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
 }

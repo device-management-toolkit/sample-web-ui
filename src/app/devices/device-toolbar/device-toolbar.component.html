@@ -1,4 +1,15 @@
 <mat-toolbar>
+  @if (device?.useTLS) {
+    <div style="padding-right: 12px">
+      <button
+        [color]="isPinned() ? 'primary' : 'warn'"
+        mat-icon-button
+        [matTooltip]="isPinned() ? 'TLS w/ Pinned Certificate' : 'TLS (not pinned)'"
+        (click)="getDeviceCert()">
+        <mat-icon>lock</mat-icon>
+      </button>
+    </div>
+  }
   <span>
     @if (device?.friendlyName) {
       <span>{{ device?.friendlyName }}</span>

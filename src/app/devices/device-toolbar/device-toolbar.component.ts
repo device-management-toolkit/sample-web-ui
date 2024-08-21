@@ -23,6 +23,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatIconButton } from '@angular/material/button'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatToolbar } from '@angular/material/toolbar'
+import { DeviceCertDialogComponent } from '../device-cert-dialog/device-cert-dialog.component'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -106,6 +107,21 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.getDevice(this.deviceId).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)
+    })
+  }
+  isPinned(): boolean {
+    return this.device?.certHash != null && this.device?.certHash !== ''
+  }
+  getDeviceCert(): void {
+    this.devicesService.getDeviceCertificate(this.deviceId).subscribe((data) => {
+      this.matDialog
+        .open(DeviceCertDialogComponent, { data: data })
+        .afterClosed()
+        .subscribe((isPinned) => {
+          if (isPinned != null) {
+            this.device!.certHash = isPinned ? 'yup' : ''
+          }
+        })
     })
   }
 

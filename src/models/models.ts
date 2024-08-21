@@ -20,8 +20,9 @@ export interface Device {
   icon: number
   username?: string
   password?: string
-  useTls?: boolean
+  useTLS?: boolean
   allowSelfSigned?: boolean
+  certHash?: string
 }
 export interface DeviceInfo {
   fwVersion: string
