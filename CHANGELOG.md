@@ -1,3 +1,10 @@
+# [3.16.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.15.0...v3.16.0) (2024-08-22)
+
+
+### Features
+
+* enable TLS pinning in UI ([542d029](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/542d02946836b54516153d7c52e05e674279cfb0))
+
 # [3.15.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.3...v3.15.0) (2024-08-19)
 
 
