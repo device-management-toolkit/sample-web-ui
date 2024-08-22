@@ -51,6 +51,7 @@ export class DeviceToolbarComponent implements OnInit {
   @Input()
   public deviceId = ''
 
+  public isCloudMode = environment.cloud
   public device: Device | null = null
   public powerOptions = [
     {
