@@ -16,11 +16,17 @@
     } @else {
       <span>{{ device?.hostname }}</span>
     }
-    Device Control
     <div class="mat-caption">
-      {{ deviceId }}
+      @if (isCloudMode) {
+        {{ deviceId }}
+      }
       @if (device?.friendlyName) {
-        <span> - {{ device?.hostname }}</span>
+        <span>
+          @if (isCloudMode) {
+            -
+          }
+          {{ device?.hostname }}</span
+        >
       }
     </div>
   </span>

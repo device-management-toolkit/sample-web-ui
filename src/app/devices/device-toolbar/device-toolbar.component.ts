@@ -116,10 +116,10 @@ export class DeviceToolbarComponent implements OnInit {
   getDeviceCert(): void {
     this.devicesService.getDeviceCertificate(this.deviceId).subscribe((data) => {
       this.matDialog
-        .open(DeviceCertDialogComponent, { data: data })
+        .open(DeviceCertDialogComponent, { data: { certData: data, isPinned: this.isPinned() } })
         .afterClosed()
         .subscribe((isPinned) => {
-          if (isPinned != null) {
+          if (isPinned != null && isPinned !== '') {
             this.device!.certHash = isPinned ? 'yup' : ''
           }
         })

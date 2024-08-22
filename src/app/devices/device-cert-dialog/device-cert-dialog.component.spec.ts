@@ -26,7 +26,10 @@ describe('DeviceCertDialogComponent', () => {
       providers: [
         { provide: DevicesService, useValue: spyDevicesService },
         { provide: MatSnackBar, useValue: spySnackBar },
-        { provide: MAT_DIALOG_DATA, useValue: { guid: 'test-guid', sha256Fingerprint: 'test-fingerprint' } },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { certData: { guid: 'test-guid', sha256Fingerprint: 'test-fingerprint' }, isPinned: false }
+        },
         { provide: MatDialogRef, useValue: spyDialogRef }
       ]
     }).compileComponents()

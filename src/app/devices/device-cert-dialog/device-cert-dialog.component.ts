@@ -20,12 +20,17 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   styleUrl: './device-cert-dialog.component.scss'
 })
 export class DeviceCertDialogComponent {
+  public data: any = {}
+  public isPinned = false
   constructor(
     public deviceService: DevicesService,
     public snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     @Inject(MatDialogRef) public ref: any
-  ) {}
+  ) {
+    this.data = dialogData.certData
+    this.isPinned = dialogData.isPinned
+  }
 
   pin(): void {
     this.deviceService.pinDeviceCertificate(this.data.guid, this.data.sha256Fingerprint).subscribe(() => {

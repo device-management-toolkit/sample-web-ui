@@ -1,29 +1,27 @@
 <mat-toolbar color="primary">
   <div class="flex-50">
-    @if(cloudMode === true) {
+    @if (cloudMode === true) {
       Open AMT Cloud Toolkit Sample UI
     } @else {
       Console
     }
   </div>
   <div class="flex flex-50 justify-end items-center">
-    @if(cloudMode === true){
+    @if (cloudMode === true) {
       @if (isLoggedIn === true) {
-        <div class="version">MPS: v{{mpsVersions?.serviceVersion}}</div>
-        <div class="version">RPS: v{{rpsVersions?.serviceVersion}}</div>
+        <div class="version">MPS: v{{ mpsVersions?.serviceVersion }}</div>
+        <div class="version">RPS: v{{ rpsVersions?.serviceVersion }}</div>
       }
-      <mat-divider  vertical></mat-divider>
+      <mat-divider vertical></mat-divider>
     }
     <span i18n>Hi</span>
-    @if (isLoggedIn === true) {
+    @if (isLoggedIn === true && cloudMode === true) {
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
       </button>
     }
-    <mat-menu #menu="matMenu" >
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon><span i18n>Log out</span>
-      </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon><span i18n>Log out</span></button>
     </mat-menu>
     <button mat-icon-button (click)="displayAbout()">
       <mat-icon>info</mat-icon>

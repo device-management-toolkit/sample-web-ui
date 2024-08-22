@@ -48,7 +48,7 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Close</button>
-    <button (click)="remove()" type="button" color="warn" mat-button>Remove</button>
-    <button (click)="pin()" type="button" color="primary" mat-flat-button>Pin</button>
+    <button (click)="remove()" [disabled]="!isPinned" type="button" color="warn" mat-button>Remove</button>
+    <button (click)="pin()" [disabled]="isPinned" type="button" color="primary" mat-flat-button>Pin</button>
   </mat-dialog-actions>
 </mat-dialog-content>
