@@ -153,6 +153,19 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value
     this.devices.filter = filterValue.trim().toLowerCase()
   }
+  editDevice(device: Device): void {
+    if (!environment.cloud) {
+      const sub = this.dialog.open(AddDeviceEnterpriseComponent, {
+        height: '500px',
+        width: '600px',
+        data: device
+      })
+      sub.afterClosed().subscribe(() => {
+        window.location.reload()
+        this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+      })
+    }
+  }
 
   // in order to maintain tag filtering when editing tags,
   // the tags need to be retrieved first,
