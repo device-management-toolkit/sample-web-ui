@@ -113,11 +113,6 @@ export interface EventLog {
   eventTypeDesc: string
 }
 
-export interface APIResponse {
-  error: string
-  message: string
-}
-
 export interface AMTFeaturesResponse {
   userConsent: string
   optInState: number
@@ -330,19 +325,6 @@ export interface UserConsentResponse {
 export interface UserConsentData {
   deviceId: string
   results: any
-}
-
-export interface errorResponse {
-  error: string
-  errorDescription: string
-}
-
-export interface MQTTEvent {
-  guid: string
-  message: string
-  timestamp: number
-  type: string
-  methods: string[]
 }
 
 export interface RedirectionToken {

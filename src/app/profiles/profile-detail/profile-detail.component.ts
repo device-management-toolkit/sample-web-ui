@@ -21,8 +21,6 @@ import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk
 import { forkJoin, Observable, of } from 'rxjs'
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import * as Cira from '../../configs/configs.constants'
-import * as IEEE8021x from '../../ieee8021x/ieee8021x.constants'
 import {
   ActivationModes,
   Profile,
