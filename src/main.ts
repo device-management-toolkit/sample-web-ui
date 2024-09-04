@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app/app-routing.module'
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser'
 import { MomentModule } from 'ngx-moment'
 import { AuthorizeInterceptor } from './app/authorize.interceptor'
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
 
 if (environment.production) {
   enableProdMode()
@@ -23,12 +23,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(MomentModule, BrowserModule, AppRoutingModule),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthorizeInterceptor,
-      multi: true
-    },
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([AuthorizeInterceptor])),
     provideAnimations(),
     provideRouter([
       {
