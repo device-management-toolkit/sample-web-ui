@@ -31,7 +31,7 @@ export class AuthorizeInterceptor implements HttpInterceptor {
       const headers: any = {
         Authorization: `Bearer ${this.authService.getLoggedUserToken()}`
       }
-      if (request.body?.version != null) {
+      if (request.body?.version != null && request.body?.version !== '') {
         headers['if-match'] = request.body.version
       }
       request = request.clone({
