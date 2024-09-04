@@ -1,3 +1,10 @@
+# [3.17.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.16.1...v3.17.0) (2024-09-04)
+
+
+### Features
+
+* add ability to edit details from device ([4f0ca81](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4f0ca817c0c9f587b314d9a8ab95437668b245fe))
+
 ## [3.16.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.16.0...v3.16.1) (2024-09-04)
 
 
