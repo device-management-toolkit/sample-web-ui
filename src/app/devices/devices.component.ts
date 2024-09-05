@@ -421,17 +421,21 @@ export class DevicesComponent implements OnInit, AfterViewInit {
             concatMap((device) =>
               this.devicesService.sendDeactivate(device.guid).pipe(
                 catchError((err) => of({ err })),
-                map((i) => ({
-                  StatusMessage: i?.status ? i.status : 'ERROR',
-                  guid: device.guid
-                })),
+                this.isCloudMode
+                  ? map((i) => ({
+                      StatusMessage: i?.status ? i.status : 'ERROR',
+                      guid: device.guid
+                    }))
+                  : map((res) => res),
                 this.isCloudMode ? map((res) => res) : delay(500) // Delay after each request if not in cloud mode
               )
             )
           )
           .subscribe({
             next: (res) => {
-              ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+              if (this.isCloudMode) {
+                ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+              }
             },
             error: () => {},
             complete: () => {
