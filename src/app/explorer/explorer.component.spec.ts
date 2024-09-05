@@ -14,6 +14,7 @@ import { of } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
+import { By } from '@angular/platform-browser'
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
@@ -83,5 +84,21 @@ describe('ExplorerComponent', () => {
     expect(component.selectedWsmanOperation).toBe('Operation2')
     expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation2')
     expect(component.XMLData).toBe('<xml>Data</xml>')
+  })
+
+  it('should clear the input field when clearFilter is called', () => {
+    component.myControl.setValue('Test Value')
+    component.clearFilter()
+    expect(component.myControl.value).toBe('')
+  })
+
+  it('should clear the input field when input is clicked', () => {
+    component.myControl.setValue('Test Value')
+
+    // Simulate click event on the input field
+    const inputDebugElement = fixture.debugElement.query(By.css('input'))
+    inputDebugElement.triggerEventHandler('click', null)
+
+    expect(component.myControl.value).toBe('')
   })
 })

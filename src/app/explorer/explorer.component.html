@@ -4,7 +4,7 @@
     <div class="flex flex-50 items-center justify-end">
       <mat-form-field>
         <mat-label>WSMAN Call</mat-label>
-        <input type="text" placeholder="Select..." matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <input type="text" placeholder="Select..." matInput [formControl]="myControl" [matAutocomplete]="auto" (click)="clearFilter()" spellcheck="false">
         <mat-autocomplete #auto="matAutocomplete">
           @for (item of filteredOptions | async; track item) {
             <mat-option [value]="item" (onSelectionChange)="inputChanged($event.source.value)">{{item}}</mat-option>

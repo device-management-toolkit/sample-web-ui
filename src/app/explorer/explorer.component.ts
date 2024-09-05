@@ -86,6 +86,10 @@ export class ExplorerComponent implements OnInit {
     return this.wsmanOperations.filter((option) => option.toLowerCase().includes(filterValue))
   }
 
+  clearFilter(): void {
+    this.myControl.setValue('')
+  }
+
   inputChanged(value: any): void {
     this.selectedWsmanOperation = value
     this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
