@@ -1,3 +1,10 @@
+## [3.17.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.0...v3.17.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* hides erroneous icon for deletion ([#2166](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2166)) ([0bea2df](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0bea2dff4f7d8edc582fa36e200f59679136b308))
+
 # [3.17.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.16.1...v3.17.0) (2024-09-04)
 
 
