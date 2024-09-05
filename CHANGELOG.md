@@ -1,3 +1,10 @@
+## [3.17.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.1...v3.17.2) (2024-09-05)
+
+
+### Bug Fixes
+
+* automatically clears explorer selection field on click ([#2167](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2167)) ([4324bae](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4324bae360d15ccdc2d42bd5aff658104db7da6b))
+
 ## [3.17.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.0...v3.17.1) (2024-09-05)
 
 
