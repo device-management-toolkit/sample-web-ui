@@ -1,3 +1,10 @@
+# [3.18.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.3...v3.18.0) (2024-09-09)
+
+
+### Features
+
+* adds section to device info for certificate information and allows for downloading of certs ([#2135](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2135)) ([74801e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/74801e0d57c0ba4f604d3d3e0a61779cb9960e3e))
+
 ## [3.17.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.2...v3.17.3) (2024-09-09)
 
 
