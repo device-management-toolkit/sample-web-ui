@@ -29,6 +29,7 @@ import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.compone
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { ExplorerComponent } from 'src/app/explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
+import { CertificatesComponent } from '../certificates/certificates.component'
 import { EventLogComponent } from '../event-log/event-log.component'
 import { AuditLogComponent } from '../audit-log/audit-log.component'
 import { HardwareInformationComponent } from '../hardware-information/hardware-information.component'
@@ -47,6 +48,7 @@ import { TLSComponent } from '../tls/tls.component'
   providers: [provideNativeDateAdapter()],
   imports: [
     AlarmsComponent,
+    CertificatesComponent,
     EventLogComponent,
     AuditLogComponent,
     HardwareInformationComponent,
@@ -158,6 +160,12 @@ export class DeviceDetailComponent implements OnInit {
     public fb: FormBuilder
   ) {
     if (!this.isCloudMode) {
+      this.categories.push({
+        name: 'Certificates',
+        description: 'Manage certificates',
+        component: 'certificates',
+        icon: 'verified'
+      })
       this.categories.push({
         name: 'Explorer',
         description: 'Send WSMAN commands',

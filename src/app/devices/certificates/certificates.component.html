@@ -1,0 +1,34 @@
+@if (isLoading) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
+<mat-card class="flex flex-50 gap-12">
+  <mat-card-header>
+    <mat-card-title>Certificates</mat-card-title>
+    <mat-card-subtitle>List of certificates currently registered on the AMT device</mat-card-subtitle>
+  </mat-card-header>
+  <mat-list>
+    @if (isLoading) {
+    <mat-list-item>Loading Certificates ...</mat-list-item>
+    } @else if (isCertEmpty()) {
+    <mat-list-item>No Certificates Found</mat-list-item>
+    } @else {
+    @for (cert of certInfo.certificates?.publicKeyCertificateItems; track cert) {
+    <mat-list-item lines="3">
+      <span matListItemTitle>{{ cert.displayName }}</span>
+      <span matListItemLine>Type: {{cert.trustedRootCertificate ? "Root" : "Client"}}</span>
+      <span matListItemLine>Profile Associations:
+        @if (!cert.associatedProfiles) {
+        Unassociated
+        } @else {
+        {{cert.associatedProfiles}}
+        }
+      </span>
+      <button matListItemMeta mat-icon-button matTooltip="Download certificate" (click)="downloadCert(cert)">
+        <mat-icon>download</mat-icon>
+      </button>
+    </mat-list-item>
+    }
+    }
+  </mat-list>
+</mat-card>

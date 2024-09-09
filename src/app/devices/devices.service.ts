@@ -489,6 +489,14 @@ export class DevicesService {
     )
   }
 
+  getCertificates(guid: string): Observable<any> {
+    return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getNetworkSettings(guid: string): Observable<any> {
     return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/networkSettings/${guid}`).pipe(
       catchError((err) => {
