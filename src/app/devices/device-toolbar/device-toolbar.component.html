@@ -38,7 +38,7 @@
   <button mat-icon-button matTooltip="Edit device" (click)="editDevice()">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button matTooltip="Deactivate device" (click)="sendDeactivate()">
+  <button mat-icon-button [matTooltip]="isCloudMode ? 'Deactivate device' : 'Remove device'" (click)="sendDeactivate()">
     <mat-icon>delete</mat-icon>
   </button>
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
