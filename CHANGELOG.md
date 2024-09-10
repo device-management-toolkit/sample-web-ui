@@ -1,3 +1,10 @@
+## [3.18.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.0...v3.18.1) (2024-09-10)
+
+
+### Bug Fixes
+
+* deactivate button tooltip ([#2176](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2176)) ([cf4d5e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf4d5e023aba9dc394e0197519bd2cac475bc4e8))
+
 # [3.18.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.3...v3.18.0) (2024-09-09)
 
 
