@@ -1,3 +1,10 @@
+# [3.19.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.1...v3.19.0) (2024-09-11)
+
+
+### Features
+
+* add validation for username length ([9d0787d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9d0787df4e20c64a2a9f8e6b824c2d8fc7a251c9))
+
 ## [3.18.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.0...v3.18.1) (2024-09-10)
 
 
