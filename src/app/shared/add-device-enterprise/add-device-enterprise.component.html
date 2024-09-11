@@ -33,7 +33,7 @@
         <mat-error>Username is required</mat-error>
       }
       @if (form.get('username')?.errors?.minlength) {
-        <mat-error>Username must be at least 5 characters long</mat-error>
+        <mat-error>Username must be at least 5 characters long and no more than 16</mat-error>
       }
     </mat-form-field>
 

@@ -42,7 +42,10 @@ export class AddDeviceEnterpriseComponent {
   form: FormGroup = this.fb.group({
     hostname: ['', [Validators.required]],
     friendlyName: ['', [Validators.required, Validators.maxLength(50)]],
-    username: ['', [Validators.required, Validators.minLength(5)]],
+    username: ['', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(16)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
     useTLS: [false],
