@@ -17,6 +17,7 @@ import { MatDivider } from '@angular/material/divider'
 import { MatIcon } from '@angular/material/icon'
 import { MatCard } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 export class DashboardComponent implements OnInit {
   public isLoading = true
   public stats?: DeviceStats
-
+  public cloudMode = environment.cloud
   constructor(
     public snackBar: MatSnackBar,
     private readonly devicesService: DevicesService

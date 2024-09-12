@@ -8,6 +8,7 @@
     <mat-icon matListItemIcon>home</mat-icon>
     <span i18n="navlink">Dashboard</span>
   </a>
+  @if(cloudMode){
   <a mat-list-item routerLink="/ieee8021x" routerLinkActive="active">
     <mat-icon matListItemIcon>security</mat-icon>
     <span i18n="navlink">IEEE 802.1x</span>
@@ -26,6 +27,7 @@
   <a mat-list-item routerLink="/domains" routerLinkActive="active">
     <mat-icon matListItemIcon>http</mat-icon><span i18n="navlink">Domains</span>
   </a>
+  }
   <a mat-list-item routerLink="/devices" routerLinkActive="active">
     <mat-icon matListItemIcon>devices</mat-icon><span i18n="navlink">Devices</span>
   </a>
