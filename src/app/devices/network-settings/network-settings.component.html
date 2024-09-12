@@ -13,19 +13,19 @@
           <p>Element Name</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.elementName }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.elementName || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Instance ID</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.instanceID }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.instanceID || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>VLAN Tag</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.vlanTag }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.vlanTag || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Shared MAC</p>
@@ -37,7 +37,7 @@
           <p>MAC Address</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.macAddress }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.macAddress || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Link Status</p>
@@ -55,13 +55,13 @@
           <p>Link Preference</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.linkPreference }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.linkPreference || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Link Control</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.linkControl }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.linkControl || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Shared Static IP</p>
@@ -91,25 +91,25 @@
           <p>IP Address</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.ipAddress }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.ipAddress || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Subnet Mask</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.subnetMask }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.subnetMask || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Default Gateway</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.defaultGateway }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.defaultGateway || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Primary DNS</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.primaryDNS }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.primaryDNS || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Secondary DNS</p>
@@ -121,25 +121,25 @@
           <p>Console TCP Max Retransmissions</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.consoleTCPMaxRetransmissions }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.consoleTCPMaxRetransmissions || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>WLAN Link Protection Level</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.wlanLinkProtectionLevel }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.wlanLinkProtectionLevel || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Physical Connection Type</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.physicalConnectionType }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.physicalConnectionType || 'N/A'  }}</span>
         </div>
         <div class="flex flex-50">
           <p>Physical NIC Medium</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.physicalNICMedium }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.physicalNICMedium || 'N/A'  }}</span>
         </div>
       </div>
     </mat-card-content>
@@ -156,19 +156,19 @@
           <p>Element Name</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.elementName }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.elementName || 'N/A'  }}</span>
         </div>
         <div class="flex flex-50">
           <p>Instance ID</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.instanceID }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.instanceID || 'N/A'  }}</span>
         </div>
         <div class="flex flex-50">
           <p>VLAN Tag</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.vlanTag }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.vlanTag || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Shared MAC</p>
@@ -180,7 +180,7 @@
           <p>MAC Address</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.macAddress }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.macAddress || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Link Status</p>
@@ -198,13 +198,13 @@
           <p>Link Preference</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.linkPreference }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.linkPreference || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Link Control</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.linkControl }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.linkControl || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Shared Static IP</p>
@@ -234,25 +234,25 @@
           <p>IP Address</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.ipAddress }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.ipAddress || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Subnet Mask</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.subnetMask }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.subnetMask || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Default Gateway</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.defaultGateway }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.defaultGateway || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Primary DNS</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.primaryDNS }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.primaryDNS || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Secondary DNS</p>
@@ -264,25 +264,25 @@
           <p>Console TCP Max Retransmissions</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.consoleTCPMaxRetransmissions }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.consoleTCPMaxRetransmissions || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>WLAN Link Protection Level</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.wlanLinkProtectionLevel }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.wlanLinkProtectionLevel || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Physical Connection Type</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.physicalConnectionType }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.physicalConnectionType || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Physical NIC Medium</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wireless?.physicalNICMedium }}</span>
+          <span class="mat-h3">{{ networkResults?.wireless?.physicalNICMedium || 'N/A' }}</span>
         </div>
       </div>
     </mat-card-content>
@@ -300,19 +300,19 @@
           <p>Available In S0</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.availableInS0 }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.availableInS0 || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>Enabled</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.enabled }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.enabled || 'N/A' }}</span>
         </div>
         <div class="flex flex-50">
           <p>PXE Timeout</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.pxeTimeout }}</span>
+          <span class="mat-h3">{{ networkResults?.wired?.ieee8021x.pxeTimeout || 'N/A' }}</span>
         </div>
       </div>
       <mat-divider style="padding-bottom: 16px"></mat-divider>
