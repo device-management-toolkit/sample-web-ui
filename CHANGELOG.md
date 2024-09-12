@@ -1,3 +1,10 @@
+## [3.20.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.0...v3.20.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* show success message on amt features update ([abbea4d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/abbea4d2c0cf4fd6d55a400856420cdb923a7e43))
+
 # [3.20.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.19.0...v3.20.0) (2024-09-12)
 
 
