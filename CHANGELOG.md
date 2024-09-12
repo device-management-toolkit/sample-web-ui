@@ -1,3 +1,10 @@
+# [3.20.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.19.0...v3.20.0) (2024-09-12)
+
+
+### Features
+
+* hide menu for console and update dashboard ([8575d89](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8575d89a21839e06cadf36bf9c9e11b12bcc7eff))
+
 # [3.19.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.1...v3.19.0) (2024-09-11)
 
 
