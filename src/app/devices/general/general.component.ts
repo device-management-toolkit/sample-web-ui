@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { catchError, finalize, forkJoin, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-general',
@@ -47,6 +48,7 @@ export class GeneralComponent implements OnInit {
   public isLoading = true
   public isDisabled = true
   public amtVersion: any
+  public cloudMode = environment.cloud
   public device: Device | null = null
   public userConsentValues = [
     'none',
@@ -124,7 +126,11 @@ export class GeneralComponent implements OnInit {
       )
       .subscribe({
         next: (results: any) => {
-          this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
+          if (this.cloudMode) {
+            this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
+          } else {
+            this.snackBar.open($localize`AMT Features updated`, undefined, SnackbarDefaults.defaultSuccess)
+          }
         },
         error: (err) => {
           this.snackBar.open($localize`Failed to update AMT Features`, undefined, SnackbarDefaults.defaultError)
