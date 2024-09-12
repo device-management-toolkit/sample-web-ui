@@ -1,3 +1,10 @@
+## [3.20.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.1...v3.20.2) (2024-09-12)
+
+
+### Bug Fixes
+
+* handles empty values in DTO for network page ([#2190](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2190)) ([b4ae79c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4ae79c9f84c441d040b44dc689289d152421b11))
+
 ## [3.20.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.0...v3.20.1) (2024-09-12)
 
 
