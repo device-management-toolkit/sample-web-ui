@@ -4,13 +4,13 @@
  **********************************************************************/
 
 import { Component, Input, OnInit } from '@angular/core'
-import { catchError, finalize } from 'rxjs/operators'
+import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { of } from 'rxjs'
+import { defer, iif, Observable, of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { Device } from 'src/models/models'
+import { AMTFeaturesResponse, Device, UserConsentResponse } from 'src/models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { environment } from 'src/environments/environment'
@@ -24,6 +24,7 @@ import { MatIconButton } from '@angular/material/button'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatToolbar } from '@angular/material/toolbar'
 import { DeviceCertDialogComponent } from '../device-cert-dialog/device-cert-dialog.component'
+import { UserConsentService } from '../user-consent.service'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -51,6 +52,7 @@ export class DeviceToolbarComponent implements OnInit {
   @Input()
   public deviceId = ''
 
+  amtFeatures?: AMTFeaturesResponse
   public isCloudMode = environment.cloud
   public device: Device | null = null
   public powerOptions = [
@@ -101,6 +103,7 @@ export class DeviceToolbarComponent implements OnInit {
     public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
     private readonly devicesService: DevicesService,
+    private readonly userConsentService: UserConsentService,
     private readonly matDialog: MatDialog
   ) {}
 
@@ -110,6 +113,7 @@ export class DeviceToolbarComponent implements OnInit {
       this.devicesService.device.next(this.device)
     })
   }
+
   isPinned(): boolean {
     return this.device?.certHash != null && this.device?.certHash !== ''
   }
@@ -141,6 +145,49 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   sendPowerAction(action: number): void {
+    if (action >= 100) {
+      this.executeAuthorizedPowerAction(action)
+    } else {
+      this.executePowerAction(action)
+    }
+  }
+
+  executeAuthorizedPowerAction(action?: number): void {
+    this.isLoading = true
+    this.devicesService
+      .getAMTFeatures(this.deviceId)
+      .pipe(
+        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        switchMap((result: boolean) => {
+          if (result) {
+            return of(null)
+          } else {
+            return this.checkUserConsent()
+          }
+        }),
+        switchMap((result: any) =>
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId, this.amtFeatures)
+        ),
+        switchMap((result: any | UserConsentResponse) =>
+          this.userConsentService.handleUserConsentResponse(this.deviceId, result, 'PowerAction')
+        )
+      )
+      .subscribe({
+        next: () => {
+          if (action !== undefined) {
+            this.executePowerAction(action)
+          }
+        },
+        error: (error) => {
+          this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
+        },
+        complete: () => {
+          this.isLoading = false
+        }
+      })
+  }
+
+  executePowerAction(action: number): void {
     this.isLoading = true
     let useSOL = false
     if (this.router.url.toString().includes('sol') && action === 101) {
@@ -199,5 +246,24 @@ export class DeviceToolbarComponent implements OnInit {
           })
       }
     })
+  }
+
+  handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
+    this.amtFeatures = results
+    if (this.amtFeatures.userConsent === 'None') {
+      return of(true) // User consent is not required
+    }
+    return of(false)
+  }
+
+  checkUserConsent(): Observable<any> {
+    if (
+      this.amtFeatures?.userConsent === 'none' ||
+      this.amtFeatures?.optInState === 3 ||
+      this.amtFeatures?.optInState === 4
+    ) {
+      return of(true)
+    }
+    return of(false)
   }
 }

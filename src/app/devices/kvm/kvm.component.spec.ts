@@ -12,7 +12,8 @@ import { DevicesService } from '../devices.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
-import { Device, UserConsentData, UserConsentResponse } from 'src/models/models'
+import { Device, UserConsentResponse } from 'src/models/models'
+import { UserConsentService } from '../user-consent.service'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -23,16 +24,12 @@ describe('KvmComponent', () => {
   let getRedirectionStatusSpy: jasmine.Spy
   let getAMTFeaturesSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
-  let reqUserConsentCodeSpy: jasmine.Spy
-  let cancelUserConsentCodeSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
   let router: Router
-  let userConsentData: UserConsentData
-  let userConsentResponse: UserConsentResponse
-  let optInCodeResponseSpy: jasmine.Spy
   let displayErrorSpy: jasmine.Spy
   let devicesService: jasmine.SpyObj<DevicesService>
+  let userConsentService: jasmine.SpyObj<UserConsentService>
 
   const eventSubject = new ReplaySubject<RouterEvent>(1)
 
@@ -48,6 +45,11 @@ describe('KvmComponent', () => {
       'getRedirectionExpirationToken',
       'getRedirectionStatus'
     ])
+    userConsentService = jasmine.createSpyObj('UserConsentService', [
+      'handleUserConsentDecision',
+      'handleUserConsentResponse'
+    ])
+
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(
       of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
     )
@@ -71,12 +73,12 @@ describe('KvmComponent', () => {
     getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(
       of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
     )
-    const reqUserConsentResponse: UserConsentResponse = {} as any
-    reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
-    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of(reqUserConsentResponse))
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
+    userConsentService.handleUserConsentDecision.and.returnValue(of(true))
+    userConsentService.handleUserConsentResponse.and.returnValue(of(true))
+
     devicesService.device = new Subject<Device>()
     devicesService.deviceState = new EventEmitter<number>()
     const websocketStub = {
@@ -137,6 +139,7 @@ describe('KvmComponent', () => {
       providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
+        { provide: UserConsentService, useValue: userConsentService },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
       ]
     }).compileComponents()
@@ -149,17 +152,7 @@ describe('KvmComponent', () => {
     component = fixture.componentInstance
     snackBarSpy = spyOn(component.snackBar, 'open')
     spyOn(router, 'navigate')
-    userConsentResponse = {
-      Body: { ReturnValue: 0, ReturnValueStr: 'Success' },
-      Header: {
-        Action: 'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/SendOptInCodeResponse',
-        MessageID: 'uuid:00000000-8086-8086-8086-0000000001B7',
-        RelatesTo: '0',
-        ResourceURI: 'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService',
-        To: 'http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous'
-      }
-    }
-    userConsentData = { deviceId: '111', results: userConsentResponse }
+
     displayErrorSpy = spyOn(component, 'displayError').and.callThrough()
   })
 
@@ -207,12 +200,6 @@ describe('KvmComponent', () => {
   it('should not show error when NavigationStart triggers', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
     expect(snackBarSpy).not.toHaveBeenCalled()
-  })
-  it('should show dialog when called', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const openSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.userConsentDialog()
-    expect(openSpy).toHaveBeenCalled()
   })
   it('power up alert dialog', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
@@ -364,85 +351,6 @@ describe('KvmComponent', () => {
         done()
       }
     })
-  })
-  it('handleUserConsentDecision false', async () => {
-    component.handleUserConsentDecision(false)
-    expect(reqUserConsentCodeSpy).toHaveBeenCalled()
-  })
-  it('handleUserConsentResponse', async () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.handleUserConsentResponse(userConsentResponse)
-    expect(dialogSpy).toHaveBeenCalled()
-  })
-  it('handleUserConsentResponse uc dialog results', (done) => {
-    spyOn(component, 'userConsentDialog').and.returnValue(of(true))
-    const ucDialogCloseSpy = spyOn(component, 'afterUserConsentDialogClosed').and.returnValue()
-    component.handleUserConsentResponse(userConsentResponse).subscribe({
-      next: () => {
-        expect(ucDialogCloseSpy).toHaveBeenCalled()
-        done()
-      }
-    })
-  })
-  it('handleUserConsentResponse uc dialog null', (done) => {
-    spyOn(component, 'userConsentDialog').and.returnValue(of(null))
-    const ucDialogCloseSpy = spyOn(component, 'cancelUserConsentCode').and.returnValue()
-    component.handleUserConsentResponse(userConsentResponse).subscribe({
-      next: () => {
-        expect(ucDialogCloseSpy).toHaveBeenCalled()
-        done()
-      }
-    })
-  })
-
-  it('handleUserConsentResponse false', async () => {
-    component.handleUserConsentResponse(false)
-    expect(displayErrorSpy).toHaveBeenCalled()
-  })
-  it('afterUserContentDialogClosed Send', async () => {
-    optInCodeResponseSpy = spyOn(component, 'sendOptInCodeResponse')
-    component.afterUserConsentDialogClosed(userConsentData)
-    expect(optInCodeResponseSpy).toHaveBeenCalled()
-  })
-  it('afterUserContentDialogClosed Cancel', async () => {
-    userConsentData.results.Header.Action =
-      'http://intel.com/wbem/wscim/1/ips-schema/1/IPS_OptInService/CancelOptInResponse'
-    optInCodeResponseSpy = spyOn(component, 'cancelOptInCodeResponse')
-    component.afterUserConsentDialogClosed(userConsentData)
-    expect(optInCodeResponseSpy).toHaveBeenCalled()
-  })
-  it('cancelOptInCodeResponse 0', async () => {
-    component.cancelOptInCodeResponse(userConsentResponse)
-    expect(displayErrorSpy).toHaveBeenCalled()
-  })
-  it('cancelOptInCodeResponse 1', async () => {
-    userConsentResponse.Body = { ReturnValue: 1, ReturnValueStr: 'Success' }
-    component.cancelOptInCodeResponse(userConsentResponse)
-    expect(displayErrorSpy).toHaveBeenCalled()
-  })
-  it('sendOptInCodeResponse 0', async () => {
-    component.sendOptInCodeResponse(userConsentResponse)
-    expect(component.readyToLoadKvm).toEqual(true)
-  })
-  it('sendOptInCodeResponse 2066', async () => {
-    userConsentResponse.Body = { ReturnValue: 2066, ReturnValueStr: 'Success' }
-    component.sendOptInCodeResponse(userConsentResponse)
-    expect(getAMTFeaturesSpy).toHaveBeenCalled()
-  })
-  it('sendOptInCodeResponse 1', async () => {
-    userConsentResponse.Body = { ReturnValue: 1, ReturnValueStr: 'Success' }
-    component.sendOptInCodeResponse(userConsentResponse)
-    expect(displayErrorSpy).toHaveBeenCalled()
-    expect(component.isLoading).toEqual(false)
-  })
-  it('reqUserConsentCode ', async () => {
-    component.reqUserConsentCode('111')
-    expect(reqUserConsentCodeSpy).toHaveBeenCalled()
-  })
-  it('cancelUserConsentCode ', async () => {
-    component.cancelUserConsentCode('111')
-    expect(cancelUserConsentCodeSpy).toHaveBeenCalled()
   })
   it('deviceStatus 3', async () => {
     component.deviceKVMStatus(3)

@@ -320,6 +320,7 @@ export interface Body {
 export interface UserConsentResponse {
   Header: Header
   Body: Body
+  error?: any
 }
 
 export interface UserConsentData {
