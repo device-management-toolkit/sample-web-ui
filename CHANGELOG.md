@@ -1,3 +1,10 @@
+## [3.20.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.2...v3.20.3) (2024-09-18)
+
+
+### Bug Fixes
+
+* accept user consent code for advanced power actions ([#2173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2173)) ([ed33bb2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/ed33bb2146c01a1c5d01d24beb2daaca5d6ad6f9))
+
 ## [3.20.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.1...v3.20.2) (2024-09-12)
 
 
