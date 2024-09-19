@@ -1,3 +1,10 @@
+## [3.20.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.3...v3.20.4) (2024-09-19)
+
+
+### Bug Fixes
+
+* KVM/SOL disconnect on close ([#2196](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2196)) ([43ecbd4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/43ecbd43fe11a02089140c43e0d2d8ac31c67691))
+
 ## [3.20.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.2...v3.20.3) (2024-09-18)
 
 
