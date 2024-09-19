@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
@@ -61,7 +61,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   @Output()
   selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
 
-  deviceState = 0
+  deviceState = -1
   results: any
   isLoading = false
   powerState: any = 0
@@ -179,12 +179,19 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (result != null && result) {
       this.readyToLoadKvm = true
       this.getAMTFeatures()
+    } else if (result === false) {
+      this.isLoading = false
+      this.deviceState = 0
     }
     return of(null)
   }
 
   connect(): void {
     this.devicesService.connectKVMSocket.emit(true)
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler() {
+    this.disconnect()
   }
   disconnect(): void {
     this.devicesService.stopwebSocket.emit(true)
@@ -333,6 +340,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       }
       this.isDisconnecting = false
     }
+
     this.devicesService.deviceState.emit(this.deviceState)
   }
 

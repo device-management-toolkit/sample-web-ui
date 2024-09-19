@@ -3,7 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  HostListener
+} from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
@@ -157,9 +166,17 @@ export class SolComponent implements OnInit, OnDestroy {
   connect(): void {
     this.devicesService.startwebSocket.emit(true)
   }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler() {
+    console.log('Disconnecting KVM')
+    this.disconnect()
+  }
+
   disconnect(): void {
     this.devicesService.stopwebSocket.emit(true)
   }
+
   handlePowerState(powerState: any): Observable<any> {
     this.powerState = powerState
     // If device is not powered on, shows alert to power up device
