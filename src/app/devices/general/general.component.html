@@ -85,8 +85,14 @@
         <div class="flex flex-50">
           <p>KVM:</p>
         </div>
-        <div class="flex flex-50 justify-end">
-          <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"></mat-checkbox>
+        <div class="flex flex-50 justify-end" 
+          matTooltip = "KVM not supported" 
+          [matTooltipDisabled]="!amtEnabledFeatures.get('enableKVM')?.disabled"
+          matTooltipPosition="after">
+          <mat-checkbox 
+            formControlName="enableKVM" 
+            (change)="setAmtFeatures()">
+          </mat-checkbox>
         </div>
         <div class="flex flex-50">
           <p>SOL:</p>
@@ -98,7 +104,13 @@
           <p>User Consent:</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <mat-select (selectionChange)="setAmtFeatures()" formControlName="userConsent" style="width: 200px">
+          <mat-select 
+            (selectionChange)="setAmtFeatures()" 
+            formControlName="userConsent"
+            style="width: 200px"
+            matTooltip = "User Consent not configurable in CCM"
+            [matTooltipDisabled]="!amtEnabledFeatures.get('userConsent')?.disabled"
+            matTooltipPosition="after">
             @for (uc of userConsentValues; track uc) {
               <mat-option [value]="uc">{{ uc }}</mat-option>
             }

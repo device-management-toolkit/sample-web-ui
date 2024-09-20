@@ -16,6 +16,7 @@ import { catchError, finalize, forkJoin, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'app-general',
@@ -26,7 +27,8 @@ import { environment } from 'src/environments/environment'
     MatSelectModule,
     MatCheckboxModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltip
   ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
@@ -47,6 +49,7 @@ export class GeneralComponent implements OnInit {
   public amtEnabledFeatures: FormGroup
   public isLoading = true
   public isDisabled = true
+  public isKVMDisabled = false
   public amtVersion: any
   public cloudMode = environment.cloud
   public device: Device | null = null
@@ -66,7 +69,7 @@ export class GeneralComponent implements OnInit {
   ) {
     this.amtEnabledFeatures = fb.group({
       enableIDER: false,
-      enableKVM: false,
+      enableKVM: [{ value: false, disabled: this.isKVMDisabled }],
       enableSOL: false,
       userConsent: [{ value: 'none', disabled: this.isDisabled }],
       optInState: 0,
@@ -101,17 +104,18 @@ export class GeneralComponent implements OnInit {
         })
       )
       .subscribe((results: any) => {
+        this.generalSettings = results.generalSettings
+        this.amtVersion = results.amtVersion
+        this.isKVMDisabled = !(results.amtFeatures.kvmAvailable ?? true)
+        this.isDisabled = results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode !== 1
         this.amtEnabledFeatures = this.fb.group({
           enableIDER: results.amtFeatures.IDER,
-          enableKVM: results.amtFeatures.KVM,
+          enableKVM: [{ value: results.amtFeatures.KVM, disabled: this.isKVMDisabled }],
           enableSOL: results.amtFeatures.SOL,
-          userConsent: results.amtFeatures.userConsent,
+          userConsent: [{ value: results.amtFeatures.userConsent, disabled: this.isDisabled }],
           optInState: results.amtFeatures.optInState,
           redirection: results.amtFeatures.redirection
         })
-        this.generalSettings = results.generalSettings
-        this.amtVersion = results.amtVersion
-        this.isDisabled = results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
       })
   }
 
