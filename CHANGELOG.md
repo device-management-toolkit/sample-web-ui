@@ -1,3 +1,10 @@
+# [3.21.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.5...v3.21.0) (2024-09-20)
+
+
+### Features
+
+* translate amt sku value to human readable string ([#2204](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2204)) ([54d9ffa](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/54d9ffa2ee6ec20899fb68a7985a1e441d5cc62b))
+
 ## [3.20.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.4...v3.20.5) (2024-09-20)
 
 
