@@ -13,13 +13,13 @@
           <p>AMT DHCP DNS Suffix:</p>
         </div>
         <div class="flex flex-50 justify-end">
-          {{ amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix }}
+          {{ amtDHCPDNSSuffix }}
         </div>
         <div class="flex flex-50">
           <p>AMT Trusted DNS Suffix (MEBx):</p>
         </div>
         <div class="flex flex-50 justify-end">
-          {{ amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix }}
+          {{ amtTrustedDNSSuffix }}
         </div>
         <div class="flex flex-50">
           <p>AMT Version:</p>
@@ -27,8 +27,8 @@
         <div class="flex flex-50 justify-end">
           @if (!isLoading) {
             <span class="mat-h3" data-cy="amtVersion">
-              @if (amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString) {
-                {{ amtVersion?.CIM_SoftwareIdentity?.responses[3].VersionString }}
+              @if (amtVersion) {
+                {{ amtVersion }}
               } @else {
                 {{ this.device?.deviceInfo?.fwVersion }}
               }
@@ -41,9 +41,7 @@
         <div class="flex flex-50 justify-end">
           @if (!isLoading) {
             <span class="mat-h3" data-cy="amtSku">
-              @if (amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString) {
-                {{ amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString }}
-              }
+                {{ amtBuild }}
             </span>
           }
         </div>
@@ -53,9 +51,7 @@
         <div class="flex flex-50 justify-end">
           @if (!isLoading) {
             <span class="mat-h3" data-cy="amtSku">
-              @if (amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString) {
-                {{ amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString }}
-              }
+                {{ amtSKU }}
             </span>
           }
         </div>
@@ -74,7 +70,7 @@
           <p>Provisioning Mode:</p>
         </div>
         <div class="flex flex-50 justify-end" data-cy="provisioningMode">
-          {{ parseProvisioningMode(amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode) }}
+          {{ amtProvisioningMode }}
         </div>
         <div class="flex flex-50">
           <p>IDE Redirection:</p>
