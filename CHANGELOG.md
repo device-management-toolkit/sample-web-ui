@@ -1,3 +1,10 @@
+## [3.20.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.4...v3.20.5) (2024-09-20)
+
+
+### Bug Fixes
+
+* resolves handling when when amt redirection features are available ([#2202](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2202)) ([4d7fbbb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4d7fbbb039f7a59b4628a02bc8be45027cd42dcb))
+
 ## [3.20.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.3...v3.20.4) (2024-09-19)
 
 
