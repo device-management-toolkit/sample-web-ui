@@ -1,9 +1,13 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center"></div>
   <div class="flex flex-50 justify-end">
-    @if (deviceState !== 2) {
+    @if (deviceState === 0 && isLoading === false) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
         <mat-icon>tv_on</mat-icon>Connect SOL
+      </button>
+      }@else if (deviceState !== 2  && isLoading === true) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <mat-icon>tv_on</mat-icon>Connecting SOL...
       </button>
     } @else {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
