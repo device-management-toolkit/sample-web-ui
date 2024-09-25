@@ -1,3 +1,10 @@
+## [3.21.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.0...v3.21.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* shows disconnect button on sol connection ([#2215](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2215)) ([5d7fdb3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5d7fdb31a3b8953ab0992f3bdb0dcf09af5f1aa4))
+
 # [3.21.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.5...v3.21.0) (2024-09-20)
 
 
