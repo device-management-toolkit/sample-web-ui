@@ -1,3 +1,10 @@
+# [3.22.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.1...v3.22.0) (2024-09-26)
+
+
+### Features
+
+* indicate when device does not respond ([9ded8cb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9ded8cb32fbed97556acdf7c2a8057cc50892db2))
+
 ## [3.21.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.0...v3.21.1) (2024-09-25)
 
 
