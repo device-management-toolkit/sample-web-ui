@@ -32,6 +32,8 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
+import { environment } from 'src/environments/environment'
+import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
 
 @Component({
   selector: 'app-profiles',
@@ -77,6 +79,7 @@ export class ProfilesComponent implements OnInit {
     startsFrom: 0,
     count: 'true'
   }
+  cloudMode = environment.cloud
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -112,6 +115,26 @@ export class ProfilesComponent implements OnInit {
 
   isNoData(): boolean {
     return !this.isLoading && this.profiles.length === 0
+  }
+
+  export(name: string): void {
+    this.profilesService.export(name).subscribe({
+      next: (data) => {
+        // prompt to download data
+        const blob = new Blob([data.content], { type: 'application/x-yaml' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${name}.yaml`
+        a.click()
+        window.URL.revokeObjectURL(url)
+        this.dialog.open(KeyDisplayDialogComponent, { data: { key: data.key } })
+        this.snackBar.open($localize`Profile exported successfully`, undefined, SnackbarDefaults.defaultSuccess)
+      },
+      error: () => {
+        this.snackBar.open($localize`Unable to export profile`, undefined, SnackbarDefaults.defaultError)
+      }
+    })
   }
 
   delete(name: string): void {
