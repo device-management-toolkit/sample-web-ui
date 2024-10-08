@@ -5,7 +5,7 @@
 
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { IPSAlarmClockOccurrence } from 'src/models/models'
+import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { catchError, finalize, throwError } from 'rxjs'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list'
 import { MatCardModule } from '@angular/material/card'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-alarms',
@@ -45,6 +46,7 @@ export class AlarmsComponent implements OnInit {
   @Input()
   public deviceId = ''
 
+  cloudMode: boolean = environment.cloud
   public alarmOccurrences: IPSAlarmClockOccurrence[] = []
   public newAlarmForm: FormGroup = this.fb.group({
     alarmName: '',
@@ -197,10 +199,10 @@ export class AlarmsComponent implements OnInit {
       const startTime: Date = alarm.startTime
       startTime.setHours(alarm.hour as number)
       startTime.setMinutes(alarm.minute as number)
-      const payload = {
+      const payload: IPSAlarmClockOccurrenceInput = {
         ElementName: alarm.alarmName,
         StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
-        Interval: alarm.interval,
+        Interval: Number(alarm.interval),
         DeleteOnCompletion: this.deleteOnCompletion.value
       }
 

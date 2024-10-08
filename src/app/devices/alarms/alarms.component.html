@@ -14,11 +14,10 @@
             <div class="flex-75">
               <span matListItemTitle data-cy="alarmElementName">{{entry.ElementName}} (InstanceID:
               {{entry.InstanceID}})</span>
-              <span matListItemLine data-cy="alarmStartTime">Start Time: {{entry.StartTime.Datetime | date:
-              'short'}}</span>
+              <span matListItemLine data-cy="alarmStartTime">Start Time: {{entry.StartTime.Datetime | date: 'short'}}</span>
+              <span matListItemLine data-cy="alarmInterval">Interval (in minutes): {{entry.IntervalInMinutes ?? 'None'}}</span>
               <span matListItemLine data-cy="alarmDeleteOnCompletion">Delete on Completion:
               {{entry.DeleteOnCompletion}}</span>
-              <span matListItemLine data-cy="alarmInterval">Interval: {{entry.Interval?.Interval ?? 'None'}}</span>
             </div>
             <div class="flex flex-25 justify-end">
               <button mat-icon-button matTooltip="Delete alarm occurrence" (click)="deleteAlarm(entry.InstanceID)"><mat-icon>delete</mat-icon></button>

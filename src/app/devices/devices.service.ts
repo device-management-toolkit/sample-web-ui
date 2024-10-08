@@ -16,14 +16,15 @@ import {
   DeviceStats,
   EventLog,
   HardwareInformation,
-  IPSAlarmClockOccurrence,
   PageEventOptions,
   PowerState,
   RedirectionToken,
   UserConsentResponse,
   RedirectionStatus,
   AMTFeaturesRequest,
-  DiskInformation
+  DiskInformation,
+  IPSAlarmClockOccurrenceInput,
+  IPSAlarmClockOccurrence
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -290,7 +291,7 @@ export class DevicesService {
       )
   }
 
-  addAlarmOccurrence(guid: string, alarm: any): Observable<any> {
+  addAlarmOccurrence(guid: string, alarm: IPSAlarmClockOccurrenceInput): Observable<any> {
     return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/alarmOccurrences/${guid}`, alarm).pipe(
       catchError((err) => {
         throw err

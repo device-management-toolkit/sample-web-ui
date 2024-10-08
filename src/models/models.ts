@@ -261,8 +261,17 @@ export interface CIMPhysicalPackage {
 export interface IPSAlarmClockOccurrence {
   ElementName: string
   InstanceID: string
-  StartTime: { Datetime: Date }
-  Interval?: { Interval: any }
+  StartTime: any
+  Interval?: any
+  IntervalInMinutes?: number
+  DeleteOnCompletion: boolean
+}
+
+export interface IPSAlarmClockOccurrenceInput {
+  ElementName: string
+  InstanceID?: string
+  StartTime: string
+  Interval?: number
   DeleteOnCompletion: boolean
 }
 

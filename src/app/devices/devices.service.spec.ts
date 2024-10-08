@@ -6,7 +6,7 @@
 import { TestBed } from '@angular/core/testing'
 import { of, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment'
-import { IPSAlarmClockOccurrence } from 'src/models/models'
+import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { AuthService } from '../auth.service'
 
 import { DevicesService } from './devices.service'
@@ -854,9 +854,9 @@ describe('DevicesService', () => {
   })
 
   it('should add an alarm instance', (done) => {
-    const alarmToAdd = {
+    const alarmToAdd: IPSAlarmClockOccurrenceInput = {
       ElementName: 'Alarm name',
-      StartTime: { Datetime: new Date() },
+      StartTime: `${new Date()}`,
       InstanceID: 'Alarm instance',
       DeleteOnCompletion: true
     }
@@ -874,7 +874,7 @@ describe('DevicesService', () => {
   it('should return error when adding an alarm', (done) => {
     const alarmToAdd: IPSAlarmClockOccurrence = {
       ElementName: 'Alarm name',
-      StartTime: { Datetime: new Date() },
+      StartTime: new Date(),
       InstanceID: 'Alarm instance',
       DeleteOnCompletion: true
     }
