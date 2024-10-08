@@ -1,3 +1,10 @@
+## [3.22.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.0...v3.22.1) (2024-10-08)
+
+
+### Bug Fixes
+
+* add and delete alarm works now ([#2232](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2232)) ([78de4fb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/78de4fbdfe203ade09ae63e71e715641bdee4eae))
+
 # [3.22.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.1...v3.22.0) (2024-09-26)
 
 
