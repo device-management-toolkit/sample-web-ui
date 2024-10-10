@@ -5,9 +5,9 @@
       <mat-form-field>
         <mat-label>WSMAN Call</mat-label>
         <input type="text" placeholder="Select..." matInput [formControl]="myControl" [matAutocomplete]="auto" (click)="clearFilter()" spellcheck="false">
-        <mat-autocomplete #auto="matAutocomplete">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="inputChanged($event)">
           @for (item of filteredOptions | async; track item) {
-            <mat-option [value]="item" (onSelectionChange)="inputChanged($event.source.value)">{{item}}</mat-option>
+            <mat-option [value]="item">{{item}}</mat-option>
           }
         </mat-autocomplete>
       </mat-form-field>

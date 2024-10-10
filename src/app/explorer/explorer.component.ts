@@ -13,7 +13,7 @@ import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { MatSelectModule } from '@angular/material/select'
 import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Observable, startWith, map } from 'rxjs'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -90,8 +90,8 @@ export class ExplorerComponent implements OnInit {
     this.myControl.setValue('')
   }
 
-  inputChanged(value: any): void {
-    this.selectedWsmanOperation = value
+  inputChanged(event: MatAutocompleteSelectedEvent): void {
+    this.selectedWsmanOperation = event.option.value
     this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
       next: (data) => {
         this.XMLData = data
