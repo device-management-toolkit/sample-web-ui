@@ -1,3 +1,15 @@
+# [3.23.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.1...v3.23.0) (2024-10-11)
+
+
+### Bug Fixes
+
+* amt explorer event trigger ([39b538e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/39b538e2b99154469cbc5375eff50ec7e8badb5c))
+
+
+### Features
+
+* enables profile export from console ([302dffd](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/302dffd7078b2cf2839ef8ab487c743e23fde8d5))
+
 ## [3.22.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.0...v3.22.1) (2024-10-08)
 
 
