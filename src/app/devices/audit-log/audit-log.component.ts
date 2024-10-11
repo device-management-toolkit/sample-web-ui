@@ -20,16 +20,15 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table'
-import { ActivatedRoute, Router } from '@angular/router'
-import { BehaviorSubject, merge, of } from 'rxjs'
-import { catchError, finalize, startWith, switchMap } from 'rxjs/operators'
+import { Router } from '@angular/router'
+import { merge, of } from 'rxjs'
+import { catchError, startWith, switchMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { MomentModule } from 'ngx-moment'
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
-import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -59,7 +58,7 @@ import { environment } from 'src/environments/environment'
     MomentModule
   ]
 })
-export class AuditLogComponent implements OnInit, AfterViewInit {
+export class AuditLogComponent implements AfterViewInit {
   @Input()
   public deviceId = ''
 
@@ -76,7 +75,6 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
 
   constructor(
     public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
     private readonly devicesService: DevicesService
   ) {
@@ -87,11 +85,6 @@ export class AuditLogComponent implements OnInit, AfterViewInit {
         'timestamp'
       ]
     }
-  }
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      this.deviceId = params.id
-    })
   }
   ngAfterViewInit(): void {
     // If the user changes the sort order, reset back to the first page.

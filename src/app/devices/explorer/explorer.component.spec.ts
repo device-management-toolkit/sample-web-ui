@@ -5,7 +5,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ExplorerComponent } from './explorer.component'
-import { DevicesService } from '../devices/devices.service'
+import { DevicesService } from '../devices.service'
 import { ActivatedRoute } from '@angular/router'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
@@ -73,14 +73,9 @@ describe('ExplorerComponent', () => {
     expect(component.filteredOptions).toBeTruthy()
   })
 
-  it('should handle ActivatedRoute parameters', () => {
-    expect(component.deviceId).toBe('123')
-    expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation1')
-    expect(component.XMLData).toBe('<xml>Data</xml>')
-  })
-
   it('should update XMLData on input change', () => {
-    component.inputChanged('Operation2')
+    component.deviceId = '123'
+    component.inputChanged({ option: { value: 'Operation2' } } as any)
     expect(component.selectedWsmanOperation).toBe('Operation2')
     expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation2')
     expect(component.XMLData).toBe('<xml>Data</xml>')

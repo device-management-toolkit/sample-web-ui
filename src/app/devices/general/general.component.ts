@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -67,7 +67,6 @@ export class GeneralComponent implements OnInit {
 
   constructor(
     public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
     private readonly devicesService: DevicesService,
     public fb: FormBuilder

@@ -6,7 +6,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -45,7 +45,6 @@ export class HardwareInformationComponent implements OnInit {
 
   constructor(
     public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
     private readonly devicesService: DevicesService,
     public fb: FormBuilder

@@ -6,8 +6,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { ActivatedRoute, Router } from '@angular/router'
-import { DevicesService } from '../devices/devices.service'
+import { Router } from '@angular/router'
+import { DevicesService } from '../devices.service'
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2'
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
@@ -53,8 +53,7 @@ export class ExplorerComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public readonly router: Router,
-    private readonly devicesService: DevicesService,
-    public readonly activatedRoute: ActivatedRoute
+    private readonly devicesService: DevicesService
   ) {}
 
   ngOnInit(): void {
@@ -65,17 +64,15 @@ export class ExplorerComponent implements OnInit {
         startWith(''),
         map((value) => this._filter(value ?? ''))
       )
-      this.activatedRoute.params.subscribe((params) => {
-        this.deviceId = params.id
-        this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
-          next: (data) => {
-            this.XMLData = data
-          },
-          error: (err) => {
-            console.error(err)
-            this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
-          }
-        })
+
+      this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+        next: (data) => {
+          this.XMLData = data
+        },
+        error: (err) => {
+          console.error(err)
+          this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+        }
       })
     })
   }

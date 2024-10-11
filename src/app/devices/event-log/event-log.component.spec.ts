@@ -138,6 +138,7 @@ describe('EventLogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventLogComponent)
     component = fixture.componentInstance
+    component.deviceId = 'guid'
     fixture.detectChanges()
   })
 

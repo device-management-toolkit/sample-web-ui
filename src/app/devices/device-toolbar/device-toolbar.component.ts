@@ -6,8 +6,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { ActivatedRoute, Router } from '@angular/router'
-import { defer, iif, Observable, of } from 'rxjs'
+import { Router } from '@angular/router'
+import { Observable, of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AMTFeaturesResponse, Device, UserConsentResponse } from 'src/models/models'
@@ -100,7 +100,6 @@ export class DeviceToolbarComponent implements OnInit {
 
   constructor(
     public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
     public readonly router: Router,
     private readonly devicesService: DevicesService,
     private readonly userConsentService: UserConsentService,

@@ -18,7 +18,6 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table'
-import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { catchError, finalize, take } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -78,7 +77,6 @@ export class EventLogComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.eventLogData)
   constructor(
     public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
     private readonly devicesService: DevicesService
   ) {
     if (!this.isCloudMode) {
@@ -92,26 +90,23 @@ export class EventLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(take(1)).subscribe((params) => {
-      this.isLoading = true
-      this.deviceId = params.id
-      this.devicesService
-        .getEventLog(this.deviceId)
-        .pipe(
-          catchError((err) => {
-            console.error(err)
-            this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
-            return of(this.eventLogData)
-          }),
-          finalize(() => {
-            this.isLoading = false
-          })
-        )
-        .subscribe((data) => {
-          this.eventLogData = data || []
-          this.dataSource.data = this.eventLogData
+    this.isLoading = true
+    this.devicesService
+      .getEventLog(this.deviceId)
+      .pipe(
+        catchError((err) => {
+          console.error(err)
+          this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+          return of(this.eventLogData)
+        }),
+        finalize(() => {
+          this.isLoading = false
         })
-    })
+      )
+      .subscribe((data) => {
+        this.eventLogData = data || []
+        this.dataSource.data = this.eventLogData
+      })
   }
 
   decodeEventType(eventType: number): string {
