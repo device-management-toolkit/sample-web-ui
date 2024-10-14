@@ -25,10 +25,6 @@ export class AuthService {
     if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)
-    } else if (!environment.cloud) {
-      localStorage.loggedInUser = JSON.stringify({ token: 'test' })
-      this.isLoggedIn = true
-      this.loggedInSubject.next(this.isLoggedIn)
     }
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
