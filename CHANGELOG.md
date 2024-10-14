@@ -1,3 +1,10 @@
+## [3.23.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.0...v3.23.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* network settings displays only available interfaces ([#2248](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2248)) ([12fb737](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/12fb737306db21b3e927cca766e12efcc7a677f8))
+
 # [3.23.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.1...v3.23.0) (2024-10-11)
 
 
