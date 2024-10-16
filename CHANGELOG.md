@@ -1,3 +1,10 @@
+# [3.24.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.1...v3.24.0) (2024-10-16)
+
+
+### Features
+
+* enable auth for console mode ([896d1fe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/896d1fe34aa7b6926d916b4984f3d55b5261e9d3))
+
 ## [3.23.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.0...v3.23.1) (2024-10-14)
 
 
