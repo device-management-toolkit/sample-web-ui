@@ -1,3 +1,10 @@
+## [3.24.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.0...v3.24.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* profile now handles direct connection mode correctly ([b4dff71](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4dff7134cceb3e230205163e5ac18de1a6985df))
+
 # [3.24.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.1...v3.24.0) (2024-10-16)
 
 
