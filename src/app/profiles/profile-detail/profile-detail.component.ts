@@ -392,27 +392,33 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   connectionModeChange(value: string): void {
-    if (this.cloudMode) {
-      if (value === this.connectionMode.tls) {
-        this.profileForm.controls.ciraConfigName.clearValidators()
-        this.profileForm.controls.ciraConfigName.setValue(null)
-        this.profileForm.controls.tlsMode.setValidators(Validators.required)
-        // set a default value if not set already
-        if (!this.profileForm.controls.tlsSigningAuthority.value) {
-          this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority)
-        }
-        this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
-      } else if (value === this.connectionMode.cira) {
-        this.profileForm.controls.tlsMode.clearValidators()
-        this.profileForm.controls.tlsMode.setValue(null)
-        this.profileForm.controls.tlsSigningAuthority.clearValidators()
-        this.profileForm.controls.tlsSigningAuthority.setValue(null)
-        this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
+    if (value === this.connectionMode.tls) {
+      this.profileForm.controls.ciraConfigName.clearValidators()
+      this.profileForm.controls.ciraConfigName.setValue(null)
+      this.profileForm.controls.tlsMode.setValidators(Validators.required)
+      // set a default value if not set already
+      if (!this.profileForm.controls.tlsSigningAuthority.value) {
+        this.profileForm.controls.tlsSigningAuthority.setValue(this.tlsDefaultSigningAuthority)
       }
-      this.profileForm.controls.ciraConfigName.updateValueAndValidity()
-      this.profileForm.controls.tlsMode.updateValueAndValidity()
-      this.profileForm.controls.tlsSigningAuthority.updateValueAndValidity()
+      this.profileForm.controls.tlsSigningAuthority.setValidators(Validators.required)
+    } else if (value === this.connectionMode.cira) {
+      this.profileForm.controls.tlsMode.clearValidators()
+      this.profileForm.controls.tlsMode.setValue(null)
+      this.profileForm.controls.tlsSigningAuthority.clearValidators()
+      this.profileForm.controls.tlsSigningAuthority.setValue(null)
+      this.profileForm.controls.ciraConfigName.setValidators(Validators.required)
+    } else if (value === this.connectionMode.direct) {
+      this.profileForm.controls.ciraConfigName.clearValidators()
+      this.profileForm.controls.ciraConfigName.setValue(null)
+      this.profileForm.controls.tlsMode.clearValidators()
+      this.profileForm.controls.tlsMode.setValue(null)
+      this.profileForm.controls.tlsSigningAuthority.clearValidators()
+      this.profileForm.controls.tlsSigningAuthority.setValue(null)
     }
+
+    this.profileForm.controls.ciraConfigName.updateValueAndValidity()
+    this.profileForm.controls.tlsMode.updateValueAndValidity()
+    this.profileForm.controls.tlsSigningAuthority.updateValueAndValidity()
   }
 
   selectWifiProfile(event: MatAutocompleteSelectedEvent): void {
