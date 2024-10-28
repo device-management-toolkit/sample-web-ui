@@ -119,9 +119,9 @@
           Tags
         </mat-header-cell>
         <mat-cell class="tags" *matCellDef="let element">
-          <span>
+
             <mat-icon class="addTag" (click)="$event.stopPropagation(); editTagsForDevice(element.guid)">edit</mat-icon>
-          </span>
+
           <mat-chip-set>
             @for (tag of element?.tags; track tag) {
             <mat-chip [disableRipple]="true">{{ tag }}</mat-chip>
