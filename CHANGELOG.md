@@ -1,3 +1,10 @@
+# [3.25.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.1...v3.25.0) (2024-10-28)
+
+
+### Features
+
+* add power state to device details ([894e264](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/894e2643759b804a0181a39f4a6d53b81514abb2)), closes [#2283](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2283)
+
 ## [3.24.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.0...v3.24.1) (2024-10-17)
 
 
