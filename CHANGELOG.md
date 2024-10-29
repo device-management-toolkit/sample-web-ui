@@ -1,3 +1,10 @@
+# [3.26.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.25.0...v3.26.0) (2024-10-29)
+
+
+### Features
+
+* add local Profile Synchronization to wireless network ([#2297](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2297)) ([3552bec](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3552bec6bb76c83b81620b9c5fa345f7eadde159))
+
 # [3.25.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.1...v3.25.0) (2024-10-28)
 
 
