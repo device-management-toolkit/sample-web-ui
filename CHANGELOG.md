@@ -1,3 +1,10 @@
+# [3.27.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.26.0...v3.27.0) (2024-10-30)
+
+
+### Features
+
+* re-enable auth for ws when in console mode ([#2298](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2298)) ([8c1b00e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8c1b00e9a5b48bb33f66cc1549de21e5b2cabd17))
+
 # [3.26.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.25.0...v3.26.0) (2024-10-29)
 
 
