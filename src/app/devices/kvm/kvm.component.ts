@@ -67,7 +67,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   powerState: any = 0
   mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   readyToLoadKvm = false
-  authToken: string = environment.cloud ? '' : 'direct'
+  authToken = ''
   timeInterval!: any
   selected = 1
   isDisconnecting = false
@@ -110,16 +110,12 @@ export class KvmComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((params) => {
           this.deviceId = params.id
-          if (environment.cloud) {
-            // request token from MPS
-            return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
-              tap((result) => {
-                this.authToken = result.token
-              })
-            )
-          } else {
-            return of()
-          }
+          // request token from MPS
+          return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
+            tap((result) => {
+              this.authToken = result.token
+            })
+          )
         })
       )
       .subscribe()
