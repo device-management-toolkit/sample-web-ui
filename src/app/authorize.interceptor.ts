@@ -40,9 +40,9 @@ export const AuthorizeInterceptor: HttpInterceptorFn = (request, next) => {
       if (error instanceof HttpErrorResponse) {
         if (error.status === 401) {
           if (error.error.exp === 'token expired') {
-            authService.logout()
             dialog.open(DialogContentComponent, { data: { name: 'Session timed out. Please login again' } })
           }
+          authService.logout()
         } else if (error.status === 412 || error.status === 409) {
           dialog.open(DialogContentComponent, {
             data: { name: 'This item has been modified since it has been loaded. Please reload.' }
