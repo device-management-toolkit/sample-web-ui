@@ -1,3 +1,10 @@
+## [3.27.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.0...v3.27.1) (2024-11-05)
+
+
+### Bug Fixes
+
+* logout user if 401 from server ([5801592](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5801592db6ce7ba64e159d3e9448def08c8d924c))
+
 # [3.27.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.26.0...v3.27.0) (2024-10-30)
 
 
