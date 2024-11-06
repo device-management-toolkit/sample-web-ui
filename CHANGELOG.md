@@ -1,3 +1,10 @@
+## [3.27.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.1...v3.27.2) (2024-11-06)
+
+
+### Bug Fixes
+
+* disables CIRA in non-cloud mode ([d0cebc3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d0cebc326a4f52107c8908139ef05218fd04e71d))
+
 ## [3.27.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.0...v3.27.1) (2024-11-05)
 
 
