@@ -16,7 +16,7 @@
   <a mat-list-item routerLink="/wireless" routerLinkActive="active">
     <mat-icon matListItemIcon>wifi</mat-icon><span i18n="navlink">Wireless</span>
   </a>
-  <a mat-list-item routerLink='/ciraconfigs' routerLinkActive="active">
+  <a mat-list-item routerLink='/ciraconfigs' routerLinkActive="active" [disabled]="cloudMode === false" [matTooltipPosition]="'right'" [matTooltip]="cloudMode === false ? 'Not Available' : 'CIRA Configs'">
     <mat-icon matListItemIcon>settings_ethernet</mat-icon><span i18n="navlink">CIRA Configs</span>
   </a>
 

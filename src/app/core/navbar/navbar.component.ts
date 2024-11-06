@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material/icon'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list
     RouterLink,
     RouterLinkActive,
     MatIcon,
-    MatListItemIcon
+    MatListItemIcon,
+    MatTooltip
   ]
 })
 export class NavbarComponent {
