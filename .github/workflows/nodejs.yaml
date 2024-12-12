@@ -38,7 +38,7 @@ jobs:
         if: ${{ matrix.node-version == '18.x' }}
       - run: npm run ci-prettify
       - run: npm run test-ci
-      - uses: codecov/codecov-action@288befbd1044bd1756afb0bdae077549e0ddb31f # v5.0.5
+      - uses: codecov/codecov-action@7f8b4b4bde536c465e797be725718b88c5d95e0e # v5.1.1
         name: Upload Coverage Results
         if: ${{ matrix.node-version == '18.x' }}
         with:
