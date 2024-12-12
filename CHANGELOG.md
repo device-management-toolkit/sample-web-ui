@@ -1,3 +1,10 @@
+## [3.27.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.4...v3.27.5) (2024-12-12)
+
+
+### Bug Fixes
+
+* update power button for hard reset ([93899a3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/93899a3b21f11345d50c0fed522fe1f1e728940d))
+
 ## [3.27.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.3...v3.27.4) (2024-11-14)
 
 ## [3.27.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.2...v3.27.3) (2024-11-08)
