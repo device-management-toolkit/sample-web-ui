@@ -66,6 +66,10 @@ export class DeviceToolbarComponent implements OnInit {
       action: 4
     },
     {
+      label: 'Power Cycle',
+      action: 5
+    },
+    {
       label: 'Reset',
       action: 10
     },

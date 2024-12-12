@@ -1,33 +1,38 @@
 <mat-toolbar>
   @if (device?.useTLS && !isCloudMode) {
-  <div style="padding-right: 12px">
-    <button [color]="isPinned() ? 'primary' : 'warn'" mat-icon-button [matTooltip]="isPinned() ? 'TLS w/ Pinned Certificate' : 'TLS (not pinned)'" (click)="getDeviceCert()">
-      <mat-icon>lock</mat-icon>
-    </button>
-  </div>
+    <div style="padding-right: 12px">
+      <button
+        [color]="isPinned() ? 'primary' : 'warn'"
+        mat-icon-button
+        [matTooltip]="isPinned() ? 'TLS w/ Pinned Certificate' : 'TLS (not pinned)'"
+        (click)="getDeviceCert()">
+        <mat-icon>lock</mat-icon>
+      </button>
+    </div>
   }
   <span>
     @if (device?.friendlyName) {
-    <span>{{ device?.friendlyName }}</span>
+      <span>{{ device?.friendlyName }}</span>
     } @else {
-    <span>{{ device?.hostname }}</span>
+      <span>{{ device?.hostname }}</span>
     }
     <div class="mat-caption">
       @if (isCloudMode) {
-      {{ deviceId }}
+        {{ deviceId }}
       }
       @if (device?.friendlyName) {
-      <span>
-        @if (isCloudMode) {
-        -
-        }
-        {{ device?.hostname }}</span>
+        <span>
+          @if (isCloudMode) {
+            -
+          }
+          {{ device?.hostname }}</span
+        >
       }
     </div>
   </span>
   <mat-chip-set class="flex-1 pad-15">
     @for (tag of device?.tags; track tag) {
-    <mat-chip>{{ tag }}</mat-chip>
+      <mat-chip>{{ tag }}</mat-chip>
     }
   </mat-chip-set>
   <button mat-icon-button matTooltip="Edit device" (click)="editDevice()">
@@ -37,8 +42,14 @@
     <mat-icon>delete</mat-icon>
   </button>
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
-  @if(!isLoading){
-  <mat-icon (click)="getPowerState()" style="padding:0 18px 0 12px;cursor: pointer;" [style.color]="powerState === 'Power: On' ? 'green' : powerState === 'Power: Sleep' ? 'yellow' : 'red'" [matTooltip]="powerState">mode_standby</mat-icon>
+  @if (!isLoading) {
+    <mat-icon
+      (click)="getPowerState()"
+      style="padding: 0 18px 0 12px; cursor: pointer"
+      [style.color]="powerState === 'Power: On' ? 'green' : powerState === 'Power: Sleep' ? 'yellow' : 'red'"
+      [matTooltip]="powerState"
+      >mode_standby</mat-icon
+    >
   }
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
   <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
@@ -47,20 +58,20 @@
   <button mat-icon-button matTooltip="Power off the device" (click)="sendPowerAction(8)">
     <mat-icon>power_off</mat-icon>
   </button>
-  <button mat-icon-button matTooltip="Restart the device" (click)="sendPowerAction(5)">
+  <button mat-icon-button matTooltip="Reset the device" (click)="sendPowerAction(10)">
     <mat-icon>restart_alt</mat-icon>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More Power Options...">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     @for (option of powerOptions; track option) {
-    <button mat-menu-item (click)="sendPowerAction(option.action)">
-      <span>{{ option.label }}</span>
-    </button>
+      <button mat-menu-item (click)="sendPowerAction(option.action)">
+        <span>{{ option.label }}</span>
+      </button>
     }
   </mat-menu>
 </mat-toolbar>
 @if (isLoading) {
-<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
