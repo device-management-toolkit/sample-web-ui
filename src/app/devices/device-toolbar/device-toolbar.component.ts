@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -30,7 +30,6 @@ import { UserConsentService } from '../user-consent.service'
   selector: 'app-device-toolbar',
   templateUrl: './device-toolbar.component.html',
   styleUrls: ['./device-toolbar.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatChipSet,
@@ -46,6 +45,12 @@ import { UserConsentService } from '../user-consent.service'
   ]
 })
 export class DeviceToolbarComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+  private readonly userConsentService = inject(UserConsentService)
+  private readonly matDialog = inject(MatDialog)
+
   @Input()
   public isLoading = false
 
@@ -102,14 +107,6 @@ export class DeviceToolbarComponent implements OnInit {
       action: 401
     }
   ]
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService,
-    private readonly userConsentService: UserConsentService,
-    private readonly matDialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.devicesService.getDevice(this.deviceId).subscribe((data) => {

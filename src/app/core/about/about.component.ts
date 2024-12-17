@@ -16,7 +16,6 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     MatIcon,

@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -15,11 +15,10 @@ import { AuthService } from '../auth.service'
   providedIn: 'root'
 })
 export class WirelessService {
+  private readonly http = inject(HttpClient)
+  private readonly authService = inject(AuthService)
+
   private readonly url = `${environment.rpsServer}/api/v1/admin/wirelessconfigs`
-  constructor(
-    private readonly http: HttpClient,
-    private readonly authService: AuthService
-  ) {}
 
   getData(pageEvent?: PageEventOptions): Observable<DataWithCount<WirelessConfig>> {
     let query = this.url

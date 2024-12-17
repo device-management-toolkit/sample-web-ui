@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -39,7 +39,6 @@ import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dial
   selector: 'app-profiles',
   templateUrl: './profiles.component.html',
   styleUrls: ['./profiles.component.scss'],
-  standalone: true,
   imports: [
     ToolkitPipe,
     MatToolbar,
@@ -63,6 +62,11 @@ import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dial
   ]
 })
 export class ProfilesComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  readonly router = inject(Router)
+  private readonly profilesService = inject(ProfilesService)
+
   profiles: Profile[] = []
   isLoading = true
   totalCount = 0
@@ -82,13 +86,6 @@ export class ProfilesComponent implements OnInit {
   cloudMode = environment.cloud
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public readonly router: Router,
-    private readonly profilesService: ProfilesService
-  ) {}
 
   ngOnInit(): void {
     this.getData(this.pageEvent)

@@ -15,7 +15,6 @@ import { MatTooltip } from '@angular/material/tooltip'
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  standalone: true,
   imports: [
     MatNavList,
     MatDivider,

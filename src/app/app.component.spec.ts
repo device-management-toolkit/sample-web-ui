@@ -14,7 +14,6 @@ import { AuthService } from './auth.service'
 
 @Component({
   selector: 'app-toolbar',
-  standalone: true,
   imports: [RouterModule, MatSidenavModule]
 })
 class TestToolbarComponent {

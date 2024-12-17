@@ -12,7 +12,6 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
   selector: 'app-power-up-alert',
   templateUrl: './power-up-alert.component.html',
   styleUrls: ['./power-up-alert.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,

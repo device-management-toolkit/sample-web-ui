@@ -1,982 +1,916 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { of, throwError } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { DevicesService } from './devices.service'
+import { environment } from 'src/environments/environment'
+import {
+  AMTFeaturesResponse,
+  AuditLogResponse,
+  DataWithCount,
+  Device,
+  EventLog,
+  HardwareInformation,
+  PowerState,
+  DeviceStats,
+  RedirectionToken,
+  RedirectionStatus,
+  UserConsentResponse,
+  DiskInformation,
+  IPSAlarmClockOccurrence,
+  IPSAlarmClockOccurrenceInput
+} from 'src/models/models'
 
 describe('DevicesService', () => {
   let service: DevicesService
-  let httpClientSpy: {
-    get: jasmine.Spy
-    post: jasmine.Spy
-    patch: jasmine.Spy
-    request: jasmine.Spy
-    delete: jasmine.Spy
-  }
-  const deviceRes = {
-    hostname: 'localhost',
-    friendlyName: '',
-    icon: 1,
-    connectionStatus: true,
-    guid: 'defgh-34567-poiuy',
-    tags: [],
-    mpsInstance: '',
-    mpsusername: '',
-    tenantId: '',
-    dnsSuffix: 'vprodemo.com'
-  }
+  let httpMock: HttpTestingController
 
-  const deviceResponse = [deviceRes]
-
-  const deviceListResponse = {
-    data: deviceResponse,
-    totalCount: 1
-  }
-
-  const error = {
-    status: 404,
-    message: 'Not Found'
-  }
+  const mockEnvironment = { mpsServer: 'https://test-mps', rpsServer: 'https://test-rps' }
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'request',
-      'patch',
-      'delete'
-    ])
+    environment.mpsServer = mockEnvironment.mpsServer
+    environment.rpsServer = mockEnvironment.rpsServer
+
     TestBed.configureTestingModule({
-      imports: [AuthService]
+      imports: [HttpClientTestingModule],
+      providers: [DevicesService, { provide: environment, useValue: mockEnvironment }]
     })
 
-    service = new DevicesService(httpClientSpy as any)
+    service = TestBed.inject(DevicesService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return all the tags', (done) => {
-    const tagsResponse = ['test']
-    httpClientSpy.get.and.returnValue(of(tagsResponse))
-    service.getTags().subscribe((response) => {
-      expect(response).toEqual(tagsResponse)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/tags`)
-      done()
+  describe('getDiskInformation', () => {
+    it('should fetch disk information for a device', () => {
+      const mockResponse: DiskInformation = { CIM_MediaAccessDevice: [], CIM_PhysicalPackage: [] } as any
+
+      service.getDiskInformation('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/diskInfo/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
     })
-  })
 
-  it('should NOT return tags when error received', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getTags().subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
 
-  it('should return the requested device', (done) => {
-    httpClientSpy.get.and.returnValue(of(deviceRes))
-    service.getDevice(deviceRes.guid).subscribe((response) => {
-      expect(response).toEqual(deviceRes)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/${deviceRes.guid}`)
-      done()
-    })
-  })
-
-  it('should NOT return requested device when error received', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getDevice('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return all devices', (done) => {
-    httpClientSpy.get.and.returnValue(of(deviceListResponse))
-    service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe((response) => {
-      expect(response).toEqual(deviceListResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(
-      `${environment.mpsServer}/api/v1/devices?$top=25&$skip=0&$count=true`
-    )
-  })
-
-  it('should return all devices filtered by tags', (done) => {
-    httpClientSpy.get.and.returnValue(of(deviceListResponse))
-    service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true', tags: ['test'] }).subscribe((response) => {
-      expect(response).toEqual(deviceListResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(
-      `${environment.mpsServer}/api/v1/devices?tags=test&$top=25&$skip=0&$count=true`
-    )
-  })
-
-  it('should NOT return devices when error received', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getDevices({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should update a device', (done) => {
-    httpClientSpy.patch.and.returnValue(of(deviceRes))
-    service.updateDevice(deviceRes).subscribe((response) => {
-      expect(response).toEqual(deviceRes)
-      done()
-    })
-    expect(httpClientSpy.patch).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices`, deviceRes)
-  })
-
-  it('should NOT return devices when error received', (done) => {
-    httpClientSpy.patch.and.returnValue(throwError(error))
-    service.updateDevice(deviceRes).subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should set AMT Features', (done) => {
-    const deviceResponse = {
-      userConsent: 'kVM',
-      optInState: 2,
-      redirection: true,
-      KVM: true,
-      SOL: true,
-      IDER: true
-    }
-    httpClientSpy.post.and.returnValue(of(deviceResponse))
-    service.setAmtFeatures('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(deviceResponse)
-      expect(httpClientSpy.post).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/features/defgh-34567-poiuy`,
-        { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }
-      )
-      done()
-    })
-  })
-
-  it('should return error when setting AMT Features', (done) => {
-    httpClientSpy.post.and.returnValue(throwError(error))
-    service.setAmtFeatures('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return power state', (done) => {
-    const powerState = {
-      powerstate: 2
-    }
-    httpClientSpy.get.and.returnValue(of(powerState))
-    service.getPowerState('defgh-34567-poiuy').subscribe((response) => {
-      expect(response.powerstate).toBe(powerState.powerstate)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/power/state/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-
-  it('should return error when requesting power state', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getPowerState('defgh-34567-poiuy').subscribe(
-      () => {},
-      (err) => {
-        expect(error).toEqual(err)
-        done()
-      }
-    )
-  })
-
-  it('should return device stats', (done) => {
-    const deviceStats = {
-      totalCount: 1,
-      connectedCount: 1,
-      disconnectedCount: 0
-    }
-    httpClientSpy.get.and.returnValue(of(deviceStats))
-    service.getStats().subscribe((response) => {
-      expect(response).toEqual(deviceStats)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/devices/stats`)
-      done()
-    })
-  })
-
-  it('should return error when requesting device stats', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getStats().subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return user consent code', (done) => {
-    const userConsentresponse = {
-      Header: {
-        To: 'string',
-        RelatesTo: 'string',
-        Action: 'string',
-        MessageID: 'string',
-        ResourceURI: 'string',
-        Method: 'string'
-      },
-      Body: {
-        ReturnValue: [
-          {
-            hostname: 'localhost',
-            icon: 1,
-            connectionStatus: true,
-            guid: 'defgh-34567-poiuy',
-            tags: []
-          }
-        ],
-        ReturnValueStr: 'SUCCESS'
-      }
-    }
-    httpClientSpy.get.and.returnValue(of(userConsentresponse))
-    service.reqUserConsentCode('defgh-34567-poiuy').subscribe((response) => {
-      expect(JSON.stringify(response)).toContain(JSON.stringify(userConsentresponse))
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/userConsentCode/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-
-  it('should return error when requesting for user consent code', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.reqUserConsentCode('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return success when cancelling user consent code', (done) => {
-    const cancelConsentresponse = {
-      Header: {
-        To: 'string',
-        RelatesTo: 'string',
-        Action: 'string',
-        MessageID: 'string',
-        ResourceURI: 'string',
-        Method: 'string'
-      },
-      Body: {
-        ReturnValue: [
-          {
-            hostname: 'localhost',
-            icon: 1,
-            connectionStatus: true,
-            guid: 'defgh-34567-poiuy',
-            tags: []
-          }
-        ],
-        ReturnValueStr: 'SUCCESS'
-      }
-    }
-    httpClientSpy.get.and.returnValue(of(cancelConsentresponse))
-    service.cancelUserConsentCode('defgh-34567-poiuy').subscribe((response) => {
-      expect(JSON.stringify(response)).toContain(JSON.stringify(cancelConsentresponse))
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/userConsentCode/cancel/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-
-  it('should return error when cancelling user consent code', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.cancelUserConsentCode('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return success when sending user consent code', (done) => {
-    const sendUserConsentCode = {
-      Header: {
-        To: 'string',
-        RelatesTo: 'string',
-        Action: 'string',
-        MessageID: 'string',
-        ResourceURI: 'string',
-        Method: 'string'
-      },
-      Body: {
-        ReturnValue: [
-          {
-            hostname: 'localhost',
-            icon: 1,
-            connectionStatus: true,
-            guid: 'defgh-34567-poiuy',
-            tags: []
-          }
-        ],
-        ReturnValueStr: 'SUCCESS'
-      }
-    }
-    httpClientSpy.post.and.returnValue(of(sendUserConsentCode))
-    service.sendUserConsentCode('defgh-34567-poiuy', 2).subscribe((response) => {
-      expect(JSON.stringify(response)).toContain(JSON.stringify(sendUserConsentCode))
-      expect(httpClientSpy.post).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/userConsentCode/defgh-34567-poiuy`,
-        { consentCode: 2 }
-      )
-      done()
-    })
-  })
-
-  it('should return error when sending user consent code', (done) => {
-    httpClientSpy.post.and.returnValue(throwError(error))
-    service.sendUserConsentCode('defgh-34567-poiuy', 2).subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return AMT Version', (done) => {
-    const amtVersion = {
-      amtVersion: 2
-    }
-    httpClientSpy.get.and.returnValue(of(amtVersion))
-    service.getAMTVersion('defgh-34567-poiuy').subscribe((response) => {
-      expect(response.amtVersion).toBe(amtVersion.amtVersion)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/version/defgh-34567-poiuy`)
-      done()
-    })
-  })
-
-  it('should return error when requesting power state', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getAMTVersion('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return Audit Log', (done) => {
-    const auditLogResponse = {
-      totalCnt: 1,
-      records: [
-        {
-          AuditApp: 'string',
-          AuditAppID: 1234,
-          Event: 'logs',
-          EventID: 12345,
-          Ex: 'string',
-          ExStr: 'string',
-          Initiator: 'string',
-          InitiatorType: 1234,
-          MCLocationType: 1234,
-          NetAddress: 'string',
-          Time: 'string'
+      service.getDiskInformation('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
         }
-      ]
-    }
-    httpClientSpy.get.and.returnValue(of(auditLogResponse))
-    service.getAuditLog('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(auditLogResponse)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/log/audit/defgh-34567-poiuy?startIndex=0`
-      )
-      done()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/diskInfo/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when requesting Audit Log', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getAuditLog('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return Event Log', (done) => {
-    const eventLogResponse = [
-      {
-        DeviceAddress: 123456,
-        EventSensorType: 45678,
-        EventType: 45,
-        EventOffset: 23,
-        EventSourceType: 2,
-        EventSeverity: 5,
-        SensorNumber: 1,
-        Entity: 1,
-        EntityInstance: 2,
-        EventData: [
-          1,
-          2,
-          3,
-          4
-        ],
-        Time: 'string',
-        EntityStr: 'string',
-        Desc: 'string',
-        eventTypeDesc: 'string'
+  describe('getAMTFeatures', () => {
+    it('should fetch AMT features for a device', () => {
+      const mockResponse: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        KVM: true,
+        SOL: true,
+        IDER: true
       }
-    ]
-    httpClientSpy.get.and.returnValue(of(eventLogResponse))
-    service.getEventLog('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(eventLogResponse)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/log/event/defgh-34567-poiuy`)
-      done()
+
+      service.getAMTFeatures('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getAMTFeatures('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when requesting Event Log', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getEventLog('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
+  describe('getAlarmOccurrences', () => {
+    it('should fetch alarm occurrences for a device', () => {
+      const mockResponse: IPSAlarmClockOccurrence[] = []
+
+      service.getAlarmOccurrences('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getAlarmOccurrences('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return AMT Features', (done) => {
-    const amtFeaturesResponse = {
-      userConsent: 'KVM',
-      optInState: 2,
-      redirection: true,
-      KVM: true,
-      SOL: true,
-      IDER: true
-    }
-    httpClientSpy.get.and.returnValue(of(amtFeaturesResponse))
-    service.getAMTFeatures('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(amtFeaturesResponse)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/features/defgh-34567-poiuy`)
-      done()
+  describe('deleteAlarmOccurrence', () => {
+    it('should delete an alarm occurrence for a device', () => {
+      const instanceID = 'alarm1'
+
+      service.deleteAlarmOccurrence('device1', instanceID).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      expect(req.request.method).toBe('DELETE')
+      expect(req.request.body).toEqual({ Name: instanceID })
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const instanceID = 'alarm1'
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.deleteAlarmOccurrence('device1', instanceID).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when requesting AMT Features', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getAMTFeatures('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should send power action < 100', (done) => {
-    const sendPowerAction = {
-      Header: {
-        To: 'string',
-        RelatesTo: 'string',
-        Action: 'string',
-        MessageID: 'string',
-        ResourceURI: 'string',
-        Method: 'string'
-      },
-      Body: {
-        ReturnValue: [
-          {
-            hostname: 'localhost',
-            icon: 1,
-            connectionStatus: true,
-            guid: 'defgh-34567-poiuy',
-            tags: []
-          }
-        ],
-        ReturnValueStr: 'SUCCESS'
-      }
-    }
-    httpClientSpy.post.and.returnValue(of(sendPowerAction))
-    service.sendPowerAction('defgh-34567-poiuy', 2).subscribe((response) => {
-      expect(response).toEqual(sendPowerAction)
-      expect(httpClientSpy.post).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/power/action/defgh-34567-poiuy`,
-        { method: 'PowerAction', action: 2, useSOL: false }
-      )
-      done()
-    })
-  })
-
-  it('should send power action >= 100', (done) => {
-    const sendPowerAction = {
-      Header: {
-        To: 'string',
-        RelatesTo: 'string',
-        Action: 'string',
-        MessageID: 'string',
-        ResourceURI: 'string',
-        Method: 'string'
-      },
-      Body: {
-        ReturnValue: [
-          {
-            hostname: 'localhost',
-            icon: 1,
-            connectionStatus: true,
-            guid: 'defgh-34567-poiuy',
-            tags: []
-          }
-        ],
-        ReturnValueStr: 'SUCCESS'
-      }
-    }
-    httpClientSpy.post.and.returnValue(of(sendPowerAction))
-    service.sendPowerAction('defgh-34567-poiuy', 101).subscribe((response) => {
-      expect(response).toEqual(sendPowerAction)
-      expect(httpClientSpy.post).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/power/bootoptions/defgh-34567-poiuy`,
-        { method: 'PowerAction', action: 101, useSOL: false }
-      )
-      done()
-    })
-  })
-
-  it('should return error when sending power action', (done) => {
-    httpClientSpy.post.and.returnValue(throwError(error))
-    service.sendPowerAction('defgh-34567-poiuy', 2).subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('it should return the hardware information', (done) => {
-    const getHardwareInfo = {
-      CIM_Chassis: {
-        response: {
-          ChassisPackageType: 2,
-          CreationClassName: 'string',
-          ElementName: 'string',
-          Manufacturer: 'string',
-          Model: 'string',
-          OperationalStatus: 2,
-          PackageType: 2,
-          SerialNumber: 'string',
-          Tag: 'string',
-          Version: 'string'
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_Chip: {
-        response: {
-          CanBeFRUed: true,
-          CreationClassName: 'string',
-          ElementName: 'string',
-          Manufacturer: 'string',
-          OperationalStatus: 2,
-          Tag: {},
-          Version: 'string',
-          BankLabel: 'string',
-          MaxMemorySpeed: 2,
-          MemoryType: 2,
-          SerialNumber: 'string',
-          PartNumber: 'string',
-          Speed: 3
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_Card: {
-        response: {
-          CanBeFRUed: true,
-          CreationClassName: 'string',
-          ElementName: 'string',
-          Manufacturer: 'string',
-          Model: 'string',
-          OperationalStatus: 2,
-          PackageType: 2,
-          SerialNumber: 'string',
-          Tag: 'string',
-          Version: 'string'
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_BIOSElement: {
-        response: {
-          ElementName: 'string',
-          Manufacturer: 'string',
-          Name: 'string',
-          OperationalStatus: 2,
-          PrimaryBIOS: true,
-          ReleaseDate: {},
-          SoftwareElementID: 'string',
-          SoftwareElementState: 2,
-          TargetOperatingSystem: 2,
-          Version: 'string'
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_Processor: {
-        response: {
-          CPUStatus: 2,
-          CreationClassName: 'string',
-          CurrentClockSpeed: 2,
-          DeviceID: 'string',
-          ElementName: 'string',
-          EnabledState: 2,
-          ExternalBusClockSpeed: 2,
-          Family: 2,
-          HealthState: 2,
-          MaxClockSpeed: 2,
-          OperationalStatus: 2,
-          RequestedState: 2,
-          Role: 'string',
-          Stepping: 2,
-          SystemCreationClassName: 'string',
-          SystemName: 'string',
-          UpgradeMethod: 2
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_PhysicalMemory: {
-        response: {
-          BankLabel: 'string',
-          Capacity: {},
-          ConfiguredMemoryClockSpeed: 2,
-          CreationClassName: 'string',
-          ElementName: 'string',
-          FormFactor: 2,
-          IsSpeedInMhz: true,
-          Manufacturer: 'string',
-          MaxMemorySpeed: 2,
-          MemoryType: 2,
-          PartNumber: 'string',
-          SerialNumber: 'string',
-          Speed: 2,
-          Tag: {}
-        },
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_MediaAccessDevice: {
-        response: [
-          {
-            Capabilities: [
-              1,
-              2,
-              4
-            ],
-            CreationClassName: 'string',
-            DeviceID: 'string',
-            ElementName: 'string',
-            EnabledDefault: 2,
-            EnabledState: 2,
-            MaxMediaSize: 2,
-            OperationalStatus: 2,
-            RequestedState: 2,
-            Security: 2,
-            SystemCreationClassName: 'string',
-            SystemName: 'string'
-          }
-        ],
-        responses: { message: 'SUCCESS' },
-        status: 200
-      },
-      CIM_PhysicalPackage: {
-        response: [
-          {
-            CanBeFRUed: true,
-            CreationClassName: 'string',
-            ElementName: 'string',
-            Manufacturer: 'string',
-            Model: 'string',
-            OperationalStatus: 2,
-            PackageType: 2,
-            SerialNumber: 'string',
-            Tag: 'string',
-            Version: 'string',
-            ManufactureDate: {},
-            ChassisPackageType: 2
-          }
-        ],
-        responses: { message: 'SUCCESS' },
-        status: 200
-      }
-    }
-
-    httpClientSpy.get.and.returnValue(of(getHardwareInfo))
-    service.getHardwareInformation('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(getHardwareInfo)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/hardwareInfo/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-
-  it('should return error while getting hardware information', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getHardwareInformation('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-
-  it('should return redirection token', (done) => {
-    const redirectionToken = {
-      token: '123'
-    }
-    httpClientSpy.get.and.returnValue(of(redirectionToken))
-    service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe((result) => {
-      expect(result).toEqual(redirectionToken)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/authorize/redirection/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-  it('should return error while getting redirection token', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getRedirectionExpirationToken('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-  it('should return the redirection status', (done) => {
-    const redirectionStatus = {
-      isKVMConnected: false,
-      isSOLConnected: false,
-      isIDERConnected: false
-    }
-    httpClientSpy.get.and.returnValue(of(redirectionStatus))
-    service.getRedirectionStatus('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(redirectionStatus)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/devices/redirectstatus/defgh-34567-poiuy`
-      )
-      done()
-    })
-  })
-  it('should throw an error when the redirection status request fails', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getRedirectionStatus('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
-    })
-  })
-  it('should return alarm instances', (done) => {
-    const alarms: IPSAlarmClockOccurrence[] = [
-      {
-        ElementName: 'Alarm name',
-        StartTime: { Datetime: new Date() },
-        InstanceID: 'Alarm instance',
+  describe('addAlarmOccurrence', () => {
+    it('should add an alarm occurrence for a device', () => {
+      const mockRequest: IPSAlarmClockOccurrenceInput = {
+        ElementName: 'TestAlarm',
+        InstanceID: 'alarm1',
+        StartTime: '2024-01-01T00:00:00Z',
         DeleteOnCompletion: true
       }
-    ]
-    httpClientSpy.get.and.returnValue(of(alarms))
-    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toBe(alarms)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`
-      )
-      done()
+
+      service.addAlarmOccurrence('device1', mockRequest).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(mockRequest)
+      req.flush({})
     })
-  })
 
-  it('should return error when requesting power state', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getPowerState('defgh-34567-poiuy').subscribe(
-      () => {},
-      (err) => {
-        expect(error).toEqual(err)
-        done()
-      }
-    )
-  })
-
-  it('should return alarm instances', (done) => {
-    const alarms: IPSAlarmClockOccurrence[] = [
-      {
-        ElementName: 'Alarm name',
-        StartTime: { Datetime: new Date() },
-        InstanceID: 'Alarm instance',
+    it('should handle errors', () => {
+      const mockRequest: IPSAlarmClockOccurrenceInput = {
+        ElementName: 'TestAlarm',
+        InstanceID: 'alarm1',
+        StartTime: '2024-01-01T00:00:00Z',
         DeleteOnCompletion: true
       }
-    ]
-    httpClientSpy.get.and.returnValue(of(alarms))
-    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toBe(alarms)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`
-      )
-      done()
+      const mockError = { status: 400, statusText: 'Bad Request' }
+
+      service.addAlarmOccurrence('device1', mockRequest).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/alarmOccurrences/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when getting alarm instances', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getAlarmOccurrences('defgh-34567-poiuy').subscribe(
-      () => {},
-      (err) => {
-        expect(error).toEqual(err)
-        done()
+  describe('sendPowerAction', () => {
+    it('should send a power action for a device', () => {
+      const action = 2
+      const useSOL = true
+      const mockPayload = { method: 'PowerAction', action, useSOL }
+
+      service.sendPowerAction('device1', action, useSOL).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/action/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(mockPayload)
+      req.flush({})
+    })
+
+    it('should send a boot options action for a device if action >= 100', () => {
+      const action = 100
+      const useSOL = false
+      const mockPayload = { method: 'PowerAction', action, useSOL }
+
+      service.sendPowerAction('device1', action, useSOL).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(mockPayload)
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const action = 2
+      const useSOL = true
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.sendPowerAction('device1', action, useSOL).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/action/device1`)
+      req.flush(null, mockError)
+    })
+  })
+  describe('sendDeactivate', () => {
+    it('should deactivate a device in cloud mode', () => {
+      const guid = 'device1'
+      environment.cloud = true
+
+      service.sendDeactivate(guid).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/deactivate/${guid}`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
+
+    it('should deactivate a device in non-cloud mode', () => {
+      const guid = 'device1'
+      environment.cloud = false
+
+      service.sendDeactivate(guid).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/${guid}`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const guid = 'device1'
+      environment.cloud = true
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.sendDeactivate(guid).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/deactivate/${guid}`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getTags', () => {
+    it('should fetch tags for devices', () => {
+      const mockResponse = ['tag1', 'tag2']
+
+      service.getTags().subscribe((response) => {
+        expect(response).toEqual(['tag1', 'tag2'])
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/tags`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getTags().subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/tags`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('addDevice', () => {
+    it('should add a new device', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+
+      service.addDevice(mockDevice).subscribe((response) => {
+        expect(response).toEqual(mockDevice)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(mockDevice)
+      req.flush(mockDevice)
+    })
+
+    it('should handle errors', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.addDevice(mockDevice).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('editDevice', () => {
+    it('should edit an existing device', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+
+      service.editDevice(mockDevice).subscribe((response) => {
+        expect(response).toEqual(mockDevice)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      expect(req.request.method).toBe('PATCH')
+      expect(req.request.body).toEqual(mockDevice)
+      req.flush(mockDevice)
+    })
+
+    it('should handle errors', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.editDevice(mockDevice).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getDevice', () => {
+    it('should fetch a specific device by GUID', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+
+      service.getDevice('guid1').subscribe((response) => {
+        expect(response).toEqual(mockDevice)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockDevice)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getDevice('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getDevices', () => {
+    it('should fetch a list of devices', () => {
+      const mockDevices: DataWithCount<Device> = {
+        data: [{ hostname: 'device1', guid: 'guid1', connectionStatus: true }] as any,
+        totalCount: 1
       }
-    )
-  })
 
-  it('should delete an alarm instance', (done) => {
-    httpClientSpy.request.and.returnValue(of({ Status: 'SUCCESS' }))
-    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe((response) => {
-      expect(response).toEqual({ Status: 'SUCCESS' })
-      expect(httpClientSpy.request).toHaveBeenCalledWith(
-        'DELETE',
-        `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`,
-        { body: { Name: 'Alarm to delete' } }
-      )
-      done()
+      service.getDevices({ pageSize: 10, startsFrom: 0, count: 'true' }).subscribe((response) => {
+        expect(response).toEqual(mockDevices)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockDevices)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getDevices({ pageSize: 10, startsFrom: 0, count: 'true' }).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices?$top=10&$skip=0&$count=true`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when deleting an alarm', (done) => {
-    httpClientSpy.request.and.returnValue(throwError(error))
-    service.deleteAlarmOccurrence('defgh-34567-poiuy', 'Alarm to delete').subscribe(
-      () => {},
-      (err) => {
-        expect(error).toEqual(err)
-        done()
+  describe('updateDevice', () => {
+    it('should update a device', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+
+      service.updateDevice(mockDevice).subscribe((response) => {
+        expect(response).toEqual(mockDevice)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      expect(req.request.method).toBe('PATCH')
+      expect(req.request.body).toEqual(mockDevice)
+      req.flush(mockDevice)
+    })
+
+    it('should handle errors', () => {
+      const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.updateDevice(mockDevice).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices`)
+      req.flush(null, mockError)
+    })
+  })
+  describe('setAmtFeatures', () => {
+    it('should set AMT features', () => {
+      const mockResponse: AMTFeaturesResponse = {
+        redirection: true,
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        userConsent: 'all',
+        optInState: 1
       }
-    )
-  })
+      const payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }
 
-  it('should add an alarm instance', (done) => {
-    const alarmToAdd: IPSAlarmClockOccurrenceInput = {
-      ElementName: 'Alarm name',
-      StartTime: `${new Date()}`,
-      InstanceID: 'Alarm instance',
-      DeleteOnCompletion: true
-    }
-    httpClientSpy.post.and.returnValue(of({ Status: 'SUCCESS' }))
-    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe((response) => {
-      expect(response).toEqual({ Status: 'SUCCESS' })
-      expect(httpClientSpy.post).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/alarmOccurrences/defgh-34567-poiuy`,
-        alarmToAdd
-      )
-      done()
+      service.setAmtFeatures('device1', payload).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+
+      service.setAmtFeatures('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when adding an alarm', (done) => {
-    const alarmToAdd: IPSAlarmClockOccurrence = {
-      ElementName: 'Alarm name',
-      StartTime: new Date(),
-      InstanceID: 'Alarm instance',
-      DeleteOnCompletion: true
-    }
-    httpClientSpy.post.and.returnValue(throwError(error))
-    service.addAlarmOccurrence('defgh-34567-poiuy', alarmToAdd).subscribe(
-      () => {},
-      (err) => {
-        expect(error).toEqual(err)
-        done()
-      }
-    )
-  })
+  describe('getPowerState', () => {
+    it('should fetch power state for a device', () => {
+      const mockResponse: PowerState = { powerstate: 2 }
 
-  it('should send deactivate', (done) => {
-    const deactivateResponse = {
-      status: 'SUCCESS'
-    }
-    httpClientSpy.delete.and.returnValue(of(deactivateResponse))
-    service.sendDeactivate('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(deactivateResponse)
-      expect(httpClientSpy.delete).toHaveBeenCalledWith(
-        `${environment.mpsServer}/api/v1/amt/deactivate/defgh-34567-poiuy`
-      )
-      done()
+      service.getPowerState('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getPowerState('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error when sending a deactivate', (done) => {
-    httpClientSpy.delete.and.returnValue(throwError(error))
-    service.sendDeactivate('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
+  describe('getStats', () => {
+    it('should fetch device statistics', () => {
+      const mockResponse: DeviceStats = { totalCount: 100, connectedCount: 80, disconnectedCount: 20 }
+
+      service.getStats().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getStats().subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+      req.flush(null, mockError)
     })
   })
 
-  it('it should return the disk information', (done) => {
-    const getDiskInfo = {
-      CIM_MediaAccessDevice: {
-        responses: [
-          [
-            {
-              Capabilities: [
-                4,
-                10,
-                7
-              ],
-              CreationClassName: 'CIM_MediaAccessDevice',
-              DeviceID: 'MEDIA DEV 0',
-              ElementName: 'Managed System Media Access Device',
-              EnabledDefault: 2,
-              EnabledState: 0,
-              MaxMediaSize: 256060514,
-              OperationalStatus: [
-                0
-              ],
-              RequestedState: 12,
-              Security: 2,
-              SystemCreationClassName: 'CIM_ComputerSystem',
-              SystemName: 'ManagedSystem'
-            }
-          ]
+  describe('reqUserConsentCode', () => {
+    it('should request user consent code', () => {
+      const mockResponse: UserConsentResponse = {
+        Header: {},
+        Body: { ReturnValue: 0, ReturnValueStr: 'Success' }
+      } as any
 
-        ]
-      },
-      CIM_PhysicalPackage: {
-        responses: [
-          [
-            {
-              CanBeFRUed: false,
-              VendorEquipmentType: '',
-              ManufactureDate: '',
-              OtherIdentifyingInfo: '',
-              SerialNumber: '50026B76866D839D',
-              SKU: '',
-              Model: 'KINGSTON OM8PGP4256Q-A0                 ',
-              Manufacturer: '',
-              ElementName: 'Managed System Storage Media Package',
-              CreationClassName: 'CIM_PhysicalPackage',
-              Tag: 'Storage Media Package 0',
-              OperationalStatus: [
-                0
-              ],
-              PackageType: 15
-            }
-          ]
+      service.reqUserConsentCode('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-        ]
-      }
-    }
-    httpClientSpy.get.and.returnValue(of(getDiskInfo))
-    service.getDiskInformation('defgh-34567-poiuy').subscribe((response) => {
-      expect(response).toEqual(getDiskInfo)
-      expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.mpsServer}/api/v1/amt/diskInfo/defgh-34567-poiuy`)
-      done()
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.reqUserConsentCode('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/device1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return error while getting disk information', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getDiskInformation('defgh-34567-poiuy').subscribe(null, (err) => {
-      expect(error).toEqual(err)
-      done()
+  describe('cancelUserConsentCode', () => {
+    it('should cancel user consent code', () => {
+      const mockResponse: UserConsentResponse = {
+        Header: {},
+        Body: { ReturnValue: 0, ReturnValueStr: 'Cancelled' }
+      } as any
+
+      service.cancelUserConsentCode('device1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/cancel/device1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.cancelUserConsentCode('device1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/cancel/device1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('sendUserConsentCode', () => {
+    it('should send user consent code', () => {
+      const mockResponse: UserConsentResponse = {
+        Header: {},
+        Body: { ReturnValue: 0, ReturnValueStr: 'Accepted' }
+      } as any
+      const payload = { consentCode: 1234 }
+
+      service.sendUserConsentCode('device1', 1234).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+
+      service.sendUserConsentCode('device1', 1234).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/userConsentCode/device1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getRedirectionExpirationToken', () => {
+    it('should fetch redirection expiration token', () => {
+      const mockResponse: RedirectionToken = { token: 'abcd1234' }
+
+      service.getRedirectionExpirationToken('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/redirection/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getRedirectionExpirationToken('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/redirection/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getRedirectionStatus', () => {
+    it('should fetch redirection status', () => {
+      const mockResponse: RedirectionStatus = { isKVMConnected: true, isSOLConnected: false, isIDERConnected: false }
+
+      service.getRedirectionStatus('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/redirectstatus/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getRedirectionStatus('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/redirectstatus/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+  describe('getWsmanOperations', () => {
+    it('should fetch WSMAN operations', () => {
+      const mockResponse = ['Operation1', 'Operation2']
+
+      service.getWsmanOperations().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/explorer`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getWsmanOperations().subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/explorer`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('executeExplorerCall', () => {
+    it('should execute a WSMAN operation', () => {
+      const mockResponse = { success: true }
+
+      service.executeExplorerCall('guid1', 'Operation1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/explorer/guid1/Operation1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.executeExplorerCall('guid1', 'Operation1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/explorer/guid1/Operation1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getCertificates', () => {
+    it('should fetch certificates for a device', () => {
+      const mockResponse = [{ certificate: 'cert1' }, { certificate: 'cert2' }]
+
+      service.getCertificates('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/certificates/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getCertificates('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/certificates/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getNetworkSettings', () => {
+    it('should fetch network settings for a device', () => {
+      const mockResponse = { ip: '192.168.0.1' }
+
+      service.getNetworkSettings('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getNetworkSettings('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getTLSSettings', () => {
+    it('should fetch TLS settings for a device', () => {
+      const mockResponse = { tlsEnabled: true }
+
+      service.getTLSSettings('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/tls/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.getTLSSettings('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/tls/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getDeviceCertificate', () => {
+    it('should fetch device certificate', () => {
+      const mockResponse = { certificate: 'device-cert' }
+
+      service.getDeviceCertificate('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getDeviceCertificate('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('pinDeviceCertificate', () => {
+    it('should pin a device certificate', () => {
+      const mockResponse = { success: true }
+      const payload = { sha256Fingerprint: 'fingerprint123' }
+
+      service.pinDeviceCertificate('guid1', 'fingerprint123').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+
+      service.pinDeviceCertificate('guid1', 'fingerprint123').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('deleteDeviceCertificate', () => {
+    it('should delete a device certificate', () => {
+      const mockResponse = { success: true }
+
+      service.deleteDeviceCertificate('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.deleteDeviceCertificate('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      req.flush(null, mockError)
     })
   })
 })

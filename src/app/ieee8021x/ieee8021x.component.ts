@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -37,7 +37,6 @@ import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
   selector: 'app-ieee8021x',
   templateUrl: './ieee8021x.component.html',
   styleUrls: ['./ieee8021x.component.scss'],
-  standalone: true,
   imports: [
     ToolkitPipe,
     MatToolbar,
@@ -61,6 +60,11 @@ import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
   ]
 })
 export class IEEE8021xComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly ieee8021xService = inject(IEEE8021xService)
+  router = inject(Router)
+  dialog = inject(MatDialog)
+
   pagedConfigs: DataWithCount<IEEE8021xConfig> = {
     data: [],
     totalCount: 0
@@ -81,13 +85,6 @@ export class IEEE8021xComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly ieee8021xService: IEEE8021xService,
-    public router: Router,
-    public dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.getData(this.pageEvent)

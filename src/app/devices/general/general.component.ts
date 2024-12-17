@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -20,7 +20,6 @@ import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'app-general',
-  standalone: true,
   imports: [
     MatProgressBar,
     MatCardModule,
@@ -34,6 +33,11 @@ import { MatTooltip } from '@angular/material/tooltip'
   styleUrl: './general.component.scss'
 })
 export class GeneralComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+  fb = inject(FormBuilder)
+
   @Input()
   public deviceId = ''
 
@@ -65,12 +69,9 @@ export class GeneralComponent implements OnInit {
   ]
   public generalSettings: any = {}
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService,
-    public fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = this.fb
+
     this.amtEnabledFeatures = fb.group({
       enableIDER: false,
       enableKVM: [{ value: false, disabled: this.isKVMDisabled }],

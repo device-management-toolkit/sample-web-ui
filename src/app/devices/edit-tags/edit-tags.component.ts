@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -24,7 +24,6 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
   selector: 'app-device-edit-tags',
   templateUrl: './edit-tags.component.html',
   styleUrls: ['./edit-tags.component.css'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,
@@ -43,13 +42,13 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
   ]
 })
 export class DeviceEditTagsComponent {
+  dialogRef = inject<MatDialogRef<DeviceEditTagsComponent>>(MatDialogRef)
+  tags = inject(MAT_DIALOG_DATA)
+
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   tagsHaveChanged: boolean
 
-  constructor(
-    public dialogRef: MatDialogRef<DeviceEditTagsComponent>,
-    @Inject(MAT_DIALOG_DATA) public tags: string[]
-  ) {
+  constructor() {
     this.tagsHaveChanged = false
   }
 

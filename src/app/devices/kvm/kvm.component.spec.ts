@@ -92,7 +92,6 @@ describe('KvmComponent', () => {
 
     @Component({
       selector: 'app-kvm',
-      standalone: true,
       imports: []
     })
     class TestAMTKVMComponent {
@@ -117,7 +116,6 @@ describe('KvmComponent', () => {
 
     @Component({
       selector: 'app-device-toolbar',
-      standalone: true,
       imports: []
     })
     class TestDeviceToolbarComponent {

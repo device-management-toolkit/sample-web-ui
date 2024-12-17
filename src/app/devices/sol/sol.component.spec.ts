@@ -83,7 +83,6 @@ describe('SolComponent', () => {
 
     @Component({
       selector: 'app-sol',
-      standalone: true,
       imports: []
     })
     class TestAMTSOLComponent {
@@ -104,7 +103,6 @@ describe('SolComponent', () => {
     }
     @Component({
       selector: 'app-device-toolbar',
-      standalone: true,
       imports: []
     })
     class TestDeviceToolbarComponent {

@@ -1,8 +1,9 @@
+@use 'sass:map';
 // Custom Theming for Angular Material
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
-@import 'src/styles/_variables.scss';
-@import 'src/styles/flex.scss';
+@use 'src/styles/_variables.scss' as vars;
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -15,16 +16,17 @@
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
 @include mat.all-component-typographies();
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $openamtui-theme: mat.m2-define-light-theme(
   (
     color: (
-      primary: $openamtui-primary,
-      accent: $openamtui-accent,
-      warn: $openamtui-warn
+      primary: vars.$openamtui-primary,
+      accent: vars.$openamtui-accent,
+      warn: vars.$openamtui-warn
     )
   )
 );
@@ -32,9 +34,9 @@ $openamtui-theme: mat.m2-define-light-theme(
 $openamtui-dark-theme: mat.m2-define-dark-theme(
   (
     color: (
-      primary: $openamtui-primary,
-      accent: $openamtui-accent,
-      warn: $openamtui-warn
+      primary: vars.$openamtui-primary,
+      accent: vars.$openamtui-accent,
+      warn: vars.$openamtui-warn
     )
   )
 );
@@ -43,6 +45,7 @@ $openamtui-dark-theme: mat.m2-define-dark-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($openamtui-theme);
+
 .dark-theme {
   @include mat.all-component-colors($openamtui-dark-theme);
 }
@@ -51,21 +54,25 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
 .mat-mdc-card {
   margin: 12px;
   padding: 12px;
 }
+
 .mat-mdc-row {
   -moz-transition: all 0.4s ease-in;
   -webkit-transition: all 0.4s ease-in;
   -o-transition: all 0.4s ease-in;
   transition: all 0.4s ease-in;
+
   &:hover {
-    background-color: map-get($openamtui-accent, 100);
+    background-color: map.get(vars.$openamtui-accent, 100);
     cursor: pointer;
     -moz-transition: all 0.4s ease-in;
     -webkit-transition: all 0.4s ease-in;
@@ -73,6 +80,7 @@ body {
     transition: all 0.4s ease-in;
   }
 }
+
 .mat-column-remove,
 .mat-column-select {
   flex: 0 0 75px;
@@ -83,9 +91,11 @@ body {
   background-color: #fafafa;
   color: rgba(0, 0, 0, 0.87);
 }
+
 .mat-mdc-form-field {
   margin-bottom: 10px;
 }
+
 .mat-mdc-snack-bar-container {
   &.warn {
     text-align: center;
@@ -98,7 +108,7 @@ body {
   &.error {
     text-align: center;
     text-transform: uppercase;
-    border-top-color: map-get($openamtui-warn, 500);
+    border-top-color: map.get(vars.$openamtui-warn, 500);
     border-top-width: 5px;
     border-top-style: solid;
   }
@@ -106,12 +116,13 @@ body {
   &.success {
     text-align: center;
     text-transform: uppercase;
-    //background-color: map-get($openamtui-primary, 900);
-    border-top-color: map-get($openamtui-primary, 300);
+    //background-color: map.get($openamtui-primary, 900);
+    border-top-color: map.get(vars.$openamtui-primary, 300);
     border-top-width: 5px;
     border-top-style: solid;
   }
 }
+
 .material-icons {
   direction: ltr;
   display: inline-block;

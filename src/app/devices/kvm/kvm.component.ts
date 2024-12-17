@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
@@ -31,9 +31,7 @@ import { UserConsentService } from '../user-consent.service'
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
   styleUrls: ['./kvm.component.scss'],
-  standalone: true,
   imports: [
-    DeviceToolbarComponent,
     MatToolbar,
     MatFormField,
     MatLabel,
@@ -49,6 +47,13 @@ import { UserConsentService } from '../user-consent.service'
   ]
 })
 export class KvmComponent implements OnInit, OnDestroy {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  private readonly devicesService = inject(DevicesService)
+  readonly activatedRoute = inject(ActivatedRoute)
+  private readonly userConsentService = inject(UserConsentService)
+  readonly router = inject(Router)
+
   @Input()
   public deviceId = ''
 
@@ -85,14 +90,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     { value: 2, viewValue: 'RLE 16' }
   ]
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private readonly devicesService: DevicesService,
-    public readonly activatedRoute: ActivatedRoute,
-    private readonly userConsentService: UserConsentService,
-    public readonly router: Router
-  ) {
+  constructor() {
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`

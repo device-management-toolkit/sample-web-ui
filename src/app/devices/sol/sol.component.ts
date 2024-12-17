@@ -11,7 +11,8 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  HostListener
+  HostListener,
+  inject
 } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
@@ -36,16 +37,21 @@ import { UserConsentService } from '../user-consent.service'
   templateUrl: './sol.component.html',
   styleUrls: ['./sol.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     MatToolbar,
     MatIcon,
-    DeviceToolbarComponent,
     MatButton,
     SOLComponent
   ]
 })
 export class SolComponent implements OnInit, OnDestroy {
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly devicesService = inject(DevicesService)
+  private readonly userConsentService = inject(UserConsentService)
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  private readonly router = inject(Router)
+
   @Input()
   public deviceId = ''
 
@@ -66,14 +72,7 @@ export class SolComponent implements OnInit, OnDestroy {
   stopSocketSubscription!: Subscription
   startSocketSubscription!: Subscription
 
-  constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly devicesService: DevicesService,
-    private readonly userConsentService: UserConsentService,
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private readonly router: Router
-  ) {
+  constructor() {
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`

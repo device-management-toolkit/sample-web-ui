@@ -1,192 +1,253 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { DomainsService } from './domains.service'
+import { AuthService } from '../auth.service'
+import { environment } from 'src/environments/environment'
+import { DataWithCount, Domain, PageEventOptions } from 'src/models/models'
+import { of, throwError } from 'rxjs'
 
 describe('DomainsService', () => {
   let service: DomainsService
-  let httpClientSpy: { get: jasmine.Spy; patch: jasmine.Spy; post: jasmine.Spy; delete: jasmine.Spy }
-  let routerSpy
-  beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'patch',
-      'post',
-      'delete'
-    ])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    TestBed.configureTestingModule({})
+  let httpMock: HttpTestingController
+  let authServiceSpy: jasmine.SpyObj<AuthService>
 
-    service = new DomainsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
+  const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/domains`
+
+  beforeEach(() => {
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = 'https://test-server'
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        DomainsService,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: environment, useValue: mockEnvironment }]
+    })
+
+    service = TestBed.inject(DomainsService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
-  const domainReq = {
-    profileName: 'testDomain',
-    domainSuffix: 'testDomain.com',
-    provisioningCert: 'domainCertLongText',
-    provisioningCertPassword: 'password',
-    provisioningCertStorageFormat: 'string',
-    expirationDate: new Date()
-  }
-
-  const domainResponse = {
-    data: [domainReq],
-    totalCount: 1
-  }
-
-  const error = {
-    status: 404,
-    message: 'Not Found'
-  }
-
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return array of 25 domains when get all domains called ', (done) => {
-    httpClientSpy.get.and.returnValue(of(domainResponse))
-
-    service.getData({ pageSize: 25, startsFrom: 0, count: 'true' }).subscribe((response) => {
-      expect(response).toEqual(domainResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(
-      `${environment.rpsServer}/api/v1/admin/domains?$top=25&$skip=0&$count=true`
-    )
-    expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
-  })
-
-  it('should return array of domains when get all domains called ', (done) => {
-    httpClientSpy.get.and.returnValue(of(domainResponse))
-
-    service.getData().subscribe((response) => {
-      expect(response).toEqual(domainResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/domains?$count=true`)
-    expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
-  })
-  it('should throw errors when get all domains called ', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getData().subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('getData', () => {
+    it('should call the API with pagination options', () => {
+      const pageEvent: PageEventOptions = { pageSize: 10, startsFrom: 0, count: 'true' }
+      const mockResponse: DataWithCount<Domain> = {
+        totalCount: 1,
+        data: [
+          {
+            profileName: 'domain1',
+            domainSuffix: 'test.com',
+            provisioningCert: 'cert',
+            provisioningCertPassword: 'pass',
+            provisioningCertStorageFormat: 'PEM',
+            expirationDate: new Date()
+          }
+        ]
       }
-    )
-    expect(httpClientSpy.get.calls.count()).toEqual(1, 'one call')
-  })
 
-  it('should return a single domain object detail when a single record is requested', (done) => {
-    const domainResponse = {
-      profileName: 'testDomain',
-      domainSuffix: 'testDomain.com',
-      provisioningCert: 'domainCertLongText',
-      provisioningCertPassword: 'password',
-      provisioningCertStorageFormat: 'string',
-      expirationDate: new Date()
-    }
+      service.getData(pageEvent).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-    httpClientSpy.get.and.returnValue(of(domainResponse))
+      const req = httpMock.expectOne(`${mockUrl}?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
 
-    service.getRecord('testDomain').subscribe((response) => {
-      expect(response).toEqual(domainResponse)
-      done()
+    it('should call the API without pagination options', () => {
+      const mockResponse: DataWithCount<Domain> = {
+        totalCount: 1,
+        data: [
+          {
+            profileName: 'domain1',
+            domainSuffix: 'test.com',
+            provisioningCert: 'cert',
+            provisioningCertPassword: 'pass',
+            provisioningCertStorageFormat: 'PEM',
+            expirationDate: new Date()
+          }
+        ]
+      }
+
+      service.getData().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getData().subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return errors on a single domain object detail when a single record is requested', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getRecord('testDomain').subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('getRecord', () => {
+    it('should call the API with the record name', () => {
+      const mockDomain: Domain = {
+        profileName: 'domain1',
+        domainSuffix: 'test.com',
+        provisioningCert: 'cert',
+        provisioningCertPassword: 'pass',
+        provisioningCertStorageFormat: 'PEM',
+        expirationDate: new Date()
       }
-    )
-  })
 
-  it('should return the updated domain details when a domain is updated', (done) => {
-    httpClientSpy.patch.and.returnValue(of(domainReq))
+      service.getRecord('domain1').subscribe((response) => {
+        expect(response).toEqual(mockDomain)
+      })
 
-    service.update(domainReq).subscribe((response) => {
-      expect(response).toEqual(domainReq)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}/domain1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockDomain)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getRecord('domain1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/domain1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return errors on updated domain details when a domain is updated', (done) => {
-    httpClientSpy.patch.and.returnValue(throwError(error))
-
-    service.update(domainReq).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('update', () => {
+    it('should call the API to update the domain', () => {
+      const mockDomain: Domain = {
+        profileName: 'domain1',
+        domainSuffix: 'test.com',
+        provisioningCert: 'cert',
+        provisioningCertPassword: 'pass',
+        provisioningCertStorageFormat: 'PEM',
+        expirationDate: new Date()
       }
-    )
-  })
 
-  it('should return the created domain details when a domain is created', (done) => {
-    httpClientSpy.post.and.returnValue(of(domainReq))
+      service.update(mockDomain).subscribe((response) => {
+        expect(response).toEqual(mockDomain)
+      })
 
-    service.create(domainReq).subscribe((response) => {
-      expect(response).toEqual(domainReq)
-      done()
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('PATCH')
+      req.flush(mockDomain)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .update({
+          profileName: 'domain1',
+          domainSuffix: 'test.com',
+          provisioningCert: 'cert',
+          provisioningCertPassword: 'pass',
+          provisioningCertStorageFormat: 'PEM',
+          expirationDate: new Date()
+        })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
     })
   })
 
-  it('should throw error on created domain details when a domain is created', (done) => {
-    httpClientSpy.post.and.returnValue(throwError(error))
-
-    service.create(domainReq).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('create', () => {
+    it('should call the API to create a new domain', () => {
+      const mockDomain: Domain = {
+        profileName: 'newDomain',
+        domainSuffix: 'new.com',
+        provisioningCert: 'cert',
+        provisioningCertPassword: 'pass',
+        provisioningCertStorageFormat: 'PEM',
+        expirationDate: new Date()
       }
-    )
-  })
 
-  it('should delete the domain when a delete request is sent', (done) => {
-    const domainName = 'testDomain'
+      service.create(mockDomain).subscribe((response) => {
+        expect(response).toEqual(mockDomain)
+      })
 
-    httpClientSpy.delete.and.returnValue(of({}))
-
-    service.delete(domainName).subscribe(() => {
-      done()
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      req.flush(mockDomain)
     })
 
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .create({
+          profileName: 'newDomain',
+          domainSuffix: 'new.com',
+          provisioningCert: 'cert',
+          provisioningCertPassword: 'pass',
+          provisioningCertStorageFormat: 'PEM',
+          expirationDate: new Date()
+        })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should throw error when a delete request is sent', (done) => {
-    const domainName = 'testDomain'
-    httpClientSpy.delete.and.returnValue(throwError(error))
+  describe('delete', () => {
+    it('should call the API to delete a domain', () => {
+      service.delete('domain1').subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
 
-    service.delete(domainName).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
-      }
-    )
+      const req = httpMock.expectOne(`${mockUrl}/domain1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
 
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.delete('domain1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/domain1`)
+      req.flush(null, mockError)
+    })
   })
 })

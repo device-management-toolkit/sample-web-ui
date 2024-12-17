@@ -10,7 +10,7 @@ import { LoginComponent } from './app/login/login.component'
 import { DashboardComponent } from './app/dashboard/dashboard.component'
 import { provideRouter } from '@angular/router'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { AppRoutingModule } from './app/app-routing.module'
+import { routes } from './app/routes'
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser'
 import { MomentModule } from 'ngx-moment'
 import { AuthorizeInterceptor } from './app/authorize.interceptor'
@@ -22,21 +22,10 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(MomentModule, BrowserModule, AppRoutingModule),
+    importProvidersFrom(MomentModule),
     provideHttpClient(withInterceptors([AuthorizeInterceptor])),
     provideAnimations(),
-    provideRouter([
-      {
-        path: '',
-        component: DashboardComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      }
-    ])
-
-  ]
+    provideRouter(routes)]
 }).catch((err) => {
   console.error(err)
 })

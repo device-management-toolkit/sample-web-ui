@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -33,7 +33,6 @@ import {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: true,
   imports: [
     MatCard,
     MatCardHeader,
@@ -57,18 +56,20 @@ import {
   ]
 })
 export class LoginComponent {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  router = inject(Router)
+  fb = inject(FormBuilder)
+  authService = inject(AuthService)
+
   public loginForm: FormGroup
   public currentYear = new Date().getFullYear()
   public isLoading = false
   public errorMessage = ''
   public loginPassInputType = 'password'
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public router: Router,
-    public fb: FormBuilder,
-    public authService: AuthService
-  ) {
+  constructor() {
+    const fb = this.fb
+
     this.loginForm = fb.group({
       userId: [null, Validators.required],
       password: [null, Validators.required]

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { MatIconButton } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-certificates',
-  standalone: true,
   imports: [
     MatProgressBar,
     MatCardModule,
@@ -24,13 +23,11 @@ import { MatSnackBar } from '@angular/material/snack-bar'
   styleUrl: './certificates.component.scss'
 })
 export class CertificatesComponent implements OnInit {
+  private readonly devicesService = inject(DevicesService)
+  snackBar = inject(MatSnackBar)
+
   public isLoading = true
   public certInfo?: any
-
-  constructor(
-    private readonly devicesService: DevicesService,
-    public snackBar: MatSnackBar
-  ) {}
 
   @Input()
   public deviceId = ''

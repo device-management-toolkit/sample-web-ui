@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
@@ -25,7 +25,6 @@ import { Profile } from 'src/app/profiles/profiles.constants'
   selector: 'app-add-device',
   templateUrl: './add-device.component.html',
   styleUrls: ['./add-device.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,
@@ -46,6 +45,8 @@ import { Profile } from 'src/app/profiles/profiles.constants'
   ]
 })
 export class AddDeviceComponent implements OnInit {
+  private readonly profilesService = inject(ProfilesService)
+
   profiles: DataWithCount<Profile> = { data: [], totalCount: 0 }
   activationUrl = ''
   rpcLinux = 'sudo ./rpc '
@@ -57,7 +58,6 @@ export class AddDeviceComponent implements OnInit {
   certCheckString = '-n '
   isCopied = false
   selectedPlatform = 'linux'
-  constructor(private readonly profilesService: ProfilesService) {}
 
   ngOnInit(): void {
     this.profilesService.getData().subscribe((data) => {

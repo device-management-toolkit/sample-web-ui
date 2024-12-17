@@ -12,7 +12,6 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
   selector: 'app-random-pass-alert',
   templateUrl: './random-pass-alert.component.html',
   styleUrls: ['./random-pass-alert.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,

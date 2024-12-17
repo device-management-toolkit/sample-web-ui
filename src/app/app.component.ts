@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { NavigationStart, Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'
@@ -20,20 +20,13 @@ import { MatSidenavModule } from '@angular/material/sidenav'
     ToolbarComponent,
     NavbarComponent,
     MatSidenavModule
-  ],
-  standalone: true
+  ]
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  isLoggedIn = false
+  router = inject(Router)
+  authService = inject(AuthService)
 
-  constructor(
-    public router: Router,
-    public authService: AuthService
-  ) {
-    // this.mqttService.connect()
-    // this.mqttService.subscribeToTopic('mps/#')
-    // this.mqttService.subscribeToTopic('rps/#')
-  }
+  isLoggedIn = false
 
   ngOnInit(): void {
     this.authService.loggedInSubject.subscribe((value: any) => {

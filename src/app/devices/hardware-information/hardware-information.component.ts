@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -20,7 +20,6 @@ import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-hardware-information',
-  standalone: true,
   imports: [
     MatProgressBar,
     MatSnackBarModule,
@@ -33,6 +32,11 @@ import { environment } from 'src/environments/environment'
   styleUrl: './hardware-information.component.scss'
 })
 export class HardwareInformationComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+  fb = inject(FormBuilder)
+
   @Input()
   public deviceId = ''
 
@@ -43,12 +47,7 @@ export class HardwareInformationComponent implements OnInit {
   public memoryType: any
   public isCloudMode: boolean = environment.cloud
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService,
-    public fb: FormBuilder
-  ) {
+  constructor() {
     this.targetOS = this.devicesService.TargetOSMap
     this.memoryType = this.devicesService.MemoryTypeMap
   }

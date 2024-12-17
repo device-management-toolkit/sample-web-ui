@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -13,11 +13,9 @@ import { DevicesService } from './devices.service'
   providedIn: 'root'
 })
 export class UserConsentService {
-  constructor(
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private readonly devicesService: DevicesService
-  ) {}
+  private dialog = inject(MatDialog)
+  private snackBar = inject(MatSnackBar)
+  private readonly devicesService = inject(DevicesService)
 
   handleUserConsentDecision(
     result: boolean | null,

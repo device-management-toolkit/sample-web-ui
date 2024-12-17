@@ -12,7 +12,6 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
   selector: 'app-are-you-sure',
   templateUrl: './are-you-sure.component.html',
   styleUrls: ['./are-you-sure.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,

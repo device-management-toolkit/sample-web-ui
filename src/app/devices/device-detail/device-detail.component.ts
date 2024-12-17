@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
@@ -44,7 +44,6 @@ import { TLSComponent } from '../tls/tls.component'
   selector: 'app-device-detail',
   templateUrl: './device-detail.component.html',
   styleUrls: ['./device-detail.component.scss'],
-  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     AlarmsComponent,
@@ -60,42 +59,15 @@ import { TLSComponent } from '../tls/tls.component'
     MatSidenavContainer,
     MatListModule,
     MatSidenav,
-    MatTabGroup,
-    MatTab,
-    MatStepper,
-    MatStep,
-    MatStepLabel,
-    MatButton,
     MatSidenavContent,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatCardContent,
     MatTooltip,
     MatIcon,
-    MatDivider,
     ReactiveFormsModule,
-    MatCheckbox,
-    MatSelect,
-    MatOption,
     MatList,
     MatListItem,
     MatListItemTitle,
     MatListItemLine,
-    MatIconButton,
-    MatFormField,
-    MatInput,
-    MatError,
-    MatHint,
-    MatLabel,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatSlideToggle,
     MomentModule,
-    DatePipe,
     RouterLink,
     RouterLinkActive,
     NetworkSettingsComponent,
@@ -103,6 +75,12 @@ import { TLSComponent } from '../tls/tls.component'
   ]
 })
 export class DeviceDetailComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly activatedRoute = inject(ActivatedRoute)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+  fb = inject(FormBuilder)
+
   public deviceId = ''
   public isCloudMode: boolean = environment.cloud
 
@@ -152,13 +130,7 @@ export class DeviceDetailComponent implements OnInit {
     }
   ]
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly activatedRoute: ActivatedRoute,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService,
-    public fb: FormBuilder
-  ) {
+  constructor() {
     if (!this.isCloudMode) {
       this.categories.push({
         name: 'Certificates',

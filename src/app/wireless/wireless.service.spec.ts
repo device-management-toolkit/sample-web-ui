@@ -1,228 +1,233 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { PageEventOptions, WirelessConfig } from 'src/models/models'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { WirelessService } from './wireless.service'
-import { AuthenticationMethods, EncryptionMethods } from './wireless.constants'
+import { AuthService } from '../auth.service'
+import { environment } from 'src/environments/environment'
+import { WirelessConfig, DataWithCount, PageEventOptions } from 'src/models/models'
 
 describe('WirelessService', () => {
   let service: WirelessService
-  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; patch: jasmine.Spy; delete: jasmine.Spy }
-  let routerSpy
+  let httpMock: HttpTestingController
+  let authServiceSpy: jasmine.SpyObj<AuthService>
+
+  const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/wirelessconfigs`
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'patch',
-      'delete'
-    ])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    TestBed.configureTestingModule({})
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = mockEnvironment.rpsServer
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        WirelessService,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: environment, useValue: mockEnvironment }]
+    })
 
-    service = new WirelessService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
+    service = TestBed.inject(WirelessService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
-  const config01: WirelessConfig = {
-    profileName: 'wirelessConfig01',
-    ssid: 'someSSID',
-    authenticationMethod: 4, // WPA PSK
-    encryptionMethod: 3, // TKIP
-    pskPassphrase: 'onlyInRequestNotRESPONSE'
-  }
-
-  const wifiResponse = {
-    data: [config01],
-    totalCount: 1
-  }
-
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should load all the wifi configs when get all request fired', (done) => {
-    httpClientSpy.get.and.returnValue(of(wifiResponse))
-
-    service.getData().subscribe((response) => {
-      expect(response).toEqual(wifiResponse)
-      done()
-    })
-
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should load all the wifi configs when get all request fired with pageevent options', (done) => {
-    const pageEvent: PageEventOptions = {
-      count: 'true',
-      pageSize: 20,
-      startsFrom: 10,
-      tags: []
-    }
-    httpClientSpy.get.and.returnValue(of(wifiResponse))
-
-    service.getData(pageEvent).subscribe((response) => {
-      expect(response).toEqual(wifiResponse)
-      done()
-    })
-    const params = httpClientSpy.get.calls.allArgs()[0][0].split('?')[1]
-    expect('$top=20&$skip=10&$count=true').toEqual(params)
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should throw errors when get all request fired with pageevent options', (done) => {
-    const pageEvent: PageEventOptions = {
-      count: 'true',
-      pageSize: 20,
-      startsFrom: 10,
-      tags: []
-    }
-
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getData(pageEvent).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('getData', () => {
+    it('should call the API with pagination options', () => {
+      const pageEvent: PageEventOptions = { pageSize: 10, startsFrom: 0, count: 'true' }
+      const mockResponse: DataWithCount<WirelessConfig> = {
+        data: [
+          {
+            profileName: 'wifiConfig1',
+            authenticationMethod: 1,
+            encryptionMethod: 1,
+            ssid: 'testSSID',
+            pskPassphrase: 'passphrase'
+          }
+        ],
+        totalCount: 1
       }
-    )
 
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
+      service.getData(pageEvent).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-  it('should load the specific wifi configs when get single record request fired', (done) => {
-    const wifiResponse = {
-      profileName: 'wifi1',
-      authenticationMethod: 3,
-      encryptionMethod: 4,
-      ssid: 'ssid',
-      pskValue: 'password',
-      linkPolicy: [14]
-    }
-
-    httpClientSpy.get.and.returnValue(of(wifiResponse))
-
-    service.getRecord('wifi1').subscribe((response) => {
-      expect(response).toEqual(wifiResponse)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
     })
 
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-  it('should throw error when get single record request fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getRecord('wifi1').subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+    it('should call the API without pagination options', () => {
+      const mockResponse: DataWithCount<WirelessConfig> = {
+        data: [
+          {
+            profileName: 'wifiConfig1',
+            authenticationMethod: 1,
+            encryptionMethod: 1,
+            ssid: 'testSSID',
+            pskPassphrase: 'passphrase'
+          }
+        ],
+        totalCount: 1
       }
-    )
 
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
+      service.getData().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-  it('should delete the wifi config when delete request fires', (done) => {
-    httpClientSpy.delete.and.returnValue(of({}))
-
-    service.delete('wifi1').subscribe(() => {
-      done()
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
     })
 
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getData().subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should throw error when delete request fires', (done) => {
-    const error = { error: 'Not Found' }
-    httpClientSpy.delete.and.returnValue(throwError(error))
-
-    service.delete('wifi1').subscribe(
-      () => {},
-      (err) => {
-        expect(err).toEqual([error])
-        done()
+  describe('getRecord', () => {
+    it('should call the API with the record name', () => {
+      const mockConfig: WirelessConfig = {
+        profileName: 'wifiConfig1',
+        authenticationMethod: 1,
+        encryptionMethod: 1,
+        ssid: 'testSSID',
+        pskPassphrase: 'passphrase'
       }
-    )
 
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
-  })
+      service.getRecord('wifiConfig1').subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
 
-  it('should create the wireless config when create request gets fired', (done) => {
-    httpClientSpy.post.and.returnValue(of(config01))
-
-    service.create(config01).subscribe((response) => {
-      expect(response).toEqual(config01)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}/wifiConfig1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockConfig)
     })
 
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
-  })
-  it('should throw error when create request gets fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-    httpClientSpy.post.and.returnValue(throwError(error))
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
 
-    service.create(config01).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+      service.getRecord('wifiConfig1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/wifiConfig1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('create', () => {
+    it('should call the API to create a new config', () => {
+      const mockConfig: WirelessConfig = {
+        profileName: 'wifiConfig1',
+        authenticationMethod: 1,
+        encryptionMethod: 1,
+        ssid: 'testSSID',
+        pskPassphrase: 'passphrase'
       }
-    )
 
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
-  })
-  it('should update the wireless config when update request gets fired', (done) => {
-    httpClientSpy.patch.and.returnValue(of(config01))
+      service.create(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
 
-    service.update(config01).subscribe((response) => {
-      expect(response).toEqual(config01)
-      done()
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      req.flush(mockConfig)
     })
 
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .create({ profileName: 'wifiConfig1', authenticationMethod: 1, encryptionMethod: 1, ssid: 'testSSID' })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should throw error when update request gets fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.patch.and.returnValue(throwError(error))
-
-    service.update(config01).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('update', () => {
+    it('should call the API to update a config', () => {
+      const mockConfig: WirelessConfig = {
+        profileName: 'wifiConfig1',
+        authenticationMethod: 1,
+        encryptionMethod: 1,
+        ssid: 'testSSID',
+        pskPassphrase: 'passphrase'
       }
-    )
 
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+      service.update(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('PATCH')
+      req.flush(mockConfig)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .update({ profileName: 'wifiConfig1', authenticationMethod: 1, encryptionMethod: 1, ssid: 'testSSID' })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('delete', () => {
+    it('should call the API to delete a config', () => {
+      service.delete('wifiConfig1').subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/wifiConfig1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.delete('wifiConfig1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/wifiConfig1`)
+      req.flush(null, mockError)
+    })
   })
 })

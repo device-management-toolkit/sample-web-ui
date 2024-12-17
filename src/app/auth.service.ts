@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -15,13 +15,13 @@ import { ValidatorError, MPSVersion, RPSVersion } from 'src/models/models'
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly http = inject(HttpClient)
+  router = inject(Router)
+
   loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   isLoggedIn = false
   url = `${environment.mpsServer}/api/v1/authorize`
-  constructor(
-    private readonly http: HttpClient,
-    public router: Router
-  ) {
+  constructor() {
     if (localStorage.loggedInUser != null) {
       this.isLoggedIn = true
       this.loggedInSubject.next(this.isLoggedIn)

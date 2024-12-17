@@ -1,198 +1,293 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { ProfilesService } from './profiles.service'
+import { AuthService } from '../auth.service'
+import { environment } from 'src/environments/environment'
+import { DataWithCount, PageEventOptions } from 'src/models/models'
 import { Profile } from './profiles.constants'
-import { DataWithCount } from 'src/models/models'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
-  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; patch: jasmine.Spy; delete: jasmine.Spy }
-  let routerSpy
+  let httpMock: HttpTestingController
+  let authServiceSpy: jasmine.SpyObj<AuthService>
 
-  const profileReq: Profile = {
-    profileName: 'profile1',
-    activation: 'acmactivate',
-    iderEnabled: false,
-    kvmEnabled: false,
-    solEnabled: false,
-    userConsent: '',
-    generateRandomPassword: true,
-    amtPassword: '',
-    generateRandomMEBxPassword: true,
-    mebxPassword: 'password',
-    dhcpEnabled: true,
-    ipSyncEnabled: false,
-    localWifiSyncEnabled: false,
-    ieee8021xProfileName: '',
-    wifiConfigs: [],
-    tags: ['acm'],
-    tlsMode: 1,
-    tlsSigningAuthority: 'SelfSigned',
-    ciraConfigName: 'config1'
-  }
-
-  const profileResponse: DataWithCount<Profile> = {
-    data: [profileReq],
-    totalCount: 1
-  }
-
-  const error = {
-    status: 404,
-    message: 'Not Found',
-    error: 'Not Found'
-  }
+  const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/profiles`
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'patch',
-      'delete'
-    ])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    TestBed.configureTestingModule({})
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = mockEnvironment.rpsServer
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        ProfilesService,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: environment, useValue: mockEnvironment }]
+    })
 
-    service = new ProfilesService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
+    service = TestBed.inject(ProfilesService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should load all the profiles when get all profile request fired', (done) => {
-    httpClientSpy.get.and.returnValue(of(profileResponse))
-
-    service.getData().subscribe((response) => {
-      expect(response).toEqual(profileResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(`${environment.rpsServer}/api/v1/admin/profiles?$count=true`)
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should load first 25 profiles when get all profile request fired', (done) => {
-    httpClientSpy.get.and.returnValue(of(profileResponse))
-
-    service.getData({ pageSize: 25, count: 'true', startsFrom: 0 }).subscribe((response) => {
-      expect(response).toEqual(profileResponse)
-      done()
-    })
-    expect(httpClientSpy.get).toHaveBeenCalledWith(
-      `${environment.rpsServer}/api/v1/admin/profiles?$top=25&$skip=0&$count=true`
-    )
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should throw errors when get all profile request fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-    httpClientSpy.get.and.returnValue(throwError(() => error))
-    service.getData().subscribe({
-      next: () => {},
-      error: (err) => {
-        expect(error.status).toEqual(err[0].status)
-        done()
+  describe('getData', () => {
+    it('should call the API with pagination options', () => {
+      const pageEvent: PageEventOptions = { pageSize: 10, startsFrom: 0, count: 'true' }
+      const mockResponse: DataWithCount<Profile> = {
+        data: [
+          {
+            profileName: 'profile1',
+            activation: 'activation1',
+            iderEnabled: true,
+            kvmEnabled: true,
+            solEnabled: true,
+            userConsent: 'All',
+            generateRandomPassword: true,
+            generateRandomMEBxPassword: true,
+            dhcpEnabled: true,
+            ipSyncEnabled: true,
+            localWifiSyncEnabled: true,
+            tags: []
+          }
+        ],
+        totalCount: 1
       }
-    })
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
 
-  it('should return a specific profile when a single profile is requested', (done) => {
-    httpClientSpy.get.and.returnValue(of(profileReq))
-    service.getRecord('profile1').subscribe((response) => {
-      expect(response).toEqual(profileReq)
-      done()
-    })
-  })
+      service.getData(pageEvent).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-  it('should return error specific profile when a single profile is requested', (done) => {
-    httpClientSpy.get.and.returnValue(throwError(error))
-    service.getRecord('profile1').subscribe({
-      next: () => {},
-      error: (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+      const req = httpMock.expectOne(`${mockUrl}?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should call the API without pagination options', () => {
+      const mockResponse: DataWithCount<Profile> = {
+        data: [
+          {
+            profileName: 'profile1',
+            activation: 'activation1',
+            iderEnabled: true,
+            kvmEnabled: true,
+            solEnabled: true,
+            userConsent: 'All',
+            generateRandomPassword: true,
+            generateRandomMEBxPassword: true,
+            dhcpEnabled: true,
+            ipSyncEnabled: true,
+            localWifiSyncEnabled: true,
+            tags: []
+          }
+        ],
+        totalCount: 1
       }
+
+      service.getData().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getData().subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should delete the specified profile when a delete request fires', (done) => {
-    httpClientSpy.delete.and.returnValue(of({}))
-    service.delete('profile1').subscribe({
-      next: () => {
-        expect(httpClientSpy.delete.calls.count()).toEqual(1)
-        done()
-      },
-      error: () => {}
-    })
-  })
-
-  it('should throw error specified profile when a delete request fires', (done) => {
-    httpClientSpy.delete.and.returnValue(throwError(error))
-    service.delete('profile1').subscribe({
-      next: () => {},
-      error: (err) => {
-        expect(error.error).toEqual(err[0].error)
-        done()
+  describe('getRecord', () => {
+    it('should call the API with the record name', () => {
+      const mockProfile: Profile = {
+        profileName: 'profile1',
+        activation: 'activation1',
+        iderEnabled: true,
+        kvmEnabled: true,
+        solEnabled: true,
+        userConsent: 'All',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: true,
+        dhcpEnabled: true,
+        ipSyncEnabled: true,
+        localWifiSyncEnabled: true,
+        tags: []
       }
+
+      service.getRecord('profile1').subscribe((response) => {
+        expect(response).toEqual(mockProfile)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/profile1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockProfile)
     })
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getRecord('profile1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/profile1`)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should create the profile when post request gets fired', (done) => {
-    httpClientSpy.post.and.returnValue(of(profileReq))
-    service.create(profileReq).subscribe((response) => {
-      expect(response).toEqual(profileReq)
-      done()
-    })
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
-  })
-
-  it('should throw error when post request gets fired', (done) => {
-    httpClientSpy.post.and.returnValue(throwError(error))
-    service.create(profileReq).subscribe({
-      next: () => {},
-      error: (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('create', () => {
+    it('should call the API to create a new profile', () => {
+      const mockProfile: Profile = {
+        profileName: 'profile1',
+        activation: 'activation1',
+        iderEnabled: true,
+        kvmEnabled: true,
+        solEnabled: true,
+        userConsent: 'All',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: true,
+        dhcpEnabled: true,
+        ipSyncEnabled: true,
+        localWifiSyncEnabled: true,
+        tags: []
       }
+
+      service.create(mockProfile).subscribe((response) => {
+        expect(response).toEqual(mockProfile)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      req.flush(mockProfile)
     })
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.create({ profileName: 'profile1', activation: 'activation1', iderEnabled: true } as any).subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should update the profile when a patch request fired', (done) => {
-    httpClientSpy.patch.and.returnValue(of(profileReq))
-    service.update(profileReq).subscribe((response) => {
-      expect(response).toEqual(profileReq)
-      done()
-    })
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
-  })
-
-  it('should throw error when a patch request fired', (done) => {
-    httpClientSpy.patch.and.returnValue(throwError(error))
-    service.update(profileReq).subscribe({
-      next: () => {},
-      error: (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('update', () => {
+    it('should call the API to update a profile', () => {
+      const mockProfile: Profile = {
+        profileName: 'profile1',
+        activation: 'activation1',
+        iderEnabled: true,
+        kvmEnabled: true,
+        solEnabled: true,
+        userConsent: 'All',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: true,
+        dhcpEnabled: true,
+        ipSyncEnabled: true,
+        localWifiSyncEnabled: true,
+        tags: []
       }
+
+      service.update(mockProfile).subscribe((response) => {
+        expect(response).toEqual(mockProfile)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('PATCH')
+      req.flush(mockProfile)
     })
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.update({ profileName: 'profile1', activation: 'activation1', iderEnabled: true } as any).subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('delete', () => {
+    it('should call the API to delete a profile', () => {
+      service.delete('profile1').subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/profile1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.delete('profile1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/profile1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('export', () => {
+    it('should call the API to export a profile', () => {
+      const mockResponse = { exported: true }
+
+      service.export('profile1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/export/profile1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.export('profile1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/export/profile1`)
+      req.flush(null, mockError)
+    })
   })
 })

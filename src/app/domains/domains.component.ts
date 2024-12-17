@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -36,7 +36,6 @@ import { MatToolbar } from '@angular/material/toolbar'
   selector: 'app-domains',
   templateUrl: './domains.component.html',
   styleUrls: ['./domains.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatButton,
@@ -60,6 +59,11 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class DomainsComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  router = inject(Router)
+  private readonly domainsService = inject(DomainsService)
+
   public domains: DataWithCount<Domain> = { data: [], totalCount: 0 }
   public isLoading = true
   public myDate = ''
@@ -78,13 +82,6 @@ export class DomainsComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public router: Router,
-    private readonly domainsService: DomainsService
-  ) {}
 
   ngOnInit(): void {
     this.getData(this.pageEvent)

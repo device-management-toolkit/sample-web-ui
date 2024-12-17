@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -21,7 +21,6 @@ import { MatToolbar } from '@angular/material/toolbar'
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatDivider,
@@ -33,16 +32,14 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class ToolbarComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  authService = inject(AuthService)
+
   isLoggedIn = false
   cloudMode: boolean = environment.cloud
   public rpsVersions?: RPSVersion
   public mpsVersions?: MPSVersion
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public authService: AuthService
-  ) {}
 
   ngOnInit(): void {
     this.authService.loggedInSubject.subscribe((value: any) => {

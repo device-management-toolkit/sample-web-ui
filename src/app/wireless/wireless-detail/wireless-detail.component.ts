@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -28,7 +28,6 @@ import { WirelessConfig } from 'src/models/models'
   selector: 'app-wireless-detail',
   templateUrl: './wireless-detail.component.html',
   styleUrls: ['./wireless-detail.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatCard,
@@ -52,6 +51,13 @@ import { WirelessConfig } from 'src/models/models'
   ]
 })
 export class WirelessDetailComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  fb = inject(FormBuilder)
+  private readonly activeRoute = inject(ActivatedRoute)
+  router = inject(Router)
+  wirelessService = inject(WirelessService)
+  private readonly ieee8021xService = inject(IEEE8021xService)
+
   public wirelessForm: FormGroup
   public pageTitle = 'New Wireless Config'
   public pskInputType = 'password'
@@ -66,14 +72,9 @@ export class WirelessDetailComponent implements OnInit {
   isEdit = false
   errorMessages: any[] = []
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public fb: FormBuilder,
-    private readonly activeRoute: ActivatedRoute,
-    public router: Router,
-    public wirelessService: WirelessService,
-    private readonly ieee8021xService: IEEE8021xService
-  ) {
+  constructor() {
+    const fb = this.fb
+
     this.wirelessForm = fb.group({
       profileName: [null, [Validators.required]],
       authenticationMethod: [null, Validators.required],

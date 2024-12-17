@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
-import { EventEmitter, Injectable } from '@angular/core'
+import { EventEmitter, Injectable, inject } from '@angular/core'
 import { Observable, Subject } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -32,6 +32,8 @@ import { caseInsensitiveCompare } from '../../utils'
   providedIn: 'root'
 })
 export class DevicesService {
+  private readonly http = inject(HttpClient)
+
   public TargetOSMap = {
     0: 'Unknown',
     1: 'Other',
@@ -207,8 +209,6 @@ export class DevicesService {
   startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   deviceState: EventEmitter<number> = new EventEmitter<number>()
-
-  constructor(private readonly http: HttpClient) {}
 
   getGeneralSettings(deviceId: string): Observable<any> {
     return this.http.get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/generalSettings/${deviceId}`).pipe(

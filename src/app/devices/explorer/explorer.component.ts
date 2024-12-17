@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -22,7 +22,6 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 @Component({
   selector: 'app-explorer',
-  standalone: true,
   imports: [
     MonacoEditorModule,
     FormsModule,
@@ -40,6 +39,11 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   styleUrl: './explorer.component.scss'
 })
 export class ExplorerComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  dialog = inject(MatDialog)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+
   @Input()
   public deviceId = ''
 
@@ -49,12 +53,6 @@ export class ExplorerComponent implements OnInit {
   wsmanOperations: string[] = []
   selectedWsmanOperation = ''
   filteredOptions!: Observable<string[]>
-  constructor(
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService
-  ) {}
 
   ngOnInit(): void {
     this.devicesService.getWsmanOperations().subscribe((data) => {

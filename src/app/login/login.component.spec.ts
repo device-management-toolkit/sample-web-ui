@@ -1,143 +1,126 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ReactiveFormsModule } from '@angular/forms'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { AuthService } from '../auth.service'
 import { LoginComponent } from './login.component'
+import { AuthService } from '../auth.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { Router } from '@angular/router'
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms'
+import { of, throwError } from 'rxjs'
+import { AboutComponent } from '../core/about/about.component'
+import { environment } from 'src/environments/environment'
+import SnackbarDefaults from '../shared/config/snackBarDefault'
+import { provideNoopAnimations } from '@angular/platform-browser/animations'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  let httpClientSpy: any
-  let routerSpy
-  let authService: any
+  let authServiceSpy: jasmine.SpyObj<AuthService>
+  let snackBarSpy: jasmine.SpyObj<MatSnackBar>
+  let dialogSpy: jasmine.SpyObj<MatDialog>
+  let routerSpy: jasmine.SpyObj<Router>
+
   beforeEach(async () => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'delete',
-      'patch'
-    ])
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['login'])
+    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
+    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
 
-    authService = new AuthService(httpClientSpy, routerSpy)
-
     await TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-        LoginComponent
-      ],
+      imports: [LoginComponent, ReactiveFormsModule],
       providers: [
+        provideNoopAnimations(),
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: MatSnackBar, useValue: snackBarSpy },
+        { provide: MatDialog, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: authService }
+        FormBuilder
       ]
     }).compileComponents()
-  })
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
 
-  afterEach(() => {
-    TestBed.resetTestingModule()
-  })
-
   it('should create', () => {
     expect(component).toBeTruthy()
   })
-  it('should turn login pass visibility on when it is off', () => {
-    component.loginPassInputType = 'password'
-    component.toggleLoginPassVisibility()
 
-    expect(component.loginPassInputType).toEqual('text')
-  })
+  describe('onSubmit', () => {
+    it('should log in the user and navigate to home on success', () => {
+      const mockLoginResponse = { token: 'test-token' }
+      authServiceSpy.login.and.returnValue(of(mockLoginResponse))
+      spyOn(localStorage, 'setItem')
 
-  it('should turn login pass visibility off when it is on', () => {
-    component.loginPassInputType = 'text'
-    component.toggleLoginPassVisibility()
+      component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
+      component.onSubmit()
 
-    expect(component.loginPassInputType).toEqual('password')
-  })
-
-  it('onSubmit login should be successful', () => {
-    const userId = 'userId'
-    const password = 'P@ssw0rd'
-    component.loginForm.patchValue({
-      userId,
-      password
+      expect(authServiceSpy.login).toHaveBeenCalledWith('testUser', 'testPass')
+      expect(routerSpy.navigate).toHaveBeenCalledWith([''])
     })
-    spyOn(authService, 'login').and.returnValue(of(true).pipe())
-    component.onSubmit()
-    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
-    expect(component.isLoading).toBeFalse()
+
+    it('should open the About dialog if environment.cloud is true and doNotShowAgain is false', () => {
+      const mockLoginResponse = { token: 'test-token' }
+      authServiceSpy.login.and.returnValue(of(mockLoginResponse))
+      spyOn(localStorage, 'getItem').and.returnValue(null)
+      environment.cloud = true
+      component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
+      component.onSubmit()
+
+      expect(dialogSpy.open).toHaveBeenCalledWith(AboutComponent)
+    })
+
+    it('should display an error snackbar for 401/405 errors', () => {
+      const mockError = { status: 401, error: { message: 'Unauthorized' } }
+      authServiceSpy.login.and.returnValue(throwError(mockError))
+
+      component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
+      component.onSubmit()
+
+      expect(snackBarSpy.open).toHaveBeenCalledWith('Unauthorized', undefined, SnackbarDefaults.defaultError)
+    })
+
+    it('should display a generic error snackbar for other errors', () => {
+      const mockError = { status: 500 }
+      authServiceSpy.login.and.returnValue(throwError(mockError))
+
+      component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
+      component.onSubmit()
+
+      expect(snackBarSpy.open).toHaveBeenCalledWith('Error logging in', undefined, SnackbarDefaults.defaultError)
+    })
+
+    it('should set isLoading to false after login attempt', () => {
+      authServiceSpy.login.and.returnValue(of({ token: 'test-token' }))
+
+      component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
+      component.onSubmit()
+
+      expect(component.isLoading).toBeFalse()
+    })
   })
 
-  it('Should fail when login service throws 405 status', () => {
-    const authSpy = spyOn(authService, 'login').and.returnValue(
-      throwError(() => {
-        return { status: 405, error: { message: 'failed' } }
-      })
-    )
-    const snackBarSpy = spyOn(component.snackBar, 'open')
-    Object.defineProperty(component.loginForm, 'valid', {
-      get: () => true
+  describe('toggleLoginPassVisibility', () => {
+    it('should toggle the visibility of the password input', () => {
+      component.loginPassInputType = 'password'
+
+      component.toggleLoginPassVisibility()
+      expect(component.loginPassInputType).toBe('text')
+
+      component.toggleLoginPassVisibility()
+      expect(component.loginPassInputType).toBe('password')
     })
-    fixture.detectChanges()
-    component.onSubmit()
-    fixture.detectChanges()
-    expect(authSpy).toHaveBeenCalled()
-    expect(snackBarSpy).toHaveBeenCalled()
   })
 
-  it('Should fail when login service throws an error', () => {
-    spyOn(authService, 'login').and.returnValue(
-      throwError(() => {
-        return { status: 401, error: { message: 'failed' } }
-      })
-    )
-    Object.defineProperty(component.loginForm, 'valid', {
-      get: () => true
+  describe('initialization', () => {
+    it('should initialize the current year', () => {
+      expect(component.currentYear).toBe(new Date().getFullYear())
     })
-    component.onSubmit()
-    expect(authService.login).toHaveBeenCalled()
-  })
 
-  it('onSubmit login should be successful and should show about notice', () => {
-    const userId = 'userId'
-    const password = 'P@ssw0rd'
-    component.loginForm.patchValue({
-      userId,
-      password
+    it('should initialize the login form', () => {
+      expect(component.loginForm).toBeTruthy()
+      expect(component.loginForm.contains('userId')).toBeTrue()
+      expect(component.loginForm.contains('password')).toBeTrue()
     })
-    spyOn(authService, 'login').and.returnValue(of(true).pipe())
-    spyOn(localStorage, 'getItem').and.returnValue('')
-    component.onSubmit()
-    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
-    expect(component.isLoading).toBeFalse()
-    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
-  })
-
-  it('onSubmit login should be successful and should not show about notice', () => {
-    const userId = 'userId'
-    const password = 'P@ssw0rd'
-    component.loginForm.patchValue({
-      userId,
-      password
-    })
-    spyOn(authService, 'login').and.returnValue(of(true).pipe())
-    spyOn(localStorage, 'getItem').and.returnValue('true')
-    component.onSubmit()
-    expect(authService.login).toHaveBeenCalledOnceWith(userId, password)
-    expect(component.isLoading).toBeFalse()
-    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
   })
 })

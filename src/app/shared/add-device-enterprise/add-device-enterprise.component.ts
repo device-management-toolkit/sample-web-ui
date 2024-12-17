@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
@@ -21,7 +21,6 @@ import { MatIcon } from '@angular/material/icon'
   selector: 'app-add-device-enterprise',
   templateUrl: './add-device-enterprise.component.html',
   styleUrl: './add-device-enterprise.component.scss',
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,
@@ -39,6 +38,11 @@ import { MatIcon } from '@angular/material/icon'
   ]
 })
 export class AddDeviceEnterpriseComponent {
+  private readonly fb = inject(FormBuilder)
+  readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
+  device = inject<Device>(MAT_DIALOG_DATA)
+  private readonly deviceService = inject(DevicesService)
+
   form: FormGroup = this.fb.group({
     hostname: ['', [Validators.required]],
     friendlyName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -55,12 +59,9 @@ export class AddDeviceEnterpriseComponent {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   tags: string[] = []
   deviceOrig: Device
-  constructor(
-    private readonly fb: FormBuilder,
-    readonly dialog: MatDialogRef<AddDeviceEnterpriseComponent>,
-    @Inject(MAT_DIALOG_DATA) public device: Device,
-    private readonly deviceService: DevicesService
-  ) {
+  constructor() {
+    const device = this.device
+
     this.deviceOrig = device
     if (device != null) {
       this.tags = device.tags || []

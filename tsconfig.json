@@ -3,42 +3,34 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "allowSyntheticDefaultImports": true,
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
     "strict": true,
+    "strictBindCallApply": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "sourceMap": false,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
     "lib": [
-      "es2018",
+      "es2022",
       "dom"
     ],
-    "paths": {
-      "@angular/*": [
-        "./node_modules/@angular/*"
-      ]
-    },
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "no-import-side-effect": [
-      true,
-      {
-        "ignore-module": "(core-js/.|zone.js/.|@angular/localize/init)$"
-      }
-    ]
+    "strictMetadataEmit": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

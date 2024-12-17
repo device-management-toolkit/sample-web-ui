@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common'
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatListModule } from '@angular/material/list'
@@ -9,7 +9,6 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 @Component({
   selector: 'app-device-cert-dialog',
-  standalone: true,
   imports: [
     MatDialogModule,
     MatButtonModule,
@@ -20,14 +19,16 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   styleUrl: './device-cert-dialog.component.scss'
 })
 export class DeviceCertDialogComponent {
+  deviceService = inject(DevicesService)
+  snackBar = inject(MatSnackBar)
+  dialogData = inject(MAT_DIALOG_DATA)
+  ref = inject(MatDialogRef)
+
   public data: any = {}
   public isPinned = false
-  constructor(
-    public deviceService: DevicesService,
-    public snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    @Inject(MatDialogRef) public ref: any
-  ) {
+  constructor() {
+    const dialogData = this.dialogData
+
     this.data = dialogData.certData
     this.isPinned = dialogData.isPinned
   }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import {
   MatDialogRef,
@@ -27,7 +27,6 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
   selector: 'app-device-user-consent',
   templateUrl: './device-user-consent.component.html',
   styleUrls: ['./device-user-consent.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     ReactiveFormsModule,
@@ -42,14 +41,14 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
   ]
 })
 export class DeviceUserConsentComponent {
+  private readonly formBuilder = inject(FormBuilder)
+  snackBar = inject(MatSnackBar)
+  dialogRef = inject<MatDialogRef<DeviceUserConsentComponent>>(MatDialogRef)
+  data = inject<UserConsentData>(MAT_DIALOG_DATA)
+  private readonly devicesService = inject(DevicesService)
+
   public userConsentForm: FormGroup
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    public snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<DeviceUserConsentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserConsentData,
-    private readonly devicesService: DevicesService
-  ) {
+  constructor() {
     this.userConsentForm = this.formBuilder.group({
       consentCode: [null, Validators.required]
     })

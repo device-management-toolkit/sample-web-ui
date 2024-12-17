@@ -19,7 +19,6 @@ xdescribe('DeviceDetailComponent', () => {
   let devicesService: any
   @Component({
     selector: 'app-device-toolbar',
-    standalone: true,
     imports: [MomentModule]
   })
   class TestDeviceToolbarComponent {

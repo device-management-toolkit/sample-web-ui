@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -24,7 +24,6 @@ import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-alarms',
-  standalone: true,
   imports: [
     MatSlideToggleModule,
     FormsModule,
@@ -43,6 +42,10 @@ import { environment } from 'src/environments/environment'
   styleUrl: './alarms.component.scss'
 })
 export class AlarmsComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  private readonly devicesService = inject(DevicesService)
+  fb = inject(FormBuilder)
+
   @Input()
   public deviceId = ''
 
@@ -147,11 +150,7 @@ export class AlarmsComponent implements OnInit {
   public deleteOnCompletion: FormControl<any>
   public isLoading = true
 
-  constructor(
-    public snackBar: MatSnackBar,
-    private readonly devicesService: DevicesService,
-    public fb: FormBuilder
-  ) {
+  constructor() {
     this.deleteOnCompletion = new FormControl<boolean>(true)
   }
 

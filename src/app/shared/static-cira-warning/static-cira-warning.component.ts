@@ -12,7 +12,6 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
   selector: 'app-static-cira-warning',
   templateUrl: './static-cira-warning.component.html',
   styleUrls: ['./static-cira-warning.component.scss'],
-  standalone: true,
   imports: [
     MatDialogTitle,
     CdkScrollable,

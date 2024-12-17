@@ -1,214 +1,233 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { of, throwError } from 'rxjs'
-import { DataWithCount, IEEE8021xConfig, PageEventOptions } from 'src/models/models'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { IEEE8021xService } from './ieee8021x.service'
-import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
+import { AuthService } from '../auth.service'
+import { environment } from 'src/environments/environment'
+import { IEEE8021xConfig, DataWithCount, PageEventOptions } from 'src/models/models'
 
 describe('IEEE8021xService', () => {
   let service: IEEE8021xService
-  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; patch: jasmine.Spy; delete: jasmine.Spy }
-  let routerSpy
+  let httpMock: HttpTestingController
+  let authServiceSpy: jasmine.SpyObj<AuthService>
+
+  const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/ieee8021xconfigs`
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'patch',
-      'delete'
-    ])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    TestBed.configureTestingModule({})
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = mockEnvironment.rpsServer
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        IEEE8021xService,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: environment, useValue: mockEnvironment }]
+    })
 
-    service = new IEEE8021xService(httpClientSpy as any, new AuthService(httpClientSpy as any, routerSpy as Router))
+    service = TestBed.inject(IEEE8021xService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
-  const config01: IEEE8021xConfig = {
-    profileName: 'name 1',
-    authenticationProtocol: 0, // EAP-TLS,
-    pxeTimeout: 120,
-    wiredInterface: true,
-    version: 'one'
-  }
-  const ieee8021ConfigsResponse: DataWithCount<IEEE8021xConfig> = {
-    data: [config01],
-    totalCount: 1
-  }
-
-  const ieee8021xRequest = config01
-
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should load all the configs when get all request fired', (done) => {
-    httpClientSpy.get.and.returnValue(of(ieee8021ConfigsResponse))
-
-    service.getData().subscribe((response) => {
-      expect(response).toEqual(ieee8021ConfigsResponse)
-      done()
-    })
-
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should load all the configs when get all request fired with pageevent options', (done) => {
-    const pageEvent: PageEventOptions = {
-      count: 'true',
-      pageSize: 20,
-      startsFrom: 10,
-      tags: []
-    }
-    httpClientSpy.get.and.returnValue(of(ieee8021ConfigsResponse))
-
-    service.getData(pageEvent).subscribe((response) => {
-      expect(response).toEqual(ieee8021ConfigsResponse)
-      done()
-    })
-    const params = httpClientSpy.get.calls.allArgs()[0][0].split('?')[1]
-    expect('$top=20&$skip=10&$count=true').toEqual(params)
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should throw errors when get all request fired with pageevent options', (done) => {
-    const pageEvent: PageEventOptions = {
-      count: 'true',
-      pageSize: 20,
-      startsFrom: 10,
-      tags: []
-    }
-
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getData(pageEvent).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('getData', () => {
+    it('should call the API with pagination options', () => {
+      const pageEvent: PageEventOptions = { pageSize: 10, startsFrom: 0, count: 'true' }
+      const mockResponse: DataWithCount<IEEE8021xConfig> = {
+        data: [
+          {
+            profileName: 'config1',
+            authenticationProtocol: 1,
+            pxeTimeout: 60,
+            wiredInterface: true,
+            version: '1.0'
+          }
+        ],
+        totalCount: 1
       }
-    )
 
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
+      service.getData(pageEvent).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-  it('should load the specific configs when get single record request fired', (done) => {
-    httpClientSpy.get.and.returnValue(of(config01))
-    service.getRecord(config01.profileName).subscribe((response) => {
-      expect(response).toEqual(config01)
-      done()
-    })
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-  it('should throw error when get single record request fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.get.and.returnValue(throwError(error))
-
-    service.getRecord('wifi1').subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
-      }
-    )
-
-    expect(httpClientSpy.get.calls.count()).toEqual(1)
-  })
-
-  it('should delete the config when delete request fires', (done) => {
-    httpClientSpy.delete.and.returnValue(of({}))
-    service.delete(config01.profileName).subscribe(() => {
-      done()
-    })
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
-  })
-
-  it('should throw error when delete request fires', (done) => {
-    const error = { error: 'Not Found' }
-    httpClientSpy.delete.and.returnValue(throwError(error))
-    service.delete(config01.profileName).subscribe(
-      () => {},
-      (err) => {
-        expect(err).toEqual([error])
-        done()
-      }
-    )
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
-  })
-
-  it('should create the ieee8021x config when create request gets fired', (done) => {
-    httpClientSpy.post.and.returnValue(of(ieee8021xRequest))
-
-    service.create(ieee8021xRequest).subscribe((response) => {
-      expect(response).toEqual(ieee8021xRequest)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
     })
 
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
-  })
-  it('should throw error when create request gets fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-    httpClientSpy.post.and.returnValue(throwError(error))
-
-    service.create(ieee8021xRequest).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+    it('should call the API without pagination options', () => {
+      const mockResponse: DataWithCount<IEEE8021xConfig> = {
+        data: [
+          {
+            profileName: 'config1',
+            authenticationProtocol: 1,
+            pxeTimeout: 60,
+            wiredInterface: true,
+            version: '1.0'
+          }
+        ],
+        totalCount: 1
       }
-    )
 
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
-  })
-  it('should update the ieee8021x config when update request gets fired', (done) => {
-    httpClientSpy.patch.and.returnValue(of(ieee8021xRequest))
+      service.getData().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
 
-    service.update(ieee8021xRequest).subscribe((response) => {
-      expect(response).toEqual(ieee8021xRequest)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
     })
 
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getData().subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should throw error when update request gets fired', (done) => {
-    const error = {
-      status: 404,
-      message: 'Not Found'
-    }
-
-    httpClientSpy.patch.and.returnValue(throwError(error))
-
-    service.update(ieee8021xRequest).subscribe(
-      () => {},
-      (err) => {
-        expect(error.status).toBe(err[0].status)
-        done()
+  describe('getRecord', () => {
+    it('should call the API with the record name', () => {
+      const mockConfig: IEEE8021xConfig = {
+        profileName: 'config1',
+        authenticationProtocol: 1,
+        pxeTimeout: 60,
+        wiredInterface: true,
+        version: '1.0'
       }
-    )
 
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+      service.getRecord('config1').subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockConfig)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getRecord('config1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('create', () => {
+    it('should call the API to create a new config', () => {
+      const mockConfig: IEEE8021xConfig = {
+        profileName: 'config1',
+        authenticationProtocol: 1,
+        pxeTimeout: 60,
+        wiredInterface: true,
+        version: '1.0'
+      }
+
+      service.create(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      req.flush(mockConfig)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .create({ profileName: 'config1', authenticationProtocol: 1, pxeTimeout: 60, wiredInterface: true })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('update', () => {
+    it('should call the API to update a config', () => {
+      const mockConfig: IEEE8021xConfig = {
+        profileName: 'config1',
+        authenticationProtocol: 1,
+        pxeTimeout: 60,
+        wiredInterface: true,
+        version: '1.0'
+      }
+
+      service.update(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('PATCH')
+      req.flush(mockConfig)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .update({ profileName: 'config1', authenticationProtocol: 1, pxeTimeout: 60, wiredInterface: true })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('delete', () => {
+    it('should call the API to delete a config', () => {
+      service.delete('config1').subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.delete('config1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      req.flush(null, mockError)
+    })
   })
 })

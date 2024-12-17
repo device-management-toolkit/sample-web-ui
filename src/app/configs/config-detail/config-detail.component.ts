@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -35,7 +35,6 @@ import { MatToolbar } from '@angular/material/toolbar'
   selector: 'app-config-detail',
   templateUrl: './config-detail.component.html',
   styleUrls: ['./config-detail.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatProgressBar,
@@ -60,18 +59,20 @@ import { MatToolbar } from '@angular/material/toolbar'
   ]
 })
 export class ConfigDetailComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  fb = inject(FormBuilder)
+  private readonly activeRoute = inject(ActivatedRoute)
+  router = inject(Router)
+  configsService = inject(ConfigsService)
+
   public configForm: FormGroup
   public isLoading = false
   public pageTitle = 'New CIRA Config'
   public isEdit = false
   public errorMessages: string[] = []
-  constructor(
-    public snackBar: MatSnackBar,
-    public fb: FormBuilder,
-    private readonly activeRoute: ActivatedRoute,
-    public router: Router,
-    public configsService: ConfigsService
-  ) {
+  constructor() {
+    const fb = this.fb
+
     this.configForm = fb.group({
       configName: [null, Validators.required],
       mpsServerAddress: ['', Validators.required],

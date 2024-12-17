@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -38,7 +38,6 @@ import { IEEE8021xConfig } from 'src/models/models'
   selector: 'app-ieee8021x-detail',
   templateUrl: './ieee8021x-detail.component.html',
   styleUrls: ['./ieee8021x-detail.component.scss'],
-  standalone: true,
   imports: [
     MatToolbar,
     MatProgressBar,
@@ -62,6 +61,12 @@ import { IEEE8021xConfig } from 'src/models/models'
   ]
 })
 export class IEEE8021xDetailComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  fb = inject(FormBuilder)
+  private readonly activeRoute = inject(ActivatedRoute)
+  router = inject(Router)
+  ieee8021xService = inject(IEEE8021xService)
+
   ieee8021xForm: FormGroup
   pageTitle = 'New IEEE8021x Config'
   isLoading = false
@@ -73,13 +78,9 @@ export class IEEE8021xDetailComponent implements OnInit {
   pxeTimeoutMax = 60 * 60 * 24 // one day
   pxeTimeoutDefault = 60 * 2 // two mninutes
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public fb: FormBuilder,
-    private readonly activeRoute: ActivatedRoute,
-    public router: Router,
-    public ieee8021xService: IEEE8021xService
-  ) {
+  constructor() {
+    const fb = this.fb
+
     this.ieee8021xForm = fb.group({
       profileName: [
         null,

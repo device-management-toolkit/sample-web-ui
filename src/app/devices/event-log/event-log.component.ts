@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, inject } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import {
   MatTableDataSource,
@@ -41,7 +41,6 @@ const EVENTTYPEMAP: EventTypeMap = {
   selector: 'app-event-log',
   templateUrl: './event-log.component.html',
   styleUrls: ['./event-log.component.scss'],
-  standalone: true,
   imports: [
     MatProgressBar,
     MatCard,
@@ -62,6 +61,9 @@ const EVENTTYPEMAP: EventTypeMap = {
   ]
 })
 export class EventLogComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  private readonly devicesService = inject(DevicesService)
+
   @Input()
   public deviceId = ''
 
@@ -75,10 +77,7 @@ export class EventLogComponent implements OnInit {
   public eventLogData: EventLog[] = []
   public isCloudMode: boolean = environment.cloud
   public dataSource = new MatTableDataSource(this.eventLogData)
-  constructor(
-    public snackBar: MatSnackBar,
-    private readonly devicesService: DevicesService
-  ) {
+  constructor() {
     if (!this.isCloudMode) {
       this.displayedColumns = [
         'Event',

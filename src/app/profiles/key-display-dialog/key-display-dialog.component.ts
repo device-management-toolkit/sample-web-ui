@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard'
@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'app-key-display-dialog',
-  standalone: true,
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -21,11 +20,13 @@ import { MatIconModule } from '@angular/material/icon'
   styleUrl: './key-display-dialog.component.scss'
 })
 export class KeyDisplayDialogComponent {
+  data = inject(MAT_DIALOG_DATA)
+  private clipboard = inject(Clipboard)
+
   key = ''
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private clipboard: Clipboard
-  ) {
+  constructor() {
+    const data = this.data
+
     this.key = data.key
   }
 

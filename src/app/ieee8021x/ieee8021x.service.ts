@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
@@ -15,11 +15,10 @@ import { AuthService } from '../auth.service'
   providedIn: 'root'
 })
 export class IEEE8021xService {
+  private readonly http = inject(HttpClient)
+  private readonly authService = inject(AuthService)
+
   private readonly url = `${environment.rpsServer}/api/v1/admin/ieee8021xconfigs`
-  constructor(
-    private readonly http: HttpClient,
-    private readonly authService: AuthService
-  ) {}
 
   getData(pageEvent?: PageEventOptions): Observable<DataWithCount<IEEE8021xConfig>> {
     let query = this.url

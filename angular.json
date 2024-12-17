@@ -21,12 +21,16 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/openamtui",
+            "outputPath": {
+              "base": "dist/openamtui"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "@angular/localize/init"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -41,32 +45,33 @@
               "src/styles/_variables.scss",
               "src/styles/open-amt-theme.scss",
               "src/styles/styles.scss",
-              "src/styles/css2.css"
+              "src/styles/css2.css",
+              "src/styles/flex.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles/"
+                "src/styles/",
+                "."
               ]
             },
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true,
-            "preserveSymlinks": true
+            "preserveSymlinks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "enterprise": {
-              "outputPath": "ui",
+              "outputPath": {
+                "base": "ui"
+              },
               "optimization": true,
               "outputHashing": "none",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -86,8 +91,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -126,7 +129,10 @@
           "options": {
             "codeCoverage": true,
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "@angular/localize/init"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [

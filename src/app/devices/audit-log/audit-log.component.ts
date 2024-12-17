@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, Input, OnInit, signal, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, Input, OnInit, signal, ViewChild, inject } from '@angular/core'
 import { PageEvent, MatPaginator } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortHeader } from '@angular/material/sort'
@@ -35,7 +35,6 @@ import { environment } from 'src/environments/environment'
   selector: 'app-audit-log',
   templateUrl: './audit-log.component.html',
   styleUrls: ['./audit-log.component.scss'],
-  standalone: true,
   imports: [
     MatProgressBar,
     MatCard,
@@ -59,6 +58,10 @@ import { environment } from 'src/environments/environment'
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
+  snackBar = inject(MatSnackBar)
+  readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+
   @Input()
   public deviceId = ''
 
@@ -73,11 +76,7 @@ export class AuditLogComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly router: Router,
-    private readonly devicesService: DevicesService
-  ) {
+  constructor() {
     if (!this.isCloudMode) {
       this.displayedColumns = [
         'Event',

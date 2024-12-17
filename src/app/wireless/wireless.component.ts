@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, inject } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -37,7 +37,6 @@ import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
   selector: 'app-wireless',
   templateUrl: './wireless.component.html',
   styleUrls: ['./wireless.component.scss'],
-  standalone: true,
   imports: [
     ToolkitPipe,
     MatToolbar,
@@ -61,6 +60,11 @@ import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
   ]
 })
 export class WirelessComponent implements OnInit {
+  snackBar = inject(MatSnackBar)
+  readonly wirelessService = inject(WirelessService)
+  router = inject(Router)
+  dialog = inject(MatDialog)
+
   configs: WirelessConfig[] = []
   isLoading = true
   totalCount = 0
@@ -80,13 +84,6 @@ export class WirelessComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
-
-  constructor(
-    public snackBar: MatSnackBar,
-    public readonly wirelessService: WirelessService,
-    public router: Router,
-    public dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.getData(this.pageEvent)

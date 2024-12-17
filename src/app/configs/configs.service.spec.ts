@@ -1,144 +1,308 @@
-/*********************************************************************
- * Copyright (c) Intel Corporation 2022
- * SPDX-License-Identifier: Apache-2.0
- **********************************************************************/
-
 import { TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { of } from 'rxjs'
-import { AuthService } from '../auth.service'
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { ConfigsService } from './configs.service'
+import { AuthService } from '../auth.service'
+import { environment } from 'src/environments/environment'
+import { CIRAConfig, DataWithCount, PageEventOptions } from 'src/models/models'
 
 describe('ConfigsService', () => {
   let service: ConfigsService
-  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; patch: jasmine.Spy; delete: jasmine.Spy }
-  let routerSpy
-  beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', [
-      'get',
-      'post',
-      'delete',
-      'patch'
-    ])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    TestBed.configureTestingModule({})
+  let httpMock: HttpTestingController
+  let authServiceSpy: jasmine.SpyObj<AuthService>
 
-    service = new ConfigsService(new AuthService(httpClientSpy as any, routerSpy as Router), httpClientSpy as any)
+  const mockEnvironment = { rpsServer: 'https://test-server', mpsServer: 'https://mps-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/ciraconfigs`
+
+  beforeEach(() => {
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = mockEnvironment.rpsServer
+    environment.mpsServer = mockEnvironment.mpsServer
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        ConfigsService,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: environment, useValue: mockEnvironment }]
+    })
+
+    service = TestBed.inject(ConfigsService)
+    httpMock = TestBed.inject(HttpTestingController)
   })
 
   afterEach(() => {
-    TestBed.resetTestingModule()
+    httpMock.verify()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should return all the configs when requested for all configs', (done: DoneFn) => {
-    const configResponse = {
-      data: [
-        {
-          configName: 'config1',
-          mpsServerAddress: '255.255.255.1',
-          mpsPort: 4433,
-          username: 'admin',
-          password: 'password',
-          commonName: '255.255.255.1',
-          serverAddressFormat: 3,
-          authMethod: 2,
-          mpsRootCertificate: 'mpsrootcertificate',
-          proxyDetails: ''
+  describe('getData', () => {
+    it('should call the API with pagination options', () => {
+      const pageEvent: PageEventOptions = { pageSize: 10, startsFrom: 0, count: 'true' }
+      const mockResponse: DataWithCount<CIRAConfig> = {
+        data: [
+          {
+            configName: 'config1',
+            mpsServerAddress: 'address',
+            mpsPort: 443,
+            username: 'user',
+            password: 'pass',
+            commonName: 'common',
+            serverAddressFormat: 0,
+            authMethod: 1,
+            mpsRootCertificate: 'cert',
+            proxyDetails: 'proxy'
+          }
+        ],
+        totalCount: 1
+      }
+
+      service.getData(pageEvent).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$top=10&$skip=0&$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should call the API without pagination options', () => {
+      const mockResponse: DataWithCount<CIRAConfig> = {
+        data: [
+          {
+            configName: 'config1',
+            mpsServerAddress: 'address',
+            mpsPort: 443,
+            username: 'user',
+            password: 'pass',
+            commonName: 'common',
+            serverAddressFormat: 0,
+            authMethod: 1,
+            mpsRootCertificate: 'cert',
+            proxyDetails: 'proxy'
+          }
+        ],
+        totalCount: 1
+      }
+
+      service.getData().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getData().subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
         }
-      ],
-      totalCount: 1
-    }
+      })
 
-    httpClientSpy.get.and.returnValue(of(configResponse))
-
-    service.getData().subscribe((response) => {
-      expect(response).toEqual(configResponse)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}?$count=true`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should return the specific config detail when requested with name', (done: DoneFn) => {
-    const configResponse = {
-      configName: 'config1',
-      mpsServerAddress: '255.255.255.1',
-      mpsPort: 4433,
-      username: 'admin',
-      password: 'password',
-      commonName: '255.255.255.1',
-      serverAddressFormat: 3,
-      authMethod: 2,
-      mpsRootCertificate: 'mpsrootcertificate',
-      proxyDetails: ''
-    }
+  describe('getRecord', () => {
+    it('should call the API with the record name', () => {
+      const mockConfig: CIRAConfig = {
+        configName: 'config1',
+        mpsServerAddress: 'address',
+        mpsPort: 443,
+        username: 'user',
+        password: 'pass',
+        commonName: 'common',
+        serverAddressFormat: 0,
+        authMethod: 1,
+        mpsRootCertificate: 'cert',
+        proxyDetails: 'proxy'
+      }
 
-    httpClientSpy.get.and.returnValue(of(configResponse))
+      service.getRecord('config1').subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
 
-    service.getRecord('config1').subscribe((response) => {
-      expect(response).toEqual(configResponse)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockConfig)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.getRecord('config1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      req.flush(null, mockError)
     })
   })
 
-  it('should delete the specified config when a delete request fired', (done: DoneFn) => {
-    httpClientSpy.delete.and.returnValue(of({}))
+  describe('create', () => {
+    it('should call the API to create a new config', () => {
+      const mockConfig: CIRAConfig = {
+        configName: 'config1',
+        mpsServerAddress: 'address',
+        mpsPort: 443,
+        username: 'user',
+        password: 'pass',
+        commonName: 'common',
+        serverAddressFormat: 0,
+        authMethod: 1,
+        mpsRootCertificate: 'cert',
+        proxyDetails: 'proxy'
+      }
 
-    service.delete('config1').subscribe(() => {
-      done()
+      service.create(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      req.flush(mockConfig)
     })
 
-    expect(httpClientSpy.delete.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .create({
+          configName: 'config1',
+          mpsServerAddress: 'address',
+          mpsPort: 443,
+          username: 'user',
+          password: 'pass',
+          commonName: 'common',
+          serverAddressFormat: 0,
+          authMethod: 1,
+          mpsRootCertificate: 'cert',
+          proxyDetails: 'proxy'
+        })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should create the config when a post request is fired', (done: DoneFn) => {
-    const configReq = {
-      configName: 'config1',
-      mpsServerAddress: '255.255.255.1',
-      mpsPort: 4433,
-      username: 'admin',
-      password: 'password',
-      commonName: '255.255.255.1',
-      serverAddressFormat: 3,
-      authMethod: 2,
-      mpsRootCertificate: 'mpsrootcertificate',
-      proxyDetails: ''
-    }
+  describe('update', () => {
+    it('should call the API to update a config', () => {
+      const mockConfig: CIRAConfig = {
+        configName: 'config1',
+        mpsServerAddress: 'address',
+        mpsPort: 443,
+        username: 'user',
+        password: 'pass',
+        commonName: 'common',
+        serverAddressFormat: 0,
+        authMethod: 1,
+        mpsRootCertificate: 'cert',
+        proxyDetails: 'proxy'
+      }
 
-    httpClientSpy.post.and.returnValue(of(configReq))
+      service.update(mockConfig).subscribe((response) => {
+        expect(response).toEqual(mockConfig)
+      })
 
-    service.create(configReq).subscribe((response) => {
-      expect(response).toEqual(configReq)
-      done()
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('PATCH')
+      req.flush(mockConfig)
     })
 
-    expect(httpClientSpy.post.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service
+        .update({
+          configName: 'config1',
+          mpsServerAddress: 'address',
+          mpsPort: 443,
+          username: 'user',
+          password: 'pass',
+          commonName: 'common',
+          serverAddressFormat: 0,
+          authMethod: 1,
+          mpsRootCertificate: 'cert',
+          proxyDetails: 'proxy'
+        })
+        .subscribe({
+          error: (error) => {
+            expect(error).toEqual(['Error occurred'])
+          }
+        })
+
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(null, mockError)
+    })
   })
 
-  it('should update the config when a update request is fired', (done: DoneFn) => {
-    const configReq = {
-      configName: 'config1',
-      mpsServerAddress: '255.255.255.1',
-      mpsPort: 4433,
-      username: 'admin',
-      password: 'password',
-      commonName: '255.255.255.1',
-      serverAddressFormat: 3,
-      authMethod: 2,
-      mpsRootCertificate: 'mpsrootcertificate',
-      proxyDetails: ''
-    }
+  describe('delete', () => {
+    it('should call the API to delete a config', () => {
+      service.delete('config1').subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
 
-    httpClientSpy.patch.and.returnValue(of(configReq))
-
-    service.update(configReq).subscribe((response) => {
-      expect(response).toEqual(configReq)
-      done()
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      expect(req.request.method).toBe('DELETE')
+      req.flush({})
     })
 
-    expect(httpClientSpy.patch.calls.count()).toEqual(1)
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+      authServiceSpy.onError.and.returnValue(['Error occurred'])
+
+      service.delete('config1').subscribe({
+        error: (error) => {
+          expect(error).toEqual(['Error occurred'])
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockUrl}/config1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('loadMPSRootCert', () => {
+    it('should call the API to load MPS root certificate', () => {
+      const mockResponse = 'mockRootCert'
+
+      service.loadMPSRootCert().subscribe((response) => {
+        expect(response).toBe(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/ciracert`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 500, statusText: 'Internal Server Error' }
+
+      service.loadMPSRootCert().subscribe({
+        error: (error) => {
+          expect(error.status).toBe(500)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/ciracert`)
+      req.flush(null, mockError)
+    })
   })
 })
