@@ -36,12 +36,12 @@ jobs:
       - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
       - run: npm run cy-runner
       - name: Upload Cypress UI Test Results
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         with:
           name: sample-web-ui-ui-test
           path: cypress-ui-test-output-*.xml
       - name: Upload Cypress UI Images
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         if: always()
         with:
           name: sample-web-ui-ui-test-screenshots
