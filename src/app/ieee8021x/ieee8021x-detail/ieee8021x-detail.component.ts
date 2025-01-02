@@ -87,7 +87,8 @@ export class IEEE8021xDetailComponent implements OnInit {
         [
           Validators.required,
           Validators.maxLength(this.profileNameMaxLen),
-          Validators.pattern('[a-zA-Z0-9]*')]
+          Validators.pattern('[a-zA-Z0-9]*')
+        ]
       ],
       authenticationProtocol: [
         null,
@@ -98,7 +99,8 @@ export class IEEE8021xDetailComponent implements OnInit {
         [
           Validators.required,
           Validators.min(this.pxeTimeoutMin),
-          Validators.max(this.pxeTimeoutMax)]
+          Validators.max(this.pxeTimeoutMax)
+        ]
       ],
       wiredInterface: [
         null,

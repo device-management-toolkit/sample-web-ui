@@ -25,7 +25,8 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(MomentModule),
     provideHttpClient(withInterceptors([AuthorizeInterceptor])),
     provideAnimations(),
-    provideRouter(routes)]
+    provideRouter(routes)
+  ]
 }).catch((err) => {
   console.error(err)
 })

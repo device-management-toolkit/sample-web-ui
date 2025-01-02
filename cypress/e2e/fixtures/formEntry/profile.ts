@@ -12,7 +12,6 @@ const dhcpEnabledValues = [true, false]
 const wifiConfigs = [
   [{}], // support non wifi config
   [wirelessFixtures.happyPath]
-
 ]
 
 const amtProfiles: any[] = []

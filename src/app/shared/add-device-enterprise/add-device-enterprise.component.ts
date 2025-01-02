@@ -49,7 +49,8 @@ export class AddDeviceEnterpriseComponent {
     username: ['', [
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(16)]],
+        Validators.maxLength(16)
+      ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
     useTLS: [false],
