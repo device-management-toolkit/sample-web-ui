@@ -115,7 +115,7 @@ const profileFixtures = {
     amtPassword: 'P@ssw0rd',
     mebxPassword: 'P@ssw0rd',
     dhcpEnabled: true,
-    connectionMode: 'TLS (Enterprise)',
+    connectionMode: 'TLS',
     tlsConfig: 'Server Authentication Only',
     generateRandomPassword: false,
     userConsent: 'All',

@@ -182,12 +182,12 @@ Cypress.Commands.add('login', (user, pass) => {
 })
 
 Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
-  cy.get('input').get('[name=configName]').type(name)
+  cy.get('input[name=configName]').type(name)
   if (format === 'FQDN') {
     cy.contains('FQDN').click()
   }
-  cy.get('input').get('[name=mpsServerAddress]').type(addr)
-  cy.get('input').get('[name=username]').clear().type(user)
+  cy.get('input[name=mpsServerAddress]').type(addr)
+  cy.get('input[name=username]').clear().type(user)
 })
 
 Cypress.Commands.add(
@@ -213,16 +213,16 @@ Cypress.Commands.add(
     })
 
     cy.get('mat-select[formcontrolname=activation]').click()
-
     if (admin === 'ccmactivate') {
-      cy.get('mat-option').contains('Client Control Mode').click()
+      cy.get('mat-option').contains('Client Control Mode').parent().click()
     } else {
-      cy.get('mat-option').contains('Admin Control Mode').click()
+      cy.get('mat-option').contains('Admin Control Mode').parent().click()
     }
+    cy.wait(1000)
 
     if (!randAmt) {
-      cy.get('[data-cy=genAmtPass]').click()
-      cy.get('input').get('[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
+      cy.get('[data-cy=genAmtPass] input').click()
+      cy.get('input[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
     }
     if (admin === 'acmactivate') {
       if (!randMebx) {
@@ -233,7 +233,7 @@ Cypress.Commands.add(
               cy.get('[data-cy=genMebxPass]').click()
             }
 
-            cy.get('input').get('[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
+            cy.get('input[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
           })
       }
     }
@@ -247,7 +247,7 @@ Cypress.Commands.add(
 
     if (connection === 'CIRA (Cloud)') {
       cy.get('mat-select[formcontrolname=ciraConfigName]').click()
-    } else if (connection === 'TLS (Enterprise)') {
+    } else if (connection === 'TLS') {
       cy.get('mat-select[formcontrolname=tlsMode]').click()
     }
 
@@ -321,10 +321,10 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   // selectors need string values so convert booleans
   cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', formData.dhcpEnabled ? 'true' : 'false')
   if (formData.ciraConfigName) {
-    cy.matRadioButtonChoose('[formControlName="connectionMode"]', 'CIRA')
+    cy.get('[data-cy="radio-cira"]').click()
     cy.matSelectChoose('[formControlName="ciraConfigName"]', formData.ciraConfigName)
   } else if (formData.tlsMode) {
-    cy.matRadioButtonChoose('[formControlName="connectionMode"]', 'TLS')
+    cy.get('[data-cy="radio-tls"]').click()
 
     cy.matSelectChoose(
       '[formControlName="tlsMode"]',
@@ -334,7 +334,6 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   if (formData.wifiConfigs != null && formData.wifiConfigs.length > 0) {
     formData.wifiConfigs.forEach((wifiProfile: { profileName: string | number | RegExp }) => {
       cy.matTextlikeInputType('[data-cy=wifiAutocomplete]', wifiProfile.profileName as string)
-      // cy.get('input[data-cy=wifiAutocomplete]').type(wifiProfile.profileName)
       cy.get('mat-option').contains(wifiProfile.profileName).click()
     })
   }
@@ -409,11 +408,9 @@ Cypress.Commands.add('goToPage', (pageName) => {
 })
 
 Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {
-  // cy.get('[formControlName=generateRandomPassword]').click()
-  cy.get('input').get('[formControlName=amtPassword]').type(amtPassword)
+  cy.get('input[formControlName=amtPassword]').type(amtPassword)
   if (mode === 'acmactivate') {
-    // cy.get('[formControlName=generateRandomMEBxPassword]').click()
-    cy.get('input').get('[formControlName=mebxPassword]').type(mebxPassword)
+    cy.get('input[formControlName=mebxPassword]').type(mebxPassword)
   }
 })
 

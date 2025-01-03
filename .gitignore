@@ -58,3 +58,4 @@ TESTS-*
 # System Files
 .DS_Store
 Thumbs.db
+update-angular.sh

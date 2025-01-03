@@ -10,6 +10,8 @@ export default defineConfig({
   reporterOptions: {
     mochaFile: 'cypress-ui-test-output-[hash].xml'
   },
+  viewportWidth: 1920,
+  viewportHeight: 1080,
   projectId: 'mxeztq',
   env: {
     BASEURL: 'http://localhost:4200/',

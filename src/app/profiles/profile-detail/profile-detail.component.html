@@ -205,20 +205,28 @@
             <mat-error>Connection mode must be specified</mat-error>
           </p>
           }
-          <p><mat-radio-button [value]='connectionMode.cira' [disabled]='ciraConfigurations.length === 0'>
-              CIRA (Cloud)
-              @if (ciraConfigurations.length === 0) {
-              <span>- No CIRA Configs Found</span>
-              }
-            </mat-radio-button></p>
-          <p><mat-radio-button [value]='connectionMode.tls'>TLS (Enterprise)</mat-radio-button></p>
+          <fieldset>
+            <legend>Internet Mode (Use when devices are NOT directly accessible via a local network)</legend>
+            <p>In this scenario, AMT acts as a client and connects to the toolkit acting as a server (requires MPS).</p>
+            <p><mat-radio-button data-cy="radio-cira"  [value]='connectionMode.cira' [disabled]='ciraConfigurations.length === 0'>
+                CIRA (Cloud)
+                @if (ciraConfigurations.length === 0) {
+                <span>- No CIRA Configs Found</span>
+                }
+              </mat-radio-button></p>
+          </fieldset>
+          <fieldset>
+            <legend>Direct Connect Mode (Use when devices ARE directly accessible via a local network)</legend>
+            <p>In this scenario, AMT acts as a server and listens for incoming connections. The toolkit acts as a client and connects to the device.</p>
+            <p><mat-radio-button data-cy="radio-tls" [value]='connectionMode.tls'>TLS</mat-radio-button></p>
 
-          @if (!cloudMode) {
-          <p>
-            <mat-radio-button [value]='connectionMode.direct'>Non TLS</mat-radio-button><br/>
-            <mat-hint>On AMT 16.1 and newer, AMT provides self-signed certificates. Choosing this option will use those instead of toolkit provided self-signed certs</mat-hint>
-          </p>
-          }
+            @if (!cloudMode) {
+            <p>
+              <mat-radio-button data-cy="radio-non-tls" [value]='connectionMode.direct'>Non TLS</mat-radio-button><br />
+              <mat-hint>On AMT 16.1 and newer, AMT provides self-signed certificates. Choosing this option will use those instead of toolkit provided self-signed certs</mat-hint>
+            </p>
+            }
+          </fieldset>
         </mat-radio-group>
 
 
