@@ -1,3 +1,10 @@
+# [3.28.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.5...v3.28.0) (2025-01-06)
+
+
+### Features
+
+* make connection modes clearer ([0858fdf](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0858fdf85119a614cce283cc6dbaef344fa0eac3))
+
 ## [3.27.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.4...v3.27.5) (2024-12-12)
 
 
