@@ -119,7 +119,6 @@ export class UserConsentService {
         response.Header.Action.length
       )
     } else {
-      console.log('getUserConsentMethod - default return', response)
       return (response as any).XMLName.Local
     }
   }
@@ -133,7 +132,6 @@ export class UserConsentService {
   }
 
   sendOptInCodeResponse(result: UserConsentResponse, featureName: string): boolean {
-    console.log('sendOptInCodeResponse ', result)
     if (result.Body?.ReturnValue === 0) {
       return true
     } else if (result.Body?.ReturnValue === 2066) {

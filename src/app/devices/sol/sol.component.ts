@@ -168,7 +168,6 @@ export class SolComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler() {
-    console.log('Disconnecting KVM')
     this.disconnect()
   }
 

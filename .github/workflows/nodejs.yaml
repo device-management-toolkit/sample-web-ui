@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x]
 
     steps:
       - name: Harden Runner
@@ -33,14 +33,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run lint
-        if: ${{ matrix.node-version == '18.x' }}
+        if: ${{ matrix.node-version == '22.x' }}
       - run: npm run lint:cypress
-        if: ${{ matrix.node-version == '18.x' }}
+        if: ${{ matrix.node-version == '22.x' }}
       - run: npm run ci-prettify
       - run: npm run test-ci
       - uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
         name: Upload Coverage Results
-        if: ${{ matrix.node-version == '18.x' }}
+        if: ${{ matrix.node-version == '22.x' }}
         with:
           directory: ./coverage/openamtui
       - name: Upload Karma Results
