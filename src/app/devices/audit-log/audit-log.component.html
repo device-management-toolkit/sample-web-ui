@@ -2,8 +2,13 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
-  <mat-card-header>
+  <mat-card-header style="justify-content: space-between">
     <mat-card-title> Audit Log ({{ auditLogData.totalCnt }}) </mat-card-title>
+    @if (!isCloudMode) {
+      <button mat-flat-button color="primary" [disabled]="isLoading()" (click)="download()">
+        Download Audit Log (.csv)
+      </button>
+    }
   </mat-card-header>
   <mat-card-content>
     @if (isNoData()) {

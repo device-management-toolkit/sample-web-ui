@@ -3,64 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, Input, OnInit, signal, ViewChild, inject } from '@angular/core'
-import { PageEvent, MatPaginator } from '@angular/material/paginator'
+import { AfterViewInit, Component, Input, signal, ViewChild, inject } from '@angular/core'
+import { PageEvent, MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatSort, MatSortHeader } from '@angular/material/sort'
-import {
-  MatTableDataSource,
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table'
+import { MatSort, MatSortModule } from '@angular/material/sort'
+import { MatTableModule } from '@angular/material/table'
 import { Router } from '@angular/router'
 import { merge, of } from 'rxjs'
 import { catchError, startWith, switchMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
-import { DevicesService } from '../devices.service'
 import { MomentModule } from 'ngx-moment'
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
-import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatCardModule } from '@angular/material/card'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
+import { DeviceLogService } from '../device-log.service'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-audit-log',
   templateUrl: './audit-log.component.html',
   styleUrls: ['./audit-log.component.scss'],
   imports: [
-    MatProgressBar,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatTable,
-    MatSort,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
-    MatSortHeader,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
-    MatPaginator,
+    MatProgressBarModule,
+    MatCardModule,
+    MatSortModule,
+    MatTableModule,
+    MatButtonModule,
+    MatPaginatorModule,
     MomentModule
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
   snackBar = inject(MatSnackBar)
   readonly router = inject(Router)
-  private readonly devicesService = inject(DevicesService)
+  private readonly deviceLogService = inject(DeviceLogService)
 
   @Input()
   public deviceId = ''
@@ -92,7 +69,7 @@ export class AuditLogComponent implements AfterViewInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          return this.devicesService
+          return this.deviceLogService
             .getAuditLog(this.deviceId, (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
             .pipe(catchError(() => of(null)))
         }),
@@ -121,5 +98,19 @@ export class AuditLogComponent implements AfterViewInit {
 
   async navigateTo(path: string): Promise<void> {
     await this.router.navigate([`/devices/${path}`])
+  }
+  download(): void {
+    this.isLoading.set(true)
+    this.deviceLogService.downloadAuditLog(this.deviceId).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/octet-stream' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `audit_${this.deviceId}.csv`
+      a.click()
+
+      window.URL.revokeObjectURL(url)
+      this.isLoading.set(false)
+    })
   }
 }

@@ -8,9 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { MomentModule } from 'ngx-moment'
-import { DevicesService } from '../devices.service'
-
 import { EventLogComponent } from './event-log.component'
+import { DeviceLogService } from '../device-log.service'
 
 describe('EventLogComponent', () => {
   let component: EventLogComponent
@@ -18,7 +17,7 @@ describe('EventLogComponent', () => {
   let eventLogSpy: jasmine.Spy
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getEventLog'])
+    const devicesService = jasmine.createSpyObj('DeviceLogService', ['getEventLog'])
     eventLogSpy = devicesService.getEventLog.and.returnValue(
       of([
         {
@@ -124,7 +123,7 @@ describe('EventLogComponent', () => {
         EventLogComponent
       ],
       providers: [
-        { provide: DevicesService, useValue: devicesService },
+        { provide: DeviceLogService, useValue: devicesService },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -149,29 +148,29 @@ describe('EventLogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(eventLogSpy).toHaveBeenCalled()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceId).toEqual('guid')
     expect(component.eventLogData.length).toEqual(4)
   })
 
   it('should return true when isLoading is false and no data', () => {
-    component.isLoading = false
+    component.isLoading.set(false)
     component.eventLogData = []
     expect(component.isNoData()).toBeTrue()
   })
   it('should return true when isLoading is true and no data', () => {
-    component.isLoading = true
+    component.isLoading.set(true)
     component.eventLogData = []
     expect(component.isNoData()).toBeTrue()
   })
 
   it('should return true when isLoading is true and data exists', () => {
-    component.isLoading = true
+    component.isLoading.set(true)
     expect(component.isNoData()).toBeTrue()
   })
 
   it('should return false when isLoading is false and data exists', () => {
-    component.isLoading = false
+    component.isLoading.set(false)
     expect(component.isNoData()).toBeFalse()
   })
 })

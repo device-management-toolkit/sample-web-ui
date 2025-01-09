@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import {
   MatTableDataSource,
@@ -28,6 +28,8 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
+import { MatButtonModule } from '@angular/material/button'
+import { DeviceLogService } from '../device-log.service'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -49,6 +51,7 @@ const EVENTTYPEMAP: EventTypeMap = {
     MatCardContent,
     MatTable,
     MatColumnDef,
+    MatButtonModule,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
@@ -62,12 +65,12 @@ const EVENTTYPEMAP: EventTypeMap = {
 })
 export class EventLogComponent implements OnInit {
   snackBar = inject(MatSnackBar)
-  private readonly devicesService = inject(DevicesService)
+  private readonly deviceLogService = inject(DeviceLogService)
 
   @Input()
   public deviceId = ''
 
-  public isLoading = true
+  public isLoading = signal(true)
   public displayedColumns = [
     'Event',
     'Event Type',
@@ -89,8 +92,8 @@ export class EventLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = true
-    this.devicesService
+    this.isLoading.set(true)
+    this.deviceLogService
       .getEventLog(this.deviceId)
       .pipe(
         catchError((err) => {
@@ -99,7 +102,7 @@ export class EventLogComponent implements OnInit {
           return of(this.eventLogData)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((data) => {
@@ -113,6 +116,20 @@ export class EventLogComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return this.isLoading || this.eventLogData?.length === 0
+    return this.isLoading() || this.eventLogData?.length === 0
+  }
+  download(): void {
+    this.isLoading.set(true)
+    this.deviceLogService.downloadEventLog(this.deviceId).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/octet-stream' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `event_${this.deviceId}.csv`
+      a.click()
+
+      window.URL.revokeObjectURL(url)
+      this.isLoading.set(false)
+    })
   }
 }

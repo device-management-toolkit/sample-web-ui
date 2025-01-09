@@ -4,11 +4,8 @@ import { DevicesService } from './devices.service'
 import { environment } from 'src/environments/environment'
 import {
   AMTFeaturesResponse,
-  AuditLogResponse,
   DataWithCount,
   Device,
-  EventLog,
-  HardwareInformation,
   PowerState,
   DeviceStats,
   RedirectionToken,

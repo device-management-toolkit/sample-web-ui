@@ -226,24 +226,6 @@ export class DevicesService {
     )
   }
 
-  getAuditLog(deviceId: string, startIndex = 0): Observable<AuditLogResponse> {
-    return this.http
-      .get<AuditLogResponse>(`${environment.mpsServer}/api/v1/amt/log/audit/${deviceId}?startIndex=${startIndex}`)
-      .pipe(
-        catchError((err) => {
-          throw err
-        })
-      )
-  }
-
-  getEventLog(deviceId: string): Observable<EventLog[]> {
-    return this.http.get<EventLog[]>(`${environment.mpsServer}/api/v1/amt/log/event/${deviceId}`).pipe(
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-
   getHardwareInformation(guid: string): Observable<HardwareInformation> {
     return this.http.get<HardwareInformation>(`${environment.mpsServer}/api/v1/amt/hardwareInfo/${guid}`).pipe(
       catchError((err) => {
