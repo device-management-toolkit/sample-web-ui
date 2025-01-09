@@ -1,3 +1,10 @@
+# [3.29.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.28.0...v3.29.0) (2025-01-09)
+
+
+### Features
+
+* enable download for audit/event logs ([#2408](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2408)) ([cf322b6](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf322b6261b87665ab055e6296fbfa0932679eb5))
+
 # [3.28.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.5...v3.28.0) (2025-01-06)
 
 
