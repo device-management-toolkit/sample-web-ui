@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
@@ -66,6 +66,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   @Output()
   selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
 
+  isFullscreen = signal(false)
   deviceState = -1
   results: any
   isLoading = false
@@ -178,6 +179,24 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.deviceState = 0
     }
     return of(null)
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  exitFullscreen(event: any): void {
+    if (
+      !document.fullscreenElement &&
+      !(document as any).webkitIsFullScreen &&
+      !(document as any).mozFullScreen &&
+      !(document as any).msFullscreenElement
+    ) {
+      this.toggleFullscreen()
+    }
+  }
+  toggleFullscreen(): void {
+    this.isFullscreen.set(!this.isFullscreen())
   }
 
   connect(): void {

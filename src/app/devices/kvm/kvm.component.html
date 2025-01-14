@@ -4,44 +4,62 @@
       <mat-label>Choose encoding type</mat-label>
       <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
         @for (encode of encodings; track encode) {
-        <mat-option [value]="encode.value">
-          {{ encode.viewValue }}
-        </mat-option>
+          <mat-option [value]="encode.value">
+            {{ encode.viewValue }}
+          </mat-option>
         }
       </mat-select>
     </mat-form-field>
   </div>
   <div class="flex flex-50 justify-end">
+    <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
+      <mat-icon>fullscreen</mat-icon>Fullscreen
+    </button>
     @if (deviceState === 0 && isLoading === false) {
-    <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
-      <mat-icon>tv_on</mat-icon>Connect KVM
-    </button>
-    }@else if (deviceState !== 2 && isLoading === true) {
-    <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
-      <mat-icon>tv_off</mat-icon>Connecting KVM...
-    </button>
-    }
-    @else {
-    <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
-      <mat-icon>tv_off</mat-icon>Disconnect KVM
-    </button>
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <mat-icon>tv_on</mat-icon>Connect KVM
+      </button>
+    } @else if (deviceState !== 2 && isLoading === true) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
+        <mat-icon>tv_off</mat-icon>Connecting KVM...
+      </button>
+    } @else {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+        <mat-icon>tv_off</mat-icon>Disconnect KVM
+      </button>
     }
     <button mat-flat-button color="primary" (click)="fileInput.click()">
       <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
     </button>
     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
     @if (isIDERActive) {
-    <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left: 12px">
-      <mat-icon>stop</mat-icon>Stop IDER
-    </button>
+      <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left: 12px">
+        <mat-icon>stop</mat-icon>Stop IDER
+      </button>
     }
   </div>
 </mat-toolbar>
 @if (isLoading) {
-<mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+  <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
 }
 @if (readyToLoadKvm) {
-<amt-kvm class="kvm" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceKVMConnection" [selectedEncoding]="selectedEncoding" (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+  <amt-kvm
+    class="kvm"
+    [isFullscreen]="isFullscreen()"
+    [deviceId]="deviceId"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken"
+    [deviceConnection]="deviceKVMConnection"
+    [selectedEncoding]="selectedEncoding"
+    (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
-<amt-ider class="ider" [deviceId]="deviceId" [mpsServer]="mpsServer" [authToken]="authToken" [deviceConnection]="deviceIDERConnection" [cdrom]="diskImage" [floppy]="null" (deviceStatus)="deviceIDERStatus($event)">
+<amt-ider
+  class="ider"
+  [deviceId]="deviceId"
+  [mpsServer]="mpsServer"
+  [authToken]="authToken"
+  [deviceConnection]="deviceIDERConnection"
+  [cdrom]="diskImage"
+  [floppy]="null"
+  (deviceStatus)="deviceIDERStatus($event)">
 </amt-ider>

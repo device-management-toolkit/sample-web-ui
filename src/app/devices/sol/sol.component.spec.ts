@@ -82,7 +82,8 @@ describe('SolComponent', () => {
     }
 
     @Component({
-      selector: 'app-sol',
+      // eslint-disable-next-line @angular-eslint/component-selector
+      selector: 'amt-sol',
       imports: []
     })
     class TestAMTSOLComponent {
@@ -122,7 +123,6 @@ describe('SolComponent', () => {
         TestAMTSOLComponent
       ],
       providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
         { provide: UserConsentService, useValue: userConsentService },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
@@ -146,14 +146,17 @@ describe('SolComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+    fixture.detectChanges()
     expect(tokenSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
   })
   it('should have correct state on websocket events', () => {
     authServiceStub.startwebSocket.emit(true)
+    fixture.detectChanges()
     expect(component.isLoading).toBeFalse()
     authServiceStub.stopwebSocket.emit(true)
+    fixture.detectChanges()
     expect(component.isDisconnecting).toBeTruthy()
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
@@ -241,6 +244,7 @@ describe('SolComponent', () => {
   })
   it('checkUserConsent yes', async () => {
     component.checkUserConsent()
+    fixture.detectChanges()
     expect(component.readyToLoadSol).toBe(true)
   })
   it('checkUserConsent no', async () => {

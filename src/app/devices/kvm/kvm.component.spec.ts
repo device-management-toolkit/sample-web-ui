@@ -9,11 +9,12 @@ import { ActivatedRoute, NavigationStart, RouterEvent, Router, RouterModule } fr
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device, UserConsentResponse } from 'src/models/models'
 import { UserConsentService } from '../user-consent.service'
+import { IDERComponent, KVMComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -91,8 +92,16 @@ describe('KvmComponent', () => {
     }
 
     @Component({
-      selector: 'app-kvm',
+      // eslint-disable-next-line @angular-eslint/component-selector
+      selector: 'amt-ider',
       imports: []
+    })
+    class TestAMTIDERComponent {}
+
+    @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
+      selector: 'amt-kvm',
+      template: '<canvas></canvas>'
     })
     class TestAMTKVMComponent {
       @Input()
@@ -114,28 +123,26 @@ describe('KvmComponent', () => {
       deviceStatus = new EventEmitter<number>()
     }
 
-    @Component({
-      selector: 'app-device-toolbar',
-      imports: []
+    TestBed.overrideComponent(KvmComponent, {
+      remove: { imports: [IDERComponent] },
+      add: { imports: [TestAMTIDERComponent] }
     })
-    class TestDeviceToolbarComponent {
-      @Input()
-      isLoading = false
-
-      @Input()
-      deviceState = 0
-    }
+    TestBed.overrideComponent(KvmComponent, {
+      remove: { imports: [KVMComponent] },
+      add: { imports: [TestAMTKVMComponent] }
+    })
+    TestBed.overrideComponent(KvmComponent, {
+      remove: { imports: [KVMComponent] },
+      add: { imports: [TestAMTKVMComponent] }
+    })
 
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         RouterModule,
-        KvmComponent,
-        TestDeviceToolbarComponent,
-        TestAMTKVMComponent
+        KvmComponent
       ],
       providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true }, // trigger automatic change detection
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
         { provide: UserConsentService, useValue: userConsentService },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
@@ -160,6 +167,7 @@ describe('KvmComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+    fixture.detectChanges()
     expect(tokenSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
@@ -167,8 +175,10 @@ describe('KvmComponent', () => {
   })
   it('should have correct state on websocket events', () => {
     authServiceStub.startwebSocket.emit(true)
+    fixture.detectChanges()
     expect(component.isLoading).toBeFalse()
     authServiceStub.stopwebSocket.emit(true)
+    fixture.detectChanges()
     expect(component.isDisconnecting).toBeTruthy()
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
@@ -286,6 +296,7 @@ describe('KvmComponent', () => {
   })
   it('checkUserConsent yes', async () => {
     component.checkUserConsent()
+    fixture.detectChanges()
     expect(component.readyToLoadKvm).toBe(true)
   })
   it('checkUserConsent no', async () => {

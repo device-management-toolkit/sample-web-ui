@@ -103,6 +103,12 @@
                   "maximumError": "5kb"
                 }
               ]
+            },
+            "development": {
+              "sourceMap": true,
+              "scripts": [
+                "node_modules/@open-amt-cloud-toolkit/ui-toolkit-angular/fesm2022/open-amt-cloud-toolkit-ui-toolkit-angular.mjs"
+              ]
             }
           },
           "defaultConfiguration": ""
