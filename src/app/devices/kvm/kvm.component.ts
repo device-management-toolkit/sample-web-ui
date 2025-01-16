@@ -3,7 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject, signal } from '@angular/core'
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+  signal
+} from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
@@ -24,13 +35,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatSelect } from '@angular/material/select'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { MatToolbar } from '@angular/material/toolbar'
-import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { UserConsentService } from '../user-consent.service'
 
 @Component({
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
   styleUrls: ['./kvm.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     MatToolbar,
     MatFormField,
