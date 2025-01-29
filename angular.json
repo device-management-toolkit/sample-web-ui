@@ -79,6 +79,14 @@
                 }
               ]
             },
+            "enterprise-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.enterprise.dev.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -121,6 +129,9 @@
           "configurations": {
             "production": {
               "buildTarget": "openamtui:build:production"
+            },
+            "enterprise": {
+              "buildTarget": "openamtui:build:enterprise-dev"
             }
           }
         },
