@@ -1,3 +1,10 @@
+## [3.30.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.0...v3.30.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* adds an option to select domain before profile export ([#2425](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2425)) ([e80b424](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/e80b42460848bd44745ba46eb02d20cf53bd9cda))
+
 # [3.30.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.29.0...v3.30.0) (2025-01-14)
 
 
