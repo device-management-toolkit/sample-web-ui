@@ -34,6 +34,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { environment } from 'src/environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
+import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 
 @Component({
   selector: 'app-profiles',
@@ -115,7 +116,30 @@ export class ProfilesComponent implements OnInit {
   }
 
   export(name: string): void {
-    this.profilesService.export(name).subscribe({
+    const profile = this.profiles.find((p) => p.profileName === name)
+    if (!profile) {
+      this.snackBar.open($localize`Unable to export profile`, undefined, SnackbarDefaults.defaultError)
+      return
+    }
+
+    if (profile.activation === 'acmactivate') {
+      const dialogRef = this.dialog.open(ExportDialogComponent, {
+        width: '400px',
+        disableClose: false
+      })
+
+      dialogRef.afterClosed().subscribe((selectedDomain) => {
+        if (selectedDomain) {
+          this.exportProfile(name, selectedDomain !== 'none' ? selectedDomain : '')
+        }
+      })
+    } else {
+      this.exportProfile(name, '')
+    }
+  }
+
+  private exportProfile(name: string, domain: string): void {
+    this.profilesService.export(name, domain).subscribe({
       next: (data) => {
         // prompt to download data
         const blob = new Blob([data.content], { type: 'application/x-yaml' })

@@ -1,0 +1,39 @@
+<mat-card-header>
+  <mat-card-title-group>
+    <mat-card-title>
+      Select Domain Suffix
+    </mat-card-title>
+    <mat-card-subtitle>The selected domain will be included in the profile for use with <a href="http://github.com/open-amt-cloud-toolkit/rpc-go">RPC-GO</a></mat-card-subtitle>
+  </mat-card-title-group>
+</mat-card-header>
+<mat-dialog-content>
+  @if (domains.length === 0) {
+    <div class="flex flex-col items-center">
+      <p>No domains are configured. You can either:</p>
+      <ul class="flex flex-col">
+        <li>Add domains first (recommended for ACM activation)</li>
+        <li>Click "Skip Domain" if device has already been activated.</li>
+      </ul>
+    </div>
+  } @else {
+    <mat-form-field appearance="fill" style="width:100%;">
+      <mat-label>domain suffix</mat-label>
+      <mat-select [(ngModel)]="selectedDomain" (selectionChange)="onSelectionChange($event)">
+        @for (domain of domains; track domain) {
+          <mat-option [value]="domain.profileName">{{domain.domainSuffix}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <p >
+      Click "Skip Domain" if device has already been activated. If device has not yet been activated, you must select a domain for ACM activation.
+    </p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (domains.length === 0) {
+    <button mat-button routerLink="/domains" (click)="navigateToDomains()">Add Domains</button>
+  } 
+    <button mat-button [mat-dialog-close]="'none'" >Skip Domain</button>
+    <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
+    <button mat-button [mat-dialog-close]="selectedDomain" color="primary" [disabled]="!selectedDomain">OK</button>
+</mat-dialog-actions>

@@ -267,11 +267,11 @@ describe('ProfilesService', () => {
     it('should call the API to export a profile', () => {
       const mockResponse = { exported: true }
 
-      service.export('profile1').subscribe((response) => {
+      service.export('profile1', 'domain1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
       })
 
-      const req = httpMock.expectOne(`${mockUrl}/export/profile1`)
+      const req = httpMock.expectOne(`${mockUrl}/export/profile1?domainName=domain1`)
       expect(req.request.method).toBe('GET')
       req.flush(mockResponse)
     })
@@ -280,13 +280,13 @@ describe('ProfilesService', () => {
       const mockError = { status: 500, statusText: 'Internal Server Error' }
       authServiceSpy.onError.and.returnValue(['Error occurred'])
 
-      service.export('profile1').subscribe({
+      service.export('profile1', 'domain1').subscribe({
         error: (error) => {
           expect(error).toEqual(['Error occurred'])
         }
       })
 
-      const req = httpMock.expectOne(`${mockUrl}/export/profile1`)
+      const req = httpMock.expectOne(`${mockUrl}/export/profile1?domainName=domain1`)
       req.flush(null, mockError)
     })
   })

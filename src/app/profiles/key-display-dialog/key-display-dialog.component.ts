@@ -26,7 +26,6 @@ export class KeyDisplayDialogComponent {
   key = ''
   constructor() {
     const data = this.data
-
     this.key = data.key
   }
 

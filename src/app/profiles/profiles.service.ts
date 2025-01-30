@@ -72,12 +72,14 @@ export class ProfilesService {
     )
   }
 
-  export(name: string): Observable<any> {
-    return this.http.get(`${this.url}/export/${encodeURIComponent(name)}`).pipe(
-      catchError((err) => {
-        const errorMessages = this.authService.onError(err)
-        return throwError(errorMessages)
-      })
-    )
+  export(name: string, domainName: string): Observable<any> {
+    return this.http
+      .get(`${this.url}/export/${encodeURIComponent(name)}?domainName=${encodeURIComponent(domainName)}`)
+      .pipe(
+        catchError((err) => {
+          const errorMessages = this.authService.onError(err)
+          return throwError(errorMessages)
+        })
+      )
   }
 }
