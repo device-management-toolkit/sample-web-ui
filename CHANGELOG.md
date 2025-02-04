@@ -1,3 +1,10 @@
+## [3.30.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.1...v3.30.2) (2025-02-04)
+
+
+### Bug Fixes
+
+* add pagination for event logs ([#2456](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2456)) ([fa63cbe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/fa63cbe8d35b7a77fe8250f7d6870da4194377d5))
+
 ## [3.30.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.0...v3.30.1) (2025-01-30)
 
 
