@@ -3,7 +3,7 @@
 }
 <mat-card>
   <mat-card-header style="justify-content: space-between">
-    <mat-card-title>Event Log ({{ eventLogData.length }} entries)</mat-card-title>
+    <mat-card-title>Event Log ({{ dataSource.data.length }} entries)</mat-card-title>
     @if (!isCloudMode) {
       <button mat-flat-button color="primary" (click)="download()">Download Event Log (.csv)</button>
     }
@@ -41,6 +41,24 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </mat-table>
+      <!-- <mat-paginator
+          (page)="handlePageEvent($event)"
+          [pageSize]="pageSize"
+          [length]="dataSource.data.length"
+          [pageIndex]="currentPageIndex"
+          [disabled]="isLoading()"
+          [hidePageSize]="true">
+        </mat-paginator> -->
     }
   </mat-card-content>
+  <mat-card-actions align="end">
+    @if (!isCloudMode) {
+      <button mat-icon-button (click)="lastPage()" [disabled]="currentPageIndex === 0">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button (click)="nextPage()" [disabled]="!hasMoreRecords">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    }
+  </mat-card-actions>
 </mat-card>

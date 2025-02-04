@@ -96,6 +96,11 @@ export interface AuditLogResponse {
   records: AuditLog[]
 }
 
+export interface EventLogResponse {
+  hasMoreRecords: boolean
+  records: EventLog[]
+}
+
 export interface EventLog {
   DeviceAddress: number
   EventSensorType: number
