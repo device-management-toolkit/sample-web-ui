@@ -1,3 +1,10 @@
+## [3.31.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.31.0...v3.31.1) (2025-02-05)
+
+
+### Bug Fixes
+
+* disable kvm for ISM systems ([#2471](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2471)) ([1ff7f56](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/1ff7f566737225dd782cc156617b960767d848d6))
+
 # [3.31.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.2...v3.31.0) (2025-02-05)
 
 
