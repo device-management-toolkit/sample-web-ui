@@ -76,6 +76,7 @@ describe('DevicesService', () => {
         userConsent: 'none',
         optInState: 0,
         redirection: true,
+        kvmAvailable: true,
         KVM: true,
         SOL: true,
         IDER: true
@@ -465,6 +466,7 @@ describe('DevicesService', () => {
         KVM: true,
         SOL: true,
         IDER: true,
+        kvmAvailable: true,
         userConsent: 'all',
         optInState: 1
       }

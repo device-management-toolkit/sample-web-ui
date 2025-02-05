@@ -67,6 +67,7 @@ describe('UserConsentService', () => {
     service.handleUserConsentDecision(false, '111', {
       userConsent: 'all',
       redirection: true,
+      kvmAvailable: true,
       KVM: true,
       SOL: true,
       IDER: true,

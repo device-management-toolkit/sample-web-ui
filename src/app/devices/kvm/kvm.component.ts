@@ -183,7 +183,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   postUserConsentDecision(result: boolean): Observable<any> {
     if (result != null && result) {
-      this.readyToLoadKvm = true
+      this.readyToLoadKvm = this.amtFeatures?.kvmAvailable ?? false
       this.getAMTFeatures()
     } else if (result === false) {
       this.isLoading = false
@@ -260,7 +260,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   handleRedirectionStatus(redirectionStatus: RedirectionStatus): Observable<any> {
     this.redirectionStatus = redirectionStatus
-    if (this.redirectionStatus.isKVMConnected) {
+    if (this.amtFeatures?.kvmAvailable && this.redirectionStatus.isKVMConnected) {
       this.displayError($localize`KVM cannot be accessed - another kvm session is in progress`)
       return of(null)
     }
@@ -279,6 +279,11 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
     this.amtFeatures = results
+
+    if (!this.amtFeatures.kvmAvailable) {
+      return of(true)
+    }
+
     if (this.amtFeatures.KVM) {
       return of(true)
     }
@@ -371,8 +376,10 @@ export class KvmComponent implements OnInit, OnDestroy {
   deviceIDERStatus = (event: any): void => {
     if (event === 0) {
       this.isIDERActive = false
+      this.displayWarning('IDER session ended')
     } else if (event === 3) {
       this.isIDERActive = true
+      this.displayWarning('IDER session active')
     }
   }
 

@@ -122,6 +122,7 @@ export interface AMTFeaturesResponse {
   userConsent: string
   optInState: number
   redirection: boolean
+  kvmAvailable: boolean
   KVM: boolean
   SOL: boolean
   IDER: boolean

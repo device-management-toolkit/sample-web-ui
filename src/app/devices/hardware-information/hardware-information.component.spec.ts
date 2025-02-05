@@ -33,7 +33,7 @@ describe('HardwareInformationComponent', () => {
       'getWsmanOperations'
     ])
     devicesServiceSpy.getAMTFeatures.and.returnValue(
-      of({ userConsent: 'ALL', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 1 })
+      of({ userConsent: 'ALL', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 1, kvmAvailable: true })
     )
 
     devicesServiceSpy.getHardwareInformation.and.returnValue(of({} as any))

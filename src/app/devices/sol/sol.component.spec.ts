@@ -50,10 +50,26 @@ describe('SolComponent', () => {
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
     setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(
-      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+      of({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0
+      })
     )
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
-      of({ userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 })
+      of({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0
+      })
     )
     devicesService.getDevice.and.returnValue(
       of({
@@ -215,6 +231,7 @@ describe('SolComponent', () => {
         expect(getAMTFeaturesSpy).toHaveBeenCalled()
         expect(result).toEqual({
           userConsent: 'none',
+          kvmAvailable: true,
           KVM: true,
           SOL: true,
           IDER: true,
@@ -248,7 +265,15 @@ describe('SolComponent', () => {
     expect(component.readyToLoadSol).toBe(true)
   })
   it('checkUserConsent no', async () => {
-    component.amtFeatures = { userConsent: 'all', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }
+    component.amtFeatures = {
+      userConsent: 'all',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0
+    }
     component.readyToLoadSol = false
     component.checkUserConsent()
     expect(component.readyToLoadSol).toBe(false)
@@ -270,7 +295,15 @@ describe('SolComponent', () => {
   })
 
   it('handleAMTFeatureResponse SOL already enabled', async () => {
-    component.amtFeatures = { userConsent: 'none', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 0 }
+    component.amtFeatures = {
+      userConsent: 'none',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0
+    }
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: (results) => {
         expect(results).toEqual(true)
@@ -278,7 +311,15 @@ describe('SolComponent', () => {
     })
   })
   it('handleAMTFeatureResponse enableSolDialog error', async () => {
-    component.amtFeatures = { userConsent: 'none', KVM: true, SOL: false, IDER: true, redirection: true, optInState: 0 }
+    component.amtFeatures = {
+      userConsent: 'none',
+      KVM: true,
+      SOL: false,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0
+    }
     spyOn(component, 'enableSolDialog').and.returnValue(throwError(new Error('err')))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       error: () => {
@@ -288,7 +329,15 @@ describe('SolComponent', () => {
   })
   it('handleAMTFeatureResponse cancel enableSol', (done) => {
     const cancelEnableSolResponseSpy = spyOn(component, 'cancelEnableSolResponse')
-    component.amtFeatures = { userConsent: 'none', KVM: true, SOL: false, IDER: true, redirection: true, optInState: 0 }
+    component.amtFeatures = {
+      userConsent: 'none',
+      KVM: true,
+      SOL: false,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0
+    }
     spyOn(component, 'enableSolDialog').and.returnValue(of(false))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: (results) => {
@@ -299,7 +348,15 @@ describe('SolComponent', () => {
     })
   })
   it('handleAMTFeatureResponse enableSol', (done) => {
-    component.amtFeatures = { userConsent: 'none', KVM: true, SOL: false, IDER: true, redirection: true, optInState: 0 }
+    component.amtFeatures = {
+      userConsent: 'none',
+      KVM: true,
+      SOL: false,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0
+    }
     spyOn(component, 'enableSolDialog').and.returnValue(of(true))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: () => {

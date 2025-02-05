@@ -45,6 +45,7 @@ export class GeneralComponent implements OnInit {
     KVM: false,
     SOL: false,
     IDER: false,
+    kvmAvailable: false,
     redirection: false,
     optInState: 0,
     userConsent: 'none'

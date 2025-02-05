@@ -1,32 +1,36 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center">
-    <mat-form-field style="margin-bottom: 0">
-      <mat-label>Choose encoding type</mat-label>
-      <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
-        @for (encode of encodings; track encode) {
-          <mat-option [value]="encode.value">
-            {{ encode.viewValue }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    @if (amtFeatures?.kvmAvailable) {
+      <mat-form-field style="margin-bottom: 0">
+        <mat-label>Choose encoding type</mat-label>
+          <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
+            @for (encode of encodings; track encode) {
+              <mat-option [value]="encode.value">
+                {{ encode.viewValue }}
+              </mat-option>
+            }
+        </mat-select>
+      </mat-form-field>
+    }
   </div>
   <div class="flex flex-50 justify-end">
-    <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
-      <mat-icon>fullscreen</mat-icon>Fullscreen
-    </button>
-    @if (deviceState === 0 && isLoading === false) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
-        <mat-icon>tv_on</mat-icon>Connect KVM
+    @if (amtFeatures?.kvmAvailable) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
+        <mat-icon>fullscreen</mat-icon>Fullscreen
       </button>
-    } @else if (deviceState !== 2 && isLoading === true) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
-        <mat-icon>tv_off</mat-icon>Connecting KVM...
-      </button>
-    } @else {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
-        <mat-icon>tv_off</mat-icon>Disconnect KVM
-      </button>
+      @if (deviceState === 0 && isLoading === false) {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+          <mat-icon>tv_on</mat-icon>Connect KVM
+        </button>
+      } @else if (deviceState !== 2 && isLoading === true) {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
+          <mat-icon>tv_off</mat-icon>Connecting KVM...
+        </button>
+      } @else {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+          <mat-icon>tv_off</mat-icon>Disconnect KVM
+        </button>
+      }
     }
     <button mat-flat-button color="primary" (click)="fileInput.click()">
       <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
@@ -42,7 +46,7 @@
 @if (isLoading) {
   <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
 }
-@if (readyToLoadKvm) {
+@if (readyToLoadKvm && amtFeatures?.kvmAvailable) {
   <amt-kvm
     class="kvm"
     [isFullscreen]="isFullscreen()"
