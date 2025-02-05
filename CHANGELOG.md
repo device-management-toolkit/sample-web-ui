@@ -1,3 +1,10 @@
+# [3.31.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.2...v3.31.0) (2025-02-05)
+
+
+### Features
+
+* enable support oauth 2.0 w/ PKCE ([3e47698](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3e476984f355a34eac455887987a7fe2e3b23712))
+
 ## [3.30.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.1...v3.30.2) (2025-02-04)
 
 
