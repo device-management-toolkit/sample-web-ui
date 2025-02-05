@@ -191,7 +191,7 @@ export class DeviceToolbarComponent implements OnInit {
             this.executePowerAction(action)
           }
         },
-        error: (error) => {
+        error: () => {
           this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
         },
         complete: () => {

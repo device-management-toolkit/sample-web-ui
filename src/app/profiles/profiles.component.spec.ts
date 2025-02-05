@@ -10,7 +10,6 @@ import { of } from 'rxjs'
 
 import { ProfilesComponent } from './profiles.component'
 import { ProfilesService } from './profiles.service'
-import { TlsModes } from './profiles.constants'
 import { RouterModule } from '@angular/router'
 
 describe('ProfilesComponent', () => {

@@ -413,7 +413,6 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        const requests: Observable<any>[] = []
         this.isLoading = true
         from(this.selectedDevices.selected)
           .pipe(

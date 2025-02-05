@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,

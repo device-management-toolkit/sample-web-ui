@@ -4,7 +4,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { DomainsService } from 'src/app/domains/domains.service'
 import { of } from 'rxjs'
-import { Domain } from 'src/models/models'
 
 describe('ExportDialogComponent', () => {
   let component: ExportDialogComponent

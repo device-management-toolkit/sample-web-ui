@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'

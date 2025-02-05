@@ -21,9 +21,6 @@ describe('DeviceToolbarComponent', () => {
   let sendDeactivateSpy: jasmine.Spy
   let sendDeactivateErrorSpy: jasmine.Spy
   let devicesService: jasmine.SpyObj<DevicesService>
-  let stopSpy: jasmine.Spy
-  let startSpy: jasmine.Spy
-  let connectSpy: jasmine.Spy
 
   beforeEach(async () => {
     devicesService = jasmine.createSpyObj('DevicesService', [

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
-import { catchError, Observable, tap, map, of } from 'rxjs'
+import { catchError, Observable, tap, of } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { AuditLogResponse, EventLog, EventLogResponse } from 'src/models/models'
 

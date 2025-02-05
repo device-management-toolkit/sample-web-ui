@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { of, throwError } from 'rxjs'
+import { of } from 'rxjs'
 import { EventLogComponent } from './event-log.component'
 import { DeviceLogService } from '../device-log.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { environment } from 'src/environments/environment'
 
 describe('EventLogComponent', () => {
@@ -17,34 +16,34 @@ describe('EventLogComponent', () => {
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
 
   // Sample responses for cloud and non-cloud modes
-  const mockData = {
-    records: [
-      {
-        DeviceAddress: 255,
-        EventSensorType: 15,
-        EventType: 1,
-        EventOffset: 2,
-        EventSourceType: 104,
-        EventSeverity: 8,
-        SensorNumber: 255,
-        Entity: 34,
-        EntityInstance: 0,
-        EventData: [
-          64,
-          19,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        EntityStr: 'BIOS',
-        Desc: 'Cloud Event'
-      }
-    ],
-    hasMoreRecords: false
-  }
+  // const mockData = {
+  //   records: [
+  //     {
+  //       DeviceAddress: 255,
+  //       EventSensorType: 15,
+  //       EventType: 1,
+  //       EventOffset: 2,
+  //       EventSourceType: 104,
+  //       EventSeverity: 8,
+  //       SensorNumber: 255,
+  //       Entity: 34,
+  //       EntityInstance: 0,
+  //       EventData: [
+  //         64,
+  //         19,
+  //         0,
+  //         0,
+  //         0,
+  //         0,
+  //         0,
+  //         0
+  //       ],
+  //       EntityStr: 'BIOS',
+  //       Desc: 'Cloud Event'
+  //     }
+  //   ],
+  //   hasMoreRecords: false
+  // }
 
   beforeEach(async () => {
     deviceLogServiceSpy = jasmine.createSpyObj('DeviceLogService', ['getEventLog', 'downloadEventLog'])
@@ -123,8 +122,6 @@ describe('EventLogComponent', () => {
   })
 
   describe('Download functionality', () => {
-    let originalCreateElement: any
-    let createElementSpy: jasmine.Spy
     let mockAnchor: any
     let urlCreateObjectURLSpy: jasmine.Spy
     let urlRevokeObjectURLSpy: jasmine.Spy
@@ -136,8 +133,7 @@ describe('EventLogComponent', () => {
         download: '',
         click: jasmine.createSpy('click')
       }
-      originalCreateElement = document.createElement
-      createElementSpy = spyOn(document, 'createElement').and.returnValue(mockAnchor)
+      spyOn(document, 'createElement').and.returnValue(mockAnchor)
       urlCreateObjectURLSpy = spyOn(window.URL, 'createObjectURL').and.returnValue('blob:url')
       urlRevokeObjectURLSpy = spyOn(window.URL, 'revokeObjectURL')
     })

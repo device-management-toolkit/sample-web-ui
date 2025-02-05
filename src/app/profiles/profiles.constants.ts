@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { DataWithCount, FormOption } from 'src/models/models'
+import { FormOption } from 'src/models/models'
 
 export const ActivationModes: FormOption<string>[] = [
   { value: 'acmactivate', label: 'Admin Control Mode' },

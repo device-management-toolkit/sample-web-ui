@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
@@ -94,11 +94,11 @@ export class AddDeviceEnterpriseComponent {
       device.tags = this.tags
       if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
         device.guid = this.deviceOrig.guid
-        this.deviceService.editDevice(device).subscribe((res) => {
+        this.deviceService.editDevice(device).subscribe(() => {
           this.dialog.close()
         })
       } else {
-        this.deviceService.addDevice(device).subscribe((res) => {
+        this.deviceService.addDevice(device).subscribe(() => {
           this.dialog.close()
         })
       }

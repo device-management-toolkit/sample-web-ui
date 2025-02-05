@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { inject, Injectable } from '@angular/core'
+import { inject } from '@angular/core'
 import { HttpErrorResponse, HttpResponse, HttpInterceptorFn } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 import { AuthService } from './auth.service'

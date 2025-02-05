@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AuditLogComponent } from './audit-log.component'

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core'
 import { NavigationStart, Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'

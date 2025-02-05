@@ -183,7 +183,7 @@ export class ConfigDetailComponent implements OnInit {
           })
         )
         .subscribe({
-          next: (data) => {
+          next: () => {
             this.snackBar.open(
               $localize`CIRA ${reqType} created successfully`,
               undefined,

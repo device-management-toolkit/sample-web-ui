@@ -126,7 +126,7 @@ export class WirelessComponent implements OnInit {
             })
           )
           .subscribe({
-            next: (data) => {
+            next: () => {
               this.getData(this.pageEvent)
               this.snackBar.open(
                 $localize`Configuration deleted successfully`,

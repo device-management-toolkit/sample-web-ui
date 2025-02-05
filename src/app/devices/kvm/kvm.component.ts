@@ -131,13 +131,13 @@ export class KvmComponent implements OnInit, OnDestroy {
       .subscribe()
 
     // used for receiving messages from the kvm connect button on the toolbar
-    this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe((data: boolean) => {
+    this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
       this.init()
       this.deviceKVMConnection.emit(true)
     })
 
     // used for receiving messages from the kvm disconnect button on the toolbar
-    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe((data: boolean) => {
+    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.isDisconnecting = true
       this.deviceKVMConnection.emit(false)
     })
@@ -196,7 +196,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   @HostListener('document:webkitfullscreenchange', ['$event'])
   @HostListener('document:mozfullscreenchange', ['$event'])
   @HostListener('document:MSFullscreenChange', ['$event'])
-  exitFullscreen(event: any): void {
+  exitFullscreen(): void {
     if (
       !document.fullscreenElement &&
       !(document as any).webkitIsFullScreen &&

@@ -128,7 +128,7 @@ export class DomainDetailComponent implements OnInit {
           })
         )
         .subscribe({
-          next: (data) => {
+          next: () => {
             this.snackBar.open(
               $localize`Domain profile ${reqType} successfully`,
               undefined,

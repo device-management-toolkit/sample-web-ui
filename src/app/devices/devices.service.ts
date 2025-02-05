@@ -14,7 +14,6 @@ import {
   Device,
   DataWithCount,
   DeviceStats,
-  EventLog,
   HardwareInformation,
   PageEventOptions,
   PowerState,

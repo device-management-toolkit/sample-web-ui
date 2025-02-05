@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { AfterViewInit, Component, Input, signal, ViewChild, inject } from '@angular/core'
-import { PageEvent, MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'

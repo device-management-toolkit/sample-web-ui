@@ -4,15 +4,15 @@
  **********************************************************************/
 
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, NavigationStart, RouterEvent, Router, RouterModule } from '@angular/router'
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
-import { Device, UserConsentResponse } from 'src/models/models'
+import { Device } from 'src/models/models'
 import { UserConsentService } from '../user-consent.service'
 import { IDERComponent, KVMComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
 

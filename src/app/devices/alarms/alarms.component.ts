@@ -182,7 +182,7 @@ export class AlarmsComponent implements OnInit {
       .deleteAlarmOccurrence(this.deviceId, instanceID)
       .pipe(finalize(() => {}))
       .subscribe({
-        next: (results) => {
+        next: () => {
           this.loadAlarms()
         },
         error: (err) => {
@@ -214,7 +214,7 @@ export class AlarmsComponent implements OnInit {
           })
         )
         .subscribe({
-          next: (results) => {
+          next: () => {
             this.loadAlarms()
           },
           error: (err) => {

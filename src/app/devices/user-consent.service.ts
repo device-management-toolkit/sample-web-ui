@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, finalize, switchMap } from 'rxjs/operators'
+import { catchError, switchMap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DeviceUserConsentComponent } from './device-user-consent/device-user-consent.component'

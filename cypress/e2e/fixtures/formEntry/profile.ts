@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { ActivationModes, TlsModes, UserConsentModes } from '../../../../src/app/profiles/profiles.constants'
+import { ActivationModes, TlsModes } from '../../../../src/app/profiles/profiles.constants'
 import { wirelessFixtures } from './wireless'
 import { ciraConfig } from '../api/cira'
 

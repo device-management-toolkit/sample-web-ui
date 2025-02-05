@@ -4,7 +4,6 @@ import { DomainsService } from './domains.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { DataWithCount, Domain, PageEventOptions } from 'src/models/models'
-import { of, throwError } from 'rxjs'
 
 describe('DomainsService', () => {
   let service: DomainsService

@@ -20,7 +20,6 @@ describe('ExplorerComponent', () => {
   let component: ExplorerComponent
   let fixture: ComponentFixture<ExplorerComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let activatedRouteSpy: jasmine.SpyObj<ActivatedRoute>
 
   beforeEach(async () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
@@ -36,8 +35,6 @@ describe('ExplorerComponent', () => {
       'getWsmanOperations',
       'executeExplorerCall'
     ])
-
-    activatedRouteSpy = jasmine.createSpyObj('ActivatedRoute', ['params'])
 
     await TestBed.configureTestingModule({
       imports: [

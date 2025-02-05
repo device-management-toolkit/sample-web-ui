@@ -297,7 +297,7 @@ export interface HardwareInformation {
 }
 
 export interface DiskResponse<T> {
-  responses: any
+  responses: T | any
 }
 
 export interface DiskInformation {

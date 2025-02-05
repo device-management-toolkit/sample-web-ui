@@ -9,7 +9,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { IEEE8021xService } from '../ieee8021x.service'
 import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
-import * as IEEE8021x from 'src/app/ieee8021x/ieee8021x.constants'
 import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xConfig } from 'src/models/models'
 

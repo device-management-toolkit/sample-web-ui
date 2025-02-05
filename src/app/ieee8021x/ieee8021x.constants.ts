@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { DataWithCount, FormOption } from '../../models/models'
+import { FormOption } from '../../models/models'
 
 // AMT Authentication ProtocoL
 // https://software.intel.com/sites/manageability/AMT_Implementation_and_Reference_Guide/HTMLDocuments/WS-Management_Class_Reference/AMT_8021XProfile.htm

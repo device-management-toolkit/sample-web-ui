@@ -26,7 +26,6 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, PowerState, UserConsentRespons
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
 import { SOLComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
-import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
@@ -111,13 +110,13 @@ export class SolComponent implements OnInit, OnDestroy {
       .subscribe()
 
     // used for receiving messages from the sol connect button on the toolbar
-    this.startSocketSubscription = this.devicesService.startwebSocket.subscribe((data: boolean) => {
+    this.startSocketSubscription = this.devicesService.startwebSocket.subscribe(() => {
       this.init()
       this.deviceConnection.emit(true)
     })
 
     // used for receiving messages from the sol disconnect button on the toolbar
-    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe((data: boolean) => {
+    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.isDisconnecting = true
       this.deviceConnection.emit(false)
     })

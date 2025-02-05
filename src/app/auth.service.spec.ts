@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
-import { MPSVersion, RPSVersion, ValidatorError } from 'src/models/models'
+import { MPSVersion, RPSVersion } from 'src/models/models'
 
 describe('AuthService', () => {
   let service: AuthService

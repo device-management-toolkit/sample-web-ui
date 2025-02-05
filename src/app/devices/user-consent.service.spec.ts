@@ -15,7 +15,6 @@ describe('UserConsentService', () => {
   let snackBar: jasmine.SpyObj<MatSnackBar>
   let reqUserConsentCodeSpy: jasmine.Spy
   let cancelUserConsentCodeSpy: jasmine.Spy
-  let optInCodeResponseSpy: jasmine.Spy
   let userConsentResponse: UserConsentResponse
   let userConsentData: UserConsentData
   let displayErrorSpy: jasmine.Spy

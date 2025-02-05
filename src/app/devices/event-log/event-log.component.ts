@@ -9,14 +9,14 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { EventLog, EventLogResponse } from 'src/models/models'
+import { EventLog } from 'src/models/models'
 import { MomentModule } from 'ngx-moment'
-import { MatCard, MatCardContent, MatCardHeader, MatCardModule, MatCardTitle } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
 import { MatButtonModule } from '@angular/material/button'
 import { DeviceLogService } from '../device-log.service'
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
 
 type EventTypeMap = Record<number, string>
@@ -81,7 +81,7 @@ export class EventLogComponent implements AfterViewInit {
       this.deviceLogService
         .getEventLog(this.deviceId)
         .pipe(
-          catchError((err) => {
+          catchError(() => {
             this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
             return of({ records: [], hasMoreRecords: true })
           }),
@@ -102,7 +102,7 @@ export class EventLogComponent implements AfterViewInit {
     this.deviceLogService
       .getEventLog(this.deviceId, startIndex, this.pageSize)
       .pipe(
-        catchError((err) => {
+        catchError(() => {
           this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
           return of({ records: [], hasMoreRecords: true })
         }),
