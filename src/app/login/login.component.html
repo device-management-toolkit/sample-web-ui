@@ -9,43 +9,61 @@
       <div [hidden]="isLoading === false">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-card-content class="flex-row flex-wrap">
-          <mat-form-field class="flex flex-1">
-            <input formControlName="userId" matInput name="userId" placeholder="Username">
-            <mat-error i18n=@@field.required>This field is required</mat-error>
-          </mat-form-field>
-          <mat-form-field class="flex flex-1">
-            <input formControlName="password" [type]="loginPassInputType" matInput name="Password" placeholder="Password" minlength="7">
-            <mat-error i18n=@@field.required>This field is required</mat-error>
-            <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleLoginPassVisibility()">
-              @if (loginPassInputType !== 'text') {
-                <mat-icon>visibility</mat-icon>
-              } @else {
-                <mat-icon>visibility_off</mat-icon>
+      @if (!useOAuth) {
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-card-content class="flex-row flex-wrap">
+            <mat-form-field class="flex flex-1">
+              <input formControlName="userId" matInput name="userId" placeholder="Username" />
+              <mat-error i18n="@@field.required">This field is required</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex flex-1">
+              <input
+                formControlName="password"
+                [type]="loginPassInputType"
+                matInput
+                name="Password"
+                placeholder="Password"
+                minlength="7" />
+              <mat-error i18n="@@field.required">This field is required</mat-error>
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                matTooltip="Show / Hide Password"
+                (click)="toggleLoginPassVisibility()">
+                @if (loginPassInputType !== 'text') {
+                  <mat-icon>visibility</mat-icon>
+                } @else {
+                  <mat-icon>visibility_off</mat-icon>
+                }
+              </button>
+            </mat-form-field>
+            <div class="flex flex-1 justify-center">
+              @if (errorMessage !== '') {
+                <mat-chip-listbox>
+                  <mat-chip-option color="accent">{{ errorMessage }}</mat-chip-option>
+                </mat-chip-listbox>
               }
-            </button>
-          </mat-form-field>
-          <div class="flex flex-1 justify-center">
-            @if (errorMessage !== '') {
-              <mat-chip-listbox>
-                <mat-chip-option color="accent">{{ errorMessage }}</mat-chip-option>
-              </mat-chip-listbox>
-            }
-          </div>
-        </mat-card-content>
-        <mat-card-actions class="flex-row">
-          <div class="flex flex-1 justify-center">
-            <button id="btnLogin" type="submit" mat-flat-button color="primary">
-              <span i18n>LOG IN</span>
-              <span class="glyphicon glyphicon-log-in padding10L"></span>
-            </button>
-          </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="flex-row">
+            <div class="flex flex-1 justify-center">
+              <button id="btnLogin" type="submit" mat-flat-button color="primary">
+                <span i18n>LOG IN</span>
+                <span class="glyphicon glyphicon-log-in padding10L"></span>
+              </button>
+            </div>
+          </mat-card-actions>
+        </form>
+      } @else {
+        <mat-card-content> </mat-card-content>
+        <mat-card-actions style="margin: 0 auto; padding: 24px 0">
+          <button mat-flat-button color="primary" type="button" (click)="oauthLogin()">Login w/ SSO</button>
         </mat-card-actions>
-      </form>
+      }
       <mat-card-footer>
-        <div style="margin:12px">
-          <div> © {{currentYear}} Intel Corporation </div>
+        <div style="margin: 12px">
+          <div>© {{ currentYear }} Intel Corporation</div>
         </div>
       </mat-card-footer>
     </mat-card>

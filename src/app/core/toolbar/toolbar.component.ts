@@ -42,7 +42,7 @@ export class ToolbarComponent implements OnInit {
   public mpsVersions?: MPSVersion
 
   ngOnInit(): void {
-    this.authService.loggedInSubject.subscribe((value: any) => {
+    this.authService.loggedInSubject$.subscribe((value: any) => {
       this.isLoggedIn = value
       if (this.isLoggedIn && environment.cloud) {
         this.authService.getMPSVersion().subscribe({

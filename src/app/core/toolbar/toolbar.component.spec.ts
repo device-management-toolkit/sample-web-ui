@@ -30,7 +30,7 @@ describe('ToolbarComponent', () => {
     getRPSVersionSpy = authService.getRPSVersion.and.returnValue(of({}))
     // getConsoleVersionSpy = authService.getConsoleVersion.and.returnValue(of({}))
     const authServiceStub = {
-      loggedInSubject: new BehaviorSubject<boolean>(true)
+      loggedInSubject$: new BehaviorSubject<boolean>(true)
     }
 
     await TestBed.configureTestingModule({
@@ -76,7 +76,7 @@ describe('ToolbarComponent', () => {
   })
 
   it('should subscribe to loggedInSubject on init', () => {
-    component.authService.loggedInSubject.next(true)
+    component.authService.loggedInSubject$.next(true)
     fixture.detectChanges()
     expect(component.isLoggedIn).toBeTruthy()
   })

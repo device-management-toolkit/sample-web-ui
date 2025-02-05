@@ -28,6 +28,7 @@ import {
   MatCardActions,
   MatCardFooter
 } from '@angular/material/card'
+import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
   selector: 'app-login',
@@ -61,19 +62,32 @@ export class LoginComponent {
   router = inject(Router)
   fb = inject(FormBuilder)
   authService = inject(AuthService)
+  oauthService
 
   public loginForm: FormGroup
   public currentYear = new Date().getFullYear()
   public isLoading = false
   public errorMessage = ''
   public loginPassInputType = 'password'
+  public useOAuth = environment.useOAuth
+
   constructor() {
+    if (environment.useOAuth) {
+      this.oauthService = inject(OAuthService)
+    }
     const fb = this.fb
 
     this.loginForm = fb.group({
       userId: [null, Validators.required],
       password: [null, Validators.required]
     })
+    if (environment.useOAuth) {
+      if (environment.auth == null) {
+        console.error('auth config not set but oauth=true')
+
+        return
+      }
+    }
   }
 
   onSubmit(): void {
@@ -84,13 +98,13 @@ export class LoginComponent {
         .login(result.userId, result.password)
         .subscribe({
           complete: () => {
-            this.router.navigate([''])
-
             const storedValue = localStorage.getItem('doNotShowAgain')
             const doNotShowNotice = storedValue ? JSON.parse(storedValue) : false
             if (!doNotShowNotice && environment.cloud) {
               this.dialog.open(AboutComponent)
             }
+
+            this.router.navigate([''])
           },
           error: (err) => {
             if (err.status === 405 || err.status === 401) {
@@ -98,13 +112,15 @@ export class LoginComponent {
             } else {
               this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
             }
-          },
-          next: () => {}
+          }
         })
         .add(() => {
           this.isLoading = false
         })
     }
+  }
+  oauthLogin(): void {
+    this.oauthService?.initCodeFlow()
   }
 
   toggleLoginPassVisibility(): void {

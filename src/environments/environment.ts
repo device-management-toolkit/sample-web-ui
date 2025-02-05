@@ -10,9 +10,18 @@
 export const environment = {
   production: false,
   cloud: true,
+  useOAuth: false, // for use with console
   mpsServer: 'http://localhost:3000',
   rpsServer: 'http://localhost:8081',
-  vault: 'http://localhost/vault'
+  vault: 'http://localhost/vault',
+  auth: {
+    clientId: '',
+    issuer: '',
+    redirectUri: 'http://localhost:4200/dashboard',
+    scope: '',
+    responseType: 'code',
+    requireHttps: true // set to false when local
+  }
 }
 
 /*
