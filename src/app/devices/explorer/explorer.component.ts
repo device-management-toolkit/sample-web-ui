@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { DevicesService } from '../devices.service'
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2'
+import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { MatSelectModule } from '@angular/material/select'
@@ -34,6 +34,14 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
     MatAutocompleteModule,
     FormsModule,
     AsyncPipe
+  ],
+  providers: [
+    {
+      provide: NGX_MONACO_EDITOR_CONFIG,
+      useValue: {
+        onMonacoLoad: () => {}
+      }
+    }
   ],
   templateUrl: './explorer.component.html',
   styleUrl: './explorer.component.scss'

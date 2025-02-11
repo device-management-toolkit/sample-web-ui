@@ -52,6 +52,7 @@ describe('UserConsentService', () => {
     expect(service).toBeTruthy()
   })
   it('should handle user consent response correctly', (done) => {
+    environment.cloud = true
     const mockDialogData: UserConsentData = {
       deviceId: 'test-guid',
       results: userConsentResponse
