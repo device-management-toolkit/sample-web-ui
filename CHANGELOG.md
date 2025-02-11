@@ -1,3 +1,10 @@
+## [3.31.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.1...v3.31.2) (2025-02-11)
+
+
+### Bug Fixes
+
+* add NGX_MONACO_EDITOR_CONFIG provider to ExplorerComponent ([063b087](https://github.com/device-management-toolkit/sample-web-ui/commit/063b0876fc02727dfbe7e0ce721d72a7e118110f))
+
 ## [3.31.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.31.0...v3.31.1) (2025-02-05)
 
 
