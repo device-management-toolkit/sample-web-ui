@@ -34,7 +34,7 @@
     "@xterm/xterm": "^5.5.0",
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "moment": "^2.30.1",
     "monaco-editor": "^0.52.2",
     "ngx-moment": "^6.0.2",
