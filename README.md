@@ -9,11 +9,11 @@
 
 > Disclaimer: Production viable releases are tagged and listed under 'Releases'. All other check-ins should be considered 'in-development' and should not be used in production
 
-The Sample Web UI provides a reference UI solution to help demonstrate the core APIs and features of the Open AMT Cloud Toolkit. Use it to help troubleshoot or try out new release features. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+The Sample Web UI provides a reference UI solution to help demonstrate the core APIs and features of the Device Management Toolkit. Use it to help troubleshoot or try out new release features. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
 <br><br>
 
-**For detailed documentation** about Getting Started or other features of the Open AMT Cloud Toolkit, see the [docs](https://open-amt-cloud-toolkit.github.io/docs/).
+**For detailed documentation** about Getting Started or other features of the Device Management Toolkit, see the [docs](https://device-management-toolkit.github.io/docs/).
 
 <br>
 
@@ -41,11 +41,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Additional Resources
 
-- For detailed documentation and Getting Started, [visit the docs site](https://open-amt-cloud-toolkit.github.io/docs).
+- For detailed documentation and Getting Started, [visit the docs site](https://device-management-toolkit.github.io/docs).
 
 - Looking to contribute? [Find more information here about contribution guidelines and practices](.\CONTRIBUTING.md).
 
-- Find a bug? Or have ideas for new features? [Open a new Issue](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues).
+- Find a bug? Or have ideas for new features? [Open a new Issue](https://github.com/device-management-toolkit/sample-web-ui/issues).
 
 - Need additional support or want to get the latest news and events about Open AMT? Connect with the team directly through Discord.
 

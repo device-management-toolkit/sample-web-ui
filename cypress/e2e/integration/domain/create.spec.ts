@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-// https://open-amt-cloud-toolkit.github.io/docs/1.1/General/createProfileACM/
-
 import { domains } from 'cypress/e2e/fixtures/api/domain'
 import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
