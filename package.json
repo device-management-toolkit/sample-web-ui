@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "3.31.2",
+  "version": "3.31.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
