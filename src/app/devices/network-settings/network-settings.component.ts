@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list'
 import { MatIcon } from '@angular/material/icon'
 import { MatDivider } from '@angular/material/divider'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { NetworkConfig } from 'src/models/models'
 
 @Component({
   selector: 'app-network-settings',
@@ -28,7 +29,7 @@ export class NetworkSettingsComponent implements OnInit {
   @Input()
   public deviceId = ''
   isLoading = true
-  public networkResults?: any
+  public networkResults?: NetworkConfig
   ngOnInit(): void {
     this.devicesService
       .getNetworkSettings(this.deviceId)

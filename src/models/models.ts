@@ -347,6 +347,98 @@ export interface RedirectionToken {
   token: string
 }
 
+export interface Certificates {
+  profileAssociation: any
+  certificates: any
+  publicKeys: any
+}
+interface Ieee8021x {
+  enabled: string
+  availableInS0: boolean
+  pxeTimeout: number
+}
+
+export interface TLSSettings {
+  ElementName: string
+  InstanceID: string
+  MutualAuthentication: boolean
+  Enabled: boolean
+  AcceptNonSecureConnections: boolean
+  NonSecureConnectionsSupported: boolean
+}
+
+interface WiFiPortConfigService {
+  requestedState: number
+  enabledState: number
+  healthState: number
+  elementName: string
+  systemCreationClassName: string
+  systemName: string
+  creationClassName: string
+  name: string
+  localProfileSynchronizationEnabled: number
+  lastConnectedSsidUnderMeControl: string
+  noHostCsmeSoftwarePolicy: number
+  uefiWiFiProfileShareEnabled: boolean
+}
+
+interface WiredNetworkSettings {
+  elementName: string
+  instanceID: string
+  vlanTag: number
+  sharedMAC: boolean
+  macAddress: string
+  linkIsUp: boolean
+  linkPolicy: string[]
+  linkPreference: string
+  linkControl: string
+  sharedStaticIP: boolean
+  sharedDynamicIP: boolean
+  ipSyncEnabled: boolean
+  dhcpEnabled: boolean
+  ipAddress: string
+  subnetMask: string
+  defaultGateway: string
+  primaryDNS: string
+  secondaryDNS: string
+  physicalConnectionType: string
+  physicalNICMedium: string
+  ieee8021x: Ieee8021x
+}
+
+interface WirelessNetworkSettings {
+  elementName: string
+  instanceID: string
+  vlanTag: number
+  sharedMAC: boolean
+  macAddress: string
+  linkIsUp: boolean
+  linkPolicy: string[]
+  linkPreference: string
+  linkControl: string
+  sharedStaticIP: boolean
+  sharedDynamicIP: boolean
+  ipSyncEnabled: boolean
+  dhcpEnabled: boolean
+  ipAddress: string
+  subnetMask: string
+  defaultGateway: string
+  primaryDNS: string
+  secondaryDNS: string
+  consoleTCPMaxRetransmissions: number
+  wlanLinkProtectionLevel: string
+  physicalConnectionType: string
+  physicalNICMedium: string
+  wifiNetworks: any[]
+  ieee8021xSettings: any[]
+  wifiPortConfigService: WiFiPortConfigService
+}
+
+export interface NetworkConfig {
+  wired: WiredNetworkSettings
+  wireless: WirelessNetworkSettings
+}
+
 export interface RedirectionStatus {
   isKVMConnected: boolean
   isSOLConnected: boolean

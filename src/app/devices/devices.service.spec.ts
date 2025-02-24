@@ -751,7 +751,7 @@ describe('DevicesService', () => {
 
   describe('getCertificates', () => {
     it('should fetch certificates for a device', () => {
-      const mockResponse = [{ certificate: 'cert1' }, { certificate: 'cert2' }]
+      const mockResponse = { profileAssociation: '', certificates: '', publicKeys: '' }
 
       service.getCertificates('guid1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
@@ -778,7 +778,7 @@ describe('DevicesService', () => {
 
   describe('getNetworkSettings', () => {
     it('should fetch network settings for a device', () => {
-      const mockResponse = { ip: '192.168.0.1' }
+      const mockResponse = { ip: '192.168.0.1' } as any
 
       service.getNetworkSettings('guid1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
@@ -805,7 +805,7 @@ describe('DevicesService', () => {
 
   describe('getTLSSettings', () => {
     it('should fetch TLS settings for a device', () => {
-      const mockResponse = { tlsEnabled: true }
+      const mockResponse = { tlsEnabled: true } as any
 
       service.getTLSSettings('guid1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
