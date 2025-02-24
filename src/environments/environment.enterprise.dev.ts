@@ -6,7 +6,9 @@
 export const environment = {
   production: false,
   cloud: false,
+  useOAuth: false, // for use with console
   mpsServer: 'http://localhost:8181',
   rpsServer: 'http://localhost:8181',
-  vault: ''
+  vault: '',
+  auth: {}
 }

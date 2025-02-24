@@ -23,7 +23,10 @@ import {
   AMTFeaturesRequest,
   DiskInformation,
   IPSAlarmClockOccurrenceInput,
-  IPSAlarmClockOccurrence
+  IPSAlarmClockOccurrence,
+  Certificates,
+  NetworkConfig,
+  TLSSettings
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -471,7 +474,7 @@ export class DevicesService {
     )
   }
 
-  getCertificates(guid: string): Observable<any> {
+  getCertificates(guid: string): Observable<Certificates> {
     return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}`).pipe(
       catchError((err) => {
         throw err
@@ -479,14 +482,14 @@ export class DevicesService {
     )
   }
 
-  getNetworkSettings(guid: string): Observable<any> {
+  getNetworkSettings(guid: string): Observable<NetworkConfig> {
     return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/networkSettings/${guid}`).pipe(
       catchError((err) => {
         throw err
       })
     )
   }
-  getTLSSettings(guid: string): Observable<any> {
+  getTLSSettings(guid: string): Observable<TLSSettings[]> {
     return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/tls/${guid}`).pipe(
       catchError((err) => {
         throw err
