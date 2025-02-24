@@ -69,6 +69,7 @@ export class GeneralComponent implements OnInit {
     'all'
   ]
   public generalSettings: any = {}
+  public ocrState: number = 0
 
   constructor() {
     const fb = this.fb
@@ -102,6 +103,12 @@ export class GeneralComponent implements OnInit {
           this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
+      ),
+      bootServices: this.devicesService.getBootService(this.deviceId).pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error retrieving Boot Services`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        })
       )
     })
       .pipe(
@@ -129,9 +136,10 @@ export class GeneralComponent implements OnInit {
           optInState: results.amtFeatures.optInState,
           redirection: results.amtFeatures.redirection
         })
+        this.ocrState = results.bootServices?.Enabled
       })
   }
-
+  
   setAmtFeatures(): void {
     this.isLoading = true
     this.devicesService
@@ -156,6 +164,16 @@ export class GeneralComponent implements OnInit {
       })
   }
 
+  decodeOCRStatus(state:number):string{
+    switch(state){
+      case 32769:
+      return "Enabled"
+      case 32768:
+      return "Disabled"
+      default:
+      return "Unknown"
+    }
+  }
   parseProvisioningMode(mode: number): string {
     switch (mode) {
       case 1:

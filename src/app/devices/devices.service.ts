@@ -516,4 +516,12 @@ export class DevicesService {
       })
     )
   }
+
+  getBootService(guid: string): Observable<any> {
+    return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/power/bootService/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
 }
