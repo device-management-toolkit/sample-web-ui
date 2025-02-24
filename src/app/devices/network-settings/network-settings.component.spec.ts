@@ -20,7 +20,7 @@ describe('NetworkSettingsComponent', () => {
           wifiNetworks: [],
           ieee8021xSettings: []
         }
-      })
+      } as any)
     )
     await TestBed.configureTestingModule({
       imports: [NetworkSettingsComponent],
