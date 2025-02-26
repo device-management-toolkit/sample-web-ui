@@ -1,3 +1,10 @@
+# [3.32.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.3...v3.32.0) (2025-02-26)
+
+
+### Features
+
+* **docker:** enable multiarch build ([4c10c0b](https://github.com/device-management-toolkit/sample-web-ui/commit/4c10c0bf45e8b4c64497e8e0d911d2e91a65e6f1))
+
 ## [3.31.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.2...v3.31.3) (2025-02-21)
 
 ## [3.31.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.1...v3.31.2) (2025-02-11)
