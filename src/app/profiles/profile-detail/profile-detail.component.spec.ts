@@ -17,6 +17,7 @@ import { Profile } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
+import { environment } from 'src/environments/environment'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -470,6 +471,7 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should adjust related fields on selecting activation mode', () => {
+    environment.cloud = true
     component.activationChange('ccmactivate')
     expect(component.profileForm.controls.generateRandomMEBxPassword.disabled).toBe(true)
     expect(component.profileForm.controls.userConsent.disabled).toBe(true)
