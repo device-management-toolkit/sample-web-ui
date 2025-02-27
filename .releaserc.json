@@ -27,8 +27,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "docker buildx build --platform linux/amd64,linux/arm64 -t vprodemo.azurecr.io/webui:v${nextRelease.version} -t vprodemo.azurecr.io/webui:latest -t docker.io/intel/oact-webui:v${nextRelease.version} -t docker.io/intel/oact-webui:latest .",
-        "publishCmd": "docker push vprodemo.azurecr.io/webui:v${nextRelease.version} && docker push vprodemo.azurecr.io/webui:latest && docker push docker.io/intel/oact-webui:latest && docker push docker.io/intel/oact-webui:v${nextRelease.version}"
+        "publishCmd": "docker buildx build --platform linux/amd64,linux/arm64 --push -t vprodemo.azurecr.io/webui:v${nextRelease.version} -t vprodemo.azurecr.io/webui:latest -t docker.io/intel/oact-webui:v${nextRelease.version} -t docker.io/intel/oact-webui:latest ."
       }
     ],
     "@semantic-release/git"
