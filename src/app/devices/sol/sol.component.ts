@@ -221,7 +221,9 @@ export class SolComponent implements OnInit, OnDestroy {
             userConsent: this.amtFeatures?.userConsent ?? '',
             enableKVM: this.amtFeatures?.KVM ?? false,
             enableSOL: true,
-            enableIDER: this.amtFeatures?.IDER ?? false
+            enableIDER: this.amtFeatures?.IDER ?? false,
+            ocr: this.amtFeatures?.ocr ?? false,
+            remoteErase: this.amtFeatures?.remoteErase ?? false
           }
           return this.devicesService.setAmtFeatures(this.deviceId, payload)
         }
