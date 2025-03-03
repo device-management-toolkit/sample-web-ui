@@ -30,7 +30,7 @@
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
     "@angular/router": "~19.2.0",
-    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^9.1.0",
+    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^9.1.1",
     "@xterm/xterm": "^5.5.0",
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
