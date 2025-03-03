@@ -26,7 +26,8 @@ import {
   IPSAlarmClockOccurrence,
   Certificates,
   NetworkConfig,
-  TLSSettings
+  TLSSettings,
+  CertInfo
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -283,11 +284,12 @@ export class DevicesService {
     )
   }
 
-  sendPowerAction(deviceId: string, action: number, useSOL = false): Observable<any> {
+  sendPowerAction(deviceId: string, action: number, useSOL = false, value: string = ''): Observable<any> {
     const payload = {
       method: 'PowerAction',
       action,
-      useSOL
+      useSOL,
+      value
     }
 
     const url: string =
@@ -382,7 +384,9 @@ export class DevicesService {
       userConsent: 'none',
       enableKVM: true,
       enableSOL: true,
-      enableIDER: true
+      enableIDER: true,
+      ocr: true,
+      remoteErase: true
     }
   ): Observable<AMTFeaturesResponse> {
     return this.http
@@ -514,6 +518,13 @@ export class DevicesService {
   }
   deleteDeviceCertificate(guid: string): Observable<any> {
     return this.http.delete<any>(`${environment.mpsServer}/api/v1/devices/cert/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+  addCertificate(guid: string, certInfo: CertInfo): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}`, certInfo).pipe(
       catchError((err) => {
         throw err
       })

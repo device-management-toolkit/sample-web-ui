@@ -9,6 +9,9 @@ import { DevicesService } from '../devices.service'
 
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { CertInfo } from 'src/models/models'
+import { AddCertComponent } from './add-cert/add-cert.component'
 
 @Component({
   selector: 'app-certificates',
@@ -23,11 +26,16 @@ import { MatSnackBar } from '@angular/material/snack-bar'
   styleUrl: './certificates.component.scss'
 })
 export class CertificatesComponent implements OnInit {
+  private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   snackBar = inject(MatSnackBar)
 
   public isLoading = true
   public certInfo?: any
+  public addCert: CertInfo = {
+    cert: '',
+    isTrustedRoot: false
+  }
 
   @Input()
   public deviceId = ''
@@ -76,5 +84,44 @@ export class CertificatesComponent implements OnInit {
     }
 
     return true
+  }
+
+  openAddCertDialog(): void {
+    this.isLoading = true
+
+    const dialogRef = this.dialog.open(AddCertComponent, {
+      width: '400px',
+      disableClose: false
+    })
+
+    dialogRef.afterClosed().subscribe((addCert: CertInfo) => {
+      if (!addCert) {
+        this.isLoading = false
+        return
+      }
+      addCert.isTrustedRoot = true
+      if (addCert?.cert != '') {
+        this.addCertificate(addCert)
+      }
+      this.isLoading = false
+    })
+
+  }
+
+  addCertificate(addCert: CertInfo): void {
+    this.devicesService
+      .addCertificate(this.deviceId, addCert)
+      .pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error adding certificate`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe(() => {
+        this.ngOnInit()
+      })
   }
 }
