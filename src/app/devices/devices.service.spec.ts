@@ -79,7 +79,12 @@ describe('DevicesService', () => {
         kvmAvailable: true,
         KVM: true,
         SOL: true,
-        IDER: true
+        IDER: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       }
 
       service.getAMTFeatures('device1').subscribe((response) => {
@@ -468,9 +473,24 @@ describe('DevicesService', () => {
         IDER: true,
         kvmAvailable: true,
         userConsent: 'all',
-        optInState: 1
+        optInState: 1,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       }
-      const payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }
+      const payload = {
+        userConsent: 'none',
+        enableKVM: true,
+        enableSOL: true,
+        enableIDER: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
+      }
 
       service.setAmtFeatures('device1', payload).subscribe((response) => {
         expect(response).toEqual(mockResponse)

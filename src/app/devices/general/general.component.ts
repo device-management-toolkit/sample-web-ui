@@ -48,7 +48,12 @@ export class GeneralComponent implements OnInit {
     kvmAvailable: false,
     redirection: false,
     optInState: 0,
-    userConsent: 'none'
+    userConsent: 'none',
+    ocr: false,
+    httpsBootSupported: false,
+    winREBootSupported: false,
+    localPBABootSupported: false,
+    remoteErase: false
   }
   public hwInfo?: HardwareInformation
   public amtEnabledFeatures: FormGroup
@@ -69,6 +74,7 @@ export class GeneralComponent implements OnInit {
     'all'
   ]
   public generalSettings: any = {}
+  public isCloudMode: boolean = environment.cloud
 
   constructor() {
     const fb = this.fb
@@ -79,7 +85,10 @@ export class GeneralComponent implements OnInit {
       enableSOL: false,
       userConsent: [{ value: 'none', disabled: this.isDisabled }],
       optInState: 0,
-      redirection: false
+      redirection: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false
     })
   }
 
@@ -127,7 +136,13 @@ export class GeneralComponent implements OnInit {
           enableSOL: results.amtFeatures.SOL,
           userConsent: [{ value: results.amtFeatures.userConsent, disabled: this.isDisabled }],
           optInState: results.amtFeatures.optInState,
-          redirection: results.amtFeatures.redirection
+          redirection: results.amtFeatures.redirection,
+          httpsBootSupported: [
+            {
+              value: results.amtFeatures.ocr && results.amtFeatures.httpsBootSupported,
+              disabled: !results.amtFeatures.httpsBootSupported
+            }
+          ]
         })
       })
   }
