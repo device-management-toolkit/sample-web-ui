@@ -1,3 +1,10 @@
+## [3.32.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.0...v3.32.1) (2025-03-04)
+
+
+### Bug Fixes
+
+* profile error messages truncated ([e8c3c25](https://github.com/device-management-toolkit/sample-web-ui/commit/e8c3c25da4759c93a58a0985842c3964da220a5e)), closes [#2486](https://github.com/device-management-toolkit/sample-web-ui/issues/2486)
+
 # [3.32.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.3...v3.32.0) (2025-02-26)
 
 
