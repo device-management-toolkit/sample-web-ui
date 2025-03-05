@@ -27,7 +27,7 @@ import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field'
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
 import { MatIcon } from '@angular/material/icon'
-import { MatList, MatListItem } from '@angular/material/list'
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
 import { MatCard, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
@@ -57,7 +57,9 @@ import { IEEE8021xConfig } from 'src/models/models'
     MatSelect,
     MatOption,
     MatCardActions,
-    MatButton
+    MatButton,
+    MatListItemIcon,
+    MatListItemTitle
   ]
 })
 export class IEEE8021xDetailComponent implements OnInit {
