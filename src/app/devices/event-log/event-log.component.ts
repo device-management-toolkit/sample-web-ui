@@ -10,7 +10,6 @@ import { of } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { EventLog } from 'src/models/models'
-import { MomentModule } from 'ngx-moment'
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
@@ -18,6 +17,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { DeviceLogService } from '../device-log.service'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
+import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
+import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -36,9 +37,10 @@ const EVENTTYPEMAP: EventTypeMap = {
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-    MomentModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    AmTimeAgoFormatterPipe,
+    AmDateFormatterPipe
   ]
 })
 export class EventLogComponent implements AfterViewInit {
