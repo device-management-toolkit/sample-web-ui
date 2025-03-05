@@ -15,3 +15,12 @@ mat-sidenav-container {
 .mat-checkbox-inner-container {
   margin-top: 5px !important;
 }
+
+.error-messages-container.mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-one-line {
+  height: auto;
+  padding: 10px 0;
+}
+
+.error-messages.mdc-list-item__primary-text {
+  white-space: break-spaces;
+}

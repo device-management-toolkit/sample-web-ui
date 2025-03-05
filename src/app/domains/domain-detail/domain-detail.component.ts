@@ -16,7 +16,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
 import { MatIcon } from '@angular/material/icon'
-import { MatList, MatListItem } from '@angular/material/list'
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
 import {
   MatCard,
   MatCardHeader,
@@ -52,7 +52,9 @@ import { MatToolbar } from '@angular/material/toolbar'
     MatIconButton,
     MatSuffix,
     MatTooltip,
-    MatCardActions
+    MatCardActions,
+    MatListItemIcon,
+    MatListItemTitle
   ]
 })
 export class DomainDetailComponent implements OnInit {

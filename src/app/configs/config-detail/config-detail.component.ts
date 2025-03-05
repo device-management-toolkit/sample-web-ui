@@ -19,7 +19,7 @@ import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
 import { MatIcon } from '@angular/material/icon'
-import { MatList, MatListItem } from '@angular/material/list'
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
 import {
   MatCard,
   MatCardHeader,
@@ -55,7 +55,9 @@ import { MatToolbar } from '@angular/material/toolbar'
     MatRadioButton,
     MatSlideToggle,
     MatCardActions,
-    MatButton
+    MatButton,
+    MatListItemIcon,
+    MatListItemTitle
   ]
 })
 export class ConfigDetailComponent implements OnInit {
