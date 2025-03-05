@@ -5,7 +5,6 @@
 
 import { DeviceEditTagsComponent } from './edit-tags.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MomentModule } from 'ngx-moment'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatChipInputEvent } from '@angular/material/chips'
@@ -23,7 +22,6 @@ describe('EditTagsComponent', () => {
     tags = ['tag1', 'tag2']
     await TestBed.configureTestingModule({
       imports: [
-        MomentModule,
         BrowserAnimationsModule,
         RouterModule,
         DeviceEditTagsComponent

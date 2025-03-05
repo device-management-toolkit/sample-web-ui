@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { enableProdMode, importProvidersFrom, inject, provideAppInitializer } from '@angular/core'
+import { enableProdMode, inject, provideAppInitializer } from '@angular/core'
 import { environment } from './environments/environment'
 import { AppComponent } from './app/app.component'
 import { provideRouter } from '@angular/router'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { routes } from './app/routes'
 import { bootstrapApplication } from '@angular/platform-browser'
-import { MomentModule } from 'ngx-moment'
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
 import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc'
 import { AuthGuard } from './app/shared/auth-guard.service'
@@ -23,7 +22,6 @@ if (environment.production) {
 }
 const providers = [
   AuthGuard,
-  importProvidersFrom(MomentModule),
   provideAnimations(),
   provideRouter(routes)
 ]

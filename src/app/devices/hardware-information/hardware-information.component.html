@@ -75,7 +75,7 @@
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosReleaseData">{{
-            hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.DateTime | amDateFormat: 'LLL'
+            hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.DateTime | amDateFormatter: 'MMMM d, yyyy h:mma'
           }}</span>
         </div>
         <div class="flex flex-50">

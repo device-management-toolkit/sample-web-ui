@@ -6,7 +6,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MomentModule } from 'ngx-moment'
 import { DeviceEnableSolComponent } from './device-enable-sol.component'
 import { RouterModule } from '@angular/router'
 
@@ -20,7 +19,6 @@ describe('DeviceEnableSolComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MomentModule,
         BrowserAnimationsModule,
         RouterModule,
         DeviceEnableSolComponent

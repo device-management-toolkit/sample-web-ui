@@ -6,7 +6,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MomentModule } from 'ngx-moment'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceUserConsentComponent } from './device-user-consent.component'
@@ -30,7 +29,6 @@ describe('DeviceUserConsentComponent', () => {
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({}))
     await TestBed.configureTestingModule({
       imports: [
-        MomentModule,
         BrowserAnimationsModule,
         RouterModule,
         DeviceUserConsentComponent
