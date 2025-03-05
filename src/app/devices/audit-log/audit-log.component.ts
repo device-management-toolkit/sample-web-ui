@@ -13,12 +13,13 @@ import { merge, of } from 'rxjs'
 import { catchError, startWith, switchMap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
-import { MomentModule } from 'ngx-moment'
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
 import { DeviceLogService } from '../device-log.service'
 import { MatButtonModule } from '@angular/material/button'
+import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
+import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
 
 @Component({
   selector: 'app-audit-log',
@@ -31,10 +32,12 @@ import { MatButtonModule } from '@angular/material/button'
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
-    MomentModule
+    AmDateFormatterPipe,
+    AmTimeAgoFormatterPipe
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
+  [x: string]: any
   snackBar = inject(MatSnackBar)
   readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
