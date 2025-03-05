@@ -283,11 +283,12 @@ export class DevicesService {
     )
   }
 
-  sendPowerAction(deviceId: string, action: number, useSOL = false): Observable<any> {
+  sendPowerAction(deviceId: string, action: number, useSOL = false, value: string = ""): Observable<any> {
     const payload = {
       method: 'PowerAction',
       action,
-      useSOL
+      useSOL,
+      value
     }
 
     const url: string =
@@ -382,7 +383,9 @@ export class DevicesService {
       userConsent: 'none',
       enableKVM: true,
       enableSOL: true,
-      enableIDER: true
+      enableIDER: true,
+      ocr: true,
+      remoteErase: true
     }
   ): Observable<AMTFeaturesResponse> {
     return this.http

@@ -126,12 +126,19 @@ export interface AMTFeaturesResponse {
   KVM: boolean
   SOL: boolean
   IDER: boolean
+  ocr: boolean
+  httpsBootSupported: boolean
+  winREBootSupported: boolean
+  localPBABootSupported: boolean
+  remoteErase: boolean
 }
 export interface AMTFeaturesRequest {
   userConsent: string
   enableKVM: boolean
   enableSOL: boolean
   enableIDER: boolean
+  ocr: boolean
+  remoteErase: boolean
 }
 
 export interface PowerState {
