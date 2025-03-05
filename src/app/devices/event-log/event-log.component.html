@@ -35,7 +35,7 @@
         <ng-container matColumnDef="timestamp">
           <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.Time | amDateFormat: 'LLL' }} ({{ element.Time | amTimeAgo: true }} ago)
+            {{ element.Time | amDateFormatter: 'MMMM d, yyyy h:mma' }} ({{ element.Time | amTimeAgoFormatter: true }})
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
