@@ -6,7 +6,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, ActivatedRoute, RouterModule } from '@angular/router'
-import { MomentModule } from 'ngx-moment'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceDetailComponent } from './device-detail.component'
@@ -19,7 +18,7 @@ xdescribe('DeviceDetailComponent', () => {
   let devicesService: any
   @Component({
     selector: 'app-device-toolbar',
-    imports: [MomentModule]
+    imports: []
   })
   class TestDeviceToolbarComponent {
     @Input()
@@ -29,7 +28,6 @@ xdescribe('DeviceDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MomentModule,
         NoopAnimationsModule,
         RouterModule,
         DeviceDetailComponent,

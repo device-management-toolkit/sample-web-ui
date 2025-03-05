@@ -14,9 +14,9 @@ import { FormBuilder } from '@angular/forms'
 import { DiskInformation, HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
-import { MomentModule } from 'ngx-moment'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
+import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
 
 @Component({
   selector: 'app-hardware-information',
@@ -26,7 +26,7 @@ import { environment } from 'src/environments/environment'
     MatCardModule,
     MatDividerModule,
     MatIconModule,
-    MomentModule
+    AmDateFormatterPipe
   ],
   templateUrl: './hardware-information.component.html',
   styleUrl: './hardware-information.component.scss'
