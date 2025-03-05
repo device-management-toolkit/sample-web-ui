@@ -59,3 +59,12 @@ fieldset {
   font-size: 75%;
   color: rgba(0, 0, 0, 0.54);
 }
+
+.error-messages-container.mdc-list-item {
+  height: auto;
+  padding: 10px 0;
+}
+
+.error-messages {
+  white-space: break-spaces;
+}
