@@ -1,11 +1,11 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>CIRA Configs</span>
+    <span i18n>{{ 'configs.header.ciraTitle.value' | translate  }}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
     <button id="btnAdd" mat-button (click)="navigateTo()">
-      <mat-icon>add</mat-icon> Add New
+      <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate  }}
     </button>
   </div>
 </mat-toolbar>
@@ -15,41 +15,41 @@
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">No CIRA Configs</h3>
+      <h3 class="flex justify-center">{{ 'configs.ciraNoData.value' | translate  }}</h3>
     } @else {
       <mat-table [dataSource]="configs.data">
         <!-- name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraName.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.configName }} </mat-cell>
         </ng-container>
         <!-- server Column -->
         <ng-container matColumnDef="mpsserver">
-          <mat-header-cell *matHeaderCellDef> MPS Server </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraMpsserver.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.mpsServerAddress }}
           </mat-cell>
         </ng-container>
         <!-- port Column -->
         <ng-container matColumnDef="port">
-          <mat-header-cell *matHeaderCellDef> Port </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraPort.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.mpsPort }}
           </mat-cell>
         </ng-container>
         <!-- activation Column -->
         <ng-container matColumnDef="username">
-          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraUsername.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.username }}
           </mat-cell>
         </ng-container>
         <!-- certname Column -->
         <ng-container matColumnDef="certname">
-          <mat-header-cell *matHeaderCellDef> Cert Common Name (CN=) </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraCert.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.commonName }}
           </mat-cell>
         </ng-container>
         <!-- rootcert Column -->
         <ng-container matColumnDef="rootcert">
-          <mat-header-cell *matHeaderCellDef> MPS Root Cert </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraRootcert.value' | translate  }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.mpsRootCertificate?.substring(0,50) + '...' }}
           </mat-cell>
         </ng-container>

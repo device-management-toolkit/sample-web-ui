@@ -27,6 +27,7 @@ import {
 } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-domain-detail',
@@ -54,7 +55,8 @@ import { MatToolbar } from '@angular/material/toolbar'
     MatTooltip,
     MatCardActions,
     MatListItemIcon,
-    MatListItemTitle
+    MatListItemTitle,
+    TranslateModule
   ]
 })
 export class DomainDetailComponent implements OnInit {
@@ -66,11 +68,11 @@ export class DomainDetailComponent implements OnInit {
 
   public domainForm: FormGroup
   public isLoading = false
-  public pageTitle = 'New Domain'
+  public pageTitle: string
   public isEdit = false
   public certPassInputType = 'password'
   public errorMessages: string[] = []
-  constructor() {
+  constructor(public translate: TranslateService) {
     const fb = this.fb
 
     this.domainForm = fb.group({
@@ -80,6 +82,7 @@ export class DomainDetailComponent implements OnInit {
       provisioningCertPassword: [null, Validators.required],
       version: [null]
     })
+    this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
   }
 
   ngOnInit(): void {

@@ -32,6 +32,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',
@@ -55,7 +56,8 @@ import { MatToolbar } from '@angular/material/toolbar'
     MatRowDef,
     MatRow,
     MatPaginator,
-    DatePipe
+    DatePipe,
+    TranslateModule
   ]
 })
 export class DomainsComponent implements OnInit {
