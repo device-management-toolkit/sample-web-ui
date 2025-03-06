@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -12,7 +12,7 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } 
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { catchError, finalize, forkJoin, throwError } from 'rxjs'
+import { catchError, finalize, forkJoin, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
@@ -32,7 +32,7 @@ import { MatTooltip } from '@angular/material/tooltip'
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, OnDestroy {
   snackBar = inject(MatSnackBar)
   readonly router = inject(Router)
   private readonly devicesService = inject(DevicesService)
@@ -83,6 +83,8 @@ export class GeneralComponent implements OnInit {
     })
   }
 
+  private readonly destroy$ = new Subject<void>();
+
   ngOnInit(): void {
     forkJoin({
       amtFeatures: this.devicesService.getAMTFeatures(this.deviceId).pipe(
@@ -107,7 +109,8 @@ export class GeneralComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((results: any) => {
         this.amtDHCPDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix ?? ''
@@ -130,6 +133,11 @@ export class GeneralComponent implements OnInit {
           redirection: results.amtFeatures.redirection
         })
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   setAmtFeatures(): void {
