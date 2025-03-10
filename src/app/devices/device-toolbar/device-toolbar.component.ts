@@ -105,6 +105,10 @@ export class DeviceToolbarComponent implements OnInit {
     {
       label: 'Power Up to PXE',
       action: 401
+    },
+    {
+      label: 'Perform HTTPBoot (OCR)',
+      action: 105
     }
   ]
 
@@ -207,7 +211,7 @@ export class DeviceToolbarComponent implements OnInit {
       useSOL = true
     }
     this.devicesService
-      .sendPowerAction(this.deviceId, action, useSOL)
+      .sendPowerAction(this.deviceId, action, useSOL, 'https://boot.example.com/boot.efi')
       .pipe(
         catchError((err) => {
           console.error(err)
