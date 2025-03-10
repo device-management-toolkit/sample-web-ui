@@ -124,14 +124,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "openamtui:build"
+            "buildTarget": "openamtui:build",
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
-              "buildTarget": "openamtui:build:production"
+              "buildTarget": "openamtui:build:production",
+              "host": "0.0.0.0"
             },
             "enterprise": {
-              "buildTarget": "openamtui:build:enterprise-dev"
+              "buildTarget": "openamtui:build:enterprise-dev",
+              "host": "0.0.0.0"
             }
           }
         },

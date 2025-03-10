@@ -33,6 +33,15 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Using devcontainer
+
+If you want debug in vscode devcontainer, try to open the project with devcontainer (Make sure you install the extension of **Dev Containers**)
+
+- Step1: Press **Ctrl + Shift+ P** in vscode;
+- Step2: Type **Dev Containers: Reopen in Container**;
+- Step3: Click the item which appear in column;
+- Step4: Open a terminal, run app with command `npm start`;
+
 ## Further Angular help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
