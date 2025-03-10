@@ -1,3 +1,10 @@
+## [3.34.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.1...v3.34.2) (2025-03-10)
+
+
+### Bug Fixes
+
+* address an issue where login token might not exist ([95d60b3](https://github.com/device-management-toolkit/sample-web-ui/commit/95d60b3509c756b27693a84bf844244d49b91599))
+
 ## [3.34.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.0...v3.34.1) (2025-03-10)
 
 # [3.34.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.33.0...v3.34.0) (2025-03-10)
