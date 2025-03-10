@@ -1,3 +1,17 @@
+# [3.33.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.2...v3.33.0) (2025-03-07)
+
+
+### Features
+
+* replace momentjs with date fns ([2074d0e](https://github.com/device-management-toolkit/sample-web-ui/commit/2074d0e7d18dbf689f18788057acc234b790f2ed)), closes [device-management-toolkit#2519](https://github.com/device-management-toolkit/issues/2519)
+
+## [3.32.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.1...v3.32.2) (2025-03-06)
+
+
+### Bug Fixes
+
+* Error messages truncated ([9b309ef](https://github.com/device-management-toolkit/sample-web-ui/commit/9b309ef67fb1b288d07cf53b17ed5acf100cd8f2)), closes [#2527](https://github.com/device-management-toolkit/sample-web-ui/issues/2527)
+
 ## [3.32.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.0...v3.32.1) (2025-03-04)
 
 
