@@ -106,9 +106,12 @@ export class AuthService {
   }
 
   getLoggedUserToken(): string {
-    const loggedUser: string = localStorage.getItem('loggedInUser') ?? ''
-    const token: string = JSON.parse(loggedUser).token
-    return token
+    const loggedInUser: string = localStorage.getItem('loggedInUser') ?? ''
+    if (loggedInUser !== '') {
+      const token: string = JSON.parse(loggedInUser).token
+      return token
+    }
+    return ''
   }
 
   login(username: string, password: string): Observable<any> {
