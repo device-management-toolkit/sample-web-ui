@@ -59,8 +59,8 @@
       </ng-container>
       <ng-container matColumnDef="timestamp">
         <mat-header-cell *matHeaderCellDef fxFlex="20%" mat-sort-header>TimeStamp</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.timestamp | amDateFormat:'LLL' }} ({{
-          element.timestamp | amTimeAgo:true }} ago)</mat-cell>
+        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.timestamp | amdDateFormatter:'MMMM d, yyyy h:mma' }} ({{
+          element.timestamp | amTimeAgoFormatter:true }})</mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

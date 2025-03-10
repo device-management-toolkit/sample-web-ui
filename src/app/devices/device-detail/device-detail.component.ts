@@ -7,7 +7,6 @@ import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
-import { MomentModule } from 'ngx-moment'
 import { MatList, MatListItem, MatListItemTitle, MatListItemLine, MatListModule } from '@angular/material/list'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { MatIcon } from '@angular/material/icon'
@@ -55,7 +54,6 @@ import { TLSComponent } from '../tls/tls.component'
     MatListItem,
     MatListItemTitle,
     MatListItemLine,
-    MomentModule,
     RouterLink,
     RouterLinkActive,
     NetworkSettingsComponent,
