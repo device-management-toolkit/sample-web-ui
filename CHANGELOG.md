@@ -1,3 +1,10 @@
+# [3.34.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.33.0...v3.34.0) (2025-03-10)
+
+
+### Features
+
+* **docker:** add support for devcontainer ([#2534](https://github.com/device-management-toolkit/sample-web-ui/issues/2534)) ([bb597f4](https://github.com/device-management-toolkit/sample-web-ui/commit/bb597f4343b47d33d2659390390c6612e0f714e9))
+
 # [3.33.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.2...v3.33.0) (2025-03-07)
 
 
