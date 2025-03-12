@@ -1,157 +1,157 @@
 @if (isLoading!==false) {
-<mat-progress-bar mode='indeterminate'></mat-progress-bar>
-}
-
-<div class="flex-row flex-wrap">
-  <div class="flex-33">
-    <mat-card [style]="cloudMode ? '' : 'min-height:169px'" class="flex justify-center">
-      <div class="flex-row">
-        <div class="flex flex-25 justify-center items-center">
-          <mat-icon>devices</mat-icon>
-        </div>
-        <div class="flex-75">
-          <h1 data-cy="totalCount" class="mat-headline-3">{{stats?.totalCount}}</h1>
-          <p>Total Devices</p>
-        </div>
-      </div>
-    </mat-card>
-  </div>
-  @if(cloudMode){
-  <div class="flex-33">
-    <mat-card>
-      <div class="flex-row">
-        <div class="flex flex-25 justify-center items-center">
-          <mat-icon>phonelink</mat-icon>
-        </div>
-        <div class="flex-75">
-          <h1 data-cy="connectedCount" class="mat-headline-3">{{stats?.connectedCount}}</h1>
-          <p>Devices Connected</p>
-        </div>
-      </div>
-    </mat-card>
-  </div>
-  <div class="flex-33">
-    <mat-card>
-      <div class="flex-row">
-        <div class="flex flex-25 justify-center items-center">
-          <mat-icon>phonelink_off</mat-icon>
-        </div>
-        <div class="flex-75">
-          <h1 data-cy="disconnectedCount" class="mat-headline-3">{{stats?.disconnectedCount}}</h1>
-          <p>Devices Disconnected</p>
-        </div>
-      </div>
-    </mat-card>
-  </div>
-  }@else{
-  <div class="flex-33 flex-column justify-center">
-    <mat-card>
-      <div class="flex flex-1 justify-center" matTooltip="Add a new device that can be managed by the console">
-        <button mat-icon-button routerLink="/devices">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <h3 class="mat-h3">1. Add a new device</h3>
-    </mat-card>
-  </div>
-  <div class="flex-33 flex-column justify-center">
-    <mat-card>
-      <div class="flex flex-1 justify-center" matTooltip="Use device actions to control a list of devices">
-        <button mat-icon-button routerLink="/devices">
-          <mat-icon>phonelink</mat-icon>
-        </button>
-      </div>
-      <h3 class="mat-h3">2. Manage Your Device</h3>
-    </mat-card>
-  </div>
-
+  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
   }
-</div>
-<mat-divider></mat-divider>
-<div class="flex-row flex-wrap">
-  <div class="flex-33">
-    <mat-card class="pointer" (click)="navigateTo('https://device-management-toolkit.github.io/docs/')">
-      <div class="flex-row">
-        <div class="flex-80">
-          <h1 class="mat-headline-4">Get started</h1>
-          <p>New to the toolkit? See the documentation to learn the basics first.</p>
+  
+  <div class="flex-row flex-wrap">
+    <div class="flex-33">
+      <mat-card [style]="cloudMode ? '' : 'min-height:169px'" class="flex justify-center">
+        <div class="flex-row">
+          <div class="flex flex-25 justify-center items-center">
+            <mat-icon>devices</mat-icon>
+          </div>
+          <div class="flex-75">
+            <h1 data-cy="totalCount" class="mat-headline-3">{{stats?.totalCount}}</h1>
+            <p>{{ 'dashboard.totalDevices.value' | translate  }}</p>
+          </div>
         </div>
-        <div class="flex flex-20 justify-center items-center">
-          <mat-icon>import_contacts</mat-icon>
+      </mat-card>
+    </div>
+    @if(cloudMode){
+    <div class="flex-33">
+      <mat-card>
+        <div class="flex-row">
+          <div class="flex flex-25 justify-center items-center">
+            <mat-icon>phonelink</mat-icon>
+          </div>
+          <div class="flex-75">
+            <h1 data-cy="connectedCount" class="mat-headline-3">{{stats?.connectedCount}}</h1>
+            <p>{{ 'dashboard.devicesConnected.value' | translate  }}</p>
+          </div>
         </div>
+      </mat-card>
+    </div>
+    <div class="flex-33">
+      <mat-card>
+        <div class="flex-row">
+          <div class="flex flex-25 justify-center items-center">
+            <mat-icon>phonelink_off</mat-icon>
+          </div>
+          <div class="flex-75">
+            <h1 data-cy="disconnectedCount" class="mat-headline-3">{{stats?.disconnectedCount}}</h1>
+            <p>{{ 'dashboard.devicesDisconnected.value' | translate  }}</p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    }@else{
+    <div class="flex-33 flex-column justify-center">
+      <mat-card>
+        <div class="flex flex-1 justify-center" matTooltip="Add a new device that can be managed by the console">
+          <button mat-icon-button routerLink="/devices">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <h3 class="mat-h3">{{ 'dashboard.addNewDevice.value' | translate  }}</h3>
+      </mat-card>
+    </div>
+    <div class="flex-33 flex-column justify-center">
+      <mat-card>
+        <div class="flex flex-1 justify-center" matTooltip="Use device actions to control a list of devices">
+          <button mat-icon-button routerLink="/devices">
+            <mat-icon>phonelink</mat-icon>
+          </button>
+        </div>
+        <h3 class="mat-h3">{{ 'dashboard.manageYourDevice' | translate  }}</h3>
+      </mat-card>
+    </div>
+    }
+  </div>
+  <mat-divider></mat-divider>
+  <div class="flex-row flex-wrap">
+    <div class="flex-33">
+      <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+        <div class="flex-row">
+          <div class="flex-80">
+            <h1 class="mat-headline-4">{{ 'dashboard.getStarted.value' | translate  }}</h1>
+            <p>{{ 'dashboard.getStartedDescription.value' | translate  }}</p>
+          </div>
+          <div class="flex flex-20 justify-center items-center">
+            <mat-icon>import_contacts</mat-icon>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="flex-33">
+      <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+        <div class="flex-row">
+          <div class="flex-80">
+            <h1 class="mat-headline-4">{{ 'dashboard.understandSecurity.value' | translate  }}</h1>
+            <p>{{ 'dashboard.understandSecurityDescription.value' | translate  }}</p>
+          </div>
+          <div class="flex flex-20 justify-center items-center">
+            <mat-icon>lock</mat-icon>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="flex-33">
+      <mat-card class="pointer" (click)="navigateTo('https://open-amt-cloud-toolkit.github.io/docs/')">
+        <div class="flex-row">
+          <div class="flex-80">
+            <h1 class="mat-headline-4">{{ 'dashboard.deploy.value' | translate  }}</h1>
+            <p>{{ 'dashboard.deployDescription.value' | translate  }}</p>
+          </div>
+          <div class="flex flex-20 justify-center items-center">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  @if(cloudMode){
+  <div class="flex-row flex-wrap" style="margin: 15px">
+    <div class="flex-20 flex-column justify-center">
+      <div class="flex flex-1 justify-center" matTooltip="Specify a wireless configuration for you device to wirelessly connect to the Managed Presence Server (MPS)">
+        <button mat-icon-button routerLink="/wireless">
+          <mat-icon>wifi</mat-icon>
+        </button>
       </div>
-    </mat-card>
-  </div>
-  <div class="flex-33">
-    <mat-card class="pointer" (click)="navigateTo('https://device-management-toolkit.github.io/docs/')">
-      <div class="flex-row">
-        <div class="flex-80">
-          <h1 class="mat-headline-4">Understand Security</h1>
-          <p>Confused about security topics? Learn about passwords, Vault, certificates, and more.</p>
-        </div>
-        <div class="flex flex-20 justify-center items-center">
-          <mat-icon>lock</mat-icon>
-        </div>
+      <h3 class="mat-h3">1. {{ 'dashboard.createWirelessConfig.value' | translate  }}</h3>
+    </div>
+  
+    <div class="flex-20 flex-column justify-center">
+      <div class="flex flex-1 justify-center" matTooltip="Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS)">
+        <button mat-icon-button routerLink="/ciraconfigs">
+          <mat-icon>phonelink_setup</mat-icon>
+        </button>
       </div>
-    </mat-card>
-  </div>
-  <div class="flex-33">
-    <mat-card class="pointer" (click)="navigateTo('https://device-management-toolkit.github.io/docs/')">
-      <div class="flex-row">
-        <div class="flex-80">
-          <h1 class="mat-headline-4">Deploy</h1>
-          <p>Ready to move to Production? Check out our deployment guide (Coming Soon).</p>
-        </div>
-        <div class="flex flex-20 justify-center items-center">
-          <mat-icon>trending_up</mat-icon>
-        </div>
+      <h3 class="mat-h3">2. {{ 'dashboard.createCiraConfig.value' | translate  }}</h3>
+    </div>
+    <div class="flex-20 flex-column justify-center">
+      <div class="flex flex-1 justify-center" matTooltip="Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings">
+        <button mat-icon-button routerLink="/profiles">
+          <mat-icon>system_update</mat-icon>
+        </button>
       </div>
-    </mat-card>
-  </div>
-</div>
-<mat-divider></mat-divider>
-@if(cloudMode){
-<div class="flex-row flex-wrap" style="margin: 15px">
-  <div class="flex-20 flex-column justify-center">
-    <div class="flex flex-1 justify-center" matTooltip="Specify a wireless configuration for you device to wirelessly connect to the Managed Presence Server (MPS)">
-      <button mat-icon-button routerLink="/wireless">
-        <mat-icon>wifi</mat-icon>
-      </button>
+      <h3 class="mat-h3">3. {{ 'dashboard.createProfile.value' | translate  }}</h3>
     </div>
-    <h3 class="mat-h3">1. Create Wireless Config [Optional]</h3>
-  </div>
-
-  <div class="flex-20 flex-column justify-center">
-    <div class="flex flex-1 justify-center" matTooltip="Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS)">
-      <button mat-icon-button routerLink="/ciraconfigs">
-        <mat-icon>phonelink_setup</mat-icon>
-      </button>
+    <div class="flex-20 flex-column justify-center">
+      <div class="flex flex-1 justify-center" matTooltip="Required for activation in Admin Control Mode (ACM)">
+        <button mat-icon-button routerLink="/domains">
+          <mat-icon>security</mat-icon>
+        </button>
+      </div>
+      <h3 class="mat-h3">4. {{ 'dashboard.addProvisioningCertificate.value' | translate  }}</h3>
     </div>
-    <h3 class="mat-h3">2. Create a CIRA Config</h3>
-  </div>
-  <div class="flex-20 flex-column justify-center">
-    <div class="flex flex-1 justify-center" matTooltip="Activate the device with a custom profile that specifies a CIRA Config, activation mode, and network settings">
-      <button mat-icon-button routerLink="/profiles">
-        <mat-icon>system_update</mat-icon>
-      </button>
+    <div class="flex-20 flex-column justify-center">
+      <div class="flex flex-1 justify-center" matTooltip="Use device actions to control a list of activated, connected devices">
+        <button mat-icon-button routerLink="/devices">
+          <mat-icon>phonelink</mat-icon>
+        </button>
+      </div>
+      <h3 class="mat-h3">5. {{ 'dashboard.manageYourDeviceStep.value' | translate  }}</h3>
     </div>
-    <h3 class="mat-h3">3. Create a Profile</h3>
   </div>
-  <div class="flex-20 flex-column justify-center">
-    <div class="flex flex-1 justify-center" matTooltip="Required for activation in Admin Control Mode (ACM)">
-      <button mat-icon-button routerLink="/domains">
-        <mat-icon>security</mat-icon>
-      </button>
-    </div>
-    <h3 class="mat-h3">4. Add a Provisioning Certificate [Optional]</h3>
-  </div>
-  <div class="flex-20 flex-column justify-center">
-    <div class="flex flex-1 justify-center" matTooltip="Use device actions to control a list of activated, connected devices">
-      <button mat-icon-button routerLink="/devices">
-        <mat-icon>phonelink</mat-icon>
-      </button>
-    </div>
-    <h3 class="mat-h3">5. Manage Your Device</h3>
-  </div>
-</div>
-}
+  }
+  

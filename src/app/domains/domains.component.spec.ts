@@ -12,6 +12,10 @@ import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
 import { Domain, DataWithCount } from 'src/models/models'
 import { RouterModule } from '@angular/router'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('DomainsComponent', () => {
   let component: DomainsComponent
@@ -19,6 +23,12 @@ describe('DomainsComponent', () => {
   let getDataSpy: jasmine.Spy
   let deleteSpy: jasmine.Spy
   let domainsService: jasmine.SpyObj<DomainsService>
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     domainsService = jasmine.createSpyObj('DomainsService', ['getData', 'delete'])
@@ -65,15 +75,29 @@ describe('DomainsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DomainsComponent
+        DomainsComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
-      providers: [{ provide: DomainsService, useValue: domainsService }]
+      providers: [
+        { provide: DomainsService, useValue: domainsService },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DomainsComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

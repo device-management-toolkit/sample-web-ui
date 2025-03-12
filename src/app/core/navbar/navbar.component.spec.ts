@@ -10,10 +10,20 @@ import { MatListModule } from '@angular/material/list'
 import { NavbarComponent } from './navbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent
   let fixture: ComponentFixture<NavbarComponent>
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,12 +32,26 @@ describe('NavbarComponent', () => {
         MatDividerModule,
         MatListModule,
         RouterModule,
-        NavbarComponent
+        NavbarComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
-      providers: [{ provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }]
+      providers: [
+        { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
     fixture = TestBed.createComponent(NavbarComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

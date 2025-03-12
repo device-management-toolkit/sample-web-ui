@@ -10,6 +10,10 @@ import { of } from 'rxjs'
 import { ConfigsService } from '../configs.service'
 
 import { ConfigDetailComponent } from './config-detail.component'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('ConfigDetailComponent', () => {
   let component: ConfigDetailComponent
@@ -18,6 +22,12 @@ describe('ConfigDetailComponent', () => {
   let updateRecordSpy: jasmine.Spy
   let loadMpsRootCertSpy: jasmine.Spy
   let createRecordSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     const configsService = jasmine.createSpyObj('ConfigsService', [
@@ -35,14 +45,24 @@ describe('ConfigDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ConfigDetailComponent
+        ConfigDetailComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
         { provide: ConfigsService, useValue: configsService },
         {
           provide: ActivatedRoute,
           useValue: { params: of({ name: 'name' }) }
-        }
+        },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -50,6 +70,8 @@ describe('ConfigDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfigDetailComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

@@ -1,11 +1,11 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>Domains</span>
+    <span i18n>{{'domains.header.domainsTitle.value'| translate}}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
     <button id="btnAdd" mat-button (click)="navigateTo()">
-      <mat-icon>add</mat-icon> Add New
+      <mat-icon>add</mat-icon>  {{ 'common.addNew.value' | translate  }}
     </button>
   </div>
 </mat-toolbar>
@@ -15,23 +15,23 @@
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">No Domains</h3>
+      <h3 class="flex justify-center">{{'domains.noData.value'| translate}}</h3>
     } @else{
       <mat-table [dataSource]="domains.data">
         <!-- name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{'domains.table.name.value'| translate}} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <!-- domainSuffix Column -->
         <ng-container matColumnDef="domainSuffix">
-          <mat-header-cell *matHeaderCellDef> Domain Suffix</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{'domains.table.domainSuffix.value'| translate}}</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.domainSuffix }}
           </mat-cell>
         </ng-container>
         <!-- expiration date Column -->
         <ng-container matColumnDef="expirationDate">
-          <mat-header-cell *matHeaderCellDef>Expiration Date</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{'domains.table.expirationDate.value'| translate}}</mat-header-cell>
           <mat-cell data-cy="expCol" *matCellDef="let element">
             {{ element.expirationDate | date: 'MM/dd/yyyy'}} -
             <mat-icon color="warn" [style.display]="getRemainingTime(element.expirationDate) === 'Expired' ? 'inline' : 'none'">warning</mat-icon>

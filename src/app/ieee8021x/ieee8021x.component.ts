@@ -32,6 +32,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-ieee8021x',
@@ -56,7 +57,8 @@ import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator
+    MatPaginator,
+    TranslateModule
   ]
 })
 export class IEEE8021xComponent implements OnInit {

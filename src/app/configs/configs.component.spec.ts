@@ -11,12 +11,22 @@ import { of } from 'rxjs'
 import { ConfigsComponent } from './configs.component'
 import { ConfigsService } from './configs.service'
 import { RouterModule } from '@angular/router'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('ConfigsComponent', () => {
   let component: ConfigsComponent
   let fixture: ComponentFixture<ConfigsComponent>
   let getDataSpy: jasmine.Spy
   let deleteSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData', 'delete'])
@@ -44,15 +54,29 @@ describe('ConfigsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ConfigsComponent
+        ConfigsComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
-      providers: [{ provide: ConfigsService, useValue: configsService }]
+      providers: [
+        { provide: ConfigsService, useValue: configsService },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfigsComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

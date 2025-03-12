@@ -33,6 +33,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { FormOption } from 'src/models/models'
 import { IEEE8021xConfig } from 'src/models/models'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-ieee8021x-detail',
@@ -59,7 +60,8 @@ import { IEEE8021xConfig } from 'src/models/models'
     MatCardActions,
     MatButton,
     MatListItemIcon,
-    MatListItemTitle
+    MatListItemTitle,
+    TranslateModule
   ]
 })
 export class IEEE8021xDetailComponent implements OnInit {
@@ -70,7 +72,7 @@ export class IEEE8021xDetailComponent implements OnInit {
   ieee8021xService = inject(IEEE8021xService)
 
   ieee8021xForm: FormGroup
-  pageTitle = 'New IEEE8021x Config'
+  pageTitle: string
   isLoading = false
   isEdit = false
   authenticationProtocols: FormOption<number>[] = []
@@ -80,7 +82,7 @@ export class IEEE8021xDetailComponent implements OnInit {
   pxeTimeoutMax = 60 * 60 * 24 // one day
   pxeTimeoutDefault = 60 * 2 // two mninutes
 
-  constructor() {
+  constructor(public translate: TranslateService) {
     const fb = this.fb
 
     this.ieee8021xForm = fb.group({
@@ -121,6 +123,7 @@ export class IEEE8021xDetailComponent implements OnInit {
       }
       this.ieee8021xForm.controls.authenticationProtocol.updateValueAndValidity()
     })
+    this.pageTitle = this.translate.instant('ieee8021xConfigs.header.ieee8021NewTitle.value')
   }
 
   ngOnInit(): void {

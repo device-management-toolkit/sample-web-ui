@@ -16,6 +16,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatIconButton } from '@angular/material/button'
 import { MatDivider } from '@angular/material/divider'
 import { MatToolbar } from '@angular/material/toolbar'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-toolbar',
@@ -28,7 +29,8 @@ import { MatToolbar } from '@angular/material/toolbar'
     MatMenuTrigger,
     MatIcon,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    TranslateModule
   ]
 })
 export class ToolbarComponent implements OnInit {
