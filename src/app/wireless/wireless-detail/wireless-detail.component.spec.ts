@@ -10,6 +10,10 @@ import { of } from 'rxjs'
 import { WirelessService } from '../wireless.service'
 import { WirelessDetailComponent } from './wireless-detail.component'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('WirelessDetailComponent', () => {
   let component: WirelessDetailComponent
@@ -18,6 +22,12 @@ describe('WirelessDetailComponent', () => {
   let wirelessCreateSpy: jasmine.Spy
   let wirelessUpdateSpy: jasmine.Spy
   let routerSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     const wirelessService = jasmine.createSpyObj('WirelessService', [
@@ -47,12 +57,22 @@ describe('WirelessDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        WirelessDetailComponent
+        WirelessDetailComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
         { provide: WirelessService, useValue: wirelessService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
-        { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } }
+        { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -60,6 +80,8 @@ describe('WirelessDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WirelessDetailComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
     routerSpy = spyOn(component.router, 'navigate')
   })

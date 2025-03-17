@@ -18,6 +18,10 @@ import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
 import { environment } from 'src/environments/environment'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -52,6 +56,12 @@ describe('ProfileDetailComponent', () => {
   let ieee8021xGetDataSpy: jasmine.Spy
   let wirelessGetDataSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
   beforeEach(async () => {
     const profilesService = jasmine.createSpyObj('ProfilesService', [
       'getRecord',
@@ -89,7 +99,14 @@ describe('ProfileDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ProfileDetailComponent
+        ProfileDetailComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
         { provide: ProfilesService, useValue: profilesService },
@@ -102,7 +119,10 @@ describe('ProfileDetailComponent', () => {
           useValue: {
             params: of({ name: 'profile' })
           }
-        }
+        },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -110,6 +130,8 @@ describe('ProfileDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileDetailComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

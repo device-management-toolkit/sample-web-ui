@@ -10,6 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
 import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +24,8 @@ import { MatTooltip } from '@angular/material/tooltip'
     RouterLinkActive,
     MatIcon,
     MatListItemIcon,
-    MatTooltip
+    MatTooltip,
+    TranslateModule
   ]
 })
 export class NavbarComponent {
