@@ -1,3 +1,10 @@
+# [3.35.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.2...v3.35.0) (2025-03-17)
+
+
+### Features
+
+* enable i18n support ([#2533](https://github.com/device-management-toolkit/sample-web-ui/issues/2533)) ([cb3c7bd](https://github.com/device-management-toolkit/sample-web-ui/commit/cb3c7bd806a1b30a147322796a23d379c5451669)), closes [#2124](https://github.com/device-management-toolkit/sample-web-ui/issues/2124)
+
 ## [3.34.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.1...v3.34.2) (2025-03-10)
 
 

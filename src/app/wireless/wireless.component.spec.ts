@@ -11,12 +11,22 @@ import { of } from 'rxjs'
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
 import { RouterModule } from '@angular/router'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+
+// Factory function for the TranslateHttpLoader
+function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+}
 
 describe('WirelessComponent', () => {
   let component: WirelessComponent
   let fixture: ComponentFixture<WirelessComponent>
   let getDataSpy: jasmine.Spy
   let deleteSpy: jasmine.Spy
+  let translate: TranslateService
 
   beforeEach(async () => {
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
@@ -40,15 +50,29 @@ describe('WirelessComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        WirelessComponent
+        WirelessComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
-      providers: [{ provide: WirelessService, useValue: wirelessService }]
+      providers: [
+        { provide: WirelessService, useValue: wirelessService },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WirelessComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

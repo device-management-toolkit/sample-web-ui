@@ -46,6 +46,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
 import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
@@ -89,7 +90,8 @@ const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
     MatChipInput,
     MatCardActions,
     MatButton,
-    AsyncPipe
+    AsyncPipe,
+    TranslateModule
   ]
 })
 export class ProfileDetailComponent implements OnInit {
@@ -104,7 +106,7 @@ export class ProfileDetailComponent implements OnInit {
   dialog = inject(MatDialog)
 
   profileForm: FormGroup
-  pageTitle = 'New Profile'
+  pageTitle: string
   isLoading = false
   isEdit = false
   activationModes = ActivationModes
@@ -138,7 +140,7 @@ export class ProfileDetailComponent implements OnInit {
     direct: 'DIRECT'
   }
 
-  constructor() {
+  constructor(public translate: TranslateService) {
     const fb = this.fb
 
     this.profileForm = fb.group({
@@ -170,6 +172,7 @@ export class ProfileDetailComponent implements OnInit {
       kvmEnabled: [true, Validators.required],
       solEnabled: [true, Validators.required]
     })
+    this.pageTitle = this.translate.instant('profiles.header.profileNewTitle.value')
   }
 
   ngOnInit(): void {

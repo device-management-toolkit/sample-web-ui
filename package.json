@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "3.34.2",
+  "version": "3.35.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,6 +32,8 @@
     "@angular/router": "~19.2.1",
     "@open-amt-cloud-toolkit/ui-toolkit-angular": "^9.1.2",
     "@xterm/xterm": "^5.5.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "date-fns": "^4.1.0",

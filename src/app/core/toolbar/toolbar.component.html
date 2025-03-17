@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
   <div class="flex-50">
     @if (cloudMode === true) {
-      Device Management Toolkit Sample UI
+      {{ 'toolbar.header.cloudModeTitle.value' | translate }}
     } @else {
-      Console
+      {{ 'toolbar.header.consoleModeTitle.value' | translate }}
     }
   </div>
   <div class="flex flex-50 justify-end items-center">

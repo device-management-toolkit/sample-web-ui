@@ -11,12 +11,22 @@ import { of } from 'rxjs'
 import { IEEE8021xComponent } from './ieee8021x.component'
 import { IEEE8021xService } from './ieee8021x.service'
 import { RouterModule } from '@angular/router'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('IEEE8021xComponent', () => {
   let component: IEEE8021xComponent
   let fixture: ComponentFixture<IEEE8021xComponent>
   let getDataSpy: jasmine.Spy
   let deleteSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
@@ -36,15 +46,29 @@ describe('IEEE8021xComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        IEEE8021xComponent
+        IEEE8021xComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
-      providers: [{ provide: IEEE8021xService, useValue: ieee8021xService }]
+      providers: [
+        { provide: IEEE8021xService, useValue: ieee8021xService },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IEEE8021xComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

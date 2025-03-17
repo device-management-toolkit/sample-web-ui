@@ -18,6 +18,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatCard } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +31,8 @@ import { environment } from 'src/environments/environment'
     MatDivider,
     MatTooltip,
     MatIconButton,
-    RouterLink
+    RouterLink,
+    TranslateModule
   ]
 })
 export class DashboardComponent implements OnInit {
