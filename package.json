@@ -35,7 +35,7 @@
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "date-fns": "^4.1.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.1",
     "monaco-editor": "^0.52.2",
     "ngx-monaco-editor-v2": "^19.0.2",
     "rxjs": "~7.8.2",
@@ -74,7 +74,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.2",
     "ts-node": "~10.9.2",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.1"
   },
   "optionalDependencies": {
     "cypress": "^13.17.0"
