@@ -1,7 +1,7 @@
 @if (isLoading!==false) {
   <mat-progress-bar mode='indeterminate'></mat-progress-bar>
   }
-  
+
   <div class="flex-row flex-wrap">
     <div class="flex-33">
       <mat-card [style]="cloudMode ? '' : 'min-height:169px'" class="flex justify-center">
@@ -61,7 +61,7 @@
             <mat-icon>phonelink</mat-icon>
           </button>
         </div>
-        <h3 class="mat-h3">{{ 'dashboard.manageYourDevice' | translate  }}</h3>
+        <h3 class="mat-h3">{{ 'dashboard.manageYourDevice.value' | translate  }}</h3>
       </mat-card>
     </div>
     }
@@ -119,7 +119,7 @@
       </div>
       <h3 class="mat-h3">1. {{ 'dashboard.createWirelessConfig.value' | translate  }}</h3>
     </div>
-  
+
     <div class="flex-20 flex-column justify-center">
       <div class="flex flex-1 justify-center" matTooltip="Specify a server configuration your device(s) will use to create a connection to the Managed Presence Server (MPS)">
         <button mat-icon-button routerLink="/ciraconfigs">
@@ -154,4 +154,3 @@
     </div>
   </div>
   }
-  
