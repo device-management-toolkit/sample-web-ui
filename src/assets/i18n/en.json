@@ -1,0 +1,314 @@
+{
+  "common.addNew": {
+    "value": "Add New",
+    "description": "Text for the add new button"
+  },
+  "configs.ciraNoData": {
+    "value": "No CIRA Configs",
+    "description": "No CIRA Configs message"
+  },
+  "configs.header.ciraNewTitle": {
+    "value": "New CIRA Config",
+    "description": "New CIRA Config page title"
+  },
+  "configs.header.ciraTitle": {
+    "value": "CIRA Configs",
+    "description": "CIRA Configs title"
+  },
+  "configs.table.ciraCert": {
+    "value": "Cert Common Name (CN=)",
+    "description": "Cert Common Name column header"
+  },
+  "configs.table.ciraMpsserver": {
+    "value": "MPS Server",
+    "description": "MPS Server column header"
+  },
+  "configs.table.ciraName": {
+    "value": "Name",
+    "description": "Name column header"
+  },
+  "configs.table.ciraPort": {
+    "value": "Port",
+    "description": "Port column header"
+  },
+  "configs.table.ciraRootcert": {
+    "value": "MPS Root Cert",
+    "description": "MPS Root Cert column header"
+  },
+  "configs.table.ciraUsername": {
+    "value": "Username",
+    "description": "Username column header"
+  },
+  "dashboard.addNewDevice": {
+    "value": "1. Add a new device",
+    "description": "Step to add a new device"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "value": "Add a Provisioning Certificate [Optional]",
+    "description": "Step to add a provisioning certificate"
+  },
+  "dashboard.createCiraConfig": {
+    "value": "Create a CIRA Config",
+    "description": "Step to create a CIRA configuration"
+  },
+  "dashboard.createProfile": {
+    "value": "Create a Profile",
+    "description": "Step to create a profile"
+  },
+  "dashboard.createWirelessConfig": {
+    "value": "Create Wireless Config [Optional]",
+    "description": "Step to create a wireless configuration"
+  },
+  "dashboard.deploy": {
+    "value": "Deploy",
+    "description": "Deploy the toolkit"
+  },
+  "dashboard.deployDescription": {
+    "value": "Ready to move to Production? Check out our deployment guide (Coming Soon).",
+    "description": "Description for deployment"
+  },
+  "dashboard.devicesConnected": {
+    "value": "Devices Connected",
+    "description": "Number of devices connected"
+  },
+  "dashboard.devicesDisconnected": {
+    "value": "Devices Disconnected",
+    "description": "Number of devices disconnected"
+  },
+  "dashboard.getStarted": {
+    "value": "Get started",
+    "description": "Get started with the toolkit"
+  },
+  "dashboard.getStartedDescription": {
+    "value": "New to the toolkit? See the documentation to learn the basics first.",
+    "description": "Description for getting started"
+  },
+  "dashboard.header.dashboardTitle": {
+    "value": "Dashboard",
+    "description": "Dashboard title"
+  },
+  "dashboard.manageYourDevice": {
+    "value": "2. Manage Your Device",
+    "description": "Step to manage your device"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "value": "Manage Your Device",
+    "description": "Step to manage your device again"
+  },
+  "dashboard.totalDevices": {
+    "value": "Total Devices",
+    "description": "Total number of devices"
+  },
+  "dashboard.understandSecurity": {
+    "value": "Understand Security",
+    "description": "Understand security topics"
+  },
+  "dashboard.understandSecurityDescription": {
+    "value": "Confused about security topics? Learn about passwords, Vault, certificates, and more.",
+    "description": "Description for understanding security"
+  },
+  "devices.headerd.devicesTitle": {
+    "value": "Devices",
+    "description": "Devices page title"
+  },
+  "devices.noData": {
+    "value": "No Devices",
+    "description": "No Devices message"
+  },
+  "devices.noDataFilter": {
+    "value": "No Devices Match Filter Selection",
+    "description": "No Devices filtered message"
+  },
+  "devices.table.actions": {
+    "value": "Actions",
+    "description": "Actions column header"
+  },
+  "devices.table.guid": {
+    "value": "GUID",
+    "description": "GUID column header"
+  },
+  "devices.table.hostname": {
+    "value": "Hostname (Friendly Name)",
+    "description": "Hostname (Friendly Name) column header"
+  },
+  "devices.table.status": {
+    "value": "Status",
+    "description": "Status column header"
+  },
+  "domains.header.domainsNewTitle": {
+    "value": "New Domain",
+    "description": "New Domain page title"
+  },
+  "domains.header.domainsTitle": {
+    "value": "Domains",
+    "description": "Domains page title"
+  },
+  "domains.noData": {
+    "value": "No Domains",
+    "description": "No Domains message"
+  },
+  "domains.table.domainSuffix": {
+    "value": "Domain Suffix",
+    "description": "Domain Suffix column header"
+  },
+  "domains.table.expirationDate": {
+    "value": "Expiration Date",
+    "description": "Expiration Date column header"
+  },
+  "domains.table.name": {
+    "value": "Name",
+    "description": "Name column header"
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "value": "IEEE 802.1x",
+    "description": "IEEE 802.1x page title"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "value": "New IEEE8021x Config",
+    "description": "New IEEE8021x Config page title"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "value": "IEEE8021x Configs",
+    "description": "IEEE8021x Configs page title"
+  },
+  "ieee8021xConfigs.noData": {
+    "value": "No IEEE 8021x Configs",
+    "description": "No IEEE 8021x Configs message"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "value": "Authentication Protocol",
+    "description": "Authentication Protocol column header"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "value": "Interface",
+    "description": "Interface column header"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "value": "Name",
+    "description": "Name column header"
+  },
+  "login.header.loginTitle": {
+    "value": "Login",
+    "description": "Login page title"
+  },
+  "profiles.header.profileNewTitle": {
+    "value": "New Profile",
+    "description": "New Profile page title"
+  },
+  "profiles.header.profileTitle": {
+    "value": "Profiles",
+    "description": "Profiles page title"
+  },
+  "profiles.noData": {
+    "value": "No Profiles",
+    "description": "No Profiles message"
+  },
+  "profiles.table.activation": {
+    "value": "Activation Mode",
+    "description": "Activation Mode column header"
+  },
+  "profiles.table.connection": {
+    "value": "Connection Config",
+    "description": "Connection Config column header"
+  },
+  "profiles.table.name": {
+    "value": "Name",
+    "description": "Name column header"
+  },
+  "profiles.table.network": {
+    "value": "Network Config",
+    "description": "Network Config column header"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "value": "Open AMT Cloud Toolkit Sample UI",
+    "description": "Main title of the application"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "value": "Console",
+    "description": "Main title of the application in console mode"
+  },
+  "wireless.header.wirelessTitle": {
+    "value": "Wireless",
+    "description": "Wireless page title"
+  },
+  "wirelessConfigs.authentication": {
+    "value": "Authentication",
+    "description": "Column header for the authentication method of the wireless configuration"
+  },
+  "wirelessConfigs.encryption": {
+    "value": "Encryption",
+    "description": "Column header for the encryption method of the wireless configuration"
+  },
+  "wirelessConfigs.name": {
+    "value": "Name",
+    "description": "Column header for the name of the wireless configuration"
+  },
+  "wirelessConfigs.noData": {
+    "value": "No Wireless Configs",
+    "description": "Message displayed when there are no wireless configurations"
+  },
+  "wirelessConfigs.ssid": {
+    "value": "SSID",
+    "description": "Column header for the SSID of the wireless configuration"
+  },
+  "wirelessConfigs.title": {
+    "value": "Wireless Configs",
+    "description": "Title for the wireless configurations section"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "value": "Authentication Method",
+    "description": "Label for the authentication method field"
+  },
+  "wirelessDetail.cancel": {
+    "value": "CANCEL",
+    "description": "Text for the cancel button"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "value": "Encryption Method",
+    "description": "Label for the encryption method field"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "value": "Error creating/updating wireless profile",
+    "description": "Error message for creating/updating wireless profile"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "value": "This field is required and must be alphanumeric with no spaces or symbols.",
+    "description": "Error message for required fields"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "value": "802.1x Configuration",
+    "description": "Label for the 802.1x configuration field"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "value": "New Wireless Config",
+    "description": "Title for creating a new wireless configuration"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "value": "Profile created successfully",
+    "description": "Success message for creating wireless profile"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "value": "Profile updated successfully",
+    "description": "Success message for updating wireless profile"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "value": "PSK Passphrase",
+    "description": "Label for the PSK passphrase field"
+  },
+  "wirelessDetail.pskPassphraseHint": {
+    "value": "This field is required and must be between 8 and 32 characters",
+    "description": "Hint for the PSK passphrase field"
+  },
+  "wirelessDetail.save": {
+    "value": "SAVE",
+    "description": "Text for the save button"
+  },
+  "wirelessDetail.ssid": {
+    "value": "SSID",
+    "description": "Label for the SSID field"
+  },
+  "wirelessDetail.ssidHint": {
+    "value": "This field is required",
+    "description": "Hint for the SSID field"
+  }
+}

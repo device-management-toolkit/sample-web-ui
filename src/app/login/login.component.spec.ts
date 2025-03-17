@@ -10,6 +10,10 @@ import { AboutComponent } from '../core/about/about.component'
 import { environment } from 'src/environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -18,6 +22,12 @@ describe('LoginComponent', () => {
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
   let dialogSpy: jasmine.SpyObj<MatDialog>
   let routerSpy: jasmine.SpyObj<Router>
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login'])
@@ -26,19 +36,34 @@ describe('LoginComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
 
     await TestBed.configureTestingModule({
-      imports: [LoginComponent, ReactiveFormsModule],
+      imports: [
+        LoginComponent,
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
+      ],
       providers: [
         provideNoopAnimations(),
         { provide: AuthService, useValue: authServiceSpy },
         { provide: MatSnackBar, useValue: snackBarSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
-        FormBuilder
+        FormBuilder,
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
 
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

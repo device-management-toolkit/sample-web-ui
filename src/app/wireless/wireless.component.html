@@ -1,10 +1,12 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>Wireless Configs</span>
+    <span>{{ 'wirelessConfigs.title.value' | translate }}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
-    <button id="btnAdd" mat-button (click)="navigateTo()"><mat-icon>add</mat-icon> Add New</button>
+    <button id="btnAdd" mat-button (click)="navigateTo()">
+      <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate }}
+    </button>
   </div>
 </mat-toolbar>
 @if (isLoading !== false) {
@@ -13,30 +15,30 @@
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">No Wireless Configs</h3>
+      <h3 class="flex justify-center">{{ 'wirelessConfigs.noData.value' | translate }}</h3>
     } @else {
       <mat-table [dataSource]="configs">
         <!-- name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.name.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <!-- server Column -->
         <ng-container matColumnDef="authmethod">
-          <mat-header-cell *matHeaderCellDef> Authentication </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.authentication.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.authenticationMethod | toolkit: authenticationMethods }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="encryptionMethod">
-          <mat-header-cell *matHeaderCellDef> Encryption </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.encryption.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.encryptionMethod | toolkit: encryptionMethods }}
           </mat-cell>
         </ng-container>
         <!-- activation Column -->
         <ng-container matColumnDef="ssid">
-          <mat-header-cell *matHeaderCellDef> SSID </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.ssid.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.ssid }} </mat-cell>
         </ng-container>
         <!-- remove Column -->

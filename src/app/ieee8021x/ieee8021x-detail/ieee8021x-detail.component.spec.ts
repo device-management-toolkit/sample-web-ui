@@ -11,6 +11,10 @@ import { IEEE8021xService } from '../ieee8021x.service'
 import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
 import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xConfig } from 'src/models/models'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('IEEE8021xDetailComponent', () => {
   let component: IEEE8021xDetailComponent
@@ -24,6 +28,12 @@ describe('IEEE8021xDetailComponent', () => {
     pxeTimeout: 120,
     wiredInterface: false,
     version: ''
+  }
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
   beforeEach(async () => {
@@ -41,7 +51,14 @@ describe('IEEE8021xDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        IEEE8021xDetailComponent
+        IEEE8021xDetailComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
         { provide: IEEE8021xService, useValue: ieee8021xService },
@@ -50,7 +67,10 @@ describe('IEEE8021xDetailComponent', () => {
           useValue: {
             params: of({ name: 'profile' })
           }
-        }
+        },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     }).compileComponents()
   })
@@ -58,6 +78,8 @@ describe('IEEE8021xDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IEEE8021xDetailComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

@@ -13,6 +13,10 @@ import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
 import { Device } from '../../models/models'
 import { MatSelectChange } from '@angular/material/select'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 describe('DevicesComponent', () => {
   let device01: Device
@@ -25,6 +29,12 @@ describe('DevicesComponent', () => {
   let getPowerStateSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let sendDeactivateSpy: jasmine.Spy
+  let translate: TranslateService
+
+  // Factory function for the TranslateHttpLoader
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   beforeEach(async () => {
     device01 = {
@@ -84,16 +94,29 @@ describe('DevicesComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
-        DevicesComponent
+        DevicesComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
       ],
       providers: [
-        { provide: DevicesService, useValue: devicesService }]
+        { provide: DevicesService, useValue: devicesService },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DevicesComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 

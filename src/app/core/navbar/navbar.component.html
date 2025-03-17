@@ -6,29 +6,29 @@
   <mat-divider></mat-divider>
   <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon matListItemIcon>home</mat-icon>
-    <span i18n="navlink">Dashboard</span>
+    <span i18n="navlink">{{'dashboard.header.dashboardTitle.value' | translate}}</span>
   </a>
 
   <a mat-list-item routerLink="/ieee8021x" routerLinkActive="active">
     <mat-icon matListItemIcon>security</mat-icon>
-    <span i18n="navlink">IEEE 802.1x</span>
+    <span i18n="navlink">{{'ieee8021x.headerd.ieeeTitle.value' | translate}}</span>
   </a>
   <a mat-list-item routerLink="/wireless" routerLinkActive="active">
-    <mat-icon matListItemIcon>wifi</mat-icon><span i18n="navlink">Wireless</span>
+    <mat-icon matListItemIcon>wifi</mat-icon><span i18n="navlink">{{'wireless.header.wirelessTitle.value' | translate}}</span>
   </a>
   <a mat-list-item routerLink='/ciraconfigs' routerLinkActive="active" [disabled]="cloudMode === false" [matTooltipPosition]="'right'" [matTooltip]="cloudMode === false ? 'Not Available' : 'CIRA Configs'">
-    <mat-icon matListItemIcon>settings_ethernet</mat-icon><span i18n="navlink">CIRA Configs</span>
+    <mat-icon matListItemIcon>settings_ethernet</mat-icon><span i18n="navlink">{{'configs.header.ciraTitle.value' | translate}}</span>
   </a>
 
   <a mat-list-item routerLink="/profiles" routerLinkActive="active">
-    <mat-icon matListItemIcon>settings_system_daydream</mat-icon><span i18n="navlink">Profiles</span>
+    <mat-icon matListItemIcon>settings_system_daydream</mat-icon><span i18n="navlink">{{'profiles.header.profileTitle.value' | translate}}</span>
   </a>
   <a mat-list-item routerLink="/domains" routerLinkActive="active">
-    <mat-icon matListItemIcon>http</mat-icon><span i18n="navlink">Domains</span>
+    <mat-icon matListItemIcon>http</mat-icon><span i18n="navlink">{{'domains.header.domainsTitle.value' | translate}}</span>
   </a>
 
   <a mat-list-item routerLink="/devices" routerLinkActive="active">
-    <mat-icon matListItemIcon>devices</mat-icon><span i18n="navlink">Devices</span>
+    <mat-icon matListItemIcon>devices</mat-icon><span i18n="navlink">{{'devices.headerd.devicesTitle.value' | translate}}</span>
   </a>
   <!-- <a mat-list-item routerLink="/event-channel" routerLinkActive="active">
         <mat-icon matListItemIcon>data_exploration</mat-icon><span i18n="navlink">MQTT Events</span>

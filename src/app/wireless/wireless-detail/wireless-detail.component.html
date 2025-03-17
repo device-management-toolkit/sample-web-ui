@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{ pageTitle }}
+  {{ pageTitle | translate }}
 </mat-toolbar>
 
 <div class="flex-row flex-1">
@@ -18,13 +18,13 @@
     <form [formGroup]="wirelessForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1">
-          <mat-label>Wireless Profile Name</mat-label>
+          <mat-label>{{ 'wirelessDetail.wirelessProfileName.value' | translate }}</mat-label>
           <input formControlName="profileName" matInput name="profileName" placeholder="ex. wifiSSID" required />
-          <mat-error i18n>This field is required and must be alphanumeric with no spaces or symbols.</mat-error>
-          <mat-hint>Provide a name for this wireless profile.</mat-hint>
+          <mat-error>{{ 'wirelessDetail.errorRequiredField.value' | translate }}</mat-error>
+          <mat-hint>{{ 'wirelessDetail.wirelessProfileNameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <mat-label>Authentication Method</mat-label>
+          <mat-label>{{ 'wirelessDetail.authenticationMethod.value' | translate }}</mat-label>
           <mat-select formControlName="authenticationMethod" required>
             @for (method of authenticationMethods; track method) {
               <mat-option [value]="method.value">
@@ -35,9 +35,9 @@
         </mat-form-field>
         @if (showPSKPassPhrase) {
           <mat-form-field class="flex flex-1">
-            <mat-label>PSK Passphrase</mat-label>
+            <mat-label>{{ 'wirelessDetail.pskPassphrase.value' | translate }}</mat-label>
             <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase" />
-            <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+            <mat-error>{{ 'wirelessDetail.pskPassphraseHint.value' | translate }}</mat-error>
             <button
               mat-icon-button
               matSuffix
@@ -55,7 +55,7 @@
         }
         @if (showIEEE8021x) {
           <mat-form-field class="flex flex-1">
-            <mat-label>802.1x Configuration</mat-label>
+            <mat-label>{{ 'wirelessDetail.ieee8021xConfiguration.value' | translate }}</mat-label>
             <mat-select formControlName="ieee8021xProfileName">
               @for (cfgName of iee8021xConfigNames; track cfgName) {
                 <mat-option [value]="cfgName">
@@ -66,7 +66,7 @@
           </mat-form-field>
         }
         <mat-form-field class="flex flex-1">
-          <mat-label>Encryption Method</mat-label>
+          <mat-label>{{ 'wirelessDetail.encryptionMethod.value' | translate }}</mat-label>
           <mat-select formControlName="encryptionMethod" required>
             @for (encryptionMode of encryptionModes; track encryptionMode) {
               <mat-option [value]="encryptionMode.value">
@@ -74,11 +74,10 @@
               </mat-option>
             }
           </mat-select>
-          <mat-error>This field is required</mat-error>
+          <mat-error>{{ 'wirelessDetail.errorRequiredField.value' | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <mat-label>SSID</mat-label>
-
+          <mat-label>{{ 'wirelessDetail.ssid.value' | translate }}</mat-label>
           <input
             type="text"
             formControlName="ssid"
@@ -87,18 +86,18 @@
             placeholder="ex. wifi-ssid"
             required
             maxlength="32" />
-          <mat-error>This field is required</mat-error>
+          <mat-error>{{ 'wirelessDetail.ssidHint.value' | translate }}</mat-error>
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions class="flex-row flex-wrap">
         <div class="flex flex-50 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span i18n>CANCEL</span>
+            <span>{{ 'wirelessDetail.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
           <button type="submit" mat-flat-button color="primary">
-            <span i18n>SAVE</span>
+            <span>{{ 'wirelessDetail.save.value' | translate }}</span>
           </button>
         </div>
       </mat-card-actions>

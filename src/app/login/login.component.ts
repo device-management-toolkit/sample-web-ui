@@ -28,6 +28,7 @@ import {
   MatCardActions,
   MatCardFooter
 } from '@angular/material/card'
+import { TranslateModule } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
@@ -53,7 +54,8 @@ import { OAuthService } from 'angular-oauth2-oidc'
     MatChipOption,
     MatCardActions,
     MatButton,
-    MatCardFooter
+    MatCardFooter,
+    TranslateModule
   ]
 })
 export class LoginComponent {

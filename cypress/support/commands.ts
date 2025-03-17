@@ -158,6 +158,14 @@ Cypress.Commands.add('setup', () => {
     body: stats.get.success.response
   }).as('stats-request')
 
+  cy.myIntercept('GET', 'api/v1/admin/version', {
+    statusCode: 200,
+    body: stats.get.success.response
+  }).as('version-request')
+  cy.myIntercept('GET', 'api/v1/version', {
+    statusCode: 200,
+    body: stats.get.success.response
+  }).as('version-request-2')
   // Login
   cy.visit(Cypress.env('BASEURL'))
   const mpsUsername = Cypress.env('MPS_USERNAME')

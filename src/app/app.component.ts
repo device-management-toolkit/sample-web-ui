@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
 
   isLoggedIn = false
 
+  constructor() {}
+
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
       this.isLoggedIn = value
