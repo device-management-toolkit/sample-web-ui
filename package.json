@@ -51,7 +51,7 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~19.2.1",
+    "@angular-devkit/build-angular": "~19.2.3",
     "@angular-eslint/builder": "~19.2.1",
     "@angular-eslint/schematics": "~19.2.1",
     "@angular-eslint/template-parser": "~19.2.1",
