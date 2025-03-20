@@ -79,7 +79,7 @@ describe('DevicesService', () => {
         kvmAvailable: true,
         KVM: true,
         SOL: true,
-        IDER: true
+        IDER: true,
       }
 
       service.getAMTFeatures('device1').subscribe((response) => {

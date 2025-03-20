@@ -6,6 +6,9 @@
   <mat-card-header>
     <mat-card-title>Certificates</mat-card-title>
     <mat-card-subtitle>List of certificates currently registered on the AMT device</mat-card-subtitle>
+    <button mat-icon-button matTooltip="Add certificate" (click)="openAddCertDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-card-header>
   <mat-list>
     @if (isLoading) {
