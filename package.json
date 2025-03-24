@@ -61,7 +61,7 @@
     "@types/jasmine": "~5.1.7",
     "angular-eslint": "19.2.1",
     "cypress": "^13.17.0",
-    "eslint": "^9.22.0",
+    "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-license-header": "^0.8.0",
     "jasmine-core": "~5.6.0",
