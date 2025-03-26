@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs'
 import { catchError, switchMap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
-import { DeviceUserConsentComponent } from './device-user-consent/device-user-consent.component'
+import { DeviceUserConsentDialogComponent } from './device-user-consent-dialog/device-user-consent-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AMTFeaturesResponse, UserConsentData, UserConsentResponse } from 'src/models/models'
@@ -72,7 +72,7 @@ export class UserConsentService {
 
   userConsentDialog(deviceId: string): Observable<any> {
     // Open user consent dialog
-    const userConsentDialog = this.dialog.open(DeviceUserConsentComponent, {
+    const userConsentDialog = this.dialog.open(DeviceUserConsentDialogComponent, {
       height: '350px',
       width: '400px',
       data: { deviceId: deviceId }

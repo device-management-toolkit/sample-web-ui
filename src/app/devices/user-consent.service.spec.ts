@@ -72,7 +72,12 @@ describe('UserConsentService', () => {
       KVM: true,
       SOL: true,
       IDER: true,
-      optInState: 2
+      optInState: 2,
+      ocr: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false,
+      remoteErase: false
     })
     expect(reqUserConsentCodeSpy).toHaveBeenCalled()
   })

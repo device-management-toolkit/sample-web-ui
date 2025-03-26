@@ -13,7 +13,8 @@ import {
   UserConsentResponse,
   DiskInformation,
   IPSAlarmClockOccurrence,
-  IPSAlarmClockOccurrenceInput
+  IPSAlarmClockOccurrenceInput,
+  BootDetails
 } from 'src/models/models'
 
 describe('DevicesService', () => {
@@ -79,7 +80,12 @@ describe('DevicesService', () => {
         kvmAvailable: true,
         KVM: true,
         SOL: true,
-        IDER: true
+        IDER: true,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        remoteErase: false
       }
 
       service.getAMTFeatures('device1').subscribe((response) => {
@@ -204,9 +210,10 @@ describe('DevicesService', () => {
     it('should send a power action for a device', () => {
       const action = 2
       const useSOL = true
-      const mockPayload = { method: 'PowerAction', action, useSOL }
+      const bootDetails = {} as BootDetails
+      const mockPayload = { method: 'PowerAction', action, useSOL, bootDetails: {} }
 
-      service.sendPowerAction('device1', action, useSOL).subscribe((response) => {
+      service.sendPowerAction('device1', action, useSOL, bootDetails).subscribe((response) => {
         expect(response).toBeTruthy()
       })
 
@@ -219,9 +226,31 @@ describe('DevicesService', () => {
     it('should send a boot options action for a device if action >= 100', () => {
       const action = 100
       const useSOL = false
-      const mockPayload = { method: 'PowerAction', action, useSOL }
+      const bootDetails = {} as BootDetails
+      const mockPayload = { method: 'PowerAction', action, useSOL, bootDetails: {} }
 
-      service.sendPowerAction('device1', action, useSOL).subscribe((response) => {
+      service.sendPowerAction('device1', action, useSOL, bootDetails).subscribe((response) => {
+        expect(response).toBeTruthy()
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(mockPayload)
+      req.flush({})
+    })
+
+    it('should include bootDetails when provided', () => {
+      const action = 105
+      const useSOL = false
+      const bootDetails: BootDetails = {
+        url: 'https://example.com/boot.iso',
+        username: 'user',
+        password: 'password',
+        enforceSecureBoot: true
+      }
+      const mockPayload = { method: 'PowerAction', action, useSOL, bootDetails }
+
+      service.sendPowerAction('device1', action, useSOL, bootDetails).subscribe((response) => {
         expect(response).toBeTruthy()
       })
 
@@ -468,9 +497,24 @@ describe('DevicesService', () => {
         IDER: true,
         kvmAvailable: true,
         userConsent: 'all',
-        optInState: 1
+        optInState: 1,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        remoteErase: false
       }
-      const payload = { userConsent: 'none', enableKVM: true, enableSOL: true, enableIDER: true }
+      const payload = {
+        userConsent: 'none',
+        enableKVM: true,
+        enableSOL: true,
+        enableIDER: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
+      }
 
       service.setAmtFeatures('device1', payload).subscribe((response) => {
         expect(response).toEqual(mockResponse)

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>
+  {{'devices.header.httpsBootTitle.value' | translate}}
+</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{'devices.header.httpsBootDescription.value' | translate}}</p>
+  <form [formGroup]='bootForm'>
+    <div>
+      <mat-form-field class="flex flex-1">
+        <mat-label>URL</mat-label>
+        <input matInput formControlName="url" placeholder="Enter the URL">
+        <mat-error *ngIf="bootForm.get('url')?.hasError('required')">URL is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex flex-1">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Enter username">
+      </mat-form-field>
+      <mat-form-field class="flex flex-1">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Enter password">
+        <mat-error *ngIf="bootForm.get('password')?.hasError('required')">Password is required when username is provided</mat-error>
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">Enforce Secure Boot</mat-checkbox>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>OK</button>
+</mat-dialog-actions>

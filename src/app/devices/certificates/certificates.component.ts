@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, inject } from '@angular/core'
-import { MatIconButton } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -9,6 +8,11 @@ import { DevicesService } from '../devices.service'
 
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { CertInfo } from 'src/models/models'
+import { AddCertDialogComponent } from './add-cert-dialog/add-cert-dialog.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { MatButtonModule, MatIconButton } from '@angular/material/button'
 
 @Component({
   selector: 'app-certificates',
@@ -16,23 +20,34 @@ import { MatSnackBar } from '@angular/material/snack-bar'
     MatProgressBar,
     MatCardModule,
     MatIcon,
-    MatIconButton,
-    MatListModule
+    MatButtonModule,
+    MatListModule,
+    TranslateModule,
+    MatIconButton
   ],
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.scss'
 })
 export class CertificatesComponent implements OnInit {
+  private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   snackBar = inject(MatSnackBar)
 
   public isLoading = true
   public certInfo?: any
+  public addCert: CertInfo = {
+    cert: '',
+    isTrusted: false
+  }
 
   @Input()
   public deviceId = ''
 
   ngOnInit(): void {
+    this.getCertificates()
+  }
+
+  getCertificates(): void {
     this.devicesService
       .getCertificates(this.deviceId)
       .pipe(
@@ -76,5 +91,41 @@ export class CertificatesComponent implements OnInit {
     }
 
     return true
+  }
+
+  openAddCertDialog(): void {
+    this.isLoading = true
+
+    const dialogRef = this.dialog.open(AddCertDialogComponent, {
+      width: '600px',
+      disableClose: false
+    })
+
+    dialogRef.afterClosed().subscribe((addCert: CertInfo) => {
+      if (!addCert || addCert.cert === '') {
+        this.isLoading = false
+        return
+      }
+
+      this.addCertificate(addCert)
+      this.isLoading = false
+    })
+  }
+
+  addCertificate(addCert: CertInfo): void {
+    this.devicesService
+      .addCertificate(this.deviceId, addCert)
+      .pipe(
+        catchError((err) => {
+          this.snackBar.open($localize`Error adding certificate`, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.isLoading = false
+        })
+      )
+      .subscribe(() => {
+        this.getCertificates()
+      })
   }
 }
