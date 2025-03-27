@@ -151,7 +151,7 @@ describe('DeviceToolbarComponent', () => {
 
     const ocrOption = component.powerOptions.find((option) => option.action === 105)
     expect(ocrOption).toBeTruthy()
-    expect(ocrOption?.label).toBe('Perform HTTPBoot (OCR)')
+    expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
   })
 
   it('should not have OCR power option in cloud mode', () => {
