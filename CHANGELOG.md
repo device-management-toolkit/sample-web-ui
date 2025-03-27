@@ -1,3 +1,10 @@
+## [3.36.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.0...v3.36.1) (2025-03-27)
+
+
+### Bug Fixes
+
+* add tooltip to https network boot ([#2571](https://github.com/device-management-toolkit/sample-web-ui/issues/2571)) ([ae87fd4](https://github.com/device-management-toolkit/sample-web-ui/commit/ae87fd44717b08bfd6fe2bf93fc25aca28b9011c))
+
 # [3.36.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.35.0...v3.36.0) (2025-03-27)
 
 
