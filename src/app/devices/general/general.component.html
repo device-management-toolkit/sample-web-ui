@@ -116,9 +116,12 @@
         </div>
         @if (!isCloudMode) {
         <div class="flex flex-50">
-          <p>HTTPS Network boot :</p>
+          <p>HTTPS Network boot:</p>
         </div>
-        <div class="flex flex-50 justify-end">
+        <div class="flex flex-50 justify-end" 
+          matTooltip = "HTTPS Boot is not supported" 
+          [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
+          matTooltipPosition="after">
           <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
       }
