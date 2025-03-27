@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AMTFeaturesResponse, Device, UserConsentResponse } from 'src/models/models'
+import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from 'src/models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { environment } from 'src/environments/environment'
@@ -25,6 +25,7 @@ import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatToolbar } from '@angular/material/toolbar'
 import { DeviceCertDialogComponent } from '../device-cert-dialog/device-cert-dialog.component'
 import { UserConsentService } from '../user-consent.service'
+import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
 
 @Component({
   selector: 'app-device-toolbar',
@@ -50,6 +51,7 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly devicesService = inject(DevicesService)
   private readonly userConsentService = inject(UserConsentService)
   private readonly matDialog = inject(MatDialog)
+  private readonly dialog = inject(MatDialog)
 
   @Input()
   public isLoading = false
@@ -109,6 +111,13 @@ export class DeviceToolbarComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    if (!this.isCloudMode) {
+      this.powerOptions.push({
+        label: 'Perform HTTPBoot (OCR)',
+        action: 105
+      })
+    }
+
     this.devicesService.getDevice(this.deviceId).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)
@@ -159,14 +168,47 @@ export class DeviceToolbarComponent implements OnInit {
 
   sendPowerAction(action: number): void {
     if (action >= 100) {
-      this.executeAuthorizedPowerAction(action)
+      this.preprocessingForAuthorizedPowerAction(action)
     } else {
       this.executePowerAction(action)
     }
   }
 
-  executeAuthorizedPowerAction(action?: number): void {
+  performHTTPBoot(): void {
+    const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
+      width: '400px',
+      disableClose: false
+    })
+
+    dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
+      if (!bootDetails) {
+        this.isLoading = false
+        return
+      }
+      this.executeAuthorizedPowerAction(105, false, bootDetails)
+    })
+  }
+
+  preprocessingForAuthorizedPowerAction(action?: number): void {
     this.isLoading = true
+    // Handle specific action pre-processing
+    switch (action) {
+      case 105: // HTTP Boot action
+        this.performHTTPBoot()
+        break
+      case 101: {
+        // Reset to BIOS
+        const useSOL = this.router.url.toString().includes('sol')
+        this.executeAuthorizedPowerAction(action, useSOL)
+        break
+      }
+      default:
+        this.executeAuthorizedPowerAction(action)
+        break
+    }
+  }
+
+  executeAuthorizedPowerAction(action?: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
     this.devicesService
       .getAMTFeatures(this.deviceId)
       .pipe(
@@ -188,7 +230,7 @@ export class DeviceToolbarComponent implements OnInit {
       .subscribe({
         next: () => {
           if (action !== undefined) {
-            this.executePowerAction(action)
+            this.executePowerAction(action, useSOL, bootDetails)
           }
         },
         error: () => {
@@ -200,14 +242,10 @@ export class DeviceToolbarComponent implements OnInit {
       })
   }
 
-  executePowerAction(action: number): void {
+  executePowerAction(action: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
     this.isLoading = true
-    let useSOL = false
-    if (this.router.url.toString().includes('sol') && action === 101) {
-      useSOL = true
-    }
     this.devicesService
-      .sendPowerAction(this.deviceId, action, useSOL)
+      .sendPowerAction(this.deviceId, action, useSOL, bootDetails)
       .pipe(
         catchError((err) => {
           console.error(err)
