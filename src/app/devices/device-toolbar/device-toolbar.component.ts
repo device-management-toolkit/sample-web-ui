@@ -113,7 +113,7 @@ export class DeviceToolbarComponent implements OnInit {
   ngOnInit(): void {
     if (!this.isCloudMode) {
       this.powerOptions.push({
-        label: 'Perform HTTPBoot (OCR)',
+        label: 'Reset to HTTPS Boot (OCR)',
         action: 105
       })
     }
