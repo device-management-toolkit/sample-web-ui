@@ -1,3 +1,10 @@
+# [3.36.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.35.0...v3.36.0) (2025-03-27)
+
+
+### Features
+
+* add OCR HTTPS Network boot ([#2509](https://github.com/device-management-toolkit/sample-web-ui/issues/2509)) ([ac1ebce](https://github.com/device-management-toolkit/sample-web-ui/commit/ac1ebcecf767d8de1b27ab9356326342a45c7934))
+
 # [3.35.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.2...v3.35.0) (2025-03-17)
 
 
