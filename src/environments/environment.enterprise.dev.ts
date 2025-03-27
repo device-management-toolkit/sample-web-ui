@@ -10,5 +10,12 @@ export const environment = {
   mpsServer: 'http://localhost:8181',
   rpsServer: 'http://localhost:8181',
   vault: '',
-  auth: {}
+  auth: {
+    clientId: '',
+    issuer: '',
+    redirectUri: 'http://localhost:4200/dashboard',
+    scope: '',
+    responseType: 'code',
+    requireHttps: true // set to false when local
+  }
 }

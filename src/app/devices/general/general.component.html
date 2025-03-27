@@ -79,7 +79,7 @@
           <mat-checkbox formControlName="enableIDER" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
         <div class="flex flex-50">
-          <p>KVM:</p>
+          <p>Keyboard-Video-Mouse (KVM):</p>
         </div>
         <div class="flex flex-50 justify-end" 
           matTooltip = "KVM not supported" 
@@ -91,7 +91,7 @@
           </mat-checkbox>
         </div>
         <div class="flex flex-50">
-          <p>SOL:</p>
+          <p>Serial-Over-Lan (SOL):</p>
         </div>
         <div class="flex flex-50 justify-end">
           <mat-checkbox formControlName="enableSOL" (change)="setAmtFeatures()"></mat-checkbox>
@@ -100,6 +100,7 @@
           <p>User Consent:</p>
         </div>
         <div class="flex flex-50 justify-end">
+          <mat-form-field>
           <mat-select 
             (selectionChange)="setAmtFeatures()" 
             formControlName="userConsent"
@@ -111,7 +112,16 @@
               <mat-option [value]="uc">{{ uc }}</mat-option>
             }
           </mat-select>
+          </mat-form-field>
         </div>
+        @if (!isCloudMode) {
+        <div class="flex flex-50">
+          <p>HTTPS Network boot :</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+      }
       </div>
     </mat-card-content>
   </mat-card>

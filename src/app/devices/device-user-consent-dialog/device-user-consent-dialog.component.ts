@@ -24,9 +24,9 @@ import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 
 @Component({
-  selector: 'app-device-user-consent',
-  templateUrl: './device-user-consent.component.html',
-  styleUrls: ['./device-user-consent.component.scss'],
+  selector: 'app-device-user-consent-dialog',
+  templateUrl: './device-user-consent-dialog.component.html',
+  styleUrls: ['./device-user-consent-dialog.component.scss'],
   imports: [
     MatDialogTitle,
     ReactiveFormsModule,
@@ -40,10 +40,10 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
     MatButton
   ]
 })
-export class DeviceUserConsentComponent {
+export class DeviceUserConsentDialogComponent {
   private readonly formBuilder = inject(FormBuilder)
   snackBar = inject(MatSnackBar)
-  dialogRef = inject<MatDialogRef<DeviceUserConsentComponent>>(MatDialogRef)
+  dialogRef = inject<MatDialogRef<DeviceUserConsentDialogComponent>>(MatDialogRef)
   data = inject<UserConsentData>(MAT_DIALOG_DATA)
   private readonly devicesService = inject(DevicesService)
 

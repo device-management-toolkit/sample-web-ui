@@ -126,12 +126,19 @@ export interface AMTFeaturesResponse {
   KVM: boolean
   SOL: boolean
   IDER: boolean
+  ocr: boolean
+  httpsBootSupported: boolean
+  winREBootSupported: boolean
+  localPBABootSupported: boolean
+  remoteErase: boolean
 }
 export interface AMTFeaturesRequest {
   userConsent: string
   enableKVM: boolean
   enableSOL: boolean
   enableIDER: boolean
+  ocr: boolean
+  remoteErase: boolean
 }
 
 export interface PowerState {
@@ -463,4 +470,16 @@ export interface MPSVersion {
 export interface RPSVersion {
   serviceVersion: string
   protocolVersion: string
+}
+
+export interface CertInfo {
+  cert: string
+  isTrusted: boolean
+}
+
+export interface BootDetails {
+  url: string
+  username: string
+  password: string
+  enforceSecureBoot: boolean
 }

@@ -1,12 +1,25 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2025
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DevicesService } from '../devices.service'
 import { CertificatesComponent } from './certificates.component'
+import { DevicesService } from '../devices.service'
 import { of } from 'rxjs'
+import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('CertificatesComponent', () => {
   let component: CertificatesComponent
   let fixture: ComponentFixture<CertificatesComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let translate: TranslateService
+
+  function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
+  }
 
   const response = {
     profileAssociation: [
@@ -133,26 +146,37 @@ describe('CertificatesComponent', () => {
     }
   }
 
-  const responseEmpty = {
-    ProfileAssociation: [],
-    Certificates: {},
-    PublicKeys: {}
-  }
-
   beforeEach(async () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
-      'getCertificates'
+      'getCertificates',
+      'addCertificate'
     ])
     devicesServiceSpy.getCertificates.and.returnValue(of(response))
+    devicesServiceSpy.addCertificate.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [CertificatesComponent],
+      imports: [
+        CertificatesComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
+      ],
       providers: [
-        { provide: DevicesService, useValue: devicesServiceSpy }]
+        { provide: DevicesService, useValue: devicesServiceSpy },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     }).compileComponents()
 
     fixture = TestBed.createComponent(CertificatesComponent)
     component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setDefaultLang('en')
     fixture.detectChanges()
   })
 
@@ -160,13 +184,50 @@ describe('CertificatesComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('certIsEmpty should return false', () => {
-    component.certInfo = response
-    expect(component.isCertEmpty()).toBe(false)
+  it('isCertEmpty should return true when certificates are undefined', () => {
+    component.certInfo = undefined
+    expect(component.isCertEmpty()).toBeTrue()
   })
 
-  it('certIsEmpty should return true', () => {
-    component.certInfo = responseEmpty
-    expect(component.isCertEmpty()).toBe(true)
+  it('isCertEmpty should return true when certificates array is empty', () => {
+    component.certInfo = { certificates: {} }
+    expect(component.isCertEmpty()).toBeTrue()
+  })
+
+  it('isCertEmpty should return false when certificates array has items', () => {
+    component.certInfo = {
+      certificates: {
+        '1': { displayName: 'Cert1', x509Certificate: 'cert-data' }
+      }
+    }
+    expect(component.isCertEmpty()).toBeFalse()
+  })
+
+  it('should call getCertificates on init', () => {
+    expect(devicesServiceSpy.getCertificates).toHaveBeenCalled()
+  })
+
+  it('should handle certificate download', () => {
+    const mockUrl = 'blob:mock-url'
+    const mockAnchor = document.createElement('a')
+
+    spyOn(window.URL, 'createObjectURL').and.returnValue(mockUrl)
+    spyOn(window.URL, 'revokeObjectURL')
+    spyOn(document, 'createElement').and.returnValue(mockAnchor)
+    spyOn(document.body, 'appendChild')
+    spyOn(document.body, 'removeChild')
+    spyOn(mockAnchor, 'click')
+
+    const cert = {
+      displayName: 'TestCert',
+      x509Certificate: 'MIIC1TCCAb2gAwIBAgIJAOjOBRLbw3l7MA0GCSqGSIb3DQEBCwUAMCExHzAdBgNV'
+    }
+
+    component.downloadCert(cert)
+
+    expect(window.URL.createObjectURL).toHaveBeenCalled()
+    expect(mockAnchor.download).toBe('TestCert.crt')
+    expect(mockAnchor.click).toHaveBeenCalled()
+    expect(window.URL.revokeObjectURL).toHaveBeenCalledWith(mockUrl)
   })
 })

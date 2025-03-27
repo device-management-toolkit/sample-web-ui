@@ -111,6 +111,22 @@
     "value": "Devices",
     "description": "Devices page title"
   },
+  "devices.header.httpsBootTitle": {
+    "value": "HTTPS Network boot (OCR)",
+    "description": "HTTPS Boot dialog title"
+  },
+  "devices.header.httpsBootDescription": {
+    "value": "HTTPS Network Boot securely boots a device over the network using encrypted HTTPS. Use it for safe provisioning or recovery without physical media.",
+    "description": "HTTPS Boot dialog description"
+  },
+  "devices.header.addCertificateTitle": {
+    "value": "Add Certificate",
+    "description": "Add Certificate dialog title"
+  },
+  "devices.header.addCertificateDescription": {
+    "value": "The certificate will be added to AMT.",
+    "description": "Add Certificate dialog description"
+  },
   "devices.noData": {
     "value": "No Devices",
     "description": "No Devices message"

@@ -59,7 +59,12 @@ describe('KvmComponent', () => {
         IDER: true,
         redirection: true,
         kvmAvailable: true,
-        optInState: 0
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       })
     )
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
@@ -70,7 +75,12 @@ describe('KvmComponent', () => {
         IDER: true,
         redirection: true,
         kvmAvailable: true,
-        optInState: 0
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       })
     )
     devicesService.getDevice.and.returnValue(
@@ -258,7 +268,12 @@ describe('KvmComponent', () => {
           IDER: true,
           redirection: true,
           kvmAvailable: true,
-          optInState: 0
+          optInState: 0,
+          httpsBootSupported: true,
+          ocr: true,
+          winREBootSupported: true,
+          localPBABootSupported: true,
+          remoteErase: true
         })
         expect(component.isLoading).toBe(true)
         done()
@@ -324,7 +339,12 @@ describe('KvmComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     component.readyToLoadKvm = false
     component.checkUserConsent()
@@ -354,7 +374,12 @@ describe('KvmComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: (results) => {
@@ -371,7 +396,12 @@ describe('KvmComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableKvmDialog').and.returnValue(throwError(new Error('err')))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -390,7 +420,12 @@ describe('KvmComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableKvmDialog').and.returnValue(of(false))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -408,7 +443,12 @@ describe('KvmComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableKvmDialog').and.returnValue(of(true))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({

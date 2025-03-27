@@ -32,7 +32,20 @@ describe('GeneralComponent', () => {
       'getWsmanOperations'
     ])
     devicesServiceSpy.getAMTFeatures.and.returnValue(
-      of({ userConsent: 'ALL', KVM: true, SOL: true, IDER: true, redirection: true, optInState: 1, kvmAvailable: true })
+      of({
+        userConsent: 'ALL',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        optInState: 1,
+        kvmAvailable: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
+      })
     )
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))

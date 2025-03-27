@@ -8,12 +8,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
-import { DeviceUserConsentComponent } from './device-user-consent.component'
+import { DeviceUserConsentDialogComponent } from './device-user-consent-dialog.component'
 import { RouterModule } from '@angular/router'
 
-describe('DeviceUserConsentComponent', () => {
-  let component: DeviceUserConsentComponent
-  let fixture: ComponentFixture<DeviceUserConsentComponent>
+describe('DeviceUserConsentDialogComponent', () => {
+  let component: DeviceUserConsentDialogComponent
+  let fixture: ComponentFixture<DeviceUserConsentDialogComponent>
   let sendUserConsentCodeSpy: jasmine.Spy
   let cancelUserConsentCodeSpy: jasmine.Spy
   const dialogMock = {
@@ -31,7 +31,7 @@ describe('DeviceUserConsentComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceUserConsentComponent
+        DeviceUserConsentDialogComponent
       ],
       providers: [
         { provide: DevicesService, useValue: devicesService },
@@ -42,7 +42,7 @@ describe('DeviceUserConsentComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceUserConsentComponent)
+    fixture = TestBed.createComponent(DeviceUserConsentDialogComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
     dialogMock.close = jasmine.createSpy('close')

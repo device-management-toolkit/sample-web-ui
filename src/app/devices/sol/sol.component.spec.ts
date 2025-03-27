@@ -57,7 +57,12 @@ describe('SolComponent', () => {
         IDER: true,
         redirection: true,
         kvmAvailable: true,
-        optInState: 0
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       })
     )
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
@@ -68,7 +73,12 @@ describe('SolComponent', () => {
         IDER: true,
         redirection: true,
         kvmAvailable: true,
-        optInState: 0
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: true
       })
     )
     devicesService.getDevice.and.returnValue(
@@ -236,7 +246,12 @@ describe('SolComponent', () => {
           SOL: true,
           IDER: true,
           redirection: true,
-          optInState: 0
+          optInState: 0,
+          httpsBootSupported: true,
+          ocr: true,
+          winREBootSupported: true,
+          localPBABootSupported: true,
+          remoteErase: true
         })
         expect(component.isLoading).toBe(true)
         done()
@@ -272,7 +287,12 @@ describe('SolComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     component.readyToLoadSol = false
     component.checkUserConsent()
@@ -302,7 +322,12 @@ describe('SolComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: (results) => {
@@ -318,7 +343,12 @@ describe('SolComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(throwError(new Error('err')))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -336,7 +366,12 @@ describe('SolComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(of(false))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -355,7 +390,12 @@ describe('SolComponent', () => {
       IDER: true,
       redirection: true,
       kvmAvailable: true,
-      optInState: 0
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(of(true))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
