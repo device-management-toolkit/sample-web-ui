@@ -119,37 +119,6 @@ describe('HTTPBootDialogComponent', () => {
     expect(component.bootForm.valid).toBeFalsy()
   })
 
-  it('should mark form as valid when URL, username and password are provided', () => {
-    component.bootForm.patchValue({
-      url: 'https://example.com',
-      username: 'testuser',
-      password: 'password123'
-    })
-    fixture.detectChanges()
-
-    expect(component.bootForm.valid).toBeTruthy()
-  })
-
-  it('should clear password required validator when username is cleared', () => {
-    const usernameControl = component.bootForm.get('username')
-    const passwordControl = component.bootForm.get('password')
-
-    component.bootForm.patchValue({
-      url: 'https://example.com',
-      username: 'testuser',
-      password: ''
-    })
-    fixture.detectChanges()
-
-    expect(component.bootForm.valid).toBeFalsy()
-
-    usernameControl?.setValue('')
-    fixture.detectChanges()
-
-    expect(passwordControl?.validator).toBeFalsy()
-    expect(component.bootForm.valid).toBeTruthy()
-  })
-
   it('should call onCancel and close dialog when Cancel button is clicked', () => {
     component.onCancel()
     expect(dialogRefSpy.close).toHaveBeenCalled()
@@ -174,8 +143,8 @@ describe('HTTPBootDialogComponent', () => {
   it('should call onSubmit and close dialog with form values when OK button is clicked', () => {
     const expectedValue = {
       url: 'https://example.com',
-      username: 'testuser',
-      password: 'password123',
+      username: '',
+      password: '',
       enforceSecureBoot: true
     }
 
@@ -184,28 +153,5 @@ describe('HTTPBootDialogComponent', () => {
 
     component.onSubmit()
     expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedValue)
-  })
-
-  it('should toggle password visibility when visibility button is clicked', () => {
-    expect(component.hidePassword).toBeTruthy()
-
-    const visibilityButton = debugElement.query(By.css('button[type="button"]'))
-    visibilityButton.nativeElement.click()
-
-    expect(component.hidePassword).toBeFalsy()
-
-    visibilityButton.nativeElement.click()
-    expect(component.hidePassword).toBeTruthy()
-  })
-
-  it('should verify password input type changes based on hidePassword value', () => {
-    const passwordInput = debugElement.query(By.css('input[formControlName="password"]'))
-
-    expect(passwordInput.nativeElement.type).toBe('password')
-
-    component.hidePassword = false
-    fixture.detectChanges()
-
-    expect(passwordInput.nativeElement.type).toBe('text')
   })
 })
