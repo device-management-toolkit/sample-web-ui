@@ -1,3 +1,10 @@
+## [3.36.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.1...v3.36.2) (2025-03-28)
+
+
+### Bug Fixes
+
+* remove username and password from https boot ([#2572](https://github.com/device-management-toolkit/sample-web-ui/issues/2572)) ([2448564](https://github.com/device-management-toolkit/sample-web-ui/commit/24485645247f9c8762176995d2189c2434dcf6f8))
+
 ## [3.36.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.0...v3.36.1) (2025-03-27)
 
 
