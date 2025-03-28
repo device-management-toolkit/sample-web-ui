@@ -10,7 +10,7 @@
         <input matInput formControlName="url" placeholder="Enter the URL">
         <mat-error *ngIf="bootForm.get('url')?.hasError('required')">URL is required</mat-error>
       </mat-form-field>
-      <mat-form-field class="flex flex-1">
+      <!-- <mat-form-field class="flex flex-1">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" placeholder="Enter username">
       </mat-form-field>
@@ -21,7 +21,7 @@
         <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
           <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
     <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">Enforce Secure Boot</mat-checkbox>
   </form>
