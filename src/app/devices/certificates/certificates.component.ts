@@ -61,6 +61,7 @@ export class CertificatesComponent implements OnInit {
       )
       .subscribe((certInfo: any) => {
         this.certInfo = certInfo
+        this.isLoading = false
       })
   }
 
@@ -94,8 +95,6 @@ export class CertificatesComponent implements OnInit {
   }
 
   openAddCertDialog(): void {
-    this.isLoading = true
-
     const dialogRef = this.dialog.open(AddCertDialogComponent, {
       width: '600px',
       disableClose: false
@@ -103,12 +102,10 @@ export class CertificatesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((addCert: CertInfo) => {
       if (!addCert || addCert.cert === '') {
-        this.isLoading = false
         return
       }
-
+      this.isLoading = true
       this.addCertificate(addCert)
-      this.isLoading = false
     })
   }
 
@@ -117,12 +114,11 @@ export class CertificatesComponent implements OnInit {
       .addCertificate(this.deviceId, addCert)
       .pipe(
         catchError((err) => {
+          this.isLoading = false
           this.snackBar.open($localize`Error adding certificate`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
-        finalize(() => {
-          this.isLoading = false
-        })
+        finalize(() => {})
       )
       .subscribe(() => {
         this.getCertificates()

@@ -182,7 +182,6 @@ export class DeviceToolbarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
       if (!bootDetails) {
-        this.isLoading = false
         return
       }
       this.executeAuthorizedPowerAction(105, false, bootDetails)
@@ -190,7 +189,6 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   preprocessingForAuthorizedPowerAction(action?: number): void {
-    this.isLoading = true
     // Handle specific action pre-processing
     switch (action) {
       case 105: // HTTP Boot action
@@ -209,6 +207,7 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   executeAuthorizedPowerAction(action?: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
+    this.isLoading = true
     this.devicesService
       .getAMTFeatures(this.deviceId)
       .pipe(
@@ -257,10 +256,20 @@ export class DeviceToolbarComponent implements OnInit {
         })
       )
       .subscribe((data) => {
-        if (data.Body.ReturnValueStr === 'NOT_READY') {
-          this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+        if (this.isCloudMode) {
+          if (data.Body?.ReturnValueStr === 'NOT_READY') {
+            this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+          } else {
+            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          }
         } else {
-          this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          if (data.ReturnValue === 0) {
+            console.log('Power action sent successfully:', data)
+            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          } else {
+            console.log('Power action failed:', data)
+            this.snackBar.open($localize`Power action failed`, undefined, SnackbarDefaults.defaultError)
+          }
         }
       })
   }
