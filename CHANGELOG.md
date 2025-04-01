@@ -1,3 +1,10 @@
+## [3.36.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.3...v3.36.4) (2025-04-01)
+
+
+### Bug Fixes
+
+* fixes wireless config name translation ([4770e9b](https://github.com/device-management-toolkit/sample-web-ui/commit/4770e9be35846ee0084e03bcaf6260dc18b4678d))
+
 ## [3.36.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.2...v3.36.3) (2025-04-01)
 
 
