@@ -116,7 +116,7 @@
     "description": "HTTPS Boot dialog title"
   },
   "devices.header.httpsBootDescription": {
-    "value": "HTTPS Network Boot securely boots a device over the network using encrypted HTTPS. Use it for safe provisioning or recovery without physical media.",
+    "value": "HTTPS Network Boot secures the boot process using encrypted HTTPS to protect boot files. Initiate One Click Recovery to quickly restore the operating system.",
     "description": "HTTPS Boot dialog description"
   },
   "devices.header.addCertificateTitle": {
