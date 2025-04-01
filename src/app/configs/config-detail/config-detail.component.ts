@@ -68,13 +68,14 @@ export class ConfigDetailComponent implements OnInit {
   private readonly activeRoute = inject(ActivatedRoute)
   router = inject(Router)
   configsService = inject(ConfigsService)
+  translate = inject(TranslateService)
 
   public configForm: FormGroup
   public isLoading = false
   public pageTitle
   public isEdit = false
   public errorMessages: string[] = []
-  constructor(public translate: TranslateService) {
+  constructor() {
     const fb = this.fb
 
     this.configForm = fb.group({

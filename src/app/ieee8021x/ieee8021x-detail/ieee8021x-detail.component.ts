@@ -70,6 +70,7 @@ export class IEEE8021xDetailComponent implements OnInit {
   private readonly activeRoute = inject(ActivatedRoute)
   router = inject(Router)
   ieee8021xService = inject(IEEE8021xService)
+  translate = inject(TranslateService)
 
   ieee8021xForm: FormGroup
   pageTitle: string
@@ -82,7 +83,7 @@ export class IEEE8021xDetailComponent implements OnInit {
   pxeTimeoutMax = 60 * 60 * 24 // one day
   pxeTimeoutDefault = 60 * 2 // two mninutes
 
-  constructor(public translate: TranslateService) {
+  constructor() {
     const fb = this.fb
 
     this.ieee8021xForm = fb.group({

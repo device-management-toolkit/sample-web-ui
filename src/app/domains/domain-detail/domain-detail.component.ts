@@ -65,6 +65,7 @@ export class DomainDetailComponent implements OnInit {
   private readonly activeRoute = inject(ActivatedRoute)
   router = inject(Router)
   domainsService = inject(DomainsService)
+  translate = inject(TranslateService)
 
   public domainForm: FormGroup
   public isLoading = false
@@ -72,7 +73,7 @@ export class DomainDetailComponent implements OnInit {
   public isEdit = false
   public certPassInputType = 'password'
   public errorMessages: string[] = []
-  constructor(public translate: TranslateService) {
+  constructor() {
     const fb = this.fb
 
     this.domainForm = fb.group({
