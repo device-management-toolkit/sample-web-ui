@@ -1,3 +1,10 @@
+## [3.36.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.2...v3.36.3) (2025-04-01)
+
+
+### Bug Fixes
+
+* correct HTTPS boot message ([#2576](https://github.com/device-management-toolkit/sample-web-ui/issues/2576)) ([a451a28](https://github.com/device-management-toolkit/sample-web-ui/commit/a451a282c5c663cb956579aee9911dd2d8064b02))
+
 ## [3.36.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.1...v3.36.2) (2025-03-28)
 
 
