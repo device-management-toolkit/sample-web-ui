@@ -299,6 +299,14 @@
     "value": "New Wireless Config",
     "description": "Title for creating a new wireless configuration"
   },
+  "wirelessDetail.wirelessProfileName": {
+    "value": "Wireless Profile Name",
+    "description": "Label for the wireless profile name field"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "value": "Provide a name for the wireless profile",
+    "description": "Hint for the wireless profile name field"
+  },
   "wirelessDetail.profileCreatedSuccessfully": {
     "value": "Profile created successfully",
     "description": "Success message for creating wireless profile"

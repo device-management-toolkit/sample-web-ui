@@ -104,6 +104,7 @@ export class ProfileDetailComponent implements OnInit {
   private readonly wirelessService = inject(WirelessService)
   private readonly ieee8021xService = inject(IEEE8021xService)
   dialog = inject(MatDialog)
+  translate = inject(TranslateService)
 
   profileForm: FormGroup
   pageTitle: string
@@ -140,7 +141,7 @@ export class ProfileDetailComponent implements OnInit {
     direct: 'DIRECT'
   }
 
-  constructor(public translate: TranslateService) {
+  constructor() {
     const fb = this.fb
 
     this.profileForm = fb.group({

@@ -60,6 +60,7 @@ export class WirelessDetailComponent implements OnInit {
   private readonly activeRoute = inject(ActivatedRoute)
   router = inject(Router)
   wirelessService = inject(WirelessService)
+  translate = inject(TranslateService)
   private readonly ieee8021xService = inject(IEEE8021xService)
 
   public wirelessForm: FormGroup
@@ -76,7 +77,7 @@ export class WirelessDetailComponent implements OnInit {
   isEdit = false
   errorMessages: any[] = []
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     const fb = this.fb
     this.pageTitle = this.translate.instant('wirelessDetail.newWirelessConfig.value')
     this.wirelessForm = fb.group({
