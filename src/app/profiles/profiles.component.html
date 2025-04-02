@@ -9,7 +9,7 @@
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading !== false) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
@@ -72,7 +72,7 @@
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="25"
+          [pageSize]="pageEvent.pageSize"
           [length]="totalCount"
           showFirstLastButtons
           (page)="pageChanged($event)">

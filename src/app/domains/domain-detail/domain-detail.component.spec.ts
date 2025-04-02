@@ -78,7 +78,7 @@ describe('DomainDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.isEdit).toBeTrue()
     expect(component.pageTitle).toEqual('domain')
   })

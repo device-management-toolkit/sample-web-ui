@@ -69,8 +69,6 @@ if (environment.useOAuth) {
 }
 bootstrapApplication(AppComponent, {
   providers
+}).catch((err) => {
+  console.error(err)
 })
-  .then(() => {})
-  .catch((err) => {
-    console.error(err)
-  })

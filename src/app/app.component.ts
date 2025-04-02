@@ -22,12 +22,11 @@ import { MatSidenavModule } from '@angular/material/sidenav'
   ]
 })
 export class AppComponent implements OnInit {
-  router = inject(Router)
-  authService = inject(AuthService)
+  // Dependency Injection
+  private readonly router = inject(Router)
+  private readonly authService = inject(AuthService)
 
-  isLoggedIn = false
-
-  constructor() {}
+  public isLoggedIn = false
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {

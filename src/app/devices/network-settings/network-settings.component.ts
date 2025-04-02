@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { DevicesService } from '../devices.service'
 import { MatCardModule } from '@angular/material/card'
 import { catchError, finalize, throwError } from 'rxjs'
@@ -23,13 +23,16 @@ import { NetworkConfig } from 'src/models/models'
   styleUrl: './network-settings.component.scss'
 })
 export class NetworkSettingsComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  devicesService = inject(DevicesService)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly devicesService = inject(DevicesService)
 
   @Input()
   public deviceId = ''
-  isLoading = true
+
+  public isLoading = signal(true)
   public networkResults?: NetworkConfig
+
   ngOnInit(): void {
     this.devicesService
       .getNetworkSettings(this.deviceId)
@@ -39,7 +42,7 @@ export class NetworkSettingsComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((results) => {

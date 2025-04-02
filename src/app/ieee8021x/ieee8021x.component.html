@@ -10,7 +10,7 @@
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
@@ -18,7 +18,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'ieee8021xConfigs.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="pagedConfigs.data">
+      <mat-table [dataSource]="tableDataSource">
         <ng-container matColumnDef="profileName">
           <mat-header-cell *matHeaderCellDef>{{
             'ieee8021xConfigs.table.profileName.value' | translate
@@ -52,16 +52,14 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (pagedConfigs.totalCount) {
-      <div>
-        <mat-paginator
-          [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="25"
-          [length]="pagedConfigs.totalCount"
-          (page)="onPaginator($event)"
-          showFirstLastButtons>
-        </mat-paginator>
-      </div>
+    @if (totalCount !== 0) {
+      <mat-paginator
+        [pageSizeOptions]="[25, 50, 100]"
+        [pageSize]="pageEvent.pageSize"
+        [length]="totalCount"
+        (page)="onPaginator($event)"
+        showFirstLastButtons>
+      </mat-paginator>
     }
   </mat-card-content>
 </mat-card>

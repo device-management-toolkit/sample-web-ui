@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -33,7 +33,7 @@ export class CertificatesComponent implements OnInit {
   private readonly devicesService = inject(DevicesService)
   snackBar = inject(MatSnackBar)
 
-  public isLoading = true
+  public isLoading = signal(true)
   public certInfo?: any
   public addCert: CertInfo = {
     cert: '',
@@ -56,12 +56,12 @@ export class CertificatesComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((certInfo: any) => {
         this.certInfo = certInfo
-        this.isLoading = false
+        this.isLoading.set(false)
       })
   }
 
@@ -104,21 +104,24 @@ export class CertificatesComponent implements OnInit {
       if (!addCert || addCert.cert === '') {
         return
       }
-      this.isLoading = true
+      this.isLoading.set(true)
       this.addCertificate(addCert)
     })
   }
 
   addCertificate(addCert: CertInfo): void {
+    this.isLoading.set(true)
     this.devicesService
       .addCertificate(this.deviceId, addCert)
       .pipe(
         catchError((err) => {
-          this.isLoading = false
+          this.isLoading.set(false)
           this.snackBar.open($localize`Error adding certificate`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
-        finalize(() => {})
+        finalize(() => {
+          this.isLoading.set(false)
+        })
       )
       .subscribe(() => {
         this.getCertificates()

@@ -38,29 +38,28 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   providers: [
     {
       provide: NGX_MONACO_EDITOR_CONFIG,
-      useValue: {
-        onMonacoLoad: () => {}
-      }
+      useValue: {}
     }
   ],
   templateUrl: './explorer.component.html',
   styleUrl: './explorer.component.scss'
 })
 export class ExplorerComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  readonly router = inject(Router)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly dialog = inject(MatDialog)
+  private readonly router = inject(Router)
   private readonly devicesService = inject(DevicesService)
 
   @Input()
   public deviceId = ''
 
-  XMLData: any
-  myControl = new FormControl('')
-  editorOptions = { theme: 'vs-dark', language: 'xml', minimap: { enabled: false } }
-  wsmanOperations: string[] = []
-  selectedWsmanOperation = ''
-  filteredOptions!: Observable<string[]>
+  public XMLData: any
+  public myControl = new FormControl('')
+  public editorOptions = { theme: 'vs-dark', language: 'xml', minimap: { enabled: false } }
+  public wsmanOperations: string[] = []
+  public selectedWsmanOperation = ''
+  public filteredOptions!: Observable<string[]>
 
   ngOnInit(): void {
     this.devicesService.getWsmanOperations().subscribe((data) => {

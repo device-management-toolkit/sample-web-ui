@@ -19,13 +19,15 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
   styleUrl: './device-cert-dialog.component.scss'
 })
 export class DeviceCertDialogComponent {
-  deviceService = inject(DevicesService)
-  snackBar = inject(MatSnackBar)
-  dialogData = inject(MAT_DIALOG_DATA)
-  ref = inject(MatDialogRef)
+  // Dependency Injection
+  private readonly deviceService = inject(DevicesService)
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly dialogData = inject(MAT_DIALOG_DATA)
+  private readonly ref = inject(MatDialogRef)
 
   public data: any = {}
   public isPinned = false
+
   constructor() {
     const dialogData = this.dialogData
 

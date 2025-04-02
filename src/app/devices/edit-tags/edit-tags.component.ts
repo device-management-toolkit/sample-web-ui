@@ -42,8 +42,8 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
   ]
 })
 export class DeviceEditTagsComponent {
-  dialogRef = inject<MatDialogRef<DeviceEditTagsComponent>>(MatDialogRef)
-  tags = inject(MAT_DIALOG_DATA)
+  private readonly dialogRef = inject<MatDialogRef<DeviceEditTagsComponent>>(MatDialogRef)
+  public readonly tags = inject(MAT_DIALOG_DATA)
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   tagsHaveChanged: boolean

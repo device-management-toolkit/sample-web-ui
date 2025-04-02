@@ -93,7 +93,7 @@ describe('ConfigDetailComponent', () => {
   })
 
   it('should update the server address format on change', () => {
-    component.configForm.get('serverAddressFormat')?.setValue('201')
+    component.configForm.get('serverAddressFormat')?.setValue(201)
     component.configForm.get('serverAddressFormat')?.updateValueAndValidity({ emitEvent: true })
     fixture.detectChanges()
     expect(component.configForm.get('commonName')?.value).toEqual(null)
@@ -112,7 +112,7 @@ describe('ConfigDetailComponent', () => {
     component.configForm.patchValue({
       configName: 'ciraConfig1',
       mpsServerAddress: '255.255.255.255',
-      serverAddressFormat: '3', // 3 = ip, 201 = FQDN? wtf?
+      serverAddressFormat: 3, // 3 = ip, 201 = FQDN? wtf?
       commonName: '255.255.255.255',
       mpsPort: 4433,
       username: 'admin',
@@ -124,7 +124,7 @@ describe('ConfigDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(loadMpsRootCertSpy).toHaveBeenCalled()
     expect(updateRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
@@ -135,7 +135,7 @@ describe('ConfigDetailComponent', () => {
     component.configForm.patchValue({
       configName: 'ciraConfig2',
       mpsServerAddress: '255.255.255.255',
-      serverAddressFormat: '3', // 3 = ip, 201 = FQDN? wtf?
+      serverAddressFormat: 3, // 3 = ip, 201 = FQDN? wtf?
       commonName: '255.255.255.255',
       mpsPort: 4433,
       username: 'admin',
@@ -148,7 +148,7 @@ describe('ConfigDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })

@@ -109,7 +109,7 @@ describe('IEEE8021xDetailComponent', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     component.ieee8021xForm.patchValue({
       profileName: 'profile1',
-      userName: 'user'
+      authenticationProtocol: 98
     })
     component.onSubmit()
 

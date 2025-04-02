@@ -9,7 +9,7 @@
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading !== false) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
@@ -56,16 +56,14 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (totalCount) {
-      <div>
-        <mat-paginator
-          [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="25"
-          [length]="totalCount"
-          (page)="pageChanged($event)"
-          showFirstLastButtons>
-        </mat-paginator>
-      </div>
+    @if (totalCount !== 0) {
+      <mat-paginator
+        [pageSizeOptions]="[25, 50, 100]"
+        [pageSize]="pageEvent.pageSize"
+        [length]="totalCount"
+        (page)="pageChanged($event)"
+        showFirstLastButtons>
+      </mat-paginator>
     }
   </mat-card-content>
 </mat-card>

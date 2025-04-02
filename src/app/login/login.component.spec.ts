@@ -121,7 +121,7 @@ describe('LoginComponent', () => {
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
 
-      expect(component.isLoading).toBeFalse()
+      expect(component.isLoading()).toBeFalse()
     })
   })
 

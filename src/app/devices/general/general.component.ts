@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
-import { Router } from '@angular/router'
 import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from 'src/models/models'
 import { DevicesService } from '../devices.service'
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { catchError, finalize, forkJoin, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -33,10 +32,9 @@ import { MatTooltip } from '@angular/material/tooltip'
   styleUrl: './general.component.scss'
 })
 export class GeneralComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly router = inject(Router)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-  fb = inject(FormBuilder)
+  private readonly fb = inject(FormBuilder)
 
   @Input()
   public deviceId = ''
@@ -56,16 +54,27 @@ export class GeneralComponent implements OnInit {
     remoteErase: false
   }
   public hwInfo?: HardwareInformation
-  public amtEnabledFeatures: FormGroup
-  public isLoading = true
   public isDisabled = true
+  public isKVMDisabled = false
+  public amtEnabledFeatures = this.fb.group({
+    enableIDER: false,
+    enableKVM: [{ value: false, disabled: this.isKVMDisabled }],
+    enableSOL: false,
+    userConsent: [{ value: 'none', disabled: this.isDisabled }],
+    optInState: 0,
+    redirection: false,
+    httpsBootSupported: false,
+    winREBootSupported: false,
+    localPBABootSupported: false
+  })
+
+  public isLoading = signal(true)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
   public amtVersion: string | null = null
   public amtBuild: string | null = null
   public amtSKU: string | null = null
   public amtProvisioningMode: string | null = null
-  public isKVMDisabled = false
   public cloudMode = environment.cloud
   public device: Device | null = null
   public userConsentValues = [
@@ -75,22 +84,6 @@ export class GeneralComponent implements OnInit {
   ]
   public generalSettings: any = {}
   public isCloudMode: boolean = environment.cloud
-
-  constructor() {
-    const fb = this.fb
-
-    this.amtEnabledFeatures = fb.group({
-      enableIDER: false,
-      enableKVM: [{ value: false, disabled: this.isKVMDisabled }],
-      enableSOL: false,
-      userConsent: [{ value: 'none', disabled: this.isDisabled }],
-      optInState: 0,
-      redirection: false,
-      httpsBootSupported: false,
-      winREBootSupported: false,
-      localPBABootSupported: false
-    })
-  }
 
   ngOnInit(): void {
     forkJoin({
@@ -115,10 +108,10 @@ export class GeneralComponent implements OnInit {
     })
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
-      .subscribe((results: any) => {
+      .subscribe((results) => {
         this.amtDHCPDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix ?? ''
         this.amtTrustedDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix ?? ''
         this.amtVersion = results.amtVersion?.CIM_SoftwareIdentity?.responses[10].VersionString ?? ''
@@ -142,24 +135,26 @@ export class GeneralComponent implements OnInit {
               value: results.amtFeatures.ocr && results.amtFeatures.httpsBootSupported,
               disabled: !results.amtFeatures.httpsBootSupported
             }
-          ]
+          ],
+          winREBootSupported: results.amtFeatures.winREBootSupported,
+          localPBABootSupported: results.amtFeatures.localPBABootSupported
         })
       })
   }
 
   setAmtFeatures(): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.devicesService
       .setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
-        next: (results: any) => {
+        next: (results) => {
           if (this.cloudMode) {
-            this.snackBar.open($localize`${results.status}`, undefined, SnackbarDefaults.defaultSuccess)
+            this.snackBar.open($localize`${(results as any).status}`, undefined, SnackbarDefaults.defaultSuccess)
           } else {
             this.snackBar.open($localize`AMT Features updated`, undefined, SnackbarDefaults.defaultSuccess)
           }
