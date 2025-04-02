@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>Add a New Device</h2>
 <div mat-dialog-content>
-  <form [formGroup]="form" (ngSubmit)="submitForm()" >
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Hostname</mat-label>
-      <input matInput title="hostname" formControlName="hostname">
+      <input matInput title="hostname" formControlName="hostname" />
       <mat-hint>Enter the hostname</mat-hint>
       @if (form.get('hostname')?.errors?.required) {
         <mat-error>Hostname is required</mat-error>
@@ -15,7 +15,7 @@
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Friendly Name</mat-label>
-      <input matInput title="friendlyName" formControlName="friendlyName">
+      <input matInput title="friendlyName" formControlName="friendlyName" />
       <mat-hint>Enter a friendly name</mat-hint>
       @if (form.get('friendlyName')?.errors?.required) {
         <mat-error>Friendly Name is required</mat-error>
@@ -27,7 +27,7 @@
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Username</mat-label>
-      <input matInput title="username" formControlName="username">
+      <input matInput title="username" formControlName="username" />
       <mat-hint>Enter your username</mat-hint>
       @if (form.get('username')?.errors?.required) {
         <mat-error>Username is required</mat-error>
@@ -39,31 +39,43 @@
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Password</mat-label>
-      <input matInput title="password" formControlName="password" type="password" required minlength='8' maxlength='32'>
+      <input
+        matInput
+        title="password"
+        formControlName="password"
+        type="password"
+        required
+        minlength="8"
+        maxlength="32" />
       <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
       <mat-hint>Enter your password</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>Tags</mat-label>
-      <mat-chip-grid #tagList aria-label='Tag selection'>
+      <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags; track tag) {
-          <mat-chip-row [removable]='true' (removed)='remove(tag)'>
-            {{tag}}
+          <mat-chip-row [removable]="true" (removed)="remove(tag)">
+            {{ tag }}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip-row>
         }
-        <input placeholder='New tag...' [matChipInputFor]='tagList' [matChipInputSeparatorKeyCodes]='separatorKeysCodes' [matChipInputAddOnBlur]='true' (matChipInputTokenEnd)='add($event)'>
+        <input
+          placeholder="New tag..."
+          [matChipInputFor]="tagList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)" />
       </mat-chip-grid>
-      <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices
-        grow. Type a tag, then present enter or comma.
+      <mat-hint
+        >You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag,
+        then present enter or comma.
       </mat-hint>
     </mat-form-field>
 
     <mat-checkbox formControlName="useTLS" class="flex flex-1">Use TLS</mat-checkbox>
     <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">Allow Self-Signed Certificates</mat-checkbox>
 
-    <button mat-raised-button color="primary" type="submit" >Submit</button>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
   </form>
-
 </div>

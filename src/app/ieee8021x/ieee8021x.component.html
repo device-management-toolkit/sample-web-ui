@@ -1,12 +1,12 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>{{'ieee8021xConfigs.headerd.ieeeTitle.value' | translate}}</span>
+    <span i18n>{{ 'ieee8021xConfigs.headerd.ieeeTitle.value' | translate }}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
     <button mat-button (click)="navigateTo()">
       <mat-icon>add</mat-icon>
-      {{ 'common.addNew.value' | translate  }}
+      {{ 'common.addNew.value' | translate }}
     </button>
   </div>
 </mat-toolbar>
@@ -16,22 +16,28 @@
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">{{'ieee8021xConfigs.noData.value' | translate}}</h3>
+      <h3 class="flex justify-center">{{ 'ieee8021xConfigs.noData.value' | translate }}</h3>
     } @else {
       <mat-table [dataSource]="pagedConfigs.data">
         <ng-container matColumnDef="profileName">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.profileName.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.profileName.value' | translate
+          }}</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="authenticationProtocol">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.authenticationProtocol.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.authenticationProtocol.value' | translate
+          }}</mat-header-cell>
           <!-- map the selections to lookup values -->
           <mat-cell *matCellDef="let element">
             {{ element.authenticationProtocol | toolkit: protocols }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="interface">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.interface.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.interface.value' | translate
+          }}</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="remove">

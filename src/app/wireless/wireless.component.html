@@ -25,7 +25,9 @@
         </ng-container>
         <!-- server Column -->
         <ng-container matColumnDef="authmethod">
-          <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.authentication.value' | translate }} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ 'wirelessConfigs.authentication.value' | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.authenticationMethod | toolkit: authenticationMethods }}
           </mat-cell>

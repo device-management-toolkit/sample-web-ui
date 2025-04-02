@@ -3,27 +3,26 @@
   <p>Remove a tag by clicking on the tag itself.</p>
   <p>Add a tag by clicking in the prompt, type the tag name, then present enter or comma.</p>
   <form>
-
     <mat-form-field class="flex flex-1">
       <mat-label>Tags</mat-label>
-      <mat-chip-grid #tagList aria-label='Tag selection'>
+      <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags; track tag) {
-          <mat-chip-row [removable]='true' (removed)='remove(tag)'>
-            {{tag}}
+          <mat-chip-row [removable]="true" (removed)="remove(tag)">
+            {{ tag }}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip-row>
         }
-        <input placeholder='New tag...'
-          [matChipInputFor]='tagList'
-          [matChipInputSeparatorKeyCodes]='separatorKeysCodes'
-          [matChipInputAddOnBlur]='true'
-          (matChipInputTokenEnd)='add($event)'>
-        </mat-chip-grid>
-      </mat-form-field>
-    </form>
-
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button type="submit" (click)="done()">Done</button>
-    <button mat-button type="button" (click)="cancel()">Cancel</button>
-  </mat-dialog-actions>
+        <input
+          placeholder="New tag..."
+          [matChipInputFor]="tagList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)" />
+      </mat-chip-grid>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button type="submit" (click)="done()">Done</button>
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>
