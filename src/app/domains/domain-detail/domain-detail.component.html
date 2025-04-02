@@ -2,7 +2,7 @@
   {{ pageTitle | translate }}
 </mat-toolbar>
 @if (isLoading) {
-  <mat-progress-bar mode=indeterminate></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-row flex-1 justify-center">
   <div class="flex-25 hide-sm"></div>
@@ -15,7 +15,7 @@
       <mat-list>
         @for (item of errorMessages; track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color='warn' matListItemIcon>error</mat-icon>
+            <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
@@ -24,21 +24,27 @@
     <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1">
-          <input formControlName="profileName" matInput name="name" placeholder="Name" required>
+          <input formControlName="profileName" matInput name="name" placeholder="Name" required />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter a name to give this domain (ex. AMT Domain)</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="flex flex-1">
-          <input formControlName="domainSuffix" matInput name="domainName" placeholder="Domain Name" required minlength=3>
+          <input
+            formControlName="domainSuffix"
+            matInput
+            name="domainName"
+            placeholder="Domain Name"
+            required
+            minlength="3" />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter the FQDN that is associated with the provisioning certificate (i.e amtdomain.com)</mat-hint>
         </mat-form-field>
 
-        <div class="flex-row flex-wrap flex-1" style="margin:16px 0">
-          <div class="flex flex-50" style="margin-top:12px">
+        <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
+          <div class="flex flex-50" style="margin-top: 12px">
             <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
-            <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx">
+            <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx" />
           </div>
           <div class="flex flex-50 justify-center items-center">
             @if (domainForm.controls.provisioningCert.value == null) {
@@ -46,8 +52,7 @@
                 <mat-icon color="warn">remove_circle</mat-icon>
                 Certificate Not Yet Uploaded
               </div>
-            }
-            @else {
+            } @else {
               <div class="flex flex-50 justify-center">
                 <mat-icon color="primary">check_circle</mat-icon>
                 Certificate Uploaded
@@ -56,11 +61,22 @@
           </div>
         </div>
 
-        <mat-form-field class="flex flex-1" style="margin:16px 0">
-          <input [type]="certPassInputType" formControlName="provisioningCertPassword" matInput name="provisioningCertPassword" placeholder="Provisioning Cert Password" required>
+        <mat-form-field class="flex flex-1" style="margin: 16px 0">
+          <input
+            [type]="certPassInputType"
+            formControlName="provisioningCertPassword"
+            matInput
+            name="provisioningCertPassword"
+            placeholder="Provisioning Cert Password"
+            required />
           <mat-error>This field is required</mat-error>
           <mat-hint>The password for the provisioning certificate</mat-hint>
-          <button mat-icon-button matSuffix type="button" matTooltip="Show / Hide Password" (click)="toggleCertPassVisibility()">
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            matTooltip="Show / Hide Password"
+            (click)="toggleCertPassVisibility()">
             @if (certPassInputType === 'text') {
               <mat-icon>visibility</mat-icon>
             } @else {
