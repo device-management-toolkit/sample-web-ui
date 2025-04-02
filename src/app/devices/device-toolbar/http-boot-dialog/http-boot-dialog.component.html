@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>
-  {{'devices.header.httpsBootTitle.value' | translate}}
+  {{ 'devices.header.httpsBootTitle.value' | translate }}
 </h2>
 <mat-dialog-content class="mat-typography">
-  <p>{{'devices.header.httpsBootDescription.value' | translate}}</p>
-  <form [formGroup]='bootForm'>
+  <p>{{ 'devices.header.httpsBootDescription.value' | translate }}</p>
+  <form [formGroup]="bootForm">
     <div>
       <mat-form-field class="flex flex-1">
         <mat-label>URL</mat-label>
-        <input matInput formControlName="url" placeholder="Enter the URL">
+        <input matInput formControlName="url" placeholder="Enter the URL" />
         <mat-error *ngIf="bootForm.get('url')?.hasError('required')">URL is required</mat-error>
       </mat-form-field>
       <!-- <mat-form-field class="flex flex-1">

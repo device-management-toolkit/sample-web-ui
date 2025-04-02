@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -46,20 +46,20 @@ import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.com
   ]
 })
 export class DeviceToolbarComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly router = inject(Router)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly userConsentService = inject(UserConsentService)
   private readonly matDialog = inject(MatDialog)
   private readonly dialog = inject(MatDialog)
+  public readonly router = inject(Router)
 
   @Input()
-  public isLoading = false
+  public isLoading = signal(false)
 
   @Input()
   public deviceId = ''
 
-  amtFeatures?: AMTFeaturesResponse
+  public amtFeatures?: AMTFeaturesResponse
   public isCloudMode = environment.cloud
   public device: Device | null = null
   public powerState = ''
@@ -125,7 +125,7 @@ export class DeviceToolbarComponent implements OnInit {
     })
   }
   getPowerState(): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.devicesService.getPowerState(this.deviceId).subscribe((powerState) => {
       this.powerState =
         powerState.powerstate.toString() === '2'
@@ -133,7 +133,7 @@ export class DeviceToolbarComponent implements OnInit {
           : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
             ? 'Power: Sleep'
             : 'Power: Off'
-      this.isLoading = false
+      this.isLoading.set(false)
     })
   }
   isPinned(): boolean {
@@ -207,7 +207,7 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   executeAuthorizedPowerAction(action?: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.devicesService
       .getAMTFeatures(this.deviceId)
       .pipe(
@@ -236,13 +236,13 @@ export class DeviceToolbarComponent implements OnInit {
           this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
         },
         complete: () => {
-          this.isLoading = false
+          this.isLoading.set(false)
         }
       })
   }
 
   executePowerAction(action: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.devicesService
       .sendPowerAction(this.deviceId, action, useSOL, bootDetails)
       .pipe(
@@ -252,7 +252,7 @@ export class DeviceToolbarComponent implements OnInit {
           return of(null)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((data) => {
@@ -286,12 +286,12 @@ export class DeviceToolbarComponent implements OnInit {
     const dialogRef = this.matDialog.open(AreYouSureDialogComponent)
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.devicesService
           .sendDeactivate(this.deviceId)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({

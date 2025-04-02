@@ -1,4 +1,4 @@
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-1 flex-row">
@@ -177,8 +177,8 @@
   </mat-card>
 </div>
 <div class="flex-1 flex-row">
-     @if (!isCloudMode) {
-      <mat-card class="flex flex-50 gap-12">
+  @if (!isCloudMode) {
+    <mat-card class="flex flex-50 gap-12">
       <mat-card-header>
         <mat-card-title> Storage Summary</mat-card-title>
         <mat-card-subtitle>Summary of Storage information</mat-card-subtitle>
@@ -202,11 +202,13 @@
               <p>Size:</p>
             </div>
             <div class="flex flex-50 justify-end">
-              <span class="mat-h3" data-cy="Size">{{ calculateMediaSize(diskInfo?.CIM_MediaAccessDevice?.responses[0][$index]?.MaxMediaSize) }}</span>
+              <span class="mat-h3" data-cy="Size">{{
+                calculateMediaSize(diskInfo?.CIM_MediaAccessDevice?.responses[0][$index]?.MaxMediaSize)
+              }}</span>
             </div>
           </div>
         }
       </mat-card-content>
-  </mat-card>
+    </mat-card>
   }
- </div>
+</div>

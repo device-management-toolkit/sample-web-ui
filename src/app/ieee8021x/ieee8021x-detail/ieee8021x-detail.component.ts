@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -65,56 +64,56 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   ]
 })
 export class IEEE8021xDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  fb = inject(FormBuilder)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
-  router = inject(Router)
-  ieee8021xService = inject(IEEE8021xService)
-  translate = inject(TranslateService)
+  private readonly ieee8021xService = inject(IEEE8021xService)
+  private readonly translate = inject(TranslateService)
+  public readonly router = inject(Router)
 
-  ieee8021xForm: FormGroup
-  pageTitle: string
-  isLoading = false
-  isEdit = false
-  authenticationProtocols: FormOption<number>[] = []
-  errorMessages: any[] = []
-  profileNameMaxLen = 32
-  pxeTimeoutMin = 0 // disables timeout
-  pxeTimeoutMax = 60 * 60 * 24 // one day
-  pxeTimeoutDefault = 60 * 2 // two mninutes
+  public readonly profileNameMaxLen = 32
+  public readonly pxeTimeoutMin = 0 // disables timeout
+  public readonly pxeTimeoutMax = 60 * 60 * 24 // one day
+  public ieee8021xForm = this.fb.nonNullable.group({
+    profileName: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(this.profileNameMaxLen),
+        Validators.pattern('[a-zA-Z0-9]*')
+      ]
+    ],
+    authenticationProtocol: [
+      0,
+      [Validators.required, this.protocolValidator]
+    ],
+    pxeTimeout: [
+      120,
+      [
+        Validators.required,
+        Validators.min(this.pxeTimeoutMin),
+        Validators.max(this.pxeTimeoutMax)
+      ]
+    ],
+    wiredInterface: [
+      true,
+      [Validators.required]
+    ],
+    version: ['']
+  })
+  public pageTitle: string
+  public authenticationProtocols: FormOption<number>[] = AuthenticationProtocols.filter(
+    (z) => z.mode === 'wired' || z.mode === 'both'
+  )
+  public errorMessages: any[] = []
+
+  public isLoading = signal(false)
+  public isEdit = false
 
   constructor() {
-    const fb = this.fb
-
-    this.ieee8021xForm = fb.group({
-      profileName: [
-        null,
-        [
-          Validators.required,
-          Validators.maxLength(this.profileNameMaxLen),
-          Validators.pattern('[a-zA-Z0-9]*')
-        ]
-      ],
-      authenticationProtocol: [
-        null,
-        [Validators.required, this.protocolValidator]
-      ],
-      pxeTimeout: [
-        this.pxeTimeoutDefault,
-        [
-          Validators.required,
-          Validators.min(this.pxeTimeoutMin),
-          Validators.max(this.pxeTimeoutMax)
-        ]
-      ],
-      wiredInterface: [
-        null,
-        [Validators.required]
-      ],
-      version: [null]
-    })
-    // add custom validation to enforce protcols appropriate to interface type
-    // unable to add this protocolValidator in the declaration becuase it causes circular form reference problems
+    // add custom validation to enforce protocols appropriate to interface type
+    // unable to add this protocolValidator in the declaration because it causes circular form reference problems
     this.ieee8021xForm.controls.authenticationProtocol.addValidators(this.protocolValidator())
     this.ieee8021xForm.controls.wiredInterface.valueChanges.subscribe((isWired) => {
       if (isWired) {
@@ -130,23 +129,20 @@ export class IEEE8021xDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.isEdit = true
         this.ieee8021xService
           .getRecord(params.name as string)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({
             next: (config) => {
-              this.pageTitle = 'IEEE8021x Config'
+              this.pageTitle = config.profileName
               this.ieee8021xForm.controls.profileName.disable()
               this.ieee8021xForm.patchValue(config)
-              if (config.wiredInterface) {
-                this.pxeTimeoutDefault = 0
-              }
             }
           })
       }
@@ -171,30 +167,27 @@ export class IEEE8021xDetailComponent implements OnInit {
   onSubmit(): void {
     if (this.ieee8021xForm.valid) {
       this.errorMessages = []
-      this.isLoading = true
+      this.isLoading.set(true)
       // disable pxeTimeout if not wired
       if (!this.ieee8021xForm.controls.wiredInterface.value) {
         this.ieee8021xForm.controls.pxeTimeout.setValue(this.pxeTimeoutMin)
       }
       const config: IEEE8021xConfig = Object.assign({}, this.ieee8021xForm.getRawValue())
       let request: Observable<IEEE8021xConfig>
-      let reqType: string
       if (this.isEdit) {
         request = this.ieee8021xService.update(config)
-        reqType = 'updated'
       } else {
         request = this.ieee8021xService.create(config)
-        reqType = 'created'
       }
       request
         .pipe(
           finalize(() => {
-            this.isLoading = false
+            this.isLoading.set(false)
           })
         )
         .subscribe({
           complete: () => {
-            this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
             void this.router.navigate(['/ieee8021x'])
           },
           error: (error) => {

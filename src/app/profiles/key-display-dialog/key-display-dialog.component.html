@@ -2,13 +2,13 @@
 <mat-dialog-content>
   <mat-dialog-content>
     <p>The key will only be displayed once. Use this key to decode the encrypted profile for use with rpc-go.</p>
-    <mat-form-field appearance="fill" style="width:100%;">
+    <mat-form-field appearance="fill" style="width: 100%">
       <mat-label>Key</mat-label>
-      <input matInput [value]="key" readonly>
+      <input matInput [value]="key" readonly />
       <button mat-icon-button matSuffix (click)="copyKey()"><mat-icon>file_copy</mat-icon></button>
-
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close="false">OK</button>
   </mat-dialog-actions>
+</mat-dialog-content>

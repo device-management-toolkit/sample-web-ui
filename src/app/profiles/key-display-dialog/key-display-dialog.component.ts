@@ -20,10 +20,11 @@ import { MatIconModule } from '@angular/material/icon'
   styleUrl: './key-display-dialog.component.scss'
 })
 export class KeyDisplayDialogComponent {
-  data = inject(MAT_DIALOG_DATA)
-  private clipboard = inject(Clipboard)
+  private readonly data = inject(MAT_DIALOG_DATA)
+  private readonly clipboard = inject(Clipboard)
 
-  key = ''
+  public key = ''
+
   constructor() {
     const data = this.data
     this.key = data.key

@@ -1,8 +1,8 @@
 <mat-toolbar>
   {{ pageTitle | translate }}
 </mat-toolbar>
-@if (isLoading) {
-  <mat-progress-bar mode=indeterminate></mat-progress-bar>
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-row">
   <div class="flex-25 hide-sm"></div>
@@ -15,7 +15,7 @@
       <mat-list>
         @for (item of errorMessages; track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color='warn' matListItemIcon>error</mat-icon>
+            <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
@@ -23,42 +23,54 @@
     }
     <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
-        <mat-form-field class="flex flex-1" style="margin-bottom: 10px;">
-          <input formControlName="configName" matInput name="configName" placeholder="ex. ciraConfig1" required>
+        <mat-form-field class="flex flex-1" style="margin-bottom: 10px">
+          <input formControlName="configName" matInput name="configName" placeholder="ex. ciraConfig1" required />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter a name for this CIRA config</mat-hint>
         </mat-form-field>
-        <mat-radio-group class="flex-1 flex-row flex-wrap" name="serverAddressFormat" formControlName="serverAddressFormat">
-          <mat-radio-button class="flex flex-50" value="3" checked="true">IPv4</mat-radio-button>
-          <mat-radio-button class="flex flex-50" value="201">FQDN</mat-radio-button>
+        <mat-radio-group
+          class="flex-1 flex-row flex-wrap"
+          name="serverAddressFormat"
+          formControlName="serverAddressFormat">
+          <mat-radio-button class="flex flex-50" [value]="3" checked="true">IPv4</mat-radio-button>
+          <mat-radio-button class="flex flex-50" [value]="201">FQDN</mat-radio-button>
         </mat-radio-group>
         <mat-form-field class="flex flex-1">
-          <input formControlName="mpsServerAddress" matInput name="mpsServerAddress" placeholder="MPS Address" required>
+          <input
+            formControlName="mpsServerAddress"
+            matInput
+            name="mpsServerAddress"
+            placeholder="MPS Address"
+            required />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter the address of where your MPS instance is hosted</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <input formControlName="commonName" matInput name="commonName" placeholder="Cert Common Name (CN=)" required>
+          <input
+            formControlName="commonName"
+            matInput
+            name="commonName"
+            placeholder="Cert Common Name (CN=)"
+            required />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter the common name contained in the certificate.</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <input type=number formControlName="mpsPort" matInput name="mpsPort" placeholder="Port" required>
+          <input type="number" formControlName="mpsPort" matInput name="mpsPort" placeholder="Port" required />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter the CIRA Port for the MPS Instance. The default is 4433.</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16">
+          <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16" />
           <mat-error>This field is required</mat-error>
           <mat-hint>Enter the username for accessing MPS</mat-hint>
         </mat-form-field>
-        <br><br><br><br>
+        <br /><br /><br /><br />
         @if (!shouldShowRegenPass()) {
           <mat-slide-toggle formControlName="regeneratePassword">
             Generate New Random Password Upon Saving
           </mat-slide-toggle>
         }
-
       </mat-card-content>
       <mat-card-actions class="flex-row">
         <div class="flex flex-50 justify-center">

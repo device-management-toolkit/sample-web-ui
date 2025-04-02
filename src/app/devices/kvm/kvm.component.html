@@ -3,12 +3,12 @@
     @if (amtFeatures?.kvmAvailable) {
       <mat-form-field style="margin-bottom: 0">
         <mat-label>Choose encoding type</mat-label>
-          <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
-            @for (encode of encodings; track encode) {
-              <mat-option [value]="encode.value">
-                {{ encode.viewValue }}
-              </mat-option>
-            }
+        <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
+          @for (encode of encodings; track encode) {
+            <mat-option [value]="encode.value">
+              {{ encode.viewValue }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     }
@@ -18,11 +18,11 @@
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
         <mat-icon>fullscreen</mat-icon>Fullscreen
       </button>
-      @if (deviceState === 0 && isLoading === false) {
+      @if (deviceState === 0 && !isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
           <mat-icon>tv_on</mat-icon>Connect KVM
         </button>
-      } @else if (deviceState !== 2 && isLoading === true) {
+      } @else if (deviceState !== 2 && isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
           <mat-icon>tv_off</mat-icon>Connecting KVM...
         </button>
@@ -43,7 +43,7 @@
     }
   </div>
 </mat-toolbar>
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
 }
 @if (readyToLoadKvm && amtFeatures?.kvmAvailable) {

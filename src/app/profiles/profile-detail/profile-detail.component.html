@@ -1,109 +1,142 @@
 <mat-toolbar>
   {{ pageTitle | translate }}
 </mat-toolbar>
-@if (isLoading) {
-<mat-progress-bar mode='indeterminate'></mat-progress-bar>
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-row justify-center">
   <div class="flex-25 hide-sm"></div>
 
   <mat-card class="flex flex-50">
     @if (errorMessages.length > 0) {
-    <mat-list>
-      @for (item of errorMessages; track item) {
-      <mat-list-item class="error-messages-container">
-        <mat-icon color='warn' matListItemIcon>error</mat-icon>
-        <span class="error-messages" matListItemTitle>{{ item }}</span>
-      </mat-list-item>
-      }
-    </mat-list>
+      <mat-list>
+        @for (item of errorMessages; track item) {
+          <mat-list-item class="error-messages-container">
+            <mat-icon color="warn" matListItemIcon>error</mat-icon>
+            <span class="error-messages" matListItemTitle>{{ item }}</span>
+          </mat-list-item>
+        }
+      </mat-list>
     }
-    <form [formGroup]='profileForm' (ngSubmit)='confirm()'>
+    <form [formGroup]="profileForm" (ngSubmit)="confirm()">
       <mat-card-content class="flex-row flex-wrap">
-
         <mat-form-field class="flex flex-1">
           <mat-label>Profile Name</mat-label>
-          <input formControlName='profileName' matInput name='profileName' placeholder='ex. profile1' required>
+          <input formControlName="profileName" matInput name="profileName" placeholder="ex. profile1" required />
           <mat-error i18n>This field is required</mat-error>
           <mat-hint>
-            Provide a name for this profile.
-            This will be the name of the profile used on the device during activation.
+            Provide a name for this profile. This will be the name of the profile used on the device during activation.
           </mat-hint>
         </mat-form-field>
-        <mat-form-field class="flex flex-1" style="margin-top:24px">
+        <mat-form-field class="flex flex-1" style="margin-top: 24px">
           <mat-label>Activation Mode</mat-label>
-          <mat-select formControlName='activation' required>
+          <mat-select formControlName="activation" required>
             @for (activationMode of activationModes; track activationMode) {
-            <mat-option data-cy='activationModes' [value]='activationMode.value'>
-              {{activationMode.label}}
-            </mat-option>
+              <mat-option data-cy="activationModes" [value]="activationMode.value">
+                {{ activationMode.label }}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-label class="flex flex-1">AMT Features - Enable/Disable redirection features of AMT</mat-label>
-        <mat-checkbox class="flex flex-1" data-cy='redirect_ider' formControlName='iderEnabled'>IDE
-          Redirect</mat-checkbox>
-        <mat-checkbox class="flex flex-1" data-cy='redirect_kvm' formControlName='kvmEnabled'>KVM</mat-checkbox>
-        <mat-checkbox class="flex flex-1" data-cy='redirect_sol' formControlName='solEnabled'>SOL</mat-checkbox>
+        <mat-checkbox class="flex flex-1" data-cy="redirect_ider" formControlName="iderEnabled"
+          >IDE Redirect</mat-checkbox
+        >
+        <mat-checkbox class="flex flex-1" data-cy="redirect_kvm" formControlName="kvmEnabled">KVM</mat-checkbox>
+        <mat-checkbox class="flex flex-1" data-cy="redirect_sol" formControlName="solEnabled">SOL</mat-checkbox>
 
-        <mat-form-field class="flex flex-1" style='margin-top:10px'>
+        <mat-form-field class="flex flex-1" style="margin-top: 10px">
           <mat-label>User Consent</mat-label>
           <mat-hint>Controls when a user must be present for select AMT features</mat-hint>
-          <mat-select formControlName='userConsent' required>
+          <mat-select formControlName="userConsent" required>
             @for (mode of userConsentModes; track mode) {
-            <mat-option [value]='mode.value'>
-              {{mode.label}}
-            </mat-option>
+              <mat-option [value]="mode.value">
+                {{ mode.label }}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
 
-        <mat-divider style="margin:16px 0"></mat-divider>
+        <mat-divider style="margin: 16px 0"></mat-divider>
 
-        <mat-checkbox class="flex flex-1" data-cy='genAmtPass' formControlName='generateRandomPassword'>
+        <mat-checkbox class="flex flex-1" data-cy="genAmtPass" formControlName="generateRandomPassword">
           Generate Random AMT Password For Each Device
         </mat-checkbox>
 
         <mat-form-field class="flex flex-1">
           <mat-label>AMT Password</mat-label>
-          <input [type]='amtInputType' formControlName='amtPassword' matInput name='amtPassword' required minlength='8' maxlength='32'>
+          <input
+            [type]="amtInputType"
+            formControlName="amtPassword"
+            matInput
+            name="amtPassword"
+            required
+            minlength="8"
+            maxlength="32" />
           <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-          <mat-hint>The AMT Password is used for remote access of a device. It is also required for
-            reconfiguring/deactivating the device.
+          <mat-hint
+            >The AMT Password is used for remote access of a device. It is also required for reconfiguring/deactivating
+            the device.
           </mat-hint>
-          <button mat-icon-button matSuffix type='button' matTooltip='Show / Hide Password' (click)='toggleAMTPassVisibility()' [disabled]='profileForm.controls.amtPassword.disabled'>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            matTooltip="Show / Hide Password"
+            (click)="toggleAMTPassVisibility()"
+            [disabled]="profileForm.controls.amtPassword.disabled">
             @if (amtInputType !== 'text') {
-            <mat-icon>visibility</mat-icon>
+              <mat-icon>visibility</mat-icon>
             } @else {
-            <mat-icon>visibility_off</mat-icon>
+              <mat-icon>visibility_off</mat-icon>
             }
           </button>
-          <button mat-icon-button matSuffix data-cy='genStaticAmt' type='button' matTooltip='Generate Random Password' (click)='generateAMTPassword()' [disabled]='profileForm.controls.amtPassword.disabled'>
+          <button
+            mat-icon-button
+            matSuffix
+            data-cy="genStaticAmt"
+            type="button"
+            matTooltip="Generate Random Password"
+            (click)="generateAMTPassword()"
+            [disabled]="profileForm.controls.amtPassword.disabled">
             <mat-icon>loop</mat-icon>
           </button>
         </mat-form-field>
 
-        <mat-checkbox class="flex flex-1" data-cy='genMebxPass' formControlName='generateRandomMEBxPassword'>
+        <mat-checkbox class="flex flex-1" data-cy="genMebxPass" formControlName="generateRandomMEBxPassword">
           Generate Random MEBX Password For Each Device
         </mat-checkbox>
 
         <mat-form-field class="flex flex-1">
           <mat-label>MEBX Password</mat-label>
-          <input [type]='mebxInputType' matInput formControlName='mebxPassword' required minlength='8' maxlength='32'>
+          <input [type]="mebxInputType" matInput formControlName="mebxPassword" required minlength="8" maxlength="32" />
           <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
           <mat-hint>
-            The MEBX Password is used for protecting the BIOS access when a user is present with a device.
-            It can only be set when the activation mode is set to Admin Control Mode.
+            The MEBX Password is used for protecting the BIOS access when a user is present with a device. It can only
+            be set when the activation mode is set to Admin Control Mode.
           </mat-hint>
-          <button mat-icon-button matSuffix type='button' matTooltip='Show / Hide Password' (click)='toggleMEBXPassVisibility()' [disabled]='profileForm.controls.mebxPassword.disabled'>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            matTooltip="Show / Hide Password"
+            (click)="toggleMEBXPassVisibility()"
+            [disabled]="profileForm.controls.mebxPassword.disabled">
             @if (mebxInputType !== 'text') {
-            <mat-icon>visibility</mat-icon>
+              <mat-icon>visibility</mat-icon>
             } @else {
-            <mat-icon>visibility_off</mat-icon>
+              <mat-icon>visibility_off</mat-icon>
             }
           </button>
-          <button mat-icon-button matSuffix data-cy='genStaticMebx' type='button' matTooltip='Generate Random Password' (click)='generateMEBXPassword()' [disabled]='profileForm.controls.mebxPassword.disabled'>
+          <button
+            mat-icon-button
+            matSuffix
+            data-cy="genStaticMebx"
+            type="button"
+            matTooltip="Generate Random Password"
+            (click)="generateMEBXPassword()"
+            [disabled]="profileForm.controls.mebxPassword.disabled">
             <mat-icon>loop</mat-icon>
           </button>
         </mat-form-field>
@@ -112,187 +145,214 @@
 
         <mat-label class="flex flex-1">Network Configuration</mat-label>
 
-        <mat-label class="flex flex-1" style="margin-top: 15px;">Wired</mat-label>
-        <mat-radio-group class="flex flex-1" name='dhcpEnabled' formControlName='dhcpEnabled'>
-          <mat-radio-button [value]='true' checked='true'>DHCP</mat-radio-button>
-          <mat-radio-button [value]='false'>STATIC</mat-radio-button>
+        <mat-label class="flex flex-1" style="margin-top: 15px">Wired</mat-label>
+        <mat-radio-group class="flex flex-1" name="dhcpEnabled" formControlName="dhcpEnabled">
+          <mat-radio-button [value]="true" checked="true">DHCP</mat-radio-button>
+          <mat-radio-button [value]="false">STATIC</mat-radio-button>
         </mat-radio-group>
 
-        <mat-checkbox class="flex flex-1" formControlName='ipSyncEnabled'>
+        <mat-checkbox class="flex flex-1" formControlName="ipSyncEnabled">
           Enable IP Synchronization
           @if (profileForm.controls.ipSyncEnabled.enabled) {
-          <p class='like-mat-hint'>
-            Only applicable for the wired interface. Requires LMS to perform synchronization
-          </p>
+            <p class="like-mat-hint">
+              Only applicable for the wired interface. Requires LMS to perform synchronization
+            </p>
           }
           @if (profileForm.controls.ipSyncEnabled.disabled) {
-          <p class='like-mat-hint'>Always enabled for DHCP</p>
+            <p class="like-mat-hint">Always enabled for DHCP</p>
           }
         </mat-checkbox>
 
         @if (showIEEE8021xConfigurations) {
-        <mat-form-field class="flex flex-1" style='margin-top:10px'>
-          <mat-label>Wired 802.1x Configuration</mat-label>
-          <mat-select formControlName='ieee8021xProfileName'>
-            @for (cfg of iee8021xConfigurations; track cfg) {
-            <mat-option [value]='cfg.profileName'>
-              {{cfg.profileName}}
-            </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="flex flex-1" style="margin-top: 10px">
+            <mat-label>Wired 802.1x Configuration</mat-label>
+            <mat-select formControlName="ieee8021xProfileName">
+              @for (cfg of iee8021xConfigurations; track cfg) {
+                <mat-option [value]="cfg.profileName">
+                  {{ cfg.profileName }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         }
 
-        <mat-label style="margin-top: 15px;">Wireless</mat-label>
+        <mat-label style="margin-top: 15px">Wireless</mat-label>
 
-        <mat-checkbox class="flex flex-1" data-cy='localWifiSyncEnabled' formControlName='localWifiSyncEnabled' style='margin-top: 15px'>
+        <mat-checkbox
+          class="flex flex-1"
+          data-cy="localWifiSyncEnabled"
+          formControlName="localWifiSyncEnabled"
+          style="margin-top: 15px">
           Enable OS WiFi Profile Synchronization
           @if (profileForm.controls.localWifiSyncEnabled.enabled) {
-          <p class='like-mat-hint'>
-            Only applicable for the wireless interface.
-          </p>
+            <p class="like-mat-hint">Only applicable for the wireless interface.</p>
           }
           @if (profileForm.controls.localWifiSyncEnabled.disabled) {
-          <p class='like-mat-hint'></p>
+            <p class="like-mat-hint"></p>
           }
         </mat-checkbox>
 
         @if (showWirelessConfigurations) {
-        <mat-form-field class="flex flex-1" style='margin-top: 20px'>
-          <mat-label>Wi-Fi Profiles</mat-label>
-          <input matInput type='text' data-cy='wifiAutocomplete' placeholder='Search for Wi-Fi Profiles to Add' [formControl]='wirelessAutocomplete' [matAutocomplete]='auto'>
-          <mat-autocomplete autoActiveFirstOption #auto='matAutocomplete' (optionSelected)='selectWifiProfile($event)'>
-            @for (wifi of filteredWirelessList | async; track wifi) {
-            <mat-option [value]='wifi' [ngClass]='isSelectable(wifi)'>
-              {{wifi}}
-            </mat-option>
-            }
-          </mat-autocomplete>
-          <mat-hint>Wi-Fi will not work over static Network</mat-hint>
-        </mat-form-field>
+          <mat-form-field class="flex flex-1" style="margin-top: 20px">
+            <mat-label>Wi-Fi Profiles</mat-label>
+            <input
+              matInput
+              type="text"
+              data-cy="wifiAutocomplete"
+              placeholder="Search for Wi-Fi Profiles to Add"
+              [formControl]="wirelessAutocomplete"
+              [matAutocomplete]="auto" />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              (optionSelected)="selectWifiProfile($event)">
+              @for (wifi of filteredWirelessList | async; track wifi) {
+                <mat-option [value]="wifi" [ngClass]="isSelectable(wifi)">
+                  {{ wifi }}
+                </mat-option>
+              }
+            </mat-autocomplete>
+            <mat-hint>Wi-Fi will not work over static Network</mat-hint>
+          </mat-form-field>
         }
 
-        @if ((selectedWifiConfigs.length > 0)) {
-        <div>
-          <mat-label class='mat-body-1'>Associated Wireless Profiles (In Priority Order)</mat-label>
-          <br />
-          <mat-hint>Drag and Drop to reorder</mat-hint>
-        </div>
+        @if (selectedWifiConfigs.length > 0) {
+          <div>
+            <mat-label class="mat-body-1">Associated Wireless Profiles (In Priority Order)</mat-label>
+            <br />
+            <mat-hint>Drag and Drop to reorder</mat-hint>
+          </div>
         }
-        <mat-list cdkDropList (cdkDropListDropped)='drop($event)' class='drag-boundary'>
+        <mat-list cdkDropList (cdkDropListDropped)="drop($event)" class="drag-boundary">
           @for (item of selectedWifiConfigs; track item) {
-          <mat-list-item class='flex flex-1 drag-box' cdkDrag cdkDragLockAxis='y' cdkDragBoundary='.drag-boundary'>
-            <mat-icon matListItemIcon>drag_handle</mat-icon>
-            <div class="flex-row" matListItemTitle>
-              <div class="flex flex-1 items-center">{{item.priority}}. {{item.profileName}}</div>
-              <div class="flex flex-1 justify-end items-center">
-                <button type='button' mat-icon-button (click)='removeWifiProfile(item)'>
-                  <mat-icon>delete</mat-icon>
-                </button>
+            <mat-list-item class="flex flex-1 drag-box" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".drag-boundary">
+              <mat-icon matListItemIcon>drag_handle</mat-icon>
+              <div class="flex-row" matListItemTitle>
+                <div class="flex flex-1 items-center">{{ item.priority }}. {{ item.profileName }}</div>
+                <div class="flex flex-1 justify-end items-center">
+                  <button type="button" mat-icon-button (click)="removeWifiProfile(item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </div>
-            </div>
-          </mat-list-item>
+            </mat-list-item>
           }
         </mat-list>
 
-
-        <mat-divider style="margin:16px 0"></mat-divider>
+        <mat-divider style="margin: 16px 0"></mat-divider>
 
         <mat-label>Provisioned Connection Configuration</mat-label>
-        <mat-radio-group name='connectionMode' formControlName='connectionMode'>
+        <mat-radio-group name="connectionMode" formControlName="connectionMode">
           @if (profileForm.get('connectionMode')?.touched && profileForm.get('connectionMode')?.invalid) {
-          <p>
-            <mat-error>Connection mode must be specified</mat-error>
-          </p>
+            <p>
+              <mat-error>Connection mode must be specified</mat-error>
+            </p>
           }
           <fieldset>
             <legend>Internet Mode (Use when devices are NOT directly accessible via a local network)</legend>
             <p>In this scenario, AMT acts as a client and connects to the toolkit acting as a server (requires MPS).</p>
-            <p><mat-radio-button data-cy="radio-cira"  [value]='connectionMode.cira' [disabled]='ciraConfigurations.length === 0'>
+            <p>
+              <mat-radio-button
+                data-cy="radio-cira"
+                [value]="connectionMode.cira"
+                [disabled]="ciraConfigurations.length === 0">
                 CIRA (Cloud)
                 @if (ciraConfigurations.length === 0) {
-                <span>- No CIRA Configs Found</span>
+                  <span>- No CIRA Configs Found</span>
                 }
-              </mat-radio-button></p>
+              </mat-radio-button>
+            </p>
           </fieldset>
           <fieldset>
             <legend>Direct Connect Mode (Use when devices ARE directly accessible via a local network)</legend>
-            <p>In this scenario, AMT acts as a server and listens for incoming connections. The toolkit acts as a client and connects to the device.</p>
-            <p><mat-radio-button data-cy="radio-tls" [value]='connectionMode.tls'>TLS</mat-radio-button></p>
+            <p>
+              In this scenario, AMT acts as a server and listens for incoming connections. The toolkit acts as a client
+              and connects to the device.
+            </p>
+            <p><mat-radio-button data-cy="radio-tls" [value]="connectionMode.tls">TLS</mat-radio-button></p>
 
             @if (!cloudMode) {
-            <p>
-              <mat-radio-button data-cy="radio-non-tls" [value]='connectionMode.direct'>Non TLS</mat-radio-button><br />
-              <mat-hint>On AMT 16.1 and newer, AMT provides self-signed certificates. Choosing this option will use those instead of toolkit provided self-signed certs</mat-hint>
-            </p>
+              <p>
+                <mat-radio-button data-cy="radio-non-tls" [value]="connectionMode.direct">Non TLS</mat-radio-button
+                ><br />
+                <mat-hint
+                  >On AMT 16.1 and newer, AMT provides self-signed certificates. Choosing this option will use those
+                  instead of toolkit provided self-signed certs</mat-hint
+                >
+              </p>
             }
           </fieldset>
         </mat-radio-group>
 
-
-        @if (profileForm.get('connectionMode')?.value=== 'TLS') {
-        <mat-form-field class="flex flex-1">
-          <mat-label>TLS Mode</mat-label>
-          <mat-select formControlName='tlsMode'>
-            @for (tm of tlsModes; track tm) {
-            <mat-option [value]='tm.value'>{{tm.label}}</mat-option>
-            }
-          </mat-select>
-          <mat-hint>CIRA cannot be configured, if TLS is configured</mat-hint>
-        </mat-form-field>
+        @if (profileForm.get('connectionMode')?.value === 'TLS') {
+          <mat-form-field class="flex flex-1">
+            <mat-label>TLS Mode</mat-label>
+            <mat-select formControlName="tlsMode">
+              @for (tm of tlsModes; track tm) {
+                <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
+              }
+            </mat-select>
+            <mat-hint>CIRA cannot be configured, if TLS is configured</mat-hint>
+          </mat-form-field>
         }
-        @if (profileForm.get('connectionMode')?.value=== 'TLS') {
-        <mat-form-field class="flex flex-1">
-          <mat-label>TLS Signing Authority</mat-label>
-          <mat-select formControlName='tlsSigningAuthority'>
-            @for (tm of tlsSigningAuthorities; track tm) {
-            <mat-option [value]='tm.value'>{{tm.label}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        @if (profileForm.get('connectionMode')?.value === 'TLS') {
+          <mat-form-field class="flex flex-1">
+            <mat-label>TLS Signing Authority</mat-label>
+            <mat-select formControlName="tlsSigningAuthority">
+              @for (tm of tlsSigningAuthorities; track tm) {
+                <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         }
-        @if (profileForm.get('connectionMode')?.value=== 'CIRA') {
-        <mat-form-field class="flex flex-1">
-          <mat-label>CIRA Configuration</mat-label>
-          <mat-select formControlName='ciraConfigName'>
-            @for (cc of ciraConfigurations; track cc) {
-            <mat-option [value]='cc.configName'>{{cc.configName}}
-            </mat-option>
-            }
-          </mat-select>
-          <mat-hint>@if (profileForm.get('ciraConfigName')?.value === null) {
-            <span>No config selected.</span>
-            } CIRA
-            cannot be configured for static network if AMT version is lower than 11.6
-          </mat-hint>
-        </mat-form-field>
+        @if (profileForm.get('connectionMode')?.value === 'CIRA') {
+          <mat-form-field class="flex flex-1">
+            <mat-label>CIRA Configuration</mat-label>
+            <mat-select formControlName="ciraConfigName">
+              @for (cc of ciraConfigurations; track cc) {
+                <mat-option [value]="cc.configName">{{ cc.configName }} </mat-option>
+              }
+            </mat-select>
+            <mat-hint>
+              @if (profileForm.get('ciraConfigName')?.value === null) {
+                <span>No config selected.</span>
+              }
+              CIRA cannot be configured for static network if AMT version is lower than 11.6
+            </mat-hint>
+          </mat-form-field>
         }
-        <mat-divider style="margin:16px 0"></mat-divider>
+        <mat-divider style="margin: 16px 0"></mat-divider>
 
         <mat-form-field class="flex flex-1">
           <mat-label>Tags</mat-label>
-          <mat-chip-grid #tagList aria-label='Tag selection'>
+          <mat-chip-grid #tagList aria-label="Tag selection">
             @for (tag of tags; track tag) {
-            <mat-chip-row [removable]='true' (removed)='remove(tag)'>
-              {{tag}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip-row>
+              <mat-chip-row [removable]="true" (removed)="remove(tag)">
+                {{ tag }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-row>
             }
-            <input placeholder='New tag...' [matChipInputFor]='tagList' [matChipInputSeparatorKeyCodes]='separatorKeysCodes' [matChipInputAddOnBlur]='true' (matChipInputTokenEnd)='add($event)'>
+            <input
+              placeholder="New tag..."
+              [matChipInputFor]="tagList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="add($event)" />
           </mat-chip-grid>
-          <mat-hint>You can enter tags to help in organizing and querying devices as your list of managed devices
-            grow. Type a tag, then present enter or comma.
+          <mat-hint
+            >You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a
+            tag, then present enter or comma.
           </mat-hint>
         </mat-form-field>
       </mat-card-content>
-      <mat-card-actions class="flex flex-row" style="margin-top:48px;">
+      <mat-card-actions class="flex flex-row" style="margin-top: 48px">
         <div class="flex flex-50 justify-center">
-          <button type='button' mat-button color='primary' (click)='cancel()'>
+          <button type="button" mat-button color="primary" (click)="cancel()">
             <span i18n>CANCEL</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
-          <button data-cy='save' type='submit' mat-flat-button color='primary'>
+          <button data-cy="save" type="submit" mat-flat-button color="primary">
             <span i18n>SAVE</span>
           </button>
         </div>
@@ -300,5 +360,4 @@
     </form>
   </mat-card>
   <div class="flex-25 hide-sm"></div>
-
 </div>

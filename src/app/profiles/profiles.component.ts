@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -24,7 +24,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatTableDataSource
 } from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -65,28 +66,29 @@ import { ExportDialogComponent } from './export-dialog/export-dialog.component'
   ]
 })
 export class ProfilesComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  readonly router = inject(Router)
+  // Dependency Injection
+  private readonly dialog = inject(MatDialog)
   private readonly profilesService = inject(ProfilesService)
+  public readonly snackBar = inject(MatSnackBar)
+  public readonly router = inject(Router)
 
-  profiles: Profile[] = []
-  isLoading = true
-  totalCount = 0
-  tlsModes = TlsModes
-  displayedColumns: string[] = [
+  public profiles = new MatTableDataSource<Profile>()
+  public readonly isLoading = signal(true)
+  public totalCount = 0
+  public readonly tlsModes = TlsModes
+  public readonly displayedColumns: string[] = [
     'name',
     'networkConfig',
     'connectionConfig',
     'activation',
     'remove'
   ]
-  pageEvent: PageEventOptions = {
+  public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }
-  cloudMode = environment.cloud
+  public readonly cloudMode = environment.cloud
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -99,12 +101,12 @@ export class ProfilesComponent implements OnInit {
       .getData(pageEvent)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (rsp) => {
-          this.profiles = rsp.data
+          this.profiles = new MatTableDataSource<Profile>(rsp.data)
           this.totalCount = rsp.totalCount
         },
         error: () => {
@@ -114,11 +116,11 @@ export class ProfilesComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.profiles.length === 0
+    return !this.isLoading && this.totalCount === 0
   }
 
   export(name: string): void {
-    const profile = this.profiles.find((p) => p.profileName === name)
+    const profile = this.profiles.data.find((p) => p.profileName === name)
     if (!profile) {
       this.snackBar.open($localize`Unable to export profile`, undefined, SnackbarDefaults.defaultError)
       return
@@ -165,12 +167,12 @@ export class ProfilesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.profilesService
           .delete(name)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({

@@ -34,12 +34,13 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class ToolbarComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  authService = inject(AuthService)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly dialog = inject(MatDialog)
+  public readonly authService = inject(AuthService)
 
-  isLoggedIn = false
-  cloudMode: boolean = environment.cloud
+  public isLoggedIn = false
+  public cloudMode: boolean = environment.cloud
   public rpsVersions?: RPSVersion
   public mpsVersions?: MPSVersion
 

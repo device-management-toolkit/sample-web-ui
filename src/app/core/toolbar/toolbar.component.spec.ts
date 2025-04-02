@@ -71,11 +71,13 @@ describe('ToolbarComponent', () => {
 
   afterEach(() => {
     TestBed.resetTestingModule()
+    component.cloudMode = true
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(component.isLoggedIn).toBeTrue()
+    expect(component.cloudMode).toBeTrue()
   })
 
   it('should display dialog', () => {

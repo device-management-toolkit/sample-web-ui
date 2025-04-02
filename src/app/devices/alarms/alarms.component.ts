@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { catchError, finalize, throwError } from 'rxjs'
@@ -42,16 +42,16 @@ import { environment } from 'src/environments/environment'
   styleUrl: './alarms.component.scss'
 })
 export class AlarmsComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-  fb = inject(FormBuilder)
+  private readonly fb = inject(FormBuilder)
 
   @Input()
   public deviceId = ''
 
   cloudMode: boolean = environment.cloud
   public alarmOccurrences: IPSAlarmClockOccurrence[] = []
-  public newAlarmForm: FormGroup = this.fb.group({
+  public newAlarmForm = this.fb.group({
     alarmName: '',
     interval: 0,
     startTime: new FormControl(new Date()),
@@ -148,7 +148,7 @@ export class AlarmsComponent implements OnInit {
     '59'
   ]
   public deleteOnCompletion: FormControl<any>
-  public isLoading = true
+  public isLoading = signal(true)
 
   constructor() {
     this.deleteOnCompletion = new FormControl<boolean>(true)
@@ -167,7 +167,7 @@ export class AlarmsComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((results) => {
@@ -177,10 +177,14 @@ export class AlarmsComponent implements OnInit {
 
   deleteAlarm = (instanceID: string): void => {
     if (!window.confirm('Deleting: ' + instanceID)) return
-
+    this.isLoading.set(true)
     this.devicesService
       .deleteAlarmOccurrence(this.deviceId, instanceID)
-      .pipe(finalize(() => {}))
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false)
+        })
+      )
       .subscribe({
         next: () => {
           this.loadAlarms()
@@ -205,12 +209,12 @@ export class AlarmsComponent implements OnInit {
         DeleteOnCompletion: this.deleteOnCompletion.value
       }
 
-      this.isLoading = true
+      this.isLoading.set(true)
       this.devicesService
         .addAlarmOccurrence(this.deviceId, payload)
         .pipe(
           finalize(() => {
-            this.isLoading = false
+            this.isLoading.set(false)
           })
         )
         .subscribe({

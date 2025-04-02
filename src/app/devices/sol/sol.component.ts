@@ -12,7 +12,8 @@ import {
   EventEmitter,
   OnDestroy,
   HostListener,
-  inject
+  inject,
+  signal
 } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
@@ -44,32 +45,34 @@ import { UserConsentService } from '../user-consent.service'
   ]
 })
 export class SolComponent implements OnInit, OnDestroy {
+  // Dependency Injection
   private readonly activatedRoute = inject(ActivatedRoute)
   private readonly devicesService = inject(DevicesService)
   private readonly userConsentService = inject(UserConsentService)
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
+  private readonly dialog = inject(MatDialog)
   private readonly router = inject(Router)
+  public readonly snackBar = inject(MatSnackBar)
 
   @Input()
   public deviceId = ''
 
   @Input()
-  deviceState = 0
+  public deviceState = 0
 
   @Output()
-  deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  public deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
 
-  results: any
-  amtFeatures?: AMTFeaturesResponse
-  isLoading = false
-  powerState: PowerState = { powerstate: 0 }
-  readyToLoadSol = false
-  mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  authToken: string = environment.cloud ? '' : 'direct'
-  isDisconnecting = false
-  stopSocketSubscription!: Subscription
-  startSocketSubscription!: Subscription
+  public results: any
+  public amtFeatures?: AMTFeaturesResponse
+  public isLoading = signal(false)
+  public powerState: PowerState = { powerstate: 0 }
+  public readyToLoadSol = false
+  public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
+  public authToken: string = environment.cloud ? '' : 'direct'
+  public isDisconnecting = false
+
+  private stopSocketSubscription!: Subscription
+  private startSocketSubscription!: Subscription
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
@@ -125,7 +128,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   init(): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     // device needs to be powered on in order to start SOL session
     this.getPowerState(this.deviceId)
       .pipe(
@@ -149,7 +152,7 @@ export class SolComponent implements OnInit, OnDestroy {
       )
       .subscribe()
       .add(() => {
-        this.isLoading = false
+        this.isLoading.set(false)
       })
   }
 
@@ -194,7 +197,7 @@ export class SolComponent implements OnInit, OnDestroy {
   getPowerState(guid: string): Observable<any> {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
-        this.isLoading = false
+        this.isLoading.set(false)
         this.displayError($localize`Error retrieving power status`)
         return throwError(err)
       })
@@ -232,7 +235,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   getAMTFeatures(): Observable<AMTFeaturesResponse> {
-    this.isLoading = true
+    this.isLoading.set(true)
     return this.devicesService.getAMTFeatures(this.deviceId)
   }
 
@@ -247,7 +250,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   cancelEnableSolResponse(result?: boolean): void {
-    this.isLoading = false
+    this.isLoading.set(false)
     if (!result) {
       this.displayError($localize`SOL cannot be accessed - request to enable SOL is cancelled`)
     } else {
@@ -276,9 +279,9 @@ export class SolComponent implements OnInit, OnDestroy {
   deviceStatus(event: any): void {
     this.deviceState = event
     if (event === 3) {
-      this.isLoading = false
+      this.isLoading.set(false)
     } else if (event === 0) {
-      this.isLoading = false
+      this.isLoading.set(false)
       if (!this.isDisconnecting) {
         this.displayError(
           'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'

@@ -3,13 +3,7 @@ import { CommonModule } from '@angular/common'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule } from '@angular/forms'
-import {
-  MAT_DIALOG_DATA,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogRef,
-  MatDialogModule
-} from '@angular/material/dialog'
+import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
 import { MatCardModule } from '@angular/material/card'
 import { DomainsService } from 'src/app/domains/domains.service'
 import { Domain } from 'src/models/models'
@@ -34,14 +28,14 @@ import { Router, RouterModule } from '@angular/router'
   styleUrl: './export-dialog.component.scss'
 })
 export class ExportDialogComponent implements OnInit {
-  data = inject(MAT_DIALOG_DATA)
+  // Dependency Injection
   private readonly domainService = inject(DomainsService)
   private readonly dialogRef = inject(MatDialogRef<ExportDialogComponent>)
   private readonly router = inject(Router)
 
-  errorMessages: string[] = []
-  domains: Domain[] = []
-  selectedDomain = ''
+  public errorMessages: string[] = []
+  public domains: Domain[] = []
+  public selectedDomain = ''
 
   ngOnInit(): void {
     this.getDomains()

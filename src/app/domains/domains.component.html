@@ -1,40 +1,43 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>{{'domains.header.domainsTitle.value'| translate}}</span>
+    <span i18n>{{ 'domains.header.domainsTitle.value' | translate }}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
     <button id="btnAdd" mat-button (click)="navigateTo()">
-      <mat-icon>add</mat-icon>  {{ 'common.addNew.value' | translate  }}
+      <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate }}
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading!==false) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">{{'domains.noData.value'| translate}}</h3>
-    } @else{
-      <mat-table [dataSource]="domains.data">
+      <h3 class="flex justify-center">{{ 'domains.noData.value' | translate }}</h3>
+    } @else {
+      <mat-table [dataSource]="domains">
         <!-- name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> {{'domains.table.name.value'| translate}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'domains.table.name.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <!-- domainSuffix Column -->
         <ng-container matColumnDef="domainSuffix">
-          <mat-header-cell *matHeaderCellDef>{{'domains.table.domainSuffix.value'| translate}}</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.domainSuffix }}
-          </mat-cell>
+          <mat-header-cell *matHeaderCellDef>{{ 'domains.table.domainSuffix.value' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.domainSuffix }} </mat-cell>
         </ng-container>
         <!-- expiration date Column -->
         <ng-container matColumnDef="expirationDate">
-          <mat-header-cell *matHeaderCellDef>{{'domains.table.expirationDate.value'| translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{ 'domains.table.expirationDate.value' | translate }}</mat-header-cell>
           <mat-cell data-cy="expCol" *matCellDef="let element">
-            {{ element.expirationDate | date: 'MM/dd/yyyy'}} -
-            <mat-icon color="warn" [style.display]="getRemainingTime(element.expirationDate) === 'Expired' ? 'inline' : 'none'">warning</mat-icon>
+            {{ element.expirationDate | date: 'MM/dd/yyyy' }} -
+            <mat-icon
+              color="warn"
+              [style.display]="getRemainingTime(element.expirationDate) === 'Expired' ? 'inline' : 'none'"
+              >warning</mat-icon
+            >
             {{ getRemainingTime(element.expirationDate) }}
           </mat-cell>
         </ng-container>
@@ -48,16 +51,19 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo(row.profileName)"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (domains.totalCount) {
+    @if (totalCount !== 0) {
       <div>
-        <mat-paginator [pageSizeOptions]="[25, 50, 100]" [pageSize]="25" [length]="domains.totalCount"
-          (page)="pageChanged($event)" showFirstLastButtons>
+        <mat-paginator
+          [pageSizeOptions]="[25, 50, 100]"
+          [pageSize]="pageEvent.pageSize"
+          [length]="totalCount"
+          (page)="pageChanged($event)"
+          showFirstLastButtons>
         </mat-paginator>
       </div>
     }
-
   </mat-card-content>
 </mat-card>

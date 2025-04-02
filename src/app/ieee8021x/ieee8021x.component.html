@@ -1,37 +1,43 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>{{'ieee8021xConfigs.headerd.ieeeTitle.value' | translate}}</span>
+    <span i18n>{{ 'ieee8021xConfigs.headerd.ieeeTitle.value' | translate }}</span>
   </div>
   <div class="flex-1"></div>
   <div class="flex flex-33 justify-end">
     <button mat-button (click)="navigateTo()">
       <mat-icon>add</mat-icon>
-      {{ 'common.addNew.value' | translate  }}
+      {{ 'common.addNew.value' | translate }}
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">{{'ieee8021xConfigs.noData.value' | translate}}</h3>
+      <h3 class="flex justify-center">{{ 'ieee8021xConfigs.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="pagedConfigs.data">
+      <mat-table [dataSource]="tableDataSource">
         <ng-container matColumnDef="profileName">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.profileName.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.profileName.value' | translate
+          }}</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.profileName }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="authenticationProtocol">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.authenticationProtocol.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.authenticationProtocol.value' | translate
+          }}</mat-header-cell>
           <!-- map the selections to lookup values -->
           <mat-cell *matCellDef="let element">
             {{ element.authenticationProtocol | toolkit: protocols }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="interface">
-          <mat-header-cell *matHeaderCellDef>{{'ieee8021xConfigs.table.interface.value' | translate}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'ieee8021xConfigs.table.interface.value' | translate
+          }}</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="remove">
@@ -46,16 +52,14 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (pagedConfigs.totalCount) {
-      <div>
-        <mat-paginator
-          [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="25"
-          [length]="pagedConfigs.totalCount"
-          (page)="onPaginator($event)"
-          showFirstLastButtons>
-        </mat-paginator>
-      </div>
+    @if (totalCount !== 0) {
+      <mat-paginator
+        [pageSizeOptions]="[25, 50, 100]"
+        [pageSize]="pageEvent.pageSize"
+        [length]="totalCount"
+        (page)="onPaginator($event)"
+        showFirstLastButtons>
+      </mat-paginator>
     }
   </mat-card-content>
 </mat-card>

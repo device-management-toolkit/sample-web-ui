@@ -3,10 +3,10 @@
   <div class="flex-60">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{'login.header.loginTitle.value' | translate}}</mat-card-title>
+        <mat-card-title>{{ 'login.header.loginTitle.value' | translate }}</mat-card-title>
         <mat-card-subtitle>Open AMT Cloud Toolkit Portal</mat-card-subtitle>
       </mat-card-header>
-      <div [hidden]="isLoading === false">
+      <div [hidden]="!isLoading()">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
       @if (!useOAuth) {

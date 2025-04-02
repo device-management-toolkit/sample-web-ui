@@ -1,4 +1,4 @@
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
@@ -13,7 +13,7 @@
     </div>
   </mat-card-header>
   <mat-list>
-    @if (isLoading) {
+    @if (isLoading()) {
       <mat-list-item>Loading Certificates ...</mat-list-item>
     } @else if (isCertEmpty()) {
       <mat-list-item>No Certificates Found</mat-list-item>

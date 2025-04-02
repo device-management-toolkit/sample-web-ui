@@ -1,4 +1,4 @@
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-1 flex-row">
@@ -41,7 +41,7 @@
         <div class="flex flex-50 justify-end">
           @if (!isLoading) {
             <span class="mat-h3" data-cy="amtSku">
-                {{ amtBuild }}
+              {{ amtBuild }}
             </span>
           }
         </div>
@@ -51,7 +51,7 @@
         <div class="flex flex-50 justify-end">
           @if (!isLoading) {
             <span class="mat-h3" data-cy="amtSku">
-                {{ amtSKU }}
+              {{ amtSKU }}
             </span>
           }
         </div>
@@ -81,14 +81,12 @@
         <div class="flex flex-50">
           <p>Keyboard-Video-Mouse (KVM):</p>
         </div>
-        <div class="flex flex-50 justify-end" 
-          matTooltip = "KVM not supported" 
+        <div
+          class="flex flex-50 justify-end"
+          matTooltip="KVM not supported"
           [matTooltipDisabled]="!amtEnabledFeatures.get('enableKVM')?.disabled"
           matTooltipPosition="after">
-          <mat-checkbox 
-            formControlName="enableKVM" 
-            (change)="setAmtFeatures()">
-          </mat-checkbox>
+          <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"> </mat-checkbox>
         </div>
         <div class="flex flex-50">
           <p>Serial-Over-Lan (SOL):</p>
@@ -101,30 +99,31 @@
         </div>
         <div class="flex flex-50 justify-end">
           <mat-form-field>
-          <mat-select 
-            (selectionChange)="setAmtFeatures()" 
-            formControlName="userConsent"
-            style="width: 200px"
-            matTooltip = "User Consent not configurable in CCM"
-            [matTooltipDisabled]="!amtEnabledFeatures.get('userConsent')?.disabled"
-            matTooltipPosition="after">
-            @for (uc of userConsentValues; track uc) {
-              <mat-option [value]="uc">{{ uc }}</mat-option>
-            }
-          </mat-select>
+            <mat-select
+              (selectionChange)="setAmtFeatures()"
+              formControlName="userConsent"
+              style="width: 200px"
+              matTooltip="User Consent not configurable in CCM"
+              [matTooltipDisabled]="!amtEnabledFeatures.get('userConsent')?.disabled"
+              matTooltipPosition="after">
+              @for (uc of userConsentValues; track uc) {
+                <mat-option [value]="uc">{{ uc }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
         @if (!isCloudMode) {
-        <div class="flex flex-50">
-          <p>HTTPS Network boot:</p>
-        </div>
-        <div class="flex flex-50 justify-end" 
-          matTooltip = "HTTPS Boot is not supported" 
-          [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
-          matTooltipPosition="after">
-          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
-        </div>
-      }
+          <div class="flex flex-50">
+            <p>HTTPS Network boot:</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end"
+            matTooltip="HTTPS Boot is not supported"
+            [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
+            matTooltipPosition="after">
+            <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
+          </div>
+        }
       </div>
     </mat-card-content>
   </mat-card>

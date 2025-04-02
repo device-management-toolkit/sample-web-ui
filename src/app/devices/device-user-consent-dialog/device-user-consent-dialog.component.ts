@@ -42,12 +42,13 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
 })
 export class DeviceUserConsentDialogComponent {
   private readonly formBuilder = inject(FormBuilder)
-  snackBar = inject(MatSnackBar)
-  dialogRef = inject<MatDialogRef<DeviceUserConsentDialogComponent>>(MatDialogRef)
-  data = inject<UserConsentData>(MAT_DIALOG_DATA)
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly dialogRef = inject<MatDialogRef<DeviceUserConsentDialogComponent>>(MatDialogRef)
   private readonly devicesService = inject(DevicesService)
+  public readonly data = inject<UserConsentData>(MAT_DIALOG_DATA)
 
   public userConsentForm: FormGroup
+
   constructor() {
     this.userConsentForm = this.formBuilder.group({
       consentCode: [null, Validators.required]
