@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { throwError } from 'rxjs'
 import { catchError, finalize } from 'rxjs/operators'
@@ -36,15 +36,16 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class DashboardComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
 
-  public isLoading = true
-  public stats?: DeviceStats
   public cloudMode = environment.cloud
+  public isLoading = signal(true)
+  public stats?: DeviceStats
 
   ngOnInit(): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.devicesService
       .getStats()
       .pipe(
@@ -54,7 +55,7 @@ export class DashboardComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((data) => {

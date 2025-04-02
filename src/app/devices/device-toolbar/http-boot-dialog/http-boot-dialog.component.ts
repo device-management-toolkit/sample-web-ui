@@ -6,7 +6,7 @@ import { Component, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
@@ -36,12 +36,17 @@ import { TranslatePipe } from '@ngx-translate/core'
   styleUrl: './http-boot-dialog.component.scss'
 })
 export class HTTPBootDialogComponent {
-  data = inject(MAT_DIALOG_DATA)
+  private readonly data = inject(MAT_DIALOG_DATA)
   private readonly dialogRef = inject(MatDialogRef<HTTPBootDialogComponent>)
-  private fb = inject(FormBuilder)
+  private readonly fb = inject(FormBuilder)
 
   hidePassword = true
-  bootForm: FormGroup
+  bootForm = this.fb.group({
+    url: ['', Validators.required],
+    username: [''],
+    password: [''],
+    enforceSecureBoot: [true]
+  })
 
   bootDetails: BootDetails = {
     url: '',
@@ -51,13 +56,6 @@ export class HTTPBootDialogComponent {
   }
 
   constructor() {
-    this.bootForm = this.fb.group({
-      url: ['', Validators.required],
-      username: [''],
-      password: [''],
-      enforceSecureBoot: [true]
-    })
-
     this.bootForm.get('username')?.valueChanges.subscribe((username) => {
       const passwordControl = this.bootForm.get('password')
 
@@ -77,7 +75,7 @@ export class HTTPBootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      this.bootDetails = this.bootForm.value
+      this.bootDetails = this.bootForm.value as BootDetails
       this.dialogRef.close(this.bootDetails)
     }
   }

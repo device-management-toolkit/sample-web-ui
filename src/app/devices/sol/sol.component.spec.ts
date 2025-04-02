@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
@@ -180,7 +180,7 @@ describe('SolComponent', () => {
   it('should have correct state on websocket events', () => {
     authServiceStub.startwebSocket.emit(true)
     fixture.detectChanges()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     authServiceStub.stopwebSocket.emit(true)
     fixture.detectChanges()
     expect(component.isDisconnecting).toBeTruthy()
@@ -189,7 +189,7 @@ describe('SolComponent', () => {
     component.isDisconnecting = true
     component.deviceStatus(0)
     expect(snackBarSpy).not.toHaveBeenCalled()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should show error and hide loading when isDisconnecting is false', () => {
@@ -200,13 +200,13 @@ describe('SolComponent', () => {
       undefined,
       SnackbarDefaults.defaultError
     )
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should  hide loading when connected', () => {
     component.deviceStatus(3)
     expect(snackBarSpy).not.toHaveBeenCalled()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(3)
   })
   it('should not show error when NavigationStart triggers', () => {
@@ -233,7 +233,7 @@ describe('SolComponent', () => {
   it('cancel enable sol request msg false', async () => {
     component.cancelEnableSolResponse(false)
     expect(snackBarSpy).toHaveBeenCalled()
-    expect(component.isLoading).toBe(false)
+    expect(component.isLoading()).toBe(false)
   })
   it('getAMTFeatures', (done) => {
     component.getAMTFeatures().subscribe({
@@ -253,7 +253,7 @@ describe('SolComponent', () => {
           localPBABootSupported: true,
           remoteErase: true
         })
-        expect(component.isLoading).toBe(true)
+        expect(component.isLoading()).toBe(true)
         done()
       }
     })
@@ -263,12 +263,12 @@ describe('SolComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalled()
   })
   it('getPowerState error', (done) => {
-    component.isLoading = true
+    component.isLoading = signal(true)
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(throwError(new Error('err')))
     component.getPowerState('111').subscribe({
       error: () => {
         expect(getPowerStateSpy).toHaveBeenCalled()
-        expect(component.isLoading).toBe(false)
+        expect(component.isLoading()).toBe(false)
         expect(displayErrorSpy).toHaveBeenCalled()
         done()
       }
@@ -407,12 +407,12 @@ describe('SolComponent', () => {
   })
   it('deviceStatus 3', async () => {
     component.deviceStatus(3)
-    expect(component.isLoading).toEqual(false)
+    expect(component.isLoading()).toEqual(false)
   })
   it('deviceStatus 0', async () => {
     component.isDisconnecting = false
     component.deviceStatus(0)
-    expect(component.isLoading).toEqual(false)
+    expect(component.isLoading()).toEqual(false)
     expect(displayErrorSpy).toHaveBeenCalled()
     expect(component.isDisconnecting).toEqual(false)
   })

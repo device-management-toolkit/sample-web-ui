@@ -3,17 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { DevicesService } from '../devices.service'
+import { Component, OnInit, inject, signal } from '@angular/core'
+import { ReactiveFormsModule } from '@angular/forms'
 import { MatList, MatListItem, MatListItemTitle, MatListItemLine, MatListModule } from '@angular/material/list'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { MatIcon } from '@angular/material/icon'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
 import { CertificatesComponent } from '../certificates/certificates.component'
@@ -61,14 +59,11 @@ import { TLSComponent } from '../tls/tls.component'
   ]
 })
 export class DeviceDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly activatedRoute = inject(ActivatedRoute)
-  readonly router = inject(Router)
-  private readonly devicesService = inject(DevicesService)
-  fb = inject(FormBuilder)
+  // Dependency Injection
+  private readonly activatedRoute = inject(ActivatedRoute)
 
   public deviceId = ''
-  public isCloudMode: boolean = environment.cloud
+  public readonly isCloudMode: boolean = environment.cloud
 
   categories = [
     {
@@ -146,12 +141,12 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   public currentView = 'general'
-  public isLoading = false
+  public isLoading = signal(false)
   isCollapsed = false
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.isLoading = true
+      this.isLoading.set(true)
 
       this.deviceId = params.id
       this.currentView = params.component || 'general'

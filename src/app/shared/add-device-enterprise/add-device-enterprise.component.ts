@@ -38,12 +38,15 @@ import { MatIcon } from '@angular/material/icon'
   ]
 })
 export class AddDeviceEnterpriseComponent {
+  // Dependency Injection
   private readonly fb = inject(FormBuilder)
-  readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
-  device = inject<Device>(MAT_DIALOG_DATA)
   private readonly deviceService = inject(DevicesService)
+  private readonly device = inject<Device>(MAT_DIALOG_DATA)
+  public readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
 
-  form: FormGroup = this.fb.group({
+  private deviceOrig: Device
+
+  public form: FormGroup = this.fb.group({
     hostname: ['', [Validators.required]],
     friendlyName: ['', [Validators.required, Validators.maxLength(50)]],
     username: ['', [
@@ -56,10 +59,9 @@ export class AddDeviceEnterpriseComponent {
     useTLS: [false],
     allowSelfSigned: [false]
   })
+  public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
+  public tags: string[] = []
 
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  tags: string[] = []
-  deviceOrig: Device
   constructor() {
     const device = this.device
 

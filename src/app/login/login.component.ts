@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, inject } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { AuthService } from '../auth.service'
@@ -59,16 +59,19 @@ import { OAuthService } from 'angular-oauth2-oidc'
   ]
 })
 export class LoginComponent {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  router = inject(Router)
-  fb = inject(FormBuilder)
-  authService = inject(AuthService)
-  oauthService
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly dialog = inject(MatDialog)
+  private readonly router = inject(Router)
+  private readonly fb = inject(FormBuilder)
+  private readonly authService = inject(AuthService)
+  private readonly oauthService
 
-  public loginForm: FormGroup
+  public loginForm = this.fb.nonNullable.group({
+    userId: ['', Validators.required],
+    password: ['', Validators.required]
+  })
   public currentYear = new Date().getFullYear()
-  public isLoading = false
+  public isLoading = signal(false)
   public errorMessage = ''
   public loginPassInputType = 'password'
   public useOAuth = environment.useOAuth
@@ -77,12 +80,7 @@ export class LoginComponent {
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
-    const fb = this.fb
 
-    this.loginForm = fb.group({
-      userId: [null, Validators.required],
-      password: [null, Validators.required]
-    })
     if (environment.useOAuth) {
       if (environment.auth == null) {
         console.error('auth config not set but oauth=true')
@@ -94,8 +92,8 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      this.isLoading = true
-      const result: { userId: string; password: string } = Object.assign({}, this.loginForm.value)
+      this.isLoading.set(true)
+      const result: { userId: string; password: string } = Object.assign({}, this.loginForm.getRawValue())
       this.authService
         .login(result.userId, result.password)
         .subscribe({
@@ -117,7 +115,7 @@ export class LoginComponent {
           }
         })
         .add(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
     }
   }

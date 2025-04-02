@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { Component, OnInit, inject, signal } from '@angular/core'
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
@@ -60,29 +60,28 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   ]
 })
 export class DomainDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  fb = inject(FormBuilder)
+  // Dependency Injection
   private readonly activeRoute = inject(ActivatedRoute)
-  router = inject(Router)
-  domainsService = inject(DomainsService)
-  translate = inject(TranslateService)
+  private readonly domainsService = inject(DomainsService)
+  private readonly fb = inject(FormBuilder)
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly translate = inject(TranslateService)
+  public readonly router = inject(Router)
 
-  public domainForm: FormGroup
-  public isLoading = false
-  public pageTitle: string
+  public domainForm = this.fb.nonNullable.group({
+    profileName: ['', Validators.required],
+    domainSuffix: ['', Validators.required],
+    provisioningCert: ['', Validators.required],
+    provisioningCertPassword: ['', Validators.required],
+    version: ['']
+  })
+  public isLoading = signal(false)
   public isEdit = false
   public certPassInputType = 'password'
+  public pageTitle: string
   public errorMessages: string[] = []
-  constructor() {
-    const fb = this.fb
 
-    this.domainForm = fb.group({
-      profileName: [null, Validators.required],
-      domainSuffix: [null, Validators.required],
-      provisioningCert: [null, Validators.required],
-      provisioningCertPassword: [null, Validators.required],
-      version: [null]
-    })
+  constructor() {
     this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
   }
 
@@ -90,12 +89,12 @@ export class DomainDetailComponent implements OnInit {
     this.activeRoute.params.subscribe((params) => {
       // hmm -- this would actually prevent editing of a domain called new
       if (params.name != null && params.name !== '') {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.domainsService
           .getRecord(params.name as string)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({
@@ -114,32 +113,25 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const result: Domain = Object.assign({}, this.domainForm.getRawValue())
+    const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
     result.provisioningCertStorageFormat = 'string'
     if (this.domainForm.valid) {
-      this.isLoading = true
+      this.isLoading.set(true)
       let request
-      let reqType: string
       if (this.isEdit) {
         request = this.domainsService.update(result)
-        reqType = 'updated'
       } else {
         request = this.domainsService.create(result)
-        reqType = 'created'
       }
       request
         .pipe(
           finalize(() => {
-            this.isLoading = false
+            this.isLoading.set(false)
           })
         )
         .subscribe({
           next: () => {
-            this.snackBar.open(
-              $localize`Domain profile ${reqType} successfully`,
-              undefined,
-              SnackbarDefaults.defaultSuccess
-            )
+            this.snackBar.open($localize`Domain profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
 
             this.router.navigate(['/domains'])
           },

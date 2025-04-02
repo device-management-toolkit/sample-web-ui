@@ -9,7 +9,7 @@
     </button>
   </div>
 </mat-toolbar>
-@if (isLoading !== false) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
@@ -17,7 +17,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'domains.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="domains.data">
+      <mat-table [dataSource]="domains">
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> {{ 'domains.table.name.value' | translate }} </mat-header-cell>
@@ -54,12 +54,12 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (domains.totalCount) {
+    @if (totalCount !== 0) {
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="25"
-          [length]="domains.totalCount"
+          [pageSize]="pageEvent.pageSize"
+          [length]="totalCount"
           (page)="pageChanged($event)"
           showFirstLastButtons>
         </mat-paginator>

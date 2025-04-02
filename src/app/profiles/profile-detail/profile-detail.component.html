@@ -1,7 +1,7 @@
 <mat-toolbar>
   {{ pageTitle | translate }}
 </mat-toolbar>
-@if (isLoading) {
+@if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <div class="flex-row justify-center">

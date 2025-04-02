@@ -37,9 +37,8 @@ import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pi
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
-  [x: string]: any
-  snackBar = inject(MatSnackBar)
-  readonly router = inject(Router)
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
 
   @Input()

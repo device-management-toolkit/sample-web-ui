@@ -39,6 +39,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       providers: [
         { provide: DevicesService, useValue: deviceService },
         { provide: MAT_DIALOG_DATA, useValue: { tags: [''] } },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: MatDialogRef, useValue: { close: () => {} } }
       ]
     }).compileComponents()

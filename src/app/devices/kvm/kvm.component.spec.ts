@@ -202,7 +202,7 @@ describe('KvmComponent', () => {
   it('should have correct state on websocket events', () => {
     authServiceStub.startwebSocket.emit(true)
     fixture.detectChanges()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     authServiceStub.stopwebSocket.emit(true)
     fixture.detectChanges()
     expect(component.isDisconnecting).toBeTruthy()
@@ -211,7 +211,7 @@ describe('KvmComponent', () => {
     component.isDisconnecting = true
     component.deviceKVMStatus(0)
     expect(snackBarSpy).not.toHaveBeenCalled()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should show error and hide loading when isDisconnecting is false', () => {
@@ -222,13 +222,13 @@ describe('KvmComponent', () => {
       undefined,
       SnackbarDefaults.defaultError
     )
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(0)
   })
   it('should hide loading when connected', () => {
     component.deviceKVMStatus(2)
     expect(snackBarSpy).not.toHaveBeenCalled()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
     expect(component.deviceState).toBe(2)
   })
   it('should not show error when NavigationStart triggers', () => {
@@ -255,7 +255,7 @@ describe('KvmComponent', () => {
   it('cancel enable sol request msg false', async () => {
     component.cancelEnableKvmResponse(false)
     expect(snackBarSpy).toHaveBeenCalled()
-    expect(component.isLoading).toBe(false)
+    expect(component.isLoading()).toBe(false)
   })
   it('getAMTFeatures', (done) => {
     component.getAMTFeatures().subscribe({
@@ -275,7 +275,7 @@ describe('KvmComponent', () => {
           localPBABootSupported: true,
           remoteErase: true
         })
-        expect(component.isLoading).toBe(true)
+        expect(component.isLoading()).toBe(true)
         done()
       }
     })
@@ -288,7 +288,7 @@ describe('KvmComponent', () => {
     })
   })
   it('getRedirectionStatus error', (done) => {
-    component.isLoading = true
+    component.isLoading.set(true)
     getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(throwError(new Error('err')))
     component.getRedirectionStatus('test-guid').subscribe({
       error: () => {
@@ -316,7 +316,7 @@ describe('KvmComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalled()
   })
   it('getPowerState error', (done) => {
-    component.isLoading = true
+    component.isLoading.set(true)
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(throwError(new Error('err')))
     component.getPowerState('111').subscribe({
       error: () => {
@@ -460,12 +460,12 @@ describe('KvmComponent', () => {
   })
   it('deviceStatus 3', async () => {
     component.deviceKVMStatus(3)
-    expect(component.isLoading).toEqual(false)
+    expect(component.isLoading()).toEqual(false)
   })
   it('deviceStatus 0', async () => {
     component.isDisconnecting = false
     component.deviceKVMStatus(0)
-    expect(component.isLoading).toEqual(false)
+    expect(component.isLoading()).toEqual(false)
     expect(displayErrorSpy).toHaveBeenCalled()
     expect(component.isDisconnecting).toEqual(false)
   })

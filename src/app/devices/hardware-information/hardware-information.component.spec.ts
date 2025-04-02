@@ -68,7 +68,7 @@ describe('HardwareInformationComponent', () => {
 
   it('should set isLoading to false upon completion or error', () => {
     component.getDiskInformation()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
   })
 
   it('should create', () => {

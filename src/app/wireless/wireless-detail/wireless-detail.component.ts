@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { Component, OnInit, inject, signal } from '@angular/core'
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
@@ -24,6 +24,7 @@ import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatToolbar } from '@angular/material/toolbar'
 import { WirelessConfig } from 'src/models/models'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { MatProgressBar } from '@angular/material/progress-bar'
 
 @Component({
   selector: 'app-wireless-detail',
@@ -51,46 +52,46 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatListItemIcon,
     MatListItemTitle,
+    MatProgressBar,
     TranslateModule
   ]
 })
 export class WirelessDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  fb = inject(FormBuilder)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
-  router = inject(Router)
-  wirelessService = inject(WirelessService)
-  translate = inject(TranslateService)
+  private readonly wirelessService = inject(WirelessService)
   private readonly ieee8021xService = inject(IEEE8021xService)
+  public readonly router = inject(Router)
 
-  public wirelessForm: FormGroup
+  public wirelessForm = this.fb.group({
+    profileName: ['', [Validators.required]],
+    authenticationMethod: [
+      4,
+      Validators.required
+    ],
+    encryptionMethod: [3, Validators.required],
+    ssid: ['', Validators.required],
+    pskPassphrase: ['', [Validators.minLength(8), Validators.maxLength(32)]],
+    ieee8021xProfileName: [undefined],
+    version: ['']
+  })
   public pageTitle: string
   public pskInputType = 'password'
-  public pskMinLen = 8
-  public pskMaxLen = 32
   public authenticationMethods = AuthenticationMethods.filter((m) => m.mode === 'PSK')
   public encryptionModes = EncryptionMethods
   public iee8021xConfigNames: Set<string> = new Set<string>()
-  showPSKPassPhrase = false
-  showIEEE8021x = false
-  isLoading = true
-  isEdit = false
-  errorMessages: any[] = []
+  public showPSKPassPhrase = true
+  public showIEEE8021x = false
+  public isEdit = false
+  public errorMessages: any[] = []
+  public isLoading = signal(false)
 
-  constructor() {
-    const fb = this.fb
+  constructor(private translate: TranslateService) {
     this.pageTitle = this.translate.instant('wirelessDetail.newWirelessConfig.value')
-    this.wirelessForm = fb.group({
-      profileName: [null, [Validators.required]],
-      authenticationMethod: [null, Validators.required],
-      encryptionMethod: [null, Validators.required],
-      ssid: ['', Validators.required],
-      pskPassphrase: [null, [Validators.minLength(this.pskMinLen), Validators.maxLength(this.pskMaxLen)]],
-      ieee8021xProfileName: [null],
-      version: [null]
-    })
-    this.wirelessForm.controls.authenticationMethod.valueChanges.subscribe((value: number) => {
-      this.onAuthenticationMethodChange(value)
+    this.wirelessForm.controls.authenticationMethod.valueChanges.subscribe((value) => {
+      this.onAuthenticationMethodChange(value!)
     })
   }
 
@@ -102,14 +103,14 @@ export class WirelessDetailComponent implements OnInit {
           .getRecord(params.name as string)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe((config) => {
             this.isEdit = true
             this.pageTitle = config.profileName
             this.wirelessForm.controls.profileName.disable()
-            this.wirelessForm.patchValue(config)
+            this.wirelessForm.patchValue(config as any)
             if (config.ieee8021xProfileName) {
               this.add8021xConfigurations([config.ieee8021xProfileName])
             }
@@ -120,34 +121,24 @@ export class WirelessDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (this.wirelessForm.valid) {
-      this.isLoading = true
-      const result: WirelessConfig = Object.assign({}, this.wirelessForm.getRawValue())
-      let request
-      let reqType: string
-      if (this.isEdit) {
-        request = this.wirelessService.update(result)
-        reqType = 'updated'
-      } else {
-        request = this.wirelessService.create(result)
-        reqType = 'created'
-      }
+      this.isLoading.set(true)
+      const result = Object.assign({}, this.wirelessForm.getRawValue()) as WirelessConfig
+
+      const request = this.isEdit ? this.wirelessService.update(result) : this.wirelessService.create(result)
+
       request
         .pipe(
           finalize(() => {
-            this.isLoading = false
+            this.isLoading.set(false)
           })
         )
         .subscribe({
           next: () => {
-            this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            this.snackBar.open($localize`Profile saving successfully`, undefined, SnackbarDefaults.defaultSuccess)
             void this.router.navigate(['/wireless'])
           },
           error: (err) => {
-            this.snackBar.open(
-              $localize`Error creating/updating wireless profile`,
-              undefined,
-              SnackbarDefaults.defaultError
-            )
+            this.snackBar.open($localize`Error saving wireless profile`, undefined, SnackbarDefaults.defaultError)
             this.errorMessages = err
           }
         })

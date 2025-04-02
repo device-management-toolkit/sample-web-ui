@@ -108,7 +108,7 @@ describe('DomainsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getDataSpy.calls.any()).toBe(true, 'getData called')
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
   })
 
   it('should change the page', () => {

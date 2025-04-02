@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { Component, OnInit, inject, signal } from '@angular/core'
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
@@ -63,33 +63,32 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   ]
 })
 export class ConfigDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  fb = inject(FormBuilder)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
-  router = inject(Router)
-  configsService = inject(ConfigsService)
-  translate = inject(TranslateService)
+  private readonly configsService = inject(ConfigsService)
+  private readonly translate = inject(TranslateService)
+  public readonly router = inject(Router)
 
-  public configForm: FormGroup
-  public isLoading = false
-  public pageTitle
+  public configForm = this.fb.group({
+    configName: ['', Validators.required],
+    mpsServerAddress: ['', Validators.required],
+    serverAddressFormat: [3, Validators.required], // 3 = ip, 201 = FQDN? wtf?
+    commonName: ['', Validators.required],
+    mpsPort: [4433, Validators.required],
+    username: ['admin', Validators.required],
+    mpsRootCertificate: [''],
+    proxyDetails: [''],
+    regeneratePassword: [false],
+    version: [null]
+  })
+  public isLoading = signal(false)
+  public pageTitle: string
   public isEdit = false
   public errorMessages: string[] = []
-  constructor() {
-    const fb = this.fb
 
-    this.configForm = fb.group({
-      configName: [null, Validators.required],
-      mpsServerAddress: ['', Validators.required],
-      serverAddressFormat: ['3', Validators.required], // 3 = ip, 201 = FQDN? wtf?
-      commonName: [null, Validators.required],
-      mpsPort: [4433, Validators.required],
-      username: ['admin', Validators.required],
-      mpsRootCertificate: [null],
-      proxyDetails: [null],
-      regeneratePassword: [false],
-      version: [null]
-    })
+  constructor() {
     this.pageTitle = this.translate.instant('configs.header.ciraNewTitle.value')
   }
   // IP ADDRESS REGEX
@@ -98,12 +97,12 @@ export class ConfigDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.configsService
           .getRecord(decodeURIComponent(params.name as string))
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({
@@ -112,9 +111,6 @@ export class ConfigDetailComponent implements OnInit {
               this.pageTitle = data.configName
               this.configForm.controls.configName.disable()
               this.configForm.patchValue(data)
-              this.configForm.patchValue({
-                serverAddressFormat: data.serverAddressFormat.toString()
-              })
             },
             error: (error) => {
               this.errorMessages = error
@@ -124,16 +120,16 @@ export class ConfigDetailComponent implements OnInit {
     })
 
     this.configForm.controls.serverAddressFormat?.valueChanges.subscribe((value) => {
-      this.serverAddressFormatChange(+value)
+      this.serverAddressFormatChange(value!)
     })
 
-    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value: string) => {
-      this.serverAddressChange(value)
+    this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) => {
+      this.serverAddressChange(value ?? '')
     })
   }
 
   serverAddressChange(value: string): void {
-    if (this.configForm.controls.serverAddressFormat?.value === '3') {
+    if (this.configForm.controls.serverAddressFormat?.value === 3) {
       this.configForm.controls.commonName?.setValue(value)
     }
   }
@@ -162,8 +158,8 @@ export class ConfigDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (this.configForm.valid) {
-      this.isLoading = true
-      const result: CIRAConfig = Object.assign({}, this.configForm.getRawValue())
+      this.isLoading.set(true)
+      const result: CIRAConfig = Object.assign({}, this.configForm.getRawValue()) as any
       // unsure why this is needed or what it is
       result.authMethod = 2
       // convert to number
@@ -181,7 +177,7 @@ export class ConfigDetailComponent implements OnInit {
         .loadMPSRootCert()
         .pipe(
           finalize(() => {
-            this.isLoading = false
+            this.isLoading.set(false)
           }),
           mergeMap((data: string) => {
             result.mpsRootCertificate = this.trimRootCert(data)

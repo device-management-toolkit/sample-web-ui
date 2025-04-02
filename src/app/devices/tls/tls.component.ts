@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -18,12 +18,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
   styleUrl: './tls.component.scss'
 })
 export class TLSComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  devicesService = inject(DevicesService)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly devicesService = inject(DevicesService)
 
   @Input()
   public deviceId = ''
-  isLoading = true
+
+  public isLoading = signal(true)
   public tlsData?: any[] = []
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class TLSComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((results) => {

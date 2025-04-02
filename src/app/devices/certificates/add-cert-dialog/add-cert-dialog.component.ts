@@ -3,16 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { Component, inject } from '@angular/core'
-import { DevicesService } from '../../devices.service'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule } from '@angular/forms'
-import {
-  MAT_DIALOG_DATA,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogRef,
-  MatDialogModule
-} from '@angular/material/dialog'
+import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { CertInfo } from 'src/models/models'
@@ -38,8 +31,6 @@ import { TranslatePipe } from '@ngx-translate/core'
   styleUrl: './add-cert-dialog.component.scss'
 })
 export class AddCertDialogComponent {
-  data = inject(MAT_DIALOG_DATA)
-  private readonly deviceService = inject(DevicesService)
   private readonly dialogRef = inject(MatDialogRef<AddCertDialogComponent>)
 
   certInfo: CertInfo = {

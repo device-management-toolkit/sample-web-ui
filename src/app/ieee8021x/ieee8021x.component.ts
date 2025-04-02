@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import { DataWithCount, IEEE8021xConfig, PageEventOptions } from 'src/models/models'
+import { IEEE8021xConfig, PageEventOptions } from 'src/models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { IEEE8021xService } from './ieee8021x.service'
@@ -24,7 +24,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatTableDataSource
 } from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -62,31 +63,29 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class IEEE8021xComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly ieee8021xService = inject(IEEE8021xService)
-  router = inject(Router)
-  dialog = inject(MatDialog)
+  // Dependency Injection
+  private readonly ieee8021xService = inject(IEEE8021xService)
+  private readonly dialog = inject(MatDialog)
+  public readonly snackBar = inject(MatSnackBar)
+  public readonly router = inject(Router)
 
-  pagedConfigs: DataWithCount<IEEE8021xConfig> = {
-    data: [],
-    totalCount: 0
-  }
-
-  protocols = AuthenticationProtocols
-  isLoading = true
-  displayedColumns: string[] = [
+  public tableDataSource = new MatTableDataSource<IEEE8021xConfig>()
+  public displayedColumns: string[] = [
     'profileName',
     'authenticationProtocol',
     'interface',
     'remove'
   ]
-  pageEvent: PageEventOptions = {
+  public totalCount = 0
+  public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }
+  public protocols = AuthenticationProtocols
+  public isLoading = signal(true)
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator
+  @ViewChild(MatPaginator) public paginator!: MatPaginator
 
   ngOnInit(): void {
     this.getData(this.pageEvent)
@@ -97,12 +96,13 @@ export class IEEE8021xComponent implements OnInit {
       .getData(pageEvent)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (pagedConfigs) => {
-          this.pagedConfigs = pagedConfigs
+          this.tableDataSource = new MatTableDataSource(pagedConfigs.data)
+          this.totalCount = pagedConfigs.totalCount
         },
         error: () => {
           this.snackBar.open($localize`Unable to load IEEE8021x Configs`, undefined, SnackbarDefaults.defaultError)
@@ -111,7 +111,7 @@ export class IEEE8021xComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.pagedConfigs.data.length === 0
+    return !this.isLoading() && this.totalCount === 0
   }
 
   delete(name: string): void {
@@ -120,12 +120,12 @@ export class IEEE8021xComponent implements OnInit {
       .afterClosed()
       .subscribe((result) => {
         if (result === true) {
-          this.isLoading = true
+          this.isLoading.set(true)
           this.ieee8021xService
             .delete(name)
             .pipe(
               finalize(() => {
-                this.isLoading = false
+                this.isLoading.set(false)
               })
             )
             .subscribe({

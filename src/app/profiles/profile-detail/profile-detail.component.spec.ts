@@ -204,8 +204,7 @@ describe('ProfileDetailComponent', () => {
       mebxPassword: 'Password123',
       dhcpEnabled: true,
       ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -224,8 +223,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: true,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -312,11 +310,10 @@ describe('ProfileDetailComponent', () => {
       mebxPassword: 'Password123',
       dhcpEnabled: false,
       ciraConfigName: 'config1',
-      tlsConfigName: null,
       userConsent: 'All',
-      iderEnabled: 'true',
-      kvmEnabled: 'true',
-      solEnabled: 'true'
+      iderEnabled: true,
+      kvmEnabled: true,
+      solEnabled: true
     })
     component.confirm()
 
@@ -340,8 +337,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false,
       mebxPassword: 'Password123',
       dhcpEnabled: false,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -365,8 +361,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: true,
       mebxPassword: '',
       dhcpEnabled: false,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -390,8 +385,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: true,
       mebxPassword: '',
       dhcpEnabled: false,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -437,8 +431,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: true,
       mebxPassword: '',
       dhcpEnabled: false,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -462,8 +455,7 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: true,
       mebxPassword: '',
       dhcpEnabled: false,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 
@@ -589,13 +581,13 @@ describe('ProfileDetailComponent', () => {
   it('should change the value of amt password to a random strong password', () => {
     component.profileForm.controls.amtPassword.setValue('')
     component.generateAMTPassword()
-    expect(component.profileForm.controls.amtPassword.value.length).toBe(16)
+    expect(component.profileForm.controls.amtPassword.value!.length).toBe(16)
   })
 
   it('should change the value of mebx password to a random strong password', () => {
     component.profileForm.controls.mebxPassword.setValue('1@qW')
     component.generateMEBXPassword()
-    expect(component.profileForm.controls.mebxPassword.value.length).toBe(16)
+    expect(component.profileForm.controls.mebxPassword.value!.length).toBe(16)
   })
 
   it('should set the ciraCofigName property to null when TLS Selected', () => {
@@ -625,8 +617,7 @@ describe('ProfileDetailComponent', () => {
       mebxPassword: 'Password123',
       dhcpEnabled: true,
       ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
-      ciraConfigName: 'config1',
-      tlsConfigName: null
+      ciraConfigName: 'config1'
     })
     component.confirm()
 

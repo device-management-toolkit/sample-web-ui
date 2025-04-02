@@ -125,6 +125,7 @@ describe('DevicesComponent', () => {
   })
 
   it('should create', () => {
+    component.isCloudMode = true
     expect(component).toBeTruthy()
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
     expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')

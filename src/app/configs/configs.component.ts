@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -23,7 +23,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatTableDataSource
 } from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -59,14 +60,17 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class ConfigsComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  router = inject(Router)
+  // Dependency Injection
+  private readonly dialog = inject(MatDialog)
   private readonly configsService = inject(ConfigsService)
+  public readonly snackBar = inject(MatSnackBar)
+  public readonly router = inject(Router)
 
-  public configs: DataWithCount<CIRAConfig> = { data: [], totalCount: 0 }
-  public isLoading = true
-  displayedColumns: string[] = [
+  // Public properties
+  public configs = new MatTableDataSource<CIRAConfig>()
+  public totalCount = 0
+  public isLoading = signal(true)
+  public displayedColumns: string[] = [
     'name',
     'mpsserver',
     'port',
@@ -75,13 +79,14 @@ export class ConfigsComponent implements OnInit {
     'rootcert',
     'remove'
   ]
-  pageEvent: PageEventOptions = {
+  public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator
+  // ViewChild
+  @ViewChild(MatPaginator) public paginator!: MatPaginator
 
   ngOnInit(): void {
     this.getData(this.pageEvent)
@@ -92,12 +97,13 @@ export class ConfigsComponent implements OnInit {
       .getData(pageEvent)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (data: DataWithCount<CIRAConfig>) => {
-          this.configs = data
+          this.configs = new MatTableDataSource<CIRAConfig>(data.data)
+          this.totalCount = data.totalCount
         },
         error: () => {
           this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
@@ -114,12 +120,12 @@ export class ConfigsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.configsService
           .delete(name)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({

@@ -47,7 +47,7 @@ describe('TLSComponent', () => {
 
     expect(mockDevicesService.getTLSSettings).toHaveBeenCalledWith('test-device-id')
     expect(component.tlsData).toEqual(mockTLSData)
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
   })
 
   it('should set isLoading to false after request completes', () => {
@@ -55,6 +55,6 @@ describe('TLSComponent', () => {
 
     fixture.detectChanges() // Triggers ngOnInit
 
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
   })
 })

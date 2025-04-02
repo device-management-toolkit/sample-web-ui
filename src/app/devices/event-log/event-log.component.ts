@@ -44,7 +44,7 @@ const EVENTTYPEMAP: EventTypeMap = {
   ]
 })
 export class EventLogComponent implements AfterViewInit {
-  snackBar = inject(MatSnackBar)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly deviceLogService = inject(DeviceLogService)
 
   @Input()
@@ -60,7 +60,6 @@ export class EventLogComponent implements AfterViewInit {
   ]
 
   public isCloudMode: boolean = environment.cloud
-
   public dataSource = new MatTableDataSource<EventLog>([])
   public hasMoreRecords = false
   public pageSize = 10

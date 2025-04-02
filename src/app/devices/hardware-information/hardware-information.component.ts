@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, inject, signal } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
-import { Router } from '@angular/router'
 import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
-import { FormBuilder } from '@angular/forms'
 import { DiskInformation, HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
@@ -32,15 +30,13 @@ import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.p
   styleUrl: './hardware-information.component.scss'
 })
 export class HardwareInformationComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly router = inject(Router)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-  fb = inject(FormBuilder)
 
   @Input()
   public deviceId = ''
 
-  isLoading = true
+  public isLoading = signal(true)
   public hwInfo?: HardwareInformation
   public diskInfo?: DiskInformation
   public targetOS: any
@@ -61,7 +57,7 @@ export class HardwareInformationComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((results) => {
@@ -81,7 +77,7 @@ export class HardwareInformationComponent implements OnInit {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe((diskInfo) => {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -25,7 +25,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatTableDataSource
 } from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -61,29 +62,35 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class DomainsComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  dialog = inject(MatDialog)
-  router = inject(Router)
+  // Dependency Injection
   private readonly domainsService = inject(DomainsService)
+  private readonly dialog = inject(MatDialog)
+  public readonly router = inject(Router)
+  public readonly snackBar = inject(MatSnackBar)
 
-  public domains: DataWithCount<Domain> = { data: [], totalCount: 0 }
-  public isLoading = true
+  // ViewChild
+  @ViewChild(MatPaginator) paginator!: MatPaginator
+
+  // Public properties
+  public domains = new MatTableDataSource<Domain>()
+  public totalCount = 0
+  public isLoading = signal(true)
   public myDate = ''
-  private readonly millisecondsInADay = 86400000
-  private readonly warningPeriodInDays = 60
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'name',
     'domainSuffix',
     'expirationDate',
     'remove'
   ]
-  pageEvent: PageEventOptions = {
+  public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator
+  // Private constants
+  private readonly millisecondsInADay = 86400000
+  private readonly warningPeriodInDays = 60
 
   ngOnInit(): void {
     this.getData(this.pageEvent)
@@ -94,12 +101,13 @@ export class DomainsComponent implements OnInit {
       .getData(pageEvent)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (data: DataWithCount<Domain>) => {
-          this.domains = data
+          this.domains = new MatTableDataSource<Domain>(data.data)
+          this.totalCount = data.totalCount
           this.expirationWarning()
         },
         error: () => {
@@ -117,12 +125,12 @@ export class DomainsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.domainsService
           .delete(name)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { Component, OnInit, inject, signal } from '@angular/core'
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -95,84 +95,82 @@ const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
   ]
 })
 export class ProfileDetailComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  fb = inject(FormBuilder)
-  router = inject(Router)
+  // Dependency Injection
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
-  profilesService = inject(ProfilesService)
+  private readonly profilesService = inject(ProfilesService)
   private readonly configsService = inject(ConfigsService)
   private readonly wirelessService = inject(WirelessService)
   private readonly ieee8021xService = inject(IEEE8021xService)
-  dialog = inject(MatDialog)
-  translate = inject(TranslateService)
+  private readonly dialog = inject(MatDialog)
+  private readonly translate = inject(TranslateService)
+  public readonly router = inject(Router)
 
-  profileForm: FormGroup
-  pageTitle: string
-  isLoading = false
-  isEdit = false
-  activationModes = ActivationModes
-  userConsentModes = UserConsentModes
-  tlsModes = TlsModes
-  tlsSigningAuthorities = TlsSigningAuthorities
-  tlsDefaultSigningAuthority = 'SelfSigned'
-  ciraConfigurations: CIRAConfig[] = []
-  tags: string[] = []
-  selectedWifiConfigs: WiFiConfig[] = []
-  amtInputType = 'password'
-  mebxInputType = 'password'
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  errorMessages: string[] = []
-  matDialogConfig: MatDialogConfig = {
+  public cloudMode = environment.cloud
+  public profileForm = this.fb.group({
+    profileName: ['', Validators.required],
+    activation: ['acmactivate', Validators.required],
+    generateRandomPassword: [
+      { value: this.cloudMode, disabled: !this.cloudMode },
+      Validators.required
+    ],
+    amtPassword: [{ value: null as string | null, disabled: this.cloudMode }],
+    generateRandomMEBxPassword: [
+      { value: this.cloudMode, disabled: !this.cloudMode },
+      Validators.required
+    ],
+    mebxPassword: [{ value: null as string | null, disabled: this.cloudMode }],
+    dhcpEnabled: [true],
+    ipSyncEnabled: [{ value: true, disabled: true }],
+    localWifiSyncEnabled: [{ value: false, disabled: false }],
+    connectionMode: ['', Validators.required],
+    ciraConfigName: [null as string | null],
+    ieee8021xProfileName: [null as string | null],
+    wifiConfigs: [[] as WiFiConfig[]],
+    tlsMode: [2],
+    tlsSigningAuthority: ['SelfSigned'],
+    version: [''],
+    // userConsent default depends on activation
+    userConsent: ['None', Validators.required],
+    iderEnabled: [true, Validators.required],
+    kvmEnabled: [true, Validators.required],
+    solEnabled: [true, Validators.required]
+  })
+
+  public pageTitle: string
+  public isLoading = signal(false)
+  public isEdit = false
+  public activationModes = ActivationModes
+  public userConsentModes = UserConsentModes
+  public tlsModes = TlsModes
+  public tlsSigningAuthorities = TlsSigningAuthorities
+  public tlsDefaultSigningAuthority = 'SelfSigned'
+  public ciraConfigurations: CIRAConfig[] = []
+  public tags: string[] = []
+  public selectedWifiConfigs: WiFiConfig[] = []
+  public amtInputType = 'password'
+  public mebxInputType = 'password'
+  public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
+  public errorMessages: string[] = []
+  public matDialogConfig: MatDialogConfig = {
     height: '275px',
     width: '450px'
   }
-
-  cloudMode = environment.cloud
-  iee8021xConfigurations: IEEE8021xConfig[] = []
-  showIEEE8021xConfigurations = false
-  wirelessConfigurations: string[] = []
-  showWirelessConfigurations = false
-  filteredWirelessList: Observable<string[]> = of([])
-  wirelessAutocomplete = new FormControl()
-  tooltipIpSyncEnabled = 'Only applicable for static wired network config'
-  connectionMode = {
+  public iee8021xConfigurations: IEEE8021xConfig[] = []
+  public showIEEE8021xConfigurations = false
+  public wirelessConfigurations: string[] = []
+  public showWirelessConfigurations = false
+  public filteredWirelessList: Observable<string[]> = of([])
+  public wirelessAutocomplete = new FormControl()
+  public tooltipIpSyncEnabled = 'Only applicable for static wired network config'
+  public connectionMode = {
     cira: 'CIRA',
     tls: 'TLS',
     direct: 'DIRECT'
   }
 
   constructor() {
-    const fb = this.fb
-
-    this.profileForm = fb.group({
-      profileName: [null, Validators.required],
-      activation: ['acmactivate', Validators.required],
-      generateRandomPassword: [
-        { value: this.cloudMode, disabled: !this.cloudMode },
-        Validators.required
-      ],
-      amtPassword: [{ value: null, disabled: this.cloudMode }],
-      generateRandomMEBxPassword: [
-        { value: this.cloudMode, disabled: !this.cloudMode },
-        Validators.required
-      ],
-      mebxPassword: [{ value: null, disabled: this.cloudMode }],
-      dhcpEnabled: [true],
-      ipSyncEnabled: [{ value: true, disabled: true }],
-      localWifiSyncEnabled: [{ value: false, disabled: false }],
-      connectionMode: [null, Validators.required],
-      ciraConfigName: [null],
-      ieee8021xProfileName: [null],
-      wifiConfigs: [null],
-      tlsMode: [null],
-      tlsSigningAuthority: [null],
-      version: [null],
-      // userConsent default depends on activation
-      userConsent: ['None', Validators.required],
-      iderEnabled: [true, Validators.required],
-      kvmEnabled: [true, Validators.required],
-      solEnabled: [true, Validators.required]
-    })
     this.pageTitle = this.translate.instant('profiles.header.profileNewTitle.value')
   }
 
@@ -182,7 +180,7 @@ export class ProfileDetailComponent implements OnInit {
     this.getCiraConfigs()
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.isEdit = true
         this.profileForm.controls.profileName.disable()
         this.getAmtProfile(decodeURIComponent(params.name as string))
@@ -193,20 +191,20 @@ export class ProfileDetailComponent implements OnInit {
       startWith(''),
       map((value: string) => (value.length > 0 ? this.search(value) : []))
     )
-    this.profileForm.controls.activation?.valueChanges.subscribe((value: string) => {
-      this.activationChange(value)
+    this.profileForm.controls.activation?.valueChanges.subscribe((value) => {
+      this.activationChange(value!)
     })
-    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value: boolean) => {
-      this.generateRandomPasswordChange(value)
+    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value) => {
+      this.generateRandomPasswordChange(value!)
     })
-    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value: boolean) => {
-      this.generateRandomMEBxPasswordChange(value)
+    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value) => {
+      this.generateRandomMEBxPasswordChange(value!)
     })
-    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value: boolean) => {
-      this.dhcpEnabledChange(value)
+    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value) => {
+      this.dhcpEnabledChange(value!)
     })
-    this.profileForm.controls.connectionMode.valueChanges.subscribe((value: string) => {
-      this.connectionModeChange(value)
+    this.profileForm.controls.connectionMode.valueChanges.subscribe((value) => {
+      this.connectionModeChange(value!)
     })
   }
 
@@ -240,19 +238,19 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   getAmtProfile(name: string): void {
-    this.isLoading = true
+    this.isLoading.set(true)
     this.profilesService
       .getRecord(name)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (data) => {
           this.pageTitle = data.profileName
           this.tags = data.tags
-          this.profileForm.patchValue(data)
+          this.profileForm.patchValue(data as any)
           this.selectedWifiConfigs = data.wifiConfigs ?? []
           this.setConnectionMode(data)
         },
@@ -543,8 +541,8 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.isLoading = true
-    const result: Profile = Object.assign({}, this.profileForm.getRawValue())
+    this.isLoading.set(true)
+    const result: Profile = Object.assign({}, this.profileForm.getRawValue()) as unknown as Profile
     result.tags = this.tags
     delete (result as any).connectionMode
     if (result.dhcpEnabled) {
@@ -553,23 +551,20 @@ export class ProfileDetailComponent implements OnInit {
       result.wifiConfigs = [] // Empty the wifi configs for static network
     }
     let request
-    let reqType: string
     if (this.isEdit) {
       request = this.profilesService.update(result)
-      reqType = 'updated'
     } else {
       request = this.profilesService.create(result)
-      reqType = 'created'
     }
     request
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: () => {
-          this.snackBar.open($localize`Profile ${reqType} successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
           void this.router.navigate(['/profiles'])
         },
         error: (error) => {

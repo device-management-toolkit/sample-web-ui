@@ -48,6 +48,7 @@ describe('ExplorerComponent', () => {
       ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },
         { provide: ActivatedRoute, useValue: { params: of({ id: '123' }) } }
       ]

@@ -22,7 +22,11 @@
       "es2022",
       "dom"
     ],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "types": [
+      "jasmine",
+      "@angular/localize"
+    ]
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

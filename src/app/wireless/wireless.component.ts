@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -24,7 +24,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatTableDataSource
 } from '@angular/material/table'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -62,24 +63,26 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class WirelessComponent implements OnInit {
-  snackBar = inject(MatSnackBar)
-  readonly wirelessService = inject(WirelessService)
-  router = inject(Router)
-  dialog = inject(MatDialog)
+  // Dependency Injection
+  public readonly snackBar = inject(MatSnackBar)
+  public readonly router = inject(Router)
+  public readonly dialog = inject(MatDialog)
+  private readonly wirelessService = inject(WirelessService)
 
-  configs: WirelessConfig[] = []
-  isLoading = true
-  totalCount = 0
-  displayedColumns: string[] = [
+  // Properties
+  public configs = new MatTableDataSource<WirelessConfig>()
+  public isLoading = signal(true)
+  public totalCount = 0
+  public displayedColumns: string[] = [
     'name',
     'authmethod',
     'encryptionMethod',
     'ssid',
     'remove'
   ]
-  authenticationMethods = AuthenticationMethods
-  encryptionMethods = EncryptionMethods
-  pageEvent: PageEventOptions = {
+  public authenticationMethods = AuthenticationMethods
+  public encryptionMethods = EncryptionMethods
+  public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
@@ -96,12 +99,12 @@ export class WirelessComponent implements OnInit {
       .getData(pageEvent)
       .pipe(
         finalize(() => {
-          this.isLoading = false
+          this.isLoading.set(false)
         })
       )
       .subscribe({
         next: (rsp) => {
-          this.configs = rsp.data
+          this.configs = new MatTableDataSource<WirelessConfig>(rsp.data)
           this.totalCount = rsp.totalCount
         },
         error: () => {
@@ -111,7 +114,7 @@ export class WirelessComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.configs.length === 0
+    return !this.isLoading() && this.totalCount === 0
   }
 
   delete(name: string): void {
@@ -119,12 +122,12 @@ export class WirelessComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading = true
+        this.isLoading.set(true)
         this.wirelessService
           .delete(name)
           .pipe(
             finalize(() => {
-              this.isLoading = false
+              this.isLoading.set(false)
             })
           )
           .subscribe({

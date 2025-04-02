@@ -114,7 +114,7 @@ describe('DeviceToolbarComponent', () => {
 
     expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false, {})
     fixture.detectChanges()
-    expect(component.isLoading).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
   })
 
   it('should navigate to device', async () => {
