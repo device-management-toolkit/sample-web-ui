@@ -171,7 +171,7 @@ describe('DeviceToolbarComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
     const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.performHTTPBoot()
+    component.performHTTPBoot(105)
 
     expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '400px',
@@ -195,7 +195,7 @@ describe('DeviceToolbarComponent', () => {
 
     const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
 
-    component.performHTTPBoot()
+    component.performHTTPBoot(105)
 
     expect(executeAuthSpy).toHaveBeenCalledWith(105, false, bootDetails)
   })
