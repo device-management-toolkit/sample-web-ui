@@ -116,6 +116,10 @@ export class DeviceToolbarComponent implements OnInit {
         label: 'Reset to HTTPS Boot (OCR)',
         action: 105
       })
+      this.powerOptions.push({
+        label: 'Power Up to HTTPS Boot (OCR)',
+        action: 106
+      })
     }
 
     this.devicesService.getDevice(this.deviceId).subscribe((data) => {
@@ -174,7 +178,7 @@ export class DeviceToolbarComponent implements OnInit {
     }
   }
 
-  performHTTPBoot(): void {
+  performHTTPBoot(action: number): void {
     const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
       width: '400px',
       disableClose: false
@@ -184,15 +188,16 @@ export class DeviceToolbarComponent implements OnInit {
       if (!bootDetails) {
         return
       }
-      this.executeAuthorizedPowerAction(105, false, bootDetails)
+      this.executeAuthorizedPowerAction(action, false, bootDetails)
     })
   }
 
   preprocessingForAuthorizedPowerAction(action?: number): void {
     // Handle specific action pre-processing
     switch (action) {
-      case 105: // HTTP Boot action
-        this.performHTTPBoot()
+      case 105:
+      case 106: // HTTP Boot action
+        this.performHTTPBoot(action)
         break
       case 101: {
         // Reset to BIOS
