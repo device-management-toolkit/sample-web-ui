@@ -1,9 +1,9 @@
 <mat-toolbar>
-  {{pageTitle | translate}}
+  {{ pageTitle | translate }}
 </mat-toolbar>
 
 @if (isLoading) {
-  <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
 <div class="flex-row flex-1 justify-center">
@@ -13,25 +13,25 @@
       <mat-list>
         @for (item of errorMessages; track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color='warn' matListItemIcon>error</mat-icon>
+            <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
       </mat-list>
     }
-    <form [formGroup]='ieee8021xForm' (ngSubmit)='onSubmit()'>
-      <div style='margin-bottom: 20px;'>
+    <form [formGroup]="ieee8021xForm" (ngSubmit)="onSubmit()">
+      <div style="margin-bottom: 20px">
         @if (isEdit) {
           <div>
-            <h2>{{ieee8021xForm.controls.profileName.value}}</h2>
-            <h3>{{getInterfaceLabel()}}</h3>
+            <h2>{{ ieee8021xForm.controls.profileName.value }}</h2>
+            <h3>{{ getInterfaceLabel() }}</h3>
           </div>
         } @else {
           <div>
             <mat-card-subtitle>
-              <mat-radio-group name='wiredInterface' formControlName='wiredInterface' class="flex-row">
-                <mat-radio-button [value]=true>Wired</mat-radio-button>
-                <mat-radio-button [value]=false>Wireless</mat-radio-button>
+              <mat-radio-group name="wiredInterface" formControlName="wiredInterface" class="flex-row">
+                <mat-radio-button [value]="true">Wired</mat-radio-button>
+                <mat-radio-button [value]="false">Wireless</mat-radio-button>
               </mat-radio-group>
             </mat-card-subtitle>
           </div>
@@ -40,48 +40,59 @@
 
       <mat-card-content class="flex-row flex-wrap">
         @if (!isEdit) {
-          <mat-form-field class="flex flex-1" style="margin-bottom:24px;">
+          <mat-form-field class="flex flex-1" style="margin-bottom: 24px">
             <mat-label>Profile Name</mat-label>
-            <input type='text' matInput formControlName='profileName' name='profileName' placeholder='ex. network-auth-profile' />
+            <input
+              type="text"
+              matInput
+              formControlName="profileName"
+              name="profileName"
+              placeholder="ex. network-auth-profile" />
             <mat-error i18n>
-            This field is required, must be alphanumeric (no spaces), and no longer than {{profileNameMaxLen}} characters
-          </mat-error>
+              This field is required, must be alphanumeric (no spaces), and no longer than
+              {{ profileNameMaxLen }} characters
+            </mat-error>
           </mat-form-field>
         }
 
         <mat-form-field class="flex flex-1">
           <mat-label>Authentication Protocol</mat-label>
-          <mat-select formControlName='authenticationProtocol'>
+          <mat-select formControlName="authenticationProtocol">
             @for (protocol of authenticationProtocols; track protocol) {
-              <mat-option [value]='protocol.value'>
-                {{protocol.label}}
+              <mat-option [value]="protocol.value">
+                {{ protocol.label }}
               </mat-option>
             }
           </mat-select>
-          <mat-error i18n>
-            This field is required
-          </mat-error>
+          <mat-error i18n> This field is required </mat-error>
         </mat-form-field>
 
         @if (shouldShowPxeTimeout()) {
           <mat-form-field class="flex flex-1">
             <mat-label>PXE Timeout</mat-label>
-            <input type='number' matInput formControlName='pxeTimeout' name='pxeTimeout' placeholder='ex. 120' required [min]='pxeTimeoutMin' [max]='pxeTimeoutMax'>
+            <input
+              type="number"
+              matInput
+              formControlName="pxeTimeout"
+              name="pxeTimeout"
+              placeholder="ex. 120"
+              required
+              [min]="pxeTimeoutMin"
+              [max]="pxeTimeoutMax" />
             <mat-error>
-              The value must be between {{pxeTimeoutMin}} (Disabled) and {{pxeTimeoutMax}} seconds (one day)
+              The value must be between {{ pxeTimeoutMin }} (Disabled) and {{ pxeTimeoutMax }} seconds (one day)
             </mat-error>
           </mat-form-field>
         }
-
       </mat-card-content>
       <mat-card-actions class="flex-row">
         <div class="flex flex-1 justify-center">
-          <button type='button' mat-button color='primary' (click)='cancel()'>
+          <button type="button" mat-button color="primary" (click)="cancel()">
             <span i18n>CANCEL</span>
           </button>
         </div>
         <div class="flex flex-1 justify-center">
-          <button type='submit' mat-flat-button color='primary'>
+          <button type="submit" mat-flat-button color="primary">
             <span i18n>SAVE</span>
           </button>
         </div>
