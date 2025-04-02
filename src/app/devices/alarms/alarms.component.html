@@ -1,9 +1,7 @@
 <mat-card class="flex flex-50" id="alarmService">
   <mat-card-header>
-    <mat-card-title>
-      Alarm Service
-    </mat-card-title>
-    <mat-card-subtitle>Alarms ({{alarmOccurrences.length}} entries)</mat-card-subtitle>
+    <mat-card-title> Alarm Service </mat-card-title>
+    <mat-card-subtitle>Alarms ({{ alarmOccurrences.length }} entries)</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     @for (entry of alarmOccurrences; track entry) {
@@ -12,15 +10,23 @@
         <mat-list-item>
           <div class="flex flex-row">
             <div class="flex-75">
-              <span matListItemTitle data-cy="alarmElementName">{{entry.ElementName}} (InstanceID:
-              {{entry.InstanceID}})</span>
-              <span matListItemLine data-cy="alarmStartTime">Start Time: {{entry.StartTime.Datetime | date: 'short'}}</span>
-              <span matListItemLine data-cy="alarmInterval">Interval (in minutes): {{entry.IntervalInMinutes ?? 'None'}}</span>
-              <span matListItemLine data-cy="alarmDeleteOnCompletion">Delete on Completion:
-              {{entry.DeleteOnCompletion}}</span>
+              <span matListItemTitle data-cy="alarmElementName"
+                >{{ entry.ElementName }} (InstanceID: {{ entry.InstanceID }})</span
+              >
+              <span matListItemLine data-cy="alarmStartTime"
+                >Start Time: {{ entry.StartTime.Datetime | date: 'short' }}</span
+              >
+              <span matListItemLine data-cy="alarmInterval"
+                >Interval (in minutes): {{ entry.IntervalInMinutes ?? 'None' }}</span
+              >
+              <span matListItemLine data-cy="alarmDeleteOnCompletion"
+                >Delete on Completion: {{ entry.DeleteOnCompletion }}</span
+              >
             </div>
             <div class="flex flex-25 justify-end">
-              <button mat-icon-button matTooltip="Delete alarm occurrence" (click)="deleteAlarm(entry.InstanceID)"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button matTooltip="Delete alarm occurrence" (click)="deleteAlarm(entry.InstanceID)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </div>
         </mat-list-item>
@@ -33,23 +39,26 @@
       </div>
       <form [formGroup]="newAlarmForm" (ngSubmit)="addAlarm()" class="flex-1 flex-row flex-wrap">
         <div class="flex flex-1 justify-end">
-          <button id="btnAdd" mat-button>
-            <mat-icon>add</mat-icon> Add New
-          </button>
+          <button id="btnAdd" mat-button><mat-icon>add</mat-icon> Add New</button>
         </div>
         <mat-form-field class="flex-1">
-          <input formControlName="alarmName" matInput name="alarmName" placeholder="Alarm Name" required>
+          <input formControlName="alarmName" matInput name="alarmName" placeholder="Alarm Name" required />
           <mat-error i18n>This field is required and must be alphanumeric with no symbols.</mat-error>
           <mat-hint>Provide a name for this alarm.</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="flex-1">
           <mat-label>Interval</mat-label>
-          <input formControlName="interval" matInput name="interval" placeholder="0">
+          <input formControlName="interval" matInput name="interval" placeholder="0" />
           <mat-hint>Interval in minutes for a periodic alarm, 0 for single alarm</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex-1">
-          <input formControlName="startTime" [matDatepicker]="startTime" matInput placeholder="Choose a date and time" required>
+          <input
+            formControlName="startTime"
+            [matDatepicker]="startTime"
+            matInput
+            placeholder="Choose a date and time"
+            required />
           <mat-datepicker-toggle matSuffix [for]="startTime"></mat-datepicker-toggle>
           <mat-datepicker #startTime></mat-datepicker>
         </mat-form-field>
@@ -58,7 +67,7 @@
             <mat-label>Hour</mat-label>
             <mat-select formControlName="hour">
               @for (hour of hourOptions; track hour) {
-                <mat-option [value]="hour">{{hour}}</mat-option>
+                <mat-option [value]="hour">{{ hour }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -66,15 +75,15 @@
             <mat-label>Minutes</mat-label>
             <mat-select formControlName="minute">
               @for (minute of minuteOptions; track minute) {
-                <mat-option [value]="minute">{{minute}}</mat-option>
+                <mat-option [value]="minute">{{ minute }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
-
         </div>
-        <br><br>
-        <mat-slide-toggle [formControl]="deleteOnCompletion" [checked]="deleteOnCompletion.value">Delete on
-        completion</mat-slide-toggle>
+        <br /><br />
+        <mat-slide-toggle [formControl]="deleteOnCompletion" [checked]="deleteOnCompletion.value"
+          >Delete on completion</mat-slide-toggle
+        >
       </form>
     </div>
   </mat-card-content>

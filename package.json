@@ -1,6 +1,6 @@
 {
   "name": "@open-amt-cloud-toolkit/sample-web-ui",
-  "version": "3.36.2",
+  "version": "3.36.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,8 +10,8 @@
     "test": "ng test",
     "test-ci": "ng test --no-watch --no-progress",
     "lint": "ng lint",
-    "prettify": "npx prettier --write '**/*.{ts,js,yaml,css,scss,json}'",
-    "ci-prettify": "npx prettier --check '**/*.{ts,js,yaml,css,scss,json}'",
+    "prettify": "npx prettier --write '**/*.{ts,js,yaml,css,scss,json,html}'",
+    "ci-prettify": "npx prettier --check '**/*.{ts,js,yaml,css,scss,json,html}'",
     "e2e": "ng e2e",
     "cypress-install": "cypress install",
     "cypress": "cypress open",
@@ -51,16 +51,16 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~19.2.5",
+    "@angular-devkit/build-angular": "~19.2.6",
     "@angular-eslint/builder": "~19.3.0",
     "@angular-eslint/schematics": "~19.3.0",
     "@angular-eslint/template-parser": "~19.3.0",
-    "@angular/cli": "~19.2.5",
+    "@angular/cli": "~19.2.6",
     "@angular/compiler-cli": "~19.2.4",
     "@angular/localize": "~19.2.4",
     "@types/jasmine": "~5.1.7",
     "angular-eslint": "19.3.0",
-    "cypress": "^13.17.0",
+    "cypress": "^14.2.1",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-license-header": "^0.8.0",
@@ -79,6 +79,6 @@
     "typescript-eslint": "^8.29.0"
   },
   "optionalDependencies": {
-    "cypress": "^13.17.0"
+    "cypress": "^14.2.1"
   }
 }
