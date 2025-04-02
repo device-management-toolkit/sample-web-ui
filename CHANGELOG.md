@@ -1,3 +1,10 @@
+# [3.37.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.4...v3.37.0) (2025-04-02)
+
+
+### Features
+
+* add Power up to OCR HTTPS Boot ([#2575](https://github.com/device-management-toolkit/sample-web-ui/issues/2575)) ([43c7748](https://github.com/device-management-toolkit/sample-web-ui/commit/43c7748c73c28d43c1de269af8be58c99f2c0676))
+
 ## [3.36.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.3...v3.36.4) (2025-04-01)
 
 
