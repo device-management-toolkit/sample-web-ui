@@ -11,11 +11,11 @@ export const environment = {
   rpsServer: 'http://localhost:8181',
   vault: '',
   auth: {
-    clientId: '',
-    issuer: '',
-    redirectUri: 'http://localhost:4200/dashboard',
-    scope: '',
+    clientId: '##CLIENTID##',
+    issuer: '##ISSUER##',
+    redirectUri: '##REDIRECTURI##',
+    scope: '##SCOPE##',
     responseType: 'code',
-    requireHttps: true // set to false when local
+    requireHttps: false
   }
 }

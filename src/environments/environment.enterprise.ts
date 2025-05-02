@@ -7,15 +7,16 @@ export const environment = {
   production: true,
   cloud: false,
   useOAuth: false, // for use with console
-  mpsServer: 'http://localhost:8181',
-  rpsServer: 'http://localhost:8181',
+  mpsServer: '##CONSOLE_SERVER_API##',
+  rpsServer: '##CONSOLE_SERVER_API##',
   vault: '##VAULT_SERVER##',
   auth: {
-    clientId: '',
-    issuer: '',
-    redirectUri: 'http://localhost:4200/dashboard',
-    scope: '',
+    clientId: '##CLIENTID##',
+    issuer: '##ISSUER##',
+    redirectUri: '##REDIRECTURI##',
+    scope: '##SCOPE##',
     responseType: 'code',
-    requireHttps: true // set to false when local
+    requireHttps: true, // set to false when local
+    strictDiscoveryDocumentValidation: true
   }
 }
