@@ -1,3 +1,10 @@
+# [3.38.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.37.0...v3.38.0) (2025-05-05)
+
+
+### Features
+
+* sso config ([ec201fc](https://github.com/device-management-toolkit/sample-web-ui/commit/ec201fca2d027ada799e6898a603e58c67f24692))
+
 # [3.37.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.4...v3.37.0) (2025-04-02)
 
 
