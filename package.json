@@ -37,7 +37,7 @@
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "date-fns": "^4.1.0",
-    "esbuild": "^0.25.3",
+    "esbuild": "^0.25.4",
     "monaco-editor": "^0.52.2",
     "ngx-monaco-editor-v2": "^19.0.2",
     "rxjs": "~7.8.2",
@@ -58,7 +58,7 @@
     "@angular/cli": "~19.2.10",
     "@angular/compiler-cli": "~19.2.9",
     "@angular/localize": "~19.2.9",
-    "@types/jasmine": "~5.1.7",
+    "@types/jasmine": "~5.1.8",
     "angular-eslint": "19.3.0",
     "cypress": "^14.3.2",
     "eslint": "^9.25.1",
@@ -76,7 +76,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.31.1"
+    "typescript-eslint": "^8.32.0"
   },
   "optionalDependencies": {
     "cypress": "^14.3.2"
