@@ -119,13 +119,7 @@ export class ProfilesComponent implements OnInit {
     return !this.isLoading && this.totalCount === 0
   }
 
-  export(name: string): void {
-    const profile = this.profiles.data.find((p) => p.profileName === name)
-    if (!profile) {
-      this.snackBar.open($localize`Unable to export profile`, undefined, SnackbarDefaults.defaultError)
-      return
-    }
-
+  export(profile: Profile): void {
     if (profile.activation === 'acmactivate') {
       const dialogRef = this.dialog.open(ExportDialogComponent, {
         width: '400px',
@@ -134,11 +128,11 @@ export class ProfilesComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((selectedDomain) => {
         if (selectedDomain) {
-          this.exportProfile(name, selectedDomain !== 'none' ? selectedDomain : '')
+          this.exportProfile(profile.profileName, selectedDomain !== 'none' ? selectedDomain : '')
         }
       })
     } else {
-      this.exportProfile(name, '')
+      this.exportProfile(profile.profileName, '')
     }
   }
 

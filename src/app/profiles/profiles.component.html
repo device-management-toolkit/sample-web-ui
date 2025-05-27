@@ -57,11 +57,9 @@
             <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
               <mat-icon>delete</mat-icon>
             </button>
-            @if (!cloudMode) {
-              <button mat-icon-button data-cy="export" (click)="export(row.profileName)">
-                <mat-icon>download</mat-icon>
-              </button>
-            }
+            <button mat-icon-button data-cy="export" (click)="export(row)">
+              <mat-icon>download</mat-icon>
+            </button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
