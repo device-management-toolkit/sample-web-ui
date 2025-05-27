@@ -26,7 +26,7 @@ import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-al
 import { environment } from 'src/environments/environment'
 import { AMTFeaturesRequest, AMTFeaturesResponse, RedirectionStatus, UserConsentResponse } from 'src/models/models'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
-import { KVMComponent, IDERComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { KVMComponent, IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
