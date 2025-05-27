@@ -30,7 +30,7 @@
     "@angular/platform-browser": "~19.2.13",
     "@angular/platform-browser-dynamic": "~19.2.13",
     "@angular/router": "~19.2.13",
-    "@open-amt-cloud-toolkit/ui-toolkit-angular": "^9.1.2",
+    "@device-management-toolkit/ui-toolkit-angular": "^9.1.4",
     "@xterm/xterm": "^5.5.0",
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
