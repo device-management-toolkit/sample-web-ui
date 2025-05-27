@@ -14,7 +14,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from 'src/models/models'
 import { UserConsentService } from '../user-consent.service'
-import { IDERComponent, KVMComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { IDERComponent, KVMComponent } from '@device-management-toolkit/ui-toolkit-angular'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
