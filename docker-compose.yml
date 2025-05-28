@@ -1,6 +1,6 @@
 services:
-  openamtui:
-    image: openamtui
+  sample-web-ui:
+    image: sample-web-ui
     build:
       context: .
       dockerfile: ./Dockerfile
