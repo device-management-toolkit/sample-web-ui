@@ -236,7 +236,7 @@
     "description": "Network Config column header"
   },
   "toolbar.header.cloudModeTitle": {
-    "value": "Open AMT Cloud Toolkit Sample UI",
+    "value": "Sample UI",
     "description": "Main title of the application"
   },
   "toolbar.header.consoleModeTitle": {

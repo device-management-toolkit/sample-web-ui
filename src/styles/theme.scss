@@ -21,22 +21,22 @@
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$openamtui-theme: mat.m2-define-light-theme(
+$samplewebui-theme: mat.m2-define-light-theme(
   (
     color: (
-      primary: vars.$openamtui-primary,
-      accent: vars.$openamtui-accent,
-      warn: vars.$openamtui-warn
+      primary: vars.$samplewebui-primary,
+      accent: vars.$samplewebui-accent,
+      warn: vars.$samplewebui-warn
     )
   )
 );
 
-$openamtui-dark-theme: mat.m2-define-dark-theme(
+$samplewebui-dark-theme: mat.m2-define-dark-theme(
   (
     color: (
-      primary: vars.$openamtui-primary,
-      accent: vars.$openamtui-accent,
-      warn: vars.$openamtui-warn
+      primary: vars.$samplewebui-primary,
+      accent: vars.$samplewebui-accent,
+      warn: vars.$samplewebui-warn
     )
   )
 );
@@ -44,10 +44,10 @@ $openamtui-dark-theme: mat.m2-define-dark-theme(
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($openamtui-theme);
+@include mat.all-component-themes($samplewebui-theme);
 
 .dark-theme {
-  @include mat.all-component-colors($openamtui-dark-theme);
+  @include mat.all-component-colors($samplewebui-dark-theme);
 }
 
 html,
@@ -72,7 +72,7 @@ body {
   transition: all 0.4s ease-in;
 
   &:hover {
-    background-color: map.get(vars.$openamtui-accent, 100);
+    background-color: map.get(vars.$samplewebui-accent, 100);
     cursor: pointer;
     -moz-transition: all 0.4s ease-in;
     -webkit-transition: all 0.4s ease-in;
@@ -108,7 +108,7 @@ body {
   &.error {
     text-align: center;
     text-transform: uppercase;
-    border-top-color: map.get(vars.$openamtui-warn, 500);
+    border-top-color: map.get(vars.$samplewebui-warn, 500);
     border-top-width: 5px;
     border-top-style: solid;
   }
@@ -116,8 +116,8 @@ body {
   &.success {
     text-align: center;
     text-transform: uppercase;
-    //background-color: map.get($openamtui-primary, 900);
-    border-top-color: map.get(vars.$openamtui-primary, 300);
+    //background-color: map.get($samplewebui-primary, 900);
+    border-top-color: map.get(vars.$samplewebui-primary, 300);
     border-top-width: 5px;
     border-top-style: solid;
   }

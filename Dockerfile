@@ -18,6 +18,6 @@ LABEL license='SPDX-License-Identifier: Apache-2.0' \
 
 RUN apk update && apk upgrade --no-cache
 
-COPY --from=build /usr/src/app/dist/openamtui/browser /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/samplewebui/browser /usr/share/nginx/html
 COPY --from=build /usr/src/app/init.sh /docker-entrypoint.d/init.sh
 EXPOSE 80
