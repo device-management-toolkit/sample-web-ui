@@ -1,9 +1,9 @@
-# Open AMT Sample Web UI
+# Sample Web UI
 
-![CodeQL](https://img.shields.io/github/actions/workflow/status/open-amt-cloud-toolkit/sample-web-ui/codeql-analysis.yml?style=for-the-badge&label=CodeQL&logo=github)
-![Build](https://img.shields.io/github/actions/workflow/status/open-amt-cloud-toolkit/sample-web-ui/nodejs.yaml?style=for-the-badge&logo=github)
-![Codecov](https://img.shields.io/codecov/c/github/open-amt-cloud-toolkit/sample-web-ui?style=for-the-badge&logo=codecov)
-[![OSSF-Scorecard Score](https://img.shields.io/ossf-scorecard/github.com/open-amt-cloud-toolkit/sample-web-ui?style=for-the-badge&label=OSSF%20Score)](https://api.securityscorecards.dev/projects/github.com/open-amt-cloud-toolkit/sample-web-ui)
+![CodeQL](https://img.shields.io/github/actions/workflow/status/device-management-toolkit/sample-web-ui/codeql-analysis.yml?style=for-the-badge&label=CodeQL&logo=github)
+![Build](https://img.shields.io/github/actions/workflow/status/device-management-toolkit/sample-web-ui/nodejs.yaml?style=for-the-badge&logo=github)
+![Codecov](https://img.shields.io/codecov/c/github/device-management-toolkit/sample-web-ui?style=for-the-badge&logo=codecov)
+[![OSSF-Scorecard Score](https://img.shields.io/ossf-scorecard/github.com/device-management-toolkit/sample-web-ui?style=for-the-badge&label=OSSF%20Score)](https://api.securityscorecards.dev/projects/github.com/device-management-toolkit/sample-web-ui)
 [![Discord](https://img.shields.io/discord/1063200098680582154?style=for-the-badge&label=Discord&logo=discord&logoColor=white&labelColor=%235865F2&link=https%3A%2F%2Fdiscord.gg%2FDKHeUNEWVH)](https://discord.gg/DKHeUNEWVH)
 [![Docker Pulls](https://img.shields.io/docker/pulls/intel/oact-webui?style=for-the-badge&logo=docker)](https://hub.docker.com/r/intel/oact-webui)
 
@@ -56,6 +56,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - Find a bug? Or have ideas for new features? [Open a new Issue](https://github.com/device-management-toolkit/sample-web-ui/issues).
 
-- Need additional support or want to get the latest news and events about Open AMT? Connect with the team directly through Discord.
+- Need additional support or want to get the latest news and events about Device Management Toolkit? Connect with the team directly through Discord.
 
   [![Discord Banner 1](https://discordapp.com/api/guilds/1063200098680582154/widget.png?style=banner2)](https://discord.gg/DKHeUNEWVH)

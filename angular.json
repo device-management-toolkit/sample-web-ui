@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "openamtui": {
+    "samplewebui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist/openamtui"
+              "base": "dist/samplewebui"
             },
             "index": "src/index.html",
             "polyfills": [
@@ -43,7 +43,7 @@
             ],
             "styles": [
               "src/styles/_variables.scss",
-              "src/styles/open-amt-theme.scss",
+              "src/styles/theme.scss",
               "src/styles/styles.scss",
               "src/styles/css2.css",
               "src/styles/flex.scss"
@@ -124,16 +124,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "openamtui:build",
+            "buildTarget": "samplewebui:build",
             "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
-              "buildTarget": "openamtui:build:production",
+              "buildTarget": "samplewebui:build:production",
               "host": "0.0.0.0"
             },
             "enterprise": {
-              "buildTarget": "openamtui:build:enterprise-dev",
+              "buildTarget": "samplewebui:build:enterprise-dev",
               "host": "0.0.0.0"
             }
           }
@@ -141,7 +141,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "openamtui:build"
+            "buildTarget": "samplewebui:build"
           }
         },
         "test": {
@@ -179,11 +179,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "openamtui:serve"
+            "devServerTarget": "samplewebui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "openamtui:serve:production"
+              "devServerTarget": "samplewebui:serve:production"
             }
           }
         }

@@ -26,7 +26,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/openamtui'),
+      dir: require('path').join(__dirname, './coverage/samplewebui'),
       subdir: '.',
       reporters: [
         { type: 'html' },
