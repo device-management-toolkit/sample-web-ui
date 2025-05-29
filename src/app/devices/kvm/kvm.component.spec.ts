@@ -237,13 +237,13 @@ describe('KvmComponent', () => {
   })
   it('power up alert dialog', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.showPowerUpAlert()
     expect(dialogSpy).toHaveBeenCalled()
   })
   it('enable KVM dialog', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.enableKvmDialog()
     expect(dialogSpy).toHaveBeenCalled()
   })

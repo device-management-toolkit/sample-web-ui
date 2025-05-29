@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule } from '@angular/forms'
@@ -13,7 +13,6 @@ import { Router, RouterModule } from '@angular/router'
 @Component({
   selector: 'app-export-dialog',
   imports: [
-    CommonModule,
     MatFormFieldModule,
     MatDialogModule,
     MatDialogContent,

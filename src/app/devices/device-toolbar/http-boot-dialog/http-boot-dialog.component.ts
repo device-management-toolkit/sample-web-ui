@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 import { Component, inject } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
@@ -19,7 +19,6 @@ import { TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'app-http-boot-dialog',
   imports: [
-    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,

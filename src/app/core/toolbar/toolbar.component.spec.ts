@@ -81,7 +81,7 @@ describe('ToolbarComponent', () => {
   })
 
   it('should display dialog', () => {
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open')
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open')
     component.displayAbout()
     expect(dialogSpy).toHaveBeenCalled()
   })
