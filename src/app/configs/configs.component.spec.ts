@@ -112,7 +112,7 @@ describe('ConfigsComponent', () => {
 
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('ciraconfig1')

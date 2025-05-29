@@ -95,7 +95,7 @@ describe('IEEE8021xComponent', () => {
 
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')
@@ -107,7 +107,7 @@ describe('IEEE8021xComponent', () => {
   })
   it('should not delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')

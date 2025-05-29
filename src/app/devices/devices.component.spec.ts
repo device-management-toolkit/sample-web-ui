@@ -164,7 +164,7 @@ describe('DevicesComponent', () => {
   })
   it('should open the add device dialog', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.addDevice()
     expect(dialogSpy).toHaveBeenCalled()
@@ -212,7 +212,7 @@ describe('DevicesComponent', () => {
 
   it('should fire deactivate action', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.sendDeactivate(device01.guid)
     fixture.detectChanges()
     expect(dialogSpy).toHaveBeenCalled()
@@ -222,7 +222,7 @@ describe('DevicesComponent', () => {
   it('should fire bulk deactivate action', () => {
     expect(component.devices.data.length).toBeGreaterThan(0)
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.selectedDevices.select(component.devices.data[0])
     component.bulkDeactivate()
     fixture.detectChanges()
@@ -233,7 +233,7 @@ describe('DevicesComponent', () => {
   it('should fire bulk edit tags', () => {
     expect(component.devices.data.length).toBeGreaterThan(0)
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.devices.data.forEach((d) => component.selectedDevices.select(d))
     component.bulkEditTags()
     fixture.detectChanges()
@@ -243,7 +243,7 @@ describe('DevicesComponent', () => {
   })
   it('should fire device edit tags', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.devices.data.forEach((d) => component.selectedDevices.select(d))
     component.editTagsForDevice(device01.guid)
     fixture.detectChanges()

@@ -134,7 +134,7 @@ describe('DeviceToolbarComponent', () => {
 
   it('should send deactivate action', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.sendDeactivate()
     expect(dialogSpy).toHaveBeenCalled()
@@ -169,7 +169,7 @@ describe('DeviceToolbarComponent', () => {
     component.isCloudMode = false
 
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.performHTTPBoot(105)
 
@@ -191,7 +191,7 @@ describe('DeviceToolbarComponent', () => {
       enforceSecureBoot: true
     }
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(bootDetails), close: null })
-    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
 
