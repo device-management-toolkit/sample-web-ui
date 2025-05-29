@@ -234,7 +234,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit when valid with random passwords (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -258,7 +258,7 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit with random passwords', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -298,7 +298,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit if cira config and static network are simultaneously selected and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -326,7 +326,7 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected and user cancels', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -350,7 +350,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit if cira config and static network are simultaneously selected + randomly generated password and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -374,7 +374,7 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected + randomly generated password and user cancels dialog', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -398,7 +398,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit when valid with only random mebx password + ccm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     component.isEdit = false
     component.profileForm.patchValue({
       profileName: 'profile',
@@ -420,7 +420,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
@@ -444,7 +444,7 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.isEdit = false
     component.profileForm.patchValue({
