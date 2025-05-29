@@ -37,12 +37,12 @@
     "angular-oauth2-oidc": "^19.0.0",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "date-fns": "^4.1.0",
-    "esbuild": "^0.25.4",
+    "esbuild": "^0.25.5",
     "monaco-editor": "^0.52.2",
     "ngx-monaco-editor-v2": "^19.0.2",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.15.1"
   },
   "overrides": {
     "ngx-monaco-editor-v2": {
@@ -76,7 +76,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1"
+    "typescript-eslint": "^8.33.0"
   },
   "optionalDependencies": {
     "cypress": "^14.4.0"
