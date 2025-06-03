@@ -54,7 +54,7 @@
     "@angular-devkit/build-angular": "~20.0.0",
     "@angular-eslint/builder": "~19.6.0",
     "@angular-eslint/schematics": "~19.6.0",
-    "@angular-eslint/template-parser": "~19.6.0",
+    "@angular-eslint/template-parser": "~19.7.0",
     "@angular/cli": "~20.0.0",
     "@angular/compiler-cli": "~20.0.0",
     "@angular/localize": "~20.0.0",
