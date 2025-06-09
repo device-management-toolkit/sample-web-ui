@@ -11,12 +11,13 @@ describe('TLSComponent', () => {
   let fixture: ComponentFixture<TLSComponent>
   let mockDevicesService: any
   let mockSnackBar: any
+  const mockTLSData = [{}, {}]
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockDevicesService = jasmine.createSpyObj('DevicesService', ['getTLSSettings'])
     mockSnackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         MatCardModule,
         MatDividerModule,
@@ -26,13 +27,15 @@ describe('TLSComponent', () => {
         { provide: DevicesService, useValue: mockDevicesService },
         { provide: MatSnackBar, useValue: mockSnackBar }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TLSComponent)
     component = fixture.componentInstance
-    component.deviceId = 'test-device-id'
+
+    fixture.componentRef.setInput('deviceId', 'test-device-id')
+    mockDevicesService.getTLSSettings.and.returnValue(of(mockTLSData))
   })
 
   it('should create the component', () => {
@@ -40,21 +43,10 @@ describe('TLSComponent', () => {
   })
 
   it('should call getTLSSettings on ngOnInit and set tlsData', () => {
-    const mockTLSData = [{}, {}]
-    mockDevicesService.getTLSSettings.and.returnValue(of(mockTLSData))
-
-    fixture.detectChanges() // Triggers ngOnInit
+    component.ngOnInit()
 
     expect(mockDevicesService.getTLSSettings).toHaveBeenCalledWith('test-device-id')
     expect(component.tlsData).toEqual(mockTLSData)
-    expect(component.isLoading()).toBeFalse()
-  })
-
-  it('should set isLoading to false after request completes', () => {
-    mockDevicesService.getTLSSettings.and.returnValue(of([{}]))
-
-    fixture.detectChanges() // Triggers ngOnInit
-
     expect(component.isLoading()).toBeFalse()
   })
 })

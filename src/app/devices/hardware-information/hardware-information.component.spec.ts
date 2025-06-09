@@ -53,13 +53,13 @@ describe('HardwareInformationComponent', () => {
     devicesServiceSpy.getDiskInformation.and.returnValue(of({} as any))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     devicesServiceSpy.TargetOSMap = { 0: '' } as any
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [HardwareInformationComponent],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(HardwareInformationComponent)
     component = fixture.componentInstance

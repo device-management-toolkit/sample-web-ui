@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -53,11 +53,9 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   public readonly router = inject(Router)
 
-  @Input()
-  public isLoading = signal(false)
+  public readonly isLoading = input(signal(false))
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public amtFeatures?: AMTFeaturesResponse
   public isCloudMode = environment.cloud
@@ -122,29 +120,29 @@ export class DeviceToolbarComponent implements OnInit {
       })
     }
 
-    this.devicesService.getDevice(this.deviceId).subscribe((data) => {
+    this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)
       this.getPowerState()
     })
   }
   getPowerState(): void {
-    this.isLoading.set(true)
-    this.devicesService.getPowerState(this.deviceId).subscribe((powerState) => {
+    this.isLoading().set(true)
+    this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
       this.powerState =
         powerState.powerstate.toString() === '2'
           ? 'Power: On'
           : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
             ? 'Power: Sleep'
             : 'Power: Off'
-      this.isLoading.set(false)
+      this.isLoading().set(false)
     })
   }
   isPinned(): boolean {
     return this.device?.certHash != null && this.device?.certHash !== ''
   }
   getDeviceCert(): void {
-    this.devicesService.getDeviceCertificate(this.deviceId).subscribe((data) => {
+    this.devicesService.getDeviceCertificate(this.deviceId()).subscribe((data) => {
       this.matDialog
         .open(DeviceCertDialogComponent, { data: { certData: data, isPinned: this.isPinned() } })
         .afterClosed()
@@ -212,9 +210,9 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   executeAuthorizedPowerAction(action?: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading.set(true)
+    this.isLoading().set(true)
     this.devicesService
-      .getAMTFeatures(this.deviceId)
+      .getAMTFeatures(this.deviceId())
       .pipe(
         switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
         switchMap((result: boolean) => {
@@ -225,10 +223,10 @@ export class DeviceToolbarComponent implements OnInit {
           }
         }),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId, this.amtFeatures)
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures)
         ),
         switchMap((result: any | UserConsentResponse) =>
-          this.userConsentService.handleUserConsentResponse(this.deviceId, result, 'PowerAction')
+          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'PowerAction')
         )
       )
       .subscribe({
@@ -241,15 +239,15 @@ export class DeviceToolbarComponent implements OnInit {
           this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
         },
         complete: () => {
-          this.isLoading.set(false)
+          this.isLoading().set(false)
         }
       })
   }
 
   executePowerAction(action: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading.set(true)
+    this.isLoading().set(true)
     this.devicesService
-      .sendPowerAction(this.deviceId, action, useSOL, bootDetails)
+      .sendPowerAction(this.deviceId(), action, useSOL, bootDetails)
       .pipe(
         catchError((err) => {
           console.error(err)
@@ -257,7 +255,7 @@ export class DeviceToolbarComponent implements OnInit {
           return of(null)
         }),
         finalize(() => {
-          this.isLoading.set(false)
+          this.isLoading().set(false)
         })
       )
       .subscribe((data) => {
@@ -280,10 +278,11 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   async navigateTo(path: string): Promise<void> {
-    if (this.router.url === `/devices/${this.deviceId}` && path === 'devices') {
+    const deviceId = this.deviceId()
+    if (this.router.url === `/devices/${deviceId}` && path === 'devices') {
       await this.router.navigate(['/devices'])
     } else {
-      await this.router.navigate([`/devices/${this.deviceId}/${path}`])
+      await this.router.navigate([`/devices/${deviceId}/${path}`])
     }
   }
 
@@ -291,12 +290,12 @@ export class DeviceToolbarComponent implements OnInit {
     const dialogRef = this.matDialog.open(AreYouSureDialogComponent)
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isLoading.set(true)
+        this.isLoading().set(true)
         this.devicesService
-          .sendDeactivate(this.deviceId)
+          .sendDeactivate(this.deviceId())
           .pipe(
             finalize(() => {
-              this.isLoading.set(false)
+              this.isLoading().set(false)
             })
           )
           .subscribe({

@@ -28,7 +28,7 @@ describe('WirelessComponent', () => {
   let deleteSpy: jasmine.Spy
   let translate: TranslateService
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
     getDataSpy = wirelessService.getData.and.returnValue(
       of({
@@ -46,7 +46,7 @@ describe('WirelessComponent', () => {
       })
     )
     deleteSpy = wirelessService.delete.and.returnValue(of(null))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -65,7 +65,7 @@ describe('WirelessComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

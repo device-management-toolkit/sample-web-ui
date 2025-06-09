@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { EventEmitter, Component, Input } from '@angular/core'
+import { EventEmitter, Component, input } from '@angular/core'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router, RouterModule } from '@angular/router'
@@ -21,8 +21,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
   imports: [RouterModule, MatSidenavModule]
 })
 class TestToolbarComponent {
-  @Input()
-  isLoading = false
+  readonly isLoading = input(false)
 }
 
 describe('AppComponent', () => {
@@ -41,12 +40,12 @@ describe('AppComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const authServiceStub = {
       loggedInSubject: new EventEmitter<boolean>()
     }
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         RouterModule,
         MatSidenavModule,
@@ -72,7 +71,7 @@ describe('AppComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)

@@ -23,12 +23,12 @@ describe('AddCertDialogComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
     mockDevicesService = jasmine.createSpyObj('DevicesService', ['addCertificate'])
     mockDevicesService.addCertificate.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         AddCertDialogComponent,
         NoopAnimationsModule,
@@ -50,7 +50,7 @@ describe('AddCertDialogComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(AddCertDialogComponent)
     component = fixture.componentInstance

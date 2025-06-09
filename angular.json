@@ -28,7 +28,6 @@
             },
             "index": "src/index.html",
             "polyfills": [
-              "zone.js",
               "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
@@ -150,7 +149,6 @@
             "codeCoverage": true,
             "main": "src/test.ts",
             "polyfills": [
-              "zone.js",
               "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",

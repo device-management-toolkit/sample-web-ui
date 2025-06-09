@@ -13,7 +13,7 @@ describe('DeviceCertDialogComponent', () => {
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<DeviceCertDialogComponent>>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const spyDevicesService = jasmine.createSpyObj('DevicesService', [
       'pinDeviceCertificate',
       'deleteDeviceCertificate'
@@ -21,7 +21,7 @@ describe('DeviceCertDialogComponent', () => {
     const spySnackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
     const spyDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [DeviceCertDialogComponent],
       providers: [
         { provide: DevicesService, useValue: spyDevicesService },
@@ -32,7 +32,7 @@ describe('DeviceCertDialogComponent', () => {
         },
         { provide: MatDialogRef, useValue: spyDialogRef }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(DeviceCertDialogComponent)
     component = fixture.componentInstance

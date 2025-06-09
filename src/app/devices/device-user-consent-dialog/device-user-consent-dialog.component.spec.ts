@@ -20,14 +20,14 @@ describe('DeviceUserConsentDialogComponent', () => {
     close: jasmine.createSpy('close')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(
       of({ deviceId: 'deviceId', results: {} })
     )
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -38,7 +38,7 @@ describe('DeviceUserConsentDialogComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
         { provide: MatDialogRef, useValue: dialogMock }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
