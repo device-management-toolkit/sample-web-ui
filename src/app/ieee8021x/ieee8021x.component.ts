@@ -76,7 +76,7 @@ export class IEEE8021xComponent implements OnInit {
     'interface',
     'remove'
   ]
-  public totalCount = 0
+  public totalCount = signal(0)
   public pageEvent: PageEventOptions = {
     pageSize: 25,
     startsFrom: 0,
@@ -102,7 +102,7 @@ export class IEEE8021xComponent implements OnInit {
       .subscribe({
         next: (pagedConfigs) => {
           this.tableDataSource = new MatTableDataSource(pagedConfigs.data)
-          this.totalCount = pagedConfigs.totalCount
+          this.totalCount.set(pagedConfigs.totalCount)
         },
         error: () => {
           this.snackBar.open($localize`Unable to load IEEE8021x Configs`, undefined, SnackbarDefaults.defaultError)
@@ -111,7 +111,7 @@ export class IEEE8021xComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {

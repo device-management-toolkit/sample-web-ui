@@ -13,14 +13,14 @@ describe('PowerUpAlertComponent', () => {
   let component: PowerUpAlertComponent
   let fixture: ComponentFixture<PowerUpAlertComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
         MatButtonModule,
         PowerUpAlertComponent
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

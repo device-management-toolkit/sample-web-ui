@@ -16,8 +16,8 @@ describe('DeviceEnableKvmComponent', () => {
     close: jasmine.createSpy('close')
   }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -25,7 +25,7 @@ describe('DeviceEnableKvmComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: dialogMock }]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

@@ -12,10 +12,10 @@ describe('RandomPassAlertComponent', () => {
   let component: RandomPassAlertComponent
   let fixture: ComponentFixture<RandomPassAlertComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [MatDialogModule, RandomPassAlertComponent]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

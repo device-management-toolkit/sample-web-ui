@@ -36,7 +36,7 @@ describe('IEEE8021xDetailComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
       'getRecord',
       'update',
@@ -47,7 +47,7 @@ describe('IEEE8021xDetailComponent', () => {
     ieee8021xCreateSpy = ieee8021xService.create.and.returnValue(of({}))
     ieee8021xUpdateSpy = ieee8021xService.update.and.returnValue(of({}))
     ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -72,7 +72,7 @@ describe('IEEE8021xDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

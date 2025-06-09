@@ -146,7 +146,7 @@ describe('CertificatesComponent', () => {
     }
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getCertificates',
       'addCertificate'
@@ -154,7 +154,7 @@ describe('CertificatesComponent', () => {
     devicesServiceSpy.getCertificates.and.returnValue(of(response))
     devicesServiceSpy.addCertificate.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         CertificatesComponent,
         TranslateModule.forRoot({
@@ -171,7 +171,7 @@ describe('CertificatesComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(CertificatesComponent)
     component = fixture.componentInstance

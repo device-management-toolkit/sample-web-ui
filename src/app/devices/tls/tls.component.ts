@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { catchError, finalize, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -22,15 +22,14 @@ export class TLSComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public isLoading = signal(true)
   public tlsData?: any[] = []
 
   ngOnInit(): void {
     this.devicesService
-      .getTLSSettings(this.deviceId)
+      .getTLSSettings(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving tls settings`, undefined, SnackbarDefaults.defaultError)
