@@ -18,9 +18,9 @@ describe('EditTagsComponent', () => {
     close: jasmine.createSpy('close')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     tags = ['tag1', 'tag2']
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -30,7 +30,7 @@ describe('EditTagsComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: tags },
         { provide: MatDialogRef, useValue: dialogMock }
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(DeviceEditTagsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

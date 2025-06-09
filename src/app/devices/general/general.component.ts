@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -36,8 +36,7 @@ export class GeneralComponent implements OnInit {
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public amtFeatures: AMTFeaturesResponse = {
     KVM: false,
@@ -87,19 +86,19 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      amtFeatures: this.devicesService.getAMTFeatures(this.deviceId).pipe(
+      amtFeatures: this.devicesService.getAMTFeatures(this.deviceId()).pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
       ),
-      generalSettings: this.devicesService.getGeneralSettings(this.deviceId).pipe(
+      generalSettings: this.devicesService.getGeneralSettings(this.deviceId()).pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving General Settings`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
       ),
-      amtVersion: this.devicesService.getAMTVersion(this.deviceId).pipe(
+      amtVersion: this.devicesService.getAMTVersion(this.deviceId()).pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
@@ -145,7 +144,7 @@ export class GeneralComponent implements OnInit {
   setAmtFeatures(): void {
     this.isLoading.set(true)
     this.devicesService
-      .setAmtFeatures(this.deviceId, this.amtEnabledFeatures.value as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.value as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)

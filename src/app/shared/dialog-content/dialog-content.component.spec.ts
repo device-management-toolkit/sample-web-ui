@@ -11,14 +11,14 @@ describe('DialogContentComponent', () => {
   let component: DialogContentComponent
   let fixture: ComponentFixture<DialogContentComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [MatDialogModule, DialogContentComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

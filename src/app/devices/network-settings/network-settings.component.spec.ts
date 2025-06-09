@@ -22,11 +22,11 @@ describe('NetworkSettingsComponent', () => {
         }
       } as any)
     )
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [NetworkSettingsComponent],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy }]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(NetworkSettingsComponent)
     component = fixture.componentInstance

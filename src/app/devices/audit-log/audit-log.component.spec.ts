@@ -15,11 +15,11 @@ describe('AuditLogComponent', () => {
   let fixture: ComponentFixture<AuditLogComponent>
   let getAuditLogSpy: jasmine.Spy
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const devicesService = jasmine.createSpyObj('DeviceLogService', ['getAuditLog'])
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         RouterModule,
@@ -34,7 +34,7 @@ describe('AuditLogComponent', () => {
           }
         }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

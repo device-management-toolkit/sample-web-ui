@@ -28,7 +28,7 @@ describe('ProfilesComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
     getDataSpy = profilesService.getData.and.returnValue(
       of({
@@ -52,7 +52,7 @@ describe('ProfilesComponent', () => {
     )
     deleteSpy = profilesService.delete.and.returnValue(of(null))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -71,7 +71,7 @@ describe('ProfilesComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

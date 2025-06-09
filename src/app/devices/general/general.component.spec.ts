@@ -15,7 +15,7 @@ describe('GeneralComponent', () => {
   let fixture: ComponentFixture<GeneralComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
@@ -49,13 +49,13 @@ describe('GeneralComponent', () => {
     )
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [GeneralComponent],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(GeneralComponent)
     component = fixture.componentInstance

@@ -10,7 +10,7 @@ describe('ExportDialogComponent', () => {
   let fixture: ComponentFixture<ExportDialogComponent>
   let domainsServiceSpy: jasmine.SpyObj<DomainsService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     // Create spy for DomainsService
     domainsServiceSpy = jasmine.createSpyObj('DomainsService', ['getData'])
     domainsServiceSpy.getData.and.returnValue(
@@ -37,7 +37,7 @@ describe('ExportDialogComponent', () => {
       })
     )
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         ExportDialogComponent,
         NoopAnimationsModule
@@ -48,7 +48,7 @@ describe('ExportDialogComponent', () => {
         { provide: MatDialogRef, useValue: { close: () => {} } },
         { provide: DomainsService, useValue: domainsServiceSpy }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(ExportDialogComponent)
     component = fixture.componentInstance

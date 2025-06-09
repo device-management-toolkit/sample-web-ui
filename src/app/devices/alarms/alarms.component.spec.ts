@@ -16,7 +16,7 @@ describe('AlarmsComponent', () => {
   let fixture: ComponentFixture<AlarmsComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
@@ -35,10 +35,10 @@ describe('AlarmsComponent', () => {
     ])
 
     devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlarmsComponent],
       providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesServiceSpy }]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(AlarmsComponent)
     component = fixture.componentInstance

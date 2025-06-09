@@ -13,14 +13,14 @@ describe('AreYouSureComponent', () => {
   let component: AreYouSureDialogComponent
   let fixture: ComponentFixture<AreYouSureDialogComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
         MatButtonModule,
         AreYouSureDialogComponent
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

@@ -21,7 +21,7 @@ describe('ExplorerComponent', () => {
   let fixture: ComponentFixture<ExplorerComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
@@ -36,7 +36,7 @@ describe('ExplorerComponent', () => {
       'executeExplorerCall'
     ])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         BrowserModule,
@@ -52,7 +52,7 @@ describe('ExplorerComponent', () => {
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },
         { provide: ActivatedRoute, useValue: { params: of({ id: '123' }) } }
       ]
-    }).compileComponents()
+    })
 
     devicesServiceSpy.getWsmanOperations.and.returnValue(of(['Operation1', 'Operation2']))
     devicesServiceSpy.executeExplorerCall.and.returnValue(of('<xml>Data</xml>'))
@@ -72,7 +72,7 @@ describe('ExplorerComponent', () => {
   })
 
   it('should update XMLData on input change', () => {
-    component.deviceId = '123'
+    fixture.componentRef.setInput('deviceId', '123')
     component.inputChanged({ option: { value: 'Operation2' } } as any)
     expect(component.selectedWsmanOperation).toBe('Operation2')
     expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation2')

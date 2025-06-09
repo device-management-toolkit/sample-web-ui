@@ -28,7 +28,7 @@ describe('DomainDetailComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const domainsService = jasmine.createSpyObj('DomainsService', [
       'getRecord',
       'update',
@@ -37,7 +37,7 @@ describe('DomainDetailComponent', () => {
     getRecordSpy = domainsService.getRecord.and.returnValue(of({ profileName: 'domain' }))
     updateRecordSpy = domainsService.update.and.returnValue(of({}))
     createRecordSpy = domainsService.create.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -60,7 +60,7 @@ describe('DomainDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

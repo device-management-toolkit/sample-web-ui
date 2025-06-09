@@ -50,7 +50,7 @@ describe('ConfigsComponent', () => {
       })
     )
     deleteSpy = configsService.delete.and.returnValue(of(null))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -69,7 +69,7 @@ describe('ConfigsComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

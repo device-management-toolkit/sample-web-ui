@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { Component, OnInit, inject, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { Router } from '@angular/router'
 import { DevicesService } from '../devices.service'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms'
@@ -47,12 +45,9 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 export class ExplorerComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
-  private readonly dialog = inject(MatDialog)
-  private readonly router = inject(Router)
   private readonly devicesService = inject(DevicesService)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public XMLData: any
   public myControl = new FormControl('')
@@ -70,7 +65,7 @@ export class ExplorerComponent implements OnInit {
         map((value) => this._filter(value ?? ''))
       )
 
-      this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+      this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
         next: (data) => {
           this.XMLData = data
         },
@@ -94,7 +89,7 @@ export class ExplorerComponent implements OnInit {
 
   inputChanged(event: MatAutocompleteSelectedEvent): void {
     this.selectedWsmanOperation = event.option.value
-    this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+    this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
       next: (data) => {
         this.XMLData = data
       },

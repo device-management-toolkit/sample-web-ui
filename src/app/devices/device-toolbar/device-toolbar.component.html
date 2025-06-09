@@ -18,7 +18,7 @@
     }
     <div class="mat-caption">
       @if (isCloudMode) {
-        {{ deviceId }}
+        {{ deviceId() }}
       }
       @if (device?.friendlyName) {
         <span>
@@ -42,7 +42,7 @@
     <mat-icon>delete</mat-icon>
   </button>
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
-  @if (!isLoading()) {
+  @if (!isLoading()()) {
     <mat-icon
       (click)="getPowerState()"
       style="padding: 0 18px 0 12px; cursor: pointer"
@@ -72,6 +72,6 @@
     }
   </mat-menu>
 </mat-toolbar>
-@if (isLoading()) {
+@if (isLoading()()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }

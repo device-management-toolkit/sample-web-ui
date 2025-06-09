@@ -54,12 +54,12 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (totalCount !== 0) {
+    @if (totalCount() !== 0) {
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
           [pageSize]="pageEvent.pageSize"
-          [length]="totalCount"
+          [length]="totalCount()"
           (page)="pageChanged($event)"
           showFirstLastButtons>
         </mat-paginator>

@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { enableProdMode, inject, provideAppInitializer, importProvidersFrom } from '@angular/core'
+import {
+  enableProdMode,
+  inject,
+  provideAppInitializer,
+  importProvidersFrom,
+  provideZonelessChangeDetection
+} from '@angular/core'
 import { environment } from './environments/environment'
 import { AppComponent } from './app/app.component'
 import { provideRouter } from '@angular/router'
@@ -30,6 +36,7 @@ if (environment.production) {
 }
 const providers = [
   AuthGuard,
+  provideZonelessChangeDetection(),
   provideAnimations(),
   provideRouter(routes),
   importProvidersFrom(

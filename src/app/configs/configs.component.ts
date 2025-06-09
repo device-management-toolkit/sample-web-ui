@@ -68,7 +68,7 @@ export class ConfigsComponent implements OnInit {
 
   // Public properties
   public configs = new MatTableDataSource<CIRAConfig>()
-  public totalCount = 0
+  public totalCount = signal(0)
   public isLoading = signal(true)
   public displayedColumns: string[] = [
     'name',
@@ -103,7 +103,7 @@ export class ConfigsComponent implements OnInit {
       .subscribe({
         next: (data: DataWithCount<CIRAConfig>) => {
           this.configs = new MatTableDataSource<CIRAConfig>(data.data)
-          this.totalCount = data.totalCount
+          this.totalCount.set(data.totalCount)
         },
         error: () => {
           this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
@@ -112,7 +112,7 @@ export class ConfigsComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.configs.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {

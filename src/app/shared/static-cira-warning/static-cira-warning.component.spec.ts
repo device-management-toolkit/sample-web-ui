@@ -12,10 +12,10 @@ describe('StaticCIRAWarningComponent', () => {
   let component: StaticCIRAWarningComponent
   let fixture: ComponentFixture<StaticCIRAWarningComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [MatDialogModule, StaticCIRAWarningComponent]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

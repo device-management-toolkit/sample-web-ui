@@ -20,11 +20,11 @@ describe('AddDeviceEnterpriseComponent', () => {
   let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
   let addDeviceSpy: jasmine.Spy
   let dialogCloseSpy: jasmine.Spy
-  beforeEach(async () => {
+  beforeEach(() => {
     const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice'])
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         MatDialogModule,
@@ -42,7 +42,7 @@ describe('AddDeviceEnterpriseComponent', () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: MatDialogRef, useValue: { close: () => {} } }
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance
     dialogCloseSpy = spyOn(component.dialog, 'close')

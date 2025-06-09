@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { catchError, finalize, throwError } from 'rxjs'
@@ -33,8 +33,7 @@ export class HardwareInformationComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public isLoading = signal(true)
   public hwInfo?: HardwareInformation
@@ -50,7 +49,7 @@ export class HardwareInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.devicesService
-      .getHardwareInformation(this.deviceId)
+      .getHardwareInformation(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving HW Info`, undefined, SnackbarDefaults.defaultError)
@@ -70,7 +69,7 @@ export class HardwareInformationComponent implements OnInit {
 
   getDiskInformation(): void {
     this.devicesService
-      .getDiskInformation(this.deviceId)
+      .getDiskInformation(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving additional info`, undefined, SnackbarDefaults.defaultError)

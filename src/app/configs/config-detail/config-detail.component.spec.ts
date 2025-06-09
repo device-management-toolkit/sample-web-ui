@@ -29,7 +29,7 @@ describe('ConfigDetailComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const configsService = jasmine.createSpyObj('ConfigsService', [
       'getRecord',
       'update',
@@ -41,7 +41,7 @@ describe('ConfigDetailComponent', () => {
     loadMpsRootCertSpy = configsService.loadMPSRootCert.and.returnValue(of('root certificate'))
     createRecordSpy = configsService.create.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -64,7 +64,7 @@ describe('ConfigDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

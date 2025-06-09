@@ -1,6 +1,6 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center">
-    @if (amtFeatures?.kvmAvailable) {
+    @if (amtFeatures()?.kvmAvailable) {
       <mat-form-field style="margin-bottom: 0">
         <mat-label>Choose encoding type</mat-label>
         <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
@@ -14,15 +14,15 @@
     }
   </div>
   <div class="flex flex-50 justify-end">
-    @if (amtFeatures?.kvmAvailable) {
+    @if (amtFeatures()?.kvmAvailable) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
         <mat-icon>fullscreen</mat-icon>Fullscreen
       </button>
-      @if (deviceState === 0 && !isLoading()) {
+      @if (deviceState() === 0 && !isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
           <mat-icon>tv_on</mat-icon>Connect KVM
         </button>
-      } @else if (deviceState !== 2 && isLoading()) {
+      } @else if (deviceState() !== 2 && isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
           <mat-icon>tv_off</mat-icon>Connecting KVM...
         </button>
@@ -46,22 +46,22 @@
 @if (isLoading()) {
   <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
 }
-@if (readyToLoadKvm && amtFeatures?.kvmAvailable) {
+@if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
   <amt-kvm
     class="kvm"
     [isFullscreen]="isFullscreen()"
-    [deviceId]="deviceId"
+    [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
-    [authToken]="authToken"
+    [authToken]="authToken()"
     [deviceConnection]="deviceKVMConnection"
     [selectedEncoding]="selectedEncoding"
     (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
 <amt-ider
   class="ider"
-  [deviceId]="deviceId"
+  [deviceId]="deviceId()"
   [mpsServer]="mpsServer"
-  [authToken]="authToken"
+  [authToken]="authToken()"
   [deviceConnection]="deviceIDERConnection"
   [cdrom]="diskImage"
   [floppy]="null"

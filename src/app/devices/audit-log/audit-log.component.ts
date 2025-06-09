@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, Input, signal, ViewChild, inject } from '@angular/core'
+import { AfterViewInit, Component, signal, ViewChild, inject, input } from '@angular/core'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortModule } from '@angular/material/sort'
@@ -41,8 +41,7 @@ export class AuditLogComponent implements AfterViewInit {
   private readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public devices: Device[] = []
   public isLoading = signal(true)
@@ -72,7 +71,7 @@ export class AuditLogComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           return this.deviceLogService
-            .getAuditLog(this.deviceId, (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
+            .getAuditLog(this.deviceId(), (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
             .pipe(catchError(() => of(null)))
         }),
         catchError((err) => {
@@ -103,12 +102,12 @@ export class AuditLogComponent implements AfterViewInit {
   }
   download(): void {
     this.isLoading.set(true)
-    this.deviceLogService.downloadAuditLog(this.deviceId).subscribe((data) => {
+    this.deviceLogService.downloadAuditLog(this.deviceId()).subscribe((data) => {
       const blob = new Blob([data], { type: 'application/octet-stream' })
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `audit_${this.deviceId}.csv`
+      a.download = `audit_${this.deviceId()}.csv`
       a.click()
 
       window.URL.revokeObjectURL(url)

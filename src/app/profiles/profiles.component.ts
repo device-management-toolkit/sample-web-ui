@@ -74,7 +74,7 @@ export class ProfilesComponent implements OnInit {
 
   public profiles = new MatTableDataSource<Profile>()
   public readonly isLoading = signal(true)
-  public totalCount = 0
+  public totalCount = signal(0)
   public readonly tlsModes = TlsModes
   public readonly displayedColumns: string[] = [
     'name',
@@ -107,7 +107,7 @@ export class ProfilesComponent implements OnInit {
       .subscribe({
         next: (rsp) => {
           this.profiles = new MatTableDataSource<Profile>(rsp.data)
-          this.totalCount = rsp.totalCount
+          this.totalCount.set(rsp.totalCount)
         },
         error: () => {
           this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
@@ -116,7 +116,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.totalCount === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   export(name: string): void {
