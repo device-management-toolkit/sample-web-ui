@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { ProfilesService } from './profiles.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
@@ -18,11 +19,13 @@ describe('ProfilesService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [
         ProfilesService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(ProfilesService)

@@ -29,7 +29,7 @@ describe('WirelessDetailComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const wirelessService = jasmine.createSpyObj('WirelessService', [
       'getRecord',
       'update',
@@ -53,7 +53,7 @@ describe('WirelessDetailComponent', () => {
         totalCount: 1
       })
     )
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -74,7 +74,7 @@ describe('WirelessDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

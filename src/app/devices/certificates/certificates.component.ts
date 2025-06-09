@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -40,8 +40,7 @@ export class CertificatesComponent implements OnInit {
     isTrusted: false
   }
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   ngOnInit(): void {
     this.getCertificates()
@@ -49,7 +48,7 @@ export class CertificatesComponent implements OnInit {
 
   getCertificates(): void {
     this.devicesService
-      .getCertificates(this.deviceId)
+      .getCertificates(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving certificate info`, undefined, SnackbarDefaults.defaultError)
@@ -112,7 +111,7 @@ export class CertificatesComponent implements OnInit {
   addCertificate(addCert: CertInfo): void {
     this.isLoading.set(true)
     this.devicesService
-      .addCertificate(this.deviceId, addCert)
+      .addCertificate(this.deviceId(), addCert)
       .pipe(
         catchError((err) => {
           this.isLoading.set(false)

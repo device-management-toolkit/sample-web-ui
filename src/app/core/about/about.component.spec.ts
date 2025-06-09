@@ -14,15 +14,15 @@ describe('AboutComponent', () => {
   let component: AboutComponent
   let fixture: ComponentFixture<AboutComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         MatListModule,
         MatIconModule,
         MatDialogModule,
         AboutComponent
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

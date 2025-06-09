@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
@@ -46,8 +46,7 @@ export class AlarmsComponent implements OnInit {
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   cloudMode: boolean = environment.cloud
   public alarmOccurrences: IPSAlarmClockOccurrence[] = []
@@ -160,7 +159,7 @@ export class AlarmsComponent implements OnInit {
 
   loadAlarms(): void {
     this.devicesService
-      .getAlarmOccurrences(this.deviceId)
+      .getAlarmOccurrences(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
@@ -179,7 +178,7 @@ export class AlarmsComponent implements OnInit {
     if (!window.confirm('Deleting: ' + instanceID)) return
     this.isLoading.set(true)
     this.devicesService
-      .deleteAlarmOccurrence(this.deviceId, instanceID)
+      .deleteAlarmOccurrence(this.deviceId(), instanceID)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)
@@ -211,7 +210,7 @@ export class AlarmsComponent implements OnInit {
 
       this.isLoading.set(true)
       this.devicesService
-        .addAlarmOccurrence(this.deviceId, payload)
+        .addAlarmOccurrence(this.deviceId(), payload)
         .pipe(
           finalize(() => {
             this.isLoading.set(false)

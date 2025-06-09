@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { DevicesService } from '../devices.service'
 import { MatCardModule } from '@angular/material/card'
 import { catchError, finalize, throwError } from 'rxjs'
@@ -27,15 +27,14 @@ export class NetworkSettingsComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   public isLoading = signal(true)
   public networkResults?: NetworkConfig
 
   ngOnInit(): void {
     this.devicesService
-      .getNetworkSettings(this.deviceId)
+      .getNetworkSettings(this.deviceId())
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error retrieving network settings`, undefined, SnackbarDefaults.defaultError)

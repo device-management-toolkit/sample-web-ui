@@ -8,12 +8,12 @@ import {
   Component,
   EventEmitter,
   HostListener,
-  Input,
   OnDestroy,
   OnInit,
   Output,
   inject,
-  signal
+  signal,
+  input
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -66,8 +66,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   @Output()
   public deviceKVMConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
@@ -80,13 +79,13 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   public isFullscreen = signal(false)
   public isLoading = signal(false)
-  public deviceState = -1
+  public deviceState = signal(-1)
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public readyToLoadKvm = false
-  public authToken = ''
+  public authToken = signal('')
   public selected = 1
   public isIDERActive = false
-  public amtFeatures?: AMTFeaturesResponse
+  public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public diskImage: File | null = null
   public isDisconnecting = false
   public redirectionStatus: RedirectionStatus | null = null
@@ -114,17 +113,12 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // grab the device id from the url
-    this.activatedRoute.params
+    // request token from MPS
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
       .pipe(
-        switchMap((params) => {
-          this.deviceId = params.id
-          // request token from MPS
-          return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
-            tap((result) => {
-              this.authToken = result.token
-            })
-          )
+        tap((result) => {
+          this.authToken.set(result.token)
         })
       )
       .subscribe()
@@ -143,7 +137,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
     this.timeInterval = interval(15000)
-      .pipe(mergeMap(() => this.getPowerState(this.deviceId)))
+      .pipe(mergeMap(() => this.getPowerState(this.deviceId())))
       .subscribe()
 
     this.init()
@@ -152,10 +146,10 @@ export class KvmComponent implements OnInit, OnDestroy {
   init(): void {
     this.isLoading.set(true)
     // device needs to be powered on in order to start KVM session
-    this.getPowerState(this.deviceId)
+    this.getPowerState(this.deviceId())
       .pipe(
         switchMap((powerState) => this.handlePowerState(powerState)),
-        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId))),
+        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId()))),
         switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
         switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
         switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
@@ -167,10 +161,10 @@ export class KvmComponent implements OnInit, OnDestroy {
           )
         ),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId, this.amtFeatures)
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures()!)
         ),
         switchMap((result: any | UserConsentResponse) =>
-          this.userConsentService.handleUserConsentResponse(this.deviceId, result, 'KVM')
+          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'KVM')
         ),
         switchMap((result: any) => this.postUserConsentDecision(result))
       )
@@ -182,11 +176,11 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   postUserConsentDecision(result: boolean): Observable<any> {
     if (result != null && result) {
-      this.readyToLoadKvm = this.amtFeatures?.kvmAvailable ?? false
+      this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
       this.getAMTFeatures()
     } else if (result === false) {
       this.isLoading.set(false)
-      this.deviceState = 0
+      this.deviceState.set(0)
     }
     return of(null)
   }
@@ -238,7 +232,7 @@ export class KvmComponent implements OnInit, OnDestroy {
         switchMap((result) => {
           // if they said yes, power on the device
           if (result) {
-            return this.devicesService.sendPowerAction(this.deviceId, 2)
+            return this.devicesService.sendPowerAction(this.deviceId(), 2)
           }
           return of(null)
         })
@@ -259,7 +253,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   handleRedirectionStatus(redirectionStatus: RedirectionStatus): Observable<any> {
     this.redirectionStatus = redirectionStatus
-    if (this.amtFeatures?.kvmAvailable && this.redirectionStatus.isKVMConnected) {
+    if (this.amtFeatures()?.kvmAvailable && this.redirectionStatus.isKVMConnected) {
       this.displayError($localize`KVM cannot be accessed - another kvm session is in progress`)
       return of(null)
     }
@@ -277,13 +271,13 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
-    this.amtFeatures = results
+    this.amtFeatures.set(results)
 
-    if (!this.amtFeatures.kvmAvailable) {
+    if (!this.amtFeatures()?.kvmAvailable) {
       return of(true)
     }
 
-    if (this.amtFeatures.KVM) {
+    if (this.amtFeatures()?.KVM) {
       return of(true)
     }
     return this.enableKvmDialog().pipe(
@@ -298,14 +292,14 @@ export class KvmComponent implements OnInit, OnDestroy {
           return of(false)
         } else {
           const payload: AMTFeaturesRequest = {
-            userConsent: this.amtFeatures?.userConsent ?? '',
+            userConsent: this.amtFeatures()?.userConsent ?? '',
             enableKVM: true,
-            enableSOL: this.amtFeatures?.SOL ?? false,
-            enableIDER: this.amtFeatures?.IDER ?? false,
-            ocr: this.amtFeatures?.ocr ?? false,
-            remoteErase: this.amtFeatures?.remoteErase ?? false
+            enableSOL: this.amtFeatures()?.SOL ?? false,
+            enableIDER: this.amtFeatures()?.IDER ?? false,
+            ocr: this.amtFeatures()?.ocr ?? false,
+            remoteErase: this.amtFeatures()?.remoteErase ?? false
           }
-          return this.devicesService.setAmtFeatures(this.deviceId, payload)
+          return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }
       })
     )
@@ -313,7 +307,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   getAMTFeatures(): Observable<AMTFeaturesResponse> {
     this.isLoading.set(true)
-    return this.devicesService.getAMTFeatures(this.deviceId)
+    return this.devicesService.getAMTFeatures(this.deviceId())
   }
 
   enableKvmDialog(): Observable<any> {
@@ -342,9 +336,9 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   checkUserConsent(): Observable<boolean> {
     if (
-      this.amtFeatures?.userConsent === 'none' ||
-      this.amtFeatures?.optInState === 3 ||
-      this.amtFeatures?.optInState === 4
+      this.amtFeatures()?.userConsent === 'none' ||
+      this.amtFeatures()?.optInState === 3 ||
+      this.amtFeatures()?.optInState === 4
     ) {
       this.readyToLoadKvm = true
       return of(true)
@@ -357,7 +351,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   deviceKVMStatus = (event: any): void => {
-    this.deviceState = event
+    this.deviceState.set(event)
     if (event === 2) {
       this.isLoading.set(false)
     } else if (event === 0) {
@@ -370,7 +364,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.isDisconnecting = false
     }
 
-    this.devicesService.deviceState.emit(this.deviceState)
+    this.devicesService.deviceState.emit(this.deviceState())
   }
 
   deviceIDERStatus = (event: any): void => {

@@ -73,7 +73,7 @@ export class DomainsComponent implements OnInit {
 
   // Public properties
   public domains = new MatTableDataSource<Domain>()
-  public totalCount = 0
+  public totalCount = signal(0)
   public isLoading = signal(true)
   public myDate = ''
   public displayedColumns: string[] = [
@@ -107,7 +107,7 @@ export class DomainsComponent implements OnInit {
       .subscribe({
         next: (data: DataWithCount<Domain>) => {
           this.domains = new MatTableDataSource<Domain>(data.data)
-          this.totalCount = data.totalCount
+          this.totalCount.set(data.totalCount)
           this.expirationWarning()
         },
         error: () => {
@@ -117,7 +117,7 @@ export class DomainsComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.domains.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {

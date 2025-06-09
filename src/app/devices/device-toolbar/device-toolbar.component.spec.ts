@@ -71,7 +71,7 @@ describe('DeviceToolbarComponent', () => {
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
     devicesService.device = new Subject<Device>()
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -87,11 +87,11 @@ describe('DeviceToolbarComponent', () => {
           }
         }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(DeviceToolbarComponent)
     component = fixture.componentInstance
-    component.deviceId = 'guid'
+    fixture.componentRef.setInput('deviceId', 'guid')
 
     fixture.detectChanges()
   })
@@ -107,27 +107,28 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should send power action', () => {
-    component.deviceId = 'guid'
+    fixture.componentRef.setInput('deviceId', 'guid')
     component.sendPowerAction(4)
 
     fixture.detectChanges()
 
     expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false, {})
     fixture.detectChanges()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()()).toBeFalse()
   })
 
   it('should navigate to device', async () => {
-    component.deviceId = '12345-pokli-456772'
+    fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('guid')
-    expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId}/guid`])
+    expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId()}/guid`])
   })
 
   it('should navigate to devices', async () => {
-    component.deviceId = '12345-pokli-456772'
+    fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
+
     const routerSpy = spyOn(component.router, 'navigate')
-    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}`)
+    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId()}`)
     await component.navigateTo('devices')
     expect(routerSpy).toHaveBeenCalledWith(['/devices'])
   })

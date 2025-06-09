@@ -39,7 +39,7 @@ import {
 import { MatOption } from '@angular/material/core'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
-import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card'
+import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
@@ -63,7 +63,6 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTooltip,
     MatProgressBar,
     MatCard,
-    MatCardHeader,
     MatFormField,
     MatLabel,
     MatSelect,
@@ -98,10 +97,10 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 
-  public totalCount = 0
+  public totalCount = signal(0)
   public isLoading = signal(true)
-  public tags: string[] = []
-  public filteredTags: string[] = []
+  public tags = signal<string[]>([])
+  public filteredTags = signal<string[]>([])
   public selectedDevices: SelectionModel<Device>
   public bulkActionResponses: any[] = []
   public isTrue = false
@@ -185,15 +184,15 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((tags) => {
-        this.tags = tags
-        this.filteredTags = this.filteredTags.filter((t) => tags.includes(t))
+        this.tags.set(tags)
+        this.filteredTags.set(this.filteredTags().filter((t) => tags.includes(t)))
       })
   }
 
   getDevices(): void {
     this.isLoading.set(true)
     this.devicesService
-      .getDevices({ ...this.pageEvent, tags: this.filteredTags })
+      .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
       .pipe(
         catchError((err) => {
           this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
@@ -209,7 +208,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res) => {
         this.devices.data = res.data
-        this.totalCount = res.totalCount
+        this.totalCount.set(res.totalCount)
         let deviceIds = this.devices.data.map((x) => x.guid)
         if (environment.cloud) {
           deviceIds = this.devices.data.filter((z) => z.connectionStatus).map((x) => x.guid)
@@ -233,7 +232,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   tagFilterChange(event: MatSelectChange): void {
-    this.filteredTags = event.value
+    this.filteredTags.set(event.value)
     this.getDevices()
   }
 
@@ -307,7 +306,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.devices.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   async navigateTo(path: string): Promise<void> {

@@ -28,7 +28,7 @@ describe('DashboardComponent', () => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['getStats'])
 
     getStatsSpy = devicesService.getStats.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         RouterModule,
         DashboardComponent,
@@ -50,7 +50,7 @@ describe('DashboardComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

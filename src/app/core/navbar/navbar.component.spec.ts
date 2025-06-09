@@ -25,8 +25,8 @@ describe('NavbarComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         MatIconModule,
         MatDividerModule,
@@ -47,7 +47,7 @@ describe('NavbarComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(NavbarComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)

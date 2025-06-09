@@ -72,7 +72,7 @@ export class WirelessComponent implements OnInit {
   // Properties
   public configs = new MatTableDataSource<WirelessConfig>()
   public isLoading = signal(true)
-  public totalCount = 0
+  public totalCount = signal(0)
   public displayedColumns: string[] = [
     'name',
     'authmethod',
@@ -105,7 +105,7 @@ export class WirelessComponent implements OnInit {
       .subscribe({
         next: (rsp) => {
           this.configs = new MatTableDataSource<WirelessConfig>(rsp.data)
-          this.totalCount = rsp.totalCount
+          this.totalCount.set(rsp.totalCount)
         },
         error: () => {
           this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
@@ -114,7 +114,7 @@ export class WirelessComponent implements OnInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {

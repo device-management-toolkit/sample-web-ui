@@ -62,7 +62,7 @@ describe('ProfileDetailComponent', () => {
   function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
-  beforeEach(async () => {
+  beforeEach(() => {
     const profilesService = jasmine.createSpyObj('ProfilesService', [
       'getRecord',
       'update',
@@ -95,7 +95,7 @@ describe('ProfileDetailComponent', () => {
     )
     wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -124,7 +124,7 @@ describe('ProfileDetailComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

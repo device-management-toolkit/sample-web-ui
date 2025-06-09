@@ -43,7 +43,7 @@ describe('ToolbarComponent', () => {
       loggedInSubject$: new BehaviorSubject<boolean>(true)
     }
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         ToolbarComponent,
         TranslateModule.forRoot({
@@ -61,7 +61,7 @@ describe('ToolbarComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)

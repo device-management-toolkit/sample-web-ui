@@ -30,7 +30,7 @@ describe('DomainsComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     domainsService = jasmine.createSpyObj('DomainsService', ['getData', 'delete'])
 
     const today = new Date()
@@ -71,7 +71,7 @@ describe('DomainsComponent', () => {
 
     deleteSpy = domainsService.delete.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
@@ -90,7 +90,7 @@ describe('DomainsComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

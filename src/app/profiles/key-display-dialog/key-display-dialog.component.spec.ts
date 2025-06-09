@@ -8,8 +8,8 @@ describe('KeyDisplayDialogComponent', () => {
   let component: KeyDisplayDialogComponent
   let fixture: ComponentFixture<KeyDisplayDialogComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       providers: [
         provideNoopAnimations(),
         {
@@ -18,7 +18,7 @@ describe('KeyDisplayDialogComponent', () => {
         }
       ],
       imports: [KeyDisplayDialogComponent, MatDialogModule]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(KeyDisplayDialogComponent)
     component = fixture.componentInstance

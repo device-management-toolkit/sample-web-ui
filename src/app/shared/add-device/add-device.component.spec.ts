@@ -26,7 +26,7 @@ describe('AddDeviceComponent', () => {
   beforeEach(async () => {
     const profileService = jasmine.createSpyObj('ProfilesService', ['getData'])
     getDataSpy = profileService.getData.and.returnValue(of([]))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         MatIconModule,
@@ -41,7 +41,7 @@ describe('AddDeviceComponent', () => {
         AddDeviceComponent
       ],
       providers: [{ provide: ProfilesService, useValue: profileService }]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

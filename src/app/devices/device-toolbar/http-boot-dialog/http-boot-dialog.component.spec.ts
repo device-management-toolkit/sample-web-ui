@@ -26,10 +26,10 @@ describe('HTTPBootDialogComponent', () => {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         HTTPBootDialogComponent,
         ReactiveFormsModule,
@@ -49,7 +49,7 @@ describe('HTTPBootDialogComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(HTTPBootDialogComponent)
     component = fixture.componentInstance

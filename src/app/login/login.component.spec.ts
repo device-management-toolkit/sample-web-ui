@@ -35,7 +35,7 @@ describe('LoginComponent', () => {
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         LoginComponent,
         ReactiveFormsModule,
@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
