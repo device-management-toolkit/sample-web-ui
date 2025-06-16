@@ -52,6 +52,11 @@ const eventLogs = {
       }
     }
   },
+  general: {
+    success: {
+      response: {}
+    }
+  },
   version: {
     success: {
       response: {
@@ -62,7 +67,17 @@ const eventLogs = {
             {},
             {
               VersionString: '16.0.8'
-            }
+            },
+            {
+              VersionString: '16.0.8'
+            },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' },
+            { VersionString: '16.0.8' }
           ]
         }
       }

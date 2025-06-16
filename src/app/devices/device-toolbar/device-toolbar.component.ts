@@ -60,7 +60,7 @@ export class DeviceToolbarComponent implements OnInit {
   public amtFeatures?: AMTFeaturesResponse
   public isCloudMode = environment.cloud
   public device: Device | null = null
-  public powerState = ''
+  public powerState = signal('Unknown')
   public powerOptions = [
     {
       label: 'Hibernate',
@@ -129,12 +129,13 @@ export class DeviceToolbarComponent implements OnInit {
   getPowerState(): void {
     this.isLoading().set(true)
     this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
-      this.powerState =
+      this.powerState.set(
         powerState.powerstate.toString() === '2'
           ? 'Power: On'
           : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
             ? 'Power: Sleep'
             : 'Power: Off'
+      )
       this.isLoading().set(false)
     })
   }

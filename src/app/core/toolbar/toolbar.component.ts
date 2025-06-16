@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -41,8 +41,8 @@ export class ToolbarComponent implements OnInit {
 
   public isLoggedIn = false
   public cloudMode: boolean = environment.cloud
-  public rpsVersions?: RPSVersion
-  public mpsVersions?: MPSVersion
+  public rpsVersions = signal<RPSVersion>({} as RPSVersion)
+  public mpsVersions = signal<MPSVersion>({} as MPSVersion)
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
@@ -53,7 +53,7 @@ export class ToolbarComponent implements OnInit {
             this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
-            this.mpsVersions = data
+            this.mpsVersions.set(data)
           }
         })
         this.authService.getRPSVersion().subscribe({
@@ -61,7 +61,7 @@ export class ToolbarComponent implements OnInit {
             this.snackBar.open($localize`Error retrieving RPS versions`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
-            this.rpsVersions = data
+            this.rpsVersions.set(data)
           }
         })
       } else if (this.isLoggedIn && !environment.cloud) {
