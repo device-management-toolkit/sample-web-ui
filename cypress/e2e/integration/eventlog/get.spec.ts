@@ -11,6 +11,14 @@ import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 describe('Test event logs page', () => {
   beforeEach('', () => {
     cy.setup()
+    cy.myIntercept('GET', /.*power.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { powerstate: 2 }
+    }).as('get-powerstate')
+    cy.myIntercept('GET', /.*general.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: eventLogs.general.success.response
+    }).as('get-general')
   })
 
   it('loads all the eventlogs', () => {

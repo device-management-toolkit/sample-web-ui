@@ -38,6 +38,11 @@ describe('Test device details page', () => {
       body: eventLogs.version.success.response
     }).as('get-version')
 
+    cy.myIntercept('GET', /.*general.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: eventLogs.general.success.response
+    }).as('get-general')
+
     cy.myIntercept('GET', /.*log.*/, {
       statusCode: httpCodes.SUCCESS,
       body: eventLogs.getAll.success.response
@@ -50,7 +55,7 @@ describe('Test device details page', () => {
 
     cy.myIntercept('GET', /.*power.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: { powerState: 2 }
+      body: { powerstate: 2 }
     }).as('get-powerstate')
 
     cy.myIntercept('GET', /.*features.*/, {

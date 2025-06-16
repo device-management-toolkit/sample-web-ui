@@ -46,8 +46,8 @@
     <mat-icon
       (click)="getPowerState()"
       style="padding: 0 18px 0 12px; cursor: pointer"
-      [style.color]="powerState === 'Power: On' ? 'green' : powerState === 'Power: Sleep' ? 'yellow' : 'red'"
-      [matTooltip]="powerState"
+      [style.color]="powerState() === 'Power: On' ? 'green' : powerState() === 'Power: Sleep' ? 'yellow' : 'red'"
+      [matTooltip]="powerState()"
       >mode_standby</mat-icon
     >
   }

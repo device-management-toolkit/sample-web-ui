@@ -9,8 +9,8 @@
   <div class="flex flex-50 justify-end items-center">
     @if (cloudMode === true) {
       @if (isLoggedIn === true) {
-        <div class="version">MPS: v{{ mpsVersions?.serviceVersion }}</div>
-        <div class="version">RPS: v{{ rpsVersions?.serviceVersion }}</div>
+        <div class="version">MPS: v{{ mpsVersions().serviceVersion }}</div>
+        <div class="version">RPS: v{{ rpsVersions().serviceVersion }}</div>
       }
       <mat-divider vertical></mat-divider>
     }
