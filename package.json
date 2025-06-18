@@ -35,7 +35,7 @@
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
     "angular-oauth2-oidc": "^20.0.0",
-    "angular-oauth2-oidc-jwks": "^17.0.2",
+    "angular-oauth2-oidc-jwks": "^20.0.0",
     "date-fns": "^4.1.0",
     "esbuild": "^0.25.5",
     "monaco-editor": "^0.52.2",
