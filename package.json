@@ -8,7 +8,7 @@
     "build": "ng build",
     "build-enterprise": "ng build --configuration=enterprise",
     "test": "ng test",
-    "test-ci": "ng test --no-watch --no-progress",
+    "test-ci": "ng test --configuration=ci",
     "lint": "ng lint",
     "prettify": "npx prettier --write '**/*.{ts,js,yaml,css,scss,json,html}'",
     "ci-prettify": "npx prettier --check '**/*.{ts,js,yaml,css,scss,json,html}'",
