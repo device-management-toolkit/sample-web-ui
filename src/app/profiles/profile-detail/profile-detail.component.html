@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{ pageTitle | translate }}
+  {{ pageTitle() | translate }}
 </mat-toolbar>
 @if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -8,9 +8,9 @@
   <div class="flex-25 hide-sm"></div>
 
   <mat-card class="flex flex-50">
-    @if (errorMessages.length > 0) {
+    @if (errorMessages().length > 0) {
       <mat-list>
-        @for (item of errorMessages; track item) {
+        @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
             <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
@@ -67,7 +67,7 @@
         <mat-form-field class="flex flex-1">
           <mat-label>AMT Password</mat-label>
           <input
-            [type]="amtInputType"
+            [type]="amtInputType()"
             formControlName="amtPassword"
             matInput
             name="amtPassword"
@@ -86,7 +86,7 @@
             matTooltip="Show / Hide Password"
             (click)="toggleAMTPassVisibility()"
             [disabled]="profileForm.controls.amtPassword.disabled">
-            @if (amtInputType !== 'text') {
+            @if (amtInputType() !== 'text') {
               <mat-icon>visibility</mat-icon>
             } @else {
               <mat-icon>visibility_off</mat-icon>
@@ -110,7 +110,13 @@
 
         <mat-form-field class="flex flex-1">
           <mat-label>MEBX Password</mat-label>
-          <input [type]="mebxInputType" matInput formControlName="mebxPassword" required minlength="8" maxlength="32" />
+          <input
+            [type]="mebxInputType()"
+            matInput
+            formControlName="mebxPassword"
+            required
+            minlength="8"
+            maxlength="32" />
           <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
           <mat-hint>
             The MEBX Password is used for protecting the BIOS access when a user is present with a device. It can only
@@ -123,7 +129,7 @@
             matTooltip="Show / Hide Password"
             (click)="toggleMEBXPassVisibility()"
             [disabled]="profileForm.controls.mebxPassword.disabled">
-            @if (mebxInputType !== 'text') {
+            @if (mebxInputType() !== 'text') {
               <mat-icon>visibility</mat-icon>
             } @else {
               <mat-icon>visibility_off</mat-icon>
@@ -163,11 +169,11 @@
           }
         </mat-checkbox>
 
-        @if (showIEEE8021xConfigurations) {
+        @if (showIEEE8021xConfigurations()) {
           <mat-form-field class="flex flex-1" style="margin-top: 10px">
             <mat-label>Wired 802.1x Configuration</mat-label>
             <mat-select formControlName="ieee8021xProfileName">
-              @for (cfg of iee8021xConfigurations; track cfg) {
+              @for (cfg of iee8021xConfigurations(); track cfg) {
                 <mat-option [value]="cfg.profileName">
                   {{ cfg.profileName }}
                 </mat-option>
@@ -187,12 +193,9 @@
           @if (profileForm.controls.localWifiSyncEnabled.enabled) {
             <p class="like-mat-hint">Only applicable for the wireless interface.</p>
           }
-          @if (profileForm.controls.localWifiSyncEnabled.disabled) {
-            <p class="like-mat-hint"></p>
-          }
         </mat-checkbox>
 
-        @if (showWirelessConfigurations) {
+        @if (showWirelessConfigurations()) {
           <mat-form-field class="flex flex-1" style="margin-top: 20px">
             <mat-label>Wi-Fi Profiles</mat-label>
             <input
@@ -216,7 +219,7 @@
           </mat-form-field>
         }
 
-        @if (selectedWifiConfigs.length > 0) {
+        @if (selectedWifiConfigs().length > 0) {
           <div>
             <mat-label class="mat-body-1">Associated Wireless Profiles (In Priority Order)</mat-label>
             <br />
@@ -224,7 +227,7 @@
           </div>
         }
         <mat-list cdkDropList (cdkDropListDropped)="drop($event)" class="drag-boundary">
-          @for (item of selectedWifiConfigs; track item) {
+          @for (item of selectedWifiConfigs(); track item) {
             <mat-list-item class="flex flex-1 drag-box" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".drag-boundary">
               <mat-icon matListItemIcon>drag_handle</mat-icon>
               <div class="flex-row" matListItemTitle>
@@ -255,13 +258,29 @@
               <mat-radio-button
                 data-cy="radio-cira"
                 [value]="connectionMode.cira"
-                [disabled]="ciraConfigurations.length === 0">
+                [disabled]="ciraConfigurations().length === 0">
                 CIRA (Cloud)
-                @if (ciraConfigurations.length === 0) {
+                @if (ciraConfigurations().length === 0) {
                   <span>- No CIRA Configs Found</span>
                 }
               </mat-radio-button>
             </p>
+            @if (profileForm.get('connectionMode')?.value === 'CIRA') {
+              <mat-form-field class="flex flex-1">
+                <mat-label>CIRA Configuration</mat-label>
+                <mat-select formControlName="ciraConfigName">
+                  @for (cc of ciraConfigurations(); track cc) {
+                    <mat-option [value]="cc.configName">{{ cc.configName }} </mat-option>
+                  }
+                </mat-select>
+                <mat-hint>
+                  @if (profileForm.get('ciraConfigName')?.value === null) {
+                    <span>No config selected.</span>
+                  }
+                  CIRA cannot be configured for static network if AMT version is lower than 11.6
+                </mat-hint>
+              </mat-form-field>
+            }
           </fieldset>
           <fieldset>
             <legend>Direct Connect Mode (Use when devices ARE directly accessible via a local network)</legend>
@@ -281,52 +300,35 @@
                 >
               </p>
             }
+            @if (profileForm.get('connectionMode')?.value === 'TLS') {
+              <mat-form-field class="flex flex-1">
+                <mat-label>TLS Mode</mat-label>
+                <mat-select formControlName="tlsMode">
+                  @for (tm of tlsModes; track tm) {
+                    <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
+                  }
+                </mat-select>
+                <mat-hint>CIRA cannot be configured, if TLS is configured</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field class="flex flex-1">
+                <mat-label>TLS Signing Authority</mat-label>
+                <mat-select formControlName="tlsSigningAuthority">
+                  @for (tm of tlsSigningAuthorities; track tm) {
+                    <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
           </fieldset>
         </mat-radio-group>
 
-        @if (profileForm.get('connectionMode')?.value === 'TLS') {
-          <mat-form-field class="flex flex-1">
-            <mat-label>TLS Mode</mat-label>
-            <mat-select formControlName="tlsMode">
-              @for (tm of tlsModes; track tm) {
-                <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
-              }
-            </mat-select>
-            <mat-hint>CIRA cannot be configured, if TLS is configured</mat-hint>
-          </mat-form-field>
-        }
-        @if (profileForm.get('connectionMode')?.value === 'TLS') {
-          <mat-form-field class="flex flex-1">
-            <mat-label>TLS Signing Authority</mat-label>
-            <mat-select formControlName="tlsSigningAuthority">
-              @for (tm of tlsSigningAuthorities; track tm) {
-                <mat-option [value]="tm.value">{{ tm.label }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        }
-        @if (profileForm.get('connectionMode')?.value === 'CIRA') {
-          <mat-form-field class="flex flex-1">
-            <mat-label>CIRA Configuration</mat-label>
-            <mat-select formControlName="ciraConfigName">
-              @for (cc of ciraConfigurations; track cc) {
-                <mat-option [value]="cc.configName">{{ cc.configName }} </mat-option>
-              }
-            </mat-select>
-            <mat-hint>
-              @if (profileForm.get('ciraConfigName')?.value === null) {
-                <span>No config selected.</span>
-              }
-              CIRA cannot be configured for static network if AMT version is lower than 11.6
-            </mat-hint>
-          </mat-form-field>
-        }
         <mat-divider style="margin: 16px 0"></mat-divider>
 
         <mat-form-field class="flex flex-1">
           <mat-label>Tags</mat-label>
           <mat-chip-grid #tagList aria-label="Tag selection">
-            @for (tag of tags; track tag) {
+            @for (tag of tags(); track tag) {
               <mat-chip-row [removable]="true" (removed)="remove(tag)">
                 {{ tag }}
                 <mat-icon matChipRemove>cancel</mat-icon>

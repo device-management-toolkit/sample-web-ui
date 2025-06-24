@@ -3,24 +3,48 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, computed } from '@angular/core'
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize, map, startWith } from 'rxjs/operators'
+import { forkJoin, Observable } from 'rxjs'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
+import { NgClass, AsyncPipe } from '@angular/common'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+
+// Material UI imports
+import { MatToolbar } from '@angular/material/toolbar'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
+import { MatInput } from '@angular/material/input'
+import { MatSelect } from '@angular/material/select'
+import { MatOption } from '@angular/material/core'
+import { MatCheckbox } from '@angular/material/checkbox'
+import { MatDivider } from '@angular/material/divider'
+import { MatIconButton, MatButton } from '@angular/material/button'
+import { MatIcon } from '@angular/material/icon'
+import { MatTooltip } from '@angular/material/tooltip'
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete'
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips'
+
+// Services
 import { ConfigsService } from 'src/app/configs/configs.service'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { ProfilesService } from '../profiles.service'
+import { WirelessService } from 'src/app/wireless/wireless.service'
+import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+
+// Shared components
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
-import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips'
-import { WirelessService } from 'src/app/wireless/wireless.service'
-import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
-import { forkJoin, Observable, of } from 'rxjs'
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete'
-import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+
+// Models and constants
+import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
 import {
   ActivationModes,
   Profile,
@@ -29,24 +53,8 @@ import {
   UserConsentModes,
   WiFiConfig
 } from '../profiles.constants'
-import { NgClass, AsyncPipe } from '@angular/common'
-import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatIconButton, MatButton } from '@angular/material/button'
-import { MatDivider } from '@angular/material/divider'
-import { MatCheckbox } from '@angular/material/checkbox'
-import { MatOption } from '@angular/material/core'
-import { MatSelect } from '@angular/material/select'
-import { MatInput } from '@angular/material/input'
-import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
-import { MatIcon } from '@angular/material/icon'
-import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
-import { MatProgressBar } from '@angular/material/progress-bar'
-import { MatToolbar } from '@angular/material/toolbar'
 import { environment } from 'src/environments/environment'
-import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
 
@@ -95,7 +103,23 @@ const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
   ]
 })
 export class ProfileDetailComponent implements OnInit {
-  // Dependency Injection
+  // Constants
+  private readonly CONNECTION_MODE = {
+    cira: 'CIRA',
+    tls: 'TLS',
+    direct: 'DIRECT'
+  } as const
+
+  private readonly SEPARATOR_KEYS = [ENTER, COMMA] as const
+
+  private readonly PASSWORD_REQUIREMENTS = [
+    /[a-z]/,
+    /[A-Z]/,
+    /[0-9]/,
+    /[!$%]/
+  ] as const
+
+  // Dependency injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
@@ -107,104 +131,90 @@ export class ProfileDetailComponent implements OnInit {
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
 
-  public cloudMode = environment.cloud
-  public profileForm = this.fb.group({
-    profileName: ['', Validators.required],
-    activation: ['acmactivate', Validators.required],
-    generateRandomPassword: [
-      { value: this.cloudMode, disabled: !this.cloudMode },
-      Validators.required
-    ],
-    amtPassword: [{ value: null as string | null, disabled: this.cloudMode }],
-    generateRandomMEBxPassword: [
-      { value: this.cloudMode, disabled: !this.cloudMode },
-      Validators.required
-    ],
-    mebxPassword: [{ value: null as string | null, disabled: this.cloudMode }],
-    dhcpEnabled: [true],
-    ipSyncEnabled: [{ value: true, disabled: true }],
-    localWifiSyncEnabled: [{ value: false, disabled: false }],
-    connectionMode: ['', Validators.required],
-    ciraConfigName: [null as string | null],
-    ieee8021xProfileName: [null as string | null],
-    wifiConfigs: [[] as WiFiConfig[]],
-    tlsMode: [2],
-    tlsSigningAuthority: ['SelfSigned'],
-    version: [''],
-    // userConsent default depends on activation
-    userConsent: ['None', Validators.required],
-    iderEnabled: [true, Validators.required],
-    kvmEnabled: [true, Validators.required],
-    solEnabled: [true, Validators.required]
-  })
+  // Computed properties and signals
+  public readonly cloudMode = environment.cloud
+  public readonly isLoading = signal(false)
+  public readonly errorMessages = signal<string[]>([])
 
-  public pageTitle: string
-  public isLoading = signal(false)
-  public isEdit = false
-  public activationModes = ActivationModes
-  public userConsentModes = UserConsentModes
-  public tlsModes = TlsModes
-  public tlsSigningAuthorities = TlsSigningAuthorities
-  public tlsDefaultSigningAuthority = 'SelfSigned'
-  public ciraConfigurations: CIRAConfig[] = []
-  public tags: string[] = []
-  public selectedWifiConfigs: WiFiConfig[] = []
-  public amtInputType = 'password'
-  public mebxInputType = 'password'
-  public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  public errorMessages: string[] = []
-  public matDialogConfig: MatDialogConfig = {
+  // Form setup
+  public readonly profileForm = this.createProfileForm()
+  public readonly wirelessAutocomplete = new FormControl('')
+
+  // Observable streams
+  public readonly filteredWirelessList = this.setupWirelessFilter()
+
+  // State signals
+  public readonly isEdit = signal(false)
+  public readonly pageTitle = signal(this.translate.instant('profiles.header.profileNewTitle.value'))
+  public readonly tags = signal<string[]>([])
+  public readonly selectedWifiConfigs = signal<WiFiConfig[]>([])
+  public readonly ciraConfigurations = signal<CIRAConfig[]>([])
+  public readonly iee8021xConfigurations = signal<IEEE8021xConfig[]>([])
+  public readonly wirelessConfigurations = signal<string[]>([])
+  public readonly amtInputType = signal<'password' | 'text'>('password')
+  public readonly mebxInputType = signal<'password' | 'text'>('password')
+
+  // Computed properties
+  public readonly showIEEE8021xConfigurations = computed(() => this.iee8021xConfigurations().length > 0)
+  public readonly showWirelessConfigurations = computed(() => this.wirelessConfigurations().length > 0)
+
+  // Constants for template use
+  public readonly activationModes = ActivationModes
+  public readonly userConsentModes = UserConsentModes
+  public readonly tlsModes = TlsModes
+  public readonly tlsSigningAuthorities = TlsSigningAuthorities
+  public readonly tlsDefaultSigningAuthority = 'SelfSigned'
+  public readonly separatorKeysCodes = this.SEPARATOR_KEYS
+  public readonly tooltipIpSyncEnabled = 'Only applicable for static wired network config'
+  public readonly connectionMode = this.CONNECTION_MODE
+
+  public readonly matDialogConfig: MatDialogConfig = {
     height: '275px',
     width: '450px'
   }
-  public iee8021xConfigurations: IEEE8021xConfig[] = []
-  public showIEEE8021xConfigurations = false
-  public wirelessConfigurations: string[] = []
-  public showWirelessConfigurations = false
-  public filteredWirelessList: Observable<string[]> = of([])
-  public wirelessAutocomplete = new FormControl()
-  public tooltipIpSyncEnabled = 'Only applicable for static wired network config'
-  public connectionMode = {
-    cira: 'CIRA',
-    tls: 'TLS',
-    direct: 'DIRECT'
-  }
-
-  constructor() {
-    this.pageTitle = this.translate.instant('profiles.header.profileNewTitle.value')
-  }
 
   ngOnInit(): void {
+    this.initializeData()
+    this.setupFormSubscriptions()
+    this.handleRouteParams()
+  }
+
+  private initializeData(): void {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
     this.getCiraConfigs()
+  }
+
+  private setupFormSubscriptions(): void {
+    this.profileForm.controls.activation.valueChanges.subscribe((value) => {
+      if (value) this.activationChange(value)
+    })
+
+    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value) => {
+      if (value !== null) this.generateRandomPasswordChange(value)
+    })
+
+    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value) => {
+      if (value !== null) this.generateRandomMEBxPasswordChange(value)
+    })
+
+    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value) => {
+      if (value !== null) this.dhcpEnabledChange(value)
+    })
+
+    this.profileForm.controls.connectionMode.valueChanges.subscribe((value) => {
+      if (value) this.connectionModeChange(value)
+    })
+  }
+
+  private handleRouteParams(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
         this.isLoading.set(true)
-        this.isEdit = true
+        this.isEdit.set(true)
         this.profileForm.controls.profileName.disable()
         this.getAmtProfile(decodeURIComponent(params.name as string))
       }
-    })
-
-    this.filteredWirelessList = this.wirelessAutocomplete.valueChanges.pipe(
-      startWith(''),
-      map((value: string) => (value.length > 0 ? this.search(value) : []))
-    )
-    this.profileForm.controls.activation?.valueChanges.subscribe((value) => {
-      this.activationChange(value!)
-    })
-    this.profileForm.controls.generateRandomPassword.valueChanges.subscribe((value) => {
-      this.generateRandomPasswordChange(value!)
-    })
-    this.profileForm.controls.generateRandomMEBxPassword.valueChanges.subscribe((value) => {
-      this.generateRandomMEBxPasswordChange(value!)
-    })
-    this.profileForm.controls.dhcpEnabled.valueChanges.subscribe((value) => {
-      this.dhcpEnabledChange(value!)
-    })
-    this.profileForm.controls.connectionMode.valueChanges.subscribe((value) => {
-      this.connectionModeChange(value!)
     })
   }
 
@@ -241,66 +251,56 @@ export class ProfileDetailComponent implements OnInit {
     this.isLoading.set(true)
     this.profilesService
       .getRecord(name)
-      .pipe(
-        finalize(() => {
-          this.isLoading.set(false)
-        })
-      )
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (data) => {
-          this.pageTitle = data.profileName
-          this.tags = data.tags
+          this.pageTitle.set(data.profileName)
+          this.tags.set(data.tags || [])
           this.profileForm.patchValue(data as any)
-          this.selectedWifiConfigs = data.wifiConfigs ?? []
+          this.selectedWifiConfigs.set(data.wifiConfigs ?? [])
           this.setConnectionMode(data)
         },
         error: (error) => {
-          this.errorMessages = error
+          this.errorMessages.set(Array.isArray(error) ? error : [error])
         }
       })
   }
 
-  getCiraConfigs(): void {
+  private getCiraConfigs(): void {
     this.configsService.getData().subscribe({
       next: (ciraCfgRsp) => {
-        this.ciraConfigurations = ciraCfgRsp.data
+        this.ciraConfigurations.set(ciraCfgRsp.data)
       },
       error: (error) => {
-        this.errorMessages = error
+        this.errorMessages.set(Array.isArray(error) ? error : [error])
       }
     })
   }
 
-  getIEEE8021xConfigs(): void {
+  private getIEEE8021xConfigs(): void {
     this.ieee8021xService.getData().subscribe({
       next: (rsp) => {
-        this.iee8021xConfigurations = rsp.data.filter((c) => c.wiredInterface)
-        this.showIEEE8021xConfigurations = this.iee8021xConfigurations.length > 0
+        const configs = rsp.data.filter((c) => c.wiredInterface)
+        this.iee8021xConfigurations.set(configs)
       },
       error: (err) => {
         console.error(JSON.stringify(err))
-        if (err instanceof Array) {
-          this.errorMessages = err
-        } else {
-          this.errorMessages.push(JSON.stringify(err))
-        }
+        const errors = Array.isArray(err) ? err : [JSON.stringify(err)]
+        this.errorMessages.set(errors)
       }
     })
   }
 
-  getWirelessConfigs(): void {
+  private getWirelessConfigs(): void {
     this.wirelessService.getData().subscribe({
       next: (data) => {
-        this.wirelessConfigurations = data.data.map((item) => item.profileName)
-        this.showWirelessConfigurations = this.wirelessConfigurations.length > 0
+        const configs = data.data.map((item) => item.profileName)
+        this.wirelessConfigurations.set(configs)
       },
       error: (err) => {
         console.error(JSON.stringify(err))
-        if (err instanceof Array) {
-          this.errorMessages = err
-        } else {
-          this.errorMessages.push(JSON.stringify(err))
-        }
+        const errors = Array.isArray(err) ? err : [JSON.stringify(err)]
+        this.errorMessages.set(errors)
       }
     })
   }
@@ -329,12 +329,6 @@ export class ProfileDetailComponent implements OnInit {
 
   generateRandomPassword(length = 16): string {
     const charset = /[a-zA-Z0-9!$%]/
-    const requirements: RegExp[] = [
-      /[a-z]/,
-      /[A-Z]/,
-      /[0-9]/,
-      /[!$%]/
-    ]
     const bit = new Uint8Array(1)
     let char = ''
     let password = ''
@@ -350,16 +344,10 @@ export class ProfileDetailComponent implements OnInit {
         password += char
       }
 
-      searching = false
-
-      for (const requirement of requirements) {
-        if (!requirement.test(password)) {
-          searching = true
-          password = ''
-          break
-        }
-      }
+      searching = !this.PASSWORD_REQUIREMENTS.every((requirement) => requirement.test(password))
+      if (searching) password = ''
     }
+
     return password
   }
 
@@ -374,11 +362,11 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   toggleAMTPassVisibility(): void {
-    this.amtInputType = this.amtInputType === 'password' ? 'text' : 'password'
+    this.amtInputType.update((current) => (current === 'password' ? 'text' : 'password'))
   }
 
   toggleMEBXPassVisibility(): void {
-    this.mebxInputType = this.mebxInputType === 'password' ? 'text' : 'password'
+    this.mebxInputType.update((current) => (current === 'password' ? 'text' : 'password'))
   }
 
   dhcpEnabledChange(isEnabled: boolean): void {
@@ -425,16 +413,20 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   selectWifiProfile(event: MatAutocompleteSelectedEvent): void {
-    if (event.option.value !== NO_WIFI_CONFIGS) {
-      const selectedProfiles = this.selectedWifiConfigs.map((wifi) => wifi.profileName)
-      if (!selectedProfiles.includes(event.option.value as string)) {
-        this.selectedWifiConfigs.push({
-          priority: this.selectedWifiConfigs.length + 1,
-          profileName: event.option.value
-        })
+    if (event.option.value === NO_WIFI_CONFIGS) return
+
+    const selectedProfiles = this.selectedWifiConfigs().map((wifi) => wifi.profileName)
+    if (selectedProfiles.includes(event.option.value as string)) return
+
+    this.selectedWifiConfigs.update((configs) => [
+      ...configs,
+      {
+        priority: configs.length + 1,
+        profileName: event.option.value
       }
-      this.wirelessAutocomplete.patchValue('')
-    }
+    ])
+
+    this.wirelessAutocomplete.patchValue('')
   }
 
   localWifiSyncChange(isEnabled: boolean): void {
@@ -450,7 +442,8 @@ export class ProfileDetailComponent implements OnInit {
 
   search(value: string): string[] {
     const filterValue = value.toLowerCase()
-    const filteredValues = this.wirelessConfigurations.filter((config) => config.toLowerCase().includes(filterValue))
+    const configs = this.wirelessConfigurations()
+    const filteredValues = configs.filter((config) => config.toLowerCase().includes(filterValue))
     return filteredValues.length > 0 ? filteredValues : [NO_WIFI_CONFIGS]
   }
 
@@ -460,55 +453,53 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  async cancel(): Promise<void> {
-    await this.router.navigate(['/profiles'])
-  }
-
   removeWifiProfile(wifiProfile: WiFiConfig): void {
-    const index = this.selectedWifiConfigs.indexOf(wifiProfile)
-
-    if (index >= 0) {
-      this.selectedWifiConfigs.splice(index, 1)
-    }
-    this.updatePriorities()
+    this.selectedWifiConfigs.update((configs) => {
+      const filtered = configs.filter((config) => config !== wifiProfile)
+      return this.updatePrioritiesForConfigs(filtered)
+    })
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.selectedWifiConfigs, event.previousIndex, event.currentIndex)
-    this.updatePriorities()
+    this.selectedWifiConfigs.update((configs) => {
+      const reordered = [...configs]
+      moveItemInArray(reordered, event.previousIndex, event.currentIndex)
+      return this.updatePrioritiesForConfigs(reordered)
+    })
+  }
+
+  private updatePrioritiesForConfigs(configs: WiFiConfig[]): WiFiConfig[] {
+    return configs.map((config, index) => ({
+      ...config,
+      priority: index + 1
+    }))
   }
 
   updatePriorities(): void {
-    let index = 1
-    this.selectedWifiConfigs.map((x) => {
-      x.priority = index++
-      return x
-    })
+    this.selectedWifiConfigs.update((configs) => this.updatePrioritiesForConfigs(configs))
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim()
-    if (value !== '' && !this.tags.includes(value)) {
-      this.tags.push(value)
-      this.tags.sort()
+    if (value === '' || this.tags().includes(value)) {
+      event.chipInput?.clear()
+      return
     }
+
+    this.tags.update((currentTags) => [...currentTags, value].sort())
     event.chipInput?.clear()
   }
 
   remove(tag: string): void {
-    const index = this.tags.indexOf(tag)
-
-    if (index >= 0) {
-      this.tags.splice(index, 1)
-    }
+    this.tags.update((currentTags) => currentTags.filter((t) => t !== tag))
   }
 
-  CIRAStaticWarning(): Observable<any> {
+  private CIRAStaticWarning(): Observable<any> {
     const dialog = this.dialog.open(StaticCIRAWarningComponent, this.matDialogConfig)
     return dialog.afterClosed()
   }
 
-  randPasswordWarning(): Observable<any> {
+  private randPasswordWarning(): Observable<any> {
     const dialog = this.dialog.open(RandomPassAlertComponent, this.matDialogConfig)
     return dialog.afterClosed()
   }
@@ -519,7 +510,7 @@ export class ProfileDetailComponent implements OnInit {
     if (this.profileForm.valid) {
       const result: any = Object.assign({}, this.profileForm.getRawValue())
       const dialogs = []
-      if (!this.isEdit && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+      if (!this.isEdit() && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
         dialogs.push(this.randPasswordWarning())
       }
       if (result.connectionMode === this.connectionMode.cira && result.dhcpEnabled === false) {
@@ -543,33 +534,70 @@ export class ProfileDetailComponent implements OnInit {
   onSubmit(): void {
     this.isLoading.set(true)
     const result: Profile = Object.assign({}, this.profileForm.getRawValue()) as unknown as Profile
-    result.tags = this.tags
+    result.tags = this.tags()
     delete (result as any).connectionMode
+
     if (result.dhcpEnabled) {
-      result.wifiConfigs = this.selectedWifiConfigs
+      result.wifiConfigs = this.selectedWifiConfigs()
     } else {
-      result.wifiConfigs = [] // Empty the wifi configs for static network
+      result.wifiConfigs = []
     }
-    let request
-    if (this.isEdit) {
-      request = this.profilesService.update(result)
-    } else {
-      request = this.profilesService.create(result)
-    }
-    request
-      .pipe(
-        finalize(() => {
-          this.isLoading.set(false)
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
-          void this.router.navigate(['/profiles'])
-        },
-        error: (error) => {
-          this.errorMessages = error
-        }
+
+    const request = this.isEdit() ? this.profilesService.update(result) : this.profilesService.create(result)
+
+    request.pipe(finalize(() => this.isLoading.set(false))).subscribe({
+      next: () => {
+        this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        void this.router.navigate(['/profiles'])
+      },
+      error: (error) => {
+        this.errorMessages.set(Array.isArray(error) ? error : [error])
+      }
+    })
+  }
+
+  private createProfileForm() {
+    return this.fb.group({
+      profileName: ['', Validators.required],
+      activation: ['acmactivate', Validators.required],
+      generateRandomPassword: [
+        { value: this.cloudMode, disabled: !this.cloudMode },
+        Validators.required
+      ],
+      amtPassword: [{ value: null as string | null, disabled: this.cloudMode }],
+      generateRandomMEBxPassword: [
+        { value: this.cloudMode, disabled: !this.cloudMode },
+        Validators.required
+      ],
+      mebxPassword: [{ value: null as string | null, disabled: this.cloudMode }],
+      dhcpEnabled: [true],
+      ipSyncEnabled: [{ value: true, disabled: true }],
+      localWifiSyncEnabled: [{ value: false, disabled: false }],
+      connectionMode: ['', Validators.required],
+      ciraConfigName: [null as string | null],
+      ieee8021xProfileName: [null as string | null],
+      wifiConfigs: [[] as WiFiConfig[]],
+      tlsMode: [2],
+      tlsSigningAuthority: ['SelfSigned'],
+      version: [''],
+      userConsent: ['None', Validators.required],
+      iderEnabled: [true, Validators.required],
+      kvmEnabled: [true, Validators.required],
+      solEnabled: [true, Validators.required]
+    })
+  }
+
+  private setupWirelessFilter(): Observable<string[]> {
+    return this.wirelessAutocomplete.valueChanges.pipe(
+      startWith(''),
+      map((value: string | null) => {
+        const searchValue = value || ''
+        return searchValue.length > 0 ? this.search(searchValue) : []
       })
+    )
+  }
+
+  async cancel(): Promise<void> {
+    await this.router.navigate(['/profiles'])
   }
 }

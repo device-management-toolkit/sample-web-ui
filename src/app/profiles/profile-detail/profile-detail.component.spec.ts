@@ -214,7 +214,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit when valid (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -236,7 +236,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -260,7 +260,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -300,7 +300,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -328,7 +328,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -352,7 +352,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -376,7 +376,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -395,19 +395,24 @@ describe('ProfileDetailComponent', () => {
     expect(routerSpy).not.toHaveBeenCalled()
   })
 
-  it('should submit when valid with only random mebx password + ccm activation', () => {
+  it('should submit when valid with only random mebx password + acm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
-      activation: 'ccmactivate',
+      activation: 'acmactivate',
       amtPassword: 'Password123',
       generateRandomPassword: false,
       generateRandomMEBxPassword: true,
-      mebxPassword: '',
+      mebxPassword: 'Password123',
       dhcpEnabled: true,
+      connectionMode: 'DIRECT',
+      userConsent: 'None',
+      iderEnabled: true,
+      kvmEnabled: true,
+      solEnabled: true,
       ciraConfigName: null
     })
     component.confirm()
@@ -422,7 +427,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'ccmactivate',
@@ -446,7 +451,7 @@ describe('ProfileDetailComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
     const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'ccmactivate',
@@ -466,22 +471,22 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the selected wifi configs on selecting a wifi profile', () => {
-    component.selectedWifiConfigs = [{ priority: 1, profileName: 'home' }]
+    component.selectedWifiConfigs.set([{ priority: 1, profileName: 'home' }])
     const option: MatAutocompleteSelectedEvent = {
       option: {
         value: 'work'
       }
     } as any
     component.selectWifiProfile(option)
-    expect(component.selectedWifiConfigs.length).toBe(2)
+    expect(component.selectedWifiConfigs().length).toBe(2)
   })
 
   it('should update the selected wifi configs when a selected config is removed', () => {
     const wifiCfg01 = { priority: 1, profileName: 'home' }
     const wifiCfg02 = { priority: 2, profileName: 'work' }
-    component.selectedWifiConfigs = [wifiCfg01, wifiCfg02]
+    component.selectedWifiConfigs.set([wifiCfg01, wifiCfg02])
     component.removeWifiProfile(wifiCfg02)
-    expect(component.selectedWifiConfigs.length).toBe(1)
+    expect(component.selectedWifiConfigs().length).toBe(1)
   })
 
   it('should adjust related fields on selecting activation mode', () => {
@@ -496,18 +501,18 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should return the search results when a search string is entered', () => {
-    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
+    component.wirelessConfigurations.set(['homeWiFi', 'officeWiFi'])
     const searchString = 'home'
     const results = component.search(searchString)
     expect(results).toEqual(['homeWiFi'])
   })
 
   it('should update the list of tags when a tag is added ', () => {
-    component.tags = [
+    component.tags.set([
       'acm',
       'ccm',
       'profile'
-    ]
+    ])
     const e = {
       value: '',
       chipInput: {
@@ -516,14 +521,14 @@ describe('ProfileDetailComponent', () => {
     }
     e.value = '  ccm '
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual([
+    expect(component.tags()).toEqual([
       'acm',
       'ccm',
       'profile'
     ])
     e.value = 'newtag'
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual([
+    expect(component.tags()).toEqual([
       'acm',
       'ccm',
       'newtag',
@@ -532,38 +537,38 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the list of tags when a tag is removed ', () => {
-    component.tags = [
+    component.tags.set([
       'acm',
       'ccm',
       'profile'
-    ]
+    ])
     const tagName = 'ccm'
     component.remove(tagName)
-    expect(component.tags).toEqual(['acm', 'profile'])
+    expect(component.tags()).toEqual(['acm', 'profile'])
   })
 
   it('should turn amt visibility on when it is off', () => {
-    component.amtInputType = 'password'
+    component.amtInputType.set('password')
     component.toggleAMTPassVisibility()
-    expect(component.amtInputType).toEqual('text')
+    expect(component.amtInputType()).toEqual('text')
   })
 
   it('should turn amt visibility off when it is on', () => {
-    component.amtInputType = 'text'
+    component.amtInputType.set('text')
     component.toggleAMTPassVisibility()
-    expect(component.amtInputType).toEqual('password')
+    expect(component.amtInputType()).toEqual('password')
   })
 
   it('should turn mebx visibility on when it is off', () => {
-    component.mebxInputType = 'password'
+    component.mebxInputType.set('password')
     component.toggleMEBXPassVisibility()
-    expect(component.mebxInputType).toEqual('text')
+    expect(component.mebxInputType()).toEqual('text')
   })
 
   it('should turn mebx visibility off when it is on', () => {
-    component.mebxInputType = 'text'
+    component.mebxInputType.set('text')
     component.toggleMEBXPassVisibility()
-    expect(component.mebxInputType).toEqual('password')
+    expect(component.mebxInputType()).toEqual('password')
   })
 
   it('should generate a random password without a specified length', () => {

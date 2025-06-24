@@ -5,52 +5,60 @@
     In order to activate a device, you'll need to execute a command on the AMT Device. This dialog will help generate
     the command to run.
   </h3>
-  <div>
-    <mat-checkbox class="flex flex-50" [checked]="true" aria-checked="true" (change)="updateCertCheck($event)"
-      >No Self-Signed Cert Check
-    </mat-checkbox>
-    <mat-checkbox class="flex flex-50" (change)="updateVerboseCheck($event)">Show Verbose </mat-checkbox>
-  </div>
-  <div>
-    <mat-form-field class="flex-1">
-      <mat-label>Choose Profile</mat-label>
-      <mat-select (selectionChange)="profileChange($event)" name="profile" required>
-        @for (profile of profiles.data; track profile) {
-          <mat-option [value]="profile.profileName">
-            {{ profile.profileName }}
-          </mat-option>
-        }
-      </mat-select>
-      <mat-error>Profile is required</mat-error>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-tab-group
-      class="tab-group"
-      mat-align-tabs="center"
-      animationDuration="0ms"
-      class="flex flex-1"
-      (selectedTabChange)="tabChange($event)">
-      <mat-tab [disabled]="isActivationCommandDisabled()" label="Linux" class="tab"> </mat-tab>
-      <mat-tab [disabled]="isActivationCommandDisabled()" label="Windows" class="tab"> </mat-tab>
-      <mat-tab [disabled]="isActivationCommandDisabled()" label="Docker" class="tab"> </mat-tab>
-    </mat-tab-group>
-  </div>
-  <div>
-    <mat-form-field appearance="fill" class="flex flex-1">
-      <input [disabled]="isActivationCommandDisabled()" matInput type="text" value="{{ activationUrl }}" readonly />
-      <button
-        [disabled]="isActivationCommandDisabled()"
-        matSuffix
-        mat-icon-button
-        (click)="onCopy()"
-        [cdkCopyToClipboard]="activationUrl">
-        @if (!isCopied) {
-          <mat-icon>file_copy</mat-icon>
-        } @else {
-          <mat-icon>check</mat-icon>
-        }
-      </button>
-    </mat-form-field>
-  </div>
+
+  <form [formGroup]="deviceForm">
+    <div>
+      <mat-checkbox class="flex flex-50" formControlName="certCheck" (change)="updateCertCheck($event)">
+        No Self-Signed Cert Check
+      </mat-checkbox>
+      <mat-checkbox class="flex flex-50" formControlName="verbose" (change)="updateVerboseCheck($event)">
+        Show Verbose
+      </mat-checkbox>
+    </div>
+
+    <div>
+      <mat-form-field class="flex-1">
+        <mat-label>Choose Profile</mat-label>
+        <mat-select formControlName="profile" (selectionChange)="profileChange($event)" name="profile" required>
+          @for (profile of profiles().data; track profile) {
+            <mat-option [value]="profile.profileName">
+              {{ profile.profileName }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>Profile is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-tab-group
+        class="tab-group"
+        mat-align-tabs="center"
+        animationDuration="0ms"
+        class="flex flex-1"
+        (selectedTabChange)="tabChange($event)">
+        <mat-tab [disabled]="isActivationCommandDisabled()" label="Linux" class="tab"></mat-tab>
+        <mat-tab [disabled]="isActivationCommandDisabled()" label="Windows" class="tab"></mat-tab>
+        <mat-tab [disabled]="isActivationCommandDisabled()" label="Docker" class="tab"></mat-tab>
+      </mat-tab-group>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <input [disabled]="isActivationCommandDisabled()" matInput type="text" [value]="activationUrl()" readonly />
+        <button
+          [disabled]="isActivationCommandDisabled()"
+          matSuffix
+          mat-icon-button
+          (click)="onCopy()"
+          [cdkCopyToClipboard]="activationUrl()">
+          @if (!isCopied()) {
+            <mat-icon>file_copy</mat-icon>
+          } @else {
+            <mat-icon>check</mat-icon>
+          }
+        </button>
+      </mat-form-field>
+    </div>
+  </form>
 </div>

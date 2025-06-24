@@ -58,6 +58,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 })
 export class WirelessDetailComponent implements OnInit {
   // Dependency Injection
+  private translate = inject(TranslateService)
   private readonly snackBar = inject(MatSnackBar)
   private readonly fb = inject(FormBuilder)
   private readonly activeRoute = inject(ActivatedRoute)
@@ -88,7 +89,7 @@ export class WirelessDetailComponent implements OnInit {
   public errorMessages: any[] = []
   public isLoading = signal(false)
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     this.pageTitle = this.translate.instant('wirelessDetail.newWirelessConfig.value')
     this.wirelessForm.controls.authenticationMethod.valueChanges.subscribe((value) => {
       this.onAuthenticationMethodChange(value!)
