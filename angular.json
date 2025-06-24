@@ -162,6 +162,13 @@
               "src/styles/css2.css"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadlessCI"
+            }
           }
         },
         "lint": {
