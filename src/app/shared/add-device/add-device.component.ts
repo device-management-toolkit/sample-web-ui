@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs'
@@ -25,6 +26,7 @@ import { Profile } from 'src/app/profiles/profiles.constants'
   selector: 'app-add-device',
   templateUrl: './add-device.component.html',
   styleUrls: ['./add-device.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDialogTitle,
     CdkScrollable,
@@ -41,49 +43,74 @@ import { Profile } from 'src/app/profiles/profiles.constants'
     MatIconButton,
     MatSuffix,
     CdkCopyToClipboard,
-    MatIcon
+    MatIcon,
+    ReactiveFormsModule
   ]
 })
 export class AddDeviceComponent implements OnInit {
   private readonly profilesService = inject(ProfilesService)
+  private readonly fb = inject(FormBuilder)
 
-  profiles: DataWithCount<Profile> = { data: [], totalCount: 0 }
-  activationUrl = ''
-  rpcLinux = 'sudo ./rpc '
-  rpcDocker = 'sudo docker run --device=/dev/mei0 rpc:latest '
-  rpcWindows = 'rpc.exe '
-  serverUrl = `-u wss://${this.formServerUrl()}/activate `
-  selectedProfile = 'activate'
-  verboseString = ''
-  certCheckString = '-n '
-  isCopied = false
-  selectedPlatform = 'linux'
+  // Signals for reactive state management
+  profiles = signal<DataWithCount<Profile>>({ data: [], totalCount: 0 })
+  selectedPlatform = signal<string>('linux')
+  isCopied = signal<boolean>(false)
+  formValues = signal({
+    profile: 'activate',
+    certCheck: true,
+    verbose: false
+  })
+
+  // Form group for reactive forms
+  deviceForm: FormGroup
+
+  // Constants for command generation
+  private readonly rpcCommands = {
+    linux: 'sudo ./rpc ',
+    windows: 'rpc.exe ',
+    docker: 'sudo docker run --device=/dev/mei0 rpc:latest '
+  } as const
+
+  private readonly serverUrl = `-u wss://${this.formServerUrl()}/activate `
+
+  // Computed activation URL based on form values and platform
+  activationUrl = computed(() => {
+    const platform = this.selectedPlatform()
+    const values = this.formValues()
+    const profile = values.profile || 'activate'
+    const certCheck = values.certCheck ? '-n ' : ''
+    const verbose = values.verbose ? '-v ' : ''
+
+    const rpcCommand = this.rpcCommands[platform as keyof typeof this.rpcCommands]
+    const profileCommand = profile === 'activate' ? 'activate' : `activate -profile ${profile}`
+
+    return `${rpcCommand}${profileCommand} ${this.serverUrl}${certCheck}${verbose}`
+  })
+
+  constructor() {
+    this.deviceForm = this.fb.group({
+      profile: ['activate', Validators.required],
+      certCheck: [true],
+      verbose: [false]
+    })
+
+    // Update signal when form values change
+    this.deviceForm.valueChanges.subscribe((values) => {
+      this.formValues.set(values)
+    })
+  }
 
   ngOnInit(): void {
     this.profilesService.getData().subscribe((data) => {
-      this.profiles = data
+      this.profiles.set(data)
     })
-    this.formActivationUrl()
+
+    // Set initial form values
+    this.formValues.set(this.deviceForm.value)
   }
 
   tabChange(event: MatTabChangeEvent): void {
-    this.selectedPlatform = event.tab.textLabel.toLowerCase()
-    this.formActivationUrl()
-  }
-
-  formActivationUrl(): void {
-    switch (this.selectedPlatform) {
-      case 'linux':
-        this.activationUrl = this.rpcLinux
-        break
-      case 'windows':
-        this.activationUrl = this.rpcWindows
-        break
-      case 'docker':
-        this.activationUrl = this.rpcDocker
-        break
-    }
-    this.activationUrl += `${this.selectedProfile} ${this.serverUrl}${this.certCheckString}${this.verboseString}`
+    this.selectedPlatform.set(event.tab.textLabel.toLowerCase())
   }
 
   formServerUrl(): string {
@@ -98,28 +125,26 @@ export class AddDeviceComponent implements OnInit {
   }
 
   profileChange(event: MatSelectChange): void {
-    this.selectedProfile = `activate -profile ${event.value as string}`
-    this.formActivationUrl()
+    this.deviceForm.get('profile')?.setValue(event.value as string)
   }
 
   onCopy(): void {
-    this.isCopied = true
+    this.isCopied.set(true)
     timer(2000).subscribe(() => {
-      this.isCopied = false
+      this.isCopied.set(false)
     })
   }
 
   isActivationCommandDisabled(): boolean {
-    return this.selectedProfile === 'activate'
+    const profileValue = this.formValues().profile
+    return profileValue === 'activate'
   }
 
   updateCertCheck(event: MatCheckboxChange): void {
-    this.certCheckString = event.checked ? '-n ' : ''
-    this.formActivationUrl()
+    this.deviceForm.get('certCheck')?.setValue(event.checked)
   }
 
   updateVerboseCheck(event: MatCheckboxChange): void {
-    this.verboseString = event.checked ? '-v ' : ''
-    this.formActivationUrl()
+    this.deviceForm.get('verbose')?.setValue(event.checked)
   }
 }

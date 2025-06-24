@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { AuthService } from '../auth.service'
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router'
 import { Observable, tap } from 'rxjs'
 
 @Injectable()
 export class AuthGuard {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  private authService = inject(AuthService)
+  private router = inject(Router)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
