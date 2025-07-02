@@ -1,3 +1,10 @@
+# [3.39.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.38.0...v3.39.0) (2025-07-02)
+
+
+### Features
+
+* adds UEFIWiFiSyncEnabled is added to profile for OCR ([#2726](https://github.com/device-management-toolkit/sample-web-ui/issues/2726)) ([01f2a53](https://github.com/device-management-toolkit/sample-web-ui/commit/01f2a53ae0a265a66656336c1e2c5b815c57354e))
+
 # [3.38.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.37.0...v3.38.0) (2025-05-05)
 
 

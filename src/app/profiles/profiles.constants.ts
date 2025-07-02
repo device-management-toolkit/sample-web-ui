@@ -55,4 +55,5 @@ export interface Profile {
   tlsSigningAuthority?: string
   ciraConfigName?: string
   version?: string
+  uefiWifiSyncEnabled: boolean
 }
