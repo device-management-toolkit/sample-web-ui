@@ -57,7 +57,8 @@ describe('ProfilesService', () => {
             dhcpEnabled: true,
             ipSyncEnabled: true,
             localWifiSyncEnabled: true,
-            tags: []
+            tags: [],
+            uefiWifiSyncEnabled: false
           }
         ],
         totalCount: 1
@@ -87,7 +88,8 @@ describe('ProfilesService', () => {
             dhcpEnabled: true,
             ipSyncEnabled: true,
             localWifiSyncEnabled: true,
-            tags: []
+            tags: [],
+            uefiWifiSyncEnabled: false
           }
         ],
         totalCount: 1
@@ -131,7 +133,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.getRecord('profile1').subscribe((response) => {
@@ -172,7 +175,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.create(mockProfile).subscribe((response) => {
@@ -213,7 +217,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.update(mockProfile).subscribe((response) => {

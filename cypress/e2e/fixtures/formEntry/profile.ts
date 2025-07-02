@@ -65,7 +65,8 @@ TlsModes.forEach((tlsMode) => {
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true,
-    tlsMode: tlsMode.value
+    tlsMode: tlsMode.value,
+    uefiWifiSyncEnabled: false
   })
 })
 
