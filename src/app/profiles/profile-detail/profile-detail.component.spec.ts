@@ -295,6 +295,16 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.localWifiSyncEnabled.enabled).toBe(true)
   })
 
+  it('should enable the uefiWifiSync checkbox', () => {
+    component.uefiWifiSyncChange(true)
+    expect(component.profileForm.controls.uefiWifiSyncEnabled.enabled).toBe(false)
+  })
+
+  it('should disable the uefiWifiSync checkbox', () => {
+    component.uefiWifiSyncChange(false)
+    expect(component.profileForm.controls.uefiWifiSyncEnabled.enabled).toBe(true)
+  })
+
   it('should submit if cira config and static network are simultaneously selected and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
