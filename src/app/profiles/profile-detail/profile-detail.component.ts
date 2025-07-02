@@ -440,6 +440,17 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
+  uefiWifiSyncChange(isEnabled: boolean): void {
+    if (isEnabled) {
+      this.profileForm.controls.uefiWifiSyncEnabled.disable()
+      this.profileForm.controls.uefiWifiSyncEnabled.setValue(true)
+      this.wirelessAutocomplete.reset({ value: '', disabled: false })
+    } else {
+      this.profileForm.controls.uefiWifiSyncEnabled.enable()
+      this.wirelessAutocomplete.reset({ value: '', disabled: true })
+    }
+  }
+
   search(value: string): string[] {
     const filterValue = value.toLowerCase()
     const configs = this.wirelessConfigurations()
@@ -583,7 +594,8 @@ export class ProfileDetailComponent implements OnInit {
       userConsent: ['None', Validators.required],
       iderEnabled: [true, Validators.required],
       kvmEnabled: [true, Validators.required],
-      solEnabled: [true, Validators.required]
+      solEnabled: [true, Validators.required],
+      uefiWifiSyncEnabled: [{ value: false, disabled: false }]
     })
   }
 
