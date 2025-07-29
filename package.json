@@ -30,7 +30,7 @@
     "@angular/platform-browser": "~20.1.2",
     "@angular/platform-browser-dynamic": "~20.1.2",
     "@angular/router": "~20.1.2",
-    "@device-management-toolkit/ui-toolkit-angular": "^9.1.4",
+    "@device-management-toolkit/ui-toolkit-angular": "^10.1.0",
     "@xterm/xterm": "^5.5.0",
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
@@ -61,7 +61,7 @@
     "angular-eslint": "20.1.1",
     "cypress": "^14.5.2",
     "eslint": "^9.31.0",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
     "jasmine-core": "~5.8.0",
     "jasmine-spec-reporter": "~7.0.0",
@@ -75,7 +75,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.37.0"
+    "typescript-eslint": "^8.38.0"
   },
   "optionalDependencies": {
     "cypress": "^14.5.2"
