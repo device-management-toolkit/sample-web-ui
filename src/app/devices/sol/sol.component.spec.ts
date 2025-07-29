@@ -172,11 +172,26 @@ describe('SolComponent', () => {
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
   })
   it('should have correct state on websocket events', () => {
-    authServiceStub.startwebSocket.emit(true)
+    // Spy on the deviceConnection.set method to verify it's called
+    const deviceConnectionSpy = spyOn(component.deviceConnection, 'set')
+
+    fixture.detectChanges() // Initialize the component first so it subscribes to events
+
+    // Get the actual service instance that the component is using
+    const deviceService = TestBed.inject(DevicesService)
+
+    deviceService.startwebSocket.emit(true)
     fixture.detectChanges()
     expect(component.isLoading()).toBeFalse()
-    authServiceStub.stopwebSocket.emit(true)
+
+    // Check initial state
+    expect(component.isDisconnecting).toBeFalse()
+
+    deviceService.stopwebSocket.emit(true)
     fixture.detectChanges()
+
+    // Verify that deviceConnection.set was called with false (from the subscription)
+    expect(deviceConnectionSpy).toHaveBeenCalledWith(false)
     expect(component.isDisconnecting).toBeTruthy()
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
@@ -257,7 +272,7 @@ describe('SolComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalled()
   })
   xit('getPowerState error', (done) => {
-    component.isLoading = signal(true)
+    component.isLoading.set(true)
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(throwError(new Error('err')))
     component.getPowerState('111').subscribe({
       error: () => {

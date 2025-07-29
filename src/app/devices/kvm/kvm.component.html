@@ -1,7 +1,7 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center">
     @if (amtFeatures()?.kvmAvailable) {
-      <mat-form-field style="margin-bottom: 0">
+      <mat-form-field style="margin-bottom: 0; margin-right: 16px">
         <mat-label>Choose encoding type</mat-label>
         <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
           @for (encode of encodings; track encode) {
@@ -11,6 +11,17 @@
           }
         </mat-select>
       </mat-form-field>
+      <mat-form-field style="margin-bottom: 0; margin-right: 8px">
+        <mat-label>Hot Keys</mat-label>
+        <mat-select [(ngModel)]="selectedHotkey" placeholder="Select hot key to send">
+          @for (hotkey of hotKeys; track hotkey.value) {
+            <mat-option [value]="hotkey.value">
+              {{ hotkey.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button mat-stroked-button (click)="sendHotkey()" [disabled]="!selectedHotkey">Send</button>
     }
   </div>
   <div class="flex flex-50 justify-end">
@@ -53,8 +64,9 @@
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()"
-    [deviceConnection]="deviceKVMConnection"
-    [selectedEncoding]="selectedEncoding"
+    [deviceConnection]="deviceKVMConnection()"
+    [selectedEncoding]="selectedEncoding()"
+    [selectedHotkey]="hotKeySignal()"
     (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
 <amt-ider
@@ -62,7 +74,7 @@
   [deviceId]="deviceId()"
   [mpsServer]="mpsServer"
   [authToken]="authToken()"
-  [deviceConnection]="deviceIDERConnection"
+  [deviceConnection]="deviceIDERConnection()"
   [cdrom]="diskImage"
   [floppy]="null"
   (deviceStatus)="deviceIDERStatus($event)">

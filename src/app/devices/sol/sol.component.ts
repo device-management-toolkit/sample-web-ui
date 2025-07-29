@@ -3,18 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  HostListener,
-  inject,
-  signal,
-  input
-} from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
@@ -57,8 +46,7 @@ export class SolComponent implements OnInit, OnDestroy {
 
   public readonly deviceState = signal(0)
 
-  @Output()
-  public deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  public deviceConnection = signal(true)
 
   public results: any
   public amtFeatures?: AMTFeaturesResponse
@@ -107,13 +95,13 @@ export class SolComponent implements OnInit, OnDestroy {
     // used for receiving messages from the sol connect button on the toolbar
     this.startSocketSubscription = this.devicesService.startwebSocket.subscribe(() => {
       this.init()
-      this.deviceConnection.emit(true)
+      this.deviceConnection.set(true)
     })
 
     // used for receiving messages from the sol disconnect button on the toolbar
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.isDisconnecting = true
-      this.deviceConnection.emit(false)
+      this.deviceConnection.set(false)
     })
 
     this.init()
@@ -284,7 +272,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   stopSol(): void {
-    this.deviceConnection.emit(false)
+    this.deviceConnection.set(false)
   }
 
   displayError(message: string): void {

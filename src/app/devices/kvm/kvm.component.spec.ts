@@ -489,16 +489,49 @@ describe('KvmComponent', () => {
     const mockFile = new File([''], 'test-file.txt', { type: 'text/plain' })
     const mockEvt = { target: { files: [mockFile] } } as unknown as Event
 
-    const deviceIDERConnectioSpy = spyOn(component.deviceIDERConnection, 'emit')
+    const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
     component.onFileSelected(mockEvt)
 
     expect(component.diskImage).toEqual(mockFile)
-    expect(deviceIDERConnectioSpy).toHaveBeenCalledWith(true)
+    expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(true)
   })
   it('should emit false on canceling IDER', () => {
-    const deviceIDERConnectioSpy = spyOn(component.deviceIDERConnection, 'emit')
+    const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
     component.onCancelIDER()
 
-    expect(deviceIDERConnectioSpy).toHaveBeenCalledWith(false)
+    expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
+  })
+
+  // Hot Key tests
+  it('should send hotkey when sendHotkey is called with selectedHotkey', () => {
+    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
+    component.selectedHotkey = 'ctrl-alt-del'
+
+    component.sendHotkey()
+
+    expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-del')
+  })
+
+  it('should not send hotkey when sendHotkey is called without selectedHotkey', () => {
+    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
+    component.selectedHotkey = null
+
+    component.sendHotkey()
+
+    expect(hotKeySignalSpy).not.toHaveBeenCalled()
+  })
+
+  it('should reset hotkey signal after timeout', (done) => {
+    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
+    component.selectedHotkey = 'ctrl-alt-del'
+
+    component.sendHotkey()
+
+    expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-del')
+
+    setTimeout(() => {
+      expect(hotKeySignalSpy).toHaveBeenCalledWith(null)
+      done()
+    }, 150)
   })
 })
