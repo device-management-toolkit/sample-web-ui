@@ -1,3 +1,10 @@
+# [3.40.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.39.0...v3.40.0) (2025-07-29)
+
+
+### Features
+
+* enable hotkey drop down for KVM ([6a12c7f](https://github.com/device-management-toolkit/sample-web-ui/commit/6a12c7ff02db589aa95211fda9b6f3b11e33f0c9))
+
 # [3.39.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.38.0...v3.39.0) (2025-07-02)
 
 
