@@ -1,3 +1,10 @@
+# [3.42.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.41.0...v3.42.0) (2025-07-31)
+
+
+### Features
+
+* adds http, winre and pba support to ocr status ([#2780](https://github.com/device-management-toolkit/sample-web-ui/issues/2780)) ([5cdd39f](https://github.com/device-management-toolkit/sample-web-ui/commit/5cdd39f1a0091fad7057d1ca0a4e2ac8a42dabe9))
+
 # [3.41.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.40.0...v3.41.0) (2025-07-31)
 
 

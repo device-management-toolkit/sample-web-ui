@@ -113,14 +113,58 @@
           </mat-form-field>
         </div>
         <div class="flex flex-50">
+          <p>One Click Recovery(OCR):</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end"
+          matTooltip="One Click Recovery is not supported"
+          [matTooltipDisabled]="!amtEnabledFeatures.get('ocr')?.disabled"
+          matTooltipPosition="after">
+          <mat-checkbox formControlName="ocr" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
           <p>HTTPS Network boot:</p>
         </div>
         <div
           class="flex flex-50 justify-end"
-          matTooltip="HTTPS Boot is not supported"
-          [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
+          [matTooltip]="
+            amtEnabledFeatures.get('httpsBootSupported')?.value
+              ? 'HTTPS Boot is supported'
+              : 'HTTPS Boot is not supported'
+          "
           matTooltipPosition="after">
-          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
+          <mat-checkbox
+            formControlName="httpsBootSupported"
+            [disabled]="true"
+            (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
+          <p>Windows Recovery Boot:</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end"
+          [matTooltip]="
+            amtEnabledFeatures.get('winREBootSupported')?.value
+              ? 'Windows Recovery is supported'
+              : 'Windows Recovery is not supported'
+          "
+          matTooltipPosition="after">
+          <mat-checkbox
+            formControlName="winREBootSupported"
+            [disabled]="true"
+            (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50">
+          <p>PBA boot:</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end"
+          [matTooltip]="
+            amtEnabledFeatures.get('localPBABootSupported')?.value ? 'PBA is supported' : 'PBA is not supported'
+          "
+          matTooltipPosition="after">
+          <mat-checkbox formControlName="localPBABootSupported" [disabled]="true" (change)="setAmtFeatures()">
+          </mat-checkbox>
         </div>
       </div>
     </mat-card-content>
