@@ -64,7 +64,8 @@ export class GeneralComponent implements OnInit {
     redirection: false,
     httpsBootSupported: false,
     winREBootSupported: false,
-    localPBABootSupported: false
+    localPBABootSupported: false,
+    ocr: false
   })
 
   public isLoading = signal(true)
@@ -129,12 +130,16 @@ export class GeneralComponent implements OnInit {
           userConsent: [{ value: results.amtFeatures.userConsent, disabled: this.isDisabled }],
           optInState: results.amtFeatures.optInState,
           redirection: results.amtFeatures.redirection,
-          httpsBootSupported: [
+          ocr: [
             {
-              value: results.amtFeatures.ocr && results.amtFeatures.httpsBootSupported,
-              disabled: !results.amtFeatures.httpsBootSupported
+              value: results.amtFeatures.ocr,
+              disabled:
+                !results.amtFeatures.httpsBootSupported &&
+                !results.amtFeatures.winREBootSupported &&
+                !results.amtFeatures.localPBABootSupported
             }
           ],
+          httpsBootSupported: results.amtFeatures.httpsBootSupported,
           winREBootSupported: results.amtFeatures.winREBootSupported,
           localPBABootSupported: results.amtFeatures.localPBABootSupported
         })
@@ -144,7 +149,10 @@ export class GeneralComponent implements OnInit {
   setAmtFeatures(): void {
     this.isLoading.set(true)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.value as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), {
+        ...this.amtEnabledFeatures.getRawValue(),
+        remoteErase: this.amtFeatures.remoteErase
+      } as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)

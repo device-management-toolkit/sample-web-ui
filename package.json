@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.40.0",
+  "version": "3.42.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -21,12 +21,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~20.1.2",
-    "@angular/cdk": "~20.1.2",
+    "@angular/cdk": "~20.1.4",
     "@angular/common": "~20.1.2",
     "@angular/compiler": "~20.1.2",
     "@angular/core": "~20.1.2",
     "@angular/forms": "~20.1.2",
-    "@angular/material": "~20.1.2",
+    "@angular/material": "~20.1.4",
     "@angular/platform-browser": "~20.1.2",
     "@angular/platform-browser-dynamic": "~20.1.2",
     "@angular/router": "~20.1.2",
@@ -39,7 +39,7 @@
     "date-fns": "^4.1.0",
     "esbuild": "^0.25.6",
     "monaco-editor": "^0.52.2",
-    "ngx-monaco-editor-v2": "^19.0.2",
+    "ngx-monaco-editor-v2": "^20.0.0",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1"
   },
@@ -50,7 +50,7 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~20.1.1",
+    "@angular-devkit/build-angular": "~20.1.4",
     "@angular-eslint/builder": "~19.6.0",
     "@angular-eslint/schematics": "~20.1.0",
     "@angular-eslint/template-parser": "~20.1.0",
