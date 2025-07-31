@@ -144,7 +144,11 @@ export class GeneralComponent implements OnInit {
   setAmtFeatures(): void {
     this.isLoading.set(true)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.value as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), {
+        ...this.amtEnabledFeatures.getRawValue(),
+        ocr: this.amtFeatures.ocr,
+        remoteErase: this.amtFeatures.remoteErase
+      } as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)

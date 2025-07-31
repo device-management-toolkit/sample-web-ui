@@ -24,7 +24,7 @@
           <span matListItemLine>Type: {{ cert.trustedRootCertificate ? 'Root' : 'Client' }}</span>
           <span matListItemLine
             >Profile Associations:
-            @if (!cert.associatedProfiles) {
+            @if (!cert.associatedProfiles || cert.associatedProfiles.length === 0) {
               Unassociated
             } @else {
               {{ cert.associatedProfiles }}

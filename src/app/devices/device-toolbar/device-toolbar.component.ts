@@ -105,21 +105,18 @@ export class DeviceToolbarComponent implements OnInit {
     {
       label: 'Power Up to PXE',
       action: 401
+    },
+    {
+      label: 'Reset to HTTPS Boot (OCR)',
+      action: 105
+    },
+    {
+      label: 'Power Up to HTTPS Boot (OCR)',
+      action: 106
     }
   ]
 
   ngOnInit(): void {
-    if (!this.isCloudMode) {
-      this.powerOptions.push({
-        label: 'Reset to HTTPS Boot (OCR)',
-        action: 105
-      })
-      this.powerOptions.push({
-        label: 'Power Up to HTTPS Boot (OCR)',
-        action: 106
-      })
-    }
-
     this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)

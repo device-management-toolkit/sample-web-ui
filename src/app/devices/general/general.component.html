@@ -112,18 +112,16 @@
             </mat-select>
           </mat-form-field>
         </div>
-        @if (!isCloudMode) {
-          <div class="flex flex-50">
-            <p>HTTPS Network boot:</p>
-          </div>
-          <div
-            class="flex flex-50 justify-end"
-            matTooltip="HTTPS Boot is not supported"
-            [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
-            matTooltipPosition="after">
-            <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
-          </div>
-        }
+        <div class="flex flex-50">
+          <p>HTTPS Network boot:</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end"
+          matTooltip="HTTPS Boot is not supported"
+          [matTooltipDisabled]="!amtEnabledFeatures.get('httpsBootSupported')?.disabled"
+          matTooltipPosition="after">
+          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

@@ -108,17 +108,17 @@ export class DeviceDetailComponent implements OnInit {
       description: 'Manage device alarms',
       component: 'alarms',
       icon: 'alarm'
+    },
+    {
+      name: 'Certificates',
+      description: 'Manage certificates',
+      component: 'certificates',
+      icon: 'verified'
     }
   ]
 
   constructor() {
     if (!this.isCloudMode) {
-      this.categories.push({
-        name: 'Certificates',
-        description: 'Manage certificates',
-        component: 'certificates',
-        icon: 'verified'
-      })
       this.categories.push({
         name: 'Explorer',
         description: 'Send WSMAN commands',

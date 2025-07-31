@@ -155,16 +155,6 @@ describe('DeviceToolbarComponent', () => {
     expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
   })
 
-  it('should not have OCR power option in cloud mode', () => {
-    environment.cloud = true
-    component.isCloudMode = true
-
-    component.ngOnInit()
-
-    const ocrOption = component.powerOptions.find((option) => option.action === 105)
-    expect(ocrOption).toBeFalsy()
-  })
-
   it('should open HttpbootDetailComponent dialog in non-cloud mode', () => {
     environment.cloud = false
     component.isCloudMode = false
