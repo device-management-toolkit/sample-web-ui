@@ -6,11 +6,9 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
-  EventEmitter,
   HostListener,
   OnDestroy,
   OnInit,
-  Output,
   inject,
   signal,
   input
@@ -68,14 +66,11 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   public readonly deviceId = input('')
 
-  @Output()
-  public deviceKVMConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  public deviceKVMConnection = signal(true)
 
-  @Output()
-  public deviceIDERConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  public deviceIDERConnection = signal(true)
 
-  @Output()
-  public selectedEncoding: EventEmitter<number> = new EventEmitter<number>()
+  public selectedEncoding = signal(1)
 
   public isFullscreen = signal(false)
   public isLoading = signal(false)
@@ -84,11 +79,13 @@ export class KvmComponent implements OnInit, OnDestroy {
   public readyToLoadKvm = false
   public authToken = signal('')
   public selected = 1
+  public selectedHotkey: string | null = null
   public isIDERActive = false
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public diskImage: File | null = null
   public isDisconnecting = false
   public redirectionStatus: RedirectionStatus | null = null
+  public hotKeySignal = signal<any>(null)
 
   private powerState: any = 0
   private stopSocketSubscription!: Subscription
@@ -98,6 +95,21 @@ export class KvmComponent implements OnInit, OnDestroy {
   public encodings = [
     { value: 1, viewValue: 'RLE 8' },
     { value: 2, viewValue: 'RLE 16' }
+  ]
+
+  public hotKeys = [
+    { value: 'ctrl-alt-del', label: 'Ctrl + Alt + Del' },
+    { value: 'alt-tab', label: 'Alt + Tab' },
+    { value: 'alt-release', label: 'Alt [Release]' },
+    { value: 'windows', label: 'Windows Key' },
+    { value: 'windows-l', label: 'Windows Key + L' },
+    { value: 'windows-r', label: 'Windows Key + R' },
+    { value: 'windows-up', label: 'Windows Key + Up' },
+    { value: 'windows-down', label: 'Windows Key + Down' },
+    { value: 'windows-left', label: 'Windows Key + Left' },
+    { value: 'windows-right', label: 'Windows Key + Right' },
+    { value: 'alt-f4', label: 'Alt + F4' },
+    { value: 'ctrl-w', label: 'Ctrl + W' }
   ]
 
   constructor() {
@@ -126,13 +138,13 @@ export class KvmComponent implements OnInit, OnDestroy {
     // used for receiving messages from the kvm connect button on the toolbar
     this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
       this.init()
-      this.deviceKVMConnection.emit(true)
+      this.deviceKVMConnection.set(true)
     })
 
     // used for receiving messages from the kvm disconnect button on the toolbar
     this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
       this.isDisconnecting = true
-      this.deviceKVMConnection.emit(false)
+      this.deviceKVMConnection.set(false)
     })
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
@@ -216,12 +228,22 @@ export class KvmComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null
-    this.deviceIDERConnection.emit(true)
+    this.deviceIDERConnection.set(true)
   }
 
   onCancelIDER(): void {
     // close the dialog, perform other actions as needed
-    this.deviceIDERConnection.emit(false)
+    this.deviceIDERConnection.set(false)
+  }
+
+  sendHotkey(): void {
+    if (this.selectedHotkey) {
+      this.hotKeySignal.set(this.selectedHotkey)
+      // Reset the signal after a short delay to allow the same hotkey to be sent again
+      setTimeout(() => {
+        this.hotKeySignal.set(null)
+      }, 100)
+    }
   }
 
   handlePowerState(powerState: any): Observable<any> {
@@ -347,7 +369,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   onEncodingChange = (e: number): void => {
-    this.selectedEncoding.emit(e)
+    this.selectedEncoding.set(e)
   }
 
   deviceKVMStatus = (event: any): void => {
