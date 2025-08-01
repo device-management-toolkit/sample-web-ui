@@ -133,10 +133,7 @@
               : 'HTTPS Boot is not supported'
           "
           matTooltipPosition="after">
-          <mat-checkbox
-            formControlName="httpsBootSupported"
-            [disabled]="true"
-            (change)="setAmtFeatures()"></mat-checkbox>
+          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
         <div class="flex flex-50">
           <p>Windows Recovery Boot:</p>
@@ -149,10 +146,7 @@
               : 'Windows Recovery is not supported'
           "
           matTooltipPosition="after">
-          <mat-checkbox
-            formControlName="winREBootSupported"
-            [disabled]="true"
-            (change)="setAmtFeatures()"></mat-checkbox>
+          <mat-checkbox formControlName="winREBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
         <div class="flex flex-50">
           <p>PBA boot:</p>
@@ -163,8 +157,7 @@
             amtEnabledFeatures.get('localPBABootSupported')?.value ? 'PBA is supported' : 'PBA is not supported'
           "
           matTooltipPosition="after">
-          <mat-checkbox formControlName="localPBABootSupported" [disabled]="true" (change)="setAmtFeatures()">
-          </mat-checkbox>
+          <mat-checkbox formControlName="localPBABootSupported" (change)="setAmtFeatures()"> </mat-checkbox>
         </div>
       </div>
     </mat-card-content>
