@@ -1,3 +1,10 @@
+## [3.42.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.0...v3.42.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* disable read-only features of ocr ([#2782](https://github.com/device-management-toolkit/sample-web-ui/issues/2782)) ([4fc9bbf](https://github.com/device-management-toolkit/sample-web-ui/commit/4fc9bbf29e570eb7ec4ce074d5dab9b36bd0c41f))
+
 # [3.42.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.41.0...v3.42.0) (2025-07-31)
 
 
