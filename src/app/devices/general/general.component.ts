@@ -139,9 +139,9 @@ export class GeneralComponent implements OnInit {
                 !results.amtFeatures.localPBABootSupported
             }
           ],
-          httpsBootSupported: results.amtFeatures.httpsBootSupported,
-          winREBootSupported: results.amtFeatures.winREBootSupported,
-          localPBABootSupported: results.amtFeatures.localPBABootSupported
+          httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
+          winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
+          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
         })
       })
   }
