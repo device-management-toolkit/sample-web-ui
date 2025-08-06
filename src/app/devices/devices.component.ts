@@ -10,7 +10,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
-import { catchError, concatMap, delay, finalize, map } from 'rxjs/operators'
+import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
 import { Device, PageEventOptions } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
@@ -191,43 +191,60 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getDevices(): void {
     this.isLoading.set(true)
+
+    // Store previous selection before making the request
+    const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
+
     this.devicesService
       .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
       .pipe(
+        switchMap((res) => {
+          this.totalCount.set(res.totalCount)
+
+          if (!environment.cloud) {
+            return of(res.data) // Return as-is for non-cloud
+          }
+
+          const connectedDevices = res.data.filter((d) => d.connectionStatus)
+          if (connectedDevices.length === 0) {
+            return of(res.data)
+          }
+
+          // Get all power states in parallel
+          const powerStateRequests = connectedDevices.map((device) =>
+            this.devicesService.getPowerState(device.guid).pipe(
+              map((powerResult) => ({ ...device, powerstate: powerResult.powerstate })),
+              catchError((error) => {
+                console.error(`Failed to get power state for device ${device.guid}:`, error)
+                return of(device) // Return device as-is if error occurs
+              })
+            )
+          )
+
+          return forkJoin(powerStateRequests).pipe(
+            map((updatedDevices) => {
+              const deviceMap = new Map(updatedDevices.map((d) => [d.guid, d]))
+              return res.data.map((device) => deviceMap.get(device.guid) || device)
+            })
+          )
+        }),
         catchError((err) => {
+          console.error('Error in getDevices:', err)
           this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
+          // Return an empty array on error
+          return of([])
         }),
         finalize(() => {
-          const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
-          this.selectedDevices.clear()
-          const stillSelected = this.devices.data.filter((d) => prevSelected.includes(d.guid))
-          this.selectedDevices.select(...stillSelected)
           this.isLoading.set(false)
         })
       )
-      .subscribe((res) => {
-        this.devices.data = res.data
-        this.totalCount.set(res.totalCount)
-        let deviceIds = this.devices.data.map((x) => x.guid)
-        if (environment.cloud) {
-          deviceIds = this.devices.data.filter((z) => z.connectionStatus).map((x) => x.guid)
-          from(deviceIds)
-            .pipe(
-              map((id) => {
-                return this.devicesService.getPowerState(id).pipe(
-                  map((result) => {
-                    return { powerstate: result.powerstate, guid: id }
-                  })
-                )
-              })
-            )
-            .subscribe((results) => {
-              results.subscribe((x) => {
-                ;(this.devices.data.find((y) => y.guid === x.guid) as any).powerstate = x.powerstate
-              })
-            })
-        }
+      .subscribe((devices) => {
+        this.devices.data = devices
+
+        // Restore selection state on data retrieval
+        this.selectedDevices.clear()
+        const stillSelected = devices.filter((d) => prevSelected.includes(d.guid))
+        this.selectedDevices.select(...stillSelected)
       })
   }
 

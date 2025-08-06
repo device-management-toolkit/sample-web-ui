@@ -54,7 +54,7 @@ describe('DevicesComponent', () => {
       friendlyName: '',
       icon: 1,
       connectionStatus: true,
-      guid: '12324-4243-ewdsd',
+      guid: '12324-4243-ewdse',
       tags: ['tagB', 'tagCommon01'],
       mpsInstance: '',
       mpsusername: '',
