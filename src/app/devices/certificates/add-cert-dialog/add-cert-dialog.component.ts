@@ -2,7 +2,7 @@
  * Copyright (c) Intel Corporation 2025
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
-import { Component, inject } from '@angular/core'
+import { ChangeDetectorRef, Component, inject } from '@angular/core'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule } from '@angular/forms'
 import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
@@ -32,6 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 })
 export class AddCertDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<AddCertDialogComponent>)
+  private readonly cdr = inject(ChangeDetectorRef)
 
   certInfo: CertInfo = {
     cert: '',
@@ -47,11 +48,12 @@ export class AddCertDialogComponent {
         const index: number = base64.indexOf('base64,')
         const cert = base64.substring(index + 7, base64.length)
         this.certInfo.cert = cert
+        this.cdr.detectChanges()
       }
       if (e.target != null) {
         const target = e.target as HTMLInputElement
         const files = target.files
-        if (files != null) {
+        if (files != null && files.length > 0) {
           reader.readAsDataURL(files[0])
         }
       }
