@@ -1,3 +1,10 @@
+## [3.42.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.3...v3.42.4) (2025-08-06)
+
+
+### Bug Fixes
+
+* device power status ([#2791](https://github.com/device-management-toolkit/sample-web-ui/issues/2791)) ([3a1f0d2](https://github.com/device-management-toolkit/sample-web-ui/commit/3a1f0d21ce5e22b6ecb515b632f9847f629ff40e))
+
 ## [3.42.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.2...v3.42.3) (2025-08-06)
 
 
