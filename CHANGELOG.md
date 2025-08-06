@@ -1,3 +1,10 @@
+## [3.42.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.2...v3.42.3) (2025-08-06)
+
+
+### Bug Fixes
+
+* domain cert upload status ([#2790](https://github.com/device-management-toolkit/sample-web-ui/issues/2790)) ([434ad61](https://github.com/device-management-toolkit/sample-web-ui/commit/434ad614452f3c2f6d50c6e532fc51a324bcec01))
+
 ## [3.42.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.1...v3.42.2) (2025-08-06)
 
 
