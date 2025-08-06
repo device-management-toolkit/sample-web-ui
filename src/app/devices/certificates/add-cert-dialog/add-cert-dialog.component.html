@@ -9,7 +9,7 @@
       <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
       <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer" />
     </div>
-    <div class="flex flex-50">
+    <div class="flex flex-50 justify-center items-center">
       @if (certInfo.cert === '') {
         <div class="flex justify-center">
           <mat-icon color="warn">remove_circle</mat-icon>
