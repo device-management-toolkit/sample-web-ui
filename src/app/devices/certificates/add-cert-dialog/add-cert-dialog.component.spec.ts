@@ -6,9 +6,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 import { FormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('AddCertDialogComponent', () => {
@@ -17,11 +17,6 @@ describe('AddCertDialogComponent', () => {
   let mockDialogRef: jasmine.SpyObj<MatDialogRef<AddCertDialogComponent>>
   let mockDevicesService: jasmine.SpyObj<DevicesService>
   let translate: TranslateService
-
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   beforeEach(() => {
     mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
@@ -34,18 +29,13 @@ describe('AddCertDialogComponent', () => {
         NoopAnimationsModule,
         FormsModule,
         MatCheckboxModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: '123' } },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: DevicesService, useValue: mockDevicesService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -55,7 +45,7 @@ describe('AddCertDialogComponent', () => {
     fixture = TestBed.createComponent(AddCertDialogComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

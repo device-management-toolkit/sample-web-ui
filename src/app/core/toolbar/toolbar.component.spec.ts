@@ -9,16 +9,11 @@ import { Router } from '@angular/router'
 import { AuthService } from 'src/app/auth.service'
 import { ToolbarComponent } from './toolbar.component'
 import { BehaviorSubject, of } from 'rxjs'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { environment } from 'src/environments/environment'
-
-// Factory function for the TranslateHttpLoader
-function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-}
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent
@@ -62,17 +57,12 @@ describe('ToolbarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ToolbarComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: createTranslateLoader,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: Router, useValue: routerSpy }]
