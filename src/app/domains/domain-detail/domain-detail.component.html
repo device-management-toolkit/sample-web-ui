@@ -47,7 +47,7 @@
             <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx" />
           </div>
           <div class="flex flex-50 justify-center items-center">
-            @if (!!domainForm.controls.provisioningCert.value || domainForm.controls.provisioningCert.value === '') {
+            @if (!isCertificateUploaded()) {
               <div class="flex justify-center">
                 <mat-icon color="warn">remove_circle</mat-icon>
                 Certificate Not Yet Uploaded
