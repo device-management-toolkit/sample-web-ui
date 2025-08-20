@@ -10,10 +10,10 @@ import { of } from 'rxjs'
 import { WirelessService } from '../wireless.service'
 import { WirelessDetailComponent } from './wireless-detail.component'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('WirelessDetailComponent', () => {
   let component: WirelessDetailComponent
@@ -23,11 +23,6 @@ describe('WirelessDetailComponent', () => {
   let wirelessUpdateSpy: jasmine.Spy
   let routerSpy: jasmine.Spy
   let translate: TranslateService
-
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   beforeEach(() => {
     const wirelessService = jasmine.createSpyObj('WirelessService', [
@@ -58,18 +53,13 @@ describe('WirelessDetailComponent', () => {
         BrowserAnimationsModule,
         RouterModule,
         WirelessDetailComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: WirelessService, useValue: wirelessService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -81,7 +71,7 @@ describe('WirelessDetailComponent', () => {
     fixture = TestBed.createComponent(WirelessDetailComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
     routerSpy = spyOn(component.router, 'navigate')
   })

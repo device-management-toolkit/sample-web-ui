@@ -3,13 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import {
-  enableProdMode,
-  inject,
-  provideAppInitializer,
-  importProvidersFrom,
-  provideZonelessChangeDetection
-} from '@angular/core'
+import { enableProdMode, inject, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core'
 import { environment } from './environments/environment'
 import { AppComponent } from './app/app.component'
 import { provideRouter } from '@angular/router'
@@ -22,14 +16,9 @@ import { AuthGuard } from './app/shared/auth-guard.service'
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks'
 import { errorHandlingInterceptor } from './app/error-handling.interceptor'
 import { authorizationInterceptor } from './app/authorize.interceptor'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
-import { HttpClient } from '@angular/common/http'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { firstValueFrom } from 'rxjs'
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json')
-}
 
 if (environment.production) {
   enableProdMode()
@@ -39,17 +28,11 @@ const providers = [
   provideZonelessChangeDetection(),
   provideAnimations(),
   provideRouter(routes),
-  importProvidersFrom(
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ),
+  provideTranslateService({
+    loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
+  }),
   provideAppInitializer(() => {
-    inject(TranslateService).setDefaultLang('en')
+    inject(TranslateService).setFallbackLang('en')
     return firstValueFrom(inject(TranslateService).use('en'))
   })
 ]

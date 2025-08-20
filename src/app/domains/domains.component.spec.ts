@@ -12,10 +12,10 @@ import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
 import { Domain, DataWithCount } from 'src/models/models'
 import { RouterModule } from '@angular/router'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('DomainsComponent', () => {
   let component: DomainsComponent
@@ -24,11 +24,6 @@ describe('DomainsComponent', () => {
   let deleteSpy: jasmine.Spy
   let domainsService: jasmine.SpyObj<DomainsService>
   let translate: TranslateService
-
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   beforeEach(() => {
     domainsService = jasmine.createSpyObj('DomainsService', ['getData', 'delete'])
@@ -76,16 +71,11 @@ describe('DomainsComponent', () => {
         BrowserAnimationsModule,
         RouterModule,
         DomainsComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DomainsService, useValue: domainsService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -97,7 +87,7 @@ describe('DomainsComponent', () => {
     fixture = TestBed.createComponent(DomainsComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

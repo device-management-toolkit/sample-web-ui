@@ -11,9 +11,9 @@ import { IEEE8021xService } from '../ieee8021x.service'
 import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
 import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
 import { IEEE8021xConfig } from 'src/models/models'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('IEEE8021xDetailComponent', () => {
@@ -31,11 +31,6 @@ describe('IEEE8021xDetailComponent', () => {
   }
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
   beforeEach(() => {
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
       'getRecord',
@@ -52,13 +47,7 @@ describe('IEEE8021xDetailComponent', () => {
         BrowserAnimationsModule,
         RouterModule,
         IEEE8021xDetailComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IEEE8021xService, useValue: ieee8021xService },
@@ -68,6 +57,7 @@ describe('IEEE8021xDetailComponent', () => {
             params: of({ name: 'profile' })
           }
         },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -79,7 +69,7 @@ describe('IEEE8021xDetailComponent', () => {
     fixture = TestBed.createComponent(IEEE8021xDetailComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

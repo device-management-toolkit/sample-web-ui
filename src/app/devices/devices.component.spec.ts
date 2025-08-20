@@ -13,10 +13,10 @@ import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
 import { Device } from '../../models/models'
 import { MatSelectChange } from '@angular/material/select'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('DevicesComponent', () => {
   let device01: Device
@@ -30,11 +30,6 @@ describe('DevicesComponent', () => {
   let sendPowerActionSpy: jasmine.Spy
   let sendDeactivateSpy: jasmine.Spy
   let translate: TranslateService
-
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   beforeEach(async () => {
     device01 = {
@@ -95,16 +90,11 @@ describe('DevicesComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
         DevicesComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -116,7 +106,7 @@ describe('DevicesComponent', () => {
     fixture = TestBed.createComponent(DevicesComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     component.ngOnInit()
   })
 
