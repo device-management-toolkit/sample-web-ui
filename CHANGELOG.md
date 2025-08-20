@@ -1,3 +1,10 @@
+## [3.42.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.4...v3.42.5) (2025-08-20)
+
+
+### Bug Fixes
+
+* ui not showing cert uploaded ([#2805](https://github.com/device-management-toolkit/sample-web-ui/issues/2805)) ([242a95f](https://github.com/device-management-toolkit/sample-web-ui/commit/242a95fc8f368e7315e57b6651e94711eb0b4073))
+
 ## [3.42.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.3...v3.42.4) (2025-08-06)
 
 
