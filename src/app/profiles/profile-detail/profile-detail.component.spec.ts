@@ -18,10 +18,10 @@ import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
 import { environment } from 'src/environments/environment'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -58,10 +58,6 @@ describe('ProfileDetailComponent', () => {
   // let tlsConfigSpy: jasmine.Spy
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
   beforeEach(() => {
     const profilesService = jasmine.createSpyObj('ProfilesService', [
       'getRecord',
@@ -100,13 +96,7 @@ describe('ProfileDetailComponent', () => {
         BrowserAnimationsModule,
         RouterModule,
         ProfileDetailComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ProfilesService, useValue: profilesService },
@@ -120,6 +110,7 @@ describe('ProfileDetailComponent', () => {
             params: of({ name: 'profile' })
           }
         },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -131,7 +122,7 @@ describe('ProfileDetailComponent', () => {
     fixture = TestBed.createComponent(ProfileDetailComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

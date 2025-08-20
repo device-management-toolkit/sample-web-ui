@@ -9,9 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('HTTPBootDialogComponent', () => {
@@ -21,11 +21,6 @@ describe('HTTPBootDialogComponent', () => {
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<HTTPBootDialogComponent>>
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
   beforeEach(() => {
     dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
 
@@ -34,17 +29,12 @@ describe('HTTPBootDialogComponent', () => {
         HTTPBootDialogComponent,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: dialogRefSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -55,7 +45,7 @@ describe('HTTPBootDialogComponent', () => {
     component = fixture.componentInstance
     debugElement = fixture.debugElement
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

@@ -6,9 +6,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { CertificatesComponent } from './certificates.component'
 import { DevicesService } from '../devices.service'
 import { of } from 'rxjs'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('CertificatesComponent', () => {
@@ -16,10 +16,6 @@ describe('CertificatesComponent', () => {
   let fixture: ComponentFixture<CertificatesComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
   let translate: TranslateService
-
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   const response = {
     profileAssociation: [
@@ -157,16 +153,11 @@ describe('CertificatesComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CertificatesComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -176,7 +167,7 @@ describe('CertificatesComponent', () => {
     fixture = TestBed.createComponent(CertificatesComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

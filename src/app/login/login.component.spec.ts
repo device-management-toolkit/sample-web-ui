@@ -11,9 +11,9 @@ import { environment } from 'src/environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -23,11 +23,6 @@ describe('LoginComponent', () => {
   let dialogSpy: jasmine.SpyObj<MatDialog>
   let routerSpy: jasmine.SpyObj<Router>
   let translate: TranslateService
-
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login'])
@@ -39,13 +34,7 @@ describe('LoginComponent', () => {
       imports: [
         LoginComponent,
         ReactiveFormsModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         provideNoopAnimations(),
@@ -53,6 +42,7 @@ describe('LoginComponent', () => {
         { provide: MatSnackBar, useValue: snackBarSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         FormBuilder,
         TranslateService,
         provideHttpClient(),
@@ -63,7 +53,7 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

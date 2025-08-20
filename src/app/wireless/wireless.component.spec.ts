@@ -11,15 +11,10 @@ import { of } from 'rxjs'
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
 import { RouterModule } from '@angular/router'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
-
-// Factory function for the TranslateHttpLoader
-function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-}
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('WirelessComponent', () => {
   let component: WirelessComponent
@@ -51,16 +46,11 @@ describe('WirelessComponent', () => {
         BrowserAnimationsModule,
         RouterModule,
         WirelessComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: WirelessService, useValue: wirelessService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -72,7 +62,7 @@ describe('WirelessComponent', () => {
     fixture = TestBed.createComponent(WirelessComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

@@ -10,9 +10,9 @@ import { Router, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 // import { MQTTService } from './event-channel/event-channel.service'
 
@@ -35,11 +35,6 @@ describe('AppComponent', () => {
   //   destroy: jasmine.createSpy('destroy')
   // }
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
   beforeEach(() => {
     const authServiceStub = {
       loggedInSubject: new EventEmitter<boolean>()
@@ -51,13 +46,7 @@ describe('AppComponent', () => {
         MatSidenavModule,
         TestToolbarComponent,
         AppComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: AuthService, useValue: authServiceStub },
@@ -67,6 +56,7 @@ describe('AppComponent', () => {
             events: of({})
           }
         },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
@@ -75,7 +65,7 @@ describe('AppComponent', () => {
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
   })
 
   afterEach(() => {
