@@ -209,9 +209,6 @@ export class DevicesService {
 
   public device = new Subject<Device>()
 
-  stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
-  startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
-  connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   deviceState: EventEmitter<number> = new EventEmitter<number>()
 
   getGeneralSettings(deviceId: string): Observable<any> {

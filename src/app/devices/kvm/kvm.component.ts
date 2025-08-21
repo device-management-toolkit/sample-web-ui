@@ -16,7 +16,7 @@ import {
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
-import { defer, iif, interval, Observable, of, Subscription, throwError } from 'rxjs'
+import { defer, iif, interval, Observable, of, throwError } from 'rxjs'
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -66,9 +66,9 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   public readonly deviceId = input('')
 
-  public deviceKVMConnection = signal(true)
+  public deviceKVMConnection = signal(false)
 
-  public deviceIDERConnection = signal(true)
+  public deviceIDERConnection = signal(false)
 
   public selectedEncoding = signal(1)
 
@@ -80,7 +80,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   public authToken = signal('')
   public selected = 1
   public selectedHotkey: string | null = null
-  public isIDERActive = false
+  public isIDERActive = signal(false)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public diskImage: File | null = null
   public isDisconnecting = false
@@ -88,8 +88,6 @@ export class KvmComponent implements OnInit, OnDestroy {
   public hotKeySignal = signal<any>(null)
 
   private powerState: any = 0
-  private stopSocketSubscription!: Subscription
-  private startSocketSubscription!: Subscription
   private timeInterval!: any
 
   public encodings = [
@@ -125,7 +123,6 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // request token from MPS
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
       .pipe(
@@ -134,18 +131,6 @@ export class KvmComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe()
-
-    // used for receiving messages from the kvm connect button on the toolbar
-    this.startSocketSubscription = this.devicesService.connectKVMSocket.subscribe(() => {
-      this.init()
-      this.deviceKVMConnection.set(true)
-    })
-
-    // used for receiving messages from the kvm disconnect button on the toolbar
-    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
-      this.isDisconnecting = true
-      this.deviceKVMConnection.set(false)
-    })
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
     this.timeInterval = interval(15000)
@@ -187,10 +172,14 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   postUserConsentDecision(result: boolean): Observable<any> {
-    if (result != null && result) {
+    if (result !== false) {
+      // If result is true OR null (no consent needed), proceed with connection
       this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
+      // Auto-connect - ensure connection state is properly set
+      this.isDisconnecting = false
+      this.deviceKVMConnection.set(true)
       this.getAMTFeatures()
-    } else if (result === false) {
+    } else {
       this.isLoading.set(false)
       this.deviceState.set(0)
     }
@@ -216,15 +205,20 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   connect(): void {
-    this.devicesService.connectKVMSocket.emit(true)
+    this.isDisconnecting = false
+    this.deviceState.set(-1) // Reset device state for reconnection
+    this.init()
+    this.deviceKVMConnection.set(true)
   }
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler() {
     this.disconnect()
   }
   disconnect(): void {
-    this.devicesService.stopwebSocket.emit(true)
+    this.isDisconnecting = true
+    this.deviceKVMConnection.set(false)
   }
+
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null
@@ -234,6 +228,11 @@ export class KvmComponent implements OnInit, OnDestroy {
   onCancelIDER(): void {
     // close the dialog, perform other actions as needed
     this.deviceIDERConnection.set(false)
+    // Clear the file input so the same file can be selected again
+    const fileInput = document.getElementById('file') as HTMLInputElement
+    if (fileInput) {
+      fileInput.value = ''
+    }
   }
 
   sendHotkey(): void {
@@ -391,10 +390,10 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   deviceIDERStatus = (event: any): void => {
     if (event === 0) {
-      this.isIDERActive = false
+      this.isIDERActive.set(false)
       this.displayWarning('IDER session ended')
     } else if (event === 3) {
-      this.isIDERActive = true
+      this.isIDERActive.set(true)
       this.displayWarning('IDER session active')
     }
   }
@@ -411,12 +410,6 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.isDisconnecting = true
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()
-    }
-    if (this.startSocketSubscription) {
-      this.startSocketSubscription.unsubscribe()
-    }
-    if (this.stopSocketSubscription) {
-      this.stopSocketSubscription.unsubscribe()
     }
   }
 }
