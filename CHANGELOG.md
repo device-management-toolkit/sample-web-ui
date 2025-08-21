@@ -1,3 +1,10 @@
+## [3.42.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.5...v3.42.6) (2025-08-21)
+
+
+### Bug Fixes
+
+* squashes bugs with KVM, IDER with SOL connections ([134cff6](https://github.com/device-management-toolkit/sample-web-ui/commit/134cff6237b260b5433c4172adeacf00f68ea795))
+
 ## [3.42.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.4...v3.42.5) (2025-08-20)
 
 
