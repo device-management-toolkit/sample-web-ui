@@ -47,7 +47,7 @@
       <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
     </button>
     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
-    @if (isIDERActive) {
+    @if (isIDERActive()) {
       <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left: 12px">
         <mat-icon>stop</mat-icon>Stop IDER
       </button>
@@ -69,13 +69,15 @@
     [selectedHotkey]="hotKeySignal()"
     (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
-<amt-ider
-  class="ider"
-  [deviceId]="deviceId()"
-  [mpsServer]="mpsServer"
-  [authToken]="authToken()"
-  [deviceConnection]="deviceIDERConnection()"
-  [cdrom]="diskImage"
-  [floppy]="null"
-  (deviceStatus)="deviceIDERStatus($event)">
-</amt-ider>
+@if (diskImage && deviceIDERConnection()) {
+  <amt-ider
+    class="ider"
+    [deviceId]="deviceId()"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken()"
+    [deviceConnection]="deviceIDERConnection()"
+    [cdrom]="diskImage"
+    [floppy]="null"
+    (deviceStatus)="deviceIDERStatus($event)">
+  </amt-ider>
+}

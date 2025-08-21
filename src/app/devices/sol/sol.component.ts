@@ -5,7 +5,7 @@
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
-import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
+import { defer, iif, Observable, of, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -46,7 +46,7 @@ export class SolComponent implements OnInit, OnDestroy {
 
   public readonly deviceState = signal(0)
 
-  public deviceConnection = signal(true)
+  public deviceConnection = signal(false)
 
   public results: any
   public amtFeatures?: AMTFeaturesResponse
@@ -56,9 +56,6 @@ export class SolComponent implements OnInit, OnDestroy {
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public authToken = signal(environment.cloud ? '' : 'direct')
   public isDisconnecting = false
-
-  private stopSocketSubscription!: Subscription
-  private startSocketSubscription!: Subscription
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
@@ -74,12 +71,6 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting = true
-    if (this.startSocketSubscription) {
-      this.startSocketSubscription.unsubscribe()
-    }
-    if (this.stopSocketSubscription) {
-      this.stopSocketSubscription.unsubscribe()
-    }
   }
 
   ngOnInit(): void {
@@ -92,19 +83,19 @@ export class SolComponent implements OnInit, OnDestroy {
       )
       .subscribe()
 
-    // used for receiving messages from the sol connect button on the toolbar
-    this.startSocketSubscription = this.devicesService.startwebSocket.subscribe(() => {
-      this.init()
-      this.deviceConnection.set(true)
-    })
-
-    // used for receiving messages from the sol disconnect button on the toolbar
-    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
-      this.isDisconnecting = true
-      this.deviceConnection.set(false)
-    })
-
-    this.init()
+    // Initial setup: fetch redirection token before connecting to SOL
+    // Note: A fresh redirection token is required for each SOL connection attempt
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
+      .pipe(
+        tap((result) => {
+          this.authToken.set(result.token)
+        })
+      )
+      .subscribe(() => {
+        // Only call init() after auth token is retrieved
+        this.init()
+      })
   }
 
   init(): void {
@@ -140,12 +131,15 @@ export class SolComponent implements OnInit, OnDestroy {
     if (result != null && result) {
       this.readyToLoadSol = true
       this.getAMTFeatures()
+      // Auto-connect when SOL is ready
+      this.deviceConnection.set(true)
     }
     return of(null)
   }
 
   connect(): void {
-    this.devicesService.startwebSocket.emit(true)
+    this.init()
+    this.deviceConnection.set(true)
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -154,7 +148,8 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.devicesService.stopwebSocket.emit(true)
+    this.isDisconnecting = true
+    this.deviceConnection.set(false)
   }
 
   handlePowerState(powerState: any): Observable<any> {
@@ -251,6 +246,8 @@ export class SolComponent implements OnInit, OnDestroy {
       this.amtFeatures?.optInState === 4
     ) {
       this.readyToLoadSol = true
+      // Auto-connect when user consent is not required
+      this.deviceConnection.set(true)
       return of(true)
     }
     return of(false)

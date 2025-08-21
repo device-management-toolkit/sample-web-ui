@@ -171,26 +171,25 @@ describe('SolComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
   })
-  it('should have correct state on websocket events', () => {
+  it('should have correct state on connect/disconnect methods', () => {
     // Spy on the deviceConnection.set method to verify it's called
     const deviceConnectionSpy = spyOn(component.deviceConnection, 'set')
 
-    fixture.detectChanges() // Initialize the component first so it subscribes to events
-
-    // Get the actual service instance that the component is using
-    const deviceService = TestBed.inject(DevicesService)
-
-    deviceService.startwebSocket.emit(true)
     fixture.detectChanges()
-    expect(component.isLoading()).toBeFalse()
 
     // Check initial state
     expect(component.isDisconnecting).toBeFalse()
 
-    deviceService.stopwebSocket.emit(true)
+    // Test connect method
+    component.connect()
+    fixture.detectChanges()
+    expect(component.isLoading()).toBeFalse()
+
+    // Test disconnect method
+    component.disconnect()
     fixture.detectChanges()
 
-    // Verify that deviceConnection.set was called with false (from the subscription)
+    // Verify that deviceConnection.set was called with false
     expect(deviceConnectionSpy).toHaveBeenCalledWith(false)
     expect(component.isDisconnecting).toBeTruthy()
   })
