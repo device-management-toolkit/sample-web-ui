@@ -5,6 +5,36 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    # Group Angular ecosystem deps so they update together (reduces PR noise)
+    groups:
+      angular-stack:
+        patterns:
+          - '@angular/*'        # covers core, cli, cdk, material, etc.
+          - '@angular-devkit/*'
+          - 'rxjs'
+          - 'zone.js'
+          - 'typescript'
+        # Only create grouped PRs for safe patch & minor updates; majors handled manually with ng update
+        update-types:
+          - patch
+          - minor
+    # Ignore major version bumps so they don't auto-open without schematics migrations
+    ignore:
+      - dependency-name: '@angular/*'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: '@angular-devkit/*'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: 'rxjs'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: 'zone.js'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: 'typescript'
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: /
