@@ -108,14 +108,8 @@ describe('KvmComponent', () => {
 
     devicesService.device = new Subject<Device>()
     devicesService.deviceState = new EventEmitter<number>()
-    const websocketStub = {
-      stopwebSocket: new EventEmitter<boolean>(false),
-      connectKVMSocket: new EventEmitter<boolean>(false)
-    }
-    authServiceStub = {
-      stopwebSocket: new EventEmitter<boolean>(false),
-      startwebSocket: new EventEmitter<boolean>(false)
-    }
+    const websocketStub = {}
+    authServiceStub = {}
 
     @Component({
       // eslint-disable-next-line @angular-eslint/component-selector
@@ -194,13 +188,19 @@ describe('KvmComponent', () => {
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(getRedirectionStatusSpy).toHaveBeenCalled()
   })
-  it('should have correct state on websocket events', () => {
-    authServiceStub.startwebSocket.emit(true)
-    fixture.detectChanges()
-    expect(component.isLoading()).toBeFalse()
-    authServiceStub.stopwebSocket.emit(true)
-    fixture.detectChanges()
+  it('should have correct state on connect/disconnect methods', () => {
+    // Initial state should be disconnected since we changed to signal(false)
+    expect(component.deviceKVMConnection()).toBeFalsy()
+
+    // Test connect method
+    component.connect()
+    expect(component.isDisconnecting).toBeFalsy()
+    expect(component.deviceKVMConnection()).toBeTruthy()
+
+    // Test disconnect method
+    component.disconnect()
     expect(component.isDisconnecting).toBeTruthy()
+    expect(component.deviceKVMConnection()).toBeFalsy()
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
@@ -475,15 +475,15 @@ describe('KvmComponent', () => {
   // IDER
   it('should set isIDERActive to false when event is 0', () => {
     component.deviceIDERStatus(0)
-    expect(component.isIDERActive).toBeFalse()
+    expect(component.isIDERActive()).toBeFalse()
   })
   it('should set isIDERActive to true when event is 3', () => {
     component.deviceIDERStatus(3)
-    expect(component.isIDERActive).toBeTrue()
+    expect(component.isIDERActive()).toBeTrue()
   })
   it('should not change isIDERActive for other event values', () => {
     component.deviceIDERStatus(1)
-    expect(component.isIDERActive).toBeFalse()
+    expect(component.isIDERActive()).toBeFalse()
   })
   it('should set diskImage and emit true on file selection', () => {
     const mockFile = new File([''], 'test-file.txt', { type: 'text/plain' })
