@@ -57,7 +57,7 @@
     "@angular/cli": "~20.1.4",
     "@angular/compiler-cli": "~20.1.2",
     "@angular/localize": "~20.1.2",
-    "@types/jasmine": "~5.1.8",
+    "@types/jasmine": "~5.1.9",
     "angular-eslint": "20.1.1",
     "cypress": "^14.5.3",
     "eslint": "^9.32.0",
