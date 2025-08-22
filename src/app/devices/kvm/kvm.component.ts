@@ -78,12 +78,12 @@ export class KvmComponent implements OnInit, OnDestroy {
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public readyToLoadKvm = false
   public authToken = signal('')
-  public selected = 1
   public selectedHotkey: string | null = null
   public isIDERActive = signal(false)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public diskImage: File | null = null
   public isDisconnecting = false
+  private isEncodingChange = false
   public redirectionStatus: RedirectionStatus | null = null
   public hotKeySignal = signal<any>(null)
 
@@ -368,7 +368,17 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   onEncodingChange = (e: number): void => {
+    // Set flag to prevent error message during encoding change
+    this.isEncodingChange = true
+
+    // Simply update the encoding - let the UI toolkit component handle the reconnection
     this.selectedEncoding.set(e)
+
+    // Clear the flag after the encoding change process completes
+    // This should be longer than the UI toolkit's reconnection process
+    setTimeout(() => {
+      this.isEncodingChange = false
+    }, 6000) // 6 seconds to account for 1s + 4s init delay
   }
 
   deviceKVMStatus = (event: any): void => {
@@ -377,7 +387,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
     } else if (event === 0) {
       this.isLoading.set(false)
-      if (!this.isDisconnecting) {
+      if (!this.isDisconnecting && !this.isEncodingChange) {
         this.displayError(
           'Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
         )
