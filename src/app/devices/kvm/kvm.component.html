@@ -3,7 +3,7 @@
     @if (amtFeatures()?.kvmAvailable) {
       <mat-form-field style="margin-bottom: 0; margin-right: 16px">
         <mat-label>Choose encoding type</mat-label>
-        <mat-select [(ngModel)]="selected" (ngModelChange)="onEncodingChange($event)">
+        <mat-select [ngModel]="selectedEncoding()" (ngModelChange)="onEncodingChange($event)">
           @for (encode of encodings; track encode) {
             <mat-option [value]="encode.value">
               {{ encode.viewValue }}
