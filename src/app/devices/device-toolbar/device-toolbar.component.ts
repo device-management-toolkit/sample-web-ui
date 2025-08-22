@@ -56,6 +56,7 @@ export class DeviceToolbarComponent implements OnInit {
   public readonly isLoading = input(signal(false))
 
   public readonly deviceId = input('')
+  public readonly isPinned = signal(false)
 
   public amtFeatures?: AMTFeaturesResponse
   public isCloudMode = environment.cloud
@@ -120,6 +121,7 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)
+      this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
       this.getPowerState()
     })
   }
@@ -136,17 +138,15 @@ export class DeviceToolbarComponent implements OnInit {
       this.isLoading().set(false)
     })
   }
-  isPinned(): boolean {
-    return this.device?.certHash != null && this.device?.certHash !== ''
-  }
   getDeviceCert(): void {
     this.devicesService.getDeviceCertificate(this.deviceId()).subscribe((data) => {
       this.matDialog
         .open(DeviceCertDialogComponent, { data: { certData: data, isPinned: this.isPinned() } })
         .afterClosed()
-        .subscribe((isPinned) => {
-          if (isPinned != null && isPinned !== '') {
-            this.device!.certHash = isPinned ? 'yup' : ''
+        .subscribe((pinned) => {
+          if (pinned != null) {
+            this.device!.certHash = pinned ? 'yup' : ''
+            this.isPinned.set(!!pinned)
           }
         })
     })
