@@ -1,3 +1,10 @@
+## [3.42.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.6...v3.42.7) (2025-08-23)
+
+
+### Bug Fixes
+
+* addresses connection issue with KVM when switching encoding ([995e867](https://github.com/device-management-toolkit/sample-web-ui/commit/995e86710a50b3a40c0066fc992fc7ef8c2575f3))
+
 ## [3.42.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.5...v3.42.6) (2025-08-21)
 
 
