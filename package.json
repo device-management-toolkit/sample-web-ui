@@ -22,9 +22,9 @@
   "dependencies": {
     "@angular/animations": "~20.1.2",
     "@angular/cdk": "~20.1.4",
-    "@angular/common": "~20.1.2",
-    "@angular/compiler": "~20.1.2",
-    "@angular/core": "~20.1.2",
+    "@angular/common": "~20.2.1",
+    "@angular/compiler": "~20.2.1",
+    "@angular/core": "~20.2.1",
     "@angular/forms": "~20.1.2",
     "@angular/material": "~20.1.4",
     "@angular/platform-browser": "~20.1.2",
@@ -50,11 +50,11 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~20.1.4",
+    "@angular-devkit/build-angular": "~20.2.0",
     "@angular-eslint/builder": "~19.6.0",
     "@angular-eslint/schematics": "~20.1.0",
     "@angular-eslint/template-parser": "~20.1.0",
-    "@angular/cli": "~20.1.4",
+    "@angular/cli": "~20.2.0",
     "@angular/compiler-cli": "~20.1.2",
     "@angular/localize": "~20.1.2",
     "@types/jasmine": "~5.1.8",
@@ -74,7 +74,7 @@
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "typescript-eslint": "^8.40.0"
   },
   "optionalDependencies": {
