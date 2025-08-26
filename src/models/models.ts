@@ -483,3 +483,12 @@ export interface BootDetails {
   password: string
   enforceSecureBoot: boolean
 }
+
+export interface ProxyConfig {
+  accessInfo: string
+  infoFormat: number
+  port: number
+  networkDnsSuffix: string
+  creationDate?: Date
+  tenantId?: string
+}
