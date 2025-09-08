@@ -35,8 +35,17 @@ jobs:
       - run: docker build . --file Dockerfile --tag vprodemo.azurecr.ui/samplewebui:latest
       - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
       - run: npm run cy-runner
+      - name: Publish Cypress Test Results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Cypress Tests
+          path: cypress-ui-test-output-*.xml
+          reporter: junit
+          fail-on-error: false
       - name: Upload Cypress UI Test Results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
         with:
           name: sample-web-ui-ui-test
           path: cypress-ui-test-output-*.xml
