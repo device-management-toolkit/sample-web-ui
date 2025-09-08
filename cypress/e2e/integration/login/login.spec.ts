@@ -9,6 +9,7 @@
 
 import { badRequest } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import stats from 'cypress/e2e/fixtures/api/stats'
 import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')
 
@@ -45,6 +46,11 @@ describe('Test login page', () => {
         statusCode: httpCodes.SUCCESS,
         body: { token: '' }
       }).as('login-request')
+
+      cy.myIntercept('GET', 'api/v1/devices/stats', {
+        statusCode: 200,
+        body: stats.get.success.response
+      }).as('stats-request')
 
       // Login
       const mpsUsername = Cypress.env('MPS_USERNAME')
