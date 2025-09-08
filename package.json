@@ -20,20 +20,20 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~20.2.3",
-    "@angular/cdk": "~20.2.1",
-    "@angular/common": "~20.2.3",
-    "@angular/compiler": "~20.2.3",
-    "@angular/core": "~20.2.3",
-    "@angular/forms": "~20.2.3",
-    "@angular/material": "~20.2.1",
-    "@angular/platform-browser": "~20.2.3",
-    "@angular/platform-browser-dynamic": "~20.2.3",
-    "@angular/router": "~20.2.3",
+    "@angular/animations": "~20.2.4",
+    "@angular/cdk": "~20.2.2",
+    "@angular/common": "~20.2.4",
+    "@angular/compiler": "~20.2.4",
+    "@angular/core": "~20.2.4",
+    "@angular/forms": "~20.2.4",
+    "@angular/material": "~20.2.2",
+    "@angular/platform-browser": "~20.2.4",
+    "@angular/platform-browser-dynamic": "~20.2.4",
+    "@angular/router": "~20.2.4",
     "@device-management-toolkit/ui-toolkit-angular": "^10.1.3",
-    "@xterm/xterm": "^5.5.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "@xterm/xterm": "^5.5.0",
     "angular-oauth2-oidc": "^20.0.2",
     "angular-oauth2-oidc-jwks": "^20.0.0",
     "date-fns": "^4.1.0",
@@ -45,22 +45,23 @@
   },
   "overrides": {
     "ngx-monaco-editor-v2": {
-      "@angular/common": "latest",
-      "@angular/core": "latest"
+      "@angular/common": "20.2.4",
+      "@angular/core": "20.2.4",
+      "rxjs": "7.8.2"
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~20.2.1",
-    "@angular-eslint/builder": "~19.6.0",
+    "@angular-devkit/build-angular": "~20.2.2",
+    "@angular-eslint/builder": "~20.2.0",
     "@angular-eslint/schematics": "~20.2.0",
     "@angular-eslint/template-parser": "~20.2.0",
-    "@angular/cli": "~20.2.1",
-    "@angular/compiler-cli": "~20.2.3",
-    "@angular/localize": "~20.2.3",
+    "@angular/cli": "~20.2.2",
+    "@angular/compiler-cli": "~20.2.4",
+    "@angular/localize": "~20.2.4",
     "@types/jasmine": "~5.1.9",
     "angular-eslint": "20.2.0",
-    "cypress": "^14.5.3",
-    "eslint": "^9.34.0",
+    "cypress": "^15.1.0",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
     "jasmine-core": "~5.10.0",
@@ -75,9 +76,9 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.42.0"
+    "typescript-eslint": "^8.43.0"
   },
   "optionalDependencies": {
-    "cypress": "^14.5.3"
+    "cypress": "^15.1.0"
   }
 }
