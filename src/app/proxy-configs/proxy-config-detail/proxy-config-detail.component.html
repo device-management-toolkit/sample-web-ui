@@ -11,22 +11,34 @@
   <form [formGroup]="proxyConfigForm" (ngSubmit)="onSubmit()">
     <mat-card-content style="margin-top: 16px" class="flex-row flex-wrap">
       <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'proxyConfigs.name.value' | translate }}</mat-label>
+        <input
+          data-cy="proxy-name"
+          matInput
+          formControlName="name"
+          [placeholder]="'proxyConfigs.namePlaceholder.value' | translate"
+          required />
+        @if (proxyConfigForm.controls.name.hasError('required')) {
+          <mat-error>{{ 'proxyConfigs.validation.nameRequired.value' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="flex flex-1">
         <mat-label>{{ 'proxyConfigs.proxyAddress.value' | translate }}</mat-label>
         <input
           data-cy="access-info"
           matInput
-          formControlName="accessInfo"
+          formControlName="address"
           [placeholder]="'proxyConfigs.addressPlaceholder.value' | translate"
           required />
-        @if (proxyConfigForm.controls.accessInfo.invalid && proxyConfigForm.controls.accessInfo.touched) {
-          <mat-error>{{ getAccessInfoError() }}</mat-error>
+        @if (proxyConfigForm.controls.address.invalid && proxyConfigForm.controls.address.touched) {
+          <mat-error>{{ getaddressError() }}</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field class="flex flex-1">
         <mat-label>{{ 'proxyConfigs.addressFormat.value' | translate }}</mat-label>
         <mat-select data-cy="info-format" formControlName="infoFormat" required>
-          @for (format of accessInfoFormats; track format.value) {
+          @for (format of addressFormats; track format.value) {
             <mat-option [value]="format.value">{{ format.label }}</mat-option>
           }
         </mat-select>

@@ -69,7 +69,7 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   private readonly translate = inject(TranslateService)
 
   public configs = new MatTableDataSource<ProxyConfig>()
-  public displayedColumns: string[] = ['accessInfo', 'infoFormat', 'port', 'networkDnsSuffix', 'remove']
+  public displayedColumns: string[] = ['name', 'address', 'infoFormat', 'port', 'networkDnsSuffix', 'remove']
   public totalCount = signal(0)
   public isLoading = signal(true)
   public pageEvent: PageEventOptions = {

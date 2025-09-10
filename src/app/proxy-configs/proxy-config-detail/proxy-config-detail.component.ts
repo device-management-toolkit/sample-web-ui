@@ -58,16 +58,17 @@ export class ProxyConfigDetailComponent implements OnInit {
   public isEdit = false
   public pageTitle = ''
   public errorMessages: string[] = []
-  public accessInfoFormats = [
+  public addressFormats = [
     { value: 3, label: 'IPv4' },
     { value: 4, label: 'IPv6' },
     { value: 201, label: 'FQDN' }
   ]
 
-  private originalAccessInfo = ''
+  private originalName = ''
 
   public proxyConfigForm = this.fb.group({
-    accessInfo: ['', [Validators.required]],
+    name: ['', [Validators.required]],
+    address: ['', [Validators.required]],
     infoFormat: [3, [Validators.required]],
     port: [8080, [Validators.required, Validators.min(0), Validators.max(65535)]],
     networkDnsSuffix: ['', [Validators.required, Validators.maxLength(192)]]
@@ -75,26 +76,26 @@ export class ProxyConfigDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      if (params['accessInfo'] && params['accessInfo'] !== 'new') {
+      if (params['name'] && params['name'] !== 'new') {
         this.isEdit = true
-        this.originalAccessInfo = decodeURIComponent(params['accessInfo'])
+        this.originalName = decodeURIComponent(params['name'])
         this.pageTitle = 'proxyConfigs.pageTitle.editProxy.value'
-        this.loadProxyConfig(this.originalAccessInfo)
-        this.proxyConfigForm.controls.accessInfo.disable()
+        this.loadProxyConfig(this.originalName)
+        this.proxyConfigForm.controls.name.disable()
       } else {
         this.pageTitle = 'proxyConfigs.pageTitle.newProxy.value'
       }
     })
 
     this.proxyConfigForm.controls.infoFormat.valueChanges.subscribe((value) => {
-      this.updateAccessInfoValidation(value!)
+      this.updateAddressValidation(value!)
     })
   }
 
-  loadProxyConfig(accessInfo: string): void {
+  loadProxyConfig(name: string): void {
     this.isLoading.set(true)
     this.proxyConfigsService
-      .getRecord(accessInfo)
+      .getRecord(name)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)
@@ -113,9 +114,9 @@ export class ProxyConfigDetailComponent implements OnInit {
       })
   }
 
-  updateAccessInfoValidation(format: number): void {
-    const accessInfoControl = this.proxyConfigForm.controls.accessInfo
-    accessInfoControl.clearValidators()
+  updateAddressValidation(format: number): void {
+    const addressControl = this.proxyConfigForm.controls.address
+    addressControl.clearValidators()
 
     const ipv4Pattern = /^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
     const ipv6Pattern = /^((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*::((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*|((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4})){7}$/
@@ -123,17 +124,17 @@ export class ProxyConfigDetailComponent implements OnInit {
 
     switch (format) {
       case 3:
-        accessInfoControl.setValidators([Validators.required, Validators.pattern(ipv4Pattern)])
+        addressControl.setValidators([Validators.required, Validators.pattern(ipv4Pattern)])
         break
       case 4:
-        accessInfoControl.setValidators([Validators.required, Validators.pattern(ipv6Pattern)])
+        addressControl.setValidators([Validators.required, Validators.pattern(ipv6Pattern)])
         break
       case 201:
-        accessInfoControl.setValidators([Validators.required, Validators.pattern(fqdnPattern)])
+        addressControl.setValidators([Validators.required, Validators.pattern(fqdnPattern)])
         break
     }
 
-    accessInfoControl.updateValueAndValidity()
+    addressControl.updateValueAndValidity()
   }
 
   onSubmit(): void {
@@ -178,8 +179,8 @@ export class ProxyConfigDetailComponent implements OnInit {
     await this.router.navigate(['/proxy-configs'])
   }
 
-  getAccessInfoError(): string {
-    const control = this.proxyConfigForm.controls.accessInfo
+  getaddressError(): string {
+    const control = this.proxyConfigForm.controls.address
     if (control.hasError('required')) {
       return 'Server address is required'
     }

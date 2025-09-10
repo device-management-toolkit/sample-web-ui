@@ -339,6 +339,10 @@
     "value": "Proxy Configs",
     "description": "Proxy Configs title"
   },
+  "proxyConfigs.header.name": {
+    "value": "Name",
+    "description": "Proxy config name column header"
+  },
   "proxyConfigs.header.proxyAddress": {
     "value": "Proxy Address",
     "description": "Proxy Address column header"
@@ -367,6 +371,14 @@
     "value": "Proxy Address",
     "description": "Proxy Address field label"
   },
+  "proxyConfigs.name": {
+    "value": "Name",
+    "description": "Proxy config name field label"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Enter proxy config name",
+    "description": "Proxy config name placeholder"
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Enter proxy server address",
     "description": "Placeholder for proxy address field"
@@ -394,6 +406,10 @@
   "proxyConfigs.validation.portRange": {
     "value": "Port must be between 0 and 65535",
     "description": "Port range validation message"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Name is required",
+    "description": "Name required validation message"
   },
   "proxyConfigs.validation.dnsSuffixRequired": {
     "value": "Network DNS suffix is required",

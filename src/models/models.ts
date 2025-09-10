@@ -485,7 +485,8 @@ export interface BootDetails {
 }
 
 export interface ProxyConfig {
-  accessInfo: string
+  name: string
+  address: string
   infoFormat: number
   port: number
   networkDnsSuffix: string

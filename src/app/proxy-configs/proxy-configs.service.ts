@@ -39,8 +39,8 @@ export class ProxyConfigsService {
     )
   }
 
-  getRecord(accessInfo: string): Observable<ProxyConfig> {
-    return this.http.get<ProxyConfig>(`${this.url}/${encodeURIComponent(accessInfo)}`).pipe(
+  getRecord(name: string): Observable<ProxyConfig> {
+    return this.http.get<ProxyConfig>(`${this.url}/${encodeURIComponent(name)}`).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)
@@ -66,8 +66,8 @@ export class ProxyConfigsService {
     )
   }
 
-  delete(accessInfo: string): Observable<any> {
-    return this.http.delete(`${this.url}/${encodeURIComponent(accessInfo)}`).pipe(
+  delete(name: string): Observable<any> {
+    return this.http.delete(`${this.url}/${encodeURIComponent(name)}`).pipe(
       catchError((err) => {
         const errorMessages = this.authService.onError(err)
         return throwError(errorMessages)

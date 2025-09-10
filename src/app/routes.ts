@@ -88,5 +88,5 @@ export const routes: Routes = [
       { path: '', component: ProxyConfigDetailComponent }],
     canActivate: [AuthGuard]
   },
-  { path: 'proxy-configs/:accessInfo', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] }
+  { path: 'proxy-configs/:name', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] }
 ]

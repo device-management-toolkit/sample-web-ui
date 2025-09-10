@@ -16,14 +16,22 @@
   } @else {
     <mat-card-content>
       <mat-table data-cy="proxy-configs-table" [dataSource]="configs">
-        <ng-container matColumnDef="accessInfo">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            <h4>{{ 'proxyConfigs.header.name.value' | translate }}</h4>
+          </mat-header-cell>
+          <mat-cell data-cy="proxy-config-name-cell" *matCellDef="let element" [matTooltip]="element.name">
+            <a style="cursor: pointer" (click)="navigateTo(encodeURIComponent(element.name))">
+              {{ element.name }}
+            </a>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
           <mat-header-cell *matHeaderCellDef>
             <h4>{{ 'proxyConfigs.header.proxyAddress.value' | translate }}</h4>
           </mat-header-cell>
-          <mat-cell data-cy="proxy-name-cell" *matCellDef="let element" [matTooltip]="element.accessInfo">
-            <a style="cursor: pointer" (click)="navigateTo(encodeURIComponent(element.accessInfo))">
-              {{ element.accessInfo }}
-            </a>
+          <mat-cell data-cy="proxy-address-cell" *matCellDef="let element" [matTooltip]="element.address">
+            {{ element.address }}
           </mat-cell>
         </ng-container>
 
@@ -61,7 +69,7 @@
               data-cy="delete-btn"
               mat-icon-button
               matTooltip="{{ 'common.delete.value' | translate }}"
-              (click)="delete(element.accessInfo)">
+              (click)="delete(element.name)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>
