@@ -21,12 +21,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~20.2.4",
-    "@angular/cdk": "~20.2.2",
+    "@angular/cdk": "~20.2.3",
     "@angular/common": "~20.2.4",
     "@angular/compiler": "~20.2.4",
     "@angular/core": "~20.2.4",
     "@angular/forms": "~20.2.4",
-    "@angular/material": "~20.2.2",
+    "@angular/material": "~20.2.3",
     "@angular/platform-browser": "~20.2.4",
     "@angular/platform-browser-dynamic": "~20.2.4",
     "@angular/router": "~20.2.4",
@@ -51,16 +51,16 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~20.2.2",
-    "@angular-eslint/builder": "~20.2.0",
-    "@angular-eslint/schematics": "~20.2.0",
-    "@angular-eslint/template-parser": "~20.2.0",
-    "@angular/cli": "~20.2.2",
+    "@angular-devkit/build-angular": "~20.3.1",
+    "@angular-eslint/builder": "~20.3.0",
+    "@angular-eslint/schematics": "~20.3.0",
+    "@angular-eslint/template-parser": "~20.3.0",
+    "@angular/cli": "~20.3.1",
     "@angular/compiler-cli": "~20.2.4",
     "@angular/localize": "~20.2.4",
     "@types/jasmine": "~5.1.9",
-    "angular-eslint": "20.2.0",
-    "cypress": "^15.1.0",
+    "angular-eslint": "20.3.0",
+    "cypress": "^15.2.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
@@ -76,9 +76,9 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.43.0"
+    "typescript-eslint": "^8.44.0"
   },
   "optionalDependencies": {
-    "cypress": "^15.1.0"
+    "cypress": "^15.2.0"
   }
 }
