@@ -72,13 +72,70 @@
         <div class="flex flex-50 justify-end" data-cy="provisioningMode">
           {{ amtProvisioningMode }}
         </div>
-        <div class="flex flex-50">
+        <div class="flex flex-50 items-end">
+          <p>One Click Recovery(OCR):</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end items-start"
+          matTooltip="One Click Recovery is not supported"
+          [matTooltipDisabled]="!amtEnabledFeatures.get('ocr')?.disabled"
+          matTooltipPosition="after">
+          <mat-checkbox formControlName="ocr" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+
+        <!-- OCR https Boot -->
+        @if (amtEnabledFeatures.get('httpsBootSupported')?.value) {
+          <div class="flex flex-50">
+            <p>HTTPS Network boot:</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end"
+            [matTooltip]="
+              amtEnabledFeatures.get('httpsBootSupported')?.value
+                ? 'HTTPS Boot is supported'
+                : 'HTTPS Boot is not supported'
+            "
+            matTooltipPosition="after">
+            {{ amtEnabledFeatures.get('httpsBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+          </div>
+        }
+        <!-- OCR WinRE Boot -->
+        @if (amtEnabledFeatures.get('winREBootSupported')?.value) {
+          <div class="flex flex-50">
+            <p>Windows Recovery Boot:</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end"
+            [matTooltip]="
+              amtEnabledFeatures.get('winREBootSupported')?.value
+                ? 'Windows Recovery is supported'
+                : 'Windows Recovery is not supported'
+            "
+            matTooltipPosition="after">
+            {{ amtEnabledFeatures.get('winREBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+          </div>
+        }
+        <!-- OCR Pre-Boot Application -->
+        @if (amtEnabledFeatures.get('localPBABootSupported')?.value) {
+          <div class="flex flex-50">
+            <p>PBA boot:</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end"
+            [matTooltip]="
+              amtEnabledFeatures.get('localPBABootSupported')?.value ? 'PBA is supported' : 'PBA is not supported'
+            "
+            matTooltipPosition="after">
+            {{ amtEnabledFeatures.get('localPBABootSupported')?.value ? 'Supported' : 'Not Supported' }}
+          </div>
+        }
+        <div class="flex flex-50 items-end">
           <p>IDE Redirection:</p>
         </div>
         <div class="flex flex-50 justify-end">
           <mat-checkbox formControlName="enableIDER" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
-        <div class="flex flex-50">
+        <div class="flex flex-50 items-end">
           <p>Keyboard-Video-Mouse (KVM):</p>
         </div>
         <div
@@ -88,16 +145,16 @@
           matTooltipPosition="after">
           <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"> </mat-checkbox>
         </div>
-        <div class="flex flex-50">
+        <div class="flex flex-50 items-end">
           <p>Serial-Over-Lan (SOL):</p>
         </div>
         <div class="flex flex-50 justify-end">
           <mat-checkbox formControlName="enableSOL" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
-        <div class="flex flex-50">
+        <div class="flex flex-50 items-center">
           <p>User Consent:</p>
         </div>
-        <div class="flex flex-50 justify-end">
+        <div class="flex flex-50 justify-end items-center">
           <mat-form-field>
             <mat-select
               (selectionChange)="setAmtFeatures()"
@@ -111,53 +168,6 @@
               }
             </mat-select>
           </mat-form-field>
-        </div>
-        <div class="flex flex-50">
-          <p>One Click Recovery(OCR):</p>
-        </div>
-        <div
-          class="flex flex-50 justify-end"
-          matTooltip="One Click Recovery is not supported"
-          [matTooltipDisabled]="!amtEnabledFeatures.get('ocr')?.disabled"
-          matTooltipPosition="after">
-          <mat-checkbox formControlName="ocr" (change)="setAmtFeatures()"></mat-checkbox>
-        </div>
-        <div class="flex flex-50">
-          <p>HTTPS Network boot:</p>
-        </div>
-        <div
-          class="flex flex-50 justify-end"
-          [matTooltip]="
-            amtEnabledFeatures.get('httpsBootSupported')?.value
-              ? 'HTTPS Boot is supported'
-              : 'HTTPS Boot is not supported'
-          "
-          matTooltipPosition="after">
-          <mat-checkbox formControlName="httpsBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
-        </div>
-        <div class="flex flex-50">
-          <p>Windows Recovery Boot:</p>
-        </div>
-        <div
-          class="flex flex-50 justify-end"
-          [matTooltip]="
-            amtEnabledFeatures.get('winREBootSupported')?.value
-              ? 'Windows Recovery is supported'
-              : 'Windows Recovery is not supported'
-          "
-          matTooltipPosition="after">
-          <mat-checkbox formControlName="winREBootSupported" (change)="setAmtFeatures()"></mat-checkbox>
-        </div>
-        <div class="flex flex-50">
-          <p>PBA boot:</p>
-        </div>
-        <div
-          class="flex flex-50 justify-end"
-          [matTooltip]="
-            amtEnabledFeatures.get('localPBABootSupported')?.value ? 'PBA is supported' : 'PBA is not supported'
-          "
-          matTooltipPosition="after">
-          <mat-checkbox formControlName="localPBABootSupported" (change)="setAmtFeatures()"> </mat-checkbox>
         </div>
       </div>
     </mat-card-content>

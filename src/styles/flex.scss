@@ -69,8 +69,14 @@
 // Used to center something via flexbox.
 
 // Align items. (Naming inspiration: https://tailwindcss.com/docs/align-items.)
+.items-start {
+  align-items: flex-start;
+}
 .items-center {
   align-items: center;
+}
+.items-end {
+  align-items: flex-end;
 }
 
 // Used very often with flex-row.
