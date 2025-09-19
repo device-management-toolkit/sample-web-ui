@@ -7,12 +7,12 @@
     <div>
       <mat-form-field class="flex flex-1">
         <mat-label>{{ 'Boot File Path' | translate }}</mat-label>
-        <mat-select formControlName="selectedBootParam">
+        <mat-select formControlName="selectedBootSource" [value]="pbaBootFilePaths[0]">
           @for (filePath of pbaBootFilePaths; track filePath) {
-            <mat-option [value]="filePath"> {{ filePath.biosBootString }} ({{ filePath.bootString }}) </mat-option>
+            <mat-option [value]="filePath"> {{ filePath.description }} ({{ filePath.bootPath }}) </mat-option>
           }
         </mat-select>
-        @if (bootForm.get('selectedBootParam')?.hasError('required')) {
+        @if (bootForm.get('selectedBootSource')?.hasError('required')) {
           <mat-error>
             {{ 'Boot file path is required' | translate }}
           </mat-error>

@@ -547,7 +547,7 @@ export class DevicesService {
     )
   }
   getBootSources(guid: string): Observable<BootSource[]> {
-    return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/bootSources/${guid}`).pipe(
+    return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/power/bootSources/${guid}`).pipe(
       catchError((err) => {
         throw err
       })

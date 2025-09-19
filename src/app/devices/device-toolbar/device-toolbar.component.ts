@@ -270,30 +270,27 @@ export class DeviceToolbarComponent implements OnInit {
 
   // Add this new method for PBA boot
   performPBABoot(action: number): void {
-    const dialogRef = this.dialog.open(PBABootDialogComponent, {
-      width: '400px',
-      disableClose: false,
-      data: {
-        pbaBootFilesPath: this.amtFeatures()?.pbaBootFilesPath || [],
-        action: action
-      }
-    })
-
-    dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
-      if (!bootDetails) {
-        return
-      }
-      this.executeAuthorizedPowerAction(action, false, bootDetails)
+    this.devicesService.getBootSources(this.deviceId()).subscribe((sources) => {
+      const pbaSources = sources.filter((s) => s.description?.toLowerCase().includes('pba'))
+      const dialogRef = this.dialog.open(PBABootDialogComponent, {
+        width: '400px',
+        disableClose: false,
+        data: {
+          pbaBootFilesPath: pbaSources,
+          action: action
+        }
+      })
+      dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
+        if (!bootDetails) {
+          return
+        }
+        this.executeAuthorizedPowerAction(action, false, bootDetails)
+      })
     })
   }
 
   performWinREBoot(action: number): void {
-    const bootDetails: BootDetails = {
-      bootFilePath: this.amtFeatures()?.winREBootFilesPath?.bootString || '',
-      instanceID: this.amtFeatures()?.winREBootFilesPath?.instanceID || '',
-      enforceSecureBoot: true
-    }
-    this.executeAuthorizedPowerAction(action, false, bootDetails)
+    this.executeAuthorizedPowerAction(action, false)
   }
 
   preprocessingForAuthorizedPowerAction(action?: number): void {

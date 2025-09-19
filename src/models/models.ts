@@ -489,8 +489,7 @@ export interface BootDetails {
   url?: string
   username?: string
   password?: string
-  bootFilePath?: string
-  instanceID?: string
+  bootPath?: string
   enforceSecureBoot: boolean
 }
 

@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { BootDetails, BootParams } from 'src/models/models'
+import { BootDetails, BootSource } from 'src/models/models'
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -40,10 +40,10 @@ export class PBABootDialogComponent {
   private readonly fb = inject(FormBuilder)
 
   // Get the boot file paths from injected data
-  pbaBootFilePaths: BootParams[] = this.data?.pbaBootFilesPath || []
+  pbaBootFilePaths: BootSource[] = this.data?.pbaBootFilesPath || []
 
   bootForm = this.fb.group({
-    selectedBootParam: this.fb.control<BootParams | null>(null, Validators.required),
+    selectedBootSource: this.fb.control<BootSource | null>(this.pbaBootFilePaths[0] ?? null, Validators.required),
     enforceSecureBoot: this.fb.control(true)
   })
 
@@ -53,11 +53,10 @@ export class PBABootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      const selectedBootParam = this.bootForm.value.selectedBootParam as BootParams | null
-      if (selectedBootParam) {
+      const selectedBootSource = this.bootForm.value.selectedBootSource as BootSource | null
+      if (selectedBootSource) {
         const bootDetails: BootDetails = {
-          bootFilePath: selectedBootParam.bootString,
-          instanceID: selectedBootParam.instanceID,
+          bootPath: selectedBootSource.bootPath,
           enforceSecureBoot: this.bootForm.value.enforceSecureBoot as boolean
         }
         this.dialogRef.close(bootDetails)
