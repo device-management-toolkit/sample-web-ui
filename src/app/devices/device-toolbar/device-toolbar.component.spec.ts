@@ -36,8 +36,10 @@ describe('DeviceToolbarComponent', () => {
       'getDevice',
       'sendDeactivate',
       'getPowerState',
-      'getAMTFeatures'
+      'getAMTFeatures',
+      'featuresChanges'
     ])
+    devicesService.featuresChanges.and.returnValue(of(null))
     devicesService.deviceState = new EventEmitter<number>()
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
@@ -63,7 +65,13 @@ describe('DeviceToolbarComponent', () => {
         kvmAvailable: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       } as any)
     )
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
@@ -150,7 +158,7 @@ describe('DeviceToolbarComponent', () => {
 
     component.ngOnInit()
 
-    const ocrOption = component.powerOptions.find((option) => option.action === 105)
+    const ocrOption = component.powerOptions()!.find((option: { action: number }) => option.action === 105)
     expect(ocrOption).toBeTruthy()
     expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
   })

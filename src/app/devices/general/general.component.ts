@@ -50,7 +50,9 @@ export class GeneralComponent implements OnInit {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    remoteErase: false
+    remoteErase: false,
+    pbaBootFilesPath: [],
+    winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
   public hwInfo?: HardwareInformation
   public isDisabled = true
