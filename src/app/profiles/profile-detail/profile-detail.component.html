@@ -194,14 +194,12 @@
             <p class="like-mat-hint">Only applicable for the wireless interface.</p>
           }
         </mat-checkbox>
-        @if (!cloudMode) {
-          <mat-checkbox class="flex flex-1" formControlName="uefiWifiSyncEnabled" style="margin-top: 15px">
-            Enable UEFI/CSME Wi-Fi Profile Sharing
-            @if (profileForm.controls.uefiWifiSyncEnabled.enabled) {
-              <p class="like-mat-hint">Only applicable for the wireless interface.</p>
-            }
-          </mat-checkbox>
-        }
+        <mat-checkbox class="flex flex-1" formControlName="uefiWifiSyncEnabled" style="margin-top: 15px">
+          Enable UEFI/CSME Wi-Fi Profile Sharing
+          @if (profileForm.controls.uefiWifiSyncEnabled.enabled) {
+            <p class="like-mat-hint">Only applicable for the wireless interface.</p>
+          }
+        </mat-checkbox>
 
         @if (showWirelessConfigurations()) {
           <mat-form-field class="flex flex-1" style="margin-top: 20px">
