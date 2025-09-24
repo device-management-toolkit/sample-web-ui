@@ -1,3 +1,10 @@
+# [3.43.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.7...v3.43.0) (2025-09-24)
+
+
+### Features
+
+* adds OCR local PBA and WinRE ([0a889fc](https://github.com/device-management-toolkit/sample-web-ui/commit/0a889fc0697dc0ba40172891246e4f86da62cec8))
+
 ## [3.42.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.6...v3.42.7) (2025-08-23)
 
 
