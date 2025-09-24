@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>
+  {{ 'devices.header.pbaBootTitle.value' | translate }}
+</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{ 'devices.header.pbaBootDescription.value' | translate }}</p>
+  <form [formGroup]="bootForm">
+    <div>
+      <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'Boot File Path' | translate }}</mat-label>
+        <mat-select formControlName="selectedBootSource" [value]="pbaBootFilePaths[0]">
+          @for (filePath of pbaBootFilePaths; track filePath) {
+            <mat-option [value]="filePath"> {{ filePath.biosBootString }} ({{ filePath.bootString }}) </mat-option>
+          }
+        </mat-select>
+        @if (bootForm.get('selectedBootSource')?.hasError('required')) {
+          <mat-error>
+            {{ 'Boot file path is required' | translate }}
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">Enforce Secure Boot</mat-checkbox>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>OK</button>
+</mat-dialog-actions>

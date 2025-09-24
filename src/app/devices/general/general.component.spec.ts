@@ -44,7 +44,13 @@ describe('GeneralComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       })
     )
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))

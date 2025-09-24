@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -26,7 +26,13 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { DeviceCertDialogComponent } from '../device-cert-dialog/device-cert-dialog.component'
 import { UserConsentService } from '../user-consent.service'
 import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
+import { PBABootDialogComponent } from './pba-boot-dialog/pba-boot-dialog.component'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
+interface PowerOptions {
+  label: string
+  action: number
+}
 @Component({
   selector: 'app-device-toolbar',
   templateUrl: './device-toolbar.component.html',
@@ -51,6 +57,7 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly userConsentService = inject(UserConsentService)
   private readonly matDialog = inject(MatDialog)
   private readonly dialog = inject(MatDialog)
+  private readonly destroyRef = inject(DestroyRef)
   public readonly router = inject(Router)
 
   public readonly isLoading = input(signal(false))
@@ -58,11 +65,11 @@ export class DeviceToolbarComponent implements OnInit {
   public readonly deviceId = input('')
   public readonly isPinned = signal(false)
 
-  public amtFeatures?: AMTFeaturesResponse
+  public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isCloudMode = environment.cloud
   public device: Device | null = null
   public powerState = signal('Unknown')
-  public powerOptions = [
+  public basePowerOptions: PowerOptions[] = [
     {
       label: 'Hibernate',
       action: 7
@@ -106,16 +113,43 @@ export class DeviceToolbarComponent implements OnInit {
     {
       label: 'Power Up to PXE',
       action: 401
-    },
-    {
-      label: 'Reset to HTTPS Boot (OCR)',
-      action: 105
-    },
-    {
-      label: 'Power Up to HTTPS Boot (OCR)',
-      action: 106
     }
   ]
+  public powerOptions = signal<PowerOptions[]>([])
+
+  // Conditional power options based on AMT features
+  private readonly conditionalPowerOptions = {
+    localPBABootSupported: [
+      {
+        label: 'Reset to PBA (OCR)',
+        action: 107
+      },
+      {
+        label: 'Power Up to PBA (OCR)',
+        action: 108
+      }
+    ],
+    winREBootSupported: [
+      {
+        label: 'Reset to WinRe (OCR)',
+        action: 109
+      },
+      {
+        label: 'Power Up to WinRe (OCR)',
+        action: 110
+      }
+    ],
+    httpsBootSupported: [
+      {
+        label: 'Reset to HTTPS Boot (OCR)',
+        action: 105
+      },
+      {
+        label: 'Power Up to HTTPS Boot (OCR)',
+        action: 106
+      }
+    ]
+  }
 
   ngOnInit(): void {
     this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
@@ -123,8 +157,53 @@ export class DeviceToolbarComponent implements OnInit {
       this.devicesService.device.next(this.device)
       this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
       this.getPowerState()
+      this.loadAMTFeatures()
+      // react to AMT feature updates emitted by service
+      this.devicesService
+        .featuresChanges(this.deviceId())
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((features) => {
+          if (features) {
+            this.amtFeatures.set(features)
+            this.buildPowerOptions()
+          }
+        })
     })
   }
+
+  private loadAMTFeatures(): void {
+    this.devicesService.getAMTFeatures(this.deviceId()).subscribe((features) => {
+      this.amtFeatures.set(features)
+      this.buildPowerOptions()
+    })
+  }
+
+  private buildPowerOptions(): void {
+    let options: PowerOptions[] = [...this.basePowerOptions]
+
+    const f = this.amtFeatures()
+    if (f?.ocr) {
+      // Add HTTPS Boot options if httpsBootSupported is true
+      if (f.httpsBootSupported) {
+        options = options.concat(this.conditionalPowerOptions.httpsBootSupported)
+      }
+
+      // Add PBA options if localPBABootSupported is true
+      if (f.localPBABootSupported) {
+        options = options.concat(this.conditionalPowerOptions.localPBABootSupported)
+      }
+
+      if (f.winREBootSupported) {
+        options = options.concat(this.conditionalPowerOptions.winREBootSupported)
+      }
+    }
+
+    // Sort options by action number for consistent ordering
+    options.sort((a, b) => a.action - b.action)
+
+    this.powerOptions.set(options)
+  }
+
   getPowerState(): void {
     this.isLoading().set(true)
     this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
@@ -138,6 +217,7 @@ export class DeviceToolbarComponent implements OnInit {
       this.isLoading().set(false)
     })
   }
+
   getDeviceCert(): void {
     this.devicesService.getDeviceCertificate(this.deviceId()).subscribe((data) => {
       this.matDialog
@@ -188,12 +268,48 @@ export class DeviceToolbarComponent implements OnInit {
     })
   }
 
+  // Add this new method for PBA boot
+  performPBABoot(action: number): void {
+    this.devicesService.getBootSources(this.deviceId()).subscribe((sources) => {
+      const pbaSources = sources.filter((s) => s.biosBootString?.toLowerCase().includes('pba'))
+      const dialogRef = this.dialog.open(PBABootDialogComponent, {
+        width: '400px',
+        disableClose: false,
+        data: {
+          pbaBootFilesPath: pbaSources,
+          action: action
+        }
+      })
+      dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
+        if (!bootDetails) {
+          return
+        }
+        this.executeAuthorizedPowerAction(action, false, bootDetails)
+      })
+    })
+  }
+
+  performWinREBoot(action: number): void {
+    const bootDetails: BootDetails = {
+      enforceSecureBoot: true
+    }
+    this.executeAuthorizedPowerAction(action, false, bootDetails)
+  }
+
   preprocessingForAuthorizedPowerAction(action?: number): void {
     // Handle specific action pre-processing
     switch (action) {
       case 105:
       case 106: // HTTP Boot action
         this.performHTTPBoot(action)
+        break
+      case 107:
+      case 108: // PBA Boot action
+        this.performPBABoot(action)
+        break
+      case 109:
+      case 110: // WinRE Boot action
+        this.performWinREBoot(action)
         break
       case 101: {
         // Reset to BIOS
@@ -221,7 +337,7 @@ export class DeviceToolbarComponent implements OnInit {
           }
         }),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures)
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
         ),
         switchMap((result: any | UserConsentResponse) =>
           this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'PowerAction')
@@ -311,8 +427,8 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
-    this.amtFeatures = results
-    if (this.amtFeatures.userConsent === 'None') {
+    this.amtFeatures.set(results)
+    if (this.amtFeatures()?.userConsent === 'None') {
       return of(true) // User consent is not required
     }
     return of(false)
@@ -320,9 +436,9 @@ export class DeviceToolbarComponent implements OnInit {
 
   checkUserConsent(): Observable<any> {
     if (
-      this.amtFeatures?.userConsent === 'none' ||
-      this.amtFeatures?.optInState === 3 ||
-      this.amtFeatures?.optInState === 4
+      this.amtFeatures()?.userConsent === 'none' ||
+      this.amtFeatures()?.optInState === 3 ||
+      this.amtFeatures()?.optInState === 4
     ) {
       return of(true)
     }

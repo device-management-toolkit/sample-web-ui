@@ -65,7 +65,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    @for (option of powerOptions; track option) {
+    @for (option of powerOptions(); track option) {
       <button mat-menu-item (click)="sendPowerAction(option.action)">
         <span>{{ option.label }}</span>
       </button>
