@@ -90,7 +90,13 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       }
 
       service.getAMTFeatures('device1').subscribe((response) => {
@@ -238,7 +244,7 @@ describe('DevicesService', () => {
         expect(response).toBeTruthy()
       })
 
-      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootOptions/device1`)
       expect(req.request.method).toBe('POST')
       expect(req.request.body).toEqual(mockPayload)
       req.flush({})
@@ -259,7 +265,7 @@ describe('DevicesService', () => {
         expect(response).toBeTruthy()
       })
 
-      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootOptions/device1`)
       expect(req.request.method).toBe('POST')
       expect(req.request.body).toEqual(mockPayload)
       req.flush({})
@@ -507,7 +513,13 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       }
       const payload = {
         userConsent: 'none',

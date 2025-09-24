@@ -36,8 +36,10 @@ describe('DeviceToolbarComponent', () => {
       'getDevice',
       'sendDeactivate',
       'getPowerState',
-      'getAMTFeatures'
+      'getAMTFeatures',
+      'featuresChanges'
     ])
+    devicesService.featuresChanges.and.returnValue(of(null))
     devicesService.deviceState = new EventEmitter<number>()
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
@@ -63,7 +65,13 @@ describe('DeviceToolbarComponent', () => {
         kvmAvailable: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       } as any)
     )
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
@@ -144,13 +152,70 @@ describe('DeviceToolbarComponent', () => {
     expect(sendDeactivateErrorSpy).toHaveBeenCalled()
   })
 
+  it('should open PBABootDialogComponent and send filtered PBA sources', () => {
+    const pbaSources = [
+      {
+        biosBootString: 'PBA1',
+        bootString: 'OemPba.efi',
+        elementName: '',
+        failThroughSupported: 0,
+        instanceID: 'PBA1',
+        structuredBootString: '',
+        description: 'PBA Boot'
+      },
+      {
+        biosBootString: 'Other',
+        bootString: 'Other.efi',
+        elementName: '',
+        failThroughSupported: 0,
+        instanceID: 'Other',
+        structuredBootString: '',
+        description: 'Other Boot'
+      }
+    ]
+    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
+    const dialogRefSpyObj = jasmine.createSpyObj({
+      afterClosed: of({ bootPath: 'OemPba.efi', enforceSecureBoot: true }),
+      close: null
+    })
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    component.performPBABoot(107)
+    expect(devicesService.getBootSources).toHaveBeenCalledWith('guid')
+    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '400px',
+      disableClose: false,
+      data: {
+        pbaBootFilesPath: [
+          {
+            biosBootString: 'PBA1',
+            bootString: 'OemPba.efi',
+            elementName: '',
+            failThroughSupported: 0,
+            instanceID: 'PBA1',
+            structuredBootString: '',
+            description: 'PBA Boot'
+          }
+        ],
+        action: 107
+      }
+    })
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(executeAuthSpy).toHaveBeenCalledWith(107, false, { bootPath: 'OemPba.efi', enforceSecureBoot: true })
+  })
+
+  it('should call executeAuthorizedPowerAction for WinRE without boot details', () => {
+    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    component.performWinREBoot(109)
+    expect(executeAuthSpy).toHaveBeenCalledWith(109, false, { enforceSecureBoot: true })
+  })
   it('should have OCR power option in non-cloud mode', () => {
     environment.cloud = false
     component.isCloudMode = false
 
     component.ngOnInit()
 
-    const ocrOption = component.powerOptions.find((option) => option.action === 105)
+    const ocrOption = component.powerOptions()!.find((option: { action: number }) => option.action === 105)
     expect(ocrOption).toBeTruthy()
     expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
   })
