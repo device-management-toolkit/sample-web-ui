@@ -77,7 +77,13 @@ describe('UserConsentService', () => {
       httpsBootSupported: false,
       winREBootSupported: false,
       localPBABootSupported: false,
-      remoteErase: false
+      remoteErase: false,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
     })
     expect(reqUserConsentCodeSpy).toHaveBeenCalled()
   })
