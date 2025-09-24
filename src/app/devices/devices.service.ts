@@ -5,8 +5,8 @@
 
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
-import { Observable, Subject } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import { Observable, Subject, BehaviorSubject } from 'rxjs'
+import { catchError, map, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
   AMTFeaturesResponse,
@@ -28,7 +28,8 @@ import {
   NetworkConfig,
   TLSSettings,
   CertInfo,
-  BootDetails
+  BootDetails,
+  BootSource
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -37,6 +38,21 @@ import { caseInsensitiveCompare } from '../../utils'
 })
 export class DevicesService {
   private readonly http = inject(HttpClient)
+  // Reactive AMT features stream, keyed by deviceId
+  private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
+
+  private getOrCreateFeaturesStream(deviceId: string): BehaviorSubject<AMTFeaturesResponse | null> {
+    if (!this.amtFeaturesStreams.has(deviceId)) {
+      this.amtFeaturesStreams.set(deviceId, new BehaviorSubject<AMTFeaturesResponse | null>(null))
+    }
+    // Non-null assertion safe because we just set it above when missing
+    return this.amtFeaturesStreams.get(deviceId)!
+  }
+
+  // Public observable for other components to react to AMT features changes
+  featuresChanges(deviceId: string): Observable<AMTFeaturesResponse | null> {
+    return this.getOrCreateFeaturesStream(deviceId).asObservable()
+  }
 
   public TargetOSMap = {
     0: 'Unknown',
@@ -245,6 +261,7 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
+      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
       catchError((err) => {
         throw err
       })
@@ -293,7 +310,7 @@ export class DevicesService {
     const url: string =
       action < 100
         ? `${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`
-        : `${environment.mpsServer}/api/v1/amt/power/bootoptions/${deviceId}`
+        : `${environment.mpsServer}/api/v1/amt/power/bootOptions/${deviceId}`
 
     return this.http.post<any>(url, payload).pipe(
       catchError((err) => {
@@ -390,6 +407,7 @@ export class DevicesService {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
+        tap((features) => this.getOrCreateFeaturesStream(deviceId).next(features)),
         catchError((err) => {
           throw err
         })
@@ -523,6 +541,13 @@ export class DevicesService {
   }
   addCertificate(guid: string, certInfo: CertInfo): Observable<any> {
     return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}`, certInfo).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+  getBootSources(guid: string): Observable<BootSource[]> {
+    return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/power/bootSources/${guid}`).pipe(
       catchError((err) => {
         throw err
       })

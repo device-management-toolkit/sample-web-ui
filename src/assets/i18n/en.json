@@ -119,6 +119,14 @@
     "value": "HTTPS Network Boot secures the boot process using encrypted HTTPS to protect boot files. Initiate One Click Recovery to quickly restore the operating system.",
     "description": "HTTPS Boot dialog description"
   },
+  "devices.header.pbaBootTitle": {
+    "value": "Local PBA boot (OCR)",
+    "description": "PBA Boot dialog title"
+  },
+  "devices.header.pbaBootDescription": {
+    "value": "A PBA (Pre-Boot Application) is a recovery or diagnostic tool that is installed locally on the system and can be selected as a boot option for Intel One-Click Recovery operations.",
+    "description": "PBA Boot dialog description"
+  },
   "devices.header.addCertificateTitle": {
     "value": "Add Certificate",
     "description": "Add Certificate dialog title"
