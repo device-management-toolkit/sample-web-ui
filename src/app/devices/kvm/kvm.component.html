@@ -12,6 +12,16 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field style="margin-bottom: 0; margin-right: 8px">
+        <mat-label>Display Selection</mat-label>
+        <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)">
+          @for (display of displays; track display.value) {
+            <mat-option [value]="display.value" [disabled]="display.disabled">
+              {{ display.viewValue }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="margin-bottom: 0; margin-right: 8px">
         <mat-label>Hot Keys</mat-label>
         <mat-select [(ngModel)]="selectedHotkey" placeholder="Select hot key to send">
           @for (hotkey of hotKeys; track hotkey.value) {

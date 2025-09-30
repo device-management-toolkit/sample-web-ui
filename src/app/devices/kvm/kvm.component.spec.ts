@@ -26,6 +26,8 @@ describe('KvmComponent', () => {
   let getAMTFeaturesSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
+  let getDisplaySelectionSpy: jasmine.Spy
+  let setDisplaySelectionSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
   let router: Router
   let displayErrorSpy: jasmine.Spy
@@ -44,7 +46,9 @@ describe('KvmComponent', () => {
       'reqUserConsentCode',
       'cancelUserConsentCode',
       'getRedirectionExpirationToken',
-      'getRedirectionStatus'
+      'getRedirectionStatus',
+      'getDisplaySelection',
+      'setDisplaySelection'
     ])
     userConsentService = jasmine.createSpyObj('UserConsentService', [
       'handleUserConsentDecision',
@@ -115,6 +119,15 @@ describe('KvmComponent', () => {
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
+    getDisplaySelectionSpy = devicesService.getDisplaySelection.and.returnValue(
+      of({
+        displays: [
+          { displayIndex: 0, isActive: true, resolutionX: 1920, resolutionY: 1080, upperLeftX: 0, upperLeftY: 0 },
+          { displayIndex: 1, isActive: false, resolutionX: 0, resolutionY: 0, upperLeftX: 0, upperLeftY: 0 }
+        ]
+      })
+    )
+    setDisplaySelectionSpy = devicesService.setDisplaySelection.and.returnValue(of({ success: true }))
     userConsentService.handleUserConsentDecision.and.returnValue(of(true))
     userConsentService.handleUserConsentResponse.and.returnValue(of(true))
 
@@ -199,6 +212,7 @@ describe('KvmComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(getRedirectionStatusSpy).toHaveBeenCalled()
+    expect(getDisplaySelectionSpy).toHaveBeenCalled()
   })
   it('should have correct state on connect/disconnect methods', () => {
     // Initial state should be disconnected since we changed to signal(false)
@@ -237,6 +251,11 @@ describe('KvmComponent', () => {
     expect(snackBarSpy).not.toHaveBeenCalled()
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(2)
+  })
+  it('should change display and call setDisplaySelection', () => {
+    fixture.detectChanges()
+    component.onDisplayChange(0)
+    expect(setDisplaySelectionSpy).toHaveBeenCalledWith('', { displayIndex: 0 })
   })
   it('should not show error when NavigationStart triggers', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))

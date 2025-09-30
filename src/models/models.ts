@@ -501,3 +501,22 @@ export interface BootSource {
   instanceID: string
   structuredBootString: string
 }
+
+export interface DisplayInfo {
+  displayIndex: number
+  isActive: boolean
+  resolutionX: number
+  resolutionY: number
+  upperLeftX: number
+  upperLeftY: number
+  role?: string
+  isDefault?: boolean
+}
+
+export interface DisplaySelectionResponse {
+  displays: DisplayInfo[]
+}
+
+export interface DisplaySelectionRequest {
+  displayIndex: number
+}
