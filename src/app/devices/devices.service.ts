@@ -29,7 +29,9 @@ import {
   TLSSettings,
   CertInfo,
   BootDetails,
-  BootSource
+  BootSource,
+  DisplaySelectionResponse,
+  DisplaySelectionRequest
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
 
@@ -548,6 +550,25 @@ export class DevicesService {
   }
   getBootSources(guid: string): Observable<BootSource[]> {
     return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/power/bootSources/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  // Display Selection (KVM) APIs
+  // GET current display selection for a device
+  getDisplaySelection(guid: string): Observable<DisplaySelectionResponse> {
+    return this.http.get<DisplaySelectionResponse>(`${environment.mpsServer}/api/v1/amt/kvm/displays/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  // PUT to change the display selection for a device
+  setDisplaySelection(guid: string, selection: DisplaySelectionRequest): Observable<any> {
+    return this.http.put<any>(`${environment.mpsServer}/api/v1/amt/kvm/displays/${guid}`, selection).pipe(
       catchError((err) => {
         throw err
       })
