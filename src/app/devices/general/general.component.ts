@@ -178,11 +178,11 @@ export class GeneralComponent implements OnInit {
   parseProvisioningMode(mode: number): string {
     switch (mode) {
       case 1:
-        return 'Admin Control Mode (ACM)'
+        return 'profileDetail.activationModeAdmin.value'
       case 4:
-        return 'Client Control Mode (CCM)'
+        return 'profileDetail.activationModeClient.value'
       default:
-        return 'Unknown'
+        return 'common.unknown.value'
     }
   }
 

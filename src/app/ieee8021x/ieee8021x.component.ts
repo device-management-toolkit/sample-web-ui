@@ -165,4 +165,10 @@ export class IEEE8021xComponent implements OnInit {
   async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate([`/ieee8021x/${path}`])
   }
+
+  public getInterfaceLabel(element: any): string {
+    return element.wiredInterface
+      ? this.translate.instant('common.wired.value')
+      : this.translate.instant('common.wireless.value')
+  }
 }

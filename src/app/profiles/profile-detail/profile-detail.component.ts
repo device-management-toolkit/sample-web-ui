@@ -14,7 +14,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
 import { NgClass, AsyncPipe } from '@angular/common'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-
 // Material UI imports
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -56,7 +55,7 @@ import {
 import { environment } from 'src/environments/environment'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
-const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
+const NO_WIFI_CONFIGS = 'profileDetail.noWifi.value'
 
 @Component({
   selector: 'app-profile-detail',
@@ -130,7 +129,7 @@ export class ProfileDetailComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
-
+  NO_WIFI_CONFIGS = this.translate.instant(NO_WIFI_CONFIGS)
   // Computed properties and signals
   public readonly cloudMode = environment.cloud
   public readonly isLoading = signal(false)
@@ -145,7 +144,7 @@ export class ProfileDetailComponent implements OnInit {
 
   // State signals
   public readonly isEdit = signal(false)
-  public readonly pageTitle = signal(this.translate.instant('profiles.header.profileNewTitle.value'))
+  public readonly pageTitle = signal('profiles.header.profileNewTitle.value')
   public readonly tags = signal<string[]>([])
   public readonly selectedWifiConfigs = signal<WiFiConfig[]>([])
   public readonly ciraConfigurations = signal<CIRAConfig[]>([])
@@ -558,7 +557,8 @@ export class ProfileDetailComponent implements OnInit {
 
     request.pipe(finalize(() => this.isLoading.set(false))).subscribe({
       next: () => {
-        this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        const completedMessage: string = this.translate.instant('common.completeProfile.value')
+        this.snackBar.open(completedMessage, undefined, SnackbarDefaults.defaultError)
         void this.router.navigate(['/profiles'])
       },
       error: (error) => {
