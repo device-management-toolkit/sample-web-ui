@@ -83,10 +83,9 @@
             required
             minlength="8"
             maxlength="32" />
-          <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-          <mat-hint
-            >The AMT Password is used for remote access of a device. It is also required for reconfiguring/deactivating
-            the device.
+          <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+          <mat-hint>
+            {{ 'profileDetail.amtPasswordHint.value' | translate }}
           </mat-hint>
           <button
             mat-icon-button
@@ -126,10 +125,9 @@
             required
             minlength="8"
             maxlength="32" />
-          <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
+          <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
           <mat-hint>
-            The MEBX Password is used for protecting the BIOS access when a user is present with a device. It can only
-            be set when the activation mode is set to Admin Control Mode.
+            {{ 'profileDetail.mebxPasswordHint.value' | translate }}
           </mat-hint>
           <button
             mat-icon-button
@@ -372,12 +370,12 @@
       <mat-card-actions class="flex flex-row" style="margin-top: 48px">
         <div class="flex flex-50 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span i18n>CANCEL</span>
+            <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
           <button data-cy="save" type="submit" mat-flat-button color="primary">
-            <span i18n>SAVE</span>
+            <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>
       </mat-card-actions>

@@ -47,12 +47,12 @@
         required
         minlength="8"
         maxlength="32" />
-      <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-      <mat-hint>Enter your password</mat-hint>
+      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+      <mat-hint>{{ 'common.enterPassword.value' | translate }}</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Tags</mat-label>
+      <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags; track tag) {
           <mat-chip-row [removable]="true" (removed)="remove(tag)">

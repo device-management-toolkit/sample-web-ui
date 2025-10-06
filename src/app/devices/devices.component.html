@@ -1,18 +1,18 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
+    <span>{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
   </div>
   <div class="flex justify-end">
     <button mat-button (click)="addDevice()">
       <mat-icon>add</mat-icon>
-      <span i18n> {{ 'common.addNew.value' | translate }}</span>
+      <span>{{ 'common.addNew.value' | translate }}</span>
     </button>
   </div>
   @if (!selectedDevices.isEmpty()) {
     <div>
       <button mat-button (click)="bulkEditTags()">
         <mat-icon>edit</mat-icon>
-        <span i18n>Edit Tags</span>
+        <span>{{ 'common.editTags.value' | translate }}</span>
       </button>
     </div>
     <div>
