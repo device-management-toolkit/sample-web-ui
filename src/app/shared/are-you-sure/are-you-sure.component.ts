@@ -7,7 +7,8 @@ import { Component } from '@angular/core'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
-
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { inject } from '@angular/core'
 @Component({
   selector: 'app-are-you-sure',
   templateUrl: './are-you-sure.component.html',
@@ -18,7 +19,10 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatDialogClose
+    MatDialogClose,
+    TranslateModule
   ]
 })
-export class AreYouSureDialogComponent {}
+export class AreYouSureDialogComponent {
+  private readonly translate = inject(TranslateService)
+}

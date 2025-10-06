@@ -62,13 +62,7 @@ describe('SolComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
+        remoteErase: true
       })
     )
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
@@ -84,13 +78,7 @@ describe('SolComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
+        remoteErase: true
       })
     )
     devicesService.getDevice.and.returnValue(
@@ -271,13 +259,7 @@ describe('SolComponent', () => {
           ocr: true,
           winREBootSupported: true,
           localPBABootSupported: true,
-          remoteErase: true,
-          pbaBootFilesPath: [],
-          winREBootFilesPath: {
-            instanceID: '',
-            biosBootString: '',
-            bootString: ''
-          }
+          remoteErase: true
         })
         expect(component.isLoading()).toBe(true)
         done()
@@ -318,13 +300,7 @@ describe('SolComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+      remoteErase: true
     }
     component.readyToLoadSol = false
     component.checkUserConsent()
@@ -359,13 +335,7 @@ describe('SolComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+      remoteErase: true
     }
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
       next: (results) => {
@@ -386,13 +356,7 @@ describe('SolComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(throwError(new Error('err')))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -415,13 +379,7 @@ describe('SolComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(of(false))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
@@ -445,13 +403,7 @@ describe('SolComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+      remoteErase: true
     }
     spyOn(component, 'enableSolDialog').and.returnValue(of(true))
     component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({

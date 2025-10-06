@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-static-cira-warning',
@@ -18,7 +19,10 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
     MatDialogContent,
     MatDialogActions,
     MatButton,
+    TranslateModule,
     MatDialogClose
   ]
 })
-export class StaticCIRAWarningComponent {}
+export class StaticCIRAWarningComponent {
+  private readonly translate = inject(TranslateService)
+}

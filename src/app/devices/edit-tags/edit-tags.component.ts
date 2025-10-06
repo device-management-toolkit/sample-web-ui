@@ -19,6 +19,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-edit-tags',
@@ -38,18 +39,21 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
     MatChipRemove,
     MatChipInput,
     MatDialogActions,
-    MatButton
+    MatButton,
+    TranslateModule
   ]
 })
 export class DeviceEditTagsComponent {
   private readonly dialogRef = inject<MatDialogRef<DeviceEditTagsComponent>>(MatDialogRef)
   public readonly tags = inject(MAT_DIALOG_DATA)
+  private readonly translate = inject(TranslateService)
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   tagsHaveChanged: boolean
 
   constructor() {
     this.tagsHaveChanged = false
+    this.translate
   }
 
   add(event: MatChipInputEvent): void {

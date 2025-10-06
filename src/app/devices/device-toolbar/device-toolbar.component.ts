@@ -28,6 +28,7 @@ import { UserConsentService } from '../user-consent.service'
 import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
 import { PBABootDialogComponent } from './pba-boot-dialog/pba-boot-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 interface PowerOptions {
   label: string
@@ -48,7 +49,8 @@ interface PowerOptions {
     MatMenuTrigger,
     MatMenu,
     MatMenuItem,
-    MatProgressBar
+    MatProgressBar,
+    TranslateModule
   ]
 })
 export class DeviceToolbarComponent implements OnInit {
@@ -59,6 +61,7 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly destroyRef = inject(DestroyRef)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public readonly isLoading = input(signal(false))
 
@@ -350,7 +353,9 @@ export class DeviceToolbarComponent implements OnInit {
           }
         },
         error: () => {
-          this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorInitializing.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         },
         complete: () => {
           this.isLoading().set(false)
@@ -365,7 +370,8 @@ export class DeviceToolbarComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error(err)
-          this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorPowerAction.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of(null)
         }),
         finalize(() => {
@@ -375,17 +381,21 @@ export class DeviceToolbarComponent implements OnInit {
       .subscribe((data) => {
         if (this.isCloudMode) {
           if (data.Body?.ReturnValueStr === 'NOT_READY') {
-            this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+            const msg: string = this.translate.instant('devices.powerActionNotReady.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultWarn)
           } else {
-            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            const msg: string = this.translate.instant('devices.powerActionSent.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
           }
         } else {
           if (data.ReturnValue === 0) {
+            const msg: string = this.translate.instant('devices.powerActionSent.value')
             console.log('Power action sent successfully:', data)
-            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
           } else {
             console.log('Power action failed:', data)
-            this.snackBar.open($localize`Power action failed`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('devices.failPowerAction.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           }
         }
       })
@@ -414,12 +424,14 @@ export class DeviceToolbarComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.snackBar.open($localize`Deactivation sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+              const msg: string = this.translate.instant('devices.deactivation.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
               void this.navigateTo('devices')
             },
             error: (err) => {
               console.error(err)
-              this.snackBar.open($localize`Error sending deactivation`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('devices.errorDeactivation.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             }
           })
       }

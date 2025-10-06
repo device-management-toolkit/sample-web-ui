@@ -6,13 +6,15 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatCardModule } from '@angular/material/card'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-tls',
   imports: [
     MatCardModule,
     MatDividerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    TranslateModule
   ],
   templateUrl: './tls.component.html',
   styleUrl: './tls.component.scss'
@@ -21,7 +23,7 @@ export class TLSComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public isLoading = signal(true)
@@ -32,7 +34,8 @@ export class TLSComponent implements OnInit {
       .getTLSSettings(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving tls settings`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('tls.errorSettings.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {

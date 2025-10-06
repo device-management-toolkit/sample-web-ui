@@ -7,6 +7,7 @@ import { Component, inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-dialog-content',
@@ -17,9 +18,11 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
     MatDialogContent,
     MatDialogActions,
     MatButton,
+    TranslateModule,
     MatDialogClose
   ]
 })
 export class DialogContentComponent {
   data = inject(MAT_DIALOG_DATA)
+  private readonly translate = inject(TranslateService)
 }

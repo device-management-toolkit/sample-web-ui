@@ -14,7 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 import { BootDetails } from 'src/models/models'
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-http-boot-dialog',
@@ -28,6 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core'
     MatCardModule,
     MatCheckboxModule,
     MatIconModule,
+    TranslateModule,
     ReactiveFormsModule,
     TranslatePipe
   ],
@@ -38,6 +39,7 @@ export class HTTPBootDialogComponent {
   private readonly data = inject(MAT_DIALOG_DATA)
   private readonly dialogRef = inject(MatDialogRef<HTTPBootDialogComponent>)
   private readonly fb = inject(FormBuilder)
+  private readonly translate = inject(TranslateService)
 
   hidePassword = true
   bootForm = this.fb.group({
