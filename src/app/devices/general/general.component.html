@@ -123,15 +123,15 @@
           <div
             class="flex flex-50 justify-end"
             [matTooltip]="
-              amtEnabledFeatures.get('localPBABootSupported')?.value ? ('general.pbaSupported.value' | translate)
-              : ('general.pbaNotSupported.value' | translate)
+              amtEnabledFeatures.get('localPBABootSupported')?.value
+                ? ('general.pbaSupported.value' | translate)
+                : ('general.pbaNotSupported.value' | translate)
             "
             matTooltipPosition="after">
             {{ amtEnabledFeatures.get('localPBABootSupported')?.value ? 'Supported' : 'Not Supported' }}
           </div>
         }
         <div class="flex flex-50 items-end">
-        <div class="flex flex-50">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">

@@ -28,7 +28,7 @@
                 name="Password"
                 [placeholder]="'common.password.value' | translate"
                 minlength="7" />
-              <mat-error i18n="@@field.required">This field is required</mat-error>
+              <mat-error i18n="@@field.required">{{ 'fieldRequired.short.value' | translate }}</mat-error>
               <button
                 mat-icon-button
                 matSuffix
@@ -53,7 +53,7 @@
           <mat-card-actions class="flex-row">
             <div class="flex flex-1 justify-center">
               <button id="btnLogin" type="submit" mat-flat-button color="primary">
-                <span i18n>LOG IN</span>
+                <span>{{ 'common.loginUpper.value' | translate }}</span>
                 <span class="glyphicon glyphicon-log-in padding10L"></span>
               </button>
             </div>
