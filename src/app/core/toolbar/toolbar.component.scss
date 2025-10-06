@@ -5,3 +5,12 @@ mat-divider {
   height: 30px;
   margin-right: 16px;
 }
+
+.lang-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.lang-menu {
+  min-width: 180px;
+}
