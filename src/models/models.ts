@@ -473,6 +473,9 @@ export interface DataWithCount<T> {
 
 export interface MPSVersion {
   serviceVersion: string
+  latest : {
+    tag_name: string
+  }
 }
 
 export interface RPSVersion {
