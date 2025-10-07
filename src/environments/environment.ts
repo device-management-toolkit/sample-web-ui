@@ -9,10 +9,10 @@
 
 export const environment = {
   production: false,
-  cloud: true,
+  cloud: false,
   useOAuth: false, // for use with console
-  mpsServer: 'http://localhost:3000',
-  rpsServer: 'http://localhost:8081',
+  mpsServer: 'http://localhost:8181',
+  rpsServer: 'http://localhost:8181',
   vault: 'http://localhost/vault',
   auth: {
     clientId: '',
@@ -20,7 +20,7 @@ export const environment = {
     redirectUri: 'http://localhost:4200/dashboard',
     scope: '',
     responseType: 'code',
-    requireHttps: true // set to false when local
+    requireHttps: false // set to false when local
   }
 }
 

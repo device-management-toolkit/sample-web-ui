@@ -4,6 +4,9 @@
       {{ 'toolbar.header.cloudModeTitle.value' | translate }}
     } @else {
       {{ 'toolbar.header.consoleModeTitle.value' | translate }}
+      @if (consoleVersion().latest?.tag_name) {
+        {{ consoleVersion().latest.tag_name }}
+      }
     }
   </div>
   <div class="flex flex-50 justify-end items-center">

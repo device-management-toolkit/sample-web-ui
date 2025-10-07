@@ -43,6 +43,7 @@ export class ToolbarComponent implements OnInit {
   public cloudMode: boolean = environment.cloud
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
+  public consoleVersion = signal<any>({} as any)
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
@@ -53,6 +54,7 @@ export class ToolbarComponent implements OnInit {
             this.snackBar.open($localize`Error retrieving MPS versions`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
+            console.log('mps version data', data)
             this.mpsVersions.set(data)
           }
         })
@@ -70,6 +72,9 @@ export class ToolbarComponent implements OnInit {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
+            // Store console version data including tag_name
+            this.consoleVersion.set(data)
+            
             if (data.current !== 'DEVELOPMENT') {
               if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
                 const ref = this.snackBar.open(
