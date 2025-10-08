@@ -74,47 +74,47 @@ export class DeviceToolbarComponent implements OnInit {
   public powerState = signal('Unknown')
   public basePowerOptions: PowerOptions[] = [
     {
-      label: 'Hibernate',
+      label: 'powerOptions.hibernate.value',
       action: 7
     },
     {
-      label: 'Sleep',
+      label: 'powerOptions.sleep.value',
       action: 4
     },
     {
-      label: 'Power Cycle',
+      label: 'powerOptions.powerCycle.value',
       action: 5
     },
     {
-      label: 'Reset',
+      label: 'powerOptions.reset.value',
       action: 10
     },
     {
-      label: 'Soft-Off',
+      label: 'powerOptions.softOff.value',
       action: 12
     },
     {
-      label: 'Soft Reset',
+      label: 'powerOptions.softReset.value',
       action: 14
     },
     {
-      label: 'Reset to IDE-R (CD-ROM)',
+      label: 'powerOptions.resetToIDER.value',
       action: 202
     },
     {
-      label: 'Reset to BIOS',
+      label: 'powerOptions.resetToBIOS.value',
       action: 101
     },
     {
-      label: 'Power Up to BIOS',
+      label: 'powerOptions.powerUpToBIOS.value',
       action: 100
     },
     {
-      label: 'Reset to PXE',
+      label: 'powerOptions.resetToPXE.value',
       action: 400
     },
     {
-      label: 'Power Up to PXE',
+      label: 'powerOptions.powerUpToPXE.value',
       action: 401
     }
   ]
@@ -124,31 +124,31 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly conditionalPowerOptions = {
     localPBABootSupported: [
       {
-        label: 'Reset to PBA (OCR)',
+        label: 'powerOptions.resetToPBA.value',
         action: 107
       },
       {
-        label: 'Power Up to PBA (OCR)',
+        label: 'powerOptions.powerUpToPBA.value',
         action: 108
       }
     ],
     winREBootSupported: [
       {
-        label: 'Reset to WinRe (OCR)',
+        label: 'powerOptions.resetToWinRe.value',
         action: 109
       },
       {
-        label: 'Power Up to WinRe (OCR)',
+        label: 'powerOptions.powerUpToWinRe.value',
         action: 110
       }
     ],
     httpsBootSupported: [
       {
-        label: 'Reset to HTTPS Boot (OCR)',
+        label: 'powerOptions.resetToHTTPSBoot.value',
         action: 105
       },
       {
-        label: 'Power Up to HTTPS Boot (OCR)',
+        label: 'powerOptions.powerUpToHTTPSBoot.value',
         action: 106
       }
     ]

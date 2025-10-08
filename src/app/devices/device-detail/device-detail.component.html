@@ -6,7 +6,7 @@
         mat-list-item
         style="cursor: pointer"
         (click)="toggleSidenav()"
-        [matTooltip]="isCollapsed ? 'Expand' : 'Collapse'"
+        [matTooltip]="isCollapsed ? ('general.expand.value' | translate) : ('general.collapse.value' | translate)"
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>

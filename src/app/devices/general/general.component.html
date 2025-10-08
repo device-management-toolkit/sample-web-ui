@@ -96,7 +96,11 @@
                 : ('general.httpsBootNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('httpsBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('httpsBootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <!-- OCR WinRE Boot -->
@@ -112,7 +116,11 @@
                 : ('general.windowsRecoveryNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('winREBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('winREBootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <!-- OCR Pre-Boot Application -->
@@ -128,7 +136,11 @@
                 : ('general.pbaNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('localPBABootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('localPBABootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <div class="flex flex-50 items-end">

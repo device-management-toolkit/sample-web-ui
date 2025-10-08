@@ -8,7 +8,7 @@ export const availableLangs = [
   { code: 'ja', label: '日本語' },
   { code: 'ar', label: 'العربية' },
   { code: 'fi', label: 'Suomi' },
-  // { code: 'he', label: 'עברית' },
+  { code: 'he', label: 'עברית' },
   { code: 'ru', label: 'Русский' },
   { code: 'sv', label: 'Svenska' }
 ]
