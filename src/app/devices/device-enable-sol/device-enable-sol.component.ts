@@ -7,7 +7,7 @@ import { Component, inject } from '@angular/core'
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
 import { MatCardContent } from '@angular/material/card'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-enable-sol',
@@ -24,5 +24,4 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 })
 export class DeviceEnableSolComponent {
   dialogRef = inject<MatDialogRef<DeviceEnableSolComponent>>(MatDialogRef)
-  private readonly translate = inject(TranslateService)
 }

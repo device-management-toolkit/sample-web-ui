@@ -12,7 +12,7 @@ import {
   MatDialogContent
 } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-enable-kvm',
@@ -29,5 +29,4 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 })
 export class DeviceEnableKvmComponent {
   dialogRef = inject<MatDialogRef<DeviceEnableKvmComponent>>(MatDialogRef)
-  private readonly translate = inject(TranslateService)
 }

@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-cert-dialog',
@@ -26,8 +26,6 @@ export class DeviceCertDialogComponent {
   private readonly snackBar = inject(MatSnackBar)
   private readonly dialogData = inject(MAT_DIALOG_DATA)
   private readonly ref = inject(MatDialogRef)
-  private readonly translate = inject(TranslateService)
-
   public data: any = {}
   public isPinned = false
 

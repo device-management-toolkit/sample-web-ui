@@ -456,4 +456,10 @@ export class DeviceToolbarComponent implements OnInit {
     }
     return of(false)
   }
+
+  public get deactivateRemoveAction(): string {
+    return this.isCloudMode
+      ? this.translate.instant('devices.actions.deactivateCloud.value')
+      : this.translate.instant('devices.actions.remove.value')
+  }
 }

@@ -1,4 +1,4 @@
-<mat-sidenav-container autosize #sidenavContainer [dir]="direction">
+<mat-sidenav-container autosize [dir]="direction">
   @if (isLoggedIn) {
     <mat-sidenav mode="side" opened class="dark-theme">
       <app-navbar></app-navbar>
@@ -6,7 +6,7 @@
   }
 
   <mat-sidenav-content>
-    <app-toolbar [sidenavContainer]="sidenavContainer"></app-toolbar>
+    <app-toolbar></app-toolbar>
 
     <router-outlet></router-outlet>
   </mat-sidenav-content>

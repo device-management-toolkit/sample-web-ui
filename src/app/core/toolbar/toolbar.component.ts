@@ -18,8 +18,8 @@ import { MatIconButton } from '@angular/material/button'
 import { MatDivider } from '@angular/material/divider'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { MatSidenavContainer } from '@angular/material/sidenav'
 import { availableLangs } from 'src/constants'
+import { getDirection } from 'src/utils'
 
 @Component({
   selector: 'app-toolbar',
@@ -39,8 +39,6 @@ import { availableLangs } from 'src/constants'
   ]
 })
 export class ToolbarComponent implements OnInit {
-  @Input() sidenavContainer!: MatSidenavContainer
-
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly dialog = inject(MatDialog)
@@ -112,8 +110,7 @@ export class ToolbarComponent implements OnInit {
   switchLang(lang: string): void {
     this.translate.use(lang)
     localStorage.setItem('lang', lang)
-
-    document.documentElement.setAttribute('dir', (lang === 'ar' || lang === 'he') ? 'rtl' : 'ltr')
+    document.documentElement.setAttribute('dir', getDirection(lang))
     document.documentElement.setAttribute('lang', lang)
   }
 }

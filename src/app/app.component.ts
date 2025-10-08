@@ -8,9 +8,10 @@ import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'
 import { NavbarComponent } from './core/navbar/navbar.component'
-import { MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav'
+import { MatSidenavModule } from '@angular/material/sidenav'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { BidiModule, Direction } from '@angular/cdk/bidi'
+import { getDirection } from 'src/utils'
 
 @Component({
   selector: 'app-root',
@@ -26,15 +27,12 @@ import { BidiModule, Direction } from '@angular/cdk/bidi'
   ]
 })
 export class AppComponent implements OnInit {
-  @ContentChild('sidenavContainer', { static: false }) sidenavContainer!: MatSidenavContainer
-
   // Dependency Injection
   private readonly router = inject(Router)
   private readonly authService = inject(AuthService)
   public readonly translate = inject(TranslateService)
   public direction: Direction = 'ltr'
   public isLoggedIn = false
-  public sidenavWidth = 250
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
@@ -50,7 +48,6 @@ export class AppComponent implements OnInit {
   }
 
   private setDirection(lang: string): void {
-    const isRtl = lang === 'ar' || lang === 'he'
-    this.direction = isRtl ? 'rtl' : 'ltr'
+    this.direction = getDirection(lang)
   }
 }

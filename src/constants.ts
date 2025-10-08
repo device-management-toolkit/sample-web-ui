@@ -12,3 +12,8 @@ export const availableLangs = [
   { code: 'ru', label: 'Русский' },
   { code: 'sv', label: 'Svenska' }
 ]
+
+export const rtlLangs = [
+  'ar',
+  'he'
+]

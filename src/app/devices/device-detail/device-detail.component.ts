@@ -24,7 +24,7 @@ import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from 'src/environments/environment'
 import { TLSComponent } from '../tls/tls.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-detail',
@@ -63,7 +63,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 export class DeviceDetailComponent implements OnInit {
   // Dependency Injection
   private readonly activatedRoute = inject(ActivatedRoute)
-  private readonly translate = inject(TranslateService)
   public deviceId = ''
   public readonly isCloudMode: boolean = environment.cloud
 

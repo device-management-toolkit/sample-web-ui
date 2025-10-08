@@ -21,7 +21,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 import { DataWithCount } from 'src/models/models'
 import { Profile } from 'src/app/profiles/profiles.constants'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-add-device',
@@ -52,7 +52,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 export class AddDeviceComponent implements OnInit {
   private readonly profilesService = inject(ProfilesService)
   private readonly fb = inject(FormBuilder)
-  private readonly translate = inject(TranslateService)
 
   // Signals for reactive state management
   profiles = signal<DataWithCount<Profile>>({ data: [], totalCount: 0 })

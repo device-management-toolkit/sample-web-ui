@@ -10,8 +10,7 @@ import { Router } from '@angular/router'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { DomainsService } from 'src/app/domains/domains.service'
 import { type Domain } from 'src/models/models'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-export-dialog',
@@ -36,7 +35,6 @@ export class ExportDialogComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef<ExportDialogComponent>)
   private readonly router = inject(Router)
   private readonly destroyRef = inject(DestroyRef)
-  private readonly translate = inject(TranslateService)
 
   // Signals for reactive state management
   readonly domains = signal<Domain[]>([])

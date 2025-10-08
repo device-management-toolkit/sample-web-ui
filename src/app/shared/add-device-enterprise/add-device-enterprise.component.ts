@@ -16,7 +16,7 @@ import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 
 @Component({
@@ -48,7 +48,6 @@ export class AddDeviceEnterpriseComponent {
   private readonly deviceService = inject(DevicesService)
   private readonly device = inject<Device>(MAT_DIALOG_DATA)
   public readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
-  public readonly translate = inject(TranslateService)
 
   private deviceOrig: Device
 

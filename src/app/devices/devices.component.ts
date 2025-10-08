@@ -107,9 +107,13 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public isTrue = false
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
-  public deleteDeviceLabel: string = this.isCloudMode
-    ? this.translate.instant('devices.actions.deactivateCloud.value')
-    : this.translate.instant('devices.actions.remove.value')
+
+  get deleteDeviceLabel(): string {
+    return this.isCloudMode
+      ? this.translate.instant('devices.actions.deactivateCloud.value')
+      : this.translate.instant('devices.actions.remove.value')
+  }
+
   public displayedColumns: string[] = [
     'select',
     'hostname',

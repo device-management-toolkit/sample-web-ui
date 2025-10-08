@@ -22,6 +22,7 @@ import { firstValueFrom } from 'rxjs'
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { TranslatePaginatorIntl } from './assets/i18n/translate-paginator-intl'
 import { availableLangs } from './constants'
+import { getDirection } from './utils'
 
 if (environment.production) {
   enableProdMode()
@@ -77,11 +78,7 @@ function getLangCode() {
   const langToUse = availableLangs.some((lang) => lang.code === browserLang) ? browserLang : 'en'
   const finalLang = savedLang || langToUse
 
-  if (finalLang === 'ar' || finalLang === 'he') {
-    document.documentElement.setAttribute('dir', 'rtl')
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr')
-  }
+  document.documentElement.setAttribute('dir', getDirection(finalLang))
   document.documentElement.setAttribute('lang', finalLang)
 
   return finalLang

@@ -23,11 +23,7 @@
     routerLinkActive="active"
     [disabled]="cloudMode === false"
     [matTooltipPosition]="'right'"
-    [matTooltip]="
-      cloudMode === false
-        ? ('configs.header.noCiraTitle.value' | translate)
-        : ('configs.header.ciraTitle.value' | translate)
-    ">
+    [matTooltip]="ciraTitle">
     <mat-icon matListItemIcon>settings_ethernet</mat-icon
     ><span i18n="navlink">{{ 'configs.header.ciraTitle.value' | translate }}</span>
   </a>
