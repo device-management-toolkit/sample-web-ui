@@ -38,6 +38,7 @@ import { ConfigsService } from 'src/app/configs/configs.service'
 import { ProfilesService } from '../profiles.service'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import { ProxyConfigsService } from 'src/app/proxy-configs/proxy-configs.service'
 
 // Shared components
 import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
@@ -48,6 +49,7 @@ import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
 import {
   ActivationModes,
   Profile,
+  proxyConfig,
   TlsModes,
   TlsSigningAuthorities,
   UserConsentModes,
@@ -57,6 +59,7 @@ import { environment } from 'src/environments/environment'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 
 const NO_WIFI_CONFIGS = 'No Wifi Configs Found'
+const NO_PROXY_CONFIGS = 'No Proxy Configs Found'
 
 @Component({
   selector: 'app-profile-detail',
@@ -127,6 +130,7 @@ export class ProfileDetailComponent implements OnInit {
   private readonly configsService = inject(ConfigsService)
   private readonly wirelessService = inject(WirelessService)
   private readonly ieee8021xService = inject(IEEE8021xService)
+  private readonly proxyConfigsService = inject(ProxyConfigsService)
   private readonly dialog = inject(MatDialog)
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
@@ -139,24 +143,29 @@ export class ProfileDetailComponent implements OnInit {
   // Form setup
   public readonly profileForm = this.createProfileForm()
   public readonly wirelessAutocomplete = new FormControl('')
+  public readonly proxyAutocomplete = new FormControl('')
 
   // Observable streams
   public readonly filteredWirelessList = this.setupWirelessFilter()
+  public readonly filteredProxyList = this.setupProxyFilter()
 
   // State signals
   public readonly isEdit = signal(false)
   public readonly pageTitle = signal(this.translate.instant('profiles.header.profileNewTitle.value'))
   public readonly tags = signal<string[]>([])
   public readonly selectedWifiConfigs = signal<WiFiConfig[]>([])
+  public readonly selectedProxyConfigs = signal<proxyConfig[]>([])
   public readonly ciraConfigurations = signal<CIRAConfig[]>([])
   public readonly iee8021xConfigurations = signal<IEEE8021xConfig[]>([])
   public readonly wirelessConfigurations = signal<string[]>([])
+  public readonly ProxyConfigurations = signal<string[]>([])
   public readonly amtInputType = signal<'password' | 'text'>('password')
   public readonly mebxInputType = signal<'password' | 'text'>('password')
 
   // Computed properties
   public readonly showIEEE8021xConfigurations = computed(() => this.iee8021xConfigurations().length > 0)
   public readonly showWirelessConfigurations = computed(() => this.wirelessConfigurations().length > 0)
+  public readonly showProxyConfigurations = computed(() => this.ProxyConfigurations().length > 0)
 
   // Constants for template use
   public readonly activationModes = ActivationModes
@@ -182,6 +191,7 @@ export class ProfileDetailComponent implements OnInit {
   private initializeData(): void {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
+    this.getProxyConfigs()
     this.getCiraConfigs()
   }
 
@@ -258,6 +268,13 @@ export class ProfileDetailComponent implements OnInit {
           this.tags.set(data.tags || [])
           this.profileForm.patchValue(data as any)
           this.selectedWifiConfigs.set(data.wifiConfigs ?? [])
+          // Ensure proxy configs have proper priorities
+          const proxies = data.proxyConfigs ?? []
+          const proxiesWithPriorities = proxies.map((proxy: proxyConfig, index: number) => ({
+            ...proxy,
+            priority: proxy.priority || index + 1
+          }))
+          this.selectedProxyConfigs.set(proxiesWithPriorities)
           this.setConnectionMode(data)
         },
         error: (error) => {
@@ -296,6 +313,20 @@ export class ProfileDetailComponent implements OnInit {
       next: (data) => {
         const configs = data.data.map((item) => item.profileName)
         this.wirelessConfigurations.set(configs)
+      },
+      error: (err) => {
+        console.error(JSON.stringify(err))
+        const errors = Array.isArray(err) ? err : [JSON.stringify(err)]
+        this.errorMessages.set(errors)
+      }
+    })
+  }
+
+  private getProxyConfigs(): void {
+    this.proxyConfigsService.getData().subscribe({
+      next: (data) => {
+        const configs = data.data.map((item) => item.name)
+        this.ProxyConfigurations.set(configs)
       },
       error: (err) => {
         console.error(JSON.stringify(err))
@@ -429,6 +460,23 @@ export class ProfileDetailComponent implements OnInit {
     this.wirelessAutocomplete.patchValue('')
   }
 
+  selectProxyProfile(event: MatAutocompleteSelectedEvent): void {
+    if (event.option.value === NO_PROXY_CONFIGS) return
+
+    const selectedProfiles = this.selectedProxyConfigs().map((proxy) => proxy.name)
+    if (selectedProfiles.includes(event.option.value as string)) return
+
+    this.selectedProxyConfigs.update((configs) => [
+      ...configs,
+      {
+        priority: configs.length + 1,
+        name: event.option.value
+      }
+    ])
+
+    this.proxyAutocomplete.patchValue('')
+  }
+
   localWifiSyncChange(isEnabled: boolean): void {
     if (isEnabled) {
       this.profileForm.controls.localWifiSyncEnabled.disable()
@@ -458,9 +506,22 @@ export class ProfileDetailComponent implements OnInit {
     return filteredValues.length > 0 ? filteredValues : [NO_WIFI_CONFIGS]
   }
 
+  searchProxy(value: string): string[] {
+    const filterValue = value.toLowerCase()
+    const configs = this.ProxyConfigurations()
+    const filteredValues = configs.filter((config) => config.toLowerCase().includes(filterValue))
+    return filteredValues.length > 0 ? filteredValues : [NO_PROXY_CONFIGS]
+  }
+
   isSelectable(wifiOption: string): any {
     return {
       'no-results': wifiOption === NO_WIFI_CONFIGS
+    }
+  }
+
+  isProxySelectable(proxyOption: string): any {
+    return {
+      'no-results': proxyOption === NO_PROXY_CONFIGS
     }
   }
 
@@ -468,6 +529,13 @@ export class ProfileDetailComponent implements OnInit {
     this.selectedWifiConfigs.update((configs) => {
       const filtered = configs.filter((config) => config !== wifiProfile)
       return this.updatePrioritiesForConfigs(filtered)
+    })
+  }
+
+  removeProxyProfile(proxyProfile: proxyConfig): void {
+    this.selectedProxyConfigs.update((configs) => {
+      const filtered = configs.filter((config) => config !== proxyProfile)
+      return this.updatePrioritiesForProxyConfigs(filtered)
     })
   }
 
@@ -488,6 +556,25 @@ export class ProfileDetailComponent implements OnInit {
 
   updatePriorities(): void {
     this.selectedWifiConfigs.update((configs) => this.updatePrioritiesForConfigs(configs))
+  }
+
+  dropProxy(event: CdkDragDrop<string[]>): void {
+    this.selectedProxyConfigs.update((configs) => {
+      const reordered = [...configs]
+      moveItemInArray(reordered, event.previousIndex, event.currentIndex)
+      return this.updatePrioritiesForProxyConfigs(reordered)
+    })
+  }
+
+  private updatePrioritiesForProxyConfigs(configs: proxyConfig[]): proxyConfig[] {
+    return configs.map((config, index) => ({
+      ...config,
+      priority: index + 1
+    }))
+  }
+
+  updateProxyPriorities(): void {
+    this.selectedProxyConfigs.update((configs) => this.updatePrioritiesForProxyConfigs(configs))
   }
 
   add(event: MatChipInputEvent): void {
@@ -554,6 +641,9 @@ export class ProfileDetailComponent implements OnInit {
       result.wifiConfigs = []
     }
 
+    // Always include proxy configurations
+    result.proxyConfigs = this.selectedProxyConfigs()
+
     const request = this.isEdit() ? this.profilesService.update(result) : this.profilesService.create(result)
 
     request.pipe(finalize(() => this.isLoading.set(false))).subscribe({
@@ -605,6 +695,16 @@ export class ProfileDetailComponent implements OnInit {
       map((value: string | null) => {
         const searchValue = value || ''
         return searchValue.length > 0 ? this.search(searchValue) : []
+      })
+    )
+  }
+
+  private setupProxyFilter(): Observable<string[]> {
+    return this.proxyAutocomplete.valueChanges.pipe(
+      startWith(''),
+      map((value: string | null) => {
+        const searchValue = value || ''
+        return searchValue.length > 0 ? this.searchProxy(searchValue) : []
       })
     )
   }
