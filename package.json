@@ -47,7 +47,8 @@
     "ngx-monaco-editor-v2": {
       "@angular/common": "20.3.4",
       "@angular/core": "20.3.4",
-      "rxjs": "7.8.2"
+      "rxjs": "7.8.2",
+      "monaco-editor": "0.52.2"
     }
   },
   "devDependencies": {
