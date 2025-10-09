@@ -69,7 +69,13 @@ export class DomainDetailComponent implements OnInit {
   public readonly router = inject(Router)
 
   public domainForm = this.fb.nonNullable.group({
-    profileName: ['', Validators.required],
+    profileName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9]*$/)
+      ]
+    ],
     domainSuffix: ['', Validators.required],
     provisioningCert: ['', Validators.required],
     provisioningCertPassword: ['', Validators.required],
@@ -115,38 +121,89 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
-    result.provisioningCertStorageFormat = 'string'
-    if (this.domainForm.valid) {
-      this.isLoading.set(true)
-      let request
-      if (this.isEdit) {
-        request = this.domainsService.update(result)
-      } else {
-        request = this.domainsService.create(result)
-      }
-      request
-        .pipe(
-          finalize(() => {
-            this.isLoading.set(false)
-          })
-        )
-        .subscribe({
-          next: () => {
-            this.snackBar.open($localize`Domain profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+    this.doSubmit()
+  }
 
-            this.router.navigate(['/domains'])
-          },
-          error: (err) => {
-            this.snackBar.open(
-              $localize`Error creating/updating domain profile`,
-              undefined,
-              SnackbarDefaults.defaultError
-            )
-            this.errorMessages = err
+  private doSubmit(): void {
+    // Get the raw values to check profileName even if disabled
+    const rawValues = this.domainForm.getRawValue()
+
+    // Manual validation for profileName (in case it's disabled in edit mode)
+    const profileNamePattern = /^[a-zA-Z0-9]*$/
+    if (!profileNamePattern.test(rawValues.profileName)) {
+      this.snackBar.open(
+        $localize`Domain name must contain only alphanumeric characters (no spaces or special characters)`,
+        undefined,
+        SnackbarDefaults.defaultError
+      )
+      return
+    }
+
+    // Check form validity before proceeding
+    if (!this.domainForm.valid) {
+      this.domainForm.markAllAsTouched()
+      this.snackBar.open(
+        $localize`Please fix the validation errors before submitting`,
+        undefined,
+        SnackbarDefaults.defaultError
+      )
+      return
+    }
+
+    const result: Domain = Object.assign({}, rawValues) as any
+    result.provisioningCertStorageFormat = 'string'
+
+    this.isLoading.set(true)
+    let request
+    if (this.isEdit) {
+      request = this.domainsService.update(result)
+    } else {
+      request = this.domainsService.create(result)
+    }
+    request
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false)
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.snackBar.open($localize`Domain profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+          this.router.navigate(['/domains'])
+        },
+        error: (err) => {
+            // Show specific error messages from the backend
+            if (Array.isArray(err) && err.length > 0) {
+              this.errorMessages = err
+              // Check if it's a validation error and show in snackbar too
+              const validationError = err.find(error =>
+                error.includes('ProfileName') ||
+                error.includes('alphanum') ||
+                error.includes('validation')
+              )
+              if (validationError) {
+                this.snackBar.open(
+                  $localize`Domain name must contain only alphanumeric characters`,
+                  undefined,
+                  SnackbarDefaults.defaultError
+                )
+              } else {
+                this.snackBar.open(
+                  $localize`Error creating/updating domain profile`,
+                  undefined,
+                  SnackbarDefaults.defaultError
+                )
+              }
+            } else {
+              this.snackBar.open(
+                $localize`Error creating/updating domain profile`,
+                undefined,
+                SnackbarDefaults.defaultError
+              )
+              this.errorMessages = [err]
+            }
           }
         })
-    }
   }
 
   onFileSelected(e: Event): void {

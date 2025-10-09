@@ -24,9 +24,21 @@
     <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1">
-          <input formControlName="profileName" matInput name="name" placeholder="Name" required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter a name to give this domain (ex. AMT Domain)</mat-hint>
+          <input
+            formControlName="profileName"
+            matInput
+            name="name"
+            placeholder="Name"
+            pattern="[a-zA-Z0-9]*"
+            title="Only letters and numbers are allowed"
+            required />
+          @if (domainForm.get('profileName')?.errors?.['required']) {
+            <mat-error>This field is required</mat-error>
+          }
+          @if (domainForm.get('profileName')?.errors?.['pattern']) {
+            <mat-error>Domain name must contain only alphanumeric characters (no spaces or special characters)</mat-error>
+          }
+          <mat-hint>Enter a name to give this domain (ex. AMTDomain). Only letters and numbers are allowed.</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="flex flex-1">
