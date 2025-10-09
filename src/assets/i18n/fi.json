@@ -184,8 +184,12 @@
     "value": "Pöytäkirjat"
   },
   "alarmService.startTime": {
-    "description": "Hälytyksen alkamisajan merkintä",
-    "value": "Aloitusaika"
+    "description": "Label for the alarm start time",
+    "value": "Aloitusaika: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Poista valmistumisen jälkeen: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Paikkamerkki alkamisajan syöttöä varten",
@@ -1896,21 +1900,21 @@
     "description": "Langattoman verkon asetuskortin otsikko",
     "value": "Langattoman verkon asetukset"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Langattoman verkon todennusmenetelmän tunniste",
-    "value": "Auth"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Langattoman verkon salausmenetelmän nimi",
-    "value": "Salaus"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Langattoman verkon nimen etiketti",
-    "value": "Nimi"
+    "description": "Label for wireless network name",
+    "value": "Verkon nimi: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Langattoman verkon SSID-tunniste",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Salaus: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Tunnistus: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Langattomien verkkojen kortin alaotsikko",

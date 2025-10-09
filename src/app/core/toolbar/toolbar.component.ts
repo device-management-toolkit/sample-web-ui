@@ -25,7 +25,6 @@ import { getDirection } from 'src/utils'
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     MatToolbar,

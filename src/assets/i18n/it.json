@@ -184,8 +184,12 @@
     "value": "Verbali"
   },
   "alarmService.startTime": {
-    "description": "Etichetta per l'ora di inizio dell'allarme",
-    "value": "Ora di inizio"
+    "description": "Label for the alarm start time",
+    "value": "Ora di inizio: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Elimina al termine: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Segnaposto per l'inserimento dell'ora di inizio",
@@ -1896,21 +1900,21 @@
     "description": "Titolo della scheda delle impostazioni di rete wireless",
     "value": "Impostazioni di rete wireless"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Etichetta per il metodo di autenticazione della rete wireless",
-    "value": "Autenticità"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Etichetta per il metodo di crittografia della rete wireless",
-    "value": "Crittografia"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Etichetta per il nome della rete wireless",
-    "value": "Nome"
+    "description": "Label for wireless network name",
+    "value": "Nome rete: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Etichetta per SSID di rete wireless",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Crittografia: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Autenticazione: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Sottotitolo della scheda delle reti wireless",

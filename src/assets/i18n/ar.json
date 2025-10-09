@@ -184,8 +184,12 @@
     "value": "محاضر"
   },
   "alarmService.startTime": {
-    "description": "تسمية لوقت بدء الإنذار",
-    "value": "وقت البدء"
+    "description": "Label for the alarm start time",
+    "value": "وقت البدء: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "احذف عند الاكتمال: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "عنصر نائب لإدخال وقت البدء",
@@ -1896,21 +1900,21 @@
     "description": "عنوان بطاقة إعدادات الشبكة اللاسلكية",
     "value": "إعدادات الشبكة اللاسلكية"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "تسمية طريقة مصادقة الشبكة اللاسلكية",
-    "value": "المصادقة"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "تسمية طريقة تشفير الشبكة اللاسلكية",
-    "value": "التشفير"
-  },
   "network.wirelessNetworks.name": {
-    "description": "تسمية اسم الشبكة اللاسلكية",
-    "value": "الاسم"
+    "description": "Label for wireless network name",
+    "value": "اسم الشبكة: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "تسمية SSID للشبكة اللاسلكية",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "معرّف الشبكة SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "طريقة التشفير: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "طريقة المصادقة: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "عنوان فرعي لبطاقة الشبكات اللاسلكية",

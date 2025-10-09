@@ -184,8 +184,12 @@
     "value": "議事録"
   },
   "alarmService.startTime": {
-    "description": "アラーム開始時刻のラベル",
-    "value": "開始時刻"
+    "description": "Label for the alarm start time",
+    "value": "開始時刻：{{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "完了時に削除：{{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "開始時刻入力用プレースホルダー",
@@ -1896,21 +1900,21 @@
     "description": "無線ネットワーク設定カードの見出し",
     "value": "ワイヤレスネットワーク設定"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "無線ネットワーク認証方法のラベル",
-    "value": "認証"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "無線ネットワーク暗号化方式のラベル",
-    "value": "暗号化"
-  },
   "network.wirelessNetworks.name": {
-    "description": "無線ネットワーク名のラベル",
-    "value": "名称"
+    "description": "Label for wireless network name",
+    "value": "ネットワーク名：{{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "無線ネットワークSSIDのラベル",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID：{{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "暗号化方式：{{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "認証方式：{{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "ワイヤレスネットワークカードの説明文",

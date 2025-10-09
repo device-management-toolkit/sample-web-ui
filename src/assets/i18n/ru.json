@@ -184,8 +184,12 @@
     "value": "Протоколы"
   },
   "alarmService.startTime": {
-    "description": "Метка для времени начала будильника",
-    "value": "Время начала"
+    "description": "Label for the alarm start time",
+    "value": "Время начала: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Удалить после завершения: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Заполнитель для ввода времени начала",
@@ -1896,21 +1900,21 @@
     "description": "Название карты настроек беспроводной сети",
     "value": "Настройки беспроводной сети"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Метка для метода аутентификации беспроводной сети",
-    "value": "Auth"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Метка для метода шифрования беспроводной сети",
-    "value": "Шифрование"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Метка для имени беспроводной сети",
-    "value": "Название"
+    "description": "Label for wireless network name",
+    "value": "Имя сети: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Метка для SSID беспроводной сети",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Шифрование: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Аутентификация: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Подзаголовок карты беспроводных сетей",

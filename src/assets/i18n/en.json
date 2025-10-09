@@ -155,6 +155,10 @@
     "description": "Label for delete on completion slide toggle",
     "value": "Delete on completion"
   },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Delete on completion: {{deleteFinal}}"
+  },
   "alarmService.elementNameWithInstance": {
     "description": "Alarm element name followed by its InstanceID",
     "value": "{{elementName}} (InstanceID: {{instanceId}})"
@@ -185,7 +189,7 @@
   },
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
-    "value": "Start Time"
+    "value": "Start Time: {{startTime}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Placeholder for start time input",
@@ -1912,21 +1916,21 @@
     "description": "Title of the wireless network settings card",
     "value": "Wireless Network Settings"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for wireless network authentication method",
-    "value": "Auth"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for wireless network encryption method",
-    "value": "Encryption"
-  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
-    "value": "Name"
+    "value": "Network Name: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Label for wireless network SSID",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Encryption: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authentication: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Subtitle of the wireless networks card",

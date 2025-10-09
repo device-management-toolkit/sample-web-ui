@@ -184,8 +184,12 @@
     "value": "Actas"
   },
   "alarmService.startTime": {
-    "description": "Etiqueta para la hora de inicio de la alarma.",
-    "value": "Hora de inicio"
+    "description": "Label for the alarm start time",
+    "value": "Hora de inicio: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Eliminar al finalizar: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Marcador de posición para la entrada de la hora de inicio",
@@ -1896,21 +1900,21 @@
     "description": "Título de la tarjeta de configuración de la red inalámbrica",
     "value": "Configuración de la red inalámbrica"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Etiqueta para el método de autenticación de la red inalámbrica.",
-    "value": "Autenticación"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Etiqueta para el método de cifrado de redes inalámbricas.",
-    "value": "Cifrado"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Etiqueta para el nombre de la red inalámbrica.",
-    "value": "Nombre"
+    "description": "Label for wireless network name",
+    "value": "Nombre de red: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Etiqueta para el SSID de la red inalámbrica.",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Cifrado: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Autenticación: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Subtítulo de la tarjeta de redes inalámbricas",

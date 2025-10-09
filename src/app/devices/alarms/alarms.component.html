@@ -20,14 +20,18 @@
               </span>
 
               <span matListItemLine data-cy="alarmStartTime">
-                {{ 'alarmService.startTime.value' | translate }}: {{ entry.StartTime.Datetime | date: 'short' }}
+                {{
+                  'alarmService.startTime.value' | translate: { startTime: (entry.StartTime.Datetime | date: 'short') }
+                }}
               </span>
               <span matListItemLine data-cy="alarmInterval">
                 {{ 'alarmService.interval.value' | translate }}:
                 {{ entry.IntervalInMinutes ?? ('alarmService.intervalNone.value' | translate) }}
               </span>
               <span matListItemLine data-cy="alarmDeleteOnCompletion">
-                {{ 'alarmService.deleteOnCompletion.value' | translate }}: {{ entry.DeleteOnCompletion }}
+                {{
+                  'alarmService.deleteOnCompletionRange.value' | translate: { deleteFinal: entry.DeleteOnCompletion }
+                }}
               </span>
             </div>
             <div class="flex flex-25 justify-end">

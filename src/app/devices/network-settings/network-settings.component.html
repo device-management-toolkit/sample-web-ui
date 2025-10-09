@@ -402,13 +402,18 @@
           @for (network of networkResults?.wireless?.wifiNetworks; track $index) {
             <mat-list-item>
               <mat-icon matListItemIcon>wifi</mat-icon>
-              <span matListItemTitle
-                >{{ 'network.wirelessNetworks.name.value' | translate }}: {{ network.elementName }}</span
-              >
-              <span matListItemLine>{{ 'network.wirelessNetworks.ssid.value' | translate }}: {{ network.ssid }}</span>
+              <span matListItemTitle>{{
+                'network.wirelessNetworks.name.value' | translate: { name: network.elementName }
+              }}</span>
+              <span matListItemLine>{{
+                'network.wirelessNetworks.ssid.value' | translate: { ssid: network.ssid }
+              }}</span>
               <span matListItemLine>
-                {{ 'network.wirelessNetworks.encryption.value' | translate }}: {{ network.encryptionMethod }} |
-                {{ 'network.wirelessNetworks.auth.value' | translate }}: {{ network.authenticationMethod }}
+                {{
+                  'network.wirelessNetworks.encryption.value' | translate: { encryptMethod: network.encryptionMethod }
+                }}
+                |
+                {{ 'network.wirelessNetworks.auth.value' | translate: { authMethod: network.authenticationMethod } }}
               </span>
             </mat-list-item>
           }

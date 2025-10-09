@@ -184,8 +184,12 @@
     "value": "Notulen"
   },
   "alarmService.startTime": {
-    "description": "Label voor de starttijd van het alarm",
-    "value": "Starttijd"
+    "description": "Label for the alarm start time",
+    "value": "Starttijd: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Verwijderen na voltooiing: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Plaatshouder voor invoer van starttijd",
@@ -1896,21 +1900,21 @@
     "description": "Titel van de kaart met instellingen voor het draadloze netwerk",
     "value": "Instellingen voor draadloze netwerken"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Label voor authenticatiemethode voor draadloze netwerken",
-    "value": "Auth"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label voor versleutelingsmethode voor draadloze netwerken",
-    "value": "Versleuteling"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Label voor naam van draadloos netwerk",
-    "value": "Naam"
+    "description": "Label for wireless network name",
+    "value": "Netwerknaam: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Label voor SSID van draadloos netwerk",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Versleuteling: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authenticatie: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Ondertitel van de kaart voor draadloze netwerken",

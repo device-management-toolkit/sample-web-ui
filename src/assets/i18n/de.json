@@ -184,8 +184,12 @@
     "value": "Protokolle"
   },
   "alarmService.startTime": {
-    "description": "Bezeichnung für die Alarmstartzeit",
-    "value": "Startzeit"
+    "description": "Label for the alarm start time",
+    "value": "Startzeit: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Nach Abschluss löschen: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Platzhalter für die Eingabe der Startzeit",
@@ -1896,21 +1900,21 @@
     "description": "Titel der Karte für die WLAN-Netzwerkeinstellungen",
     "value": "Einstellungen für drahtlose Netzwerke"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Bezeichnung für die Authentifizierungsmethode für drahtlose Netzwerke",
-    "value": "Authentifizierung"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Bezeichnung für die Verschlüsselungsmethode des drahtlosen Netzwerks",
-    "value": "Verschlüsselung"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Bezeichnung für den Namen des drahtlosen Netzwerks",
-    "value": "Name"
+    "description": "Label for wireless network name",
+    "value": "Netzwerkname: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Bezeichnung für die SSID des drahtlosen Netzwerks",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Verschlüsselung: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authentifizierung: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Untertitel der Karte „Drahtlose Netzwerke”",

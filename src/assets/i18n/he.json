@@ -184,8 +184,12 @@
     "value": "פּרוֹטוֹקוֹל"
   },
   "alarmService.startTime": {
-    "description": "תווית לזמן התחלת האזעקה",
-    "value": "זמן התחלה"
+    "description": "Label for the alarm start time",
+    "value": "שעת התחלה: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "מחק עם סיום: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "מציין מיקום לקבלת קלט זמן התחלה",
@@ -1896,21 +1900,21 @@
     "description": "כותרת כרטיס הגדרות הרשת האלחוטית",
     "value": "הגדרות רשת אלחוטית"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "תווית לשיטת אימות רשת אלחוטית",
-    "value": "Auth"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "תווית לשיטת הצפנת רשת אלחוטית",
-    "value": "הצפנה"
-  },
   "network.wirelessNetworks.name": {
-    "description": "תווית לשם רשת אלחוטית",
-    "value": "שֵׁם"
+    "description": "Label for wireless network name",
+    "value": "שם הרשת: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "תווית לרשת אלחוטית SSID",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "שיטת הצפנה: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "שיטת אימות: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "כתובית של כרטיס הרשתות האלחוטיות",

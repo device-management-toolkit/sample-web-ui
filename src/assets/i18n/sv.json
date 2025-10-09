@@ -184,8 +184,12 @@
     "value": "Protokoll"
   },
   "alarmService.startTime": {
-    "description": "Etikett för larmets starttid",
-    "value": "Starttid"
+    "description": "Label for the alarm start time",
+    "value": "Starttid: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Ta bort vid slutförande: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Platshållare för inmatning av starttid",
@@ -1896,21 +1900,21 @@
     "description": "Titel på kortet för inställningar för trådlöst nätverk",
     "value": "Inställningar för trådlöst nätverk"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Etikett för autentiseringsmetod för trådlöst nätverk",
-    "value": "Autentisering"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Etikett för krypteringsmetod för trådlöst nätverk",
-    "value": "Kryptering"
-  },
   "network.wirelessNetworks.name": {
-    "description": "Etikett för trådlöst nätverksnamn",
-    "value": "Namn"
+    "description": "Label for wireless network name",
+    "value": "Nätverksnamn: {{name}}"
   },
   "network.wirelessNetworks.ssid": {
-    "description": "Etikett för trådlöst nätverk SSID",
-    "value": "SSID"
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Kryptering: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Autentisering: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Underrubrik för kortet för trådlösa nätverk",
