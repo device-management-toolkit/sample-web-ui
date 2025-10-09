@@ -60,7 +60,7 @@
     "@angular/localize": "~20.3.1",
     "@types/jasmine": "~5.1.9",
     "angular-eslint": "20.3.0",
-    "cypress": "^15.3.0",
+    "cypress": "^15.4.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
@@ -79,6 +79,6 @@
     "typescript-eslint": "^8.45.0"
   },
   "optionalDependencies": {
-    "cypress": "^15.3.0"
+    "cypress": "^15.4.0"
   }
 }
