@@ -22,7 +22,13 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { environment } from 'src/environments/environment'
-import { AMTFeaturesRequest, AMTFeaturesResponse, RedirectionStatus, UserConsentResponse } from 'src/models/models'
+import {
+  AMTFeaturesRequest,
+  AMTFeaturesResponse,
+  RedirectionStatus,
+  UserConsentResponse,
+  DisplaySelectionResponse
+} from 'src/models/models'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 import { KVMComponent, IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
@@ -86,6 +92,8 @@ export class KvmComponent implements OnInit, OnDestroy {
   private isEncodingChange = false
   public redirectionStatus: RedirectionStatus | null = null
   public hotKeySignal = signal<any>(null)
+  public displays: { value: number; viewValue: string; disabled: boolean }[] = []
+  public selectedDisplay = signal(0)
 
   private powerState: any = 0
   private timeInterval!: any
@@ -142,6 +150,37 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   init(): void {
     this.isLoading.set(true)
+    this.devicesService.getDisplaySelection(this.deviceId()).subscribe({
+      next: (result: DisplaySelectionResponse) => {
+        const displays = result?.displays ?? []
+        this.displays = displays.map((d) => {
+          const label = `Display ${d.displayIndex + 1}${d.resolutionX && d.resolutionY ? ` (${d.resolutionX} x ${d.resolutionY})` : ''}`
+          return { value: d.displayIndex, viewValue: label, disabled: d.isActive === false }
+        })
+        // Set to default display if present, else first active display, else keep current
+        const defaultDisplay = displays.find((d) => d.isDefault)
+        if (defaultDisplay) {
+          this.selectedDisplay.set(defaultDisplay.displayIndex)
+        } else {
+          const current = this.displays.find((x) => x.value === this.selectedDisplay())
+          if (!current || current.disabled) {
+            const firstActive = this.displays.find((x) => !x.disabled)
+            if (firstActive) this.selectedDisplay.set(firstActive.value)
+          }
+        }
+      },
+      error: (err) => {
+        console.warn('Failed to load display selection:', err)
+        // Fallback to default displays if API fails
+        this.displays = [
+          { value: 0, viewValue: 'Display 1', disabled: false },
+          { value: 1, viewValue: 'Display 2', disabled: true },
+          { value: 2, viewValue: 'Display 3', disabled: true },
+          { value: 3, viewValue: 'Display 4', disabled: true }
+        ]
+        this.selectedDisplay.set(0)
+      }
+    })
     // device needs to be powered on in order to start KVM session
     this.getPowerState(this.deviceId())
       .pipe(
@@ -233,6 +272,12 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (fileInput) {
       fileInput.value = ''
     }
+  }
+
+  onDisplayChange = (e: number): void => {
+    this.selectedDisplay.set(e)
+    // optionally notify backend of selection
+    this.devicesService.setDisplaySelection(this.deviceId(), { displayIndex: e }).subscribe()
   }
 
   sendHotkey(): void {

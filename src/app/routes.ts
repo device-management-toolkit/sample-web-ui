@@ -13,6 +13,8 @@ import { DomainsComponent } from './domains/domains.component'
 // import { EventChannelComponent } from './event-channel/event-channel.component'
 import { ProfileDetailComponent } from './profiles/profile-detail/profile-detail.component'
 import { ProfilesComponent } from './profiles/profiles.component'
+import { ProxyConfigDetailComponent } from './proxy-configs/proxy-config-detail/proxy-config-detail.component'
+import { ProxyConfigsComponent } from './proxy-configs/proxy-configs.component'
 import { WirelessDetailComponent } from './wireless/wireless-detail/wireless-detail.component'
 import { WirelessComponent } from './wireless/wireless.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
@@ -78,5 +80,13 @@ export const routes: Routes = [
       { path: '', component: IEEE8021xDetailComponent }],
     canActivate: [AuthGuard]
   },
-  { path: 'ieee8021x/:name', component: IEEE8021xDetailComponent, canActivate: [AuthGuard] }
+  { path: 'ieee8021x/:name', component: IEEE8021xDetailComponent, canActivate: [AuthGuard] },
+  { path: 'proxy-configs', component: ProxyConfigsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'proxy-configs/new',
+    children: [
+      { path: '', component: ProxyConfigDetailComponent }],
+    canActivate: [AuthGuard]
+  },
+  { path: 'proxy-configs/:name', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] }
 ]

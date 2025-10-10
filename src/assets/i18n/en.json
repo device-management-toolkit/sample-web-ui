@@ -342,5 +342,121 @@
   "wirelessDetail.ssidHint": {
     "value": "This field is required",
     "description": "Hint for the SSID field"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Proxy Configs",
+    "description": "Proxy Configs title"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Name",
+    "description": "Proxy config name column header"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Proxy Address",
+    "description": "Proxy Address column header"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Address Format",
+    "description": "Address Format column header"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Port",
+    "description": "Port column header"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Network DNS Suffix",
+    "description": "Network DNS Suffix column header"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "New Proxy Config",
+    "description": "New Proxy Config page title"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Edit Proxy Config",
+    "description": "Edit Proxy Config page title"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Proxy Address",
+    "description": "Proxy Address field label"
+  },
+  "proxyConfigs.name": {
+    "value": "Name",
+    "description": "Proxy config name field label"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Enter proxy config name",
+    "description": "Proxy config name placeholder"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Enter proxy server address",
+    "description": "Placeholder for proxy address field"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Address Format",
+    "description": "Address Format field label"
+  },
+  "proxyConfigs.port": {
+    "value": "Port",
+    "description": "Port field label"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Network DNS Suffix",
+    "description": "DNS Suffix field label"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "Placeholder for DNS suffix field"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Port is required",
+    "description": "Port required validation message"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Port must be between 0 and 65535",
+    "description": "Port range validation message"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Name is required",
+    "description": "Name required validation message"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Network DNS suffix is required",
+    "description": "DNS suffix required validation message"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Network DNS suffix must be 192 characters or less",
+    "description": "DNS suffix max length validation message"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Proxy config created successfully",
+    "description": "Success message for creating proxy config"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Proxy config updated successfully",
+    "description": "Success message for updating proxy config"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Proxy config {{name}} deleted successfully",
+    "description": "Success message for deleting proxy config"
+  },
+  "common.delete": {
+    "value": "Delete",
+    "description": "Delete button text"
+  },
+  "common.cancel": {
+    "value": "CANCEL",
+    "description": "Cancel button text"
+  },
+  "common.save": {
+    "value": "SAVE",
+    "description": "Save button text"
+  },
+  "common.update": {
+    "value": "UPDATE",
+    "description": "Update button text"
+  },
+  "common.noData": {
+    "value": "No data available",
+    "description": "No data available message"
   }
 }

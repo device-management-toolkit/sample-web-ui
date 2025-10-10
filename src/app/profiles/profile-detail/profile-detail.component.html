@@ -247,7 +247,56 @@
             </mat-list-item>
           }
         </mat-list>
+        @if (cloudMode === true) {
+          <mat-label class="flex flex-1" style="margin-top: 15px">Proxies</mat-label>
 
+          @if (showProxyConfigurations()) {
+            <mat-form-field class="flex flex-1" style="margin-top: 20px">
+              <mat-label>Proxy Configs</mat-label>
+              <input
+                matInput
+                type="text"
+                data-cy="proxyAutocomplete"
+                placeholder="Search for Proxy Configs to Add"
+                [formControl]="proxyAutocomplete"
+                [matAutocomplete]="proxyAuto" />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #proxyAuto="matAutocomplete"
+                (optionSelected)="selectProxyProfile($event)">
+                @for (proxy of filteredProxyList | async; track proxy) {
+                  <mat-option [value]="proxy" [ngClass]="isProxySelectable(proxy)">
+                    {{ proxy }}
+                  </mat-option>
+                }
+              </mat-autocomplete>
+              <mat-hint>Proxies can be assigned to this profile</mat-hint>
+            </mat-form-field>
+          }
+
+          @if (selectedProxyConfigs().length > 0) {
+            <div>
+              <mat-label class="mat-body-1">Associated Proxy Profiles (In Priority Order)</mat-label>
+              <br />
+              <mat-hint>Drag and Drop to reorder</mat-hint>
+            </div>
+          }
+          <mat-list cdkDropList (cdkDropListDropped)="dropProxy($event)" class="drag-boundary">
+            @for (item of selectedProxyConfigs(); track item) {
+              <mat-list-item class="flex flex-1 drag-box" cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".drag-boundary">
+                <mat-icon matListItemIcon>drag_handle</mat-icon>
+                <div class="flex-row" matListItemTitle>
+                  <div class="flex flex-1 items-center">{{ item.priority }}. {{ item.name }}</div>
+                  <div class="flex flex-1 justify-end items-center">
+                    <button type="button" mat-icon-button (click)="removeProxyProfile(item)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </mat-list-item>
+            }
+          </mat-list>
+        }
         <mat-divider style="margin: 16px 0"></mat-divider>
 
         <mat-label>Provisioned Connection Configuration</mat-label>

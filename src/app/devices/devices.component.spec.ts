@@ -26,7 +26,6 @@ describe('DevicesComponent', () => {
   let getDevicesSpy: jasmine.Spy
   let updateDeviceSpy: jasmine.Spy
   let getTagsSpy: jasmine.Spy
-  let getPowerStateSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let sendDeactivateSpy: jasmine.Spy
   let translate: TranslateService
@@ -82,7 +81,7 @@ describe('DevicesComponent', () => {
       return of(device)
     })
     getTagsSpy = devicesService.getTags.and.returnValue(of([]))
-    getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
+    devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
@@ -119,7 +118,6 @@ describe('DevicesComponent', () => {
     expect(component).toBeTruthy()
     expect(getDevicesSpy.calls.any()).toBe(true, 'getDevices called')
     expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')
-    expect(getPowerStateSpy.calls.any()).toBe(true, 'getPowerState called')
   })
 
   it('should translate connection status - true', () => {

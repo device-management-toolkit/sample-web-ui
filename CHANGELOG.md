@@ -1,3 +1,17 @@
+# [3.45.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.44.0...v3.45.0) (2025-10-09)
+
+
+### Features
+
+* **profiles:** add proxy support to profile configuration ([#2901](https://github.com/device-management-toolkit/sample-web-ui/issues/2901)) ([caf59d0](https://github.com/device-management-toolkit/sample-web-ui/commit/caf59d05a61dca19c2ca3df340ea74b35faeca17))
+
+# [3.44.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.43.0...v3.44.0) (2025-09-30)
+
+
+### Features
+
+* enable selecting display ([#2891](https://github.com/device-management-toolkit/sample-web-ui/issues/2891)) ([3f83412](https://github.com/device-management-toolkit/sample-web-ui/commit/3f83412537176bb16cbe6112adda8775874dff5e))
+
 # [3.43.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.7...v3.43.0) (2025-09-24)
 
 
