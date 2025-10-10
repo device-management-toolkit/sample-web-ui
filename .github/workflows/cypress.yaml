@@ -12,10 +12,14 @@ on:
 permissions:
   contents: read
   actions: read
-  checks: write
 
 jobs:
   build:
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
     runs-on: ubuntu-latest
 
     strategy:
