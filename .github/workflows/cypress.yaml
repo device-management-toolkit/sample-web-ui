@@ -12,10 +12,14 @@ on:
 permissions:
   contents: read
   actions: read
-  checks: write
 
 jobs:
   build:
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,7 +42,7 @@ jobs:
       - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
       - run: npm run cy-runner
       - name: Publish Cypress Test Results
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@dc3a92680fcc15842eef52e8c4606ea7ce6bd3f3 # v2.1.1
         if: always()
         with:
           name: Cypress Tests
