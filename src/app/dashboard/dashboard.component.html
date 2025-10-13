@@ -46,7 +46,7 @@
   } @else {
     <div class="flex-33 flex-column justify-center">
       <mat-card>
-        <div class="flex flex-1 justify-center" matTooltip="Add a new device that can be managed by the console">
+        <div class="flex flex-1 justify-center" [matTooltip]="'dashboard.addDeviceTooltip.value' | translate">
           <button mat-icon-button routerLink="/devices">
             <mat-icon>add</mat-icon>
           </button>
@@ -56,7 +56,7 @@
     </div>
     <div class="flex-33 flex-column justify-center">
       <mat-card>
-        <div class="flex flex-1 justify-center" matTooltip="Use device actions to control a list of devices">
+        <div class="flex flex-1 justify-center" [matTooltip]="'dashboard.useDeviceActions.value' | translate">
           <button mat-icon-button routerLink="/devices">
             <mat-icon>phonelink</mat-icon>
           </button>

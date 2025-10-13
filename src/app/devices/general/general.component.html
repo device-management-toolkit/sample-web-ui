@@ -4,25 +4,25 @@
 <div class="flex-1 flex-row">
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title> AMT Summary </mat-card-title>
-      <mat-card-subtitle>Summary of AMT information</mat-card-subtitle>
+      <mat-card-title>{{ 'general.amtSummary.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'general.amtSummaryDescription.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="flex-row flex-wrap">
         <div class="flex flex-50">
-          <p>AMT DHCP DNS Suffix:</p>
+          <p>{{ 'general.amtDHCPDNSSuffix.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           {{ amtDHCPDNSSuffix }}
         </div>
         <div class="flex flex-50">
-          <p>AMT Trusted DNS Suffix (MEBx):</p>
+          <p>{{ 'general.amtTrustedDNSSuffix.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           {{ amtTrustedDNSSuffix }}
         </div>
         <div class="flex flex-50">
-          <p>AMT Version:</p>
+          <p>{{ 'general.amtVersion.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
@@ -36,7 +36,7 @@
           }
         </div>
         <div class="flex flex-50">
-          <p>AMT Build:</p>
+          <p>{{ 'general.amtBuild.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
@@ -46,7 +46,7 @@
           }
         </div>
         <div class="flex flex-50">
-          <p>AMT SKU:</p>
+          <p>{{ 'general.amtSKU.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
@@ -60,24 +60,24 @@
   </mat-card>
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title> AMT Enabled Features </mat-card-title>
-      <mat-card-subtitle>Status of AMT Enabled Features</mat-card-subtitle>
+      <mat-card-title>{{ 'general.amtEnabledFeatures.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'general.amtEnabledFeaturesDescription.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="amt-features" [formGroup]="amtEnabledFeatures">
       <p></p>
       <div class="flex-row flex-wrap">
         <div class="flex flex-50">
-          <p>Provisioning Mode:</p>
+          <p>{{ 'general.provisioningMode.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end" data-cy="provisioningMode">
-          {{ amtProvisioningMode }}
+          {{ amtProvisioningMode | translate }}
         </div>
         <div class="flex flex-50 items-end">
-          <p>One Click Recovery(OCR):</p>
+          <p>{{ 'general.oneClickRecovery.value' | translate }}</p>
         </div>
         <div
           class="flex flex-50 justify-end items-start"
-          matTooltip="One Click Recovery is not supported"
+          [matTooltip]="'general.oneClickRecoveryNotSupported.value' | translate"
           [matTooltipDisabled]="!amtEnabledFeatures.get('ocr')?.disabled"
           matTooltipPosition="after">
           <mat-checkbox formControlName="ocr" (change)="setAmtFeatures()"></mat-checkbox>
@@ -86,73 +86,87 @@
         <!-- OCR https Boot -->
         @if (amtEnabledFeatures.get('httpsBootSupported')?.value) {
           <div class="flex flex-50">
-            <p>HTTPS Network boot:</p>
+            <p>{{ 'general.httpsNetworkBoot.value' | translate }}</p>
           </div>
           <div
             class="flex flex-50 justify-end"
             [matTooltip]="
               amtEnabledFeatures.get('httpsBootSupported')?.value
-                ? 'HTTPS Boot is supported'
-                : 'HTTPS Boot is not supported'
+                ? ('general.httpsBootSupported.value' | translate)
+                : ('general.httpsBootNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('httpsBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('httpsBootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <!-- OCR WinRE Boot -->
         @if (amtEnabledFeatures.get('winREBootSupported')?.value) {
           <div class="flex flex-50">
-            <p>Windows Recovery Boot:</p>
+            <p>{{ 'general.windowsRecoveryBoot.value' | translate }}</p>
           </div>
           <div
             class="flex flex-50 justify-end"
             [matTooltip]="
               amtEnabledFeatures.get('winREBootSupported')?.value
-                ? 'Windows Recovery is supported'
-                : 'Windows Recovery is not supported'
+                ? ('general.windowsRecoverySupported.value' | translate)
+                : ('general.windowsRecoveryNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('winREBootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('winREBootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <!-- OCR Pre-Boot Application -->
         @if (amtEnabledFeatures.get('localPBABootSupported')?.value) {
           <div class="flex flex-50">
-            <p>PBA boot:</p>
+            <p>{{ 'general.pbaBootShort.value' | translate }}</p>
           </div>
           <div
             class="flex flex-50 justify-end"
             [matTooltip]="
-              amtEnabledFeatures.get('localPBABootSupported')?.value ? 'PBA is supported' : 'PBA is not supported'
+              amtEnabledFeatures.get('localPBABootSupported')?.value
+                ? ('general.pbaSupported.value' | translate)
+                : ('general.pbaNotSupported.value' | translate)
             "
             matTooltipPosition="after">
-            {{ amtEnabledFeatures.get('localPBABootSupported')?.value ? 'Supported' : 'Not Supported' }}
+            {{
+              amtEnabledFeatures.get('localPBABootSupported')?.value
+                ? ('general.supported.value' | translate)
+                : ('general.notSupported.value' | translate)
+            }}
           </div>
         }
         <div class="flex flex-50 items-end">
-          <p>IDE Redirection:</p>
+          <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <mat-checkbox formControlName="enableIDER" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
         <div class="flex flex-50 items-end">
-          <p>Keyboard-Video-Mouse (KVM):</p>
+          <p>{{ 'general.keyboardVideoMouse.value' | translate }}</p>
         </div>
         <div
           class="flex flex-50 justify-end"
-          matTooltip="KVM not supported"
+          [matTooltip]="'general.kvmNotSupported.value' | translate"
           [matTooltipDisabled]="!amtEnabledFeatures.get('enableKVM')?.disabled"
           matTooltipPosition="after">
           <mat-checkbox formControlName="enableKVM" (change)="setAmtFeatures()"> </mat-checkbox>
         </div>
         <div class="flex flex-50 items-end">
-          <p>Serial-Over-Lan (SOL):</p>
+          <p>{{ 'general.serialOverLan.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <mat-checkbox formControlName="enableSOL" (change)="setAmtFeatures()"></mat-checkbox>
         </div>
         <div class="flex flex-50 items-center">
-          <p>User Consent:</p>
+          <p>{{ 'general.userConsent.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end items-center">
           <mat-form-field>
@@ -160,11 +174,11 @@
               (selectionChange)="setAmtFeatures()"
               formControlName="userConsent"
               style="width: 200px"
-              matTooltip="User Consent not configurable in CCM"
+              [matTooltip]="'general.userConsentNotConfigurable.value' | translate"
               [matTooltipDisabled]="!amtEnabledFeatures.get('userConsent')?.disabled"
               matTooltipPosition="after">
               @for (uc of userConsentValues; track uc) {
-                <mat-option [value]="uc">{{ uc }}</mat-option>
+                <mat-option [value]="uc">{{ 'userConsentGeneral.' + uc + '.value' | translate }}</mat-option>
               }
             </mat-select>
           </mat-form-field>

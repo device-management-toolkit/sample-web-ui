@@ -11,6 +11,7 @@ import { MatDivider } from '@angular/material/divider'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-about',
@@ -26,13 +27,13 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
     ReactiveFormsModule,
     FormsModule,
     MatButton,
-    MatDialogClose
+    MatDialogClose,
+    TranslateModule
   ]
 })
 export class AboutComponent implements OnDestroy, OnInit {
   doNotShowAgain = false
   cloudMode: boolean = environment.cloud
-
   ngOnInit(): void {
     const storedValue = localStorage.getItem('doNotShowAgain')
     this.doNotShowAgain = storedValue ? JSON.parse(storedValue) : false

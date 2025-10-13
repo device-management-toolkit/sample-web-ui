@@ -20,6 +20,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { UserConsentService } from '../user-consent.service'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-sol',
@@ -30,7 +31,8 @@ import { UserConsentService } from '../user-consent.service'
     MatToolbar,
     MatIcon,
     MatButton,
-    SOLComponent
+    SOLComponent,
+    TranslateModule
   ]
 })
 export class SolComponent implements OnInit, OnDestroy {
@@ -41,7 +43,7 @@ export class SolComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog)
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public readonly deviceState = signal(0)
@@ -173,7 +175,8 @@ export class SolComponent implements OnInit, OnDestroy {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading.set(false)
-        this.displayError($localize`Error retrieving power status`)
+        const msg: string = this.translate.instant('sol.errorRetrievingPower.value')
+        this.displayError(msg)
         return throwError(err)
       })
     )
@@ -186,7 +189,8 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     return this.enableSolDialog().pipe(
       catchError((err) => {
-        this.displayError($localize`Unable to display SOL dialog`)
+        const msg: string = this.translate.instant('sol.errorDiplay.value')
+        this.displayError(msg)
         throw err
       }),
       switchMap((data?: boolean) => {
@@ -227,9 +231,11 @@ export class SolComponent implements OnInit, OnDestroy {
   cancelEnableSolResponse(result?: boolean): void {
     this.isLoading.set(false)
     if (!result) {
-      this.displayError($localize`SOL cannot be accessed - request to enable SOL is cancelled`)
+      const msg: string = this.translate.instant('sol.errorAccessCancel.value')
+      this.displayError(msg)
     } else {
-      this.displayError($localize`SOL cannot be accessed - failed to enable SOL`)
+      const msg: string = this.translate.instant('sol.errorAccessEnable.value')
+      this.displayError(msg)
     }
     this.readyToLoadSol = false
   }
