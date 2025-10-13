@@ -34,7 +34,14 @@ export interface WiFiConfig {
   profileName: string
   priority: number
 }
+
+export interface proxyConfig {
+  priority: number
+  name: string
+}
+
 export interface Profile {
+  proxyConfigs?: proxyConfig[]
   profileName: string
   activation: string
   iderEnabled: boolean

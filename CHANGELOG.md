@@ -1,3 +1,17 @@
+# [3.46.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.45.0...v3.46.0) (2025-10-10)
+
+
+### Features
+
+* adds UEFI wifi sync  to profile ([#2880](https://github.com/device-management-toolkit/sample-web-ui/issues/2880)) ([6c78c73](https://github.com/device-management-toolkit/sample-web-ui/commit/6c78c73a5e90945f67f7b9e657c974ff45460b98))
+
+# [3.45.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.44.0...v3.45.0) (2025-10-09)
+
+
+### Features
+
+* **profiles:** add proxy support to profile configuration ([#2901](https://github.com/device-management-toolkit/sample-web-ui/issues/2901)) ([caf59d0](https://github.com/device-management-toolkit/sample-web-ui/commit/caf59d05a61dca19c2ca3df340ea74b35faeca17))
+
 # [3.44.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.43.0...v3.44.0) (2025-09-30)
 
 

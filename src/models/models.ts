@@ -496,6 +496,16 @@ export interface BootDetails {
   enforceSecureBoot: boolean
 }
 
+export interface ProxyConfig {
+  name: string
+  address: string
+  infoFormat: number
+  port: number
+  networkDnsSuffix: string
+  creationDate?: Date
+  tenantId?: string
+}
+
 export interface BootSource {
   biosBootString: string
   bootString: string
