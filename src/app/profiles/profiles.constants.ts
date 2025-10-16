@@ -6,8 +6,8 @@
 import { FormOption } from 'src/models/models'
 
 export const ActivationModes: FormOption<string>[] = [
-  { value: 'acmactivate', label: 'profileDetail.activationModeAdmin.value' },
-  { value: 'ccmactivate', label: 'profileDetail.activationModeClient.value' }
+  { value: 'acmactivate', label: 'Admin Control Mode' },
+  { value: 'ccmactivate', label: 'Client Control Mode' }
 ]
 
 export const UserConsentModes: FormOption<string>[] = [
