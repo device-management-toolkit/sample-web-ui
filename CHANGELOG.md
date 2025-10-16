@@ -1,258 +1,236 @@
-# [3.44.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.43.0...v3.44.0) (2025-09-30)
+## [3.46.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.0...v3.46.1) (2025-10-13)
 
+# [3.46.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.45.0...v3.46.0) (2025-10-10)
 
 ### Features
 
-* enable selecting display ([#2891](https://github.com/device-management-toolkit/sample-web-ui/issues/2891)) ([3f83412](https://github.com/device-management-toolkit/sample-web-ui/commit/3f83412537176bb16cbe6112adda8775874dff5e))
+- adds UEFI wifi sync to profile ([#2880](https://github.com/device-management-toolkit/sample-web-ui/issues/2880)) ([6c78c73](https://github.com/device-management-toolkit/sample-web-ui/commit/6c78c73a5e90945f67f7b9e657c974ff45460b98))
+
+# [3.45.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.44.0...v3.45.0) (2025-10-09)
+
+### Features
+
+- **profiles:** add proxy support to profile configuration ([#2901](https://github.com/device-management-toolkit/sample-web-ui/issues/2901)) ([caf59d0](https://github.com/device-management-toolkit/sample-web-ui/commit/caf59d05a61dca19c2ca3df340ea74b35faeca17))
+
+# [3.44.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.43.0...v3.44.0) (2025-09-30)
+
+### Features
+
+- enable selecting display ([#2891](https://github.com/device-management-toolkit/sample-web-ui/issues/2891)) ([3f83412](https://github.com/device-management-toolkit/sample-web-ui/commit/3f83412537176bb16cbe6112adda8775874dff5e))
 
 # [3.43.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.7...v3.43.0) (2025-09-24)
 
-
 ### Features
 
-* adds OCR local PBA and WinRE ([0a889fc](https://github.com/device-management-toolkit/sample-web-ui/commit/0a889fc0697dc0ba40172891246e4f86da62cec8))
+- adds OCR local PBA and WinRE ([0a889fc](https://github.com/device-management-toolkit/sample-web-ui/commit/0a889fc0697dc0ba40172891246e4f86da62cec8))
 
 ## [3.42.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.6...v3.42.7) (2025-08-23)
 
-
 ### Bug Fixes
 
-* addresses connection issue with KVM when switching encoding ([995e867](https://github.com/device-management-toolkit/sample-web-ui/commit/995e86710a50b3a40c0066fc992fc7ef8c2575f3))
+- addresses connection issue with KVM when switching encoding ([995e867](https://github.com/device-management-toolkit/sample-web-ui/commit/995e86710a50b3a40c0066fc992fc7ef8c2575f3))
 
 ## [3.42.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.5...v3.42.6) (2025-08-21)
 
-
 ### Bug Fixes
 
-* squashes bugs with KVM, IDER with SOL connections ([134cff6](https://github.com/device-management-toolkit/sample-web-ui/commit/134cff6237b260b5433c4172adeacf00f68ea795))
+- squashes bugs with KVM, IDER with SOL connections ([134cff6](https://github.com/device-management-toolkit/sample-web-ui/commit/134cff6237b260b5433c4172adeacf00f68ea795))
 
 ## [3.42.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.4...v3.42.5) (2025-08-20)
 
-
 ### Bug Fixes
 
-* ui not showing cert uploaded ([#2805](https://github.com/device-management-toolkit/sample-web-ui/issues/2805)) ([242a95f](https://github.com/device-management-toolkit/sample-web-ui/commit/242a95fc8f368e7315e57b6651e94711eb0b4073))
+- ui not showing cert uploaded ([#2805](https://github.com/device-management-toolkit/sample-web-ui/issues/2805)) ([242a95f](https://github.com/device-management-toolkit/sample-web-ui/commit/242a95fc8f368e7315e57b6651e94711eb0b4073))
 
 ## [3.42.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.3...v3.42.4) (2025-08-06)
 
-
 ### Bug Fixes
 
-* device power status ([#2791](https://github.com/device-management-toolkit/sample-web-ui/issues/2791)) ([3a1f0d2](https://github.com/device-management-toolkit/sample-web-ui/commit/3a1f0d21ce5e22b6ecb515b632f9847f629ff40e))
+- device power status ([#2791](https://github.com/device-management-toolkit/sample-web-ui/issues/2791)) ([3a1f0d2](https://github.com/device-management-toolkit/sample-web-ui/commit/3a1f0d21ce5e22b6ecb515b632f9847f629ff40e))
 
 ## [3.42.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.2...v3.42.3) (2025-08-06)
 
-
 ### Bug Fixes
 
-* domain cert upload status ([#2790](https://github.com/device-management-toolkit/sample-web-ui/issues/2790)) ([434ad61](https://github.com/device-management-toolkit/sample-web-ui/commit/434ad614452f3c2f6d50c6e532fc51a324bcec01))
+- domain cert upload status ([#2790](https://github.com/device-management-toolkit/sample-web-ui/issues/2790)) ([434ad61](https://github.com/device-management-toolkit/sample-web-ui/commit/434ad614452f3c2f6d50c6e532fc51a324bcec01))
 
 ## [3.42.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.1...v3.42.2) (2025-08-06)
 
-
 ### Bug Fixes
 
-* status update on cert upload in devices ([#2789](https://github.com/device-management-toolkit/sample-web-ui/issues/2789)) ([534a4d9](https://github.com/device-management-toolkit/sample-web-ui/commit/534a4d9d2ceef12825e7ad5aac327ef84dc37d56))
+- status update on cert upload in devices ([#2789](https://github.com/device-management-toolkit/sample-web-ui/issues/2789)) ([534a4d9](https://github.com/device-management-toolkit/sample-web-ui/commit/534a4d9d2ceef12825e7ad5aac327ef84dc37d56))
 
 ## [3.42.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.0...v3.42.1) (2025-08-01)
 
-
 ### Bug Fixes
 
-* disable read-only features of ocr ([#2782](https://github.com/device-management-toolkit/sample-web-ui/issues/2782)) ([4fc9bbf](https://github.com/device-management-toolkit/sample-web-ui/commit/4fc9bbf29e570eb7ec4ce074d5dab9b36bd0c41f))
+- disable read-only features of ocr ([#2782](https://github.com/device-management-toolkit/sample-web-ui/issues/2782)) ([4fc9bbf](https://github.com/device-management-toolkit/sample-web-ui/commit/4fc9bbf29e570eb7ec4ce074d5dab9b36bd0c41f))
 
 # [3.42.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.41.0...v3.42.0) (2025-07-31)
 
-
 ### Features
 
-* adds http, winre and pba support to ocr status ([#2780](https://github.com/device-management-toolkit/sample-web-ui/issues/2780)) ([5cdd39f](https://github.com/device-management-toolkit/sample-web-ui/commit/5cdd39f1a0091fad7057d1ca0a4e2ac8a42dabe9))
+- adds http, winre and pba support to ocr status ([#2780](https://github.com/device-management-toolkit/sample-web-ui/issues/2780)) ([5cdd39f](https://github.com/device-management-toolkit/sample-web-ui/commit/5cdd39f1a0091fad7057d1ca0a4e2ac8a42dabe9))
 
 # [3.41.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.40.0...v3.41.0) (2025-07-31)
 
-
 ### Features
 
-* add ocr to cloud environment ([#2778](https://github.com/device-management-toolkit/sample-web-ui/issues/2778)) ([23870ee](https://github.com/device-management-toolkit/sample-web-ui/commit/23870ee8b07f7ede7c55630064d5e8ba7d0d1e67))
+- add ocr to cloud environment ([#2778](https://github.com/device-management-toolkit/sample-web-ui/issues/2778)) ([23870ee](https://github.com/device-management-toolkit/sample-web-ui/commit/23870ee8b07f7ede7c55630064d5e8ba7d0d1e67))
 
 # [3.40.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.39.0...v3.40.0) (2025-07-29)
 
-
 ### Features
 
-* enable hotkey drop down for KVM ([6a12c7f](https://github.com/device-management-toolkit/sample-web-ui/commit/6a12c7ff02db589aa95211fda9b6f3b11e33f0c9))
+- enable hotkey drop down for KVM ([6a12c7f](https://github.com/device-management-toolkit/sample-web-ui/commit/6a12c7ff02db589aa95211fda9b6f3b11e33f0c9))
 
 # [3.39.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.38.0...v3.39.0) (2025-07-02)
 
-
 ### Features
 
-* adds UEFIWiFiSyncEnabled is added to profile for OCR ([#2726](https://github.com/device-management-toolkit/sample-web-ui/issues/2726)) ([01f2a53](https://github.com/device-management-toolkit/sample-web-ui/commit/01f2a53ae0a265a66656336c1e2c5b815c57354e))
+- adds UEFIWiFiSyncEnabled is added to profile for OCR ([#2726](https://github.com/device-management-toolkit/sample-web-ui/issues/2726)) ([01f2a53](https://github.com/device-management-toolkit/sample-web-ui/commit/01f2a53ae0a265a66656336c1e2c5b815c57354e))
 
 # [3.38.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.37.0...v3.38.0) (2025-05-05)
 
-
 ### Features
 
-* sso config ([ec201fc](https://github.com/device-management-toolkit/sample-web-ui/commit/ec201fca2d027ada799e6898a603e58c67f24692))
+- sso config ([ec201fc](https://github.com/device-management-toolkit/sample-web-ui/commit/ec201fca2d027ada799e6898a603e58c67f24692))
 
 # [3.37.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.4...v3.37.0) (2025-04-02)
 
-
 ### Features
 
-* add Power up to OCR HTTPS Boot ([#2575](https://github.com/device-management-toolkit/sample-web-ui/issues/2575)) ([43c7748](https://github.com/device-management-toolkit/sample-web-ui/commit/43c7748c73c28d43c1de269af8be58c99f2c0676))
+- add Power up to OCR HTTPS Boot ([#2575](https://github.com/device-management-toolkit/sample-web-ui/issues/2575)) ([43c7748](https://github.com/device-management-toolkit/sample-web-ui/commit/43c7748c73c28d43c1de269af8be58c99f2c0676))
 
 ## [3.36.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.3...v3.36.4) (2025-04-01)
 
-
 ### Bug Fixes
 
-* fixes wireless config name translation ([4770e9b](https://github.com/device-management-toolkit/sample-web-ui/commit/4770e9be35846ee0084e03bcaf6260dc18b4678d))
+- fixes wireless config name translation ([4770e9b](https://github.com/device-management-toolkit/sample-web-ui/commit/4770e9be35846ee0084e03bcaf6260dc18b4678d))
 
 ## [3.36.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.2...v3.36.3) (2025-04-01)
 
-
 ### Bug Fixes
 
-* correct HTTPS boot message ([#2576](https://github.com/device-management-toolkit/sample-web-ui/issues/2576)) ([a451a28](https://github.com/device-management-toolkit/sample-web-ui/commit/a451a282c5c663cb956579aee9911dd2d8064b02))
+- correct HTTPS boot message ([#2576](https://github.com/device-management-toolkit/sample-web-ui/issues/2576)) ([a451a28](https://github.com/device-management-toolkit/sample-web-ui/commit/a451a282c5c663cb956579aee9911dd2d8064b02))
 
 ## [3.36.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.1...v3.36.2) (2025-03-28)
 
-
 ### Bug Fixes
 
-* remove username and password from https boot ([#2572](https://github.com/device-management-toolkit/sample-web-ui/issues/2572)) ([2448564](https://github.com/device-management-toolkit/sample-web-ui/commit/24485645247f9c8762176995d2189c2434dcf6f8))
+- remove username and password from https boot ([#2572](https://github.com/device-management-toolkit/sample-web-ui/issues/2572)) ([2448564](https://github.com/device-management-toolkit/sample-web-ui/commit/24485645247f9c8762176995d2189c2434dcf6f8))
 
 ## [3.36.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.36.0...v3.36.1) (2025-03-27)
 
-
 ### Bug Fixes
 
-* add tooltip to https network boot ([#2571](https://github.com/device-management-toolkit/sample-web-ui/issues/2571)) ([ae87fd4](https://github.com/device-management-toolkit/sample-web-ui/commit/ae87fd44717b08bfd6fe2bf93fc25aca28b9011c))
+- add tooltip to https network boot ([#2571](https://github.com/device-management-toolkit/sample-web-ui/issues/2571)) ([ae87fd4](https://github.com/device-management-toolkit/sample-web-ui/commit/ae87fd44717b08bfd6fe2bf93fc25aca28b9011c))
 
 # [3.36.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.35.0...v3.36.0) (2025-03-27)
 
-
 ### Features
 
-* add OCR HTTPS Network boot ([#2509](https://github.com/device-management-toolkit/sample-web-ui/issues/2509)) ([ac1ebce](https://github.com/device-management-toolkit/sample-web-ui/commit/ac1ebcecf767d8de1b27ab9356326342a45c7934))
+- add OCR HTTPS Network boot ([#2509](https://github.com/device-management-toolkit/sample-web-ui/issues/2509)) ([ac1ebce](https://github.com/device-management-toolkit/sample-web-ui/commit/ac1ebcecf767d8de1b27ab9356326342a45c7934))
 
 # [3.35.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.2...v3.35.0) (2025-03-17)
 
-
 ### Features
 
-* enable i18n support ([#2533](https://github.com/device-management-toolkit/sample-web-ui/issues/2533)) ([cb3c7bd](https://github.com/device-management-toolkit/sample-web-ui/commit/cb3c7bd806a1b30a147322796a23d379c5451669)), closes [#2124](https://github.com/device-management-toolkit/sample-web-ui/issues/2124)
+- enable i18n support ([#2533](https://github.com/device-management-toolkit/sample-web-ui/issues/2533)) ([cb3c7bd](https://github.com/device-management-toolkit/sample-web-ui/commit/cb3c7bd806a1b30a147322796a23d379c5451669)), closes [#2124](https://github.com/device-management-toolkit/sample-web-ui/issues/2124)
 
 ## [3.34.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.1...v3.34.2) (2025-03-10)
 
-
 ### Bug Fixes
 
-* address an issue where login token might not exist ([95d60b3](https://github.com/device-management-toolkit/sample-web-ui/commit/95d60b3509c756b27693a84bf844244d49b91599))
+- address an issue where login token might not exist ([95d60b3](https://github.com/device-management-toolkit/sample-web-ui/commit/95d60b3509c756b27693a84bf844244d49b91599))
 
 ## [3.34.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.34.0...v3.34.1) (2025-03-10)
 
 # [3.34.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.33.0...v3.34.0) (2025-03-10)
 
-
 ### Features
 
-* **docker:** add support for devcontainer ([#2534](https://github.com/device-management-toolkit/sample-web-ui/issues/2534)) ([bb597f4](https://github.com/device-management-toolkit/sample-web-ui/commit/bb597f4343b47d33d2659390390c6612e0f714e9))
+- **docker:** add support for devcontainer ([#2534](https://github.com/device-management-toolkit/sample-web-ui/issues/2534)) ([bb597f4](https://github.com/device-management-toolkit/sample-web-ui/commit/bb597f4343b47d33d2659390390c6612e0f714e9))
 
 # [3.33.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.2...v3.33.0) (2025-03-07)
 
-
 ### Features
 
-* replace momentjs with date fns ([2074d0e](https://github.com/device-management-toolkit/sample-web-ui/commit/2074d0e7d18dbf689f18788057acc234b790f2ed)), closes [device-management-toolkit#2519](https://github.com/device-management-toolkit/issues/2519)
+- replace momentjs with date fns ([2074d0e](https://github.com/device-management-toolkit/sample-web-ui/commit/2074d0e7d18dbf689f18788057acc234b790f2ed)), closes [device-management-toolkit#2519](https://github.com/device-management-toolkit/issues/2519)
 
 ## [3.32.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.1...v3.32.2) (2025-03-06)
 
-
 ### Bug Fixes
 
-* Error messages truncated ([9b309ef](https://github.com/device-management-toolkit/sample-web-ui/commit/9b309ef67fb1b288d07cf53b17ed5acf100cd8f2)), closes [#2527](https://github.com/device-management-toolkit/sample-web-ui/issues/2527)
+- Error messages truncated ([9b309ef](https://github.com/device-management-toolkit/sample-web-ui/commit/9b309ef67fb1b288d07cf53b17ed5acf100cd8f2)), closes [#2527](https://github.com/device-management-toolkit/sample-web-ui/issues/2527)
 
 ## [3.32.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.32.0...v3.32.1) (2025-03-04)
 
-
 ### Bug Fixes
 
-* profile error messages truncated ([e8c3c25](https://github.com/device-management-toolkit/sample-web-ui/commit/e8c3c25da4759c93a58a0985842c3964da220a5e)), closes [#2486](https://github.com/device-management-toolkit/sample-web-ui/issues/2486)
+- profile error messages truncated ([e8c3c25](https://github.com/device-management-toolkit/sample-web-ui/commit/e8c3c25da4759c93a58a0985842c3964da220a5e)), closes [#2486](https://github.com/device-management-toolkit/sample-web-ui/issues/2486)
 
 # [3.32.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.3...v3.32.0) (2025-02-26)
 
-
 ### Features
 
-* **docker:** enable multiarch build ([4c10c0b](https://github.com/device-management-toolkit/sample-web-ui/commit/4c10c0bf45e8b4c64497e8e0d911d2e91a65e6f1))
+- **docker:** enable multiarch build ([4c10c0b](https://github.com/device-management-toolkit/sample-web-ui/commit/4c10c0bf45e8b4c64497e8e0d911d2e91a65e6f1))
 
 ## [3.31.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.2...v3.31.3) (2025-02-21)
 
 ## [3.31.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.31.1...v3.31.2) (2025-02-11)
 
-
 ### Bug Fixes
 
-* add NGX_MONACO_EDITOR_CONFIG provider to ExplorerComponent ([063b087](https://github.com/device-management-toolkit/sample-web-ui/commit/063b0876fc02727dfbe7e0ce721d72a7e118110f))
+- add NGX_MONACO_EDITOR_CONFIG provider to ExplorerComponent ([063b087](https://github.com/device-management-toolkit/sample-web-ui/commit/063b0876fc02727dfbe7e0ce721d72a7e118110f))
 
 ## [3.31.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.31.0...v3.31.1) (2025-02-05)
 
-
 ### Bug Fixes
 
-* disable kvm for ISM systems ([#2471](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2471)) ([1ff7f56](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/1ff7f566737225dd782cc156617b960767d848d6))
+- disable kvm for ISM systems ([#2471](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2471)) ([1ff7f56](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/1ff7f566737225dd782cc156617b960767d848d6))
 
 # [3.31.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.2...v3.31.0) (2025-02-05)
 
-
 ### Features
 
-* enable support oauth 2.0 w/ PKCE ([3e47698](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3e476984f355a34eac455887987a7fe2e3b23712))
+- enable support oauth 2.0 w/ PKCE ([3e47698](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3e476984f355a34eac455887987a7fe2e3b23712))
 
 ## [3.30.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.1...v3.30.2) (2025-02-04)
 
-
 ### Bug Fixes
 
-* add pagination for event logs ([#2456](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2456)) ([fa63cbe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/fa63cbe8d35b7a77fe8250f7d6870da4194377d5))
+- add pagination for event logs ([#2456](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2456)) ([fa63cbe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/fa63cbe8d35b7a77fe8250f7d6870da4194377d5))
 
 ## [3.30.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.30.0...v3.30.1) (2025-01-30)
 
-
 ### Bug Fixes
 
-* adds an option to select domain before profile export ([#2425](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2425)) ([e80b424](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/e80b42460848bd44745ba46eb02d20cf53bd9cda))
+- adds an option to select domain before profile export ([#2425](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2425)) ([e80b424](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/e80b42460848bd44745ba46eb02d20cf53bd9cda))
 
 # [3.30.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.29.0...v3.30.0) (2025-01-14)
 
-
 ### Features
 
-* enable KVM fullscreen mode ([#2418](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2418)) ([df4c40c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/df4c40c67657bc6336032f49379e652ea65c9e4a))
+- enable KVM fullscreen mode ([#2418](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2418)) ([df4c40c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/df4c40c67657bc6336032f49379e652ea65c9e4a))
 
 # [3.29.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.28.0...v3.29.0) (2025-01-09)
 
-
 ### Features
 
-* enable download for audit/event logs ([#2408](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2408)) ([cf322b6](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf322b6261b87665ab055e6296fbfa0932679eb5))
+- enable download for audit/event logs ([#2408](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2408)) ([cf322b6](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf322b6261b87665ab055e6296fbfa0932679eb5))
 
 # [3.28.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.5...v3.28.0) (2025-01-06)
 
-
 ### Features
 
-* make connection modes clearer ([0858fdf](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0858fdf85119a614cce283cc6dbaef344fa0eac3))
+- make connection modes clearer ([0858fdf](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0858fdf85119a614cce283cc6dbaef344fa0eac3))
 
 ## [3.27.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.4...v3.27.5) (2024-12-12)
 
-
 ### Bug Fixes
 
-* update power button for hard reset ([93899a3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/93899a3b21f11345d50c0fed522fe1f1e728940d))
+- update power button for hard reset ([93899a3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/93899a3b21f11345d50c0fed522fe1f1e728940d))
 
 ## [3.27.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.3...v3.27.4) (2024-11-14)
 
@@ -260,211 +238,181 @@
 
 ## [3.27.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.1...v3.27.2) (2024-11-06)
 
-
 ### Bug Fixes
 
-* disables CIRA in non-cloud mode ([d0cebc3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d0cebc326a4f52107c8908139ef05218fd04e71d))
+- disables CIRA in non-cloud mode ([d0cebc3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/d0cebc326a4f52107c8908139ef05218fd04e71d))
 
 ## [3.27.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.27.0...v3.27.1) (2024-11-05)
 
-
 ### Bug Fixes
 
-* logout user if 401 from server ([5801592](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5801592db6ce7ba64e159d3e9448def08c8d924c))
+- logout user if 401 from server ([5801592](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5801592db6ce7ba64e159d3e9448def08c8d924c))
 
 # [3.27.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.26.0...v3.27.0) (2024-10-30)
 
-
 ### Features
 
-* re-enable auth for ws when in console mode ([#2298](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2298)) ([8c1b00e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8c1b00e9a5b48bb33f66cc1549de21e5b2cabd17))
+- re-enable auth for ws when in console mode ([#2298](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2298)) ([8c1b00e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8c1b00e9a5b48bb33f66cc1549de21e5b2cabd17))
 
 # [3.26.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.25.0...v3.26.0) (2024-10-29)
 
-
 ### Features
 
-* add local Profile Synchronization to wireless network ([#2297](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2297)) ([3552bec](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3552bec6bb76c83b81620b9c5fa345f7eadde159))
+- add local Profile Synchronization to wireless network ([#2297](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2297)) ([3552bec](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/3552bec6bb76c83b81620b9c5fa345f7eadde159))
 
 # [3.25.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.1...v3.25.0) (2024-10-28)
 
-
 ### Features
 
-* add power state to device details ([894e264](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/894e2643759b804a0181a39f4a6d53b81514abb2)), closes [#2283](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2283)
+- add power state to device details ([894e264](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/894e2643759b804a0181a39f4a6d53b81514abb2)), closes [#2283](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2283)
 
 ## [3.24.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.24.0...v3.24.1) (2024-10-17)
 
-
 ### Bug Fixes
 
-* profile now handles direct connection mode correctly ([b4dff71](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4dff7134cceb3e230205163e5ac18de1a6985df))
+- profile now handles direct connection mode correctly ([b4dff71](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4dff7134cceb3e230205163e5ac18de1a6985df))
 
 # [3.24.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.1...v3.24.0) (2024-10-16)
 
-
 ### Features
 
-* enable auth for console mode ([896d1fe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/896d1fe34aa7b6926d916b4984f3d55b5261e9d3))
+- enable auth for console mode ([896d1fe](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/896d1fe34aa7b6926d916b4984f3d55b5261e9d3))
 
 ## [3.23.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.23.0...v3.23.1) (2024-10-14)
 
-
 ### Bug Fixes
 
-* network settings displays only available interfaces ([#2248](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2248)) ([12fb737](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/12fb737306db21b3e927cca766e12efcc7a677f8))
+- network settings displays only available interfaces ([#2248](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2248)) ([12fb737](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/12fb737306db21b3e927cca766e12efcc7a677f8))
 
 # [3.23.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.1...v3.23.0) (2024-10-11)
 
-
 ### Bug Fixes
 
-* amt explorer event trigger ([39b538e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/39b538e2b99154469cbc5375eff50ec7e8badb5c))
-
+- amt explorer event trigger ([39b538e](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/39b538e2b99154469cbc5375eff50ec7e8badb5c))
 
 ### Features
 
-* enables profile export from console ([302dffd](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/302dffd7078b2cf2839ef8ab487c743e23fde8d5))
+- enables profile export from console ([302dffd](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/302dffd7078b2cf2839ef8ab487c743e23fde8d5))
 
 ## [3.22.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.22.0...v3.22.1) (2024-10-08)
 
-
 ### Bug Fixes
 
-* add and delete alarm works now ([#2232](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2232)) ([78de4fb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/78de4fbdfe203ade09ae63e71e715641bdee4eae))
+- add and delete alarm works now ([#2232](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2232)) ([78de4fb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/78de4fbdfe203ade09ae63e71e715641bdee4eae))
 
 # [3.22.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.1...v3.22.0) (2024-09-26)
 
-
 ### Features
 
-* indicate when device does not respond ([9ded8cb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9ded8cb32fbed97556acdf7c2a8057cc50892db2))
+- indicate when device does not respond ([9ded8cb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9ded8cb32fbed97556acdf7c2a8057cc50892db2))
 
 ## [3.21.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.21.0...v3.21.1) (2024-09-25)
 
-
 ### Bug Fixes
 
-* shows disconnect button on sol connection ([#2215](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2215)) ([5d7fdb3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5d7fdb31a3b8953ab0992f3bdb0dcf09af5f1aa4))
+- shows disconnect button on sol connection ([#2215](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2215)) ([5d7fdb3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/5d7fdb31a3b8953ab0992f3bdb0dcf09af5f1aa4))
 
 # [3.21.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.5...v3.21.0) (2024-09-20)
 
-
 ### Features
 
-* translate amt sku value to human readable string ([#2204](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2204)) ([54d9ffa](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/54d9ffa2ee6ec20899fb68a7985a1e441d5cc62b))
+- translate amt sku value to human readable string ([#2204](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2204)) ([54d9ffa](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/54d9ffa2ee6ec20899fb68a7985a1e441d5cc62b))
 
 ## [3.20.5](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.4...v3.20.5) (2024-09-20)
 
-
 ### Bug Fixes
 
-* resolves handling when when amt redirection features are available ([#2202](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2202)) ([4d7fbbb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4d7fbbb039f7a59b4628a02bc8be45027cd42dcb))
+- resolves handling when when amt redirection features are available ([#2202](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2202)) ([4d7fbbb](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4d7fbbb039f7a59b4628a02bc8be45027cd42dcb))
 
 ## [3.20.4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.3...v3.20.4) (2024-09-19)
 
-
 ### Bug Fixes
 
-* KVM/SOL disconnect on close ([#2196](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2196)) ([43ecbd4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/43ecbd43fe11a02089140c43e0d2d8ac31c67691))
+- KVM/SOL disconnect on close ([#2196](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2196)) ([43ecbd4](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/43ecbd43fe11a02089140c43e0d2d8ac31c67691))
 
 ## [3.20.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.2...v3.20.3) (2024-09-18)
 
-
 ### Bug Fixes
 
-* accept user consent code for advanced power actions ([#2173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2173)) ([ed33bb2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/ed33bb2146c01a1c5d01d24beb2daaca5d6ad6f9))
+- accept user consent code for advanced power actions ([#2173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2173)) ([ed33bb2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/ed33bb2146c01a1c5d01d24beb2daaca5d6ad6f9))
 
 ## [3.20.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.1...v3.20.2) (2024-09-12)
 
-
 ### Bug Fixes
 
-* handles empty values in DTO for network page ([#2190](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2190)) ([b4ae79c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4ae79c9f84c441d040b44dc689289d152421b11))
+- handles empty values in DTO for network page ([#2190](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2190)) ([b4ae79c](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/b4ae79c9f84c441d040b44dc689289d152421b11))
 
 ## [3.20.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.20.0...v3.20.1) (2024-09-12)
 
-
 ### Bug Fixes
 
-* show success message on amt features update ([abbea4d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/abbea4d2c0cf4fd6d55a400856420cdb923a7e43))
+- show success message on amt features update ([abbea4d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/abbea4d2c0cf4fd6d55a400856420cdb923a7e43))
 
 # [3.20.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.19.0...v3.20.0) (2024-09-12)
 
-
 ### Features
 
-* hide menu for console and update dashboard ([8575d89](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8575d89a21839e06cadf36bf9c9e11b12bcc7eff))
+- hide menu for console and update dashboard ([8575d89](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/8575d89a21839e06cadf36bf9c9e11b12bcc7eff))
 
 # [3.19.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.1...v3.19.0) (2024-09-11)
 
-
 ### Features
 
-* add validation for username length ([9d0787d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9d0787df4e20c64a2a9f8e6b824c2d8fc7a251c9))
+- add validation for username length ([9d0787d](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/9d0787df4e20c64a2a9f8e6b824c2d8fc7a251c9))
 
 ## [3.18.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.18.0...v3.18.1) (2024-09-10)
 
-
 ### Bug Fixes
 
-* deactivate button tooltip ([#2176](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2176)) ([cf4d5e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf4d5e023aba9dc394e0197519bd2cac475bc4e8))
+- deactivate button tooltip ([#2176](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2176)) ([cf4d5e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/cf4d5e023aba9dc394e0197519bd2cac475bc4e8))
 
 # [3.18.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.3...v3.18.0) (2024-09-09)
 
-
 ### Features
 
-* adds section to device info for certificate information and allows for downloading of certs ([#2135](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2135)) ([74801e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/74801e0d57c0ba4f604d3d3e0a61779cb9960e3e))
+- adds section to device info for certificate information and allows for downloading of certs ([#2135](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2135)) ([74801e0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/74801e0d57c0ba4f604d3d3e0a61779cb9960e3e))
 
 ## [3.17.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.2...v3.17.3) (2024-09-09)
 
-
 ### Bug Fixes
 
-* grammar in confirm dialog now reads correctly for multiple/single selection ([#2165](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2165)) ([96d5453](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/96d5453251f44d0953ca81104c00d3ef1e41e092))
+- grammar in confirm dialog now reads correctly for multiple/single selection ([#2165](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2165)) ([96d5453](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/96d5453251f44d0953ca81104c00d3ef1e41e092))
 
 ## [3.17.2](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.1...v3.17.2) (2024-09-05)
 
-
 ### Bug Fixes
 
-* automatically clears explorer selection field on click ([#2167](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2167)) ([4324bae](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4324bae360d15ccdc2d42bd5aff658104db7da6b))
+- automatically clears explorer selection field on click ([#2167](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2167)) ([4324bae](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4324bae360d15ccdc2d42bd5aff658104db7da6b))
 
 ## [3.17.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.17.0...v3.17.1) (2024-09-05)
 
-
 ### Bug Fixes
 
-* hides erroneous icon for deletion ([#2166](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2166)) ([0bea2df](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0bea2dff4f7d8edc582fa36e200f59679136b308))
+- hides erroneous icon for deletion ([#2166](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2166)) ([0bea2df](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/0bea2dff4f7d8edc582fa36e200f59679136b308))
 
 # [3.17.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.16.1...v3.17.0) (2024-09-04)
 
-
 ### Features
 
-* add ability to edit details from device ([4f0ca81](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4f0ca817c0c9f587b314d9a8ab95437668b245fe))
+- add ability to edit details from device ([4f0ca81](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4f0ca817c0c9f587b314d9a8ab95437668b245fe))
 
 ## [3.16.1](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.16.0...v3.16.1) (2024-09-04)
 
-
 ### Bug Fixes
 
-* prevent if-match header if version is blank ([4fcf9d7](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4fcf9d7c37890e5fd647e23c879742a54ce2c22d))
+- prevent if-match header if version is blank ([4fcf9d7](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/4fcf9d7c37890e5fd647e23c879742a54ce2c22d))
 
 # [3.16.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.15.0...v3.16.0) (2024-08-22)
 
-
 ### Features
 
-* enable TLS pinning in UI ([542d029](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/542d02946836b54516153d7c52e05e674279cfb0))
+- enable TLS pinning in UI ([542d029](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/542d02946836b54516153d7c52e05e674279cfb0))
 
 # [3.15.0](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.3...v3.15.0) (2024-08-19)
 
-
 ### Features
 
-* display TLS settings ([#2105](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2105)) ([807b173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/807b173c24fa33082c460170dee7bb6405e93324))
+- display TLS settings ([#2105](https://github.com/open-amt-cloud-toolkit/sample-web-ui/issues/2105)) ([807b173](https://github.com/open-amt-cloud-toolkit/sample-web-ui/commit/807b173c24fa33082c460170dee7bb6405e93324))
 
 ## [3.14.3](https://github.com/open-amt-cloud-toolkit/sample-web-ui/compare/v3.14.2...v3.14.3) (2024-08-19)
 

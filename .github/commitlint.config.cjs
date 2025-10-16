@@ -10,7 +10,7 @@ module.exports = {
         'scope-enum': [
             2,
             'always',
-            ['core', 'dashboard', 'devices', 'domains', 'profiles', '8021x', 'login', 'wireless', 'docker', 'deps', 'deps-dev', 'gh-actions', 'config', 'e2e']
+            ['core', 'dashboard', 'devices', 'domains', 'profiles', '8021x', 'login', 'wireless', 'docker', 'deps', 'deps-dev', 'gh-actions', 'config', 'e2e', 'i18n']
         ]
     }
 }
