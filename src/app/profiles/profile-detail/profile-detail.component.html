@@ -37,7 +37,7 @@
           <mat-label>{{ 'profileDetail.activationMode.value' | translate }}</mat-label>
           <mat-select formControlName="activation" required>
             @for (activationMode of activationModes; track activationMode) {
-              <mat-option data-cy="activationModes" [value]="activationMode.value">
+              <mat-option [attr.data-cy]="activationMode.label" [value]="activationMode.value">
                 {{ activationMode.label | translate }}
               </mat-option>
             }
@@ -60,7 +60,7 @@
           <mat-hint>{{ 'profileDetail.userConsentHint.value' | translate }}</mat-hint>
           <mat-select formControlName="userConsent" required>
             @for (mode of userConsentModes; track mode) {
-              <mat-option [value]="mode.value">
+              <mat-option [attr.data-cy]="mode.label" [value]="mode.value">
                 {{ mode.label | translate }}
               </mat-option>
             }
@@ -376,7 +376,7 @@
                 <mat-label>{{ 'profileDetail.tlsMode.value' | translate }}</mat-label>
                 <mat-select formControlName="tlsMode">
                   @for (tm of tlsModes; track tm) {
-                    <mat-option [value]="tm.value">{{ tm.label | translate }}</mat-option>
+                    <mat-option [attr.data-cy]="tm.label" [value]="tm.value">{{ tm.label | translate }}</mat-option>
                   }
                 </mat-select>
                 <mat-hint>{{ 'profileDetail.tlsModeHint.value' | translate }}</mat-hint>

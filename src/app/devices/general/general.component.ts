@@ -186,9 +186,9 @@ export class GeneralComponent implements OnInit {
   parseProvisioningMode(mode: number): string {
     switch (mode) {
       case 1:
-        return 'Admin Control Mode'
+        return 'profileDetail.activationModeAdmin.value'
       case 4:
-        return 'Client Control Mode'
+        return 'profileDetail.activationModeClient.value'
       default:
         return 'common.unknown.value'
     }
