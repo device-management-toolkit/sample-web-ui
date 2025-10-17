@@ -125,7 +125,7 @@ const domains = {
     failure: {
       response: {
         error: 'Unique key violation',
-        message: 'Domain NewDomain ID or Suffix already exists'
+        message: 'domainDetail.uniqueKeyViolation.value'
       }
     }
   },

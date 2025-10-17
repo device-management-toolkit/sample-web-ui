@@ -1,17 +1,17 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center"></div>
   <div class="flex flex-50 justify-end">
-    @if (deviceState() === 0 && !isLoading()) {
+    @if (deviceState() === 0 && isLoading() !== false) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
-        <mat-icon>tv_on</mat-icon>Connect SOL
+        <mat-icon>tv_on</mat-icon>{{ 'sol.connect.value' | translate }}
       </button>
     } @else if (deviceState() !== 2 && isLoading()) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
-        <mat-icon>tv_on</mat-icon>Connecting SOL...
+        <mat-icon>tv_on</mat-icon>{{ 'sol.loading.value' | translate }}
       </button>
     } @else {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
-        <mat-icon>tv_off</mat-icon>Disconnect SOL
+        <mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}
       </button>
     }
   </div>

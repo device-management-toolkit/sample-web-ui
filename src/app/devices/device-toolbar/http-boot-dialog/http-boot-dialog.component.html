@@ -6,10 +6,10 @@
   <form [formGroup]="bootForm">
     <div>
       <mat-form-field class="flex flex-1">
-        <mat-label>URL</mat-label>
-        <input matInput formControlName="url" placeholder="Enter the URL" />
+        <mat-label>{{ 'httpBoot.label.value' | translate }}</mat-label>
+        <input matInput formControlName="url" [placeholder]="'httpBoot.placeHolder.value' | translate" />
         @if (bootForm.get('url')?.hasError('required')) {
-          <mat-error>URL is required</mat-error>
+          <mat-error>{{ 'httpBoot.error.value' | translate }}</mat-error>
         }
       </mat-form-field>
       <!-- <mat-form-field class="flex flex-1">
@@ -25,10 +25,14 @@
       </button>
     </mat-form-field> -->
     </div>
-    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">Enforce Secure Boot</mat-checkbox>
+    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">{{
+      'httpBoot.enforce.value' | translate
+    }}</mat-checkbox>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
-  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>OK</button>
+  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

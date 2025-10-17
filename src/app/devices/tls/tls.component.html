@@ -4,52 +4,58 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <h4>Transport Layer Security</h4>
+      <h4>{{ 'tls.title.value' | translate }}</h4>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-card-content>
-      <div class="flex-row flex-wrap">
-        @for (setting of tlsData; track $index) {
-          <div class="flex flex-50">
-            <p>Element Name</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.ElementName }}</span>
-          </div>
-          <div class="flex flex-50">
-            <p>Instance ID</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.InstanceID }}</span>
-          </div>
-          <div class="flex flex-50">
-            <p>Mutual Authentication</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.MutualAuthentication ? 'Yes' : 'No' }}</span>
-          </div>
-          <div class="flex flex-50">
-            <p>Enabled</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.Enabled ? 'Yes' : 'No' }}</span>
-          </div>
-          <div class="flex flex-50">
-            <p>Accept Non-Secure Connections</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.AcceptNonSecureConnections ? 'Yes' : 'No' }}</span>
-          </div>
-          <div class="flex flex-50">
-            <p>Non-Secure Connections Supported</p>
-          </div>
-          <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ setting.NonSecureConnectionsSupported ? 'Yes' : 'No' }}</span>
-          </div>
-          <mat-divider style="width: 100%; padding: 16px"></mat-divider>
-        }
-      </div>
-    </mat-card-content>
+    <div class="flex-row flex-wrap">
+      @for (setting of tlsData; track $index) {
+        <div class="flex flex-50">
+          <p>{{ 'tls.elementName.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{ setting.ElementName }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'tls.instanceId.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{ setting.InstanceID }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'tls.mutualAuth.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{
+            setting.MutualAuthentication ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+          }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'tls.enabled.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{
+            setting.Enabled ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+          }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'tls.acceptNonSecure.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{
+            setting.AcceptNonSecureConnections ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+          }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'tls.nonSecureSupported.label.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-h3">{{
+            setting.NonSecureConnectionsSupported ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+          }}</span>
+        </div>
+        <mat-divider style="width: 100%; padding: 16px"></mat-divider>
+      }
+    </div>
   </mat-card-content>
 </mat-card>

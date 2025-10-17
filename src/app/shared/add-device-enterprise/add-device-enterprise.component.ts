@@ -13,15 +13,18 @@ import { Device } from 'src/models/models'
 import { MatButton } from '@angular/material/button'
 import { MatCheckbox } from '@angular/material/checkbox'
 import { MatInput } from '@angular/material/input'
-import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field'
+import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
+import { TranslateModule } from '@ngx-translate/core'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-add-device-enterprise',
   templateUrl: './add-device-enterprise.component.html',
   styleUrl: './add-device-enterprise.component.scss',
   imports: [
+    CommonModule,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
@@ -34,8 +37,10 @@ import { MatIcon } from '@angular/material/icon'
     MatHint,
     MatError,
     MatCheckbox,
-    MatButton
-  ]
+    MatButton,
+    TranslateModule
+  ],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }]
 })
 export class AddDeviceEnterpriseComponent {
   // Dependency Injection

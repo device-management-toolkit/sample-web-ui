@@ -19,10 +19,15 @@ import { authorizationInterceptor } from './app/authorize.interceptor'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { firstValueFrom } from 'rxjs'
+import { MatPaginatorIntl } from '@angular/material/paginator'
+import { TranslatePaginatorIntl } from './assets/i18n/translate-paginator-intl'
+import { availableLangs } from './constants'
+import { getDirection } from './utils'
 
 if (environment.production) {
   enableProdMode()
 }
+
 const providers = [
   AuthGuard,
   provideZonelessChangeDetection(),
@@ -31,9 +36,13 @@ const providers = [
   provideTranslateService({
     loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
   }),
+  { provide: MatPaginatorIntl, useClass: TranslatePaginatorIntl },
   provideAppInitializer(() => {
-    inject(TranslateService).setFallbackLang('en')
-    return firstValueFrom(inject(TranslateService).use('en'))
+    const translate = inject(TranslateService)
+
+    translate.setFallbackLang('en')
+
+    return firstValueFrom(translate.use(getLangCode()))
   })
 ]
 if (environment.useOAuth) {
@@ -62,3 +71,15 @@ bootstrapApplication(AppComponent, {
 }).catch((err) => {
   console.error(err)
 })
+
+function getLangCode() {
+  const savedLang = localStorage.getItem('lang')
+  const browserLang = navigator.language.split('-')[0] // e.g. "en-US" → "en"
+  const langToUse = availableLangs.some((lang) => lang.code === browserLang) ? browserLang : 'en'
+  const finalLang = savedLang || langToUse
+
+  document.documentElement.setAttribute('dir', getDirection(finalLang))
+  document.documentElement.setAttribute('lang', finalLang)
+
+  return finalLang
+}

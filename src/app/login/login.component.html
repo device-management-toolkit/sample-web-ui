@@ -4,7 +4,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{ 'login.header.loginTitle.value' | translate }}</mat-card-title>
-        <mat-card-subtitle>Device Management Toolkit Portal</mat-card-subtitle>
+        <mat-card-subtitle>{{ 'login.header.loginTitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <div [hidden]="!isLoading()">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -13,8 +13,12 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <mat-card-content class="flex-row flex-wrap">
             <mat-form-field class="flex flex-1">
-              <input formControlName="userId" matInput name="userId" placeholder="Username" />
-              <mat-error i18n="@@field.required">This field is required</mat-error>
+              <input
+                formControlName="userId"
+                matInput
+                name="userId"
+                [placeholder]="'common.userName.value' | translate" />
+              <mat-error i18n="@@field.required">{{ 'fieldRequired.short.value' | translate }}</mat-error>
             </mat-form-field>
             <mat-form-field class="flex flex-1">
               <input
@@ -22,14 +26,14 @@
                 [type]="loginPassInputType"
                 matInput
                 name="Password"
-                placeholder="Password"
+                [placeholder]="'common.password.value' | translate"
                 minlength="7" />
-              <mat-error i18n="@@field.required">This field is required</mat-error>
+              <mat-error i18n="@@field.required">{{ 'fieldRequired.short.value' | translate }}</mat-error>
               <button
                 mat-icon-button
                 matSuffix
                 type="button"
-                matTooltip="Show / Hide Password"
+                [matTooltip]="'profileDetail.showHidePassword.value' | translate"
                 (click)="toggleLoginPassVisibility()">
                 @if (loginPassInputType !== 'text') {
                   <mat-icon>visibility</mat-icon>
@@ -49,7 +53,7 @@
           <mat-card-actions class="flex-row">
             <div class="flex flex-1 justify-center">
               <button id="btnLogin" type="submit" mat-flat-button color="primary">
-                <span i18n>LOG IN</span>
+                <span>{{ 'common.loginUpper.value' | translate }}</span>
                 <span class="glyphicon glyphicon-log-in padding10L"></span>
               </button>
             </div>
@@ -63,7 +67,7 @@
       }
       <mat-card-footer>
         <div style="margin: 12px">
-          <div>© {{ currentYear }} Intel Corporation</div>
+          <div>{{ 'common.intelCopyright.value' | translate: { year: currentYear } }}</div>
         </div>
       </mat-card-footer>
     </mat-card>

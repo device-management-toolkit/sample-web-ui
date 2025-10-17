@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-explorer',
@@ -31,7 +32,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
     MatToolbarModule,
     MatAutocompleteModule,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    TranslateModule
   ],
   providers: [
     {
@@ -46,7 +48,7 @@ export class ExplorerComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public XMLData: any
@@ -71,7 +73,8 @@ export class ExplorerComponent implements OnInit {
         },
         error: (err) => {
           console.error(err)
-          this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('explorer.errorResponse.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
     })
@@ -95,7 +98,8 @@ export class ExplorerComponent implements OnInit {
       },
       error: (err) => {
         console.error(err)
-        this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+        const msg: string = this.translate.instant('explorer.errorResponse.value')
+        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
       }
     })
   }

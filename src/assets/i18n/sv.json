@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "Titel för avsnittet Om i molnläget",
+    "value": "Om verktygssatsen för enhetshantering Exempel på webbgränssnitt"
+  },
+  "about.consoleProvides": {
+    "description": "Meddelande för konsolfunktioner",
+    "value": "Konsolen erbjuder följande funktioner och mer:"
+  },
+  "about.description": {
+    "description": "Beskrivning för konsolen",
+    "value": "Console är ett 1:1 out-of-band-hanteringsverktyg för hantering av Intel AMT i lokala nätverk. När en enhet har lagts till kommunicerar Console direkt med AMT via det lokala nätverket, vilket ger ett snabbt och enkelt sätt att ansluta och hantera alla dina AMT-enheter."
+  },
+  "about.device": {
+    "description": "Meddelande för enhetshårdvara",
+    "value": "Information om enhetens hårdvara och loggning"
+  },
+  "about.doNotShowAgain": {
+    "description": "Kryssruta för att för närvarande visa avsnittet Om",
+    "value": "Visa inte igen"
+  },
+  "about.gotIt": {
+    "description": "Knapp för att stänga avsnittet Om",
+    "value": "Uppfattat."
+  },
+  "about.howTo": {
+    "description": "Meddelande om hur verktygslådan ska användas",
+    "value": "Hur man använder UI-verktygslådan"
+  },
+  "about.learn": {
+    "description": "Meddelande för att lära sig använda verktygslådan",
+    "value": "Lär dig hur Device Management Toolkit hanterar enheter"
+  },
+  "about.nonCloudMode": {
+    "description": "Titel för avsnittet Om",
+    "value": "Om konsolen"
+  },
+  "about.redirection": {
+    "description": "Meddelande för omdirigeringsfunktioner",
+    "value": "Omdirigeringsfunktioner som fjärrtangentbord, video, mus (KVM) och Serial-over-LAN (SOL)"
+  },
+  "about.referenceImplementation": {
+    "description": "Meddelande för demonstrationsimplementering i molnläge",
+    "value": "Denna referensimplementering visar API:er och allmänna funktioner i Device Management Toolkit och är INTE avsedd för produktionsanvändning."
+  },
+  "about.remotePower": {
+    "description": "Meddelande för fjärrstyrd strömförsörjning",
+    "value": "Fjärrstyrda strömåtgärder"
+  },
+  "about.sampleUI": {
+    "description": "Meddelande för exempelgränssnittet",
+    "value": "Detta exempel på användargränssnitt är avsett för följande:"
+  },
+  "about.setUp": {
+    "description": "Meddelande för inställningar",
+    "value": "Konfigurera profiler, inställningar och domäner"
+  },
+  "about.understand": {
+    "description": "Meddelande för att förstå verktygslådan",
+    "value": "Förstå Device Management Toolkits implementering av REST-API:er och hur de kan användas i din egen applikation."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "Meddelande för att tillåta självsignerade certifikat",
+    "value": "Tillåt självsignerade certifikat"
+  },
+  "addDevice.chooseProfile": {
+    "description": "Etikett för fält för profilval",
+    "value": "Välj profil"
+  },
+  "addDevice.description": {
+    "description": "Beskrivning som förklarar hur man aktiverar en enhet",
+    "value": "För att aktivera en enhet måste du utföra ett kommando på AMT-enheten. Denna dialogruta hjälper dig att generera kommandot som ska köras."
+  },
+  "addDevice.enterTags": {
+    "description": "Tips för att ange taggar",
+    "value": "Du kan ange taggar för att underlätta organisering och sökning av enheter när din lista över hanterade enheter växer. Skriv en tagg och tryck sedan på Enter eller komma."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "Fel för ogiltiga vänliga namn",
+    "value": "Vänligt namn får inte vara längre än 50 tecken."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "Fel för obligatoriska vänliga namn",
+    "value": "Vänligt namn krävs"
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "Fel för ogiltiga värdnamn",
+    "value": "Ogiltigt format för värdnamn"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "Fel för obligatoriska värdnamn",
+    "value": "Värdnamn krävs"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "Kryssruta för att inaktivera kontroll av självsignerade certifikat",
+    "value": "Ingen kontroll av självsignerade certifikat"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "Platshållare för att lägga till en ny tagg",
+    "value": "Ny tagg..."
+  },
+  "addDevice.profileRequired": {
+    "description": "Valideringsfelmeddelande när profil inte är vald",
+    "value": "Profil krävs"
+  },
+  "addDevice.showVerbose": {
+    "description": "Kryssruta för att aktivera detaljerad utdata",
+    "value": "Visa detaljerad information"
+  },
+  "addDevice.title": {
+    "description": "Dialogrubrik för att lägga till en ny enhet",
+    "value": "Lägg till en ny enhet"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "Fel för ogiltigt användarnamn",
+    "value": "Användarnamnet måste bestå av minst 5 tecken och högst 16 tecken."
+  },
+  "addDevice.userNameRequired": {
+    "description": "Fel för obligatoriskt användarnamn",
+    "value": "Användarnamn krävs"
+  },
+  "addDevice.useTLS": {
+    "description": "Meddelande om användning av TLS",
+    "value": "Använd TLS"
+  },
+  "alarm.errorAdding": {
+    "description": "Fel vid tillägg",
+    "value": "Fel vid tillägg av larmhändelser"
+  },
+  "alarm.errorDelete": {
+    "description": "Fel vid radering",
+    "value": "Fel vid radering av larmhändelser"
+  },
+  "alarm.errorRetrieve": {
+    "description": "Fel vid hämtning",
+    "value": "Fel vid hämtning av larmhändelser"
+  },
+  "alarmService.addNew": {
+    "description": "Knapptext för att lägga till ett nytt larm",
+    "value": "Lägg till nytt"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "Tips för inmatning av larmnamn",
+    "value": "Ange ett namn för denna larm."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "Platshållare för inmatning av larmnamn",
+    "value": "Larmnamn"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "Verktygstips för knappen för att radera larm",
+    "value": "Ta bort larmhändelse"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "Etikett för radering vid slutförande av bildväxling",
+    "value": "Ta bort när du är klar."
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "Alarmelementets namn följt av dess InstanceID",
+    "value": "{{elementName}} (InstanceID: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "Etikett för timval",
+    "value": "Timme"
+  },
+  "alarmService.interval": {
+    "description": "Etikett för larmintervallet",
+    "value": "Intervall (i minuter)"
+  },
+  "alarmService.intervalHint": {
+    "description": "Tips för intervallinmatning",
+    "value": "Intervall i minuter för ett periodiskt larm, 0 för ett engångslarm"
+  },
+  "alarmService.intervalLabel": {
+    "description": "Etikett för intervallinmatning",
+    "value": "Intervall"
+  },
+  "alarmService.intervalNone": {
+    "description": "Visas när intervallet inte är definierat",
+    "value": "Ingen"
+  },
+  "alarmService.minuteLabel": {
+    "description": "Etikett för minutval",
+    "value": "Protokoll"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "Starttid: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Ta bort vid slutförande: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "Platshållare för inmatning av starttid",
+    "value": "Välj datum och tid"
+  },
+  "alarmService.subtitle": {
+    "description": "Undertext som visar antalet larmhändelser",
+    "value": "Larm ({{count}} -poster)"
+  },
+  "alarmService.title": {
+    "description": "Titel på larmtjänstkortet",
+    "value": "Larmtjänst"
+  },
+  "audit.errorLog": {
+    "description": "Fel vid hämtning av granskningsloggar",
+    "value": "Fel vid hämtning av granskningslogg"
+  },
+  "auditLog.description": {
+    "value": "Beskrivning"
+  },
+  "auditLog.download": {
+    "description": "Nedladdningsknapp för granskningsloggar",
+    "value": "Ladda ner granskningslogg (.csv)"
+  },
+  "auditLog.event": {
+    "value": "Händelse"
+  },
+  "auditLog.missing": {
+    "description": "Meddelande om saknade granskningsloggar",
+    "value": "Ingen revisionslogg"
+  },
+  "auditLog.time": {
+    "value": "Tid"
+  },
+  "auditLog.title": {
+    "description": "Titel för granskningsloggar",
+    "value": "Revisionslogg"
+  },
+  "certificates.add.tooltip": {
+    "description": "Verktygstips för knappen Lägg till certifikat",
+    "value": "Lägg till certifikat"
+  },
+  "certificates.download.tooltip": {
+    "description": "Verktygstips för nedladdning av certifikat",
+    "value": "Ladda ner certifikat"
+  },
+  "certificates.empty": {
+    "description": "Text för tomma certifikat",
+    "value": "Inga certifikat hittades"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "Fel vid tillägg av certifikat",
+    "value": "Fel vid tillägg av certifikat"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "Fel vid hämtning av certifikatinformation",
+    "value": "Fel vid hämtning av certifikatinformation"
+  },
+  "certificates.list": {
+    "description": "Text för listan över certifikat",
+    "value": "Lista över certifikat som för närvarande är registrerade på AMT-enheten"
+  },
+  "certificates.loading": {
+    "description": "Text för laddning av certifikat",
+    "value": "Laddar certifikat ..."
+  },
+  "certificates.profileAssociations": {
+    "description": "Etikett för certifikatprofilassociationer",
+    "value": "Profilassociationer"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "Visas när ett certifikat inte har några profilassociationer.",
+    "value": "Oassocierat"
+  },
+  "certificates.title": {
+    "description": "Titel för certifikat",
+    "value": "Certifikat"
+  },
+  "certificates.type": {
+    "description": "Etikett för fältet certifikattyp",
+    "value": "Typ"
+  },
+  "certificates.typeClient": {
+    "description": "Indikerar att certifikatet är ett klientcertifikat.",
+    "value": "Kund"
+  },
+  "certificates.typeRoot": {
+    "description": "Indikerar att certifikatet är ett rotcertifikat.",
+    "value": "Rot"
+  },
+  "common.addNew": {
+    "description": "Text för knappen Lägg till ny",
+    "value": "Lägg till nytt"
+  },
+  "common.cancel": {
+    "description": "Text för avbryt-knappen",
+    "value": "AVBRYT"
+  },
+  "common.cancelLower": {
+    "description": "Text för avbryt-knappen",
+    "value": "Avbryt"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "Varning för certifikat som inte har laddats upp",
+    "value": "Certifikat ännu inte uppladdat"
+  },
+  "common.cetificateUploaded": {
+    "description": "Meddelande för certifikat som laddas upp",
+    "value": "Certifikat uppladdat"
+  },
+  "common.chooseFile": {
+    "description": "Knapp för att välja en fil",
+    "value": "Välj fil"
+  },
+  "common.close": {
+    "description": "Text för stängningsknappen",
+    "value": "Stäng"
+  },
+  "common.completeProfile": {
+    "description": "Meddelande för färdiga profiler",
+    "value": "Profilen har sparats"
+  },
+  "common.connected": {
+    "description": "Status när en enhet eller tjänst är ansluten",
+    "value": "Ansluten"
+  },
+  "common.continue": {
+    "value": "Fortsätt"
+  },
+  "common.deleteConfiguration": {
+    "description": "Meddelande för raderade konfigurationer",
+    "value": "Konfigurationen har raderats"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "Meddelande för undertexten för inloggning",
+    "value": "Portal för verktyg för enhetshantering"
+  },
+  "common.disabled": {
+    "description": "Används när lokal profilsynkronisering är inaktiverad.",
+    "value": "inaktiverad"
+  },
+  "common.disconnected": {
+    "description": "Status när en enhet eller tjänst är frånkopplad",
+    "value": "Frånkopplad"
+  },
+  "common.dismiss": {
+    "description": "Etikett för avvisningsknapp",
+    "value": "Avvisa"
+  },
+  "common.done": {
+    "description": "Meddelande för knappen \"Klar\"",
+    "value": "Klart"
+  },
+  "common.down": {
+    "value": "Ned"
+  },
+  "common.enabled": {
+    "description": "Används när lokal profilsynkronisering är aktiverad.",
+    "value": "aktiverad"
+  },
+  "common.enterFriendlyName": {
+    "description": "Tips för att ange ett vänligt namn",
+    "value": "Ange ett vänligt namn"
+  },
+  "common.enterHostName": {
+    "description": "Tips för att ange värdnamnet",
+    "value": "Ange värdnamnet"
+  },
+  "common.enterPassword": {
+    "description": "Meddelande för inmatning av lösenord",
+    "value": "Ange ditt lösenord"
+  },
+  "common.enterUserName": {
+    "description": "Tips för att ange ditt användarnamn",
+    "value": "Ange ditt användarnamn"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "Fel vid radering av konfigurationer",
+    "value": "Det går inte att ta bort konfigurationen."
+  },
+  "common.friendlyName": {
+    "description": "Meddelande för vänligt namn",
+    "value": "Vänligt namn"
+  },
+  "common.hostName": {
+    "description": "Meddelande för värdnamn",
+    "value": "Värdnamn"
+  },
+  "common.input": {
+    "description": "Input för WSMAN Explorer",
+    "value": "Input"
+  },
+  "common.intelCopyright": {
+    "description": "Upphovsrättsmeddelande för Intel",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "Meddelande för inloggningsknappen",
+    "value": "LOGGA IN"
+  },
+  "common.logOut": {
+    "description": "Meddelande för utloggning",
+    "value": "Logga ut"
+  },
+  "common.no": {
+    "value": "Nej"
+  },
+  "common.notApplicable": {
+    "description": "Visas när OS-posten inte är tillämplig.",
+    "value": "Ej tillämpligt"
+  },
+  "common.ok": {
+    "description": "Text för OK-knappen",
+    "value": "OK"
+  },
+  "common.other": {
+    "description": "Används när operativsystemet eller minneskartan är Annat eller ospecificerat",
+    "value": "Övrigt"
+  },
+  "common.output": {
+    "description": "Utdata för WSMAN Explorer",
+    "value": "Resultat"
+  },
+  "common.password": {
+    "description": "Meddelande om lösenord",
+    "value": "Lösenord"
+  },
+  "common.pin": {
+    "description": "Text för Pin-knappen",
+    "value": "Pin"
+  },
+  "common.profileName": {
+    "description": "Namn på profilen",
+    "value": "Profilnamn"
+  },
+  "common.remove": {
+    "description": "Text för borttagningsknappen",
+    "value": "Ta bort"
+  },
+  "common.save": {
+    "description": "Text för spara-knappen",
+    "value": "SPARA"
+  },
+  "common.showHidePassword": {
+    "description": "Verktygstips för att visa eller dölja lösenordet",
+    "value": "Visa/dölj lösenord"
+  },
+  "common.submit": {
+    "description": "Knapp för att skicka",
+    "value": "Skicka"
+  },
+  "common.tags": {
+    "description": "Meddelande för taggar",
+    "value": "Taggar"
+  },
+  "common.trustedRoot": {
+    "description": "Text för kryssrutan för betrodd rot",
+    "value": "Trusted Root"
+  },
+  "common.unknown": {
+    "description": "Etikett för okända eller ospecificerade värden",
+    "value": "Okänd"
+  },
+  "common.up": {
+    "value": "Upp"
+  },
+  "common.userName": {
+    "description": "Meddelande för användarnamn",
+    "value": "Användarnamn"
+  },
+  "common.wired": {
+    "description": "Text för trådlös knapp",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "Text för kabelansluten knapp",
+    "value": "Trådlöst"
+  },
+  "common.yes": {
+    "value": "Ja"
+  },
+  "configDetail.commonNameHint": {
+    "description": "Tips för fältet för vanligt namn",
+    "value": "Ange det vanliga namnet som finns i certifikatet."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "Platshållartext för fältet för vanligt namn",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "Tips för fältet för konfigurationsnamn",
+    "value": "Ange ett namn för denna CIRA-konfiguration"
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "Platshållartext för fältet för konfigurationsnamn",
+    "value": "ex. ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "FQDN-radioknappens etikett",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "IPv4-radioknappetikett",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "Tips för MPS-serveradressfältet",
+    "value": "Ange adressen till där din MPS-instans är hostad"
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "Platshållartext för MPS-serveradressfältet",
+    "value": "MPS-adress"
+  },
+  "configDetail.portHint": {
+    "description": "Tips text för portfält",
+    "value": "Ange CIRA-porten för MPS-instansen. Standardvärdet är 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "Platshållartext för portfält",
+    "value": "Port"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "Text för att återställa lösenord",
+    "value": "Generera nytt slumpmässigt lösenord vid sparande"
+  },
+  "configDetail.usernameHint": {
+    "description": "Tips för användarnamnsfältet",
+    "value": "Ange användarnamnet för åtkomst till MPS"
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "Platshållartext för fältet för användarnamn",
+    "value": "Användarnamn"
+  },
+  "configs.ciraNoData": {
+    "description": "Inget CIRA-konfigurationsmeddelande",
+    "value": "Inga CIRA-konfigurationer"
+  },
+  "configs.delete": {
+    "description": "Meddelande om radering av CIRA-konfigurationer",
+    "value": "CIRA-konfigurationen har raderats"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "Fel vid radering av CIRA-konfigurationer",
+    "value": "Det går inte att radera CIRA-konfigurationer"
+  },
+  "configs.failLoadConfigs": {
+    "description": "Fel vid laddning av CIRA-konfigurationer",
+    "value": "Det går inte att ladda CIRA-konfigurationer"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "Ny titel på CIRA-konfigurationssidan",
+    "value": "Ny CIRA-konfiguration"
+  },
+  "configs.header.ciraTitle": {
+    "description": "CIRA Configs titel",
+    "value": "CIRA-konfigurationer"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "CIRA Configs-titel när den inte är tillgänglig",
+    "value": "Ej tillgängligt"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "Första sidan"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "Antal objekt per sida:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "Sista sidan"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "Nästa sida"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "Föregående sida"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} – {{endIndex}} av {{length}}"
+  },
+  "configs.success": {
+    "description": "Meddelande för att skapa CIRA-konfigurationer",
+    "value": "CIRA- {{reqType}} en skapades framgångsrikt"
+  },
+  "configs.table.ciraCert": {
+    "description": "Cert Common Name-kolumnrubrik",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "MPS Server-kolumnrubrik",
+    "value": "MPS-server"
+  },
+  "configs.table.ciraName": {
+    "description": "Namn på kolumnrubrik",
+    "value": "Namn"
+  },
+  "configs.table.ciraPort": {
+    "description": "Portkolumnrubrik",
+    "value": "Port"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "MPS Root Cert kolumnrubrik",
+    "value": "MPS-rotcertifikat"
+  },
+  "configs.table.ciraUsername": {
+    "description": "Rubriken för kolumnen Användarnamn",
+    "value": "Användarnamn"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "Verktygstips för att lägga till en ny enhet",
+    "value": "Lägg till en ny enhet som kan hanteras av konsolen"
+  },
+  "dashboard.addNewDevice": {
+    "description": "Steg för att lägga till en ny enhet",
+    "value": "1. Lägg till en ny enhet"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "Steg för att lägga till ett provisioneringscertifikat",
+    "value": "Lägg till ett provisioneringscertifikat [valfritt]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "Steg för att skapa en CIRA-konfiguration",
+    "value": "Skapa en CIRA-konfiguration"
+  },
+  "dashboard.createProfile": {
+    "description": "Steg för att skapa en profil",
+    "value": "Skapa en profil"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "Steg för att skapa en trådlös konfiguration",
+    "value": "Skapa trådlös konfiguration [valfritt]"
+  },
+  "dashboard.deploy": {
+    "description": "Distribuera verktygslådan",
+    "value": "Distribuera"
+  },
+  "dashboard.deployDescription": {
+    "description": "Beskrivning för distribution",
+    "value": "Redo att gå vidare till produktion? Kolla in vår implementeringsguide (kommer snart)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "Antal anslutna enheter",
+    "value": "Anslutna enheter"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "Antal frånkopplade enheter",
+    "value": "Enheter frånkopplade"
+  },
+  "dashboard.error": {
+    "description": "Fel vid hämtning av enhetsstatistik",
+    "value": "Fel vid hämtning av enhetsstatistik"
+  },
+  "dashboard.getStarted": {
+    "description": "Kom igång med verktygslådan",
+    "value": "Kom igång"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "Beskrivning för att komma igång",
+    "value": "Är du ny på verktygslådan? Se dokumentationen för att lära dig grunderna först."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "Dashboard-titel",
+    "value": "Dashboard"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "Steg för att hantera din enhet",
+    "value": "2. Hantera din enhet"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "Steg för att hantera din enhet igen",
+    "value": "Hantera din enhet"
+  },
+  "dashboard.totalDevices": {
+    "description": "Totalt antal enheter",
+    "value": "Totalt antal enheter"
+  },
+  "dashboard.understandSecurity": {
+    "description": "Förstå säkerhetsfrågor",
+    "value": "Förstå säkerhet"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "Beskrivning för att förstå säkerhet",
+    "value": "Är du osäker på säkerhetsfrågor? Lär dig mer om lösenord, Vault, certifikat och mycket mer."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "Verktygstips för användning av enhetsåtgärder",
+    "value": "Använd enhetsåtgärder för att styra en lista med enheter"
+  },
+  "delete.question": {
+    "description": "Fråga om radering av poster",
+    "value": "Är du säker?"
+  },
+  "delete.questionRecord": {
+    "description": "Fråga om radering av poster",
+    "value": "Är du säker på att du vill ta bort posten/posterna?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "Text för vanligt namn",
+    "value": "Vanligt namn:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "Text för DNS-namn",
+    "value": "DNS-namn:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "Text för utfärdarens namn",
+    "value": "Utfärdares namn:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "Text för efter datum",
+    "value": "Inte efter:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "Text för datum före",
+    "value": "Inte före:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "Text för algoritm för offentlig nyckel",
+    "value": "Algoritm för offentlig nyckel:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "Text för storlek på offentlig nyckel",
+    "value": "Storlek på offentlig nyckel:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "Text för serienamn",
+    "value": "Serienummer:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "Text för SHA-1-fingeravtryck",
+    "value": "SHA-1-fingeravtryck:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "Text för SHA-256-fingeravtryck",
+    "value": "SHA-256-fingeravtryck:"
+  },
+  "deviceCertificate.title": {
+    "description": "Titel för certifikatdetaljer",
+    "value": "Certifikatdetaljer"
+  },
+  "deviceDetail.alarms": {
+    "description": "Kategorinamn för enhetslarm",
+    "value": "Larm"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "Beskrivning för larm",
+    "value": "Hantera enhetslarm"
+  },
+  "deviceDetail.auditLog": {
+    "description": "Kategorinamn för revisionslogg",
+    "value": "Revisionslogg"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "Beskrivning för revisionslogg",
+    "value": "Visa enhetsrevisionslogg"
+  },
+  "deviceDetail.certificates": {
+    "description": "Kategorinamn för certifikat",
+    "value": "Certifikat"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "Beskrivning för certifikat",
+    "value": "Hantera certifikat"
+  },
+  "deviceDetail.eventLog": {
+    "description": "Kategorinamn för händelselogg",
+    "value": "Händelselogg"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "Beskrivning för händelselogg",
+    "value": "Visa enhetshändelser"
+  },
+  "deviceDetail.explorer": {
+    "description": "Kategorinamn för utforskaren",
+    "value": "Explorer"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "Beskrivning för utforskaren",
+    "value": "Skicka WSMAN-kommandon"
+  },
+  "deviceDetail.general": {
+    "description": "Kategorinamn för allmän information om enheten",
+    "value": "Allmän information om AMT"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "Beskrivning av allmän enhetsinformation",
+    "value": "AMT-version och funktioner"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "Kategorinamn för hårdvaruinformation",
+    "value": "Hårdvaruinformation"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "Beskrivning av hårdvaruinformation",
+    "value": "Minne, CPU, etc..."
+  },
+  "deviceDetail.kvm": {
+    "description": "Kategorinamn för KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "Beskrivning för KVM",
+    "value": "Fjärrstyra enhet"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "Kategorinamn för nätverksinställningar",
+    "value": "Nätverksinställningar"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "Beskrivning av nätverksinställningar",
+    "value": "Visa nätverksinställningar"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "Kategorinamn för inga händelseloggar",
+    "value": "Ingen händelselogg"
+  },
+  "deviceDetail.sol": {
+    "description": "Kategorinamn för Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "Beskrivning för SOL",
+    "value": "Serial Over LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "Kategorinamn för TLS-inställningar",
+    "value": "TLS-inställningar"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "Beskrivning av TLS-inställningar",
+    "value": "Visa TLS-konfiguration"
+  },
+  "devices.actions.deactivate": {
+    "description": "Verktygstips för att inaktivera/ta bort en enhet",
+    "value": "Inaktivera enheten"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "Verktygstips för att inaktivera en enhet i molnläge",
+    "value": "Inaktivera enheten"
+  },
+  "devices.actions.edit": {
+    "description": "Verktygstips för redigering av en enhet",
+    "value": "Redigera enhet"
+  },
+  "devices.actions.powerOff": {
+    "description": "Verktygstips för att stänga av en enhet",
+    "value": "Stäng av enheten"
+  },
+  "devices.actions.powerUp": {
+    "description": "Verktygstips för att starta en enhet",
+    "value": "Starta enheten"
+  },
+  "devices.actions.remove": {
+    "description": "Verktygstips för att ta bort en enhet i icke-molnläge",
+    "value": "Ta bort enheten"
+  },
+  "devices.actions.reset": {
+    "description": "Verktygstips för att återställa en enhet",
+    "value": "Återställ enheten"
+  },
+  "devices.actions.restart": {
+    "description": "Verktygstips för att starta om en enhet",
+    "value": "Starta om enheten"
+  },
+  "devices.addDevice": {
+    "description": "Meddelande om ny enhet",
+    "value": "Lägg till en ny enhet"
+  },
+  "devices.bulk.deactivate": {
+    "description": "Verktygstips för massinaktivering",
+    "value": "Ta bort eller inaktivera valda enheter"
+  },
+  "devices.bulk.powerOff": {
+    "description": "Verktygstips för massavstängning",
+    "value": "Stäng av valda enheter"
+  },
+  "devices.bulk.powerUp": {
+    "description": "Verktygstips för bulk-power-up-åtgärd",
+    "value": "Starta utvalda enheter"
+  },
+  "devices.bulk.restart": {
+    "description": "Verktygstips för massomstart",
+    "value": "Starta om valda enheter"
+  },
+  "devices.deactivation": {
+    "description": "Meddelande för avaktiveringar",
+    "value": "Avaktivering skickad"
+  },
+  "devices.editDevice": {
+    "description": "Verktygstips för redigering av en enhet",
+    "value": "Redigera enheten"
+  },
+  "devices.editTags": {
+    "description": "Knapptext för redigering av taggar",
+    "value": "Redigera taggar"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "Fel vid avaktivering av enheter",
+    "value": "Fel vid avaktivering av enheter"
+  },
+  "devices.errorDeactivation": {
+    "description": "Fel vid sändning av avaktiveringar",
+    "value": "Fel vid avaktivering"
+  },
+  "devices.errorInitializing": {
+    "description": "Fel vid initialisering",
+    "value": "Fel vid initialisering"
+  },
+  "devices.errorLoadDevices": {
+    "description": "Fel vid laddning av enheter",
+    "value": "Fel vid laddning av enheter"
+  },
+  "devices.errorLoadTags": {
+    "description": "Fel vid laddning av taggar",
+    "value": "Fel vid laddning av taggar"
+  },
+  "devices.errorPowerAction": {
+    "description": "Fel för kraftfulla åtgärder",
+    "value": "Fel vid sändning av kraftåtgärd"
+  },
+  "devices.failPowerAction": {
+    "description": "Fel vid strömförsörjningsåtgärder",
+    "value": "Strömåtgärden misslyckades"
+  },
+  "devices.filter.searchHint": {
+    "description": "Tips under sökfältet för enheter",
+    "value": "Ange text för att filtrera aktuell sida"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "Platshållartext för enhetssökrutan",
+    "value": "Filtrera enheter...."
+  },
+  "devices.filter.tags": {
+    "description": "Etikett för filtrering av enheter efter taggar",
+    "value": "Filtrera taggar"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "Lägg till beskrivning av certifikatdialogrutan",
+    "value": "Certifikatet kommer att läggas till i AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "Lägg till dialogrutans titel för certifikat",
+    "value": "Lägg till certifikat"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "HTTPS Boot-dialogbeskrivning",
+    "value": "HTTPS Network Boot säkrar startprocessen med krypterad HTTPS för att skydda startfilerna. Starta One Click Recovery för att snabbt återställa operativsystemet."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "HTTPS Boot-dialogrutans titel",
+    "value": "HTTPS Nätverksstart (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "Beskrivning av dialogrutan PBA Boot",
+    "value": "En PBA (Pre-Boot Application) är ett återställnings- eller diagnostikverktyg som installeras lokalt på systemet och kan väljas som startalternativ för Intel One-Click Recovery-operationer."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "Titel på dialogrutan för PBA Boot",
+    "value": "Lokal PBA-stövel (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "Sidans titel för enheter",
+    "value": "Enheter"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "Verktygstips för att komma åt fler strömalternativ för en enhet",
+    "value": "Fler strömalternativ..."
+  },
+  "devices.noData": {
+    "description": "Meddelande när inga enheter finns",
+    "value": "Inga enheter hittades"
+  },
+  "devices.noDataFilter": {
+    "description": "Meddelande när filterresultaten är tomma",
+    "value": "Inga enheter matchar aktuellt filter"
+  },
+  "devices.notification.error": {
+    "description": "Verktygstips som visas när en åtgärd misslyckas",
+    "value": "Fel vid sändning av åtgärd"
+  },
+  "devices.notification.notReady": {
+    "description": "Verktygstips visas när enheten inte är klar",
+    "value": "Power-åtgärd skickad, men enheten svarade med att den inte var redo"
+  },
+  "devices.notification.success": {
+    "description": "Verktygstips som visas när en åtgärd lyckas",
+    "value": "Åtgärden har skickats"
+  },
+  "devices.powerActionNotReady": {
+    "description": "Fel för skickade kraftåtgärder som inte är klara",
+    "value": "Power-åtgärd skickad men inte klar"
+  },
+  "devices.powerActionSent": {
+    "description": "Meddelande för kraftfulla åtgärder",
+    "value": "Power-åtgärd skickad"
+  },
+  "devices.table.actions": {
+    "description": "Tabellkolumnrubrik för åtgärder",
+    "value": "Åtgärder"
+  },
+  "devices.table.guid": {
+    "description": "Tabellkolumnrubrik för GUID",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "Tabellkolumnrubrik för värdnamn",
+    "value": "Värdnamn"
+  },
+  "devices.table.status": {
+    "description": "Tabellkolumnrubrik för enhetsstatus",
+    "value": "Status"
+  },
+  "devices.table.tags": {
+    "description": "Tabellkolumnrubrik för taggar",
+    "value": "Taggar"
+  },
+  "deviceUserConsent.description": {
+    "description": "Beskrivning av användarens samtycke för enheter",
+    "value": "En användarkod genererad av Intel AMT krävs för att få åtkomst till systemet."
+  },
+  "deviceUserConsent.error": {
+    "description": "Fel för användarens samtycke för enheter",
+    "value": "Detta fält är obligatoriskt och värdet måste vara ett sexsiffrigt tal."
+  },
+  "deviceUserConsent.hint": {
+    "description": "Tips för användarens samtycke för enheter",
+    "value": "Ange användarens samtyckeskod som visas på målvärdens monitor."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "Platshållare för användarens samtycke för enheter",
+    "value": "Kod för användarens samtycke"
+  },
+  "deviceUserConsent.title": {
+    "description": "Titel för användarens samtycke för enheter",
+    "value": "Användarens samtycke"
+  },
+  "domainDetail.completeProfile": {
+    "description": "Meddelande för färdiga domänprofiler",
+    "value": "Domänprofil sparad"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "Fel för raderade domänprofiler",
+    "value": "Fel vid skapande/uppdatering av domänprofil"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Felmeddelande för brott mot unik nyckel",
+    "value": "Domänens NewDomain ID eller suffix finns redan"
+  },
+  "domainDetail.fqdn": {
+    "description": "Tips för fältet FQDN",
+    "value": "Ange FQDN som är associerat med provisioneringscertifikatet (dvs. amtdomain.com)"
+  },
+  "domainDetail.nameHint": {
+    "description": "Tips för fältet för domännamn",
+    "value": "Ange ett namn för denna domän (t.ex. AMT-domän)"
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "Platshållare för domännamnet",
+    "value": "Domännamn"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "Platshållare för lösenordet till provisioneringscertifikatet",
+    "value": "Provisionering av certifikatlösenord"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "Tips för lösenordet till provisioneringscertifikatet",
+    "value": "Lösenordet för provisioneringscertifikatet"
+  },
+  "domains.certExpired": {
+    "description": "Meddelande om utgångna certifikat",
+    "value": "{{count}} domäncertifikatet/domäncertifikaten har gått ut "
+  },
+  "domains.certExpring": {
+    "description": "Meddelande om certifikat som löper ut",
+    "value": "{{count}} domäncertifikatet/domäncertifikaten kommer snart att upphöra att gälla "
+  },
+  "domains.daysRemaining": {
+    "description": "Meddelande för återstående dagar",
+    "value": " dagar kvar"
+  },
+  "domains.delteDomain": {
+    "description": "Meddelande om radering av domäner",
+    "value": "Domän raderad"
+  },
+  "domains.expired": {
+    "description": "Meddelande för utgångna domäner",
+    "value": "Utgången"
+  },
+  "domains.failLoadDomain": {
+    "description": "Fel vid laddning av domäner",
+    "value": "Det går inte att ladda domäner"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "Fel vid radering av domäner",
+    "value": "Det går inte att ta bort domänen"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "Ny domänsidans titel",
+    "value": "Ny domän"
+  },
+  "domains.header.domainsTitle": {
+    "description": "Domäners sidtitel",
+    "value": "Domäner"
+  },
+  "domains.monthsRemaining": {
+    "description": "Meddelande för återstående månader",
+    "value": " Återstående månader"
+  },
+  "domains.noData": {
+    "description": "Inget domänmeddelande",
+    "value": "Inga domäner"
+  },
+  "domains.table.domainSuffix": {
+    "description": "Kolumnrubrik för domänsuffix",
+    "value": "Domänsuffix"
+  },
+  "domains.table.expirationDate": {
+    "description": "Kolumnrubrik för utgångsdatum",
+    "value": "Utgångsdatum"
+  },
+  "domains.table.name": {
+    "description": "Namn på kolumnrubrik",
+    "value": "Namn"
+  },
+  "domains.yearsRemaining": {
+    "description": "Meddelande för återstående år",
+    "value": " År kvar"
+  },
+  "editTags.description": {
+    "description": "Beskrivning för redigering av taggar",
+    "value": "Lägg till en tagg genom att klicka i prompten, skriva in taggnamnet och sedan trycka på Enter eller komma."
+  },
+  "editTags.header": {
+    "description": "Rubrik för redigering av taggar",
+    "value": "Ta bort en tagg genom att klicka på själva taggen."
+  },
+  "editTags.placeholder": {
+    "description": "Platshållare för redigering av taggar",
+    "value": "Ny tagg..."
+  },
+  "editTags.title": {
+    "description": "Titel för redigering av taggar",
+    "value": "Redigera taggar"
+  },
+  "error.deviceNotResponding": {
+    "description": "Meddelande som visas när enheten går i timeout",
+    "value": "Enheten svarade inte. Kontrollera anslutningsinställningarna och försök igen."
+  },
+  "error.itemModified": {
+    "description": "Meddelande som visas när objektet är inaktuellt",
+    "value": "Denna artikel har ändrats sedan den laddades. Ladda om sidan."
+  },
+  "error.kvmConnection": {
+    "description": "Fel visas vid anslutning till KVM",
+    "value": "Anslutningen till KVM misslyckades. Endast en session per enhet är tillåten. Se också till att din token är giltig och att du har åtkomst."
+  },
+  "error.sessionTimedOut": {
+    "description": "Meddelande som visas när användarsessionen har löpt ut",
+    "value": "Sessionen har gått ut. Logga in igen."
+  },
+  "error.unableToSendCode": {
+    "description": "Fel som visas när det inte går att skicka användarens samtyckeskod, inklusive backend-felmeddelandet",
+    "value": "Kan inte skicka kod: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "Generiskt fel när avbrytande av användarens samtyckeskod misslyckas",
+    "value": "Fel vid avbrytande av användarens samtyckeskod"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "Fel när avbrytande av begärd användarkod misslyckas",
+    "value": "{{featureName}} kan inte nås – misslyckades med att avbryta begärd användarkod"
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "Fel vid avbrytande av begärd användarkod lyckas",
+    "value": "{{featureName}} kan inte nås – begärd användarkod har annullerats"
+  },
+  "error.userConsentCodeFailed": {
+    "description": "Fel visas när begäran om användarens samtyckeskod misslyckas för en funktion",
+    "value": "{{featureName}} kan inte nås – misslyckades med att begära användarens samtyckeskod"
+  },
+  "error.userConsentSendFailed": {
+    "description": "Fel vid sändning av användarens samtyckeskod misslyckas",
+    "value": "{{featureName}} kan inte nås – misslyckades med att skicka användarens samtyckeskod"
+  },
+  "error.userConsentUnsupported": {
+    "description": "Fel vid sändning av en icke-stödd användarkod",
+    "value": "{{featureName}} kan inte nås – användarkod som inte stöds"
+  },
+  "event.errorLog": {
+    "description": "Fel vid hämtning av händelseloggar",
+    "value": "Fel vid hämtning av händelselogg"
+  },
+  "eventLog.download": {
+    "description": "Knapp för nedladdning av händelseloggen",
+    "value": "Ladda ner händelselogg (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "Titel för händelseloggposter",
+    "value": "Händelselogg ({{count}} -poster)"
+  },
+  "eventLog.eventType": {
+    "description": "Meddelande för händelseloggtyper",
+    "value": "Händelsetyp"
+  },
+  "eventLog.severity": {
+    "description": "Meddelande för allvarlighetsgrader i händelseloggen",
+    "value": "Allvarlighetsgrad"
+  },
+  "eventLog.source": {
+    "description": "Meddelande för händelseloggkällor",
+    "value": "Källa"
+  },
+  "explorer.errorResponse": {
+    "description": "Fel vid hämtning av explorer-svar",
+    "value": "Fel vid hämtning av explorer-svar"
+  },
+  "explorer.placeHolder": {
+    "description": "Platshållare för WSMAN Explorer",
+    "value": "Välj..."
+  },
+  "explorer.WSMANCall": {
+    "value": "WSMAN-samtal"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "Knapptext för lägg till domäner",
+    "value": "Lägg till domäner"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "Möjlighet att lägga till domäner först",
+    "value": "Lägg till domäner först (krävs för ACM-aktivering)"
+  },
+  "exportDialog.domainSuffix": {
+    "description": "Etikett för domänsuffixfält",
+    "value": "domänsuffix"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "Felmeddelandehuvud för laddning av domäner",
+    "value": "Fel vid laddning av domäner:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "Laddar meddelande för domäner",
+    "value": "Laddar domäner..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "Meddelande när inga domäner är konfigurerade",
+    "value": "Inga domäner är konfigurerade. Du kan antingen:"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "Felmeddelande för domänval krävs",
+    "value": "Välj en domän"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "Undertext för exportdialogens domänval",
+    "value": "Den valda domänen kommer att inkluderas i profilen för användning med"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "Titel för exportdialogens domänval",
+    "value": "Välj domänsuffix"
+  },
+  "exportDialog.skipDomain": {
+    "description": "Knapptext för hoppa över domän",
+    "value": "Hoppa över domän"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "Möjlighet att hoppa över domänen om den redan är aktiverad",
+    "value": "Klicka på ”Skip Domain” om enheten redan har aktiverats."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "Instruktioner för funktionen för att hoppa över domän",
+    "value": "Klicka på ”Hoppa över domän” om enheten redan har aktiverats. Om enheten ännu inte har aktiverats måste du välja en domän för ACM-aktivering."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "Felmeddelande för obligatoriska fält",
+    "value": "Detta fält är obligatoriskt och måste innehålla alfanumeriska tecken utan mellanslag eller symboler."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "Text för obligatoriska alfanumeriska fält och fält med maximal längd",
+    "value": "Detta fält är obligatoriskt, måste vara alfanumeriskt (inga mellanslag) och får inte vara längre än {{profileNameMaxLen}} tecken."
+  },
+  "fieldRequired.long": {
+    "description": "Tips för obligatoriska fält med teckenbegränsning",
+    "value": "Detta fält är obligatoriskt och måste innehålla mellan 8 och 32 tecken."
+  },
+  "fieldRequired.short": {
+    "description": "Tips för obligatoriska fält",
+    "value": "Detta fält är obligatoriskt"
+  },
+  "general.amtBuild": {
+    "description": "Etikett för AMT Build",
+    "value": "AMT Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "Etikett för AMT DHCP DNS-suffix",
+    "value": "AMT DHCP DNS-suffix:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "Titel för kortet AMT-aktiverade funktioner",
+    "value": "AMT-aktiverade funktioner"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "Beskrivning för kortet AMT-aktiverade funktioner",
+    "value": "Status för AMT-aktiverade funktioner"
+  },
+  "general.AMTFeatures": {
+    "description": "Meddelande om uppdaterade funktioner",
+    "value": "AMT-funktioner uppdaterade"
+  },
+  "general.amtSKU": {
+    "description": "Etikett för AMT SKU",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "Titel för AMT-sammanfattningskort",
+    "value": "AMT-sammanfattning"
+  },
+  "general.amtSummaryDescription": {
+    "description": "Beskrivning för AMT-sammanfattningskort",
+    "value": "Sammanfattning av AMT-information"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "Etikett för AMT Trusted DNS Suffix",
+    "value": "AMT Trusted DNS Suffix (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "Etikett för AMT-version",
+    "value": "AMT-version:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "Fel vid hämtning av AMT-funktioner",
+    "value": "Fel vid hämtning av AMT-funktioner"
+  },
+  "general.errorAMTVersion": {
+    "description": "Fel vid hämtning av AMT-version",
+    "value": "Fel vid hämtning av AMT-version"
+  },
+  "general.errorGeneralSettings": {
+    "description": "Fel vid hämtning av allmänna inställningar",
+    "value": "Fel vid hämtning av allmänna inställningar"
+  },
+  "general.failAMTFeatures": {
+    "description": "Fel vid uppdatering av funktioner",
+    "value": "Misslyckades med att uppdatera AMT-funktioner"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "Verktygstips för HTTPS Boot stöds inte",
+    "value": "HTTPS Boot stöds inte"
+  },
+  "general.httpsBootSupported": {
+    "description": "Verktygstips för HTTPS Boot stöds",
+    "value": "HTTPS Boot stöds"
+  },
+  "general.httpsNetworkBoot": {
+    "description": "Etikett för HTTPS Nätverksstart",
+    "value": "HTTPS Nätverksstart:"
+  },
+  "general.ideRedirection": {
+    "description": "Etikett för IDE-omdirigering",
+    "value": "IDE-omdirigering:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "Etikett för KVM",
+    "value": "Tangentbord-video-mus (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "Verktygstips för KVM stöds inte",
+    "value": "KVM stöds inte"
+  },
+  "general.oneClickRecovery": {
+    "description": "Etikett för återställning med ett klick",
+    "value": "One Click Recovery (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "Verktygstips för återställning med ett klick stöds inte",
+    "value": "Återställning med ett klick stöds inte."
+  },
+  "general.pbaBootShort": {
+    "description": "Etikett för PBA-start",
+    "value": "PBA-start:"
+  },
+  "general.pbaNotSupported": {
+    "description": "Verktygstips för PBA stöds inte",
+    "value": "PBA stöds inte."
+  },
+  "general.pbaSupported": {
+    "description": "Verktygstips för PBA-stöd",
+    "value": "PBA stöds"
+  },
+  "general.provisioningMode": {
+    "description": "Etikett för provisioneringsläge",
+    "value": "Provisioneringsläge:"
+  },
+  "general.serialOverLan": {
+    "description": "Etikett för SOL",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "Etikett för användarens samtycke",
+    "value": "Användarens samtycke:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "Verktygstips för användarens samtycke kan inte konfigureras",
+    "value": "Användarens samtycke kan inte konfigureras i CCM"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Etikett för Windows Recovery Boot",
+    "value": "Windows Recovery Boot:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Verktygstips för Windows Återställning stöds inte",
+    "value": "Windows Recovery stöds inte"
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Verktygstips för Windows Återställning stöds",
+    "value": "Windows Recovery stöds"
+  },
+  "httpBoot.enforce": {
+    "value": "Tillämpa säker uppstart"
+  },
+  "httpBoot.error": {
+    "value": "URL krävs"
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "Ange URL-adressen"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "Sammanfattning av BIOS-information"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "BIOS-sammanfattning"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "Fel vid hämtning av ytterligare information",
+    "value": "Fel vid hämtning av ytterligare information"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "Fel vid hämtning av hårdvaruinformation",
+    "value": "Fel vid hämtning av HW-information"
+  },
+  "hwInfo.label.capacity": {
+    "value": "Kapacitet:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "Klockhastighet (max):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "Tillverkare:"
+  },
+  "hwInfo.label.model": {
+    "value": "Modell:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "Utgivningsdatum:"
+  },
+  "hwInfo.label.serial": {
+    "value": "Serienummer:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "Serienummer:"
+  },
+  "hwInfo.label.size": {
+    "value": "Storlek:"
+  },
+  "hwInfo.label.slot": {
+    "value": "Slot:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "Mål-OS:"
+  },
+  "hwInfo.label.type": {
+    "value": "Typ:"
+  },
+  "hwInfo.label.version": {
+    "value": "Version:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "Sammanfattning av installerat fysiskt minne"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "Minnesöversikt"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "Sammanfattning av information om moderkort"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "Moderkort Sammanfattning"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "Sammanfattning av lagringsinformation"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "Sammanfattning av lagring"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "Sammanfattning av information om CPU och chassi"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "Systemöversikt"
+  },
+  "ieee.authProtocol": {
+    "description": "Text för autentiseringsprotokoll",
+    "value": "Autentiseringsprotokoll"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "Feltext för ieee-profiler",
+    "value": "Fel vid skapande/uppdatering av ieee8021x-profil"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "Fel vid laddning av IEEE8021x-konfigurationer",
+    "value": "Kan inte ladda IEEE8021x-konfigurationer"
+  },
+  "ieee.PXETimeout": {
+    "description": "Text för PXE-timeout",
+    "value": "PXE-timeout"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "Feltext för PXE-timeout",
+    "value": "Värdet måste ligga mellan {{pxeTimeoutMin}} (inaktiverat) och {{pxeTimeoutMax}} sekunder (en dag)."
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "IEEE 802.1x sidtitel",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "Ny titel på konfigurationssidan för IEEE8021x",
+    "value": "Ny IEEE8021x-konfiguration"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "IEEE8021x Configs sidtitel",
+    "value": "IEEE8021x-konfigurationer"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "Inget IEEE 8021x-konfigurationsmeddelande",
+    "value": "Inga IEEE 8021x-konfigurationer"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "Kolumnrubrik för autentiseringsprotokoll",
+    "value": "Autentiseringsprotokoll"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "Gränssnittets kolumnrubrik",
+    "value": "Gränssnitt"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "Namn på kolumnrubrik",
+    "value": "Namn"
+  },
+  "keyDisplayDialog.description": {
+    "description": "Beskrivning för dialogrutan för nyckelvisning",
+    "value": "Nyckeln visas endast en gång. Använd denna nyckel för att avkoda den krypterade profilen för användning med rpc-go."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "Etikett för nyckel",
+    "value": "Nyckel"
+  },
+  "keyDisplayDialog.title": {
+    "description": "Titel för dialogrutan för nyckelvisning",
+    "value": "Profilnyckel för RPC-GO"
+  },
+  "kvm.attachDisk.label": {
+    "description": "Knappetikett för att bifoga en diskbild för IDER",
+    "value": "Bifoga diskavbildning (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "Etikett för rullgardinsmenyn för kodningstyp i KVM-verktygsfältet",
+    "value": "Välj kodningstyp"
+  },
+  "kvm.connect.button": {
+    "description": "Knappetikett för anslutning till KVM-session",
+    "value": "Anslut KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "Etikett som visas när KVM ansluter",
+    "value": "Ansluter KVM..."
+  },
+  "kvm.disconnect.button": {
+    "description": "Knappetikett för att koppla bort från KVM-sessionen",
+    "value": "Koppla bort KVM"
+  },
+  "kvm.enable": {
+    "description": "Meddelande för att aktivera KVM",
+    "value": "KVM är för närvarande inte aktiverat på den här enheten. Vill du aktivera det?"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "Fel vid åtkomst när begäran om aktivering avbryts",
+    "value": "KVM kan inte nås – begäran om att aktivera KVM har avbrutits."
+  },
+  "kvm.errorAccessEnable": {
+    "description": "Fel vid åtkomst när du begär att aktivera",
+    "value": "KVM kan inte nås – det gick inte att aktivera KVM"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "Fel vid åtkomst när en session pågår",
+    "value": "KVM kan inte nås – en annan kvm-session pågår"
+  },
+  "kvm.errorDialog": {
+    "description": "Fel vid visning av KVM-dialogrutan",
+    "value": "Det går inte att visa KVM-dialogrutan"
+  },
+  "kvm.errorRetrieve": {
+    "description": "Fel vid hämtning av omdirigeringsstatus",
+    "value": "Fel vid hämtning av omdirigeringsstatus"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "Fel vid hämtning av strömstatus",
+    "value": "Fel vid hämtning av strömstatus"
+  },
+  "kvm.fullscreen.button": {
+    "description": "Knappetikett för att växla till helskärmsläge i KVM",
+    "value": "Helskärm"
+  },
+  "kvm.hotKeys.label": {
+    "description": "Etikett för rullgardinsmenyn med snabbtangenter i KVM-verktygsfältet",
+    "value": "Snabbtangenter"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "Platshållartext för rullgardinsmenyn med snabbtangenter",
+    "value": "Välj snabbtangent för att skicka"
+  },
+  "kvm.hotKeys.send": {
+    "description": "Knappetikett för att skicka den valda snabbtangenten",
+    "value": "Skicka"
+  },
+  "kvm.stopIder.label": {
+    "description": "Knappetikett för att avsluta IDER-sessionen",
+    "value": "Stoppa IDER"
+  },
+  "kvm.title": {
+    "description": "Titel för KVM",
+    "value": "Aktivera KVM"
+  },
+  "login.error": {
+    "description": "Fel vid inloggning",
+    "value": "Fel vid inloggning"
+  },
+  "login.header.loginTitle": {
+    "description": "Titel på inloggningssidan",
+    "value": "Inloggning"
+  },
+  "mqttEvents.connect": {
+    "description": "Anslut knapptext för MQTT",
+    "value": "Anslut"
+  },
+  "mqttEvents.connected": {
+    "description": "Verktygstips när MQTT-anslutningen är lyckad",
+    "value": "Anslutning upprättad"
+  },
+  "mqttEvents.failed": {
+    "description": "Verktygstips när MQTT-anslutningen misslyckas",
+    "value": "Anslutningen misslyckades"
+  },
+  "mqttEvents.guid.label": {
+    "description": "Tabellrubrik för MQTT-händelse-GUID",
+    "value": "Guid"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "Tips för inmatning av MQTT-värdnamn",
+    "value": "Ange ett värdnamn. Standardvärdet är localhost."
+  },
+  "mqttEvents.hostname.label": {
+    "description": "Etikett för inmatning av MQTT-värdnamn",
+    "value": "Värdnamn"
+  },
+  "mqttEvents.message.label": {
+    "description": "Tabellrubrik för MQTT-händelsemeddelande",
+    "value": "Meddelande"
+  },
+  "mqttEvents.methods.label": {
+    "description": "Tabellrubrik för MQTT-händelsemetoder",
+    "value": "Metoder"
+  },
+  "mqttEvents.noData": {
+    "description": "Text som visas när det inte finns några MQTT-händelser",
+    "value": "Inga evenemang"
+  },
+  "mqttEvents.path.hint": {
+    "description": "Tips för MQTT-sakinmatning",
+    "value": "Ange MQTT-sökväg. Standardvärdet är /mqtt"
+  },
+  "mqttEvents.path.label": {
+    "description": "Etikett för MQTT-slinginmatning",
+    "value": "Sökväg"
+  },
+  "mqttEvents.port.hint": {
+    "description": "Tips för MQTT-portinmatning",
+    "value": "Ange MQTT-port. Standardvärdet är 9001."
+  },
+  "mqttEvents.port.label": {
+    "description": "Etikett för MQTT-portingång",
+    "value": "Port"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "Tabellrubrik för MQTT-händelsens tidsstämpel",
+    "value": "Tidsstämpel"
+  },
+  "mqttEvents.title": {
+    "description": "Titel på MQTT-händelsekortet med dynamisk räkning",
+    "value": "MQTT-händelser ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "Tabellrubrik för MQTT-händelsetyp",
+    "value": "Typ"
+  },
+  "network.errorNetworkSetting": {
+    "description": "Fel vid hämtning av nätverksinställningar",
+    "value": "Fel vid hämtning av nätverksinställningar"
+  },
+  "network.ieee.authProtocol": {
+    "description": "Etikett för IEEE 8021x trådlöst autentiseringsprotokoll",
+    "value": "Autentiseringsprotokoll"
+  },
+  "network.ieee.availableInS0": {
+    "description": "Etikett för IEEE 8021x trådbundet tillgängligt i S0",
+    "value": "Tillgängligt i S0"
+  },
+  "network.ieee.domain": {
+    "description": "Etikett för IEEE 8021x trådlös domän",
+    "value": "Domän"
+  },
+  "network.ieee.enabled": {
+    "description": "Etikett för IEEE 8021x trådbundet aktiverat",
+    "value": "Aktiverat"
+  },
+  "network.ieee.pac": {
+    "description": "Etikett för IEEE 8021x trådlös PAC",
+    "value": "Skyddad åtkomstbehörighet"
+  },
+  "network.ieee.pacPassword": {
+    "description": "Etikett för IEEE 8021x trådlöst PAC-lösenord",
+    "value": "PAC-lösenord"
+  },
+  "network.ieee.password": {
+    "description": "Etikett för IEEE 8021x trådlöst lösenord",
+    "value": "Lösenord"
+  },
+  "network.ieee.psk": {
+    "description": "Etikett för IEEE 8021x trådlös PSK",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "Etikett för IEEE 8021x trådbunden PXE-timeout",
+    "value": "PXE-timeout"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "Etikett för IEEE 8021x trådlös roamingidentitet",
+    "value": "Roaming-identitet"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "Etikett för jämförelse av certifikatnamn för IEEE 8021x trådlösa servrar",
+    "value": "Jämförelse av serverns certifikatnamn"
+  },
+  "network.ieee.serverCertName": {
+    "description": "Etikett för IEEE 8021x trådlöst servercertifikatnamn",
+    "value": "Serverns certifikatnamn"
+  },
+  "network.ieee.subtitle": {
+    "description": "Undertext för IEEE 8021x-nätverksinställningskortet",
+    "value": "Visa IEEE 8021x-nätverksinställningar för den här enheten"
+  },
+  "network.ieee.title": {
+    "description": "Titel på IEEE 8021x-kortet för nätverksinställningar",
+    "value": "IEEE 8021x-nätverksinställningar"
+  },
+  "network.ieee.username": {
+    "description": "Etikett för IEEE 8021x trådlöst användarnamn",
+    "value": "Användarnamn"
+  },
+  "network.wired.defaultGateway": {
+    "description": "Etikett för den trådbundna standardgatewayen",
+    "value": "Standardgateway"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "Etikett för status för trådbundet DHCP-aktiverat",
+    "value": "DHCP aktiverat"
+  },
+  "network.wired.ipAddress": {
+    "description": "Etikett för den trådbundna IP-adressen",
+    "value": "IP-adress"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "Etikett för status för aktiverad trådbunden IP-synkronisering",
+    "value": "IP-synkronisering aktiverad"
+  },
+  "network.wired.linkControl": {
+    "description": "Etikett för kontroll av kabelanslutning",
+    "value": "Länk kontroll"
+  },
+  "network.wired.linkPolicy": {
+    "description": "Etikett för policy för trådbundna länkar",
+    "value": "Länkpolicy"
+  },
+  "network.wired.linkPreference": {
+    "description": "Etikett för preferens för kabelanslutning",
+    "value": "Länköverväganden"
+  },
+  "network.wired.linkStatus": {
+    "description": "Etikett för status för kabelanslutning",
+    "value": "Länkstatus"
+  },
+  "network.wired.macAddress": {
+    "description": "Etikett för trådbunden MAC-adress",
+    "value": "MAC-adress"
+  },
+  "network.wired.primaryDNS": {
+    "description": "Etikett för den trådbundna primära DNS",
+    "value": "Primär DNS"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "Etikett för den trådbundna sekundära DNS",
+    "value": "Sekundär DNS"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "Etikett för trådbunden delad dynamisk IP",
+    "value": "Delad dynamisk IP"
+  },
+  "network.wired.sharedMAC": {
+    "description": "Etikett för status för delad MAC-adress via kabel",
+    "value": "Delad MAC"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "Etikett för trådbunden delad statisk IP",
+    "value": "Delad statisk IP"
+  },
+  "network.wired.subnetMask": {
+    "description": "Etikett för den trådbundna subnätmasken",
+    "value": "Subnätmask"
+  },
+  "network.wired.subtitle": {
+    "description": "Underrubrik för kortet för inställningar för trådbundet nätverk",
+    "value": "Visa inställningar för trådbundet nätverk för den här enheten"
+  },
+  "network.wired.title": {
+    "description": "Titel på kortet för inställningar för trådbundet nätverk",
+    "value": "Inställningar för trådbundet nätverk"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "Etikett för den trådlösa standardgatewayen",
+    "value": "Standardgateway"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "Etikett för trådlös DHCP-aktiverad status",
+    "value": "DHCP aktiverat"
+  },
+  "network.wireless.ipAddress": {
+    "description": "Etikett för den trådlösa IP-adressen",
+    "value": "IP-adress"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "Etikett för status för trådlös IP-synkronisering aktiverad",
+    "value": "IP-synkronisering aktiverad"
+  },
+  "network.wireless.linkControl": {
+    "description": "Etikett för trådlös länkkontroll",
+    "value": "Länk kontroll"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "Etikett för policy för trådlösa länkar",
+    "value": "Länkpolicy"
+  },
+  "network.wireless.linkPreference": {
+    "description": "Etikett för preferens för trådlös länk",
+    "value": "Länköverväganden"
+  },
+  "network.wireless.linkStatus": {
+    "description": "Etikett för status för trådlös länk",
+    "value": "Länkstatus"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "Etikett för trådlös lokal profilsynkronisering",
+    "value": "Synkronisering av lokala profiler"
+  },
+  "network.wireless.macAddress": {
+    "description": "Etikett för trådlös MAC-adress",
+    "value": "MAC-adress"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "Etikett för den trådlösa primära DNS",
+    "value": "Primär DNS"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "Etikett för den trådlösa sekundära DNS:en",
+    "value": "Sekundär DNS"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "Etikett för trådlös delad dynamisk IP",
+    "value": "Delad dynamisk IP"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "Etikett för status för delad trådlös MAC",
+    "value": "Delad MAC"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "Etikett för trådlös delad statisk IP",
+    "value": "Delad statisk IP"
+  },
+  "network.wireless.subnetMask": {
+    "description": "Etikett för den trådlösa subnätmasken",
+    "value": "Subnätmask"
+  },
+  "network.wireless.subtitle": {
+    "description": "Undertext för kortet med inställningar för trådlöst nätverk",
+    "value": "Visa inställningar för trådlöst nätverk för den här enheten"
+  },
+  "network.wireless.title": {
+    "description": "Titel på kortet för inställningar för trådlöst nätverk",
+    "value": "Inställningar för trådlöst nätverk"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "Nätverksnamn: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Kryptering: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Autentisering: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "Underrubrik för kortet för trådlösa nätverk",
+    "value": "Visa trådlösa nätverk för den här enheten"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "Titel på kortet för trådlösa nätverk",
+    "value": "Trådlösa nätverk"
+  },
+  "pba.label": {
+    "description": "Etikett för kryssrutan för att aktivera eller inaktivera säker start",
+    "value": "Genomdriva säker start"
+  },
+  "pba.required": {
+    "description": "Felmeddelande visas när sökvägen till startfilen inte är vald",
+    "value": "Sökväg till startfil krävs"
+  },
+  "pba.title": {
+    "description": "Etikett för val av sökväg till startfilen i PBA-dialogrutan",
+    "value": "Sökväg till startfil"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "Av"
+  },
+  "powerOptions.on": {
+    "value": "På"
+  },
+  "powerOptions.powerCycle": {
+    "value": "Strömcykel"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "Starta upp till BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "Power Up till HTTPS Boot (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "Power Up till PXE"
+  },
+  "powerOptions.reset": {
+    "value": "Återställ"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "Återställ till BIOS"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "Återställ till HTTPS-start (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "Återställ till IDE-R (CD-ROM)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "Återställ till PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "Sömn"
+  },
+  "powerOptions.softOff": {
+    "value": "Soft-Off"
+  },
+  "powerOptions.softReset": {
+    "value": "Mjuk återställning"
+  },
+  "powerUp.message": {
+    "description": "Dialogmeddelande som ber användaren att starta enheten",
+    "value": "Vill du skicka ett power up-kommando till enheten?"
+  },
+  "powerUp.title": {
+    "description": "Dialogrubrik som visas när enheten är avstängd",
+    "value": "Din enhet är inte påslagen"
+  },
+  "profileDetail.activationMode": {
+    "description": "Etikett för val av aktiveringsläge",
+    "value": "Aktiveringsläge"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "Aktiveringsläge som styrs av administratören",
+    "value": "Administratörskontrolläge"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "Aktiveringsläge som styrs av klienten",
+    "value": "Klientkontrolläge"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "Etikett för avsnittet om AMT-funktioner",
+    "value": "AMT-funktioner - Aktivera/inaktivera omdirigeringsfunktioner i AMT"
+  },
+  "profileDetail.amtPassword": {
+    "description": "Etikett för AMT-lösenordsfält",
+    "value": "AMT-lösenord"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "Tips för AMT-lösenordsfält",
+    "value": "AMT-lösenordet används för fjärråtkomst till en enhet. Det krävs också för att omkonfigurera/inaktivera enheten."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "Etikett för avsnittet om associerade trådlösa profiler",
+    "value": "Associerade trådlösa profiler (i prioritetsordning)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "Etikett för CIRA-radioknapp",
+    "value": "CIRA (moln)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "Tips för CIRA-konfiguration",
+    "value": "CIRA kan inte konfigureras för statiskt nätverk om AMT-versionen är lägre än 11.6."
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "Etikett för CIRA-konfigurationsfält",
+    "value": "CIRA-konfiguration"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "Etikett för avsnittet om anslutningskonfiguration",
+    "value": "Konfiguration av tillhandahållen anslutning"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "Felmeddelande för anslutningsläge krävs",
+    "value": "Anslutningsläge måste anges"
+  },
+  "profileDetail.dhcp": {
+    "description": "Etikett för DHCP-radioknapp",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "Beskrivning för direktanslutningsläge",
+    "value": "I det här scenariot fungerar AMT som en server och lyssnar efter inkommande anslutningar. Verktygslådan fungerar som en klient och ansluter till enheten."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "Förklaring till avsnittet om direktanslutningsläge",
+    "value": "Direktanslutningsläge (används när enheterna ÄR direkt tillgängliga via ett lokalt nätverk)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "Tips för att dra och släppa för att ändra ordning",
+    "value": "Dra och släpp för att ändra ordning"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "Etikett för kryssrutan för IP-synkronisering",
+    "value": "Aktivera IP-synkronisering"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "Etikett för kryssrutan för WiFi-synkronisering i operativsystemet",
+    "value": "Aktivera synkronisering av OS WiFi-profil"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "Etikett för kryssrutan för UEFI WiFi-delning",
+    "value": "Aktivera UEFI/CSME Wi-Fi-profil delning"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "Etikett för kryssrutan för att generera slumpmässigt AMT-lösenord",
+    "value": "Generera slumpmässigt AMT-lösenord för varje enhet"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "Etikett för kryssrutan för att generera slumpmässigt MEBX-lösenord",
+    "value": "Generera ett slumpmässigt MEBX-lösenord för varje enhet"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "Verktygstips för knappen för att generera slumpmässigt lösenord",
+    "value": "Generera slumpmässigt lösenord"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "Etikett för IDE-omdirigeringsruta",
+    "value": "IDE-omdirigering"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "Beskrivning för internetläge",
+    "value": "I det här scenariot fungerar AMT som klient och ansluter till verktygslådan som fungerar som server (kräver MPS)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "Förklaring till avsnittet om internetläge",
+    "value": "Internetläge (används när enheter INTE är direkt tillgängliga via ett lokalt nätverk)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "Tips för IP-synkronisering när den är inaktiverad",
+    "value": "Alltid aktiverat för DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "Tips för IP-synkronisering när den är aktiverad",
+    "value": "Gäller endast för det trådbundna gränssnittet. Kräver att LMS utför synkronisering."
+  },
+  "profileDetail.kvm": {
+    "description": "Etikett för KVM-kryssruta",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "Etikett för MEBX-lösenordsfält",
+    "value": "MEBX-lösenord"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "Tips för MEBX-lösenordsfält",
+    "value": "MEBX-lösenordet används för att skydda BIOS-åtkomsten när en användare är närvarande med en enhet. Det kan endast ställas in när aktiveringsläget är inställt på Admin Control Mode."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "Etikett för avsnittet om nätverkskonfiguration",
+    "value": "Nätverkskonfiguration"
+  },
+  "profileDetail.newTag": {
+    "description": "Platshållare för ny tagginmatning",
+    "value": "Ny tagg..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "Text när inga CIRA-konfigurationer är tillgängliga",
+    "value": "- Inga CIRA-konfigurationer hittades"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "Text när ingen konfiguration är vald",
+    "value": "Ingen konfiguration vald."
+  },
+  "profileDetail.nonTls": {
+    "description": "Etikett för icke-TLS-alternativknapp",
+    "value": "Icke-TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "Tips för alternativet utan TLS",
+    "value": "I AMT 16.1 och nyare versioner tillhandahåller AMT självsignerade certifikat. Om du väljer det här alternativet kommer dessa att användas istället för de självsignerade certifikat som tillhandahålls av verktygssatsen."
+  },
+  "profileDetail.noWifi": {
+    "description": "Meddelande om att inga WiFi-konfigurationer är tillgängliga",
+    "value": "Inga wifi-konfigurationer hittades"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "Tips för OS WiFi-synkronisering",
+    "value": "Gäller endast för det trådlösa gränssnittet."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "Tips text för fältet profilnamn",
+    "value": "Ange ett namn för denna profil. Detta blir namnet på profilen som används på enheten under aktiveringen."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "Platshållartext för fältet för profilnamn",
+    "value": "ex. profil1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "Verktygstips för att visa/dölja lösenordsknappen",
+    "value": "Visa/dölj lösenord"
+  },
+  "profileDetail.sol": {
+    "description": "Etikett för SOL-kryssruta",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "Etikett för STATIC-radioknapp",
+    "value": "STATISK"
+  },
+  "profileDetail.tags": {
+    "description": "Etikett för taggfält",
+    "value": "Taggar"
+  },
+  "profileDetail.tagsHint": {
+    "description": "Tips för taggfält",
+    "value": "Du kan ange taggar för att underlätta organisering och sökning av enheter när din lista över hanterade enheter växer. Skriv en tagg och tryck sedan på Enter eller komma."
+  },
+  "profileDetail.tls": {
+    "description": "Etikett för TLS-alternativknapp",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "Etikett för fältet TLS-läge",
+    "value": "TLS-läge"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "Tips för fältet TLS-läge",
+    "value": "CIRA kan inte konfigureras om TLS är konfigurerat."
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "Etikett för fältet för TLS-signeringsmyndighet",
+    "value": "TLS-signeringsmyndighet"
+  },
+  "profileDetail.userConsent": {
+    "description": "Etikett för fältet för användarens samtycke",
+    "value": "Användarens samtycke"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "Tips för fältet för användarens samtycke",
+    "value": "Kontrollerar när en användare måste vara närvarande för vissa AMT-funktioner"
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "Etikett för fältet WiFi-profiler",
+    "value": "Wi-Fi-profiler"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "Tips för fältet WiFi-profiler",
+    "value": "Wi-Fi fungerar inte över statiska nätverk."
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "Platshållare för sökning efter WiFi-profiler",
+    "value": "Sök efter Wi-Fi-profiler att lägga till"
+  },
+  "profileDetail.wired": {
+    "description": "Etikett för avsnittet om trådbundna nätverk",
+    "value": "Trådbundet nätverk"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "Etikett för fältet för trådbunden 802.1x-konfiguration",
+    "value": "Wired 802.1x-konfiguration"
+  },
+  "profiles.deleteProfile": {
+    "description": "Meddelande för raderade profiler",
+    "value": "Profilen har raderats"
+  },
+  "profiles.exportProfile": {
+    "description": "Meddelande för exporterade profiler",
+    "value": "Profilen exporterades framgångsrikt"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "Fel vid radering av profiler",
+    "value": "Det går inte att radera profilen"
+  },
+  "profiles.failExportProfile": {
+    "description": "Fel vid export av profiler",
+    "value": "Det går inte att exportera profilen"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "Fel vid laddning av konfigurationer",
+    "value": "Kan inte ladda konfigurationer"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "Ny profil sidtitel",
+    "value": "Ny profil"
+  },
+  "profiles.header.profileTitle": {
+    "description": "Profilsidans titel",
+    "value": "Profiler"
+  },
+  "profiles.noData": {
+    "description": "Inget profilmeddelande",
+    "value": "Inga profiler"
+  },
+  "profiles.table.activation": {
+    "description": "Aktiveringsläge kolumnrubrik",
+    "value": "Aktiveringsläge"
+  },
+  "profiles.table.connection": {
+    "description": "Kolumnrubrik för anslutningskonfiguration",
+    "value": "Anslutningskonfiguration"
+  },
+  "profiles.table.name": {
+    "description": "Namn på kolumnrubrik",
+    "value": "Namn"
+  },
+  "profiles.table.network": {
+    "description": "Kolumnrubrik för nätverkskonfiguration",
+    "value": "Nätverkskonfiguration"
+  },
+  "randomPassword.learnMore": {
+    "description": "Meddelande för en supportlänk",
+    "value": "Läs mer här"
+  },
+  "randomPassword.message": {
+    "description": "Dialogmeddelande som förklarar konsekvenserna av att använda slumpmässiga lösenord",
+    "value": "Du har valt att generera ett slumpmässigt lösenord för varje enhet. Om den hemliga leverantörens lagringsplats (t.ex. Vault) raderas eller går förlorad kommer dessa lösenord inte att kunna återställas och en fabriksåterställning kommer att krävas."
+  },
+  "randomPassword.title": {
+    "description": "Dialogrubrik för varning om slumpmässigt lösenord",
+    "value": "Använda slumpmässigt genererade lösenord"
+  },
+  "sol.connect": {
+    "description": "Knapp för anslutning till SOL",
+    "value": "Anslut SOL"
+  },
+  "sol.disconnect": {
+    "description": "Knapp för att koppla bort från SOL",
+    "value": "Koppla bort SOL"
+  },
+  "sol.enable": {
+    "description": "Meddelande för att aktivera SOL",
+    "value": "SOL är för närvarande inte aktiverat på den här enheten. Vill du aktivera det?"
+  },
+  "sol.errorAccessCancel": {
+    "description": "Fel vid åtkomst till SOL när begäran om att aktivera SOL avbryts",
+    "value": "SOL kan inte nås – begäran om att aktivera SOL har avbrutits."
+  },
+  "sol.errorAccessEnable": {
+    "description": "Fel vid åtkomst till SOL när SOL inte kunde aktiveras",
+    "value": "SOL kan inte nås – det gick inte att aktivera SOL"
+  },
+  "sol.errorDiplay": {
+    "description": "Fel vid visning av dialogruta",
+    "value": "Kan inte visa SOL-dialogrutan"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "Fel vid hämtning av strömstatus",
+    "value": "Fel vid hämtning av strömstatus"
+  },
+  "sol.loading": {
+    "description": "Meddelande för laddning till SOL",
+    "value": "Ansluter SOL..."
+  },
+  "sol.title": {
+    "description": "Titel för SOL",
+    "value": "Aktivera SOL"
+  },
+  "staticCira.message": {
+    "description": "Dialogmeddelande som varnar om CIRA-anslutningsbegränsningar med statisk IP",
+    "value": "Du har valt att ansluta med CIRA med en statisk IP-nätverkskonfiguration. Enheter som kör en version av AMT lägre än 11.6 kommer inte att ansluta till en MPS med CIRA om de har en statisk IP-nätverkskonfiguration."
+  },
+  "staticCira.title": {
+    "description": "Dialogrubrik för CIRA:s varning om statisk IP-adress",
+    "value": "CIRA och statisk nätverkskonfiguration"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "Etikett för att acceptera icke-säkra anslutningar i TLS",
+    "value": "Acceptera icke-säkra anslutningar"
+  },
+  "tls.elementName.label": {
+    "description": "Etikett för fältet TLS-elementnamn",
+    "value": "Elementnamn"
+  },
+  "tls.enabled.label": {
+    "description": "Etikett för fältet TLS aktiverat",
+    "value": "Aktiverat"
+  },
+  "tls.errorSettings": {
+    "description": "Fel vid hämtning av tls-inställningar",
+    "value": "Fel vid hämtning av tls-inställningar"
+  },
+  "tls.instanceId.label": {
+    "description": "Etikett för fältet TLS-instans-ID",
+    "value": "Instans-ID"
+  },
+  "tls.mutualAuth.label": {
+    "description": "Etikett för fältet för ömsesidig TLS-autentisering",
+    "value": "Ömsesidig autentisering"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "Etikett som anger om icke-säkra anslutningar stöds i TLS",
+    "value": "Icke-säkra anslutningar stöds"
+  },
+  "tls.title": {
+    "description": "Titel för TLS-inställningskortet",
+    "value": "Transport Layer Security"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Alternativ för att använda ett certifikat signerat av Microsoft CA",
+    "value": "Använd Microsoft CA-signerat certifikat (kräver Enterprise Assistant)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "Alternativ för att använda ett självsignerat certifikat",
+    "value": "Använd självsignerat certifikat"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "TLS-läge med både ömsesidiga TLS- och icke-TLS-anslutningar",
+    "value": "Ömsesidig och icke-TLS-autentisering"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "TLS-läge med endast ömsesidig autentisering",
+    "value": "Endast ömsesidig TLS-autentisering"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "TLS-läge med både serverautentisering och icke-TLS-anslutningar",
+    "value": "Server- och icke-TLS-autentisering"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "TLS-läge som endast använder serverautentisering",
+    "value": "Endast serverautentisering"
+  },
+  "toolbar.errorMPS": {
+    "description": "Fel vid hämtning av MPS-versioner",
+    "value": "Fel vid hämtning av MPS-versioner"
+  },
+  "toolbar.errorRPS": {
+    "description": "Fel vid hämtning av RPS-versioner",
+    "value": "Fel vid hämtning av RPS-versioner"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "Huvudrubrik för applikationen",
+    "value": "Exempel på användargränssnitt"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "Huvudrubrik för applikationen i konsolläge",
+    "value": "Konsol"
+  },
+  "toolbar.header.hello": {
+    "description": "Hälsningsmeddelande",
+    "value": "Hej"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "Fel vid avbrytande av användarens samtyckeskod",
+    "value": "Fel vid avbrytande av användarens samtyckeskod"
+  },
+  "userConsent.errorRequest": {
+    "description": "Fel vid begäran om användarens samtyckeskod",
+    "value": "Fel vid begäran om användarens samtyckeskod – försök igen efter 3 minuter"
+  },
+  "userConsent.errorSendCode": {
+    "description": "Fel vid sändning av användarens samtyckeskod",
+    "value": "Fel vid sändning av användarens samtyckeskod"
+  },
+  "userConsentGeneral.all": {
+    "description": "Samtycke krävs för alla åtgärder",
+    "value": "alla"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "Samtycke krävs endast för KVM-åtgärder",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "Inget samtycke från användaren krävs",
+    "value": "ingen"
+  },
+  "userConsentModes.all": {
+    "description": "Samtycke krävs för alla åtgärder",
+    "value": "Alla"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "Samtycke krävs endast för KVM-åtgärder",
+    "value": "Endast KVM"
+  },
+  "userConsentModes.none": {
+    "description": "Inget samtycke från användaren krävs",
+    "value": "Ingen"
+  },
+  "warning.iderActive": {
+    "description": "Visas när IDER-sessionen är aktiv",
+    "value": "IDER-session aktiv"
+  },
+  "warning.iderEnded": {
+    "description": "Visas när IDER-sessionen har avslutats",
+    "value": "IDER-sessionen avslutad"
+  },
+  "warning.userConsentCancelled": {
+    "description": "Varning visas när tidigare användarkod för samtycke har avbrutits",
+    "value": "{{featureName}} kan inte nås – tidigare begärd användarkod har annullerats"
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "Fel vid laddning av konfigurationer",
+    "value": "Kan inte ladda konfigurationer"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "Trådlös sidtitel",
+    "value": "Trådlöst"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "Kolumnrubrik för autentiseringsmetoden för den trådlösa konfigurationen",
+    "value": "Autentisering"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "Kolumnrubrik för krypteringsmetoden för den trådlösa konfigurationen",
+    "value": "Kryptering"
+  },
+  "wirelessConfigs.name": {
+    "description": "Kolumnrubrik för namnet på den trådlösa konfigurationen",
+    "value": "Namn"
+  },
+  "wirelessConfigs.noData": {
+    "description": "Meddelande som visas när det inte finns några trådlösa konfigurationer",
+    "value": "Inga trådlösa konfigurationer"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "Kolumnrubrik för SSID för den trådlösa konfigurationen",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "Titel för avsnittet om trådlösa konfigurationer",
+    "value": "Trådlösa konfigurationer"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "Etikett för fältet för autentiseringsmetod",
+    "value": "Autentiseringsmetod"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "Etikett för fältet för krypteringsmetod",
+    "value": "Krypteringsmetod"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "Felmeddelande vid skapande/uppdatering av trådlös profil",
+    "value": "Fel vid skapande/uppdatering av trådlös profil"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "Felmeddelande för obligatoriska fält",
+    "value": "Detta fält är obligatoriskt och måste innehålla alfanumeriska tecken utan mellanslag eller symboler."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "Fel vid sparande av trådlösa profiler",
+    "value": "Fel vid sparande av trådlös profil"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "Etikett för 802.1x-konfigurationsfältet",
+    "value": "802.1x-konfiguration"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "Titel för att skapa en ny trådlös konfiguration",
+    "value": "Ny trådlös konfiguration"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "Meddelande om att det gick bra att skapa trådlös profil",
+    "value": "Profilen har skapats"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "Meddelande om att uppdateringen av trådlös profil har lyckats",
+    "value": "Profilen har uppdaterats"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "Etikett för fältet för PSK-lösenord",
+    "value": "PSK-lösenfras"
+  },
+  "wirelessDetail.saving": {
+    "description": "Meddelande om att profilen har sparats",
+    "value": "Profilen har sparats"
+  },
+  "wirelessDetail.ssid": {
+    "description": "Etikett för SSID-fältet",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "Etikett för fältet för trådlöst profilnamn",
+    "value": "Namn på trådlös profil"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "Tips för fältet för trådlöst profilnamn",
+    "value": "Ange ett namn för den trådlösa profilen"
+  },
+  "general.supported": {
+    "description": "Etikett för aktiverade AMT-funktioner",
+    "value": "Stöds"
+  },
+  "general.notSupported": {
+    "description": "Etikett för inaktiverade AMT-funktioner",
+    "value": "Stöds inte"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Starta upp till PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Starta upp till WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Återställ till PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Återställ till WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Etikett för att expandera",
+    "value": "Expandera"
+  },
+  "general.collapse": {
+    "description": "Etikett för att komprimera",
+    "value": "Komprimera"
+  },
+  "proxy.label": {
+    "value": "Proxys",
+    "description": "Etikett för proxysektionen"
+  },
+  "proxy.configs.label": {
+    "value": "Proxyinställningar",
+    "description": "Etikett för inmatningsfältet för proxyinställningar"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Sök efter proxyinställningar att lägga till",
+    "description": "Platshållartext för att söka proxyinställningar"
+  },
+  "proxy.configs.hint": {
+    "value": "Proxys kan tilldelas denna profil",
+    "description": "Tips som visas under inmatningsfältet för proxyinställningar"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Associerade proxyprofiler (i prioriteringsordning)",
+    "description": "Etikett för listan över associerade proxyprofiler"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Dra och släpp för att ändra ordning",
+    "description": "Tips för att ändra ordning med dra-och-släpp"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Ta bort proxyprofil",
+    "description": "Aria-etikett för knappen för att ta bort proxyprofil"
+  },
+  "profileDetail.noProxy": {
+    "description": "Meddelande när inga proxyinställningar är tillgängliga",
+    "value": "Inga proxyinställningar hittades"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Proxyinställningar",
+    "description": "Titel för proxyinställningar"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Namn",
+    "description": "Kolumnrubrik för proxyinställningens namn"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Proxyadress",
+    "description": "Kolumnrubrik för proxyadress"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Adressformat",
+    "description": "Kolumnrubrik för adressformat"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Port",
+    "description": "Kolumnrubrik för port"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Nätverks-DNS-suffix",
+    "description": "Kolumnrubrik för nätverks-DNS-suffix"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Ny proxyinställning",
+    "description": "Sidtitel för att skapa en ny proxyinställning"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Redigera proxyinställning",
+    "description": "Sidtitel för att redigera en proxyinställning"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Proxyadress",
+    "description": "Etikett för proxyadressfältet"
+  },
+  "proxyConfigs.name": {
+    "value": "Namn",
+    "description": "Etikett för fältet för proxyinställningens namn"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Ange namn på proxyinställning",
+    "description": "Platshållare för fältet för proxyinställningens namn"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Ange proxyserveradress",
+    "description": "Platshållare för proxyadressfältet"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Adressformat",
+    "description": "Etikett för adressformatfältet"
+  },
+  "proxyConfigs.port": {
+    "value": "Port",
+    "description": "Etikett för portfältet"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Nätverks-DNS-suffix",
+    "description": "Etikett för DNS-suffixfältet"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "exempel.com",
+    "description": "Platshållare för DNS-suffixfältet"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Port krävs",
+    "description": "Valideringsmeddelande: port krävs"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Porten måste vara mellan 0 och 65535",
+    "description": "Valideringsmeddelande för portintervall"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Namn krävs",
+    "description": "Valideringsmeddelande: namn krävs"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Nätverks-DNS-suffix krävs",
+    "description": "Valideringsmeddelande: DNS-suffix krävs"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Nätverks-DNS-suffix får vara högst 192 tecken",
+    "description": "Valideringsmeddelande för maxlängd på DNS-suffix"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Proxyinställning skapad framgångsrikt",
+    "description": "Meddelande vid lyckad skapande av proxyinställning"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Proxyinställning uppdaterad framgångsrikt",
+    "description": "Meddelande vid lyckad uppdatering av proxyinställning"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Proxyinställning {{name}} raderad framgångsrikt",
+    "description": "Meddelande vid lyckad borttagning av proxyinställning"
+  },
+  "common.delete": {
+    "value": "Radera",
+    "description": "Text på raderaknappen"
+  },
+  "common.update": {
+    "value": "UPPDATERA",
+    "description": "Text på uppdateringsknappen"
+  },
+  "common.noData": {
+    "value": "Ingen data tillgänglig",
+    "description": "Meddelande när ingen data är tillgänglig"
+  }
+}

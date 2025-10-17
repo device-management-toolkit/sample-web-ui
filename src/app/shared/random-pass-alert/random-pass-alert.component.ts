@@ -7,6 +7,7 @@ import { Component } from '@angular/core'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-random-pass-alert',
@@ -18,6 +19,7 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
     MatDialogContent,
     MatDialogActions,
     MatButton,
+    TranslateModule,
     MatDialogClose
   ]
 })

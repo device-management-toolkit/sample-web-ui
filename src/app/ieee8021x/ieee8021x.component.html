@@ -38,7 +38,7 @@
           <mat-header-cell *matHeaderCellDef>{{
             'ieee8021xConfigs.table.interface.value' | translate
           }}</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ getInterfaceLabel(element) }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="remove">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>

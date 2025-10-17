@@ -24,63 +24,84 @@
     <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1" style="margin-bottom: 10px">
-          <input formControlName="configName" matInput name="configName" placeholder="ex. ciraConfig1" required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter a name for this CIRA config</mat-hint>
+          <input
+            formControlName="configName"
+            matInput
+            name="configName"
+            [placeholder]="'configDetail.configNamePlaceholder.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.configNameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-radio-group
           class="flex-1 flex-row flex-wrap"
           name="serverAddressFormat"
           formControlName="serverAddressFormat">
-          <mat-radio-button class="flex flex-50" [value]="3" checked="true">IPv4</mat-radio-button>
-          <mat-radio-button class="flex flex-50" [value]="201">FQDN</mat-radio-button>
+          <mat-radio-button class="flex flex-50" [value]="3" checked="true">{{
+            'configDetail.ipv4.value' | translate
+          }}</mat-radio-button>
+          <mat-radio-button class="flex flex-50" [value]="201">{{
+            'configDetail.fqdn.value' | translate
+          }}</mat-radio-button>
         </mat-radio-group>
         <mat-form-field class="flex flex-1">
           <input
             formControlName="mpsServerAddress"
             matInput
             name="mpsServerAddress"
-            placeholder="MPS Address"
+            [placeholder]="'configDetail.mpsAddressPlaceholder.value' | translate"
             required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter the address of where your MPS instance is hosted</mat-hint>
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.mpsAddressHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
           <input
             formControlName="commonName"
             matInput
             name="commonName"
-            placeholder="Cert Common Name (CN=)"
+            [placeholder]="'configDetail.commonNamePlaceholder.value' | translate"
             required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter the common name contained in the certificate.</mat-hint>
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.commonNameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <input type="number" formControlName="mpsPort" matInput name="mpsPort" placeholder="Port" required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter the CIRA Port for the MPS Instance. The default is 4433.</mat-hint>
+          <input
+            type="number"
+            formControlName="mpsPort"
+            matInput
+            name="mpsPort"
+            [placeholder]="'configDetail.portPlaceholder.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.portHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
-          <input formControlName="username" matInput name="username" placeholder="Username" required maxlength="16" />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter the username for accessing MPS</mat-hint>
+          <input
+            formControlName="username"
+            matInput
+            name="username"
+            [placeholder]="'configDetail.usernamePlaceholder.value' | translate"
+            required
+            maxlength="16" />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.usernameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <br /><br /><br /><br />
         @if (!shouldShowRegenPass()) {
           <mat-slide-toggle formControlName="regeneratePassword">
-            Generate New Random Password Upon Saving
+            {{ 'configDetail.regeneratePassword.value' | translate }}
           </mat-slide-toggle>
         }
       </mat-card-content>
       <mat-card-actions class="flex-row">
         <div class="flex flex-50 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span i18n>CANCEL</span>
+            <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
           <button type="submit" mat-flat-button color="primary">
-            <span i18n>SAVE</span>
+            <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>
       </mat-card-actions>

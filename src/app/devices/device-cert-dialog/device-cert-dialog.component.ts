@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-cert-dialog',
@@ -13,7 +14,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
     MatDialogModule,
     MatButtonModule,
     MatListModule,
-    DatePipe
+    DatePipe,
+    TranslateModule
   ],
   templateUrl: './device-cert-dialog.component.html',
   styleUrl: './device-cert-dialog.component.scss'
@@ -24,7 +26,6 @@ export class DeviceCertDialogComponent {
   private readonly snackBar = inject(MatSnackBar)
   private readonly dialogData = inject(MAT_DIALOG_DATA)
   private readonly ref = inject(MatDialogRef)
-
   public data: any = {}
   public isPinned = false
 

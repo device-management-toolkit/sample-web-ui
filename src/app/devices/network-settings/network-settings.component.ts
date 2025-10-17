@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatDivider } from '@angular/material/divider'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { NetworkConfig } from 'src/models/models'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-network-settings',
@@ -17,7 +18,8 @@ import { NetworkConfig } from 'src/models/models'
     MatListModule,
     MatDivider,
     MatIcon,
-    MatProgressBarModule
+    MatProgressBarModule,
+    TranslateModule
   ],
   templateUrl: './network-settings.component.html',
   styleUrl: './network-settings.component.scss'
@@ -26,7 +28,7 @@ export class NetworkSettingsComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public isLoading = signal(true)
@@ -37,7 +39,8 @@ export class NetworkSettingsComponent implements OnInit {
       .getNetworkSettings(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving network settings`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('network.errorNetworkSetting.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
