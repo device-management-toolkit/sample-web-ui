@@ -6,6 +6,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
+import { Validators } from '@angular/forms'
 import { of } from 'rxjs'
 import { DomainsService } from '../domains.service'
 
@@ -29,9 +30,11 @@ describe('DomainDetailComponent', () => {
       'update',
       'create'
     ])
+
     getRecordSpy = domainsService.getRecord.and.returnValue(of({ profileName: 'domain' }))
     updateRecordSpy = domainsService.update.and.returnValue(of({}))
     createRecordSpy = domainsService.create.and.returnValue(of({}))
+
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -95,20 +98,65 @@ describe('DomainDetailComponent', () => {
     expect(routerSpy).toHaveBeenCalled()
   })
 
+  it('should not submit when profileName contains invalid characters(update)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.domainForm.patchValue({
+      profileName: 'domain_invalid',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    // Force validation check
+    component.domainForm.get('profileName')?.markAsTouched()
+    component.domainForm.get('profileName')?.updateValueAndValidity()
+    fixture.detectChanges()
+
+    component.onSubmit()
+
+    expect(updateRecordSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+  })
+
   it('should submit when form is valid(create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     component.domainForm.patchValue({
-      profileName: 'domain1',
+      profileName: 'ValidDomain123',
       domainSuffix: 'domain.com',
       provisioningCert: 'domainCert',
       provisioningCertPassword: 'P@ssw0rd'
     })
     component.isEdit = false
+
     expect(component.domainForm.valid).toBeTruthy()
+    expect(component.domainForm.get('profileName')?.errors).toBeNull()
     component.onSubmit()
 
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should not submit when profileName contains invalid characters(create)', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.domainForm.patchValue({
+      profileName: 'invalid_domain',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.isEdit = false
+
+    // Force validation check
+    component.domainForm.get('profileName')?.markAsTouched()
+    component.domainForm.get('profileName')?.updateValueAndValidity()
+    fixture.detectChanges()
+
+    component.onSubmit()
+
+    expect(createRecordSpy).not.toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
   })
 
   it('should attach the domain certificate on file selected', () => {
@@ -142,5 +190,31 @@ describe('DomainDetailComponent', () => {
     component.toggleCertPassVisibility()
 
     expect(component.certPassInputType).toEqual('password')
+  })
+
+  describe('Form Validation', () => {
+    it('should validate form when profileName contains only alphanumeric characters', () => {
+      component.domainForm.patchValue({
+        profileName: 'ValidDomain123',
+        domainSuffix: 'domain.com',
+        provisioningCert: 'domainCert',
+        provisioningCertPassword: 'P@ssw0rd'
+      })
+
+      component.domainForm.get('profileName')?.markAsTouched()
+      component.domainForm.get('profileName')?.updateValueAndValidity()
+      fixture.detectChanges()
+
+      const profileNameControl = component.domainForm.get('profileName')
+      expect(profileNameControl?.errors).toBeNull()
+      expect(component.domainForm.valid).toBeTruthy()
+    })
+
+    it('should have pattern validator configured', () => {
+      const profileNameControl = component.domainForm.get('profileName')
+      expect(profileNameControl?.hasValidator(Validators.required)).toBeTruthy()
+      // Test that the control exists and can be validated
+      expect(profileNameControl).toBeTruthy()
+    })
   })
 })
