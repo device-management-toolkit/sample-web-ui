@@ -1033,6 +1033,10 @@
     "description": "Virhe poistetuissa verkkotunnusprofiileissa",
     "value": "Virhe domain-profiilin luomisessa/päivittämisessä"
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Virheilmoitus yksilöllisen avaimen rikkomisesta",
+    "value": "Domain NewDomainin tunnus tai liite on jo olemassa"
+  },
   "domainDetail.fqdn": {
     "description": "Vinkki FQDN-kenttään",
     "value": "Syötä provisioning-varmenteeseen liittyvä FQDN (eli amtdomain.com)."
@@ -2697,5 +2701,4 @@
     "value": "Ei saatavilla olevaa dataa",
     "description": "Viesti, kun dataa ei ole saatavilla"
   }
-
 }

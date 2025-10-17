@@ -1033,6 +1033,10 @@
     "description": "שגיאה לפרופילי דומיין שנמחקו",
     "value": "שגיאה ביצירה/עדכון פרופיל דומיין"
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "הודעת שגיאה עבור הפרת מפתח ייחודי",
+    "value": "מזהה או סיומת של הדומיין NewDomain כבר קיימים"
+  },
   "domainDetail.fqdn": {
     "description": "רמז לשדה FQDN",
     "value": "הזן את ה- FQDN המשויך לתעודת ההקצאה (כלומר amtdomain.com)"
@@ -2697,5 +2701,4 @@
     "value": "אין נתונים זמינים",
     "description": "הודעה כאשר אין נתונים זמינים"
   }
-
 }

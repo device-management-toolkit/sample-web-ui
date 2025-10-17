@@ -1033,6 +1033,10 @@
     "description": "Error en los perfiles de dominio eliminados",
     "value": "Error al crear/actualizar el perfil del dominio."
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Mensaje de error por violación de clave única",
+    "value": "El ID o el sufijo del nuevo dominio ya existe"
+  },
   "domainDetail.fqdn": {
     "description": "Sugerencia para el campo FQDN",
     "value": "Introduzca el FQDN asociado al certificado de aprovisionamiento (es decir, amtdomain.com)."
@@ -2697,5 +2701,4 @@
     "value": "No hay datos disponibles",
     "description": "Mensaje cuando no hay datos disponibles"
   }
-
 }

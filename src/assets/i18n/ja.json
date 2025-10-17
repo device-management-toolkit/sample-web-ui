@@ -1033,6 +1033,10 @@
     "description": "削除されたドメインプロファイルに関するエラー",
     "value": "ドメインプロファイルの作成/更新中にエラーが発生しました"
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "一意キー違反のエラーメッセージ",
+    "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
+  },
   "domainDetail.fqdn": {
     "description": "FQDNフィールドに関するヒント",
     "value": "プロビジョニング証明書に関連付けられた完全修飾ドメイン名（例：amtdomain.com）を入力してください。"
@@ -2697,5 +2701,4 @@
     "value": "利用可能なデータがありません",
     "description": "データが利用できない場合のメッセージ"
   }
-
 }

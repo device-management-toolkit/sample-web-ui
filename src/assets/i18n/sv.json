@@ -1033,6 +1033,10 @@
     "description": "Fel för raderade domänprofiler",
     "value": "Fel vid skapande/uppdatering av domänprofil"
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Felmeddelande för brott mot unik nyckel",
+    "value": "Domänens NewDomain ID eller suffix finns redan"
+  },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",
     "value": "Ange FQDN som är associerat med provisioneringscertifikatet (dvs. amtdomain.com)"
@@ -2697,5 +2701,4 @@
     "value": "Ingen data tillgänglig",
     "description": "Meddelande när ingen data är tillgänglig"
   }
-
 }

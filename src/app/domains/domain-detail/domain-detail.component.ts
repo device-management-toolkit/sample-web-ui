@@ -134,15 +134,15 @@ export class DomainDetailComponent implements OnInit {
         .subscribe({
           next: () => {
             const completeMessage: string = this.translate.instant('domainDetail.completeProfile.value')
-            this.snackBar.open(completeMessage, undefined, SnackbarDefaults.defaultError)
+            this.snackBar.open(completeMessage, undefined, SnackbarDefaults.defaultSuccess)
 
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            const errorMessage: string = this.translate.instant('domainDetail.completeProfile.value')
+            const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
 
-            this.errorMessages.push(errorMessage)
+            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
           }
         })
     }

@@ -1033,6 +1033,10 @@
     "description": "Erreur pour les profils de domaine supprimés",
     "value": "Erreur lors de la création/mise à jour du profil de domaine"
   },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Message d'erreur pour violation de clé unique",
+    "value": "L'ID ou le suffixe du nouveau domaine existe déjà"
+  },
   "domainDetail.fqdn": {
     "description": "Conseil pour le champ FQDN",
     "value": "Saisissez le nom de domaine complet associé au certificat de provisionnement (c'est-à-dire amtdomain.com)."
@@ -2697,5 +2701,4 @@
     "value": "Aucune donnée disponible",
     "description": "Message indiquant qu’aucune donnée n’est disponible"
   }
-
 }
