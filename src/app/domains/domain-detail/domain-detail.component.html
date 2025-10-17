@@ -36,7 +36,9 @@
             <mat-error>This field is required</mat-error>
           }
           @if (domainForm.get('profileName')?.errors?.['pattern']) {
-            <mat-error>Domain name must contain only alphanumeric characters (no spaces or special characters)</mat-error>
+            <mat-error
+              >Domain name must contain only alphanumeric characters (no spaces or special characters)</mat-error
+            >
           }
           <mat-hint>Enter a name to give this domain (ex. AMTDomain). Only letters and numbers are allowed.</mat-hint>
         </mat-form-field>

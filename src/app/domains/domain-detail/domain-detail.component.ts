@@ -172,38 +172,36 @@ export class DomainDetailComponent implements OnInit {
           this.router.navigate(['/domains'])
         },
         error: (err) => {
-            // Show specific error messages from the backend
-            if (Array.isArray(err) && err.length > 0) {
-              this.errorMessages = err
-              // Check if it's a validation error and show in snackbar too
-              const validationError = err.find(error =>
-                error.includes('ProfileName') ||
-                error.includes('alphanum') ||
-                error.includes('validation')
+          // Show specific error messages from the backend
+          if (Array.isArray(err) && err.length > 0) {
+            this.errorMessages = err
+            // Check if it's a validation error and show in snackbar too
+            const validationError = err.find(
+              (error) => error.includes('ProfileName') || error.includes('alphanum') || error.includes('validation')
+            )
+            if (validationError) {
+              this.snackBar.open(
+                $localize`Domain name must contain only alphanumeric characters`,
+                undefined,
+                SnackbarDefaults.defaultError
               )
-              if (validationError) {
-                this.snackBar.open(
-                  $localize`Domain name must contain only alphanumeric characters`,
-                  undefined,
-                  SnackbarDefaults.defaultError
-                )
-              } else {
-                this.snackBar.open(
-                  $localize`Error creating/updating domain profile`,
-                  undefined,
-                  SnackbarDefaults.defaultError
-                )
-              }
             } else {
               this.snackBar.open(
                 $localize`Error creating/updating domain profile`,
                 undefined,
                 SnackbarDefaults.defaultError
               )
-              this.errorMessages = [err]
             }
+          } else {
+            this.snackBar.open(
+              $localize`Error creating/updating domain profile`,
+              undefined,
+              SnackbarDefaults.defaultError
+            )
+            this.errorMessages = [err]
           }
-        })
+        }
+      })
   }
 
   onFileSelected(e: Event): void {
