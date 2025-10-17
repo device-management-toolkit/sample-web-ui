@@ -480,6 +480,13 @@ export interface RPSVersion {
   protocolVersion: string
 }
 
+export interface ConsoleVersion {
+  current: string
+  latest: {
+    tag_name: string
+  }
+}
+
 export interface CertInfo {
   cert: string
   isTrusted: boolean
