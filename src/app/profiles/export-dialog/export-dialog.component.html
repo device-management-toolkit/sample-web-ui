@@ -51,5 +51,7 @@
   }
   <button mat-button (click)="onSkipDomain()">{{ 'exportDialog.skipDomain.value' | translate }}</button>
   <button mat-button (click)="onCancel()">{{ 'common.cancel.value' | translate }}</button>
-  <button mat-button (click)="onOk()" color="primary" [disabled]="!isFormValid() || isLoading()">{{ 'common.ok.value' | translate }}</button>
+  <button mat-button (click)="onOk()" color="primary" [disabled]="!isFormValid() || isLoading()">
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

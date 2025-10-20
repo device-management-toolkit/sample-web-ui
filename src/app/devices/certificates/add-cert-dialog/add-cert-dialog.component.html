@@ -6,7 +6,9 @@
 
   <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
     <div class="flex flex-50" style="margin-top: 12px">
-      <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">{{ 'common.chooseFile.value' | translate }}</button>
+      <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+        {{ 'common.chooseFile.value' | translate }}
+      </button>
       <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer" />
     </div>
     <div class="flex flex-50 justify-center items-center">
@@ -24,9 +26,13 @@
     </div>
   </div>
 
-  <mat-checkbox class="example-margin" [(ngModel)]="certInfo.isTrusted">{{ 'common.trustedRoot.value' | translate }}</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="certInfo.isTrusted">{{
+    'common.trustedRoot.value' | translate
+  }}</mat-checkbox>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
-  <button mat-button [mat-dialog-close]="certInfo" color="primary" cdkFocusInitial>{{ 'common.ok.value' | translate }}</button>
+  <button mat-button [mat-dialog-close]="certInfo" color="primary" cdkFocusInitial>
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

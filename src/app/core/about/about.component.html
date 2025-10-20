@@ -39,7 +39,11 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   @if (cloudMode === true) {
-    <label> <input type="checkbox" [(ngModel)]="doNotShowAgain" /> {{ 'about.doNotShowAgain.value' | translate }} </label>
+    <label>
+      <input type="checkbox" [(ngModel)]="doNotShowAgain" /> {{ 'about.doNotShowAgain.value' | translate }}
+    </label>
   }
-  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>{{ 'about.gotIt.value' | translate }}</button>
+  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>
+    {{ 'about.gotIt.value' | translate }}
+  </button>
 </mat-dialog-actions>

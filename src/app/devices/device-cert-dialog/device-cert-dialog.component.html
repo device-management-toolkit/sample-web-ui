@@ -48,7 +48,11 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>{{ 'common.close.value' | translate }}</button>
-    <button (click)="remove()" [disabled]="!isPinned" type="button" color="warn" mat-button>{{ 'common.remove.value' | translate }}</button>
-    <button (click)="pin()" [disabled]="isPinned" type="button" color="primary" mat-flat-button>{{ 'common.pin.value' | translate }}</button>
+    <button (click)="remove()" [disabled]="!isPinned" type="button" color="warn" mat-button>
+      {{ 'common.remove.value' | translate }}
+    </button>
+    <button (click)="pin()" [disabled]="isPinned" type="button" color="primary" mat-flat-button>
+      {{ 'common.pin.value' | translate }}
+    </button>
   </mat-dialog-actions>
 </mat-dialog-content>

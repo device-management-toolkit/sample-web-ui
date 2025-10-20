@@ -24,7 +24,12 @@
     <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1">
-          <input formControlName="profileName" matInput name="name" [placeholder]="'configs.table.ciraName.value' | translate" required />
+          <input
+            formControlName="profileName"
+            matInput
+            name="name"
+            [placeholder]="'configs.table.ciraName.value' | translate"
+            required />
           <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
           <mat-hint>{{ 'domainDetail.nameHint.value' | translate }}</mat-hint>
         </mat-form-field>
@@ -43,7 +48,9 @@
 
         <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
           <div class="flex flex-50" style="margin-top: 12px">
-            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">{{ 'common.chooseFile.value' | translate }}</button>
+            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+              {{ 'common.chooseFile.value' | translate }}
+            </button>
             <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx" />
           </div>
           <div class="flex flex-50 justify-center items-center">
