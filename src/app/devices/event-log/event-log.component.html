@@ -3,37 +3,40 @@
 }
 <mat-card>
   <mat-card-header style="justify-content: space-between">
-    <mat-card-title>Event Log ({{ dataSource.data.length }} entries)</mat-card-title>
+    <mat-card-title>
+      {{ 'eventLog.entries.value' | translate: { count: dataSource.data.length } }}
+    </mat-card-title>
+
     @if (!isCloudMode) {
-      <button mat-flat-button color="primary" (click)="download()">Download Event Log (.csv)</button>
+      <button mat-flat-button color="primary" (click)="download()">{{ 'eventLog.download.value' | translate }}</button>
     }
   </mat-card-header>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">No Event Log</h3>
+      <h3 class="flex justify-center">{{ 'deviceDetail.noEventLog.value' | translate }}</h3>
     } @else {
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="Event">
-          <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'auditLog.event.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
         </ng-container>
         @if (isCloudMode) {
           <ng-container matColumnDef="Event Type">
-            <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.eventType.value' | translate }} </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
           </ng-container>
         } @else {
           <ng-container matColumnDef="Source">
-            <mat-header-cell *matHeaderCellDef> Source </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.source.value' | translate }} </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.Entity }} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="Severity">
-            <mat-header-cell *matHeaderCellDef> Severity </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.severity.value' | translate }} </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.EventSeverity }} </mat-cell>
           </ng-container>
         }
         <ng-container matColumnDef="timestamp">
-          <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'auditLog.time.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.Time | amDateFormatter: 'MMMM d, yyyy h:mma' }} ({{ element.Time | amTimeAgoFormatter: true }})
           </mat-cell>

@@ -33,7 +33,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-ieee8021x',
@@ -68,6 +68,7 @@ export class IEEE8021xComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public tableDataSource = new MatTableDataSource<IEEE8021xConfig>()
   public displayedColumns: string[] = [
@@ -105,7 +106,8 @@ export class IEEE8021xComponent implements OnInit {
           this.totalCount.set(pagedConfigs.totalCount)
         },
         error: () => {
-          this.snackBar.open($localize`Unable to load IEEE8021x Configs`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('ieee.failLoadConfigs.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
@@ -131,21 +133,15 @@ export class IEEE8021xComponent implements OnInit {
             .subscribe({
               next: () => {
                 this.getData(this.pageEvent)
-                this.snackBar.open(
-                  $localize`Configuration deleted successfully`,
-                  undefined,
-                  SnackbarDefaults.defaultSuccess
-                )
+                const deleteMessage: string = this.translate.instant('common.deleteProfile.value')
+                this.snackBar.open(deleteMessage, undefined, SnackbarDefaults.defaultSuccess)
               },
               error: (error) => {
                 if (error?.length > 0) {
                   this.snackBar.open(error as string, undefined, SnackbarDefaults.longError)
                 } else {
-                  this.snackBar.open(
-                    $localize`Unable to delete Configuration`,
-                    undefined,
-                    SnackbarDefaults.defaultError
-                  )
+                  const errorMessage: string = this.translate.instant('common.errorDeleteConfiguration.value')
+                  this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
                 }
               }
             })
@@ -164,5 +160,11 @@ export class IEEE8021xComponent implements OnInit {
 
   async navigateTo(path = 'new'): Promise<void> {
     await this.router.navigate([`/ieee8021x/${path}`])
+  }
+
+  public getInterfaceLabel(element: any): string {
+    return element.wiredInterface
+      ? this.translate.instant('common.wired.value')
+      : this.translate.instant('common.wireless.value')
   }
 }

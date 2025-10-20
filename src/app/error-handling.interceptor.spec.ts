@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { errorHandlingInterceptor } from './error-handling.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ErrorHandlingInterceptor', () => {
   let httpMock: HttpTestingController
@@ -20,6 +21,7 @@ describe('ErrorHandlingInterceptor', () => {
     const snackbarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         provideHttpClient(withInterceptors([errorHandlingInterceptor])),
         provideHttpClientTesting(),
@@ -44,7 +46,7 @@ describe('ErrorHandlingInterceptor', () => {
       error: () => {
         expect(authService.logout).toHaveBeenCalled()
         expect(dialog.open).toHaveBeenCalledWith(DialogContentComponent, {
-          data: { name: 'Session timed out. Please login again' }
+          data: { name: 'error.sessionTimedOut.value' }
         })
       }
     })
@@ -57,7 +59,7 @@ describe('ErrorHandlingInterceptor', () => {
     httpClient.get('/test').subscribe({
       error: () => {
         expect(dialog.open).toHaveBeenCalledWith(DialogContentComponent, {
-          data: { name: 'This item has been modified since it has been loaded. Please reload.' }
+          data: { name: 'error.itemModified.value' }
         })
       }
     })
@@ -70,7 +72,7 @@ describe('ErrorHandlingInterceptor', () => {
     httpClient.get('/test').subscribe({
       error: () => {
         expect(dialog.open).toHaveBeenCalledWith(DialogContentComponent, {
-          data: { name: 'This item has been modified since it has been loaded. Please reload.' }
+          data: { name: 'error.itemModified.value' }
         })
       }
     })

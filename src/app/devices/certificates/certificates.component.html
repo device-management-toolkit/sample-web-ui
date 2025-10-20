@@ -4,33 +4,44 @@
 
 <mat-card class="flex flex-50 gap-12">
   <mat-card-header>
-    <mat-card-title>Certificates</mat-card-title>
-    <mat-card-subtitle>List of certificates currently registered on the AMT device</mat-card-subtitle>
+    <mat-card-title>{{ 'certificates.title.value' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'certificates.list.value' | translate }}</mat-card-subtitle>
     <div class="flex flex-1 justify-end">
-      <button mat-button matTooltip="Add certificate" (click)="openAddCertDialog()">
+      <button mat-button [matTooltip]="'certificates.add.tooltip.value' | translate" (click)="openAddCertDialog()">
         <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate }}
       </button>
     </div>
   </mat-card-header>
   <mat-list>
     @if (isLoading()) {
-      <mat-list-item>Loading Certificates ...</mat-list-item>
+      <mat-list-item>{{ 'certificates.loading.value' | translate }}</mat-list-item>
     } @else if (isCertEmpty()) {
-      <mat-list-item>No Certificates Found</mat-list-item>
+      <mat-list-item>{{ 'certificates.empty.value' | translate }}</mat-list-item>
     } @else {
       @for (cert of certInfo.certificates?.publicKeyCertificateItems; track cert) {
         <mat-list-item lines="3">
           <span matListItemTitle>{{ cert.displayName }}</span>
-          <span matListItemLine>Type: {{ cert.trustedRootCertificate ? 'Root' : 'Client' }}</span>
-          <span matListItemLine
-            >Profile Associations:
+          <span matListItemLine>
+            {{ 'certificates.type.value' | translate }}:
+            {{
+              cert.trustedRootCertificate
+                ? ('certificates.typeRoot.value' | translate)
+                : ('certificates.typeClient.value' | translate)
+            }}
+          </span>
+          <span matListItemLine>
+            {{ 'certificates.profileAssociations.value' | translate }}:
             @if (!cert.associatedProfiles || cert.associatedProfiles.length === 0) {
-              Unassociated
+              {{ 'certificates.profileAssociationsUnassociated.value' | translate }}
             } @else {
               {{ cert.associatedProfiles }}
             }
           </span>
-          <button matListItemMeta mat-icon-button matTooltip="Download certificate" (click)="downloadCert(cert)">
+          <button
+            matListItemMeta
+            mat-icon-button
+            [matTooltip]="'certificates.download.tooltip.value' | translate"
+            (click)="downloadCert(cert)">
             <mat-icon>download</mat-icon>
           </button>
         </mat-list-item>

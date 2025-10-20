@@ -19,6 +19,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-edit-tags',
@@ -38,7 +39,8 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
     MatChipRemove,
     MatChipInput,
     MatDialogActions,
-    MatButton
+    MatButton,
+    TranslateModule
   ]
 })
 export class DeviceEditTagsComponent {

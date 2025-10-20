@@ -5,6 +5,7 @@ import { AuthService } from './auth.service'
 import { Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
 import { MPSVersion, RPSVersion } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AuthService', () => {
   let service: AuthService
@@ -18,6 +19,7 @@ describe('AuthService', () => {
     environment.mpsServer = mockEnvironment.mpsServer
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         AuthService,
         { provide: Router, useValue: routerSpy },

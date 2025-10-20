@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Edit Tags</h1>
+<h1 mat-dialog-title>{{ 'editTags.title.value' | translate }}</h1>
 <mat-dialog-content>
-  <p>Remove a tag by clicking on the tag itself.</p>
-  <p>Add a tag by clicking in the prompt, type the tag name, then present enter or comma.</p>
+  <p>{{ 'editTags.header.value' | translate }}</p>
+  <p>{{ 'editTags.description.value' | translate }}</p>
   <form>
     <mat-form-field class="flex flex-1">
-      <mat-label>Tags</mat-label>
+      <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags; track tag) {
           <mat-chip-row [removable]="true" (removed)="remove(tag)">
@@ -13,7 +13,7 @@
           </mat-chip-row>
         }
         <input
-          placeholder="New tag..."
+          [placeholder]="'editTags.placeholder.value' | translate"
           [matChipInputFor]="tagList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="true"
@@ -23,6 +23,6 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button type="submit" (click)="done()">Done</button>
-  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-button type="submit" (click)="done()">{{ 'common.done.value' | translate }}</button>
+  <button mat-button type="button" (click)="cancel()">{{ 'common.cancelLower.value' | translate }}</button>
 </mat-dialog-actions>

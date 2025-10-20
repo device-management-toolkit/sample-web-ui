@@ -19,6 +19,7 @@ declare global {
       matRadioButtonChoose: (selector: string, value: string) => Chainable<Element>
       matRadioButtonAssert: (selector: string, value: string) => Chainable<Element>
       matSelectChoose: (selector: string, value: string) => Chainable<Element>
+      matSelectChooseByTransId: (selector: string, transId: string) => Chainable<Element>
       matSelectAssert: (selector: string, value: string) => Chainable<Element>
       matTextlikeInputType: (selector: string, value: string) => Chainable<Element>
       matTextlikeInputAssert: (selector: string, value: string) => Chainable<Element>
@@ -113,7 +114,24 @@ Cypress.Commands.add('matSelectChoose', (selector: string, text: string) => {
   const elementId = `mat-select${selector}`
   cy.get(elementId).click({ force: true }).get('mat-option').contains(text).click({ force: true })
   cy.get(elementId).focus().type('{esc}')
-  cy.get(elementId).should('have.text', text)
+  cy.get(elementId).should('have.text', text.trim())
+})
+
+Cypress.Commands.add('matSelectChooseByTransId', (selector: string, transId: string) => {
+  const dataCy = `[data-cy="${transId}"]`
+
+  let text = ''
+  cy.get(selector)
+    .click({ force: true })
+    .get(dataCy)
+    .then((elements) => {
+      text = elements[0].textContent
+      return elements[0]
+    })
+    .click({ force: true })
+    .then(() => {
+      cy.matSelectChoose(selector, text)
+    })
 })
 
 Cypress.Commands.add('matSelectAssert', (selector: string, text: string) => {
@@ -303,13 +321,13 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   if (formData.activation) {
-    cy.matSelectChoose(
+    cy.matSelectChooseByTransId(
       '[formControlName="activation"]',
       ActivationModes.find((z) => z.value === formData.activation)?.label ?? 'error'
     )
   }
   if (formData.userConsent && formData.activation !== 'ccmactivate') {
-    cy.matSelectChoose(
+    cy.matSelectChooseByTransId(
       '[formControlName="userConsent"]',
       UserConsentModes.find((z) => z.value === formData.userConsent)?.label ?? 'error'
     )
@@ -334,7 +352,7 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   } else if (formData.tlsMode) {
     cy.get('[data-cy="radio-tls"]').click()
 
-    cy.matSelectChoose(
+    cy.matSelectChooseByTransId(
       '[formControlName="tlsMode"]',
       TlsModes.find((z) => z.value === formData.tlsMode)?.label ?? 'error'
     )

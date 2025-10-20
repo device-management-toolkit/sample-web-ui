@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { ExportDialogComponent } from './export-dialog.component'
 import { DomainsService } from 'src/app/domains/domains.service'
 import { type Domain } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ExportDialogComponent', () => {
   let component: ExportDialogComponent
@@ -49,6 +50,7 @@ describe('ExportDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ExportDialogComponent,
+        TranslateModule.forRoot(),
         NoopAnimationsModule
       ],
       providers: [

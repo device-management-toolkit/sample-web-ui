@@ -6,26 +6,26 @@
 import { FormOption } from 'src/models/models'
 
 export const ActivationModes: FormOption<string>[] = [
-  { value: 'acmactivate', label: 'Admin Control Mode' },
-  { value: 'ccmactivate', label: 'Client Control Mode' }
-]
-
-export const TlsModes: FormOption<number>[] = [
-  { value: 1, label: 'Server Authentication Only' },
-  { value: 2, label: 'Server & Non-TLS Authentication' },
-  { value: 3, label: 'Mutual TLS Authentication Only' },
-  { value: 4, label: 'Mutual and Non-TLS Authentication' }
-]
-
-export const TlsSigningAuthorities: FormOption<string>[] = [
-  { value: 'SelfSigned', label: 'Use Self-Signed Cert' },
-  { value: 'MicrosoftCA', label: 'Use Microsoft CA Signed Cert (Requires Enterprise Assistant)' }
+  { value: 'acmactivate', label: 'profileDetail.activationModeAdmin.value' },
+  { value: 'ccmactivate', label: 'profileDetail.activationModeClient.value' }
 ]
 
 export const UserConsentModes: FormOption<string>[] = [
-  { value: 'All', label: 'All' },
-  { value: 'KVM', label: 'KVM Only' },
-  { value: 'None', label: 'None' }
+  { value: 'All', label: 'userConsentModes.all.value' },
+  { value: 'KVM', label: 'userConsentModes.kvmOnly.value' },
+  { value: 'None', label: 'userConsentModes.none.value' }
+]
+
+export const TlsModes: FormOption<number>[] = [
+  { value: 1, label: 'tlsModes.serverAuthOnly.value' },
+  { value: 2, label: 'tlsModes.serverAndNonTls.value' },
+  { value: 3, label: 'tlsModes.mutualTlsOnly.value' },
+  { value: 4, label: 'tlsModes.mutualAndNonTls.value' }
+]
+
+export const TlsSigningAuthorities: FormOption<string>[] = [
+  { value: 'SelfSigned', label: 'tlsAuthorities.selfSigned.value' },
+  { value: 'MicrosoftCA', label: 'tlsAuthorities.microsoftCA.value' }
 ]
 
 // unfortunately wifiConfigs is what the REST interface expects

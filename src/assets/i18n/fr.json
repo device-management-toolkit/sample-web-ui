@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "Titre de la section « À propos » en mode cloud",
+    "value": "À propos de l'outil de gestion des appareils Exemple d'interface utilisateur Web"
+  },
+  "about.consoleProvides": {
+    "description": "Message pour les fonctionnalités de la console",
+    "value": "La console offre les fonctionnalités suivantes, entre autres :"
+  },
+  "about.description": {
+    "description": "Description de la console",
+    "value": "Console est un outil de gestion hors bande 1:1 permettant de gérer Intel AMT sur les réseaux de type local. Une fois qu'un appareil a été ajouté, Console communique directement avec AMT via le réseau local, offrant ainsi un moyen rapide et facile de connecter et de gérer tous vos appareils AMT."
+  },
+  "about.device": {
+    "description": "Message pour le matériel de l'appareil",
+    "value": "Informations sur le matériel de l'appareil et journalisation"
+  },
+  "about.doNotShowAgain": {
+    "description": "Cochez la case pour afficher la section « À propos ».",
+    "value": "Ne plus afficher"
+  },
+  "about.gotIt": {
+    "description": "Bouton pour fermer la section « À propos ».",
+    "value": "Compris."
+  },
+  "about.howTo": {
+    "description": "Message sur la manière d'utiliser la boîte à outils",
+    "value": "Comment utiliser la boîte à outils UI"
+  },
+  "about.learn": {
+    "description": "Message pour apprendre à utiliser la boîte à outils",
+    "value": "Découvrez comment le Device Management Toolkit gère les appareils."
+  },
+  "about.nonCloudMode": {
+    "description": "Titre de la section « À propos »",
+    "value": "À propos de la console"
+  },
+  "about.redirection": {
+    "description": "Message pour les fonctionnalités de redirection",
+    "value": "Fonctionnalités de redirection telles que clavier, vidéo et souris à distance (KVM) et série sur LAN (SOL)"
+  },
+  "about.referenceImplementation": {
+    "description": "Message pour la démonstration de la mise en œuvre en mode cloud",
+    "value": "Cette implémentation de référence présente les API et les fonctionnalités générales du kit d'outils de gestion des appareils et n'est PAS destinée à être utilisée en production."
+  },
+  "about.remotePower": {
+    "description": "Message pour l'alimentation à distance",
+    "value": "Actions d'alimentation à distance"
+  },
+  "about.sampleUI": {
+    "description": "Message pour l'exemple d'interface utilisateur",
+    "value": "Cet exemple d'interface utilisateur est destiné aux éléments suivants :"
+  },
+  "about.setUp": {
+    "description": "Message pour la configuration",
+    "value": "Configurer les profils, la configuration et les domaines"
+  },
+  "about.understand": {
+    "description": "Message pour comprendre la boîte à outils",
+    "value": "Comprenez la mise en œuvre des API REST par Device Management Toolkit et comment elles peuvent être utilisées dans votre propre application."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "Message pour autoriser les certificats auto-signés",
+    "value": "Autoriser les certificats auto-signés"
+  },
+  "addDevice.chooseProfile": {
+    "description": "Étiquette pour le champ de sélection du profil",
+    "value": "Choisissez Profil"
+  },
+  "addDevice.description": {
+    "description": "Description expliquant comment activer un appareil",
+    "value": "Afin d'activer un appareil, vous devrez exécuter une commande sur l'appareil AMT. Cette boîte de dialogue vous aidera à générer la commande à exécuter."
+  },
+  "addDevice.enterTags": {
+    "description": "Conseil pour la saisie des balises",
+    "value": "Vous pouvez saisir des balises pour faciliter l'organisation et la recherche des appareils à mesure que votre liste d'appareils gérés s'allonge. Saisissez une balise, puis appuyez sur Entrée ou ajoutez une virgule."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "Erreur pour les noms conviviaux non valides",
+    "value": "Le nom convivial ne doit pas dépasser 50 caractères."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "Erreur pour les noms conviviaux requis",
+    "value": "Le nom convivial est obligatoire."
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "Erreur pour les noms d'hôte non valides",
+    "value": "Format de nom d'hôte non valide"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "Erreur pour les noms d'hôte requis",
+    "value": "Le nom d'hôte est obligatoire."
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "Étiquette de case à cocher pour désactiver la vérification des certificats auto-signés",
+    "value": "Pas de vérification des certificats auto-signés"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "Espace réservé pour l'ajout d'une nouvelle balise",
+    "value": "Nouvelle balise..."
+  },
+  "addDevice.profileRequired": {
+    "description": "Message d'erreur de validation lorsque le profil n'est pas sélectionné",
+    "value": "Profil requis"
+  },
+  "addDevice.showVerbose": {
+    "description": "Étiquette de case à cocher pour activer la sortie détaillée",
+    "value": "Afficher le détail"
+  },
+  "addDevice.title": {
+    "description": "Titre de la boîte de dialogue pour ajouter un nouvel appareil",
+    "value": "Ajouter un nouvel appareil"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "Erreur pour nom d'utilisateur non valide",
+    "value": "Le nom d'utilisateur doit comporter au moins 5 caractères et ne pas dépasser 16 caractères."
+  },
+  "addDevice.userNameRequired": {
+    "description": "Erreur pour le nom d'utilisateur requis",
+    "value": "Le nom d'utilisateur est obligatoire."
+  },
+  "addDevice.useTLS": {
+    "description": "Message pour l'utilisation de TLS",
+    "value": "Utilisez TLS."
+  },
+  "alarm.errorAdding": {
+    "description": "Erreur lors de l'ajout",
+    "value": "Erreur lors de l'ajout d'occurrences d'alarme"
+  },
+  "alarm.errorDelete": {
+    "description": "Erreur lors de la suppression",
+    "value": "Erreur lors de la suppression des occurrences d'alarme"
+  },
+  "alarm.errorRetrieve": {
+    "description": "Erreur lors de la récupération",
+    "value": "Erreur lors de la récupération des occurrences d'alarme"
+  },
+  "alarmService.addNew": {
+    "description": "Texte du bouton pour ajouter une nouvelle alarme",
+    "value": "Ajouter"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "Conseil pour la saisie du nom de l'alarme",
+    "value": "Veuillez fournir un nom pour cette alarme."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "Espace réservé pour la saisie du nom de l'alarme",
+    "value": "Nom de l'alarme"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "Info-bulle pour le bouton de suppression de l'alarme",
+    "value": "Supprimer l'occurrence de l'alarme"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "Étiquette à supprimer une fois terminé, basculez le curseur.",
+    "value": "Supprimer une fois terminé."
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "Nom de l'élément d'alarme suivi de son InstanceID",
+    "value": "{{elementName}} (InstanceID : {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "Étiquette pour la sélection de l'heure",
+    "value": "Heure"
+  },
+  "alarmService.interval": {
+    "description": "Étiquette pour l'intervalle d'alarme",
+    "value": "Intervalle (en minutes)"
+  },
+  "alarmService.intervalHint": {
+    "description": "Conseil pour la saisie d'intervalle",
+    "value": "Intervalle en minutes pour une alarme périodique, 0 pour une alarme unique"
+  },
+  "alarmService.intervalLabel": {
+    "description": "Étiquette pour la saisie d'intervalle",
+    "value": "Intervalle"
+  },
+  "alarmService.intervalNone": {
+    "description": "Affiché lorsque l'intervalle n'est pas défini.",
+    "value": "Aucune"
+  },
+  "alarmService.minuteLabel": {
+    "description": "Étiquette pour la sélection des minutes",
+    "value": "Procès-verbaux"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "Heure de début : {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Supprimer à la fin : {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "Espace réservé pour la saisie de l'heure de début",
+    "value": "Veuillez choisir une date et une heure."
+  },
+  "alarmService.subtitle": {
+    "description": "Sous-titre indiquant le nombre d'occurrences de l'alarme",
+    "value": "Alarmes (entrées{{count}} )"
+  },
+  "alarmService.title": {
+    "description": "Titre de la fiche de service d'alarme",
+    "value": "Service d'alarme"
+  },
+  "audit.errorLog": {
+    "description": "Erreur lors de la récupération des journaux d'audit",
+    "value": "Erreur lors de la récupération du journal d'audit"
+  },
+  "auditLog.description": {
+    "value": "Description"
+  },
+  "auditLog.download": {
+    "description": "Bouton de téléchargement pour les journaux d'audit",
+    "value": "Télécharger le journal d'audit (.csv)"
+  },
+  "auditLog.event": {
+    "value": "Événement"
+  },
+  "auditLog.missing": {
+    "description": "Message pour les journaux d'audit manquants",
+    "value": "Pas de journal d'audit"
+  },
+  "auditLog.time": {
+    "value": "Délai"
+  },
+  "auditLog.title": {
+    "description": "Titre des journaux d'audit",
+    "value": "Journal d'audit"
+  },
+  "certificates.add.tooltip": {
+    "description": "Info-bulle pour le bouton « Ajouter un certificat »",
+    "value": "Ajouter un certificat"
+  },
+  "certificates.download.tooltip": {
+    "description": "Info-bulle pour le téléchargement d'un certificat",
+    "value": "Télécharger le certificat"
+  },
+  "certificates.empty": {
+    "description": "Texte pour les certificats vides",
+    "value": "Aucun certificat trouvé"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "Erreur lors de l'ajout de certificats",
+    "value": "Erreur lors de l'ajout du certificat"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "Erreur lors de la récupération des informations du certificat",
+    "value": "Erreur lors de la récupération des informations du certificat"
+  },
+  "certificates.list": {
+    "description": "Texte pour la liste des certificats",
+    "value": "Liste des certificats actuellement enregistrés sur l'appareil AMT"
+  },
+  "certificates.loading": {
+    "description": "Texte pour le chargement des certificats",
+    "value": "Chargement des certificats..."
+  },
+  "certificates.profileAssociations": {
+    "description": "Étiquette pour les associations de profils de certificats",
+    "value": "Associations de profils"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "Affiché lorsqu'un certificat n'est associé à aucun profil.",
+    "value": "Non associé"
+  },
+  "certificates.title": {
+    "description": "Titre des certificats",
+    "value": "Certificats"
+  },
+  "certificates.type": {
+    "description": "Étiquette pour le champ du type de certificat",
+    "value": "Type"
+  },
+  "certificates.typeClient": {
+    "description": "Indique que le certificat est un certificat client.",
+    "value": "Client"
+  },
+  "certificates.typeRoot": {
+    "description": "Indique que le certificat est un certificat racine.",
+    "value": "Racine"
+  },
+  "common.addNew": {
+    "description": "Texte du bouton « Ajouter nouveau »",
+    "value": "Ajouter"
+  },
+  "common.cancel": {
+    "description": "Texte du bouton « Annuler »",
+    "value": "ANNULER"
+  },
+  "common.cancelLower": {
+    "description": "Texte du bouton « Annuler »",
+    "value": "Annuler"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "Avertissement pour les certificats qui ne sont pas téléchargés",
+    "value": "Certificat non encore téléchargé"
+  },
+  "common.cetificateUploaded": {
+    "description": "Message pour les certificats téléchargés",
+    "value": "Certificat téléchargé"
+  },
+  "common.chooseFile": {
+    "description": "Bouton permettant de sélectionner un fichier",
+    "value": "Choisissez un fichier"
+  },
+  "common.close": {
+    "description": "Texte pour le bouton Fermer",
+    "value": "Fermer"
+  },
+  "common.completeProfile": {
+    "description": "Message pour les profils complétés",
+    "value": "Profil enregistré avec succès"
+  },
+  "common.connected": {
+    "description": "Statut lorsqu'un appareil ou un service est connecté",
+    "value": "Connecté"
+  },
+  "common.continue": {
+    "value": "Continuer"
+  },
+  "common.deleteConfiguration": {
+    "description": "Message pour les configurations supprimées",
+    "value": "Configuration supprimée avec succès"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "Message pour le sous-titre de connexion",
+    "value": "Portail de la boîte à outils de gestion des appareils"
+  },
+  "common.disabled": {
+    "description": "Utilisé lorsque la synchronisation du profil local est désactivée.",
+    "value": "désactivé"
+  },
+  "common.disconnected": {
+    "description": "Statut lorsqu'un appareil ou un service est déconnecté",
+    "value": "Déconnecté"
+  },
+  "common.dismiss": {
+    "description": "Étiquette du bouton « Rejeter »",
+    "value": "Ignorer"
+  },
+  "common.done": {
+    "description": "Message pour le bouton « Terminé »",
+    "value": "Terminé"
+  },
+  "common.down": {
+    "value": "Bas"
+  },
+  "common.enabled": {
+    "description": "Utilisé lorsque la synchronisation des profils locaux est activée.",
+    "value": "activé"
+  },
+  "common.enterFriendlyName": {
+    "description": "Conseil pour saisir un nom convivial",
+    "value": "Veuillez saisir un nom convivial."
+  },
+  "common.enterHostName": {
+    "description": "Conseil pour la saisie du nom d'hôte",
+    "value": "Veuillez saisir le nom d'hôte."
+  },
+  "common.enterPassword": {
+    "description": "Message pour la saisie de votre mot de passe",
+    "value": "Veuillez saisir votre mot de passe."
+  },
+  "common.enterUserName": {
+    "description": "Conseil pour saisir votre nom d'utilisateur",
+    "value": "Veuillez saisir votre nom d'utilisateur."
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "Erreur lors de la suppression des configurations",
+    "value": "Impossible de supprimer la configuration."
+  },
+  "common.friendlyName": {
+    "description": "Message pour le nom convivial",
+    "value": "Nom convivial"
+  },
+  "common.hostName": {
+    "description": "Message pour le nom d'hôte",
+    "value": "Nom d'hôte"
+  },
+  "common.input": {
+    "description": "Entrée pour l'explorateur WSMAN",
+    "value": "Entrée"
+  },
+  "common.intelCopyright": {
+    "description": "Message de copyright pour Intel",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "Message pour le bouton de connexion",
+    "value": "CONNEXION"
+  },
+  "common.logOut": {
+    "description": "Message de déconnexion",
+    "value": "Déconnexion"
+  },
+  "common.no": {
+    "value": "Non"
+  },
+  "common.notApplicable": {
+    "description": "Affiché lorsque l'entrée du système d'exploitation ne s'applique pas.",
+    "value": "Sans objet"
+  },
+  "common.ok": {
+    "description": "Texte du bouton OK",
+    "value": "OK"
+  },
+  "common.other": {
+    "description": "Utilisé lorsque le système d'exploitation ou la carte mémoire est « Autre » ou « Non spécifié ».",
+    "value": "Autres"
+  },
+  "common.output": {
+    "description": "Résultat pour l'explorateur WSMAN",
+    "value": "Résultat"
+  },
+  "common.password": {
+    "description": "Message pour le mot de passe",
+    "value": "Mot de passe"
+  },
+  "common.pin": {
+    "description": "Texte pour le bouton Épingler",
+    "value": "Épingler"
+  },
+  "common.profileName": {
+    "description": "Nom du profil",
+    "value": "Nom du profil"
+  },
+  "common.remove": {
+    "description": "Texte du bouton « Supprimer »",
+    "value": "Supprimer"
+  },
+  "common.save": {
+    "description": "Texte du bouton « Enregistrer »",
+    "value": "ENREGISTRER"
+  },
+  "common.showHidePassword": {
+    "description": "Info-bulle pour afficher ou masquer le mot de passe",
+    "value": "Afficher / Masquer le mot de passe"
+  },
+  "common.submit": {
+    "description": "Bouton pour soumettre",
+    "value": "Soumettre"
+  },
+  "common.tags": {
+    "description": "Message pour les balises",
+    "value": "Balises"
+  },
+  "common.trustedRoot": {
+    "description": "Texte de la case à cocher « Racine de confiance »",
+    "value": "Racine de confiance"
+  },
+  "common.unknown": {
+    "description": "Étiquette pour les valeurs inconnues ou non spécifiées",
+    "value": "Inconnu"
+  },
+  "common.up": {
+    "value": "Haut"
+  },
+  "common.userName": {
+    "description": "Message pour le nom d'utilisateur",
+    "value": "Nom d'utilisateur"
+  },
+  "common.wired": {
+    "description": "Texte pour le bouton sans fil",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "Texte pour le bouton câblé",
+    "value": "Sans fil"
+  },
+  "common.yes": {
+    "value": "Oui"
+  },
+  "configDetail.commonNameHint": {
+    "description": "Texte d'aide pour le champ de nom commun",
+    "value": "Veuillez saisir le nom commun figurant dans le certificat."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "Texte de remplacement pour le champ de nom commun",
+    "value": "Nom commun du certificat (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "Texte d'aide pour le champ de nom de configuration",
+    "value": "Veuillez saisir un nom pour cette configuration CIRA."
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "Texte de remplacement pour le champ de nom de configuration",
+    "value": "Exemple : ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "Étiquette du bouton radio FQDN",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "Libellé du bouton radio IPv4",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "Texte d'aide pour le champ d'adresse du serveur MPS",
+    "value": "Veuillez saisir l'adresse où votre instance MPS est hébergée."
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "Texte de remplacement pour le champ d'adresse du serveur MPS",
+    "value": "Adresse MPS"
+  },
+  "configDetail.portHint": {
+    "description": "Texte d'aide pour le champ « port »",
+    "value": "Veuillez saisir le port CIRA pour l'instance MPS. La valeur par défaut est 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "Texte de remplacement pour le champ port",
+    "value": "Port"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "Texte pour le bouton de régénération du mot de passe",
+    "value": "Générer un nouveau mot de passe aléatoire lors de l'enregistrement"
+  },
+  "configDetail.usernameHint": {
+    "description": "Texte d'aide pour le champ du nom d'utilisateur",
+    "value": "Veuillez saisir le nom d'utilisateur pour accéder à MPS."
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "Texte de remplacement pour le champ du nom d'utilisateur",
+    "value": "Nom d'utilisateur"
+  },
+  "configs.ciraNoData": {
+    "description": "Aucun message CIRA Configs",
+    "value": "Aucune configuration CIRA"
+  },
+  "configs.delete": {
+    "description": "Message pour la suppression des configurations CIRA",
+    "value": "Configuration CIRA supprimée avec succès"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "Erreur lors de la suppression des configurations CIRA",
+    "value": "Impossible de supprimer les configurations CIRA"
+  },
+  "configs.failLoadConfigs": {
+    "description": "Erreur lors du chargement des configurations CIRA",
+    "value": "Impossible de charger les configurations CIRA"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "Nouveau titre de la page de configuration CIRA",
+    "value": "Nouvelle configuration CIRA"
+  },
+  "configs.header.ciraTitle": {
+    "description": "Titre des configurations CIRA",
+    "value": "Configurations CIRA"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "Titre CIRA Configs lorsqu'il n'est pas disponible",
+    "value": "Non disponible"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "Première page"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "Éléments par page :"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "Dernière page"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "Page suivante"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "Page précédente"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} {{endIndex}} {{length}}"
+  },
+  "configs.success": {
+    "description": "Message pour la création de configurations CIRA",
+    "value": "{{reqType}} s CIRA créées avec succès"
+  },
+  "configs.table.ciraCert": {
+    "description": "En-tête de colonne « Nom commun » de la certification",
+    "value": "Nom commun du certificat (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "En-tête de colonne du serveur MPS",
+    "value": "Serveur MPS"
+  },
+  "configs.table.ciraName": {
+    "description": "Nom de l'en-tête de colonne",
+    "value": "Nom"
+  },
+  "configs.table.ciraPort": {
+    "description": "En-tête de colonne de portage",
+    "value": "Port"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "En-tête de colonne « MPS Root Cert »",
+    "value": "Certificat racine MPS"
+  },
+  "configs.table.ciraUsername": {
+    "description": "En-tête de colonne « Nom d'utilisateur »",
+    "value": "Nom d'utilisateur"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "Info-bulle pour l'ajout d'un nouvel appareil",
+    "value": "Ajouter un nouvel appareil pouvant être géré par la console"
+  },
+  "dashboard.addNewDevice": {
+    "description": "Étape pour ajouter un nouvel appareil",
+    "value": "1. Ajouter un nouvel appareil"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "Étape pour ajouter un certificat de provisionnement",
+    "value": "Ajouter un certificat d'approvisionnement [facultatif]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "Étapes pour créer une configuration CIRA",
+    "value": "Créer une configuration CIRA"
+  },
+  "dashboard.createProfile": {
+    "description": "Étapes pour créer un profil",
+    "value": "Créer un profil"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "Étape pour créer une configuration sans fil",
+    "value": "Créer une configuration sans fil [facultatif]"
+  },
+  "dashboard.deploy": {
+    "description": "Déployez la boîte à outils.",
+    "value": "Déployer"
+  },
+  "dashboard.deployDescription": {
+    "description": "Description pour le déploiement",
+    "value": "Êtes-vous prêt à passer à la production ? Consultez notre guide de déploiement (à venir)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "Nombre d'appareils connectés",
+    "value": "Appareils connectés"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "Nombre d'appareils déconnectés",
+    "value": "Appareils déconnectés"
+  },
+  "dashboard.error": {
+    "description": "Erreur lors de la récupération des statistiques de l'appareil",
+    "value": "Erreur lors de la récupération des statistiques de l'appareil"
+  },
+  "dashboard.getStarted": {
+    "description": "Commencez à utiliser la boîte à outils",
+    "value": "Commencer"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "Description pour commencer",
+    "value": "Vous découvrez la boîte à outils ? Consultez la documentation pour en apprendre les bases."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "Titre du tableau de bord",
+    "value": "Tableau de bord"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "Étape pour gérer votre appareil",
+    "value": "2. Gérer votre appareil"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "Étape pour gérer à nouveau votre appareil",
+    "value": "Gérer votre appareil"
+  },
+  "dashboard.totalDevices": {
+    "description": "Nombre total d'appareils",
+    "value": "Nombre total d'appareils"
+  },
+  "dashboard.understandSecurity": {
+    "description": "Comprenez les questions de sécurité.",
+    "value": "Comprendre la sécurité"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "Description pour comprendre la sécurité",
+    "value": "Vous avez des questions sur les sujets liés à la sécurité ? Découvrez tout ce qu'il faut savoir sur les mots de passe, Vault, les certificats et bien plus encore."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "Info-bulle pour l'utilisation des actions de l'appareil",
+    "value": "Utiliser les actions des appareils pour contrôler une liste d'appareils"
+  },
+  "delete.question": {
+    "description": "Question concernant la suppression d'enregistrements",
+    "value": "Êtes-vous certain ?"
+  },
+  "delete.questionRecord": {
+    "description": "Question concernant la suppression d'enregistrements",
+    "value": "Êtes-vous certain de vouloir supprimer le ou les enregistrements ?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "Texte pour les noms courants",
+    "value": "Nom commun :"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "Texte pour les noms DNS",
+    "value": "Noms DNS :"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "Texte pour le nom de l'émetteur",
+    "value": "Nom de l'émetteur :"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "Texte pour après la date",
+    "value": "À éviter :"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "Texte pour la date limite",
+    "value": "Pas avant :"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "Texte pour l'algorithme à clé publique",
+    "value": "Algorithme à clé publique :"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "Texte pour la taille de la clé publique",
+    "value": "Taille de la clé publique :"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "Texte pour le nom de la série",
+    "value": "Numéro de série :"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "Texte pour l'empreinte SHA-1",
+    "value": "Empreinte SHA-1 :"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "Texte pour l'empreinte SHA-256",
+    "value": "Empreinte SHA-256 :"
+  },
+  "deviceCertificate.title": {
+    "description": "Titre pour les détails du certificat",
+    "value": "Détails du certificat"
+  },
+  "deviceDetail.alarms": {
+    "description": "Nom de la catégorie pour les alarmes des appareils",
+    "value": "Alarmes"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "Description des alarmes",
+    "value": "Gérer les alarmes des appareils"
+  },
+  "deviceDetail.auditLog": {
+    "description": "Nom de la catégorie pour le journal d'audit",
+    "value": "Journal d'audit"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "Description du journal d'audit",
+    "value": "Afficher le journal d'audit de l'appareil"
+  },
+  "deviceDetail.certificates": {
+    "description": "Nom de la catégorie pour les certificats",
+    "value": "Certificats"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "Description des certificats",
+    "value": "Gérer les certificats"
+  },
+  "deviceDetail.eventLog": {
+    "description": "Nom de la catégorie pour le journal des événements",
+    "value": "Journal des événements"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "Description du journal des événements",
+    "value": "Afficher les événements liés aux appareils"
+  },
+  "deviceDetail.explorer": {
+    "description": "Nom de la catégorie pour l'explorateur",
+    "value": "Explorer"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "Description pour l'explorateur",
+    "value": "Envoyer des commandes WSMAN"
+  },
+  "deviceDetail.general": {
+    "description": "Nom de la catégorie pour les informations générales sur l'appareil",
+    "value": "Informations générales sur AMT"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "Description des informations générales sur l'appareil",
+    "value": "Version et fonctionnalités d'AMT"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "Nom de la catégorie pour les informations sur le matériel",
+    "value": "Informations sur le matériel"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "Description des informations relatives au matériel",
+    "value": "Mémoire, CPU, etc."
+  },
+  "deviceDetail.kvm": {
+    "description": "Nom de la catégorie pour KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "Description pour KVM",
+    "value": "Contrôlez l'appareil à distance"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "Nom de la catégorie pour les paramètres réseau",
+    "value": "Paramètres réseau"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "Description des paramètres réseau",
+    "value": "Afficher les paramètres réseau"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "Nom de la catégorie pour l'absence de journaux d'événements",
+    "value": "Aucun journal des événements"
+  },
+  "deviceDetail.sol": {
+    "description": "Nom de la catégorie pour Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "Description pour SOL",
+    "value": "Série sur LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "Nom de la catégorie pour les paramètres TLS",
+    "value": "Paramètres TLS"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "Description des paramètres TLS",
+    "value": "Afficher la configuration TLS"
+  },
+  "devices.actions.deactivate": {
+    "description": "Info-bulle pour désactiver/supprimer un appareil",
+    "value": "Veuillez désactiver l'appareil."
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "Info-bulle pour la désactivation d'un appareil en mode cloud",
+    "value": "Désactiver l'appareil"
+  },
+  "devices.actions.edit": {
+    "description": "Info-bulle pour la modification d'un appareil",
+    "value": "Modifier l'appareil"
+  },
+  "devices.actions.powerOff": {
+    "description": "Info-bulle pour éteindre un appareil",
+    "value": "Éteignez l'appareil."
+  },
+  "devices.actions.powerUp": {
+    "description": "Info-bulle pour la mise sous tension d'un appareil",
+    "value": "Mettre l'appareil sous tension"
+  },
+  "devices.actions.remove": {
+    "description": "Info-bulle pour supprimer un appareil en mode non cloud",
+    "value": "Supprimer l'appareil"
+  },
+  "devices.actions.reset": {
+    "description": "Info-bulle pour réinitialiser un appareil",
+    "value": "Réinitialiser l'appareil"
+  },
+  "devices.actions.restart": {
+    "description": "Info-bulle pour redémarrer un appareil",
+    "value": "Redémarrez l'appareil."
+  },
+  "devices.addDevice": {
+    "description": "Message concernant un nouvel appareil",
+    "value": "Ajouter un nouvel appareil"
+  },
+  "devices.bulk.deactivate": {
+    "description": "Info-bulle pour l'action de désactivation en masse",
+    "value": "Supprimer ou désactiver les appareils sélectionnés"
+  },
+  "devices.bulk.powerOff": {
+    "description": "Info-bulle pour l'action d'arrêt groupé",
+    "value": "Éteignez les appareils sélectionnés."
+  },
+  "devices.bulk.powerUp": {
+    "description": "Info-bulle pour l'action de mise à niveau groupée",
+    "value": "Alimenter les appareils sélectionnés"
+  },
+  "devices.bulk.restart": {
+    "description": "Info-bulle pour l'action de redémarrage en masse",
+    "value": "Redémarrer les appareils sélectionnés"
+  },
+  "devices.deactivation": {
+    "description": "Message pour les désactivations",
+    "value": "Désactivation envoyée avec succès"
+  },
+  "devices.editDevice": {
+    "description": "Info-bulle pour la modification d'un appareil",
+    "value": "Modifier l'appareil"
+  },
+  "devices.editTags": {
+    "description": "Texte du bouton pour modifier les balises",
+    "value": "Modifier les balises"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "Erreur lors de la désactivation des appareils",
+    "value": "Erreur lors de la désactivation des appareils"
+  },
+  "devices.errorDeactivation": {
+    "description": "Erreur lors de l'envoi des désactivations",
+    "value": "Erreur lors de l'envoi de la désactivation"
+  },
+  "devices.errorInitializing": {
+    "description": "Erreur lors de l'initialisation",
+    "value": "Erreur lors de l'initialisation"
+  },
+  "devices.errorLoadDevices": {
+    "description": "Erreur lors du chargement des appareils",
+    "value": "Erreur lors du chargement des périphériques"
+  },
+  "devices.errorLoadTags": {
+    "description": "Erreur lors du chargement des balises",
+    "value": "Erreur lors du chargement des balises"
+  },
+  "devices.errorPowerAction": {
+    "description": "Erreur pour les actions de puissance",
+    "value": "Erreur lors de l'envoi de l'action d'alimentation"
+  },
+  "devices.failPowerAction": {
+    "description": "Erreur : échec des actions d'alimentation",
+    "value": "Échec de l'action d'alimentation"
+  },
+  "devices.filter.searchHint": {
+    "description": "Texte d'aide sous le champ de recherche des appareils",
+    "value": "Saisissez du texte pour filtrer la page actuelle"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "Texte de remplacement pour le champ de recherche des appareils",
+    "value": "Filtrer les appareils..."
+  },
+  "devices.filter.tags": {
+    "description": "Étiquette pour filtrer les appareils par balises",
+    "value": "Filtrer les balises"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "Ajouter la description de la boîte de dialogue Certificat",
+    "value": "Le certificat sera ajouté à AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "Ajouter le titre de la boîte de dialogue Certificat",
+    "value": "Ajouter un certificat"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "Description de la boîte de dialogue de démarrage HTTPS",
+    "value": "HTTPS Network Boot sécurise le processus de démarrage à l'aide du protocole HTTPS crypté afin de protéger les fichiers de démarrage. Lancez One Click Recovery pour restaurer rapidement le système d'exploitation."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "Titre de la boîte de dialogue de démarrage HTTPS",
+    "value": "Démarrage réseau HTTPS (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "Description de la boîte de dialogue PBA Boot",
+    "value": "Un PBA (Pre-Boot Application) est un outil de récupération ou de diagnostic installé localement sur le système et qui peut être sélectionné comme option de démarrage pour les opérations de récupération Intel One-Click."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "Titre de la boîte de dialogue PBA Boot",
+    "value": "Botte locale PBA (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "Titre de la page Appareils",
+    "value": "Appareils"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "Info-bulle permettant d'accéder à davantage d'options d'alimentation d'un appareil",
+    "value": "Plus d'options d'alimentation..."
+  },
+  "devices.noData": {
+    "description": "Message lorsqu'aucun appareil n'existe",
+    "value": "Aucun appareil trouvé"
+  },
+  "devices.noDataFilter": {
+    "description": "Message lorsque les résultats du filtre sont vides",
+    "value": "Aucun appareil ne correspond au filtre actuel"
+  },
+  "devices.notification.error": {
+    "description": "Info-bulle affichée lorsqu'une action échoue",
+    "value": "Erreur lors de l'envoi de l'action"
+  },
+  "devices.notification.notReady": {
+    "description": "Info-bulle affichée lorsque l'appareil n'est pas prêt",
+    "value": "Action d'alimentation envoyée, mais l'appareil a répondu qu'il n'était pas prêt."
+  },
+  "devices.notification.success": {
+    "description": "Info-bulle affichée lorsqu'une action réussit",
+    "value": "Action envoyée avec succès"
+  },
+  "devices.powerActionNotReady": {
+    "description": "Erreur pour les actions de puissance envoyées qui ne sont pas prêtes.",
+    "value": "Action de puissance envoyée mais non prête"
+  },
+  "devices.powerActionSent": {
+    "description": "Message pour les actions importantes",
+    "value": "Action effectuée avec succès"
+  },
+  "devices.table.actions": {
+    "description": "En-tête de colonne du tableau pour les actions",
+    "value": "Actions"
+  },
+  "devices.table.guid": {
+    "description": "En-tête de colonne du tableau pour GUID",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "En-tête de colonne du tableau pour le nom d'hôte",
+    "value": "Nom d'hôte"
+  },
+  "devices.table.status": {
+    "description": "En-tête de colonne du tableau pour l'état de l'appareil",
+    "value": "Statut"
+  },
+  "devices.table.tags": {
+    "description": "En-tête de colonne du tableau pour les balises",
+    "value": "Balises"
+  },
+  "deviceUserConsent.description": {
+    "description": "Description du consentement de l'utilisateur pour les appareils",
+    "value": "Un code de consentement utilisateur généré par Intel AMT est nécessaire pour accéder au système."
+  },
+  "deviceUserConsent.error": {
+    "description": "Erreur relative au consentement de l'utilisateur pour les appareils",
+    "value": "Ce champ est obligatoire et la valeur doit être un nombre à six chiffres."
+  },
+  "deviceUserConsent.hint": {
+    "description": "Conseil pour le consentement de l'utilisateur pour les appareils",
+    "value": "Fournir le code de consentement de l'utilisateur affiché sur le moniteur hôte cible."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "Espace réservé pour le consentement de l'utilisateur pour les appareils",
+    "value": "Code de consentement de l'utilisateur"
+  },
+  "deviceUserConsent.title": {
+    "description": "Titre pour le consentement de l'utilisateur pour les appareils",
+    "value": "Consentement de l'utilisateur"
+  },
+  "domainDetail.completeProfile": {
+    "description": "Message pour les profils de domaine complétés",
+    "value": "Profil de domaine enregistré avec succès"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "Erreur pour les profils de domaine supprimés",
+    "value": "Erreur lors de la création/mise à jour du profil de domaine"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Message d'erreur pour violation de clé unique",
+    "value": "L'ID ou le suffixe du nouveau domaine existe déjà"
+  },
+  "domainDetail.fqdn": {
+    "description": "Conseil pour le champ FQDN",
+    "value": "Saisissez le nom de domaine complet associé au certificat de provisionnement (c'est-à-dire amtdomain.com)."
+  },
+  "domainDetail.nameHint": {
+    "description": "Conseil pour le champ du nom de domaine",
+    "value": "Veuillez saisir un nom pour ce domaine (par exemple, domaine AMT)."
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "Espace réservé pour le nom de domaine",
+    "value": "Nom de domaine"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "Espace réservé pour le mot de passe du certificat d'approvisionnement",
+    "value": "Mot de passe de provisionnement Cert"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "Conseil pour le mot de passe du certificat de provisionnement",
+    "value": "Mot de passe pour le certificat de provisionnement"
+  },
+  "domains.certExpired": {
+    "description": "Message pour les certificats expirés",
+    "value": "{{count}} Les certificats de domaine ont expiré. "
+  },
+  "domains.certExpring": {
+    "description": "Message pour les certificats arrivant à expiration",
+    "value": "{{count}} Le ou les certificats de domaine expireront bientôt. "
+  },
+  "domains.daysRemaining": {
+    "description": "Message pour les jours restants",
+    "value": " jours restants"
+  },
+  "domains.delteDomain": {
+    "description": "Message pour la suppression de domaines",
+    "value": "Domaine supprimé avec succès"
+  },
+  "domains.expired": {
+    "description": "Message pour les domaines expirés",
+    "value": "Expiré"
+  },
+  "domains.failLoadDomain": {
+    "description": "Erreur lors du chargement des domaines",
+    "value": "Impossible de charger les domaines"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "Erreur lors de la suppression de domaines",
+    "value": "Impossible de supprimer le domaine"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "Nouveau titre de la page Domaine",
+    "value": "Nouveau domaine"
+  },
+  "domains.header.domainsTitle": {
+    "description": "Titre de la page Domaines",
+    "value": "Domaines"
+  },
+  "domains.monthsRemaining": {
+    "description": "Message pour les mois restants",
+    "value": " mois restants"
+  },
+  "domains.noData": {
+    "description": "Message « Aucun domaine »",
+    "value": "Aucun domaine"
+  },
+  "domains.table.domainSuffix": {
+    "description": "En-tête de colonne « Suffixe de domaine »",
+    "value": "Suffixe de domaine"
+  },
+  "domains.table.expirationDate": {
+    "description": "En-tête de colonne « Date d'expiration »",
+    "value": "Date d'expiration"
+  },
+  "domains.table.name": {
+    "description": "Nom de l'en-tête de colonne",
+    "value": "Nom"
+  },
+  "domains.yearsRemaining": {
+    "description": "Message pour les années restantes",
+    "value": " Années restantes"
+  },
+  "editTags.description": {
+    "description": "Description pour les balises d'édition",
+    "value": "Ajoutez une balise en cliquant dans l'invite, saisissez le nom de la balise, puis appuyez sur Entrée ou sur la virgule."
+  },
+  "editTags.header": {
+    "description": "En-tête pour les balises d'édition",
+    "value": "Supprimez une balise en cliquant dessus."
+  },
+  "editTags.placeholder": {
+    "description": "Espace réservé pour les balises d'édition",
+    "value": "Nouvelle balise..."
+  },
+  "editTags.title": {
+    "description": "Titre pour les balises d'édition",
+    "value": "Modifier les balises"
+  },
+  "error.deviceNotResponding": {
+    "description": "Message affiché lorsque l'appareil est hors délai",
+    "value": "L'appareil n'a pas répondu. Veuillez vérifier les paramètres de connexion et réessayer."
+  },
+  "error.itemModified": {
+    "description": "Message affiché lorsque l'élément est obsolète",
+    "value": "Cet élément a été modifié depuis son chargement. Veuillez le recharger."
+  },
+  "error.kvmConnection": {
+    "description": "Erreur affichée lors de la connexion à KVM",
+    "value": "Échec de la connexion à KVM. Une seule session par appareil est autorisée. Veuillez également vous assurer que votre jeton est valide et que vous disposez d'un accès."
+  },
+  "error.sessionTimedOut": {
+    "description": "Message affiché lorsque la session utilisateur a expiré",
+    "value": "La session a expiré. Veuillez vous reconnecter."
+  },
+  "error.unableToSendCode": {
+    "description": "Erreur affichée lorsque l'envoi du code de consentement de l'utilisateur échoue, y compris le message d'erreur du backend.",
+    "value": "Impossible d'envoyer le code : {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "Erreur générique lors de l'annulation du code de consentement de l'utilisateur",
+    "value": "Code d'annulation d'erreur du consentement de l'utilisateur"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "Erreur lors de l'annulation d'un code de consentement utilisateur demandé",
+    "value": "{{featureName}} Impossible d'accéder - Échec de l'annulation du code de consentement de l'utilisateur demandé."
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "Erreur lors de l'annulation d'un code de consentement utilisateur demandé réussi",
+    "value": "{{featureName}} Impossible d'accéder - le code de consentement de l'utilisateur demandé est annulé."
+  },
+  "error.userConsentCodeFailed": {
+    "description": "Erreur affichée lorsque la demande du code de consentement de l'utilisateur échoue pour une fonctionnalité",
+    "value": "{{featureName}} Impossible d'accéder – Échec de la demande du code de consentement de l'utilisateur."
+  },
+  "error.userConsentSendFailed": {
+    "description": "Erreur lors de l'envoi du code de consentement de l'utilisateur.",
+    "value": "{{featureName}} Impossible d'accéder - Échec de l'envoi du code de consentement de l'utilisateur"
+  },
+  "error.userConsentUnsupported": {
+    "description": "Erreur lors de l'envoi d'un code de consentement utilisateur non pris en charge",
+    "value": "{{featureName}} Impossible d'accéder - code de consentement utilisateur non pris en charge"
+  },
+  "event.errorLog": {
+    "description": "Erreur lors de la récupération des journaux d'événements",
+    "value": "Erreur lors de la récupération du journal des événements"
+  },
+  "eventLog.download": {
+    "description": "Bouton pour télécharger le journal des événements",
+    "value": "Télécharger le journal des événements (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "Titre des entrées du journal des événements",
+    "value": "Journal des événements (entrées{{count}} )"
+  },
+  "eventLog.eventType": {
+    "description": "Message pour les types de journaux d'événements",
+    "value": "Type d'événement"
+  },
+  "eventLog.severity": {
+    "description": "Message pour les niveaux de gravité du journal des événements",
+    "value": "Gravité"
+  },
+  "eventLog.source": {
+    "description": "Message pour les sources du journal des événements",
+    "value": "Source"
+  },
+  "explorer.errorResponse": {
+    "description": "Erreur lors de la récupération de la réponse de l'explorateur",
+    "value": "Erreur lors de la récupération de la réponse de l'explorateur"
+  },
+  "explorer.placeHolder": {
+    "description": "Espace réservé pour l'explorateur WSMAN",
+    "value": "Sélectionnez..."
+  },
+  "explorer.WSMANCall": {
+    "value": "Appel WSMAN"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "Texte du bouton pour ajouter des domaines",
+    "value": "Ajouter des domaines"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "Option permettant d'ajouter des domaines en premier",
+    "value": "Ajoutez d'abord les domaines (requis pour l'activation ACM)."
+  },
+  "exportDialog.domainSuffix": {
+    "description": "Étiquette pour le champ du suffixe de domaine",
+    "value": "Suffixe de domaine"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "En-tête du message d'erreur pour le chargement des domaines",
+    "value": "Erreur lors du chargement des domaines :"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "Message de chargement pour les domaines",
+    "value": "Chargement des domaines..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "Message lorsque aucun domaine n'est configuré",
+    "value": "Aucun domaine n'est configuré. Vous pouvez soit :"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "Message d'erreur pour la sélection du domaine requise",
+    "value": "Veuillez sélectionner un domaine"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "Sous-titre pour la sélection du domaine dans la boîte de dialogue d'exportation",
+    "value": "Le domaine sélectionné sera inclus dans le profil pour être utilisé avec"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "Titre pour la sélection du domaine de la boîte de dialogue d'exportation",
+    "value": "Sélectionnez le suffixe de domaine."
+  },
+  "exportDialog.skipDomain": {
+    "description": "Texte du bouton pour ignorer le domaine",
+    "value": "Ignorer le domaine"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "Possibilité d'ignorer le domaine s'il est déjà activé.",
+    "value": "Cliquez sur « Ignorer le domaine » si l'appareil a déjà été activé."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "Instructions pour la fonctionnalité de domaine ignoré",
+    "value": "Cliquez sur « Ignorer le domaine » si l'appareil a déjà été activé. Si l'appareil n'a pas encore été activé, vous devez sélectionner un domaine pour l'activation ACM."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "Message d'erreur pour les champs obligatoires",
+    "value": "Ce champ est obligatoire et doit être alphanumérique, sans espaces ni symboles."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "Texte pour les champs alphanumériques obligatoires et les champs de longueur maximale",
+    "value": "Ce champ est obligatoire, doit être alphanumérique (sans espaces) et ne doit pas dépasser {{profileNameMaxLen}} caractères."
+  },
+  "fieldRequired.long": {
+    "description": "Indication pour les champs obligatoires avec limite de caractères",
+    "value": "Ce champ est obligatoire et doit comporter entre 8 et 32 caractères."
+  },
+  "fieldRequired.short": {
+    "description": "Conseil pour les champs obligatoires",
+    "value": "Ce champ est obligatoire."
+  },
+  "general.amtBuild": {
+    "description": "Étiquette pour AMT Build",
+    "value": "AMT Build :"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "Étiquette pour AMT DHCP Suffixe DNS",
+    "value": "Suffixe DNS AMT DHCP :"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "Titre de la carte « Fonctionnalités compatibles AMT »",
+    "value": "Fonctionnalités activées par AMT"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "Description de la carte « Fonctionnalités compatibles AMT »",
+    "value": "Statut des fonctionnalités activées par AMT"
+  },
+  "general.AMTFeatures": {
+    "description": "Message pour les fonctionnalités mises à jour",
+    "value": "Fonctionnalités AMT mises à jour"
+  },
+  "general.amtSKU": {
+    "description": "Étiquette pour AMT SKU",
+    "value": "Référence AMT :"
+  },
+  "general.amtSummary": {
+    "description": "Titre de la carte de synthèse AMT",
+    "value": "Résumé AMT"
+  },
+  "general.amtSummaryDescription": {
+    "description": "Description de la carte récapitulative AMT",
+    "value": "Résumé des informations AMT"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "Étiquette pour le suffixe DNS de confiance AMT",
+    "value": "Suffixe DNS de confiance AMT (MEBx) :"
+  },
+  "general.amtVersion": {
+    "description": "Étiquette pour la version AMT",
+    "value": "Version AMT :"
+  },
+  "general.errorAMTFeatures": {
+    "description": "Erreur lors de la récupération des fonctionnalités AMT",
+    "value": "Erreur lors de la récupération des fonctionnalités AMT"
+  },
+  "general.errorAMTVersion": {
+    "description": "Erreur lors de la récupération de la version AMT",
+    "value": "Erreur lors de la récupération de la version AMT"
+  },
+  "general.errorGeneralSettings": {
+    "description": "Erreur lors de la récupération des paramètres généraux",
+    "value": "Erreur lors de la récupération des paramètres généraux"
+  },
+  "general.failAMTFeatures": {
+    "description": "Erreur lors de la mise à jour des fonctionnalités",
+    "value": "Échec de la mise à jour des fonctionnalités AMT"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "Info-bulle pour HTTPS Boot non pris en charge",
+    "value": "HTTPS Boot n'est pas pris en charge."
+  },
+  "general.httpsBootSupported": {
+    "description": "Info-bulle pour HTTPS Boot pris en charge",
+    "value": "HTTPS Boot est pris en charge."
+  },
+  "general.httpsNetworkBoot": {
+    "description": "Étiquette pour le démarrage réseau HTTPS",
+    "value": "HTTPS Démarrage réseau :"
+  },
+  "general.ideRedirection": {
+    "description": "Étiquette pour la redirection IDE",
+    "value": "Redirection IDE :"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "Étiquette pour KVM",
+    "value": "Clavier-vidéo-souris (KVM) :"
+  },
+  "general.kvmNotSupported": {
+    "description": "Info-bulle pour KVM non pris en charge",
+    "value": "KVM non pris en charge"
+  },
+  "general.oneClickRecovery": {
+    "description": "Étiquette pour la récupération en un clic",
+    "value": "Récupération en un clic (OCR) :"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "Info-bulle pour la récupération en un clic non prise en charge",
+    "value": "La récupération en un clic n'est pas prise en charge."
+  },
+  "general.pbaBootShort": {
+    "description": "Étiquette pour le démarrage PBA",
+    "value": "Démarrage PBA :"
+  },
+  "general.pbaNotSupported": {
+    "description": "Info-bulle pour PBA non prise en charge",
+    "value": "PBA n'est pas pris en charge."
+  },
+  "general.pbaSupported": {
+    "description": "Info-bulle pour PBA prise en charge",
+    "value": "PBA est pris en charge."
+  },
+  "general.provisioningMode": {
+    "description": "Étiquette pour le mode d'approvisionnement",
+    "value": "Mode d'approvisionnement :"
+  },
+  "general.serialOverLan": {
+    "description": "Étiquette pour SOL",
+    "value": "Serial-Over-Lan (SOL) :"
+  },
+  "general.userConsent": {
+    "description": "Étiquette pour le consentement de l'utilisateur",
+    "value": "Consentement de l'utilisateur :"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "Info-bulle pour le consentement de l'utilisateur non configurable",
+    "value": "Le consentement de l'utilisateur n'est pas configurable dans CCM."
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Étiquette pour le démarrage de récupération Windows",
+    "value": "Démarrage de récupération Windows :"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Info-bulle pour Windows Récupération non prise en charge",
+    "value": "La récupération Windows n'est pas prise en charge."
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Info-bulle pour la récupération Windows prise en charge",
+    "value": "La récupération Windows est prise en charge."
+  },
+  "httpBoot.enforce": {
+    "value": "Appliquer le démarrage sécurisé"
+  },
+  "httpBoot.error": {
+    "value": "L'URL est obligatoire."
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "Veuillez saisir l'URL."
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "Résumé des informations du BIOS"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "Résumé du BIOS"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "Erreur lors de la récupération d'informations supplémentaires",
+    "value": "Erreur lors de la récupération d'informations supplémentaires"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "Erreur lors de la récupération des informations matérielles",
+    "value": "Erreur lors de la récupération des informations HW"
+  },
+  "hwInfo.label.capacity": {
+    "value": "Capacité :"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "Vitesse d'horloge (max.) :"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU :"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "Fabricant :"
+  },
+  "hwInfo.label.model": {
+    "value": "Modèle :"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "Date de publication :"
+  },
+  "hwInfo.label.serial": {
+    "value": "Numéro de série :"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "Numéro de série :"
+  },
+  "hwInfo.label.size": {
+    "value": "Taille :"
+  },
+  "hwInfo.label.slot": {
+    "value": "Emplacement :"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "Système d'exploitation cible :"
+  },
+  "hwInfo.label.type": {
+    "value": "Type :"
+  },
+  "hwInfo.label.version": {
+    "value": "Version :"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "Résumé de la mémoire physique installée"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "Résumé de la mémoire"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "Résumé des informations sur la carte mère"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "Résumé de la carte mère"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "Résumé des informations relatives au stockage"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "Résumé du stockage"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "Résumé des informations sur le processeur et le châssis"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "Résumé du système"
+  },
+  "ieee.authProtocol": {
+    "description": "Texte pour le protocole d'authentification",
+    "value": "Protocole d'authentification"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "Texte d'erreur pour les profils ieee",
+    "value": "Erreur lors de la création/mise à jour du profil ieee8021x"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "Erreur lors du chargement des configurations IEEE8021x",
+    "value": "Impossible de charger les configurations IEEE8021x"
+  },
+  "ieee.PXETimeout": {
+    "description": "Texte pour le délai d'expiration PXE",
+    "value": "Délai d'attente PXE"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "Texte d'erreur pour le délai d'expiration PXE",
+    "value": "La valeur doit être comprise entre {{pxeTimeoutMin}} (désactivé) et {{pxeTimeoutMax}} secondes (un jour)."
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "Titre de la page IEEE 802.1x",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "Nouveau titre de la page de configuration IEEE8021x",
+    "value": "Nouvelle configuration IEEE8021x"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "Titre de la page « IEEE8021x Configs »",
+    "value": "Configurations IEEE8021x"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "Aucun message de configuration IEEE 8021x",
+    "value": "Pas de configurations IEEE 8021x"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "En-tête de colonne Protocole d'authentification",
+    "value": "Protocole d'authentification"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "En-tête de colonne de l'interface",
+    "value": "Interface"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "Nom de l'en-tête de colonne",
+    "value": "Nom"
+  },
+  "keyDisplayDialog.description": {
+    "description": "Description de la boîte de dialogue d'affichage des clés",
+    "value": "La clé ne s'affichera qu'une seule fois. Utilisez cette clé pour décoder le profil crypté à utiliser avec rpc-go."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "Étiquette pour la clé",
+    "value": "Clé"
+  },
+  "keyDisplayDialog.title": {
+    "description": "Titre de la boîte de dialogue d'affichage des clés",
+    "value": "Profil clé pour RPC-GO"
+  },
+  "kvm.attachDisk.label": {
+    "description": "Étiquette du bouton permettant de joindre une image disque pour IDER",
+    "value": "Joindre une image disque (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "Étiquette pour le menu déroulant du type d'encodage dans la barre d'outils KVM",
+    "value": "Choisissez le type d'encodage."
+  },
+  "kvm.connect.button": {
+    "description": "Étiquette du bouton pour se connecter à la session KVM",
+    "value": "Connectez KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "Étiquette affichée lorsque KVM se connecte",
+    "value": "Connexion KVM..."
+  },
+  "kvm.disconnect.button": {
+    "description": "Étiquette du bouton pour se déconnecter de la session KVM",
+    "value": "Déconnecter KVM"
+  },
+  "kvm.enable": {
+    "description": "Message pour l'activation de KVM",
+    "value": "KVM n'est actuellement pas activé sur cet appareil. Souhaitez-vous l'activer ?"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "Erreur d'accès lors de la demande d'activation annulée",
+    "value": "Impossible d'accéder à KVM - la demande d'activation de KVM est annulée."
+  },
+  "kvm.errorAccessEnable": {
+    "description": "Erreur d'accès lors de la demande d'activation",
+    "value": "Impossible d'accéder au KVM - échec de l'activation du KVM"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "Erreur d'accès lorsqu'une session est en cours",
+    "value": "Impossible d'accéder au KVM - une autre session KVM est en cours."
+  },
+  "kvm.errorDialog": {
+    "description": "Erreur d'affichage de la boîte de dialogue KVM",
+    "value": "Impossible d'afficher la boîte de dialogue KVM"
+  },
+  "kvm.errorRetrieve": {
+    "description": "Erreur lors de la récupération du statut de redirection",
+    "value": "Erreur lors de la récupération du statut de redirection"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "Erreur lors de la récupération de l'état de l'alimentation",
+    "value": "Erreur lors de la récupération de l'état d'alimentation"
+  },
+  "kvm.fullscreen.button": {
+    "description": "Étiquette du bouton permettant d'activer le mode plein écran dans KVM",
+    "value": "Plein écran"
+  },
+  "kvm.hotKeys.label": {
+    "description": "Libellé du menu déroulant des raccourcis clavier dans la barre d'outils KVM",
+    "value": "Raccourcis clavier"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "Texte de remplacement pour le menu déroulant des raccourcis clavier",
+    "value": "Sélectionnez la touche de raccourci pour envoyer."
+  },
+  "kvm.hotKeys.send": {
+    "description": "Libellé du bouton pour envoyer le raccourci clavier sélectionné",
+    "value": "Envoyer"
+  },
+  "kvm.stopIder.label": {
+    "description": "Étiquette du bouton pour arrêter la session IDER",
+    "value": "Arrêter IDER"
+  },
+  "kvm.title": {
+    "description": "Titre pour KVM",
+    "value": "Activer KVM"
+  },
+  "login.error": {
+    "description": "Erreur lors de la connexion",
+    "value": "Erreur de connexion"
+  },
+  "login.header.loginTitle": {
+    "description": "Titre de la page de connexion",
+    "value": "Connexion"
+  },
+  "mqttEvents.connect": {
+    "description": "Texte du bouton Connect pour MQTT",
+    "value": "Connectez-vous"
+  },
+  "mqttEvents.connected": {
+    "description": "Texte de l'info-bulle lorsque la connexion MQTT est établie",
+    "value": "Connexion établie"
+  },
+  "mqttEvents.failed": {
+    "description": "Texte de l'info-bulle lorsque la connexion MQTT échoue",
+    "value": "Échec de la connexion"
+  },
+  "mqttEvents.guid.label": {
+    "description": "En-tête du tableau pour le GUID de l'événement MQTT",
+    "value": "Guid"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "Conseil pour la saisie du nom d'hôte MQTT",
+    "value": "Veuillez saisir un nom d'hôte. La valeur par défaut est localhost."
+  },
+  "mqttEvents.hostname.label": {
+    "description": "Étiquette pour la saisie du nom d'hôte MQTT",
+    "value": "Nom d'hôte"
+  },
+  "mqttEvents.message.label": {
+    "description": "En-tête du tableau pour le message d'événement MQTT",
+    "value": "Message"
+  },
+  "mqttEvents.methods.label": {
+    "description": "En-tête du tableau pour les méthodes d'événement MQTT",
+    "value": "Méthodes"
+  },
+  "mqttEvents.noData": {
+    "description": "Texte affiché lorsqu'il n'y a pas d'événements MQTT.",
+    "value": "Aucun événement"
+  },
+  "mqttEvents.path.hint": {
+    "description": "Conseil pour la saisie du chemin MQTT",
+    "value": "Veuillez saisir le chemin MQTT. La valeur par défaut est /mqtt."
+  },
+  "mqttEvents.path.label": {
+    "description": "Étiquette pour la saisie du chemin MQTT",
+    "value": "Chemin"
+  },
+  "mqttEvents.port.hint": {
+    "description": "Conseil pour l'entrée du port MQTT",
+    "value": "Veuillez saisir le port MQTT. La valeur par défaut est 9001."
+  },
+  "mqttEvents.port.label": {
+    "description": "Étiquette pour l'entrée du port MQTT",
+    "value": "Port"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "En-tête du tableau pour l'horodatage des événements MQTT",
+    "value": "Horodatage"
+  },
+  "mqttEvents.title": {
+    "description": "Titre de la carte Événements MQTT avec comptage dynamique",
+    "value": "Événements MQTT ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "En-tête du tableau pour le type d'événement MQTT",
+    "value": "Type"
+  },
+  "network.errorNetworkSetting": {
+    "description": "Erreur lors de la récupération des paramètres réseau",
+    "value": "Erreur lors de la récupération des paramètres réseau"
+  },
+  "network.ieee.authProtocol": {
+    "description": "Étiquette pour le protocole d'authentification sans fil IEEE 8021x.",
+    "value": "Protocole d'authentification"
+  },
+  "network.ieee.availableInS0": {
+    "description": "Étiquette pour IEEE 8021x câblé disponible dans S0",
+    "value": "Disponible dans S0"
+  },
+  "network.ieee.domain": {
+    "description": "Étiquette pour le domaine sans fil IEEE 8021x",
+    "value": "Domaine"
+  },
+  "network.ieee.enabled": {
+    "description": "Étiquette pour IEEE 8021x avec connexion filaire activée",
+    "value": "Activé"
+  },
+  "network.ieee.pac": {
+    "description": "Étiquette pour le PAC sans fil IEEE 8021x",
+    "value": "Identifiant d'accès protégé"
+  },
+  "network.ieee.pacPassword": {
+    "description": "Étiquette pour le mot de passe PAC sans fil IEEE 8021x",
+    "value": "Mot de passe PAC"
+  },
+  "network.ieee.password": {
+    "description": "Étiquette pour le mot de passe sans fil IEEE 8021x",
+    "value": "Mot de passe"
+  },
+  "network.ieee.psk": {
+    "description": "Étiquette pour PSK sans fil IEEE 8021x",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "Étiquette pour le délai d'expiration PXE câblé IEEE 8021x",
+    "value": "Délai d'attente PXE"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "Étiquette pour l'identité d'itinérance sans fil IEEE 8021x",
+    "value": "Identité itinérante"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "Étiquette pour la comparaison des noms de certificats de serveurs sans fil IEEE 8021x",
+    "value": "Comparaison des noms de certificats de serveur"
+  },
+  "network.ieee.serverCertName": {
+    "description": "Étiquette pour le nom du certificat du serveur sans fil IEEE 8021x",
+    "value": "Nom du certificat du serveur"
+  },
+  "network.ieee.subtitle": {
+    "description": "Sous-titre pour la carte de paramètres réseau IEEE 8021x",
+    "value": "Afficher les paramètres réseau IEEE 8021x pour cet appareil"
+  },
+  "network.ieee.title": {
+    "description": "Titre de la carte de paramètres réseau IEEE 8021x",
+    "value": "Paramètres réseau IEEE 8021x"
+  },
+  "network.ieee.username": {
+    "description": "Étiquette pour le nom d'utilisateur sans fil IEEE 8021x",
+    "value": "Nom d'utilisateur"
+  },
+  "network.wired.defaultGateway": {
+    "description": "Étiquette pour la passerelle par défaut câblée",
+    "value": "Passerelle par défaut"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "Étiquette pour l'état activé du DHCP câblé",
+    "value": "DHCP activé"
+  },
+  "network.wired.ipAddress": {
+    "description": "Étiquette pour l'adresse IP câblée",
+    "value": "Adresse IP"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "Étiquette pour l'état de synchronisation IP filaire activée",
+    "value": "Synchronisation IP activée"
+  },
+  "network.wired.linkControl": {
+    "description": "Étiquette pour le contrôle des liens câblés",
+    "value": "Contrôle des liens"
+  },
+  "network.wired.linkPolicy": {
+    "description": "Étiquette pour la politique relative aux liens câblés",
+    "value": "Politique en matière de liens"
+  },
+  "network.wired.linkPreference": {
+    "description": "Étiquette pour la préférence de lien câblé",
+    "value": "Préférence en matière de liens"
+  },
+  "network.wired.linkStatus": {
+    "description": "Étiquette pour l'état de la connexion filaire",
+    "value": "Statut du lien"
+  },
+  "network.wired.macAddress": {
+    "description": "Étiquette pour l'adresse MAC câblée",
+    "value": "Adresse MAC"
+  },
+  "network.wired.primaryDNS": {
+    "description": "Étiquette pour le DNS principal câblé",
+    "value": "DNS principal"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "Étiquette pour le DNS secondaire câblé",
+    "value": "DNS secondaire"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "Étiquette pour IP dynamique partagée câblée",
+    "value": "IP dynamique partagée"
+  },
+  "network.wired.sharedMAC": {
+    "description": "Étiquette pour l'état MAC partagé câblé",
+    "value": "MAC partagé"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "Étiquette pour IP statique partagée câblée",
+    "value": "IP statique partagée"
+  },
+  "network.wired.subnetMask": {
+    "description": "Étiquette pour le masque de sous-réseau câblé",
+    "value": "Masque de sous-réseau"
+  },
+  "network.wired.subtitle": {
+    "description": "Sous-titre de la carte des paramètres du réseau câblé",
+    "value": "Afficher les paramètres du réseau câblé pour cet appareil"
+  },
+  "network.wired.title": {
+    "description": "Titre de la carte des paramètres du réseau câblé",
+    "value": "Paramètres du réseau câblé"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "Étiquette pour la passerelle sans fil par défaut",
+    "value": "Passerelle par défaut"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "Étiquette pour l'état d'activation du DHCP sans fil",
+    "value": "DHCP activé"
+  },
+  "network.wireless.ipAddress": {
+    "description": "Étiquette pour l'adresse IP sans fil",
+    "value": "Adresse IP"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "Étiquette pour l'état de synchronisation IP sans fil activé",
+    "value": "Synchronisation IP activée"
+  },
+  "network.wireless.linkControl": {
+    "description": "Étiquette pour le contrôle de la liaison sans fil",
+    "value": "Contrôle des liens"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "Étiquette pour la politique relative aux liaisons sans fil",
+    "value": "Politique en matière de liens"
+  },
+  "network.wireless.linkPreference": {
+    "description": "Étiquette pour la préférence de connexion sans fil",
+    "value": "Préférence en matière de liens"
+  },
+  "network.wireless.linkStatus": {
+    "description": "Étiquette pour l'état de la connexion sans fil",
+    "value": "Statut du lien"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "Étiquette pour la synchronisation sans fil des profils locaux",
+    "value": "Synchronisation des profils locaux"
+  },
+  "network.wireless.macAddress": {
+    "description": "Étiquette pour l'adresse MAC sans fil",
+    "value": "Adresse MAC"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "Étiquette pour le DNS principal sans fil",
+    "value": "DNS principal"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "Étiquette pour le DNS secondaire sans fil",
+    "value": "DNS secondaire"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "Étiquette pour IP dynamique partagée sans fil",
+    "value": "IP dynamique partagée"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "Étiquette pour l'état MAC partagé sans fil",
+    "value": "MAC partagé"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "Étiquette pour IP statique partagée sans fil",
+    "value": "IP statique partagée"
+  },
+  "network.wireless.subnetMask": {
+    "description": "Étiquette pour le masque de sous-réseau sans fil",
+    "value": "Masque de sous-réseau"
+  },
+  "network.wireless.subtitle": {
+    "description": "Sous-titre de la carte des paramètres du réseau sans fil",
+    "value": "Afficher les paramètres du réseau sans fil pour cet appareil"
+  },
+  "network.wireless.title": {
+    "description": "Titre de la fiche de configuration du réseau sans fil",
+    "value": "Paramètres du réseau sans fil"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "Nom du réseau : {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID : {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Chiffrement : {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authentification : {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "Sous-titre de la carte des réseaux sans fil",
+    "value": "Afficher les réseaux sans fil pour cet appareil"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "Titre de la carte des réseaux sans fil",
+    "value": "Réseaux sans fil"
+  },
+  "pba.label": {
+    "description": "Étiquette de la case à cocher permettant d'activer ou de désactiver la mise en œuvre du démarrage sécurisé",
+    "value": "Mise en œuvre de l'amorçage sécurisé"
+  },
+  "pba.required": {
+    "description": "Message d'erreur affiché lorsque le chemin du fichier de démarrage n'est pas sélectionné",
+    "value": "Le chemin d'accès au fichier d'amorçage est requis"
+  },
+  "pba.title": {
+    "description": "Étiquette permettant de sélectionner le chemin d'accès au fichier de démarrage dans la boîte de dialogue PBA",
+    "value": "Chemin d'accès au fichier d'amorçage"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "Off"
+  },
+  "powerOptions.on": {
+    "value": "Sur"
+  },
+  "powerOptions.powerCycle": {
+    "value": "Cycle d'alimentation"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "Mise sous tension du BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "Passage au démarrage HTTPS (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "Mise sous tension vers PXE"
+  },
+  "powerOptions.reset": {
+    "value": "Réinitialiser"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "Réinitialisation du BIOS"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "Réinitialiser le démarrage HTTPS (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "Réinitialisation à IDE-R (CD-ROM)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "Réinitialisation vers PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "Sommeil"
+  },
+  "powerOptions.softOff": {
+    "value": "Soft-Off"
+  },
+  "powerOptions.softReset": {
+    "value": "Réinitialisation logicielle"
+  },
+  "powerUp.message": {
+    "description": "Message de dialogue demandant à l'utilisateur de mettre l'appareil sous tension",
+    "value": "Souhaitez-vous envoyer une commande d'activation à l'appareil ?"
+  },
+  "powerUp.title": {
+    "description": "Titre de la boîte de dialogue affiché lorsque l'appareil est éteint",
+    "value": "Votre appareil n'est pas allumé."
+  },
+  "profileDetail.activationMode": {
+    "description": "Étiquette pour la sélection du mode d'activation",
+    "value": "Mode d'activation"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "Mode d'activation contrôlé par l'administrateur",
+    "value": "Mode de contrôle administratif"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "Mode d'activation contrôlé par le client",
+    "value": "Mode de contrôle client"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "Étiquette pour la section des fonctionnalités AMT",
+    "value": "Fonctionnalités AMT - Activer/désactiver les fonctionnalités de redirection de l'AMT"
+  },
+  "profileDetail.amtPassword": {
+    "description": "Étiquette pour le champ de mot de passe AMT",
+    "value": "Mot de passe AMT"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "Conseil pour le champ de mot de passe AMT",
+    "value": "Le mot de passe AMT est utilisé pour l'accès à distance à un appareil. Il est également nécessaire pour reconfigurer/désactiver l'appareil."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "Étiquette pour la section des profils sans fil associés",
+    "value": "Profils sans fil associés (par ordre de priorité)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "Étiquette pour le bouton radio CIRA",
+    "value": "CIRA (Cloud)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "Conseil pour la configuration CIRA",
+    "value": "CIRA ne peut pas être configuré pour un réseau statique si la version AMT est inférieure à 11.6."
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "Étiquette pour le champ de configuration CIRA",
+    "value": "Configuration CIRA"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "Étiquette pour la section de configuration de la connexion",
+    "value": "Configuration de la connexion provisionnée"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "Message d'erreur pour le mode de connexion requis",
+    "value": "Le mode de connexion doit être spécifié."
+  },
+  "profileDetail.dhcp": {
+    "description": "Étiquette pour le bouton radio DHCP",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "Description du mode de connexion directe",
+    "value": "Dans ce scénario, AMT agit comme un serveur et écoute les connexions entrantes. La boîte à outils agit comme un client et se connecte à l'appareil."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "Légende pour la section mode de connexion directe",
+    "value": "Mode de connexion directe (à utiliser lorsque les appareils sont directement accessibles via un réseau local)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "Astuce pour le réordonnancement par glisser-déposer",
+    "value": "Glisser-déposer pour réorganiser"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "Libellé de la case à cocher pour la synchronisation IP",
+    "value": "Activer la synchronisation IP"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "Libellé de la case à cocher « Synchronisation WiFi » du système d'exploitation",
+    "value": "Activer la synchronisation du profil WiFi du système d'exploitation"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "Libellé de la case à cocher pour le partage WiFi UEFI",
+    "value": "Activer le partage de profil Wi-Fi UEFI/CSME"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "Libellé de la case à cocher pour générer un mot de passe AMT aléatoire",
+    "value": "Générer un mot de passe AMT aléatoire pour chaque appareil"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "Libellé de la case à cocher pour générer un mot de passe MEBX aléatoire",
+    "value": "Générer un mot de passe MEBX aléatoire pour chaque appareil"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "Info-bulle pour le bouton de génération de mot de passe aléatoire",
+    "value": "Générer un mot de passe aléatoire"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "Libellé de la case à cocher « Redirection IDE »",
+    "value": "Redirection IDE"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "Description pour le mode Internet",
+    "value": "Dans ce scénario, AMT agit en tant que client et se connecte à la boîte à outils agissant en tant que serveur (nécessite MPS)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "Légende pour la section mode Internet",
+    "value": "Mode Internet (à utiliser lorsque les appareils ne sont PAS directement accessibles via un réseau local)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "Conseil pour la synchronisation IP lorsqu'elle est désactivée",
+    "value": "Toujours activé pour DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "Conseil pour la synchronisation IP lorsqu'elle est activée",
+    "value": "Applicable uniquement à l'interface filaire. Nécessite un LMS pour effectuer la synchronisation."
+  },
+  "profileDetail.kvm": {
+    "description": "Libellé de la case à cocher KVM",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "Étiquette pour le champ de mot de passe MEBX",
+    "value": "Mot de passe MEBX"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "Conseil pour le champ de mot de passe MEBX",
+    "value": "Le mot de passe MEBX est utilisé pour protéger l'accès au BIOS lorsqu'un utilisateur est présent avec un appareil. Il ne peut être défini que lorsque le mode d'activation est réglé sur « Admin Control Mode » (Mode de contrôle administrateur)."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "Étiquette pour la section de configuration réseau",
+    "value": "Configuration réseau"
+  },
+  "profileDetail.newTag": {
+    "description": "Espace réservé pour la saisie d'une nouvelle balise",
+    "value": "Nouvelle balise..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "Texte lorsqu'aucune configuration CIRA n'est disponible",
+    "value": "- Aucune configuration CIRA trouvée"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "Texte lorsqu'aucune configuration n'est sélectionnée",
+    "value": "Aucune configuration sélectionnée."
+  },
+  "profileDetail.nonTls": {
+    "description": "Libellé pour le bouton radio Non TLS",
+    "value": "Non TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "Conseil pour l'option Non TLS",
+    "value": "Sur AMT 16.1 et les versions plus récentes, AMT fournit des certificats auto-signés. Si vous choisissez cette option, ceux-ci seront utilisés à la place des certificats auto-signés fournis par la boîte à outils."
+  },
+  "profileDetail.noWifi": {
+    "description": "Message pour aucune configuration WiFi disponible",
+    "value": "Aucune configuration Wi-Fi trouvée"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "Conseil pour la synchronisation WiFi du système d'exploitation",
+    "value": "Applicable uniquement à l'interface sans fil."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "Texte d'aide pour le champ du nom de profil",
+    "value": "Veuillez fournir un nom pour ce profil. Ce sera le nom du profil utilisé sur l'appareil lors de l'activation."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "Texte de remplacement pour le champ du nom de profil",
+    "value": "Exemple : profil1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "Info-bulle pour le bouton d'affichage/masquage du mot de passe",
+    "value": "Afficher / Masquer le mot de passe"
+  },
+  "profileDetail.sol": {
+    "description": "Libellé de la case à cocher SOL",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "Étiquette pour le bouton radio STATIC",
+    "value": "STATIQUE"
+  },
+  "profileDetail.tags": {
+    "description": "Libellé du champ des balises",
+    "value": "Balises"
+  },
+  "profileDetail.tagsHint": {
+    "description": "Conseil pour le champ des balises",
+    "value": "Vous pouvez saisir des balises pour faciliter l'organisation et la recherche des appareils à mesure que votre liste d'appareils gérés s'allonge. Saisissez une balise, puis appuyez sur Entrée ou ajoutez une virgule."
+  },
+  "profileDetail.tls": {
+    "description": "Étiquette pour le bouton radio TLS",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "Étiquette pour le champ Mode TLS",
+    "value": "Mode TLS"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "Conseil pour le champ Mode TLS",
+    "value": "CIRA ne peut pas être configuré si TLS est configuré."
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "Étiquette pour le champ d'autorité de signature TLS",
+    "value": "Autorité de signature TLS"
+  },
+  "profileDetail.userConsent": {
+    "description": "Étiquette pour le champ de consentement de l'utilisateur",
+    "value": "Consentement de l'utilisateur"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "Conseil pour le champ de consentement de l'utilisateur",
+    "value": "Contrôle lorsque la présence d'un utilisateur est requise pour certaines fonctionnalités AMT."
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "Libellé du champ des profils WiFi",
+    "value": "Profils Wi-Fi"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "Conseil pour le champ des profils WiFi",
+    "value": "Le Wi-Fi ne fonctionnera pas sur un réseau statique."
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "Espace réservé pour la recherche de profils WiFi",
+    "value": "Recherchez les profils Wi-Fi à ajouter."
+  },
+  "profileDetail.wired": {
+    "description": "Étiquette pour la section réseau câblé",
+    "value": "Réseau filaire"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "Étiquette pour le champ de configuration 802.1x câblé",
+    "value": "Configuration filaire 802.1x"
+  },
+  "profiles.deleteProfile": {
+    "description": "Message pour les profils supprimés",
+    "value": "Profil supprimé avec succès"
+  },
+  "profiles.exportProfile": {
+    "description": "Message pour les profils exportés",
+    "value": "Profil exporté avec succès"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "Erreur lors de la suppression de profils",
+    "value": "Impossible de supprimer le profil"
+  },
+  "profiles.failExportProfile": {
+    "description": "Erreur lors de l'exportation des profils",
+    "value": "Impossible d'exporter le profil"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "Erreur lors du chargement des configurations",
+    "value": "Impossible de charger les configurations"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "Nouveau titre de la page Profil",
+    "value": "Nouveau profil"
+  },
+  "profiles.header.profileTitle": {
+    "description": "Titre de la page Profils",
+    "value": "Profils"
+  },
+  "profiles.noData": {
+    "description": "Message « Aucun profil »",
+    "value": "Pas de profils"
+  },
+  "profiles.table.activation": {
+    "description": "En-tête de colonne « Mode d'activation »",
+    "value": "Mode d'activation"
+  },
+  "profiles.table.connection": {
+    "description": "En-tête de colonne « Configuration de la connexion »",
+    "value": "Configuration de la connexion"
+  },
+  "profiles.table.name": {
+    "description": "Nom de l'en-tête de colonne",
+    "value": "Nom"
+  },
+  "profiles.table.network": {
+    "description": "En-tête de colonne « Configuration réseau »",
+    "value": "Configuration réseau"
+  },
+  "randomPassword.learnMore": {
+    "description": "Message pour un lien d'assistance",
+    "value": "Pour en savoir plus, cliquez ici."
+  },
+  "randomPassword.message": {
+    "description": "Message de dialogue expliquant les conséquences de l'utilisation de mots de passe aléatoires",
+    "value": "Vous avez choisi de générer un mot de passe aléatoire pour chaque appareil. Si le stockage du fournisseur secret (par exemple, Vault) est supprimé ou perdu, ces mots de passe seront irrécupérables et nécessiteront une réinitialisation d'usine."
+  },
+  "randomPassword.title": {
+    "description": "Titre de la boîte de dialogue pour l'avertissement relatif au mot de passe aléatoire",
+    "value": "Utilisation de mots de passe générés aléatoirement"
+  },
+  "sol.connect": {
+    "description": "Bouton pour se connecter à SOL",
+    "value": "Connectez SOL"
+  },
+  "sol.disconnect": {
+    "description": "Bouton pour se déconnecter de SOL",
+    "value": "Déconnecter SOL"
+  },
+  "sol.enable": {
+    "description": "Message pour l'activation de SOL",
+    "value": "SOL n'est actuellement pas activé sur cet appareil. Souhaitez-vous l'activer ?"
+  },
+  "sol.errorAccessCancel": {
+    "description": "Erreur lors de l'accès à SOL lorsque la demande d'activation de SOL est annulée.",
+    "value": "Impossible d'accéder à SOL - la demande d'activation de SOL est annulée."
+  },
+  "sol.errorAccessEnable": {
+    "description": "Erreur d'accès au SOL lorsque le SOL n'a pas pu être activé.",
+    "value": "Impossible d'accéder à SOL - échec de l'activation de SOL"
+  },
+  "sol.errorDiplay": {
+    "description": "Erreur d'affichage de la boîte de dialogue",
+    "value": "Impossible d'afficher la boîte de dialogue SOL"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "Erreur lors de la récupération de l'état de l'alimentation",
+    "value": "Erreur lors de la récupération de l'état d'alimentation"
+  },
+  "sol.loading": {
+    "description": "Message à charger dans SOL",
+    "value": "Connexion SOL..."
+  },
+  "sol.title": {
+    "description": "Titre pour SOL",
+    "value": "Activer SOL"
+  },
+  "staticCira.message": {
+    "description": "Message d'avertissement concernant les limitations de connexion CIRA avec une adresse IP statique",
+    "value": "Vous avez choisi de vous connecter à l'aide de CIRA avec une configuration réseau IP statique. Les appareils exécutant une version d'AMT inférieure à 11.6 ne se connecteront pas à un MPS à l'aide de CIRA s'ils ont une configuration réseau IP statique."
+  },
+  "staticCira.title": {
+    "description": "Titre de la boîte de dialogue pour l'avertissement IP statique CIRA",
+    "value": "CIRA et configuration du réseau statique"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "Étiquette pour accepter les connexions non sécurisées dans TLS",
+    "value": "Accepter les connexions non sécurisées"
+  },
+  "tls.elementName.label": {
+    "description": "Libellé du champ du nom de l'élément TLS",
+    "value": "Nom de l'élément"
+  },
+  "tls.enabled.label": {
+    "description": "Étiquette pour le champ compatible TLS",
+    "value": "Activé"
+  },
+  "tls.errorSettings": {
+    "description": "Erreur lors de la récupération des paramètres TLS",
+    "value": "Erreur lors de la récupération des paramètres TLS"
+  },
+  "tls.instanceId.label": {
+    "description": "Étiquette pour le champ d'identifiant de l'instance TLS",
+    "value": "ID d'instance"
+  },
+  "tls.mutualAuth.label": {
+    "description": "Étiquette pour le champ d'authentification mutuelle TLS",
+    "value": "Authentification mutuelle"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "Étiquette indiquant si les connexions non sécurisées sont prises en charge dans TLS.",
+    "value": "Connexions non sécurisées prises en charge"
+  },
+  "tls.title": {
+    "description": "Titre de la carte des paramètres TLS",
+    "value": "Sécurité de la couche transport"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Option d'utilisation d'un certificat signé par Microsoft CA",
+    "value": "Utiliser le certificat signé Microsoft CA (nécessite Enterprise Assistant)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "Option d'utilisation d'un certificat auto-signé",
+    "value": "Utiliser un certificat auto-signé"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "Mode TLS avec connexions TLS mutuelles et non TLS",
+    "value": "Authentification mutuelle et non TLS"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "Mode TLS utilisant uniquement l'authentification mutuelle",
+    "value": "Authentification TLS mutuelle uniquement"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "Mode TLS avec authentification du serveur et connexions non TLS.",
+    "value": "Authentification serveur et non TLS"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "Mode TLS utilisant uniquement l'authentification du serveur",
+    "value": "Authentification serveur uniquement"
+  },
+  "toolbar.errorMPS": {
+    "description": "Erreur lors de la récupération des versions MPS",
+    "value": "Erreur lors de la récupération des versions MPS"
+  },
+  "toolbar.errorRPS": {
+    "description": "Erreur lors de la récupération des versions RPS",
+    "value": "Erreur lors de la récupération des versions RPS"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "Titre principal de l'application",
+    "value": "Exemple d'interface utilisateur"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "Titre principal de l'application en mode console",
+    "value": "Console"
+  },
+  "toolbar.header.hello": {
+    "description": "Message d'accueil",
+    "value": "Bonjour"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "Erreur lors de l'annulation du code de consentement de l'utilisateur",
+    "value": "Code d'annulation d'erreur du consentement de l'utilisateur"
+  },
+  "userConsent.errorRequest": {
+    "description": "Erreur lors de la demande du code de consentement de l'utilisateur",
+    "value": "Erreur lors de la demande du code de consentement de l'utilisateur - veuillez réessayer après 3 minutes."
+  },
+  "userConsent.errorSendCode": {
+    "description": "Erreur lors de l'envoi du code de consentement de l'utilisateur",
+    "value": "Erreur lors de l'envoi du code de consentement de l'utilisateur"
+  },
+  "userConsentGeneral.all": {
+    "description": "Consentement requis pour toutes les actions",
+    "value": "Tout"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "Consentement requis uniquement pour les actions KVM",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "Aucun consentement de l'utilisateur n'est requis.",
+    "value": "Aucune"
+  },
+  "userConsentModes.all": {
+    "description": "Consentement requis pour toutes les actions",
+    "value": "Tous"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "Consentement requis uniquement pour les actions KVM",
+    "value": "KVM uniquement"
+  },
+  "userConsentModes.none": {
+    "description": "Aucun consentement de l'utilisateur n'est requis.",
+    "value": "Aucune"
+  },
+  "warning.iderActive": {
+    "description": "Affiché lorsque la session IDER est active.",
+    "value": "Session IDER active"
+  },
+  "warning.iderEnded": {
+    "description": "Affiché lorsque la session IDER est terminée.",
+    "value": "La session IDER est terminée."
+  },
+  "warning.userConsentCancelled": {
+    "description": "Avertissement affiché lorsque le code de consentement de l'utilisateur précédent a été annulé",
+    "value": "{{featureName}} Impossible d'accéder - le code de consentement de l'utilisateur précédemment demandé est annulé."
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "Erreur lors du chargement des configurations",
+    "value": "Impossible de charger les configurations"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "Titre de la page sans fil",
+    "value": "Sans fil"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "En-tête de colonne pour la méthode d'authentification de la configuration sans fil",
+    "value": "Authentification"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "En-tête de colonne pour la méthode de cryptage de la configuration sans fil",
+    "value": "Cryptage"
+  },
+  "wirelessConfigs.name": {
+    "description": "En-tête de colonne pour le nom de la configuration sans fil",
+    "value": "Nom"
+  },
+  "wirelessConfigs.noData": {
+    "description": "Message affiché lorsqu'il n'y a pas de configuration sans fil.",
+    "value": "Aucune configuration sans fil"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "En-tête de colonne pour le SSID de la configuration sans fil",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "Titre de la section consacrée aux configurations sans fil",
+    "value": "Configurations sans fil"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "Libellé du champ de la méthode d'authentification",
+    "value": "Méthode d'authentification"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "Libellé du champ de la méthode de cryptage",
+    "value": "Méthode de cryptage"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "Message d'erreur lors de la création/mise à jour d'un profil sans fil",
+    "value": "Erreur lors de la création/mise à jour du profil sans fil"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "Message d'erreur pour les champs obligatoires",
+    "value": "Ce champ est obligatoire et doit être alphanumérique, sans espaces ni symboles."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "Erreur lors de l'enregistrement des profils sans fil",
+    "value": "Erreur lors de l'enregistrement du profil sans fil"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "Étiquette pour le champ de configuration 802.1x",
+    "value": "Configuration 802.1x"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "Titre pour la création d'une nouvelle configuration sans fil",
+    "value": "Nouvelle configuration sans fil"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "Message de réussite pour la création d'un profil sans fil",
+    "value": "Profil créé avec succès"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "Message de réussite pour la mise à jour du profil sans fil",
+    "value": "Profil mis à jour avec succès"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "Étiquette pour le champ de phrase secrète PSK",
+    "value": "Phrase secrète PSK"
+  },
+  "wirelessDetail.saving": {
+    "description": "Message indiquant que l'enregistrement du profil a été effectué avec succès",
+    "value": "Enregistrement du profil réussi"
+  },
+  "wirelessDetail.ssid": {
+    "description": "Étiquette pour le champ SSID",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "Étiquette pour le champ du nom du profil sans fil",
+    "value": "Nom du profil sans fil"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "Conseil pour le champ du nom du profil sans fil",
+    "value": "Veuillez fournir un nom pour le profil sans fil."
+  },
+  "general.supported": {
+    "description": "Étiquette pour les fonctionnalités AMT activées",
+    "value": "Pris en charge"
+  },
+  "general.notSupported": {
+    "description": "Étiquette pour les fonctionnalités AMT désactivées",
+    "value": "Non pris en charge"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Mise sous tension jusqu’à PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Mise sous tension jusqu’à WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Réinitialiser vers PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Réinitialiser vers WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Libellé pour développer",
+    "value": "Développer"
+  },
+  "general.collapse": {
+    "description": "Libellé pour réduire",
+    "value": "Réduire"
+  },
+  "proxy.label": {
+    "value": "Proxys",
+    "description": "Libellé pour la section des proxys"
+  },
+  "proxy.configs.label": {
+    "value": "Configurations de Proxy",
+    "description": "Libellé pour le champ de saisie des configurations de proxy"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Rechercher des configurations de proxy à ajouter",
+    "description": "Texte indicatif pour la recherche de configurations de proxy"
+  },
+  "proxy.configs.hint": {
+    "value": "Des proxys peuvent être attribués à ce profil",
+    "description": "Indice affiché sous le champ des configurations de proxy"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Profils de Proxy Associés (par ordre de priorité)",
+    "description": "Libellé pour la liste des profils de proxy associés"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Glisser-déposer pour réorganiser",
+    "description": "Indice affiché pour le réordonnancement par glisser-déposer"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Supprimer le profil de proxy",
+    "description": "Libellé aria pour le bouton de suppression du profil de proxy"
+  },
+  "profileDetail.noProxy": {
+    "description": "Message lorsqu’aucune configuration de proxy n’est disponible",
+    "value": "Aucune configuration de proxy trouvée"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Configurations de Proxy",
+    "description": "Titre des configurations de proxy"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Nom",
+    "description": "En-tête de colonne du nom de la configuration de proxy"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Adresse du Proxy",
+    "description": "En-tête de colonne de l’adresse du proxy"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Format de l’Adresse",
+    "description": "En-tête de colonne du format d’adresse"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Port",
+    "description": "En-tête de colonne du port"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Suffixe DNS du Réseau",
+    "description": "En-tête de colonne du suffixe DNS du réseau"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Nouvelle Configuration de Proxy",
+    "description": "Titre de la page de création d’une nouvelle configuration de proxy"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Modifier la Configuration de Proxy",
+    "description": "Titre de la page de modification d’une configuration de proxy"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Adresse du Proxy",
+    "description": "Libellé du champ d’adresse du proxy"
+  },
+  "proxyConfigs.name": {
+    "value": "Nom",
+    "description": "Libellé du champ de nom de la configuration de proxy"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Saisir le nom de la configuration de proxy",
+    "description": "Texte indicatif pour le champ de nom de la configuration de proxy"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Saisir l’adresse du serveur proxy",
+    "description": "Texte indicatif pour le champ d’adresse du proxy"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Format de l’Adresse",
+    "description": "Libellé du champ de format d’adresse"
+  },
+  "proxyConfigs.port": {
+    "value": "Port",
+    "description": "Libellé du champ de port"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Suffixe DNS du Réseau",
+    "description": "Libellé du champ de suffixe DNS"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "exemple.com",
+    "description": "Texte indicatif pour le champ de suffixe DNS"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Le port est requis",
+    "description": "Message de validation indiquant que le port est obligatoire"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Le port doit être compris entre 0 et 65535",
+    "description": "Message de validation pour la plage de valeurs du port"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Le nom est requis",
+    "description": "Message de validation indiquant que le nom est obligatoire"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Le suffixe DNS du réseau est requis",
+    "description": "Message de validation indiquant que le suffixe DNS est obligatoire"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Le suffixe DNS du réseau doit comporter 192 caractères ou moins",
+    "description": "Message de validation pour la longueur maximale du suffixe DNS"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Configuration de proxy créée avec succès",
+    "description": "Message de succès pour la création d’une configuration de proxy"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Configuration de proxy mise à jour avec succès",
+    "description": "Message de succès pour la mise à jour d’une configuration de proxy"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Configuration de proxy {{name}} supprimée avec succès",
+    "description": "Message de succès pour la suppression d’une configuration de proxy"
+  },
+  "common.delete": {
+    "value": "Supprimer",
+    "description": "Texte du bouton Supprimer"
+  },
+  "common.update": {
+    "value": "METTRE À JOUR",
+    "description": "Texte du bouton Mettre à jour"
+  },
+  "common.noData": {
+    "value": "Aucune donnée disponible",
+    "description": "Message indiquant qu’aucune donnée n’est disponible"
+  }
+}

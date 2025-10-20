@@ -35,10 +35,15 @@
       <mat-chip>{{ tag }}</mat-chip>
     }
   </mat-chip-set>
-  <button mat-icon-button matTooltip="Edit device" (click)="editDevice()">
+  <button mat-icon-button [matTooltip]="'devices.editDevice.value' | translate" (click)="editDevice()">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button [matTooltip]="isCloudMode ? 'Deactivate device' : 'Remove device'" (click)="sendDeactivate()">
+  <button
+    mat-icon-button
+    [matTooltip]="
+      isCloudMode ? ('devices.actions.deactivateCloud.value' | translate) : ('devices.actions.remove.value' | translate)
+    "
+    (click)="sendDeactivate()">
     <mat-icon>delete</mat-icon>
   </button>
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
@@ -52,22 +57,22 @@
     >
   }
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
-  <button mat-icon-button matTooltip="Power up the device" (click)="sendPowerAction(2)">
+  <button mat-icon-button [matTooltip]="'devices.actions.powerUp.value' | translate" (click)="sendPowerAction(2)">
     <mat-icon>power</mat-icon>
   </button>
-  <button mat-icon-button matTooltip="Power off the device" (click)="sendPowerAction(8)">
+  <button mat-icon-button [matTooltip]="'devices.actions.powerOff.value' | translate" (click)="sendPowerAction(8)">
     <mat-icon>power_off</mat-icon>
   </button>
-  <button mat-icon-button matTooltip="Reset the device" (click)="sendPowerAction(10)">
+  <button mat-icon-button [matTooltip]="'devices.actions.reset.value' | translate" (click)="sendPowerAction(10)">
     <mat-icon>restart_alt</mat-icon>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More Power Options...">
+  <button mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="'devices.moreOptionsTooltip.value' | translate">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     @for (option of powerOptions(); track option) {
       <button mat-menu-item (click)="sendPowerAction(option.action)">
-        <span>{{ option.label }}</span>
+        <span>{{ option.label | translate }}</span>
       </button>
     }
   </mat-menu>

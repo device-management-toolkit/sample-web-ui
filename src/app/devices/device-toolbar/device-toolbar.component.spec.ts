@@ -14,6 +14,7 @@ import { BootDetails, Device } from 'src/models/models'
 import { EventEmitter } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
@@ -83,7 +84,8 @@ describe('DeviceToolbarComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceToolbarComponent
+        DeviceToolbarComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesService },
@@ -217,7 +219,7 @@ describe('DeviceToolbarComponent', () => {
 
     const ocrOption = component.powerOptions()!.find((option: { action: number }) => option.action === 105)
     expect(ocrOption).toBeTruthy()
-    expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
+    expect(ocrOption?.label).toBe('powerOptions.resetToHTTPSBoot.value')
   })
 
   it('should open HttpbootDetailComponent dialog in non-cloud mode', () => {

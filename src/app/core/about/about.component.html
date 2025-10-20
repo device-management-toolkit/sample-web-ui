@@ -1,49 +1,49 @@
 <h2 mat-dialog-title>
   @if (cloudMode === true) {
     <mat-icon color="warn">warning</mat-icon>
-    About the Device Management Toolkit Sample Web UI
+    {{ 'about.cloudMode.value' | translate }}
   } @else {
-    About Console
+    {{ 'about.nonCloudMode.value' | translate }}
   }
 </h2>
 <mat-dialog-content class="mat-typography">
   @if (cloudMode === true) {
     <br />
     <p>
-      This reference implementation demonstrates the APIs and general functionality of the Device Management Toolkit and
-      is NOT meant for production use.
+      {{ 'about.referenceImplementation.value' | translate }}
     </p>
     <mat-divider></mat-divider>
     <br />
-    <h3>This sample UI is meant for the following:</h3>
+    <h3>{{ 'about.sampleUI.value' | translate }}</h3>
     <ul>
-      <li>Learn how the Device Management Toolkit manages devices</li>
-      <li>Set Up Profiles, Configuration, and Domains</li>
+      <li>{{ 'about.learn.value' | translate }}</li>
+      <li>{{ 'about.setUp.value' | translate }}</li>
       <li>
-        Understand Device Management Toolkit implementation of the REST APIs and how they can be used in your own
-        application
+        {{ 'about.understand.value' | translate }}
       </li>
-      <li>How to use the UI Toolkit</li>
+      <li>{{ 'about.howTo.value' | translate }}</li>
     </ul>
   } @else {
     <p>
-      Console is a 1:1 out-of-band management tool for managing Intel AMT on on-premises style networks. After a device
-      is added, Console communicates with AMT directly over the local network providing a quick and easy way to connect
-      and manage all of your AMT devices.
+      {{ 'about.description.value' | translate }}
     </p>
     <mat-divider></mat-divider>
     <br />
-    <h3>Console provides the following features and more:</h3>
+    <h3>{{ 'about.consoleProvides.value' | translate }}</h3>
     <ul>
-      <li>Remote power actions</li>
-      <li>Redirection features like Remote Keyboard, Video, Mouse (KVM) and Serial-over-LAN (SOL)</li>
-      <li>Device hardware information and logging</li>
+      <li>{{ 'about.remotePower.value' | translate }}</li>
+      <li>{{ 'about.redirection.value' | translate }}</li>
+      <li>{{ 'about.device.value' | translate }}</li>
     </ul>
   }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   @if (cloudMode === true) {
-    <label> <input type="checkbox" [(ngModel)]="doNotShowAgain" /> Do not show again </label>
+    <label>
+      <input type="checkbox" [(ngModel)]="doNotShowAgain" /> {{ 'about.doNotShowAgain.value' | translate }}
+    </label>
   }
-  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>Got it</button>
+  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>
+    {{ 'about.gotIt.value' | translate }}
+  </button>
 </mat-dialog-actions>

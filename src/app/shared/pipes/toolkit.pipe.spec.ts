@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing'
 import { FormOption } from 'src/models/models'
 import { ToolkitPipe } from './toolkit.pipe'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ToolkitPipe', () => {
   let pipe: ToolkitPipe
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [ToolkitPipe]
     })
     pipe = TestBed.inject(ToolkitPipe)

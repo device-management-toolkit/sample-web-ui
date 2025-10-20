@@ -1,56 +1,57 @@
 <mat-card-header>
   <mat-card-title-group>
-    <mat-card-title> Select Domain Suffix </mat-card-title>
-    <mat-card-subtitle
-      >The selected domain will be included in the profile for use with
-      <a href="http://github.com/device-management-toolkit/rpc-go">RPC-GO</a></mat-card-subtitle
-    >
+    <mat-card-title>{{ 'exportDialog.selectDomainTitle.value' | translate }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ 'exportDialog.selectDomainSubtitle.value' | translate }}
+      <a href="http://github.com/device-management-toolkit/rpc-go">RPC-GO</a>
+    </mat-card-subtitle>
   </mat-card-title-group>
 </mat-card-header>
 <mat-dialog-content>
   @if (isLoading()) {
     <div class="loading-container">
       <mat-spinner diameter="32"></mat-spinner>
-      <span>Loading domains...</span>
+      <span>{{ 'exportDialog.loadingDomains.value' | translate }}</span>
     </div>
   } @else if (errorMessages().length > 0) {
     <div class="error-container">
-      <h4>Error loading domains:</h4>
+      <h4>{{ 'exportDialog.errorLoadingDomains.value' | translate }}</h4>
       @for (error of errorMessages(); track error) {
         <p>{{ error }}</p>
       }
     </div>
   } @else if (hasNoDomains()) {
     <div class="flex flex-col items-center">
-      <p>No domains are configured. You can either:</p>
+      <p>{{ 'exportDialog.noDomainsConfigured.value' | translate }}</p>
       <ul class="flex flex-col">
-        <li>Add domains first (required for ACM activation)</li>
-        <li>Click 'Skip Domain' if device has already been activated.</li>
+        <li>{{ 'exportDialog.addDomainsFirst.value' | translate }}</li>
+        <li>{{ 'exportDialog.skipDomainActivated.value' | translate }}</li>
       </ul>
     </div>
   } @else {
     <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>domain suffix</mat-label>
+      <mat-label>{{ 'exportDialog.domainSuffix.value' | translate }}</mat-label>
       <mat-select [formControl]="selectedDomainControl">
         @for (domain of domains(); track domain.profileName) {
           <mat-option [value]="domain.profileName">{{ domain.domainSuffix }}</mat-option>
         }
       </mat-select>
       @if (selectedDomainControl.errors?.['required']) {
-        <mat-error>Please select a domain</mat-error>
+        <mat-error>{{ 'exportDialog.selectDomainRequired.value' | translate }}</mat-error>
       }
     </mat-form-field>
     <p>
-      Click 'Skip Domain' if device has already been activated. If device has not yet been activated, you must select a
-      domain for ACM activation.
+      {{ 'exportDialog.skipDomainInstructions.value' | translate }}
     </p>
   }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   @if (hasNoDomains() && !isLoading()) {
-    <button mat-button (click)="navigateToDomains()">Add Domains</button>
+    <button mat-button (click)="navigateToDomains()">{{ 'exportDialog.addDomains.value' | translate }}</button>
   }
-  <button mat-button (click)="onSkipDomain()">Skip Domain</button>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onOk()" color="primary" [disabled]="!isFormValid() || isLoading()">OK</button>
+  <button mat-button (click)="onSkipDomain()">{{ 'exportDialog.skipDomain.value' | translate }}</button>
+  <button mat-button (click)="onCancel()">{{ 'common.cancel.value' | translate }}</button>
+  <button mat-button (click)="onOk()" color="primary" [disabled]="!isFormValid() || isLoading()">
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

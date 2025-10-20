@@ -21,6 +21,8 @@ import { MatCardModule } from '@angular/material/card'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { environment } from 'src/environments/environment'
+import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-alarms',
@@ -36,7 +38,9 @@ import { environment } from 'src/environments/environment'
     MatListModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule,
+    MatTooltip
   ],
   templateUrl: './alarms.component.html',
   styleUrl: './alarms.component.scss'
@@ -45,6 +49,7 @@ export class AlarmsComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
+  private readonly translate = inject(TranslateService)
 
   public readonly deviceId = input('')
 
@@ -162,7 +167,8 @@ export class AlarmsComponent implements OnInit {
       .getAlarmOccurrences(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving Alarm Occurrences`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('alarm.errorRetrieve.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
@@ -189,7 +195,8 @@ export class AlarmsComponent implements OnInit {
           this.loadAlarms()
         },
         error: (err) => {
-          this.snackBar.open($localize`Error deleting Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('alarm.errorDelete.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }
       })
@@ -221,7 +228,8 @@ export class AlarmsComponent implements OnInit {
             this.loadAlarms()
           },
           error: (err) => {
-            this.snackBar.open($localize`Error adding Alarm Occurrence`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('alarm.errorAdding.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             return throwError(err)
           }
         })

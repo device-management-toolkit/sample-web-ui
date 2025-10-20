@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "Titel voor het gedeelte 'Over' in cloudmodus",
+    "value": "Over de Device Management Toolkit Voorbeeld van webinterface"
+  },
+  "about.consoleProvides": {
+    "description": "Bericht voor consolefuncties",
+    "value": "console biedt de volgende functies en meer:"
+  },
+  "about.description": {
+    "description": "Beschrijving voor de console",
+    "value": "Console is een 1:1 out-of-band beheertool voor het beheer van Intel AMT op lokale netwerken. Nadat een apparaat is toegevoegd, communiceert Console rechtstreeks met AMT via het lokale netwerk, waardoor u al uw AMT-apparaten snel en eenvoudig kunt verbinden en beheren."
+  },
+  "about.device": {
+    "description": "Bericht voor apparaathardware",
+    "value": "Informatie over apparaathardware en logboekregistratie"
+  },
+  "about.doNotShowAgain": {
+    "description": "Selectievakje voor het weergeven van de sectie 'Over'.",
+    "value": "Niet meer weergeven"
+  },
+  "about.gotIt": {
+    "description": "Knop voor het sluiten van het gedeelte 'Over ons'",
+    "value": "Begrepen."
+  },
+  "about.howTo": {
+    "description": "Bericht over het gebruik van de toolkit",
+    "value": "Hoe de UI-toolkit te gebruiken"
+  },
+  "about.learn": {
+    "description": "Bericht voor het leren gebruiken van de toolkit",
+    "value": "Ontdek hoe de Device Management Toolkit apparaten beheert."
+  },
+  "about.nonCloudMode": {
+    "description": "Titel voor de sectie 'Over ons'",
+    "value": "Over Console"
+  },
+  "about.redirection": {
+    "description": "Bericht voor omleidingsfuncties",
+    "value": "Omleidingsfuncties zoals Remote Keyboard, Video, Mouse (KVM) en Serial-over-LAN (SOL)"
+  },
+  "about.referenceImplementation": {
+    "description": "Bericht voor implementatiedemonstratie in cloudmodus",
+    "value": "Deze referentie-implementatie demonstreert de API's en algemene functionaliteit van de Device Management Toolkit en is NIET bedoeld voor productiegebruik."
+  },
+  "about.remotePower": {
+    "description": "Bericht voor externe stroomvoorziening",
+    "value": "Acties voor externe stroomvoorziening"
+  },
+  "about.sampleUI": {
+    "description": "Bericht voor de voorbeeld-UI",
+    "value": "Deze voorbeeld-UI is bedoeld voor het volgende:"
+  },
+  "about.setUp": {
+    "description": "Bericht voor het instellen",
+    "value": "Profielen, configuratie en domeinen instellen"
+  },
+  "about.understand": {
+    "description": "Bericht ter verduidelijking van de toolkit",
+    "value": "Begrijp de implementatie van de REST API's in Device Management Toolkit en hoe deze in uw eigen toepassing kunnen worden gebruikt."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "Bericht voor het toestaan van zelfondertekende certificaten",
+    "value": "Zelfondertekende certificaten toestaan"
+  },
+  "addDevice.chooseProfile": {
+    "description": "Label voor profielselectieveld",
+    "value": "Kies profiel"
+  },
+  "addDevice.description": {
+    "description": "Beschrijving waarin wordt uitgelegd hoe een apparaat kan worden geactiveerd.",
+    "value": "Om een apparaat te activeren, dient u een opdracht uit te voeren op het AMT-apparaat. Dit dialoogvenster helpt u bij het genereren van de uit te voeren opdracht."
+  },
+  "addDevice.enterTags": {
+    "description": "Tip voor het invoeren van tags",
+    "value": "U kunt tags invoeren om te helpen bij het organiseren en opvragen van apparaten naarmate uw lijst met beheerde apparaten groeit. Typ een tag en druk vervolgens op Enter of komma."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "Fout voor ongeldige vriendelijke namen",
+    "value": "De vriendelijke naam mag niet langer zijn dan 50 tekens."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "Fout bij vereiste vriendelijke namen",
+    "value": "Vriendelijke naam is vereist."
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "Fout voor ongeldige hostnamen",
+    "value": "Ongeldig hostnaamformaat"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "Fout voor vereiste hostnamen",
+    "value": "Hostnaam is vereist."
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "Selectievakje om controle van zelfondertekende certificaten uit te schakelen",
+    "value": "Geen controle van zelfondertekende certificaten"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "Plaatshouder voor het toevoegen van een nieuwe tag",
+    "value": "Nieuwe tag..."
+  },
+  "addDevice.profileRequired": {
+    "description": "Validatiefoutmelding wanneer er geen profiel is geselecteerd",
+    "value": "Profiel is vereist."
+  },
+  "addDevice.showVerbose": {
+    "description": "Selectievakje om uitgebreide uitvoer in te schakelen",
+    "value": "Toon uitgebreid"
+  },
+  "addDevice.title": {
+    "description": "Dialoogvenster voor het toevoegen van een nieuw apparaat",
+    "value": "Een nieuw apparaat toevoegen"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "Foutmelding voor ongeldige gebruikersnaam",
+    "value": "De gebruikersnaam moet minimaal 5 tekens lang zijn en mag niet langer zijn dan 16 tekens."
+  },
+  "addDevice.userNameRequired": {
+    "description": "Fout bij vereiste gebruikersnaam",
+    "value": "Gebruikersnaam is vereist"
+  },
+  "addDevice.useTLS": {
+    "description": "Bericht voor het gebruik van TLS",
+    "value": "Gebruik TLS."
+  },
+  "alarm.errorAdding": {
+    "description": "Fout bij toevoegen",
+    "value": "Fout bij het toevoegen van alarmmeldingen"
+  },
+  "alarm.errorDelete": {
+    "description": "Fout bij verwijderen",
+    "value": "Fout bij het verwijderen van alarmmeldingen"
+  },
+  "alarm.errorRetrieve": {
+    "description": "Fout bij het ophalen",
+    "value": "Fout bij het ophalen van alarmmeldingen"
+  },
+  "alarmService.addNew": {
+    "description": "Knoptekst om een nieuw alarm toe te voegen",
+    "value": "Nieuw toevoegen"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "Tip voor het invoeren van alarmnamen",
+    "value": "Geef een naam op voor dit alarm."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "Plaatshouder voor invoer van alarmnaam",
+    "value": "Alarmnamen"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "Tooltip voor knop 'Alarm verwijderen'",
+    "value": "Verwijder alarmmelding"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "Label voor verwijderen na voltooiing schuifknop",
+    "value": "Verwijderen na voltooiing."
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "Naam van het alarmelement gevolgd door de InstanceID.",
+    "value": "{{elementName}} (InstanceID: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "Label voor uurkeuze",
+    "value": "Uur"
+  },
+  "alarmService.interval": {
+    "description": "Label voor de alarminterval",
+    "value": "Interval (in minuten)"
+  },
+  "alarmService.intervalHint": {
+    "description": "Tip voor intervalinvoer",
+    "value": "Interval in minuten voor een periodiek alarm, 0 voor eenmalig alarm"
+  },
+  "alarmService.intervalLabel": {
+    "description": "Label voor intervalinvoer",
+    "value": "Interval"
+  },
+  "alarmService.intervalNone": {
+    "description": "Wordt weergegeven wanneer het interval niet is gedefinieerd.",
+    "value": "Geen"
+  },
+  "alarmService.minuteLabel": {
+    "description": "Label voor minuut selecteren",
+    "value": "Notulen"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "Starttijd: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Verwijderen na voltooiing: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "Plaatshouder voor invoer van starttijd",
+    "value": "Kies een datum en tijdstip"
+  },
+  "alarmService.subtitle": {
+    "description": "Ondertitel met het aantal alarmmeldingen",
+    "value": "Alarmen ({{count}} -vermeldingen)"
+  },
+  "alarmService.title": {
+    "description": "Titel van de alarmdienstkaart",
+    "value": "Alarmservice"
+  },
+  "audit.errorLog": {
+    "description": "Fout bij het ophalen van auditlogboeken",
+    "value": "Fout bij het ophalen van het auditlogboek"
+  },
+  "auditLog.description": {
+    "value": "Beschrijving"
+  },
+  "auditLog.download": {
+    "description": "Downloadknop voor auditlogboeken",
+    "value": "Auditlogboek downloaden (.csv)"
+  },
+  "auditLog.event": {
+    "value": "Evenement"
+  },
+  "auditLog.missing": {
+    "description": "Bericht voor ontbrekende auditlogs",
+    "value": "Geen auditlogboek"
+  },
+  "auditLog.time": {
+    "value": "Tijd"
+  },
+  "auditLog.title": {
+    "description": "Titel voor auditlogboeken",
+    "value": "Auditlogboek"
+  },
+  "certificates.add.tooltip": {
+    "description": "Tooltip voor knop 'Certificaat toevoegen'",
+    "value": "Certificaat toevoegen"
+  },
+  "certificates.download.tooltip": {
+    "description": "Tooltip voor het downloaden van een certificaat",
+    "value": "Certificaat downloaden"
+  },
+  "certificates.empty": {
+    "description": "Tekst voor lege certificaten",
+    "value": "Geen certificaten gevonden"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "Fout bij het toevoegen van certificaten",
+    "value": "Fout bij het toevoegen van certificaat"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "Fout bij het ophalen van certificaatinformatie",
+    "value": "Fout bij het ophalen van certificaatinformatie"
+  },
+  "certificates.list": {
+    "description": "Tekst voor de lijst met certificaten",
+    "value": "Lijst met certificaten die momenteel op het AMT-apparaat zijn geregistreerd"
+  },
+  "certificates.loading": {
+    "description": "Tekst voor het laden van certificaten",
+    "value": "Certificaten worden geladen ..."
+  },
+  "certificates.profileAssociations": {
+    "description": "Label voor certificaatprofielkoppelingen",
+    "value": "Profielassociaties"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "Wordt weergegeven wanneer een certificaat geen profielkoppelingen heeft.",
+    "value": "Niet-gerelateerd"
+  },
+  "certificates.title": {
+    "description": "Titel voor certificaten",
+    "value": "Certificaten"
+  },
+  "certificates.type": {
+    "description": "Label voor veld certificaattype",
+    "value": "Type"
+  },
+  "certificates.typeClient": {
+    "description": "Geeft aan dat het certificaat een clientcertificaat is.",
+    "value": "Klant"
+  },
+  "certificates.typeRoot": {
+    "description": "Geeft aan dat het certificaat een rootcertificaat is.",
+    "value": "Root"
+  },
+  "common.addNew": {
+    "description": "Tekst voor de knop 'Nieuw toevoegen'",
+    "value": "Nieuw toevoegen"
+  },
+  "common.cancel": {
+    "description": "Tekst voor de knop 'Annuleren'",
+    "value": "ANNULEREN"
+  },
+  "common.cancelLower": {
+    "description": "Tekst voor de knop 'Annuleren'",
+    "value": "Annuleren"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "Waarschuwing voor certificaten die niet zijn geüpload",
+    "value": "Certificaat nog niet geüpload"
+  },
+  "common.cetificateUploaded": {
+    "description": "Bericht voor certificaten die worden geüpload",
+    "value": "Certificaat geüpload"
+  },
+  "common.chooseFile": {
+    "description": "Knop voor het selecteren van een bestand",
+    "value": "Kies Bestand"
+  },
+  "common.close": {
+    "description": "Tekst voor de knop 'Sluiten'",
+    "value": "Sluiten"
+  },
+  "common.completeProfile": {
+    "description": "Bericht voor voltooide profielen",
+    "value": "Profiel succesvol opgeslagen."
+  },
+  "common.connected": {
+    "description": "Status wanneer een apparaat of dienst is verbonden",
+    "value": "Verbonden"
+  },
+  "common.continue": {
+    "value": "Doorgaan"
+  },
+  "common.deleteConfiguration": {
+    "description": "Bericht voor verwijderde configuraties",
+    "value": "Configuratie succesvol verwijderd."
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "Bericht voor de ondertitel bij het inloggen",
+    "value": "Portal voor apparaatbeheertoolkit"
+  },
+  "common.disabled": {
+    "description": "Wordt gebruikt wanneer de lokale profielsynchronisatie is uitgeschakeld.",
+    "value": "uitgeschakeld"
+  },
+  "common.disconnected": {
+    "description": "Status wanneer een apparaat of service is losgekoppeld",
+    "value": "Losgekoppeld"
+  },
+  "common.dismiss": {
+    "description": "Label van de knop 'Sluiten'",
+    "value": "Sluiten"
+  },
+  "common.done": {
+    "description": "Bericht voor knop 'Gereed'",
+    "value": "Voltooid"
+  },
+  "common.down": {
+    "value": "Down"
+  },
+  "common.enabled": {
+    "description": "Wordt gebruikt wanneer de lokale profielsynchronisatie is ingeschakeld.",
+    "value": "Ingeschakeld"
+  },
+  "common.enterFriendlyName": {
+    "description": "Tip voor het invoeren van een vriendelijke naam",
+    "value": "Voer een vriendelijke naam in."
+  },
+  "common.enterHostName": {
+    "description": "Tip voor het invoeren van de hostnaam",
+    "value": "Voer de hostnaam in."
+  },
+  "common.enterPassword": {
+    "description": "Bericht voor het invoeren van uw wachtwoord",
+    "value": "Voer uw wachtwoord in"
+  },
+  "common.enterUserName": {
+    "description": "Tip voor het invoeren van uw gebruikersnaam",
+    "value": "Voer uw gebruikersnaam in."
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "Fout bij het verwijderen van configuraties",
+    "value": "Kan configuratie niet verwijderen"
+  },
+  "common.friendlyName": {
+    "description": "Bericht voor vriendelijke naam",
+    "value": "Vriendelijke naam"
+  },
+  "common.hostName": {
+    "description": "Bericht voor hostnaam",
+    "value": "Hostnaam"
+  },
+  "common.input": {
+    "description": "Input voor WSMAN Explorer",
+    "value": "Input"
+  },
+  "common.intelCopyright": {
+    "description": "Copyrightvermelding voor Intel",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "Bericht voor de aanmeldknop",
+    "value": "INLOGGEN"
+  },
+  "common.logOut": {
+    "description": "Bericht voor uitloggen",
+    "value": "Uitloggen"
+  },
+  "common.no": {
+    "value": "Nee"
+  },
+  "common.notApplicable": {
+    "description": "Wordt weergegeven wanneer de OS-vermelding niet van toepassing is.",
+    "value": "Niet van toepassing"
+  },
+  "common.ok": {
+    "description": "Tekst voor OK-knop",
+    "value": "Oké"
+  },
+  "common.other": {
+    "description": "Gebruikt wanneer het besturingssysteem of het geheugenkaartje 'Overig' of 'Niet gespecificeerd' is.",
+    "value": "Overige"
+  },
+  "common.output": {
+    "description": "Uitvoer voor WSMAN Explorer",
+    "value": "Output"
+  },
+  "common.password": {
+    "description": "Bericht voor wachtwoord",
+    "value": "Wachtwoord"
+  },
+  "common.pin": {
+    "description": "Tekst voor de knop 'Pin'.",
+    "value": "Pin"
+  },
+  "common.profileName": {
+    "description": "Naam van het profiel",
+    "value": "Profielnaam"
+  },
+  "common.remove": {
+    "description": "Tekst voor verwijderknop",
+    "value": "Verwijderen"
+  },
+  "common.save": {
+    "description": "Tekst voor de knop Opslaan",
+    "value": "OPSLAAN"
+  },
+  "common.showHidePassword": {
+    "description": "Tooltip voor het weergeven of verbergen van het wachtwoord",
+    "value": "Wachtwoord weergeven/verbergen"
+  },
+  "common.submit": {
+    "description": "Knop voor verzenden",
+    "value": "Verzenden"
+  },
+  "common.tags": {
+    "description": "Bericht voor tags",
+    "value": "Tags"
+  },
+  "common.trustedRoot": {
+    "description": "Tekst voor het selectievakje 'Vertrouwde root'.",
+    "value": "Vertrouwde root"
+  },
+  "common.unknown": {
+    "description": "Label voor onbekende of niet-gespecificeerde waarden",
+    "value": "Onbekend"
+  },
+  "common.up": {
+    "value": "Omhoog"
+  },
+  "common.userName": {
+    "description": "Bericht voor gebruikersnaam",
+    "value": "Gebruikersnaam"
+  },
+  "common.wired": {
+    "description": "Tekst voor draadloze knop",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "Tekst voor bedrade knop",
+    "value": "Draadloos"
+  },
+  "common.yes": {
+    "value": "Ja"
+  },
+  "configDetail.commonNameHint": {
+    "description": "Hinttekst voor veld met algemene naam",
+    "value": "Voer de algemene naam in die in het certificaat staat vermeld."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "Plaatshoudertekst voor veld met algemene naam",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "Hinttekst voor het veld met de configuratienaam",
+    "value": "Voer een naam in voor deze CIRA-configuratie."
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "Plaatshoudertekst voor het veld met de configuratienaam",
+    "value": "Bijvoorbeeld: ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "FQDN-keuzerondje-label",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "IPv4-keuzerondje-label",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "Hinttekst voor het veld voor het MPS-serveradres",
+    "value": "Voer het adres in waar uw MPS-instantie wordt gehost."
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "Plaatshoudertekst voor het veld voor het MPS-serveradres",
+    "value": "MPS-adres"
+  },
+  "configDetail.portHint": {
+    "description": "Hinttekst voor poortveld",
+    "value": "Voer de CIRA-poort voor de MPS-instantie in. De standaardwaarde is 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "Plaatshoudertekst voor poortveld",
+    "value": "Port"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "Tekst voor het opnieuw genereren van het wachtwoord",
+    "value": "Genereer een nieuw willekeurig wachtwoord bij het opslaan."
+  },
+  "configDetail.usernameHint": {
+    "description": "Hinttekst voor het veld voor de gebruikersnaam",
+    "value": "Voer de gebruikersnaam in voor toegang tot MPS."
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "Plaatshoudertekst voor het veld voor de gebruikersnaam",
+    "value": "Gebruikersnaam"
+  },
+  "configs.ciraNoData": {
+    "description": "Geen CIRA Configs-bericht",
+    "value": "Geen CIRA-configuraties."
+  },
+  "configs.delete": {
+    "description": "Bericht voor het verwijderen van CIRA-configuraties",
+    "value": "CIRA-configuratie succesvol verwijderd."
+  },
+  "configs.failDeleteConfigs": {
+    "description": "Fout bij het verwijderen van CIRA-configuraties",
+    "value": "Kan CIRA-configuraties niet verwijderen"
+  },
+  "configs.failLoadConfigs": {
+    "description": "Fout bij het laden van CIRA-configuraties",
+    "value": "Kan CIRA-configuraties niet laden"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "Nieuwe titel van de CIRA-configuratiepagina",
+    "value": "Nieuwe CIRA-configuratie"
+  },
+  "configs.header.ciraTitle": {
+    "description": "CIRA Configs titel",
+    "value": "CIRA-configuraties"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "CIRA Configs-titel indien niet beschikbaar",
+    "value": "Niet beschikbaar"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "Eerste pagina"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "Aantal items per pagina:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "Laatste pagina"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "Volgende pagina"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "Vorige pagina"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} – {{endIndex}} van {{length}}"
+  },
+  "configs.success": {
+    "description": "Bericht voor het maken van CIRA-configuraties",
+    "value": "CIRA- {{reqType}} ma succesvol aangemaakt"
+  },
+  "configs.table.ciraCert": {
+    "description": "Cert Common Name kolomkop",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "Kolomkop MPS-server",
+    "value": "MPS-server"
+  },
+  "configs.table.ciraName": {
+    "description": "Naam kolomkop",
+    "value": "Naam"
+  },
+  "configs.table.ciraPort": {
+    "description": "Kolomkop 'Port'",
+    "value": "Port"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "Kolomkop MPS Root Cert",
+    "value": "MPS Root Cert"
+  },
+  "configs.table.ciraUsername": {
+    "description": "Kolomkop gebruikersnaam",
+    "value": "Gebruikersnaam"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "Tooltip voor het toevoegen van een nieuw apparaat",
+    "value": "Voeg een nieuw apparaat toe dat kan worden beheerd door de console."
+  },
+  "dashboard.addNewDevice": {
+    "description": "Stap om een nieuw apparaat toe te voegen",
+    "value": "1. Voeg een nieuw apparaat toe"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "Stap om een provisioningcertificaat toe te voegen",
+    "value": "Voeg een provisioningcertificaat toe [optioneel]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "Stappen voor het maken van een CIRA-configuratie",
+    "value": "Maak een CIRA-configuratie."
+  },
+  "dashboard.createProfile": {
+    "description": "Stappen om een profiel aan te maken",
+    "value": "Profiel aanmaken"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "Stappen voor het maken van een draadloze configuratie",
+    "value": "Draadloze configuratie aanmaken [optioneel]"
+  },
+  "dashboard.deploy": {
+    "description": "Implementeer de toolkit.",
+    "value": "Implementeren"
+  },
+  "dashboard.deployDescription": {
+    "description": "Beschrijving voor implementatie",
+    "value": "Klaar om over te gaan naar productie? Raadpleeg onze implementatiegids (binnenkort beschikbaar)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "Aantal aangesloten apparaten",
+    "value": "Aangesloten apparaten"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "Aantal apparaten dat is losgekoppeld",
+    "value": "Apparaten zijn losgekoppeld"
+  },
+  "dashboard.error": {
+    "description": "Fout bij het ophalen van apparaatstatistieken",
+    "value": "Fout bij het ophalen van apparaatstatistieken"
+  },
+  "dashboard.getStarted": {
+    "description": "Aan de slag met de toolkit",
+    "value": "Aan de slag"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "Beschrijving om aan de slag te gaan",
+    "value": "Bent u nieuw met de toolkit? Raadpleeg de documentatie om eerst de basisprincipes te leren."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "Dashboardtitel",
+    "value": "Dashboard"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "Stappen om uw apparaat te beheren",
+    "value": "2. Beheer uw apparaat"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "Stap om uw apparaat opnieuw te beheren",
+    "value": "Beheer uw apparaat"
+  },
+  "dashboard.totalDevices": {
+    "description": "Totaal aantal apparaten",
+    "value": "Totaal aantal apparaten"
+  },
+  "dashboard.understandSecurity": {
+    "description": "Begrijp beveiligingsonderwerpen",
+    "value": "Begrijp beveiliging"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "Beschrijving voor het begrijpen van beveiliging",
+    "value": "Heeft u vragen over beveiliging? Lees meer over wachtwoorden, Vault, certificaten en meer."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "Tooltip voor het gebruik van apparaatacties",
+    "value": "Gebruik apparaatacties om een lijst met apparaten te beheren."
+  },
+  "delete.question": {
+    "description": "Vraag over het verwijderen van records",
+    "value": "Bent u zeker?"
+  },
+  "delete.questionRecord": {
+    "description": "Vraag over het verwijderen van records",
+    "value": "Weet u zeker dat u de record(s) wilt verwijderen?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "Tekst voor algemene naam",
+    "value": "Algemene naam:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "Tekst voor DNS-namen",
+    "value": "DNS-namen:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "Tekst voor naam van uitgever",
+    "value": "Naam uitgever:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "Tekst voor na de datum",
+    "value": "Niet na:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "Tekst voor niet vóór datum",
+    "value": "Niet eerder dan:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "Tekst voor algoritme voor openbare sleutels",
+    "value": "Public Key Algorithm:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "Tekst voor publieke sleutelgrootte",
+    "value": "Grootte van de openbare sleutel:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "Tekst voor serienaam",
+    "value": "Serienummer:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "Tekst voor SHA-1-vingerafdruk",
+    "value": "SHA-1-vingerafdruk:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "Tekst voor SHA-256-vingerafdruk",
+    "value": "SHA-256-vingerafdruk:"
+  },
+  "deviceCertificate.title": {
+    "description": "Titel voor certificaatgegevens",
+    "value": "Certificaatgegevens"
+  },
+  "deviceDetail.alarms": {
+    "description": "Categorienaam voor apparaatalarmen",
+    "value": "Alarmen"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "Beschrijving voor alarmen",
+    "value": "Beheer apparaatalarmen"
+  },
+  "deviceDetail.auditLog": {
+    "description": "Categorienaam voor auditlogboek",
+    "value": "Auditlogboek"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "Beschrijving voor auditlogboek",
+    "value": "Bekijk het apparaatauditlogboek"
+  },
+  "deviceDetail.certificates": {
+    "description": "Categorienaam voor certificaten",
+    "value": "Certificaten"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "Beschrijving voor certificaten",
+    "value": "Certificaten beheren"
+  },
+  "deviceDetail.eventLog": {
+    "description": "Categorienaam voor gebeurtenislogboek",
+    "value": "Gebeurtenislogboek"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "Beschrijving voor gebeurtenislogboek",
+    "value": "Bekijk apparaatgebeurtenissen"
+  },
+  "deviceDetail.explorer": {
+    "description": "Categorienaam voor verkenner",
+    "value": "Verkenner"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "Beschrijving voor verkenner",
+    "value": "WSMAN-opdrachten verzenden"
+  },
+  "deviceDetail.general": {
+    "description": "Categorienaam voor algemene apparaatinformatie",
+    "value": "Algemene AMT-informatie"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "Beschrijving voor algemene apparaatinformatie",
+    "value": "AMT-versie en functies"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "Categorienaam voor hardware-informatie",
+    "value": "Hardware-informatie"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "Beschrijving voor hardware-informatie",
+    "value": "Geheugen, CPU, enz."
+  },
+  "deviceDetail.kvm": {
+    "description": "Categorienaam voor KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "Beschrijving voor KVM",
+    "value": "Apparaat op afstand bedienen"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "Categorienaam voor netwerkinstellingen",
+    "value": "Netwerkinstellingen"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "Beschrijving voor netwerkinstellingen",
+    "value": "Bekijk netwerkinstellingen"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "Categorienaam voor geen gebeurtenislogboeken",
+    "value": "Geen gebeurtenislogboek"
+  },
+  "deviceDetail.sol": {
+    "description": "Categorienaam voor Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "Beschrijving voor SOL",
+    "value": "Serial Over LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "Categorienaam voor TLS-instellingen",
+    "value": "TLS-instellingen"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "Beschrijving voor TLS-instellingen",
+    "value": "Bekijk TLS-configuratie"
+  },
+  "devices.actions.deactivate": {
+    "description": "Tooltip voor het deactiveren/verwijderen van een apparaat",
+    "value": "Deactiveer het apparaat."
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "Tooltip voor het deactiveren van een apparaat in cloudmodus",
+    "value": "Deactiveer het apparaat"
+  },
+  "devices.actions.edit": {
+    "description": "Tooltip voor het bewerken van een apparaat",
+    "value": "Apparaat bewerken"
+  },
+  "devices.actions.powerOff": {
+    "description": "Tooltip voor het uitschakelen van een apparaat",
+    "value": "Schakel het apparaat uit."
+  },
+  "devices.actions.powerUp": {
+    "description": "Tooltip voor het opstarten van een apparaat",
+    "value": "Schakel het apparaat in."
+  },
+  "devices.actions.remove": {
+    "description": "Tooltip voor het verwijderen van een apparaat in niet-cloudmodus",
+    "value": "Verwijder het apparaat."
+  },
+  "devices.actions.reset": {
+    "description": "Tooltip voor het resetten van een apparaat",
+    "value": "Het apparaat resetten"
+  },
+  "devices.actions.restart": {
+    "description": "Tooltip voor het opnieuw opstarten van een apparaat",
+    "value": "Start het apparaat opnieuw op."
+  },
+  "devices.addDevice": {
+    "description": "Bericht over nieuw apparaat",
+    "value": "Een nieuw apparaat toevoegen"
+  },
+  "devices.bulk.deactivate": {
+    "description": "Tooltip voor bulkdeactiveringsactie",
+    "value": "Verwijder of deactiveer geselecteerde apparaten."
+  },
+  "devices.bulk.powerOff": {
+    "description": "Tooltip voor bulk-uitschakelactie",
+    "value": "Geselecteerde apparaten uitschakelen"
+  },
+  "devices.bulk.powerUp": {
+    "description": "Tooltip voor bulk power-up-actie",
+    "value": "Geselecteerde apparaten inschakelen"
+  },
+  "devices.bulk.restart": {
+    "description": "Tooltip voor bulkherstartactie",
+    "value": "Start geselecteerde apparaten opnieuw op."
+  },
+  "devices.deactivation": {
+    "description": "Bericht voor deactiveringen",
+    "value": "Deactivering succesvol verzonden"
+  },
+  "devices.editDevice": {
+    "description": "Tooltip voor het bewerken van een apparaat",
+    "value": "Bewerk het apparaat"
+  },
+  "devices.editTags": {
+    "description": "Knoptekst voor het bewerken van tags",
+    "value": "Tags bewerken"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "Fout bij het deactiveren van apparaten",
+    "value": "Fout bij het deactiveren van apparaten"
+  },
+  "devices.errorDeactivation": {
+    "description": "Fout bij het verzenden van deactiveringen",
+    "value": "Fout bij het verzenden van deactivering"
+  },
+  "devices.errorInitializing": {
+    "description": "Fout bij initialiseren",
+    "value": "Fout bij initialiseren"
+  },
+  "devices.errorLoadDevices": {
+    "description": "Fout bij het laden van apparaten",
+    "value": "Fout bij het laden van apparaten"
+  },
+  "devices.errorLoadTags": {
+    "description": "Fout bij het laden van tags",
+    "value": "Fout bij het laden van tags"
+  },
+  "devices.errorPowerAction": {
+    "description": "Fout bij krachtige acties",
+    "value": "Fout bij het verzenden van power-actie"
+  },
+  "devices.failPowerAction": {
+    "description": "Fout bij het uitvoeren van acties.",
+    "value": "Power-actie mislukt"
+  },
+  "devices.filter.searchHint": {
+    "description": "Hinttekst onder zoekinvoer voor apparaten",
+    "value": "Voer tekst in om de huidige pagina te filteren"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "Plaatshoudertekst voor zoekvak voor apparaten",
+    "value": "Filterapparaten...."
+  },
+  "devices.filter.tags": {
+    "description": "Label voor het filteren van apparaten op tags",
+    "value": "Filtertags"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "Beschrijving van het dialoogvenster Certificaat toevoegen",
+    "value": "Het certificaat wordt toegevoegd aan AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "Titel van het dialoogvenster Certificaat toevoegen",
+    "value": "Certificaat toevoegen"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "Beschrijving van het HTTPS-opstartvenster",
+    "value": "HTTPS Network Boot beveiligt het opstartproces met behulp van versleutelde HTTPS om opstartbestanden te beschermen. Start One Click Recovery om het besturingssysteem snel te herstellen."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "HTTPS Boot-dialoogvenster titel",
+    "value": "HTTPS Netwerkboot (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "PBA Boot dialoog beschrijving",
+    "value": "Een PBA (Pre-Boot Application) is een herstel- of diagnosetool die lokaal op het systeem wordt geïnstalleerd en kan worden geselecteerd als opstartoptie voor Intel One-Click Recovery-bewerkingen."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "PBA Boot dialoog titel",
+    "value": "Lokale PBA laars (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "Paginatitel 'Apparaten'",
+    "value": "Apparaten"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "Tooltip voor toegang tot meer energieopties van een apparaat",
+    "value": "Meer energieopties..."
+  },
+  "devices.noData": {
+    "description": "Bericht wanneer er geen apparaten aanwezig zijn",
+    "value": "Geen apparaten gevonden"
+  },
+  "devices.noDataFilter": {
+    "description": "Bericht wanneer filterresultaten leeg zijn",
+    "value": "Er zijn geen apparaten die aan de huidige filter voldoen."
+  },
+  "devices.notification.error": {
+    "description": "Tooltip die wordt weergegeven wanneer een actie mislukt",
+    "value": "Fout bij het verzenden van actie"
+  },
+  "devices.notification.notReady": {
+    "description": "Tooltip wordt weergegeven wanneer het apparaat niet gereed is.",
+    "value": "Power-actie verzonden, maar apparaat reageerde met 'niet gereed'."
+  },
+  "devices.notification.success": {
+    "description": "Tooltip die wordt weergegeven wanneer een actie is geslaagd",
+    "value": "Actie succesvol verzonden"
+  },
+  "devices.powerActionNotReady": {
+    "description": "Fout voor verzonden acties die nog niet gereed zijn.",
+    "value": "Power-actie verzonden, maar nog niet gereed."
+  },
+  "devices.powerActionSent": {
+    "description": "Bericht voor krachtige acties",
+    "value": "Power-actie succesvol verzonden"
+  },
+  "devices.table.actions": {
+    "description": "Tabelkolomkop voor acties",
+    "value": "Acties"
+  },
+  "devices.table.guid": {
+    "description": "Tabelkolomkop voor GUID",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "Tabelkolomkop voor hostnaam",
+    "value": "Hostnaam"
+  },
+  "devices.table.status": {
+    "description": "Tabelkolomkop voor apparaatstatus",
+    "value": "Status"
+  },
+  "devices.table.tags": {
+    "description": "Tabelkolomkop voor tags",
+    "value": "Tags"
+  },
+  "deviceUserConsent.description": {
+    "description": "Beschrijving voor toestemming van de gebruiker voor apparaten",
+    "value": "Er is een door Intel AMT gegenereerde gebruikersinstemmingscode vereist om toegang te krijgen tot het systeem."
+  },
+  "deviceUserConsent.error": {
+    "description": "Fout bij gebruikersinstemming voor apparaten",
+    "value": "Dit veld is verplicht en de waarde moet een zescijferig getal zijn."
+  },
+  "deviceUserConsent.hint": {
+    "description": "Tip voor toestemming van gebruikers voor apparaten",
+    "value": "Zorg voor een code voor gebruikersinstemming die wordt weergegeven op de doelhostmonitor."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "Plaatshouder voor toestemming van de gebruiker voor apparaten",
+    "value": "Code voor toestemming van de gebruiker"
+  },
+  "deviceUserConsent.title": {
+    "description": "Titel voor toestemming van de gebruiker voor apparaten",
+    "value": "Toestemming van de gebruiker"
+  },
+  "domainDetail.completeProfile": {
+    "description": "Bericht voor voltooide domeinprofielen",
+    "value": "Domeinprofiel succesvol opgeslagen."
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "Fout bij verwijderde domeinprofielen",
+    "value": "Fout bij het aanmaken/bijwerken van domeinprofiel"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Foutmelding voor schending van unieke sleutel",
+    "value": "Domein NewDomain ID of Suffix bestaat al"
+  },
+  "domainDetail.fqdn": {
+    "description": "Tip voor het FQDN-veld",
+    "value": "Voer de FQDN in die is gekoppeld aan het provisioningcertificaat (bijv. amtdomain.com)."
+  },
+  "domainDetail.nameHint": {
+    "description": "Tip voor het veld voor de domeinnaam",
+    "value": "Voer een naam in om dit domein een naam te geven (bijv. AMT-domein)."
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "Plaatshouder voor de domeinnaam",
+    "value": "Domeinnaam"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "Plaatshouder voor het wachtwoord van het provisioningcertificaat",
+    "value": "Wachtwoord voor provisioningcertificaat"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "Tip voor het wachtwoord van het provisioningcertificaat",
+    "value": "Het wachtwoord voor het provisioningcertificaat"
+  },
+  "domains.certExpired": {
+    "description": "Bericht voor verlopen certificaten",
+    "value": "{{count}} Domeincertificaat(en) is/zijn verlopen. "
+  },
+  "domains.certExpring": {
+    "description": "Bericht voor verlopende certificaten",
+    "value": "{{count}} Domeincertificaat(en) verloopt binnenkort. "
+  },
+  "domains.daysRemaining": {
+    "description": "Bericht voor resterende dagen",
+    "value": " dagen resterend"
+  },
+  "domains.delteDomain": {
+    "description": "Bericht voor het verwijderen van domeinen",
+    "value": "Domein succesvol verwijderd."
+  },
+  "domains.expired": {
+    "description": "Bericht voor verlopen domeinen",
+    "value": "Verlopen"
+  },
+  "domains.failLoadDomain": {
+    "description": "Fout bij het laden van domeinen",
+    "value": "Kan domeinen niet laden"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "Fout bij het verwijderen van domeinen",
+    "value": "Kan domein niet verwijderen"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "Nieuwe domeinpaginatitel",
+    "value": "Nieuw domein"
+  },
+  "domains.header.domainsTitle": {
+    "description": "Paginatitel domeinen",
+    "value": "Domeinen"
+  },
+  "domains.monthsRemaining": {
+    "description": "Bericht voor de resterende maanden",
+    "value": " maanden resterend"
+  },
+  "domains.noData": {
+    "description": "Geen domeinenbericht",
+    "value": "Geen domeinen"
+  },
+  "domains.table.domainSuffix": {
+    "description": "Kolomkop Domeinsuffix",
+    "value": "Domeinextensie"
+  },
+  "domains.table.expirationDate": {
+    "description": "Kolomkop 'Vervaldatum'",
+    "value": "Vervaldatum"
+  },
+  "domains.table.name": {
+    "description": "Naam kolomkop",
+    "value": "Naam"
+  },
+  "domains.yearsRemaining": {
+    "description": "Bericht voor de resterende jaren",
+    "value": " resterende jaren"
+  },
+  "editTags.description": {
+    "description": "Beschrijving voor bewerkingstags",
+    "value": "Voeg een tag toe door op de prompt te klikken, de tagnaam in te voeren en vervolgens op Enter of een komma te drukken."
+  },
+  "editTags.header": {
+    "description": "Koptekst voor bewerkingstags",
+    "value": "Verwijder een tag door op de tag zelf te klikken."
+  },
+  "editTags.placeholder": {
+    "description": "Plaatshouder voor bewerkingstags",
+    "value": "Nieuwe tag..."
+  },
+  "editTags.title": {
+    "description": "Titel voor bewerkingstags",
+    "value": "Tags bewerken"
+  },
+  "error.deviceNotResponding": {
+    "description": "Bericht dat wordt weergegeven wanneer het apparaat time-out gaat",
+    "value": "Het apparaat reageerde niet. Controleer de verbindingsinstellingen nogmaals en probeer het opnieuw."
+  },
+  "error.itemModified": {
+    "description": "Bericht dat wordt weergegeven wanneer het item verouderd is",
+    "value": "Dit item is gewijzigd sinds het is geladen. Laad het opnieuw."
+  },
+  "error.kvmConnection": {
+    "description": "Foutmelding bij het verbinden met KVM",
+    "value": "Verbinding met KVM mislukt. Er is slechts één sessie per apparaat toegestaan. Controleer ook of uw token geldig is en u toegang hebt."
+  },
+  "error.sessionTimedOut": {
+    "description": "Bericht dat wordt weergegeven wanneer de gebruikerssessie is verlopen",
+    "value": "De sessie is verlopen. Log opnieuw in."
+  },
+  "error.unableToSendCode": {
+    "description": "Foutmelding die wordt weergegeven wanneer het verzenden van de toestemmingscode van de gebruiker mislukt, inclusief de backend-foutmelding.",
+    "value": "Kan geen code verzenden: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "Algemene fout bij het annuleren van de toestemmingscode van de gebruiker mislukt.",
+    "value": "Fout bij het annuleren van de toestemmingscode van de gebruiker"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "Fout bij het annuleren van een aangevraagde toestemmingscode van de gebruiker mislukt.",
+    "value": "{{featureName}} Kan niet worden geopend - het annuleren van de aangevraagde toestemmingscode van de gebruiker is mislukt."
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "Fout bij het annuleren van een aangevraagde toestemmingscode van de gebruiker is geslaagd.",
+    "value": "{{featureName}} Kan niet worden geopend - de gevraagde toestemmingscode van de gebruiker is geannuleerd."
+  },
+  "error.userConsentCodeFailed": {
+    "description": "Foutmelding bij het opvragen van de toestemmingscode van de gebruiker voor een functie",
+    "value": "{{featureName}} Kan niet worden geopend – het aanvragen van de toestemmingscode van de gebruiker is mislukt."
+  },
+  "error.userConsentSendFailed": {
+    "description": "Fout bij het verzenden van de toestemmingscode van de gebruiker.",
+    "value": "{{featureName}} Kan niet worden geopend - het verzenden van de toestemmingscode van de gebruiker is mislukt."
+  },
+  "error.userConsentUnsupported": {
+    "description": "Fout bij het verzenden van een niet-ondersteunde toestemmingscode van de gebruiker",
+    "value": "{{featureName}} Kan niet worden geopend - niet-ondersteunde gebruikersinstemmingscode"
+  },
+  "event.errorLog": {
+    "description": "Fout bij het ophalen van gebeurtenislogboeken",
+    "value": "Fout bij het ophalen van het gebeurtenissenlogboek"
+  },
+  "eventLog.download": {
+    "description": "Knop voor het downloaden van het gebeurtenissenlogboek",
+    "value": "Download gebeurtenislogboek (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "Titel voor gebeurtenislogboekvermeldingen",
+    "value": "Gebeurtenislogboek ({{count}} -vermeldingen)"
+  },
+  "eventLog.eventType": {
+    "description": "Bericht voor soorten gebeurtenislogboeken",
+    "value": "Type gebeurtenis"
+  },
+  "eventLog.severity": {
+    "description": "Bericht voor ernst van gebeurtenislogboeken",
+    "value": "Ernst"
+  },
+  "eventLog.source": {
+    "description": "Bericht voor bronnen van gebeurtenislogboeken",
+    "value": "Bron"
+  },
+  "explorer.errorResponse": {
+    "description": "Fout bij het ophalen van de explorer-respons.",
+    "value": "Fout bij het ophalen van de explorer-respons."
+  },
+  "explorer.placeHolder": {
+    "description": "Plaatshouder voor WSMAN Explorer",
+    "value": "Selecteer..."
+  },
+  "explorer.WSMANCall": {
+    "value": "WSMAN-oproep"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "Knoptekst voor domeinen toevoegen",
+    "value": "Domeinen toevoegen"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "Optie om domeinen eerst toe te voegen",
+    "value": "Voeg eerst domeinen toe (vereist voor ACM-activering)."
+  },
+  "exportDialog.domainSuffix": {
+    "description": "Label voor domeinsuffixveld",
+    "value": "domeinsuffix"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "Foutmelding bij het laden van domeinen",
+    "value": "Fout bij het laden van domeinen:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "Bericht voor domeinen wordt geladen",
+    "value": "Domeinen worden geladen..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "Bericht wanneer er geen domeinen zijn geconfigureerd",
+    "value": "Er zijn geen domeinen geconfigureerd. U kunt het volgende doen:"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "Foutmelding voor domeinselectie vereist",
+    "value": "Selecteer een domein"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "Ondertitel voor domeinselectie in exportdialoogvenster",
+    "value": "Het geselecteerde domein wordt opgenomen in het profiel voor gebruik met"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "Titel voor dialoogvenster domeinselectie exporteren",
+    "value": "Selecteer domeinextensie"
+  },
+  "exportDialog.skipDomain": {
+    "description": "Knoptekst voor domein overslaan",
+    "value": "Domein overslaan"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "Optie om domein over te slaan indien reeds geactiveerd.",
+    "value": "Klik op 'Domein overslaan' als het apparaat al is geactiveerd."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "Instructies voor de skip-domeinfunctionaliteit",
+    "value": "Klik op 'Domein overslaan' als het apparaat al is geactiveerd. Als het apparaat nog niet is geactiveerd, moet u een domein selecteren voor ACM-activering."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "Foutmelding voor verplichte velden",
+    "value": "Dit veld is verplicht en moet alfanumeriek zijn, zonder spaties of symbolen."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "Tekst voor verplichte alfanumerieke velden en velden met maximale lengte",
+    "value": "Dit veld is verplicht, moet alfanumeriek zijn (geen spaties) en mag niet langer zijn dan {{profileNameMaxLen}} tekens."
+  },
+  "fieldRequired.long": {
+    "description": "Tip voor verplichte velden met tekenlimiet",
+    "value": "Dit veld is verplicht en moet tussen de 8 en 32 tekens bevatten."
+  },
+  "fieldRequired.short": {
+    "description": "Tip voor verplichte velden",
+    "value": "Dit veld is verplicht."
+  },
+  "general.amtBuild": {
+    "description": "Label voor AMT Build",
+    "value": "AMT Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "Label voor AMT DHCP DNS-achtervoegsel",
+    "value": "AMT DHCP DNS-achtervoegsel:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "Titel voor kaart met AMT-functies",
+    "value": "AMT-functies"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "Beschrijving voor kaart met AMT-functies",
+    "value": "Status van AMT-functies"
+  },
+  "general.AMTFeatures": {
+    "description": "Bericht voor bijgewerkte functies",
+    "value": "AMT-functies bijgewerkt"
+  },
+  "general.amtSKU": {
+    "description": "Label voor AMT SKU",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "Titel voor AMT-samenvattingskaart",
+    "value": "AMT-samenvatting"
+  },
+  "general.amtSummaryDescription": {
+    "description": "Beschrijving voor AMT-samenvattingskaart",
+    "value": "Samenvatting van AMT-informatie"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "Label voor AMT Trusted DNS Suffix",
+    "value": "AMT Trusted DNS Suffix (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "Label voor AMT-versie",
+    "value": "AMT-versie:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "Fout bij het ophalen van AMT-functies",
+    "value": "Fout bij het ophalen van AMT-functies"
+  },
+  "general.errorAMTVersion": {
+    "description": "Fout bij het ophalen van AMT-versie",
+    "value": "Fout bij het ophalen van AMT-versie"
+  },
+  "general.errorGeneralSettings": {
+    "description": "Fout bij het ophalen van algemene instellingen",
+    "value": "Fout bij het ophalen van algemene instellingen"
+  },
+  "general.failAMTFeatures": {
+    "description": "Fout bij het bijwerken van functies",
+    "value": "Kan AMT-functies niet bijwerken."
+  },
+  "general.httpsBootNotSupported": {
+    "description": "Tooltip voor HTTPS Boot niet ondersteund",
+    "value": "HTTPS Boot wordt niet ondersteund."
+  },
+  "general.httpsBootSupported": {
+    "description": "Tooltip voor HTTPS Boot ondersteund",
+    "value": "HTTPS Boot wordt ondersteund."
+  },
+  "general.httpsNetworkBoot": {
+    "description": "Label voor HTTPS Netwerkboot",
+    "value": "HTTPS Netwerkboot:"
+  },
+  "general.ideRedirection": {
+    "description": "Label voor IDE-omleiding",
+    "value": "IDE-omleiding:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "Label voor KVM",
+    "value": "Toetsenbord-video-muis (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "Tooltip voor KVM wordt niet ondersteund",
+    "value": "KVM wordt niet ondersteund."
+  },
+  "general.oneClickRecovery": {
+    "description": "Label voor herstel met één klik",
+    "value": "One Click Recovery (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "Tooltip voor herstel met één klik wordt niet ondersteund.",
+    "value": "One Click Recovery wordt niet ondersteund."
+  },
+  "general.pbaBootShort": {
+    "description": "Label voor PBA-opstart",
+    "value": "PBA-boot:"
+  },
+  "general.pbaNotSupported": {
+    "description": "Tooltip voor PBA wordt niet ondersteund.",
+    "value": "PBA wordt niet ondersteund."
+  },
+  "general.pbaSupported": {
+    "description": "Tooltip voor PBA ondersteund",
+    "value": "PBA wordt ondersteund."
+  },
+  "general.provisioningMode": {
+    "description": "Label voor provisioningmodus",
+    "value": "Provisioningmodus:"
+  },
+  "general.serialOverLan": {
+    "description": "Label voor SOL",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "Label voor toestemming van de gebruiker",
+    "value": "Toestemming van de gebruiker:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "Tooltip voor gebruikersinstemming niet configureerbaar",
+    "value": "Gebruikersinstemming niet configureerbaar in CCM"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Label voor Windows Recovery Boot",
+    "value": "Windows Recovery Boot:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Tooltip voor Windows Herstel wordt niet ondersteund",
+    "value": "Windows Recovery wordt niet ondersteund."
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Tooltip voor Windows Recovery ondersteund",
+    "value": "Windows Recovery wordt ondersteund."
+  },
+  "httpBoot.enforce": {
+    "value": "Dwing Secure Boot af."
+  },
+  "httpBoot.error": {
+    "value": "URL is vereist."
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "Voer de URL in."
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "Samenvatting van BIOS-informatie"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "BIOS-samenvatting"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "Fout bij het ophalen van aanvullende informatie",
+    "value": "Er is een fout opgetreden bij het ophalen van aanvullende informatie."
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "Fout bij het ophalen van hardware-informatie",
+    "value": "Fout bij het ophalen van HW-informatie"
+  },
+  "hwInfo.label.capacity": {
+    "value": "Capaciteit:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "Kloksnelheid (max.):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "Fabrikant:"
+  },
+  "hwInfo.label.model": {
+    "value": "Model:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "Publicatiedatum:"
+  },
+  "hwInfo.label.serial": {
+    "value": "Serienummer:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "Serienummer:"
+  },
+  "hwInfo.label.size": {
+    "value": "Omvang:"
+  },
+  "hwInfo.label.slot": {
+    "value": "Slot:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "Doel-OS:"
+  },
+  "hwInfo.label.type": {
+    "value": "Type:"
+  },
+  "hwInfo.label.version": {
+    "value": "Versie:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "Overzicht van geïnstalleerd fysiek geheugen"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "Geheugenoverzicht"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "Samenvatting van informatie over moederborden"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "Samenvatting moederbord"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "Samenvatting van opslaginformatie"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "Opslagsamenvatting"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "Samenvatting van CPU- en chassisinformatie"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "Systeemoverzicht"
+  },
+  "ieee.authProtocol": {
+    "description": "Tekst voor authenticatieprotocol",
+    "value": "Authenticatieprotocol"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "Fouttekst voor ieee-profielen",
+    "value": "Fout bij het maken/bijwerken van het ieee8021x-profiel"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "Fout bij het laden van IEEE8021x-configuraties",
+    "value": "Kan IEEE8021x-configuraties niet laden"
+  },
+  "ieee.PXETimeout": {
+    "description": "Tekst voor PXE-time-out",
+    "value": "PXE-time-out"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "Fouttekst voor PXE-time-out",
+    "value": "De waarde moet tussen {{pxeTimeoutMin}} (uitgeschakeld) en {{pxeTimeoutMax}} seconden (één dag) liggen."
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "IEEE 802.1x-paginatitel",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "Nieuwe titel van de IEEE8021x-configuratiepagina",
+    "value": "Nieuwe IEEE8021x-configuratie"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "IEEE8021x Configs paginatitel",
+    "value": "IEEE8021x-configuraties"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "Geen IEEE 8021x Configs-bericht",
+    "value": "Geen IEEE 8021x-configuraties."
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "Kolomkop Authenticatieprotocol",
+    "value": "Authenticatieprotocol"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "Kolomkop interface",
+    "value": "Interface"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "Naam kolomkop",
+    "value": "Naam"
+  },
+  "keyDisplayDialog.description": {
+    "description": "Beschrijving voor dialoogvenster met sleutelweergave",
+    "value": "De sleutel wordt slechts één keer weergegeven. Gebruik deze sleutel om het versleutelde profiel te decoderen voor gebruik met rpc-go."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "Label voor sleutel",
+    "value": "Sleutel"
+  },
+  "keyDisplayDialog.title": {
+    "description": "Titel voor dialoogvenster met belangrijke weergave",
+    "value": "Profielsleutel voor RPC-GO"
+  },
+  "kvm.attachDisk.label": {
+    "description": "Knoplabel om een schijfimage voor IDER toe te voegen.",
+    "value": "Diskimage (.iso) bijvoegen"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "Label voor de vervolgkeuzelijst voor het coderingstype in de KVM-werkbalk",
+    "value": "Kies het coderingstype."
+  },
+  "kvm.connect.button": {
+    "description": "Knoplabel om verbinding te maken met KVM-sessie",
+    "value": "KVM verbinden"
+  },
+  "kvm.connecting.label": {
+    "description": "Label dat wordt weergegeven wanneer KVM verbinding maakt",
+    "value": "KVM verbinden..."
+  },
+  "kvm.disconnect.button": {
+    "description": "Knoplabel om de verbinding met de KVM-sessie te verbreken",
+    "value": "KVM loskoppelen"
+  },
+  "kvm.enable": {
+    "description": "Bericht voor het inschakelen van KVM",
+    "value": "KVM is momenteel niet ingeschakeld op dit apparaat. Wilt u het inschakelen?"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "Fout bij toegang wanneer het verzoek om in te schakelen wordt geannuleerd.",
+    "value": "KVM is niet toegankelijk - verzoek om KVM in te schakelen is geannuleerd."
+  },
+  "kvm.errorAccessEnable": {
+    "description": "Fout bij toegang bij het aanvragen van activering.",
+    "value": "KVM is niet toegankelijk - KVM kan niet worden ingeschakeld."
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "Fout bij toegang wanneer een sessie actief is",
+    "value": "KVM is niet toegankelijk - er is een andere kvm-sessie bezig."
+  },
+  "kvm.errorDialog": {
+    "description": "Fout bij het weergeven van KVM-dialoogvenster",
+    "value": "Kan KVM-dialoogvenster niet weergeven"
+  },
+  "kvm.errorRetrieve": {
+    "description": "Fout bij het ophalen van de omleidingsstatus",
+    "value": "Fout bij het ophalen van de omleidingsstatus."
+  },
+  "kvm.errorRetrievePower": {
+    "description": "Fout bij het ophalen van de stroomstatus",
+    "value": "Fout bij het ophalen van de stroomstatus"
+  },
+  "kvm.fullscreen.button": {
+    "description": "Knoplabel om de modus Volledig scherm in KVM in of uit te schakelen.",
+    "value": "Volledig scherm"
+  },
+  "kvm.hotKeys.label": {
+    "description": "Label voor de vervolgkeuzelijst met sneltoetsen in de KVM-werkbalk",
+    "value": "Sneltoetsen"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "Plaatshoudertekst voor de vervolgkeuzelijst met sneltoetsen",
+    "value": "Selecteer sneltoets om te verzenden"
+  },
+  "kvm.hotKeys.send": {
+    "description": "Knoplabel om de geselecteerde sneltoets te verzenden",
+    "value": "Verzenden"
+  },
+  "kvm.stopIder.label": {
+    "description": "Knoplabel om de IDER-sessie te stoppen",
+    "value": "Stop IDER"
+  },
+  "kvm.title": {
+    "description": "Titel voor KVM",
+    "value": "Schakel KVM in."
+  },
+  "login.error": {
+    "description": "Fout bij het inloggen",
+    "value": "Foutmeldingen bij het inloggen"
+  },
+  "login.header.loginTitle": {
+    "description": "Titel van de inlogpagina",
+    "value": "Inloggen"
+  },
+  "mqttEvents.connect": {
+    "description": "Tekst van de knop 'Verbinden' voor MQTT",
+    "value": "Connect"
+  },
+  "mqttEvents.connected": {
+    "description": "Tooltip-tekst wanneer de MQTT-verbinding succesvol is",
+    "value": "Verbinding tot stand gebracht"
+  },
+  "mqttEvents.failed": {
+    "description": "Tooltip-tekst wanneer MQTT-verbinding mislukt",
+    "value": "Verbinding mislukt"
+  },
+  "mqttEvents.guid.label": {
+    "description": "Tabelkop voor MQTT-gebeurtenis-GUID",
+    "value": "Richtlijn"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "Tip voor het invoeren van de MQTT-hostnaam",
+    "value": "Voer een hostnaam in. De standaardwaarde is localhost."
+  },
+  "mqttEvents.hostname.label": {
+    "description": "Label voor invoer van MQTT-hostnaam",
+    "value": "Hostnaam"
+  },
+  "mqttEvents.message.label": {
+    "description": "Tabelkop voor MQTT-gebeurtenisbericht",
+    "value": "Bericht"
+  },
+  "mqttEvents.methods.label": {
+    "description": "Tabelkop voor MQTT-gebeurtenismethoden",
+    "value": "Methoden"
+  },
+  "mqttEvents.noData": {
+    "description": "Tekst die wordt weergegeven wanneer er geen MQTT-gebeurtenissen zijn.",
+    "value": "Geen evenementen"
+  },
+  "mqttEvents.path.hint": {
+    "description": "Tip voor MQTT-padinvoer",
+    "value": "Voer het MQTT-pad in. De standaardinstelling is /mqtt."
+  },
+  "mqttEvents.path.label": {
+    "description": "Label voor MQTT-padinvoer",
+    "value": "Pad"
+  },
+  "mqttEvents.port.hint": {
+    "description": "Tip voor MQTT-poortinvoer",
+    "value": "Voer de MQTT-poort in. De standaardwaarde is 9001."
+  },
+  "mqttEvents.port.label": {
+    "description": "Label voor MQTT-poortinvoer",
+    "value": "Port"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "Tabelkop voor MQTT-gebeurtenistijdstempel",
+    "value": "Tijdstempel"
+  },
+  "mqttEvents.title": {
+    "description": "Titel van de MQTT Events-kaart met dynamische telling",
+    "value": "MQTT-gebeurtenissen ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "Tabelkop voor MQTT-gebeurtenistype",
+    "value": "Type"
+  },
+  "network.errorNetworkSetting": {
+    "description": "Fout bij het ophalen van netwerkinstellingen",
+    "value": "Fout bij het ophalen van netwerkinstellingen"
+  },
+  "network.ieee.authProtocol": {
+    "description": "Label voor IEEE 8021x draadloos authenticatieprotocol",
+    "value": "Authenticatieprotocol"
+  },
+  "network.ieee.availableInS0": {
+    "description": "Label voor IEEE 8021x bekabeld beschikbaar in S0",
+    "value": "Beschikbaar in S0"
+  },
+  "network.ieee.domain": {
+    "description": "Label voor IEEE 8021x draadloos domein",
+    "value": "Domein"
+  },
+  "network.ieee.enabled": {
+    "description": "Label voor IEEE 8021x bekabeld ingeschakeld",
+    "value": "Ingeschakeld"
+  },
+  "network.ieee.pac": {
+    "description": "Label voor IEEE 8021x draadloze PAC",
+    "value": "Beveiligde toegangsgegevens"
+  },
+  "network.ieee.pacPassword": {
+    "description": "Label voor IEEE 8021x draadloos PAC-wachtwoord",
+    "value": "PAC-wachtwoord"
+  },
+  "network.ieee.password": {
+    "description": "Label voor IEEE 8021x draadloos wachtwoord",
+    "value": "Wachtwoord"
+  },
+  "network.ieee.psk": {
+    "description": "Label voor IEEE 8021x draadloze PSK",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "Label voor IEEE 8021x bekabelde PXE-time-out",
+    "value": "PXE-time-out"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "Label voor IEEE 8021x draadloze roaming-identiteit",
+    "value": "Roaming Identity"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "Label voor IEEE 8021x draadloze servercertificaatnaamvergelijking",
+    "value": "Vergelijking van servercertificaatnamen"
+  },
+  "network.ieee.serverCertName": {
+    "description": "Label voor IEEE 8021x draadloos servercertificaatnaam",
+    "value": "Naam van het servercertificaat"
+  },
+  "network.ieee.subtitle": {
+    "description": "Ondertitel voor de IEEE 8021x-netwerkinstellingenkaart",
+    "value": "Bekijk de IEEE 8021x-netwerkinstellingen voor dit apparaat."
+  },
+  "network.ieee.title": {
+    "description": "Titel van de IEEE 8021x-netwerkinstellingenkaart",
+    "value": "IEEE 8021x-netwerkinstellingen"
+  },
+  "network.ieee.username": {
+    "description": "Label voor IEEE 8021x draadloze gebruikersnaam",
+    "value": "Gebruikersnaam"
+  },
+  "network.wired.defaultGateway": {
+    "description": "Label voor de bekabelde standaardgateway",
+    "value": "Standaardgateway"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "Label voor status 'bekabeld DHCP ingeschakeld'.",
+    "value": "DHCP ingeschakeld"
+  },
+  "network.wired.ipAddress": {
+    "description": "Label voor het bekabelde IP-adres",
+    "value": "IP-adres"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "Label voor status 'bekabelde IP-synchronisatie ingeschakeld'.",
+    "value": "IP-synchronisatie ingeschakeld"
+  },
+  "network.wired.linkControl": {
+    "description": "Label voor bedrade linkcontrole",
+    "value": "Linkcontrole"
+  },
+  "network.wired.linkPolicy": {
+    "description": "Label voor beleid inzake bekabelde verbindingen",
+    "value": "Linkbeleid"
+  },
+  "network.wired.linkPreference": {
+    "description": "Label voor voorkeur voor bekabelde verbinding",
+    "value": "Voorkeur voor links"
+  },
+  "network.wired.linkStatus": {
+    "description": "Label voor status van bekabelde verbinding",
+    "value": "Linkstatus"
+  },
+  "network.wired.macAddress": {
+    "description": "Label voor bekabeld MAC-adres",
+    "value": "MAC-adres"
+  },
+  "network.wired.primaryDNS": {
+    "description": "Label voor de bekabelde primaire DNS",
+    "value": "Primaire DNS"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "Label voor de bekabelde secundaire DNS",
+    "value": "Secundaire DNS"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "Label voor bekabelde gedeelde dynamische IP",
+    "value": "Gedeelde dynamische IP"
+  },
+  "network.wired.sharedMAC": {
+    "description": "Label voor status van gedeelde MAC-aansluiting",
+    "value": "Gedeelde MAC"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "Label voor bekabeld gedeeld statisch IP-adres",
+    "value": "Gedeelde statische IP"
+  },
+  "network.wired.subnetMask": {
+    "description": "Label voor het bekabelde subnetmasker",
+    "value": "Subnetmasker"
+  },
+  "network.wired.subtitle": {
+    "description": "Ondertitel voor de kaart met instellingen voor het bekabelde netwerk",
+    "value": "Bekijk de instellingen voor het bekabelde netwerk voor dit apparaat."
+  },
+  "network.wired.title": {
+    "description": "Titel van de kaart met instellingen voor bekabelde netwerken",
+    "value": "Instellingen voor bekabelde netwerken"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "Label voor de draadloze standaardgateway",
+    "value": "Standaardgateway"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "Label voor status 'draadloos DHCP ingeschakeld'.",
+    "value": "DHCP ingeschakeld"
+  },
+  "network.wireless.ipAddress": {
+    "description": "Label voor het draadloze IP-adres",
+    "value": "IP-adres"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "Label voor status 'draadloze IP-synchronisatie ingeschakeld'.",
+    "value": "IP-synchronisatie ingeschakeld"
+  },
+  "network.wireless.linkControl": {
+    "description": "Label voor draadloze linkcontrole",
+    "value": "Linkcontrole"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "Label voor beleid inzake draadloze verbindingen",
+    "value": "Linkbeleid"
+  },
+  "network.wireless.linkPreference": {
+    "description": "Label voor voorkeur voor draadloze verbinding",
+    "value": "Voorkeur voor links"
+  },
+  "network.wireless.linkStatus": {
+    "description": "Label voor status van draadloze verbinding",
+    "value": "Linkstatus"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "Label voor draadloze lokale profielsynchronisatie",
+    "value": "Lokale profielsynchronisatie"
+  },
+  "network.wireless.macAddress": {
+    "description": "Label voor draadloos MAC-adres",
+    "value": "MAC-adres"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "Label voor de draadloze primaire DNS",
+    "value": "Primaire DNS"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "Label voor de draadloze secundaire DNS",
+    "value": "Secundaire DNS"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "Label voor draadloos gedeeld dynamisch IP-adres",
+    "value": "Gedeelde dynamische IP"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "Label voor draadloze gedeelde MAC-status",
+    "value": "Gedeelde MAC"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "Label voor draadloos gedeeld statisch IP-adres",
+    "value": "Gedeelde statische IP"
+  },
+  "network.wireless.subnetMask": {
+    "description": "Label voor het draadloze subnetmasker",
+    "value": "Subnetmasker"
+  },
+  "network.wireless.subtitle": {
+    "description": "Ondertitel voor de kaart met instellingen voor het draadloze netwerk",
+    "value": "Bekijk de instellingen voor draadloze netwerken voor dit apparaat."
+  },
+  "network.wireless.title": {
+    "description": "Titel van de kaart met instellingen voor het draadloze netwerk",
+    "value": "Instellingen voor draadloze netwerken"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "Netwerknaam: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Versleuteling: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authenticatie: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "Ondertitel van de kaart voor draadloze netwerken",
+    "value": "Bekijk draadloze netwerken voor dit apparaat"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "Titel van de kaart voor draadloze netwerken",
+    "value": "Draadloze netwerken"
+  },
+  "pba.label": {
+    "description": "Label voor het selectievakje om veilige opstart te activeren of deactiveren",
+    "value": "Secure Boot afdwingen"
+  },
+  "pba.required": {
+    "description": "Foutbericht wordt weergegeven wanneer het pad van het opstartbestand niet is geselecteerd",
+    "value": "Het pad van het opstartbestand is vereist"
+  },
+  "pba.title": {
+    "description": "Label voor het selecteren van het opstartbestandspad in het PBA dialoogvenster",
+    "value": "Bootbestand pad"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "Uit"
+  },
+  "powerOptions.on": {
+    "value": "Op"
+  },
+  "powerOptions.powerCycle": {
+    "value": "Power Cycle"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "Opstarten naar BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "Power Up naar HTTPS Boot (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "Power Up naar PXE"
+  },
+  "powerOptions.reset": {
+    "value": "Reset"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "Terugzetten naar BIOS"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "Terugzetten naar HTTPS Boot (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "Terugzetten naar IDE-R (cd-rom)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "Terugzetten naar PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "Slaap"
+  },
+  "powerOptions.softOff": {
+    "value": "Soft-Off"
+  },
+  "powerOptions.softReset": {
+    "value": "Soft Reset"
+  },
+  "powerUp.message": {
+    "description": "Dialoogbericht waarin de gebruiker wordt gevraagd het apparaat op te starten.",
+    "value": "Wilt u een power-up-commando naar het apparaat sturen?"
+  },
+  "powerUp.title": {
+    "description": "Dialoogvenster dat wordt weergegeven wanneer het apparaat is uitgeschakeld",
+    "value": "Uw apparaat is niet ingeschakeld."
+  },
+  "profileDetail.activationMode": {
+    "description": "Label voor selectie van activeringsmodus",
+    "value": "Activeringsmodus"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "Activeringsmodus wordt beheerd door de beheerder.",
+    "value": "Beheerdersmodus"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "Activeringsmodus wordt beheerd door de klant.",
+    "value": "Client Control Mode"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "Label voor AMT-functiesectie",
+    "value": "AMT-functies - Schakel de omleidingsfuncties van AMT in/uit."
+  },
+  "profileDetail.amtPassword": {
+    "description": "Label voor AMT-wachtwoordveld",
+    "value": "AMT-wachtwoord"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "Tip voor het AMT-wachtwoordveld",
+    "value": "Het AMT-wachtwoord wordt gebruikt voor externe toegang tot een apparaat. Het is ook vereist voor het opnieuw configureren/deactiveren van het apparaat."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "Label voor de sectie met bijbehorende draadloze profielen",
+    "value": "Bijbehorende draadloze profielen (in volgorde van prioriteit)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "Label voor CIRA-keuzerondje",
+    "value": "CIRA (Cloud)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "Tip voor CIRA-configuratie",
+    "value": "CIRA kan niet worden geconfigureerd voor een statisch netwerk als de AMT-versie lager is dan 11.6."
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "Label voor CIRA-configuratieveld",
+    "value": "CIRA-configuratie"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "Label voor het gedeelte over verbindingsconfiguratie",
+    "value": "Configuratie van de geleverde verbinding"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "Foutmelding voor vereiste verbindingsmodus",
+    "value": "De verbindingsmodus moet worden gespecificeerd."
+  },
+  "profileDetail.dhcp": {
+    "description": "Label voor DHCP-keuzerondje",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "Beschrijving voor directe verbindingsmodus",
+    "value": "In dit scenario fungeert AMT als server en luistert het naar inkomende verbindingen. De toolkit fungeert als client en maakt verbinding met het apparaat."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "Legenda voor het gedeelte over de directe verbindingsmodus",
+    "value": "Directe verbindingsmodus (te gebruiken wanneer apparaten rechtstreeks toegankelijk zijn via een lokaal netwerk)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "Tip voor het herschikken door middel van slepen en neerzetten",
+    "value": "Sleep om de volgorde te wijzigen."
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "Label voor selectievakje IP-synchronisatie",
+    "value": "IP-synchronisatie inschakelen"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "Label voor selectievakje OS WiFi-synchronisatie",
+    "value": "OS WiFi-profielsynchronisatie inschakelen"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "Label voor selectievakje UEFI WiFi delen",
+    "value": "UEFI/CSME Wi-Fi-profiel delen inschakelen"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "Label voor selectievakje voor het genereren van een willekeurig AMT-wachtwoord",
+    "value": "Genereer een willekeurig AMT-wachtwoord voor elk apparaat."
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "Label voor selectievakje voor het genereren van een willekeurig MEBX-wachtwoord",
+    "value": "Genereer een willekeurig MEBX-wachtwoord voor elk apparaat."
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "Tooltip voor de knop voor het genereren van een willekeurig wachtwoord",
+    "value": "Willekeurig wachtwoord genereren"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "Label voor IDE-omleidingsselectievakje",
+    "value": "IDE-omleiding"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "Beschrijving voor internetmodus",
+    "value": "In dit scenario fungeert AMT als client en maakt het verbinding met de toolkit die als server fungeert (vereist MPS)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "Legenda voor het gedeelte over de internetmodus",
+    "value": "Internetmodus (te gebruiken wanneer apparaten NIET rechtstreeks toegankelijk zijn via een lokaal netwerk)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "Tip voor IP-synchronisatie wanneer deze is uitgeschakeld",
+    "value": "Altijd ingeschakeld voor DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "Tip voor IP-synchronisatie wanneer deze is ingeschakeld",
+    "value": "Alleen van toepassing op de bekabelde interface. Vereist LMS om synchronisatie uit te voeren."
+  },
+  "profileDetail.kvm": {
+    "description": "Label voor KVM-selectievakje",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "Label voor MEBX-wachtwoordveld",
+    "value": "MEBX-wachtwoord"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "Tip voor het MEBX-wachtwoordveld",
+    "value": "Het MEBX-wachtwoord wordt gebruikt om de BIOS-toegang te beveiligen wanneer een gebruiker aanwezig is met een apparaat. Het kan alleen worden ingesteld wanneer de activeringsmodus is ingesteld op Admin Control Mode."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "Label voor het gedeelte over netwerkconfiguratie",
+    "value": "Netwerkconfiguratie"
+  },
+  "profileDetail.newTag": {
+    "description": "Plaatshouder voor nieuwe tag-invoer",
+    "value": "Nieuwe tag..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "Tekst wanneer er geen CIRA-configuraties beschikbaar zijn",
+    "value": "- Geen CIRA-configuraties gevonden"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "Tekst wanneer er geen configuratie is geselecteerd",
+    "value": "Geen configuratie geselecteerd."
+  },
+  "profileDetail.nonTls": {
+    "description": "Label voor niet-TLS-keuzerondje",
+    "value": "Niet-TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "Tip voor de optie zonder TLS",
+    "value": "Op AMT 16.1 en nieuwer biedt AMT zelfondertekende certificaten. Als u deze optie kiest, worden deze gebruikt in plaats van de zelfondertekende certificaten van de toolkit."
+  },
+  "profileDetail.noWifi": {
+    "description": "Bericht voor geen wifi-configuraties beschikbaar",
+    "value": "Geen wifi-configuraties gevonden"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "Tip voor OS WiFi-synchronisatie",
+    "value": "Alleen van toepassing op de draadloze interface."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "Hinttekst voor het veld voor de profielnaam",
+    "value": "Geef een naam op voor dit profiel. Dit wordt de naam van het profiel dat tijdens de activering op het apparaat wordt gebruikt."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "Plaatshoudertekst voor het veld voor de profielnaam",
+    "value": "Bijvoorbeeld: profiel1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "Tooltip voor knop voor weergeven/verbergen van wachtwoord",
+    "value": "Wachtwoord weergeven/verbergen"
+  },
+  "profileDetail.sol": {
+    "description": "Label voor SOL-selectievakje",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "Label voor STATIC-keuzerondje",
+    "value": "STATISCH"
+  },
+  "profileDetail.tags": {
+    "description": "Label voor tags-veld",
+    "value": "Tags"
+  },
+  "profileDetail.tagsHint": {
+    "description": "Tip voor het veld 'tags'",
+    "value": "U kunt tags invoeren om te helpen bij het organiseren en opvragen van apparaten naarmate uw lijst met beheerde apparaten groeit. Typ een tag en druk vervolgens op Enter of komma."
+  },
+  "profileDetail.tls": {
+    "description": "Label voor TLS-keuzerondje",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "Label voor TLS-modusveld",
+    "value": "TLS-modus"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "Tip voor het veld TLS-modus",
+    "value": "CIRA kan niet worden geconfigureerd als TLS is geconfigureerd."
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "Label voor het veld voor TLS-ondertekeningsautoriteit",
+    "value": "TLS-ondertekeningsinstantie"
+  },
+  "profileDetail.userConsent": {
+    "description": "Label voor veld voor toestemming van de gebruiker",
+    "value": "Toestemming van de gebruiker"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "Tip voor het veld voor toestemming van de gebruiker",
+    "value": "Bepaalt wanneer een gebruiker aanwezig moet zijn voor bepaalde AMT-functies."
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "Label voor het veld WiFi-profielen",
+    "value": "Wi-Fi-profielen"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "Tip voor het veld WiFi-profielen",
+    "value": "Wi-Fi werkt niet via een statisch netwerk."
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "Plaatshouder voor zoeken naar wifi-profielen",
+    "value": "Zoek naar wifi-profielen om toe te voegen"
+  },
+  "profileDetail.wired": {
+    "description": "Label voor sectie bekabeld netwerk",
+    "value": "Bekabeld netwerk"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "Label voor het configuratieveld voor bekabelde 802.1x",
+    "value": "Wired 802.1x-configuratie"
+  },
+  "profiles.deleteProfile": {
+    "description": "Bericht voor verwijderde profielen",
+    "value": "Profiel succesvol verwijderd."
+  },
+  "profiles.exportProfile": {
+    "description": "Bericht voor geëxporteerde profielen",
+    "value": "Profiel succesvol geëxporteerd."
+  },
+  "profiles.failDeleteProfie": {
+    "description": "Fout bij het verwijderen van profielen",
+    "value": "Profiel kan niet worden verwijderd."
+  },
+  "profiles.failExportProfile": {
+    "description": "Fout bij het exporteren van profielen",
+    "value": "Profiel kan niet worden geëxporteerd"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "Fout bij het laden van configuraties",
+    "value": "Kan configuraties niet laden"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "Nieuwe titel van de profielpagina",
+    "value": "Nieuw profiel"
+  },
+  "profiles.header.profileTitle": {
+    "description": "Titel van de profielenpagina",
+    "value": "Profielen"
+  },
+  "profiles.noData": {
+    "description": "Geen profielenbericht",
+    "value": "Geen profielen"
+  },
+  "profiles.table.activation": {
+    "description": "Kolomkop Activeringsmodus",
+    "value": "Activeringsmodus"
+  },
+  "profiles.table.connection": {
+    "description": "Kolomkop 'Verbindingsconfiguratie'",
+    "value": "Verbindingsconfiguratie"
+  },
+  "profiles.table.name": {
+    "description": "Naam kolomkop",
+    "value": "Naam"
+  },
+  "profiles.table.network": {
+    "description": "Kolomkop Netwerkconfiguratie",
+    "value": "Netwerkconfiguratie"
+  },
+  "randomPassword.learnMore": {
+    "description": "Bericht voor een ondersteuningslink",
+    "value": "Lees hier meer."
+  },
+  "randomPassword.message": {
+    "description": "Dialoogbericht waarin de gevolgen van het gebruik van willekeurige wachtwoorden worden uitgelegd.",
+    "value": "U hebt ervoor gekozen om voor elk apparaat een willekeurig wachtwoord te genereren. Als de opslag van de geheime provider (bijvoorbeeld Vault) wordt verwijderd of verloren gaat, kunnen deze wachtwoorden niet worden hersteld en moet het apparaat worden teruggezet naar de fabrieksinstellingen."
+  },
+  "randomPassword.title": {
+    "description": "Dialoogvenster voor waarschuwing over willekeurig wachtwoord",
+    "value": "Gebruik van willekeurig gegenereerde wachtwoorden"
+  },
+  "sol.connect": {
+    "description": "Knop voor verbinding met SOL",
+    "value": "Connect SOL"
+  },
+  "sol.disconnect": {
+    "description": "Knop voor het verbreken van de verbinding met SOL",
+    "value": "Verbreek de verbinding met SOL."
+  },
+  "sol.enable": {
+    "description": "Bericht voor het inschakelen van SOL",
+    "value": "SOL is momenteel niet ingeschakeld op dit apparaat. Wilt u het inschakelen?"
+  },
+  "sol.errorAccessCancel": {
+    "description": "Fout bij toegang tot SOL wanneer het verzoek om SOL in te schakelen wordt geannuleerd.",
+    "value": "SOL is niet toegankelijk - het verzoek om SOL in te schakelen is geannuleerd."
+  },
+  "sol.errorAccessEnable": {
+    "description": "Fout bij toegang tot SOL wanneer SOL niet kon worden ingeschakeld.",
+    "value": "SOL is niet toegankelijk - SOL kon niet worden ingeschakeld."
+  },
+  "sol.errorDiplay": {
+    "description": "Fout bij het weergeven van dialoogvenster",
+    "value": "Kan SOL-dialoogvenster niet weergeven"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "Fout bij het ophalen van de stroomstatus",
+    "value": "Fout bij het ophalen van de stroomstatus"
+  },
+  "sol.loading": {
+    "description": "Bericht voor laden naar SOL",
+    "value": "Verbinding maken met SOL..."
+  },
+  "sol.title": {
+    "description": "Titel voor SOL",
+    "value": "Schakel SOL in."
+  },
+  "staticCira.message": {
+    "description": "Dialoogvenster met waarschuwing over CIRA-verbindingsbeperkingen met statisch IP-adres",
+    "value": "U hebt ervoor gekozen om verbinding te maken met CIRA met een statische IP-netwerkconfiguratie. Apparaten met een versie van AMT lager dan 11.6 maken geen verbinding met een MPS met CIRA als ze een statische IP-netwerkconfiguratie hebben."
+  },
+  "staticCira.title": {
+    "description": "Dialoogvenster voor CIRA-waarschuwing statisch IP-adres",
+    "value": "CIRA en statische netwerkconfiguratie"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "Label voor het accepteren van niet-beveiligde verbindingen in TLS",
+    "value": "Accepteer niet-beveiligde verbindingen."
+  },
+  "tls.elementName.label": {
+    "description": "Label voor het veld met de naam van het TLS-element",
+    "value": "Elementnaam"
+  },
+  "tls.enabled.label": {
+    "description": "Label voor het TLS-veld",
+    "value": "Ingeschakeld"
+  },
+  "tls.errorSettings": {
+    "description": "Fout bij het ophalen van tls-instellingen",
+    "value": "Fout bij het ophalen van tls-instellingen"
+  },
+  "tls.instanceId.label": {
+    "description": "Label voor het veld TLS-instantie-ID",
+    "value": "Instance-ID"
+  },
+  "tls.mutualAuth.label": {
+    "description": "Label voor het TLS-veld voor wederzijdse authenticatie",
+    "value": "Wederzijdse authenticatie"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "Label dat aangeeft of niet-beveiligde verbindingen worden ondersteund in TLS.",
+    "value": "Niet-beveiligde verbindingen worden ondersteund"
+  },
+  "tls.title": {
+    "description": "Titel voor de TLS-instellingenkaart",
+    "value": "Transport Layer Security"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Optie voor het gebruik van een door Microsoft CA ondertekend certificaat",
+    "value": "Gebruik Microsoft CA Signed Cert (vereist Enterprise Assistant)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "Optie voor het gebruik van een zelfondertekend certificaat",
+    "value": "Gebruik zelfondertekende certificaten."
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "TLS-modus met zowel wederzijdse TLS- als niet-TLS-verbindingen",
+    "value": "Wederzijdse en niet-TLS-authenticatie"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "TLS-modus waarbij alleen wederzijdse authenticatie wordt gebruikt.",
+    "value": "Alleen wederzijdse TLS-authenticatie"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "TLS-modus met zowel serverauthenticatie als niet-TLS-verbindingen.",
+    "value": "Server- en niet-TLS-authenticatie"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "TLS-modus waarbij alleen serververificatie wordt gebruikt.",
+    "value": "Alleen serverauthenticatie"
+  },
+  "toolbar.errorMPS": {
+    "description": "Fout bij het ophalen van MPS-versies",
+    "value": "Fout bij het ophalen van MPS-versies"
+  },
+  "toolbar.errorRPS": {
+    "description": "Fout bij het ophalen van RPS-versies",
+    "value": "Fout bij het ophalen van RPS-versies"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "Hoofdtitel van de applicatie",
+    "value": "Voorbeeld UI"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "Hoofdtitel van de applicatie in de consolemodus",
+    "value": "Console"
+  },
+  "toolbar.header.hello": {
+    "description": "Hallo-bericht",
+    "value": "Hallo"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "Fout bij het annuleren van de toestemmingscode van de gebruiker.",
+    "value": "Fout bij het annuleren van de toestemmingscode van de gebruiker"
+  },
+  "userConsent.errorRequest": {
+    "description": "Fout bij het aanvragen van de toestemmingscode van de gebruiker",
+    "value": "Fout bij het opvragen van de toestemmingscode van de gebruiker - probeer het na 3 minuten opnieuw."
+  },
+  "userConsent.errorSendCode": {
+    "description": "Fout bij het verzenden van de toestemmingscode van de gebruiker",
+    "value": "Fout bij het verzenden van de toestemmingscode van de gebruiker"
+  },
+  "userConsentGeneral.all": {
+    "description": "Toestemming vereist voor alle acties.",
+    "value": "Alle"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "Toestemming alleen vereist voor KVM-acties.",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "Geen toestemming van de gebruiker vereist.",
+    "value": "Geen"
+  },
+  "userConsentModes.all": {
+    "description": "Toestemming vereist voor alle acties.",
+    "value": "Alle"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "Toestemming alleen vereist voor KVM-acties.",
+    "value": "Alleen KVM"
+  },
+  "userConsentModes.none": {
+    "description": "Geen toestemming van de gebruiker vereist.",
+    "value": "Geen"
+  },
+  "warning.iderActive": {
+    "description": "Wordt weergegeven wanneer de IDER-sessie actief is.",
+    "value": "IDER-sessie actief"
+  },
+  "warning.iderEnded": {
+    "description": "Wordt weergegeven wanneer de IDER-sessie is beëindigd.",
+    "value": "IDER-sessie beëindigd"
+  },
+  "warning.userConsentCancelled": {
+    "description": "Waarschuwing weergegeven wanneer de vorige gebruikersinstemmingcode werd geannuleerd",
+    "value": "{{featureName}} Kan niet worden geopend - eerder aangevraagde toestemmingscode van gebruiker is geannuleerd."
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "Fout bij het laden van configuraties",
+    "value": "Kan configuraties niet laden"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "Titel van de pagina 'Wireless'",
+    "value": "Draadloos"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "Kolomkop voor de authenticatiemethode van de draadloze configuratie",
+    "value": "Authenticatie"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "Kolomkop voor de versleutelingsmethode van de draadloze configuratie",
+    "value": "Versleuteling"
+  },
+  "wirelessConfigs.name": {
+    "description": "Kolomkop voor de naam van de draadloze configuratie",
+    "value": "Naam"
+  },
+  "wirelessConfigs.noData": {
+    "description": "Bericht dat wordt weergegeven wanneer er geen draadloze configuraties zijn.",
+    "value": "Geen draadloze configuraties"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "Kolomkop voor de SSID van de draadloze configuratie",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "Titel voor het gedeelte over draadloze configuraties",
+    "value": "Draadloze configuraties"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "Label voor het veld voor de authenticatiemethode",
+    "value": "Authenticatiemethode"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "Label voor het veld voor de versleutelingsmethode",
+    "value": "Versleutelingsmethode"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "Foutmelding bij het aanmaken/bijwerken van een draadloos profiel",
+    "value": "Fout bij het maken/bijwerken van draadloos profiel"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "Foutmelding voor verplichte velden",
+    "value": "Dit veld is verplicht en moet alfanumeriek zijn, zonder spaties of symbolen."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "Fout bij het opslaan van draadloze profielen",
+    "value": "Fout bij het opslaan van draadloos profiel"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "Label voor het 802.1x-configuratieveld",
+    "value": "802.1x-configuratie"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "Titel voor het aanmaken van een nieuwe draadloze configuratie",
+    "value": "Nieuwe draadloze configuratie"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "Succesbericht voor het aanmaken van een draadloos profiel",
+    "value": "Profiel succesvol aangemaakt."
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "Succesbericht voor het bijwerken van het draadloze profiel",
+    "value": "Profiel succesvol bijgewerkt."
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "Label voor het PSK-wachtwoordveld",
+    "value": "PSK-wachtwoordzin"
+  },
+  "wirelessDetail.saving": {
+    "description": "Bericht voor het opslaan van het profiel is succesvol",
+    "value": "Profiel succesvol opgeslagen"
+  },
+  "wirelessDetail.ssid": {
+    "description": "Label voor het SSID-veld",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "Label voor het veld voor de naam van het draadloze profiel",
+    "value": "Naam van het draadloze profiel"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "Tip voor het veld voor de naam van het draadloze profiel",
+    "value": "Geef een naam op voor het draadloze profiel."
+  },
+  "general.supported": {
+    "description": "Label voor ingeschakelde AMT-functies",
+    "value": "Ondersteund"
+  },
+  "general.notSupported": {
+    "description": "Label voor uitgeschakelde AMT-functies",
+    "value": "Niet ondersteund"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Opstarten tot PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Opstarten tot WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Reset naar PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Reset naar WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Label om uit te vouwen",
+    "value": "Uitvouwen"
+  },
+  "general.collapse": {
+    "description": "Label om in te vouwen",
+    "value": "Invouwen"
+  },
+  "proxy.label": {
+    "value": "Proxies",
+    "description": "Label voor de proxysectie"
+  },
+  "proxy.configs.label": {
+    "value": "Proxyconfiguraties",
+    "description": "Label voor het invoerveld van proxyconfiguraties"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Zoek naar proxyconfiguraties om toe te voegen",
+    "description": "Placeholdertekst voor het zoeken naar proxyconfiguraties"
+  },
+  "proxy.configs.hint": {
+    "value": "Proxies kunnen aan dit profiel worden toegewezen",
+    "description": "Hint die onder het invoerveld voor proxyconfiguraties wordt weergegeven"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Gekoppelde Proxyprofielen (in prioriteitsvolgorde)",
+    "description": "Label voor de lijst met gekoppelde proxyprofielen"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Slepen en neerzetten om de volgorde te wijzigen",
+    "description": "Hint voor het herschikken met slepen en neerzetten"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Proxyprofiel verwijderen",
+    "description": "Aria-label voor de knop om het proxyprofiel te verwijderen"
+  },
+  "profileDetail.noProxy": {
+    "description": "Bericht wanneer er geen proxyconfiguraties beschikbaar zijn",
+    "value": "Geen proxyconfiguraties gevonden"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Proxyconfiguraties",
+    "description": "Titel van de proxyconfiguraties"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Naam",
+    "description": "Kolomkop voor de naam van de proxyconfiguratie"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Proxyadres",
+    "description": "Kolomkop voor het proxyadres"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Adresformaat",
+    "description": "Kolomkop voor het adresformaat"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Poort",
+    "description": "Kolomkop voor de poort"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Netwerk-DNS-achtervoegsel",
+    "description": "Kolomkop voor het netwerk-DNS-achtervoegsel"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Nieuwe Proxyconfiguratie",
+    "description": "Paginatitel voor nieuwe proxyconfiguratie"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Proxyconfiguratie bewerken",
+    "description": "Paginatitel voor het bewerken van een proxyconfiguratie"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Proxyadres",
+    "description": "Label voor het veld proxyadres"
+  },
+  "proxyConfigs.name": {
+    "value": "Naam",
+    "description": "Label voor het naamveld van de proxyconfiguratie"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Voer de naam van de proxyconfiguratie in",
+    "description": "Placeholdertekst voor het naamveld van de proxyconfiguratie"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Voer het adres van de proxyserver in",
+    "description": "Placeholdertekst voor het proxyadresveld"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Adresformaat",
+    "description": "Label voor het veld adresformaat"
+  },
+  "proxyConfigs.port": {
+    "value": "Poort",
+    "description": "Label voor het poortveld"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Netwerk-DNS-achtervoegsel",
+    "description": "Label voor het DNS-achtervoegselveld"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "voorbeeld.com",
+    "description": "Placeholder voor het DNS-achtervoegselveld"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Poort is verplicht",
+    "description": "Validatiebericht: poort is verplicht"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Poort moet tussen 0 en 65535 liggen",
+    "description": "Validatiebericht voor het poortbereik"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Naam is verplicht",
+    "description": "Validatiebericht: naam is verplicht"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Netwerk-DNS-achtervoegsel is verplicht",
+    "description": "Validatiebericht: DNS-achtervoegsel is verplicht"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Het netwerk-DNS-achtervoegsel mag maximaal 192 tekens bevatten",
+    "description": "Validatiebericht voor de maximale lengte van het DNS-achtervoegsel"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Proxyconfiguratie succesvol aangemaakt",
+    "description": "Succesbericht voor het aanmaken van een proxyconfiguratie"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Proxyconfiguratie succesvol bijgewerkt",
+    "description": "Succesbericht voor het bijwerken van een proxyconfiguratie"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Proxyconfiguratie {{name}} succesvol verwijderd",
+    "description": "Succesbericht voor het verwijderen van een proxyconfiguratie"
+  },
+  "common.delete": {
+    "value": "Verwijderen",
+    "description": "Tekst voor de knop Verwijderen"
+  },
+  "common.update": {
+    "value": "BIJWERKEN",
+    "description": "Tekst voor de knop Bijwerken"
+  },
+  "common.noData": {
+    "value": "Geen gegevens beschikbaar",
+    "description": "Bericht wanneer er geen gegevens beschikbaar zijn"
+  }
+}

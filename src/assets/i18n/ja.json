@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "クラウドモードにおける「about」セクションのタイトル",
+    "value": "デバイス管理ツールキット サンプルWeb UIについて"
+  },
+  "about.consoleProvides": {
+    "description": "コンソール機能に関するメッセージ",
+    "value": "コンソールは以下の機能を提供します（その他にも多数あります）："
+  },
+  "about.description": {
+    "description": "コンソール向け説明文",
+    "value": "コンソールは、オンプレミス型ネットワーク上でIntel AMTを管理するための1対1のアウトオブバンド管理ツールです。デバイスを追加後、コンソールはローカルネットワーク経由でAMTと直接通信し、すべてのAMTデバイスへの接続と管理を迅速かつ容易に行う手段を提供します。"
+  },
+  "about.device": {
+    "description": "デバイスハードウェア向けメッセージ",
+    "value": "デバイスハードウェア情報とログ記録"
+  },
+  "about.doNotShowAgain": {
+    "description": "現時点では「About」セクションを表示しないチェックボックス",
+    "value": "再度表示しない"
+  },
+  "about.gotIt": {
+    "description": "「About」セクションを閉じるボタン",
+    "value": "承知いたしました"
+  },
+  "about.howTo": {
+    "description": "ツールキットの使用方法に関するメッセージ",
+    "value": "UIツールキットの使用方法"
+  },
+  "about.learn": {
+    "description": "ツールキットの使用方法を学ぶためのメッセージ",
+    "value": "デバイス管理ツールキットがデバイスを管理する方法について学ぶ"
+  },
+  "about.nonCloudMode": {
+    "description": "「About」セクションのタイトル",
+    "value": "コンソールについて"
+  },
+  "about.redirection": {
+    "description": "リダイレクト機能に関するメッセージ",
+    "value": "リモートキーボード、ビデオ、マウス（KVM）およびシリアルオーバーLAN（SOL）などのリダイレクト機能"
+  },
+  "about.referenceImplementation": {
+    "description": "クラウドモードでの実装デモに関するメッセージ",
+    "value": "このリファレンス実装は、デバイス管理ツールキットのAPIおよび一般的な機能性を示すものであり、本番環境での使用を意図したものではありません。"
+  },
+  "about.remotePower": {
+    "description": "リモート電源に関するメッセージ",
+    "value": "リモート電源操作"
+  },
+  "about.sampleUI": {
+    "description": "サンプル UI 向けメッセージ",
+    "value": "このサンプルUIは、以下の目的で使用されます："
+  },
+  "about.setUp": {
+    "description": "設定に関するメッセージ",
+    "value": "プロファイル、設定、ドメインの設定"
+  },
+  "about.understand": {
+    "description": "ツールキットの理解に関するメッセージ",
+    "value": "デバイス管理ツールキットにおけるREST APIの実装方法と、自社アプリケーションでの活用方法を理解してください。"
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "自己署名証明書を許可するメッセージ",
+    "value": "自己署名証明書を許可する"
+  },
+  "addDevice.chooseProfile": {
+    "description": "プロフィール選択フィールドのラベル",
+    "value": "プロフィールを選択してください"
+  },
+  "addDevice.description": {
+    "description": "デバイスのアクティベーション方法の説明",
+    "value": "デバイスをアクティベートするには、AMTデバイス上でコマンドを実行する必要があります。このダイアログは、実行するコマンドを生成するのに役立ちます。"
+  },
+  "addDevice.enterTags": {
+    "description": "タグ入力のヒント",
+    "value": "管理対象デバイスが増加するにつれ、デバイスの整理や検索に役立つタグを入力できます。タグを入力後、Enterキーまたはコンマを入力してください。"
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "無効なフレンドリー名に関するエラー",
+    "value": "フレンドリーネームは50文字以内でお願いいたします。"
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "必須のフレンドリーネームに関するエラー",
+    "value": "フレンドリーネームは必須です"
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "無効なホスト名に関するエラー",
+    "value": "ホスト名の形式が無効です"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "必須ホスト名に関するエラー",
+    "value": "ホスト名は必須です"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "自己署名証明書のチェックを無効化するチェックボックスのラベル",
+    "value": "自己署名証明書のチェックは行わない"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "新しいタグを追加するためのプレースホルダー",
+    "value": "新しいタグ..."
+  },
+  "addDevice.profileRequired": {
+    "description": "プロフィールが選択されていない場合の検証エラーメッセージ",
+    "value": "プロフィールは必須です"
+  },
+  "addDevice.showVerbose": {
+    "description": "詳細出力を有効にするチェックボックスラベル",
+    "value": "詳細表示"
+  },
+  "addDevice.title": {
+    "description": "新しいデバイスを追加するためのダイアログタイトル",
+    "value": "新しいデバイスを追加する"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "無効なユーザー名のためエラーが発生しました",
+    "value": "ユーザー名は5文字以上16文字以下である必要があります。"
+  },
+  "addDevice.userNameRequired": {
+    "description": "必須のユーザー名に関するエラー",
+    "value": "ユーザー名は必須です"
+  },
+  "addDevice.useTLS": {
+    "description": "TLS ご利用に関するご案内",
+    "value": "TLSを使用してください"
+  },
+  "alarm.errorAdding": {
+    "description": "エラーの追加について",
+    "value": "アラーム発生の追加に失敗しました"
+  },
+  "alarm.errorDelete": {
+    "description": "削除エラー",
+    "value": "アラーム発生の削除エラー"
+  },
+  "alarm.errorRetrieve": {
+    "description": "取得エラー",
+    "value": "アラーム発生の取得に失敗しました"
+  },
+  "alarmService.addNew": {
+    "description": "新しいアラームを追加するボタンテキスト",
+    "value": "新規追加"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "アラーム名入力のヒント",
+    "value": "このアラームに名前を付けてください。"
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "アラーム名入力用プレースホルダー",
+    "value": "アラーム名"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "アラーム削除ボタンのツールチップ",
+    "value": "アラーム発生の削除"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "完了時に削除するラベルのスライドトグル",
+    "value": "完了時に削除してください"
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "アラーム要素名とそのInstanceID",
+    "value": "{{elementName}} (InstanceID:{{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "時間選択ラベル",
+    "value": "時間"
+  },
+  "alarmService.interval": {
+    "description": "アラーム間隔のラベル",
+    "value": "間隔（分単位）"
+  },
+  "alarmService.intervalHint": {
+    "description": "間隔入力に関するヒント",
+    "value": "定期アラームの間隔（分単位）、単発アラームの場合は0"
+  },
+  "alarmService.intervalLabel": {
+    "description": "間隔入力用のラベル",
+    "value": "間隔"
+  },
+  "alarmService.intervalNone": {
+    "description": "間隔が定義されていない場合に表示されます",
+    "value": "なし"
+  },
+  "alarmService.minuteLabel": {
+    "description": "分単位選択ラベル",
+    "value": "議事録"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "開始時刻：{{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "完了時に削除：{{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "開始時刻入力用プレースホルダー",
+    "value": "日時を選択してください"
+  },
+  "alarmService.subtitle": {
+    "description": "アラーム発生回数を示すサブタイトル",
+    "value": "アラーム（{{count}} エントリ）"
+  },
+  "alarmService.title": {
+    "description": "アラームサービスカードの見出し",
+    "value": "アラームサービス"
+  },
+  "audit.errorLog": {
+    "description": "監査ログの取得エラー",
+    "value": "監査ログの取得に失敗しました"
+  },
+  "auditLog.description": {
+    "value": "説明"
+  },
+  "auditLog.download": {
+    "description": "監査ログのダウンロードボタン",
+    "value": "監査ログのダウンロード (.csv)"
+  },
+  "auditLog.event": {
+    "value": "イベント"
+  },
+  "auditLog.missing": {
+    "description": "監査ログが不足している場合のメッセージ",
+    "value": "監査ログなし"
+  },
+  "auditLog.time": {
+    "value": "時間"
+  },
+  "auditLog.title": {
+    "description": "監査ログのタイトル",
+    "value": "監査ログ"
+  },
+  "certificates.add.tooltip": {
+    "description": "証明書追加ボタンのツールチップ",
+    "value": "証明書を追加する"
+  },
+  "certificates.download.tooltip": {
+    "description": "証明書ダウンロードのツールチップ",
+    "value": "証明書をダウンロード"
+  },
+  "certificates.empty": {
+    "description": "空の証明書用テキスト",
+    "value": "証明書が見つかりませんでした"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "証明書追加時のエラー",
+    "value": "証明書追加エラー"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "証明書情報の取得エラー",
+    "value": "証明書情報の取得に失敗しました"
+  },
+  "certificates.list": {
+    "description": "証明書一覧のテキスト",
+    "value": "AMTデバイスに現在登録されている証明書のリスト"
+  },
+  "certificates.loading": {
+    "description": "証明書を読み込むためのテキスト",
+    "value": "証明書を読み込んでおります..."
+  },
+  "certificates.profileAssociations": {
+    "description": "証明書プロファイルの関連付けラベル",
+    "value": "プロファイル関連付け"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "証明書にプロファイルが関連付けられていない場合に表示されます",
+    "value": "関連性なし"
+  },
+  "certificates.title": {
+    "description": "証明書用タイトル",
+    "value": "証明書"
+  },
+  "certificates.type": {
+    "description": "証明書タイプフィールドのラベル",
+    "value": "タイプ"
+  },
+  "certificates.typeClient": {
+    "description": "クライアント証明書であることを示します",
+    "value": "クライアント"
+  },
+  "certificates.typeRoot": {
+    "description": "証明書がルート証明書であることを示します",
+    "value": "ルート"
+  },
+  "common.addNew": {
+    "description": "新規追加ボタン用テキスト",
+    "value": "新規追加"
+  },
+  "common.cancel": {
+    "description": "キャンセルボタンのテキスト",
+    "value": "キャンセル"
+  },
+  "common.cancelLower": {
+    "description": "キャンセルボタンのテキスト",
+    "value": "キャンセル"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "アップロードされていない証明書に関する警告",
+    "value": "証明書はまだアップロードされていません"
+  },
+  "common.cetificateUploaded": {
+    "description": "アップロードされた証明書に関するメッセージ",
+    "value": "証明書がアップロードされました"
+  },
+  "common.chooseFile": {
+    "description": "ファイル選択ボタン",
+    "value": "ファイルを選択"
+  },
+  "common.close": {
+    "description": "閉じるボタンのテキスト",
+    "value": "閉じる"
+  },
+  "common.completeProfile": {
+    "description": "完了したプロファイルに関するメッセージ",
+    "value": "プロファイルの保存が正常に完了しました"
+  },
+  "common.connected": {
+    "description": "デバイスまたはサービスが接続された状態",
+    "value": "関連項目"
+  },
+  "common.continue": {
+    "value": "続行"
+  },
+  "common.deleteConfiguration": {
+    "description": "削除された設定に関するメッセージ",
+    "value": "設定の削除が正常に完了しました"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "ログインサブタイトルのメッセージ",
+    "value": "デバイス管理ツールキット ポータル"
+  },
+  "common.disabled": {
+    "description": "ローカルプロファイル同期が無効化されている場合に使用されます",
+    "value": "無効化"
+  },
+  "common.disconnected": {
+    "description": "デバイスまたはサービスが切断された状態",
+    "value": "切断されました"
+  },
+  "common.dismiss": {
+    "description": "閉じるボタンラベル",
+    "value": "閉じる"
+  },
+  "common.done": {
+    "description": "完了ボタン用メッセージ",
+    "value": "完了"
+  },
+  "common.down": {
+    "value": "ダウン"
+  },
+  "common.enabled": {
+    "description": "ローカルプロファイル同期が有効な場合に使用されます",
+    "value": "有効"
+  },
+  "common.enterFriendlyName": {
+    "description": "フレンドリーネーム入力のヒント",
+    "value": "フレンドリーネームを入力してください"
+  },
+  "common.enterHostName": {
+    "description": "ホスト名入力のヒント",
+    "value": "ホスト名を入力してください"
+  },
+  "common.enterPassword": {
+    "description": "パスワード入力時のメッセージ",
+    "value": "パスワードを入力してください"
+  },
+  "common.enterUserName": {
+    "description": "ユーザー名入力のヒント",
+    "value": "ユーザー名を入力してください"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "設定削除時のエラー",
+    "value": "設定の削除ができません"
+  },
+  "common.friendlyName": {
+    "description": "フレンドリーネームのメッセージ",
+    "value": "フレンドリーネーム"
+  },
+  "common.hostName": {
+    "description": "ホスト名に関するメッセージ",
+    "value": "ホスト名"
+  },
+  "common.input": {
+    "description": "WSMANエクスプローラー向け入力",
+    "value": "入力"
+  },
+  "common.intelCopyright": {
+    "description": "インテルの著作権表示",
+    "value": "©{{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "ログインボタンへのメッセージ",
+    "value": "ログイン"
+  },
+  "common.logOut": {
+    "description": "ログアウト時のメッセージ",
+    "value": "ログアウト"
+  },
+  "common.no": {
+    "value": "いいえ"
+  },
+  "common.notApplicable": {
+    "description": "OSエントリが該当しない場合に表示されます",
+    "value": "該当なし"
+  },
+  "common.ok": {
+    "description": "OKボタンのテキスト",
+    "value": "了解いたしました。"
+  },
+  "common.other": {
+    "description": "オペレーティングシステムまたはメモリマップが「その他」または未指定の場合に使用されます。",
+    "value": "その他"
+  },
+  "common.output": {
+    "description": "WSMANエクスプローラー向け出力",
+    "value": "出力"
+  },
+  "common.password": {
+    "description": "パスワードに関するメッセージ",
+    "value": "パスワード"
+  },
+  "common.pin": {
+    "description": "ピンボタン用テキスト",
+    "value": "Pin"
+  },
+  "common.profileName": {
+    "description": "プロファイル名",
+    "value": "プロフィール名"
+  },
+  "common.remove": {
+    "description": "削除ボタンのテキスト",
+    "value": "削除"
+  },
+  "common.save": {
+    "description": "保存ボタンのテキスト",
+    "value": "保存"
+  },
+  "common.showHidePassword": {
+    "description": "パスワードの表示/非表示を示すツールチップ",
+    "value": "パスワードを表示 / 非表示"
+  },
+  "common.submit": {
+    "description": "送信ボタン",
+    "value": "提出"
+  },
+  "common.tags": {
+    "description": "タグ用メッセージ",
+    "value": "タグ"
+  },
+  "common.trustedRoot": {
+    "description": "信頼済みルートチェックボックスのテキスト",
+    "value": "信頼できるルート"
+  },
+  "common.unknown": {
+    "description": "不明または未指定の値に対するラベル",
+    "value": "不明"
+  },
+  "common.up": {
+    "value": "Up"
+  },
+  "common.userName": {
+    "description": "ユーザー名に関するメッセージ",
+    "value": "ユーザー名"
+  },
+  "common.wired": {
+    "description": "ワイヤレスボタン用テキスト",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "配線済みボタンのテキスト",
+    "value": "ワイヤレス"
+  },
+  "common.yes": {
+    "value": "はい"
+  },
+  "configDetail.commonNameHint": {
+    "description": "共通名フィールドのヒントテキスト",
+    "value": "証明書に含まれる共通名を入力してください。"
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "共通名フィールドのプレースホルダーテキスト",
+    "value": "Cert 共通名 (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "設定名フィールドのヒントテキスト",
+    "value": "このCIRA設定の名前を入力してください"
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "設定名フィールドのプレースホルダーテキスト",
+    "value": "例：ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "FQDN ラジオボタン ラベル",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "IPv4 ラジオボタン ラベル",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "MPSサーバーアドレスフィールドのヒントテキスト",
+    "value": "MPSインスタンスがホストされている場所のアドレスを入力してください"
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "MPSサーバーアドレスフィールドのプレースホルダーテキスト",
+    "value": "MPS アドレス"
+  },
+  "configDetail.portHint": {
+    "description": "ポートフィールドのヒントテキスト",
+    "value": "MPSインスタンスのCIRAポートを入力してください。デフォルトは4433です。"
+  },
+  "configDetail.portPlaceholder": {
+    "description": "ポートフィールド用プレースホルダーテキスト",
+    "value": "ポート"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "パスワード再発行トグルのテキスト",
+    "value": "保存時に新しいランダムパスワードを生成する"
+  },
+  "configDetail.usernameHint": {
+    "description": "ユーザー名フィールドのヒントテキスト",
+    "value": "MPSにアクセスするためのユーザー名を入力してください"
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "ユーザー名フィールドのプレースホルダーテキスト",
+    "value": "ユーザー名"
+  },
+  "configs.ciraNoData": {
+    "description": "CIRA設定に関するメッセージは含まれません",
+    "value": "CIRA設定は行わないでください"
+  },
+  "configs.delete": {
+    "description": "CIRA設定の削除に関するメッセージ",
+    "value": "CIRA設定の削除が正常に完了しました"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "CIRA設定の削除に関するエラー",
+    "value": "CIRA設定を削除できません"
+  },
+  "configs.failLoadConfigs": {
+    "description": "CIRA設定の読み込みエラー",
+    "value": "CIRA設定を読み込めません"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "新しいCIRA設定ページタイトル",
+    "value": "新しいCIRA設定"
+  },
+  "configs.header.ciraTitle": {
+    "description": "CIRA Configs タイトル",
+    "value": "CIRA設定"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "CIRA Configs タイトル（利用不可時）",
+    "value": "利用不可"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "最初のページ"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "ページあたりの項目数："
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "最終ページ"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "次ページ"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "前のページ"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} –{{endIndex}} {{length}}"
+  },
+  "configs.success": {
+    "description": "CIRA設定作成に関するメッセージ",
+    "value": "CIRA{{reqType}} の作成に成功しました"
+  },
+  "configs.table.ciraCert": {
+    "description": "Cert 共通名（Common Name）列見出し",
+    "value": "Cert 共通名 (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "MPS Server 列ヘッダー",
+    "value": "MPSサーバー"
+  },
+  "configs.table.ciraName": {
+    "description": "列ヘッダー名",
+    "value": "名称"
+  },
+  "configs.table.ciraPort": {
+    "description": "ポート列ヘッダー",
+    "value": "ポート"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "MPS ルート証明書列ヘッダー",
+    "value": "MPS ルート証明書"
+  },
+  "configs.table.ciraUsername": {
+    "description": "ユーザー名列ヘッダー",
+    "value": "ユーザー名"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "新しいデバイスを追加するためのツールチップ",
+    "value": "コンソールで管理可能な新しいデバイスを追加する"
+  },
+  "dashboard.addNewDevice": {
+    "description": "新しいデバイスを追加する手順",
+    "value": "1. 新しいデバイスを追加する"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "プロビジョニング証明書の追加手順",
+    "value": "プロビジョニング証明書の追加 [任意]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "CIRA設定を作成する手順",
+    "value": "CIRA設定を作成する"
+  },
+  "dashboard.createProfile": {
+    "description": "プロフィール作成の手順",
+    "value": "プロフィールを作成する"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "ワイヤレス設定を作成する手順",
+    "value": "ワイヤレス設定の作成 [オプション]"
+  },
+  "dashboard.deploy": {
+    "description": "ツールキットを展開してください",
+    "value": "デプロイ"
+  },
+  "dashboard.deployDescription": {
+    "description": "デプロイメントに関する説明",
+    "value": "本番環境への移行準備が整いましたか？デプロイメントガイド（近日公開予定）をご確認ください。"
+  },
+  "dashboard.devicesConnected": {
+    "description": "接続されているデバイスの数",
+    "value": "接続済みデバイス"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "切断されたデバイスの数",
+    "value": "デバイスが切断されました"
+  },
+  "dashboard.error": {
+    "description": "デバイス統計情報の取得エラー",
+    "value": "デバイス統計情報の取得中にエラーが発生しました"
+  },
+  "dashboard.getStarted": {
+    "description": "ツールキットの利用を開始する",
+    "value": "はじめましょう"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "はじめに",
+    "value": "ツールキットを初めてご利用ですか？まずは基本を学ぶためにドキュメントをご覧ください。"
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "ダッシュボードのタイトル",
+    "value": "ダッシュボード"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "デバイス管理の手順",
+    "value": "2. デバイスの管理"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "デバイスを再度管理する手順",
+    "value": "デバイスの管理"
+  },
+  "dashboard.totalDevices": {
+    "description": "総デバイス数",
+    "value": "総デバイス数"
+  },
+  "dashboard.understandSecurity": {
+    "description": "セキュリティ関連事項の理解",
+    "value": "セキュリティの理解"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "セキュリティに関する理解のための説明",
+    "value": "セキュリティ関連の内容についてご不明な点がございましたら、パスワード、Vault、証明書などについて詳しくご説明いたします。"
+  },
+  "dashboard.useDeviceActions": {
+    "description": "デバイス操作の使用方法に関するツールチップ",
+    "value": "デバイス操作を使用してデバイス一覧を制御する"
+  },
+  "delete.question": {
+    "description": "レコード削除に関する質問",
+    "value": "よろしいでしょうか？"
+  },
+  "delete.questionRecord": {
+    "description": "レコード削除に関する質問",
+    "value": "レコードを削除してもよろしいでしょうか？"
+  },
+  "deviceCertificate.commonName": {
+    "description": "共通名テキスト",
+    "value": "共通名称："
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "DNS 名に関するテキスト",
+    "value": "DNS 名称："
+  },
+  "deviceCertificate.issuerName": {
+    "description": "発行者名用のテキスト",
+    "value": "発行者名："
+  },
+  "deviceCertificate.notAfter": {
+    "description": "日付後のテキスト",
+    "value": "避けるべき表現："
+  },
+  "deviceCertificate.notBefore": {
+    "description": "日付より前のテキスト",
+    "value": "以下の条件を満たすまで実施しないでください："
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "公開鍵アルゴリズムに関する説明文",
+    "value": "公開鍵アルゴリズム："
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "公開鍵サイズに関するテキスト",
+    "value": "公開鍵サイズ："
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "シリアル名用テキスト",
+    "value": "シリアル番号："
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "SHA-1フィンガープリントのテキスト",
+    "value": "SHA-1フィンガープリント:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "SHA-256フィンガープリントのテキスト",
+    "value": "SHA-256フィンガープリント:"
+  },
+  "deviceCertificate.title": {
+    "description": "証明書詳細のタイトル",
+    "value": "証明書の詳細"
+  },
+  "deviceDetail.alarms": {
+    "description": "デバイスアラームのカテゴリ名",
+    "value": "アラーム"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "アラームの説明",
+    "value": "デバイスアラームの管理"
+  },
+  "deviceDetail.auditLog": {
+    "description": "監査ログのカテゴリ名",
+    "value": "監査ログ"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "監査ログの説明",
+    "value": "デバイスの監査ログを表示する"
+  },
+  "deviceDetail.certificates": {
+    "description": "証明書のカテゴリ名",
+    "value": "証明書"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "証明書に関する説明",
+    "value": "証明書の管理"
+  },
+  "deviceDetail.eventLog": {
+    "description": "イベントログのカテゴリ名",
+    "value": "イベントログ"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "イベントログの説明",
+    "value": "デバイスイベントを表示する"
+  },
+  "deviceDetail.explorer": {
+    "description": "エクスプローラーのカテゴリ名",
+    "value": "エクスプローラー"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "エクスプローラーの説明",
+    "value": "WSMANコマンドを送信する"
+  },
+  "deviceDetail.general": {
+    "description": "一般的なデバイス情報のカテゴリ名",
+    "value": "AMTに関する一般的な情報"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "一般的なデバイス情報に関する説明",
+    "value": "AMTのバージョンと機能"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "ハードウェア情報のカテゴリ名",
+    "value": "ハードウェア情報"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "ハードウェア情報に関する説明",
+    "value": "メモリ、CPUなど..."
+  },
+  "deviceDetail.kvm": {
+    "description": "KVMのカテゴリ名",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "KVMの説明",
+    "value": "デバイスをリモートで制御する"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "ネットワーク設定のカテゴリ名",
+    "value": "ネットワーク設定"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "ネットワーク設定の説明",
+    "value": "ネットワーク設定を表示"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "イベントログが存在しない場合のカテゴリ名",
+    "value": "イベントログなし"
+  },
+  "deviceDetail.sol": {
+    "description": "シリアルオーバーLANのカテゴリ名",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "SOLの説明",
+    "value": "シリアルオーバーLAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "TLS設定のカテゴリ名",
+    "value": "TLS設定"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "TLS設定の説明",
+    "value": "TLS設定を確認する"
+  },
+  "devices.actions.deactivate": {
+    "description": "デバイスの無効化/削除に関するツールチップ",
+    "value": "デバイスの無効化"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "クラウドモードでのデバイス無効化に関するツールチップ",
+    "value": "デバイスの無効化"
+  },
+  "devices.actions.edit": {
+    "description": "デバイスの編集に関するツールチップ",
+    "value": "編集デバイス"
+  },
+  "devices.actions.powerOff": {
+    "description": "デバイスの電源を切るためのツールチップ",
+    "value": "デバイスの電源を切ってください"
+  },
+  "devices.actions.powerUp": {
+    "description": "デバイスの電源を入れるためのツールチップ",
+    "value": "デバイスの電源を入れてください"
+  },
+  "devices.actions.remove": {
+    "description": "非クラウドモードでのデバイス削除に関するツールチップ",
+    "value": "デバイスを削除してください"
+  },
+  "devices.actions.reset": {
+    "description": "デバイスをリセットするためのツールチップ",
+    "value": "デバイスのリセット"
+  },
+  "devices.actions.restart": {
+    "description": "デバイス再起動のツールチップ",
+    "value": "デバイスを再起動してください"
+  },
+  "devices.addDevice": {
+    "description": "新規デバイス通知",
+    "value": "新しいデバイスを追加する"
+  },
+  "devices.bulk.deactivate": {
+    "description": "一括無効化アクションのツールチップ",
+    "value": "選択したデバイスを削除または無効化します"
+  },
+  "devices.bulk.powerOff": {
+    "description": "一括電源オフ操作のツールチップ",
+    "value": "選択したデバイスの電源を切る"
+  },
+  "devices.bulk.powerUp": {
+    "description": "一括パワーアップ操作のツールチップ",
+    "value": "選択したデバイスを起動する"
+  },
+  "devices.bulk.restart": {
+    "description": "一括再起動アクションのツールチップ",
+    "value": "選択したデバイスを再起動します"
+  },
+  "devices.deactivation": {
+    "description": "無効化に関するメッセージ",
+    "value": "無効化処理が正常に送信されました"
+  },
+  "devices.editDevice": {
+    "description": "デバイス編集時のツールチップ",
+    "value": "デバイスを編集する"
+  },
+  "devices.editTags": {
+    "description": "タグ編集用ボタンテキスト",
+    "value": "編集タグ"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "デバイスの無効化に関するエラー",
+    "value": "デバイスの無効化エラー"
+  },
+  "devices.errorDeactivation": {
+    "description": "無効化送信時のエラー",
+    "value": "無効化の送信に失敗しました"
+  },
+  "devices.errorInitializing": {
+    "description": "初期化エラー",
+    "value": "初期化中にエラーが発生しました"
+  },
+  "devices.errorLoadDevices": {
+    "description": "デバイスの読み込みエラー",
+    "value": "デバイスを読み込めませんでした"
+  },
+  "devices.errorLoadTags": {
+    "description": "タグの読み込みエラー",
+    "value": "エラーが発生しました。タグを読み込めません。"
+  },
+  "devices.errorPowerAction": {
+    "description": "パワーアクションに関するエラー",
+    "value": "パワーアクションの送信にエラーが発生しました"
+  },
+  "devices.failPowerAction": {
+    "description": "エラーが発生しました。電源操作に失敗しました。",
+    "value": "Powerアクションが失敗しました"
+  },
+  "devices.filter.searchHint": {
+    "description": "デバイス検索入力欄の下にあるヒントテキスト",
+    "value": "現在のページをフィルタリングするテキストを入力してください"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "デバイス検索ボックスのプレースホルダーテキスト",
+    "value": "フィルタリングデバイス...."
+  },
+  "devices.filter.tags": {
+    "description": "タグによるデバイスフィルタリング用ラベル",
+    "value": "フィルタータグ"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "証明書追加ダイアログの説明",
+    "value": "証明書はAMTに追加されます。"
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "証明書追加ダイアログのタイトル",
+    "value": "証明書を追加する"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "HTTPS ブート ダイアログの説明",
+    "value": "HTTPSネットワークブートは、暗号化されたHTTPSを使用してブートプロセスを保護し、ブートファイルを安全に保ちます。ワンクリックリカバリを開始すると、オペレーティングシステムを迅速に復元できます。"
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "HTTPS 起動ダイアログのタイトル",
+    "value": "HTTPS ネットワークブート (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "PBAブートダイアログの説明",
+    "value": "PBA（Pre-Boot Application）とは、システムにローカルにインストールされ、インテル・ワンクリック・リカバリー操作のブート・オプションとして選択できるリカバリーまたは診断ツールのことです。"
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "PBAブートダイアログのタイトル",
+    "value": "ローカルPBAブート（OCR）"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "デバイスページタイトル",
+    "value": "デバイス"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "デバイスの詳細設定オプションにアクセスするためのツールチップ",
+    "value": "その他の電源オプション..."
+  },
+  "devices.noData": {
+    "description": "デバイスが存在しない場合のメッセージ",
+    "value": "デバイスが見つかりません"
+  },
+  "devices.noDataFilter": {
+    "description": "検索結果が空の場合のメッセージ",
+    "value": "現在のフィルターに一致するデバイスはありません"
+  },
+  "devices.notification.error": {
+    "description": "操作が失敗した際に表示されるツールチップ",
+    "value": "アクションの送信に失敗しました"
+  },
+  "devices.notification.notReady": {
+    "description": "デバイスが準備完了していない場合に表示されるツールチップ",
+    "value": "パワーアクションは送信されましたが、デバイスは「準備完了」と応答しませんでした。"
+  },
+  "devices.notification.success": {
+    "description": "操作が成功した際に表示されるツールチップ",
+    "value": "アクションが正常に送信されました"
+  },
+  "devices.powerActionNotReady": {
+    "description": "送信済みで準備が整っていないアクションに関するエラー",
+    "value": "パワーアクションは送信されましたが、まだ準備が整っていません"
+  },
+  "devices.powerActionSent": {
+    "description": "パワーアクションに関するメッセージ",
+    "value": "パワーアクションの送信が正常に完了しました"
+  },
+  "devices.table.actions": {
+    "description": "アクション用テーブル列ヘッダー",
+    "value": "対応事項："
+  },
+  "devices.table.guid": {
+    "description": "GUID用テーブル列ヘッダー",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "ホスト名用のテーブル列ヘッダー",
+    "value": "ホスト名"
+  },
+  "devices.table.status": {
+    "description": "デバイス状態のテーブル列見出し",
+    "value": "ステータス"
+  },
+  "devices.table.tags": {
+    "description": "タグ用テーブル列ヘッダー",
+    "value": "タグ"
+  },
+  "deviceUserConsent.description": {
+    "description": "デバイスに関するユーザー同意の説明",
+    "value": "システムにアクセスするには、Intel AMTによって生成されたユーザー同意コードが必要となります。"
+  },
+  "deviceUserConsent.error": {
+    "description": "デバイスに関するユーザー同意のエラー",
+    "value": "この項目は必須であり、値は6桁の数字でなければなりません。"
+  },
+  "deviceUserConsent.hint": {
+    "description": "デバイスにおけるユーザー同意に関するヒント",
+    "value": "対象ホストモニターに表示されるユーザー同意コードをご提供ください。"
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "デバイスに関するユーザー同意のプレースホルダー",
+    "value": "ユーザー同意コード"
+  },
+  "deviceUserConsent.title": {
+    "description": "デバイスに関するユーザー同意のタイトル",
+    "value": "ユーザー同意"
+  },
+  "domainDetail.completeProfile": {
+    "description": "完了したドメインプロファイルに関するメッセージ",
+    "value": "ドメインプロファイルの保存に成功しました"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "削除されたドメインプロファイルに関するエラー",
+    "value": "ドメインプロファイルの作成/更新中にエラーが発生しました"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "一意キー違反のエラーメッセージ",
+    "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
+  },
+  "domainDetail.fqdn": {
+    "description": "FQDNフィールドに関するヒント",
+    "value": "プロビジョニング証明書に関連付けられた完全修飾ドメイン名（例：amtdomain.com）を入力してください。"
+  },
+  "domainDetail.nameHint": {
+    "description": "ドメイン名フィールドに関するヒント",
+    "value": "このドメインに名前を入力してください（例：AMTドメイン）"
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "ドメイン名のプレースホルダー",
+    "value": "ドメイン名"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "プロビジョニング証明書パスワードのプレースホルダー",
+    "value": "認証パスワードのプロビジョニング"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "プロビジョニング証明書パスワードに関するヒント",
+    "value": "プロビジョニング証明書のパスワード"
+  },
+  "domains.certExpired": {
+    "description": "有効期限切れの証明書に関するメッセージ",
+    "value": "{{count}} ドメイン証明書が期限切れとなっています "
+  },
+  "domains.certExpring": {
+    "description": "有効期限が切れる証明書に関するメッセージ",
+    "value": "{{count}} ドメイン証明書がまもなく期限切れとなります "
+  },
+  "domains.daysRemaining": {
+    "description": "残り日数に関するメッセージ",
+    "value": " 残り日数"
+  },
+  "domains.delteDomain": {
+    "description": "ドメイン削除に関するメッセージ",
+    "value": "ドメインの削除が正常に完了しました"
+  },
+  "domains.expired": {
+    "description": "期限切れドメインに関するメッセージ",
+    "value": "期限切れ"
+  },
+  "domains.failLoadDomain": {
+    "description": "ドメイン読み込みエラー",
+    "value": "ドメインを読み込めません"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "ドメイン削除時のエラー",
+    "value": "ドメインを削除できません"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "新規ドメインページタイトル",
+    "value": "新規ドメイン"
+  },
+  "domains.header.domainsTitle": {
+    "description": "ドメインページタイトル",
+    "value": "ドメイン"
+  },
+  "domains.monthsRemaining": {
+    "description": "残りの月に関するメッセージ",
+    "value": " 残り月数"
+  },
+  "domains.noData": {
+    "description": "ドメインに関するメッセージ",
+    "value": "ドメインは使用しないでください"
+  },
+  "domains.table.domainSuffix": {
+    "description": "ドメインサフィックスの列見出し",
+    "value": "ドメインサフィックス"
+  },
+  "domains.table.expirationDate": {
+    "description": "有効期限 列ヘッダー",
+    "value": "有効期限"
+  },
+  "domains.table.name": {
+    "description": "列ヘッダー名",
+    "value": "名称"
+  },
+  "domains.yearsRemaining": {
+    "description": "残りの年数に関するメッセージ",
+    "value": " 残存年数"
+  },
+  "editTags.description": {
+    "description": "編集タグの説明",
+    "value": "プロンプト内をクリックし、タグ名を入力後、Enterキーまたはコンマを入力してタグを追加してください。"
+  },
+  "editTags.header": {
+    "description": "編集タグ用ヘッダー",
+    "value": "タグ自体をクリックすることでタグを削除できます。"
+  },
+  "editTags.placeholder": {
+    "description": "編集タグ用プレースホルダー",
+    "value": "新しいタグ..."
+  },
+  "editTags.title": {
+    "description": "編集タグ用タイトル",
+    "value": "編集タグ"
+  },
+  "error.deviceNotResponding": {
+    "description": "デバイスのタイムアウト時に表示されるメッセージ",
+    "value": "デバイスが応答しません。接続設定を再度ご確認ください。"
+  },
+  "error.itemModified": {
+    "description": "アイテムが古い場合に表示されるメッセージ",
+    "value": "この項目は読み込み後に変更されました。再度読み込みを行ってください。"
+  },
+  "error.kvmConnection": {
+    "description": "KVM接続時に表示されるエラー",
+    "value": "KVMへの接続に失敗しました。デバイスごとに1セッションのみ許可されています。また、トークンが有効であり、アクセス権限があることをご確認ください。"
+  },
+  "error.sessionTimedOut": {
+    "description": "ユーザーセッションが期限切れになった際に表示されるメッセージ",
+    "value": "セッションがタイムアウトしました。再度ログインしてください"
+  },
+  "error.unableToSendCode": {
+    "description": "ユーザー同意コードの送信に失敗した際に表示されるエラー（バックエンドのエラーメッセージを含む）",
+    "value": "コードの送信ができません：{{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "ユーザー同意コードのキャンセルに失敗した際の汎用エラー",
+    "value": "エラーによるユーザー同意コードのキャンセル"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "リクエストされたユーザー同意コードのキャンセルに失敗した場合のエラー",
+    "value": "{{featureName}} アクセスできません - 要求されたユーザー同意コードのキャンセルに失敗しました"
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "リクエストされたユーザー同意コードのキャンセルが成功した場合のエラー",
+    "value": "{{featureName}} アクセスできません - 要求されたユーザー同意コードがキャンセルされました"
+  },
+  "error.userConsentCodeFailed": {
+    "description": "機能のユーザー同意コード要求が失敗した際に表示されるエラー",
+    "value": "{{featureName}} アクセスできません – ユーザー同意コードのリクエストに失敗しました"
+  },
+  "error.userConsentSendFailed": {
+    "description": "ユーザー同意コードの送信に失敗した際のエラー",
+    "value": "{{featureName}} アクセスできません - ユーザー同意コードの送信に失敗しました"
+  },
+  "error.userConsentUnsupported": {
+    "description": "サポートされていないユーザー同意コードの送信時にエラーが発生しました",
+    "value": "{{featureName}} アクセスできません - サポートされていないユーザー同意コード"
+  },
+  "event.errorLog": {
+    "description": "イベントログの取得エラー",
+    "value": "イベントログの取得中にエラーが発生しました"
+  },
+  "eventLog.download": {
+    "description": "イベントログのダウンロードボタン",
+    "value": "イベントログのダウンロード（.csv）"
+  },
+  "eventLog.entries": {
+    "description": "イベントログエントリのタイトル",
+    "value": "イベントログ（{{count}} 件のエントリ）"
+  },
+  "eventLog.eventType": {
+    "description": "イベントログタイプに関するメッセージ",
+    "value": "イベントタイプ"
+  },
+  "eventLog.severity": {
+    "description": "イベントログの重大度に関するメッセージ",
+    "value": "重要度"
+  },
+  "eventLog.source": {
+    "description": "イベントログソース向けメッセージ",
+    "value": "原文"
+  },
+  "explorer.errorResponse": {
+    "description": "エクスプローラー応答の取得エラー",
+    "value": "エクスプローラーの応答を取得できませんでした"
+  },
+  "explorer.placeHolder": {
+    "description": "WSMANエクスプローラー用プレースホルダー",
+    "value": "選択..."
+  },
+  "explorer.WSMANCall": {
+    "value": "WSMANコール"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "ドメイン追加ボタンテキスト",
+    "value": "ドメインの追加"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "ドメインを最初に追加するオプション",
+    "value": "ドメインを最初に追加してください（ACMアクティベーションに必須です）"
+  },
+  "exportDialog.domainSuffix": {
+    "description": "ドメインサフィックスフィールドのラベル",
+    "value": "ドメインサフィックス"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "ドメイン読み込み時のエラーメッセージヘッダー",
+    "value": "ドメインの読み込みに失敗しました："
+  },
+  "exportDialog.loadingDomains": {
+    "description": "ドメインの読み込みメッセージ",
+    "value": "ドメインを読み込み中..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "ドメインが設定されていない場合のメッセージ",
+    "value": "ドメインは設定されていません。以下のいずれかの方法でお手続きいただけます："
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "ドメイン選択が必須である旨のエラーメッセージ",
+    "value": "ドメインを選択してください"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "エクスポートダイアログのドメイン選択に関するサブタイトル",
+    "value": "選択されたドメインは、プロファイルに含められ、以下の用途で使用されます："
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "エクスポートダイアログのドメイン選択用タイトル",
+    "value": "ドメインサフィックスの選択"
+  },
+  "exportDialog.skipDomain": {
+    "description": "ドメインスキップ用ボタンテキスト",
+    "value": "ドメインはスキップしてください"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "既に有効化されている場合はドメインをスキップするオプション",
+    "value": "デバイスが既にアクティベート済みの場合は「ドメインをスキップ」をクリックしてください。"
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "スキップドメイン機能に関する指示",
+    "value": "デバイスが既にアクティベート済みの場合は「ドメインをスキップ」をクリックしてください。デバイスが未アクティベートの場合、ACMアクティベーション用のドメインを選択する必要があります。"
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "必須項目に関するエラーメッセージ",
+    "value": "このフィールドは必須項目であり、スペースや記号を含まない英数字で入力してください。"
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "必須の英数字および最大文字数フィールドのテキスト",
+    "value": "このフィールドは必須です。英数字のみ（スペース不可）で、{{profileNameMaxLen}} 文字以内にしてください。"
+  },
+  "fieldRequired.long": {
+    "description": "文字数制限のある必須入力欄のヒント",
+    "value": "この項目は必須であり、8文字以上32文字以内である必要があります。"
+  },
+  "fieldRequired.short": {
+    "description": "必須項目に関するヒント",
+    "value": "この項目は必須です"
+  },
+  "general.amtBuild": {
+    "description": "AMTビルド用ラベル",
+    "value": "AMTビルド："
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "AMT DHCP DNS サフィックス ラベル",
+    "value": "AMT DHCP DNS サフィックス："
+  },
+  "general.amtEnabledFeatures": {
+    "description": "AMT対応機能カードの見出し",
+    "value": "AMT有効化機能"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "AMT有効化機能カードの説明",
+    "value": "AMT有効化機能のステータス"
+  },
+  "general.AMTFeatures": {
+    "description": "更新された機能に関するメッセージ",
+    "value": "AMT機能更新"
+  },
+  "general.amtSKU": {
+    "description": "AMT SKU ラベル",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "AMTサマリーカード用タイトル",
+    "value": "AMT要約"
+  },
+  "general.amtSummaryDescription": {
+    "description": "AMTサマリーカードの説明",
+    "value": "AMT情報の要約"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "AMT Trusted DNS サフィックスのラベル",
+    "value": "AMT Trusted DNS サフィックス (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "AMT バージョン用ラベル",
+    "value": "AMTバージョン："
+  },
+  "general.errorAMTFeatures": {
+    "description": "AMT機能の取得中にエラーが発生しました",
+    "value": "AMT機能の取得に失敗しました"
+  },
+  "general.errorAMTVersion": {
+    "description": "AMTバージョンの取得エラー",
+    "value": "AMTバージョンの取得に失敗しました"
+  },
+  "general.errorGeneralSettings": {
+    "description": "一般設定の取得エラー",
+    "value": "一般設定の取得中にエラーが発生しました"
+  },
+  "general.failAMTFeatures": {
+    "description": "機能更新時のエラー",
+    "value": "AMT機能の更新に失敗しました"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "HTTPS ブートはサポートされていません",
+    "value": "HTTPS Boot はサポートされていません"
+  },
+  "general.httpsBootSupported": {
+    "description": "HTTPS Boot対応のツールチップ",
+    "value": "HTTPS Boot はサポートされています"
+  },
+  "general.httpsNetworkBoot": {
+    "description": "HTTPS ネットワークブートのラベル",
+    "value": "HTTPS ネットワークブート:"
+  },
+  "general.ideRedirection": {
+    "description": "IDEリダイレクト用ラベル",
+    "value": "IDE リダイレクト："
+  },
+  "general.keyboardVideoMouse": {
+    "description": "KVM ラベル",
+    "value": "キーボード・ビデオ・マウス（KVM）："
+  },
+  "general.kvmNotSupported": {
+    "description": "KVMのツールチップはサポートされていません",
+    "value": "KVMはサポートされていません"
+  },
+  "general.oneClickRecovery": {
+    "description": "ワンクリック復元用のラベル",
+    "value": "ワンクリック復元（OCR）："
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "ワンクリック復元機能のツールチップはサポートされていません",
+    "value": "ワンクリック復元はサポートされていません"
+  },
+  "general.pbaBootShort": {
+    "description": "PBAブート用ラベル",
+    "value": "PBA ブート:"
+  },
+  "general.pbaNotSupported": {
+    "description": "PBAのツールチップはサポートされていません",
+    "value": "PBAはサポートされていません"
+  },
+  "general.pbaSupported": {
+    "description": "PBA対応のツールチップ",
+    "value": "PBAはサポートされています"
+  },
+  "general.provisioningMode": {
+    "description": "プロビジョニングモードのラベル",
+    "value": "プロビジョニングモード："
+  },
+  "general.serialOverLan": {
+    "description": "SOL用ラベル",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "ユーザー同意ラベル",
+    "value": "ユーザー同意："
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "ユーザースーセントのツールチップは設定不可",
+    "value": "CCMではユーザー同意の設定はできません"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Windows リカバリ ブート ラベル",
+    "value": "Windows リカバリ ブート:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Windows 復元ツールのサポート対象外に関するツールチップ",
+    "value": "Windows Recovery はサポートされていません"
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Windows リカバリのツールチップがサポートされています",
+    "value": "Windows Recovery はサポートされています"
+  },
+  "httpBoot.enforce": {
+    "value": "セキュアブートの実施"
+  },
+  "httpBoot.error": {
+    "value": "URLは必須です"
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "URLを入力してください"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "BIOS情報の要約"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "BIOS概要"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "追加情報の取得エラー",
+    "value": "追加情報の取得中にエラーが発生しました"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "ハードウェア情報の取得エラー",
+    "value": "HW情報の取得に失敗しました"
+  },
+  "hwInfo.label.capacity": {
+    "value": "対応可能件数："
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "対応速度（最大）："
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "製造元："
+  },
+  "hwInfo.label.model": {
+    "value": "モデル："
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "リリース日："
+  },
+  "hwInfo.label.serial": {
+    "value": "シリアル番号："
+  },
+  "hwInfo.label.serialNo": {
+    "value": "シリアル番号："
+  },
+  "hwInfo.label.size": {
+    "value": "サイズ："
+  },
+  "hwInfo.label.slot": {
+    "value": "スロット："
+  },
+  "hwInfo.label.targetOS": {
+    "value": "対象OS："
+  },
+  "hwInfo.label.type": {
+    "value": "タイプ："
+  },
+  "hwInfo.label.version": {
+    "value": "バージョン："
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "インストール済み物理メモリの概要"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "メモリ概要"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "マザーボード情報の要約"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "マザーボード概要"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "ストレージ情報の概要"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "ストレージ概要"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "CPUおよびシャーシ情報の概要"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "システム概要"
+  },
+  "ieee.authProtocol": {
+    "description": "認証プロトコルに関するテキスト",
+    "value": "認証プロトコル"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "IEEEプロファイルのエラーテキスト",
+    "value": "IEEE 802.1X プロファイルの作成/更新中にエラーが発生しました"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "IEEE8021x設定の読み込みエラー",
+    "value": "IEEE8021x設定を読み込めません"
+  },
+  "ieee.PXETimeout": {
+    "description": "PXEタイムアウトに関するテキスト",
+    "value": "PXEタイムアウト"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "PXEタイムアウトのエラーメッセージ",
+    "value": "値は{{pxeTimeoutMin}} 秒（無効）から{{pxeTimeoutMax}} 秒（1日）の間でなければなりません。"
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "IEEE 802.1x ページタイトル",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "新しいIEEE8021x設定ページのタイトル",
+    "value": "新しい IEEE8021x 設定"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "IEEE8021x設定ページタイトル",
+    "value": "IEEE8021x設定"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "IEEE 8021x 設定メッセージは存在しません",
+    "value": "IEEE 8021x設定は行わない"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "認証プロトコル列ヘッダー",
+    "value": "認証プロトコル"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "インターフェースの列見出し",
+    "value": "インターフェース"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "列ヘッダー名",
+    "value": "名称"
+  },
+  "keyDisplayDialog.description": {
+    "description": "キー表示ダイアログの説明",
+    "value": "このキーは一度のみ表示されます。rpc-goで使用する暗号化されたプロファイルを復号化する際に、このキーをご利用ください。"
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "キーのラベル",
+    "value": "重要事項："
+  },
+  "keyDisplayDialog.title": {
+    "description": "主要表示ダイアログのタイトル",
+    "value": "RPC-GO プロファイルキー"
+  },
+  "kvm.attachDisk.label": {
+    "description": "IDER用ディスクイメージを添付するボタンラベル",
+    "value": "ディスクイメージ（.iso）を添付してください"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "KVMツールバーのエンコーディングタイプ選択ドロップダウンのラベル",
+    "value": "エンコーディングタイプを選択してください"
+  },
+  "kvm.connect.button": {
+    "description": "KVMセッションに接続するボタンラベル",
+    "value": "Connect KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "KVMが接続中の際に表示されるラベル",
+    "value": "KVMを接続中..."
+  },
+  "kvm.disconnect.button": {
+    "description": "KVMセッションから切断するボタンラベル",
+    "value": "KVMの切断"
+  },
+  "kvm.enable": {
+    "description": "KVMを有効にするためのメッセージ",
+    "value": "現在、このデバイスではKVMが有効になっておりません。有効にしますか？"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "有効化リクエストがキャンセルされた際のアクセスエラー",
+    "value": "KVMにアクセスできません - KVM有効化のリクエストはキャンセルされました"
+  },
+  "kvm.errorAccessEnable": {
+    "description": "アクセスエラーが発生しました（有効化リクエスト時）",
+    "value": "KVMにアクセスできません - KVMの有効化に失敗しました"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "セッションが進行中の際にアクセスを試みた場合のエラー",
+    "value": "KVMにアクセスできません - 別のKVMセッションが実行中です"
+  },
+  "kvm.errorDialog": {
+    "description": "KVMダイアログ表示に関するエラー",
+    "value": "KVMダイアログを表示できません"
+  },
+  "kvm.errorRetrieve": {
+    "description": "リダイレクトステータスの取得エラー",
+    "value": "リダイレクトステータスの取得に失敗しました"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "電源状態の取得エラー",
+    "value": "電源状態の取得に失敗しました"
+  },
+  "kvm.fullscreen.button": {
+    "description": "KVMにおける全画面モードの切り替えボタンラベル",
+    "value": "フルスクリーン"
+  },
+  "kvm.hotKeys.label": {
+    "description": "KVMツールバーのホットキードロップダウン用ラベル",
+    "value": "ホットキー"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "ホットキードロップダウン用のプレースホルダーテキスト",
+    "value": "送信用のホットキーを選択してください"
+  },
+  "kvm.hotKeys.send": {
+    "description": "選択したホットキーを送信するボタンラベル",
+    "value": "送信"
+  },
+  "kvm.stopIder.label": {
+    "description": "IDERセッションを停止するボタンラベル",
+    "value": "Stop IDER"
+  },
+  "kvm.title": {
+    "description": "KVMのタイトル",
+    "value": "KVMを有効にする"
+  },
+  "login.error": {
+    "description": "ログインに関するエラー",
+    "value": "エラーの記録"
+  },
+  "login.header.loginTitle": {
+    "description": "ログインページタイトル",
+    "value": "ログイン"
+  },
+  "mqttEvents.connect": {
+    "description": "MQTTの接続ボタンテキスト",
+    "value": "Connect"
+  },
+  "mqttEvents.connected": {
+    "description": "MQTT接続が成功した際のツールチップテキスト",
+    "value": "接続が確立されました"
+  },
+  "mqttEvents.failed": {
+    "description": "MQTT接続が失敗した際のツールチップテキスト",
+    "value": "接続に失敗しました"
+  },
+  "mqttEvents.guid.label": {
+    "description": "MQTTイベントGUIDの表見出し",
+    "value": "ガイドライン"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "MQTTホスト名入力に関するヒント",
+    "value": "ホスト名を入力してください。デフォルトは localhost です。"
+  },
+  "mqttEvents.hostname.label": {
+    "description": "MQTTホスト名入力用のラベル",
+    "value": "ホスト名"
+  },
+  "mqttEvents.message.label": {
+    "description": "MQTTイベントメッセージの表ヘッダー",
+    "value": "メッセージ"
+  },
+  "mqttEvents.methods.label": {
+    "description": "MQTTイベントメソッドの表見出し",
+    "value": "方法"
+  },
+  "mqttEvents.noData": {
+    "description": "MQTTイベントが存在しない場合に表示されるテキスト",
+    "value": "イベントなし"
+  },
+  "mqttEvents.path.hint": {
+    "description": "MQTTパス入力に関するヒント",
+    "value": "MQTTパスを入力してください。デフォルトは /mqtt です。"
+  },
+  "mqttEvents.path.label": {
+    "description": "MQTTパス入力用のラベル",
+    "value": "Path"
+  },
+  "mqttEvents.port.hint": {
+    "description": "MQTTポート入力に関するヒント",
+    "value": "MQTTポートを入力してください。デフォルトは9001です。"
+  },
+  "mqttEvents.port.label": {
+    "description": "MQTTポート入力のラベル",
+    "value": "ポート"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "MQTTイベントタイムスタンプの表ヘッダー",
+    "value": "タイムスタンプ"
+  },
+  "mqttEvents.title": {
+    "description": "動的カウント付きMQTTイベントカードの見出し",
+    "value": "MQTT イベント ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "MQTTイベントタイプの表見出し",
+    "value": "タイプ"
+  },
+  "network.errorNetworkSetting": {
+    "description": "ネットワーク設定の取得エラー",
+    "value": "ネットワーク設定の取得中にエラーが発生しました"
+  },
+  "network.ieee.authProtocol": {
+    "description": "IEEE 8021x 無線認証プロトコルのラベル",
+    "value": "認証プロトコル"
+  },
+  "network.ieee.availableInS0": {
+    "description": "S0で利用可能なIEEE 8021x有線接続のラベル",
+    "value": "利用可能：S0"
+  },
+  "network.ieee.domain": {
+    "description": "IEEE 8021x ワイヤレスドメインのラベル",
+    "value": "ドメイン"
+  },
+  "network.ieee.enabled": {
+    "description": "IEEE 8021x 有線接続対応のラベル",
+    "value": "有効"
+  },
+  "network.ieee.pac": {
+    "description": "IEEE 8021x ワイヤレス PAC のラベル",
+    "value": "保護されたアクセス認証情報"
+  },
+  "network.ieee.pacPassword": {
+    "description": "IEEE 8021x ワイヤレス PAC パスワードのラベル",
+    "value": "PACパスワード"
+  },
+  "network.ieee.password": {
+    "description": "IEEE 8021x ワイヤレスパスワードのラベル",
+    "value": "パスワード"
+  },
+  "network.ieee.psk": {
+    "description": "IEEE 8021x ワイヤレス PSK のラベル",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "IEEE 8021x 有線 PXE タイムアウトのラベル",
+    "value": "PXEタイムアウト"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "IEEE 8021x ワイヤレスローミング識別子用ラベル",
+    "value": "ローミングID"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "IEEE 8021x ワイヤレスサーバー証明書名比較のラベル",
+    "value": "サーバー証明書名比較"
+  },
+  "network.ieee.serverCertName": {
+    "description": "IEEE 8021x ワイヤレスサーバー証明書名用ラベル",
+    "value": "サーバー証明書名"
+  },
+  "network.ieee.subtitle": {
+    "description": "IEEE 8021x ネットワーク設定カードの説明文",
+    "value": "このデバイスのIEEE 8021xネットワーク設定を表示する"
+  },
+  "network.ieee.title": {
+    "description": "IEEE 8021x ネットワーク設定カードの見出し",
+    "value": "IEEE 8021x ネットワーク設定"
+  },
+  "network.ieee.username": {
+    "description": "IEEE 8021x ワイヤレスユーザー名用ラベル",
+    "value": "ユーザー名"
+  },
+  "network.wired.defaultGateway": {
+    "description": "有線デフォルトゲートウェイのラベル",
+    "value": "デフォルトゲートウェイ"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "有線DHCP有効状態のラベル",
+    "value": "DHCP 有効"
+  },
+  "network.wired.ipAddress": {
+    "description": "有線IPアドレスのラベル",
+    "value": "IPアドレス"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "有線IP同期有効状態のラベル",
+    "value": "IP同期が有効です"
+  },
+  "network.wired.linkControl": {
+    "description": "有線リンク制御のラベル",
+    "value": "リンク制御"
+  },
+  "network.wired.linkPolicy": {
+    "description": "有線リンクポリシーのラベル",
+    "value": "リンクポリシー"
+  },
+  "network.wired.linkPreference": {
+    "description": "有線接続の優先度を示すラベル",
+    "value": "リンクの優先順位"
+  },
+  "network.wired.linkStatus": {
+    "description": "有線リンク状態のラベル",
+    "value": "リンクステータス"
+  },
+  "network.wired.macAddress": {
+    "description": "有線MACアドレスのラベル",
+    "value": "MACアドレス"
+  },
+  "network.wired.primaryDNS": {
+    "description": "有線プライマリDNSのラベル",
+    "value": "プライマリDNS"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "有線接続のセカンダリDNS用ラベル",
+    "value": "セカンダリDNS"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "有線共有ダイナミックIPのラベル",
+    "value": "共有ダイナミックIP"
+  },
+  "network.wired.sharedMAC": {
+    "description": "有線共有MACステータスのラベル",
+    "value": "共有MAC"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "有線共有静的IPのラベル",
+    "value": "共有静的IP"
+  },
+  "network.wired.subnetMask": {
+    "description": "有線サブネットマスクのラベル",
+    "value": "サブネットマスク"
+  },
+  "network.wired.subtitle": {
+    "description": "有線ネットワーク設定カードの説明文",
+    "value": "このデバイスの有線ネットワーク設定を表示する"
+  },
+  "network.wired.title": {
+    "description": "有線ネットワーク設定カードの見出し",
+    "value": "有線ネットワーク設定"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "ワイヤレスデフォルトゲートウェイのラベル",
+    "value": "デフォルトゲートウェイ"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "ワイヤレスDHCP有効状態のラベル",
+    "value": "DHCP 有効"
+  },
+  "network.wireless.ipAddress": {
+    "description": "無線IPアドレスのラベル",
+    "value": "IPアドレス"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "ワイヤレスIP同期有効状態のラベル",
+    "value": "IP同期が有効です"
+  },
+  "network.wireless.linkControl": {
+    "description": "ワイヤレスリンク制御用ラベル",
+    "value": "リンク制御"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "無線リンクポリシーのラベル",
+    "value": "リンクポリシー"
+  },
+  "network.wireless.linkPreference": {
+    "description": "ワイヤレスリンク設定のラベル",
+    "value": "リンクの優先順位"
+  },
+  "network.wireless.linkStatus": {
+    "description": "ワイヤレスリンク状態のラベル",
+    "value": "リンクステータス"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "ワイヤレスローカルプロファイル同期のラベル",
+    "value": "ローカルプロファイルの同期"
+  },
+  "network.wireless.macAddress": {
+    "description": "無線MACアドレスのラベル",
+    "value": "MACアドレス"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "ワイヤレスプライマリDNSのラベル",
+    "value": "プライマリDNS"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "ワイヤレスセカンダリDNSのラベル",
+    "value": "セカンダリDNS"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "無線共有動的IPのラベル",
+    "value": "共有ダイナミックIP"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "ワイヤレス共有MACステータスのラベル",
+    "value": "共有MAC"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "無線共有静的IPのラベル",
+    "value": "共有静的IP"
+  },
+  "network.wireless.subnetMask": {
+    "description": "ワイヤレスサブネットマスクのラベル",
+    "value": "サブネットマスク"
+  },
+  "network.wireless.subtitle": {
+    "description": "ワイヤレスネットワーク設定カード用サブタイトル",
+    "value": "このデバイスのワイヤレスネットワーク設定を表示します"
+  },
+  "network.wireless.title": {
+    "description": "無線ネットワーク設定カードの見出し",
+    "value": "ワイヤレスネットワーク設定"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "ネットワーク名：{{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID：{{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "暗号化方式：{{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "認証方式：{{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "ワイヤレスネットワークカードの説明文",
+    "value": "このデバイスのワイヤレスネットワークを表示する"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "無線ネットワークカードの見出し",
+    "value": "ワイヤレスネットワーク"
+  },
+  "pba.label": {
+    "description": "セキュアブートの実施を有効または無効にするチェックボックスのラベル",
+    "value": "セキュアブートの強制"
+  },
+  "pba.required": {
+    "description": "ブートファイルのパスが選択されていない場合に表示されるエラーメッセージ",
+    "value": "ブートファイルのパスが必要"
+  },
+  "pba.title": {
+    "description": "PBAダイアログでブートファイルのパスを選択するためのラベル",
+    "value": "ブートファイルのパス"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "オフ"
+  },
+  "powerOptions.on": {
+    "value": "On"
+  },
+  "powerOptions.powerCycle": {
+    "value": "電源サイクル"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "BIOSへの電源投入"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "HTTPSブート（OCR）へのパワーアップ"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "PXEへの電源投入"
+  },
+  "powerOptions.reset": {
+    "value": "リセット"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "BIOSにリセットしてください"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "HTTPS ブート（OCR）にリセット"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "IDE-R（CD-ROM）にリセット"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "PXEにリセット"
+  },
+  "powerOptions.sleep": {
+    "value": "スリープ"
+  },
+  "powerOptions.softOff": {
+    "value": "ソフトオフ"
+  },
+  "powerOptions.softReset": {
+    "value": "ソフトリセット"
+  },
+  "powerUp.message": {
+    "description": "デバイスを起動するようユーザーに促すダイアログメッセージ",
+    "value": "デバイスにパワーアップコマンドを送信しますか？"
+  },
+  "powerUp.title": {
+    "description": "デバイスの電源がオフの時に表示されるダイアログタイトル",
+    "value": "お使いのデバイスは電源が入っておりません"
+  },
+  "profileDetail.activationMode": {
+    "description": "アクティベーションモード選択用ラベル",
+    "value": "アクティベーションモード"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "管理者によるアクティベーションモードの制御",
+    "value": "管理制御モード"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "クライアントによって制御されるアクティベーションモード",
+    "value": "クライアント制御モード"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "AMT機能セクションのラベル",
+    "value": "AMT機能 - AMTのリダイレクト機能の有効化/無効化"
+  },
+  "profileDetail.amtPassword": {
+    "description": "AMTパスワードフィールドのラベル",
+    "value": "AMTパスワード"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "AMTパスワードフィールドに関するヒント",
+    "value": "AMTパスワードは、デバイスへのリモートアクセスに使用されます。また、デバイスの再設定や無効化にも必要となります。"
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "関連するワイヤレスプロファイルセクションのラベル",
+    "value": "関連するワイヤレスプロファイル（優先順位順）"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "CIRA ラジオボタンのラベル",
+    "value": "CIRA（クラウド）"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "CIRA設定に関するヒント",
+    "value": "AMTのバージョンが11.6未満の場合、CIRAを静的ネットワーク用に設定することはできません。"
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "CIRA設定フィールドのラベル",
+    "value": "CIRA設定"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "接続設定セクションのラベル",
+    "value": "プロビジョニング済み接続設定"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "接続モードが必須である旨のエラーメッセージ",
+    "value": "接続モードは必ず指定してください。"
+  },
+  "profileDetail.dhcp": {
+    "description": "DHCP ラジオボタンのラベル",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "ダイレクトコネクトモードの説明",
+    "value": "このシナリオでは、AMTはサーバーとして動作し、着信接続を待機します。ツールキットはクライアントとして動作し、デバイスに接続します。"
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "ダイレクトコネクトモードセクションの凡例",
+    "value": "ダイレクト接続モード（デバイスがローカルネットワーク経由で直接アクセス可能な場合に使用）"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "ドラッグ＆ドロップによる並べ替えのヒント",
+    "value": "ドラッグ＆ドロップで並べ替え"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "IP同期チェックボックスのラベル",
+    "value": "IP同期を有効にする"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "OS WiFi同期チェックボックスのラベル",
+    "value": "OSのWiFiプロファイル同期を有効にする"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "UEFI WiFi共有チェックボックスのラベル",
+    "value": "UEFI/CSME Wi-Fi プロファイル共有を有効にする"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "ランダムなAMTパスワードを生成するチェックボックスのラベル",
+    "value": "各デバイスごとにランダムなAMTパスワードを生成する"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "ランダムなMEBXパスワードを生成するチェックボックスのラベル",
+    "value": "各デバイスごとにランダムなMEBXパスワードを生成する"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "ランダムパスワード生成ボタンのツールチップ",
+    "value": "ランダムパスワードを生成する"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "IDE リダイレクトチェックボックスのラベル",
+    "value": "IDE リダイレクト"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "インターネットモードの説明",
+    "value": "このシナリオでは、AMTがクライアントとして動作し、サーバーとして動作するツールキットに接続します（MPSが必要です）。"
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "インターネットモードセクションの凡例",
+    "value": "インターネットモード（デバイスがローカルネットワーク経由で直接アクセスできない場合に使用）"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "IP同期が無効化されている場合のヒント",
+    "value": "DHCPは常に有効です"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "IP同期が有効な場合のヒント",
+    "value": "有線インターフェースにのみ適用されます。同期処理にはLMSが必要です。"
+  },
+  "profileDetail.kvm": {
+    "description": "KVMチェックボックスのラベル",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "MEBXパスワードフィールドのラベル",
+    "value": "MEBX パスワード"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "MEBXパスワードフィールドに関するヒント",
+    "value": "MEBXパスワードは、ユーザーがデバイスを操作している際のBIOSアクセス保護に使用されます。アクティベーションモードが管理者制御モードに設定されている場合にのみ設定可能です。"
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "ネットワーク設定セクションのラベル",
+    "value": "ネットワーク構成"
+  },
+  "profileDetail.newTag": {
+    "description": "新しいタグ入力用のプレースホルダー",
+    "value": "新しいタグ..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "CIRA設定が利用できない場合のテキスト",
+    "value": "- CIRA設定が見つかりませんでした"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "設定が選択されていない場合のテキスト",
+    "value": "設定が選択されていません。"
+  },
+  "profileDetail.nonTls": {
+    "description": "非TLSラジオボタン用ラベル",
+    "value": "非TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "非TLSオプションに関するヒント",
+    "value": "AMT 16.1以降では、AMTが自己署名証明書を提供します。このオプションを選択すると、ツールキット提供の自己署名証明書ではなく、AMTの証明書が使用されます。"
+  },
+  "profileDetail.noWifi": {
+    "description": "WiFi設定が利用できない場合のメッセージ",
+    "value": "Wi-Fi設定が見つかりません"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "OS WiFi同期に関するヒント",
+    "value": "無線インターフェースにのみ適用されます。"
+  },
+  "profileDetail.profileNameHint": {
+    "description": "プロフィール名フィールドのヒントテキスト",
+    "value": "このプロファイルに名前を付けてください。これは、デバイス上でアクティベーション時に使用されるプロファイル名となります。"
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "プロフィール名フィールドのプレースホルダーテキスト",
+    "value": "例：profile1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "パスワード表示/非表示ボタンのツールチップ",
+    "value": "パスワードを表示 / 非表示"
+  },
+  "profileDetail.sol": {
+    "description": "SOLチェックボックスのラベル",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "STATIC ラジオボタンのラベル",
+    "value": "STATIC"
+  },
+  "profileDetail.tags": {
+    "description": "ラベル（タグ用フィールド）",
+    "value": "タグ"
+  },
+  "profileDetail.tagsHint": {
+    "description": "タグ欄のヒント",
+    "value": "管理対象デバイスが増加するにつれ、デバイスの整理や検索に役立つタグを入力できます。タグを入力後、Enterキーまたはコンマを入力してください。"
+  },
+  "profileDetail.tls": {
+    "description": "TLS ラジオボタンのラベル",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "TLSモードフィールドのラベル",
+    "value": "TLSモード"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "TLSモードフィールドに関するヒント",
+    "value": "TLSが設定されている場合、CIRAは設定できません。"
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "TLS署名権限フィールドのラベル",
+    "value": "TLS署名機関"
+  },
+  "profileDetail.userConsent": {
+    "description": "ユーザー同意フィールドのラベル",
+    "value": "ユーザー同意"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "ユーザー同意フィールドに関するヒント",
+    "value": "特定のAMT機能においてユーザーが常時待機する必要がある場合の制御"
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "WiFiプロファイルフィールドのラベル",
+    "value": "Wi-Fi プロファイル"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "WiFiプロファイルフィールドに関するヒント",
+    "value": "Wi-Fiは静的ネットワーク上では機能しません"
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "WiFiプロファイル検索用プレースホルダー",
+    "value": "Wi-Fi プロファイルを検索して追加する"
+  },
+  "profileDetail.wired": {
+    "description": "有線ネットワークセクションのラベル",
+    "value": "有線ネットワーク"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "有線802.1x設定フィールドのラベル",
+    "value": "有線 802.1x 設定"
+  },
+  "profiles.deleteProfile": {
+    "description": "削除されたプロフィールに関するメッセージ",
+    "value": "プロファイルの削除が正常に完了しました"
+  },
+  "profiles.exportProfile": {
+    "description": "エクスポートされたプロファイルに関するメッセージ",
+    "value": "プロファイルのエクスポートが正常に完了しました"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "プロファイル削除時のエラー",
+    "value": "プロファイルを削除できません"
+  },
+  "profiles.failExportProfile": {
+    "description": "プロファイルのエクスポートに関するエラー",
+    "value": "プロファイルのエクスポートができません"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "設定の読み込みエラー",
+    "value": "設定を読み込めません"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "新しいプロフィールページのタイトル",
+    "value": "新しいプロフィール"
+  },
+  "profiles.header.profileTitle": {
+    "description": "プロフィールページのタイトル",
+    "value": "プロフィール"
+  },
+  "profiles.noData": {
+    "description": "プロフィール情報がない場合",
+    "value": "プロフィールなし"
+  },
+  "profiles.table.activation": {
+    "description": "アクティベーションモードの列見出し",
+    "value": "アクティベーションモード"
+  },
+  "profiles.table.connection": {
+    "description": "接続設定の列見出し",
+    "value": "接続設定"
+  },
+  "profiles.table.name": {
+    "description": "列ヘッダー名",
+    "value": "名称"
+  },
+  "profiles.table.network": {
+    "description": "ネットワーク設定の列見出し",
+    "value": "ネットワーク設定"
+  },
+  "randomPassword.learnMore": {
+    "description": "サポートリンクのメッセージ",
+    "value": "詳細はこちらをご覧ください"
+  },
+  "randomPassword.message": {
+    "description": "ランダムパスワード使用時の影響を説明するダイアログメッセージ",
+    "value": "各デバイスごとにランダムなパスワードを生成するよう選択されました。秘密プロバイダーの保存場所（例：Vault）が削除または紛失した場合、これらのパスワードは復元不可能となり、工場出荷時設定へのリセットが必要となります。"
+  },
+  "randomPassword.title": {
+    "description": "ランダムパスワード警告ダイアログのタイトル",
+    "value": "ランダム生成パスワードの使用について"
+  },
+  "sol.connect": {
+    "description": "SOL接続用ボタン",
+    "value": "Connect SOL"
+  },
+  "sol.disconnect": {
+    "description": "SOL への接続を切断するボタン",
+    "value": "SOLの切断"
+  },
+  "sol.enable": {
+    "description": "SOLを有効化するメッセージ",
+    "value": "このデバイスでは現在SOLが有効になっておりません。有効にしますか？"
+  },
+  "sol.errorAccessCancel": {
+    "description": "SOLの有効化リクエストがキャンセルされた際にSOLにアクセスするエラー",
+    "value": "SOLにアクセスできません - SOL有効化のリクエストはキャンセルされました"
+  },
+  "sol.errorAccessEnable": {
+    "description": "SOLの有効化に失敗した場合のSOLアクセスエラー",
+    "value": "SOLにアクセスできません - SOLの有効化に失敗しました"
+  },
+  "sol.errorDiplay": {
+    "description": "ダイアログ表示エラー",
+    "value": "SOLダイアログを表示できません"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "電源状態の取得エラー",
+    "value": "電源状態の取得に失敗しました"
+  },
+  "sol.loading": {
+    "description": "SOLへの読み込み用メッセージ",
+    "value": "SOLの接続中..."
+  },
+  "sol.title": {
+    "description": "SOLのタイトル",
+    "value": "SOLを有効にする"
+  },
+  "staticCira.message": {
+    "description": "静的IPアドレスにおけるCIRA接続制限に関するダイアログメッセージの警告",
+    "value": "CIRAを使用した接続を選択され、静的IPネットワーク構成が設定されています。AMTバージョン11.6未満のデバイスは、静的IPネットワーク構成の場合、CIRA経由でMPSに接続できません。"
+  },
+  "staticCira.title": {
+    "description": "CIRA静的IP警告ダイアログのタイトル",
+    "value": "CIRA および静的ネットワーク構成"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "TLSにおける非セキュア接続の受け入れラベル",
+    "value": "非セキュア接続の許可"
+  },
+  "tls.elementName.label": {
+    "description": "TLS要素名フィールドのラベル",
+    "value": "要素名"
+  },
+  "tls.enabled.label": {
+    "description": "TLS有効化フィールドのラベル",
+    "value": "有効"
+  },
+  "tls.errorSettings": {
+    "description": "TLS設定の取得エラー",
+    "value": "TLS設定の取得に失敗しました"
+  },
+  "tls.instanceId.label": {
+    "description": "TLSインスタンスIDフィールドのラベル",
+    "value": "インスタンスID"
+  },
+  "tls.mutualAuth.label": {
+    "description": "TLS相互認証フィールドのラベル",
+    "value": "相互認証"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "TLSにおいて非セキュア接続がサポートされているか否かを示すラベル",
+    "value": "非セキュア接続のサポート"
+  },
+  "tls.title": {
+    "description": "TLS設定カードの見出し",
+    "value": "Transport Layer Security"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Microsoft CA署名付き証明書の使用オプション",
+    "value": "Microsoft CA署名付き証明書を使用（Enterprise Assistantが必要）"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "自己署名証明書の使用オプション",
+    "value": "自己署名証明書を使用する"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "相互TLS接続と非TLS接続の両方を含むTLSモード",
+    "value": "相互認証および非TLS認証"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "相互認証のみを使用したTLSモード",
+    "value": "相互TLS認証のみ"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "サーバー認証と非TLS接続の両方を含むTLSモード",
+    "value": "サーバーおよび非TLS認証"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "サーバー認証のみを使用したTLSモード",
+    "value": "サーバー認証のみ"
+  },
+  "toolbar.errorMPS": {
+    "description": "MPSバージョンの取得エラー",
+    "value": "MPSバージョンの取得に失敗しました"
+  },
+  "toolbar.errorRPS": {
+    "description": "RPSバージョンの取得エラー",
+    "value": "RPSバージョンの取得に失敗しました"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "アプリケーションのメインタイトル",
+    "value": "UIサンプル"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "コンソールモードにおけるアプリケーションのメインタイトル",
+    "value": "コンソール"
+  },
+  "toolbar.header.hello": {
+    "description": "ご挨拶",
+    "value": "こんにちは"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "ユーザー同意コードのキャンセルに関するエラー",
+    "value": "エラーによるユーザー同意コードのキャンセル"
+  },
+  "userConsent.errorRequest": {
+    "description": "ユーザー同意コードの要求に関するエラー",
+    "value": "ユーザー同意コードの取得に失敗しました - 3分後に再試行してください"
+  },
+  "userConsent.errorSendCode": {
+    "description": "ユーザー同意コード送信時のエラー",
+    "value": "ユーザー同意コードの送信に失敗しました"
+  },
+  "userConsentGeneral.all": {
+    "description": "すべての操作には同意が必要です",
+    "value": "すべて"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "KVM操作のみ同意が必要です",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "ユーザーの同意は不要です",
+    "value": "none"
+  },
+  "userConsentModes.all": {
+    "description": "すべての操作には同意が必要です",
+    "value": "すべて"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "KVM操作のみ同意が必要です",
+    "value": "KVMのみ"
+  },
+  "userConsentModes.none": {
+    "description": "ユーザーの同意は不要です",
+    "value": "なし"
+  },
+  "warning.iderActive": {
+    "description": "IDERセッションがアクティブな場合に表示されます",
+    "value": "IDERセッションがアクティブです"
+  },
+  "warning.iderEnded": {
+    "description": "IDERセッションが終了した際に表示されます",
+    "value": "IDERセッション終了"
+  },
+  "warning.userConsentCancelled": {
+    "description": "以前のユーザー同意コードがキャンセルされた際に表示される警告",
+    "value": "{{featureName}} アクセスできません - 以前リクエストされたユーザー同意コードはキャンセルされました"
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "設定の読み込みエラー",
+    "value": "設定を読み込めません"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "ワイヤレスページタイトル",
+    "value": "ワイヤレス"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "無線設定の認証方法に関する列見出し",
+    "value": "認証"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "無線設定の暗号化方式に関する列見出し",
+    "value": "暗号化"
+  },
+  "wirelessConfigs.name": {
+    "description": "無線設定名用の列見出し",
+    "value": "名称"
+  },
+  "wirelessConfigs.noData": {
+    "description": "ワイヤレス設定が存在しない場合に表示されるメッセージ",
+    "value": "ワイヤレス設定なし"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "無線設定のSSID用列ヘッダー",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "無線設定セクションのタイトル",
+    "value": "ワイヤレス設定"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "認証方法フィールドのラベル",
+    "value": "認証方法"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "暗号化方式フィールドのラベル",
+    "value": "暗号化方式"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "無線プロファイルの作成/更新に関するエラーメッセージ",
+    "value": "ワイヤレスプロファイルの作成/更新中にエラーが発生しました"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "必須項目に関するエラーメッセージ",
+    "value": "このフィールドは必須項目であり、スペースや記号を含まない英数字で入力してください。"
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "ワイヤレスプロファイルの保存に関するエラー",
+    "value": "ワイヤレスプロファイルの保存中にエラーが発生しました"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "802.1x設定フィールドのラベル",
+    "value": "802.1x 設定"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "新しい無線設定を作成するためのタイトル",
+    "value": "新しいワイヤレス設定"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "ワイヤレスプロファイル作成の成功メッセージ",
+    "value": "プロファイルの作成が正常に完了しました"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "ワイヤレスプロファイル更新完了時の成功メッセージ",
+    "value": "プロファイルの更新が正常に完了しました"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "PSKパスフレーズフィールドのラベル",
+    "value": "PSK パスフレーズ"
+  },
+  "wirelessDetail.saving": {
+    "description": "プロフィール保存が正常に完了しました",
+    "value": "プロファイルの保存が正常に完了しました"
+  },
+  "wirelessDetail.ssid": {
+    "description": "SSIDフィールドのラベル",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "ワイヤレスプロファイル名フィールドのラベル",
+    "value": "ワイヤレスプロファイル名"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "無線プロファイル名フィールドのヒント",
+    "value": "ワイヤレスプロファイルの名称をご提供ください"
+  },
+  "general.supported": {
+    "description": "有効なAMT機能のラベル",
+    "value": "サポートされています"
+  },
+  "general.notSupported": {
+    "description": "無効なAMT機能のラベル",
+    "value": "サポートされていません"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "PBAまで電源を入れる (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "WinReまで電源を入れる (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "PBAにリセット (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "WinReにリセット (OCR)"
+  },
+  "general.expand": {
+    "description": "展開のラベル",
+    "value": "展開"
+  },
+  "general.collapse": {
+    "description": "折りたたみのラベル",
+    "value": "折りたたむ"
+  },
+  "proxy.label": {
+    "value": "プロキシ",
+    "description": "プロキシセクションのラベル"
+  },
+  "proxy.configs.label": {
+    "value": "プロキシ設定",
+    "description": "プロキシ設定入力フィールドのラベル"
+  },
+  "proxy.configs.placeholder": {
+    "value": "追加するプロキシ設定を検索",
+    "description": "プロキシ設定を検索するためのプレースホルダー"
+  },
+  "proxy.configs.hint": {
+    "value": "このプロファイルにプロキシを割り当てることができます",
+    "description": "プロキシ設定入力フィールドの下に表示されるヒント"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "関連プロキシプロファイル（優先順）",
+    "description": "関連プロキシプロファイルリストのラベル"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "ドラッグ＆ドロップで順序を変更",
+    "description": "ドラッグアンドドロップによる並び替えのヒント"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "プロキシプロファイルを削除",
+    "description": "プロキシプロファイル削除ボタンのAriaラベル"
+  },
+  "profileDetail.noProxy": {
+    "description": "利用可能なプロキシ設定がない場合のメッセージ",
+    "value": "プロキシ設定が見つかりません"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "プロキシ設定",
+    "description": "プロキシ設定のタイトル"
+  },
+  "proxyConfigs.header.name": {
+    "value": "名前",
+    "description": "プロキシ設定名の列ヘッダー"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "プロキシアドレス",
+    "description": "プロキシアドレスの列ヘッダー"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "アドレス形式",
+    "description": "アドレス形式の列ヘッダー"
+  },
+  "proxyConfigs.header.port": {
+    "value": "ポート",
+    "description": "ポートの列ヘッダー"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "ネットワークDNSサフィックス",
+    "description": "ネットワークDNSサフィックスの列ヘッダー"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "新しいプロキシ設定",
+    "description": "新しいプロキシ設定ページのタイトル"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "プロキシ設定を編集",
+    "description": "プロキシ設定編集ページのタイトル"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "プロキシアドレス",
+    "description": "プロキシアドレスフィールドのラベル"
+  },
+  "proxyConfigs.name": {
+    "value": "名前",
+    "description": "プロキシ設定名フィールドのラベル"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "プロキシ設定名を入力",
+    "description": "プロキシ設定名フィールドのプレースホルダー"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "プロキシサーバーのアドレスを入力",
+    "description": "プロキシアドレスフィールドのプレースホルダー"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "アドレス形式",
+    "description": "アドレス形式フィールドのラベル"
+  },
+  "proxyConfigs.port": {
+    "value": "ポート",
+    "description": "ポートフィールドのラベル"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "ネットワークDNSサフィックス",
+    "description": "DNSサフィックスフィールドのラベル"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "DNSサフィックスフィールドのプレースホルダー"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "ポートは必須です",
+    "description": "ポート必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "ポートは0から65535の間である必要があります",
+    "description": "ポート範囲のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "名前は必須です",
+    "description": "名前必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "ネットワークDNSサフィックスは必須です",
+    "description": "DNSサフィックス必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "ネットワークDNSサフィックスは192文字以内である必要があります",
+    "description": "DNSサフィックス最大長のバリデーションメッセージ"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "プロキシ設定が正常に作成されました",
+    "description": "プロキシ設定作成成功メッセージ"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "プロキシ設定が正常に更新されました",
+    "description": "プロキシ設定更新成功メッセージ"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "プロキシ設定 {{name}} が正常に削除されました",
+    "description": "プロキシ設定削除成功メッセージ"
+  },
+  "common.delete": {
+    "value": "削除",
+    "description": "削除ボタンのテキスト"
+  },
+  "common.update": {
+    "value": "更新",
+    "description": "更新ボタンのテキスト"
+  },
+  "common.noData": {
+    "value": "利用可能なデータがありません",
+    "description": "データが利用できない場合のメッセージ"
+  }
+}

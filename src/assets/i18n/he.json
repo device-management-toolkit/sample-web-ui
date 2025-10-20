@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "כותרת לסעיף אודות במצב ענן",
+    "value": "אודות ממשק המשתמש לניהול כלים לניהול המכשירים מדגם אינטרנט"
+  },
+  "about.consoleProvides": {
+    "description": "הודעה לתכונות קונסולה",
+    "value": "המסוף מספק את התכונות הבאות ועוד:"
+  },
+  "about.description": {
+    "description": "תיאור לקונסולה",
+    "value": "המסוף הוא כלי לניהול 1: 1 מחוץ ללהקה לניהול אינטל AMT ברשתות בסגנון מקומי. "
+  },
+  "about.device": {
+    "description": "הודעה לחומרת מכשירים",
+    "value": "מידע על חומרת מכשירים ורישום"
+  },
+  "about.doNotShowAgain": {
+    "description": "תיבת הסימון לעת עתה מציגה את החלק אודות",
+    "value": "אל תראה שוב"
+  },
+  "about.gotIt": {
+    "description": "כפתור לסגירת החלק אודות",
+    "value": "קיבלתי את זה"
+  },
+  "about.howTo": {
+    "description": "הודעה כיצד להשתמש בערכת הכלים",
+    "value": "כיצד להשתמש בערכת הכלים של ממשק המשתמש"
+  },
+  "about.learn": {
+    "description": "הודעה ללימוד להשתמש בערכת הכלים",
+    "value": "למד כיצד ערכת הכלים לניהול המכשירים מנהלת מכשירים"
+  },
+  "about.nonCloudMode": {
+    "description": "כותרת לסעיף אודות",
+    "value": "על קונסולה"
+  },
+  "about.redirection": {
+    "description": "הודעה לתכונות הפניה מחדש",
+    "value": "תכונות ניתוק מחדש כמו מקלדת מרוחקת, וידאו, עכבר (KVM) וסדרתי-אובר-לאן (סול)"
+  },
+  "about.referenceImplementation": {
+    "description": "הודעה להפגנת יישום במצב ענן",
+    "value": "יישום התייחסות זה מדגים את ממשקי ה- API והפונקציונליות הכללית של ערכת הכלים לניהול המכשירים ואינו נועד לשימוש בייצור."
+  },
+  "about.remotePower": {
+    "description": "הודעה לכוח מרחוק",
+    "value": "פעולות חשמל מרחוק"
+  },
+  "about.sampleUI": {
+    "description": "הודעה לממשק המשתמש לדוגמא",
+    "value": "ממשק משתמש מדגם זה נועד להלן:"
+  },
+  "about.setUp": {
+    "description": "הודעה להגדרה",
+    "value": "הגדר פרופילים, תצורה ודומיינים"
+  },
+  "about.understand": {
+    "description": "הודעה להבנת ערכת הכלים",
+    "value": "הבן את יישום ערכת הכלים לניהול מכשירים של ממשקי ה- API של ה- REST וכיצד ניתן להשתמש בהם ביישום שלך"
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "הודעה לאפשרות אישורים עם חתימה עצמית",
+    "value": "אפשר אישורים עם חתימה עצמית"
+  },
+  "addDevice.chooseProfile": {
+    "description": "תווית לפרופיל שדה בחר",
+    "value": "בחר פרופיל"
+  },
+  "addDevice.description": {
+    "description": "תיאור מסביר כיצד להפעיל מכשיר",
+    "value": "על מנת להפעיל מכשיר, תצטרך לבצע פקודה במכשיר AMT. "
+  },
+  "addDevice.enterTags": {
+    "description": "רמז להיכנס לתגיות",
+    "value": "אתה יכול להזין תגיות כדי לעזור בארגון ושאילתות מכשירי כאשר רשימת המכשירים המנוהלים שלך צומחת. "
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "שגיאה בשמות ידידותיים לא חוקיים",
+    "value": "שם ידידותי לא יכול להיות יותר מ- 50 תווים"
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "שגיאה לשמות ידידותיים נדרשים",
+    "value": "נדרש שם ידידותי"
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "שגיאה עבור שמות מארח לא חוקיים",
+    "value": "פורמט שם מארח לא חוקי"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "שגיאה עבור שמות מארח נדרשים",
+    "value": "שם מארח נדרש"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "תווית תיבת סימון כדי להשבית בדיקת אישור חתימה עצמית",
+    "value": "אין בדיקת אישורים עם חתימה עצמית"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "מציין מקום להוספת תג חדש",
+    "value": "תג חדש ..."
+  },
+  "addDevice.profileRequired": {
+    "description": "הודעת שגיאת אימות כאשר הפרופיל לא נבחר",
+    "value": "נדרש פרופיל"
+  },
+  "addDevice.showVerbose": {
+    "description": "תווית תיבת הסימון כדי לאפשר פלט מילולי",
+    "value": "להראות מילולית"
+  },
+  "addDevice.title": {
+    "description": "כותרת דו -שיח להוספת מכשיר חדש",
+    "value": "הוסף מכשיר חדש"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "שגיאה בשם משתמש לא חוקי",
+    "value": "שם המשתמש חייב להיות באורך של לפחות 5 תווים ולא יותר מ- 16"
+  },
+  "addDevice.userNameRequired": {
+    "description": "שגיאה לשם המשתמש הנדרש",
+    "value": "שם המשתמש נדרש"
+  },
+  "addDevice.useTLS": {
+    "description": "הודעה לשימוש ב- TLS",
+    "value": "השתמש ב- TLS"
+  },
+  "alarm.errorAdding": {
+    "description": "שגיאה להוספת",
+    "value": "שגיאה הוספת התרחשויות אזעקה"
+  },
+  "alarm.errorDelete": {
+    "description": "שגיאה למחיקה",
+    "value": "שגיאות מחיקת התרחשויות אזעקה"
+  },
+  "alarm.errorRetrieve": {
+    "description": "שגיאה לאחזור",
+    "value": "שגיאה באחזור התרחשויות אזעקה"
+  },
+  "alarmService.addNew": {
+    "description": "טקסט כפתור כדי להוסיף אזעקה חדשה",
+    "value": "הוסף חדש"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "רמז לקלט שם אזעקה",
+    "value": "ספק שם לאזעקה זו."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "מציין מיקום לקבלת קלט שם אזעקה",
+    "value": "שם אזעקה"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "הסבר כלים למחיקת כפתור אזעקה",
+    "value": "מחק התרחשות אזעקה"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "תווית למחיקה בהשלמת שקופיות",
+    "value": "מחק בסיום"
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "שם אלמנט אזעקה ואחריו מופע שלו",
+    "value": "{{elementName}} (מופע: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "תווית לשעה בחר",
+    "value": "שָׁעָה"
+  },
+  "alarmService.interval": {
+    "description": "תווית למרווח האזעקה",
+    "value": "מרווח (תוך דקות)"
+  },
+  "alarmService.intervalHint": {
+    "description": "רמז לקלט מרווח",
+    "value": "מרווח תוך דקות לאזעקה תקופתית, 0 לאזעקה יחידה"
+  },
+  "alarmService.intervalLabel": {
+    "description": "תווית לקלט מרווח",
+    "value": "הַפסָקָה"
+  },
+  "alarmService.intervalNone": {
+    "description": "מוצג כאשר לא מוגדר מרווח",
+    "value": "אַף לֹא אֶחָד"
+  },
+  "alarmService.minuteLabel": {
+    "description": "תווית לדקה בחר",
+    "value": "פּרוֹטוֹקוֹל"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "שעת התחלה: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "מחק עם סיום: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "מציין מיקום לקבלת קלט זמן התחלה",
+    "value": "בחר תאריך ושעה"
+  },
+  "alarmService.subtitle": {
+    "description": "כתובית המציגה את מספר התרחשויות האזעקה",
+    "value": "אזעקות ({{count}} ערכים)"
+  },
+  "alarmService.title": {
+    "description": "כותרת כרטיס שירות האזעקה",
+    "value": "שירות אזעקה"
+  },
+  "audit.errorLog": {
+    "description": "שגיאה לאחזור יומני ביקורת",
+    "value": "שגיאה באחזור יומן ביקורת"
+  },
+  "auditLog.description": {
+    "value": "תֵאוּר"
+  },
+  "auditLog.download": {
+    "description": "כפתור הורד ליומני ביקורת",
+    "value": "הורד יומן ביקורת (.csv)"
+  },
+  "auditLog.event": {
+    "value": "מִקרֶה"
+  },
+  "auditLog.missing": {
+    "description": "הודעה על יומני ביקורת חסרים",
+    "value": "אין יומן ביקורת"
+  },
+  "auditLog.time": {
+    "value": "זְמַן"
+  },
+  "auditLog.title": {
+    "description": "כותרת ליומני ביקורת",
+    "value": "יומן ביקורת"
+  },
+  "certificates.add.tooltip": {
+    "description": "הסבר כלים להוספת כפתור תעודה",
+    "value": "הוסף תעודה"
+  },
+  "certificates.download.tooltip": {
+    "description": "קובץ כלים להורדת תעודה",
+    "value": "הורד אישור"
+  },
+  "certificates.empty": {
+    "description": "טקסט לתעודות ריקות",
+    "value": "לא נמצאו תעודות"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "שגיאה להוספת תעודות",
+    "value": "שגיאה הוספת תעודה"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "שגיאה לאחזור מידע על אישור",
+    "value": "שגיאה באחזור מידע על אישור"
+  },
+  "certificates.list": {
+    "description": "טקסט לרשימת התעודות",
+    "value": "רשימת האישורים הרשומים כעת במכשיר AMT"
+  },
+  "certificates.loading": {
+    "description": "טקסט לטעינת תעודות",
+    "value": "טעינת תעודות ..."
+  },
+  "certificates.profileAssociations": {
+    "description": "תווית לאגודות פרופיל תעודות",
+    "value": "עמותות פרופיל"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "מוצג כאשר לתעודה אין אסוציאציות פרופיל",
+    "value": "לא קשור"
+  },
+  "certificates.title": {
+    "description": "כותרת לתעודות",
+    "value": "תעודות"
+  },
+  "certificates.type": {
+    "description": "תווית לשדה סוג תעודה",
+    "value": "סוּג"
+  },
+  "certificates.typeClient": {
+    "description": "מציין שהתעודה היא תעודת לקוח",
+    "value": "לָקוּחַ"
+  },
+  "certificates.typeRoot": {
+    "description": "מציין שהתעודה היא תעודת שורש",
+    "value": "שׁוֹרֶשׁ"
+  },
+  "common.addNew": {
+    "description": "טקסט עבור הכפתור הוסף חדש",
+    "value": "הוסף חדש"
+  },
+  "common.cancel": {
+    "description": "טקסט עבור כפתור ביטול",
+    "value": "לְבַטֵל"
+  },
+  "common.cancelLower": {
+    "description": "טקסט עבור כפתור ביטול",
+    "value": "לְבַטֵל"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "אזהרה על תעודות שלא הועלו",
+    "value": "תעודה טרם הועלה"
+  },
+  "common.cetificateUploaded": {
+    "description": "הודעה לתעודות המועלות",
+    "value": "תעודה הועלה"
+  },
+  "common.chooseFile": {
+    "description": "כפתור לבחירת קובץ",
+    "value": "בחר קובץ"
+  },
+  "common.close": {
+    "description": "טקסט לכפתור סגור",
+    "value": "לִסְגוֹר"
+  },
+  "common.completeProfile": {
+    "description": "הודעה לפרופילים שהושלמו",
+    "value": "פרופיל נשמר בהצלחה"
+  },
+  "common.connected": {
+    "description": "סטטוס כאשר מכשיר או שירות מחובר",
+    "value": "מְחוּבָּר"
+  },
+  "common.continue": {
+    "value": "לְהַמשִׁיך"
+  },
+  "common.deleteConfiguration": {
+    "description": "הודעה לתצורות שנמחקו",
+    "value": "התצורה נמחקה בהצלחה"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "הודעה על כותרת המשנה",
+    "value": "פורטל ערכת כלים לניהול מכשירים"
+  },
+  "common.disabled": {
+    "description": "משמש כאשר סנכרון הפרופיל המקומי מושבת",
+    "value": "נָכֶה"
+  },
+  "common.disconnected": {
+    "description": "סטטוס כאשר מכשיר או שירות מנותק",
+    "value": "מְנוּתָק"
+  },
+  "common.dismiss": {
+    "description": "דחיית תווית כפתור",
+    "value": "לְפַטֵר"
+  },
+  "common.done": {
+    "description": "הודעה על כפתור Done",
+    "value": "נַעֲשָׂה"
+  },
+  "common.down": {
+    "value": "לְמַטָה"
+  },
+  "common.enabled": {
+    "description": "משמש כאשר סנכרון הפרופיל המקומי מופעל",
+    "value": "מופעל"
+  },
+  "common.enterFriendlyName": {
+    "description": "רמז להיכנס לשם ידידותי",
+    "value": "הזן שם ידידותי"
+  },
+  "common.enterHostName": {
+    "description": "רמז להיכנס לשם המארח",
+    "value": "הזן את שם המארח"
+  },
+  "common.enterPassword": {
+    "description": "הודעה על הזנת הסיסמה שלך",
+    "value": "הזן את הסיסמה שלך"
+  },
+  "common.enterUserName": {
+    "description": "רמז להיכנס לשם המשתמש שלך",
+    "value": "הזן את שם המשתמש שלך"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "שגיאה למחיקת תצורות",
+    "value": "לא ניתן למחוק תצורה"
+  },
+  "common.friendlyName": {
+    "description": "הודעה לשם ידידותי",
+    "value": "שם ידידותי"
+  },
+  "common.hostName": {
+    "description": "הודעה ל- HostName",
+    "value": "שם מארח"
+  },
+  "common.input": {
+    "description": "קלט ל- WSMAN Explorer",
+    "value": "קֶלֶט"
+  },
+  "common.intelCopyright": {
+    "description": "הודעת זכויות יוצרים עבור אינטל",
+    "value": "© {{year}} חברת אינטל"
+  },
+  "common.loginUpper": {
+    "description": "הודעה עבור כפתור הכניסה",
+    "value": "התחבר"
+  },
+  "common.logOut": {
+    "description": "הודעה ליציאה",
+    "value": "התנתק"
+  },
+  "common.no": {
+    "value": "לֹא"
+  },
+  "common.notApplicable": {
+    "description": "מוצג כאשר כניסת מערכת ההפעלה אינה חלה",
+    "value": "לא ישים"
+  },
+  "common.ok": {
+    "description": "טקסט עבור כפתור אישור",
+    "value": "בְּסֵדֶר"
+  },
+  "common.other": {
+    "description": "משמש כאשר מערכת ההפעלה או מפת הזיכרון הם אחרים או לא מוגדרים",
+    "value": "אַחֵר"
+  },
+  "common.output": {
+    "description": "פלט עבור WSMAN Explorer",
+    "value": "תְפוּקָה"
+  },
+  "common.password": {
+    "description": "הודעה לסיסמה",
+    "value": "סִיסמָה"
+  },
+  "common.pin": {
+    "description": "טקסט עבור כפתור סיכה",
+    "value": "פִּין"
+  },
+  "common.profileName": {
+    "description": "שם הפרופיל",
+    "value": "שם הפרופיל"
+  },
+  "common.remove": {
+    "description": "טקסט להסרת כפתור",
+    "value": "לְהַסִיר"
+  },
+  "common.save": {
+    "description": "טקסט לשמירה",
+    "value": "לְהַצִיל"
+  },
+  "common.showHidePassword": {
+    "description": "הסבר כלים להצגת הסיסמה או הסתרה",
+    "value": "הצג / הסתר סיסמה"
+  },
+  "common.submit": {
+    "description": "כפתור להגשה",
+    "value": "לְהַגִישׁ"
+  },
+  "common.tags": {
+    "description": "הודעה לתגיות",
+    "value": "תגיות"
+  },
+  "common.trustedRoot": {
+    "description": "טקסט לתיבת סימון שורש מהימן",
+    "value": "שורש מהימן"
+  },
+  "common.unknown": {
+    "description": "תווית לערכים לא ידועים או לא מוגדרים",
+    "value": "לֹא יְדוּעַ"
+  },
+  "common.up": {
+    "value": "לְמַעלָה"
+  },
+  "common.userName": {
+    "description": "הודעה לשם המשתמש",
+    "value": "שם משתמש"
+  },
+  "common.wired": {
+    "description": "טקסט לכפתור אלחוטי",
+    "value": "קווי"
+  },
+  "common.wireless": {
+    "description": "טקסט לכפתור קווי",
+    "value": "אַלחוּט"
+  },
+  "common.yes": {
+    "value": "כֵּן"
+  },
+  "configDetail.commonNameHint": {
+    "description": "טקסט רמז לשדה שם משותף",
+    "value": "הזן את השם הנפוץ הכלול בתעודה."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "טקסט מציין מקום לשדה שם משותף",
+    "value": "שם שם משותף (CN =)"
+  },
+  "configDetail.configNameHint": {
+    "description": "רמז טקסט לשדה שם תצורה",
+    "value": "הזן שם לתצורת CIRA זו"
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "טקסט מציין מקום לשדה שם תצורה",
+    "value": "לְשֶׁעָבַר. "
+  },
+  "configDetail.fqdn": {
+    "description": "תווית לחצן רדיו FQDN",
+    "value": "Fqdn"
+  },
+  "configDetail.ipv4": {
+    "description": "תווית לחצן רדיו IPv4",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "רמז טקסט לשדה כתובת שרת MP",
+    "value": "הזן את הכתובת למקום בו מתארח מופע ה- MP"
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "טקסט מציין מקום לשדה כתובת שרת MP",
+    "value": "כתובת MPS"
+  },
+  "configDetail.portHint": {
+    "description": "רמז טקסט לשדה יציאה",
+    "value": "הזן את יציאת CIRA למופע MPS. "
+  },
+  "configDetail.portPlaceholder": {
+    "description": "טקסט מציין מקום לשדה יציאה",
+    "value": "נָמָל"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "טקסט לחידוש סיסמא",
+    "value": "צור סיסמה אקראית חדשה לאחר שמירה"
+  },
+  "configDetail.usernameHint": {
+    "description": "טקסט רמז לשדה שם משתמש",
+    "value": "הזן את שם המשתמש לגישה לחברי פרלמנט"
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "טקסט מציין מקום לשדה שם משתמש",
+    "value": "שם משתמש"
+  },
+  "configs.ciraNoData": {
+    "description": "אין הודעת תצורות של CIRA",
+    "value": "אין תצורות CIRA"
+  },
+  "configs.delete": {
+    "description": "הודעה למחיקת תצורות CIRA",
+    "value": "CIRA Config נמחק בהצלחה"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "שגיאה למחיקת תצורות CIRA",
+    "value": "לא ניתן למחוק את תצורות CIRA"
+  },
+  "configs.failLoadConfigs": {
+    "description": "שגיאה לטעינת תצורות CIRA",
+    "value": "לא ניתן לטעון תצורות CIRA"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "כותרת עמוד תצורת CIRA חדשה",
+    "value": "CIRA Config חדש"
+  },
+  "configs.header.ciraTitle": {
+    "description": "כותרת CIRA Configs",
+    "value": "תצורות CIRA"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "כותרת CIRA CONFIGES כאשר אינה זמינה",
+    "value": "לא זמין"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "עמוד ראשון"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "פריטים לדף:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "העמוד האחרון"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "העמוד הבא"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "עמוד קודם"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} - {{endIndex}} שֶׁל {{length}}"
+  },
+  "configs.success": {
+    "description": "הודעה ליצירת תצורות CIRA",
+    "value": "CIRA {{reqType}} נוצר בהצלחה"
+  },
+  "configs.table.ciraCert": {
+    "description": "כותרת עמודות שם משותפת",
+    "value": "שם שם משותף (CN =)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "כותרת עמודות שרת MPS",
+    "value": "שרת MPS"
+  },
+  "configs.table.ciraName": {
+    "description": "כותרת עמודת שם",
+    "value": "שֵׁם"
+  },
+  "configs.table.ciraPort": {
+    "description": "כותרת עמודת יציאה",
+    "value": "נָמָל"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "כותרת עמודות שורש שורש",
+    "value": "MPS שורש אישור"
+  },
+  "configs.table.ciraUsername": {
+    "description": "כותרת עמודות שם משתמש",
+    "value": "שם משתמש"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "קובץ כלים להוספת מכשיר חדש",
+    "value": "הוסף מכשיר חדש שניתן לנהל על ידי הקונסולה"
+  },
+  "dashboard.addNewDevice": {
+    "description": "שלב כדי להוסיף מכשיר חדש",
+    "value": "1. הוסף מכשיר חדש"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "שלב להוספת תעודת הקצאה",
+    "value": "הוסף תעודת אישור [אופציונלי]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "שלב ליצירת תצורת CIRA",
+    "value": "צור תצורת CIRA"
+  },
+  "dashboard.createProfile": {
+    "description": "שלב ליצירת פרופיל",
+    "value": "צור פרופיל"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "שלב ליצירת תצורה אלחוטית",
+    "value": "צור תצורה אלחוטית [אופציונלית]"
+  },
+  "dashboard.deploy": {
+    "description": "לפרוס את ערכת הכלים",
+    "value": "לִפְרוֹס"
+  },
+  "dashboard.deployDescription": {
+    "description": "תיאור לפריסה",
+    "value": "מוכנים לעבור לייצור? "
+  },
+  "dashboard.devicesConnected": {
+    "description": "מספר המכשירים המחוברים",
+    "value": "מכשירים המחוברים"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "מספר המכשירים מנותקים",
+    "value": "מכשירים מנותקים"
+  },
+  "dashboard.error": {
+    "description": "שגיאה לאחזור סטטיסטיקות מכשירים",
+    "value": "שגיאה באחזור סטטיסטיקות מכשירים"
+  },
+  "dashboard.getStarted": {
+    "description": "התחל עם ערכת הכלים",
+    "value": "התחל"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "תיאור לתחילת העבודה",
+    "value": "חדש בערכת הכלים? "
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "כותרת לוח המחוונים",
+    "value": "לוּחַ מַחווָנִים"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "שלב לניהול המכשיר שלך",
+    "value": "2. נהל את המכשיר שלך"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "צעד לניהול המכשיר שלך שוב",
+    "value": "נהל את המכשיר שלך"
+  },
+  "dashboard.totalDevices": {
+    "description": "המספר הכולל של המכשירים",
+    "value": "סה\"כ המכשירים"
+  },
+  "dashboard.understandSecurity": {
+    "description": "להבין נושאי אבטחה",
+    "value": "להבין את האבטחה"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "תיאור להבנת האבטחה",
+    "value": "מבולבל בנושאי אבטחה? "
+  },
+  "dashboard.useDeviceActions": {
+    "description": "הסבר כלים לשימוש בפעולות מכשירים",
+    "value": "השתמש בפעולות מכשירים כדי לשלוט ברשימת מכשירים"
+  },
+  "delete.question": {
+    "description": "שאלה לגבי מחיקת רשומות",
+    "value": "אתה בטוח?"
+  },
+  "delete.questionRecord": {
+    "description": "שאלה לגבי מחיקת רשומות",
+    "value": "האם אתה בטוח שאתה רוצה למחוק את הרשומות / ים?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "טקסט לשם משותף",
+    "value": "שם נפוץ:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "טקסט לשמות DNS",
+    "value": "שמות DNS:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "טקסט לשם המנפיק",
+    "value": "שם המנפיק:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "טקסט לתאריך לאחר",
+    "value": "לא אחרי:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "טקסט עבור לא לפני תאריך",
+    "value": "לא לפני:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "טקסט לאלגוריתם מפתח ציבורי",
+    "value": "אלגוריתם מפתח ציבורי:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "טקסט לגודל המפתח הציבורי",
+    "value": "גודל המפתח הציבורי:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "טקסט לשם סידורי",
+    "value": "מספר סידורי:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "טקסט לטביעת אצבע SHA-1",
+    "value": "טביעת אצבע SHA-1:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "טקסט לטביעת אצבע SHA-256",
+    "value": "טביעת אצבע SHA-256:"
+  },
+  "deviceCertificate.title": {
+    "description": "כותרת לפרטי תעודה",
+    "value": "פרטי תעודה"
+  },
+  "deviceDetail.alarms": {
+    "description": "שם קטגוריה עבור אזעקות מכשירים",
+    "value": "אַזעָקָה"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "תיאור לאזעקות",
+    "value": "נהל אזעקות מכשירים"
+  },
+  "deviceDetail.auditLog": {
+    "description": "שם קטגוריה ליומן ביקורת",
+    "value": "יומן ביקורת"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "תיאור ליומן ביקורת",
+    "value": "צפה ביומן ביקורת מכשירים"
+  },
+  "deviceDetail.certificates": {
+    "description": "שם קטגוריה לתעודות",
+    "value": "תעודות"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "תיאור לתעודות",
+    "value": "ניהול תעודות"
+  },
+  "deviceDetail.eventLog": {
+    "description": "שם קטגוריה ליומן אירועים",
+    "value": "יומן אירועים"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "תיאור ליומן אירועים",
+    "value": "צפה באירועי מכשירים"
+  },
+  "deviceDetail.explorer": {
+    "description": "שם קטגוריה לחוקר",
+    "value": "חוֹקֵר"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "תיאור לסייר",
+    "value": "שלח פקודות WSMAN"
+  },
+  "deviceDetail.general": {
+    "description": "שם קטגוריה למידע על מכשירים כלליים",
+    "value": "מידע כללי של AMT"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "תיאור למידע על מכשיר כללי",
+    "value": "גרסת AMT ותכונות"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "שם קטגוריה למידע על חומרה",
+    "value": "מידע על חומרה"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "תיאור למידע על חומרה",
+    "value": "זיכרון, מעבד וכו '..."
+  },
+  "deviceDetail.kvm": {
+    "description": "שם קטגוריה עבור KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "תיאור ל- KVM",
+    "value": "מכשיר שליטה מרחוק"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "שם קטגוריה להגדרות רשת",
+    "value": "הגדרות רשת"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "תיאור להגדרות רשת",
+    "value": "צפה בהגדרות רשת"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "שם קטגוריה ללא יומני אירועים",
+    "value": "אין יומן אירועים"
+  },
+  "deviceDetail.sol": {
+    "description": "שם קטגוריה לסידורי LAN",
+    "value": "סוֹל"
+  },
+  "deviceDetail.solDescription": {
+    "description": "תיאור לסול",
+    "value": "סדרתי מעל LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "שם קטגוריה להגדרות TLS",
+    "value": "הגדרות TLS"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "תיאור להגדרות TLS",
+    "value": "צפה בתצורת TLS"
+  },
+  "devices.actions.deactivate": {
+    "description": "הסבר כלים לביטול/הסרת מכשיר",
+    "value": "השבת את המכשיר"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "הסבר כלים לביטול מכשיר במצב ענן",
+    "value": "השבת את המכשיר"
+  },
+  "devices.actions.edit": {
+    "description": "קובץ כלים לעריכת מכשיר",
+    "value": "ערוך מכשיר"
+  },
+  "devices.actions.powerOff": {
+    "description": "הסבר כלים להפעלת מכשיר",
+    "value": "כבה את המכשיר"
+  },
+  "devices.actions.powerUp": {
+    "description": "קלט כלים להפעלת מכשיר",
+    "value": "הפעל את המכשיר"
+  },
+  "devices.actions.remove": {
+    "description": "הסבר כלים להסרת מכשיר במצב שאינו ענן",
+    "value": "הסר את המכשיר"
+  },
+  "devices.actions.reset": {
+    "description": "קובץ כלים לאיפוס מכשיר",
+    "value": "אפס את המכשיר"
+  },
+  "devices.actions.restart": {
+    "description": "הסבר כלים להפעלה מחדש של מכשיר",
+    "value": "הפעל מחדש את המכשיר"
+  },
+  "devices.addDevice": {
+    "description": "הודעת מכשיר חדשה",
+    "value": "הוסף מכשיר חדש"
+  },
+  "devices.bulk.deactivate": {
+    "description": "הסבר כלים לפעולה של השבתה בתפזורת",
+    "value": "הסר או מבטל מכשירים שנבחרו"
+  },
+  "devices.bulk.powerOff": {
+    "description": "קובץ כלים לפעולה של כיבוי בתפזורת",
+    "value": "כיבוי מכשירים נבחרים"
+  },
+  "devices.bulk.powerUp": {
+    "description": "קובץ כלים לפעולה בהפעלה בתפזורת",
+    "value": "הפעל מכשירים נבחרים"
+  },
+  "devices.bulk.restart": {
+    "description": "הסבר על כלים לפעולה מחדש בתפזורת",
+    "value": "הפעל מחדש מכשירים נבחרים"
+  },
+  "devices.deactivation": {
+    "description": "הודעה לביטול",
+    "value": "ביטול ההפעלה שנשלח בהצלחה"
+  },
+  "devices.editDevice": {
+    "description": "הסבר כלים לעריכת מכשיר",
+    "value": "ערוך את המכשיר"
+  },
+  "devices.editTags": {
+    "description": "טקסט כפתור לעריכת תגיות",
+    "value": "ערוך תגיות"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "שגיאה לביטול מכשירים",
+    "value": "שגיאה מבטלת מכשירים"
+  },
+  "devices.errorDeactivation": {
+    "description": "שגיאה לשליחת ביטולים",
+    "value": "שגיאה בשליחת ביטול"
+  },
+  "devices.errorInitializing": {
+    "description": "שגיאה להתחלה",
+    "value": "אתחול שגיאה"
+  },
+  "devices.errorLoadDevices": {
+    "description": "שגיאה לטעינת מכשירים",
+    "value": "מכשירי טעינת שגיאה"
+  },
+  "devices.errorLoadTags": {
+    "description": "שגיאה לטעינת תגיות",
+    "value": "תגיות טעינת שגיאה"
+  },
+  "devices.errorPowerAction": {
+    "description": "שגיאה לפעולות חשמל",
+    "value": "שגיאה בשליחת פעולת חשמל"
+  },
+  "devices.failPowerAction": {
+    "description": "שגיאה פעולות חשמל שנכשלו",
+    "value": "פעולת חשמל נכשלה"
+  },
+  "devices.filter.searchHint": {
+    "description": "רמז טקסט תחת מכשירים קלט חיפוש",
+    "value": "הזן טקסט כדי לסנן את הדף הנוכחי"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "טקסט מציין מיקום לתיבת חיפוש למכשירים",
+    "value": "מכשירי פילטר ...."
+  },
+  "devices.filter.tags": {
+    "description": "תווית לסינון התקנים על ידי תגיות",
+    "value": "תגי סינון"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "הוסף תיאור דיאלוג תעודה",
+    "value": "האישור יתווסף ל- AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "הוסף כותרת דו -שיח תעודה",
+    "value": "הוסף תעודה"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "תיאור תיבת הדו -שיח האתחול של HTTPS",
+    "value": "אתחול רשת HTTPS מאבטח את תהליך האתחול באמצעות HTTPS מוצפן להגנה על קבצי האתחול. "
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "כותרת דיאלוג אתחול HTTPS",
+    "value": "אתחול רשת HTTPS (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "תיאור דיאלוג אתחול PBA",
+    "value": "PBA (יישום לפני אתחול) הוא כלי שחזור או אבחון המותקן באופן מקומי במערכת וניתן לבחור בו כאפשרות אתחול עבור פעולות שחזור בלחיצה אחת של אינטל."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "כותרת דו -שיח של אתחול PBA",
+    "value": "מגף PBA מקומי (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "מכשירים כותרת עמוד",
+    "value": "מכשירים"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "הסבר כלים לגישה לאפשרויות חשמל נוספות של מכשיר",
+    "value": "אפשרויות כוח נוספות ..."
+  },
+  "devices.noData": {
+    "description": "הודעה כאשר אין מכשירים",
+    "value": "לא נמצאו מכשירים"
+  },
+  "devices.noDataFilter": {
+    "description": "הודעה כאשר תוצאות המסנן ריקות",
+    "value": "אין מכשירים תואמים את המסנן הנוכחי"
+  },
+  "devices.notification.error": {
+    "description": "מסלול כלים המוצג כאשר פעולה נכשלת",
+    "value": "שגיאה בשליחת פעולה"
+  },
+  "devices.notification.notReady": {
+    "description": "מסלול כלים מוצג כאשר המכשיר אינו מוכן",
+    "value": "פעולת הפעלה שנשלחה, אולם המכשיר הגיב לא מוכן"
+  },
+  "devices.notification.success": {
+    "description": "מסלול כלים המוצג כאשר פעולה מצליחה",
+    "value": "פעולה שנשלחה בהצלחה"
+  },
+  "devices.powerActionNotReady": {
+    "description": "שגיאה עבור פעולות חשמל שנשלחו שאינן מוכנות",
+    "value": "פעולת חשמל שנשלחה אך אינה מוכנה"
+  },
+  "devices.powerActionSent": {
+    "description": "הודעה על פעולות חשמל",
+    "value": "פעולת חשמל שנשלחה בהצלחה"
+  },
+  "devices.table.actions": {
+    "description": "כותרת עמודות טבלה לפעולות",
+    "value": "פעולות"
+  },
+  "devices.table.guid": {
+    "description": "כותרת עמודות טבלה ל- GUID",
+    "value": "מדריך"
+  },
+  "devices.table.hostname": {
+    "description": "כותרת עמודות טבלה עבור שם מארח",
+    "value": "שם מארח"
+  },
+  "devices.table.status": {
+    "description": "כותרת עמודות טבלה למצב המכשיר",
+    "value": "סטָטוּס"
+  },
+  "devices.table.tags": {
+    "description": "כותרת עמודות טבלה לתגיות",
+    "value": "תגיות"
+  },
+  "deviceUserConsent.description": {
+    "description": "תיאור להסכמת משתמש למכשירים",
+    "value": "קוד הסכמת משתמש שנוצר על ידי Intel AMT נדרש כדי לגשת למערכת."
+  },
+  "deviceUserConsent.error": {
+    "description": "שגיאה להסכמת משתמש למכשירים",
+    "value": "שדה זה נדרש וערך חייב להיות מספר שישה ספרות."
+  },
+  "deviceUserConsent.hint": {
+    "description": "רמז להסכמת משתמש למכשירים",
+    "value": "ספק קוד הסכמת משתמש המוצג במוניטור המארח היעד."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "מציין מקום להסכמת משתמש למכשירים",
+    "value": "קוד הסכמת משתמש"
+  },
+  "deviceUserConsent.title": {
+    "description": "כותרת להסכמת משתמש למכשירים",
+    "value": "הסכמת משתמש"
+  },
+  "domainDetail.completeProfile": {
+    "description": "הודעה לפרופילי דומיין שהושלמו",
+    "value": "פרופיל דומיין נשמר בהצלחה"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "שגיאה לפרופילי דומיין שנמחקו",
+    "value": "שגיאה ביצירה/עדכון פרופיל דומיין"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "הודעת שגיאה עבור הפרת מפתח ייחודי",
+    "value": "מזהה או סיומת של הדומיין NewDomain כבר קיימים"
+  },
+  "domainDetail.fqdn": {
+    "description": "רמז לשדה FQDN",
+    "value": "הזן את ה- FQDN המשויך לתעודת ההקצאה (כלומר amtdomain.com)"
+  },
+  "domainDetail.nameHint": {
+    "description": "רמז לשדה שם הדומיין",
+    "value": "הזן שם כדי לתת דומיין זה (Ex. DOMAIN AMT)"
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "מציין מיקום לשם הדומיין",
+    "value": "שם דומיין"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "מציין מקום עבור סיסמת אישור ההקצאה",
+    "value": "סיסמת אישור אישור"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "רמז לסיסמת אישור ההקצאה",
+    "value": "הסיסמה לתעודת ההקצאה"
+  },
+  "domains.certExpired": {
+    "description": "הודעה לתעודות שפג תוקפם",
+    "value": "{{count}} פג תוקף של תחום "
+  },
+  "domains.certExpring": {
+    "description": "הודעה לתעודות שפג תוקף",
+    "value": "{{count}} דומיין אישור (ים) יפוג בקרוב "
+  },
+  "domains.daysRemaining": {
+    "description": "הודעה לימים שנותרו",
+    "value": " שנותרו ימים"
+  },
+  "domains.delteDomain": {
+    "description": "הודעה למחיקת דומיינים",
+    "value": "הדומיין נמחק בהצלחה"
+  },
+  "domains.expired": {
+    "description": "הודעה לתחומים שפג תוקפם",
+    "value": "פג תוקף"
+  },
+  "domains.failLoadDomain": {
+    "description": "שגיאה לטעינת דומיינים",
+    "value": "לא ניתן לטעון דומיינים"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "שגיאה למחיקת דומיינים",
+    "value": "לא ניתן למחוק דומיין"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "כותרת עמוד דומיין חדשה",
+    "value": "תחום חדש"
+  },
+  "domains.header.domainsTitle": {
+    "description": "כותרת עמוד דומיינים",
+    "value": "דומיינים"
+  },
+  "domains.monthsRemaining": {
+    "description": "הודעה לחודשים שנותרו",
+    "value": " שנותרו חודשים"
+  },
+  "domains.noData": {
+    "description": "אין הודעת דומיינים",
+    "value": "אין תחומים"
+  },
+  "domains.table.domainSuffix": {
+    "description": "כותרת עמודות סיומת דומיין",
+    "value": "סיומת דומיין"
+  },
+  "domains.table.expirationDate": {
+    "description": "כותרת עמודות תאריך תפוגה",
+    "value": "תַאֲרִיך תְפוּגָה"
+  },
+  "domains.table.name": {
+    "description": "כותרת עמודת שם",
+    "value": "שֵׁם"
+  },
+  "domains.yearsRemaining": {
+    "description": "הודעה לשנים שנותרו",
+    "value": " שנים נותרו"
+  },
+  "editTags.description": {
+    "description": "תיאור לעריכה תגיות",
+    "value": "הוסף תג על ידי לחיצה על ההנחיה, הקלד את שם התג, ואז הצג הזן או פסיק."
+  },
+  "editTags.header": {
+    "description": "כותרת לעריכה תגיות",
+    "value": "הסר תג על ידי לחיצה על התג עצמו."
+  },
+  "editTags.placeholder": {
+    "description": "מציין מקום לעריכה תגיות",
+    "value": "תג חדש ..."
+  },
+  "editTags.title": {
+    "description": "כותרת לעריכה תגיות",
+    "value": "ערוך תגיות"
+  },
+  "error.deviceNotResponding": {
+    "description": "הודעה מוצגת כשמכשיר פסק זמן",
+    "value": "המכשיר לא הגיב. "
+  },
+  "error.itemModified": {
+    "description": "הודעה מוצגת כאשר הפריט מעופש",
+    "value": "פריט זה שונה מאז שהוא נטען. "
+  },
+  "error.kvmConnection": {
+    "description": "שגיאה המוצגת בעת חיבור ל- KVM",
+    "value": "החיבור ל- KVM נכשל. "
+  },
+  "error.sessionTimedOut": {
+    "description": "ההודעה המוצגת כאשר פג תוקף הפעלת המשתמש",
+    "value": "הפגישה מתוזמנת. "
+  },
+  "error.unableToSendCode": {
+    "description": "שגיאה המוצגת בעת שליחת קוד הסכמת המשתמש נכשלת, כוללת את הודעת שגיאת Backend",
+    "value": "לא ניתן לשלוח קוד: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "שגיאה גנרית בעת ביטול קוד הסכמת המשתמש נכשל",
+    "value": "שגיאה בביטול קוד הסכמת משתמש"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "שגיאה בעת ביטול קוד הסכמת המשתמש המבוקש נכשל",
+    "value": "{{featureName}} לא ניתן לגשת - לא ניתן לבטל את קוד הסכמת המשתמש המבוקש"
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "שגיאה בעת ביטול קוד הסכמת המשתמש המבוקש מצליח",
+    "value": "{{featureName}} לא ניתן לגשת - קוד הסכמת המשתמש המבוקש מבוטל מבוטל"
+  },
+  "error.userConsentCodeFailed": {
+    "description": "שגיאה המוצגת בבקשת קוד הסכמת המשתמש נכשלת עבור תכונה",
+    "value": "{{featureName}} לא ניתן לגשת - לא נכשל בבקשת קוד הסכמת המשתמש"
+  },
+  "error.userConsentSendFailed": {
+    "description": "שגיאה בעת שליחת קוד הסכמת המשתמש נכשלת",
+    "value": "{{featureName}} לא ניתן לגשת - לא נכשל בשליחת קוד הסכמת המשתמש"
+  },
+  "error.userConsentUnsupported": {
+    "description": "שגיאה בעת שליחת קוד הסכמת משתמש שאינו נתמך",
+    "value": "{{featureName}} לא ניתן לגשת - קוד הסכמת משתמש לא נתמך"
+  },
+  "event.errorLog": {
+    "description": "שגיאה לאחזור יומני אירועים",
+    "value": "שגיאה באחזור יומן האירועים"
+  },
+  "eventLog.download": {
+    "description": "כפתור להורדת יומן האירועים",
+    "value": "הורד יומן אירועים (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "כותרת לערכי יומן אירועים",
+    "value": "יומן אירועים ({{count}} ערכים)"
+  },
+  "eventLog.eventType": {
+    "description": "הודעה לסוגי יומני אירועים",
+    "value": "סוג אירוע"
+  },
+  "eventLog.severity": {
+    "description": "הודעה לחיכות יומן אירועים",
+    "value": "חוּמרָה"
+  },
+  "eventLog.source": {
+    "description": "הודעה למקורות יומן אירועים",
+    "value": "מָקוֹר"
+  },
+  "explorer.errorResponse": {
+    "description": "שגיאה לאחזור תגובת סייר",
+    "value": "שגיאה באחזור תגובת סייר"
+  },
+  "explorer.placeHolder": {
+    "description": "מציין מקום עבור WSMAN Explorer",
+    "value": "לִבחוֹר..."
+  },
+  "explorer.WSMANCall": {
+    "value": "שיחת ווסמן"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "חוקר ווסמן"
+  },
+  "exportDialog.addDomains": {
+    "description": "טקסט כפתור להוספת דומיינים",
+    "value": "הוסף דומיינים"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "אפשרות להוסיף תחילה דומיינים",
+    "value": "הוסף תחילה דומיינים (נדרש להפעלת ACM)"
+  },
+  "exportDialog.domainSuffix": {
+    "description": "תווית לשדה סיומת דומיין",
+    "value": "סיומת דומיין"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "כותרת הודעת שגיאה לטעינת דומיינים",
+    "value": "שגיאות טוען תחומים:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "טוענת הודעת דומיינים",
+    "value": "טוען תחומים ..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "הודעה כאשר לא מוגדרים תחומים",
+    "value": "לא מוגדרים תחומים. "
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "הודעת שגיאה לבחירת דומיין נדרשת",
+    "value": "אנא בחר דומיין"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "כתובית לבחירת תחום דו -שיח ייצוא",
+    "value": "הדומיין שנבחר ייכלל בפרופיל לשימוש עם"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "כותרת לבחירת תחום שיח ייצוא",
+    "value": "בחר סיומת דומיין"
+  },
+  "exportDialog.skipDomain": {
+    "description": "טקסט כפתור לדלג דומיין",
+    "value": "דלג על תחום"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "אפשרות לדלג על דומיין אם כבר מופעלת",
+    "value": "לחץ על 'דלג דומיין' אם המכשיר כבר הופעל."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "הוראות לפונקציונליות של דלג על תחום",
+    "value": "לחץ על 'דלג דומיין' אם המכשיר כבר הופעל. "
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "הודעת שגיאה לשדות נדרשים",
+    "value": "שדה זה נדרש ועליו להיות אלפא -נומרי ללא רווחים או סמלים."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "טקסט לשדות אלפא -נומריים ואורך מקסימאלי",
+    "value": "שדה זה נדרש, חייב להיות אלפא -נומרי (ללא חללים), ולא יותר מ {{profileNameMaxLen}} תווים"
+  },
+  "fieldRequired.long": {
+    "description": "רמז לשדות נדרשים עם מגבלת אופי",
+    "value": "שדה זה נדרש ועליו להיות בין 8 ל 32 תווים"
+  },
+  "fieldRequired.short": {
+    "description": "רמז לשדות נדרשים",
+    "value": "שדה זה נדרש"
+  },
+  "general.amtBuild": {
+    "description": "תווית לבניית AMT",
+    "value": "Amt Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "תווית ל- AMT DHCP DNS Simpix",
+    "value": "AMT DHCP DNS סיומת:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "כותרת לכרטיס תכונות AMT מופעלות",
+    "value": "תכונות מופעלות של AMT"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "תיאור לכרטיס תכונות AMT מופעל",
+    "value": "סטטוס של תכונות מופעלות AMT"
+  },
+  "general.AMTFeatures": {
+    "description": "הודעה לתכונות מעודכנות",
+    "value": "תכונות AMT מעודכנות"
+  },
+  "general.amtSKU": {
+    "description": "תווית עבור AMT SKU",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "כותרת לכרטיס סיכום AMT",
+    "value": "סיכום AMT"
+  },
+  "general.amtSummaryDescription": {
+    "description": "תיאור לכרטיס סיכום AMT",
+    "value": "סיכום מידע AMT"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "תווית עבור סיומת DNS מהימנים של AMT",
+    "value": "AMT מהימן של DNS סיומת (MEBX):"
+  },
+  "general.amtVersion": {
+    "description": "תווית לגרסת AMT",
+    "value": "גרסת AMT:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "אחזור שגיאות לתכונות AMT",
+    "value": "שגיאות אחזור תכונות AMT"
+  },
+  "general.errorAMTVersion": {
+    "description": "שגיאה לאחזור גרסת AMT",
+    "value": "שגיאה באחזור גרסת AMT"
+  },
+  "general.errorGeneralSettings": {
+    "description": "שגיאה לאחזור הגדרות כלליות",
+    "value": "שגיאה באחזור הגדרות כלליות"
+  },
+  "general.failAMTFeatures": {
+    "description": "שגיאה לעדכון תכונות",
+    "value": "עדכון תכונות AMT נכשל"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "הסבר כלים לאתחול HTTPS לא נתמך",
+    "value": "אתחול HTTPS אינו נתמך"
+  },
+  "general.httpsBootSupported": {
+    "description": "הסבר כלים לתמיכה באתחול HTTPS",
+    "value": "אתחול HTTPS נתמך"
+  },
+  "general.httpsNetworkBoot": {
+    "description": "תווית עבור אתחול רשת HTTPS",
+    "value": "אתחול רשת HTTPS:"
+  },
+  "general.ideRedirection": {
+    "description": "תווית לניתוב מחדש של IDE",
+    "value": "ניתוב מחדש של IDE:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "תווית ל- KVM",
+    "value": "עכבר מקלדת-וידיאו (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "קובץ כלים ל- KVM לא נתמך",
+    "value": "KVM לא נתמך"
+  },
+  "general.oneClickRecovery": {
+    "description": "תווית לשחזור לחיצה אחת",
+    "value": "התאוששות לחיצה אחת (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "קובץ כלים לשחזור לחיצה אחת לא נתמך",
+    "value": "התאוששות בלחיצה אחת אינה נתמכת"
+  },
+  "general.pbaBootShort": {
+    "description": "תווית ל- PBA Boot",
+    "value": "מגף PBA:"
+  },
+  "general.pbaNotSupported": {
+    "description": "מסמך כלים ל- PBA לא נתמך",
+    "value": "PBA אינו נתמך"
+  },
+  "general.pbaSupported": {
+    "description": "מסמך כלים לתמיכה ב- PBA",
+    "value": "PBA נתמך"
+  },
+  "general.provisioningMode": {
+    "description": "תווית למצב אספקה",
+    "value": "מצב אספקה:"
+  },
+  "general.serialOverLan": {
+    "description": "תווית לסול",
+    "value": "סדרתי-אובר-לאן (סול):"
+  },
+  "general.userConsent": {
+    "description": "תווית להסכמת משתמש",
+    "value": "הסכמת משתמש:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "הסכמת כלים להסכמת המשתמש אינה ניתנת להגדרה",
+    "value": "הסכמת משתמש שלא ניתן להגדרה ב- CCM"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "תווית לאתחול לשחזור Windows",
+    "value": "אתחול שחזור Windows:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "קובץ כלים לשחזור חלונות אינו נתמך",
+    "value": "התאוששות Windows אינה נתמכת"
+  },
+  "general.windowsRecoverySupported": {
+    "description": "מסמך כלים לתמיכה בשחזור Windows הנתמך",
+    "value": "התאוששות Windows נתמכת"
+  },
+  "httpBoot.enforce": {
+    "value": "אוכף אתחול מאובטח"
+  },
+  "httpBoot.error": {
+    "value": "כתובת אתר נדרשת"
+  },
+  "httpBoot.label": {
+    "value": "כתובת אתר"
+  },
+  "httpBoot.placeHolder": {
+    "value": "הזן את כתובת האתר"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "סיכום מידע BIOS"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "סיכום BIOS"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "שגיאה לאחזור מידע נוסף",
+    "value": "שגיאה באחזור מידע נוסף"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "שגיאה לאחזור מידע על חומרה",
+    "value": "שגיאה באחזור מידע על HW"
+  },
+  "hwInfo.label.capacity": {
+    "value": "יְכוֹלֶת:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "מהירות שעון (מקסימום):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "מעבד:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "יַצרָן:"
+  },
+  "hwInfo.label.model": {
+    "value": "דֶגֶם:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "תאריך שחרור:"
+  },
+  "hwInfo.label.serial": {
+    "value": "מס 'סידורי:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "מס 'סדרתי::"
+  },
+  "hwInfo.label.size": {
+    "value": "גוֹדֶל:"
+  },
+  "hwInfo.label.slot": {
+    "value": "חָרִיץ:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "מערכת ההפעלה היעד:"
+  },
+  "hwInfo.label.type": {
+    "value": "סוּג:"
+  },
+  "hwInfo.label.version": {
+    "value": "גִרְסָה:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "סיכום הזיכרון הפיזי המותקן"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "סיכום זיכרון"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "סיכום מידע על לוח האם"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "סיכום לוח האם"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "סיכום מידע האחסון"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "סיכום אחסון"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "סיכום מידע על מעבד ושלדה"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "סיכום מערכת"
+  },
+  "ieee.authProtocol": {
+    "description": "טקסט לפרוטוקול אימות",
+    "value": "פרוטוקול אימות"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "טקסט שגיאה לפרופילי IEEE",
+    "value": "שגיאה ביצירה/עדכון IEEE8021X פרופיל"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "שגיאה לטעינת תצורות IEEE8021X",
+    "value": "לא ניתן לטעון IEEE8021x configs"
+  },
+  "ieee.PXETimeout": {
+    "description": "טקסט לפסק זמן של PXE",
+    "value": "פסק זמן של PXE"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "טקסט שגיאה לפסק זמן של PXE",
+    "value": "הערך חייב להיות בין {{pxeTimeoutMin}} (מושבת) ו- {{pxeTimeoutMax}} שניות (יום אחד)"
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "IEEE 802.1x כותרת עמוד",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "IEEE8021X חדש כותרת עמוד תצורה",
+    "value": "IEEE8021X חדש"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "IEEE8021X CONFIGS כותרת עמוד",
+    "value": "תצורות IEEE8021X"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "אין הודעת תצורות IEEE 8021X",
+    "value": "אין תצורות IEEE 8021X"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "כותרת עמודות פרוטוקול אימות",
+    "value": "פרוטוקול אימות"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "כותרת עמודת ממשק",
+    "value": "מִמְשָׁק"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "כותרת עמודת שם",
+    "value": "שֵׁם"
+  },
+  "keyDisplayDialog.description": {
+    "description": "תיאור לתיבת דו -שיח תצוגה מפתח",
+    "value": "המפתח יוצג רק פעם אחת. "
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "תווית למפתח",
+    "value": "מַפְתֵחַ"
+  },
+  "keyDisplayDialog.title": {
+    "description": "כותרת לתיבת דו -שיח תצוגה מפתח",
+    "value": "מקש פרופיל עבור RPC-Go"
+  },
+  "kvm.attachDisk.label": {
+    "description": "תווית כפתור כדי לצרף תמונת דיסק עבור ider",
+    "value": "צרף תמונת דיסק (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "תווית לסוג הקידוד בסרגל הכלים של KVM",
+    "value": "בחר סוג קידוד"
+  },
+  "kvm.connect.button": {
+    "description": "תווית כפתור כדי להתחבר לפגישת KVM",
+    "value": "חבר KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "תווית מוצגת כאשר KVM מתחבר",
+    "value": "חיבור KVM ..."
+  },
+  "kvm.disconnect.button": {
+    "description": "תווית כפתור לניתוק מפגישת KVM",
+    "value": "נתק את KVM"
+  },
+  "kvm.enable": {
+    "description": "הודעה להפעלת KVM",
+    "value": "KVM אינו מופעל כרגע במכשיר זה. "
+  },
+  "kvm.errorAccessCancel": {
+    "description": "שגיאה לגישה בעת הבקשה לאפשר זאת מבוטלת",
+    "value": "לא ניתן לגשת ל- KVM - בקשה להפעיל את KVM מבוטלת"
+  },
+  "kvm.errorAccessEnable": {
+    "description": "שגיאה לגישה כאשר מבקשים להפעיל",
+    "value": "לא ניתן לגשת ל- KVM - נכשלה לאפשר KVM"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "שגיאה לגישה כאשר פגישה מתבצעת",
+    "value": "לא ניתן לגשת ל- KVM - פגישה נוספת של KVM בעיצומה"
+  },
+  "kvm.errorDialog": {
+    "description": "שגיאה להצגת דו -שיח KVM",
+    "value": "לא ניתן להציג דו -שיח KVM"
+  },
+  "kvm.errorRetrieve": {
+    "description": "שגיאה לאחזור סטטוס הפניה מחדש",
+    "value": "שגיאה אחזור סטטוס הפניה מחדש"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "שגיאה לאחזור סטטוס כוח",
+    "value": "שגיאה באחזור סטטוס כוח"
+  },
+  "kvm.fullscreen.button": {
+    "description": "תווית כפתור כדי להחליף את מצב המסך המלא ב- KVM",
+    "value": "מסך מלא"
+  },
+  "kvm.hotKeys.label": {
+    "description": "תווית לתפריט הנפתח של Hotkeys בסרגל הכלים של KVM",
+    "value": "מפתחות חמים"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "טקסט מציין מיקום לתפריט הנפתח של Hotkeys",
+    "value": "בחר מקש חם כדי לשלוח"
+  },
+  "kvm.hotKeys.send": {
+    "description": "תווית כפתור לשליחת המפתח שנבחר",
+    "value": "לִשְׁלוֹחַ"
+  },
+  "kvm.stopIder.label": {
+    "description": "תווית כפתור כדי לעצור את הפעלת ider",
+    "value": "עצור אידיר"
+  },
+  "kvm.title": {
+    "description": "כותרת ל- KVM",
+    "value": "אפשר KVM"
+  },
+  "login.error": {
+    "description": "שגיאה לכניסה",
+    "value": "כניסה שגיאה"
+  },
+  "login.header.loginTitle": {
+    "description": "כותרת עמוד הכניסה",
+    "value": "כְּנִיסָה לַמַעֲרֶכֶת"
+  },
+  "mqttEvents.connect": {
+    "description": "חיבר טקסט לחצן עבור MQTT",
+    "value": "לְחַבֵּר"
+  },
+  "mqttEvents.connected": {
+    "description": "Tooltip Text כאשר חיבור MQTT מצליח",
+    "value": "חיבור שהוקם"
+  },
+  "mqttEvents.failed": {
+    "description": "Tooltip Text כאשר חיבור MQTT נכשל",
+    "value": "החיבור נכשל"
+  },
+  "mqttEvents.guid.label": {
+    "description": "כותרת טבלה למדריך אירוע MQTT",
+    "value": "מדריך"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "רמז לקלט שם מארח MQTT",
+    "value": "הזן שם מארח. "
+  },
+  "mqttEvents.hostname.label": {
+    "description": "תווית עבור קלט MQTT HostName",
+    "value": "שם מארח"
+  },
+  "mqttEvents.message.label": {
+    "description": "כותרת טבלה להודעת אירוע MQTT",
+    "value": "הוֹדָעָה"
+  },
+  "mqttEvents.methods.label": {
+    "description": "כותרת טבלה לשיטות אירוע MQTT",
+    "value": "שיטות"
+  },
+  "mqttEvents.noData": {
+    "description": "טקסט המוצג כאשר אין אירועי MQTT",
+    "value": "אין אירועים"
+  },
+  "mqttEvents.path.hint": {
+    "description": "רמז לכניסת נתיב MQTT",
+    "value": "הזן נתיב MQTT. "
+  },
+  "mqttEvents.path.label": {
+    "description": "תווית עבור קלט נתיב MQTT",
+    "value": "נָתִיב"
+  },
+  "mqttEvents.port.hint": {
+    "description": "רמז לקלט יציאת MQTT",
+    "value": "הזן יציאת MQTT. "
+  },
+  "mqttEvents.port.label": {
+    "description": "תווית עבור קלט יציאת MQTT",
+    "value": "נָמָל"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "כותרת טבלה עבור חותמת זמן MQTT",
+    "value": "חותמת זמן"
+  },
+  "mqttEvents.title": {
+    "description": "כותרת כרטיס האירועים MQTT עם ספירה דינמית",
+    "value": "אירועי MQTT ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "כותרת טבלה לסוג אירוע MQTT",
+    "value": "סוּג"
+  },
+  "network.errorNetworkSetting": {
+    "description": "שגיאה לאחזור הגדרות רשת",
+    "value": "שגיאה בהגדרות רשת"
+  },
+  "network.ieee.authProtocol": {
+    "description": "תווית לפרוטוקול אימות אלחוטי 8021x",
+    "value": "פרוטוקול אימות"
+  },
+  "network.ieee.availableInS0": {
+    "description": "תווית עבור IEEE 8021X קווי חוטית זמינה ב- S0",
+    "value": "זמין ב- S0"
+  },
+  "network.ieee.domain": {
+    "description": "תווית עבור IEEE 8021X תחום אלחוטי",
+    "value": "תְחוּם"
+  },
+  "network.ieee.enabled": {
+    "description": "תווית עבור IEEE 8021X Wired מופעלת",
+    "value": "מופעל"
+  },
+  "network.ieee.pac": {
+    "description": "תווית עבור IEEE 8021X PAC אלחוטי",
+    "value": "תעודת גישה מוגנת"
+  },
+  "network.ieee.pacPassword": {
+    "description": "תווית עבור סיסמת IEEE 8021X PAC אלחוטית",
+    "value": "סיסמת PAC"
+  },
+  "network.ieee.password": {
+    "description": "תווית עבור IEEE 8021x סיסמא אלחוטית",
+    "value": "סִיסמָה"
+  },
+  "network.ieee.psk": {
+    "description": "תווית עבור IEEE 8021X אלחוטית PSK",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "תווית עבור IEEE 8021x פסק זמן של PXE Wired",
+    "value": "פסק זמן של PXE"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "תווית עבור IEEE 8021x זהות נדידת אלחוטי",
+    "value": "זהות נודדת"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "תווית עבור IEEE 8021x השוואה בין אישור שרת אלחוטי",
+    "value": "השוואת שם תעודת שרת"
+  },
+  "network.ieee.serverCertName": {
+    "description": "תווית עבור IEEE 8021X שם אישור שרת אלחוטי",
+    "value": "שם אישור שרת"
+  },
+  "network.ieee.subtitle": {
+    "description": "כתובית לכרטיס הגדרות רשת IEEE 8021X",
+    "value": "צפה בהגדרות רשת IEEE 8021X עבור מכשיר זה"
+  },
+  "network.ieee.title": {
+    "description": "כותרת כרטיס הגדרות הרשת IEEE 8021X",
+    "value": "הגדרות רשת IEEE 8021X"
+  },
+  "network.ieee.username": {
+    "description": "תווית עבור IEEE 8021X שם משתמש אלחוטי",
+    "value": "שם משתמש"
+  },
+  "network.wired.defaultGateway": {
+    "description": "תווית עבור שער ברירת המחדל הקווי",
+    "value": "שער ברירת מחדל"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "תווית לסטטוס מופעל DHCP קווי",
+    "value": "DHCP מופעל"
+  },
+  "network.wired.ipAddress": {
+    "description": "תווית לכתובת ה- IP החוטית",
+    "value": "כתובת IP"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "תווית למצב סנכרון IP קווי",
+    "value": "סנכרון IP מופעל"
+  },
+  "network.wired.linkControl": {
+    "description": "תווית לבקרת קישורים קווית",
+    "value": "בקרת קישור"
+  },
+  "network.wired.linkPolicy": {
+    "description": "תווית למדיניות קישור קווית",
+    "value": "מדיניות קישור"
+  },
+  "network.wired.linkPreference": {
+    "description": "תווית להעדפת קישור קווית",
+    "value": "העדפת קישור"
+  },
+  "network.wired.linkStatus": {
+    "description": "תווית לסטטוס קישור קווי",
+    "value": "סטטוס קישור"
+  },
+  "network.wired.macAddress": {
+    "description": "תווית לכתובת MAC קווית",
+    "value": "כתובת MAC"
+  },
+  "network.wired.primaryDNS": {
+    "description": "תווית עבור ה- DNS הראשוני החוטי",
+    "value": "DNS ראשוני"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "תווית עבור ה- DNS המשני החוטי",
+    "value": "DNS משני"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "תווית ל- IP דינמי משותף קווי",
+    "value": "IP דינמי משותף"
+  },
+  "network.wired.sharedMAC": {
+    "description": "תווית לסטטוס Mac משותף קווי",
+    "value": "Mac משותף"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "תווית ל- IP סטטי משותף קווי",
+    "value": "IP סטטי משותף"
+  },
+  "network.wired.subnetMask": {
+    "description": "תווית עבור מסכת רשת המשנה הקווית",
+    "value": "מסכת רשת משנה"
+  },
+  "network.wired.subtitle": {
+    "description": "כתובית לכרטיס הגדרות הרשת החוטית",
+    "value": "הצג הגדרות רשת קוויות עבור מכשיר זה"
+  },
+  "network.wired.title": {
+    "description": "כותרת כרטיס הגדרות הרשת החוטית",
+    "value": "הגדרות רשת קווית"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "תווית לשער ברירת המחדל האלחוטי",
+    "value": "שער ברירת מחדל"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "תווית למצב של DHCP אלחוטי",
+    "value": "DHCP מופעל"
+  },
+  "network.wireless.ipAddress": {
+    "description": "תווית לכתובת ה- IP האלחוטית",
+    "value": "כתובת IP"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "תווית למצב סנכרון IP אלחוטי",
+    "value": "סנכרון IP מופעל"
+  },
+  "network.wireless.linkControl": {
+    "description": "תווית לבקרת קישורים אלחוטית",
+    "value": "בקרת קישור"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "תווית למדיניות קישור אלחוטי",
+    "value": "מדיניות קישור"
+  },
+  "network.wireless.linkPreference": {
+    "description": "תווית להעדפת קישור אלחוטי",
+    "value": "העדפת קישור"
+  },
+  "network.wireless.linkStatus": {
+    "description": "תווית לסטטוס קישור אלחוטי",
+    "value": "סטטוס קישור"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "תווית לסנכרון פרופיל מקומי אלחוטי",
+    "value": "סנכרון פרופיל מקומי"
+  },
+  "network.wireless.macAddress": {
+    "description": "תווית לכתובת MAC אלחוטית",
+    "value": "כתובת MAC"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "תווית עבור ה- DNS הראשוני האלחוטי",
+    "value": "DNS ראשוני"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "תווית עבור ה- DNS המשני האלחוטי",
+    "value": "DNS משני"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "תווית ל- IP דינמי משותף אלחוטי",
+    "value": "IP דינמי משותף"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "תווית לסטטוס Mac משותף אלחוטי",
+    "value": "Mac משותף"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "תווית ל- IP סטטי משותף אלחוטי",
+    "value": "IP סטטי משותף"
+  },
+  "network.wireless.subnetMask": {
+    "description": "תווית עבור מסכת רשת המשנה האלחוטית",
+    "value": "מסכת רשת משנה"
+  },
+  "network.wireless.subtitle": {
+    "description": "כתובית לכרטיס הגדרות הרשת האלחוטית",
+    "value": "הצג הגדרות רשת אלחוטית עבור מכשיר זה"
+  },
+  "network.wireless.title": {
+    "description": "כותרת כרטיס הגדרות הרשת האלחוטית",
+    "value": "הגדרות רשת אלחוטית"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "שם הרשת: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "שיטת הצפנה: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "שיטת אימות: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "כתובית של כרטיס הרשתות האלחוטיות",
+    "value": "צפה ברשתות אלחוטיות עבור מכשיר זה"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "כותרת כרטיס הרשתות האלחוטיות",
+    "value": "רשתות אלחוטיות"
+  },
+  "pba.label": {
+    "description": "תווית לתיבת הסימון כדי להפעיל או להשבית אכיפת אתחול מאובטחת",
+    "value": "אוכף אתחול מאובטח"
+  },
+  "pba.required": {
+    "description": "הודעת שגיאה המוצגת כאשר נתיב קובץ האתחול לא נבחר",
+    "value": "נתיב קובץ אתחול נדרש"
+  },
+  "pba.title": {
+    "description": "תווית לבחירת נתיב קובץ האתחול בתיבת הדו -שיח PBA",
+    "value": "נתיב קובץ אתחול"
+  },
+  "powerOptions.hibernate": {
+    "value": "שינה"
+  },
+  "powerOptions.off": {
+    "value": "כבוי"
+  },
+  "powerOptions.on": {
+    "value": "עַל"
+  },
+  "powerOptions.powerCycle": {
+    "value": "מחזור כוח"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "הפעלה ל- BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "הפעלה ל- HTTPS BOOT (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "הפעלה עד PXE"
+  },
+  "powerOptions.reset": {
+    "value": "אִתחוּל"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "אפס לביוס"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "אפס לאתחול HTTPS (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "אפס ל- IDE-R (CD-ROM)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "אפס ל- PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "לִישׁוֹן"
+  },
+  "powerOptions.softOff": {
+    "value": "רך-אוף"
+  },
+  "powerOptions.softReset": {
+    "value": "איפוס רך"
+  },
+  "powerUp.message": {
+    "description": "הודעת דו -שיח המבקשת מהמשתמש להפעיל את המכשיר",
+    "value": "האם אתה רוצה לשלוח פקודת הפעלה למכשיר?"
+  },
+  "powerUp.title": {
+    "description": "כותרת הדו -שיח מוצגת כאשר המכשיר כבוי",
+    "value": "המכשיר שלך לא מופעל"
+  },
+  "profileDetail.activationMode": {
+    "description": "תווית לבחירת מצב הפעלה",
+    "value": "מצב הפעלה"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "מצב הפעלה הנשלט על ידי המנהל",
+    "value": "מצב בקרת מנהל"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "מצב הפעלה הנשלט על ידי הלקוח",
+    "value": "מצב בקרת לקוחות"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "תווית למקטע תכונות AMT",
+    "value": "תכונות AMT - הפעל/השבת תכונות ניתוק מחדש של AMT"
+  },
+  "profileDetail.amtPassword": {
+    "description": "תווית לשדה סיסמא AMT",
+    "value": "סיסמת AMT"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "רמז לשדה סיסמא AMT",
+    "value": "סיסמת AMT משמשת לגישה מרחוק של מכשיר. "
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "תווית לסעיף פרופילים אלחוטיים משויכים",
+    "value": "פרופילים אלחוטיים משויכים (בסדר עדיפות)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "תווית עבור לחצן רדיו CIRA",
+    "value": "CIRA (ענן)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "רמז לתצורת CIRA",
+    "value": "לא ניתן להגדיר את CIRA לרשת סטטית אם גרסת AMT נמוכה מ- 11.6"
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "תווית לשדה תצורת CIRA",
+    "value": "תצורת CIRA"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "תווית לקטע תצורת חיבור",
+    "value": "תצורת חיבור אספקת"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "הודעת שגיאה למצב חיבור חובה",
+    "value": "יש לציין את מצב החיבור"
+  },
+  "profileDetail.dhcp": {
+    "description": "תווית ללחצן DHCP",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "תיאור למצב חיבור ישיר",
+    "value": "בתרחיש זה AMT משמש כשרת ומאזין לחיבורים נכנסים. "
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "אגדה למקטע מצב חיבור ישיר",
+    "value": "מצב חיבור ישיר (השתמש כאשר מכשירים נגישים ישירות דרך רשת מקומית)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "רמז להזמנה מחדש של גרירה ושחרור",
+    "value": "לגרור ולרדת לסדר מחדש"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "תווית לתיבת הסימון לסנכרון IP",
+    "value": "אפשר סנכרון IP"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "תווית לתיבת הסימון של מערכת ההפעלה WiFi Sync",
+    "value": "אפשר סנכרון פרופיל WiFi של מערכת ההפעלה"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "תווית לתיבת הסימון של שיתוף wifi wifi",
+    "value": "אפשר שיתוף פרופיל Wi-Fi של UEFI/CSME"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "תווית ליצירת תיבת סימון AMT סיסמה אקראית",
+    "value": "צור סיסמת AMT אקראית עבור כל מכשיר"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "תווית ליצירת תיבת סימון סיסמא אקראית MEBX",
+    "value": "צור סיסמת MEBX אקראית עבור כל מכשיר"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "הסבר כלים ליצירת כפתור סיסמה אקראית",
+    "value": "צור סיסמא אקראית"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "תווית לתיבת הסימון של IDE Redirect",
+    "value": "הפניית IDE"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "תיאור למצב אינטרנט",
+    "value": "בתרחיש זה AMT משמש כלקוח ומתחבר לערכת הכלים המשמשת כשרת (דורש חברי פרלמנט)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "אגדה למקטע מצב אינטרנט",
+    "value": "מצב אינטרנט (השתמש כאשר מכשירים אינם נגישים ישירות דרך רשת מקומית)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "רמז לסנכרון IP כאשר מושבת",
+    "value": "מופעל תמיד עבור DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "רמז לסנכרון IP כאשר מופעל",
+    "value": "החל רק על ממשק החוטי. "
+  },
+  "profileDetail.kvm": {
+    "description": "תווית לתיבת הסימון KVM",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "תווית לשדה סיסמא MEBX",
+    "value": "סיסמת MEBX"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "רמז לשדה סיסמא MEBX",
+    "value": "סיסמת MEBX משמשת להגנה על גישה ל- BIOS כאשר משתמש נמצא במכשיר. "
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "תווית למקטע תצורת רשת",
+    "value": "תצורת רשת"
+  },
+  "profileDetail.newTag": {
+    "description": "מציין מקום לקבלת קלט תגיות חדש",
+    "value": "תג חדש ..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "טקסט כאשר אין תצורות CIRA זמינות",
+    "value": "- לא נמצאו תצורות CIRA"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "טקסט כאשר לא נבחר תצורה",
+    "value": "לא נבחר תצורה."
+  },
+  "profileDetail.nonTls": {
+    "description": "תווית ללחצן רדיו שאינו TLS",
+    "value": "לא TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "רמז לאפשרות ללא TLS",
+    "value": "ב- AMT 16.1 וחדש יותר, AMT מספקת תעודות עם חתימה עצמית. "
+  },
+  "profileDetail.noWifi": {
+    "description": "הודעה ללא תצורות WiFi זמינות",
+    "value": "לא נמצאו תצורות WiFi"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "רמז לסינכרון WiFi של מערכת ההפעלה",
+    "value": "החל רק על הממשק האלחוטי."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "רמז טקסט לשדה שם פרופיל",
+    "value": "ספק שם לפרופיל זה. "
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "טקסט מציין מקום לשדה שם פרופיל",
+    "value": "לְשֶׁעָבַר. "
+  },
+  "profileDetail.showHidePassword": {
+    "description": "הסבר כלים לתצוגה/הסתר לחצן סיסמה",
+    "value": "הצג / הסתר סיסמה"
+  },
+  "profileDetail.sol": {
+    "description": "תווית לתיבת הסימון SOL",
+    "value": "סוֹל"
+  },
+  "profileDetail.static": {
+    "description": "תווית לכפתור רדיו סטטי",
+    "value": "סטָטִי"
+  },
+  "profileDetail.tags": {
+    "description": "תווית לשדה תגיות",
+    "value": "תגיות"
+  },
+  "profileDetail.tagsHint": {
+    "description": "רמז לשדה תגיות",
+    "value": "אתה יכול להזין תגיות כדי לעזור בארגון ושאילתות מכשירי כאשר רשימת המכשירים המנוהלים שלך צומחת. "
+  },
+  "profileDetail.tls": {
+    "description": "תווית עבור כפתור הרדיו של TLS",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "תווית לשדה מצב TLS",
+    "value": "מצב TLS"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "רמז לשדה מצב TLS",
+    "value": "לא ניתן להגדיר את CIRA, אם TLS מוגדר"
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "תווית לשדה רשות חתימת TLS",
+    "value": "רשות חתימת TLS"
+  },
+  "profileDetail.userConsent": {
+    "description": "תווית לשדה הסכמת משתמש",
+    "value": "הסכמת משתמש"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "רמז לשדה הסכמת משתמש",
+    "value": "שולט כאשר משתמש צריך להיות נוכח עבור תכונות AMT SELECT"
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "תווית לשדה פרופילי WiFi",
+    "value": "פרופילי Wi-Fi"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "רמז לשדה פרופילי WiFi",
+    "value": "Wi-Fi לא יעבוד דרך רשת סטטית"
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "מציין מקום לחיפוש פרופילי WiFi",
+    "value": "חפש פרופילי Wi-Fi להוסיף"
+  },
+  "profileDetail.wired": {
+    "description": "תווית לקטע רשת קווי",
+    "value": "קווי"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "תווית לשדה תצורה של 802.1x קווי",
+    "value": "תצורת 802.1x קווי"
+  },
+  "profiles.deleteProfile": {
+    "description": "הודעה לפרופילים שנמחקו",
+    "value": "הפרופיל נמחק בהצלחה"
+  },
+  "profiles.exportProfile": {
+    "description": "הודעה לפרופילים מיוצאים",
+    "value": "פרופיל ייצא בהצלחה"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "שגיאה למחיקת פרופילים",
+    "value": "לא ניתן למחוק פרופיל"
+  },
+  "profiles.failExportProfile": {
+    "description": "שגיאה לייצוא פרופילים",
+    "value": "לא ניתן לייצא פרופיל"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "שגיאה לטעינת תצורות",
+    "value": "לא ניתן לטעון תצורות"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "כותרת עמוד פרופיל חדש",
+    "value": "פרופיל חדש"
+  },
+  "profiles.header.profileTitle": {
+    "description": "פרופילים כותרת עמוד",
+    "value": "פרופילים"
+  },
+  "profiles.noData": {
+    "description": "אין הודעה על פרופילים",
+    "value": "אין פרופילים"
+  },
+  "profiles.table.activation": {
+    "description": "כותרת העמודה של מצב הפעלה",
+    "value": "מצב הפעלה"
+  },
+  "profiles.table.connection": {
+    "description": "כותרת עמודת Config Config",
+    "value": "תצורת חיבור"
+  },
+  "profiles.table.name": {
+    "description": "כותרת עמודת שם",
+    "value": "שֵׁם"
+  },
+  "profiles.table.network": {
+    "description": "כותרת עמודות תצורת רשת",
+    "value": "תצורת רשת"
+  },
+  "randomPassword.learnMore": {
+    "description": "הודעה לקישור תמיכה",
+    "value": "למידע נוסף כאן"
+  },
+  "randomPassword.message": {
+    "description": "הודעת דו -שיח מסבירה את ההשלכות של שימוש בסיסמאות אקראיות",
+    "value": "בחרת ליצור סיסמא אקראית עבור כל מכשיר. "
+  },
+  "randomPassword.title": {
+    "description": "כותרת דו -שיח לאזהרת סיסמא אקראית",
+    "value": "באמצעות סיסמאות שנוצרו אקראיות"
+  },
+  "sol.connect": {
+    "description": "כפתור לחיבור ל- SOL",
+    "value": "Connect Sol"
+  },
+  "sol.disconnect": {
+    "description": "כפתור לניתוק ל- SOL",
+    "value": "נתק את סול"
+  },
+  "sol.enable": {
+    "description": "הודעה להפעלת SOL",
+    "value": "SOL אינו מופעל כרגע במכשיר זה. "
+  },
+  "sol.errorAccessCancel": {
+    "description": "שגיאה לגישה ל- SOL כאשר הבקשה להפעלת SOL מבוטלת",
+    "value": "לא ניתן לגשת ל- SOL - בקשה להפעלת SOL מבוטלת"
+  },
+  "sol.errorAccessEnable": {
+    "description": "שגיאה לגישה ל- SOL כאשר ה- SOL לא הצליח להפעיל",
+    "value": "לא ניתן לגשת ל- SOL - נכשל להפעיל את SOL"
+  },
+  "sol.errorDiplay": {
+    "description": "שגיאה להצגת דו -שיח",
+    "value": "לא ניתן להציג דו -שיח SOL"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "שגיאה לאחזור סטטוס כוח",
+    "value": "שגיאה באחזור סטטוס כוח"
+  },
+  "sol.loading": {
+    "description": "הודעה לטעינה ל- SOL",
+    "value": "חיבור סול ..."
+  },
+  "sol.title": {
+    "description": "כותרת לסול",
+    "value": "אפשר סול"
+  },
+  "staticCira.message": {
+    "description": "אזהרת הודעת דו -שיח על מגבלות חיבור CIRA עם IP סטטי",
+    "value": "בחרת להתחבר באמצעות CIRA עם תצורת רשת IP סטטית. "
+  },
+  "staticCira.title": {
+    "description": "כותרת דו -שיח לאזהרת IP סטטית של CIRA",
+    "value": "תצורת CIRA ותצורת רשת סטטית"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "תווית לקבלת חיבורים לא מאובטחים ב- TLS",
+    "value": "קבל קשרים שאינם מאובטחים"
+  },
+  "tls.elementName.label": {
+    "description": "תווית לשדה שם אלמנט TLS",
+    "value": "שם אלמנט"
+  },
+  "tls.enabled.label": {
+    "description": "תווית לשדה המופעל על ידי TLS",
+    "value": "מופעל"
+  },
+  "tls.errorSettings": {
+    "description": "שגיאה לאחזור הגדרות TLS",
+    "value": "שגיאה בהגדרות TLS"
+  },
+  "tls.instanceId.label": {
+    "description": "תווית לשדה מזהה מופע TLS",
+    "value": "מזהה מופע"
+  },
+  "tls.mutualAuth.label": {
+    "description": "תווית לשדה אימות הדדי TLS",
+    "value": "אימות הדדי"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "תווית מציינת אם חיבורים שאינם מאובטחים נתמכים ב- TLS",
+    "value": "חיבורים לא מאובטחים נתמכים"
+  },
+  "tls.title": {
+    "description": "כותרת לכרטיס הגדרות TLS",
+    "value": "אבטחת שכבת הובלה"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "אפשרות לשימוש בתעודה חתומה של Microsoft CA",
+    "value": "השתמש ב- Microsoft CA חתום Cert (דורש עוזר ארגוני)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "אפשרות לשימוש בתעודה חתימה עצמית",
+    "value": "השתמש ב- Cert עם חתימה עצמית"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "מצב TLS עם חיבורי TLS הדדיים וגם חיבורי TLS",
+    "value": "אימות הדדי ולא TLS"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "מצב TLS באמצעות אימות הדדי בלבד",
+    "value": "אימות TLS הדדי בלבד"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "מצב TLS עם חיבורי אימות שרת וגם חיבורים שאינם TLS",
+    "value": "אימות שרת ואי-TLS"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "מצב TLS באמצעות אימות שרת בלבד",
+    "value": "אימות שרת בלבד"
+  },
+  "toolbar.errorMPS": {
+    "description": "שגיאה לאחזור גרסאות חברי פרלמנט",
+    "value": "שגיאה באחזור גרסאות חברי פרלמנט"
+  },
+  "toolbar.errorRPS": {
+    "description": "שגיאה לאחזור גרסאות RPS",
+    "value": "שגיאה באחזור גרסאות RPS"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "הכותרת העיקרית של היישום",
+    "value": "מדגם ממשק משתמש"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "הכותרת העיקרית של היישום במצב קונסולה",
+    "value": "לְנַחֵם"
+  },
+  "toolbar.header.hello": {
+    "description": "שלום הודעה",
+    "value": "היי"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "שגיאה לביטול קוד הסכמת המשתמש",
+    "value": "שגיאה בביטול קוד הסכמת משתמש"
+  },
+  "userConsent.errorRequest": {
+    "description": "שגיאה לבקשת קוד הסכמת משתמש",
+    "value": "שגיאה מבקשת קוד הסכמת משתמש - נסה שוב לאחר 3 דקות"
+  },
+  "userConsent.errorSendCode": {
+    "description": "שגיאה לשליחת קוד הסכמת משתמש",
+    "value": "שגיאה שליחת קוד הסכמת משתמש"
+  },
+  "userConsentGeneral.all": {
+    "description": "הסכמה הנדרשת לכל הפעולות",
+    "value": "כֹּל"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "הסכמה הנדרשת רק לפעולות KVM",
+    "value": "KVM"
+  },
+  "userConsentGeneral.none": {
+    "description": "אין צורך בהסכמת משתמש",
+    "value": "אַף לֹא אֶחָד"
+  },
+  "userConsentModes.all": {
+    "description": "הסכמה הנדרשת לכל הפעולות",
+    "value": "כֹּל"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "הסכמה הנדרשת רק לפעולות KVM",
+    "value": "KVM בלבד"
+  },
+  "userConsentModes.none": {
+    "description": "אין צורך בהסכמת משתמש",
+    "value": "אַף לֹא אֶחָד"
+  },
+  "warning.iderActive": {
+    "description": "מוצג כאשר הפעלת ider פעילה",
+    "value": "הפעלה IDER פעיל"
+  },
+  "warning.iderEnded": {
+    "description": "מוצג עם סיום מושב ה- ider",
+    "value": "הפעלת ider הסתיימה"
+  },
+  "warning.userConsentCancelled": {
+    "description": "אזהרה מוצגת כאשר בוטל קוד הסכמת המשתמש הקודם",
+    "value": "{{featureName}} לא ניתן לגשת - קוד הסכמת המשתמש המבוקש בעבר מבוטל"
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "שגיאה לטעינת תצורות",
+    "value": "לא ניתן לטעון תצורות"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "כותרת עמוד אלחוטית",
+    "value": "אַלחוּט"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "כותרת עמודות לשיטת האימות של התצורה האלחוטית",
+    "value": "אימות"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "כותרת עמודות לשיטת ההצפנה של התצורה האלחוטית",
+    "value": "הצפנה"
+  },
+  "wirelessConfigs.name": {
+    "description": "כותרת עמודות לשם התצורה האלחוטית",
+    "value": "שֵׁם"
+  },
+  "wirelessConfigs.noData": {
+    "description": "הודעה המוצגת כאשר אין תצורות אלחוטיות",
+    "value": "אין תצורות אלחוטיות"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "כותרת עמודות עבור ה- SSID של התצורה האלחוטית",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "כותרת לקטע התצורות האלחוטיות",
+    "value": "תצורות אלחוטיות"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "תווית לשדה שיטת האימות",
+    "value": "שיטת אימות"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "תווית לשדה שיטת ההצפנה",
+    "value": "שיטת הצפנה"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "הודעת שגיאה ליצירה/עדכון פרופיל אלחוטי",
+    "value": "שגיאה ביצירה/עדכון פרופיל אלחוטי"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "הודעת שגיאה לשדות נדרשים",
+    "value": "שדה זה נדרש ועליו להיות אלפא -נומרי ללא רווחים או סמלים."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "שגיאה לשמירת פרופילים אלחוטיים",
+    "value": "שגיאה שמירת פרופיל אלחוטי"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "תווית לשדה התצורה 802.1x",
+    "value": "תצורת 802.1x"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "כותרת ליצירת תצורה אלחוטית חדשה",
+    "value": "תצורה אלחוטית חדשה"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "הודעת הצלחה ליצירת פרופיל אלחוטי",
+    "value": "הפרופיל נוצר בהצלחה"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "הודעת הצלחה לעדכון פרופיל אלחוטי",
+    "value": "פרופיל עודכן בהצלחה"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "תווית לשדה משפחת PSK",
+    "value": "משפט סיסמה של PSK"
+  },
+  "wirelessDetail.saving": {
+    "description": "הודעה לשמירת פרופיל בהצלחה",
+    "value": "פרופיל שומר בהצלחה"
+  },
+  "wirelessDetail.ssid": {
+    "description": "תווית לשדה SSID",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "תווית לשדה שם הפרופיל האלחוטי",
+    "value": "שם פרופיל אלחוטי"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "רמז לשדה שם הפרופיל האלחוטי",
+    "value": "ספק שם לפרופיל האלחוטי"
+  },
+  "general.supported": {
+    "description": "תווית לתכונות AMT מופעלות",
+    "value": "נתמך"
+  },
+  "general.notSupported": {
+    "description": "תווית לתכונות AMT מושבתות",
+    "value": "לא נתמך"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "הפעלה עד PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "הפעלה עד WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "איפוס ל־PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "איפוס ל־WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "תווית להרחבה",
+    "value": "הרחב"
+  },
+  "general.collapse": {
+    "description": "תווית לצמצום",
+    "value": "צמצם"
+  },
+  "proxy.label": {
+    "value": "פרוקסים",
+    "description": "תווית עבור סעיף הפרוקסים"
+  },
+  "proxy.configs.label": {
+    "value": "הגדרות פרוקסי",
+    "description": "תווית עבור שדה הקלט של הגדרות הפרוקסי"
+  },
+  "proxy.configs.placeholder": {
+    "value": "חפש הגדרות פרוקסי להוספה",
+    "description": "טקסט מציין מקום לחיפוש הגדרות פרוקסי"
+  },
+  "proxy.configs.hint": {
+    "value": "ניתן להקצות פרוקסים לפרופיל זה",
+    "description": "רמז שמוצג מתחת לשדה הקלט של הגדרות הפרוקסי"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "פרופילי פרוקסי קשורים (לפי סדר עדיפות)",
+    "description": "תווית עבור רשימת פרופילי הפרוקסי הקשורים"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "גרור ושחרר לשינוי סדר",
+    "description": "רמז עבור שינוי סדר באמצעות גרירה ושחרור"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "הסר פרופיל פרוקסי",
+    "description": "תווית aria עבור כפתור הסרת פרופיל הפרוקסי"
+  },
+  "profileDetail.noProxy": {
+    "description": "הודעה כאשר אין הגדרות פרוקסי זמינות",
+    "value": "לא נמצאו הגדרות פרוקסי"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "הגדרות פרוקסי",
+    "description": "כותרת הגדרות הפרוקסי"
+  },
+  "proxyConfigs.header.name": {
+    "value": "שם",
+    "description": "כותרת עמודה עבור שם הגדרת הפרוקסי"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "כתובת פרוקסי",
+    "description": "כותרת עמודה עבור כתובת הפרוקסי"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "פורמט כתובת",
+    "description": "כותרת עמודה עבור פורמט הכתובת"
+  },
+  "proxyConfigs.header.port": {
+    "value": "פורט",
+    "description": "כותרת עמודה עבור הפורט"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "סיומת DNS של הרשת",
+    "description": "כותרת עמודה עבור סיומת DNS של הרשת"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "הגדרת פרוקסי חדשה",
+    "description": "כותרת עמוד עבור הגדרת פרוקסי חדשה"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "עריכת הגדרת פרוקסי",
+    "description": "כותרת עמוד לעריכת הגדרת פרוקסי"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "כתובת פרוקסי",
+    "description": "תווית עבור שדה כתובת הפרוקסי"
+  },
+  "proxyConfigs.name": {
+    "value": "שם",
+    "description": "תווית עבור שדה שם הגדרת הפרוקסי"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "הזן שם הגדרת פרוקסי",
+    "description": "טקסט מציין מקום עבור שדה שם הגדרת הפרוקסי"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "הזן את כתובת שרת הפרוקסי",
+    "description": "טקסט מציין מקום עבור שדה כתובת הפרוקסי"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "פורמט כתובת",
+    "description": "תווית עבור שדה פורמט הכתובת"
+  },
+  "proxyConfigs.port": {
+    "value": "פורט",
+    "description": "תווית עבור שדה הפורט"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "סיומת DNS של הרשת",
+    "description": "תווית עבור שדה סיומת ה-DNS"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "טקסט מציין מקום עבור שדה סיומת ה-DNS"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "פורט נדרש",
+    "description": "הודעת אימות: הפורט נדרש"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "הפורט חייב להיות בין 0 ל-65535",
+    "description": "הודעת אימות עבור טווח הפורט"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "שם נדרש",
+    "description": "הודעת אימות: שם נדרש"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "סיומת DNS של הרשת נדרשת",
+    "description": "הודעת אימות: סיומת DNS נדרשת"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "סיומת DNS של הרשת חייבת להכיל 192 תווים או פחות",
+    "description": "הודעת אימות עבור אורך סיומת ה-DNS המרבי"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "הגדרת הפרוקסי נוצרה בהצלחה",
+    "description": "הודעת הצלחה ליצירת הגדרת פרוקסי"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "הגדרת הפרוקסי עודכנה בהצלחה",
+    "description": "הודעת הצלחה לעדכון הגדרת פרוקסי"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "הגדרת הפרוקסי {{name}} נמחקה בהצלחה",
+    "description": "הודעת הצלחה למחיקת הגדרת פרוקסי"
+  },
+  "common.delete": {
+    "value": "מחק",
+    "description": "טקסט כפתור מחיקה"
+  },
+  "common.update": {
+    "value": "עדכן",
+    "description": "טקסט כפתור עדכון"
+  },
+  "common.noData": {
+    "value": "אין נתונים זמינים",
+    "description": "הודעה כאשר אין נתונים זמינים"
+  }
+}

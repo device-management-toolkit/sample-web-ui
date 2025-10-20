@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
 import { MatTooltip } from '@angular/material/tooltip'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-navbar',
@@ -31,4 +31,11 @@ import { TranslateModule } from '@ngx-translate/core'
 export class NavbarComponent {
   cloudMode = environment.cloud
   showSubNav = false
+  private readonly translate = inject(TranslateService)
+
+  get ciraTitle(): string {
+    return this.cloudMode === false
+      ? this.translate.instant('configs.header.noCiraTitle.value')
+      : this.translate.instant('configs.header.ciraTitle.value')
+  }
 }

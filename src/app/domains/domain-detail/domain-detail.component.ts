@@ -133,17 +133,16 @@ export class DomainDetailComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.snackBar.open($localize`Domain profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            const completeMessage: string = this.translate.instant('domainDetail.completeProfile.value')
+            this.snackBar.open(completeMessage, undefined, SnackbarDefaults.defaultSuccess)
 
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            this.snackBar.open(
-              $localize`Error creating/updating domain profile`,
-              undefined,
-              SnackbarDefaults.defaultError
-            )
-            this.errorMessages = err
+            const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
+            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
+
+            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
           }
         })
     }

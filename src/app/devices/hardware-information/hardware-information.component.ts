@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-hardware-information',
@@ -24,7 +25,8 @@ import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.p
     MatCardModule,
     MatDividerModule,
     MatIconModule,
-    AmDateFormatterPipe
+    AmDateFormatterPipe,
+    TranslateModule
   ],
   templateUrl: './hardware-information.component.html',
   styleUrl: './hardware-information.component.scss'
@@ -32,7 +34,7 @@ import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.p
 export class HardwareInformationComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public isLoading = signal(true)
@@ -52,7 +54,8 @@ export class HardwareInformationComponent implements OnInit {
       .getHardwareInformation(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving HW Info`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('hwInfo.errorRetrievingHW.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
@@ -72,7 +75,8 @@ export class HardwareInformationComponent implements OnInit {
       .getDiskInformation(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving additional info`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('hwInfo.errorRetrievingAdditional.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {

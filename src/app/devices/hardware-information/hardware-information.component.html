@@ -4,8 +4,8 @@
 <div class="flex-1 flex-row">
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title> System Summary </mat-card-title>
-      <mat-card-subtitle>Summary of CPU and Chassis information</mat-card-subtitle>
+      <mat-card-title>{{ 'hwInfo.systemSummary.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'hwInfo.systemSummary.subtitle.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="flex-row flex-wrap">
@@ -14,7 +14,7 @@
             @if (chip.Version !== null) {
               <div class="flex-row flex-1 flex-wrap">
                 <div class="flex flex-25">
-                  <p>CPU:</p>
+                  <p>{{ 'hwInfo.label.cpu.value' | translate }}</p>
                 </div>
                 <div class="flex flex-75 justify-end">
                   <span class="mat-h3" data-cy="chipVersion"> {{ chip.Version }}</span>
@@ -24,25 +24,25 @@
           </div>
         }
         <div class="flex flex-50">
-          <p>Manufacturer:</p>
+          <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo?.CIM_Chassis?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Model:</p>
+          <p>{{ 'hwInfo.label.model.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="model"> {{ hwInfo?.CIM_Chassis?.response?.Model }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Serial No:</p>
+          <p>{{ 'hwInfo.label.serialNo.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo?.CIM_Chassis?.response?.SerialNumber }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Version:</p>
+          <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="version">{{ hwInfo?.CIM_Chassis?.response?.Version }}</span>
@@ -50,28 +50,28 @@
       </div>
     </mat-card-content>
   </mat-card>
+
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title> BIOS Summary </mat-card-title>
-      <mat-card-subtitle>Summary of BIOS information</mat-card-subtitle>
+      <mat-card-title>{{ 'hwInfo.biosSummary.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'hwInfo.biosSummary.subtitle.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p></p>
       <div class="flex-row flex-wrap">
         <div class="flex flex-50">
-          <p>Manufacturer:</p>
+          <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosManufacturer">{{ hwInfo?.CIM_BIOSElement?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Version:</p>
+          <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosVersion"> {{ hwInfo?.CIM_BIOSElement?.response?.Version }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Release Date:</p>
+          <p>{{ 'hwInfo.label.releaseDate.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosReleaseData">{{
@@ -79,22 +79,23 @@
           }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Target OS:</p>
+          <p>{{ 'hwInfo.label.targetOS.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosTargetOS">
-            {{ targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] }}
+            {{ targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] | translate }}
           </span>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
+
 <div class="flex-1 flex-row">
   <mat-card class="flex flex-50 gap-12" id="memorySummary">
     <mat-card-header>
-      <mat-card-title> Memory Summary </mat-card-title>
-      <mat-card-subtitle>Summary of physical memory installed</mat-card-subtitle>
+      <mat-card-title>{{ 'hwInfo.memorySummary.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'hwInfo.memorySummary.subtitle.value' | translate }}</mat-card-subtitle>
       <div class="flex flex-1 justify-end">
         <mat-icon>memory</mat-icon>
       </div>
@@ -106,33 +107,33 @@
             <mat-divider></mat-divider>
           </div>
           <div class="flex flex-50">
-            <p>Slot:</p>
+            <p>{{ 'hwInfo.label.slot.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3" data-cy="bankLabel"> {{ bank.BankLabel }}</span>
           </div>
           <div class="flex flex-50">
-            <p>Capacity:</p>
+            <p>{{ 'hwInfo.label.capacity.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3" data-cy="bankCapacity"> {{ bank.Capacity / 1024 / 1024 / 1024 }} GB</span>
           </div>
           <div class="flex flex-50">
-            <p>Clock Speed(Max):</p>
+            <p>{{ 'hwInfo.label.clockSpeed.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3" data-cy="bankMaxClockSpeed">
-              {{ bank.ConfiguredMemoryClockSpeed }} ({{ bank.MaxMemorySpeed }}) Mhz</span
-            >
+              {{ bank.ConfiguredMemoryClockSpeed }} ({{ bank.MaxMemorySpeed }}) Mhz
+            </span>
           </div>
           <div class="flex flex-50">
-            <p>Serial No.:</p>
+            <p>{{ 'hwInfo.label.serialNo.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3" data-cy="bankSerialNumber"> {{ bank.SerialNumber }}</span>
           </div>
           <div class="flex flex-50">
-            <p>Type:</p>
+            <p>{{ 'hwInfo.label.type.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3" data-cy="bankSerialNumber"> {{ memoryType[bank.MemoryType] }}</span>
@@ -143,31 +144,31 @@
   </mat-card>
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title> Motherboard Summary</mat-card-title>
-      <mat-card-subtitle>Summary of Motherboard information</mat-card-subtitle>
+      <mat-card-title> {{ 'hwInfo.motherboardSummary.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'hwInfo.motherboardSummary.subtitle.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="flex-row flex-wrap">
         <div class="flex flex-50">
-          <p>Manufacturer:</p>
+          <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo?.CIM_Card?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Model:</p>
+          <p>{{ 'hwInfo.label.model.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="model"> {{ hwInfo?.CIM_Card?.response?.Model }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Serial No:</p>
+          <p>{{ 'hwInfo.label.serial.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo?.CIM_Card?.response?.SerialNumber }}</span>
         </div>
         <div class="flex flex-50">
-          <p>Version:</p>
+          <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="version">{{ hwInfo?.CIM_Card?.response?.Version }}</span>
@@ -176,30 +177,31 @@
     </mat-card-content>
   </mat-card>
 </div>
+
 <div class="flex-1 flex-row">
   @if (!isCloudMode) {
     <mat-card class="flex flex-50 gap-12">
       <mat-card-header>
-        <mat-card-title> Storage Summary</mat-card-title>
-        <mat-card-subtitle>Summary of Storage information</mat-card-subtitle>
+        <mat-card-title>{{ 'hwInfo.storageSummary.title.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'hwInfo.storageSummary.subtitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         @for (bank of diskInfo?.CIM_PhysicalPackage?.responses[0]; track bank) {
           <div class="flex-row flex-wrap">
             <div class="flex flex-50">
-              <p>Model:</p>
+              <p>{{ 'hwInfo.label.model.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3" data-cy="manufacturer"> {{ bank.Model }}</span>
             </div>
             <div class="flex flex-50">
-              <p>Serial No:</p>
+              <p>{{ 'hwInfo.label.serialNo.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3" data-cy="serialNumber"> {{ bank.SerialNumber }}</span>
             </div>
             <div class="flex flex-50">
-              <p>Size:</p>
+              <p>{{ 'hwInfo.label.size.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3" data-cy="Size">{{

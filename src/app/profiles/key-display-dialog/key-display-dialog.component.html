@@ -1,14 +1,14 @@
-<h1 mat-dialog-title>Profile Key for RPC-GO</h1>
+<h1 mat-dialog-title>{{ 'keyDisplayDialog.title.value' | translate }}</h1>
 <mat-dialog-content>
   <mat-dialog-content>
-    <p>The key will only be displayed once. Use this key to decode the encrypted profile for use with rpc-go.</p>
+    <p>{{ 'keyDisplayDialog.description.value' | translate }}</p>
     <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Key</mat-label>
+      <mat-label>{{ 'keyDisplayDialog.keyLabel.value' | translate }}</mat-label>
       <input matInput [value]="key" readonly />
       <button mat-icon-button matSuffix (click)="copyKey()"><mat-icon>file_copy</mat-icon></button>
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close="false">OK</button>
+    <button mat-button mat-dialog-close="false">{{ 'common.ok.value' | translate }}</button>
   </mat-dialog-actions>
 </mat-dialog-content>

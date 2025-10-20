@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
 import { MatCardModule } from '@angular/material/card'
 import { MatDividerModule } from '@angular/material/divider'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('TLSComponent', () => {
   let component: TLSComponent
@@ -21,7 +22,8 @@ describe('TLSComponent', () => {
       imports: [
         MatCardModule,
         MatDividerModule,
-        TLSComponent
+        TLSComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: mockDevicesService },

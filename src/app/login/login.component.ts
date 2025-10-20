@@ -28,7 +28,7 @@ import {
   MatCardActions,
   MatCardFooter
 } from '@angular/material/card'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
@@ -64,6 +64,7 @@ export class LoginComponent {
   private readonly router = inject(Router)
   private readonly fb = inject(FormBuilder)
   private readonly authService = inject(AuthService)
+  private readonly translate = inject(TranslateService)
   private readonly oauthService
 
   public loginForm = this.fb.nonNullable.group({
@@ -110,7 +111,9 @@ export class LoginComponent {
             if (err.status === 405 || err.status === 401) {
               this.snackBar.open($localize`${err.error.message}`, undefined, SnackbarDefaults.defaultError)
             } else {
-              this.snackBar.open($localize`Error logging in`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('login.error.value')
+
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             }
           }
         })

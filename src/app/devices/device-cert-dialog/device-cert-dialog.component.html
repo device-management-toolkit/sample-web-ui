@@ -1,54 +1,58 @@
-<h1 mat-dialog-title>Certificate Details</h1>
+<h1 mat-dialog-title>{{ 'deviceCertificate.title.value' | translate }}</h1>
 <mat-dialog-content>
   <mat-dialog-content>
     <mat-list>
       <mat-list-item>
-        <p matListItemTitle>Common Name:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.commonName.value' | translate }}</p>
         <p matListItemLine>{{ data.commonName }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Issuer Name:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.issuerName.value' | translate }}</p>
         <p matListItemLine>{{ data.issuerName }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Serial Number:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.serialNumber.value' | translate }}</p>
         <p matListItemLine>{{ data.serialNumber }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Not Before:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.notBefore.value' | translate }}</p>
         <p matListItemLine>{{ data.notBefore | date: 'medium' }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Not After:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.notAfter.value' | translate }}</p>
         <p matListItemLine>{{ data.notAfter | date: 'medium' }}</p>
       </mat-list-item>
       @if (data.dnsNames) {
         <mat-list-item>
-          <p matListItemTitle>DNS Names:</p>
+          <p matListItemTitle>{{ 'deviceCertificate.DNSNames.value' | translate }}</p>
           <p matListItemLine>{{ data.dnsNames.join(', ') }}</p>
         </mat-list-item>
       }
       <mat-list-item>
-        <p matListItemTitle>SHA-1 Fingerprint:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.SHA1Fingerprint.value' | translate }}</p>
         <p matListItemLine>{{ data.sha1Fingerprint }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>SHA-256 Fingerprint:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.SHA256Finferprint.value' | translate }}</p>
         <p matListItemLine>{{ data.sha256Fingerprint }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Public Key Algorithm:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.publicKeyAlgo.value' | translate }}</p>
         <p matListItemLine>{{ data.publicKeyAlgorithm }}</p>
       </mat-list-item>
       <mat-list-item>
-        <p matListItemTitle>Public Key Size:</p>
+        <p matListItemTitle>{{ 'deviceCertificate.PublicKeySize.value' | translate }}</p>
         <p matListItemLine>{{ data.publicKeySize }} bits</p>
       </mat-list-item>
     </mat-list>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-    <button (click)="remove()" [disabled]="!isPinned" type="button" color="warn" mat-button>Remove</button>
-    <button (click)="pin()" [disabled]="isPinned" type="button" color="primary" mat-flat-button>Pin</button>
+    <button mat-button mat-dialog-close>{{ 'common.close.value' | translate }}</button>
+    <button (click)="remove()" [disabled]="!isPinned" type="button" color="warn" mat-button>
+      {{ 'common.remove.value' | translate }}
+    </button>
+    <button (click)="pin()" [disabled]="isPinned" type="button" color="primary" mat-flat-button>
+      {{ 'common.pin.value' | translate }}
+    </button>
   </mat-dialog-actions>
 </mat-dialog-content>

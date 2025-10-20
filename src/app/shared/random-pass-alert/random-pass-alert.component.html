@@ -1,12 +1,13 @@
-<h2 mat-dialog-title>Using Random Generated Passwords</h2>
+<h2 mat-dialog-title>{{ 'randomPassword.title.value' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-  You have chosen to generate a random password for each device. If the secret provider storage (e.g., Vault) is deleted
-  or lost, these passwords will be unrecoverable and will require a factory reset.
+  {{ 'randomPassword.message.value' | translate }}
   <a target="_blank" href="https://www.intel.com/content/www/us/en/support/articles/000006328/technologies.html">
-    Learn more here</a
+    {{ 'randomPassword.learnMore.value' | translate }}</a
   >.
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button data-cy="random-pass-ok" [mat-dialog-close]="true" cdkFocusInitial>Continue</button>
+  <button mat-button mat-dialog-close>{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button data-cy="random-pass-ok" [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'common.continue.value' | translate }}
+  </button>
 </mat-dialog-actions>

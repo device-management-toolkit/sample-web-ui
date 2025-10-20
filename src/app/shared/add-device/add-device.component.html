@@ -1,24 +1,21 @@
-<h2 mat-dialog-title>Add a New Device</h2>
+<h2 mat-dialog-title>{{ 'addDevice.title.value' | translate }}</h2>
 
 <div mat-dialog-content>
-  <h3>
-    In order to activate a device, you'll need to execute a command on the AMT Device. This dialog will help generate
-    the command to run.
-  </h3>
+  <h3>{{ 'addDevice.description.value' | translate }}</h3>
 
   <form [formGroup]="deviceForm">
     <div>
       <mat-checkbox class="flex flex-50" formControlName="certCheck" (change)="updateCertCheck($event)">
-        No Self-Signed Cert Check
+        {{ 'addDevice.noSelfSignedCertCheck.value' | translate }}
       </mat-checkbox>
       <mat-checkbox class="flex flex-50" formControlName="verbose" (change)="updateVerboseCheck($event)">
-        Show Verbose
+        {{ 'addDevice.showVerbose.value' | translate }}
       </mat-checkbox>
     </div>
 
     <div>
       <mat-form-field class="flex-1">
-        <mat-label>Choose Profile</mat-label>
+        <mat-label>{{ 'addDevice.chooseProfile.value' | translate }}</mat-label>
         <mat-select formControlName="profile" (selectionChange)="profileChange($event)" name="profile" required>
           @for (profile of profiles().data; track profile) {
             <mat-option [value]="profile.profileName">
@@ -26,7 +23,7 @@
             </mat-option>
           }
         </mat-select>
-        <mat-error>Profile is required</mat-error>
+        <mat-error>{{ 'addDevice.profileRequired.value' | translate }}</mat-error>
       </mat-form-field>
     </div>
 

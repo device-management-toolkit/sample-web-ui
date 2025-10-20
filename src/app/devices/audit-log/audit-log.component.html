@@ -3,33 +3,33 @@
 }
 <mat-card>
   <mat-card-header style="justify-content: space-between">
-    <mat-card-title> Audit Log ({{ auditLogData.totalCnt }}) </mat-card-title>
+    <mat-card-title> {{ 'auditLog.title.value' | translate }} ({{ auditLogData.totalCnt }}) </mat-card-title>
     @if (!isCloudMode) {
       <button mat-flat-button color="primary" [disabled]="isLoading()" (click)="download()">
-        Download Audit Log (.csv)
+        {{ 'auditLog.download.value' | translate }}
       </button>
     }
   </mat-card-header>
   <mat-card-content>
     @if (isNoData()) {
-      <h3 class="flex justify-center">No Audit Log</h3>
+      <h3 class="flex justify-center">{{ 'auditLog.missing.value' | translate }}</h3>
     } @else {
       <mat-table [dataSource]="auditLogData.records" matSort>
         <!-- host Column -->
         <ng-container matColumnDef="Event">
-          <mat-header-cell *matHeaderCellDef> Event </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> {{ 'auditLog.event.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Event }} </mat-cell>
         </ng-container>
         @if (!isCloudMode) {
           <!-- host Column -->
           <ng-container matColumnDef="Description">
-            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{ 'auditLog.description.value' | translate }} </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.ExStr }} </mat-cell>
           </ng-container>
         }
         <!-- host Column -->
         <ng-container matColumnDef="timestamp">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'auditLog.time.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.Time | amDateFormatter: 'MMMM d, yyyy h:mma' }} ({{ element.Time | amTimeAgoFormatter: true }})
           </mat-cell>

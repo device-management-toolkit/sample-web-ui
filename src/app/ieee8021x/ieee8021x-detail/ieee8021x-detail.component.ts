@@ -161,7 +161,9 @@ export class IEEE8021xDetailComponent implements OnInit {
   }
 
   getInterfaceLabel(): string {
-    return this.ieee8021xForm.controls.wiredInterface.value ? 'Wired' : 'Wireless'
+    return this.ieee8021xForm.controls.wiredInterface.value
+      ? this.translate.instant('common.wired.value')
+      : this.translate.instant('common.wireless.value')
   }
 
   onSubmit(): void {
@@ -187,15 +189,13 @@ export class IEEE8021xDetailComponent implements OnInit {
         )
         .subscribe({
           complete: () => {
-            this.snackBar.open($localize`Profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            const completeMessage: string = this.translate.instant('common.completeProfile.value')
+            this.snackBar.open(completeMessage, undefined, SnackbarDefaults.defaultSuccess)
             void this.router.navigate(['/ieee8021x'])
           },
           error: (error) => {
-            this.snackBar.open(
-              $localize`Error creating/updating ieee8021x profile`,
-              undefined,
-              SnackbarDefaults.defaultError
-            )
+            const errorMessage: string = this.translate.instant('ieee.errorCreateUpdate.value')
+            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
             this.errorMessages = error
           }
         })

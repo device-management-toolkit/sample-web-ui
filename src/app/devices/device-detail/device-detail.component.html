@@ -6,7 +6,7 @@
         mat-list-item
         style="cursor: pointer"
         (click)="toggleSidenav()"
-        [matTooltip]="isCollapsed ? 'Expand' : 'Collapse'"
+        [matTooltip]="isCollapsed ? ('general.expand.value' | translate) : ('general.collapse.value' | translate)"
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
@@ -17,14 +17,14 @@
           [routerLink]="'/devices/' + deviceId + '/' + item.component"
           routerLinkActive="active"
           style="cursor: pointer"
-          [matTooltip]="item.name"
+          [matTooltip]="item.name | translate"
           matTooltipPosition="left">
           @if (!isCollapsed) {
-            <h3 matListItemTitle>{{ item.name }}</h3>
+            <h3 matListItemTitle>{{ item.name | translate }}</h3>
           }
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           @if (!isCollapsed) {
-            <p matListItemLine>{{ item.description }}</p>
+            <p matListItemLine>{{ item.description | translate }}</p>
           }
         </a>
       }

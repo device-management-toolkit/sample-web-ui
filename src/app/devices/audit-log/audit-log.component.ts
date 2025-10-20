@@ -20,6 +20,7 @@ import { DeviceLogService } from '../device-log.service'
 import { MatButtonModule } from '@angular/material/button'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-audit-log',
@@ -33,14 +34,15 @@ import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pi
     MatButtonModule,
     MatPaginatorModule,
     AmDateFormatterPipe,
-    AmTimeAgoFormatterPipe
+    AmTimeAgoFormatterPipe,
+    TranslateModule
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   public devices: Device[] = []
@@ -76,7 +78,8 @@ export class AuditLogComponent implements AfterViewInit {
         }),
         catchError((err) => {
           console.error(err)
-          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('audit.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of(this.auditLogData)
         })
       )
@@ -88,7 +91,8 @@ export class AuditLogComponent implements AfterViewInit {
         error: (err) => {
           console.error(err)
           this.isLoading.set(false)
-          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('audit.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }

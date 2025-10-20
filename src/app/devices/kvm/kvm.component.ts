@@ -40,6 +40,7 @@ import { MatSelect } from '@angular/material/select'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { MatToolbar } from '@angular/material/toolbar'
 import { UserConsentService } from '../user-consent.service'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-kvm',
@@ -58,7 +59,8 @@ import { UserConsentService } from '../user-consent.service'
     MatIcon,
     MatProgressSpinner,
     KVMComponent,
-    IDERComponent
+    IDERComponent,
+    TranslateModule
   ]
 })
 export class KvmComponent implements OnInit, OnDestroy {
@@ -69,6 +71,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   private readonly userConsentService = inject(UserConsentService)
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
+  private readonly translate = inject(TranslateService)
 
   public readonly deviceId = input('')
 
@@ -311,7 +314,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     return this.devicesService.getRedirectionStatus(guid).pipe(
       catchError((err) => {
         this.isLoading.set(false)
-        this.displayError($localize`Error retrieving redirection status`)
+        const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+        this.displayError(msg)
         return throwError(err)
       })
     )
@@ -320,7 +324,8 @@ export class KvmComponent implements OnInit, OnDestroy {
   handleRedirectionStatus(redirectionStatus: RedirectionStatus): Observable<any> {
     this.redirectionStatus = redirectionStatus
     if (this.amtFeatures()?.kvmAvailable && this.redirectionStatus.isKVMConnected) {
-      this.displayError($localize`KVM cannot be accessed - another kvm session is in progress`)
+      const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+      this.displayError(msg)
       return of(null)
     }
     return of(true)
@@ -330,7 +335,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading.set(false)
-        this.displayError($localize`Error retrieving power status`)
+        const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+        this.displayError(msg)
         return throwError(err)
       })
     )
@@ -348,7 +354,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
     return this.enableKvmDialog().pipe(
       catchError((err) => {
-        this.displayError($localize`Unable to display KVM dialog`)
+        const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+        this.displayError(msg)
         throw err
       }),
       switchMap((data?: boolean) => {
@@ -388,9 +395,11 @@ export class KvmComponent implements OnInit, OnDestroy {
   cancelEnableKvmResponse(result?: boolean): void {
     this.isLoading.set(false)
     if (!result) {
-      this.displayError($localize`KVM cannot be accessed - request to enable KVM is cancelled`)
+      const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+      this.displayError(msg)
     } else {
-      this.displayError($localize`KVM cannot be accessed - failed to enable KVM`)
+      const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+      this.displayError(msg)
     }
     this.readyToLoadKvm = false
   }
@@ -433,9 +442,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     } else if (event === 0) {
       this.isLoading.set(false)
       if (!this.isDisconnecting && !this.isEncodingChange) {
-        this.displayError(
-          'Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
-        )
+        this.displayError(this.translate.instant('errors.kvmConnection.value'))
       }
       this.isDisconnecting = false
     }
@@ -446,10 +453,10 @@ export class KvmComponent implements OnInit, OnDestroy {
   deviceIDERStatus = (event: any): void => {
     if (event === 0) {
       this.isIDERActive.set(false)
-      this.displayWarning('IDER session ended')
+      this.displayWarning(this.translate.instant('warning.iderEnded.value'))
     } else if (event === 3) {
       this.isIDERActive.set(true)
-      this.displayWarning('IDER session active')
+      this.displayWarning(this.translate.instant('warning.iderActive.value'))
     }
   }
 

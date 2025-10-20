@@ -24,9 +24,14 @@
     <form [formGroup]="domainForm" (ngSubmit)="onSubmit()">
       <mat-card-content class="flex-row flex-wrap">
         <mat-form-field class="flex flex-1">
-          <input formControlName="profileName" matInput name="name" placeholder="Name" required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter a name to give this domain (ex. AMT Domain)</mat-hint>
+          <input
+            formControlName="profileName"
+            matInput
+            name="name"
+            [placeholder]="'configs.table.ciraName.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'domainDetail.nameHint.value' | translate }}</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="flex flex-1">
@@ -34,28 +39,30 @@
             formControlName="domainSuffix"
             matInput
             name="domainName"
-            placeholder="Domain Name"
+            [placeholder]="'domainDetail.namePlaceholder.value' | translate"
             required
             minlength="3" />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>Enter the FQDN that is associated with the provisioning certificate (i.e amtdomain.com)</mat-hint>
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'domainDetail.fqdn.value' | translate }}</mat-hint>
         </mat-form-field>
 
         <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
           <div class="flex flex-50" style="margin-top: 12px">
-            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
+            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+              {{ 'common.chooseFile.value' | translate }}
+            </button>
             <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx" />
           </div>
           <div class="flex flex-50 justify-center items-center">
             @if (!isCertificateUploaded()) {
               <div class="flex justify-center">
                 <mat-icon color="warn">remove_circle</mat-icon>
-                Certificate Not Yet Uploaded
+                {{ 'common.cetificateNotUploaded.value' | translate }}
               </div>
             } @else {
               <div class="flex flex-50 justify-center">
                 <mat-icon color="primary">check_circle</mat-icon>
-                Certificate Uploaded
+                {{ 'common.cetificateUploaded.value' | translate }}
               </div>
             }
           </div>
@@ -67,15 +74,15 @@
             formControlName="provisioningCertPassword"
             matInput
             name="provisioningCertPassword"
-            placeholder="Provisioning Cert Password"
+            [placeholder]="'domainDetail.placeholderProvisioningCertPassword.value' | translate"
             required />
-          <mat-error>This field is required</mat-error>
-          <mat-hint>The password for the provisioning certificate</mat-hint>
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'domainDetail.provisioningCertPassword.value' | translate }}</mat-hint>
           <button
             mat-icon-button
             matSuffix
             type="button"
-            matTooltip="Show / Hide Password"
+            [matTooltip]="'common.showHidePassword.value' | translate"
             (click)="toggleCertPassVisibility()">
             @if (certPassInputType === 'text') {
               <mat-icon>visibility</mat-icon>
@@ -88,12 +95,12 @@
       <mat-card-actions class="flex-row">
         <div class="flex flex-50 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span i18n>CANCEL</span>
+            <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
           <button type="submit" mat-flat-button color="primary">
-            <span i18n>SAVE</span>
+            <span>{{ 'common.save.value' | translate }}</span>
             <span class="glyphicon glyphicon-log-in padding10L"></span>
           </button>
         </div>

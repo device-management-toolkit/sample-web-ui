@@ -12,8 +12,8 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -46,7 +46,10 @@ describe('LoginComponent', () => {
         FormBuilder,
         TranslateService,
         provideHttpClient(),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
+        })
       ]
     })
 
@@ -102,7 +105,7 @@ describe('LoginComponent', () => {
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith('Error logging in', undefined, SnackbarDefaults.defaultError)
+      expect(snackBarSpy.open).toHaveBeenCalledWith('login.error.value', undefined, SnackbarDefaults.defaultError)
     })
 
     it('should set isLoading to false after login attempt', () => {

@@ -6,27 +6,33 @@
 
   <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
     <div class="flex flex-50" style="margin-top: 12px">
-      <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+        {{ 'common.chooseFile.value' | translate }}
+      </button>
       <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer" />
     </div>
     <div class="flex flex-50 justify-center items-center">
       @if (certInfo.cert === '') {
         <div class="flex justify-center">
           <mat-icon color="warn">remove_circle</mat-icon>
-          Certificate Not Yet Uploaded
+          {{ 'common.cetificateNotUploaded.value' | translate }}
         </div>
       } @else {
         <div class="flex justify-center">
           <mat-icon color="primary">check_circle</mat-icon>
-          Certificate Uploaded
+          {{ 'common.cetificateUploaded.value' | translate }}
         </div>
       }
     </div>
   </div>
 
-  <mat-checkbox class="example-margin" [(ngModel)]="certInfo.isTrusted">Trusted Root</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="certInfo.isTrusted">{{
+    'common.trustedRoot.value' | translate
+  }}</mat-checkbox>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="certInfo" color="primary" cdkFocusInitial>OK</button>
+  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button [mat-dialog-close]="certInfo" color="primary" cdkFocusInitial>
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

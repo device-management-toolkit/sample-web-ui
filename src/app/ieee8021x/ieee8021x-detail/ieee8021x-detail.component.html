@@ -30,8 +30,8 @@
           <div>
             <mat-card-subtitle>
               <mat-radio-group name="wiredInterface" formControlName="wiredInterface" class="flex-row">
-                <mat-radio-button [value]="true">Wired</mat-radio-button>
-                <mat-radio-button [value]="false">Wireless</mat-radio-button>
+                <mat-radio-button [value]="true">{{ 'common.wired.value' | translate }}</mat-radio-button>
+                <mat-radio-button [value]="false">{{ 'common.wireless.value' | translate }}</mat-radio-button>
               </mat-radio-group>
             </mat-card-subtitle>
           </div>
@@ -41,22 +41,21 @@
       <mat-card-content class="flex-row flex-wrap">
         @if (!isEdit) {
           <mat-form-field class="flex flex-1" style="margin-bottom: 24px">
-            <mat-label>Profile Name</mat-label>
+            <mat-label>{{ 'common.profileName.value' | translate }}</mat-label>
             <input
               type="text"
               matInput
               formControlName="profileName"
               name="profileName"
               placeholder="ex. network-auth-profile" />
-            <mat-error i18n>
-              This field is required, must be alphanumeric (no spaces), and no longer than
-              {{ profileNameMaxLen }} characters
+            <mat-error>
+              {{ 'fieldRequired.alphaNumericMaxLen.value' | translate: { profileNameMaxLen: profileNameMaxLen } }}
             </mat-error>
           </mat-form-field>
         }
 
         <mat-form-field class="flex flex-1">
-          <mat-label>Authentication Protocol</mat-label>
+          <mat-label>{{ 'ieee.authProtocol.value' | translate }}</mat-label>
           <mat-select formControlName="authenticationProtocol">
             @for (protocol of authenticationProtocols; track protocol) {
               <mat-option [value]="protocol.value">
@@ -64,12 +63,12 @@
               </mat-option>
             }
           </mat-select>
-          <mat-error i18n> This field is required </mat-error>
+          <mat-error> {{ 'fieldRequired.short.value' | translate }} </mat-error>
         </mat-form-field>
 
         @if (shouldShowPxeTimeout()) {
           <mat-form-field class="flex flex-1">
-            <mat-label>PXE Timeout</mat-label>
+            <mat-label>{{ 'ieee.PXETimeout.value' | translate }}</mat-label>
             <input
               type="number"
               matInput
@@ -80,7 +79,7 @@
               [min]="pxeTimeoutMin"
               [max]="pxeTimeoutMax" />
             <mat-error>
-              The value must be between {{ pxeTimeoutMin }} (Disabled) and {{ pxeTimeoutMax }} seconds (one day)
+              {{ 'ieee.PXETimeoutRange.value' | translate }}
             </mat-error>
           </mat-form-field>
         }
@@ -88,12 +87,12 @@
       <mat-card-actions class="flex-row">
         <div class="flex flex-1 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span i18n>CANCEL</span>
+            <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-1 justify-center">
           <button type="submit" mat-flat-button color="primary">
-            <span i18n>SAVE</span>
+            <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>
       </mat-card-actions>

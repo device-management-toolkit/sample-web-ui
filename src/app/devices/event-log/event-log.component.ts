@@ -19,6 +19,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -40,13 +41,14 @@ const EVENTTYPEMAP: EventTypeMap = {
     MatPaginatorModule,
     MatIconModule,
     AmTimeAgoFormatterPipe,
-    AmDateFormatterPipe
+    AmDateFormatterPipe,
+    TranslateModule
   ]
 })
 export class EventLogComponent implements AfterViewInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly deviceLogService = inject(DeviceLogService)
-
+  private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
@@ -82,7 +84,8 @@ export class EventLogComponent implements AfterViewInit {
         .getEventLog(this.deviceId())
         .pipe(
           catchError(() => {
-            this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('event.errorLog.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             return of({ records: [], hasMoreRecords: true })
           }),
           finalize(() => {
@@ -103,7 +106,8 @@ export class EventLogComponent implements AfterViewInit {
       .getEventLog(this.deviceId(), startIndex, this.pageSize)
       .pipe(
         catchError(() => {
-          this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('event.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of({ records: [], hasMoreRecords: true })
         }),
         finalize(() => {

@@ -47,7 +47,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-devices',
@@ -94,6 +94,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 
@@ -106,7 +107,13 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public isTrue = false
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
-  public deleteDeviceLabel: string = this.isCloudMode ? 'Deactivate the Device' : 'Remove the Device'
+
+  get deleteDeviceLabel(): string {
+    return this.isCloudMode
+      ? this.translate.instant('devices.actions.deactivateCloud.value')
+      : this.translate.instant('devices.actions.remove.value')
+  }
+
   public displayedColumns: string[] = [
     'select',
     'hostname',
@@ -176,7 +183,9 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .getTags()
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error loading tags`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorLoadTags.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
@@ -230,7 +239,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         }),
         catchError((err) => {
           console.error('Error in getDevices:', err)
-          this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('configs.failDeleteConfigs.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           // Return an empty array on error
           return of([])
         }),
@@ -454,7 +464,9 @@ export class DevicesComponent implements OnInit, AfterViewInit {
               }
             },
             error: () => {
-              this.snackBar.open($localize`Error deactivating devices`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('devices.errorDeactivateDevice.value')
+
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             },
             complete: () => {
               this.isLoading.set(false)

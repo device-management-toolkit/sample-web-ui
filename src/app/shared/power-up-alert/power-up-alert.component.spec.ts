@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { PowerUpAlertComponent } from './power-up-alert.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('PowerUpAlertComponent', () => {
   let component: PowerUpAlertComponent
@@ -18,7 +19,8 @@ describe('PowerUpAlertComponent', () => {
       imports: [
         MatDialogModule,
         MatButtonModule,
-        PowerUpAlertComponent
+        PowerUpAlertComponent,
+        TranslateModule.forRoot()
       ]
     })
   })

@@ -6,7 +6,7 @@
   <form [formGroup]="bootForm">
     <div>
       <mat-form-field class="flex flex-1">
-        <mat-label>{{ 'Boot File Path' | translate }}</mat-label>
+        <mat-label>{{ 'pba.title.value' | translate }}</mat-label>
         <mat-select formControlName="selectedBootSource" [value]="pbaBootFilePaths[0]">
           @for (filePath of pbaBootFilePaths; track filePath) {
             <mat-option [value]="filePath"> {{ filePath.biosBootString }} ({{ filePath.bootString }}) </mat-option>
@@ -14,15 +14,19 @@
         </mat-select>
         @if (bootForm.get('selectedBootSource')?.hasError('required')) {
           <mat-error>
-            {{ 'Boot file path is required' | translate }}
+            {{ 'pba.required.value' | translate }}
           </mat-error>
         }
       </mat-form-field>
     </div>
-    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">Enforce Secure Boot</mat-checkbox>
+    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">{{
+      'pba.label.value' | translate
+    }}</mat-checkbox>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">Cancel</button>
-  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>OK</button>
+  <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>
+    {{ 'common.ok.value' | translate }}
+  </button>
 </mat-dialog-actions>

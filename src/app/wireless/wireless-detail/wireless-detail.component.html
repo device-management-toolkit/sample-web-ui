@@ -22,7 +22,7 @@
         <mat-form-field class="flex flex-1">
           <mat-label>{{ 'wirelessDetail.wirelessProfileName.value' | translate }}</mat-label>
           <input formControlName="profileName" matInput name="profileName" placeholder="ex. wifiSSID" required />
-          <mat-error>{{ 'wirelessDetail.errorRequiredField.value' | translate }}</mat-error>
+          <mat-error>{{ 'fieldRequired.alphaNumeric.value' | translate }}</mat-error>
           <mat-hint>{{ 'wirelessDetail.wirelessProfileNameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
@@ -39,7 +39,7 @@
           <mat-form-field class="flex flex-1">
             <mat-label>{{ 'wirelessDetail.pskPassphrase.value' | translate }}</mat-label>
             <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase" />
-            <mat-error>{{ 'wirelessDetail.pskPassphraseHint.value' | translate }}</mat-error>
+            <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
             <button
               mat-icon-button
               matSuffix
@@ -75,7 +75,7 @@
               </mat-option>
             }
           </mat-select>
-          <mat-error>{{ 'wirelessDetail.errorRequiredField.value' | translate }}</mat-error>
+          <mat-error>{{ 'fieldRequired.alphaNumeric.value' | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field class="flex flex-1">
           <mat-label>{{ 'wirelessDetail.ssid.value' | translate }}</mat-label>
@@ -87,18 +87,18 @@
             placeholder="ex. wifi-ssid"
             required
             maxlength="32" />
-          <mat-error>{{ 'wirelessDetail.ssidHint.value' | translate }}</mat-error>
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions class="flex-row flex-wrap">
         <div class="flex flex-50 justify-center">
           <button type="button" mat-button color="primary" (click)="cancel()">
-            <span>{{ 'wirelessDetail.cancel.value' | translate }}</span>
+            <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
           <button type="submit" mat-flat-button color="primary">
-            <span>{{ 'wirelessDetail.save.value' | translate }}</span>
+            <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>
       </mat-card-actions>

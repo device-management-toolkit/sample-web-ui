@@ -9,6 +9,7 @@ import { GeneralComponent } from './general.component'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('GeneralComponent', () => {
   let component: GeneralComponent
@@ -56,7 +57,7 @@ describe('GeneralComponent', () => {
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({
-      imports: [GeneralComponent],
+      imports: [GeneralComponent, TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
