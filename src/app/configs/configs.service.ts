@@ -67,10 +67,9 @@ export class ConfigsService {
     const options = { responseType: 'text' } as any
 
     return this.http.get<string>(`${environment.mpsServer}/api/v1/ciracert`, options).pipe(
-      catchError((err) => {
-        const errorMessages: string[] = []
-        errorMessages.push('Error loading CIRA config')
-        return throwError(err)
+      catchError(() => {
+        const errorMessages: string[] = ['Error loading CIRA config']
+        return throwError(errorMessages)
       })
     )
   }

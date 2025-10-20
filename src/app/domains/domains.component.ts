@@ -33,7 +33,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',
@@ -67,6 +67,7 @@ export class DomainsComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   public readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
+  private readonly translate = inject(TranslateService)
 
   // ViewChild
   @ViewChild(MatPaginator) paginator!: MatPaginator
@@ -111,7 +112,8 @@ export class DomainsComponent implements OnInit {
           this.expirationWarning()
         },
         error: () => {
-          this.snackBar.open($localize`Unable to load domains`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('domains.failLoadDomain.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
@@ -136,10 +138,13 @@ export class DomainsComponent implements OnInit {
           .subscribe({
             next: () => {
               this.getData(this.pageEvent)
-              this.snackBar.open($localize`Domain deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+              const msg: string = this.translate.instant('domains.delteDomain.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
             error: () => {
-              this.snackBar.open($localize`Unable to delete domain`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('domains.failtDeltedDomain.value')
+
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             }
           })
       }
@@ -164,17 +169,25 @@ export class DomainsComponent implements OnInit {
     const expDate = new Date(expirationDate)
 
     if (expDate < today) {
-      return $localize`Expired`
+      const msg: string = this.translate.instant('domains.expired.value')
+
+      return msg
     }
 
     const daysRemaining = Math.trunc((expDate.getTime() - today.getTime()) / this.millisecondsInADay)
 
     if (daysRemaining <= 60) {
-      return daysRemaining.toString() + $localize` days remaining`
+      const msg: string = this.translate.instant('domains.daysRemaining.value')
+
+      return daysRemaining.toString() + msg
     } else if (daysRemaining < 730) {
-      return Math.trunc(daysRemaining / 30).toString() + $localize` months remaining`
+      const msg: string = this.translate.instant('domains.monthsRemaining.value')
+
+      return Math.trunc(daysRemaining / 30).toString() + msg
     } else {
-      return Math.trunc(daysRemaining / 365).toString() + $localize` years remaining`
+      const msg: string = this.translate.instant('domains.yearsRemaining.value')
+
+      return Math.trunc(daysRemaining / 365).toString() + msg
     }
   }
 
@@ -194,10 +207,10 @@ export class DomainsComponent implements OnInit {
 
     let message = ''
     if (countWarn > 0) {
-      message += $localize`${countWarn.toString()} domain cert(s) will expire soon `
+      message += this.translate.instant('domains.certExpring.value', { count: countWarn })
     }
     if (countExp > 0) {
-      message += $localize`${countExp.toString()} domain cert(s) are expired `
+      message += this.translate.instant('domains.certExpired.value', { count: countWarn })
     }
 
     if (message !== '') {

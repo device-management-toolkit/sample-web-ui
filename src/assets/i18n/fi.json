@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "Otsikko pilvitilassa olevassa Tietoja-osiossa",
+    "value": "Tietoja laitteenhallintatyökalupaketin esimerkkisovelluksesta"
+  },
+  "about.consoleProvides": {
+    "description": "Viesti konsolin ominaisuuksista",
+    "value": "Konsoli tarjoaa seuraavat ominaisuudet ja paljon muuta:"
+  },
+  "about.description": {
+    "description": "Kuvaus konsolille",
+    "value": "Console on 1:1-ulkopuolinen hallintatyökalu Intel AMT:n hallintaan paikallisissa verkoissa. Kun laite on lisätty, Console kommunikoi AMT:n kanssa suoraan paikallisen verkon kautta, mikä tarjoaa nopean ja helpon tavan yhdistää ja hallita kaikkia AMT-laitteitasi."
+  },
+  "about.device": {
+    "description": "Viesti laitteen laitteistolle",
+    "value": "Laitteen laitteistotiedot ja lokitiedot"
+  },
+  "about.doNotShowAgain": {
+    "description": "Valintaruutu, joka näyttää nyt tietoja-osion",
+    "value": "Älä näytä uudelleen"
+  },
+  "about.gotIt": {
+    "description": "Painike tietoja-osion sulkemiseksi",
+    "value": "Selvä"
+  },
+  "about.howTo": {
+    "description": "Viesti työkalupakin käytöstä",
+    "value": "UI-työkalupakin käyttö"
+  },
+  "about.learn": {
+    "description": "Viesti työkalupakin käytön oppimista varten",
+    "value": "Opi, miten laitehallintatyökalupakki hallitsee laitteita"
+  },
+  "about.nonCloudMode": {
+    "description": "Otsikko tietoja-osiolle",
+    "value": "Tietoja konsolista"
+  },
+  "about.redirection": {
+    "description": "Viesti uudelleenohjausominaisuuksista",
+    "value": "Uudelleenohjausominaisuudet, kuten etäkäyttöinen näppäimistö, video, hiiri (KVM) ja Serial-over-LAN (SOL)"
+  },
+  "about.referenceImplementation": {
+    "description": "Viesti pilvipalvelutilassa tapahtuvaa käyttöönottoa koskevaa esittelyä varten",
+    "value": "Tämä viiteimplementaatio esittelee Device Management Toolkit -työkalun API:t ja yleiset toiminnot, eikä se ole tarkoitettu tuotantokäyttöön."
+  },
+  "about.remotePower": {
+    "description": "Viesti etävirralle",
+    "value": "Etäkäyttöiset virrankäyttötoiminnot"
+  },
+  "about.sampleUI": {
+    "description": "Viesti esimerkkikäyttöliittymälle",
+    "value": "Tämä esimerkkikäyttöliittymä on tarkoitettu seuraaviin tarkoituksiin:"
+  },
+  "about.setUp": {
+    "description": "Viesti asetusten määrittämisestä",
+    "value": "Profiilien, kokoonpanon ja verkkotunnusten määrittäminen"
+  },
+  "about.understand": {
+    "description": "Viesti työkalupakin ymmärtämiseksi",
+    "value": "Ymmärrä Device Management Toolkit -sovelluksen REST-rajapintojen toteutus ja miten niitä voidaan käyttää omassa sovelluksessasi."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "Viesti itse allekirjoitettujen varmenteiden sallimisesta",
+    "value": "Salli itse allekirjoitetut varmenteet"
+  },
+  "addDevice.chooseProfile": {
+    "description": "Profiilin valintakentän nimi",
+    "value": "Valitse profiili"
+  },
+  "addDevice.description": {
+    "description": "Kuvaus laitteen aktivoinnista",
+    "value": "Laitteen aktivoimiseksi sinun on suoritettava komento AMT-laitteella. Tämä valintaikkuna auttaa luomaan suoritettavan komennon."
+  },
+  "addDevice.enterTags": {
+    "description": "Vinkki tagien syöttämiseen",
+    "value": "Voit syöttää tunnisteita, jotka auttavat laitteiden järjestämisessä ja hakemisessa, kun hallinnoitujen laitteiden luettelo kasvaa. Kirjoita tunniste ja paina sitten Enter-näppäintä tai pilkkua."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "Virhe virheellisissä ystävällisissä nimissä",
+    "value": "Ystävällinen nimi ei saa olla pidempi kuin 50 merkkiä."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "Virhe vaadituissa ystävällisissä nimissä",
+    "value": "Ystävällinen nimi vaaditaan"
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "Virhe kelpaamattomille isäntänimille",
+    "value": "Virheellinen isäntänimen muoto"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "Virhe vaadituissa isäntänimissä",
+    "value": "Isäntänimi vaaditaan"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "Valintaruutu, jolla voi poistaa itse allekirjoitetun varmenteen tarkistuksen käytöstä",
+    "value": "Ei itse allekirjoitettua varmennetarkistusta"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "Paikkamerkki uuden tunnisteen lisäämistä varten",
+    "value": "Uusi tunniste..."
+  },
+  "addDevice.profileRequired": {
+    "description": "Vahvistusvirheilmoitus, kun profiilia ei ole valittu",
+    "value": "Profiili vaaditaan"
+  },
+  "addDevice.showVerbose": {
+    "description": "Valintaruudun teksti, joka mahdollistaa yksityiskohtaisen tulostuksen",
+    "value": "Näytä yksityiskohdat"
+  },
+  "addDevice.title": {
+    "description": "Uuden laitteen lisäämisen valintaikkunan otsikko",
+    "value": "Lisää uusi laite"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "Virhe kelpaamattomalle käyttäjätunnukselle",
+    "value": "Käyttäjänimen on oltava vähintään 5 merkkiä pitkä ja enintään 16 merkkiä pitkä."
+  },
+  "addDevice.userNameRequired": {
+    "description": "Virhe vaaditussa käyttäjänimessä",
+    "value": "Käyttäjätunnus vaaditaan"
+  },
+  "addDevice.useTLS": {
+    "description": "Viesti TLS:n käytöstä",
+    "value": "Käytä TLS:ää."
+  },
+  "alarm.errorAdding": {
+    "description": "Virhe lisätty",
+    "value": "Virhe hälytystapahtumien lisäämisessä"
+  },
+  "alarm.errorDelete": {
+    "description": "Virhe poistettaessa",
+    "value": "Virheiden poistaminen hälytystapahtumista"
+  },
+  "alarm.errorRetrieve": {
+    "description": "Virhe hakemisessa",
+    "value": "Virhe hälytystapahtumien hakemisessa"
+  },
+  "alarmService.addNew": {
+    "description": "Painikkeen teksti uuden hälytyksen lisäämiseksi",
+    "value": "Lisää uusi"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "Vihje hälytysnimen syöttämiseen",
+    "value": "Anna nimi tälle hälytykselle."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "Paikkamerkki hälytysnimen syöttöä varten",
+    "value": "Hälytyksen nimi"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "Työkaluvinkki hälytyspainikkeen poistamiseksi",
+    "value": "Poista hälytys"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "Poistomerkki valmistumisen jälkeen liukusäädin",
+    "value": "Poista valmistuttuasi"
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "Hälytyselementin nimi, jota seuraa sen InstanceID",
+    "value": "{{elementName}} (InstanceID: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "Tunnin valinnan etiketti",
+    "value": "Tunti"
+  },
+  "alarmService.interval": {
+    "description": "Hälytysvälin merkintä",
+    "value": "Väliaika (minuutteina)"
+  },
+  "alarmService.intervalHint": {
+    "description": "Vinkki intervallin syöttämiseen",
+    "value": "Jakso minuutteina jaksottaiselle hälytykselle, 0 yksittäiselle hälytykselle"
+  },
+  "alarmService.intervalLabel": {
+    "description": "Väliaikaisen syötteen etiketti",
+    "value": "Väliaika"
+  },
+  "alarmService.intervalNone": {
+    "description": "Näytetään, kun väliä ei ole määritelty",
+    "value": "Ei mitään"
+  },
+  "alarmService.minuteLabel": {
+    "description": "Merkki minuutin valintaa varten",
+    "value": "Pöytäkirjat"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "Aloitusaika: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Poista valmistumisen jälkeen: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "Paikkamerkki alkamisajan syöttöä varten",
+    "value": "Valitse päivämäärä ja kellonaika"
+  },
+  "alarmService.subtitle": {
+    "description": "Alarmin esiintymisten lukumäärän osoittava alaotsikko",
+    "value": "Hälytykset ({{count}} -merkinnät)"
+  },
+  "alarmService.title": {
+    "description": "Hälytyspalvelukortin otsikko",
+    "value": "Hälytyspalvelu"
+  },
+  "audit.errorLog": {
+    "description": "Virhe auditointilokien hakemisessa",
+    "value": "Virhe auditointilokin hakemisessa"
+  },
+  "auditLog.description": {
+    "value": "Kuvaus"
+  },
+  "auditLog.download": {
+    "description": "Latauspainike auditointilokeille",
+    "value": "Lataa tarkastusloki (.csv)"
+  },
+  "auditLog.event": {
+    "value": "Tapahtuma"
+  },
+  "auditLog.missing": {
+    "description": "Viesti puuttuvista tarkastuslokeista",
+    "value": "Ei tarkastuslokia"
+  },
+  "auditLog.time": {
+    "value": "Aika"
+  },
+  "auditLog.title": {
+    "description": "Auditointilokien otsikko",
+    "value": "Tarkastusloki"
+  },
+  "certificates.add.tooltip": {
+    "description": "Työkaluvinkki sertifikaatin lisäämispainikkeelle",
+    "value": "Lisää sertifikaatti"
+  },
+  "certificates.download.tooltip": {
+    "description": "Työkaluvinkki sertifikaatin lataamiseen",
+    "value": "Lataa sertifikaatti"
+  },
+  "certificates.empty": {
+    "description": "Teksti tyhjille sertifikaateille",
+    "value": "Sertifikaatteja ei löytynyt"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "Virhe sertifikaattien lisäämisessä",
+    "value": "Virhe sertifikaatin lisäämisessä"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "Virhe sertifikaattitietojen hakemisessa",
+    "value": "Virhe sertifikaatin tietojen hakemisessa"
+  },
+  "certificates.list": {
+    "description": "Teksti sertifikaattiluetteloon",
+    "value": "Luettelo AMT-laitteeseen tällä hetkellä rekisteröidyistä sertifikaateista"
+  },
+  "certificates.loading": {
+    "description": "Teksti sertifikaattien lataamista varten",
+    "value": "Lataa varmenteet ..."
+  },
+  "certificates.profileAssociations": {
+    "description": "Sertifikaattiprofiilien yhdistämisten nimike",
+    "value": "Profiililiitännät"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "Näkyy, kun sertifikaatilla ei ole profiililiitoksia.",
+    "value": "Ei liity"
+  },
+  "certificates.title": {
+    "description": "Sertifikaattien otsikot",
+    "value": "Sertifikaatit"
+  },
+  "certificates.type": {
+    "description": "Sertifikaattityyppikentän nimi",
+    "value": "Tyyppi"
+  },
+  "certificates.typeClient": {
+    "description": "Ilmaisee, että sertifikaatti on asiakassertifikaatti.",
+    "value": "Asiakas"
+  },
+  "certificates.typeRoot": {
+    "description": "Ilmaisee, että varmenne on juurivarmenne.",
+    "value": "Juuri"
+  },
+  "common.addNew": {
+    "description": "Teksti \"Lisää uusi\" -painikkeelle",
+    "value": "Lisää uusi"
+  },
+  "common.cancel": {
+    "description": "Peruuta-painikkeen teksti",
+    "value": "PERUUTA"
+  },
+  "common.cancelLower": {
+    "description": "Peruuta-painikkeen teksti",
+    "value": "Peruuta"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "Varoitus sertifikaateista, joita ei ole ladattu",
+    "value": "Sertifikaattia ei ole vielä ladattu"
+  },
+  "common.cetificateUploaded": {
+    "description": "Viesti ladatuille sertifikaateille",
+    "value": "Sertifikaatti ladattu"
+  },
+  "common.chooseFile": {
+    "description": "Painike tiedoston valitsemiseksi",
+    "value": "Valitse tiedosto"
+  },
+  "common.close": {
+    "description": "Sulkemispainikkeen teksti",
+    "value": "Sulje"
+  },
+  "common.completeProfile": {
+    "description": "Viesti valmiille profiileille",
+    "value": "Profiili tallennettu onnistuneesti"
+  },
+  "common.connected": {
+    "description": "Tila, kun laite tai palvelu on kytketty",
+    "value": "Yhdistetty"
+  },
+  "common.continue": {
+    "value": "Jatka"
+  },
+  "common.deleteConfiguration": {
+    "description": "Viesti poistetuista kokoonpanoista",
+    "value": "Määritys poistettu onnistuneesti"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "Viesti kirjautumisen alaotsikossa",
+    "value": "Laitteiden hallinnan työkalupakki -portaali"
+  },
+  "common.disabled": {
+    "description": "Käytetään, kun paikallinen profiilin synkronointi on poistettu käytöstä.",
+    "value": "pois käytöstä"
+  },
+  "common.disconnected": {
+    "description": "Tila, kun laite tai palvelu on irrotettu",
+    "value": "Irrallinen"
+  },
+  "common.dismiss": {
+    "description": "Hylkää-painikkeen teksti",
+    "value": "Hylkää"
+  },
+  "common.done": {
+    "description": "Viesti valmis-painikkeelle",
+    "value": "Valmis"
+  },
+  "common.down": {
+    "value": "Alas"
+  },
+  "common.enabled": {
+    "description": "Käytetään, kun paikallinen profiilin synkronointi on käytössä.",
+    "value": "käytössä"
+  },
+  "common.enterFriendlyName": {
+    "description": "Vinkki ystävällisen nimen syöttämiseen",
+    "value": "Anna ystävällinen nimi"
+  },
+  "common.enterHostName": {
+    "description": "Vinkki isäntänimen syöttämiseen",
+    "value": "Syötä isäntänimi"
+  },
+  "common.enterPassword": {
+    "description": "Viesti salasanan syöttämistä varten",
+    "value": "Syötä salasanasi"
+  },
+  "common.enterUserName": {
+    "description": "Vinkki käyttäjätunnuksen syöttämiseen",
+    "value": "Kirjoita käyttäjätunnuksesi"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "Virhe konfiguraatioiden poistamisessa",
+    "value": "Konfiguraatiota ei voi poistaa"
+  },
+  "common.friendlyName": {
+    "description": "Viesti ystävälliselle nimelle",
+    "value": "Ystävällinen nimi"
+  },
+  "common.hostName": {
+    "description": "Viesti isäntänimelle",
+    "value": "Isäntänimi"
+  },
+  "common.input": {
+    "description": "Syöte WSMAN-selaimelle",
+    "value": "Syöttö"
+  },
+  "common.intelCopyright": {
+    "description": "Tekijänoikeusilmoitus Intelille",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "Viesti kirjautumispainikkeelle",
+    "value": "KIRJAUDU SISÄÄN"
+  },
+  "common.logOut": {
+    "description": "Viesti kirjautumisesta ulos",
+    "value": "Kirjaudu ulos"
+  },
+  "common.no": {
+    "value": "Ei"
+  },
+  "common.notApplicable": {
+    "description": "Näkyy, kun OS-merkintä ei sovellu.",
+    "value": "Ei sovelleta"
+  },
+  "common.ok": {
+    "description": "OK-painikkeen teksti",
+    "value": "OK"
+  },
+  "common.other": {
+    "description": "Käytetään, kun käyttöjärjestelmä tai muistikartta on muu tai määrittelemätön.",
+    "value": "Muu"
+  },
+  "common.output": {
+    "description": "WSMAN Explorerin tuloste",
+    "value": "Tulostus"
+  },
+  "common.password": {
+    "description": "Viesti salasanalle",
+    "value": "Salasana"
+  },
+  "common.pin": {
+    "description": "Teksti Pin-painikkeelle",
+    "value": "Pin"
+  },
+  "common.profileName": {
+    "description": "Profiilin nimi",
+    "value": "Profiilin nimi"
+  },
+  "common.remove": {
+    "description": "Poista-painikkeen teksti",
+    "value": "Poista"
+  },
+  "common.save": {
+    "description": "Tallenna-painikkeen teksti",
+    "value": "TALLENNA"
+  },
+  "common.showHidePassword": {
+    "description": "Työkaluvinkki salasanan näyttämiseen tai piilottamiseen",
+    "value": "Näytä / piilota salasana"
+  },
+  "common.submit": {
+    "description": "Lähetyspainike",
+    "value": "Lähetä"
+  },
+  "common.tags": {
+    "description": "Viesti tunnisteille",
+    "value": "Tunnisteet"
+  },
+  "common.trustedRoot": {
+    "description": "Teksti luotettavan juuren valintaruudulle",
+    "value": "Luotettu juuritunnus"
+  },
+  "common.unknown": {
+    "description": "Merkitse tuntemattomat tai määrittelemättömät arvot.",
+    "value": "Tuntematon"
+  },
+  "common.up": {
+    "value": "Ylös"
+  },
+  "common.userName": {
+    "description": "Viesti käyttäjätunnukselle",
+    "value": "Käyttäjätunnus"
+  },
+  "common.wired": {
+    "description": "Teksti langattomalle painikkeelle",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "Teksti langalliselle painikkeelle",
+    "value": "Langaton"
+  },
+  "common.yes": {
+    "value": "Kyllä"
+  },
+  "configDetail.commonNameHint": {
+    "description": "Vihje teksti yleiselle nimikentälle",
+    "value": "Syötä sertifikaatissa oleva yleinen nimi."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "Paikkamerkki teksti yleiselle nimikentälle",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "Vihje teksti konfiguraationimikentälle",
+    "value": "Anna nimi tälle CIRA-määritykselle"
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "Paikkamerkki teksti konfiguraationimikentälle",
+    "value": "esim. ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "FQDN-valintapainikkeen teksti",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "IPv4-valintapainikkeen teksti",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "Vihje teksti MPS-palvelimen osoitekenttään",
+    "value": "Syötä MPS-instanssin isännöintiosoite"
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "Paikkamerkki MPS-palvelimen osoitekenttään",
+    "value": "MPS-osoite"
+  },
+  "configDetail.portHint": {
+    "description": "Vihje teksti porttikentälle",
+    "value": "Syötä MPS-ilmentymän CIRA-portti. Oletusarvo on 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "Paikkamerkki teksti porttikentälle",
+    "value": "Portti"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "Teksti salasanan uudelleenasettamista varten",
+    "value": "Luo uusi satunnainen salasana tallennuksen yhteydessä"
+  },
+  "configDetail.usernameHint": {
+    "description": "Vihje teksti käyttäjänimen kenttään",
+    "value": "Syötä käyttäjätunnus MPS-palveluun pääsemiseksi"
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "Paikkamerkki teksti käyttäjänimen kenttään",
+    "value": "Käyttäjätunnus"
+  },
+  "configs.ciraNoData": {
+    "description": "Ei CIRA-määrityksiä -viesti",
+    "value": "Ei CIRA-määrityksiä"
+  },
+  "configs.delete": {
+    "description": "Viesti CIRA-määritysten poistamisesta",
+    "value": "CIRA-määritys poistettu onnistuneesti"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "Virhe CIRA-määritysten poistamisessa",
+    "value": "CIRA-määrityksiä ei voi poistaa"
+  },
+  "configs.failLoadConfigs": {
+    "description": "Virhe CIRA-määritysten lataamisessa",
+    "value": "CIRA-asetuksia ei voi ladata"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "Uusi CIRA-asetussivun otsikko",
+    "value": "Uusi CIRA-konfiguraatio"
+  },
+  "configs.header.ciraTitle": {
+    "description": "CIRA Configs -otsikko",
+    "value": "CIRA-asetukset"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "CIRA Configs -otsikko, kun se ei ole käytettävissä",
+    "value": "Ei saatavilla"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "Ensimmäinen sivu"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "Kohdat sivulla:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "Viimeinen sivu"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "Seuraava sivu"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "Edellinen sivu"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} – {{endIndex}} {{length}}"
+  },
+  "configs.success": {
+    "description": "Viesti CIRA-määritysten luomista varten",
+    "value": "CIRA {{reqType}} luotu onnistuneesti"
+  },
+  "configs.table.ciraCert": {
+    "description": "Cert Common Name -sarakkeen otsikko",
+    "value": "Cert Common Name (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "MPS-palvelimen sarakkeen otsikko",
+    "value": "MPS-palvelin"
+  },
+  "configs.table.ciraName": {
+    "description": "Nimeä sarakkeen otsikko",
+    "value": "Nimi"
+  },
+  "configs.table.ciraPort": {
+    "description": "Port-sarakkeen otsikko",
+    "value": "Portti"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "MPS Root Cert -sarakkeen otsikko",
+    "value": "MPS-juuritodistus"
+  },
+  "configs.table.ciraUsername": {
+    "description": "Käyttäjänimen sarakkeen otsikko",
+    "value": "Käyttäjätunnus"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "Työkaluvinkki uuden laitteen lisäämiseksi",
+    "value": "Lisää uusi laite, jota voidaan hallita konsolista"
+  },
+  "dashboard.addNewDevice": {
+    "description": "Uuden laitteen lisäämisen vaiheet",
+    "value": "1. Lisää uusi laite"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "Toimenpide varmennetodistuksen lisäämiseksi",
+    "value": "Lisää varmennusvarmenne [valinnainen]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "CIRA-kokoonpanon luominen",
+    "value": "Luo CIRA-määritys"
+  },
+  "dashboard.createProfile": {
+    "description": "Profiilin luominen",
+    "value": "Luo profiili"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "Langattoman yhteyden määrittämisen vaiheet",
+    "value": "Luo langaton kokoonpano [valinnainen]"
+  },
+  "dashboard.deploy": {
+    "description": "Työkalupaketin käyttöönotto",
+    "value": "Käyttöönotto"
+  },
+  "dashboard.deployDescription": {
+    "description": "Kuvaus käyttöönotosta",
+    "value": "Oletko valmis siirtymään tuotantoon? Tutustu käyttöönotto-oppaaseemme (tulossa pian)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "Yhdistettyjen laitteiden määrä",
+    "value": "Yhdistetyt laitteet"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "Irrotettujen laitteiden määrä",
+    "value": "Laitteet irrotettu"
+  },
+  "dashboard.error": {
+    "description": "Virhe laitteen tilastojen hakemisessa",
+    "value": "Virhe laitteen tilastojen hakemisessa"
+  },
+  "dashboard.getStarted": {
+    "description": "Aloita työkalupaketin käyttö",
+    "value": "Aloita"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "Kuvaus aloittamisesta",
+    "value": "Oletko uusi työkalupaketin käyttäjä? Tutustu ensin perusasioihin dokumentaatiosta."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "Kojelaudan otsikko",
+    "value": "Kojetaulu"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "Laitteesi hallinnan vaiheet",
+    "value": "2. Hallitse laitettasi"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "Vaihe laitteen hallinnan uudelleen aloittamiseksi",
+    "value": "Hallitse laitettasi"
+  },
+  "dashboard.totalDevices": {
+    "description": "Laitteiden kokonaismäärä",
+    "value": "Laitteiden kokonaismäärä"
+  },
+  "dashboard.understandSecurity": {
+    "description": "Ymmärrä turvallisuusaiheet",
+    "value": "Ymmärrä turvallisuus"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "Kuvaus turvallisuuden ymmärtämiseksi",
+    "value": "Oletko epävarma turvallisuusaiheista? Lue lisää salasanoista, Vaultista, varmenteista ja muusta."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "Työkaluvinkki laitteen toimintojen käyttämiseen",
+    "value": "Käytä laite toimintoja hallita luettelo laitteita"
+  },
+  "delete.question": {
+    "description": "Kysymys tietueiden poistamisesta",
+    "value": "Oletko varma?"
+  },
+  "delete.questionRecord": {
+    "description": "Kysymys tietueiden poistamisesta",
+    "value": "Haluatko varmasti poistaa tietueen/tietueet?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "Yleisen nimen teksti",
+    "value": "Yleinen nimi:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "DNS-nimien teksti",
+    "value": "DNS-nimet:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "Teksti liikkeeseenlaskijan nimelle",
+    "value": "Myöntäjän nimi:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "Teksti päivämäärän jälkeen",
+    "value": "Ei jälkeen:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "Teksti, jota ei saa käyttää ennen päivämäärää",
+    "value": "Ei ennen:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "Teksti julkisen avaimen algoritmille",
+    "value": "Julkisen avaimen algoritmi:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "Teksti julkisen avaimen koosta",
+    "value": "Julkisen avaimen koko:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "Sarjanimen teksti",
+    "value": "Sarjanumero:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "Teksti SHA-1-sormenjäljelle",
+    "value": "SHA-1-sormenjälki:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "Teksti SHA-256-sormenjäljelle",
+    "value": "SHA-256-sormenjälki:"
+  },
+  "deviceCertificate.title": {
+    "description": "Sertifikaatin tietojen otsikko",
+    "value": "Sertifikaatin tiedot"
+  },
+  "deviceDetail.alarms": {
+    "description": "Laitteen hälytysten luokkanimi",
+    "value": "Hälytykset"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "Kuvaus hälytyksille",
+    "value": "Hallitse laitteen hälytyksiä"
+  },
+  "deviceDetail.auditLog": {
+    "description": "Auditointilokin luokkanimi",
+    "value": "Tarkastusloki"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "Kuvaus tarkastuslokille",
+    "value": "Tarkastele laitteen tarkastuslokia"
+  },
+  "deviceDetail.certificates": {
+    "description": "Sertifikaattien luokkien nimet",
+    "value": "Sertifikaatit"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "Sertifikaattien kuvaus",
+    "value": "Hallitse sertifikaatteja"
+  },
+  "deviceDetail.eventLog": {
+    "description": "Tapahtumalokin luokkanimi",
+    "value": "Tapahtumaloki"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "Tapahtumalokin kuvaus",
+    "value": "Näytä laitetapahtumat"
+  },
+  "deviceDetail.explorer": {
+    "description": "Explorerin luokkanimi",
+    "value": "Explorer"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "Kuvaus selaimelle",
+    "value": "Lähetä WSMAN-komennot"
+  },
+  "deviceDetail.general": {
+    "description": "Luokan nimi yleisiä laitetietoja varten",
+    "value": "Yleistä tietoa AMT:stä"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "Kuvaus laitteen yleisistä tiedoista",
+    "value": "AMT-versio ja ominaisuudet"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "Laitteistotietojen luokkanimi",
+    "value": "Laitteistotiedot"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "Kuvaus laitteistotiedoista",
+    "value": "Muisti, CPU jne."
+  },
+  "deviceDetail.kvm": {
+    "description": "KVM:n luokkanimi",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "KVM:n kuvaus",
+    "value": "Laitteen etäohjaus"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "Verkkosäätöjen luokkanimi",
+    "value": "Verkkoyhteydet"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "Kuvaus verkkoasetuksista",
+    "value": "Näytä verkkoasetukset"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "Kategorian nimi, jos tapahtumalokeja ei ole",
+    "value": "Ei tapahtumalokia"
+  },
+  "deviceDetail.sol": {
+    "description": "Sarjanimi Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "Kuvaus SOL:lle",
+    "value": "Sarja LAN-verkossa"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "TLS-asetusten luokkanimi",
+    "value": "TLS-asetukset"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "Kuvaus TLS-asetuksista",
+    "value": "Näytä TLS-määritykset"
+  },
+  "devices.actions.deactivate": {
+    "description": "Työkaluvinkki laitteen deaktivoimiseksi/poistamiseksi",
+    "value": "Poista laite käytöstä"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "Työkaluvinkki laitteen deaktivoimiseksi pilvipalvelutilassa",
+    "value": "Laitteen deaktivointi"
+  },
+  "devices.actions.edit": {
+    "description": "Työkaluvinkki laitteen muokkaamiseen",
+    "value": "Muokkaa laitetta"
+  },
+  "devices.actions.powerOff": {
+    "description": "Työkaluvinkki laitteen sammuttamiseen",
+    "value": "Sammuta laite"
+  },
+  "devices.actions.powerUp": {
+    "description": "Työkaluvinkki laitteen käynnistämiseen",
+    "value": "Käynnistä laite"
+  },
+  "devices.actions.remove": {
+    "description": "Työkaluvinkki laitteen poistamiseksi ei-pilvipalvelutilassa",
+    "value": "Poista laite"
+  },
+  "devices.actions.reset": {
+    "description": "Työkaluvinkki laitteen nollaamiseksi",
+    "value": "Nollaa laite"
+  },
+  "devices.actions.restart": {
+    "description": "Työkaluvinkki laitteen uudelleenkäynnistämiseen",
+    "value": "Käynnistä laite uudelleen"
+  },
+  "devices.addDevice": {
+    "description": "Uuden laitteen viesti",
+    "value": "Lisää uusi laite"
+  },
+  "devices.bulk.deactivate": {
+    "description": "Työkaluvinkki joukkodeaktivointitoiminnolle",
+    "value": "Poista tai deaktivoi valitut laitteet"
+  },
+  "devices.bulk.powerOff": {
+    "description": "Työkaluvinkki joukkosammutustoiminnolle",
+    "value": "Sammuta valitut laitteet"
+  },
+  "devices.bulk.powerUp": {
+    "description": "Työkaluvinkki joukkovoimatoiminnolle",
+    "value": "Valittujen laitteiden virran kytkeminen"
+  },
+  "devices.bulk.restart": {
+    "description": "Työkaluvinkki joukkokäynnistystoiminnolle",
+    "value": "Käynnistä valitut laitteet uudelleen"
+  },
+  "devices.deactivation": {
+    "description": "Viesti deaktivoinneista",
+    "value": "Deaktivointi lähetetty onnistuneesti"
+  },
+  "devices.editDevice": {
+    "description": "Työkaluvinkki laitteen muokkaamiseen",
+    "value": "Muokkaa laitetta"
+  },
+  "devices.editTags": {
+    "description": "Painikkeen teksti tagien muokkaamista varten",
+    "value": "Muokkaa tunnisteita"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "Virhe laitteiden deaktivoinnissa",
+    "value": "Virhe laitteiden deaktivoinnissa"
+  },
+  "devices.errorDeactivation": {
+    "description": "Virhe deaktivointien lähettämisessä",
+    "value": "Virhe deaktivoinnin lähettämisessä"
+  },
+  "devices.errorInitializing": {
+    "description": "Virhe alustuksessa",
+    "value": "Alustuksen virhe"
+  },
+  "devices.errorLoadDevices": {
+    "description": "Virhe laitteiden lataamisessa",
+    "value": "Virhe laitteiden lataamisessa"
+  },
+  "devices.errorLoadTags": {
+    "description": "Virhe tagien lataamisessa",
+    "value": "Virhe tagien lataamisessa"
+  },
+  "devices.errorPowerAction": {
+    "description": "Virhe voimakkaissa toimissa",
+    "value": "Virhe lähettäessä teho-toimintoa"
+  },
+  "devices.failPowerAction": {
+    "description": "Virhe epäonnistui virranhallintatoiminnot",
+    "value": "Toiminto epäonnistui"
+  },
+  "devices.filter.searchHint": {
+    "description": "Vihje teksti laitteiden hakukentän alla",
+    "value": "Kirjoita teksti suodattaaksesi nykyisen sivun"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "Paikkamerkki teksti laitteiden hakukenttään",
+    "value": "Suodata laitteet..."
+  },
+  "devices.filter.tags": {
+    "description": "Tunniste laitteiden suodattamiseen tunnisteiden avulla",
+    "value": "Suodata tunnisteet"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "Lisää sertifikaatin kuvaus",
+    "value": "Sertifikaatti lisätään AMT:hen."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "Lisää sertifikaatin valintaikkunan otsikko",
+    "value": "Lisää sertifikaatti"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "HTTPS-käynnistysvalintaikkunan kuvaus",
+    "value": "HTTPS Network Boot suojaa käynnistysprosessia salatulla HTTPS-yhteydellä käynnistystiedostojen suojaamiseksi. Käynnistä One Click Recovery -toiminto käyttöjärjestelmän nopeaa palauttamista varten."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "HTTPS-käynnistysvalintaikkunan otsikko",
+    "value": "HTTPS-verkkokäynnistys (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "PBA Boot -valintaikkunan kuvaus",
+    "value": "PBA (Pre-Boot Application) on palautus- tai diagnostiikkatyökalu, joka asennetaan paikallisesti järjestelmään ja joka voidaan valita käynnistysvaihtoehdoksi Intel One-Click Recovery -toiminnoissa."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "PBA Boot -valintaikkunan otsikko",
+    "value": "Paikallinen PBA-saappaat (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "Laitteet-sivun otsikko",
+    "value": "Laitteet"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "Työkaluvinkki laitteen lisävirta-asetusten käyttämiseen",
+    "value": "Lisää virta-asetuksia..."
+  },
+  "devices.noData": {
+    "description": "Viesti, kun laitteita ei ole",
+    "value": "Laitteita ei löytynyt"
+  },
+  "devices.noDataFilter": {
+    "description": "Viesti, kun suodatustulokset ovat tyhjät",
+    "value": "Mikään laite ei vastaa nykyistä suodatinta"
+  },
+  "devices.notification.error": {
+    "description": "Työkaluvinkki, joka näkyy, kun toiminto epäonnistuu",
+    "value": "Virhe lähettämisessä"
+  },
+  "devices.notification.notReady": {
+    "description": "Työkaluvinkki näkyy, kun laite ei ole valmis",
+    "value": "Virta-toiminto lähetetty, mutta laite vastasi, ettei se ole valmis."
+  },
+  "devices.notification.success": {
+    "description": "Työkaluvinkki, joka näkyy, kun toiminto onnistuu",
+    "value": "Toiminto lähetetty onnistuneesti"
+  },
+  "devices.powerActionNotReady": {
+    "description": "Virhe lähetetyille toimille, jotka eivät ole valmiita",
+    "value": "Power-toiminto lähetetty, mutta ei vielä valmis"
+  },
+  "devices.powerActionSent": {
+    "description": "Viesti voimakkaille toimille",
+    "value": "Toiminto lähetetty onnistuneesti"
+  },
+  "devices.table.actions": {
+    "description": "Taulukon sarakkeen otsikko toiminnoille",
+    "value": "Toimenpiteet"
+  },
+  "devices.table.guid": {
+    "description": "Taulukon sarakkeen otsikko GUID:lle",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "Taulukon sarakkeen otsikko isäntänimelle",
+    "value": "Isäntänimi"
+  },
+  "devices.table.status": {
+    "description": "Laitteen tilan taulukon sarakkeen otsikko",
+    "value": "Tila"
+  },
+  "devices.table.tags": {
+    "description": "Taulukon sarakkeen otsikko tunnisteille",
+    "value": "Tunnisteet"
+  },
+  "deviceUserConsent.description": {
+    "description": "Kuvaus laitteiden käyttäjän suostumuksesta",
+    "value": "Järjestelmään pääsemiseksi tarvitaan Intel AMT:n luoma käyttäjän suostumus koodi."
+  },
+  "deviceUserConsent.error": {
+    "description": "Virhe käyttäjän suostumuksessa laitteille",
+    "value": "Tämä kenttä on pakollinen, ja sen arvona on oltava kuusinumeroinen luku."
+  },
+  "deviceUserConsent.hint": {
+    "description": "Vinkki laitteiden käyttäjien suostumuksesta",
+    "value": "Anna käyttäjän suostumus koodi, joka näkyy kohdeisännän näytöllä."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "Paikkamerkki käyttäjän suostumukselle laitteille",
+    "value": "Käyttäjän suostumus -koodi"
+  },
+  "deviceUserConsent.title": {
+    "description": "Käyttäjän suostumuksen otsikko laitteille",
+    "value": "Käyttäjän suostumus"
+  },
+  "domainDetail.completeProfile": {
+    "description": "Viesti valmiista verkkotunnusprofiileista",
+    "value": "Verkkotunnusprofiili tallennettu onnistuneesti"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "Virhe poistetuissa verkkotunnusprofiileissa",
+    "value": "Virhe domain-profiilin luomisessa/päivittämisessä"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Virheilmoitus yksilöllisen avaimen rikkomisesta",
+    "value": "Domain NewDomainin tunnus tai liite on jo olemassa"
+  },
+  "domainDetail.fqdn": {
+    "description": "Vinkki FQDN-kenttään",
+    "value": "Syötä provisioning-varmenteeseen liittyvä FQDN (eli amtdomain.com)."
+  },
+  "domainDetail.nameHint": {
+    "description": "Vinkki verkkotunnuksen kenttään",
+    "value": "Anna nimi tälle verkkotunnukselle (esim. AMT-verkkotunnus)"
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "Paikkamerkki verkkotunnukselle",
+    "value": "Verkkotunnus"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "Paikkamerkki varmennetunnuksen salasanalle",
+    "value": "Sertifikaatin salasanan määrittäminen"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "Vihje varmennetunnuksen salasanan määrittämiseen",
+    "value": "Provisiointitodistuksen salasana"
+  },
+  "domains.certExpired": {
+    "description": "Viesti vanhentuneista varmenteista",
+    "value": "{{count}} verkkotunnuksen varmenteet ovat vanhentuneet "
+  },
+  "domains.certExpring": {
+    "description": "Viesti vanhentuvista varmenteista",
+    "value": "{{count}} verkkotunnuksen varmenne(et) vanhenee pian "
+  },
+  "domains.daysRemaining": {
+    "description": "Viesti jäljellä oleville päiville",
+    "value": " jäljellä olevat päivät"
+  },
+  "domains.delteDomain": {
+    "description": "Viesti verkkotunnusten poistamisesta",
+    "value": "Verkkotunnus poistettu onnistuneesti"
+  },
+  "domains.expired": {
+    "description": "Viesti vanhentuneille verkkotunnuksille",
+    "value": "Vanhentunut"
+  },
+  "domains.failLoadDomain": {
+    "description": "Virhe verkkotunnusten lataamisessa",
+    "value": "Domaineja ei voi ladata"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "Virhe domainien poistamisessa",
+    "value": "Verkkotunnusta ei voi poistaa"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "Uuden verkkotunnuksen sivun otsikko",
+    "value": "Uusi verkkotunnus"
+  },
+  "domains.header.domainsTitle": {
+    "description": "Verkkotunnusten sivun otsikko",
+    "value": "Verkkotunnukset"
+  },
+  "domains.monthsRemaining": {
+    "description": "Viesti jäljellä oleville kuukausille",
+    "value": " jäljellä olevat kuukaudet"
+  },
+  "domains.noData": {
+    "description": "Ei verkkotunnuksia -viesti",
+    "value": "Ei verkkotunnuksia"
+  },
+  "domains.table.domainSuffix": {
+    "description": "Verkkotunnuksen loppuliitteen sarakkeen otsikko",
+    "value": "Verkkotunnuksen pääte"
+  },
+  "domains.table.expirationDate": {
+    "description": "Voimassaoloaika-sarakkeen otsikko",
+    "value": "Voimassaoloaika"
+  },
+  "domains.table.name": {
+    "description": "Nimeä sarakkeen otsikko",
+    "value": "Nimi"
+  },
+  "domains.yearsRemaining": {
+    "description": "Viesti jäljellä oleville vuosille",
+    "value": " jäljellä olevat vuodet"
+  },
+  "editTags.description": {
+    "description": "Kuvaus muokkausmerkinnöille",
+    "value": "Lisää tunniste napsauttamalla kehotetta, kirjoita tunnisteen nimi ja paina sitten Enter- tai pilkku-näppäintä."
+  },
+  "editTags.header": {
+    "description": "Otsikko muokkausmerkintöjä varten",
+    "value": "Poista tunniste napsauttamalla itse tunnistetta."
+  },
+  "editTags.placeholder": {
+    "description": "Paikkamerkki muokkausmerkintöjen varten",
+    "value": "Uusi tunniste..."
+  },
+  "editTags.title": {
+    "description": "Otsikko muokkausmerkintöjä varten",
+    "value": "Muokkaa tunnisteita"
+  },
+  "error.deviceNotResponding": {
+    "description": "Viesti, joka näkyy, kun laitteen aikakatkaisu umpeutuu",
+    "value": "Laite ei vastannut. Tarkista yhteysasetukset ja yritä uudelleen."
+  },
+  "error.itemModified": {
+    "description": "Viesti, joka näkyy, kun kohde on vanhentunut",
+    "value": "Tämä kohde on muutettu sen lataamisen jälkeen. Lataa uudelleen."
+  },
+  "error.kvmConnection": {
+    "description": "Virhe näkyy, kun muodostetaan yhteys KVM:ään",
+    "value": "Yhteyden muodostaminen KVM:ään epäonnistui. Laitetta kohti sallitaan vain yksi istunto. Varmista myös, että tunnuksesi on voimassa ja että sinulla on käyttöoikeus."
+  },
+  "error.sessionTimedOut": {
+    "description": "Viesti, joka näkyy, kun käyttäjän istunto on päättynyt",
+    "value": "Istunto on päättynyt. Kirjaudu uudelleen."
+  },
+  "error.unableToSendCode": {
+    "description": "Virhe, joka näkyy, kun käyttäjän suostumuskoodin lähettäminen epäonnistuu, sisältää backend-virheilmoituksen.",
+    "value": "Koodia ei voi lähettää: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "Yleinen virhe, kun käyttäjän suostumuskoodin peruuttaminen epäonnistuu",
+    "value": "Virheen peruuttaminen käyttäjän suostumus koodi"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "Virhe, kun pyydetyn käyttäjän suostumuskoodin peruuttaminen epäonnistuu",
+    "value": "{{featureName}} ei pääse käsiksi - pyydetyn käyttäjän suostumuskoodin peruuttaminen epäonnistui"
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "Virhe, kun pyydetyn käyttäjän suostumuskoodin peruuttaminen onnistuu",
+    "value": "{{featureName}} ei pääse käsiksi - pyydetty käyttäjän suostumus koodi on peruutettu"
+  },
+  "error.userConsentCodeFailed": {
+    "description": "Virhe näkyy, kun käyttäjän suostumuskoodin pyytäminen epäonnistuu jonkin ominaisuuden osalta.",
+    "value": "{{featureName}} ei voi käyttää – käyttäjän suostumuskoodin pyytäminen epäonnistui"
+  },
+  "error.userConsentSendFailed": {
+    "description": "Virhe käyttäjän suostumuskoodin lähettämisessä",
+    "value": "{{featureName}} ei pääse käsiksi - käyttäjän suostumuskoodin lähettäminen epäonnistui"
+  },
+  "error.userConsentUnsupported": {
+    "description": "Virhe, kun lähetetään tuettu käyttäjän suostumus koodi",
+    "value": "{{featureName}} ei voi käyttää - käyttäjän suostumuskoodia ei tueta"
+  },
+  "event.errorLog": {
+    "description": "Virhe tapahtumalokien hakemisessa",
+    "value": "Virhe tapahtumalokin hakemisessa"
+  },
+  "eventLog.download": {
+    "description": "Tapahtumalokin latauspainike",
+    "value": "Lataa tapahtumaloki (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "Tapahtumalokin merkintöjen otsikot",
+    "value": "Tapahtumaloki ({{count}} -merkintää)"
+  },
+  "eventLog.eventType": {
+    "description": "Viesti tapahtumalokityypeille",
+    "value": "Tapahtuman tyyppi"
+  },
+  "eventLog.severity": {
+    "description": "Viesti tapahtumalokin vakavuustasoille",
+    "value": "Vakavuus"
+  },
+  "eventLog.source": {
+    "description": "Viesti tapahtumalokin lähteille",
+    "value": "Lähde"
+  },
+  "explorer.errorResponse": {
+    "description": "Virhe hakukoneen vastauksen hakemisessa",
+    "value": "Virhe hakukoneen vastauksen hakemisessa"
+  },
+  "explorer.placeHolder": {
+    "description": "Paikkamerkki WSMAN-selaimelle",
+    "value": "Valitse..."
+  },
+  "explorer.WSMANCall": {
+    "value": "WSMAN-puhelu"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "Painikkeen teksti verkkotunnusten lisäämiseksi",
+    "value": "Lisää verkkotunnuksia"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "Mahdollisuus lisätä ensin verkkotunnukset",
+    "value": "Lisää ensin verkkotunnukset (vaaditaan ACM-aktivointia varten)"
+  },
+  "exportDialog.domainSuffix": {
+    "description": "Tunniste verkkotunnuksen loppuliitteen kentälle",
+    "value": "verkkotunnuksen loppuliite"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "Virheilmoituksen otsikko verkkotunnusten lataamisen yhteydessä",
+    "value": "Virhe domainien lataamisessa:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "Lataamassa viestiä verkkotunnuksille",
+    "value": "Ladataan verkkotunnuksia..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "Viesti, kun verkkotunnuksia ei ole määritetty",
+    "value": "Mitään verkkotunnuksia ei ole määritetty. Voit joko:"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "Virheilmoitus verkkotunnuksen valinnasta vaaditaan",
+    "value": "Valitse toimialue"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "Alateksti vientidialogin verkkotunnuksen valintaa varten",
+    "value": "Valittu verkkotunnus lisätään profiiliin käytettäväksi"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "Vientidialogin domain-valinnan otsikko",
+    "value": "Valitse verkkotunnuksen pääte"
+  },
+  "exportDialog.skipDomain": {
+    "description": "Painikkeen teksti verkkotunnuksen ohittamiseksi",
+    "value": "Ohita verkkotunnus"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "Mahdollisuus ohittaa domain, jos se on jo aktivoitu",
+    "value": "Napsauta \"Ohita verkkotunnus\", jos laite on jo aktivoitu."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "Ohjeet domainin ohitustoiminnolle",
+    "value": "Napsauta \"Ohita verkkotunnus\", jos laite on jo aktivoitu. Jos laitetta ei ole vielä aktivoitu, sinun on valittava verkkotunnus ACM-aktivointia varten."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "Pakollisten kenttien virheilmoitus",
+    "value": "Tämä kenttä on pakollinen, ja sen on oltava aakkosnumeerinen ilman välilyöntejä tai symboleja."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "Teksti pakollisille aakkosnumeerisille ja enimmäispituisille kentille",
+    "value": "Tämä kenttä on pakollinen, sen on oltava aakkosnumeerinen (ei välilyöntejä) ja enintään {{profileNameMaxLen}} merkkiä pitkä."
+  },
+  "fieldRequired.long": {
+    "description": "Vihje pakollisille kentille, joissa on merkkimäärärajoitus",
+    "value": "Tämä kenttä on pakollinen ja sen pituuden on oltava 8–32 merkkiä."
+  },
+  "fieldRequired.short": {
+    "description": "Vihje pakollisille kentille",
+    "value": "Tämä kenttä on pakollinen."
+  },
+  "general.amtBuild": {
+    "description": "AMT Build -merkki",
+    "value": "AMT Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "AMT DHCP DNS-jälkiliitteen etiketti",
+    "value": "AMT DHCP DNS-päätteet:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "Otsikko AMT-ominaisuuksien kortille",
+    "value": "AMT-ominaisuudet"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "Kuvaus AMT-ominaisuuksien kortille",
+    "value": "AMT-ominaisuuksien tila"
+  },
+  "general.AMTFeatures": {
+    "description": "Viesti päivitetyistä ominaisuuksista",
+    "value": "AMT-ominaisuudet päivitetty"
+  },
+  "general.amtSKU": {
+    "description": "AMT SKU:n etiketti",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "Otsikko AMT-yhteenvetokortille",
+    "value": "AMT-yhteenveto"
+  },
+  "general.amtSummaryDescription": {
+    "description": "Kuvaus AMT-yhteenvetokortille",
+    "value": "Yhteenveto AMT-tiedoista"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "AMT Trusted DNS Suffix -merkki",
+    "value": "AMT Trusted DNS Suffix (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "AMT-version tunniste",
+    "value": "AMT-versio:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "Virhe AMT-ominaisuuksien hakemisessa",
+    "value": "Virhe AMT-ominaisuuksien hakemisessa"
+  },
+  "general.errorAMTVersion": {
+    "description": "Virhe AMT-version hakemisessa",
+    "value": "Virhe AMT-version hakemisessa"
+  },
+  "general.errorGeneralSettings": {
+    "description": "Virhe yleisten asetusten hakemisessa",
+    "value": "Virhe yleisten asetusten hakemisessa"
+  },
+  "general.failAMTFeatures": {
+    "description": "Virhe ominaisuuksien päivittämisessä",
+    "value": "AMT-ominaisuuksien päivitys epäonnistui"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "HTTPS-käynnistystä ei tueta -työkaluvinkki",
+    "value": "HTTPS Bootia ei tueta."
+  },
+  "general.httpsBootSupported": {
+    "description": "HTTPS-käynnistyksen tukea koskeva työkaluvinkki",
+    "value": "HTTPS Boot on tuettu"
+  },
+  "general.httpsNetworkBoot": {
+    "description": "HTTPS-verkon käynnistysmerkki",
+    "value": "HTTPS-verkkokäynnistys:"
+  },
+  "general.ideRedirection": {
+    "description": "IDE-uudelleenohjauksen etiketti",
+    "value": "IDE-uudelleenohjaus:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "KVM-merkki",
+    "value": "Näppäimistö-video-hiiri (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "KVM:ää ei tueta -työkaluvinkki",
+    "value": "KVM ei tueta"
+  },
+  "general.oneClickRecovery": {
+    "description": "One Click Recovery -merkki",
+    "value": "Yhden napsautuksen palautus (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "One Click Recovery -työkalun vinkki ei tueta",
+    "value": "Yhden napsautuksen palautusta ei tueta."
+  },
+  "general.pbaBootShort": {
+    "description": "PBA-käynnistyksen etiketti",
+    "value": "PBA-käynnistys:"
+  },
+  "general.pbaNotSupported": {
+    "description": "PBA:ta ei tueta -työkaluvinkki",
+    "value": "PBA:ta ei tueta."
+  },
+  "general.pbaSupported": {
+    "description": "PBA-tuettu työkaluvinkki",
+    "value": "PBA on tuettu."
+  },
+  "general.provisioningMode": {
+    "description": "Provisiointitilan merkki",
+    "value": "Provisiointitila:"
+  },
+  "general.serialOverLan": {
+    "description": "SOL-merkki",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "Käyttäjän suostumuksen merkki",
+    "value": "Käyttäjän suostumus:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "Käyttäjän suostumuksen työkaluvinkki ei ole konfiguroitavissa",
+    "value": "Käyttäjän suostumusta ei voi määrittää CCM:ssä"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Windowsin palautuskäynnistyksen etiketti",
+    "value": "Windowsin palautuskäynnistys:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Työkaluvinkki Windowsin palautusta ei tueta",
+    "value": "Windowsin palautusta ei tueta."
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Työkaluvinkki Windowsin palautukselle tuettu",
+    "value": "Windows Recovery on tuettu"
+  },
+  "httpBoot.enforce": {
+    "value": "Turvallisen käynnistyksen pakottaminen"
+  },
+  "httpBoot.error": {
+    "value": "URL-osoite vaaditaan"
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "Syötä URL-osoite"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "Yhteenveto BIOS-tiedoista"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "BIOS-yhteenveto"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "Virhe lisätietojen hakemisessa",
+    "value": "Virhe lisätietojen hakemisessa"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "Virhe laitteistotietojen hakemisessa",
+    "value": "Virhe HW-tietojen hakemisessa"
+  },
+  "hwInfo.label.capacity": {
+    "value": "Kapasiteetti:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "Kellonopeus (maks.):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "Valmistaja:"
+  },
+  "hwInfo.label.model": {
+    "value": "Malli:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "Julkaisupäivä:"
+  },
+  "hwInfo.label.serial": {
+    "value": "Sarjanumero:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "Sarjanumero:"
+  },
+  "hwInfo.label.size": {
+    "value": "Koko:"
+  },
+  "hwInfo.label.slot": {
+    "value": "Paikka:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "Kohde-käyttöjärjestelmä:"
+  },
+  "hwInfo.label.type": {
+    "value": "Tyyppi:"
+  },
+  "hwInfo.label.version": {
+    "value": "Versio:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "Yhteenveto asennetusta fyysisestä muistista"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "Muistiyhteenveto"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "Yhteenveto emolevyn tiedoista"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "Emolevyn yhteenveto"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "Yhteenveto tallennustiedoista"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "Tallennuksen yhteenveto"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "Yhteenveto CPU- ja kotelotiedoista"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "Järjestelmän yhteenveto"
+  },
+  "ieee.authProtocol": {
+    "description": "Teksti todennusprotokollalle",
+    "value": "Todentamisprotokolla"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "Virheilmoitus teksti ieee-profiileille",
+    "value": "Virhe ieee8021x-profiilin luomisessa/päivittämisessä"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "Virhe IEEE8021x-määritysten lataamisessa",
+    "value": "IEEE8021x-määrityksiä ei voi ladata"
+  },
+  "ieee.PXETimeout": {
+    "description": "Teksti PXE-aikakatkaisulle",
+    "value": "PXE-aikakatkaisu"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "PXE-aikakatkaisun virheilmoitus",
+    "value": "Arvon on oltava välillä {{pxeTimeoutMin}} (pois käytöstä) ja {{pxeTimeoutMax}} sekuntia (yksi päivä)."
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "IEEE 802.1x -sivun otsikko",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "Uusi IEEE8021x-määrityssivun otsikko",
+    "value": "Uusi IEEE8021x-konfiguraatio"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "IEEE8021x-määritykset -sivun otsikko",
+    "value": "IEEE8021x-määritykset"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "Ei IEEE 8021x -määrityksiä koskevaa viestiä",
+    "value": "Ei IEEE 8021x -määrityksiä"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "Todentamisprotokollan sarakkeen otsikko",
+    "value": "Todentamisprotokolla"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "Käyttöliittymän sarakkeen otsikko",
+    "value": "Käyttöliittymä"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "Nimeä sarakkeen otsikko",
+    "value": "Nimi"
+  },
+  "keyDisplayDialog.description": {
+    "description": "Kuvaus avainnäytön valintaikkunasta",
+    "value": "Avain näytetään vain kerran. Käytä tätä avainta salatun profiilin dekoodaamiseen rpc-go:n kanssa."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "Tunniste avaimelle",
+    "value": "Avain"
+  },
+  "keyDisplayDialog.title": {
+    "description": "Otsikko avainnäytön valintaikkunalle",
+    "value": "Profiilin avain RPC-GO:lle"
+  },
+  "kvm.attachDisk.label": {
+    "description": "Painikkeen teksti levyn kuvan liittämiseksi IDER:ään",
+    "value": "Liitä levykuva (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "KVM-työkalurivin koodaustyypin pudotusvalikon nimike",
+    "value": "Valitse koodaustyyppi"
+  },
+  "kvm.connect.button": {
+    "description": "Painikkeen teksti KVM-istuntoon yhdistämiseksi",
+    "value": "Yhdistä KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "KVM-yhteyden muodostamisen aikana näkyvä etiketti",
+    "value": "KVM:n yhdistäminen..."
+  },
+  "kvm.disconnect.button": {
+    "description": "Painikkeen teksti KVM-istunnon katkaisemiseksi",
+    "value": "Kytke KVM irti"
+  },
+  "kvm.enable": {
+    "description": "Viesti KVM:n käyttöönottamisesta",
+    "value": "KVM ei ole tällä hetkellä käytössä tässä laitteessa. Haluatko ottaa sen käyttöön?"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "Virhe pääsyssä, kun pyyntö ottaa käyttöön on peruutettu",
+    "value": "KVM:ään ei pääse käsiksi – KVM:n käyttöönottopyyntö on peruutettu."
+  },
+  "kvm.errorAccessEnable": {
+    "description": "Virhe pääsyssä, kun pyydetään ottamaan käyttöön",
+    "value": "KVM:ään ei pääse - KVM:n käyttöönotto epäonnistui"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "Virhe pääsyssä, kun istunto on käynnissä",
+    "value": "KVM:ään ei pääse käsiksi – toinen kvm-istunto on käynnissä."
+  },
+  "kvm.errorDialog": {
+    "description": "Virhe KVM-valintaikkunan näyttämisessä",
+    "value": "KVM-valintaikkunaa ei voi näyttää"
+  },
+  "kvm.errorRetrieve": {
+    "description": "Virhe uudelleenohjauksen tilan hakemisessa",
+    "value": "Virhe uudelleenohjauksen tilan hakemisessa"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "Virhe virran tilan hakemisessa",
+    "value": "Virhe virran tilan hakemisessa"
+  },
+  "kvm.fullscreen.button": {
+    "description": "Painikkeen teksti, jolla vaihdetaan KVM:n koko näytön tilaan",
+    "value": "Koko näyttö"
+  },
+  "kvm.hotKeys.label": {
+    "description": "KVM-työkalurivin pikanäppäinten pudotusvalikon nimike",
+    "value": "Pikanäppäimet"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "Paikkamerkki teksti pikanäppäinten pudotusvalikolle",
+    "value": "Valitse pikanäppäin lähettämistä varten"
+  },
+  "kvm.hotKeys.send": {
+    "description": "Painikkeen teksti valitun pikanäppäimen lähettämiseksi",
+    "value": "Lähetä"
+  },
+  "kvm.stopIder.label": {
+    "description": "Painikkeen teksti IDER-istunnon lopettamiseksi",
+    "value": "Lopeta IDER"
+  },
+  "kvm.title": {
+    "description": "KVM:n otsikko",
+    "value": "Ota KVM käyttöön"
+  },
+  "login.error": {
+    "description": "Virhe kirjautumisessa",
+    "value": "Virheiden kirjaaminen"
+  },
+  "login.header.loginTitle": {
+    "description": "Kirjautumissivun otsikko",
+    "value": "Kirjautuminen"
+  },
+  "mqttEvents.connect": {
+    "description": "Yhdistä painikkeen teksti MQTT:lle",
+    "value": "Yhdistä"
+  },
+  "mqttEvents.connected": {
+    "description": "Työkaluvinkki, kun MQTT-yhteys on onnistunut",
+    "value": "Yhteys muodostettu"
+  },
+  "mqttEvents.failed": {
+    "description": "Työkaluvinkki, kun MQTT-yhteys epäonnistuu",
+    "value": "Yhteys epäonnistui"
+  },
+  "mqttEvents.guid.label": {
+    "description": "MQTT-tapahtuman GUID-tiedoston otsikkotaulukko",
+    "value": "Ohjeet"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "Vinkki MQTT-isäntänimen syöttämiseen",
+    "value": "Syötä isäntänimi. Oletusarvo on localhost."
+  },
+  "mqttEvents.hostname.label": {
+    "description": "MQTT-isäntänimen syöttöruudun nimi",
+    "value": "Isäntänimi"
+  },
+  "mqttEvents.message.label": {
+    "description": "MQTT-tapahtumaviestin taulukon otsikko",
+    "value": "Viesti"
+  },
+  "mqttEvents.methods.label": {
+    "description": "MQTT-tapahtumamenetelmien taulukon otsikko",
+    "value": "Menetelmät"
+  },
+  "mqttEvents.noData": {
+    "description": "Teksti, joka näkyy, kun MQTT-tapahtumia ei ole",
+    "value": "Ei tapahtumia"
+  },
+  "mqttEvents.path.hint": {
+    "description": "Vinkki MQTT-polun syöttämiseen",
+    "value": "Syötä MQTT-polku. Oletusarvo on /mqtt."
+  },
+  "mqttEvents.path.label": {
+    "description": "MQTT-polun syötteen etiketti",
+    "value": "Polku"
+  },
+  "mqttEvents.port.hint": {
+    "description": "Vinkki MQTT-portin syöttämiseen",
+    "value": "Syötä MQTT-portti. Oletusarvo on 9001."
+  },
+  "mqttEvents.port.label": {
+    "description": "MQTT-portin tulon merkintä",
+    "value": "Portti"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "MQTT-tapahtuman aikaleiman taulukon otsikko",
+    "value": "Aikaleima"
+  },
+  "mqttEvents.title": {
+    "description": "MQTT-tapahtumien kortin otsikko dynaamisella laskurilla",
+    "value": "MQTT-tapahtumat ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "MQTT-tapahtumatyypin taulukon otsikko",
+    "value": "Tyyppi"
+  },
+  "network.errorNetworkSetting": {
+    "description": "Virhe verkkoasetusten hakemisessa",
+    "value": "Virhe verkkoasetusten hakemisessa"
+  },
+  "network.ieee.authProtocol": {
+    "description": "IEEE 8021x -langattoman todennusprotokollan tunniste",
+    "value": "Todentamisprotokolla"
+  },
+  "network.ieee.availableInS0": {
+    "description": "S0:ssa käytettävissä oleva IEEE 8021x -langallinen merkintä",
+    "value": "Saatavilla S0:ssa"
+  },
+  "network.ieee.domain": {
+    "description": "IEEE 8021x -langattoman verkkotunnuksen tunniste",
+    "value": "Verkkotunnus"
+  },
+  "network.ieee.enabled": {
+    "description": "Tunniste IEEE 8021x -langalliselle yhteydelle",
+    "value": "Käytössä"
+  },
+  "network.ieee.pac": {
+    "description": "IEEE 8021x langattoman PAC:n etiketti",
+    "value": "Suojattu pääsyoikeus"
+  },
+  "network.ieee.pacPassword": {
+    "description": "IEEE 8021x langattoman PAC-salasanan etiketti",
+    "value": "PAC-salasana"
+  },
+  "network.ieee.password": {
+    "description": "IEEE 8021x -langattoman salasanan tunniste",
+    "value": "Salasana"
+  },
+  "network.ieee.psk": {
+    "description": "IEEE 8021x langattoman PSK:n tunniste",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "IEEE 8021x -langallisen PXE-aikakatkaisun merkintä",
+    "value": "PXE-aikakatkaisu"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "IEEE 8021x -langattoman verkkovierailun tunnisteen nimi",
+    "value": "Roaming-identiteetti"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "IEEE 8021x -langattoman palvelimen varmenneen nimen vertailun merkintä",
+    "value": "Palvelintodistuksen nimen vertailu"
+  },
+  "network.ieee.serverCertName": {
+    "description": "IEEE 8021x -langattoman palvelimen varmenneen nimen merkintä",
+    "value": "Palvelintodistuksen nimi"
+  },
+  "network.ieee.subtitle": {
+    "description": "Alateksti IEEE 8021x -verkkokortin asetuksille",
+    "value": "Tarkastele tämän laitteen IEEE 8021x-verkkoasetuksia"
+  },
+  "network.ieee.title": {
+    "description": "IEEE 8021x -verkkokortin asetukset",
+    "value": "IEEE 8021x -verkkoasetukset"
+  },
+  "network.ieee.username": {
+    "description": "IEEE 8021x -langattoman käyttäjänimen tunniste",
+    "value": "Käyttäjätunnus"
+  },
+  "network.wired.defaultGateway": {
+    "description": "Nimike langalliselle oletusyhdyskäytävälle",
+    "value": "Oletusyhdyskäytävä"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "Merkki langallisen DHCP-yhteyden tilalle",
+    "value": "DHCP käytössä"
+  },
+  "network.wired.ipAddress": {
+    "description": "Langallisen IP-osoitteen tunniste",
+    "value": "IP-osoite"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "Tunniste langallisen IP-synkronoinnin käyttöönotetulle tilalle",
+    "value": "IP-synkronointi käytössä"
+  },
+  "network.wired.linkControl": {
+    "description": "Nimike langalliselle linkin hallinnalle",
+    "value": "Linkkien hallinta"
+  },
+  "network.wired.linkPolicy": {
+    "description": "Nimike langalliselle linkkipolitiikalle",
+    "value": "Linkkikäytäntö"
+  },
+  "network.wired.linkPreference": {
+    "description": "Merkki langallisen yhteyden asetukselle",
+    "value": "Linkkien suositukset"
+  },
+  "network.wired.linkStatus": {
+    "description": "Nimike langallisen linkin tilalle",
+    "value": "Linkin tila"
+  },
+  "network.wired.macAddress": {
+    "description": "Langallisen MAC-osoitteen tunniste",
+    "value": "MAC-osoite"
+  },
+  "network.wired.primaryDNS": {
+    "description": "Nimike langalliselle ensisijaiselle DNS:lle",
+    "value": "Ensisijainen DNS"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "Nimike langalliselle toissijaiselle DNS:lle",
+    "value": "Toissijainen DNS"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "Nimi langalliselle jaetulle dynaamiselle IP-osoitteelle",
+    "value": "Jaettu dynaaminen IP-osoite"
+  },
+  "network.wired.sharedMAC": {
+    "description": "Nimike langallisen jaetun MAC-tilan tilalle",
+    "value": "Jaettu MAC"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "Nimike langalliselle jaetulle staattiselle IP-osoitteelle",
+    "value": "Jaettu staattinen IP-osoite"
+  },
+  "network.wired.subnetMask": {
+    "description": "Nimike langalliselle aliverkon peitteelle",
+    "value": "Aliverkon peite"
+  },
+  "network.wired.subtitle": {
+    "description": "Alakuvateksti langallisen verkon asetuskortille",
+    "value": "Tarkastele tämän laitteen langallisen verkon asetuksia"
+  },
+  "network.wired.title": {
+    "description": "Langallisen verkon asetuskortin otsikko",
+    "value": "Langallinen verkkoasetukset"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "Langattoman oletusyhdyskäytävän nimi",
+    "value": "Oletusyhdyskäytävä"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "Langattoman DHCP-yhteyden tilan merkki",
+    "value": "DHCP käytössä"
+  },
+  "network.wireless.ipAddress": {
+    "description": "Langattoman IP-osoitteen tunniste",
+    "value": "IP-osoite"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "Langattoman IP-synkronoinnin tilan merkki",
+    "value": "IP-synkronointi käytössä"
+  },
+  "network.wireless.linkControl": {
+    "description": "Langattoman linkin ohjauksen merkki",
+    "value": "Linkkien hallinta"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "Langattoman yhteyden käytäntöä koskeva merkintä",
+    "value": "Linkkikäytäntö"
+  },
+  "network.wireless.linkPreference": {
+    "description": "Langattoman yhteyden asetusten merkki",
+    "value": "Linkkien suositukset"
+  },
+  "network.wireless.linkStatus": {
+    "description": "Langattoman yhteyden tilan merkki",
+    "value": "Linkin tila"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "Langattoman paikallisen profiilin synkronoinnin tunniste",
+    "value": "Paikallisen profiilin synkronointi"
+  },
+  "network.wireless.macAddress": {
+    "description": "Langattoman MAC-osoitteen tunniste",
+    "value": "MAC-osoite"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "Langattoman ensisijaisen DNS:n tunniste",
+    "value": "Ensisijainen DNS"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "Langattoman toissijaisen DNS:n tunniste",
+    "value": "Toissijainen DNS"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "Langattoman jaetun dynaamisen IP-osoitteen tunniste",
+    "value": "Jaettu dynaaminen IP-osoite"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "Langattoman jaetun MAC-tilan merkki",
+    "value": "Jaettu MAC"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "Langattoman jaetun staattisen IP-osoitteen tunniste",
+    "value": "Jaettu staattinen IP-osoite"
+  },
+  "network.wireless.subnetMask": {
+    "description": "Langattoman aliverkon peitteen etiketti",
+    "value": "Aliverkon peite"
+  },
+  "network.wireless.subtitle": {
+    "description": "Langattoman verkon asetuskortin alaotsikko",
+    "value": "Tarkastele tämän laitteen langattoman verkon asetuksia"
+  },
+  "network.wireless.title": {
+    "description": "Langattoman verkon asetuskortin otsikko",
+    "value": "Langattoman verkon asetukset"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "Verkon nimi: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Salaus: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Tunnistus: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "Langattomien verkkojen kortin alaotsikko",
+    "value": "Tarkastele tämän laitteen langattomia verkkoja"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "Langattomien verkkojen kortin otsikko",
+    "value": "Langattomat verkot"
+  },
+  "pba.label": {
+    "description": "Merkintä valintaruudulle, jolla suojatun käynnistyksen valvonta otetaan käyttöön tai poistetaan käytöstä.",
+    "value": "Secure Bootin käyttöönotto"
+  },
+  "pba.required": {
+    "description": "Näytetään virheilmoitus, kun käynnistystiedoston polkua ei ole valittu.",
+    "value": "Käynnistystiedoston polku vaaditaan"
+  },
+  "pba.title": {
+    "description": "Käynnistystiedoston polun valintaan tarkoitettu merkki PBA-valintaikkunassa",
+    "value": "Käynnistystiedoston polku"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "Off"
+  },
+  "powerOptions.on": {
+    "value": "On"
+  },
+  "powerOptions.powerCycle": {
+    "value": "Virrankatkaisukierto"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "Käynnistä BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "Power Up to HTTPS Boot (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "Power Up to PXE"
+  },
+  "powerOptions.reset": {
+    "value": "Nollaa"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "Palauta BIOS-asetukset"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "Palauta HTTPS-käynnistykseen (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "Palauta IDE-R (CD-ROM)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "Palauta PXE-asetuksiin"
+  },
+  "powerOptions.sleep": {
+    "value": "Sleep"
+  },
+  "powerOptions.softOff": {
+    "value": "Soft-Off"
+  },
+  "powerOptions.softReset": {
+    "value": "Pehmeä nollaus"
+  },
+  "powerUp.message": {
+    "description": "Dialogiviesti, jossa käyttäjää pyydetään käynnistämään laite",
+    "value": "Haluatko lähettää virran kytkentäkomennon laitteelle?"
+  },
+  "powerUp.title": {
+    "description": "Laite pois päältä -tilassa näkyvä dialogin otsikko",
+    "value": "Laitteesi ei ole päällä"
+  },
+  "profileDetail.activationMode": {
+    "description": "Aktivointitilan valinnan merkki",
+    "value": "Aktivointitila"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "Järjestelmänvalvojan hallitsema aktivointitila",
+    "value": "Järjestelmänvalvojan ohjausmoodi"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "Asiakkaan ohjaama aktivointitila",
+    "value": "Asiakkaan hallintatila"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "AMT-ominaisuuksien osion nimi",
+    "value": "AMT-ominaisuudet - Ota käyttöön/poista käytöstä AMT:n uudelleenohjausominaisuudet"
+  },
+  "profileDetail.amtPassword": {
+    "description": "AMT-salasanakentän nimike",
+    "value": "AMT-salasana"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "Vinkki AMT-salasanakenttään",
+    "value": "AMT-salasanaa käytetään laitteen etäkäyttöön. Sitä tarvitaan myös laitteen uudelleenkonfigurointiin/deaktivointiin."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "Liitännäisten langattomien profiilien osion nimi",
+    "value": "Liittyvät langattomat profiilit (tärkeysjärjestyksessä)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "CIRA-valintapainikkeen etiketti",
+    "value": "CIRA (pilvi)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "Vinkki CIRA-konfiguraatioon",
+    "value": "CIRA:ta ei voi konfiguroida staattiselle verkolle, jos AMT-versio on alempi kuin 11.6."
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "CIRA-määrityskentän nimi",
+    "value": "CIRA-konfiguraatio"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "Yhteysasetusten osion nimike",
+    "value": "Provisioitu yhteyden konfigurointi"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "Virheilmoitus yhteystilan vaatimuksesta",
+    "value": "Yhteystila on määritettävä"
+  },
+  "profileDetail.dhcp": {
+    "description": "DHCP-valintapainikkeen etiketti",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "Kuvaus suorakytkentätilasta",
+    "value": "Tässä tilanteessa AMT toimii palvelimena ja kuuntelee saapuvia yhteyksiä. Työkalupakki toimii asiakkaana ja muodostaa yhteyden laitteeseen."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "Selite suorakytkentätilan osiolle",
+    "value": "Suora yhteys -tila (käytä, kun laitteet ovat suoraan käytettävissä paikallisen verkon kautta)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "Vinkki vetämällä ja pudottamalla tapahtuvaan uudelleenjärjestelyyn",
+    "value": "Vedä ja pudota järjestääksesi uudelleen"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "IP-synkronoinnin valintaruudun nimi",
+    "value": "Ota IP-synkronointi käyttöön"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "OS WiFi -synkronointivalintaruudun nimi",
+    "value": "Ota käyttöön käyttöjärjestelmän WiFi-profiilin synkronointi"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "UEFI WiFi-jakamisen valintaruudun nimi",
+    "value": "Ota käyttöön UEFI/CSME Wi-Fi-profiilin jakaminen"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "Valintaruutu satunnaisen AMT-salasanan luomiselle",
+    "value": "Luo satunnainen AMT-salasana jokaiselle laitteelle"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "Valintaruutu satunnaisen MEBX-salasanan luomiselle",
+    "value": "Luo satunnainen MEBX-salasana jokaiselle laitteelle"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "Työkaluvinkki satunnaisen salasanan luomispainikkeelle",
+    "value": "Luo satunnainen salasana"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "IDE-uudelleenohjausvalintaruudun nimi",
+    "value": "IDE-uudelleenohjaus"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "Kuvaus internet-tilasta",
+    "value": "Tässä tilanteessa AMT toimii asiakkaana ja muodostaa yhteyden työkalupakettiin, joka toimii palvelimena (vaatii MPS:n)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "Internet-tilan osion selitykset",
+    "value": "Internet-tila (käytä, kun laitteisiin EI ole suoraa pääsyä paikallisen verkon kautta)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "Vihje IP-synkronoinnille, kun se on pois käytöstä",
+    "value": "Aina käytössä DHCP:lle"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "Vinkki IP-synkronoinnille, kun se on käytössä",
+    "value": "Koskee vain langallista käyttöliittymää. Vaatii LMS:n suorittamaan synkronoinnin."
+  },
+  "profileDetail.kvm": {
+    "description": "KVM-valintaruudun etiketti",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "MEBX-salasanakentän etiketti",
+    "value": "MEBX-salasana"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "Vinkki MEBX-salasanakenttään",
+    "value": "MEBX-salasanaa käytetään BIOS-pääsyn suojaamiseen, kun käyttäjä on läsnä laitteen kanssa. Se voidaan asettaa vain, kun aktivointitila on asetettu Admin Control Mode -tilaan."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "Verkkoasetusten osion nimike",
+    "value": "Verkon kokoonpano"
+  },
+  "profileDetail.newTag": {
+    "description": "Paikkamerkki uudelle tunnisteelle",
+    "value": "Uusi tunniste..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "Teksti, kun CIRA-määrityksiä ei ole käytettävissä",
+    "value": "- CIRA-määrityksiä ei löytynyt"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "Teksti, kun mitään asetusta ei ole valittu",
+    "value": "Ei valittua kokoonpanoa."
+  },
+  "profileDetail.nonTls": {
+    "description": "Non TLS -valintapainikkeen etiketti",
+    "value": "Ei TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "Vinkki TLS-vaihtoehdolle",
+    "value": "AMT 16.1:ssä ja uudemmissa versioissa AMT tarjoaa itse allekirjoitettuja varmenteita. Tämän vaihtoehdon valitseminen käyttää niitä työkalupaketin tarjoamien itse allekirjoitettujen varmenteiden sijaan."
+  },
+  "profileDetail.noWifi": {
+    "description": "Viesti, kun WiFi-määrityksiä ei ole käytettävissä",
+    "value": "Wifi-asetuksia ei löytynyt"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "Vinkki käyttöjärjestelmän WiFi-synkronointiin",
+    "value": "Koskee vain langatonta käyttöliittymää."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "Vihje teksti profiilin nimen kenttään",
+    "value": "Anna nimi tälle profiilille. Tämä on profiilin nimi, jota käytetään laitteessa aktivoinnin aikana."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "Paikkamerkki teksti profiilin nimen kenttään",
+    "value": "esim. profile1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "Työkaluvinkki salasanan näyttämisen/piilottamisen painikkeelle",
+    "value": "Näytä / piilota salasana"
+  },
+  "profileDetail.sol": {
+    "description": "SOL-valintaruudun etiketti",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "STATIC-valintapainikkeen etiketti",
+    "value": "STATIC"
+  },
+  "profileDetail.tags": {
+    "description": "Tunnisteiden kentän nimi",
+    "value": "Tunnisteet"
+  },
+  "profileDetail.tagsHint": {
+    "description": "Vinkki tag-kenttään",
+    "value": "Voit syöttää tunnisteita, jotka auttavat laitteiden järjestämisessä ja hakemisessa, kun hallinnoitujen laitteiden luettelo kasvaa. Kirjoita tunniste ja paina sitten Enter-näppäintä tai pilkkua."
+  },
+  "profileDetail.tls": {
+    "description": "TLS-valintapainikkeen etiketti",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "TLS-tilan kentän nimike",
+    "value": "TLS-tila"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "Vinkki TLS-tilan kenttään",
+    "value": "CIRA:ta ei voi konfiguroida, jos TLS on konfiguroitu."
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "TLS-allekirjoitusvaltuuden kentän nimike",
+    "value": "TLS-allekirjoitusviranomainen"
+  },
+  "profileDetail.userConsent": {
+    "description": "Käyttäjän suostumuskentän merkintä",
+    "value": "Käyttäjän suostumus"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "Vinkki käyttäjän suostumuskenttään",
+    "value": "Ohjaa, milloin käyttäjän on oltava läsnä tiettyjen AMT-ominaisuuksien käyttämiseksi."
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "WiFi-profiilien kentän nimi",
+    "value": "Wi-Fi-profiilit"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "Vinkki WiFi-profiilien kenttään",
+    "value": "Wi-Fi ei toimi staattisen verkon kautta."
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "Paikkamerkki WiFi-profiilien hakua varten",
+    "value": "Etsi lisättävät Wi-Fi-profiilit"
+  },
+  "profileDetail.wired": {
+    "description": "Langallisen verkon osion nimi",
+    "value": "Kaapeloitu verkko"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "Merkintä langalliselle 802.1x-määrityskentälle",
+    "value": "Wired 802.1x -määritykset"
+  },
+  "profiles.deleteProfile": {
+    "description": "Viesti poistetuille profiileille",
+    "value": "Profiili poistettu onnistuneesti"
+  },
+  "profiles.exportProfile": {
+    "description": "Viesti viedyille profiileille",
+    "value": "Profiili viety onnistuneesti"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "Virhe profiilien poistamisessa",
+    "value": "Profiilia ei voi poistaa"
+  },
+  "profiles.failExportProfile": {
+    "description": "Virhe profiilien viemisessä",
+    "value": "Profiilia ei voi viedä"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "Virhe konfiguraatioiden lataamisessa",
+    "value": "Asetuksia ei voi ladata"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "Uusi profiilisivun otsikko",
+    "value": "Uusi profiili"
+  },
+  "profiles.header.profileTitle": {
+    "description": "Profiilisivun otsikko",
+    "value": "Profiilit"
+  },
+  "profiles.noData": {
+    "description": "Ei profiileja -viesti",
+    "value": "Ei profiileja"
+  },
+  "profiles.table.activation": {
+    "description": "Aktivointitila-sarakkeen otsikko",
+    "value": "Aktivointitila"
+  },
+  "profiles.table.connection": {
+    "description": "Yhteysasetukset-sarakkeen otsikko",
+    "value": "Yhteysasetukset"
+  },
+  "profiles.table.name": {
+    "description": "Nimeä sarakkeen otsikko",
+    "value": "Nimi"
+  },
+  "profiles.table.network": {
+    "description": "Verkon kokoonpano -sarakkeen otsikko",
+    "value": "Verkon kokoonpano"
+  },
+  "randomPassword.learnMore": {
+    "description": "Viesti tukilinkkiä varten",
+    "value": "Lisätietoja täältä"
+  },
+  "randomPassword.message": {
+    "description": "Dialogiviesti, jossa selitetään satunnaisten salasanojen käytön seuraukset",
+    "value": "Olet valinnut satunnaisen salasanan luomisen jokaiselle laitteelle. Jos salaisen palveluntarjoajan tallennustila (esim. Vault) poistetaan tai katoaa, näitä salasanoja ei voida palauttaa ja laite on palautettava tehdasasetuksiin."
+  },
+  "randomPassword.title": {
+    "description": "Satunnaisen salasanan varoituksen dialogin otsikko",
+    "value": "Satunnaisesti luotujen salasanojen käyttö"
+  },
+  "sol.connect": {
+    "description": "Painike SOL-yhteyden muodostamiseksi",
+    "value": "Yhdistä SOL"
+  },
+  "sol.disconnect": {
+    "description": "Painike SOL-yhteyden katkaisemiseksi",
+    "value": "Katkaise yhteys SOL"
+  },
+  "sol.enable": {
+    "description": "Viesti SOL:n käyttöönottamisesta",
+    "value": "SOL ei ole tällä hetkellä käytössä tässä laitteessa. Haluatko ottaa sen käyttöön?"
+  },
+  "sol.errorAccessCancel": {
+    "description": "Virhe SOL-palveluun pääsyssä, kun SOL-palvelun käyttöönottopyyntö peruutetaan",
+    "value": "SOL-palveluun ei pääse – SOL-palvelun käyttöönottopyyntö on peruutettu."
+  },
+  "sol.errorAccessEnable": {
+    "description": "Virhe SOL-palveluun pääsyssä, kun SOL-palvelu ei onnistunut aktivoitumaan",
+    "value": "SOL-palveluun ei pääse – SOL-palvelun käyttöönotto epäonnistui"
+  },
+  "sol.errorDiplay": {
+    "description": "Virhe dialogin näyttämisessä",
+    "value": "SOL-valintaikkunaa ei voi näyttää"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "Virhe virran tilan hakemisessa",
+    "value": "Virhe virran tilan hakemisessa"
+  },
+  "sol.loading": {
+    "description": "Viesti ladattavaksi SOL:iin",
+    "value": "Yhdistetään SOL..."
+  },
+  "sol.title": {
+    "description": "SOL:n otsikko",
+    "value": "Ota SOL käyttöön"
+  },
+  "staticCira.message": {
+    "description": "Dialogiviesti, joka varoittaa CIRA-yhteyden rajoituksista staattisella IP-osoitteella",
+    "value": "Olet valinnut yhteyden muodostamisen CIRA:n avulla staattisella IP-verkkoasetuksella. Laitteet, joissa on AMT-versio 11.6 tai vanhempi, eivät muodosta yhteyttä MPS:ään CIRA:n avulla, jos niissä on staattinen IP-verkkoasetus."
+  },
+  "staticCira.title": {
+    "description": "CIRA:n staattisen IP-osoitteen varoituksen dialogin otsikko",
+    "value": "CIRA ja staattinen verkkokonfiguraatio"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "Tunniste TLS:n suojaamattomien yhteyksien hyväksymiselle",
+    "value": "Hyväksy suojaamattomat yhteydet"
+  },
+  "tls.elementName.label": {
+    "description": "TLS-elementin nimen kentän nimi",
+    "value": "Elementin nimi"
+  },
+  "tls.enabled.label": {
+    "description": "TLS-yhteensopivan kentän merkki",
+    "value": "Käytössä"
+  },
+  "tls.errorSettings": {
+    "description": "Virhe tls-asetusten hakemisessa",
+    "value": "Virhe tls-asetusten hakemisessa"
+  },
+  "tls.instanceId.label": {
+    "description": "TLS-instanssin tunnuskentän nimi",
+    "value": "Instanssin tunnus"
+  },
+  "tls.mutualAuth.label": {
+    "description": "TLS-keskinäisen todennuksen kentän nimi",
+    "value": "Keskinäinen todennus"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "Merkki, joka osoittaa, tuetaanko TLS:ssä suojaamattomia yhteyksiä",
+    "value": "Tuetut suojaamattomat yhteydet"
+  },
+  "tls.title": {
+    "description": "TLS-asetuskortin otsikko",
+    "value": "Transport Layer Security"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Mahdollisuus käyttää Microsoft CA:n allekirjoittamaa varmennetta",
+    "value": "Käytä Microsoft CA Signed Cert -sertifikaattia (vaatii Enterprise Assistantin)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "Mahdollisuus käyttää itse allekirjoitettua varmennetta",
+    "value": "Käytä itse allekirjoitettua varmennetta"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "TLS-tila, jossa on sekä keskinäiset TLS- että ei-TLS-yhteydet",
+    "value": "Keskinäinen ja ei-TLS-todennus"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "TLS-tila, jossa käytetään vain molemminpuolista todennusta",
+    "value": "Vain molemminpuolinen TLS-todennus"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "TLS-tila sekä palvelimen todennuksella että ei-TLS-yhteyksillä",
+    "value": "Palvelin ja ei-TLS-todennus"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "TLS-tila, jossa käytetään vain palvelimen todennusta",
+    "value": "Vain palvelimen todennus"
+  },
+  "toolbar.errorMPS": {
+    "description": "Virhe MPS-versioiden hakemisessa",
+    "value": "Virhe MPS-versioiden hakemisessa"
+  },
+  "toolbar.errorRPS": {
+    "description": "Virhe RPS-versioiden hakemisessa",
+    "value": "Virhe RPS-versioiden hakemisessa"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "Sovelluksen pääotsikko",
+    "value": "Esimerkki käyttöliittymästä"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "Sovelluksen pääotsikko konsolitilassa",
+    "value": "Konsoli"
+  },
+  "toolbar.header.hello": {
+    "description": "Tervehdysviesti",
+    "value": "Hei"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "Virhe käyttäjän suostumuskoodin peruuttamisessa",
+    "value": "Virheen peruuttaminen käyttäjän suostumus koodi"
+  },
+  "userConsent.errorRequest": {
+    "description": "Virhe käyttäjän suostumuskoodin pyytämisessä",
+    "value": "Virhe käyttäjän suostumuskoodin pyytämisessä – yritä uudelleen 3 minuutin kuluttua"
+  },
+  "userConsent.errorSendCode": {
+    "description": "Virhe käyttäjän suostumuskoodin lähettämisessä",
+    "value": "Virhe käyttäjän suostumuskoodin lähettämisessä"
+  },
+  "userConsentGeneral.all": {
+    "description": "Suostumus vaaditaan kaikkiin toimiin",
+    "value": "kaikki"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "Suostumus vaaditaan vain KVM-toiminnoille",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "Käyttäjän suostumusta ei tarvita.",
+    "value": "ei mitään"
+  },
+  "userConsentModes.all": {
+    "description": "Suostumus vaaditaan kaikkiin toimiin",
+    "value": "Kaikki"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "Suostumus vaaditaan vain KVM-toiminnoille",
+    "value": "Vain KVM"
+  },
+  "userConsentModes.none": {
+    "description": "Käyttäjän suostumusta ei tarvita.",
+    "value": "Ei mitään"
+  },
+  "warning.iderActive": {
+    "description": "Näytetään, kun IDER-istunto on aktiivinen.",
+    "value": "IDER-istunto aktiivinen"
+  },
+  "warning.iderEnded": {
+    "description": "Näytetään, kun IDER-istunto on päättynyt.",
+    "value": "IDER-istunto päättynyt"
+  },
+  "warning.userConsentCancelled": {
+    "description": "Varoitus näkyy, kun edellisen käyttäjän suostumus koodi peruutettiin",
+    "value": "{{featureName}} ei voi käyttää - aiemmin pyydetty käyttäjän suostumus koodi on peruutettu"
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "Virhe konfiguraatioiden lataamisessa",
+    "value": "Asetuksia ei voi ladata"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "Langattoman sivun otsikko",
+    "value": "Langaton"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "Langattoman konfiguraation todennusmenetelmän sarakkeen otsikko",
+    "value": "Todentaminen"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "Langattoman kokoonpanon salausmenetelmän sarakkeen otsikko",
+    "value": "Salaus"
+  },
+  "wirelessConfigs.name": {
+    "description": "Sarakkeen otsikko langattoman konfiguraation nimelle",
+    "value": "Nimi"
+  },
+  "wirelessConfigs.noData": {
+    "description": "Viesti, joka näkyy, kun langattomia määrityksiä ei ole",
+    "value": "Ei langattomia asetuksia"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "Langattoman verkon SSID-tunnuksen sarakkeen otsikko",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "Langattomien kokoonpanojen osion otsikko",
+    "value": "Langattomat asetukset"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "Tunnistautumismenetelmäkentän nimi",
+    "value": "Todentamismenetelmä"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "Salausmenetelmäkentän nimi",
+    "value": "Salausmenetelmä"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "Virheilmoitus langattoman profiilin luomisesta/päivittämisestä",
+    "value": "Virhe langattoman profiilin luomisessa/päivittämisessä"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "Pakollisten kenttien virheilmoitus",
+    "value": "Tämä kenttä on pakollinen, ja sen on oltava aakkosnumeerinen ilman välilyöntejä tai symboleja."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "Virhe langattomien profiilien tallennuksessa",
+    "value": "Virhe langattoman profiilin tallennuksessa"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "802.1x-määrityskentän nimi",
+    "value": "802.1x-määritykset"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "Otsikko uuden langattoman kokoonpanon luomiselle",
+    "value": "Uusi langaton kokoonpano"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "Menestysviesti langattoman profiilin luomisesta",
+    "value": "Profiili luotu onnistuneesti"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "Menestysviesti langattoman profiilin päivittämisestä",
+    "value": "Profiili päivitetty onnistuneesti"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "PSK-salasanakentän nimike",
+    "value": "PSK-salasana"
+  },
+  "wirelessDetail.saving": {
+    "description": "Viesti profiilin tallentamisesta onnistui",
+    "value": "Profiilin tallennus onnistui"
+  },
+  "wirelessDetail.ssid": {
+    "description": "SSID-kentän nimi",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "Langattoman profiilin nimen kentän nimi",
+    "value": "Langattoman profiilin nimi"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "Vihje langattoman profiilin nimen kenttään",
+    "value": "Anna nimi langattomalle profiilille."
+  },
+  "general.supported": {
+    "description": "Tunniste käytössä oleville AMT-ominaisuuksille",
+    "value": "Tuettu"
+  },
+  "general.notSupported": {
+    "description": "Tunniste pois käytöstä oleville AMT-ominaisuuksille",
+    "value": "Ei tuettu"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Käynnistä PBA:han asti (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Käynnistä WinRe:hen asti (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Nollaa PBA:han (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Nollaa WinRe:hen (OCR)"
+  },
+  "general.expand": {
+    "description": "Tunniste laajentamiselle",
+    "value": "Laajenna"
+  },
+  "general.collapse": {
+    "description": "Tunniste tiivistämiselle",
+    "value": "Tiivistä"
+  },
+  "proxy.label": {
+    "value": "Välityspalvelimet",
+    "description": "Tunniste välityspalvelinosioon"
+  },
+  "proxy.configs.label": {
+    "value": "Välityspalvelinasetukset",
+    "description": "Tunniste välityspalvelinasetusten syöttökentälle"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Etsi lisättäviä välityspalvelinasetuksia",
+    "description": "Paikkamerkkiteksti välityspalvelinasetusten hakemiseen"
+  },
+  "proxy.configs.hint": {
+    "value": "Välityspalvelimet voidaan liittää tähän profiiliin",
+    "description": "Vihje näytetään välityspalvelinasetusten syöttökentän alla"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Liitetyt välityspalveluprofiilit (prioriteettijärjestyksessä)",
+    "description": "Tunniste liitettyjen välityspalveluprofiilien listalle"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Raahaa ja pudota järjestyksen muuttamiseksi",
+    "description": "Vihje vetämällä ja pudottamalla tapahtuvaa uudelleenjärjestelyä varten"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Poista välityspalveluprofiili",
+    "description": "Aria-tunniste välityspalveluprofiilin poistopainikkeelle"
+  },
+  "profileDetail.noProxy": {
+    "description": "Viesti, kun välityspalvelinasetuksia ei ole saatavilla",
+    "value": "Välityspalvelinasetuksia ei löytynyt"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Välityspalvelinasetukset",
+    "description": "Välityspalvelinasetusten otsikko"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Nimi",
+    "description": "Sarakeotsikko välityspalvelinasetuksen nimelle"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Välityspalvelimen osoite",
+    "description": "Sarakeotsikko välityspalvelimen osoitteelle"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Osoiteformaatti",
+    "description": "Sarakeotsikko osoiteformaatille"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Portti",
+    "description": "Sarakeotsikko portille"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Verkon DNS-lisäosa",
+    "description": "Sarakeotsikko verkon DNS-lisäosalle"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Uusi välityspalvelinasetus",
+    "description": "Uuden välityspalvelinasetuksen sivun otsikko"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Muokkaa välityspalvelinasetusta",
+    "description": "Välityspalvelinasetuksen muokkaussivun otsikko"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Välityspalvelimen osoite",
+    "description": "Välityspalvelimen osoitekentän tunniste"
+  },
+  "proxyConfigs.name": {
+    "value": "Nimi",
+    "description": "Välityspalvelinasetuksen nimikentän tunniste"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Syötä välityspalvelinasetuksen nimi",
+    "description": "Paikkamerkki välityspalvelinasetuksen nimikentälle"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Syötä välityspalvelimen osoite",
+    "description": "Paikkamerkki välityspalvelimen osoitekentälle"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Osoiteformaatti",
+    "description": "Osoiteformaattikentän tunniste"
+  },
+  "proxyConfigs.port": {
+    "value": "Portti",
+    "description": "Porttikentän tunniste"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Verkon DNS-lisäosa",
+    "description": "DNS-lisäosakentän tunniste"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "esimerkki.com",
+    "description": "Paikkamerkki DNS-lisäosakentälle"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Portti on pakollinen",
+    "description": "Varmistusviesti: portti on pakollinen"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Portin on oltava välillä 0–65535",
+    "description": "Varmistusviesti porttialueelle"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Nimi on pakollinen",
+    "description": "Varmistusviesti: nimi on pakollinen"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Verkon DNS-lisäosa on pakollinen",
+    "description": "Varmistusviesti: DNS-lisäosa on pakollinen"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Verkon DNS-lisäosan on oltava enintään 192 merkkiä",
+    "description": "Varmistusviesti DNS-lisäosan maksimipituudesta"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Välityspalvelinasetus luotu onnistuneesti",
+    "description": "Onnistumisviesti välityspalvelinasetuksen luomisesta"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Välityspalvelinasetus päivitetty onnistuneesti",
+    "description": "Onnistumisviesti välityspalvelinasetuksen päivittämisestä"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Välityspalvelinasetus {{name}} poistettu onnistuneesti",
+    "description": "Onnistumisviesti välityspalvelinasetuksen poistamisesta"
+  },
+  "common.delete": {
+    "value": "Poista",
+    "description": "Poista-painikkeen teksti"
+  },
+  "common.update": {
+    "value": "PÄIVITÄ",
+    "description": "Päivitä-painikkeen teksti"
+  },
+  "common.noData": {
+    "value": "Ei saatavilla olevaa dataa",
+    "description": "Viesti, kun dataa ei ole saatavilla"
+  }
+}

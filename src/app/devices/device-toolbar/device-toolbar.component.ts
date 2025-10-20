@@ -28,6 +28,7 @@ import { UserConsentService } from '../user-consent.service'
 import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
 import { PBABootDialogComponent } from './pba-boot-dialog/pba-boot-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 interface PowerOptions {
   label: string
@@ -48,7 +49,8 @@ interface PowerOptions {
     MatMenuTrigger,
     MatMenu,
     MatMenuItem,
-    MatProgressBar
+    MatProgressBar,
+    TranslateModule
   ]
 })
 export class DeviceToolbarComponent implements OnInit {
@@ -59,6 +61,7 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly destroyRef = inject(DestroyRef)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public readonly isLoading = input(signal(false))
 
@@ -71,47 +74,47 @@ export class DeviceToolbarComponent implements OnInit {
   public powerState = signal('Unknown')
   public basePowerOptions: PowerOptions[] = [
     {
-      label: 'Hibernate',
+      label: 'powerOptions.hibernate.value',
       action: 7
     },
     {
-      label: 'Sleep',
+      label: 'powerOptions.sleep.value',
       action: 4
     },
     {
-      label: 'Power Cycle',
+      label: 'powerOptions.powerCycle.value',
       action: 5
     },
     {
-      label: 'Reset',
+      label: 'powerOptions.reset.value',
       action: 10
     },
     {
-      label: 'Soft-Off',
+      label: 'powerOptions.softOff.value',
       action: 12
     },
     {
-      label: 'Soft Reset',
+      label: 'powerOptions.softReset.value',
       action: 14
     },
     {
-      label: 'Reset to IDE-R (CD-ROM)',
+      label: 'powerOptions.resetToIDER.value',
       action: 202
     },
     {
-      label: 'Reset to BIOS',
+      label: 'powerOptions.resetToBIOS.value',
       action: 101
     },
     {
-      label: 'Power Up to BIOS',
+      label: 'powerOptions.powerUpToBIOS.value',
       action: 100
     },
     {
-      label: 'Reset to PXE',
+      label: 'powerOptions.resetToPXE.value',
       action: 400
     },
     {
-      label: 'Power Up to PXE',
+      label: 'powerOptions.powerUpToPXE.value',
       action: 401
     }
   ]
@@ -121,31 +124,31 @@ export class DeviceToolbarComponent implements OnInit {
   private readonly conditionalPowerOptions = {
     localPBABootSupported: [
       {
-        label: 'Reset to PBA (OCR)',
+        label: 'powerOptions.resetToPBA.value',
         action: 107
       },
       {
-        label: 'Power Up to PBA (OCR)',
+        label: 'powerOptions.powerUpToPBA.value',
         action: 108
       }
     ],
     winREBootSupported: [
       {
-        label: 'Reset to WinRe (OCR)',
+        label: 'powerOptions.resetToWinRe.value',
         action: 109
       },
       {
-        label: 'Power Up to WinRe (OCR)',
+        label: 'powerOptions.powerUpToWinRe.value',
         action: 110
       }
     ],
     httpsBootSupported: [
       {
-        label: 'Reset to HTTPS Boot (OCR)',
+        label: 'powerOptions.resetToHTTPSBoot.value',
         action: 105
       },
       {
-        label: 'Power Up to HTTPS Boot (OCR)',
+        label: 'powerOptions.powerUpToHTTPSBoot.value',
         action: 106
       }
     ]
@@ -350,7 +353,9 @@ export class DeviceToolbarComponent implements OnInit {
           }
         },
         error: () => {
-          this.snackBar.open($localize`Error initializing`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorInitializing.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         },
         complete: () => {
           this.isLoading().set(false)
@@ -365,7 +370,8 @@ export class DeviceToolbarComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error(err)
-          this.snackBar.open($localize`Error sending power action`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorPowerAction.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of(null)
         }),
         finalize(() => {
@@ -375,17 +381,21 @@ export class DeviceToolbarComponent implements OnInit {
       .subscribe((data) => {
         if (this.isCloudMode) {
           if (data.Body?.ReturnValueStr === 'NOT_READY') {
-            this.snackBar.open($localize`Power action sent but is not ready`, undefined, SnackbarDefaults.defaultWarn)
+            const msg: string = this.translate.instant('devices.powerActionNotReady.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultWarn)
           } else {
-            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            const msg: string = this.translate.instant('devices.powerActionSent.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
           }
         } else {
           if (data.ReturnValue === 0) {
+            const msg: string = this.translate.instant('devices.powerActionSent.value')
             console.log('Power action sent successfully:', data)
-            this.snackBar.open($localize`Power action sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
           } else {
             console.log('Power action failed:', data)
-            this.snackBar.open($localize`Power action failed`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('devices.failPowerAction.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           }
         }
       })
@@ -414,12 +424,14 @@ export class DeviceToolbarComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.snackBar.open($localize`Deactivation sent successfully`, undefined, SnackbarDefaults.defaultSuccess)
+              const msg: string = this.translate.instant('devices.deactivation.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
               void this.navigateTo('devices')
             },
             error: (err) => {
               console.error(err)
-              this.snackBar.open($localize`Error sending deactivation`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('devices.errorDeactivation.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             }
           })
       }
@@ -443,5 +455,11 @@ export class DeviceToolbarComponent implements OnInit {
       return of(true)
     }
     return of(false)
+  }
+
+  public get deactivateRemoveAction(): string {
+    return this.isCloudMode
+      ? this.translate.instant('devices.actions.deactivateCloud.value')
+      : this.translate.instant('devices.actions.remove.value')
   }
 }
