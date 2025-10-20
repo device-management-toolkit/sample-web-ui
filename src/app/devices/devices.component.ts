@@ -343,11 +343,11 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   translateConnectionStatus(status?: boolean): string {
     switch (status) {
       case false:
-        return this.translate.instant('common.disconnected.value')
+        return 'Disconnected'
       case true:
-        return this.translate.instant('common.connected.value')
+        return 'Connected'
       default:
-        return this.translate.instant('common.unknown.value')
+        return 'Unknown'
     }
   }
 
