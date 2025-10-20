@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "عنوان قسم \"حول\" في وضع السحابة",
+    "value": "حول مجموعة أدوات إدارة الأجهزة نموذج واجهة المستخدم على الويب"
+  },
+  "about.consoleProvides": {
+    "description": "رسالة لميزات وحدة التحكم",
+    "value": "توفر وحدة التحكم الميزات التالية وغيرها:"
+  },
+  "about.description": {
+    "description": "وصف وحدة التحكم",
+    "value": "Console هي أداة إدارة خارج النطاق 1:1 لإدارة Intel AMT على الشبكات المحلية. بعد إضافة الجهاز، تتصل Console بـ AMT مباشرة عبر الشبكة المحلية، مما يوفر طريقة سريعة وسهلة لتوصيل وإدارة جميع أجهزة AMT الخاصة بك."
+  },
+  "about.device": {
+    "description": "رسالة لأجهزة الجهاز",
+    "value": "معلومات أجهزة الأجهزة وتسجيل الدخول"
+  },
+  "about.doNotShowAgain": {
+    "description": "مربع اختيار لعرض قسم \"حول\" في الوقت الحالي",
+    "value": "لا تعرض مرة أخرى"
+  },
+  "about.gotIt": {
+    "description": "زر لإغلاق قسم \"حول\"",
+    "value": "فهمت"
+  },
+  "about.howTo": {
+    "description": "رسالة حول كيفية استخدام مجموعة الأدوات",
+    "value": "كيفية استخدام مجموعة أدوات واجهة المستخدم"
+  },
+  "about.learn": {
+    "description": "رسالة لتعلم استخدام مجموعة الأدوات",
+    "value": "تعرف على كيفية إدارة أداة إدارة الأجهزة للأجهزة"
+  },
+  "about.nonCloudMode": {
+    "description": "عنوان قسم \"حول\"",
+    "value": "حول وحدة التحكم"
+  },
+  "about.redirection": {
+    "description": "رسالة لميزات إعادة التوجيه",
+    "value": "ميزات إعادة التوجيه مثل لوحة المفاتيح عن بُعد والفيديو والماوس (KVM) والسلسلة عبر الشبكة المحلية (SOL)"
+  },
+  "about.referenceImplementation": {
+    "description": "رسالة لتوضيح التنفيذ في الوضع السحابي",
+    "value": "يوضح هذا التطبيق المرجعي واجهات برمجة التطبيقات والوظائف العامة لمجموعة أدوات إدارة الأجهزة، وهو غير مخصص للاستخدام في الإنتاج."
+  },
+  "about.remotePower": {
+    "description": "رسالة للتشغيل عن بُعد",
+    "value": "إجراءات الطاقة عن بُعد"
+  },
+  "about.sampleUI": {
+    "description": "رسالة لنموذج واجهة المستخدم",
+    "value": "هذا النموذج من واجهة المستخدم مخصص للأغراض التالية:"
+  },
+  "about.setUp": {
+    "description": "رسالة لإعداد",
+    "value": "إعداد الملفات الشخصية والتكوين والمجالات"
+  },
+  "about.understand": {
+    "description": "رسالة لفهم مجموعة الأدوات",
+    "value": "فهم تطبيق Device Management Toolkit لواجهات برمجة التطبيقات REST وكيفية استخدامها في تطبيقك الخاص."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "رسالة للسماح بالشهادات الموقعة ذاتيًا",
+    "value": "السماح بالشهادات الموقعة ذاتيًا"
+  },
+  "addDevice.chooseProfile": {
+    "description": "تسمية حقل اختيار الملف الشخصي",
+    "value": "اختر الملف الشخصي"
+  },
+  "addDevice.description": {
+    "description": "وصف يشرح كيفية تنشيط الجهاز",
+    "value": "لتنشيط جهاز، ستحتاج إلى تنفيذ أمر على جهاز AMT. سيساعدك مربع الحوار هذا في إنشاء الأمر المطلوب تنفيذه."
+  },
+  "addDevice.enterTags": {
+    "description": "تلميح لإدخال العلامات",
+    "value": "يمكنك إدخال علامات للمساعدة في تنظيم الأجهزة والاستعلام عنها مع نمو قائمة الأجهزة المدارة. اكتب علامة، ثم اضغط على Enter أو ضع فاصلة."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "خطأ في الأسماء الصديقة غير الصالحة",
+    "value": "لا يمكن أن يزيد طول الاسم المألوف عن 50 حرفًا."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "خطأ في الأسماء المطلوبة",
+    "value": "الاسم المألوف مطلوب"
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "خطأ في أسماء المضيفين غير الصالحة",
+    "value": "تنسيق اسم المضيف غير صالح"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "خطأ في أسماء المضيف المطلوبة",
+    "value": "اسم المضيف مطلوب"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "تسمية مربع الاختيار لتعطيل التحقق من الشهادة الموقعة ذاتيًا",
+    "value": "لا فحص للشهادات الموقعة ذاتيًا"
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "مكان مخصص لإضافة علامة جديدة",
+    "value": "علامة جديدة..."
+  },
+  "addDevice.profileRequired": {
+    "description": "رسالة خطأ التحقق عند عدم تحديد الملف الشخصي",
+    "value": "الملف الشخصي مطلوب"
+  },
+  "addDevice.showVerbose": {
+    "description": "تسمية مربع الاختيار لتمكين الإخراج التفصيلي",
+    "value": "إظهار التفاصيل"
+  },
+  "addDevice.title": {
+    "description": "عنوان مربع الحوار لإضافة جهاز جديد",
+    "value": "إضافة جهاز جديد"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "خطأ في اسم المستخدم غير صالح",
+    "value": "يجب أن يتكون اسم المستخدم من 5 أحرف على الأقل ولا يزيد عن 16 حرفًا."
+  },
+  "addDevice.userNameRequired": {
+    "description": "خطأ في اسم المستخدم المطلوب",
+    "value": "اسم المستخدم مطلوب"
+  },
+  "addDevice.useTLS": {
+    "description": "رسالة لاستخدام TLS",
+    "value": "استخدم TLS"
+  },
+  "alarm.errorAdding": {
+    "description": "خطأ في الإضافة",
+    "value": "خطأ في إضافة حالات الإنذار"
+  },
+  "alarm.errorDelete": {
+    "description": "خطأ في الحذف",
+    "value": "خطأ في حذف حالات الإنذار"
+  },
+  "alarm.errorRetrieve": {
+    "description": "خطأ في الاسترداد",
+    "value": "خطأ في استرداد حالات الإنذار"
+  },
+  "alarmService.addNew": {
+    "description": "نص الزر لإضافة منبه جديد",
+    "value": "إضافة جديد"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "تلميح لإدخال اسم التنبيه",
+    "value": "أدخل اسمًا لهذا التنبيه."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "مكان مخصص لإدخال اسم التنبيه",
+    "value": "اسم التنبيه"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "نصيحة حول زر حذف التنبيه",
+    "value": "حذف حدوث الإنذار"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "تسمية للحذف عند الانتهاء من التبديل بين الشرائح",
+    "value": "حذف عند الانتهاء"
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "اسم عنصر التنبيه متبوعًا بـ InstanceID",
+    "value": "{{elementName}} (InstanceID: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "تسمية لاختيار الساعة",
+    "value": "ساعة"
+  },
+  "alarmService.interval": {
+    "description": "تسمية لفاصل الإنذار",
+    "value": "الفاصل الزمني (بالدقائق)"
+  },
+  "alarmService.intervalHint": {
+    "description": "تلميح لإدخال الفاصل الزمني",
+    "value": "الفاصل الزمني بالدقائق للإنذار الدوري، 0 للإنذار الفردي"
+  },
+  "alarmService.intervalLabel": {
+    "description": "تسمية لإدخال الفاصل الزمني",
+    "value": "الفاصل الزمني"
+  },
+  "alarmService.intervalNone": {
+    "description": "يتم عرضه عندما لا يتم تحديد الفاصل الزمني",
+    "value": "لا شيء"
+  },
+  "alarmService.minuteLabel": {
+    "description": "تسمية لاختيار الدقيقة",
+    "value": "محاضر"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "وقت البدء: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "احذف عند الاكتمال: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "عنصر نائب لإدخال وقت البدء",
+    "value": "اختر تاريخًا ووقتًا"
+  },
+  "alarmService.subtitle": {
+    "description": "عنوان فرعي يوضح عدد مرات حدوث الإنذار",
+    "value": "الإنذارات (إدخالات{{count}} )"
+  },
+  "alarmService.title": {
+    "description": "عنوان بطاقة خدمة الإنذار",
+    "value": "خدمة الإنذار"
+  },
+  "audit.errorLog": {
+    "description": "خطأ في استرداد سجلات التدقيق",
+    "value": "خطأ في استرداد سجل التدقيق"
+  },
+  "auditLog.description": {
+    "value": "الوصف"
+  },
+  "auditLog.download": {
+    "description": "زر التنزيل لسجلات التدقيق",
+    "value": "تنزيل سجل التدقيق (.csv)"
+  },
+  "auditLog.event": {
+    "value": "حدث"
+  },
+  "auditLog.missing": {
+    "description": "رسالة بشأن سجلات التدقيق المفقودة",
+    "value": "لا يوجد سجل تدقيق"
+  },
+  "auditLog.time": {
+    "value": "الوقت"
+  },
+  "auditLog.title": {
+    "description": "عنوان سجلات التدقيق",
+    "value": "سجل التدقيق"
+  },
+  "certificates.add.tooltip": {
+    "description": "نصيحة حول زر إضافة شهادة",
+    "value": "إضافة شهادة"
+  },
+  "certificates.download.tooltip": {
+    "description": "نصيحة لتنزيل شهادة",
+    "value": "تنزيل الشهادة"
+  },
+  "certificates.empty": {
+    "description": "نص الشهادات الفارغة",
+    "value": "لم يتم العثور على شهادات"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "خطأ في إضافة الشهادات",
+    "value": "خطأ في إضافة الشهادة"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "خطأ في استرداد معلومات الشهادة",
+    "value": "خطأ في استرداد معلومات الشهادة"
+  },
+  "certificates.list": {
+    "description": "نص قائمة الشهادات",
+    "value": "قائمة الشهادات المسجلة حاليًا على جهاز AMT"
+  },
+  "certificates.loading": {
+    "description": "نص لتحميل الشهادات",
+    "value": "تحميل الشهادات ..."
+  },
+  "certificates.profileAssociations": {
+    "description": "تسمية لارتباطات ملف تعريف الشهادة",
+    "value": "ارتباطات الملف الشخصي"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "يظهر عندما لا يكون للشهادة أي ارتباطات بالملف الشخصي",
+    "value": "غير مرتبط"
+  },
+  "certificates.title": {
+    "description": "عنوان الشهادات",
+    "value": "الشهادات"
+  },
+  "certificates.type": {
+    "description": "تسمية حقل نوع الشهادة",
+    "value": "النوع"
+  },
+  "certificates.typeClient": {
+    "description": "يشير إلى أن الشهادة هي شهادة عميل",
+    "value": "العميل"
+  },
+  "certificates.typeRoot": {
+    "description": "يشير إلى أن الشهادة هي شهادة جذرية",
+    "value": "الجذر"
+  },
+  "common.addNew": {
+    "description": "نص زر \"إضافة جديد\"",
+    "value": "إضافة جديد"
+  },
+  "common.cancel": {
+    "description": "نص زر الإلغاء",
+    "value": "إلغاء"
+  },
+  "common.cancelLower": {
+    "description": "نص زر الإلغاء",
+    "value": "إلغاء"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "تحذير بشأن الشهادات التي لم يتم تحميلها",
+    "value": "الشهادة لم يتم تحميلها بعد"
+  },
+  "common.cetificateUploaded": {
+    "description": "رسالة للشهادات التي يتم تحميلها",
+    "value": "تم تحميل الشهادة"
+  },
+  "common.chooseFile": {
+    "description": "زر لاختيار ملف",
+    "value": "اختر ملفًا"
+  },
+  "common.close": {
+    "description": "نص زر الإغلاق",
+    "value": "إغلاق"
+  },
+  "common.completeProfile": {
+    "description": "رسالة للملفات الشخصية المكتملة",
+    "value": "تم حفظ الملف الشخصي بنجاح"
+  },
+  "common.connected": {
+    "description": "الحالة عند توصيل جهاز أو خدمة",
+    "value": "متصل"
+  },
+  "common.continue": {
+    "value": "متابعة"
+  },
+  "common.deleteConfiguration": {
+    "description": "رسالة للتكوينات المحذوفة",
+    "value": "تم حذف التكوين بنجاح"
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "رسالة لعنوان تسجيل الدخول الفرعي",
+    "value": "بوابة مجموعة أدوات إدارة الأجهزة"
+  },
+  "common.disabled": {
+    "description": "يُستخدم عندما تكون مزامنة الملف الشخصي المحلي معطلة",
+    "value": "معطل"
+  },
+  "common.disconnected": {
+    "description": "الحالة عند فصل جهاز أو خدمة",
+    "value": "غير متصل"
+  },
+  "common.dismiss": {
+    "description": "تسمية زر الرفض",
+    "value": "إغلاق"
+  },
+  "common.done": {
+    "description": "رسالة زر \"تم\"",
+    "value": "تم"
+  },
+  "common.down": {
+    "value": "أسفل"
+  },
+  "common.enabled": {
+    "description": "يُستخدم عند تمكين مزامنة الملف الشخصي المحلي",
+    "value": "ممكّن"
+  },
+  "common.enterFriendlyName": {
+    "description": "تلميح لإدخال اسم ودود",
+    "value": "أدخل اسمًا مألوفًا"
+  },
+  "common.enterHostName": {
+    "description": "تلميح لإدخال اسم المضيف",
+    "value": "أدخل اسم المضيف"
+  },
+  "common.enterPassword": {
+    "description": "رسالة لإدخال كلمة المرور",
+    "value": "أدخل كلمة المرور"
+  },
+  "common.enterUserName": {
+    "description": "تلميح لإدخال اسم المستخدم الخاص بك",
+    "value": "أدخل اسم المستخدم الخاص بك"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "خطأ في حذف التكوينات",
+    "value": "تعذر حذف التكوين"
+  },
+  "common.friendlyName": {
+    "description": "رسالة للاسم الودي",
+    "value": "الاسم المألوف"
+  },
+  "common.hostName": {
+    "description": "رسالة لاسم المضيف",
+    "value": "اسم المضيف"
+  },
+  "common.input": {
+    "description": "مدخلات لمستكشف WSMAN",
+    "value": "الإدخال"
+  },
+  "common.intelCopyright": {
+    "description": "رسالة حقوق النشر لشركة Intel",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "رسالة زر تسجيل الدخول",
+    "value": "تسجيل الدخول"
+  },
+  "common.logOut": {
+    "description": "رسالة لتسجيل الخروج",
+    "value": "تسجيل الخروج"
+  },
+  "common.no": {
+    "value": "لا"
+  },
+  "common.notApplicable": {
+    "description": "يتم عرضها عندما لا ينطبق إدخال نظام التشغيل",
+    "value": "لا ينطبق"
+  },
+  "common.ok": {
+    "description": "نص زر \"موافق\"",
+    "value": "موافق"
+  },
+  "common.other": {
+    "description": "يُستخدم عندما يكون نظام التشغيل أو خريطة الذاكرة \"آخر\" أو غير محدد.",
+    "value": "أخرى"
+  },
+  "common.output": {
+    "description": "الإخراج لمستكشف WSMAN",
+    "value": "الناتج"
+  },
+  "common.password": {
+    "description": "رسالة بشأن كلمة المرور",
+    "value": "كلمة المرور"
+  },
+  "common.pin": {
+    "description": "نص زر Pin",
+    "value": "تثبيت"
+  },
+  "common.profileName": {
+    "description": "اسم الملف الشخصي",
+    "value": "اسم الملف الشخصي"
+  },
+  "common.remove": {
+    "description": "نص زر الإزالة",
+    "value": "إزالة"
+  },
+  "common.save": {
+    "description": "نص زر الحفظ",
+    "value": "حفظ"
+  },
+  "common.showHidePassword": {
+    "description": "أداة تلميح لإظهار أو إخفاء كلمة المرور",
+    "value": "إظهار/إخفاء كلمة المرور"
+  },
+  "common.submit": {
+    "description": "زر الإرسال",
+    "value": "إرسال"
+  },
+  "common.tags": {
+    "description": "رسالة للعلامات",
+    "value": "العلامات"
+  },
+  "common.trustedRoot": {
+    "description": "نص مربع الاختيار \"جذر موثوق\"",
+    "value": "الجذر الموثوق"
+  },
+  "common.unknown": {
+    "description": "تسمية للقيم غير المعروفة أو غير المحددة",
+    "value": "غير معروف"
+  },
+  "common.up": {
+    "value": "أعلى"
+  },
+  "common.userName": {
+    "description": "رسالة لاسم المستخدم",
+    "value": "اسم المستخدم"
+  },
+  "common.wired": {
+    "description": "نص الزر اللاسلكي",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "نص الزر السلكي",
+    "value": "لاسلكي"
+  },
+  "common.yes": {
+    "value": "نعم"
+  },
+  "configDetail.commonNameHint": {
+    "description": "نص تلميح لحقل الاسم الشائع",
+    "value": "أدخل الاسم الشائع الوارد في الشهادة."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "نص مؤقت لحقل الاسم الشائع",
+    "value": "اسم شهادة المشترك (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "نص تلميح لحقل اسم التكوين",
+    "value": "أدخل اسمًا لتكوين CIRA هذا"
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "نص مؤقت لحقل اسم التكوين",
+    "value": "مثال: ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "تسمية زر الاختيار FQDN",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "تسمية زر الاختيار IPv4",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "نص تلميح لحقل عنوان خادم MPS",
+    "value": "أدخل عنوان المكان الذي تستضيف فيه مثيل MPS الخاص بك"
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "نص مؤقت لحقل عنوان خادم MPS",
+    "value": "عنوان MPS"
+  },
+  "configDetail.portHint": {
+    "description": "نص تلميح لحقل المنفذ",
+    "value": "أدخل منفذ CIRA لمثيل MPS. القيمة الافتراضية هي 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "نص مؤقت لحقل المنفذ",
+    "value": "الميناء"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "نص لتبديل إعادة إنشاء كلمة المرور",
+    "value": "إنشاء كلمة مرور عشوائية جديدة عند الحفظ"
+  },
+  "configDetail.usernameHint": {
+    "description": "نص تلميح لحقل اسم المستخدم",
+    "value": "أدخل اسم المستخدم للوصول إلى MPS"
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "نص مؤقت لحقل اسم المستخدم",
+    "value": "اسم المستخدم"
+  },
+  "configs.ciraNoData": {
+    "description": "لا توجد رسالة CIRA Configs",
+    "value": "لا توجد تكوينات CIRA"
+  },
+  "configs.delete": {
+    "description": "رسالة لحذف تكوينات CIRA",
+    "value": "تم حذف تكوين CIRA بنجاح"
+  },
+  "configs.failDeleteConfigs": {
+    "description": "خطأ في حذف تكوينات CIRA",
+    "value": "تعذر حذف تكوينات CIRA"
+  },
+  "configs.failLoadConfigs": {
+    "description": "خطأ في تحميل تكوينات CIRA",
+    "value": "تعذر تحميل تكوينات CIRA"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "عنوان صفحة تكوين CIRA الجديد",
+    "value": "تكوين CIRA جديد"
+  },
+  "configs.header.ciraTitle": {
+    "description": "عنوان تكوينات CIRA",
+    "value": "تكوينات CIRA"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "عنوان تكوينات CIRA عندما لا يكون متاحًا",
+    "value": "غير متوفر"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "الصفحة الأولى"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "العناصر في كل صفحة:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "الصفحة الأخيرة"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "الصفحة التالية"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "الصفحة السابقة"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} – {{endIndex}} of {{length}}"
+  },
+  "configs.success": {
+    "description": "رسالة لإنشاء تكوينات CIRA",
+    "value": "تم إنشاء CIRA {{reqType}} بنجاح"
+  },
+  "configs.table.ciraCert": {
+    "description": "عنوان عمود الاسم الشائع لـ Cert",
+    "value": "اسم شهادة المشترك (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "عنوان عمود خادم MPS",
+    "value": "خادم MPS"
+  },
+  "configs.table.ciraName": {
+    "description": "اسم عنوان العمود",
+    "value": "الاسم"
+  },
+  "configs.table.ciraPort": {
+    "description": "عنوان عمود الميناء",
+    "value": "الميناء"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "عنوان عمود شهادة الجذر MPS",
+    "value": "شهادة الجذر MPS"
+  },
+  "configs.table.ciraUsername": {
+    "description": "عنوان عمود اسم المستخدم",
+    "value": "اسم المستخدم"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "نصيحة لإضافة جهاز جديد",
+    "value": "إضافة جهاز جديد يمكن إدارته بواسطة وحدة التحكم"
+  },
+  "dashboard.addNewDevice": {
+    "description": "خطوة لإضافة جهاز جديد",
+    "value": "1. إضافة جهاز جديد"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "خطوة لإضافة شهادة تزويد",
+    "value": "إضافة شهادة تزويد [اختياري]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "خطوات إنشاء تكوين CIRA",
+    "value": "إنشاء تكوين CIRA"
+  },
+  "dashboard.createProfile": {
+    "description": "خطوات إنشاء ملف تعريف",
+    "value": "إنشاء ملف تعريف"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "خطوة لإنشاء تكوين لاسلكي",
+    "value": "إنشاء تكوين لاسلكي [اختياري]"
+  },
+  "dashboard.deploy": {
+    "description": "نشر مجموعة الأدوات",
+    "value": "النشر"
+  },
+  "dashboard.deployDescription": {
+    "description": "وصف النشر",
+    "value": "هل أنت مستعد للانتقال إلى مرحلة الإنتاج؟ اطلع على دليل النشر (قريبًا)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "عدد الأجهزة المتصلة",
+    "value": "الأجهزة المتصلة"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "عدد الأجهزة غير المتصلة",
+    "value": "الأجهزة غير المتصلة"
+  },
+  "dashboard.error": {
+    "description": "خطأ في استرداد إحصائيات الجهاز",
+    "value": "خطأ في استرداد إحصائيات الجهاز"
+  },
+  "dashboard.getStarted": {
+    "description": "ابدأ باستخدام مجموعة الأدوات",
+    "value": "ابدأ"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "وصف لبدء الاستخدام",
+    "value": "هل أنت جديد على مجموعة الأدوات؟ راجع الوثائق لتتعلم الأساسيات أولاً."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "عنوان لوحة التحكم",
+    "value": "لوحة التحكم"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "خطوات إدارة جهازك",
+    "value": "2. إدارة جهازك"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "خطوة لإدارة جهازك مرة أخرى",
+    "value": "إدارة جهازك"
+  },
+  "dashboard.totalDevices": {
+    "description": "العدد الإجمالي للأجهزة",
+    "value": "إجمالي الأجهزة"
+  },
+  "dashboard.understandSecurity": {
+    "description": "فهم موضوعات الأمان",
+    "value": "فهم الأمان"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "وصف لفهم الأمان",
+    "value": "هل تشعر بالارتباك بشأن موضوعات الأمان؟ تعرف على كلمات المرور و Vault والشهادات والمزيد."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "نصيحة لاستخدام إجراءات الجهاز",
+    "value": "استخدم إجراءات الجهاز للتحكم في قائمة الأجهزة"
+  },
+  "delete.question": {
+    "description": "سؤال حول حذف السجلات",
+    "value": "هل أنت متأكد؟"
+  },
+  "delete.questionRecord": {
+    "description": "سؤال حول حذف السجلات",
+    "value": "هل أنت متأكد من رغبتك في حذف السجل (السجلات)؟"
+  },
+  "deviceCertificate.commonName": {
+    "description": "نص الاسم الشائع",
+    "value": "الاسم الشائع:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "نص أسماء DNS",
+    "value": "أسماء DNS:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "نص اسم المُصدر",
+    "value": "اسم المُصدر:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "نص لما بعد التاريخ",
+    "value": "ليس بعد:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "نص \"لا قبل تاريخ\"",
+    "value": "ليس قبل:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "نص خوارزمية المفتاح العام",
+    "value": "خوارزمية المفتاح العام:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "نص حجم المفتاح العام",
+    "value": "حجم المفتاح العام:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "نص اسم السلسلة",
+    "value": "الرقم التسلسلي:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "نص بصمة SHA-1",
+    "value": "بصمة SHA-1:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "نص بصمة SHA-256",
+    "value": "بصمة SHA-256:"
+  },
+  "deviceCertificate.title": {
+    "description": "عنوان تفاصيل الشهادة",
+    "value": "تفاصيل الشهادة"
+  },
+  "deviceDetail.alarms": {
+    "description": "اسم فئة إنذارات الجهاز",
+    "value": "الإنذارات"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "وصف الإنذارات",
+    "value": "إدارة إنذارات الجهاز"
+  },
+  "deviceDetail.auditLog": {
+    "description": "اسم فئة سجل التدقيق",
+    "value": "سجل التدقيق"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "وصف سجل التدقيق",
+    "value": "عرض سجل تدقيق الجهاز"
+  },
+  "deviceDetail.certificates": {
+    "description": "اسم فئة الشهادات",
+    "value": "الشهادات"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "وصف الشهادات",
+    "value": "إدارة الشهادات"
+  },
+  "deviceDetail.eventLog": {
+    "description": "اسم فئة سجل الأحداث",
+    "value": "سجل الأحداث"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "وصف سجل الأحداث",
+    "value": "عرض أحداث الجهاز"
+  },
+  "deviceDetail.explorer": {
+    "description": "اسم فئة المستكشف",
+    "value": "المستكشف"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "وصف المستكشف",
+    "value": "إرسال أوامر WSMAN"
+  },
+  "deviceDetail.general": {
+    "description": "اسم الفئة للمعلومات العامة عن الجهاز",
+    "value": "معلومات عامة عن AMT"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "وصف للمعلومات العامة عن الجهاز",
+    "value": "إصدار AMT وميزاته"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "اسم فئة معلومات الأجهزة",
+    "value": "معلومات الأجهزة"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "وصف معلومات الأجهزة",
+    "value": "الذاكرة، وحدة المعالجة المركزية، إلخ..."
+  },
+  "deviceDetail.kvm": {
+    "description": "اسم الفئة لـ KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "وصف KVM",
+    "value": "التحكم عن بُعد في الجهاز"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "اسم فئة إعدادات الشبكة",
+    "value": "إعدادات الشبكة"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "وصف إعدادات الشبكة",
+    "value": "عرض إعدادات الشبكة"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "اسم الفئة لعدم وجود سجلات الأحداث",
+    "value": "لا يوجد سجل أحداث"
+  },
+  "deviceDetail.sol": {
+    "description": "اسم الفئة لـ Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "وصف SOL",
+    "value": "التسلسل عبر شبكة LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "اسم فئة إعدادات TLS",
+    "value": "إعدادات TLS"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "وصف إعدادات TLS",
+    "value": "عرض تكوين TLS"
+  },
+  "devices.actions.deactivate": {
+    "description": "نصيحة لإلغاء تنشيط/إزالة جهاز",
+    "value": "قم بإلغاء تنشيط الجهاز"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "نصيحة لإلغاء تنشيط جهاز في وضع السحابة",
+    "value": "إلغاء تنشيط الجهاز"
+  },
+  "devices.actions.edit": {
+    "description": "أداة تلميح لتحرير جهاز",
+    "value": "تحرير الجهاز"
+  },
+  "devices.actions.powerOff": {
+    "description": "نصيحة حول إيقاف تشغيل الجهاز",
+    "value": "قم بإيقاف تشغيل الجهاز"
+  },
+  "devices.actions.powerUp": {
+    "description": "نصيحة لتشغيل جهاز",
+    "value": "قم بتشغيل الجهاز"
+  },
+  "devices.actions.remove": {
+    "description": "نصيحة لإزالة جهاز في وضع غير السحابة",
+    "value": "إزالة الجهاز"
+  },
+  "devices.actions.reset": {
+    "description": "نصيحة لإعادة ضبط الجهاز",
+    "value": "إعادة ضبط الجهاز"
+  },
+  "devices.actions.restart": {
+    "description": "نصيحة لإعادة تشغيل الجهاز",
+    "value": "أعد تشغيل الجهاز"
+  },
+  "devices.addDevice": {
+    "description": "رسالة جهاز جديد",
+    "value": "إضافة جهاز جديد"
+  },
+  "devices.bulk.deactivate": {
+    "description": "نص توضيحي لإجراء التعطيل الجماعي",
+    "value": "إزالة أو تعطيل الأجهزة المحددة"
+  },
+  "devices.bulk.powerOff": {
+    "description": "تلميح لأمر إيقاف التشغيل الجماعي",
+    "value": "إيقاف تشغيل الأجهزة المحددة"
+  },
+  "devices.bulk.powerUp": {
+    "description": "تلميح لأداة تعزيز القوة الجماعية",
+    "value": "تشغيل الأجهزة المحددة"
+  },
+  "devices.bulk.restart": {
+    "description": "نصيحة حول إجراء إعادة التشغيل الجماعي",
+    "value": "إعادة تشغيل الأجهزة المحددة"
+  },
+  "devices.deactivation": {
+    "description": "رسالة لإلغاء التنشيط",
+    "value": "تم إرسال طلب إلغاء التنشيط بنجاح"
+  },
+  "devices.editDevice": {
+    "description": "نصيحة لتحرير جهاز",
+    "value": "تحرير الجهاز"
+  },
+  "devices.editTags": {
+    "description": "نص الزر لتحرير العلامات",
+    "value": "تحرير العلامات"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "خطأ في تعطيل الأجهزة",
+    "value": "خطأ في تعطيل الأجهزة"
+  },
+  "devices.errorDeactivation": {
+    "description": "خطأ في إرسال عمليات إلغاء التنشيط",
+    "value": "خطأ في إرسال إلغاء التنشيط"
+  },
+  "devices.errorInitializing": {
+    "description": "خطأ في التهيئة",
+    "value": "خطأ في التهيئة"
+  },
+  "devices.errorLoadDevices": {
+    "description": "خطأ في تحميل الأجهزة",
+    "value": "خطأ في تحميل الأجهزة"
+  },
+  "devices.errorLoadTags": {
+    "description": "خطأ في تحميل العلامات",
+    "value": "خطأ في تحميل العلامات"
+  },
+  "devices.errorPowerAction": {
+    "description": "خطأ في الإجراءات القوية",
+    "value": "خطأ في إرسال إجراء الطاقة"
+  },
+  "devices.failPowerAction": {
+    "description": "فشل إجراءات الطاقة بسبب خطأ",
+    "value": "فشل إجراء الطاقة"
+  },
+  "devices.filter.searchHint": {
+    "description": "نص تلميح أسفل إدخال البحث عن الأجهزة",
+    "value": "أدخل النص لتصفية الصفحة الحالية"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "نص مؤقت لمربع البحث عن الأجهزة",
+    "value": "أجهزة التصفية...."
+  },
+  "devices.filter.tags": {
+    "description": "تسمية لتصفية الأجهزة حسب العلامات",
+    "value": "تصفية العلامات"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "إضافة وصف مربع حوار الشهادة",
+    "value": "سيتم إضافة الشهادة إلى AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "إضافة عنوان مربع حوار الشهادة",
+    "value": "إضافة شهادة"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "وصف مربع حوار HTTPS Boot",
+    "value": "تقوم شبكة HTTPS Boot بتأمين عملية التمهيد باستخدام HTTPS المشفر لحماية ملفات التمهيد. ابدأ الاسترداد بنقرة واحدة لاستعادة نظام التشغيل بسرعة."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "عنوان مربع حوار HTTPS Boot",
+    "value": "HTTPS تشغيل الشبكة (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "وصف مربع حوار التمهيد PBA",
+    "value": "تطبيق PBA (تطبيق ما قبل التمهيد) هو أداة استرداد أو أداة تشخيصية يتم تثبيتها محلياً على النظام ويمكن تحديدها كخيار تمهيد لعمليات الاسترداد بنقرة واحدة من Intel."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "عنوان مربع حوار التمهيد PBA",
+    "value": "التمهيد المحلي (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "عنوان صفحة الأجهزة",
+    "value": "الأجهزة"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "أداة تلميح للوصول إلى المزيد من خيارات الطاقة لجهاز ما",
+    "value": "المزيد من خيارات الطاقة..."
+  },
+  "devices.noData": {
+    "description": "رسالة عند عدم وجود أجهزة",
+    "value": "لم يتم العثور على أي أجهزة"
+  },
+  "devices.noDataFilter": {
+    "description": "رسالة عندما تكون نتائج التصفية فارغة",
+    "value": "لا توجد أجهزة مطابقة للفلتر الحالي"
+  },
+  "devices.notification.error": {
+    "description": "تظهر تلميح عند فشل إجراء ما",
+    "value": "خطأ في إرسال الإجراء"
+  },
+  "devices.notification.notReady": {
+    "description": "تظهر تلميح أداة عندما لا يكون الجهاز جاهزًا",
+    "value": "تم إرسال إجراء الطاقة، ولكن الجهاز رد بأنه غير جاهز"
+  },
+  "devices.notification.success": {
+    "description": "تظهر تلميحات عند نجاح إجراء ما",
+    "value": "تم إرسال الإجراء بنجاح"
+  },
+  "devices.powerActionNotReady": {
+    "description": "خطأ في إجراءات الطاقة المرسلة غير الجاهزة",
+    "value": "تم إرسال إجراء الطاقة ولكنه غير جاهز"
+  },
+  "devices.powerActionSent": {
+    "description": "رسالة للإجراءات القوية",
+    "value": "تم إرسال الإجراء بنجاح"
+  },
+  "devices.table.actions": {
+    "description": "عنوان عمود الجدول للإجراءات",
+    "value": "الإجراءات"
+  },
+  "devices.table.guid": {
+    "description": "عنوان عمود الجدول لـ GUID",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "عنوان عمود الجدول لاسم المضيف",
+    "value": "اسم المضيف"
+  },
+  "devices.table.status": {
+    "description": "عنوان عمود الجدول لحالة الجهاز",
+    "value": "الحالة"
+  },
+  "devices.table.tags": {
+    "description": "عنوان عمود الجدول للعلامات",
+    "value": "العلامات"
+  },
+  "deviceUserConsent.description": {
+    "description": "وصف موافقة المستخدم للأجهزة",
+    "value": "يلزم وجود رمز موافقة المستخدم الذي تم إنشاؤه بواسطة Intel AMT للوصول إلى النظام."
+  },
+  "deviceUserConsent.error": {
+    "description": "خطأ في موافقة المستخدم للأجهزة",
+    "value": "هذا الحقل مطلوب ويجب أن تكون القيمة رقمًا مكونًا من ستة أرقام."
+  },
+  "deviceUserConsent.hint": {
+    "description": "تلميح للحصول على موافقة المستخدم للأجهزة",
+    "value": "توفير رمز موافقة المستخدم المعروض على شاشة المضيف المستهدف."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "مكان مخصص لموافقة المستخدم على الأجهزة",
+    "value": "رمز موافقة المستخدم"
+  },
+  "deviceUserConsent.title": {
+    "description": "عنوان موافقة المستخدم للأجهزة",
+    "value": "موافقة المستخدم"
+  },
+  "domainDetail.completeProfile": {
+    "description": "رسالة لملفات تعريف المجال المكتملة",
+    "value": "تم حفظ ملف تعريف المجال بنجاح"
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "خطأ في ملفات تعريف المجال المحذوفة",
+    "value": "خطأ في إنشاء/تحديث ملف تعريف المجال"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "رسالة خطأ لانتهاك المفتاح الفريد",
+    "value": "معرّف المجال NewDomain أو اللاحقة موجود بالفعل"
+  },
+  "domainDetail.fqdn": {
+    "description": "تلميح لحقل FQDN",
+    "value": "أدخل اسم المجال الكامل (FQDN) المرتبط بشهادة التزويد (على سبيل المثال amtdomain.com)"
+  },
+  "domainDetail.nameHint": {
+    "description": "تلميح لحقل اسم المجال",
+    "value": "أدخل اسمًا لهذا المجال (مثل مجال AMT)"
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "مكان مخصص لاسم النطاق",
+    "value": "اسم المجال"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "مكان مخصص لكلمة مرور شهادة التزويد",
+    "value": "توفير كلمة مرور الشهادة"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "تلميح بشأن كلمة مرور شهادة التزويد",
+    "value": "كلمة المرور لشهادة التزويد"
+  },
+  "domains.certExpired": {
+    "description": "رسالة بشأن الشهادات منتهية الصلاحية",
+    "value": "{{count}} شهادة (شهادات) المجال منتهية الصلاحية "
+  },
+  "domains.certExpring": {
+    "description": "رسالة بشأن الشهادات المنتهية الصلاحية",
+    "value": "{{count}} شهادة (شهادات) المجال ستنتهي صلاحيتها قريبًا "
+  },
+  "domains.daysRemaining": {
+    "description": "رسالة للأيام المتبقية",
+    "value": " الأيام المتبقية"
+  },
+  "domains.delteDomain": {
+    "description": "رسالة لحذف النطاقات",
+    "value": "تم حذف المجال بنجاح"
+  },
+  "domains.expired": {
+    "description": "رسالة للنطاقات منتهية الصلاحية",
+    "value": "منتهية الصلاحية"
+  },
+  "domains.failLoadDomain": {
+    "description": "خطأ في تحميل المجالات",
+    "value": "تعذر تحميل النطاقات"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "خطأ في حذف النطاقات",
+    "value": "تعذر حذف المجال"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "عنوان صفحة المجال الجديد",
+    "value": "نطاق جديد"
+  },
+  "domains.header.domainsTitle": {
+    "description": "عنوان صفحة المجالات",
+    "value": "المجالات"
+  },
+  "domains.monthsRemaining": {
+    "description": "رسالة للأشهر المتبقية",
+    "value": " أشهر متبقية"
+  },
+  "domains.noData": {
+    "description": "لا توجد رسالة نطاقات",
+    "value": "لا توجد مجالات"
+  },
+  "domains.table.domainSuffix": {
+    "description": "عنوان عمود لاحقة المجال",
+    "value": "لاحقة المجال"
+  },
+  "domains.table.expirationDate": {
+    "description": "عنوان عمود تاريخ انتهاء الصلاحية",
+    "value": "تاريخ انتهاء الصلاحية"
+  },
+  "domains.table.name": {
+    "description": "اسم عنوان العمود",
+    "value": "الاسم"
+  },
+  "domains.yearsRemaining": {
+    "description": "رسالة للسنوات المتبقية",
+    "value": " السنوات المتبقية"
+  },
+  "editTags.description": {
+    "description": "وصف علامات التحرير",
+    "value": "أضف علامة بالنقر فوق المطالبة، واكتب اسم العلامة، ثم اضغط على Enter أو فاصلة."
+  },
+  "editTags.header": {
+    "description": "رأس الصفحة لتحرير العلامات",
+    "value": "قم بإزالة علامة بالنقر فوق العلامة نفسها."
+  },
+  "editTags.placeholder": {
+    "description": "مكان مخصص لتحرير العلامات",
+    "value": "علامة جديدة..."
+  },
+  "editTags.title": {
+    "description": "عنوان لتحرير العلامات",
+    "value": "تحرير العلامات"
+  },
+  "error.deviceNotResponding": {
+    "description": "الرسالة التي تظهر عند انتهاء مهلة الجهاز",
+    "value": "لم يستجب الجهاز. تحقق من إعدادات الاتصال وحاول مرة أخرى."
+  },
+  "error.itemModified": {
+    "description": "الرسالة التي تظهر عندما يكون العنصر قديمًا",
+    "value": "تم تعديل هذا العنصر منذ تحميله. يرجى إعادة التحميل."
+  },
+  "error.kvmConnection": {
+    "description": "يظهر خطأ عند الاتصال بـ KVM",
+    "value": "فشل الاتصال بـ KVM. يُسمح بجلسة واحدة فقط لكل جهاز. تأكد أيضًا من صلاحية الرمز المميز الخاص بك ومن أن لديك حق الوصول."
+  },
+  "error.sessionTimedOut": {
+    "description": "الرسالة التي تظهر عند انتهاء صلاحية جلسة المستخدم",
+    "value": "انتهت مدة الجلسة. يرجى تسجيل الدخول مرة أخرى"
+  },
+  "error.unableToSendCode": {
+    "description": "يظهر خطأ عند فشل إرسال رمز موافقة المستخدم، ويتضمن رسالة خطأ الخلفية",
+    "value": "تعذر إرسال الرمز: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "خطأ عام عند فشل إلغاء رمز موافقة المستخدم",
+    "value": "خطأ في إلغاء رمز موافقة المستخدم"
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "خطأ عند فشل إلغاء رمز موافقة المستخدم المطلوب",
+    "value": "{{featureName}} لا يمكن الوصول إليه - فشل إلغاء رمز موافقة المستخدم المطلوب"
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "حدث خطأ عند إلغاء رمز موافقة المستخدم المطلوب بنجاح",
+    "value": "{{featureName}} لا يمكن الوصول إليه - تم إلغاء رمز موافقة المستخدم المطلوب"
+  },
+  "error.userConsentCodeFailed": {
+    "description": "يظهر خطأ عند فشل طلب رمز موافقة المستخدم لميزة ما",
+    "value": "{{featureName}} لا يمكن الوصول إليه – فشل طلب رمز موافقة المستخدم"
+  },
+  "error.userConsentSendFailed": {
+    "description": "خطأ عند فشل إرسال رمز موافقة المستخدم",
+    "value": "{{featureName}} لا يمكن الوصول إليه - فشل إرسال رمز موافقة المستخدم"
+  },
+  "error.userConsentUnsupported": {
+    "description": "خطأ عند إرسال رمز موافقة مستخدم غير مدعوم",
+    "value": "{{featureName}} لا يمكن الوصول إليه - رمز موافقة المستخدم غير مدعوم"
+  },
+  "event.errorLog": {
+    "description": "خطأ في استرداد سجلات الأحداث",
+    "value": "خطأ في استرداد سجل الأحداث"
+  },
+  "eventLog.download": {
+    "description": "زر لتنزيل سجل الأحداث",
+    "value": "تنزيل سجل الأحداث (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "عنوان إدخالات سجل الأحداث",
+    "value": "سجل الأحداث (إدخالات{{count}} )"
+  },
+  "eventLog.eventType": {
+    "description": "رسالة لأنواع سجلات الأحداث",
+    "value": "نوع الحدث"
+  },
+  "eventLog.severity": {
+    "description": "رسالة بشأن درجات خطورة سجل الأحداث",
+    "value": "الخطورة"
+  },
+  "eventLog.source": {
+    "description": "رسالة لمصادر سجل الأحداث",
+    "value": "المصدر"
+  },
+  "explorer.errorResponse": {
+    "description": "خطأ في استرداد استجابة المستكشف",
+    "value": "خطأ في استرداد استجابة المستكشف"
+  },
+  "explorer.placeHolder": {
+    "description": "مكان مخصص لمستكشف WSMAN",
+    "value": "اختر..."
+  },
+  "explorer.WSMANCall": {
+    "value": "مكالمة WSMAN"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "نص الزر لإضافة نطاقات",
+    "value": "إضافة نطاقات"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "خيار إضافة النطاقات أولاً",
+    "value": "أضف المجالات أولاً (مطلوب لتفعيل ACM)"
+  },
+  "exportDialog.domainSuffix": {
+    "description": "تسمية حقل لاحقة المجال",
+    "value": "لاحظ أن المصطلح \"frontend\" هو مصطلح تقني"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "عنوان رسالة الخطأ لتحميل المجالات",
+    "value": "خطأ في تحميل المجالات:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "تحميل رسالة للمجالات",
+    "value": "تحميل المجالات..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "رسالة عند عدم تكوين أي نطاقات",
+    "value": "لم يتم تكوين أي مجالات. يمكنك إما:"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "رسالة خطأ تتطلب اختيار المجال",
+    "value": "يرجى تحديد مجال"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "عنوان فرعي لاختيار مجال حوار التصدير",
+    "value": "سيتم تضمين المجال المحدد في الملف الشخصي لاستخدامه مع"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "عنوان اختيار مجال مربع حوار التصدير",
+    "value": "حدد لاحقة المجال"
+  },
+  "exportDialog.skipDomain": {
+    "description": "نص الزر لتخطي المجال",
+    "value": "تخطي المجال"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "خيار تخطي المجال إذا كان نشطًا بالفعل",
+    "value": "انقر على \"تخطي المجال\" إذا كان الجهاز قد تم تنشيطه بالفعل."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "تعليمات لوظيفة تخطي المجال",
+    "value": "انقر فوق \"تخطي المجال\" إذا كان الجهاز قد تم تنشيطه بالفعل. إذا لم يتم تنشيط الجهاز بعد، فيجب عليك تحديد مجال لتنشيط ACM."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "رسالة خطأ للحقول المطلوبة",
+    "value": "هذا الحقل مطلوب ويجب أن يكون أبجديًا رقميًا بدون مسافات أو رموز."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "نص الحقول الأبجدية الرقمية المطلوبة والحقول ذات الطول الأقصى",
+    "value": "هذا الحقل مطلوب، ويجب أن يكون أبجديًا رقميًا (بدون مسافات)، وألا يزيد طوله عن {{profileNameMaxLen}} حرفًا."
+  },
+  "fieldRequired.long": {
+    "description": "تلميح للحقول المطلوبة مع حد أقصى لعدد الأحرف",
+    "value": "هذا الحقل مطلوب ويجب أن يتكون من 8 إلى 32 حرفًا"
+  },
+  "fieldRequired.short": {
+    "description": "تلميح للحقول المطلوبة",
+    "value": "هذا الحقل مطلوب"
+  },
+  "general.amtBuild": {
+    "description": "تسمية AMT Build",
+    "value": "AMT Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "تسمية لـ AMT DHCP لاحقة DNS",
+    "value": "AMT DHCP DNS Suffix:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "عنوان بطاقة الميزات التي تدعم AMT",
+    "value": "ميزات AMT الممكّنة"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "وصف بطاقة الميزات التي تدعم AMT",
+    "value": "حالة الميزات التي تدعم AMT"
+  },
+  "general.AMTFeatures": {
+    "description": "رسالة بشأن الميزات المحدثة",
+    "value": "تم تحديث ميزات AMT"
+  },
+  "general.amtSKU": {
+    "description": "تسمية AMT SKU",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "عنوان بطاقة ملخص AMT",
+    "value": "ملخص AMT"
+  },
+  "general.amtSummaryDescription": {
+    "description": "وصف بطاقة ملخص AMT",
+    "value": "ملخص معلومات AMT"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "تسمية لـ AMT Trusted DNS Suffix",
+    "value": "لاحق DNS الموثوق به من AMT (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "تسمية إصدار AMT",
+    "value": "إصدار AMT:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "خطأ في استرداد ميزات AMT",
+    "value": "خطأ في استرداد ميزات AMT"
+  },
+  "general.errorAMTVersion": {
+    "description": "خطأ في استرداد إصدار AMT",
+    "value": "خطأ في استرداد إصدار AMT"
+  },
+  "general.errorGeneralSettings": {
+    "description": "خطأ في استرداد الإعدادات العامة",
+    "value": "خطأ في استرداد الإعدادات العامة"
+  },
+  "general.failAMTFeatures": {
+    "description": "خطأ في تحديث الميزات",
+    "value": "فشل تحديث ميزات AMT"
+  },
+  "general.httpsBootNotSupported": {
+    "description": "تلميح لأداة HTTPS Boot غير مدعوم",
+    "value": "HTTPS Boot غير مدعوم"
+  },
+  "general.httpsBootSupported": {
+    "description": "تلميح لأداة HTTPS Boot المدعومة",
+    "value": "يتم دعم HTTPS Boot"
+  },
+  "general.httpsNetworkBoot": {
+    "description": "تسمية لـ HTTPS تشغيل الشبكة",
+    "value": "HTTPS تشغيل الشبكة:"
+  },
+  "general.ideRedirection": {
+    "description": "تسمية لإعادة توجيه IDE",
+    "value": "إعادة توجيه IDE:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "تسمية KVM",
+    "value": "لوحة المفاتيح والفيديو والماوس (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "أداة تلميح لـ KVM غير مدعومة",
+    "value": "KVM غير مدعوم"
+  },
+  "general.oneClickRecovery": {
+    "description": "تسمية الاستعادة بنقرة واحدة",
+    "value": "الاستعادة بنقرة واحدة (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "أداة التلميح لـ One Click Recovery غير مدعومة",
+    "value": "لا يتم دعم الاسترداد بنقرة واحدة"
+  },
+  "general.pbaBootShort": {
+    "description": "تسمية لتمهيد PBA",
+    "value": "تشغيل PBA:"
+  },
+  "general.pbaNotSupported": {
+    "description": "أداة التلميح لـ PBA غير مدعومة",
+    "value": "PBA غير مدعوم"
+  },
+  "general.pbaSupported": {
+    "description": "تلميح لأداة PBA المدعومة",
+    "value": "PBA مدعوم"
+  },
+  "general.provisioningMode": {
+    "description": "تسمية وضع التزويد",
+    "value": "وضع التزويد:"
+  },
+  "general.serialOverLan": {
+    "description": "تسمية SOL",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "تسمية موافقة المستخدم",
+    "value": "موافقة المستخدم:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "تلميح للمستخدم: الموافقة غير قابلة للتكوين",
+    "value": "موافقة المستخدم غير قابلة للتكوين في CCM"
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "تسمية لـ Windows Recovery Boot",
+    "value": "تشغيل استرداد Windows:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "تلميح لأداة Windows Recovery غير مدعوم",
+    "value": "لا يتم دعم استرداد Windows"
+  },
+  "general.windowsRecoverySupported": {
+    "description": "تلميح أداة لـ Windows Recovery مدعوم",
+    "value": "يتم دعم استرداد Windows"
+  },
+  "httpBoot.enforce": {
+    "value": "فرض التمهيد الآمن"
+  },
+  "httpBoot.error": {
+    "value": "عنوان URL مطلوب"
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "أدخل عنوان URL"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "ملخص معلومات BIOS"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "ملخص BIOS"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "خطأ في استرداد معلومات إضافية",
+    "value": "خطأ في استرداد معلومات إضافية"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "خطأ في استرداد معلومات الأجهزة",
+    "value": "خطأ في استرداد معلومات HW"
+  },
+  "hwInfo.label.capacity": {
+    "value": "السعة:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "سرعة الساعة (الحد الأقصى):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "الشركة المصنعة:"
+  },
+  "hwInfo.label.model": {
+    "value": "النموذج:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "تاريخ الإصدار:"
+  },
+  "hwInfo.label.serial": {
+    "value": "الرقم التسلسلي:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "الرقم التسلسلي:"
+  },
+  "hwInfo.label.size": {
+    "value": "الحجم:"
+  },
+  "hwInfo.label.slot": {
+    "value": "الفترة الزمنية:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "نظام التشغيل المستهدف:"
+  },
+  "hwInfo.label.type": {
+    "value": "النوع:"
+  },
+  "hwInfo.label.version": {
+    "value": "الإصدار:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "ملخص الذاكرة الفعلية المثبتة"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "ملخص الذاكرة"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "ملخص معلومات اللوحة الأم"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "ملخص اللوحة الأم"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "ملخص معلومات التخزين"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "ملخص التخزين"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "ملخص معلومات وحدة المعالجة المركزية والهيكل"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "ملخص النظام"
+  },
+  "ieee.authProtocol": {
+    "description": "نص بروتوكول المصادقة",
+    "value": "بروتوكول المصادقة"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "نص الخطأ لملفات تعريف ieee",
+    "value": "خطأ في إنشاء/تحديث ملف تعريف ieee8021x"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "خطأ في تحميل تكوينات IEEE8021x",
+    "value": "تعذر تحميل تكوينات IEEE8021x"
+  },
+  "ieee.PXETimeout": {
+    "description": "نص لانتهاء مهلة PXE",
+    "value": "مهلة PXE"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "نص الخطأ لانتهاء مهلة PXE",
+    "value": "يجب أن تكون القيمة بين {{pxeTimeoutMin}} (معطل) و {{pxeTimeoutMax}} ثانية (يوم واحد)"
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "عنوان صفحة IEEE 802.1x",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "عنوان صفحة التكوين IEEE8021x الجديد",
+    "value": "تكوين IEEE8021x الجديد"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "عنوان صفحة تكوينات IEEE8021x",
+    "value": "تكوينات IEEE8021x"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "لا توجد رسالة تكوينات IEEE 8021x",
+    "value": "لا توجد تكوينات IEEE 8021x"
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "عنوان عمود بروتوكول المصادقة",
+    "value": "بروتوكول المصادقة"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "عنوان عمود الواجهة",
+    "value": "الواجهة"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "اسم عنوان العمود",
+    "value": "الاسم"
+  },
+  "keyDisplayDialog.description": {
+    "description": "وصف مربع حوار عرض المفاتيح",
+    "value": "سيتم عرض المفتاح مرة واحدة فقط. استخدم هذا المفتاح لفك تشفير الملف الشخصي المشفر لاستخدامه مع rpc-go."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "تسمية المفتاح",
+    "value": "مفتاح"
+  },
+  "keyDisplayDialog.title": {
+    "description": "عنوان مربع حوار العرض الرئيسي",
+    "value": "مفتاح الملف الشخصي لـ RPC-GO"
+  },
+  "kvm.attachDisk.label": {
+    "description": "تسمية الزر لإرفاق صورة قرص لـ IDER",
+    "value": "إرفاق صورة القرص (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "تسمية القائمة المنسدلة لنوع الترميز في شريط أدوات KVM",
+    "value": "اختر نوع الترميز"
+  },
+  "kvm.connect.button": {
+    "description": "تسمية الزر للاتصال بجلسة KVM",
+    "value": "اتصل بـ KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "التسمية التي تظهر عند اتصال KVM",
+    "value": "توصيل KVM..."
+  },
+  "kvm.disconnect.button": {
+    "description": "تسمية الزر لقطع الاتصال بجلسة KVM",
+    "value": "فصل KVM"
+  },
+  "kvm.enable": {
+    "description": "رسالة لتمكين KVM",
+    "value": "KVM غير ممكّن حاليًا على هذا الجهاز. هل ترغب في تمكينه؟"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "خطأ في الوصول عند إلغاء طلب التمكين",
+    "value": "لا يمكن الوصول إلى KVM - تم إلغاء طلب تمكين KVM"
+  },
+  "kvm.errorAccessEnable": {
+    "description": "خطأ في الوصول عند طلب التمكين",
+    "value": "لا يمكن الوصول إلى KVM - فشل تمكين KVM"
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "خطأ في الوصول أثناء وجود جلسة قيد التقدم",
+    "value": "لا يمكن الوصول إلى KVM - هناك جلسة kvm أخرى قيد التقدم"
+  },
+  "kvm.errorDialog": {
+    "description": "خطأ في عرض مربع حوار KVM",
+    "value": "تعذر عرض مربع حوار KVM"
+  },
+  "kvm.errorRetrieve": {
+    "description": "خطأ في استرداد حالة إعادة التوجيه",
+    "value": "خطأ في استرداد حالة إعادة التوجيه"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "خطأ في استرداد حالة الطاقة",
+    "value": "خطأ في استرداد حالة الطاقة"
+  },
+  "kvm.fullscreen.button": {
+    "description": "تسمية الزر لتبديل وضع ملء الشاشة في KVM",
+    "value": "شاشة كاملة"
+  },
+  "kvm.hotKeys.label": {
+    "description": "تسمية القائمة المنسدلة لمفاتيح الاختصار في شريط أدوات KVM",
+    "value": "مفاتيح الاختصار"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "نص مؤقت لقائمة مفاتيح الاختصار",
+    "value": "حدد مفتاح التشغيل السريع للإرسال"
+  },
+  "kvm.hotKeys.send": {
+    "description": "تسمية الزر لإرسال مفتاح التشغيل السريع المحدد",
+    "value": "إرسال"
+  },
+  "kvm.stopIder.label": {
+    "description": "تسمية الزر لإيقاف جلسة IDER",
+    "value": "إيقاف IDER"
+  },
+  "kvm.title": {
+    "description": "عنوان KVM",
+    "value": "تمكين KVM"
+  },
+  "login.error": {
+    "description": "خطأ في تسجيل الدخول",
+    "value": "تسجيل الأخطاء"
+  },
+  "login.header.loginTitle": {
+    "description": "عنوان صفحة تسجيل الدخول",
+    "value": "تسجيل الدخول"
+  },
+  "mqttEvents.connect": {
+    "description": "نص زر الاتصال لـ MQTT",
+    "value": "اتصل"
+  },
+  "mqttEvents.connected": {
+    "description": "نص تلميح عند نجاح اتصال MQTT",
+    "value": "تم إنشاء الاتصال"
+  },
+  "mqttEvents.failed": {
+    "description": "نص تلميح عند فشل اتصال MQTT",
+    "value": "فشل الاتصال"
+  },
+  "mqttEvents.guid.label": {
+    "description": "عنوان جدول لحدث MQTT GUID",
+    "value": "Guid"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "تلميح لإدخال اسم مضيف MQTT",
+    "value": "أدخل اسم المضيف. الاسم الافتراضي هو localhost"
+  },
+  "mqttEvents.hostname.label": {
+    "description": "تسمية لإدخال اسم مضيف MQTT",
+    "value": "اسم المضيف"
+  },
+  "mqttEvents.message.label": {
+    "description": "عنوان جدول رسالة حدث MQTT",
+    "value": "الرسالة"
+  },
+  "mqttEvents.methods.label": {
+    "description": "عنوان جدول لطرق أحداث MQTT",
+    "value": "الأساليب"
+  },
+  "mqttEvents.noData": {
+    "description": "النص الذي يظهر عند عدم وجود أحداث MQTT",
+    "value": "لا توجد أحداث"
+  },
+  "mqttEvents.path.hint": {
+    "description": "تلميح لإدخال مسار MQTT",
+    "value": "أدخل مسار MQTT. القيمة الافتراضية هي /mqtt"
+  },
+  "mqttEvents.path.label": {
+    "description": "تسمية لمدخل مسار MQTT",
+    "value": "المسار"
+  },
+  "mqttEvents.port.hint": {
+    "description": "تلميح لإدخال منفذ MQTT",
+    "value": "أدخل منفذ MQTT. القيمة الافتراضية هي 9001"
+  },
+  "mqttEvents.port.label": {
+    "description": "تسمية مدخل منفذ MQTT",
+    "value": "الميناء"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "عنوان جدول لطابع زمني لحدث MQTT",
+    "value": "الطابع الزمني"
+  },
+  "mqttEvents.title": {
+    "description": "عنوان بطاقة أحداث MQTT مع عدد ديناميكي",
+    "value": "أحداث MQTT ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "عنوان جدول لنوع حدث MQTT",
+    "value": "النوع"
+  },
+  "network.errorNetworkSetting": {
+    "description": "خطأ في استرداد إعدادات الشبكة",
+    "value": "خطأ في استرداد إعدادات الشبكة"
+  },
+  "network.ieee.authProtocol": {
+    "description": "تسمية بروتوكول المصادقة اللاسلكية IEEE 8021x",
+    "value": "بروتوكول المصادقة"
+  },
+  "network.ieee.availableInS0": {
+    "description": "تسمية IEEE 8021x السلكية المتاحة في S0",
+    "value": "متوفر في S0"
+  },
+  "network.ieee.domain": {
+    "description": "تسمية المجال اللاسلكي IEEE 8021x",
+    "value": "المجال"
+  },
+  "network.ieee.enabled": {
+    "description": "تسمية لـ IEEE 8021x السلكية الممكّنة",
+    "value": "ممكّن"
+  },
+  "network.ieee.pac": {
+    "description": "تسمية لـ IEEE 8021x اللاسلكي PAC",
+    "value": "بيانات اعتماد الوصول المحمية"
+  },
+  "network.ieee.pacPassword": {
+    "description": "تسمية كلمة مرور PAC اللاسلكية IEEE 8021x",
+    "value": "كلمة مرور PAC"
+  },
+  "network.ieee.password": {
+    "description": "تسمية كلمة مرور IEEE 8021x اللاسلكية",
+    "value": "كلمة المرور"
+  },
+  "network.ieee.psk": {
+    "description": "تسمية لـ IEEE 8021x اللاسلكي PSK",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "تسمية لانتهاء مهلة PXE السلكية IEEE 8021x",
+    "value": "مهلة PXE"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "تسمية هوية التجوال اللاسلكي IEEE 8021x",
+    "value": "هوية التجوال"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "تسمية لمقارنة اسم شهادة الخادم اللاسلكي IEEE 8021x",
+    "value": "مقارنة أسماء شهادات الخادم"
+  },
+  "network.ieee.serverCertName": {
+    "description": "تسمية اسم شهادة الخادم اللاسلكي IEEE 8021x",
+    "value": "اسم شهادة الخادم"
+  },
+  "network.ieee.subtitle": {
+    "description": "العنوان الفرعي لبطاقة إعدادات شبكة IEEE 8021x",
+    "value": "عرض إعدادات شبكة IEEE 8021x لهذا الجهاز"
+  },
+  "network.ieee.title": {
+    "description": "عنوان بطاقة إعدادات شبكة IEEE 8021x",
+    "value": "إعدادات شبكة IEEE 8021x"
+  },
+  "network.ieee.username": {
+    "description": "تسمية اسم المستخدم اللاسلكي IEEE 8021x",
+    "value": "اسم المستخدم"
+  },
+  "network.wired.defaultGateway": {
+    "description": "تسمية البوابة الافتراضية السلكية",
+    "value": "البوابة الافتراضية"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "تسمية لحالة تمكين DHCP السلكي",
+    "value": "تم تمكين DHCP"
+  },
+  "network.wired.ipAddress": {
+    "description": "تسمية عنوان IP السلكي",
+    "value": "عنوان IP"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "تسمية لحالة تمكين مزامنة IP السلكية",
+    "value": "تمكين مزامنة IP"
+  },
+  "network.wired.linkControl": {
+    "description": "تسمية للتحكم في الارتباط السلكي",
+    "value": "التحكم في الروابط"
+  },
+  "network.wired.linkPolicy": {
+    "description": "تسمية لسياسة الروابط السلكية",
+    "value": "سياسة الروابط"
+  },
+  "network.wired.linkPreference": {
+    "description": "تسمية لتفضيل الارتباط السلكي",
+    "value": "تفضيل الرابط"
+  },
+  "network.wired.linkStatus": {
+    "description": "تسمية لحالة الارتباط السلكي",
+    "value": "حالة الرابط"
+  },
+  "network.wired.macAddress": {
+    "description": "تسمية عنوان MAC السلكي",
+    "value": "عنوان MAC"
+  },
+  "network.wired.primaryDNS": {
+    "description": "تسمية DNS الأساسي السلكي",
+    "value": "DNS الأساسي"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "تسمية DNS الثانوية السلكية",
+    "value": "DNS الثانوي"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "تسمية IP ديناميكي مشترك سلكي",
+    "value": "عنوان IP ديناميكي مشترك"
+  },
+  "network.wired.sharedMAC": {
+    "description": "تسمية لحالة MAC المشتركة السلكية",
+    "value": "MAC مشترك"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "تسمية IP ثابت مشترك سلكي",
+    "value": "عنوان IP ثابت مشترك"
+  },
+  "network.wired.subnetMask": {
+    "description": "تسمية قناع الشبكة الفرعية السلكية",
+    "value": "قناع الشبكة الفرعية"
+  },
+  "network.wired.subtitle": {
+    "description": "العنوان الفرعي لبطاقة إعدادات الشبكة السلكية",
+    "value": "عرض إعدادات الشبكة السلكية لهذا الجهاز"
+  },
+  "network.wired.title": {
+    "description": "عنوان بطاقة إعدادات الشبكة السلكية",
+    "value": "إعدادات الشبكة السلكية"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "تسمية البوابة اللاسلكية الافتراضية",
+    "value": "البوابة الافتراضية"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "تسمية لحالة تمكين DHCP اللاسلكي",
+    "value": "تم تمكين DHCP"
+  },
+  "network.wireless.ipAddress": {
+    "description": "تسمية عنوان IP اللاسلكي",
+    "value": "عنوان IP"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "تسمية لحالة تمكين المزامنة اللاسلكية عبر بروتوكول الإنترنت",
+    "value": "تمكين مزامنة IP"
+  },
+  "network.wireless.linkControl": {
+    "description": "تسمية للتحكم في الارتباط اللاسلكي",
+    "value": "التحكم في الروابط"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "تسمية لسياسة الارتباط اللاسلكي",
+    "value": "سياسة الروابط"
+  },
+  "network.wireless.linkPreference": {
+    "description": "تسمية لتفضيل الاتصال اللاسلكي",
+    "value": "تفضيل الرابط"
+  },
+  "network.wireless.linkStatus": {
+    "description": "تسمية لحالة الاتصال اللاسلكي",
+    "value": "حالة الرابط"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "تسمية لمزامنة الملفات الشخصية المحلية اللاسلكية",
+    "value": "مزامنة الملف الشخصي المحلي"
+  },
+  "network.wireless.macAddress": {
+    "description": "تسمية عنوان MAC اللاسلكي",
+    "value": "عنوان MAC"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "تسمية DNS الأساسي اللاسلكي",
+    "value": "DNS الأساسي"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "تسمية DNS الثانوية اللاسلكية",
+    "value": "DNS الثانوي"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "تسمية IP ديناميكي مشترك لاسلكي",
+    "value": "عنوان IP ديناميكي مشترك"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "تسمية لحالة MAC اللاسلكية المشتركة",
+    "value": "MAC مشترك"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "تسمية IP ثابت مشترك لاسلكي",
+    "value": "عنوان IP ثابت مشترك"
+  },
+  "network.wireless.subnetMask": {
+    "description": "تسمية قناع الشبكة الفرعية اللاسلكية",
+    "value": "قناع الشبكة الفرعية"
+  },
+  "network.wireless.subtitle": {
+    "description": "العنوان الفرعي لبطاقة إعدادات الشبكة اللاسلكية",
+    "value": "عرض إعدادات الشبكة اللاسلكية لهذا الجهاز"
+  },
+  "network.wireless.title": {
+    "description": "عنوان بطاقة إعدادات الشبكة اللاسلكية",
+    "value": "إعدادات الشبكة اللاسلكية"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "اسم الشبكة: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "معرّف الشبكة SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "طريقة التشفير: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "طريقة المصادقة: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "عنوان فرعي لبطاقة الشبكات اللاسلكية",
+    "value": "عرض الشبكات اللاسلكية لهذا الجهاز"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "عنوان بطاقة الشبكات اللاسلكية",
+    "value": "الشبكات اللاسلكية"
+  },
+  "pba.label": {
+    "description": "التسمية الخاصة بخانة الاختيار لتمكين أو تعطيل تطبيق الإقلاع الآمن أو تعطيله",
+    "value": "فرض التمهيد الآمن"
+  },
+  "pba.required": {
+    "description": "رسالة الخطأ التي تظهر عند عدم تحديد مسار ملف التمهيد",
+    "value": "مسار ملف التمهيد مطلوب"
+  },
+  "pba.title": {
+    "description": "التسمية الخاصة بتحديد مسار ملف التمهيد في مربع حوار PBA",
+    "value": "مسار ملف التمهيد"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "إيقاف"
+  },
+  "powerOptions.on": {
+    "value": "في"
+  },
+  "powerOptions.powerCycle": {
+    "value": "دورة الطاقة"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "تشغيل BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "تشغيل HTTPS Boot (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "تشغيل PXE"
+  },
+  "powerOptions.reset": {
+    "value": "إعادة تعيين"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "إعادة الضبط إلى BIOS"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "إعادة التعيين إلى HTTPS Boot (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "إعادة التعيين إلى IDE-R (قرص مضغوط)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "إعادة الضبط إلى PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "النوم"
+  },
+  "powerOptions.softOff": {
+    "value": "Soft-Off"
+  },
+  "powerOptions.softReset": {
+    "value": "إعادة الضبط الناعمة"
+  },
+  "powerUp.message": {
+    "description": "رسالة حوار تطلب من المستخدم تشغيل الجهاز",
+    "value": "هل تريد إرسال أمر تشغيل إلى الجهاز؟"
+  },
+  "powerUp.title": {
+    "description": "عنوان الحوار الذي يظهر عندما يكون الجهاز مغلقًا",
+    "value": "جهازك غير قيد التشغيل"
+  },
+  "profileDetail.activationMode": {
+    "description": "تسمية لاختيار وضع التنشيط",
+    "value": "وضع التنشيط"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "وضع التنشيط الذي يتحكم فيه المسؤول",
+    "value": "وضع التحكم الإداري"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "وضع التنشيط يتحكم فيه العميل",
+    "value": "وضع التحكم في العميل"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "تسمية قسم ميزات AMT",
+    "value": "ميزات AMT - تمكين/تعطيل ميزات إعادة التوجيه في AMT"
+  },
+  "profileDetail.amtPassword": {
+    "description": "تسمية حقل كلمة مرور AMT",
+    "value": "كلمة مرور AMT"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "تلميح لحقل كلمة مرور AMT",
+    "value": "تُستخدم كلمة مرور AMT للوصول عن بُعد إلى الجهاز. كما أنها مطلوبة لإعادة تكوين/إلغاء تنشيط الجهاز."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "تسمية قسم ملفات التعريف اللاسلكية المرتبطة",
+    "value": "الملفات الشخصية اللاسلكية المرتبطة (حسب ترتيب الأولوية)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "تسمية زر الاختيار CIRA",
+    "value": "CIRA (السحابة)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "تلميح لتكوين CIRA",
+    "value": "لا يمكن تكوين CIRA لشبكة ثابتة إذا كانت إصدار AMT أقل من 11.6"
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "تسمية حقل تكوين CIRA",
+    "value": "تكوين CIRA"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "تسمية قسم تكوين الاتصال",
+    "value": "تكوين الاتصال المُوفر"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "رسالة خطأ لوضع الاتصال المطلوب",
+    "value": "يجب تحديد وضع الاتصال"
+  },
+  "profileDetail.dhcp": {
+    "description": "تسمية زر الاختيار DHCP",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "وصف وضع الاتصال المباشر",
+    "value": "في هذا السيناريو، يعمل AMT كخادم ويستمع إلى الاتصالات الواردة. تعمل مجموعة الأدوات كعميل وتتصل بالجهاز."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "شرح قسم وضع الاتصال المباشر",
+    "value": "وضع الاتصال المباشر (استخدمه عندما تكون الأجهزة قابلة للوصول مباشرة عبر شبكة محلية)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "تلميح لإعادة الترتيب بالسحب والإفلات",
+    "value": "السحب والإفلات لإعادة الترتيب"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "تسمية مربع اختيار مزامنة IP",
+    "value": "تمكين مزامنة IP"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "تسمية مربع اختيار مزامنة WiFi لنظام التشغيل",
+    "value": "تمكين مزامنة ملف تعريف WiFi لنظام التشغيل"
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "تسمية مربع الاختيار لمشاركة UEFI WiFi",
+    "value": "تمكين مشاركة ملف تعريف Wi-Fi UEFI/CSME"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "تسمية مربع الاختيار لتوليد كلمة مرور AMT عشوائية",
+    "value": "إنشاء كلمة مرور AMT عشوائية لكل جهاز"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "تسمية مربع الاختيار لتوليد كلمة مرور MEBX عشوائية",
+    "value": "إنشاء كلمة مرور MEBX عشوائية لكل جهاز"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "أداة تلميح لزر إنشاء كلمة مرور عشوائية",
+    "value": "إنشاء كلمة مرور عشوائية"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "تسمية مربع الاختيار \"إعادة توجيه IDE\"",
+    "value": "إعادة توجيه IDE"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "وصف وضع الإنترنت",
+    "value": "في هذا السيناريو، يعمل AMT كعميل ويتصل بمجموعة الأدوات التي تعمل كخادم (يتطلب MPS)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "شرح قسم وضع الإنترنت",
+    "value": "وضع الإنترنت (استخدمه عندما لا يمكن الوصول إلى الأجهزة مباشرة عبر شبكة محلية)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "تلميح لمزامنة IP عند تعطيلها",
+    "value": "ممكّن دائمًا لـ DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "تلميح لمزامنة IP عند تمكينها",
+    "value": "ينطبق فقط على الواجهة السلكية. يتطلب LMS لإجراء المزامنة"
+  },
+  "profileDetail.kvm": {
+    "description": "تسمية مربع الاختيار KVM",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "تسمية حقل كلمة مرور MEBX",
+    "value": "كلمة مرور MEBX"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "تلميح لحقل كلمة مرور MEBX",
+    "value": "تُستخدم كلمة مرور MEBX لحماية الوصول إلى BIOS عندما يكون المستخدم موجودًا مع الجهاز. لا يمكن ضبطها إلا عندما يكون وضع التنشيط مضبوطًا على وضع التحكم الإداري."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "تسمية قسم تكوين الشبكة",
+    "value": "تكوين الشبكة"
+  },
+  "profileDetail.newTag": {
+    "description": "مكان مخصص لإدخال علامة جديدة",
+    "value": "علامة جديدة..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "نص عند عدم توفر تكوينات CIRA",
+    "value": "- لم يتم العثور على تكوينات CIRA"
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "نص عند عدم تحديد أي تكوين",
+    "value": "لم يتم تحديد أي تكوين."
+  },
+  "profileDetail.nonTls": {
+    "description": "تسمية زر الاختيار لغير TLS",
+    "value": "غير TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "تلميح لخيار عدم استخدام TLS",
+    "value": "في AMT 16.1 والإصدارات الأحدث، يوفر AMT شهادات موقعة ذاتيًا. سيؤدي اختيار هذا الخيار إلى استخدام هذه الشهادات بدلاً من الشهادات الموقعة ذاتيًا التي توفرها مجموعة الأدوات."
+  },
+  "profileDetail.noWifi": {
+    "description": "رسالة تفيد بعدم توفر تكوينات WiFi",
+    "value": "لم يتم العثور على تكوينات واي فاي"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "تلميح لمزامنة WiFi في نظام التشغيل",
+    "value": "ينطبق فقط على الواجهة اللاسلكية."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "نص تلميح لحقل اسم الملف الشخصي",
+    "value": "حدد اسمًا لهذا الملف الشخصي. سيكون هذا هو اسم الملف الشخصي المستخدم على الجهاز أثناء التنشيط."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "نص مؤقت لحقل اسم الملف الشخصي",
+    "value": "مثال: profile1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "أداة تلميح لإظهار/إخفاء زر كلمة المرور",
+    "value": "إظهار/إخفاء كلمة المرور"
+  },
+  "profileDetail.sol": {
+    "description": "تسمية مربع الاختيار SOL",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "تسمية زر الاختيار STATIC",
+    "value": "STATIC"
+  },
+  "profileDetail.tags": {
+    "description": "تسمية حقل العلامات",
+    "value": "العلامات"
+  },
+  "profileDetail.tagsHint": {
+    "description": "تلميح لحقل العلامات",
+    "value": "يمكنك إدخال علامات للمساعدة في تنظيم الأجهزة والاستعلام عنها مع نمو قائمة الأجهزة المدارة. اكتب علامة، ثم اضغط على Enter أو ضع فاصلة."
+  },
+  "profileDetail.tls": {
+    "description": "تسمية زر الاختيار TLS",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "تسمية حقل وضع TLS",
+    "value": "وضع TLS"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "تلميح لحقل وضع TLS",
+    "value": "لا يمكن تكوين CIRA، إذا تم تكوين TLS"
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "تسمية حقل سلطة التوقيع TLS",
+    "value": "سلطة توقيع TLS"
+  },
+  "profileDetail.userConsent": {
+    "description": "تسمية حقل موافقة المستخدم",
+    "value": "موافقة المستخدم"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "تلميح لحقل موافقة المستخدم",
+    "value": "يتحكم في الحالات التي يجب أن يكون فيها المستخدم حاضرًا لاستخدام ميزات AMT محددة"
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "تسمية حقل ملفات تعريف WiFi",
+    "value": "ملفات تعريف Wi-Fi"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "تلميح لحقل ملفات تعريف WiFi",
+    "value": "لن تعمل شبكة Wi-Fi عبر الشبكة الثابتة"
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "مكان مخصص للبحث عن ملفات تعريف WiFi",
+    "value": "البحث عن ملفات تعريف Wi-Fi لإضافتها"
+  },
+  "profileDetail.wired": {
+    "description": "تسمية قسم الشبكة السلكية",
+    "value": "شبكة سلكية"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "تسمية حقل تكوين 802.1x السلكي",
+    "value": "تكوين Wired 802.1x"
+  },
+  "profiles.deleteProfile": {
+    "description": "رسالة للملفات الشخصية المحذوفة",
+    "value": "تم حذف الملف الشخصي بنجاح"
+  },
+  "profiles.exportProfile": {
+    "description": "رسالة للملفات الشخصية المصدرة",
+    "value": "تم تصدير الملف الشخصي بنجاح"
+  },
+  "profiles.failDeleteProfie": {
+    "description": "خطأ في حذف الملفات الشخصية",
+    "value": "تعذر حذف الملف الشخصي"
+  },
+  "profiles.failExportProfile": {
+    "description": "خطأ في تصدير الملفات الشخصية",
+    "value": "تعذر تصدير الملف الشخصي"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "خطأ في تحميل التكوينات",
+    "value": "تعذر تحميل التكوينات"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "عنوان صفحة الملف الشخصي الجديد",
+    "value": "ملف تعريف جديد"
+  },
+  "profiles.header.profileTitle": {
+    "description": "عنوان صفحة الملفات الشخصية",
+    "value": "الملفات الشخصية"
+  },
+  "profiles.noData": {
+    "description": "رسالة \"لا توجد ملفات تعريف\"",
+    "value": "لا توجد ملفات تعريف"
+  },
+  "profiles.table.activation": {
+    "description": "عنوان عمود \"وضع التنشيط\"",
+    "value": "وضع التنشيط"
+  },
+  "profiles.table.connection": {
+    "description": "عنوان عمود تكوين الاتصال",
+    "value": "تكوين الاتصال"
+  },
+  "profiles.table.name": {
+    "description": "اسم عنوان العمود",
+    "value": "الاسم"
+  },
+  "profiles.table.network": {
+    "description": "عنوان عمود تكوين الشبكة",
+    "value": "تكوين الشبكة"
+  },
+  "randomPassword.learnMore": {
+    "description": "رسالة لرابط الدعم",
+    "value": "تعرف على المزيد هنا"
+  },
+  "randomPassword.message": {
+    "description": "رسالة حوار تشرح عواقب استخدام كلمات مرور عشوائية",
+    "value": "لقد اخترت إنشاء كلمة مرور عشوائية لكل جهاز. إذا تم حذف أو فقدان مخزن مزود السرية (مثل Vault)، فلن يمكن استعادة كلمات المرور هذه وستتطلب إعادة ضبط المصنع."
+  },
+  "randomPassword.title": {
+    "description": "عنوان مربع الحوار لتحذير كلمة المرور العشوائية",
+    "value": "استخدام كلمات مرور عشوائية"
+  },
+  "sol.connect": {
+    "description": "زر للاتصال بـ SOL",
+    "value": "ربط SOL"
+  },
+  "sol.disconnect": {
+    "description": "زر لقطع الاتصال بـ SOL",
+    "value": "قطع الاتصال SOL"
+  },
+  "sol.enable": {
+    "description": "رسالة لتمكين SOL",
+    "value": "SOL غير ممكّن حاليًا على هذا الجهاز. هل ترغب في تمكينه؟"
+  },
+  "sol.errorAccessCancel": {
+    "description": "خطأ في الوصول إلى SOL عند إلغاء طلب تمكين SOL",
+    "value": "لا يمكن الوصول إلى SOL - تم إلغاء طلب تمكين SOL"
+  },
+  "sol.errorAccessEnable": {
+    "description": "خطأ في الوصول إلى SOL عندما فشل SOL في التمكين",
+    "value": "تعذر الوصول إلى SOL - فشل تمكين SOL"
+  },
+  "sol.errorDiplay": {
+    "description": "خطأ في عرض مربع الحوار",
+    "value": "تعذر عرض مربع حوار SOL"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "خطأ في استرداد حالة الطاقة",
+    "value": "خطأ في استرداد حالة الطاقة"
+  },
+  "sol.loading": {
+    "description": "رسالة للتحميل إلى SOL",
+    "value": "ربط SOL..."
+  },
+  "sol.title": {
+    "description": "عنوان SOL",
+    "value": "تمكين SOL"
+  },
+  "staticCira.message": {
+    "description": "رسالة حوار تحذر من قيود اتصال CIRA مع IP ثابت",
+    "value": "لقد اخترت الاتصال باستخدام CIRA مع تكوين شبكة IP ثابتة. لن تتصل الأجهزة التي تعمل بإصدار AMT أقل من 11.6 بـ MPS باستخدام CIRA إذا كان لديها تكوين شبكة IP ثابت."
+  },
+  "staticCira.title": {
+    "description": "عنوان مربع الحوار لتحذير CIRA بشأن عنوان IP الثابت",
+    "value": "CIRA وتكوين الشبكة الثابتة"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "تسمية لقبول الاتصالات غير الآمنة في TLS",
+    "value": "قبول الاتصالات غير الآمنة"
+  },
+  "tls.elementName.label": {
+    "description": "تسمية لحقل اسم عنصر TLS",
+    "value": "اسم العنصر"
+  },
+  "tls.enabled.label": {
+    "description": "تسمية الحقل الذي يدعم TLS",
+    "value": "ممكّن"
+  },
+  "tls.errorSettings": {
+    "description": "خطأ في استرداد إعدادات tls",
+    "value": "خطأ في استرداد إعدادات tls"
+  },
+  "tls.instanceId.label": {
+    "description": "تسمية حقل معرف مثيل TLS",
+    "value": "معرف المثيل"
+  },
+  "tls.mutualAuth.label": {
+    "description": "تسمية حقل المصادقة المتبادلة TLS",
+    "value": "المصادقة المتبادلة"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "علامة تشير إلى ما إذا كانت الاتصالات غير الآمنة مدعومة في TLS",
+    "value": "الوصلات غير الآمنة المدعومة"
+  },
+  "tls.title": {
+    "description": "عنوان بطاقة إعدادات TLS",
+    "value": "أمان طبقة النقل"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "خيار استخدام شهادة موقعة من Microsoft CA",
+    "value": "استخدم شهادة Microsoft CA الموقعة (يتطلب Enterprise Assistant)"
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "خيار استخدام شهادة موقعة ذاتيًا",
+    "value": "استخدام شهادة موقعة ذاتيًا"
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "وضع TLS مع اتصالات TLS متبادلة واتصالات غير TLS",
+    "value": "المصادقة المتبادلة وغير TLS"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "وضع TLS باستخدام المصادقة المتبادلة فقط",
+    "value": "المصادقة المتبادلة TLS فقط"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "وضع TLS مع مصادقة الخادم والاتصالات غير TLS",
+    "value": "المصادقة على الخادم والمصادقة غير TLS"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "وضع TLS باستخدام مصادقة الخادم فقط",
+    "value": "مصادقة الخادم فقط"
+  },
+  "toolbar.errorMPS": {
+    "description": "خطأ في استرداد إصدارات MPS",
+    "value": "خطأ في استرداد إصدارات MPS"
+  },
+  "toolbar.errorRPS": {
+    "description": "خطأ في استرداد إصدارات RPS",
+    "value": "خطأ في استرداد إصدارات RPS"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "العنوان الرئيسي للتطبيق",
+    "value": "نموذج واجهة المستخدم"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "العنوان الرئيسي للتطبيق في وضع وحدة التحكم",
+    "value": "وحدة التحكم"
+  },
+  "toolbar.header.hello": {
+    "description": "رسالة الترحيب",
+    "value": "مرحبًا"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "خطأ في إلغاء رمز موافقة المستخدم",
+    "value": "خطأ في إلغاء رمز موافقة المستخدم"
+  },
+  "userConsent.errorRequest": {
+    "description": "خطأ في طلب رمز موافقة المستخدم",
+    "value": "خطأ في طلب رمز موافقة المستخدم - أعد المحاولة بعد 3 دقائق"
+  },
+  "userConsent.errorSendCode": {
+    "description": "خطأ في إرسال رمز موافقة المستخدم",
+    "value": "خطأ في إرسال رمز موافقة المستخدم"
+  },
+  "userConsentGeneral.all": {
+    "description": "مطلوب الموافقة على جميع الإجراءات",
+    "value": "الكل"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "الموافقة مطلوبة فقط لإجراءات KVM",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "لا يلزم الحصول على موافقة المستخدم",
+    "value": "لا شيء"
+  },
+  "userConsentModes.all": {
+    "description": "مطلوب الموافقة على جميع الإجراءات",
+    "value": "الكل"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "الموافقة مطلوبة فقط لإجراءات KVM",
+    "value": "KVM فقط"
+  },
+  "userConsentModes.none": {
+    "description": "لا يلزم الحصول على موافقة المستخدم",
+    "value": "لا شيء"
+  },
+  "warning.iderActive": {
+    "description": "يظهر عندما تكون جلسة IDER نشطة",
+    "value": "جلسة IDER نشطة"
+  },
+  "warning.iderEnded": {
+    "description": "يظهر عند انتهاء جلسة IDER",
+    "value": "انتهت جلسة IDER"
+  },
+  "warning.userConsentCancelled": {
+    "description": "يظهر تحذير عند إلغاء رمز موافقة المستخدم السابق",
+    "value": "{{featureName}} لا يمكن الوصول إليه - تم إلغاء رمز موافقة المستخدم المطلوب مسبقًا"
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "خطأ في تحميل التكوينات",
+    "value": "تعذر تحميل التكوينات"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "عنوان الصفحة اللاسلكية",
+    "value": "لاسلكي"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "عنوان عمود لطريقة المصادقة للتكوين اللاسلكي",
+    "value": "المصادقة"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "عنوان عمود لطريقة التشفير في التكوين اللاسلكي",
+    "value": "التشفير"
+  },
+  "wirelessConfigs.name": {
+    "description": "عنوان العمود لاسم التكوين اللاسلكي",
+    "value": "الاسم"
+  },
+  "wirelessConfigs.noData": {
+    "description": "الرسالة التي تظهر عند عدم وجود تكوينات لاسلكية",
+    "value": "لا توجد تكوينات لاسلكية"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "عنوان عمود لـ SSID للتكوين اللاسلكي",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "عنوان قسم التكوينات اللاسلكية",
+    "value": "تكوينات اللاسلكي"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "تسمية حقل طريقة المصادقة",
+    "value": "طريقة المصادقة"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "تسمية حقل طريقة التشفير",
+    "value": "طريقة التشفير"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "رسالة خطأ عند إنشاء/تحديث ملف تعريف لاسلكي",
+    "value": "خطأ في إنشاء/تحديث ملف تعريف اللاسلكي"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "رسالة خطأ للحقول المطلوبة",
+    "value": "هذا الحقل مطلوب ويجب أن يكون أبجديًا رقميًا بدون مسافات أو رموز."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "خطأ في حفظ ملفات تعريف الشبكات اللاسلكية",
+    "value": "خطأ في حفظ ملف التعريف اللاسلكي"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "تسمية حقل تكوين 802.1x",
+    "value": "تكوين 802.1x"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "عنوان لإنشاء تكوين لاسلكي جديد",
+    "value": "تكوين لاسلكي جديد"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "رسالة نجاح لإنشاء ملف تعريف لاسلكي",
+    "value": "تم إنشاء الملف الشخصي بنجاح"
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "رسالة نجاح لتحديث ملف التعريف اللاسلكي",
+    "value": "تم تحديث الملف الشخصي بنجاح"
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "تسمية حقل عبارة مرور PSK",
+    "value": "عبارة مرور PSK"
+  },
+  "wirelessDetail.saving": {
+    "description": "رسالة تفيد بنجاح حفظ الملف الشخصي",
+    "value": "تم حفظ الملف الشخصي بنجاح"
+  },
+  "wirelessDetail.ssid": {
+    "description": "تسمية حقل SSID",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "تسمية حقل اسم ملف التعريف اللاسلكي",
+    "value": "اسم ملف التعريف اللاسلكي"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "تلميح لحقل اسم ملف التعريف اللاسلكي",
+    "value": "توفير اسم لملف التعريف اللاسلكي"
+  },
+  "general.supported": {
+    "description": "تسمية للميزات المُمكّنة في AMT",
+    "value": "مدعوم"
+  },
+  "general.notSupported": {
+    "description": "تسمية للميزات غير المُمكّنة في AMT",
+    "value": "غير مدعوم"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "تشغيل حتى PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "تشغيل حتى WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "إعادة التعيين إلى PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "إعادة التعيين إلى WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "تسمية للتوسيع",
+    "value": "توسيع"
+  },
+  "general.collapse": {
+    "description": "تسمية للطيّ",
+    "value": "طيّ"
+  },
+  "proxy.label": {
+    "value": "الوكلاء",
+    "description": "تسمية قسم الوكلاء"
+  },
+  "proxy.configs.label": {
+    "value": "إعدادات الوكيل",
+    "description": "تسمية حقل إدخال إعدادات الوكيل"
+  },
+  "proxy.configs.placeholder": {
+    "value": "ابحث عن إعدادات الوكيل لإضافتها",
+    "description": "نص العنصر النائب للبحث عن إعدادات الوكيل"
+  },
+  "proxy.configs.hint": {
+    "value": "يمكن تعيين الوكلاء لهذا الملف الشخصي",
+    "description": "تلميح يظهر أسفل حقل إدخال إعدادات الوكيل"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "ملفات تعريف الوكيل المرتبطة (حسب ترتيب الأولوية)",
+    "description": "تسمية قائمة ملفات تعريف الوكيل المرتبطة"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "اسحب وأفلت لإعادة الترتيب",
+    "description": "تلميح لإعادة الترتيب بالسحب والإفلات"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "إزالة ملف تعريف الوكيل",
+    "description": "تسمية aria لزر إزالة ملف تعريف الوكيل"
+  },
+  "profileDetail.noProxy": {
+    "description": "رسالة عند عدم وجود إعدادات وكيل متاحة",
+    "value": "لم يتم العثور على إعدادات الوكيل"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "إعدادات الوكيل",
+    "description": "عنوان إعدادات الوكيل"
+  },
+  "proxyConfigs.header.name": {
+    "value": "الاسم",
+    "description": "رأس العمود لاسم إعداد الوكيل"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "عنوان الوكيل",
+    "description": "رأس العمود لعنوان الوكيل"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "تنسيق العنوان",
+    "description": "رأس العمود لتنسيق العنوان"
+  },
+  "proxyConfigs.header.port": {
+    "value": "المنفذ",
+    "description": "رأس العمود للمنفذ"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "لاحقة DNS للشبكة",
+    "description": "رأس العمود للاسم اللاحق لنظام DNS للشبكة"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "إعداد وكيل جديد",
+    "description": "عنوان صفحة إعداد وكيل جديد"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "تحرير إعداد الوكيل",
+    "description": "عنوان صفحة تحرير إعداد الوكيل"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "عنوان الوكيل",
+    "description": "تسمية حقل عنوان الوكيل"
+  },
+  "proxyConfigs.name": {
+    "value": "الاسم",
+    "description": "تسمية حقل اسم إعداد الوكيل"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "أدخل اسم إعداد الوكيل",
+    "description": "نص العنصر النائب لحقل اسم إعداد الوكيل"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "أدخل عنوان خادم الوكيل",
+    "description": "نص العنصر النائب لحقل عنوان الوكيل"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "تنسيق العنوان",
+    "description": "تسمية حقل تنسيق العنوان"
+  },
+  "proxyConfigs.port": {
+    "value": "المنفذ",
+    "description": "تسمية حقل المنفذ"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "لاحقة DNS للشبكة",
+    "description": "تسمية حقل لاحقة DNS"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "نص العنصر النائب لحقل لاحقة DNS"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "المنفذ مطلوب",
+    "description": "رسالة التحقق: المنفذ مطلوب"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "يجب أن يكون المنفذ بين 0 و 65535",
+    "description": "رسالة التحقق لنطاق المنفذ"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "الاسم مطلوب",
+    "description": "رسالة التحقق: الاسم مطلوب"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "لاحقة DNS للشبكة مطلوبة",
+    "description": "رسالة التحقق: لاحقة DNS مطلوبة"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "يجب ألا تتجاوز لاحقة DNS للشبكة 192 حرفًا",
+    "description": "رسالة التحقق لطول لاحقة DNS الأقصى"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "تم إنشاء إعداد الوكيل بنجاح",
+    "description": "رسالة نجاح لإنشاء إعداد الوكيل"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "تم تحديث إعداد الوكيل بنجاح",
+    "description": "رسالة نجاح لتحديث إعداد الوكيل"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "تم حذف إعداد الوكيل {{name}} بنجاح",
+    "description": "رسالة نجاح لحذف إعداد الوكيل"
+  },
+  "common.delete": {
+    "value": "حذف",
+    "description": "نص زر الحذف"
+  },
+  "common.update": {
+    "value": "تحديث",
+    "description": "نص زر التحديث"
+  },
+  "common.noData": {
+    "value": "لا توجد بيانات متاحة",
+    "description": "رسالة عند عدم توفر بيانات"
+  }
+}

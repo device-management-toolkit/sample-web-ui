@@ -15,6 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { By } from '@angular/platform-browser'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
@@ -44,7 +45,8 @@ describe('ExplorerComponent', () => {
         MatSnackBarModule,
         MatDialogModule,
         MonacoEditorModule,
-        ExplorerComponent
+        ExplorerComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },

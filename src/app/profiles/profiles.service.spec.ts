@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { DataWithCount, PageEventOptions } from 'src/models/models'
 import { Profile } from './profiles.constants'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
@@ -19,6 +20,7 @@ describe('ProfilesService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         ProfilesService,
         { provide: AuthService, useValue: authServiceSpy },

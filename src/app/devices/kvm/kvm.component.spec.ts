@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { Device } from 'src/models/models'
 import { UserConsentService } from '../user-consent.service'
 import { IDERComponent, KVMComponent } from '@device-management-toolkit/ui-toolkit-angular'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -180,7 +181,8 @@ describe('KvmComponent', () => {
       imports: [
         NoopAnimationsModule,
         RouterModule,
-        KvmComponent
+        KvmComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
@@ -238,11 +240,7 @@ describe('KvmComponent', () => {
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
     component.deviceKVMStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith(
-      'Connecting to KVM failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.',
-      undefined,
-      SnackbarDefaults.defaultError
-    )
+    expect(snackBarSpy).toHaveBeenCalledOnceWith('errors.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(0)
   })

@@ -24,6 +24,7 @@ import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from 'src/environments/environment'
 import { TLSComponent } from '../tls/tls.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-detail',
@@ -55,63 +56,63 @@ import { TLSComponent } from '../tls/tls.component'
     RouterLink,
     RouterLinkActive,
     NetworkSettingsComponent,
-    TLSComponent
+    TLSComponent,
+    TranslateModule
   ]
 })
 export class DeviceDetailComponent implements OnInit {
   // Dependency Injection
   private readonly activatedRoute = inject(ActivatedRoute)
-
   public deviceId = ''
   public readonly isCloudMode: boolean = environment.cloud
 
   categories = [
     {
-      name: 'General AMT Info',
-      description: 'AMT Version and Features',
+      name: 'deviceDetail.general.value',
+      description: 'deviceDetail.generalDescription.value',
       description2: '',
       component: 'general',
       icon: 'info'
     },
     {
-      name: 'KVM',
-      description: 'Remotely control device',
+      name: 'deviceDetail.kvm.value',
+      description: 'deviceDetail.kvmDescription.value',
       component: 'kvm',
       icon: 'tv'
     },
     {
-      name: 'SOL',
-      description: 'Serial Over LAN',
+      name: 'deviceDetail.sol.value',
+      description: 'deviceDetail.solDescription.value',
       component: 'sol',
       icon: 'keyboard'
     },
     {
-      name: 'Hardware Information',
-      description: 'Memory, CPU, etc...',
+      name: 'deviceDetail.hardwareInfo.value',
+      description: 'deviceDetail.hardwareInfoDescription.value',
       component: 'hardware-info',
       icon: 'memory'
     },
     {
-      name: 'Audit Log',
-      description: 'View device audit log',
+      name: 'deviceDetail.auditLog.value',
+      description: 'deviceDetail.auditLogDescription.value',
       component: 'audit-log',
       icon: 'history'
     },
     {
-      name: 'Event Log',
-      description: 'View device events',
+      name: 'deviceDetail.eventLog.value',
+      description: 'deviceDetail.eventLogDescription.value',
       component: 'event-log',
       icon: 'event_list'
     },
     {
-      name: 'Alarms',
-      description: 'Manage device alarms',
+      name: 'deviceDetail.alarms.value',
+      description: 'deviceDetail.alarmsDescription.value',
       component: 'alarms',
       icon: 'alarm'
     },
     {
-      name: 'Certificates',
-      description: 'Manage certificates',
+      name: 'deviceDetail.certificates.value',
+      description: 'deviceDetail.certificatesDescription.value',
       component: 'certificates',
       icon: 'verified'
     }
@@ -119,24 +120,26 @@ export class DeviceDetailComponent implements OnInit {
 
   constructor() {
     if (!this.isCloudMode) {
-      this.categories.push({
-        name: 'Explorer',
-        description: 'Send WSMAN commands',
-        component: 'explorer',
-        icon: 'search'
-      })
-      this.categories.push({
-        name: 'Network Settings',
-        description: 'View network settings',
-        component: 'network-settings',
-        icon: 'lan'
-      })
-      this.categories.push({
-        name: 'TLS Settings',
-        description: 'View TLS configuration',
-        component: 'tls',
-        icon: 'license'
-      })
+      this.categories.push(
+        {
+          name: 'deviceDetail.explorer.value',
+          description: 'deviceDetail.explorerDescription.value',
+          component: 'explorer',
+          icon: 'search'
+        },
+        {
+          name: 'deviceDetail.networkSettings.value',
+          description: 'deviceDetail.networkSettingsDescription.value',
+          component: 'network-settings',
+          icon: 'lan'
+        },
+        {
+          name: 'deviceDetail.tlsSettings.value',
+          description: 'deviceDetail.tlsSettingsDescription.value',
+          component: 'tls',
+          icon: 'license'
+        }
+      )
     }
   }
 
@@ -147,7 +150,6 @@ export class DeviceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.isLoading.set(true)
-
       this.deviceId = params.id
       this.currentView = params.component || 'general'
     })

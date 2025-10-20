@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.46.1",
+  "version": "3.47.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,16 +20,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~20.3.4",
-    "@angular/cdk": "~20.2.8",
-    "@angular/common": "~20.3.5",
-    "@angular/compiler": "~20.3.5",
-    "@angular/core": "~20.3.5",
-    "@angular/forms": "~20.3.4",
-    "@angular/material": "~20.2.8",
-    "@angular/platform-browser": "~20.3.4",
-    "@angular/platform-browser-dynamic": "~20.3.4",
-    "@angular/router": "~20.3.4",
+    "@angular/animations": "~20.3.6",
+    "@angular/cdk": "~20.2.9",
+    "@angular/common": "~20.3.6",
+    "@angular/compiler": "~20.3.6",
+    "@angular/core": "~20.3.6",
+    "@angular/forms": "~20.3.6",
+    "@angular/material": "~20.2.9",
+    "@angular/platform-browser": "~20.3.6",
+    "@angular/platform-browser-dynamic": "~20.3.6",
+    "@angular/router": "~20.3.6",
     "@device-management-toolkit/ui-toolkit-angular": "^10.1.4",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
@@ -45,8 +45,8 @@
   },
   "overrides": {
     "ngx-monaco-editor-v2": {
-      "@angular/common": "20.3.4",
-      "@angular/core": "20.3.4",
+      "@angular/common": "20.3.6",
+      "@angular/core": "20.3.6",
       "rxjs": "7.8.2"
     }
   },
@@ -56,12 +56,12 @@
     "@angular-eslint/schematics": "~20.4.0",
     "@angular-eslint/template-parser": "~20.4.0",
     "@angular/cli": "~20.3.6",
-    "@angular/compiler-cli": "~20.3.4",
-    "@angular/localize": "~20.3.4",
-    "@types/jasmine": "~5.1.11",
+    "@angular/compiler-cli": "~20.3.6",
+    "@angular/localize": "~20.3.6",
+    "@types/jasmine": "~5.1.12",
     "angular-eslint": "20.4.0",
-    "cypress": "^15.4.0",
-    "eslint": "^9.37.0",
+    "cypress": "^15.5.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
     "jasmine-core": "~5.12.0",
@@ -79,6 +79,6 @@
     "typescript-eslint": "^8.46.1"
   },
   "optionalDependencies": {
-    "cypress": "^15.4.0"
+    "cypress": "^15.5.0"
   }
 }
