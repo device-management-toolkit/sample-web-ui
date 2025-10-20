@@ -143,7 +143,7 @@ export class WirelessDetailComponent implements OnInit {
           error: (err) => {
             const errorMessage: string = this.translate.instant('wirelessDetail.errorSaving.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
-            this.errorMessages = [errorMessage]
+            this.errorMessages = err
           }
         })
     }

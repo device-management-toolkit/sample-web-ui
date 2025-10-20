@@ -196,7 +196,7 @@ export class IEEE8021xDetailComponent implements OnInit {
           error: (error) => {
             const errorMessage: string = this.translate.instant('ieee.errorCreateUpdate.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
-            this.errorMessages = [errorMessage]
+            this.errorMessages = error
           }
         })
     }

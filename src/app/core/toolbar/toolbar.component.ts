@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'

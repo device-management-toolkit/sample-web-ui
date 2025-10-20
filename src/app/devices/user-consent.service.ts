@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AMTFeaturesResponse, UserConsentData, UserConsentResponse } from 'src/models/models'
 import { DevicesService } from './devices.service'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'

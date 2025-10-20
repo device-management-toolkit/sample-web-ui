@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, ContentChild, ElementRef, OnInit, ViewChild, inject } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'
