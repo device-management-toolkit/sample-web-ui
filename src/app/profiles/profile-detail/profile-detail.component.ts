@@ -192,7 +192,9 @@ export class ProfileDetailComponent implements OnInit {
   private initializeData(): void {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
-    this.getProxyConfigs()
+    if (this.cloudMode) {
+      this.getProxyConfigs()
+    }
     this.getCiraConfigs()
   }
 
