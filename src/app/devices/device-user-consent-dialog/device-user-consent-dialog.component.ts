@@ -22,6 +22,7 @@ import { MatButton } from '@angular/material/button'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-user-consent-dialog',
@@ -37,7 +38,8 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
     MatError,
     MatHint,
     MatDialogActions,
-    MatButton
+    MatButton,
+    TranslateModule
   ]
 })
 export class DeviceUserConsentDialogComponent {
@@ -46,7 +48,7 @@ export class DeviceUserConsentDialogComponent {
   private readonly dialogRef = inject<MatDialogRef<DeviceUserConsentDialogComponent>>(MatDialogRef)
   private readonly devicesService = inject(DevicesService)
   public readonly data = inject<UserConsentData>(MAT_DIALOG_DATA)
-
+  private readonly translate = inject(TranslateService)
   public userConsentForm: FormGroup
 
   constructor() {
@@ -60,7 +62,8 @@ export class DeviceUserConsentDialogComponent {
       .cancelUserConsentCode(this.data.deviceId)
       .pipe(
         catchError(() => {
-          this.snackBar.open($localize`Error cancelling user consent code`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('userConsent.errorCancelCode.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           this.dialogRef.close()
           return of()
         })
@@ -79,7 +82,8 @@ export class DeviceUserConsentDialogComponent {
         .sendUserConsentCode(this.data.deviceId, result.consentCode as number)
         .pipe(
           catchError((err) => {
-            this.snackBar.open($localize`Error sending user consent code`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('userConsent.errorSendCode.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             this.dialogRef.close()
             return of(err)
           })

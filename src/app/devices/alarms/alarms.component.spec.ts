@@ -10,6 +10,7 @@ import { DevicesService } from '../devices.service'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { of } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AlarmsComponent', () => {
   let component: AlarmsComponent
@@ -36,7 +37,11 @@ describe('AlarmsComponent', () => {
 
     devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlarmsComponent],
+      imports: [
+        NoopAnimationsModule,
+        AlarmsComponent,
+        TranslateModule.forRoot()
+      ],
       providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesServiceSpy }]
     })
 

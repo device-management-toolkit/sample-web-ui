@@ -1,0 +1,2704 @@
+{
+  "about.cloudMode": {
+    "description": "Заголовок для раздела «О нас» в облачном режиме",
+    "value": "О наборе инструментов для управления устройствами Пример веб-интерфейса пользователя"
+  },
+  "about.consoleProvides": {
+    "description": "Сообщение для функций консоли",
+    "value": "Консоль предоставляет следующие функции и многое другое:"
+  },
+  "about.description": {
+    "description": "Описание для консоли",
+    "value": "Консоль — это инструмент управления 1:1 вне полосы пропускания для управления Intel AMT в локальных сетях. После добавления устройства консоль связывается с AMT напрямую через локальную сеть, обеспечивая быстрый и простой способ подключения и управления всеми вашими устройствами AMT."
+  },
+  "about.device": {
+    "description": "Сообщение для аппаратного обеспечения устройства",
+    "value": "Информация об аппаратном обеспечении устройства и ведение журнала"
+  },
+  "about.doNotShowAgain": {
+    "description": "Флажок для отображения раздела «О нас»",
+    "value": "Не показывать больше"
+  },
+  "about.gotIt": {
+    "description": "Кнопка для закрытия раздела «О нас»",
+    "value": "Понятно."
+  },
+  "about.howTo": {
+    "description": "Сообщение о том, как использовать набор инструментов",
+    "value": "Как использовать набор инструментов пользовательского интерфейса"
+  },
+  "about.learn": {
+    "description": "Сообщение для обучения использованию набора инструментов",
+    "value": "Узнайте, как набор инструментов для управления устройствами управляет устройствами."
+  },
+  "about.nonCloudMode": {
+    "description": "Название раздела «О нас»",
+    "value": "О консоли"
+  },
+  "about.redirection": {
+    "description": "Сообщение для функций перенаправления",
+    "value": "Функции перенаправления, такие как удаленная клавиатура, видео, мышь (KVM) и Serial-over-LAN (SOL)."
+  },
+  "about.referenceImplementation": {
+    "description": "Сообщение для демонстрации реализации в облачном режиме",
+    "value": "Данная эталонная реализация демонстрирует API и общие функции набора инструментов для управления устройствами и НЕ предназначена для использования в производственной среде."
+  },
+  "about.remotePower": {
+    "description": "Сообщение для удаленного питания",
+    "value": "Удаленные действия с питанием"
+  },
+  "about.sampleUI": {
+    "description": "Сообщение для примера пользовательского интерфейса",
+    "value": "Этот образец пользовательского интерфейса предназначен для следующих целей:"
+  },
+  "about.setUp": {
+    "description": "Сообщение для настройки",
+    "value": "Настройка профилей, конфигурации и доменов"
+  },
+  "about.understand": {
+    "description": "Сообщение для понимания набора инструментов",
+    "value": "Понимание реализации REST API в Device Management Toolkit и того, как их можно использовать в вашем собственном приложении."
+  },
+  "addDevice.allowSelfSignedCertificates": {
+    "description": "Сообщение о разрешении самоподписанных сертификатов",
+    "value": "Разрешить самоподписанные сертификаты"
+  },
+  "addDevice.chooseProfile": {
+    "description": "Метка для поля выбора профиля",
+    "value": "Выберите профиль"
+  },
+  "addDevice.description": {
+    "description": "Описание, объясняющее, как активировать устройство.",
+    "value": "Для активации устройства необходимо выполнить команду на устройстве AMT. Это диалоговое окно поможет сгенерировать команду для запуска."
+  },
+  "addDevice.enterTags": {
+    "description": "Подсказка для ввода тегов",
+    "value": "Вы можете вводить теги, чтобы облегчить организацию и поиск устройств по мере роста списка управляемых устройств. Введите тег, затем нажмите Enter или запятую."
+  },
+  "addDevice.friendlyNameInvalid": {
+    "description": "Ошибка для недопустимых дружественных имен",
+    "value": "Дружественное имя не может быть длиннее 50 символов."
+  },
+  "addDevice.friendlyNameRequired": {
+    "description": "Ошибка для обязательных дружественных имен",
+    "value": "Требуется дружественное имя."
+  },
+  "addDevice.hostNameInvalid": {
+    "description": "Ошибка для недопустимых имен хостов",
+    "value": "Неверный формат имени хоста"
+  },
+  "addDevice.hostNameRequired": {
+    "description": "Ошибка для обязательных имен хостов",
+    "value": "Имя хоста является обязательным"
+  },
+  "addDevice.noSelfSignedCertCheck": {
+    "description": "Флажок для отключения проверки самоподписанного сертификата.",
+    "value": "Проверка самоподписанных сертификатов не требуется."
+  },
+  "addDevice.placeholderNewTag": {
+    "description": "Место для добавления нового тега",
+    "value": "Новый тег..."
+  },
+  "addDevice.profileRequired": {
+    "description": "Сообщение об ошибке проверки при отсутствии выбранного профиля",
+    "value": "Профиль обязателен."
+  },
+  "addDevice.showVerbose": {
+    "description": "Флажок для включения подробного вывода",
+    "value": "Показать подробности"
+  },
+  "addDevice.title": {
+    "description": "Заголовок диалогового окна для добавления нового устройства",
+    "value": "Добавить новое устройство"
+  },
+  "addDevice.userNameInvalid": {
+    "description": "Ошибка при вводе неверного имени пользователя",
+    "value": "Имя пользователя должно состоять не менее чем из 5 и не более чем из 16 символов."
+  },
+  "addDevice.userNameRequired": {
+    "description": "Ошибка при вводе обязательного имени пользователя",
+    "value": "Требуется имя пользователя"
+  },
+  "addDevice.useTLS": {
+    "description": "Сообщение об использовании TLS",
+    "value": "Используйте TLS."
+  },
+  "alarm.errorAdding": {
+    "description": "Ошибка при добавлении",
+    "value": "Ошибка при добавлении событий тревоги"
+  },
+  "alarm.errorDelete": {
+    "description": "Ошибка при удалении",
+    "value": "Ошибка при удалении событий тревоги"
+  },
+  "alarm.errorRetrieve": {
+    "description": "Ошибка при извлечении",
+    "value": "Ошибка при получении событий тревоги"
+  },
+  "alarmService.addNew": {
+    "description": "Текст кнопки для добавления нового будильника",
+    "value": "Добавить новый"
+  },
+  "alarmService.alarmNameHint": {
+    "description": "Подсказка для ввода названия сигнала тревоги",
+    "value": "Укажите название для этого сигнала тревоги."
+  },
+  "alarmService.alarmNamePlaceholder": {
+    "description": "Заполнитель для ввода названия сигнала тревоги",
+    "value": "Название тревоги"
+  },
+  "alarmService.deleteAlarmOccurence": {
+    "description": "Всплывающая подсказка для кнопки удаления сигнала тревоги",
+    "value": "Удаление сигнала тревоги"
+  },
+  "alarmService.deleteOnCompletion": {
+    "description": "Метка для удаления по завершении, переключатель слайда",
+    "value": "Удалите после завершения."
+  },
+  "alarmService.elementNameWithInstance": {
+    "description": "Название элемента сигнала тревоги, за которым следует его InstanceID.",
+    "value": "{{elementName}} (InstanceID: {{instanceId}})"
+  },
+  "alarmService.hourLabel": {
+    "description": "Метка для выбора часа",
+    "value": "Час"
+  },
+  "alarmService.interval": {
+    "description": "Метка для интервала сигнализации",
+    "value": "Интервал (в минутах)"
+  },
+  "alarmService.intervalHint": {
+    "description": "Подсказка для ввода интервала",
+    "value": "Интервал в минутах для периодического будильника, 0 для однократного будильника."
+  },
+  "alarmService.intervalLabel": {
+    "description": "Метка для ввода интервала",
+    "value": "Интервал"
+  },
+  "alarmService.intervalNone": {
+    "description": "Отображается, когда интервал не определен.",
+    "value": "Нет"
+  },
+  "alarmService.minuteLabel": {
+    "description": "Метка для выбора минуты",
+    "value": "Протоколы"
+  },
+  "alarmService.startTime": {
+    "description": "Label for the alarm start time",
+    "value": "Время начала: {{startTime}}"
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Удалить после завершения: {{deleteFinal}}"
+  },
+  "alarmService.startTimePlaceholder": {
+    "description": "Заполнитель для ввода времени начала",
+    "value": "Выберите дату и время"
+  },
+  "alarmService.subtitle": {
+    "description": "Подзаголовок, отображающий количество срабатываний сигнализации.",
+    "value": "Сигналы тревоги (записи{{count}} )"
+  },
+  "alarmService.title": {
+    "description": "Название карты службы оповещений",
+    "value": "Служба оповещений"
+  },
+  "audit.errorLog": {
+    "description": "Ошибка при извлечении журналов аудита",
+    "value": "Ошибка при извлечении журнала аудита"
+  },
+  "auditLog.description": {
+    "value": "Описание"
+  },
+  "auditLog.download": {
+    "description": "Кнопка загрузки для журналов аудита",
+    "value": "Скачать журнал аудита (.csv)"
+  },
+  "auditLog.event": {
+    "value": "Событие"
+  },
+  "auditLog.missing": {
+    "description": "Сообщение о отсутствующих журналах аудита",
+    "value": "Отсутствие журнала аудита"
+  },
+  "auditLog.time": {
+    "value": "Время"
+  },
+  "auditLog.title": {
+    "description": "Название для журналов аудита",
+    "value": "Журнал аудита"
+  },
+  "certificates.add.tooltip": {
+    "description": "Всплывающая подсказка для кнопки «Добавить сертификат»",
+    "value": "Добавить сертификат"
+  },
+  "certificates.download.tooltip": {
+    "description": "Всплывающая подсказка для загрузки сертификата",
+    "value": "Скачать сертификат"
+  },
+  "certificates.empty": {
+    "description": "Текст для пустых сертификатов",
+    "value": "Сертификаты не найдены"
+  },
+  "certificates.errorAddingCertificates": {
+    "description": "Ошибка при добавлении сертификатов",
+    "value": "Ошибка при добавлении сертификата"
+  },
+  "certificates.errorRetrievingCertificates": {
+    "description": "Ошибка при получении информации о сертификате",
+    "value": "Ошибка при получении информации о сертификате"
+  },
+  "certificates.list": {
+    "description": "Текст для списка сертификатов",
+    "value": "Список сертификатов, зарегистрированных в настоящее время на устройстве AMT."
+  },
+  "certificates.loading": {
+    "description": "Текст для загрузки сертификатов",
+    "value": "Загрузка сертификатов..."
+  },
+  "certificates.profileAssociations": {
+    "description": "Метка для ассоциаций профилей сертификатов",
+    "value": "Ассоциации профилей"
+  },
+  "certificates.profileAssociationsUnassociated": {
+    "description": "Отображается, когда сертификат не имеет ассоциаций с профилем.",
+    "value": "Несвязанные"
+  },
+  "certificates.title": {
+    "description": "Название сертификатов",
+    "value": "Сертификаты"
+  },
+  "certificates.type": {
+    "description": "Метка для поля типа сертификата",
+    "value": "Тип"
+  },
+  "certificates.typeClient": {
+    "description": "Указывает, что сертификат является клиентским сертификатом.",
+    "value": "Клиент"
+  },
+  "certificates.typeRoot": {
+    "description": "Указывает, что сертификат является корневым сертификатом.",
+    "value": "Корневой"
+  },
+  "common.addNew": {
+    "description": "Текст для кнопки «Добавить новый»",
+    "value": "Добавить новый"
+  },
+  "common.cancel": {
+    "description": "Текст для кнопки «Отмена»",
+    "value": "ОТМЕНА"
+  },
+  "common.cancelLower": {
+    "description": "Текст для кнопки «Отмена»",
+    "value": "Отменить"
+  },
+  "common.cetificateNotUploaded": {
+    "description": "Предупреждение о сертификатах, которые не были загружены",
+    "value": "Сертификат еще не загружен"
+  },
+  "common.cetificateUploaded": {
+    "description": "Сообщение для загружаемых сертификатов",
+    "value": "Сертификат загружен"
+  },
+  "common.chooseFile": {
+    "description": "Кнопка для выбора файла",
+    "value": "Выберите файл"
+  },
+  "common.close": {
+    "description": "Текст для кнопки «Закрыть»",
+    "value": "Закрыть"
+  },
+  "common.completeProfile": {
+    "description": "Сообщение для заполненных профилей",
+    "value": "Профиль успешно сохранен."
+  },
+  "common.connected": {
+    "description": "Состояние при подключении устройства или службы",
+    "value": "Связанные"
+  },
+  "common.continue": {
+    "value": "Продолжить"
+  },
+  "common.deleteConfiguration": {
+    "description": "Сообщение об удаленных конфигурациях",
+    "value": "Конфигурация удалена успешно."
+  },
+  "common.deviceMangementToolkitPortal": {
+    "description": "Сообщение для подзаголовка входа в систему",
+    "value": "Портал инструментов управления устройствами"
+  },
+  "common.disabled": {
+    "description": "Используется, когда локальная синхронизация профилей отключена.",
+    "value": "отключено"
+  },
+  "common.disconnected": {
+    "description": "Статус при отключении устройства или службы",
+    "value": "Отключено"
+  },
+  "common.dismiss": {
+    "description": "Метка кнопки «Отклонить»",
+    "value": "Отклонить"
+  },
+  "common.done": {
+    "description": "Сообщение для кнопки «Готово»",
+    "value": "Выполнено"
+  },
+  "common.down": {
+    "value": "Вниз"
+  },
+  "common.enabled": {
+    "description": "Используется, когда включена синхронизация локального профиля.",
+    "value": "Включено"
+  },
+  "common.enterFriendlyName": {
+    "description": "Подсказка для ввода дружественного имени",
+    "value": "Введите дружественное имя"
+  },
+  "common.enterHostName": {
+    "description": "Подсказка для ввода имени хоста",
+    "value": "Введите имя хоста"
+  },
+  "common.enterPassword": {
+    "description": "Сообщение для ввода пароля",
+    "value": "Введите свой пароль"
+  },
+  "common.enterUserName": {
+    "description": "Подсказка для ввода вашего имени пользователя",
+    "value": "Введите свое имя пользователя"
+  },
+  "common.errorDeleteConfiguration": {
+    "description": "Ошибка при удалении конфигураций",
+    "value": "Невозможно удалить конфигурацию."
+  },
+  "common.friendlyName": {
+    "description": "Сообщение для дружественного имени",
+    "value": "Дружественное имя"
+  },
+  "common.hostName": {
+    "description": "Сообщение для имени хоста",
+    "value": "Имя хоста"
+  },
+  "common.input": {
+    "description": "Ввод данных для WSMAN Explorer",
+    "value": "Ввод"
+  },
+  "common.intelCopyright": {
+    "description": "Сообщение об авторских правах для Intel",
+    "value": "© {{year}} Intel Corporation"
+  },
+  "common.loginUpper": {
+    "description": "Сообщение для кнопки входа в систему",
+    "value": "ВХОД В СИСТЕМУ"
+  },
+  "common.logOut": {
+    "description": "Сообщение о выходе из системы",
+    "value": "Выйти из системы"
+  },
+  "common.no": {
+    "value": "Нет"
+  },
+  "common.notApplicable": {
+    "description": "Отображается, когда запись ОС не применима.",
+    "value": "Неприменимо"
+  },
+  "common.ok": {
+    "description": "Текст для кнопки «ОК»",
+    "value": "Приемлемо"
+  },
+  "common.other": {
+    "description": "Используется, когда операционная система или карта памяти являются «Другими» или «Неуказанными».",
+    "value": "Прочее"
+  },
+  "common.output": {
+    "description": "Результат для WSMAN Explorer",
+    "value": "Результат"
+  },
+  "common.password": {
+    "description": "Сообщение для пароля",
+    "value": "Пароль"
+  },
+  "common.pin": {
+    "description": "Текст для кнопки «Закрепить»",
+    "value": "Закрепить"
+  },
+  "common.profileName": {
+    "description": "Название профиля",
+    "value": "Имя профиля"
+  },
+  "common.remove": {
+    "description": "Текст для кнопки «Удалить»",
+    "value": "Удалите"
+  },
+  "common.save": {
+    "description": "Текст для кнопки «Сохранить»",
+    "value": "СОХРАНИТЬ"
+  },
+  "common.showHidePassword": {
+    "description": "Всплывающая подсказка для отображения или скрытия пароля",
+    "value": "Показать/скрыть пароль"
+  },
+  "common.submit": {
+    "description": "Кнопка для отправки",
+    "value": "Отправить"
+  },
+  "common.tags": {
+    "description": "Сообщение для тегов",
+    "value": "Теги"
+  },
+  "common.trustedRoot": {
+    "description": "Текст для флажка «Доверенный корень»",
+    "value": "Доверенный корень"
+  },
+  "common.unknown": {
+    "description": "Метка для неизвестных или неуказанных значений",
+    "value": "Неизвестно"
+  },
+  "common.up": {
+    "value": "Вверх"
+  },
+  "common.userName": {
+    "description": "Сообщение для имени пользователя",
+    "value": "Имя пользователя"
+  },
+  "common.wired": {
+    "description": "Текст для беспроводной кнопки",
+    "value": "Wired"
+  },
+  "common.wireless": {
+    "description": "Текст для проводной кнопки",
+    "value": "Беспроводная связь"
+  },
+  "common.yes": {
+    "value": "Да"
+  },
+  "configDetail.commonNameHint": {
+    "description": "Подсказка для поля общего имени",
+    "value": "Введите общее имя, указанное в сертификате."
+  },
+  "configDetail.commonNamePlaceholder": {
+    "description": "Заполнитель текста для поля общего имени",
+    "value": "Общее имя сертификата (CN=)"
+  },
+  "configDetail.configNameHint": {
+    "description": "Подсказка для поля имени конфигурации",
+    "value": "Введите название для этой конфигурации CIRA."
+  },
+  "configDetail.configNamePlaceholder": {
+    "description": "Заполнитель текста для поля имени конфигурации",
+    "value": "Пример: ciraConfig1"
+  },
+  "configDetail.fqdn": {
+    "description": "Метка радиокнопки FQDN",
+    "value": "FQDN"
+  },
+  "configDetail.ipv4": {
+    "description": "Метка радиокнопки IPv4",
+    "value": "IPv4"
+  },
+  "configDetail.mpsAddressHint": {
+    "description": "Подсказка для поля адреса сервера MPS",
+    "value": "Введите адрес, по которому размещен ваш экземпляр MPS."
+  },
+  "configDetail.mpsAddressPlaceholder": {
+    "description": "Заполнитель текста для поля адреса сервера MPS",
+    "value": "Адрес MPS"
+  },
+  "configDetail.portHint": {
+    "description": "Подсказка для поля порта",
+    "value": "Введите порт CIRA для экземпляра MPS. По умолчанию используется порт 4433."
+  },
+  "configDetail.portPlaceholder": {
+    "description": "Заполнитель текста для поля порта",
+    "value": "Порт"
+  },
+  "configDetail.regeneratePassword": {
+    "description": "Текст для переключателя «Восстановить пароль»",
+    "value": "Генерация нового случайного пароля при сохранении"
+  },
+  "configDetail.usernameHint": {
+    "description": "Подсказка для поля имени пользователя",
+    "value": "Введите имя пользователя для доступа к MPS."
+  },
+  "configDetail.usernamePlaceholder": {
+    "description": "Заполнитель текста для поля имени пользователя",
+    "value": "Имя пользователя"
+  },
+  "configs.ciraNoData": {
+    "description": "Сообщение «Нет конфигураций CIRA»",
+    "value": "Без конфигураций CIRA"
+  },
+  "configs.delete": {
+    "description": "Сообщение об удалении конфигураций CIRA",
+    "value": "Конфигурация CIRA удалена успешно."
+  },
+  "configs.failDeleteConfigs": {
+    "description": "Ошибка при удалении конфигураций CIRA",
+    "value": "Невозможно удалить конфигурации CIRA"
+  },
+  "configs.failLoadConfigs": {
+    "description": "Ошибка при загрузке конфигураций CIRA",
+    "value": "Невозможно загрузить конфигурации CIRA"
+  },
+  "configs.header.ciraNewTitle": {
+    "description": "Новое название страницы «CIRA Config»",
+    "value": "Новая конфигурация CIRA"
+  },
+  "configs.header.ciraTitle": {
+    "description": "Название CIRA Configs",
+    "value": "Конфигурации CIRA"
+  },
+  "configs.header.noCiraTitle": {
+    "description": "Название CIRA Configs, если оно недоступно.",
+    "value": "Недоступно"
+  },
+  "configs.paginator.firstPageLabel": {
+    "value": "Первая страница"
+  },
+  "configs.paginator.itemsPerPageLabel": {
+    "value": "Количество элементов на странице:"
+  },
+  "configs.paginator.lastPageLabel": {
+    "value": "Последняя страница"
+  },
+  "configs.paginator.nextPageLabel": {
+    "value": "Следующая страница"
+  },
+  "configs.paginator.previousPageLabel": {
+    "value": "Предыдущая страница"
+  },
+  "configs.paginator.range": {
+    "value": "{{startIndex}} – {{endIndex}} {{length}}"
+  },
+  "configs.success": {
+    "description": "Сообщение для создания конфигураций CIRA",
+    "value": "{{reqType}} CIRA создан успешно"
+  },
+  "configs.table.ciraCert": {
+    "description": "Заголовок столбца «Общее название сертификата»",
+    "value": "Общее имя сертификата (CN=)"
+  },
+  "configs.table.ciraMpsserver": {
+    "description": "Заголовок столбца MPS Server",
+    "value": "Сервер MPS"
+  },
+  "configs.table.ciraName": {
+    "description": "Название заголовка столбца",
+    "value": "Название"
+  },
+  "configs.table.ciraPort": {
+    "description": "Заголовок столбца «Порт»",
+    "value": "Порт"
+  },
+  "configs.table.ciraRootcert": {
+    "description": "Заголовок столбца «Корневой сертификат MPS»",
+    "value": "Корневой сертификат MPS"
+  },
+  "configs.table.ciraUsername": {
+    "description": "Заголовок столбца «Имя пользователя»",
+    "value": "Имя пользователя"
+  },
+  "dashboard.addDeviceTooltip": {
+    "description": "Всплывающая подсказка для добавления нового устройства",
+    "value": "Добавьте новое устройство, которым можно управлять с помощью консоли."
+  },
+  "dashboard.addNewDevice": {
+    "description": "Шаг по добавлению нового устройства",
+    "value": "1. Добавьте новое устройство"
+  },
+  "dashboard.addProvisioningCertificate": {
+    "description": "Шаг по добавлению сертификата провижининга",
+    "value": "Добавьте сертификат предоставления [необязательно]"
+  },
+  "dashboard.createCiraConfig": {
+    "description": "Шаг по созданию конфигурации CIRA",
+    "value": "Создайте конфигурацию CIRA."
+  },
+  "dashboard.createProfile": {
+    "description": "Шаг по созданию профиля",
+    "value": "Создайте профиль"
+  },
+  "dashboard.createWirelessConfig": {
+    "description": "Шаг по созданию беспроводной конфигурации",
+    "value": "Создание беспроводной конфигурации [необязательно]"
+  },
+  "dashboard.deploy": {
+    "description": "Разверните набор инструментов.",
+    "value": "Развертывание"
+  },
+  "dashboard.deployDescription": {
+    "description": "Описание для развертывания",
+    "value": "Готовы перейти к производству? Ознакомьтесь с нашим руководством по развертыванию (скоро будет доступно)."
+  },
+  "dashboard.devicesConnected": {
+    "description": "Количество подключенных устройств",
+    "value": "Подключенные устройства"
+  },
+  "dashboard.devicesDisconnected": {
+    "description": "Количество отключенных устройств",
+    "value": "Устройства отключены"
+  },
+  "dashboard.error": {
+    "description": "Ошибка при получении статистики устройства",
+    "value": "Ошибка при получении статистики устройства"
+  },
+  "dashboard.getStarted": {
+    "description": "Начните работу с набором инструментов",
+    "value": "Начните работу"
+  },
+  "dashboard.getStartedDescription": {
+    "description": "Описание для начала работы",
+    "value": "Вы новичок в использовании инструментария? Ознакомьтесь с документацией, чтобы сначала изучить основы."
+  },
+  "dashboard.header.dashboardTitle": {
+    "description": "Название панели инструментов",
+    "value": "Панель управления"
+  },
+  "dashboard.manageYourDevice": {
+    "description": "Шаг для управления вашим устройством",
+    "value": "2. Управление устройством"
+  },
+  "dashboard.manageYourDeviceStep": {
+    "description": "Шаг для повторного управления вашим устройством",
+    "value": "Управляйте своим устройством"
+  },
+  "dashboard.totalDevices": {
+    "description": "Общее количество устройств",
+    "value": "Общее количество устройств"
+  },
+  "dashboard.understandSecurity": {
+    "description": "Понимание вопросов безопасности",
+    "value": "Понимание безопасности"
+  },
+  "dashboard.understandSecurityDescription": {
+    "description": "Описание для понимания безопасности",
+    "value": "Не уверены в вопросах безопасности? Узнайте о паролях, Vault, сертификатах и многом другом."
+  },
+  "dashboard.useDeviceActions": {
+    "description": "Всплывающая подсказка по использованию действий устройства",
+    "value": "Используйте действия устройств для управления списком устройств."
+  },
+  "delete.question": {
+    "description": "Вопрос об удалении записей",
+    "value": "Вы уверены?"
+  },
+  "delete.questionRecord": {
+    "description": "Вопрос об удалении записей",
+    "value": "Вы уверены, что хотите удалить запись (записи)?"
+  },
+  "deviceCertificate.commonName": {
+    "description": "Текст для общего названия",
+    "value": "Общее название:"
+  },
+  "deviceCertificate.DNSNames": {
+    "description": "Текст для имен DNS",
+    "value": "DNS-имена:"
+  },
+  "deviceCertificate.issuerName": {
+    "description": "Текст для названия эмитента",
+    "value": "Название эмитента:"
+  },
+  "deviceCertificate.notAfter": {
+    "description": "Текст после даты",
+    "value": "Не допускается:"
+  },
+  "deviceCertificate.notBefore": {
+    "description": "Текст не должен быть устаревшим.",
+    "value": "Не ранее:"
+  },
+  "deviceCertificate.publicKeyAlgo": {
+    "description": "Текст для алгоритма открытого ключа",
+    "value": "Алгоритм открытого ключа:"
+  },
+  "deviceCertificate.PublicKeySize": {
+    "description": "Текст для размера открытого ключа",
+    "value": "Размер открытого ключа:"
+  },
+  "deviceCertificate.serialNumber": {
+    "description": "Текст для серийного имени",
+    "value": "Серийный номер:"
+  },
+  "deviceCertificate.SHA1Fingerprint": {
+    "description": "Текст для отпечатка SHA-1",
+    "value": "Отпечаток SHA-1:"
+  },
+  "deviceCertificate.SHA256Finferprint": {
+    "description": "Текст для отпечатка SHA-256",
+    "value": "Отпечаток SHA-256:"
+  },
+  "deviceCertificate.title": {
+    "description": "Название для сведений о сертификате",
+    "value": "Детали сертификата"
+  },
+  "deviceDetail.alarms": {
+    "description": "Название категории для сигналов тревоги устройства",
+    "value": "Сигналы тревоги"
+  },
+  "deviceDetail.alarmsDescription": {
+    "description": "Описание для сигналов тревоги",
+    "value": "Управление сигналами тревоги устройств"
+  },
+  "deviceDetail.auditLog": {
+    "description": "Название категории для журнала аудита",
+    "value": "Журнал аудита"
+  },
+  "deviceDetail.auditLogDescription": {
+    "description": "Описание журнала аудита",
+    "value": "Просмотр журнала аудита устройства"
+  },
+  "deviceDetail.certificates": {
+    "description": "Название категории для сертификатов",
+    "value": "Сертификаты"
+  },
+  "deviceDetail.certificatesDescription": {
+    "description": "Описание сертификатов",
+    "value": "Управление сертификатами"
+  },
+  "deviceDetail.eventLog": {
+    "description": "Название категории для журнала событий",
+    "value": "Журнал событий"
+  },
+  "deviceDetail.eventLogDescription": {
+    "description": "Описание журнала событий",
+    "value": "Просмотр событий устройства"
+  },
+  "deviceDetail.explorer": {
+    "description": "Название категории для проводника",
+    "value": "Проводник"
+  },
+  "deviceDetail.explorerDescription": {
+    "description": "Описание для проводника",
+    "value": "Отправка команд WSMAN"
+  },
+  "deviceDetail.general": {
+    "description": "Название категории для общей информации об устройстве",
+    "value": "Общая информация об AMT"
+  },
+  "deviceDetail.generalDescription": {
+    "description": "Описание общей информации об устройстве",
+    "value": "Версия и функции AMT"
+  },
+  "deviceDetail.hardwareInfo": {
+    "description": "Название категории для информации об оборудовании",
+    "value": "Информация об оборудовании"
+  },
+  "deviceDetail.hardwareInfoDescription": {
+    "description": "Описание информации об оборудовании",
+    "value": "Память, ЦП и т. д."
+  },
+  "deviceDetail.kvm": {
+    "description": "Название категории для KVM",
+    "value": "KVM"
+  },
+  "deviceDetail.kvmDescription": {
+    "description": "Описание для KVM",
+    "value": "Устройство дистанционного управления"
+  },
+  "deviceDetail.networkSettings": {
+    "description": "Название категории для сетевых настроек",
+    "value": "Настройки сети"
+  },
+  "deviceDetail.networkSettingsDescription": {
+    "description": "Описание сетевых настроек",
+    "value": "Просмотр настроек сети"
+  },
+  "deviceDetail.noEventLog": {
+    "description": "Название категории для отсутствия журналов событий",
+    "value": "Нет журнала событий"
+  },
+  "deviceDetail.sol": {
+    "description": "Название категории для Serial Over LAN",
+    "value": "SOL"
+  },
+  "deviceDetail.solDescription": {
+    "description": "Описание для SOL",
+    "value": "Последовательный по LAN"
+  },
+  "deviceDetail.tlsSettings": {
+    "description": "Название категории для настроек TLS",
+    "value": "Настройки TLS"
+  },
+  "deviceDetail.tlsSettingsDescription": {
+    "description": "Описание настроек TLS",
+    "value": "Просмотр конфигурации TLS"
+  },
+  "devices.actions.deactivate": {
+    "description": "Всплывающая подсказка для деактивации/удаления устройства",
+    "value": "Деактивируйте устройство"
+  },
+  "devices.actions.deactivateCloud": {
+    "description": "Всплывающая подсказка для деактивации устройства в облачном режиме",
+    "value": "Деактивируйте устройство"
+  },
+  "devices.actions.edit": {
+    "description": "Всплывающая подсказка для редактирования устройства",
+    "value": "Редактировать устройство"
+  },
+  "devices.actions.powerOff": {
+    "description": "Всплывающая подсказка для выключения устройства",
+    "value": "Выключите устройство."
+  },
+  "devices.actions.powerUp": {
+    "description": "Всплывающая подсказка для включения устройства",
+    "value": "Включите устройство."
+  },
+  "devices.actions.remove": {
+    "description": "Всплывающая подсказка для удаления устройства в не облачном режиме",
+    "value": "Удалите устройство."
+  },
+  "devices.actions.reset": {
+    "description": "Всплывающая подсказка для сброса настроек устройства",
+    "value": "Сброс настроек устройства"
+  },
+  "devices.actions.restart": {
+    "description": "Всплывающая подсказка для перезапуска устройства",
+    "value": "Перезапустите устройство."
+  },
+  "devices.addDevice": {
+    "description": "Сообщение о новом устройстве",
+    "value": "Добавить новое устройство"
+  },
+  "devices.bulk.deactivate": {
+    "description": "Всплывающая подсказка для массовой деактивации",
+    "value": "Удалите или деактивируйте выбранные устройства."
+  },
+  "devices.bulk.powerOff": {
+    "description": "Всплывающая подсказка для массового отключения питания",
+    "value": "Выключение выбранных устройств"
+  },
+  "devices.bulk.powerUp": {
+    "description": "Всплывающая подсказка для массового включения питания",
+    "value": "Включение выбранных устройств"
+  },
+  "devices.bulk.restart": {
+    "description": "Всплывающая подсказка для массового перезапуска",
+    "value": "Перезапустите выбранные устройства."
+  },
+  "devices.deactivation": {
+    "description": "Сообщение о деактивации",
+    "value": "Деактивация отправлена успешно"
+  },
+  "devices.editDevice": {
+    "description": "Всплывающая подсказка для редактирования устройства",
+    "value": "Редактирование устройства"
+  },
+  "devices.editTags": {
+    "description": "Текст кнопки для редактирования тегов",
+    "value": "Редактировать теги"
+  },
+  "devices.errorDeactivateDevice": {
+    "description": "Ошибка при деактивации устройств",
+    "value": "Ошибка при деактивации устройств"
+  },
+  "devices.errorDeactivation": {
+    "description": "Ошибка при отправке деактиваций",
+    "value": "Ошибка при отправке деактивации"
+  },
+  "devices.errorInitializing": {
+    "description": "Ошибка при инициализации",
+    "value": "Ошибка при инициализации"
+  },
+  "devices.errorLoadDevices": {
+    "description": "Ошибка при загрузке устройств",
+    "value": "Ошибка при загрузке устройств"
+  },
+  "devices.errorLoadTags": {
+    "description": "Ошибка при загрузке тегов",
+    "value": "Ошибка при загрузке тегов"
+  },
+  "devices.errorPowerAction": {
+    "description": "Ошибка при выполнении действий с повышенными правами",
+    "value": "Ошибка при отправке действия питания"
+  },
+  "devices.failPowerAction": {
+    "description": "Ошибка: не удалось выполнить действия с питанием.",
+    "value": "Операция с питанием не удалась"
+  },
+  "devices.filter.searchHint": {
+    "description": "Подсказка под полем ввода для поиска устройств",
+    "value": "Введите текст для фильтрации текущей страницы"
+  },
+  "devices.filter.searchPlaceholder": {
+    "description": "Заполнитель текста для поля поиска устройств",
+    "value": "Фильтры устройств..."
+  },
+  "devices.filter.tags": {
+    "description": "Метка для фильтрации устройств по тегам",
+    "value": "Фильтр тегов"
+  },
+  "devices.header.addCertificateDescription": {
+    "description": "Описание диалогового окна «Добавить сертификат»",
+    "value": "Сертификат будет добавлен в AMT."
+  },
+  "devices.header.addCertificateTitle": {
+    "description": "Заголовок диалогового окна «Добавить сертификат»",
+    "value": "Добавить сертификат"
+  },
+  "devices.header.httpsBootDescription": {
+    "description": "Описание диалогового окна HTTPS Boot",
+    "value": "HTTPS Network Boot обеспечивает безопасность процесса загрузки с помощью зашифрованного HTTPS для защиты загрузочных файлов. Инициируйте One Click Recovery для быстрого восстановления операционной системы."
+  },
+  "devices.header.httpsBootTitle": {
+    "description": "Заголовок диалогового окна HTTPS Boot",
+    "value": "HTTPS Сетевая загрузка (OCR)"
+  },
+  "devices.header.pbaBootDescription": {
+    "description": "Описание диалога загрузки PBA",
+    "value": "PBA (Pre-Boot Application) - это инструмент восстановления или диагностики, который устанавливается локально в системе и может быть выбран в качестве варианта загрузки для операций Intel One-Click Recovery."
+  },
+  "devices.header.pbaBootTitle": {
+    "description": "Заголовок диалогового окна загрузки PBA",
+    "value": "Местный ботинок PBA (OCR)"
+  },
+  "devices.headerd.devicesTitle": {
+    "description": "Заголовок страницы «Устройства»",
+    "value": "Устройства"
+  },
+  "devices.moreOptionsTooltip": {
+    "description": "Всплывающая подсказка для доступа к дополнительным параметрам питания устройства",
+    "value": "Дополнительные параметры питания..."
+  },
+  "devices.noData": {
+    "description": "Сообщение, когда устройств не существует",
+    "value": "Устройства не найдены"
+  },
+  "devices.noDataFilter": {
+    "description": "Сообщение, когда результаты фильтрации отсутствуют",
+    "value": "Ни одно устройство не соответствует текущему фильтру"
+  },
+  "devices.notification.error": {
+    "description": "Всплывающая подсказка, отображаемая при сбое действия",
+    "value": "Ошибка при отправке действия"
+  },
+  "devices.notification.notReady": {
+    "description": "Всплывающая подсказка, отображаемая, когда устройство не готово",
+    "value": "Отправлено действие питания, однако устройство ответило, что не готово."
+  },
+  "devices.notification.success": {
+    "description": "Всплывающая подсказка, отображаемая при успешном выполнении действия",
+    "value": "Действие успешно отправлено"
+  },
+  "devices.powerActionNotReady": {
+    "description": "Ошибка для отправленных действий, которые не готовы.",
+    "value": "Действие «Power» отправлено, но не готово"
+  },
+  "devices.powerActionSent": {
+    "description": "Сообщение для действий с повышенными правами",
+    "value": "Действие выполнено успешно"
+  },
+  "devices.table.actions": {
+    "description": "Заголовок столбца таблицы для действий",
+    "value": "Действия"
+  },
+  "devices.table.guid": {
+    "description": "Заголовок столбца таблицы для GUID",
+    "value": "GUID"
+  },
+  "devices.table.hostname": {
+    "description": "Заголовок столбца таблицы для имени хоста",
+    "value": "Имя хоста"
+  },
+  "devices.table.status": {
+    "description": "Заголовок столбца таблицы для состояния устройства",
+    "value": "Статус"
+  },
+  "devices.table.tags": {
+    "description": "Заголовок столбца таблицы для тегов",
+    "value": "Теги"
+  },
+  "deviceUserConsent.description": {
+    "description": "Описание согласия пользователя для устройств",
+    "value": "Для доступа к системе требуется код согласия пользователя, сгенерированный Intel AMT."
+  },
+  "deviceUserConsent.error": {
+    "description": "Ошибка при получении согласия пользователя для устройств",
+    "value": "Это поле является обязательным для заполнения, и значение должно быть шестизначным числом."
+  },
+  "deviceUserConsent.hint": {
+    "description": "Подсказка для согласия пользователя на устройствах",
+    "value": "Предоставьте код согласия пользователя, отображаемый на целевом мониторе хоста."
+  },
+  "deviceUserConsent.placeholder": {
+    "description": "Местозаполнитель для согласия пользователя на использование устройств",
+    "value": "Код согласия пользователя"
+  },
+  "deviceUserConsent.title": {
+    "description": "Заголовок для согласия пользователя на использование устройств",
+    "value": "Согласие пользователя"
+  },
+  "domainDetail.completeProfile": {
+    "description": "Сообщение о завершении профилей доменов",
+    "value": "Профиль домена успешно сохранен."
+  },
+  "domainDetail.errorDeleteConfiguration": {
+    "description": "Ошибка при удалении профилей домена",
+    "value": "Ошибка при создании/обновлении профиля домена"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Сообщение об ошибке при нарушении уникального ключа",
+    "value": "ID или суффикс домена NewDomain уже существует"
+  },
+  "domainDetail.fqdn": {
+    "description": "Подсказка для поля FQDN",
+    "value": "Введите полное доменное имя, связанное с сертификатом предоставления (например, amtdomain.com)."
+  },
+  "domainDetail.nameHint": {
+    "description": "Подсказка для поля доменного имени",
+    "value": "Введите название для этого домена (например, «Домен AMT»)."
+  },
+  "domainDetail.namePlaceholder": {
+    "description": "Заполнитель для доменного имени",
+    "value": "Доменное имя"
+  },
+  "domainDetail.placeholderProvisioningCertPassword": {
+    "description": "Заполнитель для пароля сертификата предоставления",
+    "value": "Пароль для сертификата провижининга"
+  },
+  "domainDetail.provisioningCertPassword": {
+    "description": "Подсказка для пароля сертификата предоставления",
+    "value": "Пароль для сертификата предоставления"
+  },
+  "domains.certExpired": {
+    "description": "Сообщение об истекших сертификатах",
+    "value": "{{count}} Сертификаты домена просрочены. "
+  },
+  "domains.certExpring": {
+    "description": "Сообщение об истечении срока действия сертификатов",
+    "value": "{{count}} Сертификат(ы) домена скоро истечет(и). "
+  },
+  "domains.daysRemaining": {
+    "description": "Сообщение о оставшихся днях",
+    "value": " Оставшиеся дни"
+  },
+  "domains.delteDomain": {
+    "description": "Сообщение об удалении доменов",
+    "value": "Домен удален успешно"
+  },
+  "domains.expired": {
+    "description": "Сообщение для доменов с истекшим сроком действия",
+    "value": "Срок действия истек"
+  },
+  "domains.failLoadDomain": {
+    "description": "Ошибка при загрузке доменов",
+    "value": "Невозможно загрузить домены"
+  },
+  "domains.failtDeltedDomain": {
+    "description": "Ошибка при удалении доменов",
+    "value": "Невозможно удалить домен"
+  },
+  "domains.header.domainsNewTitle": {
+    "description": "Название новой страницы домена",
+    "value": "Новый домен"
+  },
+  "domains.header.domainsTitle": {
+    "description": "Заголовок страницы «Домены»",
+    "value": "Домены"
+  },
+  "domains.monthsRemaining": {
+    "description": "Сообщение на оставшиеся месяцы",
+    "value": " Оставшиеся месяцы"
+  },
+  "domains.noData": {
+    "description": "Сообщение «Нет доменов»",
+    "value": "Без доменов"
+  },
+  "domains.table.domainSuffix": {
+    "description": "Заголовок столбца «Суффикс домена»",
+    "value": "Суффикс домена"
+  },
+  "domains.table.expirationDate": {
+    "description": "Заголовок столбца «Срок годности»",
+    "value": "Срок действия"
+  },
+  "domains.table.name": {
+    "description": "Название заголовка столбца",
+    "value": "Название"
+  },
+  "domains.yearsRemaining": {
+    "description": "Сообщение на оставшиеся годы",
+    "value": " оставшиеся годы"
+  },
+  "editTags.description": {
+    "description": "Описание для редактирования тегов",
+    "value": "Добавьте тег, щелкнув в командной строке, введите название тега, а затем нажмите Enter или запятую."
+  },
+  "editTags.header": {
+    "description": "Заголовок для редактирования тегов",
+    "value": "Удалите тег, нажав на него."
+  },
+  "editTags.placeholder": {
+    "description": "Заполнитель для редактирования тегов",
+    "value": "Новый тег..."
+  },
+  "editTags.title": {
+    "description": "Заголовок для редактирования тегов",
+    "value": "Редактировать теги"
+  },
+  "error.deviceNotResponding": {
+    "description": "Сообщение, отображаемое при истечении времени ожидания устройства",
+    "value": "Устройство не отвечает. Пожалуйста, проверьте настройки подключения и попробуйте еще раз."
+  },
+  "error.itemModified": {
+    "description": "Сообщение, отображаемое, когда элемент устарел",
+    "value": "Этот элемент был изменен после загрузки. Пожалуйста, перезагрузите страницу."
+  },
+  "error.kvmConnection": {
+    "description": "Ошибка, отображаемая при подключении к KVM",
+    "value": "Не удалось подключиться к KVM. Допускается только одна сессия на устройство. Также убедитесь, что ваш токен действителен и у вас есть доступ."
+  },
+  "error.sessionTimedOut": {
+    "description": "Сообщение, отображаемое при истечении сеанса пользователя",
+    "value": "Сессия истекла. Пожалуйста, войдите снова."
+  },
+  "error.unableToSendCode": {
+    "description": "Ошибка, отображаемая при сбое отправки кода согласия пользователя, включает сообщение об ошибке бэкэнда.",
+    "value": "Невозможно отправить код: {{error}}"
+  },
+  "error.userConsentCancelFailed": {
+    "description": "Общая ошибка при отмене кода согласия пользователя.",
+    "value": "Код отмены согласия пользователя на ошибку."
+  },
+  "error.userConsentCodeCancelFailed": {
+    "description": "Ошибка при отмене запрошенного кода согласия пользователя.",
+    "value": "{{featureName}} Невозможно получить доступ — не удалось отменить запрошенный код согласия пользователя."
+  },
+  "error.userConsentCodeCancelled": {
+    "description": "Ошибка при отмене запрошенного кода согласия пользователя.",
+    "value": "{{featureName}} Доступ невозможен — запрошенный код согласия пользователя отменен."
+  },
+  "error.userConsentCodeFailed": {
+    "description": "Ошибка, отображаемая при запросе кода согласия пользователя, не удается для функции",
+    "value": "{{featureName}} Невозможно получить доступ — не удалось запросить код согласия пользователя."
+  },
+  "error.userConsentSendFailed": {
+    "description": "Ошибка при отправке кода согласия пользователя.",
+    "value": "{{featureName}} Невозможно получить доступ — не удалось отправить код согласия пользователя."
+  },
+  "error.userConsentUnsupported": {
+    "description": "Ошибка при отправке неподдерживаемого кода согласия пользователя",
+    "value": "{{featureName}} Доступ невозможен — неподдерживаемый код согласия пользователя."
+  },
+  "event.errorLog": {
+    "description": "Ошибка при извлечении журналов событий",
+    "value": "Ошибка при извлечении журнала событий"
+  },
+  "eventLog.download": {
+    "description": "Кнопка для загрузки журнала событий",
+    "value": "Скачать журнал событий (.csv)"
+  },
+  "eventLog.entries": {
+    "description": "Название для записей в журнале событий",
+    "value": "Журнал событий (записи{{count}} )"
+  },
+  "eventLog.eventType": {
+    "description": "Сообщение для типов журналов событий",
+    "value": "Тип события"
+  },
+  "eventLog.severity": {
+    "description": "Сообщение о серьезности событий в журнале событий",
+    "value": "Серьезность"
+  },
+  "eventLog.source": {
+    "description": "Сообщение для источников журнала событий",
+    "value": "Источник"
+  },
+  "explorer.errorResponse": {
+    "description": "Ошибка при получении ответа браузера",
+    "value": "Ошибка при получении ответа браузера"
+  },
+  "explorer.placeHolder": {
+    "description": "Заполнитель для WSMAN explorer",
+    "value": "Выберите..."
+  },
+  "explorer.WSMANCall": {
+    "value": "WSMAN Call"
+  },
+  "explorer.WSMANExplorer": {
+    "value": "WSMAN Explorer"
+  },
+  "exportDialog.addDomains": {
+    "description": "Текст кнопки для добавления доменов",
+    "value": "Добавление доменов"
+  },
+  "exportDialog.addDomainsFirst": {
+    "description": "Возможность сначала добавить домены.",
+    "value": "Сначала добавьте домены (требуется для активации ACM)."
+  },
+  "exportDialog.domainSuffix": {
+    "description": "Метка для поля суффикса домена",
+    "value": "суффикс домена"
+  },
+  "exportDialog.errorLoadingDomains": {
+    "description": "Заголовок сообщения об ошибке при загрузке доменов",
+    "value": "Ошибка при загрузке доменов:"
+  },
+  "exportDialog.loadingDomains": {
+    "description": "Загрузка сообщения для доменов",
+    "value": "Загрузка доменов..."
+  },
+  "exportDialog.noDomainsConfigured": {
+    "description": "Сообщение, когда домены не настроены",
+    "value": "Домены не настроены. Вы можете:"
+  },
+  "exportDialog.selectDomainRequired": {
+    "description": "Сообщение об ошибке при выборе домена",
+    "value": "Пожалуйста, выберите домен"
+  },
+  "exportDialog.selectDomainSubtitle": {
+    "description": "Подзаголовок для выбора домена диалога экспорта",
+    "value": "Выбранный домен будет включен в профиль для использования с"
+  },
+  "exportDialog.selectDomainTitle": {
+    "description": "Заголовок для диалога экспорта выбора домена",
+    "value": "Выберите суффикс домена"
+  },
+  "exportDialog.skipDomain": {
+    "description": "Текст кнопки для пропуска домена",
+    "value": "Пропустить домен"
+  },
+  "exportDialog.skipDomainActivated": {
+    "description": "Возможность пропустить домен, если он уже активирован.",
+    "value": "Нажмите «Пропустить домен», если устройство уже активировано."
+  },
+  "exportDialog.skipDomainInstructions": {
+    "description": "Инструкции по функции пропуска домена",
+    "value": "Нажмите «Пропустить домен», если устройство уже активировано. Если устройство еще не активировано, необходимо выбрать домен для активации ACM."
+  },
+  "fieldRequired.alphaNumeric": {
+    "description": "Сообщение об ошибке для обязательных полей",
+    "value": "Это поле является обязательным для заполнения и должно содержать только буквы и цифры без пробелов и символов."
+  },
+  "fieldRequired.alphaNumericMaxLen": {
+    "description": "Текст для обязательных алфавитно-цифровых полей и полей с максимальной длиной.",
+    "value": "Это поле является обязательным для заполнения, должно содержать только буквы и цифры (без пробелов) и не превышать {{profileNameMaxLen}} символов."
+  },
+  "fieldRequired.long": {
+    "description": "Подсказка для обязательных полей с ограничением по количеству символов",
+    "value": "Это поле является обязательным для заполнения и должно содержать от 8 до 32 символов."
+  },
+  "fieldRequired.short": {
+    "description": "Подсказка для обязательных полей",
+    "value": "Это поле является обязательным для заполнения."
+  },
+  "general.amtBuild": {
+    "description": "Метка для AMT Build",
+    "value": "AMT Build:"
+  },
+  "general.amtDHCPDNSSuffix": {
+    "description": "Метка для AMT DHCP DNS Suffix",
+    "value": "AMT DHCP DNS Suffix:"
+  },
+  "general.amtEnabledFeatures": {
+    "description": "Название карты «Функции с поддержкой AMT»",
+    "value": "Функции, поддерживаемые AMT"
+  },
+  "general.amtEnabledFeaturesDescription": {
+    "description": "Описание карты «Функции с поддержкой AMT»",
+    "value": "Состояние функций, поддерживаемых AMT"
+  },
+  "general.AMTFeatures": {
+    "description": "Сообщение об обновленных функциях",
+    "value": "Обновленные функции AMT"
+  },
+  "general.amtSKU": {
+    "description": "Метка для AMT SKU",
+    "value": "AMT SKU:"
+  },
+  "general.amtSummary": {
+    "description": "Название для карты AMT Summary",
+    "value": "Резюме AMT"
+  },
+  "general.amtSummaryDescription": {
+    "description": "Описание для карты AMT Summary",
+    "value": "Резюме информации AMT"
+  },
+  "general.amtTrustedDNSSuffix": {
+    "description": "Метка для доверенного DNS-суффикса AMT",
+    "value": "AMT Trusted DNS Suffix (MEBx):"
+  },
+  "general.amtVersion": {
+    "description": "Метка для версии AMT",
+    "value": "Версия AMT:"
+  },
+  "general.errorAMTFeatures": {
+    "description": "Ошибка при извлечении функций AMT",
+    "value": "Ошибка при извлечении функций AMT"
+  },
+  "general.errorAMTVersion": {
+    "description": "Ошибка при извлечении версии AMT",
+    "value": "Ошибка при получении версии AMT"
+  },
+  "general.errorGeneralSettings": {
+    "description": "Ошибка при извлечении общих настроек",
+    "value": "Ошибка при извлечении общих настроек"
+  },
+  "general.failAMTFeatures": {
+    "description": "Ошибка при обновлении функций",
+    "value": "Не удалось обновить функции AMT."
+  },
+  "general.httpsBootNotSupported": {
+    "description": "Всплывающая подсказка для HTTPS Загрузка не поддерживается",
+    "value": "HTTPS Boot не поддерживается."
+  },
+  "general.httpsBootSupported": {
+    "description": "Подсказка для HTTPS Boot поддерживается.",
+    "value": "Поддерживается HTTPS Boot."
+  },
+  "general.httpsNetworkBoot": {
+    "description": "Метка для HTTPS Сетевая загрузка",
+    "value": "HTTPS Сетевая загрузка:"
+  },
+  "general.ideRedirection": {
+    "description": "Метка для перенаправления IDE",
+    "value": "Перенаправление IDE:"
+  },
+  "general.keyboardVideoMouse": {
+    "description": "Метка для KVM",
+    "value": "Клавиатура-видео-мышь (KVM):"
+  },
+  "general.kvmNotSupported": {
+    "description": "Всплывающая подсказка для KVM не поддерживается",
+    "value": "KVM не поддерживается"
+  },
+  "general.oneClickRecovery": {
+    "description": "Метка для восстановления в один клик",
+    "value": "Восстановление одним щелчком (OCR):"
+  },
+  "general.oneClickRecoveryNotSupported": {
+    "description": "Всплывающая подсказка для функции «Восстановление в один клик» не поддерживается.",
+    "value": "Восстановление одним щелчком мыши не поддерживается."
+  },
+  "general.pbaBootShort": {
+    "description": "Метка для загрузки PBA",
+    "value": "Загрузка PBA:"
+  },
+  "general.pbaNotSupported": {
+    "description": "Всплывающая подсказка для PBA не поддерживается",
+    "value": "PBA не поддерживается."
+  },
+  "general.pbaSupported": {
+    "description": "Всплывающая подсказка для PBA поддерживается.",
+    "value": "PBA поддерживается."
+  },
+  "general.provisioningMode": {
+    "description": "Метка для режима предоставления",
+    "value": "Режим предоставления:"
+  },
+  "general.serialOverLan": {
+    "description": "Метка для SOL",
+    "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.userConsent": {
+    "description": "Метка для согласия пользователя",
+    "value": "Согласие пользователя:"
+  },
+  "general.userConsentNotConfigurable": {
+    "description": "Всплывающая подсказка для согласия пользователя не настраивается.",
+    "value": "Согласие пользователя не настраивается в CCM."
+  },
+  "general.windowsRecoveryBoot": {
+    "description": "Метка для Windows Recovery Boot",
+    "value": "Загрузка Windows для восстановления:"
+  },
+  "general.windowsRecoveryNotSupported": {
+    "description": "Всплывающая подсказка для Windows Восстановление не поддерживается",
+    "value": "Восстановление Windows не поддерживается."
+  },
+  "general.windowsRecoverySupported": {
+    "description": "Подсказка для Windows Восстановление поддерживается",
+    "value": "Поддерживается восстановление Windows."
+  },
+  "httpBoot.enforce": {
+    "value": "Обеспечьте безопасную загрузку."
+  },
+  "httpBoot.error": {
+    "value": "URL-адрес обязателен."
+  },
+  "httpBoot.label": {
+    "value": "URL"
+  },
+  "httpBoot.placeHolder": {
+    "value": "Введите URL-адрес"
+  },
+  "hwInfo.biosSummary.subtitle": {
+    "value": "Краткое изложение информации о BIOS"
+  },
+  "hwInfo.biosSummary.title": {
+    "value": "Краткое описание BIOS"
+  },
+  "hwInfo.errorRetrievingAdditional": {
+    "description": "Ошибка при получении дополнительной информации",
+    "value": "Ошибка при получении дополнительной информации"
+  },
+  "hwInfo.errorRetrievingHW": {
+    "description": "Ошибка при получении информации об оборудовании",
+    "value": "Ошибка при получении информации о HW"
+  },
+  "hwInfo.label.capacity": {
+    "value": "Возможности:"
+  },
+  "hwInfo.label.clockSpeed": {
+    "value": "Тактовая частота (макс.):"
+  },
+  "hwInfo.label.cpu": {
+    "value": "CPU:"
+  },
+  "hwInfo.label.manufacturer": {
+    "value": "Производитель:"
+  },
+  "hwInfo.label.model": {
+    "value": "Модель:"
+  },
+  "hwInfo.label.releaseDate": {
+    "value": "Дата выпуска:"
+  },
+  "hwInfo.label.serial": {
+    "value": "Серийный номер:"
+  },
+  "hwInfo.label.serialNo": {
+    "value": "Серийный номер:"
+  },
+  "hwInfo.label.size": {
+    "value": "Размер:"
+  },
+  "hwInfo.label.slot": {
+    "value": "Слот:"
+  },
+  "hwInfo.label.targetOS": {
+    "value": "Целевая ОС:"
+  },
+  "hwInfo.label.type": {
+    "value": "Тип:"
+  },
+  "hwInfo.label.version": {
+    "value": "Версия:"
+  },
+  "hwInfo.memorySummary.subtitle": {
+    "value": "Сводка установленной физической памяти"
+  },
+  "hwInfo.memorySummary.title": {
+    "value": "Краткое изложение"
+  },
+  "hwInfo.motherboardSummary.subtitle": {
+    "value": "Краткое изложение информации о материнской плате"
+  },
+  "hwInfo.motherboardSummary.title": {
+    "value": "Краткое описание материнской платы"
+  },
+  "hwInfo.storageSummary.subtitle": {
+    "value": "Краткое изложение информации о хранении"
+  },
+  "hwInfo.storageSummary.title": {
+    "value": "Краткое изложение хранения"
+  },
+  "hwInfo.systemSummary.subtitle": {
+    "value": "Краткое изложение информации о процессоре и корпусе"
+  },
+  "hwInfo.systemSummary.title": {
+    "value": "Краткое описание системы"
+  },
+  "ieee.authProtocol": {
+    "description": "Текст для протокола аутентификации",
+    "value": "Протокол аутентификации"
+  },
+  "ieee.errorCreateUpdate": {
+    "description": "Текст ошибки для профилей ieee",
+    "value": "Ошибка при создании/обновлении профиля ieee8021x"
+  },
+  "ieee.failLoadConfigs": {
+    "description": "Ошибка при загрузке конфигураций IEEE8021x",
+    "value": "Невозможно загрузить конфигурации IEEE8021x."
+  },
+  "ieee.PXETimeout": {
+    "description": "Текст для таймаута PXE",
+    "value": "Таймаут PXE"
+  },
+  "ieee.PXETimeoutRange": {
+    "description": "Текст ошибки для таймаута PXE",
+    "value": "Значение должно быть в диапазоне от {{pxeTimeoutMin}} (отключено) до {{pxeTimeoutMax}} секунд (один день)."
+  },
+  "ieee8021x.headerd.ieeeTitle": {
+    "description": "Название страницы IEEE 802.1x",
+    "value": "IEEE 802.1x"
+  },
+  "ieee8021xConfigs.header.ieee8021NewTitle": {
+    "description": "Новое название страницы настроек IEEE8021x",
+    "value": "Новая конфигурация IEEE8021x"
+  },
+  "ieee8021xConfigs.headerd.ieeeTitle": {
+    "description": "Название страницы «Конфигурации IEEE8021x»",
+    "value": "Конфигурации IEEE8021x"
+  },
+  "ieee8021xConfigs.noData": {
+    "description": "Отсутствие сообщения «IEEE 8021x Configs»",
+    "value": "Без конфигураций IEEE 8021x."
+  },
+  "ieee8021xConfigs.table.authenticationProtocol": {
+    "description": "Заголовок столбца «Протокол аутентификации»",
+    "value": "Протокол аутентификации"
+  },
+  "ieee8021xConfigs.table.interface": {
+    "description": "Заголовок столбца интерфейса",
+    "value": "Интерфейс"
+  },
+  "ieee8021xConfigs.table.profileName": {
+    "description": "Название заголовка столбца",
+    "value": "Название"
+  },
+  "keyDisplayDialog.description": {
+    "description": "Описание для диалогового окна отображения ключей",
+    "value": "Ключ будет отображаться только один раз. Используйте этот ключ для декодирования зашифрованного профиля для использования с rpc-go."
+  },
+  "keyDisplayDialog.keyLabel": {
+    "description": "Метка для ключа",
+    "value": "Ключевые моменты"
+  },
+  "keyDisplayDialog.title": {
+    "description": "Заголовок для диалогового окна отображения ключей",
+    "value": "Ключ профиля для RPC-GO"
+  },
+  "kvm.attachDisk.label": {
+    "description": "Метка кнопки для прикрепления образа диска для IDER",
+    "value": "Прикрепить образ диска (.iso)"
+  },
+  "kvm.chooseEncoding.label": {
+    "description": "Метка для раскрывающегося списка типов кодировки на панели инструментов KVM.",
+    "value": "Выберите тип кодирования"
+  },
+  "kvm.connect.button": {
+    "description": "Метка кнопки для подключения к сеансу KVM",
+    "value": "Подключите KVM"
+  },
+  "kvm.connecting.label": {
+    "description": "Метка, отображаемая при подключении KVM",
+    "value": "Подключение KVM..."
+  },
+  "kvm.disconnect.button": {
+    "description": "Метка кнопки для отключения от сеанса KVM",
+    "value": "Отключить KVM"
+  },
+  "kvm.enable": {
+    "description": "Сообщение для включения KVM",
+    "value": "KVM в настоящее время не включен на этом устройстве. Желаете ли вы включить его?"
+  },
+  "kvm.errorAccessCancel": {
+    "description": "Ошибка доступа при запросе на включение отменена.",
+    "value": "Доступ к KVM невозможен — запрос на включение KVM отменен."
+  },
+  "kvm.errorAccessEnable": {
+    "description": "Ошибка доступа при запросе на включение",
+    "value": "Невозможно получить доступ к KVM — не удалось включить KVM."
+  },
+  "kvm.errorAccessInProgress": {
+    "description": "Ошибка доступа при активной сессии",
+    "value": "Доступ к KVM невозможен — выполняется другая сессия kvm."
+  },
+  "kvm.errorDialog": {
+    "description": "Ошибка при отображении диалогового окна KVM",
+    "value": "Невозможно отобразить диалоговое окно KVM"
+  },
+  "kvm.errorRetrieve": {
+    "description": "Ошибка при получении статуса перенаправления",
+    "value": "Ошибка при получении статуса перенаправления"
+  },
+  "kvm.errorRetrievePower": {
+    "description": "Ошибка при получении статуса питания",
+    "value": "Ошибка при получении информации о состоянии питания"
+  },
+  "kvm.fullscreen.button": {
+    "description": "Метка кнопки для переключения в полноэкранный режим в KVM",
+    "value": "Полноэкранный режим"
+  },
+  "kvm.hotKeys.label": {
+    "description": "Метка для раскрывающегося списка горячих клавиш на панели инструментов KVM",
+    "value": "Горячие клавиши"
+  },
+  "kvm.hotKeys.placeholder": {
+    "description": "Заполнитель текста для раскрывающегося списка горячих клавиш",
+    "value": "Выберите горячую клавишу для отправки"
+  },
+  "kvm.hotKeys.send": {
+    "description": "Метка кнопки для отправки выбранной горячей клавиши.",
+    "value": "Отправить"
+  },
+  "kvm.stopIder.label": {
+    "description": "Метка кнопки для остановки сеанса IDER",
+    "value": "Прекратите IDER"
+  },
+  "kvm.title": {
+    "description": "Название для KVM",
+    "value": "Включить KVM"
+  },
+  "login.error": {
+    "description": "Ошибка при входе в систему",
+    "value": "Регистрация ошибок"
+  },
+  "login.header.loginTitle": {
+    "description": "Заголовок страницы входа в систему",
+    "value": "Вход в систему"
+  },
+  "mqttEvents.connect": {
+    "description": "Текст кнопки «Подключиться» для MQTT",
+    "value": "Соединение"
+  },
+  "mqttEvents.connected": {
+    "description": "Текст всплывающей подсказки при успешном подключении MQTT",
+    "value": "Соединение установлено"
+  },
+  "mqttEvents.failed": {
+    "description": "Текст всплывающей подсказки при сбое соединения MQTT",
+    "value": "Сбой подключения"
+  },
+  "mqttEvents.guid.label": {
+    "description": "Заголовок таблицы для GUID события MQTT",
+    "value": "Руководство"
+  },
+  "mqttEvents.hostname.hint": {
+    "description": "Подсказка для ввода имени хоста MQTT",
+    "value": "Введите имя хоста. По умолчанию используется localhost."
+  },
+  "mqttEvents.hostname.label": {
+    "description": "Метка для ввода имени хоста MQTT",
+    "value": "Имя хоста"
+  },
+  "mqttEvents.message.label": {
+    "description": "Заголовок таблицы для сообщения о событии MQTT",
+    "value": "Сообщение"
+  },
+  "mqttEvents.methods.label": {
+    "description": "Заголовок таблицы для методов событий MQTT",
+    "value": "Методы"
+  },
+  "mqttEvents.noData": {
+    "description": "Текст, отображаемый при отсутствии событий MQTT",
+    "value": "Нет событий"
+  },
+  "mqttEvents.path.hint": {
+    "description": "Подсказка для ввода пути MQTT",
+    "value": "Введите путь MQTT. По умолчанию используется /mqtt."
+  },
+  "mqttEvents.path.label": {
+    "description": "Метка для ввода пути MQTT",
+    "value": "Путь"
+  },
+  "mqttEvents.port.hint": {
+    "description": "Подсказка для ввода порта MQTT",
+    "value": "Введите порт MQTT. По умолчанию используется 9001."
+  },
+  "mqttEvents.port.label": {
+    "description": "Метка для ввода порта MQTT",
+    "value": "Порт"
+  },
+  "mqttEvents.timestamp.label": {
+    "description": "Заголовок таблицы для временной метки события MQTT",
+    "value": "Временная метка"
+  },
+  "mqttEvents.title": {
+    "description": "Название карты событий MQTT с динамическим подсчетом",
+    "value": "События MQTT ({{length}})"
+  },
+  "mqttEvents.type.label": {
+    "description": "Заголовок таблицы для типа события MQTT",
+    "value": "Тип"
+  },
+  "network.errorNetworkSetting": {
+    "description": "Ошибка при получении сетевых настроек",
+    "value": "Ошибка при получении сетевых настроек"
+  },
+  "network.ieee.authProtocol": {
+    "description": "Метка для протокола беспроводной аутентификации IEEE 8021x.",
+    "value": "Протокол аутентификации"
+  },
+  "network.ieee.availableInS0": {
+    "description": "Метка для IEEE 8021x с проводным подключением, доступная в S0",
+    "value": "Доступно в S0"
+  },
+  "network.ieee.domain": {
+    "description": "Метка для беспроводного домена IEEE 8021x.",
+    "value": "Домен"
+  },
+  "network.ieee.enabled": {
+    "description": "Метка для IEEE 8021x с поддержкой проводного соединения",
+    "value": "Включено"
+  },
+  "network.ieee.pac": {
+    "description": "Метка для беспроводного PAC IEEE 8021x",
+    "value": "Защищенные учетные данные доступа"
+  },
+  "network.ieee.pacPassword": {
+    "description": "Метка для беспроводного пароля PAC IEEE 8021x",
+    "value": "PAC-пароль"
+  },
+  "network.ieee.password": {
+    "description": "Метка для беспроводного пароля IEEE 8021x",
+    "value": "Пароль"
+  },
+  "network.ieee.psk": {
+    "description": "Метка для беспроводного PSK IEEE 8021x",
+    "value": "PSK"
+  },
+  "network.ieee.pxeTimeout": {
+    "description": "Метка для таймаута проводного PXE IEEE 8021x",
+    "value": "Таймаут PXE"
+  },
+  "network.ieee.roamingIdentity": {
+    "description": "Метка для идентификации беспроводного роуминга IEEE 8021x.",
+    "value": "Роуминг идентичности"
+  },
+  "network.ieee.serverCertComparison": {
+    "description": "Метка для сравнения имен сертификатов беспроводных серверов IEEE 8021x.",
+    "value": "Сравнение имен сертификатов сервера"
+  },
+  "network.ieee.serverCertName": {
+    "description": "Метка для имени сертификата беспроводного сервера IEEE 8021x.",
+    "value": "Название сертификата сервера"
+  },
+  "network.ieee.subtitle": {
+    "description": "Подзаголовок для карты сетевых настроек IEEE 8021x",
+    "value": "Просмотрите настройки сети IEEE 8021x для этого устройства."
+  },
+  "network.ieee.title": {
+    "description": "Название карты сетевых настроек IEEE 8021x",
+    "value": "Настройки сети IEEE 8021x"
+  },
+  "network.ieee.username": {
+    "description": "Метка для имени пользователя беспроводной сети IEEE 8021x",
+    "value": "Имя пользователя"
+  },
+  "network.wired.defaultGateway": {
+    "description": "Метка для проводного шлюза по умолчанию",
+    "value": "Шлюз по умолчанию"
+  },
+  "network.wired.dhcpEnabled": {
+    "description": "Метка для состояния «Подключено, DHCP включен»",
+    "value": "DHCP включен"
+  },
+  "network.wired.ipAddress": {
+    "description": "Метка для проводного IP-адреса",
+    "value": "IP-адрес"
+  },
+  "network.wired.ipSyncEnabled": {
+    "description": "Метка для статуса «Проводная IP-синхронизация включена»",
+    "value": "Включена синхронизация IP"
+  },
+  "network.wired.linkControl": {
+    "description": "Метка для управления проводным соединением",
+    "value": "Контроль ссылок"
+  },
+  "network.wired.linkPolicy": {
+    "description": "Метка для политики проводных ссылок",
+    "value": "Политика в отношении ссылок"
+  },
+  "network.wired.linkPreference": {
+    "description": "Метка для предпочтения проводного соединения",
+    "value": "Предпочтения по ссылкам"
+  },
+  "network.wired.linkStatus": {
+    "description": "Метка для статуса проводного соединения",
+    "value": "Состояние ссылки"
+  },
+  "network.wired.macAddress": {
+    "description": "Метка для проводного MAC-адреса",
+    "value": "MAC-адрес"
+  },
+  "network.wired.primaryDNS": {
+    "description": "Метка для проводного основного DNS",
+    "value": "Основной DNS"
+  },
+  "network.wired.secondaryDNS": {
+    "description": "Метка для проводного вторичного DNS",
+    "value": "Вторичный DNS"
+  },
+  "network.wired.sharedDynamicIP": {
+    "description": "Метка для проводного общего динамического IP-адреса",
+    "value": "Общий динамический IP-адрес"
+  },
+  "network.wired.sharedMAC": {
+    "description": "Метка для статуса проводного общего MAC-адреса",
+    "value": "Общий MAC"
+  },
+  "network.wired.sharedStaticIP": {
+    "description": "Метка для проводного общего статического IP-адреса",
+    "value": "Общий статический IP-адрес"
+  },
+  "network.wired.subnetMask": {
+    "description": "Метка для маски подсети проводной сети",
+    "value": "Маска подсети"
+  },
+  "network.wired.subtitle": {
+    "description": "Подзаголовок для карты настроек проводной сети",
+    "value": "Просмотр настроек проводной сети для этого устройства"
+  },
+  "network.wired.title": {
+    "description": "Название карты настроек проводной сети",
+    "value": "Настройки проводной сети"
+  },
+  "network.wireless.defaultGateway": {
+    "description": "Метка для беспроводного шлюза по умолчанию",
+    "value": "Шлюз по умолчанию"
+  },
+  "network.wireless.dhcpEnabled": {
+    "description": "Метка для статуса включения беспроводного DHCP",
+    "value": "DHCP включен"
+  },
+  "network.wireless.ipAddress": {
+    "description": "Метка для беспроводного IP-адреса",
+    "value": "IP-адрес"
+  },
+  "network.wireless.ipSyncEnabled": {
+    "description": "Метка для статуса включенной беспроводной IP-синхронизации",
+    "value": "Включена синхронизация IP"
+  },
+  "network.wireless.linkControl": {
+    "description": "Метка для управления беспроводной связью",
+    "value": "Контроль ссылок"
+  },
+  "network.wireless.linkPolicy": {
+    "description": "Метка для политики беспроводной связи",
+    "value": "Политика в отношении ссылок"
+  },
+  "network.wireless.linkPreference": {
+    "description": "Метка для предпочтения беспроводной связи",
+    "value": "Предпочтения по ссылкам"
+  },
+  "network.wireless.linkStatus": {
+    "description": "Метка для статуса беспроводного соединения",
+    "value": "Состояние ссылки"
+  },
+  "network.wireless.localProfileSync": {
+    "description": "Метка для беспроводной синхронизации локального профиля",
+    "value": "Синхронизация локального профиля"
+  },
+  "network.wireless.macAddress": {
+    "description": "Метка для беспроводного MAC-адреса",
+    "value": "MAC-адрес"
+  },
+  "network.wireless.primaryDNS": {
+    "description": "Метка для беспроводного основного DNS",
+    "value": "Основной DNS"
+  },
+  "network.wireless.secondaryDNS": {
+    "description": "Метка для беспроводного вторичного DNS",
+    "value": "Вторичный DNS"
+  },
+  "network.wireless.sharedDynamicIP": {
+    "description": "Метка для беспроводного общего динамического IP-адреса",
+    "value": "Общий динамический IP-адрес"
+  },
+  "network.wireless.sharedMAC": {
+    "description": "Метка для статуса общего доступа к беспроводной сети MAC",
+    "value": "Общий MAC"
+  },
+  "network.wireless.sharedStaticIP": {
+    "description": "Метка для беспроводного общего статического IP-адреса",
+    "value": "Общий статический IP-адрес"
+  },
+  "network.wireless.subnetMask": {
+    "description": "Метка для маски подсети беспроводной сети",
+    "value": "Маска подсети"
+  },
+  "network.wireless.subtitle": {
+    "description": "Подзаголовок для карты настроек беспроводной сети",
+    "value": "Просмотр настроек беспроводной сети для этого устройства"
+  },
+  "network.wireless.title": {
+    "description": "Название карты настроек беспроводной сети",
+    "value": "Настройки беспроводной сети"
+  },
+  "network.wirelessNetworks.name": {
+    "description": "Label for wireless network name",
+    "value": "Имя сети: {{name}}"
+  },
+  "network.wirelessNetworks.ssid": {
+    "description": "Label for SSID",
+    "value": "SSID: {{ssid}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Шифрование: {{encryptMethod}}"
+  },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Аутентификация: {{authMethod}}"
+  },
+  "network.wirelessNetworks.subtitle": {
+    "description": "Подзаголовок карты беспроводных сетей",
+    "value": "Просмотр беспроводных сетей для этого устройства"
+  },
+  "network.wirelessNetworks.title": {
+    "description": "Название карты беспроводных сетей",
+    "value": "Беспроводные сети"
+  },
+  "pba.label": {
+    "description": "Метка для флажка, позволяющего включить или отключить применение безопасной загрузки",
+    "value": "Обеспечение безопасной загрузки"
+  },
+  "pba.required": {
+    "description": "Сообщение об ошибке, отображаемое, когда путь к загрузочному файлу не выбран",
+    "value": "Требуется путь к загрузочному файлу"
+  },
+  "pba.title": {
+    "description": "Метка для выбора пути к загрузочному файлу в диалоговом окне PBA",
+    "value": "Путь к загрузочному файлу"
+  },
+  "powerOptions.hibernate": {
+    "value": "Hibernate"
+  },
+  "powerOptions.off": {
+    "value": "Выключено"
+  },
+  "powerOptions.on": {
+    "value": "На"
+  },
+  "powerOptions.powerCycle": {
+    "value": "Цикл питания"
+  },
+  "powerOptions.powerUpToBIOS": {
+    "value": "Включение BIOS"
+  },
+  "powerOptions.powerUpToHTTPSBoot": {
+    "value": "Переход на HTTPS Загрузка (OCR)"
+  },
+  "powerOptions.powerUpToPXE": {
+    "value": "Включение питания в PXE"
+  },
+  "powerOptions.reset": {
+    "value": "Сбросить"
+  },
+  "powerOptions.resetToBIOS": {
+    "value": "Сброс настроек BIOS"
+  },
+  "powerOptions.resetToHTTPSBoot": {
+    "value": "Сброс к HTTPS Boot (OCR)"
+  },
+  "powerOptions.resetToIDER": {
+    "value": "Сброс до IDE-R (CD-ROM)"
+  },
+  "powerOptions.resetToPXE": {
+    "value": "Сброс до PXE"
+  },
+  "powerOptions.sleep": {
+    "value": "Сон"
+  },
+  "powerOptions.softOff": {
+    "value": "Мягкое отключение"
+  },
+  "powerOptions.softReset": {
+    "value": "Мягкая перезагрузка"
+  },
+  "powerUp.message": {
+    "description": "Диалоговое сообщение с просьбой к пользователю включить устройство",
+    "value": "Вы хотите отправить команду включения на устройство?"
+  },
+  "powerUp.title": {
+    "description": "Заголовок диалога, отображаемый при выключенном устройстве",
+    "value": "Ваше устройство не включено."
+  },
+  "profileDetail.activationMode": {
+    "description": "Метка для выбора режима активации",
+    "value": "Режим активации"
+  },
+  "profileDetail.activationModeAdmin": {
+    "description": "Режим активации контролируется администратором.",
+    "value": "Режим администрирования"
+  },
+  "profileDetail.activationModeClient": {
+    "description": "Режим активации контролируется клиентом.",
+    "value": "Режим управления клиентом"
+  },
+  "profileDetail.amtFeatures": {
+    "description": "Метка для раздела функций AMT",
+    "value": "Функции AMT - Включение/отключение функций перенаправления AMT"
+  },
+  "profileDetail.amtPassword": {
+    "description": "Метка для поля пароля AMT",
+    "value": "Пароль AMT"
+  },
+  "profileDetail.amtPasswordHint": {
+    "description": "Подсказка для поля пароля AMT",
+    "value": "Пароль AMT используется для удаленного доступа к устройству. Он также необходим для перенастройки/деактивации устройства."
+  },
+  "profileDetail.associatedWirelessProfiles": {
+    "description": "Метка для раздела связанных беспроводных профилей",
+    "value": "Связанные беспроводные профили (в порядке приоритета)"
+  },
+  "profileDetail.ciraCloud": {
+    "description": "Метка для радиокнопки CIRA",
+    "value": "CIRA (облако)"
+  },
+  "profileDetail.ciraConfigHint": {
+    "description": "Подсказка по настройке CIRA",
+    "value": "CIRA не может быть настроен для статической сети, если версия AMT ниже 11.6."
+  },
+  "profileDetail.ciraConfiguration": {
+    "description": "Метка для поля конфигурации CIRA",
+    "value": "Конфигурация CIRA"
+  },
+  "profileDetail.connectionConfiguration": {
+    "description": "Метка для раздела настройки подключения",
+    "value": "Настройка предоставленного соединения"
+  },
+  "profileDetail.connectionModeRequired": {
+    "description": "Сообщение об ошибке для требуемого режима подключения",
+    "value": "Необходимо указать режим подключения."
+  },
+  "profileDetail.dhcp": {
+    "description": "Метка для радиокнопки DHCP",
+    "value": "DHCP"
+  },
+  "profileDetail.directConnectDescription": {
+    "description": "Описание режима прямого подключения",
+    "value": "В данном сценарии AMT действует как сервер и ожидает входящих подключений. Инструментарий действует как клиент и подключается к устройству."
+  },
+  "profileDetail.directConnectLegend": {
+    "description": "Легенда для раздела «Режим прямого подключения»",
+    "value": "Режим прямого подключения (используйте, когда устройства доступны напрямую через локальную сеть)"
+  },
+  "profileDetail.dragDropReorder": {
+    "description": "Подсказка для переупорядочивания с помощью перетаскивания",
+    "value": "Перетаскивайте для изменения порядка"
+  },
+  "profileDetail.enableIpSynchronization": {
+    "description": "Метка для флажка синхронизации IP",
+    "value": "Включение синхронизации IP"
+  },
+  "profileDetail.enableOsWifiSync": {
+    "description": "Метка для флажка «Синхронизация WiFi» в ОС",
+    "value": "Включите синхронизацию профилей Wi-Fi в ОС."
+  },
+  "profileDetail.enableUefiWifiSharing": {
+    "description": "Метка для флажка совместного использования UEFI WiFi",
+    "value": "Включение совместного использования профилей Wi-Fi UEFI/CSME"
+  },
+  "profileDetail.generateRandomAmtPassword": {
+    "description": "Метка для флажка «Генерировать случайный пароль AMT»",
+    "value": "Генерация случайного пароля AMT для каждого устройства"
+  },
+  "profileDetail.generateRandomMebxPassword": {
+    "description": "Метка для флажка «Генерировать случайный пароль MEBX»",
+    "value": "Генерация случайного пароля MEBX для каждого устройства"
+  },
+  "profileDetail.generateRandomPassword": {
+    "description": "Всплывающая подсказка для кнопки «Генерировать случайный пароль»",
+    "value": "Генерация случайного пароля"
+  },
+  "profileDetail.ideRedirect": {
+    "description": "Метка для флажка «Перенаправление IDE»",
+    "value": "Перенаправление IDE"
+  },
+  "profileDetail.internetModeDescription": {
+    "description": "Описание для интернет-режима",
+    "value": "В этом сценарии AMT выступает в качестве клиента и подключается к набору инструментов, действующему в качестве сервера (требуется MPS)."
+  },
+  "profileDetail.internetModeLegend": {
+    "description": "Легенда для раздела «Интернет-режим»",
+    "value": "Режим Интернет (используйте, когда устройства НЕ доступны напрямую через локальную сеть)"
+  },
+  "profileDetail.ipSyncHintDisabled": {
+    "description": "Подсказка для синхронизации IP при отключении",
+    "value": "Всегда включено для DHCP"
+  },
+  "profileDetail.ipSyncHintEnabled": {
+    "description": "Подсказка для синхронизации IP, если она включена",
+    "value": "Применимо только к проводной интерфейсу. Требуется LMS для выполнения синхронизации."
+  },
+  "profileDetail.kvm": {
+    "description": "Метка для флажка KVM",
+    "value": "KVM"
+  },
+  "profileDetail.mebxPassword": {
+    "description": "Метка для поля пароля MEBX",
+    "value": "Пароль MEBX"
+  },
+  "profileDetail.mebxPasswordHint": {
+    "description": "Подсказка для поля пароля MEBX",
+    "value": "Пароль MEBX используется для защиты доступа к BIOS, когда пользователь находится рядом с устройством. Его можно установить только в том случае, если режим активации установлен в режим административного контроля."
+  },
+  "profileDetail.networkConfiguration": {
+    "description": "Метка для раздела настройки сети",
+    "value": "Конфигурация сети"
+  },
+  "profileDetail.newTag": {
+    "description": "Место для ввода нового тега",
+    "value": "Новый тег..."
+  },
+  "profileDetail.noCiraConfigs": {
+    "description": "Текст, когда конфигурации CIRA недоступны",
+    "value": "- CIRA-конфигурации не найдены."
+  },
+  "profileDetail.noConfigSelected": {
+    "description": "Текст, когда конфигурация не выбрана",
+    "value": "Конфигурация не выбрана."
+  },
+  "profileDetail.nonTls": {
+    "description": "Метка для переключателя «Без TLS»",
+    "value": "Без TLS"
+  },
+  "profileDetail.nonTlsHint": {
+    "description": "Подсказка для опции без TLS",
+    "value": "В AMT 16.1 и более поздних версиях AMT предоставляет самоподписанные сертификаты. При выборе этой опции будут использоваться эти сертификаты вместо самоподписанных сертификатов, предоставляемых набором инструментов."
+  },
+  "profileDetail.noWifi": {
+    "description": "Сообщение об отсутствии доступных конфигураций WiFi",
+    "value": "Не обнаружено конфигураций Wi-Fi"
+  },
+  "profileDetail.osWifiSyncHint": {
+    "description": "Подсказка для синхронизации WiFi в ОС",
+    "value": "Применимо только к беспроводному интерфейсу."
+  },
+  "profileDetail.profileNameHint": {
+    "description": "Подсказка для поля имени профиля",
+    "value": "Укажите название для этого профиля. Это будет название профиля, используемого на устройстве во время активации."
+  },
+  "profileDetail.profileNamePlaceholder": {
+    "description": "Заполнитель текста для поля имени профиля",
+    "value": "Пример: profile1"
+  },
+  "profileDetail.showHidePassword": {
+    "description": "Всплывающая подсказка для кнопки показа/скрытия пароля",
+    "value": "Показать/скрыть пароль"
+  },
+  "profileDetail.sol": {
+    "description": "Метка для флажка SOL",
+    "value": "SOL"
+  },
+  "profileDetail.static": {
+    "description": "Метка для радиокнопки STATIC",
+    "value": "СТАТИЧЕСКИЙ"
+  },
+  "profileDetail.tags": {
+    "description": "Метка для поля тегов",
+    "value": "Теги"
+  },
+  "profileDetail.tagsHint": {
+    "description": "Подсказка для поля тегов",
+    "value": "Вы можете вводить теги, чтобы облегчить организацию и поиск устройств по мере роста списка управляемых устройств. Введите тег, затем нажмите Enter или запятую."
+  },
+  "profileDetail.tls": {
+    "description": "Метка для переключателя TLS",
+    "value": "TLS"
+  },
+  "profileDetail.tlsMode": {
+    "description": "Метка для поля режима TLS",
+    "value": "Режим TLS"
+  },
+  "profileDetail.tlsModeHint": {
+    "description": "Подсказка для поля режима TLS",
+    "value": "CIRA не может быть настроен, если настроен TLS."
+  },
+  "profileDetail.tlsSigningAuthority": {
+    "description": "Метка для поля органа, подписывающего TLS",
+    "value": "Уполномоченный орган по подписанию TLS"
+  },
+  "profileDetail.userConsent": {
+    "description": "Метка для поля согласия пользователя",
+    "value": "Согласие пользователя"
+  },
+  "profileDetail.userConsentHint": {
+    "description": "Подсказка для поля согласия пользователя",
+    "value": "Управляет, когда пользователь должен быть присутствовать для выбора определенных функций AMT."
+  },
+  "profileDetail.wifiProfiles": {
+    "description": "Метка для поля профилей WiFi",
+    "value": "Профили Wi-Fi"
+  },
+  "profileDetail.wifiProfilesHint": {
+    "description": "Подсказка для поля «Профили WiFi»",
+    "value": "Wi-Fi не будет работать через статическую сеть."
+  },
+  "profileDetail.wifiProfilesPlaceholder": {
+    "description": "Заполнитель для поиска профилей WiFi",
+    "value": "Поиск профилей Wi-Fi для добавления"
+  },
+  "profileDetail.wired": {
+    "description": "Метка для раздела «Проводная сеть»",
+    "value": "Проводная сеть"
+  },
+  "profileDetail.wired8021xConfiguration": {
+    "description": "Метка для поля настройки проводного соединения 802.1x",
+    "value": "Конфигурация Wired 802.1x"
+  },
+  "profiles.deleteProfile": {
+    "description": "Сообщение об удаленных профилях",
+    "value": "Профиль удален успешно"
+  },
+  "profiles.exportProfile": {
+    "description": "Сообщение для экспортированных профилей",
+    "value": "Профиль успешно экспортирован."
+  },
+  "profiles.failDeleteProfie": {
+    "description": "Ошибка при удалении профилей",
+    "value": "Невозможно удалить профиль"
+  },
+  "profiles.failExportProfile": {
+    "description": "Ошибка при экспорте профилей",
+    "value": "Невозможно экспортировать профиль"
+  },
+  "profiles.failLoadConfiguration": {
+    "description": "Ошибка при загрузке конфигураций",
+    "value": "Невозможно загрузить конфигурации"
+  },
+  "profiles.header.profileNewTitle": {
+    "description": "Новое название страницы «Профиль»",
+    "value": "Новый профиль"
+  },
+  "profiles.header.profileTitle": {
+    "description": "Заголовок страницы «Профили»",
+    "value": "Профили"
+  },
+  "profiles.noData": {
+    "description": "Сообщение «Нет профилей»",
+    "value": "Без профилей"
+  },
+  "profiles.table.activation": {
+    "description": "Заголовок столбца «Режим активации»",
+    "value": "Режим активации"
+  },
+  "profiles.table.connection": {
+    "description": "Заголовок столбца «Конфигурация подключения»",
+    "value": "Настройка соединения"
+  },
+  "profiles.table.name": {
+    "description": "Название заголовка столбца",
+    "value": "Название"
+  },
+  "profiles.table.network": {
+    "description": "Заголовок столбца «Конфигурация сети»",
+    "value": "Конфигурация сети"
+  },
+  "randomPassword.learnMore": {
+    "description": "Сообщение для ссылки поддержки",
+    "value": "Узнайте больше здесь"
+  },
+  "randomPassword.message": {
+    "description": "Диалоговое сообщение, объясняющее последствия использования случайных паролей.",
+    "value": "Вы решили сгенерировать случайный пароль для каждого устройства. Если хранилище секретных данных (например, Vault) будет удалено или утеряно, эти пароли будут невозможно восстановить, и потребуется сброс к заводским настройкам."
+  },
+  "randomPassword.title": {
+    "description": "Заголовок диалогового окна для предупреждения о случайном пароле",
+    "value": "Использование случайно сгенерированных паролей"
+  },
+  "sol.connect": {
+    "description": "Кнопка для подключения к SOL",
+    "value": "Подключите SOL"
+  },
+  "sol.disconnect": {
+    "description": "Кнопка для отключения от SOL",
+    "value": "Отключить SOL"
+  },
+  "sol.enable": {
+    "description": "Сообщение для включения SOL",
+    "value": "SOL в настоящее время не включен на этом устройстве. Желаете ли вы включить его?"
+  },
+  "sol.errorAccessCancel": {
+    "description": "Ошибка при доступе к SOL, когда запрос на включение SOL отменен.",
+    "value": "Доступ к SOL невозможен — запрос на включение SOL отменен."
+  },
+  "sol.errorAccessEnable": {
+    "description": "Ошибка при доступе к SOL, когда SOL не удалось включить.",
+    "value": "Невозможно получить доступ к SOL — не удалось включить SOL."
+  },
+  "sol.errorDiplay": {
+    "description": "Ошибка при отображении диалогового окна",
+    "value": "Невозможно отобразить диалоговое окно SOL"
+  },
+  "sol.errorRetrievingPower": {
+    "description": "Ошибка при получении статуса питания",
+    "value": "Ошибка при получении информации о состоянии питания"
+  },
+  "sol.loading": {
+    "description": "Сообщение для загрузки в SOL",
+    "value": "Подключение SOL..."
+  },
+  "sol.title": {
+    "description": "Название для SOL",
+    "value": "Включить SOL"
+  },
+  "staticCira.message": {
+    "description": "Диалоговое сообщение с предупреждением об ограничениях подключения CIRA со статическим IP-адресом.",
+    "value": "Вы выбрали подключение с помощью CIRA со статической конфигурацией IP-сети. Устройства с версией AMT ниже 11.6 не будут подключаться к MPS с помощью CIRA, если у них статическая конфигурация IP-сети."
+  },
+  "staticCira.title": {
+    "description": "Заголовок диалогового окна для предупреждения CIRA о статическом IP-адресе",
+    "value": "CIRA и статическая конфигурация сети"
+  },
+  "tls.acceptNonSecure.label": {
+    "description": "Метка для принятия незащищенных соединений в TLS",
+    "value": "Принимайте небезопасные соединения"
+  },
+  "tls.elementName.label": {
+    "description": "Метка для поля имени элемента TLS",
+    "value": "Название элемента"
+  },
+  "tls.enabled.label": {
+    "description": "Метка для поля с поддержкой TLS",
+    "value": "Включено"
+  },
+  "tls.errorSettings": {
+    "description": "Ошибка при извлечении настроек tls",
+    "value": "Ошибка при получении настроек tls"
+  },
+  "tls.instanceId.label": {
+    "description": "Метка для поля идентификатора экземпляра TLS",
+    "value": "Идентификатор экземпляра"
+  },
+  "tls.mutualAuth.label": {
+    "description": "Метка для поля взаимной аутентификации TLS",
+    "value": "Взаимная аутентификация"
+  },
+  "tls.nonSecureSupported.label": {
+    "description": "Метка, указывающая, поддерживаются ли незащищенные соединения в TLS.",
+    "value": "Поддерживаются небезопасные соединения"
+  },
+  "tls.title": {
+    "description": "Название карты настроек TLS",
+    "value": "Безопасность транспортного уровня"
+  },
+  "tlsAuthorities.microsoftCA": {
+    "description": "Возможность использования сертификата, подписанного Microsoft CA.",
+    "value": "Используйте сертификат, подписанный Microsoft CA (требуется Enterprise Assistant)."
+  },
+  "tlsAuthorities.selfSigned": {
+    "description": "Возможность использования самоподписанного сертификата",
+    "value": "Используйте самоподписанный сертификат."
+  },
+  "tlsModes.mutualAndNonTls": {
+    "description": "Режим TLS с взаимными соединениями TLS и не-TLS.",
+    "value": "Взаимная аутентификация и аутентификация без TLS"
+  },
+  "tlsModes.mutualTlsOnly": {
+    "description": "Режим TLS с использованием только взаимной аутентификации.",
+    "value": "Только взаимная аутентификация TLS"
+  },
+  "tlsModes.serverAndNonTls": {
+    "description": "Режим TLS с аутентификацией сервера и соединениями без TLS.",
+    "value": "Сервер и аутентификация без TLS"
+  },
+  "tlsModes.serverAuthOnly": {
+    "description": "Режим TLS с использованием только аутентификации сервера.",
+    "value": "Только аутентификация сервера"
+  },
+  "toolbar.errorMPS": {
+    "description": "Ошибка при извлечении версий MPS",
+    "value": "Ошибка при получении версий MPS"
+  },
+  "toolbar.errorRPS": {
+    "description": "Ошибка при извлечении версий RPS",
+    "value": "Ошибка при извлечении версий RPS"
+  },
+  "toolbar.header.cloudModeTitle": {
+    "description": "Основное название приложения",
+    "value": "Пример пользовательского интерфейса"
+  },
+  "toolbar.header.consoleModeTitle": {
+    "description": "Основное название приложения в консольном режиме",
+    "value": "Консоль"
+  },
+  "toolbar.header.hello": {
+    "description": "Приветственное сообщение",
+    "value": "Здравствуйте"
+  },
+  "userConsent.errorCancelCode": {
+    "description": "Ошибка при отмене кода согласия пользователя",
+    "value": "Код отмены согласия пользователя на ошибку."
+  },
+  "userConsent.errorRequest": {
+    "description": "Ошибка при запросе кода согласия пользователя",
+    "value": "Ошибка при запросе кода согласия пользователя — повторите попытку через 3 минуты."
+  },
+  "userConsent.errorSendCode": {
+    "description": "Ошибка при отправке кода согласия пользователя",
+    "value": "Ошибка при отправке кода согласия пользователя"
+  },
+  "userConsentGeneral.all": {
+    "description": "Для всех действий требуется согласие.",
+    "value": "все"
+  },
+  "userConsentGeneral.kvm": {
+    "description": "Согласие требуется только для действий KVM.",
+    "value": "kvm"
+  },
+  "userConsentGeneral.none": {
+    "description": "Согласие пользователя не требуется.",
+    "value": "нет"
+  },
+  "userConsentModes.all": {
+    "description": "Для всех действий требуется согласие.",
+    "value": "Все"
+  },
+  "userConsentModes.kvmOnly": {
+    "description": "Согласие требуется только для действий KVM.",
+    "value": "Только KVM"
+  },
+  "userConsentModes.none": {
+    "description": "Согласие пользователя не требуется.",
+    "value": "Нет"
+  },
+  "warning.iderActive": {
+    "description": "Отображается, когда сеанс IDER активен.",
+    "value": "Сессия IDER активна"
+  },
+  "warning.iderEnded": {
+    "description": "Отображается по окончании сеанса IDER.",
+    "value": "Сессия IDER завершена."
+  },
+  "warning.userConsentCancelled": {
+    "description": "Предупреждение, отображаемое при отмене предыдущего кода согласия пользователя.",
+    "value": "{{featureName}} Доступ невозможен — ранее запрошенный код согласия пользователя отменен."
+  },
+  "wireless.failLoadConfiguration": {
+    "description": "Ошибка при загрузке конфигураций",
+    "value": "Невозможно загрузить конфигурации"
+  },
+  "wireless.header.wirelessTitle": {
+    "description": "Название страницы «Беспроводная связь»",
+    "value": "Беспроводная сеть"
+  },
+  "wirelessConfigs.authentication": {
+    "description": "Заголовок столбца для метода аутентификации беспроводной конфигурации",
+    "value": "Аутентификация"
+  },
+  "wirelessConfigs.encryption": {
+    "description": "Заголовок столбца для метода шифрования беспроводной конфигурации",
+    "value": "Шифрование"
+  },
+  "wirelessConfigs.name": {
+    "description": "Заголовок столбца для названия беспроводной конфигурации",
+    "value": "Название"
+  },
+  "wirelessConfigs.noData": {
+    "description": "Сообщение, отображаемое при отсутствии настроек беспроводной сети",
+    "value": "Отсутствие настроек беспроводной связи"
+  },
+  "wirelessConfigs.ssid": {
+    "description": "Заголовок столбца для SSID беспроводной конфигурации",
+    "value": "SSID"
+  },
+  "wirelessConfigs.title": {
+    "description": "Название раздела «Настройки беспроводной сети»",
+    "value": "Беспроводные конфигурации"
+  },
+  "wirelessDetail.authenticationMethod": {
+    "description": "Метка для поля метода аутентификации",
+    "value": "Метод аутентификации"
+  },
+  "wirelessDetail.encryptionMethod": {
+    "description": "Метка для поля метода шифрования",
+    "value": "Метод шифрования"
+  },
+  "wirelessDetail.errorCreatingUpdatingProfile": {
+    "description": "Сообщение об ошибке при создании/обновлении профиля беспроводной сети",
+    "value": "Ошибка при создании/обновлении беспроводного профиля"
+  },
+  "wirelessDetail.errorRequiredField": {
+    "description": "Сообщение об ошибке для обязательных полей",
+    "value": "Это поле является обязательным для заполнения и должно содержать только буквы и цифры без пробелов и символов."
+  },
+  "wirelessDetail.errorSaving": {
+    "description": "Ошибка при сохранении профилей беспроводной сети",
+    "value": "Ошибка при сохранении беспроводного профиля"
+  },
+  "wirelessDetail.ieee8021xConfiguration": {
+    "description": "Метка для поля конфигурации 802.1x",
+    "value": "Конфигурация 802.1x"
+  },
+  "wirelessDetail.newWirelessConfig": {
+    "description": "Название для создания новой беспроводной конфигурации",
+    "value": "Новая конфигурация беспроводной сети"
+  },
+  "wirelessDetail.profileCreatedSuccessfully": {
+    "description": "Сообщение об успешном создании беспроводного профиля",
+    "value": "Профиль успешно создан."
+  },
+  "wirelessDetail.profileUpdatedSuccessfully": {
+    "description": "Сообщение об успешном обновлении профиля беспроводной сети",
+    "value": "Профиль успешно обновлен."
+  },
+  "wirelessDetail.pskPassphrase": {
+    "description": "Метка для поля парольной фразы PSK",
+    "value": "PSK Пароль"
+  },
+  "wirelessDetail.saving": {
+    "description": "Сообщение об успешном сохранении профиля",
+    "value": "Профиль успешно сохранен"
+  },
+  "wirelessDetail.ssid": {
+    "description": "Метка для поля SSID",
+    "value": "SSID"
+  },
+  "wirelessDetail.wirelessProfileName": {
+    "description": "Метка для поля имени беспроводного профиля",
+    "value": "Название беспроводного профиля"
+  },
+  "wirelessDetail.wirelessProfileNameHint": {
+    "description": "Подсказка для поля имени беспроводного профиля",
+    "value": "Укажите название беспроводного профиля."
+  },
+  "general.supported": {
+    "description": "Метка для включённых функций AMT",
+    "value": "Поддерживается"
+  },
+  "general.notSupported": {
+    "description": "Метка для отключённых функций AMT",
+    "value": "Не поддерживается"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Включить до PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Включить до WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Сброс до PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Сброс до WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Метка для разворачивания",
+    "value": "Развернуть"
+  },
+  "general.collapse": {
+    "description": "Метка для сворачивания",
+    "value": "Свернуть"
+  },
+  "proxy.label": {
+    "value": "Прокси",
+    "description": "Метка для раздела прокси"
+  },
+  "proxy.configs.label": {
+    "value": "Настройки прокси",
+    "description": "Метка для поля ввода настроек прокси"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Поиск настроек прокси для добавления",
+    "description": "Текст-подсказка для поиска настроек прокси"
+  },
+  "proxy.configs.hint": {
+    "value": "Прокси можно назначить этому профилю",
+    "description": "Подсказка под полем ввода настроек прокси"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Связанные профили прокси (по приоритету)",
+    "description": "Метка для списка связанных профилей прокси"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Перетащите для изменения порядка",
+    "description": "Подсказка для изменения порядка методом drag-and-drop"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Удалить профиль прокси",
+    "description": "Aria-метка для кнопки удаления профиля прокси"
+  },
+  "profileDetail.noProxy": {
+    "description": "Сообщение при отсутствии доступных настроек прокси",
+    "value": "Настройки прокси не найдены"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Настройки прокси",
+    "description": "Заголовок настроек прокси"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Имя",
+    "description": "Заголовок столбца для имени настройки прокси"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Адрес прокси",
+    "description": "Заголовок столбца для адреса прокси"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Формат адреса",
+    "description": "Заголовок столбца для формата адреса"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Порт",
+    "description": "Заголовок столбца для порта"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Суффикс DNS сети",
+    "description": "Заголовок столбца для сетевого DNS-суффикса"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Новая настройка прокси",
+    "description": "Заголовок страницы создания новой настройки прокси"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Редактировать настройку прокси",
+    "description": "Заголовок страницы редактирования настройки прокси"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Адрес прокси",
+    "description": "Метка поля адреса прокси"
+  },
+  "proxyConfigs.name": {
+    "value": "Имя",
+    "description": "Метка поля имени настройки прокси"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Введите имя настройки прокси",
+    "description": "Подсказка для поля имени настройки прокси"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Введите адрес прокси-сервера",
+    "description": "Подсказка для поля адреса прокси"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Формат адреса",
+    "description": "Метка поля формата адреса"
+  },
+  "proxyConfigs.port": {
+    "value": "Порт",
+    "description": "Метка поля порта"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Суффикс DNS сети",
+    "description": "Метка поля сетевого DNS-суффикса"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "Подсказка для поля сетевого DNS-суффикса"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Порт обязателен",
+    "description": "Сообщение проверки: порт обязателен"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Порт должен быть в диапазоне от 0 до 65535",
+    "description": "Сообщение проверки диапазона порта"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Имя обязательно",
+    "description": "Сообщение проверки: имя обязательно"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Суффикс DNS сети обязателен",
+    "description": "Сообщение проверки: суффикс DNS обязателен"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Суффикс DNS сети должен быть не более 192 символов",
+    "description": "Сообщение проверки максимальной длины DNS-суффикса"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Настройка прокси успешно создана",
+    "description": "Сообщение об успешном создании настройки прокси"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Настройка прокси успешно обновлена",
+    "description": "Сообщение об успешном обновлении настройки прокси"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Настройка прокси {{name}} успешно удалена",
+    "description": "Сообщение об успешном удалении настройки прокси"
+  },
+  "common.delete": {
+    "value": "Удалить",
+    "description": "Текст кнопки удаления"
+  },
+  "common.update": {
+    "value": "ОБНОВИТЬ",
+    "description": "Текст кнопки обновления"
+  },
+  "common.noData": {
+    "value": "Нет доступных данных",
+    "description": "Сообщение при отсутствии данных"
+  }
+}

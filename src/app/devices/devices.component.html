@@ -1,31 +1,43 @@
 <mat-toolbar>
   <div class="flex-33">
-    <span i18n>{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
+    <span>{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
   </div>
   <div class="flex justify-end">
     <button mat-button (click)="addDevice()">
       <mat-icon>add</mat-icon>
-      <span i18n> {{ 'common.addNew.value' | translate }}</span>
+      <span>{{ 'common.addNew.value' | translate }}</span>
     </button>
   </div>
   @if (!selectedDevices.isEmpty()) {
     <div>
       <button mat-button (click)="bulkEditTags()">
         <mat-icon>edit</mat-icon>
-        <span i18n>Edit Tags</span>
+        <span>{{ 'common.editTags.value' | translate }}</span>
       </button>
     </div>
     <div>
-      <button mat-icon-button matTooltip="Power up selected devices" (click)="bulkPowerAction(2)">
+      <button
+        mat-icon-button
+        [matTooltip]="'devices.tooltips.bulkPowerUp.value' | translate"
+        (click)="bulkPowerAction(2)">
         <mat-icon>power</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Power off selected devices" (click)="bulkPowerAction(8)">
+      <button
+        mat-icon-button
+        [matTooltip]="'devices.tooltips.bulkPowerOff.value' | translate"
+        (click)="bulkPowerAction(8)">
         <mat-icon>power_off</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Restart selected devices" (click)="bulkPowerAction(5)">
+      <button
+        mat-icon-button
+        [matTooltip]="'devices.tooltips.bulkRestart.value' | translate"
+        (click)="bulkPowerAction(5)">
         <mat-icon>restart_alt</mat-icon>
       </button>
-      <button mat-icon-button [matTooltip]="deleteDeviceLabel" (click)="bulkDeactivate()">
+      <button
+        mat-icon-button
+        [matTooltip]="'devices.tooltips.bulkDeactivate.value' | translate"
+        (click)="bulkDeactivate()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -49,13 +61,16 @@
       <div class="flex-row flex-wrap flex-1">
         <div class="flex flex-66" style="width: 66%">
           <mat-form-field data-cy="filterSearch" style="width: 100%">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filter Devices...." />
-            <mat-hint>Enter text to filter current page</mat-hint>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              [placeholder]="'devices.filter.searchPlaceholder.value' | translate" />
+            <mat-hint>{{ 'devices.filter.searchHint.value' | translate }}</mat-hint>
           </mat-form-field>
         </div>
         <div class="flex flex-33 justify-end">
           <mat-form-field data-cy="filterTags">
-            <mat-label>Filter Tags</mat-label>
+            <mat-label>{{ 'devices.filter.tags.value' | translate }}</mat-label>
             <mat-select [(ngModel)]="filteredTags" (selectionChange)="tagFilterChange($event)" name="tag" multiple>
               @for (tag of tags(); track tag) {
                 <mat-option [value]="tag">
@@ -122,7 +137,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             <!-- include this always hidden icon to match spacing in the cell -->
             <mat-icon class="alwaysHidden">edit</mat-icon>
-            Tags
+            {{ 'common.tags.value' | translate }}
           </mat-header-cell>
           <mat-cell class="tags" *matCellDef="let element">
             <mat-icon class="addTag" (click)="$event.stopPropagation(); editTagsForDevice(element.guid)">edit</mat-icon>
@@ -141,19 +156,19 @@
               <div>
                 <button
                   mat-icon-button
-                  matTooltip="Power up the device"
+                  [matTooltip]="'devices.actions.powerUp.value' | translate"
                   (click)="$event.stopPropagation(); sendPowerAction(element.guid, 2)">
                   <mat-icon>power</mat-icon>
                 </button>
                 <button
                   mat-icon-button
-                  matTooltip="Power off the device"
+                  [matTooltip]="'devices.actions.powerOff.value' | translate"
                   (click)="$event.stopPropagation(); sendPowerAction(element.guid, 8)">
                   <mat-icon>power_off</mat-icon>
                 </button>
                 <button
                   mat-icon-button
-                  matTooltip="Restart the device"
+                  [matTooltip]="'devices.actions.restart.value' | translate"
                   (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
                   <mat-icon>restart_alt</mat-icon>
                 </button>
@@ -165,7 +180,7 @@
                 </button>
                 <button
                   mat-icon-button
-                  matTooltip="Edit Device"
+                  [matTooltip]="'devices.actions.edit.value' | translate"
                   (click)="$event.stopPropagation(); editDevice(element)">
                   <mat-icon>edit</mat-icon>
                 </button>
@@ -177,13 +192,15 @@
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let element">
             @if (element.StatusMessage === 'SUCCESS') {
-              <mat-icon color="primary" matTooltip="Action sent successfully">check_circle</mat-icon>
+              <mat-icon color="primary" [matTooltip]="'devices.tooltips.successAction.value' | translate"
+                >check_circle</mat-icon
+              >
             } @else if (element.StatusMessage === 'NOT_READY') {
-              <mat-icon color="warn" matTooltip="Power action sent, however device responded with not ready"
+              <mat-icon color="warn" [matTooltip]="'devices.tooltips.notReadyAction.value' | translate"
                 >warning</mat-icon
               >
             } @else if (element.StatusMessage === 'ERROR') {
-              <mat-icon color="warn" matTooltip="Error sending action">error</mat-icon>
+              <mat-icon color="warn" [matTooltip]="'devices.tooltips.errorAction.value' | translate">error</mat-icon>
             } @else {}
           </mat-cell>
         </ng-container>

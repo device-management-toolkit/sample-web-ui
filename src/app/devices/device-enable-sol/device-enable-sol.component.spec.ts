@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DeviceEnableSolComponent } from './device-enable-sol.component'
 import { RouterModule } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceEnableSolComponent', () => {
   let component: DeviceEnableSolComponent
@@ -21,7 +22,8 @@ describe('DeviceEnableSolComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceEnableSolComponent
+        DeviceEnableSolComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: MatDialogRef, useValue: dialogMock }]

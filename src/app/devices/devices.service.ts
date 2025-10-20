@@ -34,6 +34,7 @@ import {
   DisplaySelectionRequest
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +57,10 @@ export class DevicesService {
     return this.getOrCreateFeaturesStream(deviceId).asObservable()
   }
 
+  private readonly translate = inject(TranslateService)
   public TargetOSMap = {
-    0: 'Unknown',
-    1: 'Other',
+    0: 'common.unknown.value',
+    1: 'common.other.value',
     2: 'MACOS',
     3: 'ATTUNIX',
     4: 'DGUX',
@@ -123,7 +125,7 @@ export class DevicesService {
     63: 'Windows (R) Me',
     64: 'Caldera Open UNIX',
     65: 'OpenBSD',
-    66: 'Not Applicable',
+    66: 'common.notApplicable.value',
     67: 'Windows XP',
     68: 'z/OS',
     69: 'Microsoft Windows Server 2003',
@@ -174,19 +176,19 @@ export class DevicesService {
   }
 
   public PowerStates = {
-    2: 'On',
-    3: 'Sleep',
-    4: 'Sleep',
-    6: 'Off',
-    7: 'Hibernate',
-    8: 'Off',
-    9: 'Power Cycle',
-    13: 'Off'
+    2: this.translate.instant('powerOptions.on.value'),
+    3: this.translate.instant('powerOptions.sleep.value'),
+    4: this.translate.instant('powerOptions.sleep.value'),
+    6: this.translate.instant('powerOptions.off.value'),
+    7: this.translate.instant('powerOptions.hibernate.value'),
+    8: this.translate.instant('powerOptions.off.value'),
+    9: this.translate.instant('powerOptions.powerCycle.value'),
+    13: this.translate.instant('powerOptions.off.value')
   }
 
   public MemoryTypeMap = {
-    0: 'Unknown',
-    1: 'Other',
+    0: this.translate.instant('common.unknown.value'),
+    1: this.translate.instant('common.other.value'),
     2: 'DRAM',
     3: 'Synchronous DRAM',
     4: 'Cache DRAM',
