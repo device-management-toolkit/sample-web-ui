@@ -19,10 +19,10 @@ import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
 import { environment } from 'src/environments/environment'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -111,6 +111,9 @@ describe('ProfileDetailComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
+        }),
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
@@ -693,7 +696,7 @@ describe('ProfileDetailComponent', () => {
 
     it('should not select NO_PROXY_CONFIGS option', () => {
       const event = {
-        option: { value: 'No Proxy Configs Found' }
+        option: { value: 'profileDetail.noProxy.value' }
       } as MatAutocompleteSelectedEvent
 
       component.selectedProxyConfigs.set([])
@@ -793,14 +796,14 @@ describe('ProfileDetailComponent', () => {
       component.ProxyConfigurations.set(['proxy1', 'proxy2'])
 
       const result = component.searchProxy('nonexistent')
-      expect(result).toEqual(['No Proxy Configs Found'])
+      expect(result).toEqual(['profileDetail.noProxy.value'])
     })
 
     it('should return correct CSS classes for proxy selectability', () => {
       const result1 = component.isProxySelectable('proxy1')
       expect(result1['no-results']).toBeFalsy()
 
-      const result2 = component.isProxySelectable('No Proxy Configs Found')
+      const result2 = component.isProxySelectable('profileDetail.noProxy.value')
       expect(result2['no-results']).toBe(true)
     })
 

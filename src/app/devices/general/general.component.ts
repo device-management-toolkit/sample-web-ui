@@ -16,6 +16,7 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-general',
@@ -26,7 +27,8 @@ import { MatTooltip } from '@angular/material/tooltip'
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTooltip
+    MatTooltip,
+    TranslateModule
   ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
@@ -35,6 +37,7 @@ export class GeneralComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
+  private readonly translate = inject(TranslateService)
 
   public readonly deviceId = input('')
 
@@ -91,19 +94,22 @@ export class GeneralComponent implements OnInit {
     forkJoin({
       amtFeatures: this.devicesService.getAMTFeatures(this.deviceId()).pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving AMT Features`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('general.errorAMTFeatures.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
       ),
       generalSettings: this.devicesService.getGeneralSettings(this.deviceId()).pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving General Settings`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('general.errorGeneralSettings.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
       ),
       amtVersion: this.devicesService.getAMTVersion(this.deviceId()).pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving AMT Version`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('general.errorAMTVersion.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         })
       )
@@ -165,11 +171,13 @@ export class GeneralComponent implements OnInit {
           if (this.cloudMode) {
             this.snackBar.open($localize`${(results as any).status}`, undefined, SnackbarDefaults.defaultSuccess)
           } else {
-            this.snackBar.open($localize`AMT Features updated`, undefined, SnackbarDefaults.defaultSuccess)
+            const msg: string = this.translate.instant('general.AMTFeatures.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
           }
         },
         error: (err) => {
-          this.snackBar.open($localize`Failed to update AMT Features`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('general.failAMTFeatures.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }
       })
@@ -178,11 +186,11 @@ export class GeneralComponent implements OnInit {
   parseProvisioningMode(mode: number): string {
     switch (mode) {
       case 1:
-        return 'Admin Control Mode (ACM)'
+        return 'profileDetail.activationModeAdmin.value'
       case 4:
-        return 'Client Control Mode (CCM)'
+        return 'profileDetail.activationModeClient.value'
       default:
-        return 'Unknown'
+        return 'common.unknown.value'
     }
   }
 

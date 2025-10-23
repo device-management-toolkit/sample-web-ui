@@ -5,211 +5,273 @@
   @if (networkResults?.wired != null) {
     <mat-card class="flex flex-50 gap-12">
       <mat-card-header>
-        <mat-card-title>Wired Network Settings</mat-card-title>
-        <mat-card-subtitle>View wired network settings for this device</mat-card-subtitle>
+        <mat-card-title>{{ 'network.wired.title.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'network.wired.subtitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div class="flex-row flex-wrap">
           <div class="flex flex-50">
-            <p>IP Address</p>
+            <p>{{ 'network.wired.ipAddress.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.ipAddress || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Subnet Mask</p>
+            <p>{{ 'network.wired.subnetMask.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.subnetMask || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Default Gateway</p>
+            <p>{{ 'network.wired.defaultGateway.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.defaultGateway || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Primary DNS</p>
+            <p>{{ 'network.wired.primaryDNS.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.primaryDNS || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Secondary DNS</p>
+            <p>{{ 'network.wired.secondaryDNS.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.secondaryDNS || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>IP Sync Enabled</p>
+            <p>{{ 'network.wired.ipSyncEnabled.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.ipSyncEnabled ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.ipSyncEnabled ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>DHCP Enabled</p>
+            <p>{{ 'network.wired.dhcpEnabled.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.dhcpEnabled ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.dhcpEnabled ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared MAC</p>
+            <p>{{ 'network.wired.sharedMAC.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.sharedMAC ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.sharedMAC ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>MAC Address</p>
+            <p>{{ 'network.wired.macAddress.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.macAddress || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Status</p>
+            <p>{{ 'network.wired.linkStatus.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.linkIsUp ? 'Up' : 'Down' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.linkIsUp ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Policy</p>
+            <p>{{ 'network.wired.linkPolicy.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.linkPolicy || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Preference</p>
+            <p>{{ 'network.wired.linkPreference.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.linkPreference || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Control</p>
+            <p>{{ 'network.wired.linkControl.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.linkControl || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared Static IP</p>
+            <p>{{ 'network.wired.sharedStaticIP.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.sharedStaticIP ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.sharedStaticIP ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared Dynamic IP</p>
+            <p>{{ 'network.wired.sharedDynamicIP.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wired?.sharedDynamicIP ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wired?.sharedDynamicIP
+                ? ('common.yes.value' | translate)
+                : ('common.no.value' | translate)
+            }}</span>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
   }
+
   @if (networkResults?.wireless != null) {
     <mat-card class="flex flex-50 gap-12">
       <mat-card-header>
-        <mat-card-title>Wireless Network Settings</mat-card-title>
-        <mat-card-subtitle>View wireless network settings for this device</mat-card-subtitle>
+        <mat-card-title>{{ 'network.wireless.title.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'network.wireless.subtitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div class="flex-row flex-wrap">
           <div class="flex flex-50">
-            <p>IP Address</p>
+            <p>{{ 'network.wireless.ipAddress.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.ipAddress || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Subnet Mask</p>
+            <p>{{ 'network.wireless.subnetMask.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.subnetMask || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Default Gateway</p>
+            <p>{{ 'network.wireless.defaultGateway.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.defaultGateway || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Primary DNS</p>
+            <p>{{ 'network.wireless.primaryDNS.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.primaryDNS || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Secondary DNS</p>
+            <p>{{ 'network.wireless.secondaryDNS.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.secondaryDNS || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>IP Sync Enabled</p>
+            <p>{{ 'network.wireless.ipSyncEnabled.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.ipSyncEnabled ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.ipSyncEnabled
+                ? ('common.yes.value' | translate)
+                : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>DHCP Enabled</p>
+            <p>{{ 'network.wireless.dhcpEnabled.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.dhcpEnabled ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.dhcpEnabled ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared MAC</p>
+            <p>{{ 'network.wireless.sharedMAC.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.sharedMAC ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.sharedMAC ? ('common.yes.value' | translate) : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>MAC Address</p>
+            <p>{{ 'network.wireless.macAddress.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.macAddress || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Status</p>
+            <p>{{ 'network.wireless.linkStatus.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.linkIsUp ? 'Up' : 'Down' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.linkIsUp ? ('common.up.value' | translate) : ('common.down.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Policy</p>
+            <p>{{ 'network.wireless.linkPolicy.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.linkPolicy || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Preference</p>
+            <p>{{ 'network.wireless.linkPreference.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.linkPreference || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Link Control</p>
+            <p>{{ 'network.wireless.linkControl.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wireless?.linkControl || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared Static IP</p>
+            <p>{{ 'network.wireless.sharedStaticIP.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.sharedStaticIP ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.sharedStaticIP
+                ? ('common.yes.value' | translate)
+                : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Shared Dynamic IP</p>
+            <p>{{ 'network.wireless.sharedDynamicIP.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
-            <span class="mat-h3">{{ networkResults?.wireless?.sharedDynamicIP ? 'Yes' : 'No' }}</span>
+            <span class="mat-h3">{{
+              networkResults?.wireless?.sharedDynamicIP
+                ? ('common.yes.value' | translate)
+                : ('common.no.value' | translate)
+            }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Local Profile Synchronization</p>
+            <p>{{ 'network.wireless.localProfileSync.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{
               networkResults?.wireless?.wifiPortConfigService?.localProfileSynchronizationEnabled === 1
-                ? 'enabled'
-                : 'disabled'
+                ? ('common.enabled.value' | translate)
+                : ('common.disabled.value' | translate)
             }}</span>
           </div>
         </div>
@@ -217,95 +279,108 @@
     </mat-card>
   }
 </div>
+
 <div class="flex-1 flex-row">
   <mat-card class="flex flex-50 gap-12">
     <mat-card-header>
-      <mat-card-title>IEEE 8021x Network Settings</mat-card-title>
-      <mat-card-subtitle>View IEEE 8021x network settings for this device</mat-card-subtitle>
+      <mat-card-title>{{ 'network.ieee.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'network.ieee.subtitle.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       @if (networkResults?.wired != null) {
         <div class="flex-row flex-wrap">
           <div class="flex flex-50">
-            <p>Available In S0</p>
+            <p>{{ 'network.ieee.availableInS0.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.ieee8021x?.availableInS0 || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>Enabled</p>
+            <p>{{ 'network.ieee.enabled.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.ieee8021x?.enabled || 'N/A' }}</span>
           </div>
+
           <div class="flex flex-50">
-            <p>PXE Timeout</p>
+            <p>{{ 'network.ieee.pxeTimeout.value' | translate }}</p>
           </div>
           <div class="flex flex-50 justify-end">
             <span class="mat-h3">{{ networkResults?.wired?.ieee8021x?.pxeTimeout || 'N/A' }}</span>
           </div>
         </div>
       }
+
       @if (networkResults?.wireless != null) {
         <mat-divider style="padding-bottom: 16px"></mat-divider>
         @for (setting of networkResults?.wireless?.ieee8021xSettings; track $index) {
           <div class="flex-row flex-wrap">
             <div class="flex flex-50">
-              <p>Authentication Protocol</p>
+              <p>{{ 'network.ieee.authProtocol.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.authenticationProtocol }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Roaming Identity</p>
+              <p>{{ 'network.ieee.roamingIdentity.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.roamingIdentity || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Server Certificate Name</p>
+              <p>{{ 'network.ieee.serverCertName.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.serverCertificateName || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Server Certificate Name Comparison</p>
+              <p>{{ 'network.ieee.serverCertComparison.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.serverCertificateNameComparison }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Username</p>
+              <p>{{ 'network.ieee.username.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.username }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Password</p>
+              <p>{{ 'network.ieee.password.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.password || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Domain</p>
+              <p>{{ 'network.ieee.domain.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.domain || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>Protected Access Credential</p>
+              <p>{{ 'network.ieee.pac.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.protectedAccessCredential || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>PAC Password</p>
+              <p>{{ 'network.ieee.pacPassword.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.pacPassword || 'N/A' }}</span>
             </div>
+
             <div class="flex flex-50">
-              <p>PSK</p>
+              <p>{{ 'network.ieee.psk.value' | translate }}</p>
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3">{{ setting.psk || 'N/A' }}</span>
@@ -315,22 +390,31 @@
       }
     </mat-card-content>
   </mat-card>
+
   @if (networkResults?.wireless != null) {
     <mat-card class="flex flex-50 gap-12">
       <mat-card-header>
-        <mat-card-title>Wireless Networks</mat-card-title>
-        <mat-card-subtitle>View wireless networks for this device</mat-card-subtitle>
+        <mat-card-title>{{ 'network.wirelessNetworks.title.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'network.wirelessNetworks.subtitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <mat-list>
           @for (network of networkResults?.wireless?.wifiNetworks; track $index) {
             <mat-list-item>
               <mat-icon matListItemIcon>wifi</mat-icon>
-              <span matListItemTitle>Name: {{ network.elementName }}</span>
-              <span matListItemLine>SSID: {{ network.ssid }}</span>
-              <span matListItemLine
-                >Encryption:{{ network.encryptionMethod }} | Auth: {{ network.authenticationMethod }}</span
-              >
+              <span matListItemTitle>{{
+                'network.wirelessNetworks.name.value' | translate: { name: network.elementName }
+              }}</span>
+              <span matListItemLine>{{
+                'network.wirelessNetworks.ssid.value' | translate: { ssid: network.ssid }
+              }}</span>
+              <span matListItemLine>
+                {{
+                  'network.wirelessNetworks.encryption.value' | translate: { encryptMethod: network.encryptionMethod }
+                }}
+                |
+                {{ 'network.wirelessNetworks.auth.value' | translate: { authMethod: network.authenticationMethod } }}
+              </span>
             </mat-list-item>
           }
         </mat-list>
