@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuthService } from 'src/app/auth.service'
 import { AboutComponent } from '../about/about.component'
-import { MPSVersion, RPSVersion } from 'src/models/models'
+import { MPSVersion, RPSVersion, ConsoleVersion } from 'src/models/models'
 import { environment } from 'src/environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
@@ -48,6 +48,7 @@ export class ToolbarComponent implements OnInit {
   public cloudMode: boolean = environment.cloud
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
+  public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
 
   public get availableLangs() {
     return availableLangs
@@ -81,6 +82,8 @@ export class ToolbarComponent implements OnInit {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
           },
           next: (data) => {
+            // Store console version data including tag_name
+            this.consoleVersion.set(data)
             if (data.current !== 'DEVELOPMENT') {
               if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
                 const ref = this.snackBar.open(
