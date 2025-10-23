@@ -166,12 +166,22 @@ export class AuthService {
 
   onError(err: any): string[] {
     const errorMessages: string[] = []
-    if (err.error?.errors != null) {
+
+    // Handle new validation error format from Go backend
+    if (err.error?.errors != null && Array.isArray(err.error.errors)) {
+      // Check if errors are simple strings (new format)
+      if (err.error.errors.length > 0 && typeof err.error.errors[0] === 'string') {
+        return err.error.errors as string[]
+      }
+      // Handle old ValidatorError format
       err.error.errors.forEach((error: ValidatorError) => {
         errorMessages.push(`${error.msg}: ${error.param}`)
       })
     } else if (err.error?.message != null) {
       errorMessages.push(err.error.message as string)
+    } else if (err.error?.error != null) {
+      // Handle single error message format
+      errorMessages.push(err.error.error as string)
     } else {
       errorMessages.push(err as string)
     }
