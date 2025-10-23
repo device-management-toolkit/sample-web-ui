@@ -18,6 +18,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { ReactiveFormsModule } from '@angular/forms'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AddDeviceComponent', () => {
   let component: AddDeviceComponent
@@ -41,7 +42,8 @@ describe('AddDeviceComponent', () => {
         MatButtonModule,
         MatInputModule,
         ReactiveFormsModule,
-        AddDeviceComponent
+        AddDeviceComponent,
+        TranslateModule.forRoot()
       ],
       providers: [{ provide: ProfilesService, useValue: profileService }]
     }).compileComponents()

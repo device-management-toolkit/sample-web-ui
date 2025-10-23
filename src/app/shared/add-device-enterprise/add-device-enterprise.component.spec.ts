@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AddDeviceEnterpriseComponent', () => {
   let component: AddDeviceEnterpriseComponent
@@ -34,7 +35,8 @@ describe('AddDeviceEnterpriseComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         MatChipsModule,
-        AddDeviceEnterpriseComponent
+        AddDeviceEnterpriseComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: deviceService },

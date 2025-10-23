@@ -1,3 +1,15 @@
+# [3.47.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.1...v3.47.0) (2025-10-20)
+
+
+### Bug Fixes
+
+* hide proxy's on console ([#2941](https://github.com/device-management-toolkit/sample-web-ui/issues/2941)) ([9fb20a0](https://github.com/device-management-toolkit/sample-web-ui/commit/9fb20a06b229ae6ed73dc4301cf8fdfd90aae989))
+
+
+### Features
+
+* **i18n:** add and update missing translations and localization support  ([78df33e](https://github.com/device-management-toolkit/sample-web-ui/commit/78df33e4d0a213786a0747165846535da996c29f))
+
 ## [3.46.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.0...v3.46.1) (2025-10-13)
 
 # [3.46.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.45.0...v3.46.0) (2025-10-10)

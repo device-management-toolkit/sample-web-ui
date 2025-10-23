@@ -160,10 +160,10 @@ describe('DomainsComponent', () => {
     expDate.setMonth(today.getMonth() - 2)
     longDate.setFullYear(today.getFullYear() + 5)
 
-    expect(component.getRemainingTime(okayDate)).toEqual('3 months remaining')
-    expect(component.getRemainingTime(warnDate)).toEqual('30 days remaining')
-    expect(component.getRemainingTime(expDate)).toEqual('Expired')
-    expect(component.getRemainingTime(longDate)).toEqual('5 years remaining')
+    expect(component.getRemainingTime(okayDate)).toEqual('3domains.monthsRemaining.value')
+    expect(component.getRemainingTime(warnDate)).toEqual('30domains.daysRemaining.value')
+    expect(component.getRemainingTime(expDate)).toEqual('domains.expired.value')
+    expect(component.getRemainingTime(longDate)).toEqual('5domains.yearsRemaining.value')
   })
 
   it('should ', () => {

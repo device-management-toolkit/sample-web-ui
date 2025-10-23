@@ -2,7 +2,7 @@
   <div class="flex flex-50 items-center">
     @if (amtFeatures()?.kvmAvailable) {
       <mat-form-field style="margin-bottom: 0; margin-right: 16px">
-        <mat-label>Choose encoding type</mat-label>
+        <mat-label>{{ 'kvm.chooseEncoding.label.value' | translate }}</mat-label>
         <mat-select [ngModel]="selectedEncoding()" (ngModelChange)="onEncodingChange($event)">
           @for (encode of encodings; track encode) {
             <mat-option [value]="encode.value">
@@ -22,44 +22,46 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field style="margin-bottom: 0; margin-right: 8px">
-        <mat-label>Hot Keys</mat-label>
-        <mat-select [(ngModel)]="selectedHotkey" placeholder="Select hot key to send">
+        <mat-label>{{ 'kvm.hotKeys.label.value' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedHotkey" [placeholder]="'kvm.hotKeys.placeholder.value' | translate">
           @for (hotkey of hotKeys; track hotkey.value) {
             <mat-option [value]="hotkey.value">
-              {{ hotkey.label }}
+              {{ hotkey.label | translate }}
             </mat-option>
           }
         </mat-select>
       </mat-form-field>
-      <button mat-stroked-button (click)="sendHotkey()" [disabled]="!selectedHotkey">Send</button>
+      <button mat-stroked-button (click)="sendHotkey()" [disabled]="!selectedHotkey">
+        {{ 'kvm.hotKeys.send.value' | translate }}
+      </button>
     }
   </div>
   <div class="flex flex-50 justify-end">
     @if (amtFeatures()?.kvmAvailable) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
-        <mat-icon>fullscreen</mat-icon>Fullscreen
+        <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
       </button>
       @if (deviceState() === 0 && !isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
-          <mat-icon>tv_on</mat-icon>Connect KVM
+          <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
         </button>
       } @else if (deviceState() !== 2 && isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
-          <mat-icon>tv_off</mat-icon>Connecting KVM...
+          <mat-icon>tv_off</mat-icon>{{ 'kvm.connecting.label.value' | translate }}
         </button>
       } @else {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
-          <mat-icon>tv_off</mat-icon>Disconnect KVM
+          <mat-icon>tv_off</mat-icon>{{ 'kvm.disconnect.button.value' | translate }}
         </button>
       }
     }
     <button mat-flat-button color="primary" (click)="fileInput.click()">
-      <mat-icon>upload_file</mat-icon>Attach Disk Image (.iso)
+      <mat-icon>upload_file</mat-icon>{{ 'kvm.attachDisk.label.value' | translate }}
     </button>
     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
     @if (isIDERActive()) {
-      <button mat-flat-button color="warn" (click)="onCancelIDER()" style="margin-left: 12px">
-        <mat-icon>stop</mat-icon>Stop IDER
+      <button mat-flat-button color="warn" (click)="onCancelIDER()" class="stop-ider-button">
+        <mat-icon>stop</mat-icon>{{ 'kvm.stopIder.label.value' | translate }}
       </button>
     }
   </div>
