@@ -28,6 +28,7 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { AuthService } from 'src/app/auth.service'
 
 @Component({
   selector: 'app-domain-detail',
@@ -66,6 +67,7 @@ export class DomainDetailComponent implements OnInit {
   private readonly fb = inject(FormBuilder)
   private readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
+  private readonly authService = inject(AuthService)
   public readonly router = inject(Router)
 
   public domainForm = this.fb.nonNullable.group({
@@ -172,33 +174,51 @@ export class DomainDetailComponent implements OnInit {
           this.router.navigate(['/domains'])
         },
         error: (err) => {
-          // Show specific error messages from the backend
-          if (Array.isArray(err) && err.length > 0) {
-            this.errorMessages = err
-            // Check if it's a validation error and show in snackbar too
-            const validationError = err.find(
-              (error) => error.includes('ProfileName') || error.includes('alphanum') || error.includes('validation')
-            )
-            if (validationError) {
-              this.snackBar.open(
-                $localize`Domain name must contain only alphanumeric characters`,
-                undefined,
-                SnackbarDefaults.defaultError
-              )
-            } else {
-              this.snackBar.open(
-                $localize`Error creating/updating domain profile`,
-                undefined,
-                SnackbarDefaults.defaultError
-              )
+          // Process error through auth service to handle different formats
+          const processedErrors = this.authService.onError(err)
+
+          // Translate error messages if they are translation keys
+          this.errorMessages = processedErrors.map((error: string) => {
+            // Check if it's a translation key (contains dots)
+            if (error.includes('.') && !error.includes(' ')) {
+              return this.translate.instant(error)
             }
+            return error
+          })
+
+          // Check for specific error types and show appropriate snackbar messages
+          const duplicateError = processedErrors.find(
+            (error: string) =>
+              error.includes('already exists') ||
+              error.includes('duplicate') ||
+              error.includes('Unique key violation') ||
+              error.includes('uniqueKeyViolation') ||
+              error.includes('domainDetail.uniqueKeyViolation')
+          )
+
+          const validationError = processedErrors.find(
+            (error: string) =>
+              error.includes('ProfileName') || error.includes('alphanum') || error.includes('validation')
+          )
+
+          if (duplicateError) {
+            this.snackBar.open(
+              $localize`Domain name or suffix already exists`,
+              undefined,
+              SnackbarDefaults.defaultError
+            )
+          } else if (validationError) {
+            this.snackBar.open(
+              $localize`Domain name must contain only alphanumeric characters`,
+              undefined,
+              SnackbarDefaults.defaultError
+            )
           } else {
             this.snackBar.open(
               $localize`Error creating/updating domain profile`,
               undefined,
               SnackbarDefaults.defaultError
             )
-            this.errorMessages = [err]
           }
         }
       })
