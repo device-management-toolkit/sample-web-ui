@@ -482,7 +482,7 @@ export interface RPSVersion {
 
 export interface ConsoleVersion {
   current: string
-  latest: {
+  latest?: {
     tag_name: string
   }
 }
