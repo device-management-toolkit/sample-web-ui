@@ -92,26 +92,15 @@ export class UserConsentService {
       )
       return false
     } else {
-      if (environment.cloud) {
-        // On success to send or cancel to previous requested user consent code
-        const method = response.Header.Action.substring(
-          (response.Header.Action.lastIndexOf('/') as number) + 1,
-          response.Header.Action.length
-        )
-        if (method === 'CancelOptInResponse') {
-          this.cancelOptInCodeResponse(response as UserConsentResponse, featureName)
-        } else if (method === 'SendOptInCodeResponse') {
-          const result = this.sendOptInCodeResponse(response as UserConsentResponse, featureName)
-          return result
-        }
-      } else {
-        const method = (response as any).XMLName.Local
-        if (method === 'CancelOptIn_OUTPUT') {
-          this.cancelOptInCodeResponse({ Body: response } as any, featureName)
-        } else if (method === 'SendOptInCode_OUTPUT') {
-          const result = this.sendOptInCodeResponse({ Body: response } as any, featureName)
-          return result
-        }
+      const method = response.Header.Action.substring(
+        (response.Header.Action.lastIndexOf('/') as number) + 1,
+        response.Header.Action.length
+      )
+      if (method === 'CancelOptInResponse') {
+        this.cancelOptInCodeResponse(response as UserConsentResponse, featureName)
+      } else if (method === 'SendOptInCodeResponse') {
+        const result = this.sendOptInCodeResponse(response as UserConsentResponse, featureName)
+        return result
       }
       return false
     }
