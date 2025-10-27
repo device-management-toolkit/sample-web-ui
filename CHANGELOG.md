@@ -1,3 +1,15 @@
+# [3.48.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.47.0...v3.48.0) (2025-10-27)
+
+
+### Bug Fixes
+
+* addresses issue with console version being empty ([#2944](https://github.com/device-management-toolkit/sample-web-ui/issues/2944)) ([d0d3a0c](https://github.com/device-management-toolkit/sample-web-ui/commit/d0d3a0cf85f4c9b7b2f21b51e49526f423b29521))
+
+
+### Features
+
+* **ui:** display console version in toolbar ([#2934](https://github.com/device-management-toolkit/sample-web-ui/issues/2934)) ([24956a0](https://github.com/device-management-toolkit/sample-web-ui/commit/24956a025adbaf2d33fc4ca9356d64ea7c3155af))
+
 # [3.47.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.1...v3.47.0) (2025-10-20)
 
 
