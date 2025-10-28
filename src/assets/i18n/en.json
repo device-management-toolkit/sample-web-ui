@@ -603,6 +603,14 @@
   "common.yes": {
     "value": "Yes"
   },
+  "common.error.generic": {
+    "value": "Error occurred",
+    "description": "Generic error message displayed in snackbar when no specific error is available"
+  },
+  "common.error.processingRequest": {
+    "value": "An error occurred while processing the request",
+    "description": "Generic error message for failed API requests"
+  },
   "configDetail.commonNameHint": {
     "description": "Hint text for common name field",
     "value": "Enter the common name contained in the certificate."
@@ -1168,6 +1176,10 @@
   "domainDetail.uniqueKeyViolation": {
     "description": "Error message for unique key violation",
     "value": "Domain NewDomain ID or Suffix already exists"
+  },
+  "domainDetail.alphanumValidation": {
+    "description": "Error message for alphanumeric validation",
+    "value": "Domain name must contain only alphanumeric characters (no spaces or special characters)"
   },
   "domainDetail.fqdn": {
     "description": "Hint for the FQDN field",
