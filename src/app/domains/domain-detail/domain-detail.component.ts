@@ -141,22 +141,43 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
+            // Handle array-wrapped HttpErrorResponse
+            const actualError = err[0] || err
+
+            // Extract error messages
+            const errorMessages: string[] = []
+
+            if (actualError.error && typeof actualError.error === 'object' && actualError.error.error) {
+              // Server returned { error: "message" }
+              errorMessages.push(actualError.error.error as string)
+            } else if (actualError.error && typeof actualError.error === 'string') {
+              // Server returned plain string
+              errorMessages.push(actualError.error)
+            } else if (actualError.message) {
+              // Use HTTP error message
+              errorMessages.push(actualError.message)
+            } else {
+              errorMessages.push('An error occurred')
+            }
+
             // Detect error type and use appropriate translation key
             let errorTranslationKey = 'domainDetail.errorDeleteConfiguration.value' // Default fallback
 
-            // Check if error contains information about the type
-            const errorString = JSON.stringify(err).toLowerCase()
+            // Check the error messages for specific patterns
+            const errorContent = errorMessages.join(' ').toLowerCase()
 
-            if (errorString.includes('alphanum') || errorString.includes('alphanumeric')) {
+            if (errorContent.includes('alphanum')) {
               errorTranslationKey = 'domainDetail.alphanumValidation.value'
-            } else if (errorString.includes('unique constraint') || errorString.includes('already exists')) {
+            } else if (errorContent.includes('unique constraint') || errorContent.includes('already exists')) {
               errorTranslationKey = 'domainDetail.uniqueKeyViolation.value'
             }
 
-            const errorMessage: string = this.translate.instant(errorTranslationKey)
+            // Show only the translated error message
+            const errorMessage = this.translate.instant(errorTranslationKey)
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
 
-            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
+            // Show only translated message in error list (no raw server details)
+            this.errorMessages = [errorMessage]
           }
         })
     }
