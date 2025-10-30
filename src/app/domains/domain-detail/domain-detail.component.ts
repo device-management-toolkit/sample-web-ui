@@ -28,7 +28,6 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { AuthService } from 'src/app/auth.service'
 
 @Component({
   selector: 'app-domain-detail',
@@ -67,7 +66,6 @@ export class DomainDetailComponent implements OnInit {
   private readonly fb = inject(FormBuilder)
   private readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
-  private readonly authService = inject(AuthService)
   public readonly router = inject(Router)
 
   public domainForm = this.fb.nonNullable.group({
@@ -86,35 +84,6 @@ export class DomainDetailComponent implements OnInit {
 
   constructor() {
     this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
-  }
-
-  private processErrorMessages(err: any): string[] {
-    if (Array.isArray(err)) {
-      return err.map((errorMessage: any) => {
-        if (
-          errorMessage &&
-          errorMessage.error &&
-          errorMessage.error.error &&
-          typeof errorMessage.error.error === 'string'
-        ) {
-          return errorMessage.error.error
-        } else if (errorMessage && errorMessage.error && typeof errorMessage.error === 'string') {
-          return errorMessage.error
-        } else if (typeof errorMessage === 'string') {
-          return this.translate.instant(errorMessage)
-        } else {
-          return errorMessage?.message || errorMessage?.error || String(errorMessage)
-        }
-      })
-    } else if (err && typeof err === 'string') {
-      return [this.translate.instant(err)]
-    } else if (err && err.error && typeof err.error === 'string') {
-      return [err.error]
-    } else if (err && err.message) {
-      return [err.message]
-    } else {
-      return [this.translate.instant('common.error.processingRequest')]
-    }
   }
 
   ngOnInit(): void {
@@ -138,7 +107,7 @@ export class DomainDetailComponent implements OnInit {
               this.isCertificateUploaded.set(!!data.provisioningCert)
             },
             error: (err) => {
-              this.errorMessages = this.processErrorMessages(err)
+              this.errorMessages = err
             }
           })
       }
@@ -148,9 +117,6 @@ export class DomainDetailComponent implements OnInit {
   onSubmit(): void {
     const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
     result.provisioningCertStorageFormat = 'string'
-
-    // Always clear previous error messages
-    this.errorMessages = []
 
     if (this.domainForm.valid) {
       this.isLoading.set(true)
@@ -175,16 +141,24 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            this.errorMessages = this.processErrorMessages(err)
+            // Detect error type and use appropriate translation key
+            let errorTranslationKey = 'domainDetail.errorDeleteConfiguration.value' // Default fallback
 
-            // Show error in snackbar
-            const snackbarMessage = this.errorMessages[0] || this.translate.instant('common.error.generic')
-            this.snackBar.open(snackbarMessage, undefined, SnackbarDefaults.defaultError)
+            // Check if error contains information about the type
+            const errorString = JSON.stringify(err).toLowerCase()
+
+            if (errorString.includes('alphanum') || errorString.includes('alphanumeric')) {
+              errorTranslationKey = 'domainDetail.alphanumValidation.value'
+            } else if (errorString.includes('unique constraint') || errorString.includes('already exists')) {
+              errorTranslationKey = 'domainDetail.uniqueKeyViolation.value'
+            }
+
+            const errorMessage: string = this.translate.instant(errorTranslationKey)
+            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
+
+            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
           }
         })
-    } else {
-      // Mark all fields as touched to show validation errors
-      this.domainForm.markAllAsTouched()
     }
   }
 
