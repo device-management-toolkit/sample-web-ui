@@ -1037,6 +1037,10 @@
     "description": "Virheilmoitus yksilöllisen avaimen rikkomisesta",
     "value": "Domain NewDomainin tunnus tai liite on jo olemassa"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Virheilmoitus aakkosnumeerista validointia varten",
+    "value": "Verkkotunnuksen nimessä saa olla vain aakkosnumeerisia merkkejä (ei välilyöntejä tai erikoismerkkejä)"
+  },
   "domainDetail.fqdn": {
     "description": "Vinkki FQDN-kenttään",
     "value": "Syötä provisioning-varmenteeseen liittyvä FQDN (eli amtdomain.com)."

@@ -1037,6 +1037,10 @@
     "description": "Felmeddelande för brott mot unik nyckel",
     "value": "Domänens NewDomain ID eller suffix finns redan"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Felmeddelande för alfanumerisk validering",
+    "value": "Domännamnet får endast innehålla alfanumeriska tecken (inga mellanslag eller specialtecken)"
+  },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",
     "value": "Ange FQDN som är associerat med provisioneringscertifikatet (dvs. amtdomain.com)"

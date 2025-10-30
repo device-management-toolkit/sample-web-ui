@@ -115,8 +115,12 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Clear any previous error messages
+    this.errorMessages = []
+
     const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
     result.provisioningCertStorageFormat = 'string'
+
     if (this.domainForm.valid) {
       this.isLoading.set(true)
       let request
@@ -125,6 +129,7 @@ export class DomainDetailComponent implements OnInit {
       } else {
         request = this.domainsService.create(result)
       }
+
       request
         .pipe(
           finalize(() => {
@@ -139,10 +144,44 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
-            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
+            // Handle array-wrapped HttpErrorResponse
+            const actualError = err[0] || err
 
-            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
+            // Extract error messages
+            const errorMessages: string[] = []
+
+            if (actualError.error && typeof actualError.error === 'object' && actualError.error.error) {
+              // Server returned { error: "message" }
+              errorMessages.push(actualError.error.error as string)
+            } else if (actualError.error && typeof actualError.error === 'string') {
+              // Server returned plain string
+              errorMessages.push(actualError.error)
+            } else if (actualError.message) {
+              // Use HTTP error message
+              errorMessages.push(actualError.message)
+            } else {
+              errorMessages.push('An error occurred')
+            }
+
+            // Detect error type and use appropriate translation key
+            let errorTranslationKey = 'domainDetail.errorDeleteConfiguration.value' // Default fallback
+
+            // Check the error messages for specific patterns
+            const errorContent = errorMessages.join(' ').toLowerCase()
+
+            if (errorContent.includes('alphanum')) {
+              errorTranslationKey = 'domainDetail.alphanumValidation.value'
+            } else if (
+              errorContent.includes('unique constraint') ||
+              errorContent.includes('already exists') ||
+              errorContent.includes('unique key violation')
+            ) {
+              errorTranslationKey = 'domainDetail.uniqueKeyViolation.value'
+            }
+
+            // Show only the translated error message
+            const errorMessage = this.translate.instant(errorTranslationKey)
+            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
           }
         })
     }
