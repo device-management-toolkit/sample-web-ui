@@ -115,6 +115,9 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Clear any previous error messages
+    this.errorMessages = []
+
     const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
     result.provisioningCertStorageFormat = 'string'
 
@@ -175,9 +178,6 @@ export class DomainDetailComponent implements OnInit {
             // Show only the translated error message
             const errorMessage = this.translate.instant(errorTranslationKey)
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
-
-            // Show only translated message in error list (no raw server details)
-            this.errorMessages = [errorMessage]
           }
         })
     }
