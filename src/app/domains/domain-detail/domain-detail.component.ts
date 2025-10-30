@@ -171,7 +171,11 @@ export class DomainDetailComponent implements OnInit {
 
             if (errorContent.includes('alphanum')) {
               errorTranslationKey = 'domainDetail.alphanumValidation.value'
-            } else if (errorContent.includes('unique constraint') || errorContent.includes('already exists')) {
+            } else if (
+              errorContent.includes('unique constraint') ||
+              errorContent.includes('already exists') ||
+              errorContent.includes('unique key violation')
+            ) {
               errorTranslationKey = 'domainDetail.uniqueKeyViolation.value'
             }
 
