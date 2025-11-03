@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #*********************************************************************/
 ### STAGE 1: Build ###
-FROM node:25-bullseye-slim@sha256:6e837c73960c4ec048e5052e9700fbc053f8584116eb31a24c14baef4123fb54 AS build
+FROM node:25-bullseye-slim@sha256:e69bcf36ea78429d441fc3eddd560f4c6da6bcaf1996440796d06870abdad120 AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build -- --configuration=production
 
 ### STAGE 2: Run ###
-FROM nginx:mainline-alpine-slim@sha256:1887231696051e3495a50e0b25b0bd44b459c16e7ca722ba0dc2481284405f94
+FROM nginx:mainline-alpine-slim@sha256:4c175d0d849aae0e0eedc64d718ef6323bed2bc68ee673e2d0a1bd5d501d0e5f
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
   copyright='Copyright (c) 2021: Intel'
