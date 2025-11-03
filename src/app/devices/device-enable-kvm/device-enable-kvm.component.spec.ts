@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DeviceEnableKvmComponent } from './device-enable-kvm.component'
 import { RouterModule } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceEnableKvmComponent', () => {
   let component: DeviceEnableKvmComponent
@@ -16,16 +17,17 @@ describe('DeviceEnableKvmComponent', () => {
     close: jasmine.createSpy('close')
   }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceEnableKvmComponent
+        DeviceEnableKvmComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: MatDialogRef, useValue: dialogMock }]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

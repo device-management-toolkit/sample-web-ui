@@ -5,14 +5,17 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { Router, ActivatedRoute, RouterModule } from '@angular/router'
+import { ActivatedRoute, RouterModule, provideRouter } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceDetailComponent } from './device-detail.component'
 import { provideNativeDateAdapter } from '@angular/material/core'
-import { Component, Input } from '@angular/core'
+import { Component, signal, input } from '@angular/core'
+import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
+import { GeneralComponent } from '../general/general.component'
+import { TranslateModule } from '@ngx-translate/core'
 
-xdescribe('DeviceDetailComponent', () => {
+describe('DeviceDetailComponent', () => {
   let component: DeviceDetailComponent
   let fixture: ComponentFixture<DeviceDetailComponent>
   let devicesService: any
@@ -21,19 +24,31 @@ xdescribe('DeviceDetailComponent', () => {
     imports: []
   })
   class TestDeviceToolbarComponent {
-    @Input()
-    isLoading = false
+    readonly isLoading = input(signal(false))
+
+    public readonly deviceId = input('')
+  }
+  @Component({
+    selector: 'app-general',
+    imports: []
+  })
+  class TestGeneralComponent {
+    readonly isLoading = input(signal(false))
+
+    public readonly deviceId = input('')
   }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         RouterModule,
         DeviceDetailComponent,
-        TestDeviceToolbarComponent
+        TestDeviceToolbarComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
+        provideRouter([]), // Provide an empty router configuration
         provideNativeDateAdapter(),
         { provide: DevicesService, useValue: devicesService },
         {
@@ -41,19 +56,16 @@ xdescribe('DeviceDetailComponent', () => {
           useValue: {
             params: of({ id: 'guid' })
           }
-        },
-        {
-          provide: Router,
-          useValue: {
-            url: 'sol'
-          }
         }
       ]
-    }).compileComponents()
+    }).overrideComponent(DeviceDetailComponent, {
+      remove: { imports: [DeviceToolbarComponent, GeneralComponent] },
+      add: { imports: [TestDeviceToolbarComponent, TestGeneralComponent] }
+    })
 
     fixture = TestBed.createComponent(DeviceDetailComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
+    component.ngOnInit()
   })
 
   it('should create', () => {

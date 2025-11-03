@@ -3,20 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  HostListener,
-  inject,
-  signal
-} from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
-import { defer, iif, Observable, of, Subscription, throwError } from 'rxjs'
+import { defer, iif, Observable, of, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -26,11 +15,12 @@ import { environment } from 'src/environments/environment'
 import { AMTFeaturesRequest, AMTFeaturesResponse, PowerState, UserConsentResponse } from 'src/models/models'
 import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
-import { SOLComponent } from '@open-amt-cloud-toolkit/ui-toolkit-angular'
+import { SOLComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { UserConsentService } from '../user-consent.service'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-sol',
@@ -41,7 +31,8 @@ import { UserConsentService } from '../user-consent.service'
     MatToolbar,
     MatIcon,
     MatButton,
-    SOLComponent
+    SOLComponent,
+    TranslateModule
   ]
 })
 export class SolComponent implements OnInit, OnDestroy {
@@ -52,15 +43,12 @@ export class SolComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog)
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
+  private readonly translate = inject(TranslateService)
+  public readonly deviceId = input('')
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceState = signal(0)
 
-  @Input()
-  public deviceState = 0
-
-  @Output()
-  public deviceConnection: EventEmitter<boolean> = new EventEmitter<boolean>(true)
+  public deviceConnection = signal(false)
 
   public results: any
   public amtFeatures?: AMTFeaturesResponse
@@ -68,11 +56,8 @@ export class SolComponent implements OnInit, OnDestroy {
   public powerState: PowerState = { powerstate: 0 }
   public readyToLoadSol = false
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  public authToken: string = environment.cloud ? '' : 'direct'
+  public authToken = signal(environment.cloud ? '' : 'direct')
   public isDisconnecting = false
-
-  private stopSocketSubscription!: Subscription
-  private startSocketSubscription!: Subscription
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
@@ -88,49 +73,37 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting = true
-    if (this.startSocketSubscription) {
-      this.startSocketSubscription.unsubscribe()
-    }
-    if (this.stopSocketSubscription) {
-      this.stopSocketSubscription.unsubscribe()
-    }
   }
 
   ngOnInit(): void {
-    // grab the device id from the url
-    this.activatedRoute.params
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
       .pipe(
-        switchMap((params) => {
-          this.deviceId = params.id
-          // request token from MPS
-          return this.devicesService.getRedirectionExpirationToken(this.deviceId).pipe(
-            tap((result) => {
-              this.authToken = result.token
-            })
-          )
+        tap((result) => {
+          this.authToken.set(result.token)
         })
       )
       .subscribe()
 
-    // used for receiving messages from the sol connect button on the toolbar
-    this.startSocketSubscription = this.devicesService.startwebSocket.subscribe(() => {
-      this.init()
-      this.deviceConnection.emit(true)
-    })
-
-    // used for receiving messages from the sol disconnect button on the toolbar
-    this.stopSocketSubscription = this.devicesService.stopwebSocket.subscribe(() => {
-      this.isDisconnecting = true
-      this.deviceConnection.emit(false)
-    })
-
-    this.init()
+    // Initial setup: fetch redirection token before connecting to SOL
+    // Note: A fresh redirection token is required for each SOL connection attempt
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
+      .pipe(
+        tap((result) => {
+          this.authToken.set(result.token)
+        })
+      )
+      .subscribe(() => {
+        // Only call init() after auth token is retrieved
+        this.init()
+      })
   }
 
   init(): void {
     this.isLoading.set(true)
     // device needs to be powered on in order to start SOL session
-    this.getPowerState(this.deviceId)
+    this.getPowerState(this.deviceId())
       .pipe(
         switchMap((powerState) => this.handlePowerState(powerState)),
         switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
@@ -143,10 +116,10 @@ export class SolComponent implements OnInit, OnDestroy {
           )
         ),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId, this.amtFeatures)
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures)
         ),
         switchMap((result: any | UserConsentResponse) =>
-          this.userConsentService.handleUserConsentResponse(this.deviceId, result, 'SOL')
+          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'SOL')
         ),
         switchMap((result: any) => this.postUserConsentDecision(result))
       )
@@ -160,12 +133,15 @@ export class SolComponent implements OnInit, OnDestroy {
     if (result != null && result) {
       this.readyToLoadSol = true
       this.getAMTFeatures()
+      // Auto-connect when SOL is ready
+      this.deviceConnection.set(true)
     }
     return of(null)
   }
 
   connect(): void {
-    this.devicesService.startwebSocket.emit(true)
+    this.init()
+    this.deviceConnection.set(true)
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -174,7 +150,8 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.devicesService.stopwebSocket.emit(true)
+    this.isDisconnecting = true
+    this.deviceConnection.set(false)
   }
 
   handlePowerState(powerState: any): Observable<any> {
@@ -185,7 +162,7 @@ export class SolComponent implements OnInit, OnDestroy {
         switchMap((result) => {
           // if they said yes, power on the device
           if (result) {
-            return this.devicesService.sendPowerAction(this.deviceId, 2)
+            return this.devicesService.sendPowerAction(this.deviceId(), 2)
           }
           return of(null)
         })
@@ -198,7 +175,8 @@ export class SolComponent implements OnInit, OnDestroy {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading.set(false)
-        this.displayError($localize`Error retrieving power status`)
+        const msg: string = this.translate.instant('sol.errorRetrievingPower.value')
+        this.displayError(msg)
         return throwError(err)
       })
     )
@@ -211,7 +189,8 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     return this.enableSolDialog().pipe(
       catchError((err) => {
-        this.displayError($localize`Unable to display SOL dialog`)
+        const msg: string = this.translate.instant('sol.errorDiplay.value')
+        this.displayError(msg)
         throw err
       }),
       switchMap((data?: boolean) => {
@@ -228,7 +207,7 @@ export class SolComponent implements OnInit, OnDestroy {
             ocr: this.amtFeatures?.ocr ?? false,
             remoteErase: this.amtFeatures?.remoteErase ?? false
           }
-          return this.devicesService.setAmtFeatures(this.deviceId, payload)
+          return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }
       })
     )
@@ -236,7 +215,7 @@ export class SolComponent implements OnInit, OnDestroy {
 
   getAMTFeatures(): Observable<AMTFeaturesResponse> {
     this.isLoading.set(true)
-    return this.devicesService.getAMTFeatures(this.deviceId)
+    return this.devicesService.getAMTFeatures(this.deviceId())
   }
 
   enableSolDialog(): Observable<any> {
@@ -244,7 +223,7 @@ export class SolComponent implements OnInit, OnDestroy {
     const userEnableSolDialog = this.dialog.open(DeviceEnableSolComponent, {
       height: '200px',
       width: '400px',
-      data: { deviceId: this.deviceId, results: this.results }
+      data: { deviceId: this.deviceId(), results: this.results }
     })
     return userEnableSolDialog.afterClosed()
   }
@@ -252,9 +231,11 @@ export class SolComponent implements OnInit, OnDestroy {
   cancelEnableSolResponse(result?: boolean): void {
     this.isLoading.set(false)
     if (!result) {
-      this.displayError($localize`SOL cannot be accessed - request to enable SOL is cancelled`)
+      const msg: string = this.translate.instant('sol.errorAccessCancel.value')
+      this.displayError(msg)
     } else {
-      this.displayError($localize`SOL cannot be accessed - failed to enable SOL`)
+      const msg: string = this.translate.instant('sol.errorAccessEnable.value')
+      this.displayError(msg)
     }
     this.readyToLoadSol = false
   }
@@ -271,13 +252,15 @@ export class SolComponent implements OnInit, OnDestroy {
       this.amtFeatures?.optInState === 4
     ) {
       this.readyToLoadSol = true
+      // Auto-connect when user consent is not required
+      this.deviceConnection.set(true)
       return of(true)
     }
     return of(false)
   }
 
   deviceStatus(event: any): void {
-    this.deviceState = event
+    this.deviceState.set(event)
     if (event === 3) {
       this.isLoading.set(false)
     } else if (event === 0) {
@@ -292,7 +275,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   stopSol(): void {
-    this.deviceConnection.emit(false)
+    this.deviceConnection.set(false)
   }
 
   displayError(message: string): void {

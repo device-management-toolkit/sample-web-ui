@@ -9,6 +9,7 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { MatDialog } from '@angular/material/dialog'
 import { authorizationInterceptor } from './authorize.interceptor'
 import { AuthService } from './auth.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AuthorizeInterceptor', () => {
   let httpClient: HttpClient
@@ -21,6 +22,7 @@ describe('AuthorizeInterceptor', () => {
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
 
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         provideHttpClient(withInterceptors([authorizationInterceptor])),
         provideHttpClientTesting(),

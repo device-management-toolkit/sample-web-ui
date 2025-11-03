@@ -76,6 +76,7 @@ export class DomainDetailComponent implements OnInit {
     version: ['']
   })
   public isLoading = signal(false)
+  public isCertificateUploaded = signal(false)
   public isEdit = false
   public certPassInputType = 'password'
   public pageTitle: string
@@ -103,6 +104,7 @@ export class DomainDetailComponent implements OnInit {
               this.domainForm.controls.profileName.disable()
               this.pageTitle = data.profileName
               this.domainForm.patchValue(data)
+              this.isCertificateUploaded.set(!!data.provisioningCert)
             },
             error: (err) => {
               this.errorMessages = err
@@ -131,17 +133,16 @@ export class DomainDetailComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.snackBar.open($localize`Domain profile saved successfully`, undefined, SnackbarDefaults.defaultSuccess)
+            const completeMessage: string = this.translate.instant('domainDetail.completeProfile.value')
+            this.snackBar.open(completeMessage, undefined, SnackbarDefaults.defaultSuccess)
 
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            this.snackBar.open(
-              $localize`Error creating/updating domain profile`,
-              undefined,
-              SnackbarDefaults.defaultError
-            )
-            this.errorMessages = err
+            const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
+            this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
+
+            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
           }
         })
     }
@@ -157,6 +158,7 @@ export class DomainDetailComponent implements OnInit {
         const index: number = base64.indexOf('base64,')
         const cert = base64.substring(index + 7, base64.length)
         this.domainForm.patchValue({ provisioningCert: cert })
+        this.isCertificateUploaded.set(true)
       }
       if (e.target != null) {
         const target = e.target as HTMLInputElement

@@ -9,21 +9,23 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AuditLogComponent } from './audit-log.component'
 import { DeviceLogService } from '../device-log.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AuditLogComponent', () => {
   let component: AuditLogComponent
   let fixture: ComponentFixture<AuditLogComponent>
   let getAuditLogSpy: jasmine.Spy
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const devicesService = jasmine.createSpyObj('DeviceLogService', ['getAuditLog'])
     getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         RouterModule,
-        AuditLogComponent
+        AuditLogComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DeviceLogService, useValue: devicesService },
@@ -34,7 +36,7 @@ describe('AuditLogComponent', () => {
           }
         }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

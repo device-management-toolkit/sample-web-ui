@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { DevicesService } from './devices.service'
 import { environment } from 'src/environments/environment'
 import {
@@ -14,8 +15,10 @@ import {
   DiskInformation,
   IPSAlarmClockOccurrence,
   IPSAlarmClockOccurrenceInput,
-  BootDetails
+  BootDetails,
+  DisplaySelectionResponse
 } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DevicesService', () => {
   let service: DevicesService
@@ -28,8 +31,13 @@ describe('DevicesService', () => {
     environment.rpsServer = mockEnvironment.rpsServer
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [DevicesService, { provide: environment, useValue: mockEnvironment }]
+      imports: [TranslateModule.forRoot()],
+      providers: [
+        DevicesService,
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(DevicesService)
@@ -85,7 +93,13 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       }
 
       service.getAMTFeatures('device1').subscribe((response) => {
@@ -233,7 +247,7 @@ describe('DevicesService', () => {
         expect(response).toBeTruthy()
       })
 
-      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootOptions/device1`)
       expect(req.request.method).toBe('POST')
       expect(req.request.body).toEqual(mockPayload)
       req.flush({})
@@ -254,7 +268,7 @@ describe('DevicesService', () => {
         expect(response).toBeTruthy()
       })
 
-      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootoptions/device1`)
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/bootOptions/device1`)
       expect(req.request.method).toBe('POST')
       expect(req.request.body).toEqual(mockPayload)
       req.flush({})
@@ -502,7 +516,13 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       }
       const payload = {
         userConsent: 'none',
@@ -953,6 +973,68 @@ describe('DevicesService', () => {
       })
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/cert/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('getDisplaySelection', () => {
+    it('should fetch current display selection for a device', () => {
+      const mockResponse: DisplaySelectionResponse = {
+        displays: [
+          { displayIndex: 0, isActive: true, resolutionX: 1920, resolutionY: 1080, upperLeftX: 0, upperLeftY: 0 },
+          { displayIndex: 1, isActive: false, resolutionX: 0, resolutionY: 0, upperLeftX: 0, upperLeftY: 0 }
+        ]
+      }
+
+      service.getDisplaySelection('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/kvm/displays/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const mockError = { status: 404, statusText: 'Not Found' }
+
+      service.getDisplaySelection('guid1').subscribe({
+        error: (error) => {
+          expect(error.status).toBe(404)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/kvm/displays/guid1`)
+      req.flush(null, mockError)
+    })
+  })
+
+  describe('setDisplaySelection', () => {
+    it('should update display selection for a device', () => {
+      const payload = { displayIndex: 2 }
+      const mockResponse = { success: true }
+
+      service.setDisplaySelection('guid1', payload).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/kvm/displays/guid1`)
+      expect(req.request.method).toBe('PUT')
+      expect(req.request.body).toEqual(payload)
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors', () => {
+      const payload = { displayIndex: 3 }
+      const mockError = { status: 400, statusText: 'Bad Request' }
+
+      service.setDisplaySelection('guid1', payload).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/kvm/displays/guid1`)
       req.flush(null, mockError)
     })
   })

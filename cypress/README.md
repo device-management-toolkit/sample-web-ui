@@ -8,7 +8,7 @@ Visit the [documentation for Cypress](https://docs.cypress.io/guides/overview/wh
 
 First spin up a local instance of the sample web ui using `npm run start`
 
-> You may need to configure `open-amt-cloud-toolkit/docker-compose.yml` to prevent network errors
+> You may need to configure `device-management-toolkit/docker-compose.yml` to prevent network errors
 
 Once the server is up on `http://localhost:4200/`, open a new terminal and run `npm run cypress`. This will start the cypress testing gui.
 

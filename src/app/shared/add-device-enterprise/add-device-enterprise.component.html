@@ -1,44 +1,44 @@
-<h2 mat-dialog-title>Add a New Device</h2>
+<h2 mat-dialog-title>{{ 'devices.addDevice.value' | translate }}</h2>
 <div mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Hostname</mat-label>
+      <mat-label>{{ 'common.hostName.value' | translate }}</mat-label>
       <input matInput title="hostname" formControlName="hostname" />
-      <mat-hint>Enter the hostname</mat-hint>
+      <mat-hint>{{ 'common.enterHostName.value' | translate }}</mat-hint>
       @if (form.get('hostname')?.errors?.required) {
-        <mat-error>Hostname is required</mat-error>
+        <mat-error>{{ 'addDevice.hostNameRequired.value' | translate }}</mat-error>
       }
       @if (form.get('hostname')?.errors?.pattern) {
-        <mat-error>Invalid hostname format</mat-error>
+        <mat-error>{{ 'addDevice.hostNameInvalid.value' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Friendly Name</mat-label>
+      <mat-label>{{ 'common.friendlyName.value' | translate }}</mat-label>
       <input matInput title="friendlyName" formControlName="friendlyName" />
-      <mat-hint>Enter a friendly name</mat-hint>
+      <mat-hint>{{ 'common.enterFriendlyName.value' | translate }}</mat-hint>
       @if (form.get('friendlyName')?.errors?.required) {
-        <mat-error>Friendly Name is required</mat-error>
+        <mat-error>{{ 'addDevice.friendlyNameRequired.value' | translate }}</mat-error>
       }
       @if (form.get('friendlyName')?.errors?.maxlength) {
-        <mat-error>Friendly Name cannot be longer than 50 characters</mat-error>
+        <mat-error>{{ 'addDevice.friendlyNameInvalid.value' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Username</mat-label>
+      <mat-label>{{ 'common.userName.value' | translate }}</mat-label>
       <input matInput title="username" formControlName="username" />
-      <mat-hint>Enter your username</mat-hint>
+      <mat-hint>{{ 'common.enterUserName.value' | translate }}</mat-hint>
       @if (form.get('username')?.errors?.required) {
-        <mat-error>Username is required</mat-error>
+        <mat-error>{{ 'addDevice.userNameRequired.value' | translate }}</mat-error>
       }
       @if (form.get('username')?.errors?.minlength) {
-        <mat-error>Username must be at least 5 characters long and no more than 16</mat-error>
+        <mat-error>{{ 'addDevice.userNameInvalid.value' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Password</mat-label>
+      <mat-label>{{ 'common.password.value' | translate }}</mat-label>
       <input
         matInput
         title="password"
@@ -47,12 +47,12 @@
         required
         minlength="8"
         maxlength="32" />
-      <mat-error i18n>This field is required and must be between 8 and 32 characters</mat-error>
-      <mat-hint>Enter your password</mat-hint>
+      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+      <mat-hint>{{ 'common.enterPassword.value' | translate }}</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>Tags</mat-label>
+      <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags; track tag) {
           <mat-chip-row [removable]="true" (removed)="remove(tag)">
@@ -61,21 +61,20 @@
           </mat-chip-row>
         }
         <input
-          placeholder="New tag..."
+          [placeholder]="'addDevice.placeholderNewTag.value' | translate"
           [matChipInputFor]="tagList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="true"
           (matChipInputTokenEnd)="add($event)" />
       </mat-chip-grid>
-      <mat-hint
-        >You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag,
-        then present enter or comma.
-      </mat-hint>
+      <mat-hint>{{ 'addDevice.enterTags.value' | translate }} </mat-hint>
     </mat-form-field>
 
-    <mat-checkbox formControlName="useTLS" class="flex flex-1">Use TLS</mat-checkbox>
-    <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">Allow Self-Signed Certificates</mat-checkbox>
+    <mat-checkbox formControlName="useTLS" class="flex flex-1">{{ 'addDevice.useTLS.value' | translate }}</mat-checkbox>
+    <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">{{
+      'addDevice.allowSelfSignedCertificates.value' | translate
+    }}</mat-checkbox>
 
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-raised-button color="primary" type="submit">{{ 'common.submit.value' | translate }}</button>
   </form>
 </div>

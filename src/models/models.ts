@@ -118,6 +118,12 @@ export interface EventLog {
   eventTypeDesc: string
 }
 
+export interface BootParams {
+  instanceID: string
+  biosBootString: string
+  bootString: string
+}
+
 export interface AMTFeaturesResponse {
   userConsent: string
   optInState: number
@@ -131,6 +137,8 @@ export interface AMTFeaturesResponse {
   winREBootSupported: boolean
   localPBABootSupported: boolean
   remoteErase: boolean
+  pbaBootFilesPath: BootParams[]
+  winREBootFilesPath: BootParams
 }
 export interface AMTFeaturesRequest {
   userConsent: string
@@ -472,14 +480,60 @@ export interface RPSVersion {
   protocolVersion: string
 }
 
+export interface ConsoleVersion {
+  current: string
+  latest?: {
+    tag_name: string
+  }
+}
+
 export interface CertInfo {
   cert: string
   isTrusted: boolean
 }
 
 export interface BootDetails {
-  url: string
-  username: string
-  password: string
+  url?: string
+  username?: string
+  password?: string
+  bootPath?: string
   enforceSecureBoot: boolean
+}
+
+export interface ProxyConfig {
+  name: string
+  address: string
+  infoFormat: number
+  port: number
+  networkDnsSuffix: string
+  creationDate?: Date
+  tenantId?: string
+}
+
+export interface BootSource {
+  biosBootString: string
+  bootString: string
+  elementName: string
+  failThroughSupported: number
+  instanceID: string
+  structuredBootString: string
+}
+
+export interface DisplayInfo {
+  displayIndex: number
+  isActive: boolean
+  resolutionX: number
+  resolutionY: number
+  upperLeftX: number
+  upperLeftY: number
+  role?: string
+  isDefault?: boolean
+}
+
+export interface DisplaySelectionResponse {
+  displays: DisplayInfo[]
+}
+
+export interface DisplaySelectionRequest {
+  displayIndex: number
 }

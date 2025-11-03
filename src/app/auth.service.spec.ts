@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router'
 import { environment } from 'src/environments/environment'
 import { MPSVersion, RPSVersion } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AuthService', () => {
   let service: AuthService
@@ -17,11 +19,14 @@ describe('AuthService', () => {
     environment.mpsServer = mockEnvironment.mpsServer
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         AuthService,
         { provide: Router, useValue: routerSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(AuthService)

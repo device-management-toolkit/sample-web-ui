@@ -6,19 +6,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { DialogContentComponent } from './dialog-content.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DialogContentComponent', () => {
   let component: DialogContentComponent
   let fixture: ComponentFixture<DialogContentComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MatDialogModule, DialogContentComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        DialogContentComponent,
+        TranslateModule.forRoot()
+      ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

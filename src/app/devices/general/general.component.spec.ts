@@ -9,13 +9,14 @@ import { GeneralComponent } from './general.component'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('GeneralComponent', () => {
   let component: GeneralComponent
   let fixture: ComponentFixture<GeneralComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
@@ -44,18 +45,24 @@ describe('GeneralComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       })
     )
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
-    await TestBed.configureTestingModule({
-      imports: [GeneralComponent],
+    TestBed.configureTestingModule({
+      imports: [GeneralComponent, TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(GeneralComponent)
     component = fixture.componentInstance

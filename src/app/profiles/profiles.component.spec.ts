@@ -11,10 +11,10 @@ import { of } from 'rxjs'
 import { ProfilesComponent } from './profiles.component'
 import { ProfilesService } from './profiles.service'
 import { RouterModule } from '@angular/router'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfilesComponent', () => {
   let component: ProfilesComponent
@@ -23,12 +23,7 @@ describe('ProfilesComponent', () => {
   let deleteSpy: jasmine.Spy
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
-  beforeEach(async () => {
+  beforeEach(() => {
     const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
     getDataSpy = profilesService.getData.and.returnValue(
       of({
@@ -52,33 +47,28 @@ describe('ProfilesComponent', () => {
     )
     deleteSpy = profilesService.delete.and.returnValue(of(null))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
         ProfilesComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ProfilesService, useValue: profilesService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfilesComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 
@@ -103,7 +93,7 @@ describe('ProfilesComponent', () => {
   })
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')
@@ -115,7 +105,7 @@ describe('ProfilesComponent', () => {
   })
   it('should not delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')

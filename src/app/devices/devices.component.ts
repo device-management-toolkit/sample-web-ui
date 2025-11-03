@@ -10,7 +10,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
-import { catchError, concatMap, delay, finalize, map } from 'rxjs/operators'
+import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
 import { Device, PageEventOptions } from 'src/models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
@@ -39,7 +39,7 @@ import {
 import { MatOption } from '@angular/material/core'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
-import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card'
+import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
@@ -47,7 +47,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-devices',
@@ -63,7 +63,6 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTooltip,
     MatProgressBar,
     MatCard,
-    MatCardHeader,
     MatFormField,
     MatLabel,
     MatSelect,
@@ -95,19 +94,26 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 
-  public totalCount = 0
+  public totalCount = signal(0)
   public isLoading = signal(true)
-  public tags: string[] = []
-  public filteredTags: string[] = []
+  public tags = signal<string[]>([])
+  public filteredTags = signal<string[]>([])
   public selectedDevices: SelectionModel<Device>
   public bulkActionResponses: any[] = []
   public isTrue = false
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
-  public deleteDeviceLabel: string = this.isCloudMode ? 'Deactivate the Device' : 'Remove the Device'
+
+  get deleteDeviceLabel(): string {
+    return this.isCloudMode
+      ? this.translate.instant('devices.actions.deactivateCloud.value')
+      : this.translate.instant('devices.actions.remove.value')
+  }
+
   public displayedColumns: string[] = [
     'select',
     'hostname',
@@ -177,7 +183,9 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .getTags()
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error loading tags`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('devices.errorLoadTags.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
@@ -185,55 +193,73 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((tags) => {
-        this.tags = tags
-        this.filteredTags = this.filteredTags.filter((t) => tags.includes(t))
+        this.tags.set(tags)
+        this.filteredTags.set(this.filteredTags().filter((t) => tags.includes(t)))
       })
   }
 
   getDevices(): void {
     this.isLoading.set(true)
+
+    // Store previous selection before making the request
+    const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
+
     this.devicesService
-      .getDevices({ ...this.pageEvent, tags: this.filteredTags })
+      .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
       .pipe(
+        switchMap((res) => {
+          this.totalCount.set(res.totalCount)
+
+          if (!environment.cloud) {
+            return of(res.data) // Return as-is for non-cloud
+          }
+
+          const connectedDevices = res.data.filter((d) => d.connectionStatus)
+          if (connectedDevices.length === 0) {
+            return of(res.data)
+          }
+
+          // Get all power states in parallel
+          const powerStateRequests = connectedDevices.map((device) =>
+            this.devicesService.getPowerState(device.guid).pipe(
+              map((powerResult) => ({ ...device, powerstate: powerResult.powerstate })),
+              catchError((error) => {
+                console.error(`Failed to get power state for device ${device.guid}:`, error)
+                return of(device) // Return device as-is if error occurs
+              })
+            )
+          )
+
+          return forkJoin(powerStateRequests).pipe(
+            map((updatedDevices) => {
+              const deviceMap = new Map(updatedDevices.map((d) => [d.guid, d]))
+              return res.data.map((device) => deviceMap.get(device.guid) || device)
+            })
+          )
+        }),
         catchError((err) => {
-          this.snackBar.open($localize`Error loading devices`, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
+          console.error('Error in getDevices:', err)
+          const msg: string = this.translate.instant('configs.failDeleteConfigs.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+          // Return an empty array on error
+          return of([])
         }),
         finalize(() => {
-          const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
-          this.selectedDevices.clear()
-          const stillSelected = this.devices.data.filter((d) => prevSelected.includes(d.guid))
-          this.selectedDevices.select(...stillSelected)
           this.isLoading.set(false)
         })
       )
-      .subscribe((res) => {
-        this.devices.data = res.data
-        this.totalCount = res.totalCount
-        let deviceIds = this.devices.data.map((x) => x.guid)
-        if (environment.cloud) {
-          deviceIds = this.devices.data.filter((z) => z.connectionStatus).map((x) => x.guid)
-          from(deviceIds)
-            .pipe(
-              map((id) => {
-                return this.devicesService.getPowerState(id).pipe(
-                  map((result) => {
-                    return { powerstate: result.powerstate, guid: id }
-                  })
-                )
-              })
-            )
-            .subscribe((results) => {
-              results.subscribe((x) => {
-                ;(this.devices.data.find((y) => y.guid === x.guid) as any).powerstate = x.powerstate
-              })
-            })
-        }
+      .subscribe((devices) => {
+        this.devices.data = devices
+
+        // Restore selection state on data retrieval
+        this.selectedDevices.clear()
+        const stillSelected = devices.filter((d) => prevSelected.includes(d.guid))
+        this.selectedDevices.select(...stillSelected)
       })
   }
 
   tagFilterChange(event: MatSelectChange): void {
-    this.filteredTags = event.value
+    this.filteredTags.set(event.value)
     this.getDevices()
   }
 
@@ -307,7 +333,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.devices.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   async navigateTo(path: string): Promise<void> {
@@ -438,7 +464,9 @@ export class DevicesComponent implements OnInit, AfterViewInit {
               }
             },
             error: () => {
-              this.snackBar.open($localize`Error deactivating devices`, undefined, SnackbarDefaults.defaultError)
+              const msg: string = this.translate.instant('devices.errorDeactivateDevice.value')
+
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             },
             complete: () => {
               this.isLoading.set(false)

@@ -5,6 +5,7 @@ import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceCertDialogComponent } from './device-cert-dialog.component'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceCertDialogComponent', () => {
   let component: DeviceCertDialogComponent
@@ -13,7 +14,7 @@ describe('DeviceCertDialogComponent', () => {
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<DeviceCertDialogComponent>>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const spyDevicesService = jasmine.createSpyObj('DevicesService', [
       'pinDeviceCertificate',
       'deleteDeviceCertificate'
@@ -21,8 +22,8 @@ describe('DeviceCertDialogComponent', () => {
     const spySnackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
     const spyDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
 
-    await TestBed.configureTestingModule({
-      imports: [DeviceCertDialogComponent],
+    TestBed.configureTestingModule({
+      imports: [DeviceCertDialogComponent, TranslateModule.forRoot()],
       providers: [
         { provide: DevicesService, useValue: spyDevicesService },
         { provide: MatSnackBar, useValue: spySnackBar },
@@ -32,7 +33,7 @@ describe('DeviceCertDialogComponent', () => {
         },
         { provide: MatDialogRef, useValue: spyDialogRef }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(DeviceCertDialogComponent)
     component = fixture.componentInstance

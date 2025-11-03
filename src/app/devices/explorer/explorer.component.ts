@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, OnInit, inject } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
+import { Component, OnInit, inject, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { Router } from '@angular/router'
 import { DevicesService } from '../devices.service'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms'
@@ -19,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-explorer',
@@ -33,7 +32,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
     MatToolbarModule,
     MatAutocompleteModule,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    TranslateModule
   ],
   providers: [
     {
@@ -47,12 +47,9 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 export class ExplorerComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
-  private readonly dialog = inject(MatDialog)
-  private readonly router = inject(Router)
   private readonly devicesService = inject(DevicesService)
-
-  @Input()
-  public deviceId = ''
+  private readonly translate = inject(TranslateService)
+  public readonly deviceId = input('')
 
   public XMLData: any
   public myControl = new FormControl('')
@@ -70,13 +67,14 @@ export class ExplorerComponent implements OnInit {
         map((value) => this._filter(value ?? ''))
       )
 
-      this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+      this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
         next: (data) => {
           this.XMLData = data
         },
         error: (err) => {
           console.error(err)
-          this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('explorer.errorResponse.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
     })
@@ -94,13 +92,14 @@ export class ExplorerComponent implements OnInit {
 
   inputChanged(event: MatAutocompleteSelectedEvent): void {
     this.selectedWsmanOperation = event.option.value
-    this.devicesService.executeExplorerCall(this.deviceId, this.selectedWsmanOperation).subscribe({
+    this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
       next: (data) => {
         this.XMLData = data
       },
       error: (err) => {
         console.error(err)
-        this.snackBar.open($localize`Error retrieving explorer response`, undefined, SnackbarDefaults.defaultError)
+        const msg: string = this.translate.instant('explorer.errorResponse.value')
+        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
       }
     })
   }

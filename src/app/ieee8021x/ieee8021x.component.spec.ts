@@ -11,9 +11,9 @@ import { of } from 'rxjs'
 import { IEEE8021xComponent } from './ieee8021x.component'
 import { IEEE8021xService } from './ieee8021x.service'
 import { RouterModule } from '@angular/router'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
 describe('IEEE8021xComponent', () => {
@@ -23,12 +23,7 @@ describe('IEEE8021xComponent', () => {
   let deleteSpy: jasmine.Spy
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
-  beforeEach(async () => {
+  beforeEach(() => {
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
       'getData',
       'delete',
@@ -42,33 +37,28 @@ describe('IEEE8021xComponent', () => {
     )
     deleteSpy = ieee8021xService.delete.and.returnValue(of(null))
     ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
         IEEE8021xComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IEEE8021xService, useValue: ieee8021xService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IEEE8021xComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 
@@ -95,7 +85,7 @@ describe('IEEE8021xComponent', () => {
 
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')
@@ -107,7 +97,7 @@ describe('IEEE8021xComponent', () => {
   })
   it('should not delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')

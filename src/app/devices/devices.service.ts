@@ -5,8 +5,8 @@
 
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
-import { Observable, Subject } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import { Observable, Subject, BehaviorSubject } from 'rxjs'
+import { catchError, map, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
   AMTFeaturesResponse,
@@ -28,19 +28,39 @@ import {
   NetworkConfig,
   TLSSettings,
   CertInfo,
-  BootDetails
+  BootDetails,
+  BootSource,
+  DisplaySelectionResponse,
+  DisplaySelectionRequest
 } from 'src/models/models'
 import { caseInsensitiveCompare } from '../../utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DevicesService {
   private readonly http = inject(HttpClient)
+  // Reactive AMT features stream, keyed by deviceId
+  private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
 
+  private getOrCreateFeaturesStream(deviceId: string): BehaviorSubject<AMTFeaturesResponse | null> {
+    if (!this.amtFeaturesStreams.has(deviceId)) {
+      this.amtFeaturesStreams.set(deviceId, new BehaviorSubject<AMTFeaturesResponse | null>(null))
+    }
+    // Non-null assertion safe because we just set it above when missing
+    return this.amtFeaturesStreams.get(deviceId)!
+  }
+
+  // Public observable for other components to react to AMT features changes
+  featuresChanges(deviceId: string): Observable<AMTFeaturesResponse | null> {
+    return this.getOrCreateFeaturesStream(deviceId).asObservable()
+  }
+
+  private readonly translate = inject(TranslateService)
   public TargetOSMap = {
-    0: 'Unknown',
-    1: 'Other',
+    0: 'common.unknown.value',
+    1: 'common.other.value',
     2: 'MACOS',
     3: 'ATTUNIX',
     4: 'DGUX',
@@ -105,7 +125,7 @@ export class DevicesService {
     63: 'Windows (R) Me',
     64: 'Caldera Open UNIX',
     65: 'OpenBSD',
-    66: 'Not Applicable',
+    66: 'common.notApplicable.value',
     67: 'Windows XP',
     68: 'z/OS',
     69: 'Microsoft Windows Server 2003',
@@ -156,19 +176,19 @@ export class DevicesService {
   }
 
   public PowerStates = {
-    2: 'On',
-    3: 'Sleep',
-    4: 'Sleep',
-    6: 'Off',
-    7: 'Hibernate',
-    8: 'Off',
-    9: 'Power Cycle',
-    13: 'Off'
+    2: this.translate.instant('powerOptions.on.value'),
+    3: this.translate.instant('powerOptions.sleep.value'),
+    4: this.translate.instant('powerOptions.sleep.value'),
+    6: this.translate.instant('powerOptions.off.value'),
+    7: this.translate.instant('powerOptions.hibernate.value'),
+    8: this.translate.instant('powerOptions.off.value'),
+    9: this.translate.instant('powerOptions.powerCycle.value'),
+    13: this.translate.instant('powerOptions.off.value')
   }
 
   public MemoryTypeMap = {
-    0: 'Unknown',
-    1: 'Other',
+    0: this.translate.instant('common.unknown.value'),
+    1: this.translate.instant('common.other.value'),
     2: 'DRAM',
     3: 'Synchronous DRAM',
     4: 'Cache DRAM',
@@ -209,9 +229,6 @@ export class DevicesService {
 
   public device = new Subject<Device>()
 
-  stopwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
-  startwebSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
-  connectKVMSocket: EventEmitter<boolean> = new EventEmitter<boolean>(false)
   deviceState: EventEmitter<number> = new EventEmitter<number>()
 
   getGeneralSettings(deviceId: string): Observable<any> {
@@ -248,6 +265,7 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
+      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
       catchError((err) => {
         throw err
       })
@@ -296,7 +314,7 @@ export class DevicesService {
     const url: string =
       action < 100
         ? `${environment.mpsServer}/api/v1/amt/power/action/${deviceId}`
-        : `${environment.mpsServer}/api/v1/amt/power/bootoptions/${deviceId}`
+        : `${environment.mpsServer}/api/v1/amt/power/bootOptions/${deviceId}`
 
     return this.http.post<any>(url, payload).pipe(
       catchError((err) => {
@@ -393,6 +411,7 @@ export class DevicesService {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
+        tap((features) => this.getOrCreateFeaturesStream(deviceId).next(features)),
         catchError((err) => {
           throw err
         })
@@ -526,6 +545,32 @@ export class DevicesService {
   }
   addCertificate(guid: string, certInfo: CertInfo): Observable<any> {
     return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}`, certInfo).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+  getBootSources(guid: string): Observable<BootSource[]> {
+    return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/power/bootSources/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  // Display Selection (KVM) APIs
+  // GET current display selection for a device
+  getDisplaySelection(guid: string): Observable<DisplaySelectionResponse> {
+    return this.http.get<DisplaySelectionResponse>(`${environment.mpsServer}/api/v1/amt/kvm/displays/${guid}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  // PUT to change the display selection for a device
+  setDisplaySelection(guid: string, selection: DisplaySelectionRequest): Observable<any> {
+    return this.http.put<any>(`${environment.mpsServer}/api/v1/amt/kvm/displays/${guid}`, selection).pipe(
       catchError((err) => {
         throw err
       })

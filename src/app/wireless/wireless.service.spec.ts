@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { WirelessService } from './wireless.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { WirelessConfig, DataWithCount, PageEventOptions } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('WirelessService', () => {
   let service: WirelessService
@@ -17,11 +19,14 @@ describe('WirelessService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         WirelessService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(WirelessService)

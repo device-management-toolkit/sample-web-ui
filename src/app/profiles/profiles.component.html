@@ -42,7 +42,7 @@
           <mat-header-cell *matHeaderCellDef> {{ 'profiles.table.connection.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span>{{ element.ciraConfigName }}</span>
-            <span>{{ element.tlsMode | toolkit: tlsModes }}</span>
+            <span>{{ element.tlsMode | toolkit: tlsModes | translate }}</span>
           </mat-cell>
         </ng-container>
         <!-- activation Column -->
@@ -57,7 +57,7 @@
             <button mat-icon-button data-cy="delete" (click)="delete(row.profileName)">
               <mat-icon>delete</mat-icon>
             </button>
-            <button mat-icon-button data-cy="export" (click)="export(row)">
+            <button mat-icon-button data-cy="export" (click)="export(row.profileName)">
               <mat-icon>download</mat-icon>
             </button>
           </mat-cell>
@@ -66,12 +66,12 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (totalCount) {
+    @if (totalCount() !== 0) {
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
           [pageSize]="pageEvent.pageSize"
-          [length]="totalCount"
+          [length]="totalCount()"
           showFirstLastButtons
           (page)="pageChanged($event)">
         </mat-paginator>

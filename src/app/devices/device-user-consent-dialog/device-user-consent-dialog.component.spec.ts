@@ -10,6 +10,7 @@ import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceUserConsentDialogComponent } from './device-user-consent-dialog.component'
 import { RouterModule } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceUserConsentDialogComponent', () => {
   let component: DeviceUserConsentDialogComponent
@@ -20,25 +21,26 @@ describe('DeviceUserConsentDialogComponent', () => {
     close: jasmine.createSpy('close')
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const devicesService = jasmine.createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
     sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(
       of({ deviceId: 'deviceId', results: {} })
     )
     cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({}))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceUserConsentDialogComponent
+        DeviceUserConsentDialogComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesService },
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
         { provide: MatDialogRef, useValue: dialogMock }
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

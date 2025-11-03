@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, Input, signal, ViewChild, inject } from '@angular/core'
+import { AfterViewInit, Component, signal, ViewChild, inject, input } from '@angular/core'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortModule } from '@angular/material/sort'
@@ -20,6 +20,7 @@ import { DeviceLogService } from '../device-log.service'
 import { MatButtonModule } from '@angular/material/button'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-audit-log',
@@ -33,16 +34,16 @@ import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pi
     MatButtonModule,
     MatPaginatorModule,
     AmDateFormatterPipe,
-    AmTimeAgoFormatterPipe
+    AmTimeAgoFormatterPipe,
+    TranslateModule
   ]
 })
 export class AuditLogComponent implements AfterViewInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
-
-  @Input()
-  public deviceId = ''
+  private readonly translate = inject(TranslateService)
+  public readonly deviceId = input('')
 
   public devices: Device[] = []
   public isLoading = signal(true)
@@ -72,12 +73,13 @@ export class AuditLogComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           return this.deviceLogService
-            .getAuditLog(this.deviceId, (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
+            .getAuditLog(this.deviceId(), (this.paginator?.pageSize ?? 120) * (this.paginator?.pageIndex ?? 0) + 1)
             .pipe(catchError(() => of(null)))
         }),
         catchError((err) => {
           console.error(err)
-          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('audit.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of(this.auditLogData)
         })
       )
@@ -89,7 +91,8 @@ export class AuditLogComponent implements AfterViewInit {
         error: (err) => {
           console.error(err)
           this.isLoading.set(false)
-          this.snackBar.open($localize`Error retrieving audit log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('audit.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
@@ -103,12 +106,12 @@ export class AuditLogComponent implements AfterViewInit {
   }
   download(): void {
     this.isLoading.set(true)
-    this.deviceLogService.downloadAuditLog(this.deviceId).subscribe((data) => {
+    this.deviceLogService.downloadAuditLog(this.deviceId()).subscribe((data) => {
       const blob = new Blob([data], { type: 'application/octet-stream' })
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `audit_${this.deviceId}.csv`
+      a.download = `audit_${this.deviceId()}.csv`
       a.click()
 
       window.URL.revokeObjectURL(url)

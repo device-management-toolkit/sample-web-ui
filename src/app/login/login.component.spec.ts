@@ -11,9 +11,9 @@ import { environment } from 'src/environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideHttpClient } from '@angular/common/http'
+import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -24,28 +24,17 @@ describe('LoginComponent', () => {
   let routerSpy: jasmine.SpyObj<Router>
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login'])
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         LoginComponent,
         ReactiveFormsModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         provideNoopAnimations(),
@@ -53,17 +42,21 @@ describe('LoginComponent', () => {
         { provide: MatSnackBar, useValue: snackBarSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: Router, useValue: routerSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         FormBuilder,
         TranslateService,
         provideHttpClient(),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
+        })
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(LoginComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 
@@ -112,7 +105,7 @@ describe('LoginComponent', () => {
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
 
-      expect(snackBarSpy.open).toHaveBeenCalledWith('Error logging in', undefined, SnackbarDefaults.defaultError)
+      expect(snackBarSpy.open).toHaveBeenCalledWith('login.error.value', undefined, SnackbarDefaults.defaultError)
     })
 
     it('should set isLoading to false after login attempt', () => {

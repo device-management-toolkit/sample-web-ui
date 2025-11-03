@@ -31,7 +31,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-configs',
@@ -65,10 +65,10 @@ export class ConfigsComponent implements OnInit {
   private readonly configsService = inject(ConfigsService)
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
-
+  private readonly translate = inject(TranslateService)
   // Public properties
   public configs = new MatTableDataSource<CIRAConfig>()
-  public totalCount = 0
+  public totalCount = signal(0)
   public isLoading = signal(true)
   public displayedColumns: string[] = [
     'name',
@@ -103,16 +103,18 @@ export class ConfigsComponent implements OnInit {
       .subscribe({
         next: (data: DataWithCount<CIRAConfig>) => {
           this.configs = new MatTableDataSource<CIRAConfig>(data.data)
-          this.totalCount = data.totalCount
+          this.totalCount.set(data.totalCount)
         },
         error: () => {
-          this.snackBar.open($localize`Unable to load CIRA Configs`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('configs.failLoadConfigs.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.configs.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {
@@ -131,17 +133,15 @@ export class ConfigsComponent implements OnInit {
           .subscribe({
             next: () => {
               this.getData(this.pageEvent)
-              this.snackBar.open(
-                $localize`CIRA config deleted successfully`,
-                undefined,
-                SnackbarDefaults.defaultSuccess
-              )
+              const msg: string = this.translate.instant('configs.delete.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
             error: (err) => {
               if (err?.length > 0) {
                 this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
-                this.snackBar.open($localize`Unable to delete CIRA Config`, undefined, SnackbarDefaults.defaultError)
+                const msg: string = this.translate.instant('configs.failDeleteConfigs.value')
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
               }
             }
           })

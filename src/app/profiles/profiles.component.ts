@@ -35,7 +35,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { environment } from 'src/environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 
 @Component({
@@ -71,10 +71,11 @@ export class ProfilesComponent implements OnInit {
   private readonly profilesService = inject(ProfilesService)
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
 
   public profiles = new MatTableDataSource<Profile>()
   public readonly isLoading = signal(true)
-  public totalCount = 0
+  public totalCount = signal(0)
   public readonly tlsModes = TlsModes
   public readonly displayedColumns: string[] = [
     'name',
@@ -107,19 +108,29 @@ export class ProfilesComponent implements OnInit {
       .subscribe({
         next: (rsp) => {
           this.profiles = new MatTableDataSource<Profile>(rsp.data)
-          this.totalCount = rsp.totalCount
+          this.totalCount.set(rsp.totalCount)
         },
         error: () => {
-          this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('profiles.failLoadConfiguration.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
 
   isNoData(): boolean {
-    return !this.isLoading && this.totalCount === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
-  export(profile: Profile): void {
+  export(profileName: string): void {
+    const profile = this.profiles.data.find((p) => p.profileName === profileName)
+    if (!profile) {
+      const msg: string = this.translate.instant('profiles.failExportProfile.value')
+
+      this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+      return
+    }
+
     if (profile.activation === 'acmactivate') {
       const dialogRef = this.dialog.open(ExportDialogComponent, {
         width: '400px',
@@ -148,10 +159,14 @@ export class ProfilesComponent implements OnInit {
         a.click()
         window.URL.revokeObjectURL(url)
         this.dialog.open(KeyDisplayDialogComponent, { data: { key: data.key } })
-        this.snackBar.open($localize`Profile exported successfully`, undefined, SnackbarDefaults.defaultSuccess)
+        const msg: string = this.translate.instant('profiles.exportProfile.value')
+
+        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
       },
       error: () => {
-        this.snackBar.open($localize`Unable to export profile`, undefined, SnackbarDefaults.defaultError)
+        const msg: string = this.translate.instant('profiles.failExportProfile.value')
+
+        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
       }
     })
   }
@@ -172,13 +187,17 @@ export class ProfilesComponent implements OnInit {
           .subscribe({
             next: () => {
               this.getData(this.pageEvent)
-              this.snackBar.open($localize`Profile deleted successfully`, undefined, SnackbarDefaults.defaultSuccess)
+              const msg: string = this.translate.instant('profiles.deleteProfile.value')
+
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
             error: (err) => {
               if (err?.length > 0) {
                 this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
-                this.snackBar.open($localize`Unable to delete profile`, undefined, SnackbarDefaults.defaultError)
+                const msg: string = this.translate.instant('profiles.failDeleteProfie.value')
+
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
               }
             }
           })

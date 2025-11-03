@@ -10,10 +10,10 @@ import { of } from 'rxjs'
 import { ConfigsService } from '../configs.service'
 
 import { ConfigDetailComponent } from './config-detail.component'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ConfigDetailComponent', () => {
   let component: ConfigDetailComponent
@@ -24,12 +24,7 @@ describe('ConfigDetailComponent', () => {
   let createRecordSpy: jasmine.Spy
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-
-  beforeEach(async () => {
+  beforeEach(() => {
     const configsService = jasmine.createSpyObj('ConfigsService', [
       'getRecord',
       'update',
@@ -41,18 +36,12 @@ describe('ConfigDetailComponent', () => {
     loadMpsRootCertSpy = configsService.loadMPSRootCert.and.returnValue(of('root certificate'))
     createRecordSpy = configsService.create.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
         ConfigDetailComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ConfigsService, useValue: configsService },
@@ -60,18 +49,19 @@ describe('ConfigDetailComponent', () => {
           provide: ActivatedRoute,
           useValue: { params: of({ name: 'name' }) }
         },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfigDetailComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 

@@ -187,7 +187,7 @@ export class ConfigDetailComponent implements OnInit {
         .subscribe({
           next: () => {
             this.snackBar.open(
-              $localize`CIRA ${reqType} created successfully`,
+              this.translate.instant('configs.success.value', { reqType: reqType }),
               undefined,
               SnackbarDefaults.defaultSuccess
             )

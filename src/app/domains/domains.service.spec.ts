@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { DomainsService } from './domains.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { DataWithCount, Domain, PageEventOptions } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DomainsService', () => {
   let service: DomainsService
@@ -17,11 +19,14 @@ describe('DomainsService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = 'https://test-server'
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         DomainsService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(DomainsService)

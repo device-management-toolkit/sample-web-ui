@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NetworkSettingsComponent } from './network-settings.component'
 import { DevicesService } from '../devices.service'
 import { of } from 'rxjs'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('NetworkSettingsComponent', () => {
   let component: NetworkSettingsComponent
@@ -22,11 +23,11 @@ describe('NetworkSettingsComponent', () => {
         }
       } as any)
     )
-    await TestBed.configureTestingModule({
-      imports: [NetworkSettingsComponent],
+    TestBed.configureTestingModule({
+      imports: [NetworkSettingsComponent, TranslateModule.forRoot()],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy }]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(NetworkSettingsComponent)
     component = fixture.componentInstance

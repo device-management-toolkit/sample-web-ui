@@ -10,13 +10,14 @@ import { DevicesService } from '../devices.service'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { of } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AlarmsComponent', () => {
   let component: AlarmsComponent
   let fixture: ComponentFixture<AlarmsComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
 
-  beforeEach(async () => {
+  beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
@@ -35,10 +36,14 @@ describe('AlarmsComponent', () => {
     ])
 
     devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
-    await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlarmsComponent],
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        AlarmsComponent,
+        TranslateModule.forRoot()
+      ],
       providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesServiceSpy }]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(AlarmsComponent)
     component = fixture.componentInstance

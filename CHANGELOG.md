@@ -1,3 +1,134 @@
+# [3.48.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.47.0...v3.48.0) (2025-10-27)
+
+
+### Bug Fixes
+
+* addresses issue with console version being empty ([#2944](https://github.com/device-management-toolkit/sample-web-ui/issues/2944)) ([d0d3a0c](https://github.com/device-management-toolkit/sample-web-ui/commit/d0d3a0cf85f4c9b7b2f21b51e49526f423b29521))
+
+
+### Features
+
+* **ui:** display console version in toolbar ([#2934](https://github.com/device-management-toolkit/sample-web-ui/issues/2934)) ([24956a0](https://github.com/device-management-toolkit/sample-web-ui/commit/24956a025adbaf2d33fc4ca9356d64ea7c3155af))
+
+# [3.47.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.1...v3.47.0) (2025-10-20)
+
+
+### Bug Fixes
+
+* hide proxy's on console ([#2941](https://github.com/device-management-toolkit/sample-web-ui/issues/2941)) ([9fb20a0](https://github.com/device-management-toolkit/sample-web-ui/commit/9fb20a06b229ae6ed73dc4301cf8fdfd90aae989))
+
+
+### Features
+
+* **i18n:** add and update missing translations and localization support  ([78df33e](https://github.com/device-management-toolkit/sample-web-ui/commit/78df33e4d0a213786a0747165846535da996c29f))
+
+## [3.46.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.46.0...v3.46.1) (2025-10-13)
+
+# [3.46.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.45.0...v3.46.0) (2025-10-10)
+
+
+### Features
+
+* adds UEFI wifi sync  to profile ([#2880](https://github.com/device-management-toolkit/sample-web-ui/issues/2880)) ([6c78c73](https://github.com/device-management-toolkit/sample-web-ui/commit/6c78c73a5e90945f67f7b9e657c974ff45460b98))
+
+# [3.45.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.44.0...v3.45.0) (2025-10-09)
+
+
+### Features
+
+* **profiles:** add proxy support to profile configuration ([#2901](https://github.com/device-management-toolkit/sample-web-ui/issues/2901)) ([caf59d0](https://github.com/device-management-toolkit/sample-web-ui/commit/caf59d05a61dca19c2ca3df340ea74b35faeca17))
+
+# [3.44.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.43.0...v3.44.0) (2025-09-30)
+
+
+### Features
+
+* enable selecting display ([#2891](https://github.com/device-management-toolkit/sample-web-ui/issues/2891)) ([3f83412](https://github.com/device-management-toolkit/sample-web-ui/commit/3f83412537176bb16cbe6112adda8775874dff5e))
+
+# [3.43.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.7...v3.43.0) (2025-09-24)
+
+
+### Features
+
+* adds OCR local PBA and WinRE ([0a889fc](https://github.com/device-management-toolkit/sample-web-ui/commit/0a889fc0697dc0ba40172891246e4f86da62cec8))
+
+## [3.42.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.6...v3.42.7) (2025-08-23)
+
+
+### Bug Fixes
+
+* addresses connection issue with KVM when switching encoding ([995e867](https://github.com/device-management-toolkit/sample-web-ui/commit/995e86710a50b3a40c0066fc992fc7ef8c2575f3))
+
+## [3.42.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.5...v3.42.6) (2025-08-21)
+
+
+### Bug Fixes
+
+* squashes bugs with KVM, IDER with SOL connections ([134cff6](https://github.com/device-management-toolkit/sample-web-ui/commit/134cff6237b260b5433c4172adeacf00f68ea795))
+
+## [3.42.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.4...v3.42.5) (2025-08-20)
+
+
+### Bug Fixes
+
+* ui not showing cert uploaded ([#2805](https://github.com/device-management-toolkit/sample-web-ui/issues/2805)) ([242a95f](https://github.com/device-management-toolkit/sample-web-ui/commit/242a95fc8f368e7315e57b6651e94711eb0b4073))
+
+## [3.42.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.3...v3.42.4) (2025-08-06)
+
+
+### Bug Fixes
+
+* device power status ([#2791](https://github.com/device-management-toolkit/sample-web-ui/issues/2791)) ([3a1f0d2](https://github.com/device-management-toolkit/sample-web-ui/commit/3a1f0d21ce5e22b6ecb515b632f9847f629ff40e))
+
+## [3.42.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.2...v3.42.3) (2025-08-06)
+
+
+### Bug Fixes
+
+* domain cert upload status ([#2790](https://github.com/device-management-toolkit/sample-web-ui/issues/2790)) ([434ad61](https://github.com/device-management-toolkit/sample-web-ui/commit/434ad614452f3c2f6d50c6e532fc51a324bcec01))
+
+## [3.42.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.1...v3.42.2) (2025-08-06)
+
+
+### Bug Fixes
+
+* status update on cert upload in devices ([#2789](https://github.com/device-management-toolkit/sample-web-ui/issues/2789)) ([534a4d9](https://github.com/device-management-toolkit/sample-web-ui/commit/534a4d9d2ceef12825e7ad5aac327ef84dc37d56))
+
+## [3.42.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.42.0...v3.42.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* disable read-only features of ocr ([#2782](https://github.com/device-management-toolkit/sample-web-ui/issues/2782)) ([4fc9bbf](https://github.com/device-management-toolkit/sample-web-ui/commit/4fc9bbf29e570eb7ec4ce074d5dab9b36bd0c41f))
+
+# [3.42.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.41.0...v3.42.0) (2025-07-31)
+
+
+### Features
+
+* adds http, winre and pba support to ocr status ([#2780](https://github.com/device-management-toolkit/sample-web-ui/issues/2780)) ([5cdd39f](https://github.com/device-management-toolkit/sample-web-ui/commit/5cdd39f1a0091fad7057d1ca0a4e2ac8a42dabe9))
+
+# [3.41.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.40.0...v3.41.0) (2025-07-31)
+
+
+### Features
+
+* add ocr to cloud environment ([#2778](https://github.com/device-management-toolkit/sample-web-ui/issues/2778)) ([23870ee](https://github.com/device-management-toolkit/sample-web-ui/commit/23870ee8b07f7ede7c55630064d5e8ba7d0d1e67))
+
+# [3.40.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.39.0...v3.40.0) (2025-07-29)
+
+
+### Features
+
+* enable hotkey drop down for KVM ([6a12c7f](https://github.com/device-management-toolkit/sample-web-ui/commit/6a12c7ff02db589aa95211fda9b6f3b11e33f0c9))
+
+# [3.39.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.38.0...v3.39.0) (2025-07-02)
+
+
+### Features
+
+* adds UEFIWiFiSyncEnabled is added to profile for OCR ([#2726](https://github.com/device-management-toolkit/sample-web-ui/issues/2726)) ([01f2a53](https://github.com/device-management-toolkit/sample-web-ui/commit/01f2a53ae0a265a66656336c1e2c5b815c57354e))
+
 # [3.38.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.37.0...v3.38.0) (2025-05-05)
 
 

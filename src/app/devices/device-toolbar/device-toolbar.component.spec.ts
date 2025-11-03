@@ -14,6 +14,7 @@ import { BootDetails, Device } from 'src/models/models'
 import { EventEmitter } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
@@ -36,8 +37,10 @@ describe('DeviceToolbarComponent', () => {
       'getDevice',
       'sendDeactivate',
       'getPowerState',
-      'getAMTFeatures'
+      'getAMTFeatures',
+      'featuresChanges'
     ])
+    devicesService.featuresChanges.and.returnValue(of(null))
     devicesService.deviceState = new EventEmitter<number>()
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
@@ -63,7 +66,13 @@ describe('DeviceToolbarComponent', () => {
         kvmAvailable: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       } as any)
     )
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
@@ -71,11 +80,12 @@ describe('DeviceToolbarComponent', () => {
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
     devicesService.device = new Subject<Device>()
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceToolbarComponent
+        DeviceToolbarComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: devicesService },
@@ -87,11 +97,11 @@ describe('DeviceToolbarComponent', () => {
           }
         }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(DeviceToolbarComponent)
     component = fixture.componentInstance
-    component.deviceId = 'guid'
+    fixture.componentRef.setInput('deviceId', 'guid')
 
     fixture.detectChanges()
   })
@@ -107,34 +117,35 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should send power action', () => {
-    component.deviceId = 'guid'
+    fixture.componentRef.setInput('deviceId', 'guid')
     component.sendPowerAction(4)
 
     fixture.detectChanges()
 
     expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false, {})
     fixture.detectChanges()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()()).toBeFalse()
   })
 
   it('should navigate to device', async () => {
-    component.deviceId = '12345-pokli-456772'
+    fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
     const routerSpy = spyOn(component.router, 'navigate')
     await component.navigateTo('guid')
-    expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId}/guid`])
+    expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId()}/guid`])
   })
 
   it('should navigate to devices', async () => {
-    component.deviceId = '12345-pokli-456772'
+    fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
+
     const routerSpy = spyOn(component.router, 'navigate')
-    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId}`)
+    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId()}`)
     await component.navigateTo('devices')
     expect(routerSpy).toHaveBeenCalledWith(['/devices'])
   })
 
   it('should send deactivate action', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.sendDeactivate()
     expect(dialogSpy).toHaveBeenCalled()
@@ -143,25 +154,72 @@ describe('DeviceToolbarComponent', () => {
     expect(sendDeactivateErrorSpy).toHaveBeenCalled()
   })
 
+  it('should open PBABootDialogComponent and send filtered PBA sources', () => {
+    const pbaSources = [
+      {
+        biosBootString: 'PBA1',
+        bootString: 'OemPba.efi',
+        elementName: '',
+        failThroughSupported: 0,
+        instanceID: 'PBA1',
+        structuredBootString: '',
+        description: 'PBA Boot'
+      },
+      {
+        biosBootString: 'Other',
+        bootString: 'Other.efi',
+        elementName: '',
+        failThroughSupported: 0,
+        instanceID: 'Other',
+        structuredBootString: '',
+        description: 'Other Boot'
+      }
+    ]
+    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
+    const dialogRefSpyObj = jasmine.createSpyObj({
+      afterClosed: of({ bootPath: 'OemPba.efi', enforceSecureBoot: true }),
+      close: null
+    })
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    component.performPBABoot(107)
+    expect(devicesService.getBootSources).toHaveBeenCalledWith('guid')
+    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '400px',
+      disableClose: false,
+      data: {
+        pbaBootFilesPath: [
+          {
+            biosBootString: 'PBA1',
+            bootString: 'OemPba.efi',
+            elementName: '',
+            failThroughSupported: 0,
+            instanceID: 'PBA1',
+            structuredBootString: '',
+            description: 'PBA Boot'
+          }
+        ],
+        action: 107
+      }
+    })
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(executeAuthSpy).toHaveBeenCalledWith(107, false, { bootPath: 'OemPba.efi', enforceSecureBoot: true })
+  })
+
+  it('should call executeAuthorizedPowerAction for WinRE without boot details', () => {
+    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    component.performWinREBoot(109)
+    expect(executeAuthSpy).toHaveBeenCalledWith(109, false, { enforceSecureBoot: true })
+  })
   it('should have OCR power option in non-cloud mode', () => {
     environment.cloud = false
     component.isCloudMode = false
 
     component.ngOnInit()
 
-    const ocrOption = component.powerOptions.find((option) => option.action === 105)
+    const ocrOption = component.powerOptions()!.find((option: { action: number }) => option.action === 105)
     expect(ocrOption).toBeTruthy()
-    expect(ocrOption?.label).toBe('Reset to HTTPS Boot (OCR)')
-  })
-
-  it('should not have OCR power option in cloud mode', () => {
-    environment.cloud = true
-    component.isCloudMode = true
-
-    component.ngOnInit()
-
-    const ocrOption = component.powerOptions.find((option) => option.action === 105)
-    expect(ocrOption).toBeFalsy()
+    expect(ocrOption?.label).toBe('powerOptions.resetToHTTPSBoot.value')
   })
 
   it('should open HttpbootDetailComponent dialog in non-cloud mode', () => {
@@ -169,7 +227,7 @@ describe('DeviceToolbarComponent', () => {
     component.isCloudMode = false
 
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     component.performHTTPBoot(105)
 
@@ -191,7 +249,7 @@ describe('DeviceToolbarComponent', () => {
       enforceSecureBoot: true
     }
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(bootDetails), close: null })
-    spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
     const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
 

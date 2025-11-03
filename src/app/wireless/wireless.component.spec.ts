@@ -11,15 +11,10 @@ import { of } from 'rxjs'
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
 import { RouterModule } from '@angular/router'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
-
-// Factory function for the TranslateHttpLoader
-function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-}
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('WirelessComponent', () => {
   let component: WirelessComponent
@@ -28,7 +23,7 @@ describe('WirelessComponent', () => {
   let deleteSpy: jasmine.Spy
   let translate: TranslateService
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
     getDataSpy = wirelessService.getData.and.returnValue(
       of({
@@ -46,33 +41,28 @@ describe('WirelessComponent', () => {
       })
     )
     deleteSpy = wirelessService.delete.and.returnValue(of(null))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
         WirelessComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: WirelessService, useValue: wirelessService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WirelessComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 
@@ -99,7 +89,7 @@ describe('WirelessComponent', () => {
 
   it('should delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')
@@ -111,7 +101,7 @@ describe('WirelessComponent', () => {
   })
   it('should not delete', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
     const snackBarSpy = spyOn(component.snackBar, 'open')
 
     component.delete('profile')

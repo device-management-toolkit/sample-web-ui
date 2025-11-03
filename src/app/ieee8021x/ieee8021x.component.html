@@ -38,7 +38,7 @@
           <mat-header-cell *matHeaderCellDef>{{
             'ieee8021xConfigs.table.interface.value' | translate
           }}</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.wiredInterface ? 'Wired' : 'Wireless' }} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{ getInterfaceLabel(element) }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="remove">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -52,11 +52,11 @@
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
       </mat-table>
     }
-    @if (totalCount !== 0) {
+    @if (totalCount() !== 0) {
       <mat-paginator
         [pageSizeOptions]="[25, 50, 100]"
         [pageSize]="pageEvent.pageSize"
-        [length]="totalCount"
+        [length]="totalCount()"
         (page)="onPaginator($event)"
         showFirstLastButtons>
       </mat-paginator>

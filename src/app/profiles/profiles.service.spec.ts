@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { ProfilesService } from './profiles.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { DataWithCount, PageEventOptions } from 'src/models/models'
 import { Profile } from './profiles.constants'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ProfilesService', () => {
   let service: ProfilesService
@@ -18,11 +20,14 @@ describe('ProfilesService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         ProfilesService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(ProfilesService)
@@ -54,7 +59,8 @@ describe('ProfilesService', () => {
             dhcpEnabled: true,
             ipSyncEnabled: true,
             localWifiSyncEnabled: true,
-            tags: []
+            tags: [],
+            uefiWifiSyncEnabled: false
           }
         ],
         totalCount: 1
@@ -84,7 +90,8 @@ describe('ProfilesService', () => {
             dhcpEnabled: true,
             ipSyncEnabled: true,
             localWifiSyncEnabled: true,
-            tags: []
+            tags: [],
+            uefiWifiSyncEnabled: false
           }
         ],
         totalCount: 1
@@ -128,7 +135,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.getRecord('profile1').subscribe((response) => {
@@ -169,7 +177,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.create(mockProfile).subscribe((response) => {
@@ -210,7 +219,8 @@ describe('ProfilesService', () => {
         dhcpEnabled: true,
         ipSyncEnabled: true,
         localWifiSyncEnabled: true,
-        tags: []
+        tags: [],
+        uefiWifiSyncEnabled: false
       }
 
       service.update(mockProfile).subscribe((response) => {

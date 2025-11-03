@@ -12,16 +12,17 @@ import { ConfigsService } from 'src/app/configs/configs.service'
 import { WirelessService } from 'src/app/wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
 import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
+import { ProxyConfigsService } from 'src/app/proxy-configs/proxy-configs.service'
 import { ProfileDetailComponent } from './profile-detail.component'
 import { Profile } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from 'src/models/models'
 import { environment } from 'src/environments/environment'
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
-import { HttpClient, provideHttpClient } from '@angular/common/http'
+import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
   let component: ProfileDetailComponent
@@ -55,14 +56,16 @@ describe('ProfileDetailComponent', () => {
   ]
   let ieee8021xGetDataSpy: jasmine.Spy
   let wirelessGetDataSpy: jasmine.Spy
+  let proxyGetDataSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
   let translate: TranslateService
 
-  // Factory function for the TranslateHttpLoader
-  function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json')
-  }
-  beforeEach(async () => {
+  const mockProxyConfigs = [
+    { name: 'proxy1', address: 'http://proxy1.com', port: 8080, infoFormat: 1, networkDnsSuffix: '' },
+    { name: 'proxy2', address: 'http://proxy2.com', port: 3128, infoFormat: 1, networkDnsSuffix: '' }
+  ]
+
+  beforeEach(() => {
     const profilesService = jasmine.createSpyObj('ProfilesService', [
       'getRecord',
       'update',
@@ -71,6 +74,7 @@ describe('ProfileDetailComponent', () => {
     const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
+    const proxyConfigsService = jasmine.createSpyObj('ProxyConfigsService', ['getData'])
     // const tlsService = jasmine.createSpyObj('TLSService', ['getData'])
     const profileResponse = {
       profileName: 'profile1',
@@ -84,7 +88,8 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: true,
       tags: ['acm'],
       ieee8021xProfileName: ieee8021xAvailableConfigs[0].profileName,
-      wifiConfigs: [{ priority: 1, profileName: 'wifi' }]
+      wifiConfigs: [{ priority: 1, profileName: 'wifi' }],
+      proxyConfigs: [{ priority: 1, name: 'proxy1' }]
     }
     profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
     profileCreateSpy = profilesService.create.and.returnValue(of({}))
@@ -94,25 +99,26 @@ describe('ProfileDetailComponent', () => {
       of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length })
     )
     wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    proxyGetDataSpy = proxyConfigsService.getData.and.returnValue(
+      of({ data: mockProxyConfigs, totalCount: mockProxyConfigs.length })
+    )
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
         RouterModule,
         ProfileDetailComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateModule.forRoot()
       ],
       providers: [
+        provideTranslateService({
+          loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })
+        }),
         { provide: ProfilesService, useValue: profilesService },
         { provide: ConfigsService, useValue: configsService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: WirelessService, useFactory: () => wirelessService },
+        { provide: ProxyConfigsService, useValue: proxyConfigsService },
         // { provide: TLSService, useValue: tlsService },
         {
           provide: ActivatedRoute,
@@ -120,18 +126,19 @@ describe('ProfileDetailComponent', () => {
             params: of({ name: 'profile' })
           }
         },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
         provideHttpClientTesting()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileDetailComponent)
     component = fixture.componentInstance
     translate = TestBed.inject(TranslateService)
-    translate.setDefaultLang('en')
+    translate.setFallbackLang('en')
     fixture.detectChanges()
   })
 
@@ -145,6 +152,7 @@ describe('ProfileDetailComponent', () => {
     expect(profileSpy).toHaveBeenCalledWith('profile')
     expect(ieee8021xGetDataSpy).toHaveBeenCalled()
     expect(wirelessGetDataSpy).toHaveBeenCalled()
+    expect(proxyGetDataSpy).toHaveBeenCalled()
   })
   it('should set connectionMode to TLS when tlsMode is not null', () => {
     const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
@@ -214,7 +222,7 @@ describe('ProfileDetailComponent', () => {
   it('should submit when valid (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -234,9 +242,9 @@ describe('ProfileDetailComponent', () => {
   it('should submit when valid with random passwords (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -258,9 +266,9 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit with random passwords', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -295,12 +303,22 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.localWifiSyncEnabled.enabled).toBe(true)
   })
 
+  it('should enable the uefiWifiSync checkbox', () => {
+    component.uefiWifiSyncChange(true)
+    expect(component.profileForm.controls.uefiWifiSyncEnabled.enabled).toBe(false)
+  })
+
+  it('should disable the uefiWifiSync checkbox', () => {
+    component.uefiWifiSyncChange(false)
+    expect(component.profileForm.controls.uefiWifiSyncEnabled.enabled).toBe(true)
+  })
+
   it('should submit if cira config and static network are simultaneously selected and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -326,9 +344,9 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected and user cancels', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -350,9 +368,9 @@ describe('ProfileDetailComponent', () => {
   it('should submit if cira config and static network are simultaneously selected + randomly generated password and user confirms', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -374,9 +392,9 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected + randomly generated password and user cancels dialog', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -395,19 +413,24 @@ describe('ProfileDetailComponent', () => {
     expect(routerSpy).not.toHaveBeenCalled()
   })
 
-  it('should submit when valid with only random mebx password + ccm activation', () => {
+  it('should submit when valid with only random mebx password + acm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    component.isEdit = false
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
-      activation: 'ccmactivate',
+      activation: 'acmactivate',
       amtPassword: 'Password123',
       generateRandomPassword: false,
       generateRandomMEBxPassword: true,
-      mebxPassword: '',
+      mebxPassword: 'Password123',
       dhcpEnabled: true,
+      connectionMode: 'DIRECT',
+      userConsent: 'None',
+      iderEnabled: true,
+      kvmEnabled: true,
+      solEnabled: true,
       ciraConfigName: null
     })
     component.confirm()
@@ -420,9 +443,9 @@ describe('ProfileDetailComponent', () => {
   it('should submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'ccmactivate',
@@ -444,9 +467,9 @@ describe('ProfileDetailComponent', () => {
   it('should cancel submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'ccmactivate',
@@ -466,22 +489,22 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the selected wifi configs on selecting a wifi profile', () => {
-    component.selectedWifiConfigs = [{ priority: 1, profileName: 'home' }]
+    component.selectedWifiConfigs.set([{ priority: 1, profileName: 'home' }])
     const option: MatAutocompleteSelectedEvent = {
       option: {
         value: 'work'
       }
     } as any
     component.selectWifiProfile(option)
-    expect(component.selectedWifiConfigs.length).toBe(2)
+    expect(component.selectedWifiConfigs().length).toBe(2)
   })
 
   it('should update the selected wifi configs when a selected config is removed', () => {
     const wifiCfg01 = { priority: 1, profileName: 'home' }
     const wifiCfg02 = { priority: 2, profileName: 'work' }
-    component.selectedWifiConfigs = [wifiCfg01, wifiCfg02]
+    component.selectedWifiConfigs.set([wifiCfg01, wifiCfg02])
     component.removeWifiProfile(wifiCfg02)
-    expect(component.selectedWifiConfigs.length).toBe(1)
+    expect(component.selectedWifiConfigs().length).toBe(1)
   })
 
   it('should adjust related fields on selecting activation mode', () => {
@@ -496,18 +519,18 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should return the search results when a search string is entered', () => {
-    component.wirelessConfigurations = ['homeWiFi', 'officeWiFi']
+    component.wirelessConfigurations.set(['homeWiFi', 'officeWiFi'])
     const searchString = 'home'
     const results = component.search(searchString)
     expect(results).toEqual(['homeWiFi'])
   })
 
   it('should update the list of tags when a tag is added ', () => {
-    component.tags = [
+    component.tags.set([
       'acm',
       'ccm',
       'profile'
-    ]
+    ])
     const e = {
       value: '',
       chipInput: {
@@ -516,14 +539,14 @@ describe('ProfileDetailComponent', () => {
     }
     e.value = '  ccm '
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual([
+    expect(component.tags()).toEqual([
       'acm',
       'ccm',
       'profile'
     ])
     e.value = 'newtag'
     component.add(e as unknown as MatChipInputEvent)
-    expect(component.tags).toEqual([
+    expect(component.tags()).toEqual([
       'acm',
       'ccm',
       'newtag',
@@ -532,38 +555,38 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should update the list of tags when a tag is removed ', () => {
-    component.tags = [
+    component.tags.set([
       'acm',
       'ccm',
       'profile'
-    ]
+    ])
     const tagName = 'ccm'
     component.remove(tagName)
-    expect(component.tags).toEqual(['acm', 'profile'])
+    expect(component.tags()).toEqual(['acm', 'profile'])
   })
 
   it('should turn amt visibility on when it is off', () => {
-    component.amtInputType = 'password'
+    component.amtInputType.set('password')
     component.toggleAMTPassVisibility()
-    expect(component.amtInputType).toEqual('text')
+    expect(component.amtInputType()).toEqual('text')
   })
 
   it('should turn amt visibility off when it is on', () => {
-    component.amtInputType = 'text'
+    component.amtInputType.set('text')
     component.toggleAMTPassVisibility()
-    expect(component.amtInputType).toEqual('password')
+    expect(component.amtInputType()).toEqual('password')
   })
 
   it('should turn mebx visibility on when it is off', () => {
-    component.mebxInputType = 'password'
+    component.mebxInputType.set('password')
     component.toggleMEBXPassVisibility()
-    expect(component.mebxInputType).toEqual('text')
+    expect(component.mebxInputType()).toEqual('text')
   })
 
   it('should turn mebx visibility off when it is on', () => {
-    component.mebxInputType = 'text'
+    component.mebxInputType.set('text')
     component.toggleMEBXPassVisibility()
-    expect(component.mebxInputType).toEqual('password')
+    expect(component.mebxInputType()).toEqual('password')
   })
 
   it('should generate a random password without a specified length', () => {
@@ -623,5 +646,239 @@ describe('ProfileDetailComponent', () => {
 
     expect(profileUpdateSpy).toHaveBeenCalled()
     expect(routerSpy).not.toHaveBeenCalled()
+  })
+
+  // Proxy Configuration Tests
+  describe('Proxy Configuration Tests', () => {
+    it('should load proxy configurations on initialization', () => {
+      expect(proxyGetDataSpy).toHaveBeenCalled()
+      expect(component.ProxyConfigurations().length).toBe(2)
+      expect(component.ProxyConfigurations()).toEqual(['proxy1', 'proxy2'])
+    })
+
+    it('should show proxy configurations when available', () => {
+      component.ProxyConfigurations.set(['proxy1', 'proxy2'])
+      expect(component.showProxyConfigurations()).toBe(true)
+    })
+
+    it('should not show proxy configurations when none available', () => {
+      component.ProxyConfigurations.set([])
+      expect(component.showProxyConfigurations()).toBe(false)
+    })
+
+    it('should select proxy profile and assign priority', () => {
+      const event = {
+        option: { value: 'proxy1' }
+      } as MatAutocompleteSelectedEvent
+
+      component.selectedProxyConfigs.set([])
+      component.selectProxyProfile(event)
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs.length).toBe(1)
+      expect(selectedConfigs[0]).toEqual({
+        priority: 1,
+        name: 'proxy1'
+      })
+    })
+
+    it('should not add duplicate proxy profile', () => {
+      const event = {
+        option: { value: 'proxy1' }
+      } as MatAutocompleteSelectedEvent
+
+      component.selectedProxyConfigs.set([
+        { priority: 1, name: 'proxy1' }])
+
+      component.selectProxyProfile(event)
+      expect(component.selectedProxyConfigs().length).toBe(1)
+    })
+
+    it('should not select NO_PROXY_CONFIGS option', () => {
+      const event = {
+        option: { value: 'profileDetail.noProxy.value' }
+      } as MatAutocompleteSelectedEvent
+
+      component.selectedProxyConfigs.set([])
+      component.selectProxyProfile(event)
+      expect(component.selectedProxyConfigs().length).toBe(0)
+    })
+
+    it('should assign correct priority when adding multiple proxies', () => {
+      const event1 = { option: { value: 'proxy1' } } as MatAutocompleteSelectedEvent
+      const event2 = { option: { value: 'proxy2' } } as MatAutocompleteSelectedEvent
+
+      component.selectedProxyConfigs.set([])
+      component.selectProxyProfile(event1)
+      component.selectProxyProfile(event2)
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs.length).toBe(2)
+      expect(selectedConfigs[0].priority).toBe(1)
+      expect(selectedConfigs[1].priority).toBe(2)
+    })
+
+    it('should remove proxy profile and update priorities', () => {
+      const proxyToRemove = { priority: 1, name: 'proxy1' }
+      component.selectedProxyConfigs.set([
+        proxyToRemove,
+        { priority: 2, name: 'proxy2' }])
+
+      component.removeProxyProfile(proxyToRemove)
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs.length).toBe(1)
+      expect(selectedConfigs[0].priority).toBe(1)
+      expect(selectedConfigs[0].name).toBe('proxy2')
+    })
+
+    it('should handle drag and drop reordering', () => {
+      component.selectedProxyConfigs.set([
+        { priority: 1, name: 'proxy1' },
+        { priority: 2, name: 'proxy2' }
+      ])
+
+      const dropEvent = {
+        previousIndex: 0,
+        currentIndex: 1
+      } as any
+
+      component.dropProxy(dropEvent)
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs[0].name).toBe('proxy2')
+      expect(selectedConfigs[0].priority).toBe(1)
+      expect(selectedConfigs[1].name).toBe('proxy1')
+      expect(selectedConfigs[1].priority).toBe(2)
+    })
+
+    it('should update priorities for proxy configs', () => {
+      const configs = [
+        { priority: 3, name: 'proxy1' },
+        { priority: 1, name: 'proxy2' }
+      ]
+
+      const result = component['updatePrioritiesForProxyConfigs'](configs)
+
+      expect(result[0].priority).toBe(1)
+      expect(result[0].name).toBe('proxy1')
+      expect(result[1].priority).toBe(2)
+      expect(result[1].name).toBe('proxy2')
+    })
+
+    it('should update proxy priorities', () => {
+      component.selectedProxyConfigs.set([
+        { priority: 3, name: 'proxy1' },
+        { priority: 1, name: 'proxy2' }
+      ])
+
+      component.updateProxyPriorities()
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs[0].priority).toBe(1)
+      expect(selectedConfigs[1].priority).toBe(2)
+    })
+
+    it('should filter proxy configurations for autocomplete', () => {
+      component.ProxyConfigurations.set([
+        'proxy1',
+        'proxy2',
+        'test-proxy'
+      ])
+
+      const result = component.searchProxy('proxy')
+      expect(result).toContain('proxy1')
+      expect(result).toContain('proxy2')
+      expect(result).toContain('test-proxy') // All contain 'proxy' substring
+    })
+
+    it('should return NO_PROXY_CONFIGS when no matches found', () => {
+      component.ProxyConfigurations.set(['proxy1', 'proxy2'])
+
+      const result = component.searchProxy('nonexistent')
+      expect(result).toEqual(['profileDetail.noProxy.value'])
+    })
+
+    it('should return correct CSS classes for proxy selectability', () => {
+      const result1 = component.isProxySelectable('proxy1')
+      expect(result1['no-results']).toBeFalsy()
+
+      const result2 = component.isProxySelectable('profileDetail.noProxy.value')
+      expect(result2['no-results']).toBe(true)
+    })
+
+    it('should include proxy configs in form submission', () => {
+      const routerSpy = spyOn(component.router, 'navigate')
+
+      component.isEdit.set(false)
+      component.selectedProxyConfigs.set([
+        { priority: 1, name: 'proxy1' },
+        { priority: 2, name: 'proxy2' }
+      ])
+
+      component.profileForm.patchValue({
+        profileName: 'profile',
+        activation: 'acmactivate',
+        amtPassword: 'Password123',
+        generateRandomPassword: false,
+        generateRandomMEBxPassword: false,
+        mebxPassword: 'Password123',
+        dhcpEnabled: true,
+        ciraConfigName: 'config1'
+      })
+
+      component.confirm()
+
+      expect(profileCreateSpy).toHaveBeenCalled()
+      expect(routerSpy).toHaveBeenCalled()
+      expect(profileCreateSpy).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          proxyConfigs: [
+            { priority: 1, name: 'proxy1' },
+            { priority: 2, name: 'proxy2' }
+          ]
+        })
+      )
+    })
+
+    it('should load existing proxy configs with proper priorities when editing', () => {
+      const profileData = {
+        profileName: 'test-profile',
+        proxyConfigs: [
+          { profileName: 'proxy1' }, // Missing priority
+          { priority: 2, profileName: 'proxy2' }
+        ]
+      } as any
+
+      profileSpy.and.returnValue(of(profileData))
+
+      component.getAmtProfile('test-profile')
+
+      const selectedConfigs = component.selectedProxyConfigs()
+      expect(selectedConfigs.length).toBe(2)
+      expect(selectedConfigs[0].priority).toBe(1) // Should assign priority 1
+      expect(selectedConfigs[1].priority).toBe(2) // Should keep existing priority
+    })
+
+    it('should handle error when loading proxy configs', () => {
+      proxyGetDataSpy.and.returnValue(throwError(() => new Error('Proxy load error')))
+
+      component['getProxyConfigs']()
+
+      expect(component.errorMessages().length).toBeGreaterThan(0)
+    })
+
+    it('should clear proxy autocomplete after selection', () => {
+      const event = {
+        option: { value: 'proxy1' }
+      } as MatAutocompleteSelectedEvent
+
+      component.selectedProxyConfigs.set([])
+      const patchValueSpy = spyOn(component.proxyAutocomplete, 'patchValue')
+
+      component.selectProxyProfile(event)
+
+      expect(patchValueSpy).toHaveBeenCalledWith('')
+    })
   })
 })

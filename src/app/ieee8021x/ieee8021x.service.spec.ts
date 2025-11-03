@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
 import { IEEE8021xService } from './ieee8021x.service'
 import { AuthService } from '../auth.service'
 import { environment } from 'src/environments/environment'
 import { IEEE8021xConfig, DataWithCount, PageEventOptions } from 'src/models/models'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('IEEE8021xService', () => {
   let service: IEEE8021xService
@@ -17,11 +19,14 @@ describe('IEEE8021xService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         IEEE8021xService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: environment, useValue: mockEnvironment }]
+        { provide: environment, useValue: mockEnvironment },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
 
     service = TestBed.inject(IEEE8021xService)

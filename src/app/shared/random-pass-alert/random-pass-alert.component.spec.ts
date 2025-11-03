@@ -7,15 +7,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { RandomPassAlertComponent } from './random-pass-alert.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('RandomPassAlertComponent', () => {
   let component: RandomPassAlertComponent
   let fixture: ComponentFixture<RandomPassAlertComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MatDialogModule, RandomPassAlertComponent]
-    }).compileComponents()
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        RandomPassAlertComponent,
+        TranslateModule.forRoot()
+      ]
+    })
   })
 
   beforeEach(() => {

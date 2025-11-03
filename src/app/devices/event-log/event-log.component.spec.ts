@@ -8,6 +8,7 @@ import { EventLogComponent } from './event-log.component'
 import { DeviceLogService } from '../device-log.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('EventLogComponent', () => {
   let component: EventLogComponent
@@ -45,25 +46,24 @@ describe('EventLogComponent', () => {
   //   hasMoreRecords: false
   // }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     deviceLogServiceSpy = jasmine.createSpyObj('DeviceLogService', ['getEventLog', 'downloadEventLog'])
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
-    await TestBed.configureTestingModule({
-      imports: [EventLogComponent],
+    TestBed.configureTestingModule({
+      imports: [EventLogComponent, TranslateModule.forRoot()],
       providers: [
         { provide: DeviceLogService, useValue: deviceLogServiceSpy },
         { provide: MatSnackBar, useValue: snackBarSpy }
       ]
-    }).compileComponents()
+    })
   })
 
   // Create the component instance without immediately triggering change detection.
   beforeEach(() => {
     fixture = TestBed.createComponent(EventLogComponent)
     component = fixture.componentInstance
-    component.deviceId = 'test-device'
-    // Do not call fixture.detectChanges() here so that we can control when ngAfterViewInit is run.
+    fixture.componentRef.setInput('deviceId', 'test-device')
   })
 
   afterEach(() => {

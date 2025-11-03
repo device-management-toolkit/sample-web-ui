@@ -14,17 +14,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AddDeviceEnterpriseComponent', () => {
   let component: AddDeviceEnterpriseComponent
   let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
   let addDeviceSpy: jasmine.Spy
   let dialogCloseSpy: jasmine.Spy
-  beforeEach(async () => {
+  beforeEach(() => {
     const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice'])
     addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
         MatDialogModule,
@@ -34,7 +35,8 @@ describe('AddDeviceEnterpriseComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         MatChipsModule,
-        AddDeviceEnterpriseComponent
+        AddDeviceEnterpriseComponent,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: DevicesService, useValue: deviceService },
@@ -42,7 +44,7 @@ describe('AddDeviceEnterpriseComponent', () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: MatDialogRef, useValue: { close: () => {} } }
       ]
-    }).compileComponents()
+    })
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance
     dialogCloseSpy = spyOn(component.dialog, 'close')

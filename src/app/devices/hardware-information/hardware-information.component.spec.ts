@@ -9,6 +9,7 @@ import { HardwareInformationComponent } from './hardware-information.component'
 import { DevicesService } from '../devices.service'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('HardwareInformationComponent', () => {
   let component: HardwareInformationComponent
@@ -45,7 +46,13 @@ describe('HardwareInformationComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        remoteErase: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       })
     )
 
@@ -53,13 +60,13 @@ describe('HardwareInformationComponent', () => {
     devicesServiceSpy.getDiskInformation.and.returnValue(of({} as any))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     devicesServiceSpy.TargetOSMap = { 0: '' } as any
-    await TestBed.configureTestingModule({
-      imports: [HardwareInformationComponent],
+    TestBed.configureTestingModule({
+      imports: [HardwareInformationComponent, TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
-    }).compileComponents()
+    })
 
     fixture = TestBed.createComponent(HardwareInformationComponent)
     component = fixture.componentInstance

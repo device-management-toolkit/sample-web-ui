@@ -8,19 +8,21 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { AreYouSureDialogComponent } from './are-you-sure.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AreYouSureComponent', () => {
   let component: AreYouSureDialogComponent
   let fixture: ComponentFixture<AreYouSureDialogComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
         MatButtonModule,
-        AreYouSureDialogComponent
+        AreYouSureDialogComponent,
+        TranslateModule.forRoot()
       ]
-    }).compileComponents()
+    })
   })
 
   beforeEach(() => {

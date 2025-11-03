@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -11,8 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
 import { CertInfo } from 'src/models/models'
 import { AddCertDialogComponent } from './add-cert-dialog/add-cert-dialog.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { MatButtonModule, MatIconButton } from '@angular/material/button'
+import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'app-certificates',
@@ -23,6 +24,7 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button'
     MatButtonModule,
     MatListModule,
     TranslateModule,
+    MatTooltip,
     MatIconButton
   ],
   templateUrl: './certificates.component.html',
@@ -31,6 +33,7 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button'
 export class CertificatesComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
+  private readonly translate = inject(TranslateService)
   snackBar = inject(MatSnackBar)
 
   public isLoading = signal(true)
@@ -40,8 +43,7 @@ export class CertificatesComponent implements OnInit {
     isTrusted: false
   }
 
-  @Input()
-  public deviceId = ''
+  public readonly deviceId = input('')
 
   ngOnInit(): void {
     this.getCertificates()
@@ -49,10 +51,11 @@ export class CertificatesComponent implements OnInit {
 
   getCertificates(): void {
     this.devicesService
-      .getCertificates(this.deviceId)
+      .getCertificates(this.deviceId())
       .pipe(
         catchError((err) => {
-          this.snackBar.open($localize`Error retrieving certificate info`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('certificates.errorRetrievingCertificates.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {
@@ -112,11 +115,13 @@ export class CertificatesComponent implements OnInit {
   addCertificate(addCert: CertInfo): void {
     this.isLoading.set(true)
     this.devicesService
-      .addCertificate(this.deviceId, addCert)
+      .addCertificate(this.deviceId(), addCert)
       .pipe(
         catchError((err) => {
           this.isLoading.set(false)
-          this.snackBar.open($localize`Error adding certificate`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('certificates.errorAddingCertificates.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
         }),
         finalize(() => {

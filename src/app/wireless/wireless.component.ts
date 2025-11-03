@@ -33,7 +33,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-wireless',
@@ -68,11 +68,12 @@ export class WirelessComponent implements OnInit {
   public readonly router = inject(Router)
   public readonly dialog = inject(MatDialog)
   private readonly wirelessService = inject(WirelessService)
+  private readonly translate = inject(TranslateService)
 
   // Properties
   public configs = new MatTableDataSource<WirelessConfig>()
   public isLoading = signal(true)
-  public totalCount = 0
+  public totalCount = signal(0)
   public displayedColumns: string[] = [
     'name',
     'authmethod',
@@ -105,16 +106,18 @@ export class WirelessComponent implements OnInit {
       .subscribe({
         next: (rsp) => {
           this.configs = new MatTableDataSource<WirelessConfig>(rsp.data)
-          this.totalCount = rsp.totalCount
+          this.totalCount.set(rsp.totalCount)
         },
         error: () => {
-          this.snackBar.open($localize`Unable to load configurations`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('wireless.failLoadConfiguration.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   delete(name: string): void {
@@ -133,17 +136,16 @@ export class WirelessComponent implements OnInit {
           .subscribe({
             next: () => {
               this.getData(this.pageEvent)
-              this.snackBar.open(
-                $localize`Configuration deleted successfully`,
-                undefined,
-                SnackbarDefaults.defaultSuccess
-              )
+              const msg: string = this.translate.instant('common.deleteConfiguration.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
             error: (err) => {
               if (err?.length > 0) {
                 this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
               } else {
-                this.snackBar.open($localize`Unable to delete configuration`, undefined, SnackbarDefaults.defaultError)
+                const errorMessage: string = this.translate.instant('common.errorDeleteConfiguration.value')
+
+                this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
               }
             }
           })

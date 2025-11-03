@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AMTFeaturesResponse, UserConsentData, UserConsentResponse } from 'src/models/models'
 import { DevicesService } from './devices.service'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class UserConsentService {
   private dialog = inject(MatDialog)
   private snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
+  private readonly translate = inject(TranslateService)
 
   handleUserConsentDecision(
     result: boolean | null,
@@ -41,7 +43,8 @@ export class UserConsentService {
     return this.devicesService.reqUserConsentCode(guid).pipe(
       catchError((err) => {
         // Cannot access KVM if request to user consent code fails
-        this.displayError($localize`Error requesting user consent code - retry after 3 minutes`)
+        const msg: string = this.translate.instant('userConsent.errorRequest.value')
+        this.displayError(msg)
         return of(err)
       })
     )
@@ -65,7 +68,7 @@ export class UserConsentService {
         })
       )
     } else {
-      this.displayError(`${featureName} cannot be accessed - failed to request user consent code`)
+      this.displayError(this.translate.instant('error.userConsentCodeFailed.value', { featureName }))
       return of(null)
     }
   }
@@ -84,29 +87,20 @@ export class UserConsentService {
   afterUserConsentDialogClosed(data: UserConsentData, featureName: string): boolean {
     const response: UserConsentResponse = data?.results
     if (response.error != null) {
-      this.displayError(`Unable to send code: ${response.error.Body.ReturnValueStr as string}`)
+      this.displayError(
+        this.translate.instant('error.unableToSendCode.value', { error: response.error.Body.ReturnValueStr })
+      )
       return false
     } else {
-      if (environment.cloud) {
-        // On success to send or cancel to previous requested user consent code
-        const method = response.Header.Action.substring(
-          (response.Header.Action.lastIndexOf('/') as number) + 1,
-          response.Header.Action.length
-        )
-        if (method === 'CancelOptInResponse') {
-          this.cancelOptInCodeResponse(response as UserConsentResponse, featureName)
-        } else if (method === 'SendOptInCodeResponse') {
-          const result = this.sendOptInCodeResponse(response as UserConsentResponse, featureName)
-          return result
-        }
-      } else {
-        const method = (response as any).XMLName.Local
-        if (method === 'CancelOptIn_OUTPUT') {
-          this.cancelOptInCodeResponse({ Body: response } as any, featureName)
-        } else if (method === 'SendOptInCode_OUTPUT') {
-          const result = this.sendOptInCodeResponse({ Body: response } as any, featureName)
-          return result
-        }
+      const method = response.Header.Action.substring(
+        (response.Header.Action.lastIndexOf('/') as number) + 1,
+        response.Header.Action.length
+      )
+      if (method === 'CancelOptInResponse') {
+        this.cancelOptInCodeResponse(response as UserConsentResponse, featureName)
+      } else if (method === 'SendOptInCodeResponse') {
+        const result = this.sendOptInCodeResponse(response as UserConsentResponse, featureName)
+        return result
       }
       return false
     }
@@ -125,9 +119,9 @@ export class UserConsentService {
 
   cancelOptInCodeResponse(result: UserConsentResponse, featureName: string): void {
     if (result.Body?.ReturnValue === 0) {
-      this.displayError(`${featureName} cannot be accessed - requested user consent code is cancelled`)
+      this.displayError(this.translate.instant('error.userConsentCodeCancelled.value', { featureName }))
     } else {
-      this.displayError(`${featureName} cannot be accessed - failed to cancel requested user consent code`)
+      this.displayError(this.translate.instant('error.userConsentCodeCancelFailed.value', { featureName }))
     }
   }
 
@@ -135,10 +129,10 @@ export class UserConsentService {
     if (result.Body?.ReturnValue === 0) {
       return true
     } else if (result.Body?.ReturnValue === 2066) {
-      this.displayError(`${featureName} cannot be accessed - unsupported user consent code`)
+      this.displayError(this.translate.instant('error.userConsentUnsupported.value', { featureName }))
       return false
     } else {
-      this.displayError(`${featureName} cannot be accessed - failed to send user consent code`)
+      this.displayError(this.translate.instant('error.userConsentSendFailed.value', { featureName }))
       return false
     }
   }
@@ -149,16 +143,16 @@ export class UserConsentService {
       .cancelUserConsentCode(guid)
       .pipe(
         catchError((err) => {
-          this.displayError(`Error cancelling user consent code`)
+          this.displayError(this.translate.instant('error.userConsentCancelFailed.value'))
           return of(err)
         })
       )
       .subscribe((data: UserConsentResponse) => {
         if (data.Body?.ReturnValue === 0) {
-          this.displayWarning(`${featureName} cannot be accessed - previously requested user consent code is cancelled`)
+          this.displayWarning(this.translate.instant('warning.userConsentCancelled.value', { featureName }))
           result = true
         } else {
-          this.displayError(`${featureName} cannot be accessed - failed to cancel previous requested user content code`)
+          this.displayError(this.translate.instant('error.userConsentCancelFailed.value', { featureName }))
         }
       })
     return result

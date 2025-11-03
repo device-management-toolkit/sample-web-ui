@@ -3,13 +3,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyDisplayDialogComponent } from './key-display-dialog.component'
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('KeyDisplayDialogComponent', () => {
   let component: KeyDisplayDialogComponent
   let fixture: ComponentFixture<KeyDisplayDialogComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       providers: [
         provideNoopAnimations(),
         {
@@ -17,8 +18,12 @@ describe('KeyDisplayDialogComponent', () => {
           useValue: { key: 'test' }
         }
       ],
-      imports: [KeyDisplayDialogComponent, MatDialogModule]
-    }).compileComponents()
+      imports: [
+        KeyDisplayDialogComponent,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ]
+    })
 
     fixture = TestBed.createComponent(KeyDisplayDialogComponent)
     component = fixture.componentInstance

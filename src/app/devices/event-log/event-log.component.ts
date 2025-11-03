@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, Input, AfterViewInit, ViewChild, inject, signal } from '@angular/core'
+import { Component, AfterViewInit, ViewChild, inject, signal, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { of } from 'rxjs'
@@ -19,6 +19,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -40,15 +41,15 @@ const EVENTTYPEMAP: EventTypeMap = {
     MatPaginatorModule,
     MatIconModule,
     AmTimeAgoFormatterPipe,
-    AmDateFormatterPipe
+    AmDateFormatterPipe,
+    TranslateModule
   ]
 })
 export class EventLogComponent implements AfterViewInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly deviceLogService = inject(DeviceLogService)
-
-  @Input()
-  public deviceId = ''
+  private readonly translate = inject(TranslateService)
+  public readonly deviceId = input('')
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -80,10 +81,11 @@ export class EventLogComponent implements AfterViewInit {
     if (this.isCloudMode) {
       this.isLoading.set(true)
       this.deviceLogService
-        .getEventLog(this.deviceId)
+        .getEventLog(this.deviceId())
         .pipe(
           catchError(() => {
-            this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+            const msg: string = this.translate.instant('event.errorLog.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
             return of({ records: [], hasMoreRecords: true })
           }),
           finalize(() => {
@@ -101,10 +103,11 @@ export class EventLogComponent implements AfterViewInit {
   loadEventLogs(startIndex: number): void {
     this.isLoading.set(true)
     this.deviceLogService
-      .getEventLog(this.deviceId, startIndex, this.pageSize)
+      .getEventLog(this.deviceId(), startIndex, this.pageSize)
       .pipe(
         catchError(() => {
-          this.snackBar.open($localize`Error retrieving event log`, undefined, SnackbarDefaults.defaultError)
+          const msg: string = this.translate.instant('event.errorLog.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of({ records: [], hasMoreRecords: true })
         }),
         finalize(() => {
@@ -134,12 +137,12 @@ export class EventLogComponent implements AfterViewInit {
   }
   download(): void {
     this.isLoading.set(true)
-    this.deviceLogService.downloadEventLog(this.deviceId).subscribe((data) => {
+    this.deviceLogService.downloadEventLog(this.deviceId()).subscribe((data) => {
       const blob = new Blob([data], { type: 'application/octet-stream' })
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `event_${this.deviceId}.csv`
+      a.download = `event_${this.deviceId()}.csv`
       a.click()
 
       window.URL.revokeObjectURL(url)
