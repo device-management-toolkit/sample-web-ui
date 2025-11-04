@@ -69,17 +69,19 @@ export class DomainDetailComponent implements OnInit {
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
 
+  // Get the appropriate validators for profile name based on environment
+  private getProfileNameValidators() {
+    return [
+      Validators.required,
+      // Environment-aware validation pattern
+      environment.cloud
+        ? Validators.pattern(/^[^\s]+$/) // Cloud: No spaces (allows special characters)
+        : Validators.pattern(/^[a-zA-Z0-9]+$/) // Console: Alphanumeric only
+    ]
+  }
+
   public domainForm = this.fb.nonNullable.group({
-    profileName: [
-      '',
-      [
-        Validators.required,
-        // Environment-aware validation pattern
-        environment.cloud
-          ? Validators.pattern(/^[^\s]+$/) // Cloud: No spaces (allows special characters)
-          : Validators.pattern(/^[a-zA-Z0-9]+$/) // Console: Alphanumeric only
-      ]
-    ],
+    profileName: ['', this.getProfileNameValidators()],
     domainSuffix: ['', Validators.required],
     provisioningCert: ['', Validators.required],
     provisioningCertPassword: ['', Validators.required],
@@ -105,7 +107,7 @@ export class DomainDetailComponent implements OnInit {
           : this.translate.instant('domainDetail.consolealphanumValidation.value')
       }
     }
-    return null
+    return ''
   }
 
   constructor() {
