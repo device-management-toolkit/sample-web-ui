@@ -1177,10 +1177,6 @@
     "description": "Error message for cloud deployment validation (allows special characters but no spaces)",
     "value": "Domain name cannot contain spaces"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Error message for FQDN certificate validation",
-    "value": "FQDN not associated with provisioning certificate"
-  },
   "domainDetail.fqdn": {
     "description": "Hint for the FQDN field",
     "value": "Enter the FQDN that is associated with the provisioning certificate (i.e amtdomain.com)"

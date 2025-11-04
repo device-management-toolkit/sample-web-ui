@@ -1045,10 +1045,6 @@
     "description": "Foutmelding voor cloud deployment validatie (staat speciale tekens toe maar geen spaties)",
     "value": "Domeinnaam mag geen spaties bevatten"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Foutmelding voor FQDN certificaat validatie",
-    "value": "FQDN niet gekoppeld aan provisioningcertificaat"
-  },
   "domainDetail.fqdn": {
     "description": "Tip voor het FQDN-veld",
     "value": "Voer de FQDN in die is gekoppeld aan het provisioningcertificaat (bijv. amtdomain.com)."

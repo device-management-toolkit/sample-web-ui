@@ -92,7 +92,7 @@ export class DomainDetailComponent implements OnInit {
   public pageTitle: string
   public errorMessages: string[] = []
 
-  // PofileName validation errors
+  // ProfileName validation errors
   get profileNameErrors() {
     const control = this.domainForm.get('profileName')
     if (control?.errors && (control.dirty || control.touched)) {
@@ -141,12 +141,8 @@ export class DomainDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Clear any previous error messages
-    this.errorMessages = []
-
     const result: Domain = Object.assign({}, this.domainForm.getRawValue()) as any
     result.provisioningCertStorageFormat = 'string'
-
     if (this.domainForm.valid) {
       this.isLoading.set(true)
       let request
@@ -155,7 +151,6 @@ export class DomainDetailComponent implements OnInit {
       } else {
         request = this.domainsService.create(result)
       }
-
       request
         .pipe(
           finalize(() => {
@@ -170,22 +165,10 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            let errorMessage = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
-
-            // Handle common server-side errors that client validation can't catch
-            const errorText = JSON.stringify(err).toLowerCase()
-
-            if (
-              errorText.includes('unique') ||
-              errorText.includes('duplicate') ||
-              errorText.includes('already exists')
-            ) {
-              errorMessage = this.translate.instant('domainDetail.uniqueKeyViolation.value')
-            } else if (errorText.includes('fqdn') || errorText.includes('certificate')) {
-              errorMessage = this.translate.instant('domainDetail.fqdnCertificateError.value')
-            }
-
+            const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
+
+            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
           }
         })
     }

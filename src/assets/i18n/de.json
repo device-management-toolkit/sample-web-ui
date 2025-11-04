@@ -1045,10 +1045,6 @@
     "description": "Fehlermeldung für Cloud-Deployment-Validierung (erlaubt Sonderzeichen, aber keine Leerzeichen)",
     "value": "Der Domänenname darf keine Leerzeichen enthalten"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Fehlermeldung für FQDN-Zertifikatvalidierung",
-    "value": "FQDN nicht mit Bereitstellungszertifikat verknüpft"
-  },
   "domainDetail.fqdn": {
     "description": "Hinweis für das Feld „FQDN“",
     "value": "Geben Sie den FQDN ein, der mit dem Bereitstellungszertifikat verknüpft ist (z. B. amtdomain.com)."

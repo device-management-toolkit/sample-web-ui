@@ -1045,10 +1045,6 @@
     "description": "Felmeddelande för molndeploymentvalidering (tillåter specialtecken men inte mellanslag)",
     "value": "Domännamnet får inte innehålla mellanslag"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Felmeddelande för FQDN-certifikatvalidering",
-    "value": "FQDN inte associerat med provisioneringscertifikat"
-  },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",
     "value": "Ange FQDN som är associerat med provisioneringscertifikatet (dvs. amtdomain.com)"

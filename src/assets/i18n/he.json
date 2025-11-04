@@ -1045,10 +1045,6 @@
     "description": "הודעת שגיאה עבור אימות פריסת ענן (מאפשר תווים מיוחדים אך לא רווחים)",
     "value": "שם הדומיין לא יכול להכיל רווחים"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "הודעת שגיאה עבור אימות תעודת FQDN",
-    "value": "FQDN לא משויך לתעודת הקצאה"
-  },
   "domainDetail.fqdn": {
     "description": "רמז לשדה FQDN",
     "value": "הזן את ה- FQDN המשויך לתעודת ההקצאה (כלומר amtdomain.com)"

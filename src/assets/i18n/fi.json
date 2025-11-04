@@ -1045,10 +1045,6 @@
     "description": "Virheilmoitus pilvikatastusvalidointia varten (sallii erikoismerkit mutta ei välilyöntejä)",
     "value": "Verkkotunnuksen nimessä ei saa olla välilyöntejä"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Virheilmoitus FQDN-varmenteen validointia varten",
-    "value": "FQDN ei liity provisioning-varmenteeseen"
-  },
   "domainDetail.fqdn": {
     "description": "Vinkki FQDN-kenttään",
     "value": "Syötä provisioning-varmenteeseen liittyvä FQDN (eli amtdomain.com)."

@@ -1045,10 +1045,6 @@
     "description": "Mensaje de error para la validación de implementación en la nube (permite caracteres especiales pero no espacios)",
     "value": "El nombre del dominio no puede contener espacios"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "Mensaje de error para la validación de certificado FQDN",
-    "value": "FQDN no asociado con certificado de aprovisionamiento"
-  },
   "domainDetail.fqdn": {
     "description": "Sugerencia para el campo FQDN",
     "value": "Introduzca el FQDN asociado al certificado de aprovisionamiento (es decir, amtdomain.com)."

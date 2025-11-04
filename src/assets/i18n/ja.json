@@ -1045,10 +1045,6 @@
     "description": "クラウドデプロイメント検証のエラーメッセージ（特殊文字は許可されますが、スペースは許可されません）",
     "value": "ドメイン名にスペースを含めることはできません"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "FQDN証明書検証のエラーメッセージ",
-    "value": "FQDNがプロビジョニング証明書に関連付けられていません"
-  },
   "domainDetail.fqdn": {
     "description": "FQDNフィールドに関するヒント",
     "value": "プロビジョニング証明書に関連付けられた完全修飾ドメイン名（例：amtdomain.com）を入力してください。"

@@ -1045,10 +1045,6 @@
     "description": "رسالة خطأ للتحقق من نشر السحابة (يسمح بالأحرف الخاصة ولكن بدون مسافات)",
     "value": "لا يمكن أن يحتوي اسم المجال على مسافات"
   },
-  "domainDetail.fqdnCertificateError": {
-    "description": "رسالة خطأ للتحقق من شهادة FQDN",
-    "value": "FQDN غير مرتبط بشهادة التزويد"
-  },
   "domainDetail.fqdn": {
     "description": "تلميح لحقل FQDN",
     "value": "أدخل اسم المجال الكامل (FQDN) المرتبط بشهادة التزويد (على سبيل المثال amtdomain.com)"
