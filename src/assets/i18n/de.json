@@ -1037,9 +1037,17 @@
     "description": "Fehlermeldung bei Verletzung des eindeutigen Schlüssels",
     "value": "Domain NewDomain ID oder Suffix existiert bereits"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Fehlermeldung für alphanumerische Validierung",
     "value": "Der Domänenname darf nur alphanumerische Zeichen enthalten (keine Leerzeichen oder Sonderzeichen)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Fehlermeldung für Cloud-Deployment-Validierung (erlaubt Sonderzeichen, aber keine Leerzeichen)",
+    "value": "Der Domänenname darf keine Leerzeichen enthalten"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Fehlermeldung für FQDN-Zertifikatvalidierung",
+    "value": "FQDN nicht mit Bereitstellungszertifikat verknüpft"
   },
   "domainDetail.fqdn": {
     "description": "Hinweis für das Feld „FQDN“",

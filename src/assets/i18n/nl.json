@@ -1037,9 +1037,17 @@
     "description": "Foutmelding voor schending van unieke sleutel",
     "value": "Domein NewDomain ID of Suffix bestaat al"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Foutmelding voor alfanumerieke validatie",
     "value": "Domeinnaam mag alleen alfanumerieke tekens bevatten (geen spaties of speciale tekens)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Foutmelding voor cloud deployment validatie (staat speciale tekens toe maar geen spaties)",
+    "value": "Domeinnaam mag geen spaties bevatten"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Foutmelding voor FQDN certificaat validatie",
+    "value": "FQDN niet gekoppeld aan provisioningcertificaat"
   },
   "domainDetail.fqdn": {
     "description": "Tip voor het FQDN-veld",

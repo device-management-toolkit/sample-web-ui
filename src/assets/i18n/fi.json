@@ -1037,9 +1037,17 @@
     "description": "Virheilmoitus yksilöllisen avaimen rikkomisesta",
     "value": "Domain NewDomainin tunnus tai liite on jo olemassa"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Virheilmoitus aakkosnumeerista validointia varten",
     "value": "Verkkotunnuksen nimessä saa olla vain aakkosnumeerisia merkkejä (ei välilyöntejä tai erikoismerkkejä)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Virheilmoitus pilvikatastusvalidointia varten (sallii erikoismerkit mutta ei välilyöntejä)",
+    "value": "Verkkotunnuksen nimessä ei saa olla välilyöntejä"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Virheilmoitus FQDN-varmenteen validointia varten",
+    "value": "FQDN ei liity provisioning-varmenteeseen"
   },
   "domainDetail.fqdn": {
     "description": "Vinkki FQDN-kenttään",

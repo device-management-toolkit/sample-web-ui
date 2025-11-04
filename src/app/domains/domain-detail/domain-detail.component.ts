@@ -28,6 +28,7 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { environment } from '../../../environments/environment'
 
 @Component({
   selector: 'app-domain-detail',
@@ -69,7 +70,16 @@ export class DomainDetailComponent implements OnInit {
   public readonly router = inject(Router)
 
   public domainForm = this.fb.nonNullable.group({
-    profileName: ['', Validators.required],
+    profileName: [
+      '',
+      [
+        Validators.required,
+        // Environment-aware validation pattern
+        environment.cloud
+          ? Validators.pattern(/^[^\s]+$/) // Cloud: No spaces (allows special characters)
+          : Validators.pattern(/^[a-zA-Z0-9]+$/) // Console: Alphanumeric only
+      ]
+    ],
     domainSuffix: ['', Validators.required],
     provisioningCert: ['', Validators.required],
     provisioningCertPassword: ['', Validators.required],
@@ -81,6 +91,22 @@ export class DomainDetailComponent implements OnInit {
   public certPassInputType = 'password'
   public pageTitle: string
   public errorMessages: string[] = []
+
+  // PofileName validation errors
+  get profileNameErrors() {
+    const control = this.domainForm.get('profileName')
+    if (control?.errors && (control.dirty || control.touched)) {
+      if (control.errors['required']) {
+        return this.translate.instant('fieldRequired.short.value')
+      }
+      if (control.errors['pattern']) {
+        return environment.cloud
+          ? this.translate.instant('domainDetail.cloudalphanumValidation.value')
+          : this.translate.instant('domainDetail.consolealphanumValidation.value')
+      }
+    }
+    return null
+  }
 
   constructor() {
     this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
@@ -144,43 +170,21 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            // Handle array-wrapped HttpErrorResponse
-            const actualError = err[0] || err
+            let errorMessage = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
 
-            // Extract error messages
-            const errorMessages: string[] = []
+            // Handle common server-side errors that client validation can't catch
+            const errorText = JSON.stringify(err).toLowerCase()
 
-            if (actualError.error && typeof actualError.error === 'object' && actualError.error.error) {
-              // Server returned { error: "message" }
-              errorMessages.push(actualError.error.error as string)
-            } else if (actualError.error && typeof actualError.error === 'string') {
-              // Server returned plain string
-              errorMessages.push(actualError.error)
-            } else if (actualError.message) {
-              // Use HTTP error message
-              errorMessages.push(actualError.message)
-            } else {
-              errorMessages.push('An error occurred')
-            }
-
-            // Detect error type and use appropriate translation key
-            let errorTranslationKey = 'domainDetail.errorDeleteConfiguration.value' // Default fallback
-
-            // Check the error messages for specific patterns
-            const errorContent = errorMessages.join(' ').toLowerCase()
-
-            if (errorContent.includes('alphanum')) {
-              errorTranslationKey = 'domainDetail.alphanumValidation.value'
-            } else if (
-              errorContent.includes('unique constraint') ||
-              errorContent.includes('already exists') ||
-              errorContent.includes('unique key violation')
+            if (
+              errorText.includes('unique') ||
+              errorText.includes('duplicate') ||
+              errorText.includes('already exists')
             ) {
-              errorTranslationKey = 'domainDetail.uniqueKeyViolation.value'
+              errorMessage = this.translate.instant('domainDetail.uniqueKeyViolation.value')
+            } else if (errorText.includes('fqdn') || errorText.includes('certificate')) {
+              errorMessage = this.translate.instant('domainDetail.fqdnCertificateError.value')
             }
 
-            // Show only the translated error message
-            const errorMessage = this.translate.instant(errorTranslationKey)
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
           }
         })

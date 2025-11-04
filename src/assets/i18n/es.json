@@ -1037,9 +1037,17 @@
     "description": "Mensaje de error por violación de clave única",
     "value": "El ID o el sufijo del nuevo dominio ya existe"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Mensaje de error para la validación alfanumérica",
     "value": "El nombre del dominio debe contener solo caracteres alfanuméricos (sin espacios ni caracteres especiales)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Mensaje de error para la validación de implementación en la nube (permite caracteres especiales pero no espacios)",
+    "value": "El nombre del dominio no puede contener espacios"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Mensaje de error para la validación de certificado FQDN",
+    "value": "FQDN no asociado con certificado de aprovisionamiento"
   },
   "domainDetail.fqdn": {
     "description": "Sugerencia para el campo FQDN",

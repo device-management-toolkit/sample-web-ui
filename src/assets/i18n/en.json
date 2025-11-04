@@ -1169,9 +1169,17 @@
     "description": "Error message for unique key violation",
     "value": "Domain NewDomain ID or Suffix already exists"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Error message for alphanumeric validation",
     "value": "Domain name must contain only alphanumeric characters (no spaces or special characters)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Error message for cloud deployment validation (allows special characters but no spaces)",
+    "value": "Domain name cannot contain spaces"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Error message for FQDN certificate validation",
+    "value": "FQDN not associated with provisioning certificate"
   },
   "domainDetail.fqdn": {
     "description": "Hint for the FQDN field",

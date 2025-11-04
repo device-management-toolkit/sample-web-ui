@@ -1037,9 +1037,17 @@
     "description": "Message d'erreur pour violation de clé unique",
     "value": "L'ID ou le suffixe du nouveau domaine existe déjà"
   },
-  "domainDetail.alphanumValidation": {
+  "domainDetail.consolealphanumValidation": {
     "description": "Message d'erreur pour la validation alphanumérique",
     "value": "Le nom de domaine ne doit contenir que des caractères alphanumériques (pas d'espaces ni de caractères spéciaux)"
+  },
+  "domainDetail.cloudalphanumValidation": {
+    "description": "Message d'erreur pour la validation du déploiement cloud (autorise les caractères spéciaux mais pas les espaces)",
+    "value": "Le nom de domaine ne peut pas contenir d'espaces"
+  },
+  "domainDetail.fqdnCertificateError": {
+    "description": "Message d'erreur pour la validation du certificat FQDN",
+    "value": "FQDN non associé au certificat de provisionnement"
   },
   "domainDetail.fqdn": {
     "description": "Conseil pour le champ FQDN",
