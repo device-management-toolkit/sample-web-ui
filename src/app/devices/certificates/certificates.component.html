@@ -37,13 +37,22 @@
               {{ cert.associatedProfiles }}
             }
           </span>
-          <button
-            matListItemMeta
-            mat-icon-button
-            [matTooltip]="'certificates.download.tooltip.value' | translate"
-            (click)="downloadCert(cert)">
-            <mat-icon>download</mat-icon>
-          </button>
+          <div matListItemMeta class="flex gap-1">
+            <button
+              mat-icon-button
+              [matTooltip]="'certificates.download.tooltip.value' | translate"
+              (click)="downloadCert(cert)">
+              <mat-icon>download</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              [matTooltip]="'certificates.delete.tooltip.value' | translate"
+              (click)="deleteCertificate(cert)"
+              [disabled]="isLoading() || cert.readOnlyCertificate"
+              class="text-red-500">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </mat-list-item>
       }
     }

@@ -550,6 +550,15 @@ export class DevicesService {
       })
     )
   }
+  deleteCertificate(guid: string, instanceId: string): Observable<any> {
+    return this.http
+      .delete<any>(`${environment.mpsServer}/api/v1/amt/certificates/${guid}/${encodeURIComponent(instanceId)}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
   getBootSources(guid: string): Observable<BootSource[]> {
     return this.http.get<BootSource[]>(`${environment.mpsServer}/api/v1/amt/power/bootSources/${guid}`).pipe(
       catchError((err) => {
