@@ -1,3 +1,10 @@
+# [3.49.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.48.0...v3.49.0) (2025-11-05)
+
+
+### Features
+
+* allow export of profile for cloud mode ([#2960](https://github.com/device-management-toolkit/sample-web-ui/issues/2960)) ([008e60c](https://github.com/device-management-toolkit/sample-web-ui/commit/008e60cb35c32068a6e8042890ebd14f3fce1d18))
+
 # [3.48.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.47.0...v3.48.0) (2025-10-27)
 
 
