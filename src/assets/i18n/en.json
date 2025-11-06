@@ -1169,13 +1169,9 @@
     "description": "Error message for unique key violation",
     "value": "Domain NewDomain ID or Suffix already exists"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "Error message for alphanumeric validation",
-    "value": "Domain name must contain only alphanumeric characters (no spaces or special characters)"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "Error message for cloud deployment validation (allows special characters but no spaces)",
-    "value": "Domain name cannot contain spaces"
+    "value": "Domain name can only contain letters, numbers, hyphens (-), and underscores (_)"
   },
   "domainDetail.fqdn": {
     "description": "Hint for the FQDN field",

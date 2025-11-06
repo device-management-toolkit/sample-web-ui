@@ -1037,13 +1037,9 @@
     "description": "Messaggio di errore per violazione della chiave univoca",
     "value": "L'ID o il suffisso del nuovo dominio esiste già"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "Messaggio di errore per la validazione alfanumerica",
     "value": "Il nome del dominio deve contenere solo caratteri alfanumerici (nessuno spazio o carattere speciale)"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "Messaggio di errore per la validazione del deployment cloud (consente caratteri speciali ma non spazi)",
-    "value": "Il nome del dominio non può contenere spazi"
   },
   "domainDetail.fqdn": {
     "description": "Suggerimento per il campo FQDN",

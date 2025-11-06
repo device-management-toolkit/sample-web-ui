@@ -1037,13 +1037,9 @@
     "description": "הודעת שגיאה עבור הפרת מפתח ייחודי",
     "value": "מזהה או סיומת של הדומיין NewDomain כבר קיימים"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "הודעת שגיאה עבור אימות אלפאנומרי",
     "value": "שם הדומיין חייב להכיל רק תווים אלפאנומריים (ללא רווחים או תווים מיוחדים)"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "הודעת שגיאה עבור אימות פריסת ענן (מאפשר תווים מיוחדים אך לא רווחים)",
-    "value": "שם הדומיין לא יכול להכיל רווחים"
   },
   "domainDetail.fqdn": {
     "description": "רמז לשדה FQDN",

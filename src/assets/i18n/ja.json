@@ -1037,13 +1037,9 @@
     "description": "一意キー違反のエラーメッセージ",
     "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "英数字検証のエラーメッセージ",
     "value": "ドメイン名は英数字のみを含む必要があります（スペースや特殊文字は使用できません）"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "クラウドデプロイメント検証のエラーメッセージ（特殊文字は許可されますが、スペースは許可されません）",
-    "value": "ドメイン名にスペースを含めることはできません"
   },
   "domainDetail.fqdn": {
     "description": "FQDNフィールドに関するヒント",

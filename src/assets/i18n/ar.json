@@ -1037,13 +1037,9 @@
     "description": "رسالة خطأ لانتهاك المفتاح الفريد",
     "value": "معرّف المجال NewDomain أو اللاحقة موجود بالفعل"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "رسالة خطأ للتحقق من الحروف والأرقام",
     "value": "يجب أن يحتوي اسم المجال على أحرف وأرقام فقط (بدون مسافات أو أحرف خاصة)"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "رسالة خطأ للتحقق من نشر السحابة (يسمح بالأحرف الخاصة ولكن بدون مسافات)",
-    "value": "لا يمكن أن يحتوي اسم المجال على مسافات"
   },
   "domainDetail.fqdn": {
     "description": "تلميح لحقل FQDN",

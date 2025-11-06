@@ -1037,13 +1037,9 @@
     "description": "Felmeddelande för brott mot unik nyckel",
     "value": "Domänens NewDomain ID eller suffix finns redan"
   },
-  "domainDetail.consolealphanumValidation": {
+  "domainDetail.alphanumValidation": {
     "description": "Felmeddelande för alfanumerisk validering",
     "value": "Domännamnet får endast innehålla alfanumeriska tecken (inga mellanslag eller specialtecken)"
-  },
-  "domainDetail.cloudalphanumValidation": {
-    "description": "Felmeddelande för molndeploymentvalidering (tillåter specialtecken men inte mellanslag)",
-    "value": "Domännamnet får inte innehålla mellanslag"
   },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",

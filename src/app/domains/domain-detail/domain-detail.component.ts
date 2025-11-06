@@ -28,7 +28,6 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { environment } from '../../../environments/environment'
 
 @Component({
   selector: 'app-domain-detail',
@@ -69,14 +68,12 @@ export class DomainDetailComponent implements OnInit {
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
 
-  // Get the appropriate validators for profile name based on environment
+  // Get the validators for profile name - same rule for both cloud and console
   private getProfileNameValidators() {
     return [
       Validators.required,
-      // Environment-aware validation pattern
-      environment.cloud
-        ? Validators.pattern(/^[^\s]+$/) // Cloud: No spaces (allows special characters)
-        : Validators.pattern(/^[a-zA-Z0-9]+$/) // Console: Alphanumeric only
+      // Domain name can only contain letters, numbers, hyphens (-), and underscores (_)
+      Validators.pattern(/^[a-zA-Z0-9_-]+$/)
     ]
   }
 
@@ -102,9 +99,7 @@ export class DomainDetailComponent implements OnInit {
         return this.translate.instant('fieldRequired.short.value')
       }
       if (control.errors['pattern']) {
-        return environment.cloud
-          ? this.translate.instant('domainDetail.cloudalphanumValidation.value')
-          : this.translate.instant('domainDetail.consolealphanumValidation.value')
+        return this.translate.instant('domainDetail.alphanumValidation.value')
       }
     }
     return ''
