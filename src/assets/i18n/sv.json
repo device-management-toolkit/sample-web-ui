@@ -1039,7 +1039,7 @@
   },
   "domainDetail.alphanumValidation": {
     "description": "Felmeddelande för alfanumerisk validering",
-    "value": "Domännamnet får endast innehålla alfanumeriska tecken (inga mellanslag eller specialtecken)"
+    "value": "Domännamnet får endast innehålla bokstäver, siffror, bindestreck (-) och understreck (_)"
   },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",

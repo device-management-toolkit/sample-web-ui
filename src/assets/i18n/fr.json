@@ -1039,7 +1039,7 @@
   },
   "domainDetail.alphanumValidation": {
     "description": "Message d'erreur pour la validation alphanumérique",
-    "value": "Le nom de domaine ne doit contenir que des caractères alphanumériques (pas d'espaces ni de caractères spéciaux)"
+    "value": "Le nom de domaine ne peut contenir que des lettres, des chiffres, des traits d'union (-) et des traits de soulignement (_)"
   },
   "domainDetail.fqdn": {
     "description": "Conseil pour le champ FQDN",

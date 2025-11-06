@@ -1039,7 +1039,7 @@
   },
   "domainDetail.alphanumValidation": {
     "description": "Virheilmoitus aakkosnumeerista validointia varten",
-    "value": "Verkkotunnuksen nimessä saa olla vain aakkosnumeerisia merkkejä (ei välilyöntejä tai erikoismerkkejä)"
+    "value": "Verkkotunnuksen nimessä saa olla vain kirjaimia, numeroita, viivoja (-) ja alaviivoja (_)"
   },
   "domainDetail.fqdn": {
     "description": "Vinkki FQDN-kenttään",
