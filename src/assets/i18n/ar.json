@@ -1037,6 +1037,10 @@
     "description": "رسالة خطأ لانتهاك المفتاح الفريد",
     "value": "معرّف المجال NewDomain أو اللاحقة موجود بالفعل"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "رسالة خطأ للتحقق من الحروف والأرقام",
+    "value": "يمكن أن يحتوي اسم المجال على أحرف وأرقام وشرطات (-) وشرطات سفلية (_) فقط"
+  },
   "domainDetail.fqdn": {
     "description": "تلميح لحقل FQDN",
     "value": "أدخل اسم المجال الكامل (FQDN) المرتبط بشهادة التزويد (على سبيل المثال amtdomain.com)"

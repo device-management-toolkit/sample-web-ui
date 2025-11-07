@@ -1037,6 +1037,10 @@
     "description": "Fehlermeldung bei Verletzung des eindeutigen Schlüssels",
     "value": "Domain NewDomain ID oder Suffix existiert bereits"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Fehlermeldung für alphanumerische Validierung",
+    "value": "Der Domänenname darf nur Buchstaben, Zahlen, Bindestriche (-) und Unterstriche (_) enthalten"
+  },
   "domainDetail.fqdn": {
     "description": "Hinweis für das Feld „FQDN“",
     "value": "Geben Sie den FQDN ein, der mit dem Bereitstellungszertifikat verknüpft ist (z. B. amtdomain.com)."

@@ -1037,6 +1037,10 @@
     "description": "Mensaje de error por violación de clave única",
     "value": "El ID o el sufijo del nuevo dominio ya existe"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Mensaje de error para la validación alfanumérica",
+    "value": "El nombre del dominio solo puede contener letras, números, guiones (-) y guiones bajos (_)"
+  },
   "domainDetail.fqdn": {
     "description": "Sugerencia para el campo FQDN",
     "value": "Introduzca el FQDN asociado al certificado de aprovisionamiento (es decir, amtdomain.com)."
