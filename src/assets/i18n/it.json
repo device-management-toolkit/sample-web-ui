@@ -1037,6 +1037,10 @@
     "description": "Messaggio di errore per violazione della chiave univoca",
     "value": "L'ID o il suffisso del nuovo dominio esiste già"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Messaggio di errore per la validazione alfanumerica",
+    "value": "Il nome del dominio può contenere solo lettere, numeri, trattini (-) e trattini bassi (_)"
+  },
   "domainDetail.fqdn": {
     "description": "Suggerimento per il campo FQDN",
     "value": "Inserire l'FQDN associato al certificato di provisioning (ad esempio amtdomain.com)."
