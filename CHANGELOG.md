@@ -1,3 +1,10 @@
+## [3.49.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.1...v3.49.2) (2025-11-07)
+
+
+### Bug Fixes
+
+* **domains:** adds better error handling for domain responses to surface in web ui ([#2952](https://github.com/device-management-toolkit/sample-web-ui/issues/2952)) ([1dcbe0d](https://github.com/device-management-toolkit/sample-web-ui/commit/1dcbe0daa0b1fb72941af7d1fdb69d1607ed7fa2)), closes [#2863](https://github.com/device-management-toolkit/sample-web-ui/issues/2863)
+
 ## [3.49.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.0...v3.49.1) (2025-11-06)
 
 # [3.49.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.48.0...v3.49.0) (2025-11-05)
