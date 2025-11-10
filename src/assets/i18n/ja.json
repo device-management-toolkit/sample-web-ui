@@ -1037,6 +1037,10 @@
     "description": "一意キー違反のエラーメッセージ",
     "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "英数字検証のエラーメッセージ",
+    "value": "ドメイン名は文字、数字、ハイフン（-）、アンダースコア（_）のみを含むことができます"
+  },
   "domainDetail.fqdn": {
     "description": "FQDNフィールドに関するヒント",
     "value": "プロビジョニング証明書に関連付けられた完全修飾ドメイン名（例：amtdomain.com）を入力してください。"

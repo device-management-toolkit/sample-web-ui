@@ -68,8 +68,17 @@ export class DomainDetailComponent implements OnInit {
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
 
+  // Get the validators for profile name - same rule for both cloud and console
+  private getProfileNameValidators() {
+    return [
+      Validators.required,
+      // Domain name can only contain letters, numbers, hyphens (-), and underscores (_)
+      Validators.pattern(/^[a-zA-Z0-9_-]+$/)
+    ]
+  }
+
   public domainForm = this.fb.nonNullable.group({
-    profileName: ['', Validators.required],
+    profileName: ['', this.getProfileNameValidators()],
     domainSuffix: ['', Validators.required],
     provisioningCert: ['', Validators.required],
     provisioningCertPassword: ['', Validators.required],
@@ -81,6 +90,20 @@ export class DomainDetailComponent implements OnInit {
   public certPassInputType = 'password'
   public pageTitle: string
   public errorMessages: string[] = []
+
+  // ProfileName validation errors
+  get profileNameErrors() {
+    const control = this.domainForm.get('profileName')
+    if (control?.errors && (control.dirty || control.touched)) {
+      if (control.errors['required']) {
+        return this.translate.instant('fieldRequired.short.value')
+      }
+      if (control.errors['pattern']) {
+        return this.translate.instant('domainDetail.alphanumValidation.value')
+      }
+    }
+    return ''
+  }
 
   constructor() {
     this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')

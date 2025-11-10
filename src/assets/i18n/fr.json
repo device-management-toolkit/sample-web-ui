@@ -1037,6 +1037,10 @@
     "description": "Message d'erreur pour violation de clé unique",
     "value": "L'ID ou le suffixe du nouveau domaine existe déjà"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Message d'erreur pour la validation alphanumérique",
+    "value": "Le nom de domaine ne peut contenir que des lettres, des chiffres, des traits d'union (-) et des traits de soulignement (_)"
+  },
   "domainDetail.fqdn": {
     "description": "Conseil pour le champ FQDN",
     "value": "Saisissez le nom de domaine complet associé au certificat de provisionnement (c'est-à-dire amtdomain.com)."
