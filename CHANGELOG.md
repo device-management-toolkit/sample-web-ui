@@ -1,3 +1,10 @@
+# [3.50.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.2...v3.50.0) (2025-11-17)
+
+
+### Features
+
+* Add certificate delete functionality to device management UI ([#2969](https://github.com/device-management-toolkit/sample-web-ui/issues/2969)) ([c560da9](https://github.com/device-management-toolkit/sample-web-ui/commit/c560da929081d58d11cccccfc0df93cfb6434ef3))
+
 ## [3.49.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.1...v3.49.2) (2025-11-07)
 
 
