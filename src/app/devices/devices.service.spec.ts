@@ -977,6 +977,41 @@ describe('DevicesService', () => {
     })
   })
 
+  describe('deleteCertificate', () => {
+    it('should delete a certificate', () => {
+      const mockResponse = { message: 'Certificate deleted successfully' }
+      const guid = 'test-guid'
+      const instanceId = 'Intel(r) AMT Certificate: Handle: 1'
+
+      service.deleteCertificate(guid, instanceId).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/amt/certificates/${guid}/${encodeURIComponent(instanceId)}`
+      )
+      expect(req.request.method).toBe('DELETE')
+      req.flush(mockResponse)
+    })
+
+    it('should handle errors when deleting certificate', () => {
+      const mockError = { status: 400, statusText: 'Bad Request' }
+      const guid = 'test-guid'
+      const instanceId = 'Intel(r) AMT Certificate: Handle: 1'
+
+      service.deleteCertificate(guid, instanceId).subscribe({
+        error: (error) => {
+          expect(error.status).toBe(400)
+        }
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/amt/certificates/${guid}/${encodeURIComponent(instanceId)}`
+      )
+      req.flush(null, mockError)
+    })
+  })
+
   describe('getDisplaySelection', () => {
     it('should fetch current display selection for a device', () => {
       const mockResponse: DisplaySelectionResponse = {

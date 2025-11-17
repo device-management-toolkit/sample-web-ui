@@ -420,6 +420,18 @@
     "description": "Indicates the certificate is a root certificate",
     "value": "Root"
   },
+  "certificates.delete.tooltip": {
+    "description": "Tooltip text for delete certificate button",
+    "value": "Delete Certificate"
+  },
+  "certificates.errorDeletingCertificate": {
+    "description": "Error message displayed when certificate deletion fails",
+    "value": "Error deleting certificate"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Success message displayed when certificate is deleted",
+    "value": "Certificate '{{name}}' deleted successfully"
+  },
   "common.addNew": {
     "description": "Text for the add new button",
     "value": "Add New"

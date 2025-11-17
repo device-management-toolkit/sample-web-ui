@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
 import { CertInfo } from 'src/models/models'
 import { AddCertDialogComponent } from './add-cert-dialog/add-cert-dialog.component'
+import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { MatButtonModule, MatIconButton } from '@angular/material/button'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -131,5 +132,35 @@ export class CertificatesComponent implements OnInit {
       .subscribe(() => {
         this.getCertificates()
       })
+  }
+
+  deleteCertificate(cert: any): void {
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent)
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.isLoading.set(true)
+        this.devicesService
+          .deleteCertificate(this.deviceId(), cert.instanceID)
+          .pipe(
+            catchError((err) => {
+              this.isLoading.set(false)
+              const msg: string = this.translate.instant('certificates.errorDeletingCertificate.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+              return throwError(err)
+            }),
+            finalize(() => {
+              this.isLoading.set(false)
+            })
+          )
+          .subscribe(() => {
+            const msg: string = this.translate.instant('certificates.deletedSuccessfully.value', {
+              name: cert.displayName
+            })
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+            this.getCertificates()
+          })
+      }
+    })
   }
 }
