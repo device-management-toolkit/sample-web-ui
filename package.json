@@ -58,7 +58,7 @@
     "@angular/cli": "~20.3.10",
     "@angular/compiler-cli": "~20.3.12",
     "@angular/localize": "~20.3.12",
-    "@types/jasmine": "~5.1.12",
+    "@types/jasmine": "~5.1.13",
     "angular-eslint": "20.6.0",
     "cypress": "^15.6.0",
     "eslint": "^9.39.1",
@@ -76,7 +76,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.3",
     "ts-node": "~10.9.2",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.47.0"
   },
   "optionalDependencies": {
     "cypress": "^15.6.0"
