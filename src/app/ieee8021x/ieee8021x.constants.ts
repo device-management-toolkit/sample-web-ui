@@ -29,14 +29,14 @@ import { FormOption } from '../../models/models'
 
 export const AuthenticationProtocols: FormOption<number>[] = [
   { value: 0, mode: 'both', label: 'EAP-TLS' },
-  { value: 1, mode: 'wired', label: 'EAP-TTLS/MSCHAPv2' },
+  //{ value: 1, mode: 'wired', label: 'EAP-TTLS/MSCHAPv2' },
   { value: 2, mode: 'both', label: 'PEAPv0/EAP-MSCHAPv2' },
   { value: 3, mode: 'wired', label: 'PEAPv1/EAP-GTC' },
-  { value: 4, mode: 'wired', label: 'EAP-FAST/MSCHAPv2' },
+  // { value: 4, mode: 'wired', label: 'EAP-FAST/MSCHAPv2' },
   { value: 5, mode: 'wired', label: 'EAP-FAST/GTC' },
-  { value: 6, mode: 'wired', label: 'EAP-MD5' },
-  { value: 7, mode: 'wired', label: 'EAP-PSK' },
-  { value: 8, mode: 'wired', label: 'EAP-SIM' },
-  { value: 9, mode: 'wired', label: 'EAP-AKA' },
+  // { value: 6, mode: 'wired', label: 'EAP-MD5' },
+  // { value: 7, mode: 'wired', label: 'EAP-PSK' },
+  // { value: 8, mode: 'wired', label: 'EAP-SIM' },
+  // { value: 9, mode: 'wired', label: 'EAP-AKA' },
   { value: 10, mode: 'wired', label: 'EAP-FAST/TLS' }
 ]
