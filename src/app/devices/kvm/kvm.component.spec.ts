@@ -599,4 +599,236 @@ describe('KvmComponent', () => {
       done()
     }, 150)
   })
+
+  // Keyboard event handling tests
+  describe('Keyboard Event Handling', () => {
+    let createdElements: HTMLElement[] = []
+
+    beforeEach(() => {
+      // Trigger component initialization which adds event listeners in ngOnInit
+      fixture.detectChanges()
+      createdElements = []
+    })
+
+    afterEach(() => {
+      // Clean up only the elements we created
+      createdElements.forEach((el) => {
+        if (el.parentNode) {
+          el.parentNode.removeChild(el)
+        }
+      })
+      createdElements = []
+    })
+
+    it('should stop immediate propagation when input field has focus and KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const inputElement = document.createElement('input')
+      document.body.appendChild(inputElement)
+      createdElements.push(inputElement)
+      inputElement.focus()
+
+      let captureHandlerCalled = false
+      const event = new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true })
+
+      // Add a listener that should not be called if stopImmediatePropagation works
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      inputElement.dispatchEvent(event)
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeFalse()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should stop immediate propagation when textarea has focus and KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const textareaElement = document.createElement('textarea')
+      document.body.appendChild(textareaElement)
+      createdElements.push(textareaElement)
+      textareaElement.focus()
+
+      let captureHandlerCalled = false
+      const event = new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true })
+
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      textareaElement.dispatchEvent(event)
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeFalse()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should allow propagation when no input element has focus and KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const divElement = document.createElement('div')
+      divElement.setAttribute('tabindex', '0')
+      document.body.appendChild(divElement)
+      createdElements.push(divElement)
+      divElement.focus()
+
+      let captureHandlerCalled = false
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      divElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeTrue()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should stop immediate propagation when select element has focus and KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const selectElement = document.createElement('select')
+      const optionElement = document.createElement('option')
+      optionElement.value = 'test'
+      optionElement.text = 'Test'
+      selectElement.appendChild(optionElement)
+      document.body.appendChild(selectElement)
+      createdElements.push(selectElement)
+      selectElement.focus()
+
+      let captureHandlerCalled = false
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      selectElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeFalse()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should stop immediate propagation when contenteditable element has focus and KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const divElement = document.createElement('div')
+      divElement.contentEditable = 'true'
+      document.body.appendChild(divElement)
+      createdElements.push(divElement)
+      divElement.focus()
+
+      let captureHandlerCalled = false
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      divElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeFalse()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should stop immediate propagation for element inside mat-form-field when KVM is connected', (done) => {
+      component.deviceKVMConnection.set(true)
+      const matFormField = document.createElement('div')
+      matFormField.classList.add('mat-form-field')
+      const inputElement = document.createElement('input')
+      matFormField.appendChild(inputElement)
+      document.body.appendChild(matFormField)
+      createdElements.push(matFormField)
+      inputElement.focus()
+
+      let captureHandlerCalled = false
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeFalse()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should handle keyup and keypress events in addition to keydown', (done) => {
+      component.deviceKVMConnection.set(true)
+      const inputElement = document.createElement('input')
+      document.body.appendChild(inputElement)
+      createdElements.push(inputElement)
+      inputElement.focus()
+
+      let keyupHandlerCalled = false
+      let keypressHandlerCalled = false
+
+      const keyupListener = () => {
+        keyupHandlerCalled = true
+      }
+      const keypressListener = () => {
+        keypressHandlerCalled = true
+      }
+
+      document.addEventListener('keyup', keyupListener, true)
+      document.addEventListener('keypress', keypressListener, true)
+
+      inputElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'a', bubbles: true, cancelable: true }))
+      inputElement.dispatchEvent(new KeyboardEvent('keypress', { key: 'a', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(keyupHandlerCalled).toBeFalse()
+        expect(keypressHandlerCalled).toBeFalse()
+        document.removeEventListener('keyup', keyupListener, true)
+        document.removeEventListener('keypress', keypressListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should allow propagation when KVM is not connected', (done) => {
+      component.deviceKVMConnection.set(false)
+      const divElement = document.createElement('div')
+      divElement.setAttribute('tabindex', '0')
+      document.body.appendChild(divElement)
+      createdElements.push(divElement)
+      divElement.focus()
+
+      let captureHandlerCalled = false
+      const laterListener = () => {
+        captureHandlerCalled = true
+      }
+      document.addEventListener('keydown', laterListener, true)
+
+      divElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+
+      setTimeout(() => {
+        expect(captureHandlerCalled).toBeTrue()
+        document.removeEventListener('keydown', laterListener, true)
+        done()
+      }, 50)
+    })
+
+    it('should clean up event listeners on component destroy', () => {
+      const removeEventListenerSpy = spyOn(document, 'removeEventListener')
+
+      component.ngOnDestroy()
+
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', jasmine.any(Function), true)
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('keyup', jasmine.any(Function), true)
+      expect(removeEventListenerSpy).toHaveBeenCalledWith('keypress', jasmine.any(Function), true)
+    })
+  })
 })
