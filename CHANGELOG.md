@@ -1,3 +1,10 @@
+## [3.50.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.0...v3.50.1) (2025-11-20)
+
+
+### Bug Fixes
+
+* update dependencies ([696cd47](https://github.com/device-management-toolkit/sample-web-ui/commit/696cd473dc9b7d44f76a18fc6cd62098e5f25f53))
+
 # [3.50.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.2...v3.50.0) (2025-11-17)
 
 
