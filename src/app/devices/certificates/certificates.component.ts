@@ -145,7 +145,24 @@ export class CertificatesComponent implements OnInit {
           .pipe(
             catchError((err) => {
               this.isLoading.set(false)
-              const msg: string = this.translate.instant('certificates.errorDeletingCertificate.value')
+
+              // Handle specific error types from our API
+              let msg: string
+              if (err.status === 409) {
+                // Certificate is referenced by profiles
+                msg =
+                  err.error?.errorDescription || this.translate.instant('certificates.certificateReferencedError.value')
+              } else if (err.status === 404) {
+                // Certificate not found
+                msg = this.translate.instant('certificates.certificateNotFoundError.value')
+              } else if (err.status === 400 && err.error?.errorDescription?.includes('read-only')) {
+                // Read-only certificate
+                msg = this.translate.instant('certificates.readOnlyCertificateError.value')
+              } else {
+                // Generic error
+                msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+              }
+
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
               return throwError(err)
             }),
