@@ -248,6 +248,22 @@
     "description": "Error al recuperar la información del certificado.",
     "value": "Error al recuperar la información del certificado."
   },
+  "certificates.certificateReferencedError": {
+    "description": "Mensaje de error cuando no se puede eliminar un certificado porque está referenciado por perfiles",
+    "value": "No se puede eliminar el certificado porque actualmente está referenciado por perfiles AMT. Elimine primero las referencias."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Mensaje de error cuando no se encuentra el certificado a eliminar",
+    "value": "Certificado no encontrado o ya eliminado"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Mensaje de error al intentar eliminar un certificado de solo lectura",
+    "value": "No se puede eliminar el certificado de solo lectura"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Mensaje de éxito mostrado cuando se elimina un certificado",
+    "value": "Certificado '{{name}}' eliminado con éxito"
+  },
   "certificates.list": {
     "description": "Texto para la lista de certificados",
     "value": "Lista de certificados registrados actualmente en el dispositivo AMT."

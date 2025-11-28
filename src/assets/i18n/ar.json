@@ -248,6 +248,22 @@
     "description": "خطأ في استرداد معلومات الشهادة",
     "value": "خطأ في استرداد معلومات الشهادة"
   },
+  "certificates.certificateReferencedError": {
+    "description": "خطأ عند عدم إمكانية حذف الشهادة لأنها مرجعة بواسطة ملفات تعريف",
+    "value": "لا يمكن حذف الشهادة لأنها مرجعة حالياً بواسطة ملفات تعريف AMT. قم بإزالة المراجع أولاً."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "خطأ عندما لا يتم العثور على الشهادة المراد حذفها",
+    "value": "لم يتم العثور على الشهادة أو تم حذفها بالفعل"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "خطأ عند محاولة حذف شهادة للقراءة فقط",
+    "value": "لا يمكن حذف شهادة للقراءة فقط"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "رسالة نجاح عند حذف الشهادة",
+    "value": "تم حذف الشهادة '{{name}}' بنجاح"
+  },
   "certificates.list": {
     "description": "نص قائمة الشهادات",
     "value": "قائمة الشهادات المسجلة حاليًا على جهاز AMT"
