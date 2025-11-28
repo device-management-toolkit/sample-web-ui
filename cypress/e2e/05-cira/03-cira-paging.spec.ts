@@ -61,10 +61,16 @@ describe('Test CIRA Config Page Paging', () => {
     cy.goToPage('CIRA Configs')
     cy.wait('@get-configs')
 
-    // In mock mode, the pagination test should just verify that the interface works
-    // In real API mode, actually create configs to enable pagination
-    if (Cypress.env('ISOLATE') === 'N') {
-      // Create multiple CIRA configs to enable pagination testing (Real API mode)
+    // Check ISOLATE environment variable to determine mode
+    if (Cypress.env('ISOLATE') === 'Y') {
+      // Mock mode - just verify the create form can be accessed
+      cy.get('button').contains('Add New').click()
+      cy.get('input[name=configName]').should('be.visible')
+      cy.log('✅ Mock mode - Verified CIRA config creation form accessibility')
+      // Go back to list without creating
+      cy.goToPage('CIRA Configs')
+    } else {
+      // Real API mode - create multiple configs to enable pagination testing
       const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 10000)}`
       for (let i = 1; i <= 3; i++) {
         cy.get('button').contains('Add New').click()
@@ -84,14 +90,7 @@ describe('Test CIRA Config Page Paging', () => {
         cy.goToPage('CIRA Configs')
         cy.wait('@get-configs')
       }
-      cy.log('Created CIRA configs for pagination testing')
-    } else {
-      // Mock mode - just verify the create form can be accessed
-      cy.get('button').contains('Add New').click()
-      cy.get('input[name=configName]').should('be.visible')
-      cy.log('Verified CIRA config creation form accessibility in mock mode')
-      // Go back to list without creating
-      cy.goToPage('CIRA Configs')
+      cy.log('✅ Real API mode - Created CIRA configs for pagination testing')
     }
   })
 })

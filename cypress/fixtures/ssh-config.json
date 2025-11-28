@@ -1,0 +1,45 @@
+{
+  "enabled": true,
+  "devices": [
+    {
+      "name": "device1",
+      "host": "192.168.1.100",
+      "username": "amt-user",
+      "password": "yourpassword",
+      "sudoPassword": "yourpassword",
+      "useSudo": true,
+      "port": 22,
+      "enabled": true
+    },
+    {
+      "name": "device2",
+      "host": "192.168.1.101",
+      "username": "amt-user",
+      "password": "yourpassword",
+      "port": 22,
+      "enabled": false
+    },
+    {
+      "name": "device3",
+      "host": "192.168.1.102",
+      "username": "amt-user",
+      "password": "yourpassword",
+      "port": 22,
+      "enabled": false
+    }
+  ],
+  "description": "SSH configuration for multiple device RPC execution",
+  "notes": [
+    "IMPORTANT: Set the correct 'sudoPassword' for each device to enable RPC execution",
+    "The RPC executable requires root privileges to access Intel ME hardware",
+    "Set 'useSudo' to false to try running without sudo (will likely fail with privilege errors)",
+    "Set global 'enabled' to true to use remote SSH execution instead of local Docker/Windows",
+    "Each device can have a separate 'sudoPassword' field for sudo authentication",
+    "If sudoPassword is not provided, the SSH password will be used for sudo",
+    "Tests will iterate through all enabled devices in the array",
+    "Ensure all remote hosts have Intel AMT hardware and /dev/mei0 device access",
+    "The RPC executable will be downloaded and extracted to /tmp on each remote host",
+    "Make sure password-based SSH authentication is configured and sshpass is installed on the test runner",
+    "Replace 'yourpassword' and 'REPLACE_WITH_CORRECT_SUDO_PASSWORD' with actual passwords"
+  ]
+}

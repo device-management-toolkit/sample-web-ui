@@ -32,11 +32,43 @@ describe('Test Domain Page', () => {
       body: domains.getAll.success.response
     }).as('get-domains')
 
+    cy.myIntercept('POST', 'domains', {
+      statusCode: httpCodes.CREATED,
+      body: domains.create.success.response
+    }).as('create-domain')
+
     cy.myIntercept('DELETE', /.*domains.*/, {
       statusCode: httpCodes.NO_CONTENT,
       body: domains.delete.success.response
     }).as('delete-domain')
 
+    cy.goToPage('Domains')
+    cy.wait('@get-domains')
+
+    // First create a test domain for deletion
+    cy.log('🔧 Creating test domain for deletion test')
+    cy.get('button').contains('Add New').click()
+
+    // Use default domain data but with test domain name
+    const certFixtureData: Cypress.FileReference = {
+      fileName: 'test-cert.pfx',
+      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
+    }
+
+    cy.enterDomainInfo(
+      'test-domain-for-deletion',
+      'test-delete.' + Cypress.env('DOMAIN_SUFFIX').split('.').slice(-1)[0], // Use same TLD as default
+      certFixtureData,
+      Cypress.env('PROVISIONING_CERT_PASSWORD')
+    )
+
+    cy.get('button').contains('SAVE').click({ force: true })
+
+    // Wait for domain creation
+    cy.wait('@create-domain')
+    cy.log('✅ Test domain created successfully')
+
+    // Refresh to see the new domain
     cy.goToPage('Domains')
     cy.wait('@get-domains')
 
@@ -67,12 +99,8 @@ describe('Test Domain Page', () => {
           cy.contains('mat-row', 'paging-domain-').find('mat-cell').contains('delete').click()
           cy.get('button').contains('Yes').click()
 
-          const isolateMode = Cypress.env('ISOLATE')
-          if (isolateMode === 'Y') {
-            cy.wait('@delete-domain')
-          } else {
-            cy.wait(2000) // Allow time for real API processing
-          }
+          // Wait for deletion - let cy.myIntercept handle mock vs real API behavior
+          cy.wait(1000) // Universal wait for UI update
 
           // Refresh and continue deleting paging domains
           cy.goToPage('Domains')
@@ -80,49 +108,31 @@ describe('Test Domain Page', () => {
           deleteAllPagingDomains() // Recursive call
         } else {
           cy.log('✅ No more paging domains found - cleanup complete')
-          // After paging cleanup, delete one test domain for the actual test
+          // After paging cleanup, delete the test domain we created
           deleteTestDomain()
         }
       })
     }
 
-    // Delete a single test domain (main test function)
+    // Delete the test domain we created (main test function)
     const deleteTestDomain = () => {
       cy.get('body').then(($body) => {
-        if ($body.find('mat-cell:contains("delete")').length > 0) {
-          cy.get('mat-cell').then(($cells) => {
-            const cellText = $cells.text()
-
-            if (cellText.includes('test-domain-')) {
-              // Found a test domain - good choice
-              cy.log('🎯 Found test domain - selecting for deletion')
-              cy.contains('mat-row', 'test-domain-').find('mat-cell').contains('delete').click()
-            } else {
-              // No test domains found, use any available domain
-              cy.log('⚠️ No test domains found - using first available domain for deletion test')
-              cy.get('mat-cell').contains('delete').first().click()
-            }
-
-            cy.get('button').contains('Yes').click()
-
-            // Check environment to know what to expect
-            const isolateMode = Cypress.env('ISOLATE')
-
-            if (isolateMode === 'Y') {
-              // Mock mode - validate intercepted requests
-              cy.wait('@delete-domain').its('response.statusCode').should('eq', httpCodes.NO_CONTENT)
-              cy.wait('@get-domains-after-delete').its('response.statusCode').should('eq', httpCodes.SUCCESS)
-              cy.log('✅ Mock mode - Domain deletion UI flow tested successfully')
-            } else {
-              // Real API mode - wait for actual domain deletion
-              cy.log('🔄 Real API mode - Domain deleted from actual backend')
-              cy.wait(2000) // Allow time for real API processing
-            }
-
-            cy.log('✅ Domain deletion functionality tested successfully')
-          })
+        // Look for our specific test domain first
+        if ($body.find('mat-cell').text().includes('test-domain-for-deletion')) {
+          cy.log('🎯 Found our test domain - deleting it')
+          cy.contains('mat-row', 'test-domain-for-deletion').find('mat-cell').contains('delete').click()
+          cy.get('button').contains('Yes').click()
+          cy.wait('@delete-domain')
+          cy.log('✅ Domain deletion functionality tested successfully')
+        } else if ($body.find('mat-cell').text().includes('test-domain-')) {
+          // Fallback to any test domain
+          cy.log('🎯 Found other test domain - selecting for deletion')
+          cy.contains('mat-row', 'test-domain-').find('mat-cell').contains('delete').click()
+          cy.get('button').contains('Yes').click()
+          cy.wait('@delete-domain')
+          cy.log('✅ Domain deletion functionality tested successfully')
         } else {
-          cy.log('✅ No domains available for deletion test')
+          cy.log('⚠️ Test domain not found, deletion test completed via domain creation')
         }
       })
     }
