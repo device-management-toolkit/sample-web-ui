@@ -148,19 +148,27 @@ export class CertificatesComponent implements OnInit {
 
               // Handle specific error types from our API
               let msg: string
-              if (err.status === 409) {
-                // Certificate is referenced by profiles
-                msg =
-                  err.error?.errorDescription || this.translate.instant('certificates.certificateReferencedError.value')
-              } else if (err.status === 404) {
-                // Certificate not found
-                msg = this.translate.instant('certificates.certificateNotFoundError.value')
-              } else if (err.status === 400 && err.error?.errorDescription?.includes('read-only')) {
-                // Read-only certificate
-                msg = this.translate.instant('certificates.readOnlyCertificateError.value')
-              } else {
-                // Generic error
-                msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+              switch (err.status) {
+                case 409:
+                  // Certificate is referenced by profiles
+                  msg = err.error?.errorDescription || this.translate.instant('certificates.certificateReferencedError.value')
+                  break
+                case 404:
+                  // Certificate not found
+                  msg = this.translate.instant('certificates.certificateNotFoundError.value')
+                  break
+                case 400:
+                  // Read-only certificate
+                  if (err.error?.errorDescription?.includes('read-only')) {
+                    msg = this.translate.instant('certificates.readOnlyCertificateError.value')
+                  } else {
+                    msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+                  }
+                  break
+                default:
+                  // Generic error
+                  msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+                  break
               }
 
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)

@@ -248,6 +248,22 @@
     "description": "Fel vid hämtning av certifikatinformation",
     "value": "Fel vid hämtning av certifikatinformation"
   },
+  "certificates.certificateReferencedError": {
+    "description": "Fel när certifikat inte kan raderas eftersom det refereras av profiler",
+    "value": "Certifikatet kan inte raderas eftersom det för närvarande refereras av AMT-profiler. Ta bort referenserna först."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Fel när certifikat som ska raderas inte hittas",
+    "value": "Certifikat hittades inte eller har redan raderats"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fel vid försök att radera skrivskyddat certifikat",
+    "value": "Kan inte radera skrivskyddat certifikat"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Framgångsmeddelande när certifikat raderas",
+    "value": "Certifikat '{{name}}' raderat framgångsrikt"
+  },
   "certificates.list": {
     "description": "Text för listan över certifikat",
     "value": "Lista över certifikat som för närvarande är registrerade på AMT-enheten"
