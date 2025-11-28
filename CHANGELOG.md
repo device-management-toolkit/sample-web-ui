@@ -1,3 +1,10 @@
+## [3.50.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.1...v3.50.2) (2025-11-28)
+
+
+### Bug Fixes
+
+* prevent kb input lock in the active KVM session ([#2994](https://github.com/device-management-toolkit/sample-web-ui/issues/2994)) ([925b7b5](https://github.com/device-management-toolkit/sample-web-ui/commit/925b7b56dbb6aeb5e6c18927ffa1ac33c07d060b))
+
 ## [3.50.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.0...v3.50.1) (2025-11-20)
 
 
