@@ -3,102 +3,112 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-// Tests profile page pagination functionality
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { profiles } from 'cypress/e2e/fixtures/api/profile'
-import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-import { wiredConfigsResponse } from 'cypress/e2e/fixtures/api/ieee8021x'
+import { paging } from 'cypress/e2e/fixtures/formEntry/paging'
 
-describe('Test Profile Page Paging', () => {
+describe('Test Profile Page Pagination', () => {
   beforeEach('clear cache and login', () => {
     cy.setup()
-
-    // Setup intercepts - provide proper mock data for ISOLATE mode
-    cy.myIntercept('GET', '**/profiles*', {
-      statusCode: httpCodes.SUCCESS,
-      body: profiles.getAll.success.response
-    }).as('get-profiles')
-
-    cy.myIntercept('GET', '**/ciraconfigs*', {
-      statusCode: httpCodes.SUCCESS,
-      body: ciraConfig.getAll.success.response
-    }).as('get-configs')
-
-    cy.myIntercept('GET', '**/wirelessconfigs*', {
-      statusCode: httpCodes.SUCCESS,
-      body: wirelessConfigs.getAll.success.response
-    }).as('get-wireless')
-
-    cy.myIntercept('GET', '**/ieee8021xconfigs*', {
-      statusCode: httpCodes.SUCCESS,
-      body: wiredConfigsResponse
-    }).as('get-8021x')
-
-    cy.myIntercept('POST', '**/profiles', {
-      statusCode: httpCodes.CREATED,
-      body: profiles.create.success.response
-    }).as('post-profile')
   })
 
-  it('should handle profile list pagination', () => {
+  it('pagination for next page', () => {
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles')
+
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=25&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles2')
+
     cy.goToPage('Profiles')
     cy.wait('@get-profiles')
-
-    // Check if any data exists, if not, skip pagination tests
-    cy.get('body').then(($body) => {
-      if ($body.find('mat-paginator').length > 0) {
-        cy.log('Paginator found - testing pagination')
-        // Test next page functionality
-        cy.get('mat-paginator').should('exist')
-
-        // Check if next page button is enabled
-        cy.get('mat-paginator button[aria-label="Next page"]').then(($btn) => {
-          if (!$btn.is(':disabled')) {
-            cy.log('Clicking next page button')
-            cy.wrap($btn).click()
-            cy.wait(2000) // Allow time for any API call and UI update
-            // Verify the button state changed or page content updated
-            cy.get('mat-paginator').should('exist')
-          } else {
-            cy.log('Next page button is disabled - no additional pages available')
-          }
-        })
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').then(($label) => {
+      const text = $label.text()
+      if (text.includes(`1 – 25 of ${paging.totalCount}`)) {
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
       } else {
-        cy.log('No paginator found - likely no data in table, skipping pagination test')
+        cy.log('Real API mode: Not enough profiles for pagination test, skipping')
       }
     })
   })
 
-  it('should create enough profiles to test pagination', () => {
+  it('pagination for previous page', () => {
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles')
+
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=25&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles2')
+
     cy.goToPage('Profiles')
     cy.wait('@get-profiles')
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').then(($label) => {
+      const text = $label.text()
+      if (text.includes(`1 – 25 of ${paging.totalCount}`)) {
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-next.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`26 – 50 of ${paging.totalCount}`)
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-previous.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+      } else {
+        cy.log('Real API mode: Not enough profiles for pagination test, skipping')
+      }
+    })
+  })
 
-    // Create multiple profiles to enable pagination testing
-    // Use a very unique timestamp + random component to avoid any collisions
-    const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 10000)}`
-    for (let i = 1; i <= 3; i++) {
-      cy.get('button').contains('Add New').click()
-      cy.wait('@get-configs')
-      cy.wait('@get-wireless')
+  it('pagination for last page', () => {
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles')
 
-      cy.matTextlikeInputType('[formControlName="profileName"]', `paging-${uniqueId}-${i}`)
-      cy.matSelectChooseByValue('[formControlName="activation"]', 'acmactivate')
-      cy.matCheckboxSet('[formControlName="generateRandomPassword"]', true)
-      cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', true)
-      cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', 'true')
-      cy.get('[data-cy="radio-tls"]').click()
-      cy.matSelectChooseByValue('[formControlName="tlsMode"]', '1')
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=75&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles2')
 
-      cy.get('button[type=submit]').click()
-      cy.get('button').contains('Continue').click()
-      cy.wait('@post-profile')
+    cy.goToPage('Profiles')
+    cy.wait('@get-profiles')
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').then(($label) => {
+      const text = $label.text()
+      if (text.includes(`1 – 25 of ${paging.totalCount}`)) {
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
+      } else {
+        cy.log('Real API mode: Not enough profiles for pagination test, skipping')
+      }
+    })
+  })
 
-      // Go back to list
-      cy.goToPage('Profiles')
-      cy.wait('@get-profiles')
-    }
+  it('pagination for first page', () => {
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles')
 
-    cy.log('Created profiles for pagination testing')
+    cy.myIntercept('GET', 'profiles?$top=25&$skip=75&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: profiles.getAll.forPaging.response
+    }).as('get-profiles2')
+
+    cy.goToPage('Profiles')
+    cy.wait('@get-profiles')
+    cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').then(($label) => {
+      const text = $label.text()
+      if (text.includes(`1 – 25 of ${paging.totalCount}`)) {
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-last.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`76 – 100 of ${paging.totalCount}`)
+        cy.get('mat-paginator').find('button.mat-mdc-paginator-navigation-first.mat-mdc-icon-button').click()
+        cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${paging.totalCount}`)
+      } else {
+        cy.log('Real API mode: Not enough profiles for pagination test, skipping')
+      }
+    })
   })
 })

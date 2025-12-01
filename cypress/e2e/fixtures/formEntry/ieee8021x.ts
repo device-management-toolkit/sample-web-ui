@@ -13,7 +13,8 @@ AuthenticationProtocols.filter((x) => x.mode === 'wired').forEach((authProtocol)
       profileName: `8021xWiredProto${authProtocol.value}Pxe${pxeTimeout}`,
       wiredInterface: true,
       authenticationProtocol: authProtocol.value,
-      pxeTimeout
+      pxeTimeout,
+      version: ''
     })
   })
 })
@@ -31,7 +32,8 @@ AuthenticationProtocols.filter((x) => x.mode === 'both').forEach((authProtocol) 
       profileName: `8021xWirelessProto${authProtocol.value}${nameSuffix}`,
       wiredInterface: false,
       authenticationProtocol: authProtocol.value,
-      pxeTimeout: 0
+      pxeTimeout: 0,
+      version: ''
     })
   })
 })

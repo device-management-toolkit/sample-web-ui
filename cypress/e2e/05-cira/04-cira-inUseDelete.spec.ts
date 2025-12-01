@@ -91,6 +91,11 @@ describe('Test CIRA Config Page', () => {
     // Fill profile form using the same pattern as working tests
     cy.matTextlikeInputType('[formControlName="profileName"]', 'test-profile-using-cira')
     cy.matSelectChoose('[formControlName="activation"]', 'Admin Control Mode')
+    cy.matCheckboxSet('[formControlName="generateRandomPassword"]', true)
+    cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', true)
+    cy.matCheckboxSet('[formControlName="iderEnabled"]', false)
+    cy.matCheckboxSet('[formControlName="kvmEnabled"]', false)
+    cy.matCheckboxSet('[formControlName="solEnabled"]', false)
     cy.matSelectChoose('[formControlName="userConsent"]', 'All')
 
     // AMT Features

@@ -86,12 +86,12 @@ describe('Test Profile In-Use Delete', () => {
         cy.wait('@get-configs')
 
         cy.matTextlikeInputType('[formControlName="profileName"]', 'test-profile-inuse')
-        cy.matSelectChooseByValue('[formControlName="activation"]', 'acmactivate')
+        cy.matSelectChoose('[formControlName="activation"]', 'Admin Control Mode')
         cy.matCheckboxSet('[formControlName="generateRandomPassword"]', true)
         cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', true)
         cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', 'true')
         cy.get('[data-cy="radio-tls"]').click()
-        cy.matSelectChooseByValue('[formControlName="tlsMode"]', '1')
+        cy.matSelectChoose('[formControlName="tlsMode"]', 'Server Authentication Only')
 
         cy.get('button[type=submit]').click()
         cy.get('button').contains('Continue').click()

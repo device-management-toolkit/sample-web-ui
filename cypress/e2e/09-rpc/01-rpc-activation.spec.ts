@@ -400,7 +400,7 @@ describe('RPC Activation Tests', () => {
           // Wrap RPC command with timeout to prevent hanging on CIRA connection
           const rpcCmd = `timeout 90 /tmp/rpc_linux_x64 activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json -d vprodemo.com`
           activateCommand = buildSSHCommand(rpcCmd, device)
-          cy.log(`Activation Command: ${activateCommand}`)
+          cy.log(`Activation SSH command for ${deviceName}: ${activateCommand}`)
           cy.task('log', `[SPEC LOG] Activation Command: ${activateCommand}`)
         } else {
           if (isWin) {

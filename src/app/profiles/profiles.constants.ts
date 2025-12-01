@@ -6,21 +6,21 @@
 import { FormOption } from 'src/models/models'
 
 export const ActivationModes: FormOption<string>[] = [
-  { value: 'acmactivate', label: 'profileDetail.activationModeAdmin.value' },
-  { value: 'ccmactivate', label: 'profileDetail.activationModeClient.value' }
+  { value: 'acmactivate', label: 'Admin Control Mode' },
+  { value: 'ccmactivate', label: 'Client Control Mode' }
 ]
 
 export const UserConsentModes: FormOption<string>[] = [
-  { value: 'All', label: 'userConsentModes.all.value' },
-  { value: 'KVM', label: 'userConsentModes.kvmOnly.value' },
-  { value: 'None', label: 'userConsentModes.none.value' }
+  { value: 'All', label: 'All' },
+  { value: 'KVM', label: 'KVM Only' },
+  { value: 'None', label: 'None' }
 ]
 
 export const TlsModes: FormOption<number>[] = [
-  { value: 1, label: 'tlsModes.serverAuthOnly.value' },
-  { value: 2, label: 'tlsModes.serverAndNonTls.value' },
-  { value: 3, label: 'tlsModes.mutualTlsOnly.value' },
-  { value: 4, label: 'tlsModes.mutualAndNonTls.value' }
+  { value: 1, label: 'Server Authentication Only' },
+  { value: 2, label: 'Server & Non-TLS Authentication' },
+  { value: 3, label: 'Mutual TLS Authentication Only' },
+  { value: 4, label: 'Mutual and Non-TLS Authentication' }
 ]
 
 export const TlsSigningAuthorities: FormOption<string>[] = [

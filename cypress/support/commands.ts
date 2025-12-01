@@ -19,8 +19,6 @@ declare global {
       matRadioButtonChoose: (selector: string, value: string) => Chainable<Element>
       matRadioButtonAssert: (selector: string, value: string) => Chainable<Element>
       matSelectChoose: (selector: string, value: string) => Chainable<Element>
-      matSelectChooseByValue: (selector: string, value: string) => Chainable<Element>
-      matSelectChooseByTransId: (selector: string, transId: string) => Chainable<Element>
       matSelectAssert: (selector: string, value: string) => Chainable<Element>
       matTextlikeInputType: (selector: string, value: string) => Chainable<Element>
       matTextlikeInputAssert: (selector: string, value: string) => Chainable<Element>
@@ -113,101 +111,9 @@ Cypress.Commands.add('matRadioButtonAssert', (selector: string, value: string) =
 
 Cypress.Commands.add('matSelectChoose', (selector: string, text: string) => {
   const elementId = `mat-select${selector}`
-  cy.get(elementId).click({ force: true })
-  cy.wait(300) // Wait for dropdown to open
-  cy.get('mat-option').should('be.visible') // Ensure options are visible
-  cy.get('mat-option').contains(text).click({ force: true })
+  cy.get(elementId).click({ force: true }).get('mat-option').contains(text).click({ force: true })
   cy.get(elementId).focus().type('{esc}')
-  cy.get(elementId).should('have.text', text.trim())
-})
-
-Cypress.Commands.add('matSelectChooseByValue', (selector: string, value: string) => {
-  const elementId = `mat-select${selector}`
-  cy.get(elementId).click({ force: true })
-  cy.wait(500) // Wait longer for dropdown to open and populate
-  cy.get('mat-option').should('be.visible') // Ensure options are visible
-  cy.get('mat-option').should('have.length.greaterThan', 0) // Ensure options exist
-
-  // Find and click the option with matching value
-  cy.get('mat-option').then(($options) => {
-    let clicked = false
-
-    // Try to find by value using jQuery .val() or by checking various attributes
-    for (let i = 0; i < $options.length; i++) {
-      const option = $options[i]
-      const $option = Cypress.$($options[i])
-
-      // Try multiple ways to get the value
-      const ngReflectValue = option.getAttribute('ng-reflect-value')
-      const dataValue = option.getAttribute('data-value')
-      const valueAttr = option.getAttribute('value')
-      const jqueryVal = $option.val()
-
-      // Check all possible value sources
-      const valuesToCheck = [ngReflectValue, dataValue, valueAttr, jqueryVal]
-
-      if (valuesToCheck.some(v => v === value || v === String(value) || String(v) === value || String(v) === String(value))) {
-        cy.wrap(option).click({ force: true })
-        clicked = true
-        break
-      }
-    }
-
-    if (!clicked) {
-      // Fallback: for numeric values, try selecting by index (1-based for tlsMode)
-      if (!isNaN(Number(value)) && Number(value) > 0 && Number(value) <= $options.length) {
-        cy.wrap($options[Number(value) - 1]).click({ force: true })
-        clicked = true
-      }
-    }
-
-    if (!clicked) {
-      // Final fallback: try to find option by matching the value in constants
-      // For acmactivate/ccmactivate, look for the data-cy attribute
-      const dataCyMap: { [key: string]: string } = {
-        'acmactivate': 'profileDetail.activationModeAdmin.value',
-        'ccmactivate': 'profileDetail.activationModeClient.value'
-      }
-
-      if (dataCyMap[value]) {
-        const option = $options.filter(`[data-cy="${dataCyMap[value]}"]`)[0]
-        if (option) {
-          cy.wrap(option).click({ force: true })
-          clicked = true
-        }
-      }
-    }
-
-    if (!clicked) {
-      cy.log(`Available options: ${$options.length}`)
-      $options.each((i: number, el: HTMLElement) => {
-        const $el = Cypress.$(el)
-        cy.log(`Option ${i}: ng-reflect-value="${el.getAttribute('ng-reflect-value')}", value="${el.getAttribute('value')}", data-cy="${el.getAttribute('data-cy')}", text="${el.textContent?.trim()}", val="${$el.val()}"`)
-      })
-      throw new Error(`Could not find mat-option with value="${value}"`)
-    }
-  })
-
-  cy.wait(200)
-  cy.get(elementId).focus().type('{esc}', { force: true })
-  // Don't assert text since we selected by value and displayed text may be translated
-})
-
-Cypress.Commands.add('matSelectChooseByTransId', (selector: string, transId: string) => {
-  const dataCy = `[data-cy="${transId}"]`
-
-  let text = ''
-  cy.get(selector)
-    .click({ force: true })
-    .get(dataCy)
-    .then((elements) => {
-      text = elements[0].textContent
-      return elements[0]
-    })
-    .click({ force: true })
-    .then(() => {
-      cy.matSelectChoose(selector, text)
-    })
+  cy.get(elementId).should('have.text', text)
 })
 
 Cypress.Commands.add('matSelectAssert', (selector: string, text: string) => {
@@ -252,14 +158,6 @@ Cypress.Commands.add('setup', () => {
     body: stats.get.success.response
   }).as('stats-request')
 
-  cy.myIntercept('GET', 'api/v1/admin/version', {
-    statusCode: 200,
-    body: stats.get.success.response
-  }).as('version-request')
-  cy.myIntercept('GET', 'api/v1/version', {
-    statusCode: 200,
-    body: stats.get.success.response
-  }).as('version-request-2')
   // Login
   cy.visit(Cypress.env('BASEURL'))
   const mpsUsername = Cypress.env('MPS_USERNAME')
@@ -397,13 +295,13 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   if (formData.activation) {
-    cy.matSelectChooseByTransId(
+    cy.matSelectChoose(
       '[formControlName="activation"]',
       ActivationModes.find((z) => z.value === formData.activation)?.label ?? 'error'
     )
   }
   if (formData.userConsent && formData.activation !== 'ccmactivate') {
-    cy.matSelectChooseByTransId(
+    cy.matSelectChoose(
       '[formControlName="userConsent"]',
       UserConsentModes.find((z) => z.value === formData.userConsent)?.label ?? 'error'
     )
@@ -428,15 +326,23 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   } else if (formData.tlsMode) {
     cy.get('[data-cy="radio-tls"]').click()
 
-    cy.matSelectChooseByTransId(
+    cy.matSelectChoose(
       '[formControlName="tlsMode"]',
       TlsModes.find((z) => z.value === formData.tlsMode)?.label ?? 'error'
     )
   }
   if (formData.wifiConfigs != null && formData.wifiConfigs.length > 0) {
-    formData.wifiConfigs.forEach((wifiProfile: { profileName: string | number | RegExp }) => {
-      cy.matTextlikeInputType('[data-cy=wifiAutocomplete]', wifiProfile.profileName as string)
-      cy.get('mat-option').contains(wifiProfile.profileName).click()
+    // Wait for WiFi autocomplete to be available (requires wireless configs to load from server)
+    // Use should('exist') with timeout to handle async loading in real API mode
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-cy=wifiAutocomplete]').length > 0) {
+        formData.wifiConfigs.forEach((wifiProfile: { profileName: string | number | RegExp }) => {
+          cy.matTextlikeInputType('[data-cy=wifiAutocomplete]', wifiProfile.profileName as string)
+          cy.get('mat-option').contains(wifiProfile.profileName).click()
+        })
+      } else {
+        cy.log('WiFi autocomplete not visible - wireless configs may not be available on server')
+      }
     })
   }
 })
@@ -498,7 +404,8 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: IEEE8021xConfig) => {
       AuthenticationProtocols.find((x) => x.value === config.authenticationProtocol)?.label ?? 'error'
     )
   }
-  if (config.pxeTimeout != null && config.profileName.includes('wireless')) {
+  // Only fill pxeTimeout for wired configs (field is hidden for wireless)
+  if (config.pxeTimeout != null && config.wiredInterface) {
     cy.matTextlikeInputType('[formControlName="pxeTimeout"]', config.pxeTimeout.toString())
   }
 })

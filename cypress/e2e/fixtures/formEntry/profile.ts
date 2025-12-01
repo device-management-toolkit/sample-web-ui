@@ -25,11 +25,18 @@ ActivationModes.forEach((activationMode) => {
           activation: activationMode.value,
           amtPassword: '', // Cypress.env('AMT_PASSWORD'),
           mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
+          generateRandomPassword: true,
+          generateRandomMEBxPassword: true,
           dhcpEnabled,
+          ipSyncEnabled: dhcpEnabled,
+          localWifiSyncEnabled: false,
+          uefiWifiSyncEnabled: false,
           userConsent: 'All',
           iderEnabled: true,
           kvmEnabled: true,
-          solEnabled: true
+          solEnabled: true,
+          tags: [],
+          proxyConfigs: []
         }
         if (connection === 'CIRA') {
           profile.ciraConfigName = ciraConfig.getAll.forProfile.response.data[0].configName
@@ -58,15 +65,19 @@ TlsModes.forEach((tlsMode) => {
     activation: 'acmactivate',
     amtPassword: '', // Cypress.env('AMT_PASSWORD'),
     mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
+    generateRandomPassword: true,
+    generateRandomMEBxPassword: true,
     dhcpEnabled: false,
     ipSyncEnabled: false,
     localWifiSyncEnabled: false,
+    uefiWifiSyncEnabled: false,
     userConsent: 'All',
     iderEnabled: true,
     kvmEnabled: true,
     solEnabled: true,
     tlsMode: tlsMode.value,
-    uefiWifiSyncEnabled: false
+    tags: [],
+    proxyConfigs: []
   })
 })
 
