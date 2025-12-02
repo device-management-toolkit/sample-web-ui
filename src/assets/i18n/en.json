@@ -428,6 +428,18 @@
     "description": "Error message displayed when certificate deletion fails",
     "value": "Error deleting certificate"
   },
+  "certificates.certificateReferencedError": {
+    "description": "Error message when certificate cannot be deleted because it's referenced by profiles",
+    "value": "Certificate cannot be deleted as it is currently referenced by AMT profiles. Remove the references first."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Error message when certificate to delete is not found",
+    "value": "Certificate not found or has already been deleted"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Error message when trying to delete a read-only certificate",
+    "value": "Cannot delete read-only certificate"
+  },
   "certificates.deletedSuccessfully": {
     "description": "Success message displayed when certificate is deleted",
     "value": "Certificate '{{name}}' deleted successfully"
