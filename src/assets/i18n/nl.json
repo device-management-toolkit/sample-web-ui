@@ -248,6 +248,22 @@
     "description": "Fout bij het ophalen van certificaatinformatie",
     "value": "Fout bij het ophalen van certificaatinformatie"
   },
+  "certificates.certificateReferencedError": {
+    "description": "Fout wanneer certificaat niet kan worden verwijderd omdat het wordt gerefereerd door profielen",
+    "value": "Certificaat kan niet worden verwijderd omdat er momenteel naar wordt verwezen door AMT-profielen. Verwijder eerst de referenties."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Fout wanneer het te verwijderen certificaat niet wordt gevonden",
+    "value": "Certificaat niet gevonden of is al verwijderd"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fout bij het proberen een alleen-lezen certificaat te verwijderen",
+    "value": "Kan alleen-lezen certificaat niet verwijderen"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Succesbericht wanneer certificaat is verwijderd",
+    "value": "Certificaat '{{name}}' succesvol verwijderd"
+  },
   "certificates.list": {
     "description": "Tekst voor de lijst met certificaten",
     "value": "Lijst met certificaten die momenteel op het AMT-apparaat zijn geregistreerd"

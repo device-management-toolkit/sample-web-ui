@@ -248,6 +248,22 @@
     "description": "שגיאה לאחזור מידע על אישור",
     "value": "שגיאה באחזור מידע על אישור"
   },
+  "certificates.certificateReferencedError": {
+    "description": "שגיאה כאשר לא ניתן למחוק אישור מכיוון שהוא מופנה על ידי פרופילים",
+    "value": "לא ניתן למחוק את האישור מכיוון שהוא מופנה כעת על ידי פרופילי AMT. הסר תחילה את ההפניות."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "שגיאה כאשר האישור למחיקה לא נמצא",
+    "value": "האישור לא נמצא או כבר נמחק"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "שגיאה בעת ניסיון למחוק אישור לקריאה בלבד",
+    "value": "לא ניתן למחוק אישור לקריאה בלבד"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "הודעת הצלחה כאשר האישור נמחק",
+    "value": "האישור '{{name}}' נמחק בהצלחה"
+  },
   "certificates.list": {
     "description": "טקסט לרשימת התעודות",
     "value": "רשימת האישורים הרשומים כעת במכשיר AMT"

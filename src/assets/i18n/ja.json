@@ -248,6 +248,22 @@
     "description": "証明書情報の取得エラー",
     "value": "証明書情報の取得に失敗しました"
   },
+  "certificates.certificateReferencedError": {
+    "description": "プロファイルから参照されているため証明書を削除できないエラー",
+    "value": "証明書は現在AMTプロファイルから参照されているため削除できません。まず参照を削除してください。"
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "削除する証明書が見つからないエラー",
+    "value": "証明書が見つからないか、既に削除されています"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "読み取り専用証明書を削除しようとしたときのエラー",
+    "value": "読み取り専用証明書は削除できません"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "証明書が削除されたときの成功メッセージ",
+    "value": "証明書 '{{name}}' を正常に削除しました"
+  },
   "certificates.list": {
     "description": "証明書一覧のテキスト",
     "value": "AMTデバイスに現在登録されている証明書のリスト"
