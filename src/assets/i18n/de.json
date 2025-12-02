@@ -248,6 +248,22 @@
     "description": "Fehler beim Abrufen der Zertifikatsinformationen",
     "value": "Fehler beim Abrufen der Zertifikatsinformationen"
   },
+  "certificates.certificateReferencedError": {
+    "description": "Fehlermeldung, wenn ein Zertifikat nicht gelöscht werden kann, da es von Profilen referenziert wird",
+    "value": "Zertifikat kann nicht gelöscht werden, da es derzeit von AMT-Profilen referenziert wird. Entfernen Sie zuerst die Referenzen."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Fehlermeldung, wenn das zu löschende Zertifikat nicht gefunden wird",
+    "value": "Zertifikat nicht gefunden oder bereits gelöscht"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fehlermeldung beim Versuch, ein schreibgeschütztes Zertifikat zu löschen",
+    "value": "Schreibgeschütztes Zertifikat kann nicht gelöscht werden"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Erfolgsmeldung, wenn ein Zertifikat gelöscht wurde",
+    "value": "Zertifikat '{{name}}' erfolgreich gelöscht"
+  },
   "certificates.list": {
     "description": "Text für die Liste der Zertifikate",
     "value": "Liste der derzeit auf dem AMT-Gerät registrierten Zertifikate"
