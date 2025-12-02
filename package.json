@@ -55,7 +55,7 @@
     "@angular-eslint/builder": "~21.0.1",
     "@angular-eslint/schematics": "~21.0.1",
     "@angular-eslint/template-parser": "~21.0.1",
-    "@angular/cli": "~20.3.12",
+    "@angular/cli": "~20.0.6",
     "@angular/compiler-cli": "~20.3.15",
     "@angular/localize": "~20.3.15",
     "@types/jasmine": "~5.1.13",
@@ -73,7 +73,7 @@
     "karma-jasmine-html-reporter": "^2.1.0",
     "karma-junit-reporter": "^2.0.1",
     "prettier-config-standard": "^7.0.0",
-    "prettier-plugin-multiline-arrays": "^4.0.3",
+    "prettier-plugin-multiline-arrays": "^4.0.4",
     "ts-node": "~10.9.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.48.0"
