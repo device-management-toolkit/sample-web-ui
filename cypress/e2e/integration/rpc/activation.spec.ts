@@ -43,6 +43,12 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     failOnNonZeroExit: false,
     timeout: 240000
   } as any
+  const buildOutput = (result: { stdout?: string; stderr?: string }) => {
+    const stdout = result.stdout ? result.stdout.trim() : ''
+    const stderr = result.stderr ? result.stderr.trim() : ''
+    const combined = [stdout, stderr].filter((value) => value.length > 0).join('\n')
+    return { stdout, stderr, combined }
+  }
 
   // get environment variables
   const profileName: string = Cypress.env('PROFILE_NAME') as string
@@ -56,9 +62,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let activateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
   let deactivateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
   if (isWin) {
-    activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
-    infoCommand = 'rpc.exe amtinfo -json'
-    deactivateCommand = `rpc.exe deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
+    activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
+    infoCommand = 'rpc.exe amtinfo --json'
+    deactivateCommand = `rpc.exe deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
   }
 
   describe('Activation', () => {
@@ -66,8 +72,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     beforeEach(() => {
       cy.setup()
       cy.exec(infoCommand, execConfig).then((result) => {
-        cy.log(result.stderr)
-        amtInfo = JSON.parse(result.stderr)
+        const { stdout, stderr, combined } = buildOutput(result)
+        cy.log(combined)
+        const source = stdout.length > 0 ? stdout : stderr
+        amtInfo = JSON.parse(source)
         const versions: string[] = amtInfo.amt.split('.')
         majorVersion = versions.length > 1 ? versions[0] : '0'
       })
@@ -79,31 +87,41 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
       // activate device
       cy.exec(activateCommand, execConfig).then((result) => {
-        cy.log(result.stderr)
+        const { stdout, stderr, combined } = buildOutput(result)
+        cy.log(combined)
+        const primaryOutput = stdout.length > 0 ? stdout : stderr
         if (parseInt(majorVersion) < 12 && parseInt(amtInfo.buildNumber) < 3000) {
-          expect(result.stderr).to.contain(
-            'Only version 10.0.47 with build greater than 3000 can be remotely configured'
-          )
-          return null
+          expect(combined).to.contain('Only version 10.0.47 with build greater than 3000 can be remotely configured')
+          return
+        }
+
+        if (isAdminControlModeProfile) {
+          expect(combined).to.contain('Status: Admin control mode')
         } else {
-          if (isAdminControlModeProfile) {
-            expect(result.stderr).to.contain('Status: Admin control mode')
-          } else {
-            expect(result.stderr).to.contain('Status: Client control mode')
-          }
+          expect(combined).to.contain('Status: Client control mode')
+        }
 
-          if (parts[2] === 'CIRA') {
-            expect(result.stderr).to.contain('CIRA: Configured')
-          } else {
-            expect(result.stderr).to.contain('TLS: Configured')
-          }
+        if (parts[2] === 'CIRA') {
+          expect(combined).to.contain('CIRA: Configured')
+        } else {
+          expect(combined).to.contain('TLS: Configured')
+        }
 
-          if (profileName.endsWith('WiFi')) {
-            expect(result.stderr).to.contain('Network: Wired Network Configured. Wireless Configured')
-          } else {
-            expect(result.stderr).to.contain('Network: Wired Network Configured')
+        if (profileName.endsWith('WiFi')) {
+          expect(combined).to.contain('Network: Wired Network Configured. Wireless Configured')
+        } else {
+          expect(combined).to.contain('Network: Wired Network Configured')
+        }
+        if (primaryOutput.length > 0) {
+          try {
+            const parsed = JSON.parse(primaryOutput)
+            expect(parsed.status).to.equal('success')
+            expect(parsed.profile).to.equal(profileName)
+          } catch {
+            cy.log('Activation output is not JSON formatted')
           }
         }
+
         cy.wait(120000)
 
         cy.intercept(/devices\/.*$/).as('getdevices')
@@ -148,8 +166,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         const invalidCommand =
           deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
         cy.exec(invalidCommand, execConfig).then((result) => {
-          cy.log(result.stderr)
-          expect(result.stderr).to.contain('Unable to authenticate with AMT')
+          const { combined } = buildOutput(result)
+          cy.log(combined)
+          expect(combined).to.contain('Unable to authenticate with AMT')
         })
       }
     })
@@ -158,8 +177,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       // deactivate
       if (amtInfo.controlMode !== 'pre-provisioning state') {
         cy.exec(deactivateCommand, execConfig).then((result) => {
-          cy.log(result.stderr)
-          expect(result.stderr).to.contain('Status: Deactivated')
+          const { combined } = buildOutput(result)
+          cy.log(combined)
+          expect(combined).to.contain('Status: Deactivated')
         })
       }
     })
@@ -170,7 +190,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
         activateCommand += ' -d dontmatch.com'
         cy.exec(activateCommand, execConfig).then((result) => {
-          expect(result.stderr).to.contain(
+          const { stderr, combined } = buildOutput(result)
+          cy.log(combined)
+          expect(stderr).to.contain(
             'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
           )
         })
