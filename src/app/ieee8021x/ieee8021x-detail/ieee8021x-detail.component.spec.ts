@@ -120,6 +120,6 @@ describe('IEEE8021xDetailComponent', () => {
 
   it('should support subsets of all autthentication protocols', () => {
     expect(AuthenticationProtocols.filter((z) => z.mode === 'both').length).toBe(2)
-    expect(AuthenticationProtocols.filter((z) => z.mode === 'wired').length).toBe(9)
+    expect(AuthenticationProtocols.filter((z) => z.mode === 'wired').length).toBe(3)
   })
 })
