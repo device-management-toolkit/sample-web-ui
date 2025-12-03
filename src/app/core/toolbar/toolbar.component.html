@@ -25,9 +25,11 @@
     </button>
     <mat-menu #langMenu="matMenu" class="lang-menu">
       <div class="lang-scroll">
-        <button mat-menu-item *ngFor="let lang of availableLangs" (click)="switchLang(lang.code)">
-          {{ lang.label }}
-        </button>
+        @for (lang of availableLangs; track lang.code) {
+          <button mat-menu-item (click)="switchLang(lang.code)">
+            {{ lang.label }}
+          </button>
+        }
       </div>
     </mat-menu>
 

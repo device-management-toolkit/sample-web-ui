@@ -1,3 +1,12 @@
+## [3.51.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.0...v3.51.1) (2025-12-03)
+
+# [3.51.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.2...v3.51.0) (2025-12-02)
+
+
+### Features
+
+* improve certificate deletion error handling ([#3007](https://github.com/device-management-toolkit/sample-web-ui/issues/3007)) ([9eef82a](https://github.com/device-management-toolkit/sample-web-ui/commit/9eef82ab7acfb5e35196be7a491e3c1699187d4f))
+
 ## [3.50.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.1...v3.50.2) (2025-11-28)
 
 
