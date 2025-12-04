@@ -1,3 +1,10 @@
+## [3.51.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.1...v3.51.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* display actual console version instead of latest release ([#3026](https://github.com/device-management-toolkit/sample-web-ui/issues/3026)) ([09cd49f](https://github.com/device-management-toolkit/sample-web-ui/commit/09cd49f2d6f48d2d421b54d96b7fc6848bb50f60)), closes [#707](https://github.com/device-management-toolkit/sample-web-ui/issues/707)
+
 ## [3.51.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.0...v3.51.1) (2025-12-03)
 
 # [3.51.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.2...v3.51.0) (2025-12-02)
