@@ -5,7 +5,7 @@
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { Component, inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 import { DevicesService } from 'src/app/devices/devices.service'
@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common'
     CdkScrollable,
     MatDialogContent,
     ReactiveFormsModule,
+    FormsModule,
     MatFormField,
     MatLabel,
     MatIcon,
@@ -62,10 +63,13 @@ export class AddDeviceEnterpriseComponent {
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
     useTLS: [false],
-    allowSelfSigned: [false]
+    allowSelfSigned: [false],
+    guid: [''],
+    mpsusername: ['admin']
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public tags: string[] = []
+  public useCIRA = false
 
   constructor() {
     const device = this.device
@@ -94,11 +98,23 @@ export class AddDeviceEnterpriseComponent {
     }
   }
 
+  onCIRAChange(checked: boolean): void {
+    this.useCIRA = checked
+    if (!checked) {
+      this.form.patchValue({
+        guid: '',
+        mpsUsername: 'admin'
+      })
+    }
+  }
+
   // Method to submit form
   submitForm(): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.value }
       device.tags = this.tags
+      // Remove CIRA mpsUsername field as it is not sent to server
+      delete (device as any).mpsUsername
       if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe(() => {

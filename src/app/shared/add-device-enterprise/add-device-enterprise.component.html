@@ -75,6 +75,24 @@
       'addDevice.allowSelfSignedCertificates.value' | translate
     }}</mat-checkbox>
 
+    <mat-checkbox [(ngModel)]="useCIRA" [ngModelOptions]="{standalone: true}" (change)="onCIRAChange($event.checked)" class="flex flex-1">
+      Use CIRA
+    </mat-checkbox>
+
+    @if (useCIRA) {
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>GUID</mat-label>
+        <input matInput title="guid" formControlName="guid" />
+        <mat-hint>Enter GUID</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>MPS Username</mat-label>
+        <input matInput title="mpsusername" formControlName="mpsusername" />
+        <mat-hint>MPS Username (default: admin)</mat-hint>
+      </mat-form-field>
+    }
+
     <button mat-raised-button color="primary" type="submit">{{ 'common.submit.value' | translate }}</button>
   </form>
 </div>

@@ -62,7 +62,9 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: 'password',
       tenantId: '',
       useTLS: false,
-      allowSelfSigned: false
+      allowSelfSigned: false,
+      ciraConfigGuid: '',
+      mpsUsername: 'admin'
     })
     component.submitForm()
 
@@ -87,11 +89,56 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: '',
       tenantId: '',
       useTLS: false,
-      allowSelfSigned: false
+      allowSelfSigned: false,
+      guid: '',
+      mpsUsername: 'admin'
     })
     component.submitForm()
 
     expect(addDeviceSpy).not.toHaveBeenCalled()
     expect(dialogCloseSpy).not.toHaveBeenCalled()
+  })
+
+  it('should toggle CIRA fields visibility', () => {
+    expect(component.useCIRA).toBe(false)
+    
+    component.onCIRAChange(true)
+    expect(component.useCIRA).toBe(true)
+    
+    component.onCIRAChange(false)
+    expect(component.useCIRA).toBe(false)
+  })
+
+  it('should reset CIRA fields when CIRA is disabled', () => {
+    component.form.patchValue({
+      guid: 'test-guid-123',
+      mpsUsername: 'customUser'
+    })
+    
+    component.onCIRAChange(false)
+    
+    expect(component.form.get('guid')?.value).toBe('')
+    expect(component.form.get('mpsUsername')?.value).toBe('admin')
+  })
+
+  it('should include guid but not mpsUsername in submitted device', () => {
+    component.form.setValue({
+      hostname: 'example.com',
+      friendlyName: 'Test Device',
+      username: 'testuser',
+      password: 'password',
+      tenantId: '',
+      useTLS: false,
+      allowSelfSigned: false,
+      guid: 'test-guid-123',
+      mpsUsername: 'customUser'
+    })
+    component.useCIRA = true
+    component.submitForm()
+
+    const submittedDevice = addDeviceSpy.calls.mostRecent().args[0]
+    expect(submittedDevice.guid).toBe('test-guid-123')
+    expect(submittedDevice.mpsUsername).toBeUndefined()
+    expect(dialogCloseSpy).toHaveBeenCalled()
   })
 })
