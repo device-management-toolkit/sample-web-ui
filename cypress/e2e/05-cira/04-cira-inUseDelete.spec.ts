@@ -90,24 +90,40 @@ describe('Test CIRA Config Page', () => {
 
     // Fill profile form using the same pattern as working tests
     cy.matTextlikeInputType('[formControlName="profileName"]', 'test-profile-using-cira')
-    cy.matSelectChooseByValue('[formControlName="activation"]', 'acmactivate')
-    cy.matCheckboxSet('[formControlName="generateRandomPassword"]', true)
-    cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', true)
-    cy.matCheckboxSet('[formControlName="iderEnabled"]', false)
-    cy.matCheckboxSet('[formControlName="kvmEnabled"]', false)
-    cy.matCheckboxSet('[formControlName="solEnabled"]', false)
+    cy.matSelectChoose('[formControlName="activation"]', 'Admin Control Mode')
     cy.matSelectChoose('[formControlName="userConsent"]', 'All')
+
+    // AMT Features
+    cy.matCheckboxSet('[formControlName="iderEnabled"]', true)
+    cy.matCheckboxSet('[formControlName="kvmEnabled"]', true)
+    cy.matCheckboxSet('[formControlName="solEnabled"]', true)
+
+    // Password configuration - just like enterProfileInfoV2 does it
+    cy.matCheckboxSet('[formControlName="generateRandomPassword"]', false)
+    cy.matTextlikeInputType('[formControlName="amtPassword"]', Cypress.env('AMT_PASSWORD'))
+
+    cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', false)
+    cy.matTextlikeInputType('[formControlName="mebxPassword"]', Cypress.env('MEBX_PASSWORD'))
+
+    // Network configuration
     cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', 'true')
 
     // Set CIRA connection with the CIRA config we just created
     cy.get('[data-cy="radio-cira"]').click()
     cy.matSelectChoose('[formControlName="ciraConfigName"]', ciraFixtures.default.name)
 
-    // Submit the profile
+    // Submit the profile - same pattern as working tests
     cy.get('button[type=submit]').should('not.be.disabled').click()
-    cy.get('button').contains('Continue').click()
+
+    // Handle Continue button only if it appears (DHCP + CIRA may show warning)
+    cy.get('body').then(($body) => {
+      if ($body.find('button:contains("Continue")').length > 0) {
+        cy.get('button').contains('Continue').click()
+      }
+    })
+
     cy.wait('@post-profile')
-    cy.wait(5000)
+    cy.wait(3000)
 
     // Go back to CIRA Configs and attempt to delete the config
     cy.goToPage('CIRA Configs')

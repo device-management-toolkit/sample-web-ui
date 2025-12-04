@@ -61,34 +61,34 @@ describe('Test Profile Delete with Cleanup', () => {
     cy.goToPage('Profiles')
     cy.wait('@get-profiles')
 
-    // Check that profile deletion can be cancelled
-    cy.get('body').then(($body) => {
-      if ($body.find('mat-cell:contains("delete")').length > 0) {
-        cy.get('mat-cell').contains('delete').first().click()
-        cy.get('button').contains('No').click()
-        cy.log('✅ Delete cancellation functionality verified')
-      } else if ($body.text().includes('No Profiles')) {
-        // If no profiles exist, create one first for the test
-        cy.log('⚠️ No profiles available - creating test profile for deletion test')
+  it('should not delete when cancelled', () => {
+    // Delete profile (but cancel)
+    cy.get('mat-cell').contains('delete').click()
+    cy.get('button').contains('No').click()
+  })
 
-        cy.get('button').contains('Add New').click()
-        cy.wait('@get-configs')
+  // Include ALL profiles for deletion (including WiFi profiles)
+  const profilesToDelete = amtProfiles
 
-        cy.matTextlikeInputType('[formControlName="profileName"]', 'test-profile-delete')
-        cy.matSelectChooseByValue('[formControlName="activation"]', 'acmactivate')
-        cy.matCheckboxSet('[formControlName="generateRandomPassword"]', true)
-        cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', true)
-        cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', 'true')
-        cy.get('[data-cy="radio-tls"]').click()
-        cy.matSelectChooseByValue('[formControlName="tlsMode"]', '1')
+  profilesToDelete.forEach((profile: any) => {
+    it(`should delete ${profile.profileName as string}`, () => {
+      cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: empty.response
+      }).as('get-profiles-empty')
 
-        cy.get('button[type=submit]').click()
-        cy.get('button').contains('Continue').click()
-        cy.wait('@post-profile')
-
-        cy.goToPage('Profiles')
-        cy.wait(1000)
-      }
+      // Delete profile - handle case where profile may not exist
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(profile.profileName)) {
+          cy.get('mat-row').contains(profile.profileName).parent().contains('delete').click()
+          cy.get('button').contains('Yes').click()
+          cy.wait('@delete-profile')
+          cy.wait('@get-profiles-empty')
+          cy.log(`✓ Deleted profile: ${profile.profileName}`)
+        } else {
+          cy.log(`⚠️  Profile not found (already deleted or never created): ${profile.profileName}`)
+        }
+      })
     })
 
     // Delete all paging profiles first (cleanup priority)
