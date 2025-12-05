@@ -7,6 +7,7 @@
 
 import { httpCodes } from '../fixtures/api/httpCodes'
 import { domains } from 'cypress/e2e/fixtures/api/domain'
+import { getDomainSuffix, getProvisioningCertForDomain } from '../../support/certHelper'
 
 // ---------------------------- Test section ----------------------------
 
@@ -169,29 +170,36 @@ describe('Test Domain Page Paging', () => {
       // Create multiple domains to enable pagination testing (Real API mode)
       const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 10000)}`
 
-      const certFixtureData: Cypress.FileReference = {
-        fileName: 'test-cert.pfx',
-        contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
-      }
+      const domainSuffix = getDomainSuffix()
+      const certPassword = Cypress.env('PROVISIONING_CERT_PASSWORD') || 'Intel123!'
 
-      for (let i = 1; i <= 3; i++) {
-        cy.get('button').contains('Add New').click()
+      // Get certificate for this domain
+      getProvisioningCertForDomain().then((certData) => {
+        const provCert = certData || Cypress.env('PROVISIONING_CERT')
+        const certFixtureData: Cypress.FileReference = {
+          fileName: 'test-cert.pfx',
+          contents: Cypress.Buffer.from(provCert!, 'base64')
+        }
 
-        cy.enterDomainInfo(
-          `paging-domain-${uniqueId}-${i}`,
-          `paging-${uniqueId}-${i}.${Cypress.env('DOMAIN_SUFFIX') || 'local'}`,
-          certFixtureData,
-          Cypress.env('PROVISIONING_CERT_PASSWORD') || 'Intel123!'
-        )
+        for (let i = 1; i <= 3; i++) {
+          cy.get('button').contains('Add New').click()
 
-        cy.get('button').contains('SAVE').click()
-        cy.wait('@post-domain')
+          cy.enterDomainInfo(
+            `paging-domain-${uniqueId}-${i}`,
+            `paging-${uniqueId}-${i}.${domainSuffix}`,
+            certFixtureData,
+            certPassword
+          )
 
-        // Go back to list
-        cy.goToPage('Domains')
-        cy.wait('@get-domains')
-      }
-      cy.log('Created domains for pagination testing')
+          cy.get('button').contains('SAVE').click()
+          cy.wait('@post-domain')
+
+          // Go back to list
+          cy.goToPage('Domains')
+          cy.wait('@get-domains')
+        }
+        cy.log('Created domains for pagination testing')
+      })
     } else {
       // Mock mode - just verify the create form can be accessed
       cy.get('button').contains('Add New').click()

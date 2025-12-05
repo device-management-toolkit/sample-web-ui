@@ -41,7 +41,7 @@ describe('DevicesComponent', () => {
       mpsInstance: '',
       mpsusername: '',
       tenantId: '',
-      dnsSuffix: 'vprodemo.com'
+      dnsSuffix: 'mlopshub.com'
     }
     device02 = {
       hostname: 'device02',
@@ -53,7 +53,7 @@ describe('DevicesComponent', () => {
       mpsInstance: '',
       mpsusername: '',
       tenantId: '',
-      dnsSuffix: 'vprodemo.com'
+      dnsSuffix: 'mlopshub.com'
     }
     const devicesService = jasmine.createSpyObj('DevicesService', [
       'getDevices',

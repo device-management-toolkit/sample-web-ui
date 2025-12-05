@@ -7,6 +7,7 @@ import { domains } from 'cypress/e2e/fixtures/api/domain'
 import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { domainFixtures } from 'cypress/e2e/fixtures/formEntry/domain'
+import { getDomainSuffix, getProvisioningCertForDomain } from '../../support/certHelper'
 
 describe('Test Domain Page', () => {
   beforeEach('before', () => {
@@ -50,44 +51,50 @@ describe('Test Domain Page', () => {
     cy.get('button').contains('Add New').click()
 
     // Use default domain data but with test domain name
-    const certFixtureData: Cypress.FileReference = {
-      fileName: 'test-cert.pfx',
-      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
-    }
+    const domainSuffix = getDomainSuffix()
+    const certPassword = Cypress.env('PROVISIONING_CERT_PASSWORD') || 'Intel123!'
 
-    cy.enterDomainInfo(
-      'test-domain-for-deletion',
-      'test-delete.' + Cypress.env('DOMAIN_SUFFIX').split('.').slice(-1)[0], // Use same TLD as default
-      certFixtureData,
-      Cypress.env('PROVISIONING_CERT_PASSWORD')
-    )
-
-    cy.get('button').contains('SAVE').click({ force: true })
-
-    // Wait for domain creation
-    cy.wait('@create-domain')
-    cy.log('✅ Test domain created successfully')
-
-    // Refresh to see the new domain
-    cy.goToPage('Domains')
-    cy.wait('@get-domains')
-
-    // Check that domain deletion can be cancelled
-    cy.get('body').then(($body) => {
-      if ($body.find('mat-cell:contains("delete")').length > 0) {
-        cy.get('mat-cell').contains('delete').first().click()
-        cy.get('button').contains('No').click()
-        cy.log('✅ Delete cancellation functionality verified')
-      } else {
-        cy.log('✅ No domains available for delete cancellation test')
+    // Get certificate for this domain
+    getProvisioningCertForDomain().then((certData) => {
+      const provCert = certData || Cypress.env('PROVISIONING_CERT')
+      const certFixtureData: Cypress.FileReference = {
+        fileName: 'test-cert.pfx',
+        contents: Cypress.Buffer.from(provCert!, 'base64')
       }
-    })
 
-    // Change api response for after deletion
-    cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: empty.response
-    }).as('get-domains-after-delete')
+      cy.enterDomainInfo(
+        'test-domain-for-deletion',
+        'test-delete.' + domainSuffix.split('.').slice(-1)[0], // Use same TLD as default
+        certFixtureData,
+        certPassword
+      )
+
+      cy.get('button').contains('SAVE').click({ force: true })
+
+      // Wait for domain creation
+      cy.wait('@create-domain')
+      cy.log('✅ Test domain created successfully')
+
+      // Refresh to see the new domain
+      cy.goToPage('Domains')
+      cy.wait('@get-domains')
+
+      // Check that domain deletion can be cancelled
+      cy.get('body').then(($body) => {
+        if ($body.find('mat-cell:contains("delete")').length > 0) {
+          cy.get('mat-cell').contains('delete').first().click()
+          cy.get('button').contains('No').click()
+          cy.log('✅ Delete cancellation functionality verified')
+        } else {
+          cy.log('✅ No domains available for delete cancellation test')
+        }
+      })
+
+      // Change api response for after deletion
+      cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: empty.response
+      }).as('get-domains-after-delete')
 
     // Delete all paging domains first (cleanup priority)
     const deleteAllPagingDomains = () => {
@@ -139,5 +146,6 @@ describe('Test Domain Page', () => {
 
     // Start by cleaning up paging domains, then do the main test
     deleteAllPagingDomains()
+    })
   })
 })

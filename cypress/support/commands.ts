@@ -28,6 +28,7 @@ declare global {
       myIntercept: (method: string, url: string | RegExp, body: any) => Chainable<Element>
       goToPage: (pageName: string) => Chainable<Element>
       enterCiraInfo: (name: string, format: string, addr: string, user: string) => Chainable<Element>
+      enterProxyConfigInfo: (name: string, address: string, port: number, networkDnsSuffix: string) => Chainable<Element>
       enterDomainInfo: (name: string, domain: string, file: Cypress.FileReference, pass: string) => Chainable<Element>
       enterWirelessInfo: (
         name: string,
@@ -188,6 +189,13 @@ Cypress.Commands.add('enterCiraInfo', (name, format, addr, user) => {
   }
   cy.get('input[name=mpsServerAddress]').type(addr)
   cy.get('input[name=username]').clear().type(user)
+})
+
+Cypress.Commands.add('enterProxyConfigInfo', (name, address, port, networkDnsSuffix) => {
+  cy.get('[formControlName=name]').type(name)
+  cy.get('[formControlName=address]').type(address)
+  cy.get('[formControlName=port]').clear().type(port.toString())
+  cy.get('[formControlName=networkDnsSuffix]').type(networkDnsSuffix)
 })
 
 Cypress.Commands.add(
