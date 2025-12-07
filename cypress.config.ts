@@ -20,7 +20,7 @@ export default defineConfig({
     ISOLATE: 'N',
     FQDN: '192.168.8.50',
     ACTIVATION_URL: '192.168.8.50',
-    PROFILE_NAME: 'test-profile-using-cira',
+    PROFILE_NAME: 'test-profile-cira',
     MPS_USERNAME: 'standalone',
     MPS_PASSWORD: 'G@ppm0ym',
     AMT_PASSWORD: 'P@ssw0rd',
