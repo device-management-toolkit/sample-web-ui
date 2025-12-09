@@ -1,3 +1,33 @@
+## [3.51.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.1...v3.51.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* display actual console version instead of latest release ([#3026](https://github.com/device-management-toolkit/sample-web-ui/issues/3026)) ([09cd49f](https://github.com/device-management-toolkit/sample-web-ui/commit/09cd49f2d6f48d2d421b54d96b7fc6848bb50f60)), closes [#707](https://github.com/device-management-toolkit/sample-web-ui/issues/707)
+
+## [3.51.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.0...v3.51.1) (2025-12-03)
+
+# [3.51.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.2...v3.51.0) (2025-12-02)
+
+
+### Features
+
+* improve certificate deletion error handling ([#3007](https://github.com/device-management-toolkit/sample-web-ui/issues/3007)) ([9eef82a](https://github.com/device-management-toolkit/sample-web-ui/commit/9eef82ab7acfb5e35196be7a491e3c1699187d4f))
+
+## [3.50.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.1...v3.50.2) (2025-11-28)
+
+
+### Bug Fixes
+
+* prevent kb input lock in the active KVM session ([#2994](https://github.com/device-management-toolkit/sample-web-ui/issues/2994)) ([925b7b5](https://github.com/device-management-toolkit/sample-web-ui/commit/925b7b56dbb6aeb5e6c18927ffa1ac33c07d060b))
+
+## [3.50.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.50.0...v3.50.1) (2025-11-20)
+
+
+### Bug Fixes
+
+* update dependencies ([696cd47](https://github.com/device-management-toolkit/sample-web-ui/commit/696cd473dc9b7d44f76a18fc6cd62098e5f25f53))
+
 # [3.50.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.49.2...v3.50.0) (2025-11-17)
 
 

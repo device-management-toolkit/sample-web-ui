@@ -248,6 +248,22 @@
     "description": "Virhe sertifikaattitietojen hakemisessa",
     "value": "Virhe sertifikaatin tietojen hakemisessa"
   },
+  "certificates.certificateReferencedError": {
+    "description": "Virhe, kun sertifikaattia ei voida poistaa, koska profiilit viittaavat siihen",
+    "value": "Sertifikaattia ei voida poistaa, koska AMT-profiilit viittaavat siihen tällä hetkellä. Poista viittaukset ensin."
+  },
+  "certificates.certificateNotFoundError": {
+    "description": "Virhe, kun poistettavaa sertifikaattia ei löydy",
+    "value": "Sertifikaattia ei löydy tai se on jo poistettu"
+  },
+  "certificates.readOnlyCertificateError": {
+    "description": "Virhe yritettäessä poistaa vain luku -sertifikaatti",
+    "value": "Vain luku -sertifikaattia ei voi poistaa"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Onnistumisviesti, kun sertifikaatti on poistettu",
+    "value": "Sertifikaatti '{{name}}' poistettu onnistuneesti"
+  },
   "certificates.list": {
     "description": "Teksti sertifikaattiluetteloon",
     "value": "Luettelo AMT-laitteeseen tällä hetkellä rekisteröidyistä sertifikaateista"

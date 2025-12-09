@@ -148,6 +148,12 @@ export class KvmComponent implements OnInit, OnDestroy {
       .pipe(mergeMap(() => this.getPowerState(this.deviceId())))
       .subscribe()
 
+    // Add keyboard event listeners in capture phase to intercept before KVM component
+    // This is necessary because the KVM UI toolkit component also listens in capture phase
+    document.addEventListener('keydown', this.handleKeyboardEventCapture, true)
+    document.addEventListener('keyup', this.handleKeyboardEventCapture, true)
+    document.addEventListener('keypress', this.handleKeyboardEventCapture, true)
+
     this.init()
   }
 
@@ -226,6 +232,29 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.deviceState.set(0)
     }
     return of(null)
+  }
+
+  private handleKeyboardEventCapture = (event: KeyboardEvent): void => {
+    // Only intercept keyboard events when KVM is connected
+    if (this.deviceKVMConnection()) {
+      const activeElement = document.activeElement as HTMLElement
+      const tagName = activeElement?.tagName.toLowerCase()
+
+      // Check if the active element is an input field, textarea, select, or has contenteditable
+      const isInputElement =
+        tagName === 'input' ||
+        tagName === 'textarea' ||
+        tagName === 'select' ||
+        activeElement?.isContentEditable ||
+        activeElement?.closest('mat-select') !== null ||
+        activeElement?.closest('mat-form-field') !== null ||
+        activeElement?.closest('.mat-select-panel') !== null
+
+      // If an input element has focus, stop the event immediately to prevent KVM from capturing it
+      if (isInputElement) {
+        event.stopImmediatePropagation()
+      }
+    }
   }
 
   @HostListener('document:fullscreenchange', ['$event'])
@@ -473,5 +502,9 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()
     }
+    // Remove keyboard event listeners
+    document.removeEventListener('keydown', this.handleKeyboardEventCapture, true)
+    document.removeEventListener('keyup', this.handleKeyboardEventCapture, true)
+    document.removeEventListener('keypress', this.handleKeyboardEventCapture, true)
   }
 }

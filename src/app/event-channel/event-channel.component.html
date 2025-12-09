@@ -38,12 +38,15 @@
 
         <div fxFlex="calc(25% - 12px)" fxLayoutAlign="center center">
           <button type="submit" mat-button color="primary">{{ 'mqttEvents.connect.value' | translate }}</button>
-          <mat-icon *ngIf="status" color="primary" matTooltip="{{ 'mqttEvents.connected.value' | translate }}"
-            >fiber_manual_record</mat-icon
-          >
-          <mat-icon *ngIf="!status" color="warn" matTooltip="{{ 'mqttEvents.failed.value' | translate }}"
-            >fiber_manual_record</mat-icon
-          >
+          @if (status) {
+            <mat-icon color="primary" matTooltip="{{ 'mqttEvents.connected.value' | translate }}"
+              >fiber_manual_record</mat-icon
+            >
+          } @else {
+            <mat-icon color="warn" matTooltip="{{ 'mqttEvents.failed.value' | translate }}"
+              >fiber_manual_record</mat-icon
+            >
+          }
         </div>
       </div>
     </form>
@@ -52,58 +55,63 @@
 
 <mat-card>
   <mat-card-content>
-    <h3 [fxShow]="isNoData()" class="flex justify-center">{{ 'mqttEvents.noData.value' | translate }}</h3>
-    <mat-table [dataSource]="dataSource" [fxHide]="isNoData()" matSort>
-      <ng-container matColumnDef="guid">
-        <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
-          'mqttEvents.guid.label.value' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.guid }}</mat-cell>
-      </ng-container>
+    @if (isNoData()) {
+      <h3 class="flex justify-center">{{ 'mqttEvents.noData.value' | translate }}</h3>
+    } @else {
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="guid">
+          <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
+            'mqttEvents.guid.label.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.guid }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="message">
-        <mat-header-cell *matHeaderCellDef fxFlex="20%" mat-sort-header>{{
-          'mqttEvents.message.label.value' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.message }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="message">
+          <mat-header-cell *matHeaderCellDef fxFlex="20%" mat-sort-header>{{
+            'mqttEvents.message.label.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.message }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="type">
-        <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
-          'mqttEvents.type.label.value' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.type }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
+            'mqttEvents.type.label.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.type }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="methods">
-        <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
-          'mqttEvents.methods.label.value' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.methods.toString() }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="methods">
+          <mat-header-cell *matHeaderCellDef fxFlex="20%">{{
+            'mqttEvents.methods.label.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="20%">{{ element.methods.toString() }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="timestamp">
-        <mat-header-cell *matHeaderCellDef fxFlex="20%" mat-sort-header>{{
-          'mqttEvents.timestamp.label.value' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element" fxFlex="20%">
-          {{ element.timestamp | amdDateFormatter: 'MMMM d, yyyy h:mma' }} ({{
-            element.timestamp | amTimeAgoFormatter: true
-          }})
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell *matHeaderCellDef fxFlex="20%" mat-sort-header>{{
+            'mqttEvents.timestamp.label.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="20%">
+            {{ element.timestamp | amdDateFormatter: 'MMMM d, yyyy h:mma' }} ({{
+              element.timestamp | amTimeAgoFormatter: true
+            }})
+          </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
 
-    <div *ngIf="dataSource.data.length">
-      <mat-paginator
-        [pageSize]="pageEvent.pageSize"
-        [length]="dataSource.data.length"
-        [pageSizeOptions]="[25, 50, 100]"
-        showFirstLastButtons>
-      </mat-paginator>
-    </div>
+      @if (dataSource.data.length) {
+        <div>
+          <mat-paginator
+            [pageSize]="pageEvent.pageSize"
+            [length]="dataSource.data.length"
+            [pageSizeOptions]="[25, 50, 100]"
+            showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      }
+    }
   </mat-card-content>
 </mat-card>
