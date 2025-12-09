@@ -4,8 +4,8 @@
       {{ 'toolbar.header.cloudModeTitle.value' | translate }}
     } @else {
       {{ 'toolbar.header.consoleModeTitle.value' | translate }}
-      @if (consoleVersion()?.current) {
-        {{ consoleVersion()?.current }}
+      @if (consoleVersion().current) {
+        {{ consoleVersion().current }}
       }
     }
   </div>
