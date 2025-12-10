@@ -18,7 +18,7 @@
     } @else if (isCertEmpty()) {
       <mat-list-item>{{ 'certificates.empty.value' | translate }}</mat-list-item>
     } @else {
-      @for (cert of certInfo.certificates?.publicKeyCertificateItems; track cert) {
+      @for (cert of certInfo.certificates?.publicKeyCertificateItems; track cert.instanceID) {
         <mat-list-item lines="3">
           <span matListItemTitle>{{ cert.displayName }}</span>
           <span matListItemLine>

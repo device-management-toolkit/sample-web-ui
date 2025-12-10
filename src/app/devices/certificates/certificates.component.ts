@@ -51,6 +51,7 @@ export class CertificatesComponent implements OnInit {
   }
 
   getCertificates(): void {
+    this.isLoading.set(true)
     this.devicesService
       .getCertificates(this.deviceId())
       .pipe(
@@ -64,8 +65,11 @@ export class CertificatesComponent implements OnInit {
         })
       )
       .subscribe((certInfo: any) => {
-        this.certInfo = certInfo
-        this.isLoading.set(false)
+        // Ensure Angular detects changes by creating a fresh reference
+        this.certInfo = { ...certInfo }
+        if (this.certInfo.certificates?.publicKeyCertificateItems) {
+          this.certInfo.certificates.publicKeyCertificateItems = [...this.certInfo.certificates.publicKeyCertificateItems]
+        }
       })
   }
 
@@ -144,8 +148,6 @@ export class CertificatesComponent implements OnInit {
           .deleteCertificate(this.deviceId(), cert.instanceID)
           .pipe(
             catchError((err) => {
-              this.isLoading.set(false)
-
               // Handle specific error types from our API
               let msg: string
               switch (err.status) {
@@ -172,10 +174,8 @@ export class CertificatesComponent implements OnInit {
               }
 
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return throwError(err)
-            }),
-            finalize(() => {
               this.isLoading.set(false)
+              return throwError(err)
             })
           )
           .subscribe(() => {
@@ -183,6 +183,7 @@ export class CertificatesComponent implements OnInit {
               name: cert.displayName
             })
             this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+            // Refresh the certificate list - getCertificates() will handle its own loading state
             this.getCertificates()
           })
       }
