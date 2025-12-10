@@ -123,6 +123,42 @@
     "description": "Message pour l'utilisation de TLS",
     "value": "Utilisez TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Case à cocher pour utiliser la connexion CIRA",
+    "value": "Utiliser CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Étiquette pour le champ GUID",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Indication pour entrer le GUID",
+    "value": "Entrez le GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Étiquette pour le champ nom d'utilisateur MPS",
+    "value": "Nom d'utilisateur MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Indication pour le champ nom d'utilisateur MPS",
+    "value": "Nom d'utilisateur MPS (par défaut: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Étiquette pour le champ mot de passe MPS",
+    "value": "Mot de passe MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Indication pour le champ mot de passe MPS",
+    "value": "Entrer le mot de passe MPS"
+  },
+  "addDevice.amtPassword": {
+    "description": "Étiquette pour le champ mot de passe AMT",
+    "value": "Mot de passe AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Indication pour le champ mot de passe AMT",
+    "value": "Entrer le mot de passe AMT"
+  },
   "alarm.errorAdding": {
     "description": "Erreur lors de l'ajout",
     "value": "Erreur lors de l'ajout d'occurrences d'alarme"
@@ -527,9 +563,9 @@
     "description": "Texte de remplacement pour le champ port",
     "value": "Port"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Texte pour le bouton de régénération du mot de passe",
-    "value": "Générer un nouveau mot de passe aléatoire lors de l'enregistrement"
+  "configDetail.generateRandomPassword": {
+    "description": "Texte pour le bouton de génération de mot de passe aléatoire",
+    "value": "Générer un mot de passe aléatoire par appareil lors de l'activation de l'appareil"
   },
   "configDetail.usernameHint": {
     "description": "Texte d'aide pour le champ du nom d'utilisateur",

@@ -86,11 +86,42 @@
           <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
           <mat-hint>{{ 'configDetail.usernameHint.value' | translate }}</mat-hint>
         </mat-form-field>
-        <br /><br /><br /><br />
-        @if (!shouldShowRegenPass()) {
-          <mat-slide-toggle formControlName="regeneratePassword">
-            {{ 'configDetail.regeneratePassword.value' | translate }}
+        <br />
+        @if (!isCloud) {
+          <mat-slide-toggle formControlName="generateRandomPassword">
+            {{ 'configDetail.generateRandomPassword.value' | translate }}
           </mat-slide-toggle>
+        }
+        <br />
+        <br />
+
+        @if (!configForm.controls.generateRandomPassword.value) {
+          <mat-form-field class="flex flex-1" style="margin-top: 16px">
+            <input
+              [type]="passwordInputType()"
+              formControlName="password"
+              matInput
+              name="password"
+              [placeholder]="'configDetail.passwordPlaceholder.value' | translate"
+              required
+              minlength="8"
+              maxlength="32" />
+            <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+            <mat-hint>{{ 'configDetail.passwordHint.value' | translate }}</mat-hint>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              [matTooltip]="'profileDetail.showHidePassword.value' | translate"
+              (click)="togglePasswordVisibility()"
+              [disabled]="configForm.controls.password.disabled">
+              @if (passwordInputType() !== 'text') {
+                <mat-icon>visibility</mat-icon>
+              } @else {
+                <mat-icon>visibility_off</mat-icon>
+              }
+            </button>
+          </mat-form-field>
         }
       </mat-card-content>
       <mat-card-actions class="flex-row">
