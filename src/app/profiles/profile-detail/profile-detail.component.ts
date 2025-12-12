@@ -254,9 +254,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
-      if (this.cloudMode) {
-        this.profileForm.controls.generateRandomMEBxPassword.enable()
-      }
+      this.profileForm.controls.generateRandomMEBxPassword.enable()
     }
   }
 
@@ -348,6 +346,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.amtPassword.enable()
       this.profileForm.controls.amtPassword.setValidators(Validators.required)
     }
+    this.profileForm.controls.amtPassword.updateValueAndValidity()
   }
 
   generateRandomMEBxPasswordChange(value: boolean): void {
@@ -359,6 +358,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.enable()
       this.profileForm.controls.mebxPassword.setValidators(Validators.required)
     }
+    this.profileForm.controls.mebxPassword.updateValueAndValidity()
   }
 
   generateRandomPassword(length = 16): string {
@@ -665,16 +665,10 @@ export class ProfileDetailComponent implements OnInit {
     return this.fb.group({
       profileName: ['', Validators.required],
       activation: ['acmactivate', Validators.required],
-      generateRandomPassword: [
-        { value: this.cloudMode, disabled: !this.cloudMode },
-        Validators.required
-      ],
-      amtPassword: [{ value: null as string | null, disabled: this.cloudMode }],
-      generateRandomMEBxPassword: [
-        { value: this.cloudMode, disabled: !this.cloudMode },
-        Validators.required
-      ],
-      mebxPassword: [{ value: null as string | null, disabled: this.cloudMode }],
+      generateRandomPassword: [true, Validators.required],
+      amtPassword: [{ value: null as string | null, disabled: true }],
+      generateRandomMEBxPassword: [true, Validators.required],
+      mebxPassword: [{ value: null as string | null, disabled: true }],
       dhcpEnabled: [true],
       ipSyncEnabled: [{ value: true, disabled: true }],
       localWifiSyncEnabled: [{ value: false, disabled: false }],

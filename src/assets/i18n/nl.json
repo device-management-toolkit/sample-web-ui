@@ -123,6 +123,42 @@
     "description": "Bericht voor het gebruik van TLS",
     "value": "Gebruik TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
+    "value": "Gebruik CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Label voor het GUID-veld",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Hint voor het invoeren van GUID",
+    "value": "Voer GUID in"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Label voor het MPS-gebruikersnaam-veld",
+    "value": "MPS-gebruikersnaam"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hint voor het MPS-gebruikersnaam-veld",
+    "value": "MPS-gebruikersnaam (standaard: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Label voor het MPS-wachtwoord-veld",
+    "value": "MPS-wachtwoord"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hint voor het MPS-wachtwoord-veld",
+    "value": "Voer MPS-wachtwoord in"
+  },
+  "addDevice.amtPassword": {
+    "description": "Label voor het AMT-wachtwoord-veld",
+    "value": "AMT-wachtwoord"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hint voor het AMT-wachtwoord-veld",
+    "value": "Voer AMT-wachtwoord in"
+  },
   "alarm.errorAdding": {
     "description": "Fout bij toevoegen",
     "value": "Fout bij het toevoegen van alarmmeldingen"
@@ -527,9 +563,9 @@
     "description": "Plaatshoudertekst voor poortveld",
     "value": "Port"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Tekst voor het opnieuw genereren van het wachtwoord",
-    "value": "Genereer een nieuw willekeurig wachtwoord bij het opslaan."
+  "configDetail.generateRandomPassword": {
+    "description": "Tekst voor het genereren van een willekeurig wachtwoord",
+    "value": "Genereer willekeurig wachtwoord per apparaat bij apparaatactivering"
   },
   "configDetail.usernameHint": {
     "description": "Hinttekst voor het veld voor de gebruikersnaam",

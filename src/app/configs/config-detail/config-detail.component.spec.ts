@@ -72,7 +72,7 @@ describe('ConfigDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')
-    expect(component.isEdit).toBeTrue()
+    expect(component.isEdit()).toBeTrue()
     expect(component.pageTitle).toEqual('ciraConfig1')
   })
 
@@ -97,7 +97,7 @@ describe('ConfigDetailComponent', () => {
     expect(component.configForm.get('commonName')?.value).toEqual('255.255.255.1')
   })
 
-  it('should submit when valid(update)', () => {
+  it('should submit when valid(update) with regenerate password', () => {
     const routerSpy = spyOn(component.router, 'navigate')
     component.configForm.patchValue({
       configName: 'ciraConfig1',
@@ -108,8 +108,33 @@ describe('ConfigDetailComponent', () => {
       username: 'admin',
       mpsRootCertificate: 'rootcert',
       proxyDetails: null,
-      regeneratePassword: false
+      generateRandomPassword: true
     })
+    expect(component.configForm.valid).toBeTruthy()
+
+    component.onSubmit()
+
+    expect(component.isLoading()).toBeFalse()
+    expect(loadMpsRootCertSpy).toHaveBeenCalled()
+    expect(updateRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should submit when valid(update) with static password', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+    component.configForm.patchValue({
+      configName: 'ciraConfig1',
+      mpsServerAddress: '255.255.255.255',
+      serverAddressFormat: 3,
+      commonName: '255.255.255.255',
+      mpsPort: 4433,
+      username: 'admin',
+      mpsRootCertificate: 'rootcert',
+      proxyDetails: null,
+      generateRandomPassword: false,
+      password: 'TestPassword123!'
+    })
+    component.generateRandomPasswordChange(false)
     expect(component.configForm.valid).toBeTruthy()
 
     component.onSubmit()
@@ -131,9 +156,9 @@ describe('ConfigDetailComponent', () => {
       username: 'admin',
       mpsRootCertificate: 'rootcert',
       proxyDetails: null,
-      regeneratePassword: false
+      generateRandomPassword: true
     })
-    component.isEdit = false
+    component.isEdit.set(false)
     expect(component.configForm.valid).toBeTruthy()
 
     component.onSubmit()

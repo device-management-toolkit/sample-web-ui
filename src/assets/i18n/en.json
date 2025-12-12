@@ -263,6 +263,42 @@
     "description": "Message for using TLS",
     "value": "Use TLS"
   },
+  "addDevice.useCIRA": {
+    "description": "Checkbox label for using CIRA connection",
+    "value": "Use CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Label for GUID field",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Hint for entering GUID",
+    "value": "Enter GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Label for MPS Username field",
+    "value": "MPS Username"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hint for MPS Username field",
+    "value": "MPS Username (default: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Label for MPS Password field",
+    "value": "MPS Password"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hint for MPS Password field",
+    "value": "Enter MPS Password"
+  },
+  "addDevice.amtPassword": {
+    "description": "Label for AMT Password field",
+    "value": "AMT Password"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hint for AMT Password field",
+    "value": "Enter AMT Password"
+  },
   "alarm.errorAdding": {
     "description": "Error for adding",
     "value": "Error adding Alarm Occurrences"
@@ -667,9 +703,17 @@
     "description": "Placeholder text for port field",
     "value": "Port"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Text for regenerate password toggle",
-    "value": "Generate New Random Password Upon Saving"
+  "configDetail.generateRandomPassword": {
+    "description": "Text for generate random password toggle",
+    "value": "Generate Random Password Per Device Upon Device Activation"
+  },
+  "configDetail.passwordPlaceholder": {
+    "description": "Placeholder text for password field",
+    "value": "Password"
+  },
+  "configDetail.passwordHint": {
+    "description": "Hint text for password field",
+    "value": "Enter a static password (8-32 characters)"
   },
   "configDetail.usernameHint": {
     "description": "Hint text for username field",

@@ -123,6 +123,42 @@
     "description": "TLS ご利用に関するご案内",
     "value": "TLSを使用してください"
   },
+  "addDevice.useCIRA": {
+    "description": "CIRA接続を使用するチェックボックス",
+    "value": "CIRAを使用"
+  },
+  "addDevice.guid": {
+    "description": "GUIDフィールドのラベル",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "GUIDを入力するヒント",
+    "value": "GUIDを入力"
+  },
+  "addDevice.mpsUsername": {
+    "description": "MPSユーザー名フィールドのラベル",
+    "value": "MPSユーザー名"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "MPSユーザー名フィールドのヒント",
+    "value": "MPSユーザー名（デフォルト: admin）"
+  },
+  "addDevice.mpsPassword": {
+    "description": "MPSパスワードフィールドのラベル",
+    "value": "MPSパスワード"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "MPSパスワードフィールドのヒント",
+    "value": "MPSパスワードを入力"
+  },
+  "addDevice.amtPassword": {
+    "description": "AMTパスワードフィールドのラベル",
+    "value": "AMTパスワード"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "AMTパスワードフィールドのヒント",
+    "value": "AMTパスワードを入力"
+  },
   "alarm.errorAdding": {
     "description": "エラーの追加について",
     "value": "アラーム発生の追加に失敗しました"
@@ -527,9 +563,9 @@
     "description": "ポートフィールド用プレースホルダーテキスト",
     "value": "ポート"
   },
-  "configDetail.regeneratePassword": {
-    "description": "パスワード再発行トグルのテキスト",
-    "value": "保存時に新しいランダムパスワードを生成する"
+  "configDetail.generateRandomPassword": {
+    "description": "ランダムパスワード生成トグルのテキスト",
+    "value": "デバイスのアクティベーション時にデバイスごとにランダムパスワードを生成"
   },
   "configDetail.usernameHint": {
     "description": "ユーザー名フィールドのヒントテキスト",

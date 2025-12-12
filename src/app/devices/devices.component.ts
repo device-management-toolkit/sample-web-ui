@@ -163,13 +163,15 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   editDevice(device: Device): void {
     if (!environment.cloud) {
       const sub = this.dialog.open(AddDeviceEnterpriseComponent, {
-        height: '500px',
-        width: '600px',
+        height: '650px',
+        width: '700px',
         data: device
       })
-      sub.afterClosed().subscribe(() => {
-        window.location.reload()
-        this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+      sub.afterClosed().subscribe((result) => {
+        if (result?.submitted) {
+          window.location.reload()
+          this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+        }
       })
     }
   }
@@ -491,11 +493,13 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   addDevice(): void {
     if (!environment.cloud) {
       const sub = this.dialog.open(AddDeviceEnterpriseComponent, {
-        height: '500px',
-        width: '600px'
+        height: '650px',
+        width: '700px'
       })
-      sub.afterClosed().subscribe(() => {
-        this.getDevices()
+      sub.afterClosed().subscribe((result) => {
+        if (result?.submitted) {
+          this.getDevices()
+        }
       })
     } else {
       this.dialog.open(AddDeviceComponent, {

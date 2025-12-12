@@ -123,6 +123,42 @@
     "description": "Mensaje para el uso de TLS",
     "value": "Utilice TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Casilla de verificación para usar conexión CIRA",
+    "value": "Usar CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Etiqueta para el campo GUID",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Sugerencia para ingresar GUID",
+    "value": "Ingrese GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Etiqueta para el campo de nombre de usuario MPS",
+    "value": "Nombre de usuario MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Sugerencia para el campo de nombre de usuario MPS",
+    "value": "Nombre de usuario MPS (predeterminado: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Etiqueta para el campo de contraseña MPS",
+    "value": "Contraseña MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Sugerencia para el campo de contraseña MPS",
+    "value": "Introducir contraseña MPS"
+  },
+  "addDevice.amtPassword": {
+    "description": "Etiqueta para el campo de contraseña AMT",
+    "value": "Contraseña AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Sugerencia para el campo de contraseña AMT",
+    "value": "Introducir contraseña AMT"
+  },
   "alarm.errorAdding": {
     "description": "Error al añadir",
     "value": "Error al añadir ocurrencias de alarma"
@@ -527,9 +563,9 @@
     "description": "Texto de marcador de posición para el campo de puerto",
     "value": "Puerto"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Texto para la opción de regenerar contraseña.",
-    "value": "Generar una nueva contraseña aleatoria al guardar"
+  "configDetail.generateRandomPassword": {
+    "description": "Texto para la opción de generar contraseña aleatoria",
+    "value": "Generar contraseña aleatoria por dispositivo durante la activación del dispositivo"
   },
   "configDetail.usernameHint": {
     "description": "Texto de ayuda para el campo de nombre de usuario",

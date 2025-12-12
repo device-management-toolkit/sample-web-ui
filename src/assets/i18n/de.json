@@ -123,6 +123,42 @@
     "description": "Hinweis zur Verwendung von TLS",
     "value": "Verwenden Sie TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Kontrollkästchen für die Verwendung der CIRA-Verbindung",
+    "value": "CIRA verwenden"
+  },
+  "addDevice.guid": {
+    "description": "Bezeichnung für das GUID-Feld",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Hinweis zur Eingabe der GUID",
+    "value": "GUID eingeben"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Bezeichnung für das MPS-Benutzername-Feld",
+    "value": "MPS-Benutzername"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hinweis für das MPS-Benutzername-Feld",
+    "value": "MPS-Benutzername (Standard: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Bezeichnung für das MPS-Passwort-Feld",
+    "value": "MPS-Passwort"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hinweis für das MPS-Passwort-Feld",
+    "value": "MPS-Passwort eingeben"
+  },
+  "addDevice.amtPassword": {
+    "description": "Bezeichnung für das AMT-Passwort-Feld",
+    "value": "AMT-Passwort"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hinweis für das AMT-Passwort-Feld",
+    "value": "AMT-Passwort eingeben"
+  },
   "alarm.errorAdding": {
     "description": "Fehler beim Hinzufügen",
     "value": "Fehler beim Hinzufügen von Alarmereignissen"
@@ -527,9 +563,9 @@
     "description": "Platzhaltertext für das Feld „Port“",
     "value": "Port"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Text für die Option „Passwort neu generieren”",
-    "value": "Generieren Sie beim Speichern ein neues zufälliges Passwort."
+  "configDetail.generateRandomPassword": {
+    "description": "Text für die Option „Zufälliges Passwort generieren",
+    "value": "Zufälliges Passwort pro Gerät bei Geräteaktivierung generieren"
   },
   "configDetail.usernameHint": {
     "description": "Hinweistext für das Feld „Benutzername”",

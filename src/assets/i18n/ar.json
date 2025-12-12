@@ -123,6 +123,42 @@
     "description": "رسالة لاستخدام TLS",
     "value": "استخدم TLS"
   },
+  "addDevice.useCIRA": {
+    "description": "مربع اختيار لاستخدام اتصال CIRA",
+    "value": "استخدام CIRA"
+  },
+  "addDevice.guid": {
+    "description": "تسمية حقل GUID",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "تلميح لإدخال GUID",
+    "value": "أدخل GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "تسمية حقل اسم مستخدم MPS",
+    "value": "اسم مستخدم MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "تلميح لحقل اسم مستخدم MPS",
+    "value": "اسم مستخدم MPS (افتراضي: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "تسمية حقل كلمة مرور MPS",
+    "value": "كلمة مرور MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "تلميح لحقل كلمة مرور MPS",
+    "value": "أدخل كلمة مرور MPS"
+  },
+  "addDevice.amtPassword": {
+    "description": "تسمية حقل كلمة مرور AMT",
+    "value": "كلمة مرور AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "تلميح لحقل كلمة مرور AMT",
+    "value": "أدخل كلمة مرور AMT"
+  },
   "alarm.errorAdding": {
     "description": "خطأ في الإضافة",
     "value": "خطأ في إضافة حالات الإنذار"
@@ -527,9 +563,9 @@
     "description": "نص مؤقت لحقل المنفذ",
     "value": "الميناء"
   },
-  "configDetail.regeneratePassword": {
-    "description": "نص لتبديل إعادة إنشاء كلمة المرور",
-    "value": "إنشاء كلمة مرور عشوائية جديدة عند الحفظ"
+  "configDetail.generateRandomPassword": {
+    "description": "نص لتبديل إنشاء كلمة مرور عشوائية",
+    "value": "إنشاء كلمة مرور عشوائية لكل جهاز عند تفعيل الجهاز"
   },
   "configDetail.usernameHint": {
     "description": "نص تلميح لحقل اسم المستخدم",
