@@ -175,9 +175,6 @@ export class CertificatesComponent implements OnInit {
 
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
               return throwError(err)
-            }),
-            finalize(() => {
-              this.isLoading.set(false)
             })
           )
           .subscribe(() => {
