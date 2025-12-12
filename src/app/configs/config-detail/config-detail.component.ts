@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, computed } from '@angular/core'
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -17,7 +17,9 @@ import { MatButton } from '@angular/material/button'
 import { MatSlideToggle } from '@angular/material/slide-toggle'
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
 import { MatInput } from '@angular/material/input'
-import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
+import { MatFormField, MatError, MatHint, MatSuffix } from '@angular/material/form-field'
+import { MatIconButton } from '@angular/material/button'
+import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list'
 import {
@@ -31,6 +33,7 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-config-detail',
@@ -52,11 +55,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatInput,
     MatError,
     MatHint,
+    MatSuffix,
     MatRadioGroup,
     MatRadioButton,
     MatSlideToggle,
     MatCardActions,
     MatButton,
+    MatIconButton,
+    MatTooltip,
     MatListItemIcon,
     MatListItemTitle,
     TranslateModule
@@ -78,15 +84,22 @@ export class ConfigDetailComponent implements OnInit {
     commonName: ['', Validators.required],
     mpsPort: [4433, Validators.required],
     username: ['admin', Validators.required],
+    password: [null as string | null],
     mpsRootCertificate: [''],
     proxyDetails: [''],
-    regeneratePassword: [false],
+    generateRandomPassword: [true],
     version: [null]
   })
   public isLoading = signal(false)
   public pageTitle: string
-  public isEdit = false
+  public isEdit = signal(false)
   public errorMessages: string[] = []
+  public passwordInputType = signal<'password' | 'text'>('password')
+  public isCloud = environment.cloud
+  // Computed property to determine if password field should be shown
+  public readonly showPasswordField = computed(() => {
+    return this.isEdit() && !this.configForm.controls.generateRandomPassword.value
+  })
 
   constructor() {
     this.pageTitle = this.translate.instant('configs.header.ciraNewTitle.value')
@@ -107,7 +120,7 @@ export class ConfigDetailComponent implements OnInit {
           )
           .subscribe({
             next: (data) => {
-              this.isEdit = true
+              this.isEdit.set(true)
               this.pageTitle = data.configName
               this.configForm.controls.configName.disable()
               this.configForm.patchValue(data)
@@ -125,6 +138,10 @@ export class ConfigDetailComponent implements OnInit {
 
     this.configForm.controls.mpsServerAddress?.valueChanges.subscribe((value) => {
       this.serverAddressChange(value ?? '')
+    })
+
+    this.configForm.controls.generateRandomPassword?.valueChanges.subscribe((value) => {
+      this.generateRandomPasswordChange(value!)
     })
   }
 
@@ -149,8 +166,21 @@ export class ConfigDetailComponent implements OnInit {
     }
   }
 
-  shouldShowRegenPass(): boolean {
-    return !this.isEdit
+  generateRandomPasswordChange(value: boolean): void {
+    console.log(value)
+    if (value) {
+      this.configForm.controls.password.disable()
+      this.configForm.controls.password.setValue(null)
+      this.configForm.controls.password.clearValidators()
+    } else {
+      this.configForm.controls.password.enable()
+      this.configForm.controls.password.setValidators(Validators.required)
+    }
+    this.configForm.controls.password.updateValueAndValidity()
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordInputType.update((current) => (current === 'password' ? 'text' : 'password'))
   }
 
   trimRootCert = (cert: string): string =>
@@ -166,7 +196,7 @@ export class ConfigDetailComponent implements OnInit {
       result.serverAddressFormat = +result.serverAddressFormat
       let reqType: string
       let rpsRequest: Observable<CIRAConfig>
-      if (this.isEdit) {
+      if (this.isEdit()) {
         reqType = 'updated'
         rpsRequest = this.configsService.update(result)
       } else {

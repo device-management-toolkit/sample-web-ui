@@ -123,6 +123,42 @@
     "description": "Messaggio per l'utilizzo di TLS",
     "value": "Utilizzare TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Casella di controllo per utilizzare la connessione CIRA",
+    "value": "Usa CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Etichetta per il campo GUID",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Suggerimento per inserire il GUID",
+    "value": "Inserisci GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Etichetta per il campo nome utente MPS",
+    "value": "Nome utente MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Suggerimento per il campo nome utente MPS",
+    "value": "Nome utente MPS (predefinito: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Etichetta per il campo password MPS",
+    "value": "Password MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Suggerimento per il campo password MPS",
+    "value": "Inserire password MPS"
+  },
+  "addDevice.amtPassword": {
+    "description": "Etichetta per il campo password AMT",
+    "value": "Password AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Suggerimento per il campo password AMT",
+    "value": "Inserire password AMT"
+  },
   "alarm.errorAdding": {
     "description": "Errore durante l'aggiunta",
     "value": "Errore durante l'aggiunta di occorrenze di allarme"
@@ -527,9 +563,9 @@
     "description": "Testo segnaposto per il campo porta",
     "value": "Port"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Testo per il pulsante di rigenerazione della password",
-    "value": "Generare una nuova password casuale al momento del salvataggio"
+  "configDetail.generateRandomPassword": {
+    "description": "Testo per il pulsante di generazione password casuale",
+    "value": "Genera password casuale per dispositivo all'attivazione del dispositivo"
   },
   "configDetail.usernameHint": {
     "description": "Testo di suggerimento per il campo nome utente",

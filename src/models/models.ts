@@ -70,12 +70,13 @@ export interface CIRAConfig {
   mpsServerAddress: string
   mpsPort: number
   username: string
-  password: string
+  password?: string
   commonName: string
   serverAddressFormat: number
   authMethod: number
   mpsRootCertificate: string
   proxyDetails: string
+  generateRandomPassword?: boolean
 }
 
 export interface AuditLog {

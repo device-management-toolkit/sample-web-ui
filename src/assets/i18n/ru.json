@@ -123,6 +123,42 @@
     "description": "Сообщение об использовании TLS",
     "value": "Используйте TLS."
   },
+  "addDevice.useCIRA": {
+    "description": "Флажок для использования соединения CIRA",
+    "value": "Использовать CIRA"
+  },
+  "addDevice.guid": {
+    "description": "Метка для поля GUID",
+    "value": "GUID"
+  },
+  "addDevice.enterGuid": {
+    "description": "Подсказка для ввода GUID",
+    "value": "Введите GUID"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Метка для поля имени пользователя MPS",
+    "value": "Имя пользователя MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Подсказка для поля имени пользователя MPS",
+    "value": "Имя пользователя MPS (по умолчанию: admin)"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Метка для поля пароля MPS",
+    "value": "Пароль MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Подсказка для поля пароля MPS",
+    "value": "Введите пароль MPS"
+  },
+  "addDevice.amtPassword": {
+    "description": "Метка для поля пароля AMT",
+    "value": "Пароль AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Подсказка для поля пароля AMT",
+    "value": "Введите пароль AMT"
+  },
   "alarm.errorAdding": {
     "description": "Ошибка при добавлении",
     "value": "Ошибка при добавлении событий тревоги"
@@ -527,9 +563,9 @@
     "description": "Заполнитель текста для поля порта",
     "value": "Порт"
   },
-  "configDetail.regeneratePassword": {
-    "description": "Текст для переключателя «Восстановить пароль»",
-    "value": "Генерация нового случайного пароля при сохранении"
+  "configDetail.generateRandomPassword": {
+    "description": "Текст для переключателя генерации случайного пароля",
+    "value": "Генерировать случайный пароль для каждого устройства при активации устройства"
   },
   "configDetail.usernameHint": {
     "description": "Подсказка для поля имени пользователя",
