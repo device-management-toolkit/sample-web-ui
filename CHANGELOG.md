@@ -1,3 +1,10 @@
+## [3.52.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.0...v3.52.1) (2025-12-12)
+
+
+### Bug Fixes
+
+* certificate list not refreshing after deletion ([#3037](https://github.com/device-management-toolkit/sample-web-ui/issues/3037)) ([0f69922](https://github.com/device-management-toolkit/sample-web-ui/commit/0f699228b711edfc63f5f9a857ab12334a272448))
+
 # [3.52.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.51.2...v3.52.0) (2025-12-12)
 
 
