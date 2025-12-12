@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.52.0",
+  "version": "3.52.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
