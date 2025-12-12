@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { inject, Injectable } from '@angular/core'
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { TranslateService } from '@ngx-translate/core'

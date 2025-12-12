@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 export const availableLangs = [
   { code: 'en', label: 'English' },
   { code: 'fr', label: 'Français' },

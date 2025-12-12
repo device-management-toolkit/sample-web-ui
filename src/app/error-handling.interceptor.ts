@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
 import { catchError, of, throwError } from 'rxjs'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'

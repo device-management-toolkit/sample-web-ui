@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { Component, inject, signal, computed, effect, DestroyRef, type OnInit } from '@angular/core'
 import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'

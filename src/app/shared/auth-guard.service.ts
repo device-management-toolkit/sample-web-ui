@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { Injectable, inject } from '@angular/core'
 import { AuthService } from '../auth.service'
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router'

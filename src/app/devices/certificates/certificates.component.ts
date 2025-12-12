@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2023
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { Component, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
