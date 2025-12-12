@@ -38,7 +38,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>{{ 'common.password.value' | translate }}</mat-label>
+      <mat-label>{{ 'addDevice.amtPassword.value' | translate }}</mat-label>
       <input
         matInput
         title="password"
@@ -48,7 +48,7 @@
         minlength="8"
         maxlength="32" />
       <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
-      <mat-hint>{{ 'common.enterPassword.value' | translate }}</mat-hint>
+      <mat-hint>{{ 'addDevice.amtPasswordHint.value' | translate }}</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">
@@ -70,10 +70,49 @@
       <mat-hint>{{ 'addDevice.enterTags.value' | translate }} </mat-hint>
     </mat-form-field>
 
-    <mat-checkbox formControlName="useTLS" class="flex flex-1">{{ 'addDevice.useTLS.value' | translate }}</mat-checkbox>
-    <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">{{
-      'addDevice.allowSelfSignedCertificates.value' | translate
-    }}</mat-checkbox>
+    <mat-checkbox
+      [(ngModel)]="useCIRA"
+      [ngModelOptions]="{ standalone: true }"
+      (change)="onCIRAChange($event.checked)"
+      class="flex flex-1">
+      {{ 'addDevice.useCIRA.value' | translate }}
+    </mat-checkbox>
+
+    @if (!useCIRA) {
+      <mat-checkbox formControlName="useTLS" class="flex flex-1">{{
+        'addDevice.useTLS.value' | translate
+      }}</mat-checkbox>
+      <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">{{
+        'addDevice.allowSelfSignedCertificates.value' | translate
+      }}</mat-checkbox>
+    }
+
+    @if (useCIRA) {
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>{{ 'addDevice.guid.value' | translate }}</mat-label>
+        <input matInput title="guid" formControlName="guid" />
+        <mat-hint>{{ 'addDevice.enterGuid.value' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>{{ 'addDevice.mpsPassword.value' | translate }}</mat-label>
+        <input
+          matInput
+          title="mpspassword"
+          formControlName="mpspassword"
+          type="password"
+          minlength="8"
+          maxlength="32" />
+        <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+        <mat-hint>{{ 'addDevice.mpsPasswordHint.value' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>{{ 'addDevice.mpsUsername.value' | translate }}</mat-label>
+        <input matInput title="mpsusername" formControlName="mpsusername" />
+        <mat-hint>{{ 'addDevice.mpsUsernameHint.value' | translate }}</mat-hint>
+      </mat-form-field>
+    }
 
     <button mat-raised-button color="primary" type="submit">{{ 'common.submit.value' | translate }}</button>
   </form>
