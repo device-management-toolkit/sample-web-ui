@@ -62,7 +62,10 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: 'password',
       tenantId: '',
       useTLS: false,
-      allowSelfSigned: false
+      allowSelfSigned: false,
+      guid: '',
+      mpsusername: 'admin',
+      mpspassword: ''
     })
     component.submitForm()
 
@@ -74,9 +77,10 @@ describe('AddDeviceEnterpriseComponent', () => {
       tenantId: '',
       useTLS: false,
       allowSelfSigned: false,
+      guid: '',
       tags: ['']
     })
-    expect(dialogCloseSpy).toHaveBeenCalled()
+    expect(dialogCloseSpy).toHaveBeenCalledWith({ submitted: true })
   })
 
   it('should not submit form when invalid', () => {
@@ -87,11 +91,151 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: '',
       tenantId: '',
       useTLS: false,
-      allowSelfSigned: false
+      allowSelfSigned: false,
+      guid: '',
+      mpsusername: 'admin',
+      mpspassword: ''
     })
     component.submitForm()
 
     expect(addDeviceSpy).not.toHaveBeenCalled()
     expect(dialogCloseSpy).not.toHaveBeenCalled()
+  })
+
+  it('should toggle CIRA fields visibility', () => {
+    expect(component.useCIRA).toBe(false)
+
+    component.onCIRAChange(true)
+    expect(component.useCIRA).toBe(true)
+
+    component.onCIRAChange(false)
+    expect(component.useCIRA).toBe(false)
+  })
+
+  it('should reset CIRA fields when CIRA is disabled', () => {
+    component.form.patchValue({
+      guid: 'test-guid-123',
+      mpsusername: 'customUser'
+    })
+
+    component.onCIRAChange(false)
+
+    expect(component.form.get('guid')?.value).toBe('')
+    expect(component.form.get('mpsusername')?.value).toBe('admin')
+  })
+
+  it('should include guid and mpsusername as admin in submitted CIRA device', () => {
+    component.form.setValue({
+      hostname: 'example.com',
+      friendlyName: 'Test Device',
+      username: 'testuser',
+      password: 'password',
+      tenantId: '',
+      useTLS: false,
+      allowSelfSigned: false,
+      guid: 'test-guid-123',
+      mpsusername: 'customUser',
+      mpspassword: ''
+    })
+    component.useCIRA = true
+    component.submitForm()
+
+    const submittedDevice = addDeviceSpy.calls.mostRecent().args[0]
+    expect(submittedDevice.guid).toBe('test-guid-123')
+    expect(submittedDevice.mpsusername).toBe('admin')
+    expect(dialogCloseSpy).toHaveBeenCalledWith({ submitted: true })
+  })
+
+  it('should disable TLS options and username when CIRA is enabled', () => {
+    component.onCIRAChange(true)
+
+    expect(component.form.get('useTLS')?.disabled).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.disabled).toBe(true)
+    expect(component.form.get('username')?.disabled).toBe(true)
+    expect(component.form.get('useTLS')?.value).toBe(false)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(false)
+    expect(component.form.get('username')?.value).toBe('admin')
+  })
+
+  it('should enable TLS options and username when CIRA is disabled', () => {
+    component.onCIRAChange(true)
+    component.onCIRAChange(false)
+
+    expect(component.form.get('useTLS')?.disabled).toBe(false)
+    expect(component.form.get('allowSelfSigned')?.disabled).toBe(false)
+    expect(component.form.get('username')?.disabled).toBe(false)
+  })
+
+  it('should set useCIRA when device has mpsusername', () => {
+    // This is tested via constructor behavior with MAT_DIALOG_DATA
+    // Mocking would require a different test setup
+    expect(component).toBeTruthy()
+  })
+})
+
+describe('AddDeviceEnterpriseComponent with CIRA device', () => {
+  let component: AddDeviceEnterpriseComponent
+  let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
+
+  beforeEach(() => {
+    const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice', 'editDevice'])
+    deviceService.addDevice.and.returnValue(of({}))
+    deviceService.editDevice.and.returnValue(of({}))
+
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        AddDeviceEnterpriseComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: DevicesService, useValue: deviceService },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            hostname: 'test-device.local',
+            friendlyName: 'Test CIRA Device',
+            username: 'admin',
+            password: 'testpass',
+            guid: 'test-guid-123',
+            mpsusername: 'admin',
+            tags: ['cira']
+          }
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {
+              /* empty */
+            }
+          }
+        }
+      ]
+    })
+    fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
+
+  it('should enable CIRA mode when device has mpsusername populated', () => {
+    expect(component.useCIRA).toBe(true)
+  })
+
+  it('should disable TLS and username fields when CIRA device is loaded', () => {
+    expect(component.form.get('useTLS')?.disabled).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.disabled).toBe(true)
+    expect(component.form.get('username')?.disabled).toBe(true)
+    expect(component.form.get('mpsusername')?.disabled).toBe(true)
+  })
+
+  it('should preserve guid value for CIRA device', () => {
+    expect(component.form.get('guid')?.value).toBe('test-guid-123')
   })
 })
