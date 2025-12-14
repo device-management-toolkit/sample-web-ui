@@ -11,38 +11,21 @@
     4200
   ],
   "containerEnv": {
-    "HTTP_PROXY": "${localEnv:http_proxy}",
-    "HTTPS_PROXY": "${localEnv:https_proxy}",
-    "NO_PROXY": "${localEnv:no_proxy}",
-    "http_proxy": "${localEnv:http_proxy}",
-    "https_proxy": "${localEnv:https_proxy}",
-    "no_proxy": "${localEnv:no_proxy}"
+    "HTTP_PROXY": "${localEnv:HTTP_PROXY:}",
+    "HTTPS_PROXY": "${localEnv:HTTPS_PROXY:}",
+    "NO_PROXY": "${localEnv:NO_PROXY:}",
+    "http_proxy": "${localEnv:http_proxy:}",
+    "https_proxy": "${localEnv:https_proxy:}",
+    "no_proxy": "${localEnv:no_proxy:}"
   },
-  "runArgs": [
-    "--env",
-    "HTTP_PROXY=${env:http_proxy:-}",
-    "--env",
-    "HTTPS_PROXY=${env:https_proxy:-}",
-    "--env",
-    "NO_PROXY=${env:no_proxy:-}",
-    "--env",
-    "http_proxy=${env:http_proxy:-}",
-    "--env",
-    "https_proxy=${env:https_proxy:-}",
-    "--env",
-    "no_proxy=${env:no_proxy:-}"
-  ],
-
   "portsAttributes": {
     "4200": {
       "label": "Angular Dev Server",
       "onAutoForward": "notify"
     }
   },
-  // Use 'onCreateCommand' to run commands once when the container is created.
-  "onCreateCommand": "if [ -n \"$HTTP_PROXY\" ] || [ -n \"$HTTPS_PROXY\" ]; then sudo bash -c \"echo 'Acquire::http::Proxy \\\"'$HTTP_PROXY'\\\";' > /etc/apt/apt.conf.d/proxy.conf && echo 'Acquire::https::Proxy \\\"'$HTTPS_PROXY'\\\";' >> /etc/apt/apt.conf.d/proxy.conf\"; fi",
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "/bin/bash .devcontainer/post-create.sh"
+  "postCreateCommand": "sed -i 's/\\r$//' .devcontainer/post-create.sh && /bin/bash .devcontainer/post-create.sh"
   // Configure tool-specific properties.
   // "customizations": {},
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
