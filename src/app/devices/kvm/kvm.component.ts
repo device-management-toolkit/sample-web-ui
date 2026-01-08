@@ -257,10 +257,10 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:fullscreenchange', ['$event'])
-  @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
+  @HostListener('document:fullscreenchange')
+  @HostListener('document:webkitfullscreenchange')
+  @HostListener('document:mozfullscreenchange')
+  @HostListener('document:MSFullscreenChange')
   exitFullscreen(): void {
     if (
       !document.fullscreenElement &&
@@ -281,7 +281,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.init()
     this.deviceKVMConnection.set(true)
   }
-  @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload')
   beforeUnloadHandler() {
     this.disconnect()
   }
