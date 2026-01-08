@@ -17,14 +17,12 @@ import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIO
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-add-device-enterprise',
   templateUrl: './add-device-enterprise.component.html',
   styleUrl: './add-device-enterprise.component.scss',
   imports: [
-    CommonModule,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,

@@ -144,7 +144,7 @@ export class SolComponent implements OnInit, OnDestroy {
     this.deviceConnection.set(true)
   }
 
-  @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload')
   beforeUnloadHandler() {
     this.disconnect()
   }
