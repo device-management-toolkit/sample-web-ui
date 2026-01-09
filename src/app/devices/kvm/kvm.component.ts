@@ -117,8 +117,33 @@ export class KvmComponent implements OnInit, OnDestroy {
     { value: 'windows-down', label: 'Windows Key + Down' },
     { value: 'windows-left', label: 'Windows Key + Left' },
     { value: 'windows-right', label: 'Windows Key + Right' },
+    { value: 'ctrl-w', label: 'Ctrl + W' },
+    // Alt + Function Keys
+    { value: 'alt-f1', label: 'Alt + F1' },
+    { value: 'alt-f2', label: 'Alt + F2' },
+    { value: 'alt-f3', label: 'Alt + F3' },
     { value: 'alt-f4', label: 'Alt + F4' },
-    { value: 'ctrl-w', label: 'Ctrl + W' }
+    { value: 'alt-f5', label: 'Alt + F5' },
+    { value: 'alt-f6', label: 'Alt + F6' },
+    { value: 'alt-f7', label: 'Alt + F7' },
+    { value: 'alt-f8', label: 'Alt + F8' },
+    { value: 'alt-f9', label: 'Alt + F9' },
+    { value: 'alt-f10', label: 'Alt + F10' },
+    { value: 'alt-f11', label: 'Alt + F11' },
+    { value: 'alt-f12', label: 'Alt + F12' },
+    // Ctrl + Alt + Function Keys
+    { value: 'ctrl-alt-f1', label: 'Ctrl + Alt + F1' },
+    { value: 'ctrl-alt-f2', label: 'Ctrl + Alt + F2' },
+    { value: 'ctrl-alt-f3', label: 'Ctrl + Alt + F3' },
+    { value: 'ctrl-alt-f4', label: 'Ctrl + Alt + F4' },
+    { value: 'ctrl-alt-f5', label: 'Ctrl + Alt + F5' },
+    { value: 'ctrl-alt-f6', label: 'Ctrl + Alt + F6' },
+    { value: 'ctrl-alt-f7', label: 'Ctrl + Alt + F7' },
+    { value: 'ctrl-alt-f8', label: 'Ctrl + Alt + F8' },
+    { value: 'ctrl-alt-f9', label: 'Ctrl + Alt + F9' },
+    { value: 'ctrl-alt-f10', label: 'Ctrl + Alt + F10' },
+    { value: 'ctrl-alt-f11', label: 'Ctrl + Alt + F11' },
+    { value: 'ctrl-alt-f12', label: 'Ctrl + Alt + F12' }
   ]
 
   constructor() {
