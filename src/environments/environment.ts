@@ -9,7 +9,7 @@
 
 export const environment = {
   production: false,
-  cloud: true,
+  cloud: false,  // Set to false to bypass login
   useOAuth: false, // for use with console
   mpsServer: 'http://localhost:3000',
   rpsServer: 'http://localhost:8081',
