@@ -652,7 +652,7 @@ export class ProfileDetailComponent implements OnInit {
     request.pipe(finalize(() => this.isLoading.set(false))).subscribe({
       next: () => {
         const completedMessage: string = this.translate.instant('common.completeProfile.value')
-        this.snackBar.open(completedMessage, undefined, SnackbarDefaults.defaultError)
+        this.snackBar.open(completedMessage, undefined, SnackbarDefaults.defaultSuccess)
         void this.router.navigate(['/profiles'])
       },
       error: (error) => {
