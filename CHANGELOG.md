@@ -1,3 +1,10 @@
+## [3.52.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.1...v3.52.2) (2026-01-12)
+
+
+### Bug Fixes
+
+* addresses issue with blank guid when saving non-cira device in enterprise mode ([79c887a](https://github.com/device-management-toolkit/sample-web-ui/commit/79c887aa2fafda61f41dee7d55c251c8a476a22b))
+
 ## [3.52.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.0...v3.52.1) (2025-12-12)
 
 
