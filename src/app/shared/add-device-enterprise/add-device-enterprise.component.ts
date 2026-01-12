@@ -128,7 +128,6 @@ export class AddDeviceEnterpriseComponent {
       this.form.controls['username'].enable()
       this.form.controls['mpsusername'].enable()
       this.form.patchValue({
-        guid: '',
         mpsusername: 'admin',
         mpspassword: ''
       })
