@@ -1,3 +1,10 @@
+## [3.52.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.2...v3.52.3) (2026-01-12)
+
+
+### Bug Fixes
+
+* updates class to use success for snackbar when creating profile ([#3066](https://github.com/device-management-toolkit/sample-web-ui/issues/3066)) ([d3ec564](https://github.com/device-management-toolkit/sample-web-ui/commit/d3ec564fd62be8bed429c9483527ef4dd4b8fdd9))
+
 ## [3.52.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.1...v3.52.2) (2026-01-12)
 
 
