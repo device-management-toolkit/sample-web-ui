@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { Component, OnInit, inject, signal } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -26,7 +26,6 @@ import { getDirection } from 'src/utils'
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
   imports: [
-    CommonModule,
     MatToolbar,
     MatDivider,
     MatIconButton,
