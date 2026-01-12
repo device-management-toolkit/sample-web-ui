@@ -112,7 +112,7 @@ describe('AddDeviceEnterpriseComponent', () => {
     expect(component.useCIRA).toBe(false)
   })
 
-  it('should reset CIRA fields when CIRA is disabled', () => {
+  it('should reset MPS fields but preserve guid when CIRA is disabled', () => {
     component.form.patchValue({
       guid: 'test-guid-123',
       mpsusername: 'customUser'
@@ -120,7 +120,7 @@ describe('AddDeviceEnterpriseComponent', () => {
 
     component.onCIRAChange(false)
 
-    expect(component.form.get('guid')?.value).toBe('')
+    expect(component.form.get('guid')?.value).toBe('test-guid-123')
     expect(component.form.get('mpsusername')?.value).toBe('admin')
   })
 
