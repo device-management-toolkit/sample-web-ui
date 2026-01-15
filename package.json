@@ -22,9 +22,9 @@
   "dependencies": {
     "@angular/animations": "~21.0.8",
     "@angular/cdk": "~21.0.6",
-    "@angular/common": "~21.0.8",
-    "@angular/compiler": "~21.0.8",
-    "@angular/core": "~21.0.8",
+    "@angular/common": "~21.1.0",
+    "@angular/compiler": "~21.1.0",
+    "@angular/core": "~21.1.0",
     "@angular/forms": "~21.0.8",
     "@angular/material": "~21.0.6",
     "@angular/platform-browser": "~21.0.8",
@@ -52,11 +52,11 @@
     }
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~21.0.5",
+    "@angular-devkit/build-angular": "~21.1.0",
     "@angular-eslint/builder": "~21.1.0",
     "@angular-eslint/schematics": "~21.1.0",
     "@angular-eslint/template-parser": "~21.1.0",
-    "@angular/cli": "~21.0.5",
+    "@angular/cli": "~21.1.0",
     "@angular/compiler-cli": "~21.0.8",
     "@angular/localize": "~21.0.8",
     "@types/jasmine": "~5.1.15",
