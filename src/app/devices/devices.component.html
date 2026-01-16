@@ -178,12 +178,14 @@
                   (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
                   <mat-icon>delete</mat-icon>
                 </button>
-                <button
-                  mat-icon-button
-                  [matTooltip]="'devices.actions.edit.value' | translate"
-                  (click)="$event.stopPropagation(); editDevice(element)">
-                  <mat-icon>edit</mat-icon>
-                </button>
+                @if (!isCloudMode) {
+                  <button
+                    mat-icon-button
+                    [matTooltip]="'devices.actions.edit.value' | translate"
+                    (click)="$event.stopPropagation(); editDevice(element)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                }
               </div>
             }
           </mat-cell>
