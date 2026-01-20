@@ -1,3 +1,10 @@
+## [3.52.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.3...v3.52.4) (2026-01-16)
+
+
+### Bug Fixes
+
+* hide edit device button in cloud deployment mode ([#3078](https://github.com/device-management-toolkit/sample-web-ui/issues/3078)) ([6e56b04](https://github.com/device-management-toolkit/sample-web-ui/commit/6e56b043312c7e4f9e0cb93f3e3c11dcb04f691b))
+
 ## [3.52.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.2...v3.52.3) (2026-01-12)
 
 

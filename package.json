@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.52.3",
+  "version": "3.52.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -77,7 +77,7 @@
     "prettier-plugin-multiline-arrays": "^4.0.5",
     "ts-node": "~10.9.2",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.53.0"
+    "typescript-eslint": "^8.53.1"
   },
   "optionalDependencies": {
     "cypress": "^15.9.0"
