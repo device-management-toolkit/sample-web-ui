@@ -98,6 +98,11 @@ export class KvmComponent implements OnInit, OnDestroy {
   public displays: { value: number; viewValue: string; disabled: boolean }[] = []
   public selectedDisplay = signal(0)
 
+  // NEW: Track if initial data loading is complete
+  private displayDataLoaded = false
+  private initializationComplete = false
+  private isInitializing = false
+
   private powerState: any = 0
   private timeInterval!: any
 
@@ -134,6 +139,14 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('KVMComponent: ngOnInit called')
+
+    // Prevent multiple simultaneous initializations
+    if (this.isInitializing) {
+      console.warn('KVMComponent: Already initializing, skipping duplicate ngOnInit')
+      return
+    }
+
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
       .pipe(
@@ -154,11 +167,20 @@ export class KvmComponent implements OnInit, OnDestroy {
     document.addEventListener('keyup', this.handleKeyboardEventCapture, true)
     document.addEventListener('keypress', this.handleKeyboardEventCapture, true)
 
-    this.init()
+    // Prevent duplicate initializations
+    if (!this.isInitializing && !this.initializationComplete) {
+      this.init()
+    }
   }
 
   init(): void {
+    console.log('KVMComponent: Initialization started')
+    this.isInitializing = true
     this.isLoading.set(true)
+    this.initializationComplete = false
+    this.displayDataLoaded = false
+
+    // First, load display selection data
     this.devicesService.getDisplaySelection(this.deviceId()).subscribe({
       next: (result: DisplaySelectionResponse) => {
         const displays = result?.displays ?? []
@@ -177,6 +199,9 @@ export class KvmComponent implements OnInit, OnDestroy {
             if (firstActive) this.selectedDisplay.set(firstActive.value)
           }
         }
+        this.displayDataLoaded = true
+        // Only proceed with initialization after display data is loaded
+        this.proceedWithInitialization()
       },
       error: (err) => {
         console.warn('Failed to load display selection:', err)
@@ -188,8 +213,21 @@ export class KvmComponent implements OnInit, OnDestroy {
           { value: 3, viewValue: 'Display 4', disabled: true }
         ]
         this.selectedDisplay.set(0)
+        this.displayDataLoaded = true
+        this.proceedWithInitialization()
       }
     })
+  }
+
+  // NEW: Only proceed with initialization chain after display data is loaded
+  private proceedWithInitialization(): void {
+    if (!this.displayDataLoaded) {
+      console.log('KVMComponent: Waiting for display data to load...')
+      return
+    }
+
+    console.log('KVMComponent: Display data loaded, proceeding with device initialization')
+
     // device needs to be powered on in order to start KVM session
     this.getPowerState(this.deviceId())
       .pipe(
@@ -216,16 +254,25 @@ export class KvmComponent implements OnInit, OnDestroy {
       .subscribe()
       .add(() => {
         this.isLoading.set(false)
+        this.initializationComplete = true
+        this.isInitializing = false
+        console.log('KVMComponent: Initialization complete')
       })
   }
 
   postUserConsentDecision(result: boolean): Observable<any> {
     if (result !== false) {
-      // If result is true OR null (no consent needed), proceed with connection
+      // If result is true OR null (no consent needed), make KVM ready
       this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
-      // Auto-connect - ensure connection state is properly set
-      this.isDisconnecting = false
-      this.deviceKVMConnection.set(true)
+      // Check if user clicked Connect while we were initializing
+      if (this.deviceState() === -1) {
+        console.log('KVMComponent: Ready to load KVM - user already clicked Connect, connecting now')
+        this.deviceKVMConnection.set(true)
+        this.deviceState.set(2) // Mark as connected
+      } else {
+        console.log('KVMComponent: Ready to load KVM - waiting for manual Connect button click')
+        this.deviceKVMConnection.set(false)
+      }
       this.getAMTFeatures()
     } else {
       this.isLoading.set(false)
@@ -276,16 +323,30 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   connect(): void {
+    console.log('KVMComponent: Manual connect clicked')
     this.isDisconnecting = false
-    this.deviceState.set(-1) // Reset device state for reconnection
-    this.init()
-    this.deviceKVMConnection.set(true)
+    // If ready to connect, do it immediately
+    if (this.readyToLoadKvm && this.initializationComplete) {
+      console.log('KVMComponent: Ready - connecting to KVM now')
+      this.deviceKVMConnection.set(true)
+    } else if (this.isInitializing) {
+      // Initialization in progress, set flag to connect when done
+      console.log('KVMComponent: Initialization in progress, will connect when ready')
+      this.deviceState.set(-1) // Signal that user wants to connect
+    } else {
+      // Not initialized yet, start initialization
+      console.log('KVMComponent: Not initialized, starting initialization then will connect')
+      this.deviceState.set(-1) // Signal that user wants to connect
+      this.init()
+    }
   }
   @HostListener('window:beforeunload')
   beforeUnloadHandler() {
     this.disconnect()
   }
+
   disconnect(): void {
+    console.log('KVMComponent: Disconnect called')
     this.isDisconnecting = true
     this.deviceKVMConnection.set(false)
   }
@@ -498,7 +559,9 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('KVMComponent: ngOnDestroy called')
     this.isDisconnecting = true
+    this.isInitializing = false
     if (this.timeInterval) {
       this.timeInterval.unsubscribe()
     }
