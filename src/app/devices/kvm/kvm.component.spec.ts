@@ -831,4 +831,113 @@ describe('KvmComponent', () => {
       expect(removeEventListenerSpy).toHaveBeenCalledWith('keypress', jasmine.any(Function), true)
     })
   })
+
+  describe('Initialization state tracking and optimization', () => {
+    it('should prevent duplicate initializations when ngOnInit is called multiple times', () => {
+      fixture.detectChanges()
+      const initialCallCount = getDisplaySelectionSpy.calls.count()
+
+      // Try to call ngOnInit again while initializing
+      component.ngOnInit()
+
+      // Should not make additional API calls
+      expect(getDisplaySelectionSpy.calls.count()).toBe(initialCallCount)
+    })
+
+    it('should load display data before proceeding with initialization', (done) => {
+      fixture.detectChanges()
+
+      setTimeout(() => {
+        expect(getDisplaySelectionSpy).toHaveBeenCalled()
+        expect(getPowerStateSpy).toHaveBeenCalled()
+        expect(getAMTFeaturesSpy).toHaveBeenCalled()
+        done()
+      }, 100)
+    })
+
+    it('should handle display selection error gracefully and use defaults', (done) => {
+      getDisplaySelectionSpy.and.returnValue(throwError(() => new Error('Display error')))
+
+      component.init()
+
+      setTimeout(() => {
+        expect(component.displays.length).toBeGreaterThan(0)
+        expect(component.selectedDisplay()).toBe(0)
+        done()
+      }, 100)
+    })
+
+    it('should connect immediately when already initialized and connect is called', () => {
+      fixture.detectChanges()
+      // Mark as initialized
+      component['initializationComplete'] = true
+      component.readyToLoadKvm = true
+
+      component.connect()
+
+      expect(component.deviceKVMConnection()).toBeTruthy()
+    })
+
+    it('should wait for initialization when connect is called before initialization completes', () => {
+      component['initializationComplete'] = false
+      component['isInitializing'] = true
+      component.readyToLoadKvm = false
+
+      component.connect()
+
+      // Should set intent to connect but not connect yet
+      expect(component.deviceState()).toBe(-1)
+      expect(component.deviceKVMConnection()).toBeFalsy()
+    })
+
+    it('should trigger initialization if not yet initialized when connect is called', () => {
+      const initSpy = spyOn(component, 'init')
+      component['initializationComplete'] = false
+      component['isInitializing'] = false
+      component.readyToLoadKvm = false
+
+      component.connect()
+
+      expect(initSpy).toHaveBeenCalled()
+      expect(component.deviceState()).toBe(-1)
+    })
+
+    it('should auto-connect after initialization if user clicked connect during init', (done) => {
+      fixture.detectChanges()
+
+      // Simulate user clicking connect during initialization
+      component['isInitializing'] = true
+      component.deviceState.set(-1)
+      component.readyToLoadKvm = true
+
+      // Call postUserConsentDecision to simulate completion
+      component.postUserConsentDecision(true).subscribe(() => {
+        expect(component.deviceKVMConnection()).toBeTruthy()
+        expect(component.deviceState()).toBe(2)
+        done()
+      })
+    })
+
+    it('should not auto-connect if user did not click connect during init', (done) => {
+      fixture.detectChanges()
+
+      component['isInitializing'] = true
+      component.deviceState.set(0)
+      component.readyToLoadKvm = true
+
+      component.postUserConsentDecision(true).subscribe(() => {
+        expect(component.deviceKVMConnection()).toBeFalsy()
+        done()
+      })
+    })
+
+    it('should reset initialization flags on ngOnDestroy', () => {
+      component['isInitializing'] = true
+
+      component.ngOnDestroy()
+
+      expect(component['isInitializing']).toBeFalse()
+      expect(component.isDisconnecting).toBeTrue()
+    })
+  })
 })
