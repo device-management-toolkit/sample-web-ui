@@ -197,6 +197,8 @@ describe('KvmComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(KvmComponent)
     component = fixture.componentInstance
+    // Set the deviceId input for all tests
+    fixture.componentRef.setInput('deviceId', 'test-device-id')
     snackBarSpy = spyOn(component.snackBar, 'open')
     spyOn(router, 'navigate')
 
@@ -253,7 +255,7 @@ describe('KvmComponent', () => {
   it('should change display and call setDisplaySelection', () => {
     fixture.detectChanges()
     component.onDisplayChange(0)
-    expect(setDisplaySelectionSpy).toHaveBeenCalledWith('', { displayIndex: 0 })
+    expect(setDisplaySelectionSpy).toHaveBeenCalledWith('test-device-id', { displayIndex: 0 })
   })
   it('should not show error when NavigationStart triggers', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
