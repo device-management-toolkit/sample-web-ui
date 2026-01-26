@@ -42,15 +42,31 @@
         <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
       </button>
       @if (deviceState() === 0 && !isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()" data-cy="kvm-connect-button">
+        <button
+          mat-flat-button
+          color="primary"
+          style="margin-right: 16px"
+          (click)="connect()"
+          data-cy="kvm-connect-button">
           <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
         </button>
       } @else if (deviceState() !== 2 && isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled data-cy="kvm-connecting-button">
+        <button
+          mat-flat-button
+          color="primary"
+          style="margin-right: 16px"
+          (click)="disconnect()"
+          disabled
+          data-cy="kvm-connecting-button">
           <mat-icon>tv_off</mat-icon>{{ 'kvm.connecting.label.value' | translate }}
         </button>
       } @else {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" data-cy="kvm-disconnect-button">
+        <button
+          mat-flat-button
+          color="primary"
+          style="margin-right: 16px"
+          (click)="disconnect()"
+          data-cy="kvm-disconnect-button">
           <mat-icon>tv_off</mat-icon>{{ 'kvm.disconnect.button.value' | translate }}
         </button>
       }
