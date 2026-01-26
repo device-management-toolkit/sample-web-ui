@@ -12,6 +12,13 @@ describe('KVM Component E2E Tests', () => {
 
   beforeEach(() => {
     cy.setup()
+    
+    // Mock generic power state for any device (needed during navigation)
+    cy.myIntercept('GET', /.*power.*/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { powerState: 2 }
+    }).as('get-powerstate-generic')
+    
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response
