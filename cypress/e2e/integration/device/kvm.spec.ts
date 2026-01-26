@@ -17,7 +17,7 @@ describe('KVM Component E2E Tests', () => {
       body: devices.getAll.success.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', /devices\/.*(?<!\/power|\/redirection|\/features|\/displays)$/, {
+    cy.myIntercept('GET', `**/api/v1/devices/${deviceId}`, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response.data[0]
     }).as('get-device-by-id')
@@ -27,6 +27,12 @@ describe('KVM Component E2E Tests', () => {
       statusCode: httpCodes.SUCCESS,
       body: { token: 'mock-jwt-token' }
     }).as('get-redirection-token')
+
+    // Mock display selection PUT
+    cy.myIntercept('PUT', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      statusCode: httpCodes.SUCCESS,
+      body: {}
+    }).as('set-display-selection')
   })
 
   describe('KVM Initialization Flow', () => {
