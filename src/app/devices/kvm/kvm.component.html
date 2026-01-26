@@ -13,7 +13,7 @@
       </mat-form-field>
       <mat-form-field style="margin-bottom: 0; margin-right: 8px">
         <mat-label>Display Selection</mat-label>
-        <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)">
+        <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)" data-cy="display-select">
           @for (display of displays; track display.value) {
             <mat-option [value]="display.value" [disabled]="display.disabled">
               {{ display.viewValue }}
@@ -42,15 +42,15 @@
         <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
       </button>
       @if (deviceState() === 0 && !isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()" data-cy="kvm-connect-button">
           <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
         </button>
       } @else if (deviceState() !== 2 && isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled data-cy="kvm-connecting-button">
           <mat-icon>tv_off</mat-icon>{{ 'kvm.connecting.label.value' | translate }}
         </button>
       } @else {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" data-cy="kvm-disconnect-button">
           <mat-icon>tv_off</mat-icon>{{ 'kvm.disconnect.button.value' | translate }}
         </button>
       }
@@ -72,6 +72,7 @@
 @if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
   <amt-kvm
     class="kvm"
+    data-cy="kvm-canvas"
     [isFullscreen]="isFullscreen()"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"

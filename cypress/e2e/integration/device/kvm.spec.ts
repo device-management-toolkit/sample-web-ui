@@ -110,7 +110,7 @@ describe('KVM Component E2E Tests', () => {
       let displayCallCount = 0
       let powerCallCount = 0
 
-      cy.myIntercept('GET', `devices/${deviceId}/displays`, (req) => {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, (req: any) => {
         displayCallCount++
         req.reply({
           statusCode: httpCodes.SUCCESS,
@@ -118,7 +118,7 @@ describe('KVM Component E2E Tests', () => {
         })
       }).as('get-displays')
 
-      cy.myIntercept('GET', `devices/${deviceId}/power`, (req) => {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, (req: any) => {
         powerCallCount++
         req.reply({
           statusCode: httpCodes.SUCCESS,
@@ -192,7 +192,7 @@ describe('KVM Component E2E Tests', () => {
 
     it('should handle user clicking connect during initialization', () => {
       // Add delay to power state to simulate slow API
-      cy.myIntercept('GET', `devices/${deviceId}/power`, (req) => {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, (req: any) => {
         setTimeout(() => {
           req.reply({
             statusCode: httpCodes.SUCCESS,
