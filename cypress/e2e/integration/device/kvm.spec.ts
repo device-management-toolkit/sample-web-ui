@@ -69,7 +69,7 @@ describe('KVM Component E2E Tests', () => {
       }).as('get-amt-features')
 
       // Navigate to KVM page
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       // Verify display selection is loaded first
       cy.wait('@get-displays').then((interception) => {
@@ -112,7 +112,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays-error')
 
@@ -155,7 +155,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
       cy.wait('@get-power-state')
@@ -193,7 +193,7 @@ describe('KVM Component E2E Tests', () => {
     })
 
     it('should wait for initialization before connecting', () => {
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       // Wait for initialization to complete
       cy.wait('@get-displays')
@@ -220,7 +220,7 @@ describe('KVM Component E2E Tests', () => {
         }, 1000)
       }).as('get-power-state-delayed')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       // Click connect while initialization is in progress
       cy.get('[data-cy="kvm-connect-button"]').click()
@@ -241,7 +241,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.powerState.poweredOff.response
       }).as('get-power-state-off')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
       cy.wait('@get-power-state-off')
@@ -257,7 +257,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.amtFeatures.kvmDisabled.response
       }).as('get-amt-features-disabled')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
       cy.wait('@get-power-state')
@@ -296,7 +296,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.userConsent.granted.response
       }).as('post-user-consent')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
       cy.wait('@get-power-state')
@@ -336,7 +336,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
       cy.wait('@get-power-state')
@@ -381,7 +381,7 @@ describe('KVM Component E2E Tests', () => {
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
 
-      cy.visit(`/#/device/${deviceId}/kvm`)
+      cy.visit(`/#/devices/${deviceId}/kvm`)
 
       cy.wait('@get-displays')
 
