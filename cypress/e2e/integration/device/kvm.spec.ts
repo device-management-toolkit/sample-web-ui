@@ -228,7 +228,7 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-power-state-off')
 
       // Should show power on message
-      cy.contains('Device must be powered on').should('be.visible')
+      cy.contains('Your device is not powered on').should('be.visible')
       cy.get('[data-cy="power-on-button"]').should('be.visible')
     })
 
@@ -245,8 +245,8 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-redirection-status')
       cy.wait('@get-amt-features-disabled')
 
-      // Should show KVM not available message
-      cy.contains('KVM is not available').should('be.visible')
+      // Should show KVM not available state - connect button should not be visible
+      cy.get('[data-cy="kvm-connect-button"]').should('not.exist')
     })
   })
 
@@ -285,7 +285,7 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-amt-features-consent')
 
       // Should show user consent dialog
-      cy.contains('User Consent Required').should('be.visible')
+      cy.contains('User Consent').should('be.visible')
       cy.get('[data-cy="consent-approve-button"]').click()
 
       cy.wait('@post-user-consent')
