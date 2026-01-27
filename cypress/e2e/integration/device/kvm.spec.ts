@@ -64,7 +64,6 @@ describe('KVM Component E2E Tests', () => {
 
   describe('KVM Initialization Flow', () => {
     it('should initialize KVM with display selection loaded first', () => {
-
       // Mock power state API
       cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
         statusCode: httpCodes.SUCCESS,
@@ -76,12 +75,6 @@ describe('KVM Component E2E Tests', () => {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
-
-      // Mock AMT features API
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
-        statusCode: httpCodes.SUCCESS,
-        body: kvm.amtFeatures.kvmEnabled.response
-      }).as('get-amt-features')
 
       // Navigate to KVM page
       cy.visit(`/#/devices/${deviceId}/kvm`)
@@ -101,7 +94,7 @@ describe('KVM Component E2E Tests', () => {
 
       // Verify other initialization APIs are called
       cy.wait('@get-redirection-status')
-      cy.wait('@get-amt-features')
+      cy.wait('@get-amt-features-toolbar')
     })
 
     it('should handle display selection API failure gracefully', () => {
