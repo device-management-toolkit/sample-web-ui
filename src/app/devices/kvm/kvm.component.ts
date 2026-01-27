@@ -11,8 +11,7 @@ import {
   OnInit,
   inject,
   signal,
-  input,
-  effect
+  input
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -137,18 +136,6 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.isDisconnecting = true
       }
     })
-
-    // Use effect to react when deviceId becomes available
-    effect(() => {
-      const deviceId = this.deviceId()
-      console.log('KVMComponent: deviceId changed to:', deviceId)
-      
-      // Only initialize once we have a valid deviceId and haven't started yet
-      if (deviceId && !this.isInitializing && !this.initializationComplete) {
-        console.log('KVMComponent: Starting initialization with deviceId:', deviceId)
-        this.startInitialization()
-      }
-    })
   }
 
   ngOnInit(): void {
@@ -160,14 +147,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     document.addEventListener('keyup', this.handleKeyboardEventCapture, true)
     document.addEventListener('keypress', this.handleKeyboardEventCapture, true)
 
-    // If deviceId is already available (e.g., in unit tests), initialize immediately
-    if (this.deviceId() && !this.isInitializing && !this.initializationComplete) {
-      console.log('KVMComponent: deviceId available in ngOnInit, starting initialization')
-      this.startInitialization()
-    }
-  }
-
-  private startInitialization(): void {
+    // Initialize with token and power state polling
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
       .pipe(
@@ -182,6 +162,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       .pipe(mergeMap(() => this.getPowerState(this.deviceId())))
       .subscribe()
 
+    // Start KVM initialization
     this.init()
   }
 
