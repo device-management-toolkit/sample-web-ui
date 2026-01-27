@@ -46,15 +46,24 @@ describe('KVM Component E2E Tests', () => {
       statusCode: httpCodes.SUCCESS,
       body: {}
     }).as('set-display-selection')
+
+    // Mock display selection for all tests
+    cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      statusCode: httpCodes.SUCCESS,
+      body: kvm.displaySelection.success.response
+    }).as('get-displays')
+  })
+
+  describe('Debug', () => {
+    it('should load the KVM page', () => {
+      cy.visit(`/#/devices/${deviceId}/kvm`)
+      cy.url().should('include', '/devices/')
+      cy.url().should('include', '/kvm')
+    })
   })
 
   describe('KVM Initialization Flow', () => {
     it('should initialize KVM with display selection loaded first', () => {
-      // Mock display selection API
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
-        statusCode: httpCodes.SUCCESS,
-        body: kvm.displaySelection.success.response
-      }).as('get-displays')
 
       // Mock power state API
       cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
