@@ -11,7 +11,8 @@ import {
   OnInit,
   inject,
   signal,
-  input
+  input,
+  effect
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -136,14 +137,33 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.isDisconnecting = true
       }
     })
+
+    // Watch for deviceId changes and initialize when it becomes available
+    effect(() => {
+      const currentDeviceId = this.deviceId()
+      if (currentDeviceId && !this.isInitializing && !this.initializationComplete) {
+        // Use setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
+        setTimeout(() => {
+          if (!this.isInitializing && !this.initializationComplete) {
+            this.ngOnInit()
+          }
+        }, 0)
+      }
+    })
   }
 
   ngOnInit(): void {
-    console.log('KVMComponent: ngOnInit called')
+    console.log('KVMComponent: ngOnInit called, deviceId:', this.deviceId())
 
     // Prevent multiple simultaneous initializations
     if (this.isInitializing) {
       console.warn('KVMComponent: Already initializing, skipping duplicate ngOnInit')
+      return
+    }
+
+    // Don't initialize if deviceId is empty - wait for it to be provided
+    if (!this.deviceId()) {
+      console.warn('KVMComponent: deviceId is empty, waiting for deviceId')
       return
     }
 

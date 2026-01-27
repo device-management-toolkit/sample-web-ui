@@ -197,6 +197,10 @@ describe('KvmComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(KvmComponent)
     component = fixture.componentInstance
+    
+    // Set deviceId input before component initialization
+    fixture.componentRef.setInput('deviceId', 'test-device-id')
+    
     snackBarSpy = spyOn(component.snackBar, 'open')
     spyOn(router, 'navigate')
 
