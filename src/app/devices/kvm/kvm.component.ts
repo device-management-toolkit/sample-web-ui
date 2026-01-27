@@ -139,15 +139,14 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('KVMComponent: ngOnInit called, deviceId:', this.deviceId())
+    console.log('KVMComponent: ngOnInit called')
 
-    // Add keyboard event listeners in capture phase to intercept before KVM component
-    // This is necessary because the KVM UI toolkit component also listens in capture phase
-    document.addEventListener('keydown', this.handleKeyboardEventCapture, true)
-    document.addEventListener('keyup', this.handleKeyboardEventCapture, true)
-    document.addEventListener('keypress', this.handleKeyboardEventCapture, true)
+    // Prevent multiple simultaneous initializations
+    if (this.isInitializing) {
+      console.warn('KVMComponent: Already initializing, skipping duplicate ngOnInit')
+      return
+    }
 
-    // Initialize with token and power state polling
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
       .pipe(
@@ -162,8 +161,16 @@ export class KvmComponent implements OnInit, OnDestroy {
       .pipe(mergeMap(() => this.getPowerState(this.deviceId())))
       .subscribe()
 
-    // Start KVM initialization
-    this.init()
+    // Add keyboard event listeners in capture phase to intercept before KVM component
+    // This is necessary because the KVM UI toolkit component also listens in capture phase
+    document.addEventListener('keydown', this.handleKeyboardEventCapture, true)
+    document.addEventListener('keyup', this.handleKeyboardEventCapture, true)
+    document.addEventListener('keypress', this.handleKeyboardEventCapture, true)
+
+    // Prevent duplicate initializations
+    if (!this.isInitializing && !this.initializationComplete) {
+      this.init()
+    }
   }
 
   init(): void {
