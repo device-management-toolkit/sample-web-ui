@@ -29,6 +29,46 @@ describe('KVM Component E2E Tests', () => {
     }).as('get-redirection-token')
   })
 
+  describe('Debug - Page Loading', () => {
+    it('should load the page and show what happens', () => {
+      // Mock all required APIs
+      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.displaySelection.success.response
+      }).as('get-displays')
+
+      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.powerState.poweredOn.response
+      }).as('get-power-state')
+
+      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.redirectionStatus.available.response
+      }).as('get-redirection-status')
+
+      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.amtFeatures.kvmEnabled.response
+      }).as('get-amt-features')
+
+      cy.visit(`/#/devices/${deviceId}/kvm`)
+      
+      // Wait a bit for Angular to bootstrap
+      cy.wait(2000)
+      
+      // Check what's on the page
+      cy.get('body').then(($body) => {
+        cy.log('Page HTML:', $body.html())
+      })
+      
+      // Try to find key elements
+      cy.get('app-root').should('exist')
+      cy.get('app-device-detail', { timeout: 10000 }).should('exist')
+      cy.get('app-kvm', { timeout: 10000 }).should('exist')
+    })
+  })
+
   describe('KVM Initialization Flow', () => {
     it('should initialize KVM with display selection loaded first', () => {
       // Mock display selection API
