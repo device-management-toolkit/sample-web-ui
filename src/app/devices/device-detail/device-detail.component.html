@@ -1,4 +1,5 @@
 <app-device-toolbar [deviceId]="deviceId"></app-device-toolbar>
+@if (deviceId) {
 <mat-sidenav-container autosize>
   <mat-sidenav mode="side" position="end" opened [style.width.px]="isCollapsed ? 60 : 250">
     <mat-list>
@@ -71,3 +72,4 @@
     }
   </mat-sidenav-content>
 </mat-sidenav-container>
+}
