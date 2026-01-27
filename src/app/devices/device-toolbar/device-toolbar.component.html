@@ -35,9 +35,12 @@
       <mat-chip>{{ tag }}</mat-chip>
     }
   </mat-chip-set>
-  <button mat-icon-button [matTooltip]="'devices.editDevice.value' | translate" (click)="editDevice()">
-    <mat-icon>edit</mat-icon>
-  </button>
+  @if (!isCloudMode) {
+    <button mat-icon-button [matTooltip]="'devices.editDevice.value' | translate" (click)="editDevice()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  }
+
   <button
     mat-icon-button
     [matTooltip]="
