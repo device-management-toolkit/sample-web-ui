@@ -59,6 +59,10 @@ describe('KVM Component E2E Tests', () => {
       cy.visit(`/#/devices/${deviceId}/kvm`)
       cy.url().should('include', '/devices/')
       cy.url().should('include', '/kvm')
+      // Verify component renders
+      cy.get('app-kvm').should('exist')
+      // Wait for display dropdown to appear (indicates component initialized)
+      cy.get('mat-select[data-cy="display-select"]', { timeout: 10000 }).should('exist')
     })
   })
 
