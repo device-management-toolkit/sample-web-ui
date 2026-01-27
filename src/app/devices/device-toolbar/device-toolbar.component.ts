@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/core'
+import { Component, OnInit, inject, signal, input, DestroyRef, effect } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -67,6 +67,22 @@ export class DeviceToolbarComponent implements OnInit {
 
   public readonly deviceId = input('')
   public readonly isPinned = signal(false)
+  private initialized = false
+
+  constructor() {
+    // Watch for deviceId changes and initialize when it becomes available
+    effect(() => {
+      const currentDeviceId = this.deviceId()
+      if (currentDeviceId && !this.initialized) {
+        // Use setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
+        setTimeout(() => {
+          if (!this.initialized) {
+            this.initialize()
+          }
+        }, 0)
+      }
+    })
+  }
 
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isCloudMode = environment.cloud
@@ -155,6 +171,19 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Don't initialize if deviceId is empty - wait for it to be provided
+    if (!this.deviceId()) {
+      return
+    }
+    this.initialize()
+  }
+
+  private initialize(): void {
+    if (this.initialized) {
+      return
+    }
+    this.initialized = true
+    
     this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
       this.device = data
       this.devicesService.device.next(this.device)
