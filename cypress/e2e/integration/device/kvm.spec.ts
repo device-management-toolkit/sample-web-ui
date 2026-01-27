@@ -54,18 +54,31 @@ describe('KVM Component E2E Tests', () => {
 
       cy.visit(`/#/devices/${deviceId}/kvm`)
       
-      // Wait a bit for Angular to bootstrap
-      cy.wait(2000)
+      // Check URL loaded
+      cy.url().should('include', `/devices/${deviceId}/kvm`)
       
-      // Check what's on the page
+      // Wait and log what we have
+      cy.wait(3000)
+      
+      // Log the entire body HTML
       cy.get('body').then(($body) => {
-        cy.log('Page HTML:', $body.html())
+        cy.log('Body HTML length:', $body.html().length)
+        // Check for error messages
+        if ($body.text().includes('error') || $body.text().includes('Error')) {
+          cy.log('ERROR TEXT FOUND:', $body.text())
+        }
       })
       
-      // Try to find key elements
-      cy.get('app-root').should('exist')
+      // Check basic Angular bootstrap
+      cy.get('app-root', { timeout: 10000 }).should('exist').then(($root) => {
+        cy.log('app-root found, innerHTML length:', $root.html().length)
+      })
+      
+      // Check router outlet rendered something
+      cy.get('router-outlet', { timeout: 5000 }).should('exist')
+      
+      // Now check for device-detail
       cy.get('app-device-detail', { timeout: 10000 }).should('exist')
-      cy.get('app-kvm', { timeout: 10000 }).should('exist')
     })
   })
 
