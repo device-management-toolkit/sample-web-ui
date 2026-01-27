@@ -29,6 +29,12 @@ describe('KVM Component E2E Tests', () => {
       body: devices.getAll.success.response.data[0]
     }).as('get-device-by-id')
 
+    // Mock AMT features for device toolbar
+    cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      statusCode: httpCodes.SUCCESS,
+      body: kvm.amtFeatures.kvmEnabled.response
+    }).as('get-amt-features-toolbar')
+
     // Mock redirection token API
     cy.myIntercept('GET', `**/api/v1/authorize/redirection/${deviceId}`, {
       statusCode: httpCodes.SUCCESS,
