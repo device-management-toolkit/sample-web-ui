@@ -12,84 +12,42 @@ describe('KVM Component E2E Tests', () => {
 
   beforeEach(() => {
     cy.setup()
-    
-    // Mock generic power state for any device (needed during navigation)
-    cy.myIntercept('GET', /.*power.*/, {
-      statusCode: httpCodes.SUCCESS,
-      body: { powerState: 2 }
-    }).as('get-powerstate-generic')
-    
     cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', `**/api/v1/devices/${deviceId}`, {
+    cy.myIntercept('GET', /devices\/.*(?<!\/power|\/redirection|\/features|\/displays)$/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response.data[0]
     }).as('get-device-by-id')
-
-    // Mock AMT features for device toolbar
-    cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
-      statusCode: httpCodes.SUCCESS,
-      body: kvm.amtFeatures.kvmEnabled.response
-    }).as('get-amt-features-toolbar')
-
-    // Mock redirection token API
-    cy.myIntercept('GET', `**/api/v1/authorize/redirection/${deviceId}`, {
-      statusCode: httpCodes.SUCCESS,
-      body: { token: 'mock-jwt-token' }
-    }).as('get-redirection-token')
-
-    // Mock display selection PUT
-    cy.myIntercept('PUT', `**/api/v1/amt/kvm/displays/${deviceId}`, {
-      statusCode: httpCodes.SUCCESS,
-      body: {}
-    }).as('set-display-selection')
-
-    // Mock display selection for all tests
-    cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
-      statusCode: httpCodes.SUCCESS,
-      body: kvm.displaySelection.success.response
-    }).as('get-displays')
-
-    // Mock redirection status for all tests
-    cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
-      statusCode: httpCodes.SUCCESS,
-      body: kvm.redirectionStatus.available.response
-    }).as('get-redirection-status')
-  })
-
-  describe('Debug', () => {
-    it('should load the KVM page', () => {
-      cy.visit(`/#/devices/${deviceId}/kvm`)
-      cy.url().should('include', '/devices/')
-      cy.url().should('include', '/kvm')
-      
-      // Check if device detail page loaded
-      cy.get('app-device-detail', { timeout: 10000 }).should('exist')
-      
-      // Check what the currentView is
-      cy.get('mat-sidenav-content').should('exist')
-      
-      // Try to find the kvm component
-      cy.get('app-kvm', { timeout: 10000 }).should('exist')
-    })
   })
 
   describe('KVM Initialization Flow', () => {
     it('should initialize KVM with display selection loaded first', () => {
+      // Mock display selection API
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.displaySelection.success.response
+      }).as('get-displays')
+
       // Mock power state API
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
       // Mock redirection status API
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
+
+      // Mock AMT features API
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
+        statusCode: httpCodes.SUCCESS,
+        body: kvm.amtFeatures.kvmEnabled.response
+      }).as('get-amt-features')
 
       // Navigate to KVM page
       cy.visit(`/#/devices/${deviceId}/kvm`)
@@ -109,28 +67,28 @@ describe('KVM Component E2E Tests', () => {
 
       // Verify other initialization APIs are called
       cy.wait('@get-redirection-status')
-      cy.wait('@get-amt-features-toolbar')
+      cy.wait('@get-amt-features')
     })
 
     it('should handle display selection API failure gracefully', () => {
       // Mock display selection API failure
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
         statusCode: httpCodes.INTERNAL_SERVER_ERROR,
         body: kvm.displaySelection.error.response
       }).as('get-displays-error')
 
       // Mock other APIs
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
@@ -152,7 +110,7 @@ describe('KVM Component E2E Tests', () => {
       let displayCallCount = 0
       let powerCallCount = 0
 
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, (req: any) => {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, (req) => {
         displayCallCount++
         req.reply({
           statusCode: httpCodes.SUCCESS,
@@ -160,7 +118,7 @@ describe('KVM Component E2E Tests', () => {
         })
       }).as('get-displays')
 
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, (req: any) => {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, (req) => {
         powerCallCount++
         req.reply({
           statusCode: httpCodes.SUCCESS,
@@ -168,12 +126,12 @@ describe('KVM Component E2E Tests', () => {
         })
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
@@ -194,22 +152,22 @@ describe('KVM Component E2E Tests', () => {
   describe('KVM Connect Functionality', () => {
     beforeEach(() => {
       // Setup successful initialization mocks
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.displaySelection.success.response
       }).as('get-displays')
 
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
@@ -234,7 +192,7 @@ describe('KVM Component E2E Tests', () => {
 
     it('should handle user clicking connect during initialization', () => {
       // Add delay to power state to simulate slow API
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, (req: any) => {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, (req) => {
         setTimeout(() => {
           req.reply({
             statusCode: httpCodes.SUCCESS,
@@ -259,7 +217,7 @@ describe('KVM Component E2E Tests', () => {
     })
 
     it('should show appropriate message when device is powered off', () => {
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOff.response
       }).as('get-power-state-off')
@@ -270,12 +228,12 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-power-state-off')
 
       // Should show power on message
-      cy.contains('Your device is not powered on').should('be.visible')
+      cy.contains('Device must be powered on').should('be.visible')
       cy.get('[data-cy="power-on-button"]').should('be.visible')
     })
 
     it('should handle KVM not available', () => {
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmDisabled.response
       }).as('get-amt-features-disabled')
@@ -287,29 +245,29 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-redirection-status')
       cy.wait('@get-amt-features-disabled')
 
-      // Should show KVM not available state - connect button should not be visible
-      cy.get('[data-cy="kvm-connect-button"]').should('not.exist')
+      // Should show KVM not available message
+      cy.contains('KVM is not available').should('be.visible')
     })
   })
 
   describe('User Consent Flow', () => {
     it('should handle user consent requirement', () => {
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.displaySelection.success.response
       }).as('get-displays')
 
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.userConsentRequired.response
       }).as('get-amt-features-consent')
@@ -327,7 +285,7 @@ describe('KVM Component E2E Tests', () => {
       cy.wait('@get-amt-features-consent')
 
       // Should show user consent dialog
-      cy.contains('User Consent').should('be.visible')
+      cy.contains('User Consent Required').should('be.visible')
       cy.get('[data-cy="consent-approve-button"]').click()
 
       cy.wait('@post-user-consent')
@@ -339,22 +297,22 @@ describe('KVM Component E2E Tests', () => {
 
   describe('Display Selection', () => {
     it('should allow switching between available displays', () => {
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.displaySelection.success.response
       }).as('get-displays')
 
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
@@ -384,22 +342,22 @@ describe('KVM Component E2E Tests', () => {
     })
 
     it('should default to the default display', () => {
-      cy.myIntercept('GET', `**/api/v1/amt/kvm/displays/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/displays`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.displaySelection.success.response
       }).as('get-displays')
 
-      cy.myIntercept('GET', `**/api/v1/amt/power/state/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/power`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.powerState.poweredOn.response
       }).as('get-power-state')
 
-      cy.myIntercept('GET', `**/api/v1/devices/redirectstatus/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/redirection`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.redirectionStatus.available.response
       }).as('get-redirection-status')
 
-      cy.myIntercept('GET', `**/api/v1/amt/features/${deviceId}`, {
+      cy.myIntercept('GET', `devices/${deviceId}/features`, {
         statusCode: httpCodes.SUCCESS,
         body: kvm.amtFeatures.kvmEnabled.response
       }).as('get-amt-features')
