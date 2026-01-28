@@ -38,6 +38,7 @@ describe('DeviceToolbarComponent', () => {
       'sendDeactivate',
       'getPowerState',
       'getAMTFeatures',
+      'getAMTVersion',
       'featuresChanges'
     ])
     devicesService.featuresChanges.and.returnValue(of(null))
@@ -78,6 +79,13 @@ describe('DeviceToolbarComponent', () => {
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
+    devicesService.getAMTVersion.and.returnValue(
+      of({
+        AMT_SetupAndConfigurationService: {
+          response: { ProvisioningMode: 1 } // Default to ACM mode
+        }
+      })
+    )
     devicesService.device = new Subject<Device>()
 
     TestBed.configureTestingModule({
@@ -176,6 +184,9 @@ describe('DeviceToolbarComponent', () => {
       }
     ]
     devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
+    devicesService.getAMTVersion.and.returnValue(
+      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 1 } } })
+    )
     const dialogRefSpyObj = jasmine.createSpyObj({
       afterClosed: of({ bootPath: 'OemPba.efi', enforceSecureBoot: true }),
       close: null
@@ -199,7 +210,8 @@ describe('DeviceToolbarComponent', () => {
             description: 'PBA Boot'
           }
         ],
-        action: 107
+        action: 107,
+        isCCM: false
       }
     })
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
@@ -233,7 +245,8 @@ describe('DeviceToolbarComponent', () => {
 
     expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
       width: '400px',
-      disableClose: false
+      disableClose: false,
+      data: { isCCM: false }
     })
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
   })
@@ -256,5 +269,54 @@ describe('DeviceToolbarComponent', () => {
     component.performHTTPBoot(105)
 
     expect(executeAuthSpy).toHaveBeenCalledWith(105, false, bootDetails)
+  })
+
+  it('should pass isCCM true to HTTPBootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
+    devicesService.getAMTVersion.and.returnValue(
+      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
+    )
+
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.performHTTPBoot(105)
+
+    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '400px',
+      disableClose: false,
+      data: { isCCM: true }
+    })
+  })
+
+  it('should pass isCCM true to PBABootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
+    devicesService.getAMTVersion.and.returnValue(
+      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
+    )
+
+    const pbaSources = [
+      {
+        biosBootString: 'PBA1',
+        bootString: 'OemPba.efi',
+        elementName: '',
+        failThroughSupported: 0,
+        instanceID: 'PBA1',
+        structuredBootString: ''
+      }
+    ]
+    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+
+    component.performPBABoot(107)
+
+    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+      width: '400px',
+      disableClose: false,
+      data: {
+        pbaBootFilesPath: pbaSources,
+        action: 107,
+        isCCM: true
+      }
+    })
   })
 })

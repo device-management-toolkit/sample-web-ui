@@ -7,7 +7,7 @@ import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/c
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { Observable, of } from 'rxjs'
+import { Observable, of, forkJoin } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from 'src/models/models'
@@ -258,29 +258,38 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   performHTTPBoot(action: number): void {
-    const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
-      width: '400px',
-      disableClose: false
-    })
+    this.devicesService.getAMTVersion(this.deviceId()).subscribe((amtVersion) => {
+      const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
+      const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
+        width: '400px',
+        disableClose: false,
+        data: { isCCM }
+      })
 
-    dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
-      if (!bootDetails) {
-        return
-      }
-      this.executeAuthorizedPowerAction(action, false, bootDetails)
+      dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
+        if (!bootDetails) {
+          return
+        }
+        this.executeAuthorizedPowerAction(action, false, bootDetails)
+      })
     })
   }
 
   // Add this new method for PBA boot
   performPBABoot(action: number): void {
-    this.devicesService.getBootSources(this.deviceId()).subscribe((sources) => {
+    forkJoin({
+      amtVersion: this.devicesService.getAMTVersion(this.deviceId()),
+      sources: this.devicesService.getBootSources(this.deviceId())
+    }).subscribe(({ amtVersion, sources }) => {
+      const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === 4
       const pbaSources = sources.filter((s) => s.biosBootString?.toLowerCase().includes('pba'))
       const dialogRef = this.dialog.open(PBABootDialogComponent, {
         width: '400px',
         disableClose: false,
         data: {
           pbaBootFilesPath: pbaSources,
-          action: action
+          action: action,
+          isCCM
         }
       })
       dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
