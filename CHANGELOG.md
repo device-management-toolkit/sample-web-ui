@@ -1,3 +1,17 @@
+## [3.53.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.53.0...v3.53.1) (2026-01-29)
+
+
+### Bug Fixes
+
+* fixed cypress ts code for Linux device ([#3085](https://github.com/device-management-toolkit/sample-web-ui/issues/3085)) ([cfcfb8e](https://github.com/device-management-toolkit/sample-web-ui/commit/cfcfb8e7b9e07abad53cce961938928254309243))
+
+# [3.53.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.4...v3.53.0) (2026-01-28)
+
+
+### Features
+
+* Added hotkey support for ALT+Fx and CTL+ATL+Fx ([bd681b7](https://github.com/device-management-toolkit/sample-web-ui/commit/bd681b7f2b9212f62a24aebe2d18a40583fdbd35))
+
 ## [3.52.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.52.3...v3.52.4) (2026-01-16)
 
 

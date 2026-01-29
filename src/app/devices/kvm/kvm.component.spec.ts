@@ -604,6 +604,70 @@ describe('KvmComponent', () => {
     }, 150)
   })
 
+  it('should have all Alt + Function keys (F1-F12) in hotKeys array', () => {
+    const altFKeys = [
+      'alt-f1',
+      'alt-f2',
+      'alt-f3',
+      'alt-f4',
+      'alt-f5',
+      'alt-f6',
+      'alt-f7',
+      'alt-f8',
+      'alt-f9',
+      'alt-f10',
+      'alt-f11',
+      'alt-f12'
+    ]
+
+    altFKeys.forEach((key) => {
+      const found = component.hotKeys.find((hotkey) => hotkey.value === key)
+      expect(found).toBeDefined()
+      expect(found?.label).toContain('Alt + F')
+    })
+  })
+
+  it('should have all Ctrl + Alt + Function keys (F1-F12) in hotKeys array', () => {
+    const ctrlAltFKeys = [
+      'ctrl-alt-f1',
+      'ctrl-alt-f2',
+      'ctrl-alt-f3',
+      'ctrl-alt-f4',
+      'ctrl-alt-f5',
+      'ctrl-alt-f6',
+      'ctrl-alt-f7',
+      'ctrl-alt-f8',
+      'ctrl-alt-f9',
+      'ctrl-alt-f10',
+      'ctrl-alt-f11',
+      'ctrl-alt-f12'
+    ]
+
+    ctrlAltFKeys.forEach((key) => {
+      const found = component.hotKeys.find((hotkey) => hotkey.value === key)
+      expect(found).toBeDefined()
+      expect(found?.label).toContain('Ctrl + Alt + F')
+    })
+  })
+
+  it('should send Alt + F4 hotkey correctly', () => {
+    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
+    component.selectedHotkey = 'alt-f4'
+
+    component.sendHotkey()
+
+    expect(hotKeySignalSpy).toHaveBeenCalledWith('alt-f4')
+  })
+
+  it('should send Ctrl + Alt + F5 hotkey correctly', () => {
+    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
+    component.selectedHotkey = 'ctrl-alt-f5'
+
+    component.sendHotkey()
+
+    expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-f5')
+  })
+
   // Keyboard event handling tests
   describe('Keyboard Event Handling', () => {
     let createdElements: HTMLElement[] = []

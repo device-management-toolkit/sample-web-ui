@@ -50,6 +50,30 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     return { stdout, stderr, combined }
   }
 
+  const execWithRetry = (
+    command: string,
+    config: Cypress.ExecOptions,
+    maxRetries = 5,
+    retryInterval = 5000
+  ): Cypress.Chainable<Cypress.Exec> => {
+    const attemptExec = (attempt: number): Cypress.Chainable<Cypress.Exec> => {
+      return cy.exec(command, config).then((result) => {
+        const { combined } = buildOutput(result)
+
+        // Check if the error is "interrupted system call"
+        if (combined.includes('"msg":"interrupted system call"') && attempt < maxRetries) {
+          cy.log(`Retry attempt ${attempt + 1}/${maxRetries} after interrupted system call error`)
+          cy.wait(retryInterval)
+          return attemptExec(attempt + 1)
+        }
+
+        return cy.wrap(result)
+      })
+    }
+
+    return attemptExec(1)
+  }
+
   // get environment variables
   const profileName: string = Cypress.env('PROFILE_NAME') as string
   const password: string = Cypress.env('AMT_PASSWORD')
@@ -58,9 +82,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const parts: string[] = profileName.split('-')
   const isAdminControlModeProfile = parts[0] === 'acmactivate'
   let majorVersion = ''
-  let infoCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} amtinfo -json`
-  let activateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} -json`
-  let deactivateCommand = `docker run --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f -json --password ${password}`
+  let infoCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} amtinfo --json`
+  let activateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
+  let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
   if (isWin) {
     activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
     infoCommand = 'rpc.exe amtinfo --json'
@@ -86,7 +110,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       expect(amtInfo.controlMode).to.contain('pre-provisioning state')
 
       // activate device
-      cy.exec(activateCommand, execConfig).then((result) => {
+      execWithRetry(activateCommand, execConfig).then((result) => {
         const { stdout, stderr, combined } = buildOutput(result)
         cy.log(combined)
         const primaryOutput = stdout.length > 0 ? stdout : stderr
@@ -165,7 +189,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       if (amtInfo.controlMode !== 'pre-provisioning state') {
         const invalidCommand =
           deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
-        cy.exec(invalidCommand, execConfig).then((result) => {
+        execWithRetry(invalidCommand, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Unable to authenticate with AMT')
@@ -176,7 +200,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     it('should deactivate device', () => {
       // deactivate
       if (amtInfo.controlMode !== 'pre-provisioning state') {
-        cy.exec(deactivateCommand, execConfig).then((result) => {
+        execWithRetry(deactivateCommand, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Status: Deactivated')
@@ -189,7 +213,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     if (isAdminControlModeProfile) {
       it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
         activateCommand += ' -d dontmatch.com'
-        cy.exec(activateCommand, execConfig).then((result) => {
+        execWithRetry(activateCommand, execConfig).then((result) => {
           const { stderr, combined } = buildOutput(result)
           cy.log(combined)
           expect(stderr).to.contain(
