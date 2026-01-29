@@ -40,11 +40,12 @@ export class HTTPBootDialogComponent {
   private readonly fb = inject(FormBuilder)
 
   hidePassword = true
+  isCCM = this.data?.isCCM ?? false
   bootForm = this.fb.group({
     url: ['', Validators.required],
     username: [''],
     password: [''],
-    enforceSecureBoot: [true]
+    enforceSecureBoot: [{ value: true, disabled: this.isCCM }]
   })
 
   bootDetails: BootDetails = {
@@ -74,7 +75,7 @@ export class HTTPBootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      this.bootDetails = this.bootForm.value as BootDetails
+      this.bootDetails = this.bootForm.getRawValue() as BootDetails
       this.dialogRef.close(this.bootDetails)
     }
   }
