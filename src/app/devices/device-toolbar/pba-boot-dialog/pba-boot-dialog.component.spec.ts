@@ -193,3 +193,79 @@ describe('PBABootDialogComponent', () => {
     expect(dialogRefSpy.close).not.toHaveBeenCalled()
   })
 })
+
+describe('PBABootDialogComponent in CCM mode', () => {
+  let component: PBABootDialogComponent
+  let fixture: ComponentFixture<PBABootDialogComponent>
+  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<PBABootDialogComponent>>
+
+  const mockBootSources = [
+    {
+      biosBootString: 'PBA OEM',
+      bootString: 'path1.efi',
+      elementName: 'PBA',
+      failThroughSupported: 1,
+      instanceID: 'Intel(r) AMT: Force OCR UEFI Boot Option 1',
+      structuredBootString: 'PBA1'
+    }
+  ]
+
+  beforeEach(() => {
+    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
+
+    const mockDialogData = {
+      pbaBootFilesPath: mockBootSources,
+      isCCM: true
+    }
+
+    TestBed.configureTestingModule({
+      imports: [
+        PBABootDialogComponent,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+        { provide: MatDialogRef, useValue: dialogRefSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    })
+
+    fixture = TestBed.createComponent(PBABootDialogComponent)
+    component = fixture.componentInstance
+    const translate = TestBed.inject(TranslateService)
+    translate.setFallbackLang('en')
+    fixture.detectChanges()
+  })
+
+  it('should have isCCM set to true', () => {
+    expect(component.isCCM).toBeTrue()
+  })
+
+  it('should have enforceSecureBoot disabled in CCM mode', () => {
+    const secureBootControl = component.bootForm.get('enforceSecureBoot')
+    expect(secureBootControl?.disabled).toBeTrue()
+  })
+
+  it('should have enforceSecureBoot checked (true) in CCM mode', () => {
+    const secureBootControl = component.bootForm.get('enforceSecureBoot')
+    expect(secureBootControl?.value).toBeTrue()
+  })
+
+  it('should submit with enforceSecureBoot true even when disabled', () => {
+    const expectedBootDetails = {
+      bootPath: mockBootSources[0].bootString,
+      enforceSecureBoot: true
+    }
+
+    component.bootForm.get('selectedBootSource')?.setValue(mockBootSources[0])
+    fixture.detectChanges()
+
+    component.onSubmit()
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedBootDetails)
+  })
+})

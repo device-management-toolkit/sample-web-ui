@@ -1630,6 +1630,9 @@
   "httpBoot.enforce": {
     "value": "Enforce Secure Boot"
   },
+  "httpBoot.enforceCCMMessage": {
+    "value": "Secure boot is always enforced in CCM"
+  },
   "httpBoot.error": {
     "value": "URL is required"
   },

@@ -41,10 +41,11 @@ export class PBABootDialogComponent {
 
   // Get the boot file paths from injected data
   pbaBootFilePaths: BootSource[] = this.data?.pbaBootFilesPath || []
+  isCCM = this.data?.isCCM ?? false
 
   bootForm = this.fb.group({
     selectedBootSource: this.fb.control<BootSource | null>(this.pbaBootFilePaths[0] ?? null, Validators.required),
-    enforceSecureBoot: this.fb.control(true)
+    enforceSecureBoot: this.fb.control({ value: true, disabled: this.isCCM })
   })
 
   onCancel(): void {
@@ -53,11 +54,12 @@ export class PBABootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      const selectedBootSource = this.bootForm.value.selectedBootSource as BootSource | null
+      const formValue = this.bootForm.getRawValue()
+      const selectedBootSource = formValue.selectedBootSource
       if (selectedBootSource) {
         const bootDetails: BootDetails = {
           bootPath: selectedBootSource.bootString,
-          enforceSecureBoot: this.bootForm.value.enforceSecureBoot as boolean
+          enforceSecureBoot: formValue.enforceSecureBoot ?? false
         }
         this.dialogRef.close(bootDetails)
       }
