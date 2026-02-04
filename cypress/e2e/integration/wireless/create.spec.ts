@@ -7,6 +7,7 @@ import { empty } from 'cypress/e2e/fixtures/api/general'
 import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
 import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
 import { wirelessFixtures } from 'cypress/e2e/fixtures/formEntry/wireless'
+import * as api8021x from 'cypress/e2e/fixtures/api/ieee8021x'
 
 describe('create a wireless profile', () => {
   beforeEach('clear cache and login', () => {
@@ -14,6 +15,15 @@ describe('create a wireless profile', () => {
   })
 
   it('creates a default profile', () => {
+    // Only intercept ieee8021xconfigs for console mode (CLOUD=false)
+    // In cloud mode, this feature is not available
+/*    if (!Cypress.env('CLOUD')) {
+      cy.myIntercept('GET', 'ieee8021xconfigs?$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: api8021x.noConfigsResponse
+      }).as('ieee8021xConfigsGetAll')
+    }*/
+
     cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: wirelessConfigs.getAll.success.response
@@ -52,7 +62,10 @@ describe('create a wireless profile', () => {
       cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
 
       // Check that the wireless config was successful
-      cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName)
+      cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName).should('be.visible')
+      
+      // Add a small delay to ensure video captures the final state
+      cy.wait(5000)
     })
   })
 })

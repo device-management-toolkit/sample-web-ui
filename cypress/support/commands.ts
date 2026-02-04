@@ -191,8 +191,19 @@ Cypress.Commands.add('setup', () => {
   cy.login(mpsUsername, mpsPassword)
   cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
-  // Close about notice
-  cy.get('[data-cy="closeNotice"]').click()
+  // Close about notice (only appears when environment.cloud = true)
+  // Check if the application is running in cloud mode using Cypress environment
+  if (Cypress.env('CLOUD')) {
+    // In cloud mode (CLOUD = true), the dialog may appear on first login
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-cy="closeNotice"]').length > 0) {
+        // Dialog is present, click close
+        cy.get('[data-cy="closeNotice"]').click()
+      }
+      // If dialog not present, "doNotShowAgain" was set - continue without error
+    })
+  }
+  // In console mode (CLOUD = false), dialog never appears - no action needed
 })
 
 // ------------------- Enter info into a form -------------------------

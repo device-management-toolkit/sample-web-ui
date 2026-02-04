@@ -16,6 +16,7 @@ export default defineConfig({
   env: {
     BASEURL: 'http://localhost:4200/',
     ISOLATE: 'Y',
+    CLOUD: false,
     FQDN: '192.168.8.50',
     MPS_USERNAME: 'standalone',
     MPS_PASSWORD: 'G@ppm0ym',
@@ -32,9 +33,41 @@ export default defineConfig({
     RPC_DOCKER_IMAGE: 'vprodemo.azurecr.io/rpc-go:latest'
   },
   chromeWebSecurity: false,
+  video: true,
+  videoCompression: false,
+  videosFolder: 'cypress/videos',
+  screenshotsFolder: 'cypress/screenshots',
+  trashAssetsBeforeRuns: true,
+  videoUploadOnPasses: true,
   e2e: {
     experimentalStudio: true,
-    screenshotOnRunFailure: false,
-    specPattern: 'cypress/e2e/integration/**/*.ts'
+    screenshotOnRunFailure: true,
+    specPattern: 'cypress/e2e/integration/**/*.ts',
+    setupNodeEvents(on, config) {
+      // Enable detailed logging
+      on('task', {
+        log(message) {
+          console.log(message)
+          return null
+        },
+        table(message) {
+          console.table(message)
+          return null
+        }
+      })
+      
+      // Add after:spec event to ensure video processing completes
+      on('after:spec', (spec, results) => {
+        if (results && results.video) {
+          // Wait a bit to ensure video finishes writing
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(null)
+            }, 2000)
+          })
+        }
+        return null
+      })
+    }
   }
 })
