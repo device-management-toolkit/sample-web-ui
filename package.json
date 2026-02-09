@@ -60,7 +60,7 @@
     "@angular/compiler-cli": "~21.1.1",
     "@angular/localize": "~21.1.1",
     "@types/jasmine": "~6.0.0",
-    "angular-eslint": "21.1.0",
+    "angular-eslint": "21.2.0",
     "cypress": "^15.9.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
