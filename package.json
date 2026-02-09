@@ -54,7 +54,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~21.1.1",
     "@angular-eslint/builder": "~21.1.0",
-    "@angular-eslint/schematics": "~21.1.0",
+    "@angular-eslint/schematics": "~21.2.0",
     "@angular-eslint/template-parser": "~21.2.0",
     "@angular/cli": "~21.1.1",
     "@angular/compiler-cli": "~21.1.1",
