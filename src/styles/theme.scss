@@ -123,6 +123,11 @@ body {
   }
 }
 
+.warn-border {
+  border: 1px solid map.get(vars.$samplewebui-warn, 500);
+  border-radius: 4px;
+}
+
 .material-icons {
   direction: ltr;
   display: inline-block;

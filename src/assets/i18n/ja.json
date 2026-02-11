@@ -1463,6 +1463,14 @@
     "description": "Windows リカバリのツールチップがサポートされています",
     "value": "Windows Recovery はサポートされています"
   },
+  "general.redirectionWarning": {
+    "description": "リダイレクトが無効でKVM/SOL/IDERが有効な場合の警告",
+    "value": "リダイレクトが無効です。KVM、SOL、IDERにはリダイレクトの有効化が必要です。"
+  },
+  "general.redirectionEnable": {
+    "description": "リダイレクトを有効にするボタンラベル",
+    "value": "有効にする"
+  },
   "httpBoot.enforce": {
     "value": "セキュアブートの実施"
   },

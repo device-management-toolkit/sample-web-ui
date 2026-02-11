@@ -1463,6 +1463,14 @@
     "description": "Työkaluvinkki Windowsin palautukselle tuettu",
     "value": "Windows Recovery on tuettu"
   },
+  "general.redirectionWarning": {
+    "description": "Varoitus, kun uudelleenohjaus on poistettu käytöstä, mutta KVM/SOL/IDER on käytössä",
+    "value": "Uudelleenohjaus on poistettu käytöstä. KVM, SOL ja IDER vaativat uudelleenohjauksen käyttöönottoa."
+  },
+  "general.redirectionEnable": {
+    "description": "Painikkeen teksti uudelleenohjauksen käyttöönottamiseksi",
+    "value": "Ota käyttöön"
+  },
   "httpBoot.enforce": {
     "value": "Turvallisen käynnistyksen pakottaminen"
   },

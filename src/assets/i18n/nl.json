@@ -1463,6 +1463,14 @@
     "description": "Tooltip voor Windows Recovery ondersteund",
     "value": "Windows Recovery wordt ondersteund."
   },
+  "general.redirectionWarning": {
+    "description": "Waarschuwing wanneer omleiding is uitgeschakeld maar KVM/SOL/IDER is ingeschakeld",
+    "value": "Omleiding is uitgeschakeld. KVM, SOL en IDER vereisen dat omleiding is ingeschakeld."
+  },
+  "general.redirectionEnable": {
+    "description": "Knoplabel om omleiding in te schakelen",
+    "value": "Inschakelen"
+  },
   "httpBoot.enforce": {
     "value": "Dwing Secure Boot af."
   },

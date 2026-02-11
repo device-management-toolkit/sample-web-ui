@@ -1463,6 +1463,14 @@
     "description": "Tooltip für Windows-Wiederherstellung wird unterstützt",
     "value": "Windows Recovery wird unterstützt."
   },
+  "general.redirectionWarning": {
+    "description": "Warnung, wenn Umleitung deaktiviert ist, aber KVM/SOL/IDER aktiviert ist",
+    "value": "Umleitung ist deaktiviert. KVM, SOL und IDER erfordern eine aktivierte Umleitung."
+  },
+  "general.redirectionEnable": {
+    "description": "Schaltflächenbeschriftung zum Aktivieren der Umleitung",
+    "value": "Aktivieren"
+  },
   "httpBoot.enforce": {
     "value": "Sicheres Booten erzwingen"
   },
