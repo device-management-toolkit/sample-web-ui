@@ -64,8 +64,21 @@
       <mat-card-subtitle>{{ 'general.amtEnabledFeaturesDescription.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="amt-features" [formGroup]="amtEnabledFeatures">
-      <p></p>
       <div class="flex-row flex-wrap">
+        @if (isRedirectionRequired && !amtEnabledFeatures.get('redirection')?.value) {
+          <div
+            role="alert"
+            class="flex flex-1 flex-wrap items-center space-between gap-8 warn-border"
+            style="margin-bottom: 16px; padding: 8px 12px">
+            <div class="flex items-center">
+              <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
+              <span>{{ 'general.redirectionWarning.value' | translate }}</span>
+            </div>
+            <button mat-stroked-button (click)="setAmtFeatures()">
+              {{ 'general.redirectionEnable.value' | translate }}
+            </button>
+          </div>
+        }
         <div class="flex flex-50">
           <p>{{ 'general.provisioningMode.value' | translate }}</p>
         </div>
@@ -173,7 +186,7 @@
             <mat-select
               (selectionChange)="setAmtFeatures()"
               formControlName="userConsent"
-              style="width: 200px"
+              style="width: 100%"
               [matTooltip]="'general.userConsentNotConfigurable.value' | translate"
               [matTooltipDisabled]="!amtEnabledFeatures.get('userConsent')?.disabled"
               matTooltipPosition="after">

@@ -1463,6 +1463,14 @@
     "description": "מסמך כלים לתמיכה בשחזור Windows הנתמך",
     "value": "התאוששות Windows נתמכת"
   },
+  "general.redirectionWarning": {
+    "description": "אזהרה כאשר הפניה מושבתת אך KVM/SOL/IDER מופעל",
+    "value": "הפניה מושבתת. KVM, SOL ו-IDER דורשים שהפניה תהיה מופעלת."
+  },
+  "general.redirectionEnable": {
+    "description": "תווית כפתור להפעלת הפניה",
+    "value": "הפעל"
+  },
   "httpBoot.enforce": {
     "value": "אוכף אתחול מאובטח"
   },

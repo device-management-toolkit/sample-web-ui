@@ -1627,6 +1627,14 @@
     "description": "Tooltip for Windows Recovery supported",
     "value": "Windows Recovery is supported"
   },
+  "general.redirectionWarning": {
+    "description": "Warning shown when redirection is disabled but KVM/SOL/IDER is enabled",
+    "value": "Redirection is disabled. KVM, SOL, and IDER require redirection to be enabled."
+  },
+  "general.redirectionEnable": {
+    "description": "Button label to enable redirection",
+    "value": "Enable"
+  },
   "httpBoot.enforce": {
     "value": "Enforce Secure Boot"
   },

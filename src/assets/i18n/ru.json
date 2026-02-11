@@ -1463,6 +1463,14 @@
     "description": "Подсказка для Windows Восстановление поддерживается",
     "value": "Поддерживается восстановление Windows."
   },
+  "general.redirectionWarning": {
+    "description": "Предупреждение, когда перенаправление отключено, но KVM/SOL/IDER включен",
+    "value": "Перенаправление отключено. KVM, SOL и IDER требуют включения перенаправления."
+  },
+  "general.redirectionEnable": {
+    "description": "Надпись кнопки для включения перенаправления",
+    "value": "Включить"
+  },
   "httpBoot.enforce": {
     "value": "Обеспечьте безопасную загрузку."
   },

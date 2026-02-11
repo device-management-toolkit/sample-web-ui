@@ -1463,6 +1463,14 @@
     "description": "Tooltip per il ripristino di Windows supportato",
     "value": "È supportato il ripristino di Windows."
   },
+  "general.redirectionWarning": {
+    "description": "Avviso quando il reindirizzamento è disabilitato ma KVM/SOL/IDER è abilitato",
+    "value": "Il reindirizzamento è disabilitato. KVM, SOL e IDER richiedono l'abilitazione del reindirizzamento."
+  },
+  "general.redirectionEnable": {
+    "description": "Etichetta del pulsante per abilitare il reindirizzamento",
+    "value": "Abilita"
+  },
   "httpBoot.enforce": {
     "value": "Applicare l'avvio sicuro"
   },

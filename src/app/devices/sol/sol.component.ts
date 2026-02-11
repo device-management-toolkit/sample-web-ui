@@ -51,7 +51,7 @@ export class SolComponent implements OnInit, OnDestroy {
   public deviceConnection = signal(false)
 
   public results: any
-  public amtFeatures?: AMTFeaturesResponse
+  public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isLoading = signal(false)
   public powerState: PowerState = { powerstate: 0 }
   public readyToLoadSol = false
@@ -116,7 +116,8 @@ export class SolComponent implements OnInit, OnDestroy {
           )
         ),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures)
+          // safely convert null to undefined for type compatibility
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
         ),
         switchMap((result: any | UserConsentResponse) =>
           this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'SOL')
@@ -183,8 +184,8 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
-    this.amtFeatures = results
-    if (this.amtFeatures.SOL) {
+    this.amtFeatures.set(results)
+    if (this.amtFeatures()?.redirection && this.amtFeatures()?.SOL) {
       return of(true)
     }
     return this.enableSolDialog().pipe(
@@ -200,12 +201,12 @@ export class SolComponent implements OnInit, OnDestroy {
           return of(false)
         } else {
           const payload: AMTFeaturesRequest = {
-            userConsent: this.amtFeatures?.userConsent ?? '',
-            enableKVM: this.amtFeatures?.KVM ?? false,
+            userConsent: this.amtFeatures()?.userConsent ?? '',
+            enableKVM: this.amtFeatures()?.KVM ?? false,
             enableSOL: true,
-            enableIDER: this.amtFeatures?.IDER ?? false,
-            ocr: this.amtFeatures?.ocr ?? false,
-            remoteErase: this.amtFeatures?.remoteErase ?? false
+            enableIDER: this.amtFeatures()?.IDER ?? false,
+            ocr: this.amtFeatures()?.ocr ?? false,
+            remoteErase: this.amtFeatures()?.remoteErase ?? false
           }
           return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }
@@ -247,9 +248,9 @@ export class SolComponent implements OnInit, OnDestroy {
 
   checkUserConsent(): Observable<any> {
     if (
-      this.amtFeatures?.userConsent === 'none' ||
-      this.amtFeatures?.optInState === 3 ||
-      this.amtFeatures?.optInState === 4
+      this.amtFeatures()?.userConsent === 'none' ||
+      this.amtFeatures()?.optInState === 3 ||
+      this.amtFeatures()?.optInState === 4
     ) {
       this.readyToLoadSol = true
       // Auto-connect when user consent is not required

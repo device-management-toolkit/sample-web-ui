@@ -1463,6 +1463,14 @@
     "description": "Información sobre herramientas para la recuperación de Windows compatible.",
     "value": "Se admite la recuperación de Windows."
   },
+  "general.redirectionWarning": {
+    "description": "Advertencia cuando la redirección está deshabilitada pero KVM/SOL/IDER está habilitado",
+    "value": "La redirección está deshabilitada. KVM, SOL e IDER requieren que la redirección esté habilitada."
+  },
+  "general.redirectionEnable": {
+    "description": "Etiqueta del botón para habilitar la redirección",
+    "value": "Habilitar"
+  },
   "httpBoot.enforce": {
     "value": "Aplicar el arranque seguro"
   },

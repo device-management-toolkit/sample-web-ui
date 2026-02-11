@@ -16,6 +16,8 @@ import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
+import { MatIcon } from '@angular/material/icon'
+import { MatButton } from '@angular/material/button'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -28,7 +30,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     FormsModule,
     ReactiveFormsModule,
     MatTooltip,
-    TranslateModule
+    TranslateModule,
+    MatIcon,
+    MatButton
   ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
@@ -152,6 +156,14 @@ export class GeneralComponent implements OnInit {
           localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
         })
       })
+  }
+
+  get isRedirectionRequired(): boolean {
+    const enableKVM = this.amtEnabledFeatures.get('enableKVM')?.value
+    const enableSOL = this.amtEnabledFeatures.get('enableSOL')?.value
+    const enableIDER = this.amtEnabledFeatures.get('enableIDER')?.value
+    // coerce nullable form values to boolean
+    return !!(enableKVM || enableSOL || enableIDER)
   }
 
   setAmtFeatures(): void {

@@ -1463,6 +1463,14 @@
     "description": "Info-bulle pour la récupération Windows prise en charge",
     "value": "La récupération Windows est prise en charge."
   },
+  "general.redirectionWarning": {
+    "description": "Avertissement lorsque la redirection est désactivée mais KVM/SOL/IDER est activé",
+    "value": "La redirection est désactivée. KVM, SOL et IDER nécessitent l'activation de la redirection."
+  },
+  "general.redirectionEnable": {
+    "description": "Libellé du bouton pour activer la redirection",
+    "value": "Activer"
+  },
   "httpBoot.enforce": {
     "value": "Appliquer le démarrage sécurisé"
   },
