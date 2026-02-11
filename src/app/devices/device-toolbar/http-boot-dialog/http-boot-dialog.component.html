@@ -25,9 +25,15 @@
       </button>
     </mat-form-field> -->
     </div>
-    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">{{
-      'httpBoot.enforce.value' | translate
-    }}</mat-checkbox>
+    <mat-checkbox
+      class="example-margin"
+      formControlName="enforceSecureBoot"
+      [attr.aria-describedby]="isCCM ? 'httpBootCcmMessage' : null"
+      >{{ 'httpBoot.enforce.value' | translate }}</mat-checkbox
+    >
+    @if (isCCM) {
+      <p id="httpBootCcmMessage">{{ 'httpBoot.enforceCCMMessage.value' | translate }}</p>
+    }
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -6,7 +6,7 @@ import { Component, inject } from '@angular/core'
 
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
-import { FormsModule, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
@@ -41,10 +41,11 @@ export class PBABootDialogComponent {
 
   // Get the boot file paths from injected data
   pbaBootFilePaths: BootSource[] = this.data?.pbaBootFilesPath || []
+  isCCM = this.data?.isCCM ?? false
 
   bootForm = this.fb.group({
     selectedBootSource: this.fb.control<BootSource | null>(this.pbaBootFilePaths[0] ?? null, Validators.required),
-    enforceSecureBoot: this.fb.control(true)
+    enforceSecureBoot: new FormControl<boolean>({ value: true, disabled: this.isCCM }, { nonNullable: true })
   })
 
   onCancel(): void {
@@ -53,11 +54,12 @@ export class PBABootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      const selectedBootSource = this.bootForm.value.selectedBootSource as BootSource | null
+      const formValue = this.bootForm.getRawValue()
+      const selectedBootSource = formValue.selectedBootSource
       if (selectedBootSource) {
         const bootDetails: BootDetails = {
           bootPath: selectedBootSource.bootString,
-          enforceSecureBoot: this.bootForm.value.enforceSecureBoot as boolean
+          enforceSecureBoot: formValue.enforceSecureBoot
         }
         this.dialogRef.close(bootDetails)
       }

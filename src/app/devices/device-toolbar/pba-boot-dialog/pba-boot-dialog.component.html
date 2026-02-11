@@ -19,9 +19,15 @@
         }
       </mat-form-field>
     </div>
-    <mat-checkbox class="example-margin" formControlName="enforceSecureBoot">{{
-      'pba.label.value' | translate
-    }}</mat-checkbox>
+    <mat-checkbox
+      class="example-margin"
+      formControlName="enforceSecureBoot"
+      [attr.aria-describedby]="isCCM ? 'pbaCcmMessage' : null"
+      >{{ 'pba.label.value' | translate }}</mat-checkbox
+    >
+    @if (isCCM) {
+      <p id="pbaCcmMessage">{{ 'pba.enforceCCMMessage.value' | translate }}</p>
+    }
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
