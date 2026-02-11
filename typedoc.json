@@ -1,0 +1,23 @@
+{
+  "name": "Test Documentation",
+  "entryPoints": ["cypress/e2e/integration"],
+  "entryPointStrategy": "expand",
+  "out": "test-docs-html",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "readme": "none",
+  "includeVersion": false,
+  "disableSources": true,
+  "visibilityFilters": {},
+  "sort": ["kind", "alphabetical"],
+  "theme": "default",
+  "customCss": "typedoc-custom.css",
+  "skipErrorChecking": true,
+  "validation": {
+    "notDocumented": false,
+    "invalidLink": false
+  }
+}

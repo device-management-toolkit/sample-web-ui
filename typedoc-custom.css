@@ -1,0 +1,21 @@
+/* Hide the h1 title that contains "Interface" prefix */
+.tsd-page-title h1 {
+  display: none;
+}
+
+/* Remove link styling from headers */
+.tsd-anchor-link {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.tsd-anchor-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hide the anchor icon */
+.tsd-anchor-icon {
+  display: none;
+}

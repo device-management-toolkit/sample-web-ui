@@ -16,7 +16,8 @@
     "cypress-install": "cypress install",
     "cypress": "cypress open",
     "cy-runner": "cypress run",
-    "lint:cypress": "eslint ./cypress"
+    "lint:cypress": "eslint ./cypress",
+    "docs": "npx typedoc --tsconfig tsconfig.docs.json && echo 'Open test-docs-html/index.html in your browser'"
   },
   "private": true,
   "dependencies": {
@@ -61,7 +62,11 @@
     "@angular/localize": "~21.1.1",
     "@types/jasmine": "~6.0.0",
     "angular-eslint": "21.1.0",
+<<<<<<< Updated upstream
     "cypress": "^15.9.0",
+=======
+    "cypress": "^15.10.0",
+>>>>>>> Stashed changes
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.8.0",
@@ -76,6 +81,7 @@
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-multiline-arrays": "^4.0.5",
     "ts-node": "~10.9.2",
+    "typedoc": "^0.28.16",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.54.0"
   },
