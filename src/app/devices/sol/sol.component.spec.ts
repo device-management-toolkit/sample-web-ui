@@ -308,7 +308,7 @@ describe('SolComponent', () => {
     expect(component.readyToLoadSol).toBe(true)
   })
   it('checkUserConsent no', async () => {
-    component.amtFeatures = {
+    component.amtFeatures.set({
       userConsent: 'all',
       KVM: true,
       SOL: true,
@@ -327,7 +327,7 @@ describe('SolComponent', () => {
         biosBootString: '',
         bootString: ''
       }
-    }
+    })
     component.readyToLoadSol = false
     component.checkUserConsent()
     expect(component.readyToLoadSol).toBe(false)
@@ -349,7 +349,7 @@ describe('SolComponent', () => {
   })
 
   it('handleAMTFeatureResponse SOL already enabled', async () => {
-    component.amtFeatures = {
+    component.amtFeatures.set({
       userConsent: 'none',
       KVM: true,
       SOL: true,
@@ -368,15 +368,15 @@ describe('SolComponent', () => {
         biosBootString: '',
         bootString: ''
       }
-    }
-    component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
+    })
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
       next: (results) => {
         expect(results).toEqual(true)
       }
     })
   })
   it('handleAMTFeatureResponse enableSolDialog error', async () => {
-    component.amtFeatures = {
+    component.amtFeatures.set({
       userConsent: 'none',
       KVM: true,
       SOL: false,
@@ -395,9 +395,9 @@ describe('SolComponent', () => {
         biosBootString: '',
         bootString: ''
       }
-    }
+    })
     spyOn(component, 'enableSolDialog').and.returnValue(throwError(new Error('err')))
-    component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
       error: () => {
         expect(displayErrorSpy).toHaveBeenCalled()
       }
@@ -405,7 +405,7 @@ describe('SolComponent', () => {
   })
   it('handleAMTFeatureResponse cancel enableSol', (done) => {
     const cancelEnableSolResponseSpy = spyOn(component, 'cancelEnableSolResponse')
-    component.amtFeatures = {
+    component.amtFeatures.set({
       userConsent: 'none',
       KVM: true,
       SOL: false,
@@ -424,9 +424,9 @@ describe('SolComponent', () => {
         biosBootString: '',
         bootString: ''
       }
-    }
+    })
     spyOn(component, 'enableSolDialog').and.returnValue(of(false))
-    component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
       next: (results) => {
         expect(cancelEnableSolResponseSpy).toHaveBeenCalled()
         expect(results).toEqual(false)
@@ -435,7 +435,7 @@ describe('SolComponent', () => {
     })
   })
   it('handleAMTFeatureResponse enableSol', (done) => {
-    component.amtFeatures = {
+    component.amtFeatures.set({
       userConsent: 'none',
       KVM: true,
       SOL: false,
@@ -454,9 +454,67 @@ describe('SolComponent', () => {
         biosBootString: '',
         bootString: ''
       }
-    }
+    })
     spyOn(component, 'enableSolDialog').and.returnValue(of(true))
-    component.handleAMTFeaturesResponse(component.amtFeatures).subscribe({
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
+      next: () => {
+        expect(setAmtFeaturesSpy).toHaveBeenCalled()
+        done()
+      }
+    })
+  })
+  it('handleAMTFeatureResponse should show enable dialog when redirection is false', (done) => {
+    component.amtFeatures.set({
+      userConsent: 'none',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: false,
+      kvmAvailable: true,
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    spyOn(component, 'enableSolDialog').and.returnValue(of(true))
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
+      next: () => {
+        expect(setAmtFeaturesSpy).toHaveBeenCalled()
+        done()
+      }
+    })
+  })
+  it('handleAMTFeatureResponse should show enable dialog when both redirection and SOL are false', (done) => {
+    component.amtFeatures.set({
+      userConsent: 'none',
+      KVM: true,
+      SOL: false,
+      IDER: true,
+      redirection: false,
+      kvmAvailable: true,
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    spyOn(component, 'enableSolDialog').and.returnValue(of(true))
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
       next: () => {
         expect(setAmtFeaturesSpy).toHaveBeenCalled()
         done()

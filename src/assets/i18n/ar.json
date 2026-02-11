@@ -1463,6 +1463,14 @@
     "description": "تلميح أداة لـ Windows Recovery مدعوم",
     "value": "يتم دعم استرداد Windows"
   },
+  "general.redirectionWarning": {
+    "description": "تحذير عندما يكون إعادة التوجيه معطلاً ولكن KVM/SOL/IDER مفعل",
+    "value": "إعادة التوجيه معطلة. يتطلب KVM وSOL وIDER تفعيل إعادة التوجيه."
+  },
+  "general.redirectionEnable": {
+    "description": "تسمية الزر لتفعيل إعادة التوجيه",
+    "value": "تفعيل"
+  },
   "httpBoot.enforce": {
     "value": "فرض التمهيد الآمن"
   },

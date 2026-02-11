@@ -231,7 +231,8 @@ export class KvmComponent implements OnInit, OnDestroy {
           )
         ),
         switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures()!)
+          // safely convert null to undefined for type compatibility
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
         ),
         switchMap((result: any | UserConsentResponse) =>
           this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'KVM')
@@ -403,7 +404,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       return of(true)
     }
 
-    if (this.amtFeatures()?.KVM) {
+    if (this.amtFeatures()?.redirection && this.amtFeatures()?.KVM) {
       return of(true)
     }
     return this.enableKvmDialog().pipe(

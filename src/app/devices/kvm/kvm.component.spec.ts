@@ -518,6 +518,64 @@ describe('KvmComponent', () => {
       }
     })
   })
+  it('handleAMTFeatureResponse should show enable dialog when redirection is false', (done) => {
+    component.amtFeatures.set({
+      userConsent: 'none',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: false,
+      kvmAvailable: true,
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    spyOn(component, 'enableKvmDialog').and.returnValue(of(true))
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
+      next: () => {
+        expect(setAmtFeaturesSpy).toHaveBeenCalled()
+        done()
+      }
+    })
+  })
+  it('handleAMTFeatureResponse should show enable dialog when both redirection and KVM are false', (done) => {
+    component.amtFeatures.set({
+      userConsent: 'none',
+      KVM: false,
+      SOL: true,
+      IDER: true,
+      redirection: false,
+      kvmAvailable: true,
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    spyOn(component, 'enableKvmDialog').and.returnValue(of(true))
+    component.handleAMTFeaturesResponse(component.amtFeatures()!).subscribe({
+      next: () => {
+        expect(setAmtFeaturesSpy).toHaveBeenCalled()
+        done()
+      }
+    })
+  })
   it('deviceStatus 3', async () => {
     component.deviceKVMStatus(3)
     expect(component.isLoading()).toEqual(false)

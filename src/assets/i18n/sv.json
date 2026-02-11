@@ -1463,6 +1463,14 @@
     "description": "Verktygstips för Windows Återställning stöds",
     "value": "Windows Recovery stöds"
   },
+  "general.redirectionWarning": {
+    "description": "Varning när omdirigering är inaktiverad men KVM/SOL/IDER är aktiverat",
+    "value": "Omdirigering är inaktiverad. KVM, SOL och IDER kräver att omdirigering är aktiverad."
+  },
+  "general.redirectionEnable": {
+    "description": "Knappetikett för att aktivera omdirigering",
+    "value": "Aktivera"
+  },
   "httpBoot.enforce": {
     "value": "Tillämpa säker uppstart"
   },
