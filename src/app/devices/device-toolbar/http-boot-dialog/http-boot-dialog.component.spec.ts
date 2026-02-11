@@ -145,3 +145,65 @@ describe('HTTPBootDialogComponent', () => {
     expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedValue)
   })
 })
+
+describe('HTTPBootDialogComponent in CCM mode', () => {
+  let component: HTTPBootDialogComponent
+  let fixture: ComponentFixture<HTTPBootDialogComponent>
+  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<HTTPBootDialogComponent>>
+
+  beforeEach(() => {
+    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
+
+    TestBed.configureTestingModule({
+      imports: [
+        HTTPBootDialogComponent,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: { isCCM: true } },
+        { provide: MatDialogRef, useValue: dialogRefSpy },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    })
+
+    fixture = TestBed.createComponent(HTTPBootDialogComponent)
+    component = fixture.componentInstance
+    const translate = TestBed.inject(TranslateService)
+    translate.setFallbackLang('en')
+    fixture.detectChanges()
+  })
+
+  it('should have isCCM set to true', () => {
+    expect(component.isCCM).toBeTrue()
+  })
+
+  it('should have enforceSecureBoot disabled in CCM mode', () => {
+    const secureBootControl = component.bootForm.get('enforceSecureBoot')
+    expect(secureBootControl?.disabled).toBeTrue()
+  })
+
+  it('should have enforceSecureBoot checked (true) in CCM mode', () => {
+    const secureBootControl = component.bootForm.get('enforceSecureBoot')
+    expect(secureBootControl?.value).toBeTrue()
+  })
+
+  it('should submit with enforceSecureBoot true even when disabled', () => {
+    const expectedValue = {
+      url: 'https://example.com',
+      username: '',
+      password: '',
+      enforceSecureBoot: true
+    }
+
+    component.bootForm.patchValue({ url: 'https://example.com' })
+    fixture.detectChanges()
+
+    component.onSubmit()
+    expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedValue)
+  })
+})

@@ -6,7 +6,7 @@ import { Component, inject } from '@angular/core'
 
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
-import { FormsModule, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
@@ -40,11 +40,12 @@ export class HTTPBootDialogComponent {
   private readonly fb = inject(FormBuilder)
 
   hidePassword = true
+  isCCM = this.data?.isCCM ?? false
   bootForm = this.fb.group({
     url: ['', Validators.required],
     username: [''],
     password: [''],
-    enforceSecureBoot: [true]
+    enforceSecureBoot: new FormControl<boolean>({ value: true, disabled: this.isCCM }, { nonNullable: true })
   })
 
   bootDetails: BootDetails = {
@@ -74,7 +75,7 @@ export class HTTPBootDialogComponent {
 
   onSubmit(): void {
     if (this.bootForm.valid) {
-      this.bootDetails = this.bootForm.value as BootDetails
+      this.bootDetails = this.bootForm.getRawValue() as BootDetails
       this.dialogRef.close(this.bootDetails)
     }
   }
