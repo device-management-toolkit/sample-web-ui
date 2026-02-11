@@ -37,7 +37,7 @@
     "angular-oauth2-oidc": "^20.0.2",
     "angular-oauth2-oidc-jwks": "^20.0.0",
     "date-fns": "^4.1.0",
-    "esbuild": "^0.27.1",
+    "esbuild": "^0.27.3",
     "monaco-editor": "^0.55.1",
     "ngx-monaco-editor-v2": "^20.3.0",
     "rxjs": "~7.8.2",
