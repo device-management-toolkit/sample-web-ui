@@ -1630,6 +1630,9 @@
   "httpBoot.enforce": {
     "value": "Enforce Secure Boot"
   },
+  "httpBoot.enforceCCMMessage": {
+    "value": "Secure Boot is always enforced in Client Control Mode (CCM)"
+  },
   "httpBoot.error": {
     "value": "URL is required"
   },
@@ -2148,8 +2151,11 @@
     "description": "Title of the wireless networks card",
     "value": "Wireless Networks"
   },
+  "pba.enforceCCMMessage": {
+    "value": "Secure Boot is always enforced in Client Control Mode (CCM)"
+  },
   "pba.label": {
-    "description": "Label for the checkbox to enable or disable secure boot enforcement",
+    "description": "Label for the checkbox to enable or disable Secure Boot enforcement",
     "value": "Enforce Secure Boot"
   },
   "pba.required": {
