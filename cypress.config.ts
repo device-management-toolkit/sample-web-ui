@@ -6,9 +6,9 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  reporter: 'junit',
+  reporter: 'mocha-multi-reporters',
   reporterOptions: {
-    mochaFile: 'cypress-ui-test-output-[hash].xml'
+    configFile: 'cypress/support/multi-reporter-config.json'
   },
   viewportWidth: 1920,
   viewportHeight: 1080,
