@@ -171,6 +171,10 @@
     "description": "Fehler beim Abrufen",
     "value": "Fehler beim Abrufen von Alarmereignissen"
   },
+  "alarm.successAdding": {
+    "description": "Erfolgsmeldung beim Hinzufügen eines Alarms",
+    "value": "Alarm erfolgreich erstellt"
+  },
   "alarmService.addNew": {
     "description": "Schaltflächentext zum Hinzufügen eines neuen Alarms",
     "value": "Neu hinzufügen"

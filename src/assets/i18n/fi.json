@@ -171,6 +171,10 @@
     "description": "Virhe hakemisessa",
     "value": "Virhe hälytystapahtumien hakemisessa"
   },
+  "alarm.successAdding": {
+    "description": "Onnistumisviesti hälytyksen lisäämisestä",
+    "value": "Hälytys luotu onnistuneesti"
+  },
   "alarmService.addNew": {
     "description": "Painikkeen teksti uuden hälytyksen lisäämiseksi",
     "value": "Lisää uusi"

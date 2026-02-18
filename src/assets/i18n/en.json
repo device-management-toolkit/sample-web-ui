@@ -307,9 +307,21 @@
     "description": "Error for deleting",
     "value": "Error deleting Alarm Occurrences"
   },
+  "alarm.successDelete": {
+    "description": "Success message for deleting alarm",
+    "value": "Alarm deleted successfully"
+  },
   "alarm.errorRetrieve": {
     "description": "Error for retrieving",
     "value": "Error retrieving Alarm Occurrences"
+  },
+  "alarm.successAdding": {
+    "description": "Success message for adding alarm",
+    "value": "Alarm created successfully"
+  },
+  "alarm.errorAlarmName": {
+    "description": "Error when alarm name is empty",
+    "value": "Alarm name is required"
   },
   "alarmService.addNew": {
     "description": "Button text to add a new alarm",

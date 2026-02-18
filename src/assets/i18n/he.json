@@ -171,6 +171,10 @@
     "description": "שגיאה לאחזור",
     "value": "שגיאה באחזור התרחשויות אזעקה"
   },
+  "alarm.successAdding": {
+    "description": "הודעת הצלחה להוספת אזעקה",
+    "value": "האזעקה נוצרה בהצלחה"
+  },
   "alarmService.addNew": {
     "description": "טקסט כפתור כדי להוסיף אזעקה חדשה",
     "value": "הוסף חדש"

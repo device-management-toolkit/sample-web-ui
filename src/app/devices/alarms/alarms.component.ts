@@ -3,8 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input } from '@angular/core'
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { Component, OnInit, inject, signal, input, ViewChild } from '@angular/core'
+import {
+  FormBuilder,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+  FormGroupDirective
+} from '@angular/forms'
 import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
 import { catchError, finalize, throwError } from 'rxjs'
@@ -54,14 +61,16 @@ export class AlarmsComponent implements OnInit {
   public readonly deviceId = input('')
 
   cloudMode: boolean = environment.cloud
-  public alarmOccurrences: IPSAlarmClockOccurrence[] = []
+  public alarmOccurrences = signal<IPSAlarmClockOccurrence[]>([])
   public newAlarmForm = this.fb.group({
-    alarmName: '',
+    alarmName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]],
     interval: 0,
     startTime: new FormControl(new Date()),
     hour: '12',
     minute: '00'
   })
+
+  @ViewChild(FormGroupDirective) formDirective?: FormGroupDirective
 
   public hourOptions = [
     '1',
@@ -176,12 +185,17 @@ export class AlarmsComponent implements OnInit {
         })
       )
       .subscribe((results) => {
-        this.alarmOccurrences = results
+        this.alarmOccurrences.set(results)
       })
   }
 
   deleteAlarm = (instanceID: string): void => {
     if (!window.confirm('Deleting: ' + instanceID)) return
+
+    // Optimistic update - remove alarm immediately from UI
+    const previousAlarms = this.alarmOccurrences()
+    this.alarmOccurrences.set(previousAlarms.filter((alarm) => alarm.InstanceID !== instanceID))
+
     this.isLoading.set(true)
     this.devicesService
       .deleteAlarmOccurrence(this.deviceId(), instanceID)
@@ -192,47 +206,65 @@ export class AlarmsComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.loadAlarms()
+          // Success - alarm already removed from UI
+          const msg: string = this.translate.instant('alarm.successDelete.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
         },
-        error: (err) => {
+        error: () => {
+          // Error - restore the alarm and reload to ensure consistency
+          this.alarmOccurrences.set(previousAlarms)
+          this.loadAlarms()
           const msg: string = this.translate.instant('alarm.errorDelete.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          return throwError(err)
         }
       })
   }
 
   addAlarm = (): void => {
-    if (this.newAlarmForm.valid) {
-      const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
-      const startTime: Date = alarm.startTime
-      startTime.setHours(alarm.hour as number)
-      startTime.setMinutes(alarm.minute as number)
-      const payload: IPSAlarmClockOccurrenceInput = {
-        ElementName: alarm.alarmName,
-        StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
-        Interval: Number(alarm.interval),
-        DeleteOnCompletion: this.deleteOnCompletion.value
-      }
-
-      this.isLoading.set(true)
-      this.devicesService
-        .addAlarmOccurrence(this.deviceId(), payload)
-        .pipe(
-          finalize(() => {
-            this.isLoading.set(false)
-          })
-        )
-        .subscribe({
-          next: () => {
-            this.loadAlarms()
-          },
-          error: (err) => {
-            const msg: string = this.translate.instant('alarm.errorAdding.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-            return throwError(err)
-          }
-        })
+    if (this.newAlarmForm.invalid) {
+      this.newAlarmForm.markAllAsTouched()
+      return
     }
+
+    const alarm: any = Object.assign({}, this.newAlarmForm.getRawValue())
+    // Create a new Date object to avoid mutating the form's Date
+    const startTime: Date = new Date(alarm.startTime)
+    startTime.setHours(alarm.hour as number)
+    startTime.setMinutes(alarm.minute as number)
+    const payload: IPSAlarmClockOccurrenceInput = {
+      ElementName: alarm.alarmName,
+      StartTime: startTime?.toISOString()?.replace(/:\d+.\d+Z$/g, ':00Z'),
+      Interval: Number(alarm.interval),
+      DeleteOnCompletion: this.deleteOnCompletion.value
+    }
+
+    this.isLoading.set(true)
+    this.devicesService
+      .addAlarmOccurrence(this.deviceId(), payload)
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false)
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.loadAlarms()
+          // Reset the form directive to clear submitted state
+          this.formDirective?.resetForm({
+            alarmName: '',
+            interval: 0,
+            startTime: new Date(),
+            hour: '12',
+            minute: '00'
+          })
+          this.deleteOnCompletion.setValue(true)
+          const msg: string = this.translate.instant('alarm.successAdding.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+        },
+        error: () => {
+          const msg: string = this.translate.instant('alarm.errorAdding.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+        }
+      })
   }
 }

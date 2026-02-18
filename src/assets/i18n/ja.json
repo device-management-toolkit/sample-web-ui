@@ -171,6 +171,10 @@
     "description": "取得エラー",
     "value": "アラーム発生の取得に失敗しました"
   },
+  "alarm.successAdding": {
+    "description": "アラーム追加の成功メッセージ",
+    "value": "アラームが正常に作成されました"
+  },
   "alarmService.addNew": {
     "description": "新しいアラームを追加するボタンテキスト",
     "value": "新規追加"
