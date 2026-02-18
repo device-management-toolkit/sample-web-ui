@@ -1,3 +1,16 @@
+# [3.54.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.53.1...v3.54.0) (2026-02-18)
+
+
+### Bug Fixes
+
+* disable Enforce Secure Boot checkbox in CCM mode ([#3101](https://github.com/device-management-toolkit/sample-web-ui/issues/3101)) ([17ad7ea](https://github.com/device-management-toolkit/sample-web-ui/commit/17ad7eab4ec323d11ed74114e8e6b8e508598e69))
+* update redirection form state after enabling AMT features ([#3131](https://github.com/device-management-toolkit/sample-web-ui/issues/3131)) ([40a0276](https://github.com/device-management-toolkit/sample-web-ui/commit/40a0276e0eb98a91d89cfbc8ad897b054cd4c3d1))
+
+
+### Features
+
+* show redirection warning when KVM/SOL/IDER is enabled but redirection is off ([#3125](https://github.com/device-management-toolkit/sample-web-ui/issues/3125)) ([a532bf7](https://github.com/device-management-toolkit/sample-web-ui/commit/a532bf7421e750350a2a9985465df4cc47bed852))
+
 ## [3.53.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.53.0...v3.53.1) (2026-01-29)
 
 
