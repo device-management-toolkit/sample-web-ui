@@ -1688,6 +1688,26 @@
     "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
     "value": "Stop IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Status message shown while checking power state",
+    "value": "Checking power status..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Status message shown while checking redirection status",
+    "value": "Checking redirection status..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Status message shown while retrieving AMT features",
+    "value": "Retrieving AMT features..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Status message shown while checking user consent",
+    "value": "Zustimmungsmodus wird überprüft..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Status message shown while KVM component is connecting",
+    "value": "Connecting to KVM..."
+  },
   "kvm.title": {
     "description": "Titel für KVM",
     "value": "KVM aktivieren"

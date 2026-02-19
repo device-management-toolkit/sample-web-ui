@@ -83,6 +83,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   public isFullscreen = signal(false)
   public isLoading = signal(false)
+  public loadingStatus = signal('')
   public deviceState = signal(-1)
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public readyToLoadKvm = false
@@ -216,13 +217,17 @@ export class KvmComponent implements OnInit, OnDestroy {
       }
     })
     // device needs to be powered on in order to start KVM session
+    this.loadingStatus.set('kvm.status.checkingPowerState.value')
     this.getPowerState(this.deviceId())
       .pipe(
+        tap(() => this.loadingStatus.set('kvm.status.checkingRedirection.value')),
         switchMap((powerState) => this.handlePowerState(powerState)),
         switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId()))),
+        tap(() => this.loadingStatus.set('kvm.status.checkingAMTFeatures.value')),
         switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
         switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
         switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        tap(() => this.loadingStatus.set('kvm.status.checkingConsent.value')),
         switchMap((result: boolean | any) =>
           iif(
             () => result === false,
@@ -237,12 +242,14 @@ export class KvmComponent implements OnInit, OnDestroy {
         switchMap((result: any | UserConsentResponse) =>
           this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'KVM')
         ),
-        switchMap((result: any) => this.postUserConsentDecision(result))
+        switchMap((result: any) => this.postUserConsentDecision(result)),
+        catchError((err) => {
+          this.isLoading.set(false)
+          this.loadingStatus.set('')
+          return throwError(() => err)
+        })
       )
       .subscribe()
-      .add(() => {
-        this.isLoading.set(false)
-      })
   }
 
   postUserConsentDecision(result: boolean): Observable<any> {
@@ -251,10 +258,12 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
       // Auto-connect - ensure connection state is properly set
       this.isDisconnecting = false
+      this.loadingStatus.set('kvm.status.connectingKVM.value')
       this.deviceKVMConnection.set(true)
       this.getAMTFeatures()
     } else {
       this.isLoading.set(false)
+      this.loadingStatus.set('')
       this.deviceState.set(0)
     }
     return of(null)
@@ -371,7 +380,7 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.isLoading.set(false)
         const msg: string = this.translate.instant('kvm.errorRetrieve.value')
         this.displayError(msg)
-        return throwError(err)
+        return throwError(() => err)
       })
     )
   }
@@ -392,7 +401,7 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.isLoading.set(false)
         const msg: string = this.translate.instant('kvm.errorRetrieve.value')
         this.displayError(msg)
-        return throwError(err)
+        return throwError(() => err)
       })
     )
   }
@@ -407,6 +416,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (this.amtFeatures()?.redirection && this.amtFeatures()?.KVM) {
       return of(true)
     }
+
     return this.enableKvmDialog().pipe(
       catchError((err) => {
         const msg: string = this.translate.instant('kvm.errorRetrieve.value')
@@ -494,8 +504,10 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.deviceState.set(event)
     if (event === 2) {
       this.isLoading.set(false)
+      this.loadingStatus.set('')
     } else if (event === 0) {
       this.isLoading.set(false)
+      this.loadingStatus.set('')
       if (!this.isDisconnecting && !this.isEncodingChange) {
         this.displayError(this.translate.instant('errors.kvmConnection.value'))
       }

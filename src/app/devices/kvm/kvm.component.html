@@ -66,8 +66,13 @@
     }
   </div>
 </mat-toolbar>
-@if (isLoading()) {
-  <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+@if (isLoading() && deviceState() !== 2) {
+  <div class="loading-container">
+    <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+    @if (loadingStatus()) {
+      <div class="loading-status">{{ loadingStatus() | translate }}</div>
+    }
+  </div>
 }
 @if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
   <amt-kvm
