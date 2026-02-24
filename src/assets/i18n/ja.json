@@ -1689,24 +1689,24 @@
     "value": "Stop IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "電源状態の確認中に表示されるステータスメッセージ",
+    "value": "電源状態を確認しています..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "リダイレクト状態の確認中に表示されるステータスメッセージ",
+    "value": "リダイレクト状態を確認しています..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "AMT機能の取得中に表示されるステータスメッセージ",
+    "value": "AMT機能を取得しています..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "ユーザーの同意確認中に表示されるステータスメッセージ",
     "value": "同意モードを確認しています..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "KVMコンポーネントの接続中に表示されるステータスメッセージ",
+    "value": "KVMに接続しています..."
   },
   "kvm.title": {
     "description": "KVMのタイトル",

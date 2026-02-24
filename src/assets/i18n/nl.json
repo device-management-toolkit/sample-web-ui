@@ -1689,24 +1689,24 @@
     "value": "Stop IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "Statusbericht weergegeven tijdens het controleren van de energiestatus",
+    "value": "Energiestatus controleren..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "Statusbericht weergegeven tijdens het controleren van de omleidingsstatus",
+    "value": "Omleidingsstatus controleren..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
+    "value": "AMT-functies ophalen..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "Statusbericht weergegeven tijdens het controleren van gebruikerstoestemming",
     "value": "Toestemmingsmodus controleren..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "Statusbericht weergegeven terwijl het KVM-onderdeel verbinding maakt",
+    "value": "Verbinding maken met KVM..."
   },
   "kvm.title": {
     "description": "Titel voor KVM",

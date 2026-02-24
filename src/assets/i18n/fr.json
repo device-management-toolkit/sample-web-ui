@@ -1689,24 +1689,24 @@
     "value": "Arrêter IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "Message d'état affiché lors de la vérification de l'état d'alimentation",
+    "value": "Vérification de l'état d'alimentation..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "Message d'état affiché lors de la vérification de l'état de redirection",
+    "value": "Vérification de l'état de redirection..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "Message d'état affiché lors de la récupération des fonctionnalités AMT",
+    "value": "Récupération des fonctionnalités AMT..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "Message d'état affiché lors de la vérification du consentement de l'utilisateur",
     "value": "Vérification du mode de consentement..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "Message d'état affiché lors de la connexion du composant KVM",
+    "value": "Connexion à KVM en cours..."
   },
   "kvm.title": {
     "description": "Titre pour KVM",

@@ -1689,24 +1689,24 @@
     "value": "Lopeta IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "Tilailmoitus virtatilan tarkistuksen aikana",
+    "value": "Tarkistetaan virtatilaa..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "Tilailmoitus uudelleenohjauksen tilan tarkistuksen aikana",
+    "value": "Tarkistetaan uudelleenohjauksen tilaa..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "Tilailmoitus AMT-ominaisuuksien hakemisen aikana",
+    "value": "Haetaan AMT-ominaisuuksia..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "Tilailmoitus käyttäjän suostumuksen tarkistuksen aikana",
     "value": "Tarkistetaan suostumustilaa..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "Tilailmoitus KVM-komponentin yhdistämisen aikana",
+    "value": "Yhdistetään KVM:ään..."
   },
   "kvm.title": {
     "description": "KVM:n otsikko",

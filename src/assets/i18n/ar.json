@@ -1689,24 +1689,24 @@
     "value": "إيقاف IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "رسالة الحالة المعروضة أثناء التحقق من حالة الطاقة",
+    "value": "جارٍ التحقق من حالة الطاقة..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "رسالة الحالة المعروضة أثناء التحقق من حالة إعادة التوجيه",
+    "value": "جارٍ التحقق من حالة إعادة التوجيه..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "رسالة الحالة المعروضة أثناء استرداد ميزات AMT",
+    "value": "جارٍ استرداد ميزات AMT..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "رسالة الحالة المعروضة أثناء التحقق من موافقة المستخدم",
     "value": "جارٍ التحقق من وضع الموافقة..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "رسالة الحالة المعروضة أثناء اتصال مكوّن KVM",
+    "value": "جارٍ الاتصال بـ KVM..."
   },
   "kvm.title": {
     "description": "عنوان KVM",

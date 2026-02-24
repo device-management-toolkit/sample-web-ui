@@ -1689,24 +1689,24 @@
     "value": "Прекратите IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "Сообщение о состоянии при проверке состояния питания",
+    "value": "Проверка состояния питания..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "Сообщение о состоянии при проверке статуса перенаправления",
+    "value": "Проверка статуса перенаправления..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "Сообщение о состоянии при получении функций AMT",
+    "value": "Получение функций AMT..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
+    "description": "Сообщение о состоянии при проверке согласия пользователя",
     "value": "Проверка режима согласия..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "Сообщение о состоянии при подключении компонента KVM",
+    "value": "Подключение к KVM..."
   },
   "kvm.title": {
     "description": "Название для KVM",

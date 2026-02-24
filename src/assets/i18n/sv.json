@@ -1689,24 +1689,24 @@
     "value": "Stoppa IDER"
   },
   "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
+    "description": "Statusmeddelande som visas vid kontroll av energistatus",
+    "value": "Kontrollerar energistatus..."
   },
   "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+    "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
+    "value": "Kontrollerar omdirigeringsstatus..."
   },
   "kvm.status.checkingAMTFeatures": {
-    "description": "Status message shown while retrieving AMT features",
-    "value": "Retrieving AMT features..."
+    "description": "Statusmeddelande som visas vid hämtning av AMT-funktioner",
+    "value": "Hämtar AMT-funktioner..."
   },
   "kvm.status.checkingConsent": {
-    "description": "Status message shown while checking user consent",
-    "value": "Kontrollerarsamtyckesläge..."
+    "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
+    "value": "Kontrollerar samtyckesläge..."
   },
   "kvm.status.connectingKVM": {
-    "description": "Status message shown while KVM component is connecting",
-    "value": "Connecting to KVM..."
+    "description": "Statusmeddelande som visas när KVM-komponenten ansluter",
+    "value": "Ansluter till KVM..."
   },
   "kvm.title": {
     "description": "Titel för KVM",
