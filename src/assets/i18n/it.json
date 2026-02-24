@@ -171,6 +171,10 @@
     "description": "Errore durante il recupero",
     "value": "Errore durante il recupero delle occorrenze dell'allarme"
   },
+  "alarm.successAdding": {
+    "description": "Messaggio di successo per l'aggiunta di allarme",
+    "value": "Allarme creato con successo"
+  },
   "alarmService.addNew": {
     "description": "Testo del pulsante per aggiungere un nuovo allarme",
     "value": "Aggiungi nuovo"

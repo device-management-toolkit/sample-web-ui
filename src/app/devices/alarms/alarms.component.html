@@ -2,11 +2,11 @@
   <mat-card-header>
     <mat-card-title>{{ 'alarmService.title.value' | translate }}</mat-card-title>
     <mat-card-subtitle>{{
-      'alarmService.subtitle.value' | translate: { count: alarmOccurrences.length }
+      'alarmService.subtitle.value' | translate: { count: alarmOccurrences().length }
     }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    @for (entry of alarmOccurrences; track entry) {
+    @for (entry of alarmOccurrences(); track entry) {
       <mat-list>
         <mat-divider></mat-divider>
         <mat-list-item>

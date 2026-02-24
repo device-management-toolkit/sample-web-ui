@@ -171,6 +171,10 @@
     "description": "خطأ في الاسترداد",
     "value": "خطأ في استرداد حالات الإنذار"
   },
+  "alarm.successAdding": {
+    "description": "رسالة نجاح لإضافة التنبيه",
+    "value": "تم إنشاء التنبيه بنجاح"
+  },
   "alarmService.addNew": {
     "description": "نص الزر لإضافة منبه جديد",
     "value": "إضافة جديد"

@@ -171,6 +171,10 @@
     "description": "Error al recuperar",
     "value": "Error al recuperar las ocurrencias de alarma"
   },
+  "alarm.successAdding": {
+    "description": "Mensaje de éxito al agregar alarma",
+    "value": "Alarma creada exitosamente"
+  },
   "alarmService.addNew": {
     "description": "Texto del botón para añadir una nueva alarma",
     "value": "Añadir nuevo"

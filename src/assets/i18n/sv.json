@@ -171,6 +171,10 @@
     "description": "Fel vid hämtning",
     "value": "Fel vid hämtning av larmhändelser"
   },
+  "alarm.successAdding": {
+    "description": "Framgångsmeddelande för tillägg av larm",
+    "value": "Larm skapades framgångsrikt"
+  },
   "alarmService.addNew": {
     "description": "Knapptext för att lägga till ett nytt larm",
     "value": "Lägg till nytt"

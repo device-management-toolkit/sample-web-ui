@@ -171,6 +171,10 @@
     "description": "Fout bij het ophalen",
     "value": "Fout bij het ophalen van alarmmeldingen"
   },
+  "alarm.successAdding": {
+    "description": "Succesbericht voor het toevoegen van alarm",
+    "value": "Alarm succesvol aangemaakt"
+  },
   "alarmService.addNew": {
     "description": "Knoptekst om een nieuw alarm toe te voegen",
     "value": "Nieuw toevoegen"
