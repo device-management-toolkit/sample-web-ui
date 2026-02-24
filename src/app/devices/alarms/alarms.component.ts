@@ -30,6 +30,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { environment } from 'src/environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { MatDialog } from '@angular/material/dialog'
+import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 
 @Component({
   selector: 'app-alarms',
@@ -57,6 +59,7 @@ export class AlarmsComponent implements OnInit {
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
   private readonly translate = inject(TranslateService)
+  private readonly dialog = inject(MatDialog)
 
   public readonly deviceId = input('')
 
@@ -190,34 +193,38 @@ export class AlarmsComponent implements OnInit {
   }
 
   deleteAlarm = (instanceID: string): void => {
-    if (!window.confirm('Deleting: ' + instanceID)) return
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    // Optimistic update - remove alarm immediately from UI
-    const previousAlarms = this.alarmOccurrences()
-    this.alarmOccurrences.set(previousAlarms.filter((alarm) => alarm.InstanceID !== instanceID))
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== true) return
 
-    this.isLoading.set(true)
-    this.devicesService
-      .deleteAlarmOccurrence(this.deviceId(), instanceID)
-      .pipe(
-        finalize(() => {
-          this.isLoading.set(false)
+      // Optimistic update - remove alarm immediately from UI
+      const previousAlarms = this.alarmOccurrences()
+      this.alarmOccurrences.set(previousAlarms.filter((alarm) => alarm.InstanceID !== instanceID))
+
+      this.isLoading.set(true)
+      this.devicesService
+        .deleteAlarmOccurrence(this.deviceId(), instanceID)
+        .pipe(
+          finalize(() => {
+            this.isLoading.set(false)
+          })
+        )
+        .subscribe({
+          next: () => {
+            // Success - alarm already removed from UI
+            const msg: string = this.translate.instant('alarm.successDelete.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+          },
+          error: () => {
+            // Error - restore the alarm and reload to ensure consistency
+            this.alarmOccurrences.set(previousAlarms)
+            this.loadAlarms()
+            const msg: string = this.translate.instant('alarm.errorDelete.value')
+            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+          }
         })
-      )
-      .subscribe({
-        next: () => {
-          // Success - alarm already removed from UI
-          const msg: string = this.translate.instant('alarm.successDelete.value')
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-        },
-        error: () => {
-          // Error - restore the alarm and reload to ensure consistency
-          this.alarmOccurrences.set(previousAlarms)
-          this.loadAlarms()
-          const msg: string = this.translate.instant('alarm.errorDelete.value')
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-        }
-      })
+    })
   }
 
   addAlarm = (): void => {

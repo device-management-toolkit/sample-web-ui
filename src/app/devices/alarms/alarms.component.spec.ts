@@ -11,11 +11,13 @@ import { provideNativeDateAdapter } from '@angular/material/core'
 import { of, throwError } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatDialog } from '@angular/material/dialog'
 
 describe('AlarmsComponent', () => {
   let component: AlarmsComponent
   let fixture: ComponentFixture<AlarmsComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let dialogSpy: jasmine.SpyObj<MatDialog>
 
   beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
@@ -23,6 +25,7 @@ describe('AlarmsComponent', () => {
       'addAlarmOccurrence',
       'deleteAlarmOccurrence'
     ])
+    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
 
     devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
     devicesServiceSpy.addAlarmOccurrence.and.returnValue(of({}))
@@ -33,7 +36,10 @@ describe('AlarmsComponent', () => {
         AlarmsComponent,
         TranslateModule.forRoot()
       ],
-      providers: [provideNativeDateAdapter(), { provide: DevicesService, useValue: devicesServiceSpy }]
+      providers: [
+        provideNativeDateAdapter(),
+        { provide: DevicesService, useValue: devicesServiceSpy },
+        { provide: MatDialog, useValue: dialogSpy }]
     })
 
     fixture = TestBed.createComponent(AlarmsComponent)
@@ -111,19 +117,23 @@ describe('AlarmsComponent', () => {
   })
 
   it('should delete alarm successfully', () => {
-    spyOn(window, 'confirm').and.returnValue(true)
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.and.returnValue(dialogRefSpyObj)
 
     component.deleteAlarm('test-instance-id')
 
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(devicesServiceSpy.deleteAlarmOccurrence).toHaveBeenCalledWith('', 'test-instance-id')
   })
 
   it('should not delete alarm if user cancels', () => {
-    spyOn(window, 'confirm').and.returnValue(false)
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
+    dialogSpy.open.and.returnValue(dialogRefSpyObj)
 
     const callCount = devicesServiceSpy.deleteAlarmOccurrence.calls.count()
     component.deleteAlarm('test-instance-id')
 
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(devicesServiceSpy.deleteAlarmOccurrence.calls.count()).toBe(callCount)
   })
 
@@ -143,7 +153,8 @@ describe('AlarmsComponent', () => {
   })
 
   it('should optimistically remove alarm from UI when deleting', () => {
-    spyOn(window, 'confirm').and.returnValue(true)
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.and.returnValue(dialogRefSpyObj)
     component.alarmOccurrences.set([
       { InstanceID: 'test-instance-id', StartTime: {} } as any,
       { InstanceID: 'other-instance-id', StartTime: {} } as any
@@ -157,7 +168,8 @@ describe('AlarmsComponent', () => {
   })
 
   it('should call getAlarmOccurrences when delete fails', () => {
-    spyOn(window, 'confirm').and.returnValue(true)
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.and.returnValue(dialogRefSpyObj)
     const mockAlarms = [
       { InstanceID: 'test-instance-id', StartTime: {} } as any,
       { InstanceID: 'other-instance-id', StartTime: {} } as any
