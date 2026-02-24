@@ -1,3 +1,10 @@
+# [3.55.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.54.1...v3.55.0) (2026-02-24)
+
+
+### Features
+
+* add real-time status spinner with text during KVM device management action ([#3136](https://github.com/device-management-toolkit/sample-web-ui/issues/3136)) ([bcde293](https://github.com/device-management-toolkit/sample-web-ui/commit/bcde2935ccf76b69128b705500913e9a4219f335))
+
 ## [3.54.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.54.0...v3.54.1) (2026-02-24)
 
 
