@@ -1692,6 +1692,26 @@
     "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
     "value": "Stop IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Statusmeldung beim Überprüfen des Energiestatus",
+    "value": "Energiestatus wird überprüft..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Statusmeldung beim Überprüfen des Umleitungsstatus",
+    "value": "Umleitungsstatus wird überprüft..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Statusmeldung beim Abrufen der AMT-Funktionen",
+    "value": "AMT-Funktionen werden abgerufen..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Statusmeldung beim Überprüfen der Benutzerzustimmung",
+    "value": "Zustimmungsmodus wird überprüft..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Statusmeldung während der KVM-Verbindungsherstellung",
+    "value": "Verbindung zu KVM wird hergestellt..."
+  },
   "kvm.title": {
     "description": "Titel für KVM",
     "value": "KVM aktivieren"

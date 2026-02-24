@@ -1692,6 +1692,26 @@
     "description": "Knappetikett för att avsluta IDER-sessionen",
     "value": "Stoppa IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Statusmeddelande som visas vid kontroll av energistatus",
+    "value": "Kontrollerar energistatus..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
+    "value": "Kontrollerar omdirigeringsstatus..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Statusmeddelande som visas vid hämtning av AMT-funktioner",
+    "value": "Hämtar AMT-funktioner..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
+    "value": "Kontrollerar samtyckesläge..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Statusmeddelande som visas när KVM-komponenten ansluter",
+    "value": "Ansluter till KVM..."
+  },
   "kvm.title": {
     "description": "Titel för KVM",
     "value": "Aktivera KVM"

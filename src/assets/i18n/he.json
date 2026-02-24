@@ -1692,6 +1692,26 @@
     "description": "תווית כפתור כדי לעצור את הפעלת ider",
     "value": "עצור אידיר"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "הודעת סטאטוס המוצגת בעת בדיקת מצב הצריכה",
+    "value": "בודק מצב צריכת חשמל..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "הודעת סטאטוס המוצגת בעת בדיקת מצב הפנייה מחדש",
+    "value": "בודק מצב הפניה מחדש..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "הודעת סטאטוס המוצגת בעת אחזור תכונות AMT",
+    "value": "מאחזר תכונות AMT..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "הודעת סטאטוס המוצגת בעת בדיקת הסכמת המשתמש",
+    "value": "בודק מצב הסכמה..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "הודעת סטאטוס המוצגת בעת חיבור רכיב KVM",
+    "value": "מתחבר ל-KVM..."
+  },
   "kvm.title": {
     "description": "כותרת ל- KVM",
     "value": "אפשר KVM"

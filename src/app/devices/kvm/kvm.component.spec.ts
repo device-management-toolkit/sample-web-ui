@@ -250,6 +250,39 @@ describe('KvmComponent', () => {
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(2)
   })
+  it('should clear loading status when connected', () => {
+    component.loadingStatus.set('kvm.status.connectingKVM.value')
+    component.isLoading.set(true)
+    component.deviceKVMStatus(2)
+    expect(component.loadingStatus()).toBe('')
+    expect(component.isLoading()).toBeFalse()
+    expect(component.deviceState()).toBe(2)
+  })
+  it('should clear loading status on disconnect', () => {
+    component.loadingStatus.set('kvm.status.connectingKVM.value')
+    component.isLoading.set(true)
+    component.isDisconnecting = true
+    component.deviceKVMStatus(0)
+    expect(component.loadingStatus()).toBe('')
+    expect(component.isLoading()).toBeFalse()
+    expect(component.deviceState()).toBe(0)
+  })
+  it('should set loading status when initiating connection', (done) => {
+    component.postUserConsentDecision(true).subscribe(() => {
+      expect(component.loadingStatus()).toBe('kvm.status.connectingKVM.value')
+      expect(component.deviceKVMConnection()).toBeTrue()
+      done()
+    })
+  })
+  it('should clear loading status when consent is denied', (done) => {
+    component.loadingStatus.set('kvm.status.checkingAMTFeatures.value')
+    component.postUserConsentDecision(false).subscribe(() => {
+      expect(component.loadingStatus()).toBe('')
+      expect(component.isLoading()).toBeFalse()
+      expect(component.deviceState()).toBe(0)
+      done()
+    })
+  })
   it('should change display and call setDisplaySelection', () => {
     fixture.detectChanges()
     component.onDisplayChange(0)
@@ -385,6 +418,39 @@ describe('KvmComponent', () => {
     component.readyToLoadKvm = false
     component.checkUserConsent()
     expect(component.readyToLoadKvm).toBe(false)
+  })
+  it('should set loading status when checking consent', () => {
+    component.loadingStatus.set('kvm.status.checkingConsent.value')
+    expect(component.loadingStatus()).toBe('kvm.status.checkingConsent.value')
+  })
+  it('should maintain loading status through consent check', (done) => {
+    component.amtFeatures.set({
+      userConsent: 'none',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 3,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    component.loadingStatus.set('kvm.status.checkingConsent.value')
+    component.isLoading.set(true)
+    component.checkUserConsent().subscribe(() => {
+      expect(component.isLoading()).toBeTrue()
+      expect(component.readyToLoadKvm).toBeTrue()
+      done()
+    })
   })
   it('handlePowerState 2', (done) => {
     component.handlePowerState({ powerstate: 2 }).subscribe((results) => {

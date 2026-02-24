@@ -1692,6 +1692,26 @@
     "description": "IDERセッションを停止するボタンラベル",
     "value": "Stop IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "電源状態の確認中に表示されるステータスメッセージ",
+    "value": "電源状態を確認しています..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "リダイレクト状態の確認中に表示されるステータスメッセージ",
+    "value": "リダイレクト状態を確認しています..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "AMT機能の取得中に表示されるステータスメッセージ",
+    "value": "AMT機能を取得しています..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "ユーザーの同意確認中に表示されるステータスメッセージ",
+    "value": "同意モードを確認しています..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "KVMコンポーネントの接続中に表示されるステータスメッセージ",
+    "value": "KVMに接続しています..."
+  },
   "kvm.title": {
     "description": "KVMのタイトル",
     "value": "KVMを有効にする"

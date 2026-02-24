@@ -1692,6 +1692,26 @@
     "description": "Painikkeen teksti IDER-istunnon lopettamiseksi",
     "value": "Lopeta IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Tilailmoitus virtatilan tarkistuksen aikana",
+    "value": "Tarkistetaan virtatilaa..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Tilailmoitus uudelleenohjauksen tilan tarkistuksen aikana",
+    "value": "Tarkistetaan uudelleenohjauksen tilaa..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Tilailmoitus AMT-ominaisuuksien hakemisen aikana",
+    "value": "Haetaan AMT-ominaisuuksia..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Tilailmoitus käyttäjän suostumuksen tarkistuksen aikana",
+    "value": "Tarkistetaan suostumustilaa..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Tilailmoitus KVM-komponentin yhdistämisen aikana",
+    "value": "Yhdistetään KVM:ään..."
+  },
   "kvm.title": {
     "description": "KVM:n otsikko",
     "value": "Ota KVM käyttöön"

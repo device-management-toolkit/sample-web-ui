@@ -1692,6 +1692,26 @@
     "description": "Knoplabel om de IDER-sessie te stoppen",
     "value": "Stop IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de energiestatus",
+    "value": "Energiestatus controleren..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de omleidingsstatus",
+    "value": "Omleidingsstatus controleren..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
+    "value": "AMT-functies ophalen..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Statusbericht weergegeven tijdens het controleren van gebruikerstoestemming",
+    "value": "Toestemmingsmodus controleren..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Statusbericht weergegeven terwijl het KVM-onderdeel verbinding maakt",
+    "value": "Verbinding maken met KVM..."
+  },
   "kvm.title": {
     "description": "Titel voor KVM",
     "value": "Schakel KVM in."

@@ -1692,6 +1692,26 @@
     "description": "Метка кнопки для остановки сеанса IDER",
     "value": "Прекратите IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Сообщение о состоянии при проверке состояния питания",
+    "value": "Проверка состояния питания..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Сообщение о состоянии при проверке статуса перенаправления",
+    "value": "Проверка статуса перенаправления..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Сообщение о состоянии при получении функций AMT",
+    "value": "Получение функций AMT..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Сообщение о состоянии при проверке согласия пользователя",
+    "value": "Проверка режима согласия..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Сообщение о состоянии при подключении компонента KVM",
+    "value": "Подключение к KVM..."
+  },
   "kvm.title": {
     "description": "Название для KVM",
     "value": "Включить KVM"

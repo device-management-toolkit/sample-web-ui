@@ -1692,6 +1692,26 @@
     "description": "Etichetta del pulsante per interrompere la sessione IDER",
     "value": "Interrompere IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Messaggio di stato mostrato durante la verifica dello stato di alimentazione",
+    "value": "Verifica dello stato di alimentazione..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Messaggio di stato mostrato durante la verifica dello stato di reindirizzamento",
+    "value": "Verifica dello stato di reindirizzamento..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "Messaggio di stato mostrato durante il recupero delle funzionalità AMT",
+    "value": "Recupero delle funzionalità AMT..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "Messaggio di stato mostrato durante la verifica del consenso dell'utente",
+    "value": "Controllo della modalità di consenso..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "Messaggio di stato mostrato durante la connessione del componente KVM",
+    "value": "Connessione a KVM in corso..."
+  },
   "kvm.title": {
     "description": "Titolo per KVM",
     "value": "Abilitare KVM"

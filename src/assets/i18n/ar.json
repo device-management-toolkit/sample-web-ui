@@ -1692,6 +1692,26 @@
     "description": "تسمية الزر لإيقاف جلسة IDER",
     "value": "إيقاف IDER"
   },
+  "kvm.status.checkingPowerState": {
+    "description": "رسالة الحالة المعروضة أثناء التحقق من حالة الطاقة",
+    "value": "جارٍ التحقق من حالة الطاقة..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "رسالة الحالة المعروضة أثناء التحقق من حالة إعادة التوجيه",
+    "value": "جارٍ التحقق من حالة إعادة التوجيه..."
+  },
+  "kvm.status.checkingAMTFeatures": {
+    "description": "رسالة الحالة المعروضة أثناء استرداد ميزات AMT",
+    "value": "جارٍ استرداد ميزات AMT..."
+  },
+  "kvm.status.checkingConsent": {
+    "description": "رسالة الحالة المعروضة أثناء التحقق من موافقة المستخدم",
+    "value": "جارٍ التحقق من وضع الموافقة..."
+  },
+  "kvm.status.connectingKVM": {
+    "description": "رسالة الحالة المعروضة أثناء اتصال مكوّن KVM",
+    "value": "جارٍ الاتصال بـ KVM..."
+  },
   "kvm.title": {
     "description": "عنوان KVM",
     "value": "تمكين KVM"
