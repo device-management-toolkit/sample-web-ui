@@ -1,3 +1,10 @@
+## [3.54.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.54.0...v3.54.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* alarm creation and deletion with proper validation and instant feedback ([#3135](https://github.com/device-management-toolkit/sample-web-ui/issues/3135)) ([d7d4188](https://github.com/device-management-toolkit/sample-web-ui/commit/d7d4188507c7b8ea094c26e0c2040e4d8d711fac))
+
 # [3.54.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.53.1...v3.54.0) (2026-02-18)
 
 
