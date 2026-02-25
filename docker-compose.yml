@@ -4,8 +4,16 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        HTTP_PROXY: ${http_proxy}
+        HTTPS_PROXY: ${https_proxy}
+        NO_PROXY: ${no_proxy}
     environment:
       NODE_ENV: production
+      RPS_SERVER: ${RPS_SERVER}
+      MPS_SERVER: ${MPS_SERVER}
+      VAULT_SERVER: ${VAULT_SERVER}
+      AUTH_MODE_ENABLED: ${AUTH_MODE_ENABLED}
     ports:
       - 8089:80
     volumes:
