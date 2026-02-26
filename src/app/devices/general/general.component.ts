@@ -180,9 +180,11 @@ export class GeneralComponent implements OnInit {
       )
       .subscribe({
         next: (results) => {
-          this.amtEnabledFeatures.patchValue({
-            redirection: results.redirection
-          })
+          if (results.redirection != null) {
+            this.amtEnabledFeatures.patchValue({
+              redirection: results.redirection
+            })
+          }
           if (this.cloudMode) {
             this.snackBar.open($localize`${(results as any).status}`, undefined, SnackbarDefaults.defaultSuccess)
           } else {
