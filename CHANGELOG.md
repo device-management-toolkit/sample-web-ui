@@ -1,3 +1,10 @@
+## [3.55.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.0...v3.55.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* false "Redirection is disabled" alert after updating AMT features ([#3157](https://github.com/device-management-toolkit/sample-web-ui/issues/3157)) ([2512a5f](https://github.com/device-management-toolkit/sample-web-ui/commit/2512a5f6de936a2b53ff2fa513a6fcc2f6e4cc78))
+
 # [3.55.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.54.1...v3.55.0) (2026-02-24)
 
 
