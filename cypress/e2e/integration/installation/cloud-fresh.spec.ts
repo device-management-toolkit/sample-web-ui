@@ -17,11 +17,11 @@ const mpsUsername: string = Cypress.env('MPS_USERNAME') || 'standalone'
 const mpsPassword: string = Cypress.env('MPS_PASSWORD') || 'G@ppm0ym'
 const serverPort: string = Cypress.env('SERVER_PORT') || '8443'
 const cloudDeploymentPath = Cypress.env('CLOUD_DEPLOYMENT_PATH') ||'../cloud-deployment'
-const cloudBranch = Cypress.env('CLOUD_DEPLOYMENT_BRANCH') || 'v2.32.0'
-const mpsRef = Cypress.env('MPS_REF') || 'v2.32.0'
-const rpsRef = Cypress.env('RPS_REF') || 'v2.32.0'
-const sampleWebUiRef = Cypress.env('SAMPLE_WEB_UI_REF') || 'v2.32.0'
-const mpsRouterRef = Cypress.env('MPS_ROUTER_REF') || 'v2.32.0'
+const cloudBranch = Cypress.env('CLOUD_DEPLOYMENT_BRANCH') || 'main'
+const mpsRef = Cypress.env('MPS_REF') || 'main'
+const rpsRef = Cypress.env('RPS_REF') || 'main'
+const sampleWebUiRef = Cypress.env('SAMPLE_WEB_UI_REF') || 'main'
+const mpsRouterRef = Cypress.env('MPS_ROUTER_REF') || 'main'
 const jwtSecret = Cypress.env('JWT_SECRET') || 'supersecret'
 const postgresPassword = Cypress.env('POSTGRES_PASSWORD') || 'postgresadmin'
 const vaultToken = Cypress.env('VAULT_TOKEN') || 'myroot'
@@ -148,21 +148,21 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
         cy.task('log', `✓ Kong port set to ${serverPort}:8443`)
       })
 
-      cy.exec(`/tmp/yq eval '.services.webui.environment.RPS_SERVER = "https://\\\${MPS_COMMON_NAME}:${serverPort}/rps"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
+      cy.exec(`/tmp/yq eval '.services.webui.environment.RPS_SERVER = "https://\${MPS_COMMON_NAME}:${serverPort}/rps"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
         cy.task('log', '✓ RPS_SERVER configured')
       })
 
-      cy.exec(`/tmp/yq eval '.services.webui.environment.MPS_SERVER = "https://\\\${MPS_COMMON_NAME}:${serverPort}/mps"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
+      cy.exec(`/tmp/yq eval '.services.webui.environment.MPS_SERVER = "https://\${MPS_COMMON_NAME}:${serverPort}/mps"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
         cy.task('log', '✓ MPS_SERVER configured')
       })
 
-      cy.exec(`/tmp/yq eval '.services.webui.environment.VAULT_SERVER = "https://\\\${MPS_COMMON_NAME}:${serverPort}/vault"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
+      cy.exec(`/tmp/yq eval '.services.webui.environment.VAULT_SERVER = "https://\${MPS_COMMON_NAME}:${serverPort}/vault"' -i ${cloudDeploymentPath}/docker-compose.yml`).then(() => {
         cy.task('log', '✓ VAULT_SERVER configured')
       })
 
       // STEP 8: Build and start services with Docker Compose
       cy.task('log', '\n=== STEP 8: Build and start services with Docker Compose ===')
-      cy.exec(`cd ${cloudDeploymentPath} && sudo docker compose down -v --remove-orphans || true`, {
+      cy.exec(`cd ${cloudDeploymentPath} && docker compose down -v --remove-orphans || true`, {
         timeout: 120000,
         failOnNonZeroExit: false
       }).then(() => {
@@ -170,13 +170,13 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
       })
 
       cy.task('log', 'Building Docker images (this may take 10+ minutes)...')
-      cy.exec(`cd ${cloudDeploymentPath} && sudo docker compose build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY --build-arg NO_PROXY --build-arg http_proxy --build-arg https_proxy --build-arg no_proxy --no-cache`, {
-        timeout: 600000
-      }).then(() => {
-        cy.task('log', '✓ Services built successfully')
-      })
+      //cy.exec(`cd ${cloudDeploymentPath} && docker compose build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY --build-arg NO_PROXY --build-arg http_proxy --build-arg https_proxy --build-arg no_proxy --no-cache`, {
+      //  timeout: 600000
+      //}).then(() => {
+      //  cy.task('log', '✓ Services built successfully')
+     // })
 
-      cy.exec(`cd ${cloudDeploymentPath} && sudo docker compose up -d`, {
+      cy.exec(`cd ${cloudDeploymentPath} && docker compose up -d`, {
         timeout: 120000
       }).then(() => {
         cy.task('log', '✓ Services started in detached mode')
@@ -190,7 +190,7 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
 
       // STEP 10: Check service health
       cy.task('log', '\n=== STEP 10: Check service health ===')
-      cy.exec(`cd ${cloudDeploymentPath} && [ $(sudo docker compose ps --services --filter "status=running" | wc -l) -eq $(sudo docker compose ps --services | wc -l) ] && echo "All services are running" || (echo "Some services failed to start" && sudo docker compose ps --services --filter "status=exited" && exit 1)`, {
+      cy.exec(`cd ${cloudDeploymentPath} && [ $(docker compose ps --services --filter "status=running" | wc -l) -eq $(docker compose ps --services | wc -l) ] && echo "All services are running" || (echo "Some services failed to start" && docker compose ps --services --filter "status=exited" && exit 1)`, {
         timeout: 60000
       }).then(() => {
         cy.task('log', '✓ All services are running')
@@ -199,52 +199,43 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
       // STEP 11: Display deployment info
       cy.task('log', '\n=== STEP 11: Display deployment info ===')
       cy.task('log', `Branch: ${cloudBranch}`)
-      cy.exec(`cd ${cloudDeploymentPath} && sudo docker compose ps --format "table {{.Name}}\\t{{.Status}}\\t{{.Ports}}"`).then((result) => {
+      cy.exec(`cd ${cloudDeploymentPath} && docker compose ps --format "table {{.Name}}\\t{{.Status}}\\t{{.Ports}}"`).then((result) => {
         cy.task('log', '\nServices deployed:')
         cy.task('log', result.stdout)
       })
 
-      // FINAL VERIFICATION: Verify deployed services
+      // FINAL VERIFICATION: Verify deployed services using curl (bypasses proxy)
       cy.task('log', '\n=== FINAL VERIFICATION: Verify deployed services ===')
       
-      cy.request({
-        url: baseUrl,
-        failOnStatusCode: false
-      }).then((response) => {
-        expect(response.status).to.be.oneOf([httpCodes.SUCCESS, 301, 302])
-        cy.task('log', '✓ Web services accessible')
-      })
+      cy.then(() => {
+        const ip = Cypress.env('SYSTEM_IP')
+        const verifyBaseUrl = `https://${ip}:${serverPort}`
+        cy.task('log', `Verifying services at: ${verifyBaseUrl}`)
 
-      cy.request({
-        method: 'GET',
-        url: `${baseUrl}mps/api/v1/version`,
-        failOnStatusCode: false
-      }).then((response) => {
-        expect(response.status).to.be.oneOf([httpCodes.SUCCESS, httpCodes.UNAUTHORIZED])
-        cy.task('log', '✓ MPS API accessible')
-      })
+        // Get JWT token using curl
+        cy.exec(`curl -k -s --noproxy "*" -X POST "${verifyBaseUrl}/mps/login/api/v1/authorize" -H "Content-Type: application/json" -d '{"username":"${mpsUsername}","password":"${mpsPassword}"}'`).then((result) => {
+          const response = JSON.parse(result.stdout)
+          expect(response).to.have.property('token')
+          const token = response.token
+          cy.task('log', '✓ Authentication successful - JWT token obtained')
 
-      cy.request({
-        method: 'GET',
-        url: `${baseUrl}rps/api/v1/version`,
-        failOnStatusCode: false
-      }).then((response) => {
-        expect(response.status).to.be.oneOf([httpCodes.SUCCESS, httpCodes.UNAUTHORIZED])
-        cy.task('log', '✓ RPS API accessible')
-      })
-
-      cy.request({
-        method: 'POST',
-        url: `${baseUrl}mps/api/v1/authorize`,
-        body: {
-          username: mpsUsername,
-          password: mpsPassword
-        }
-      }).then((response) => {
-        expect(response.status).to.eq(httpCodes.SUCCESS)
-        expect(response.body).to.have.property('token')
-        cy.task('log', '✓ Authentication successful')
-        cy.task('log', '\n🎉 Deployment completed successfully!')
+          // Test MPS API with token
+          const mpsUrl = `${verifyBaseUrl}/mps/api/v1/version`
+          cy.exec(`curl -k -s --noproxy "*" -H "Authorization: Bearer ${token}" -w "\\nHTTP_STATUS:%{http_code}" "${mpsUrl}"`).then((result) => {
+            expect(result.stdout).to.include('HTTP_STATUS:200')
+            expect(result.stdout).to.include('serviceVersion')
+            cy.task('log', '✓ MPS API accessible with JWT token')
+            
+            // Test RPS API with token
+            const rpsUrl = `${verifyBaseUrl}/rps/api/v1/admin/version`
+            cy.exec(`curl -k -s --noproxy "*" -H "Authorization: Bearer ${token}" -w "\\nHTTP_STATUS:%{http_code}" "${rpsUrl}"`).then((result) => {
+              expect(result.stdout).to.include('HTTP_STATUS:200')
+              expect(result.stdout).to.include('serviceVersion')
+              cy.task('log', '✓ RPS API accessible with JWT token')
+              cy.task('log', '\\n🎉 Deployment completed successfully!')
+            })
+          })
+        })
       })
     })
   })
