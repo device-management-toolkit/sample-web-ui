@@ -28,7 +28,7 @@ const vaultToken = Cypress.env('VAULT_TOKEN') || 'myroot'
 let baseUrl: string
 
 describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', () => {
-  context('TC_INSTALL_FRESH-CLOUD-DEPLOY', () => {
+  context('TC_INSTALL_CLOUD-DEPLOY-FRESH', () => {
     it('cloud deployment workflow', () => {
       let systemIP: string
 
@@ -81,14 +81,24 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
 
       // STEP 3: Get system IP address
       cy.task('log', '\n=== STEP 3: Get system IP address ===')
-      cy.exec(`hostname -I | awk '{print $1}'`).then((result) => {
-        systemIP = result.stdout.trim()
-        expect(systemIP).to.not.be.empty
-        cy.task('log', `✓ System IP: ${systemIP}`)
-        Cypress.env('SYSTEM_IP', systemIP)
+      // Allow SYSTEM_IP override via env (recommended for reliability), otherwise auto-detect
+      // Smart detection: Use IP of the default route interface (usually the main network interface)
+      const envSystemIP = Cypress.env('SYSTEM_IP')
+      if (envSystemIP) {
+        systemIP = envSystemIP
+        cy.task('log', `✓ Using SYSTEM_IP from environment: ${systemIP}`)
         baseUrl = `https://${systemIP}:${serverPort}`
         cy.task('log', `✓ Base URL set to: ${baseUrl}`)
-      })
+      } else {
+        cy.exec(`ifconfig $(ip route | grep default | awk '{print $5}' | head -1) | grep 'inet ' | awk '{print $2}'`).then((result) => {
+          systemIP = result.stdout.trim()
+          expect(systemIP).to.not.be.empty
+          cy.task('log', `✓ System IP : ${systemIP}`)
+          Cypress.env('SYSTEM_IP', systemIP)
+          baseUrl = `https://${systemIP}:${serverPort}`
+          cy.task('log', `✓ Base URL set to: ${baseUrl}`)
+        })
+      }
 
       // STEP 4: Set up environment variables
       cy.task('log', '\n=== STEP 4: Set up environment variables ===')
@@ -166,10 +176,10 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
         timeout: 120000,
         failOnNonZeroExit: false
       }).then(() => {
-        cy.task('log', '✓ Existing containers stopped')
+        cy.task('log', '✓ Existing dmt containers removed')
       })
 
-      cy.task('log', 'Building Docker images (this may take 10+ minutes)...')
+      //cy.task('log', 'Building Docker images (this may take 10+ minutes)...')
       //cy.exec(`cd ${cloudDeploymentPath} && docker compose build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY --build-arg NO_PROXY --build-arg http_proxy --build-arg https_proxy --build-arg no_proxy --no-cache`, {
       //  timeout: 600000
       //}).then(() => {
