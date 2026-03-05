@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install cypress
@@ -42,7 +42,7 @@ jobs:
       - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
       - run: npm run cy-runner
       - name: Publish Cypress Test Results
-        uses: dorny/test-reporter@3d76b34a4535afbd0600d347b09a6ee5deb3ed7f # v2.6.0
+        uses: dorny/test-reporter@b082adf0eced0765477756c2a610396589b8c637 # v2.5.0
         if: always()
         with:
           name: Cypress Tests

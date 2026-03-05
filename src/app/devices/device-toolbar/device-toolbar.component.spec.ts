@@ -38,6 +38,7 @@ describe('DeviceToolbarComponent', () => {
       'sendDeactivate',
       'getPowerState',
       'getAMTFeatures',
+      'getAMTFeaturesCached',
       'getAMTVersion',
       'featuresChanges'
     ])
@@ -54,28 +55,28 @@ describe('DeviceToolbarComponent', () => {
     )
 
     devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    devicesService.getAMTFeatures.and.returnValue(
-      of({
-        userConsent: 'None',
-        ocr: true,
-        httpsBootSupported: true,
-        kvm: true,
-        sol: true,
-        ider: true,
-        redirection: true,
-        optInState: 1,
-        kvmAvailable: true,
-        winREBootSupported: true,
-        localPBABootSupported: true,
-        remoteErase: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
-      } as any)
-    )
+    const mockAMTFeatures = {
+      userConsent: 'None',
+      ocr: true,
+      httpsBootSupported: true,
+      kvm: true,
+      sol: true,
+      ider: true,
+      redirection: true,
+      optInState: 1,
+      kvmAvailable: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    } as any
+    devicesService.getAMTFeatures.and.returnValue(of(mockAMTFeatures))
+    devicesService.getAMTFeaturesCached.and.returnValue(of(mockAMTFeatures))
     getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
