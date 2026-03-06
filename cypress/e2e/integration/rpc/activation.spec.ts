@@ -204,6 +204,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Status: Deactivated')
+          cy.wait(10000) // Wait for device to fully reset
         })
       }
     })
