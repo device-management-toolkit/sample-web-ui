@@ -123,6 +123,14 @@
     "value": "Delete",
     "description": "Delete button text"
   },
+  "common.deleteProfile": {
+    "value": "Delete Profile",
+    "description": "Delete profile button text"
+  },
+  "common.editTags": {
+    "description": "Button text for editing tags in bulk",
+    "value": "Edit tags"
+  },
   "common.cancel": {
     "value": "CANCEL",
     "description": "Cancel button text"
@@ -1216,6 +1224,18 @@
   "devices.table.tags": {
     "description": "Table column header for tags",
     "value": "Tags"
+  },
+  "deviceToolbar.power.on": {
+    "description": "Power tooltip for On",
+    "value": "Power: On"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Power tooltip for Sleep",
+    "value": "Power: Sleep"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Power tooltip for Off",
+    "value": "Power: Off"
   },
   "deviceUserConsent.description": {
     "description": "Description for user consent for devices",

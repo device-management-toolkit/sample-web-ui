@@ -1061,6 +1061,18 @@
     "description": "כותרת עמודות טבלה לתגיות",
     "value": "תגיות"
   },
+  "deviceToolbar.power.on": {
+    "description": "רמז מצב צריכת חשמל עבור פועל",
+    "value": "חשמל: פועל"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "רמז מצב צריכת חשמל עבור שינה",
+    "value": "חשמל: שינה"
+  },
+  "deviceToolbar.power.off": {
+    "description": "רמז מצב צריכת חשמל עבור כבוי",
+    "value": "חשמל: כבוי"
+  },
   "deviceUserConsent.description": {
     "description": "תיאור להסכמת משתמש למכשירים",
     "value": "קוד הסכמת משתמש שנוצר על ידי Intel AMT נדרש כדי לגשת למערכת."
@@ -2673,10 +2685,6 @@
     "value": "גרור ושחרר לשינוי סדר",
     "description": "רמז עבור שינוי סדר באמצעות גרירה ושחרור"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "הסר פרופיל פרוקסי",
-    "description": "תווית aria עבור כפתור הסרת פרופיל הפרוקסי"
-  },
   "profileDetail.noProxy": {
     "description": "הודעה כאשר אין הגדרות פרוקסי זמינות",
     "value": "לא נמצאו הגדרות פרוקסי"
@@ -2780,6 +2788,14 @@
   "common.delete": {
     "value": "מחק",
     "description": "טקסט כפתור מחיקה"
+  },
+  "common.deleteProfile": {
+    "value": "מחק פרופיל",
+    "description": "טקסט כפתור למחיקת פרופיל"
+  },
+  "common.editTags": {
+    "description": "טקסט כפתור לעריכת תגיות באופן מרוכז",
+    "value": "ערוך תגיות"
   },
   "common.update": {
     "value": "עדכן",
