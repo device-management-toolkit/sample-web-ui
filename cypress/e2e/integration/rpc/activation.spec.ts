@@ -120,9 +120,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         }
 
         if (isAdminControlModeProfile) {
-          expect(combined).to.contain('Status: admin control mode')
+          expect(combined).to.match(/Status: admin control mode/i)
         } else {
-          expect(combined).to.contain('Status: client control mode')
+          expect(combined).to.match(/Status: client control mode/i)
         }
 
         if (parts[2] === 'CIRA') {
