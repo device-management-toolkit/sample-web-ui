@@ -1,3 +1,10 @@
+## [3.55.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.1...v3.55.2) (2026-03-09)
+
+
+### Bug Fixes
+
+* **i18n:** add and update missing translations ([528ea4d](https://github.com/device-management-toolkit/sample-web-ui/commit/528ea4dc5996fc95e047f7ea7905c11950950f70))
+
 ## [3.55.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.0...v3.55.1) (2026-02-26)
 
 
