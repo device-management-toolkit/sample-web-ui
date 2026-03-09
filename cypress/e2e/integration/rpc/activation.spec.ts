@@ -83,8 +83,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const isAdminControlModeProfile = parts[0] === 'acmactivate'
   let majorVersion = ''
   let infoCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} amtinfo --json`
-  let activateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
-  let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
+  let activateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n -skipamtcertcheck --profile ${profileName} --json`
+  let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -skipamtcertcheck -f --json --password ${password}`
   if (isWin) {
     activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
     infoCommand = 'rpc.exe amtinfo --json'
