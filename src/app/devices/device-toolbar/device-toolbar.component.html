@@ -54,8 +54,14 @@
     <mat-icon
       (click)="getPowerState()"
       style="padding: 0 18px 0 12px; cursor: pointer"
-      [style.color]="powerState() === 'Power: On' ? 'green' : powerState() === 'Power: Sleep' ? 'yellow' : 'red'"
-      [matTooltip]="powerState()"
+      [style.color]="
+        powerState() === 'deviceToolbar.power.on.value'
+          ? 'green'
+          : powerState() === 'deviceToolbar.power.sleep.value'
+            ? 'yellow'
+            : 'red'
+      "
+      [matTooltip]="powerState() | translate"
       >mode_standby</mat-icon
     >
   }

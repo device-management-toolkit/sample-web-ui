@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Tekst voor draadloze knop",
-    "value": "Wired"
+    "value": "Bekabeld"
   },
   "common.wireless": {
     "description": "Tekst voor bedrade knop",
@@ -533,7 +533,7 @@
   },
   "configDetail.commonNamePlaceholder": {
     "description": "Plaatshoudertekst voor veld met algemene naam",
-    "value": "Cert Common Name (CN=)"
+    "value": "Cert Gemeenschappelijke naam (CN=)"
   },
   "configDetail.configNameHint": {
     "description": "Hinttekst voor het veld met de configuratienaam",
@@ -631,7 +631,7 @@
   },
   "configs.table.ciraCert": {
     "description": "Cert Common Name kolomkop",
-    "value": "Cert Common Name (CN=)"
+    "value": "Cert Gemeenschappelijke naam (CN=)"
   },
   "configs.table.ciraMpsserver": {
     "description": "Kolomkop MPS-server",
@@ -647,7 +647,7 @@
   },
   "configs.table.ciraRootcert": {
     "description": "Kolomkop MPS Root Cert",
-    "value": "MPS Root Cert"
+    "value": "MPS-basiscertificaat"
   },
   "configs.table.ciraUsername": {
     "description": "Kolomkop gebruikersnaam",
@@ -763,7 +763,7 @@
   },
   "deviceCertificate.publicKeyAlgo": {
     "description": "Tekst voor algoritme voor openbare sleutels",
-    "value": "Public Key Algorithm:"
+    "value": "Algoritme voor openbare sleutels:"
   },
   "deviceCertificate.PublicKeySize": {
     "description": "Tekst voor publieke sleutelgrootte",
@@ -1060,6 +1060,18 @@
   "devices.table.tags": {
     "description": "Tabelkolomkop voor tags",
     "value": "Tags"
+  },
+  "deviceToolbar.power.on": {
+    "description": "Energie-tooltip voor ingeschakeld",
+    "value": "Stroom: Aan"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Energie-tooltip voor slaapstand",
+    "value": "Stroom: Slaapstand"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Energie-tooltip voor uitgeschakeld",
+    "value": "Stroom: Uit"
   },
   "deviceUserConsent.description": {
     "description": "Beschrijving voor toestemming van de gebruiker voor apparaten",
@@ -1373,7 +1385,7 @@
   },
   "general.amtTrustedDNSSuffix": {
     "description": "Label voor AMT Trusted DNS Suffix",
-    "value": "AMT Trusted DNS Suffix (MEBx):"
+    "value": "AMT vertrouwd DNS-achtervoegsel (MEBx):"
   },
   "general.amtVersion": {
     "description": "Label voor AMT-versie",
@@ -1726,7 +1738,7 @@
   },
   "mqttEvents.connect": {
     "description": "Tekst van de knop 'Verbinden' voor MQTT",
-    "value": "Connect"
+    "value": "Verbinden"
   },
   "mqttEvents.connected": {
     "description": "Tooltip-tekst wanneer de MQTT-verbinding succesvol is",
@@ -1830,7 +1842,7 @@
   },
   "network.ieee.roamingIdentity": {
     "description": "Label voor IEEE 8021x draadloze roaming-identiteit",
-    "value": "Roaming Identity"
+    "value": "Roaming-identiteit"
   },
   "network.ieee.serverCertComparison": {
     "description": "Label voor IEEE 8021x draadloze servercertificaatnaamvergelijking",
@@ -2029,7 +2041,7 @@
     "value": "Bootbestand pad"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "Winterslaap"
   },
   "powerOptions.off": {
     "value": "Uit"
@@ -2038,7 +2050,7 @@
     "value": "Op"
   },
   "powerOptions.powerCycle": {
-    "value": "Power Cycle"
+    "value": "Stroomcyclus"
   },
   "powerOptions.powerUpToBIOS": {
     "value": "Opstarten naar BIOS"
@@ -2068,10 +2080,10 @@
     "value": "Slaap"
   },
   "powerOptions.softOff": {
-    "value": "Soft-Off"
+    "value": "Zacht uit"
   },
   "powerOptions.softReset": {
-    "value": "Soft Reset"
+    "value": "Zachte reset"
   },
   "powerUp.message": {
     "description": "Dialoogbericht waarin de gebruiker wordt gevraagd het apparaat op te starten.",
@@ -2650,7 +2662,7 @@
     "value": "Invouwen"
   },
   "proxy.label": {
-    "value": "Proxies",
+    "value": "Gevolmachtigden",
     "description": "Label voor de proxysectie"
   },
   "proxy.configs.label": {
@@ -2672,10 +2684,6 @@
   "proxy.associatedProfiles.hint": {
     "value": "Slepen en neerzetten om de volgorde te wijzigen",
     "description": "Hint voor het herschikken met slepen en neerzetten"
-  },
-  "proxy.removeButton.ariaLabel": {
-    "value": "Proxyprofiel verwijderen",
-    "description": "Aria-label voor de knop om het proxyprofiel te verwijderen"
   },
   "profileDetail.noProxy": {
     "description": "Bericht wanneer er geen proxyconfiguraties beschikbaar zijn",
@@ -2780,6 +2788,14 @@
   "common.delete": {
     "value": "Verwijderen",
     "description": "Tekst voor de knop Verwijderen"
+  },
+  "common.deleteProfile": {
+    "value": "Profiel verwijderen",
+    "description": "Knoptekst voor het verwijderen van een profiel"
+  },
+  "common.editTags": {
+    "description": "Knoptekst voor het in bulk bewerken van tags",
+    "value": "Tags bewerken"
   },
   "common.update": {
     "value": "BIJWERKEN",

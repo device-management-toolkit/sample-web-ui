@@ -509,7 +509,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
       this.loadingStatus.set('')
       if (!this.isDisconnecting && !this.isEncodingChange) {
-        this.displayError(this.translate.instant('errors.kvmConnection.value'))
+        this.displayError(this.translate.instant('error.kvmConnection.value'))
       }
       this.isDisconnecting = false
     }

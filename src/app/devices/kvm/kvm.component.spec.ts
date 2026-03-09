@@ -240,7 +240,7 @@ describe('KvmComponent', () => {
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
     component.deviceKVMStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith('errors.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith('error.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(0)
   })
