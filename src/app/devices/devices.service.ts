@@ -340,6 +340,14 @@ export class DevicesService {
     }
   }
 
+  sendRemotePlatformErase(deviceId: string): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/remoteErase/${deviceId}`, {}).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
       map((tags) => tags.sort(caseInsensitiveCompare)),

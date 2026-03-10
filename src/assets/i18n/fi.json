@@ -1407,6 +1407,10 @@
     "description": "HTTPS-verkon käynnistysmerkki",
     "value": "HTTPS-verkkokäynnistys:"
   },
+  "general.remotePlatformErase": {
+    "description": "Label for Remote Platform Erase",
+    "value": "Remote Platform Erase:"
+  },
   "general.ideRedirection": {
     "description": "IDE-uudelleenohjauksen etiketti",
     "value": "IDE-uudelleenohjaus:"
@@ -2788,5 +2792,65 @@
   "common.noData": {
     "value": "Ei saatavilla olevaa dataa",
     "description": "Viesti, kun dataa ei ole saatavilla"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Category name for Remote Platform Erase",
+    "value": "Remote Platform Erase"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Description for Remote Platform Erase",
+    "value": "Securely erase platform data"
+  },
+  "remotePlatformErase.title": {
+    "description": "Title for the Remote Platform Erase feature card",
+    "value": "Remote Platform Erase"
+  },
+  "remotePlatformErase.description": {
+    "description": "Subtitle for the Remote Platform Erase feature card",
+    "value": "Enable or disable the Remote Platform Erase feature on this device"
+  },
+  "remotePlatformErase.warning": {
+    "description": "Warning message about enabling Remote Platform Erase",
+    "value": "Enabling this feature allows remote erasure of platform data. Use with caution."
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "Label for the enable Remote Platform Erase checkbox",
+    "value": "Enable Remote Platform Erase"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Title for the initiate erase action card",
+    "value": "Initiate Remote Erase"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Subtitle for the initiate erase action card",
+    "value": "Permanently erase all data stored on this platform"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Warning before initiating a remote platform erase",
+    "value": "This action is irreversible. All platform data will be permanently erased."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Button label to initiate Remote Platform Erase",
+    "value": "Initiate Remote Erase"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Success message when Remote Platform Erase feature is toggled",
+    "value": "Remote Platform Erase feature updated successfully"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Error message when Remote Platform Erase feature update fails",
+    "value": "Failed to update Remote Platform Erase feature"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Success message after initiating Remote Platform Erase",
+    "value": "Remote Platform Erase initiated successfully"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Error message when Remote Platform Erase fails to initiate",
+    "value": "Failed to initiate Remote Platform Erase"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Error message when loading Remote Platform Erase feature status fails",
+    "value": "Failed to load Remote Platform Erase feature status"
   }
 }

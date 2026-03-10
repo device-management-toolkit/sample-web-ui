@@ -1,0 +1,52 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<div class="flex-1 flex-row">
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'remotePlatformErase.description.value' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div role="alert" class="flex flex-1 items-center gap-8 warn-border" style="padding: 8px 12px; margin-bottom: 16px">
+        <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
+        <span>{{ 'remotePlatformErase.warning.value' | translate }}</span>
+      </div>
+      <div class="flex-row flex-wrap" [formGroup]="featureForm">
+        <div class="flex flex-50 items-end">
+          <p>{{ 'remotePlatformErase.enableFeature.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox
+            formControlName="remoteErase"
+            data-cy="remoteEraseCheckbox"
+            (change)="toggleFeature()">
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (amtFeatures.remoteErase) {
+    <mat-card class="flex flex-50 gap-12">
+      <mat-card-header>
+        <mat-card-title>{{ 'remotePlatformErase.initiateTitle.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'remotePlatformErase.initiateDescription.value' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div role="alert" class="flex flex-1 items-center gap-8 warn-border" style="padding: 8px 12px; margin-bottom: 16px">
+          <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">dangerous</mat-icon>
+          <span>{{ 'remotePlatformErase.initiateWarning.value' | translate }}</span>
+        </div>
+        <button
+          mat-flat-button
+          color="warn"
+          data-cy="initiateEraseButton"
+          (click)="initiateErase()">
+          <mat-icon>delete_forever</mat-icon>
+          {{ 'remotePlatformErase.initiateButton.value' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

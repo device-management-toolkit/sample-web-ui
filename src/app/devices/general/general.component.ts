@@ -74,7 +74,8 @@ export class GeneralComponent implements OnInit {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    ocr: false
+    ocr: false,
+    remoteErase: false
   })
 
   public isLoading = signal(true)
@@ -153,7 +154,8 @@ export class GeneralComponent implements OnInit {
           ],
           httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
           winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
-          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
+          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
+          remoteErase: results.amtFeatures.remoteErase
         })
       })
   }
@@ -170,8 +172,7 @@ export class GeneralComponent implements OnInit {
     this.isLoading.set(true)
     this.devicesService
       .setAmtFeatures(this.deviceId(), {
-        ...this.amtEnabledFeatures.getRawValue(),
-        remoteErase: this.amtFeatures.remoteErase
+        ...this.amtEnabledFeatures.getRawValue()
       } as AMTFeaturesRequest)
       .pipe(
         finalize(() => {

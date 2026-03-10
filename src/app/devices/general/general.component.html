@@ -157,6 +157,12 @@
           </div>
         }
         <div class="flex flex-50 items-end">
+          <p>{{ 'general.remotePlatformErase.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <mat-checkbox formControlName="remoteErase" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
+        <div class="flex flex-50 items-end">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
