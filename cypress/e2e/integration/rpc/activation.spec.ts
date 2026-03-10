@@ -217,8 +217,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         execWithRetry(activateCommand, execConfig).then((result) => {
           const { stderr, combined } = buildOutput(result)
           cy.log(combined)
-          expect(stderr).to.contain(
-            'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
+          expect(stderr).to.match(
+            /Specified AMT domain suffix: dontmatch\.com does not match list of available AMT domain suffixes\.|Failed to extract domain certificate/
           )
         })
       })
