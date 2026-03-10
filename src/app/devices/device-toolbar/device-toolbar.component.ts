@@ -214,10 +214,10 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
       this.powerState.set(
         powerState.powerstate.toString() === '2'
-          ? 'Power: On'
+          ? 'deviceToolbar.power.on.value'
           : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-            ? 'Power: Sleep'
-            : 'Power: Off'
+            ? 'deviceToolbar.power.sleep.value'
+            : 'deviceToolbar.power.off.value'
       )
       this.isLoading().set(false)
     })

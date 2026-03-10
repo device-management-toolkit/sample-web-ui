@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Текст для беспроводной кнопки",
-    "value": "Wired"
+    "value": "Проводной"
   },
   "common.wireless": {
     "description": "Текст для проводной кнопки",
@@ -1061,6 +1061,18 @@
     "description": "Заголовок столбца таблицы для тегов",
     "value": "Теги"
   },
+  "deviceToolbar.power.on": {
+    "description": "Подсказка питания для состояния включено",
+    "value": "Питание: Включено"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Подсказка питания для состояния сон",
+    "value": "Питание: Сон"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Подсказка питания для состояния выключено",
+    "value": "Питание: Выключено"
+  },
   "deviceUserConsent.description": {
     "description": "Описание согласия пользователя для устройств",
     "value": "Для доступа к системе требуется код согласия пользователя, сгенерированный Intel AMT."
@@ -1373,7 +1385,7 @@
   },
   "general.amtTrustedDNSSuffix": {
     "description": "Метка для доверенного DNS-суффикса AMT",
-    "value": "AMT Trusted DNS Suffix (MEBx):"
+    "value": "Доверенный DNS-суффикс AMT (MEBx):"
   },
   "general.amtVersion": {
     "description": "Метка для версии AMT",
@@ -2029,7 +2041,7 @@
     "value": "Путь к загрузочному файлу"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "Гибернация"
   },
   "powerOptions.off": {
     "value": "Выключено"
@@ -2673,10 +2685,6 @@
     "value": "Перетащите для изменения порядка",
     "description": "Подсказка для изменения порядка методом drag-and-drop"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "Удалить профиль прокси",
-    "description": "Aria-метка для кнопки удаления профиля прокси"
-  },
   "profileDetail.noProxy": {
     "description": "Сообщение при отсутствии доступных настроек прокси",
     "value": "Настройки прокси не найдены"
@@ -2780,6 +2788,14 @@
   "common.delete": {
     "value": "Удалить",
     "description": "Текст кнопки удаления"
+  },
+  "common.deleteProfile": {
+    "value": "Удалить профиль",
+    "description": "Текст кнопки удаления профиля"
+  },
+  "common.editTags": {
+    "description": "Текст кнопки для массового редактирования тегов",
+    "value": "Редактировать теги"
   },
   "common.update": {
     "value": "ОБНОВИТЬ",

@@ -265,7 +265,7 @@ describe('KvmComponent', () => {
     component.isDisconnecting = false
     component.deviceKVMConnection.set(true)
     component.deviceKVMStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith('errors.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith('error.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(0)
     // AMT dropped the connection — deviceKVMConnection must be reset so Connect button appears
