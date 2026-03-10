@@ -87,11 +87,7 @@ describe('ErrorHandlingInterceptor', () => {
     const req = httpMock.expectOne('/test')
     req.flush({}, { status: 504, statusText: 'Gateway Timeout' })
 
-    expect(snackbar.open).toHaveBeenCalledOnceWith(
-      jasmine.any(String),
-      jasmine.any(String),
-      { duration: 5000 }
-    )
+    expect(snackbar.open).toHaveBeenCalledOnceWith(jasmine.any(String), jasmine.any(String), { duration: 5000 })
   })
 
   it('should rethrow other errors', () => {
