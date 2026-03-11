@@ -241,7 +241,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         }),
         catchError((err) => {
           console.error('Error in getDevices:', err)
-          const msg: string = this.translate.instant('configs.failDeleteConfigs.value')
+          const msg: string = this.translate.instant('devices.errorLoadDevices.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           // Return an empty array on error
           return of([])
