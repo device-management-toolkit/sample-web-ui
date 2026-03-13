@@ -34,17 +34,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     // Default: use Docker (Linux/Mac); Windows overrides below use rpc.exe directly
     let infoCommand = `docker run --rm --network host --device=/dev/mei0 -v ${profileDir}:/config ${rpcDockerImage} amtinfo -json`
-    let activateCommand = `docker run --rm --network host --device=/dev/mei0 -v ${profileDir}:/config ${rpcDockerImage} activate -local -configv2 /config/${profileFileName} -configencryptionkey ${encryptionKey} -skipamtcertcheck -v -n -json`
-    let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 -v ${profileDir}:/config ${rpcDockerImage} deactivate -local -v -n -f -json -password ${password}`
+    let activateCommand = `docker run --rm --network host --device=/dev/mei0 -v ${profileDir}:/config ${rpcDockerImage} activate -local -configv2 /config/${profileFileName} -configencryptionkey ${encryptionKey} -v -skipamtcertcheck -json`
+    let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 -v ${profileDir}:/config ${rpcDockerImage} deactivate -local -v -skipamtcertcheck -f -json -password ${password}`
 
     if (isWin) {
-      activateCommand = `rpc.exe activate -local -configv2 ${profileYamlFile} -configencryptionkey ${encryptionKey} -skipamtcertcheck -v -n -json`
+      activateCommand = `rpc.exe activate -local -configv2 ${profileYamlFile} -configencryptionkey ${encryptionKey} -v -skipamtcertcheck -json`
       infoCommand = 'rpc.exe amtinfo -json'
-      deactivateCommand = `rpc.exe deactivate -local -v -n -f -json -password ${password}`
+      deactivateCommand = `rpc.exe deactivate -local -v -skipamtcertcheck -f -json -password ${password}`
     }
 
     describe('Device Activation - Console', () => {
-      context('TC_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
+      context('TC_ACTIVATION_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
           cy.exec(infoCommand, execConfig).then((result) => {
