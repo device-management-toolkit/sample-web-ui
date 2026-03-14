@@ -1652,6 +1652,10 @@
     "description": "Label dat wordt weergegeven wanneer KVM verbinding maakt",
     "value": "KVM verbinden..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Bericht getoond wanneer AMT de KVM-sessie sluit",
+    "value": "KVM-sessie is gesloten door AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Knoplabel om de verbinding met de KVM-sessie te verbreken",
     "value": "KVM loskoppelen"

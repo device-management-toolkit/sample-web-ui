@@ -1652,6 +1652,10 @@
     "description": "KVMが接続中の際に表示されるラベル",
     "value": "KVMを接続中..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
+    "value": "KVMセッションはAMTによって閉じられました"
+  },
   "kvm.disconnect.button": {
     "description": "KVMセッションから切断するボタンラベル",
     "value": "KVMの切断"
