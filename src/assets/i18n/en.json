@@ -1839,6 +1839,10 @@
     "description": "Button label to disconnect from KVM session",
     "value": "Disconnect KVM"
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Message shown when AMT closes the KVM session (e.g. idle timeout)",
+    "value": "KVM session was closed by AMT"
+  },
   "kvm.enable": {
     "description": "Message for enabling KVM",
     "value": "KVM is not currently enabled on this device. Would you like to enable it?"

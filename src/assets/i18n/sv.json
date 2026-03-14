@@ -1652,6 +1652,10 @@
     "description": "Etikett som visas när KVM ansluter",
     "value": "Ansluter KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Meddelande som visas när AMT stänger KVM-sessionen",
+    "value": "KVM-sessionen stängdes av AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Knappetikett för att koppla bort från KVM-sessionen",
     "value": "Koppla bort KVM"

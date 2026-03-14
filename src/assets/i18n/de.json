@@ -1652,6 +1652,10 @@
     "description": "Bezeichnung, die angezeigt wird, wenn KVM eine Verbindung herstellt",
     "value": "KVM wird verbunden..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Meldung, wenn AMT die KVM-Sitzung schließt",
+    "value": "KVM-Sitzung wurde von AMT geschlossen"
+  },
   "kvm.disconnect.button": {
     "description": "Schaltflächenbeschriftung zum Trennen der Verbindung zur KVM-Sitzung",
     "value": "KVM trennen"
