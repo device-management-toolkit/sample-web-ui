@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Testo per il pulsante wireless",
-    "value": "Cablato"
+    "value": "Wired"
   },
   "common.wireless": {
     "description": "Testo per pulsante cablato",
@@ -533,7 +533,7 @@
   },
   "configDetail.commonNamePlaceholder": {
     "description": "Testo segnaposto per il campo del nome comune",
-    "value": "Nome comune certificato (CN=)"
+    "value": "Cert Common Name (CN=)"
   },
   "configDetail.configNameHint": {
     "description": "Testo suggerimento per il campo del nome di configurazione",
@@ -631,7 +631,7 @@
   },
   "configs.table.ciraCert": {
     "description": "Certifica intestazione colonna Nome comune",
-    "value": "Nome comune certificato (CN=)"
+    "value": "Cert Common Name (CN=)"
   },
   "configs.table.ciraMpsserver": {
     "description": "Intestazione della colonna MPS Server",
@@ -1060,18 +1060,6 @@
   "devices.table.tags": {
     "description": "Intestazione della colonna della tabella per i tag",
     "value": "Tag"
-  },
-  "deviceToolbar.power.on": {
-    "description": "Tooltip di alimentazione per acceso",
-    "value": "Alimentazione: Acceso"
-  },
-  "deviceToolbar.power.sleep": {
-    "description": "Tooltip di alimentazione per sospensione",
-    "value": "Alimentazione: Sospensione"
-  },
-  "deviceToolbar.power.off": {
-    "description": "Tooltip di alimentazione per spento",
-    "value": "Alimentazione: Spento"
   },
   "deviceUserConsent.description": {
     "description": "Descrizione del consenso dell'utente per i dispositivi",
@@ -1652,6 +1640,10 @@
     "description": "Etichetta visualizzata quando KVM è in fase di connessione",
     "value": "Connessione KVM in corso..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Messaggio mostrato quando AMT chiude la sessione KVM",
+    "value": "La sessione KVM è stata chiusa da AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Etichetta del pulsante per disconnettersi dalla sessione KVM",
     "value": "Disconnetti KVM"
@@ -2041,7 +2033,7 @@
     "value": "Percorso del file di avvio"
   },
   "powerOptions.hibernate": {
-    "value": "Ibernare"
+    "value": "Hibernate"
   },
   "powerOptions.off": {
     "value": "Off"
@@ -2080,7 +2072,7 @@
     "value": "Sonno"
   },
   "powerOptions.softOff": {
-    "value": "Spegnimento graduale"
+    "value": "Soft-Off"
   },
   "powerOptions.softReset": {
     "value": "Soft reset"
@@ -2685,6 +2677,10 @@
     "value": "Trascina e rilascia per riordinare",
     "description": "Suggerimento mostrato per il riordino tramite drag-and-drop"
   },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Rimuovi profilo proxy",
+    "description": "Etichetta aria per il pulsante di rimozione del profilo proxy"
+  },
   "profileDetail.noProxy": {
     "description": "Messaggio quando non ci sono configurazioni proxy disponibili",
     "value": "Nessuna configurazione proxy trovata"
@@ -2788,14 +2784,6 @@
   "common.delete": {
     "value": "Elimina",
     "description": "Testo del pulsante Elimina"
-  },
-  "common.deleteProfile": {
-    "value": "Elimina profilo",
-    "description": "Testo del pulsante per eliminare il profilo"
-  },
-  "common.editTags": {
-    "description": "Testo del pulsante per modificare le etichette in massa",
-    "value": "Modificare etichette"
   },
   "common.update": {
     "value": "AGGIORNA",

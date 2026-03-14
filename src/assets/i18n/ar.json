@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "نص الزر اللاسلكي",
-    "value": "سلكي"
+    "value": "Wired"
   },
   "common.wireless": {
     "description": "نص الزر السلكي",
@@ -1060,18 +1060,6 @@
   "devices.table.tags": {
     "description": "عنوان عمود الجدول للعلامات",
     "value": "العلامات"
-  },
-  "deviceToolbar.power.on": {
-    "description": "تلميح الطاقة للحالة تشغيل",
-    "value": "الطاقة: تشغيل"
-  },
-  "deviceToolbar.power.sleep": {
-    "description": "تلميح الطاقة للحالة سكون",
-    "value": "الطاقة: سكون"
-  },
-  "deviceToolbar.power.off": {
-    "description": "تلميح الطاقة للحالة إيقاف",
-    "value": "الطاقة: إيقاف"
   },
   "deviceUserConsent.description": {
     "description": "وصف موافقة المستخدم للأجهزة",
@@ -1652,6 +1640,10 @@
     "description": "التسمية التي تظهر عند اتصال KVM",
     "value": "توصيل KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "رسالة تظهر عند إغلاق AMT لجلسة KVM",
+    "value": "تم إغلاق جلسة KVM بواسطة AMT"
+  },
   "kvm.disconnect.button": {
     "description": "تسمية الزر لقطع الاتصال بجلسة KVM",
     "value": "فصل KVM"
@@ -2041,7 +2033,7 @@
     "value": "مسار ملف التمهيد"
   },
   "powerOptions.hibernate": {
-    "value": "السبات"
+    "value": "Hibernate"
   },
   "powerOptions.off": {
     "value": "إيقاف"
@@ -2080,7 +2072,7 @@
     "value": "النوم"
   },
   "powerOptions.softOff": {
-    "value": "إيقاف تشغيل ناعم"
+    "value": "Soft-Off"
   },
   "powerOptions.softReset": {
     "value": "إعادة الضبط الناعمة"
@@ -2685,6 +2677,10 @@
     "value": "اسحب وأفلت لإعادة الترتيب",
     "description": "تلميح لإعادة الترتيب بالسحب والإفلات"
   },
+  "proxy.removeButton.ariaLabel": {
+    "value": "إزالة ملف تعريف الوكيل",
+    "description": "تسمية aria لزر إزالة ملف تعريف الوكيل"
+  },
   "profileDetail.noProxy": {
     "description": "رسالة عند عدم وجود إعدادات وكيل متاحة",
     "value": "لم يتم العثور على إعدادات الوكيل"
@@ -2788,14 +2784,6 @@
   "common.delete": {
     "value": "حذف",
     "description": "نص زر الحذف"
-  },
-  "common.deleteProfile": {
-    "value": "حذف الملف الشخصي",
-    "description": "نص زر حذف الملف الشخصي"
-  },
-  "common.editTags": {
-    "description": "نص زر تعديل العلامات بشكل جماعي",
-    "value": "تعديل العلامات"
   },
   "common.update": {
     "value": "تحديث",

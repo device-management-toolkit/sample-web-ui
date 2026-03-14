@@ -144,7 +144,13 @@ Cypress.Commands.add('matTextlikeInputType', (selector: string, value: string) =
     .invoke('is', ':disabled')
     .then((isDisabled) => {
       if (!isDisabled) {
-        cy.get(selector).should('be.visible').clear({ force: true }).type(value, { force: true }).blur()
+        cy.get(selector)
+          .invoke('is', ':visible')
+          .then((isVisible) => {
+            if (isVisible) {
+              cy.get(selector).clear({ force: true }).type(value).blur()
+            }
+          })
       }
     })
 })
@@ -179,41 +185,14 @@ Cypress.Commands.add('setup', () => {
     body: stats.get.success.response
   }).as('version-request-2')
   // Login
-  cy.visit(Cypress.env('BASEURL'), {
-    failOnStatusCode: false,
-    timeout: 60000
-  })
-
-  // Handle potential browser certificate warnings
-  cy.get('body', { timeout: 10000 }).then(($body) => {
-    // Check for common certificate warning elements
-    if ($body.find('#details-button').length > 0) {
-      cy.get('#details-button').click()
-      cy.get('#proceed-link').click()
-    }
-  })
-
-  // Wait for login form to appear
-  cy.get('[name=userId]', { timeout: 10000 }).should('be.visible')
-
+  cy.visit(Cypress.env('BASEURL'))
   const mpsUsername = Cypress.env('MPS_USERNAME')
   const mpsPassword = Cypress.env('MPS_PASSWORD')
   cy.login(mpsUsername, mpsPassword)
   cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
-  // Close about notice (only appears when environment.cloud = true)
-  // Check if the application is running in cloud mode using Cypress environment
-  if (Cypress.env('CLOUD')) {
-    // In cloud mode (CLOUD = true), the dialog may appear on first login
-    cy.get('body').then(($body) => {
-      if ($body.find('[data-cy="closeNotice"]').length > 0) {
-        // Dialog is present, click close
-        cy.get('[data-cy="closeNotice"]').click()
-      }
-      // If dialog not present, "doNotShowAgain" was set - continue without error
-    })
-  }
-  // In console mode (CLOUD = false), dialog never appears - no action needed
+  // Close about notice
+  cy.get('[data-cy="closeNotice"]').click()
 })
 
 // ------------------- Enter info into a form -------------------------

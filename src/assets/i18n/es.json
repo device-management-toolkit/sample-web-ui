@@ -1061,18 +1061,6 @@
     "description": "Encabezado de columna de tabla para etiquetas",
     "value": "Etiquetas"
   },
-  "deviceToolbar.power.on": {
-    "description": "Información de energía para Encendido",
-    "value": "Energía: Encendido"
-  },
-  "deviceToolbar.power.sleep": {
-    "description": "Información de energía para Suspensión",
-    "value": "Energía: Suspensión"
-  },
-  "deviceToolbar.power.off": {
-    "description": "Información de energía para Apagado",
-    "value": "Energía: Apagado"
-  },
   "deviceUserConsent.description": {
     "description": "Descripción del consentimiento del usuario para los dispositivos.",
     "value": "Se requiere un código de consentimiento del usuario generado por Intel AMT para acceder al sistema."
@@ -1652,6 +1640,10 @@
     "description": "Etiqueta que se muestra cuando KVM se está conectando.",
     "value": "Conectando KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Mensaje que se muestra cuando AMT cierra la sesión KVM",
+    "value": "La sesión KVM fue cerrada por AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Etiqueta del botón para desconectarse de la sesión KVM.",
     "value": "Desconectar KVM"
@@ -2041,7 +2033,7 @@
     "value": "Ruta del archivo de arranque"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernar"
+    "value": "Hibernate"
   },
   "powerOptions.off": {
     "value": "Desactivado"
@@ -2080,7 +2072,7 @@
     "value": "Sueño"
   },
   "powerOptions.softOff": {
-    "value": "Apagado suave"
+    "value": "Soft-Off"
   },
   "powerOptions.softReset": {
     "value": "Restablecimiento suave"
@@ -2662,7 +2654,7 @@
     "value": "Contraer"
   },
   "proxy.label": {
-    "value": "Apoderados",
+    "value": "Proxies",
     "description": "Etiqueta para la sección de proxies"
   },
   "proxy.configs.label": {
@@ -2684,6 +2676,10 @@
   "proxy.associatedProfiles.hint": {
     "value": "Arrastra y suelta para reordenar",
     "description": "Sugerencia mostrada para reordenar mediante arrastrar y soltar"
+  },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Eliminar perfil de proxy",
+    "description": "Etiqueta aria para el botón de eliminación del perfil de proxy"
   },
   "profileDetail.noProxy": {
     "description": "Mensaje cuando no hay configuraciones de proxy disponibles",
@@ -2788,14 +2784,6 @@
   "common.delete": {
     "value": "Eliminar",
     "description": "Texto del botón Eliminar"
-  },
-  "common.deleteProfile": {
-    "value": "Eliminar perfil",
-    "description": "Texto del botón para eliminar el perfil"
-  },
-  "common.editTags": {
-    "description": "Texto del botón para editar etiquetas en acción masiva",
-    "value": "Editar etiquetas"
   },
   "common.update": {
     "value": "ACTUALIZAR",

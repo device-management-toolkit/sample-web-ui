@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "ワイヤレスボタン用テキスト",
-    "value": "ワイアード"
+    "value": "Wired"
   },
   "common.wireless": {
     "description": "配線済みボタンのテキスト",
@@ -1060,18 +1060,6 @@
   "devices.table.tags": {
     "description": "タグ用テーブル列ヘッダー",
     "value": "タグ"
-  },
-  "deviceToolbar.power.on": {
-    "description": "電源オンのツールチップ",
-    "value": "電源: オン"
-  },
-  "deviceToolbar.power.sleep": {
-    "description": "スリープ状態のツールチップ",
-    "value": "電源: スリープ"
-  },
-  "deviceToolbar.power.off": {
-    "description": "電源オフのツールチップ",
-    "value": "電源: オフ"
   },
   "deviceUserConsent.description": {
     "description": "デバイスに関するユーザー同意の説明",
@@ -1652,6 +1640,10 @@
     "description": "KVMが接続中の際に表示されるラベル",
     "value": "KVMを接続中..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
+    "value": "KVMセッションはAMTによって閉じられました"
+  },
   "kvm.disconnect.button": {
     "description": "KVMセッションから切断するボタンラベル",
     "value": "KVMの切断"
@@ -1738,7 +1730,7 @@
   },
   "mqttEvents.connect": {
     "description": "MQTTの接続ボタンテキスト",
-    "value": "接続"
+    "value": "Connect"
   },
   "mqttEvents.connected": {
     "description": "MQTT接続が成功した際のツールチップテキスト",
@@ -2041,7 +2033,7 @@
     "value": "ブートファイルのパス"
   },
   "powerOptions.hibernate": {
-    "value": "冬眠"
+    "value": "Hibernate"
   },
   "powerOptions.off": {
     "value": "オフ"
@@ -2685,6 +2677,10 @@
     "value": "ドラッグ＆ドロップで順序を変更",
     "description": "ドラッグアンドドロップによる並び替えのヒント"
   },
+  "proxy.removeButton.ariaLabel": {
+    "value": "プロキシプロファイルを削除",
+    "description": "プロキシプロファイル削除ボタンのAriaラベル"
+  },
   "profileDetail.noProxy": {
     "description": "利用可能なプロキシ設定がない場合のメッセージ",
     "value": "プロキシ設定が見つかりません"
@@ -2788,14 +2784,6 @@
   "common.delete": {
     "value": "削除",
     "description": "削除ボタンのテキスト"
-  },
-  "common.deleteProfile": {
-    "value": "プロフィールを削除",
-    "description": "プロフィール削除ボタンのテキスト"
-  },
-  "common.editTags": {
-    "description": "タグを一括編集するためのボタンテキスト",
-    "value": "タグを編集"
   },
   "common.update": {
     "value": "更新",

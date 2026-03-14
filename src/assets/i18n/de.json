@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Text für die Schaltfläche „Wireless“",
-    "value": "Verkabelt"
+    "value": "Wired"
   },
   "common.wireless": {
     "description": "Text für kabelgebundenen Knopf",
@@ -1061,18 +1061,6 @@
     "description": "Tabellen-Spaltenüberschrift für Tags",
     "value": "Tags"
   },
-  "deviceToolbar.power.on": {
-    "description": "Energie-Tooltip für Eingeschaltet",
-    "value": "Strom: Ein"
-  },
-  "deviceToolbar.power.sleep": {
-    "description": "Energie-Tooltip für Ruhezustand",
-    "value": "Strom: Ruhezustand"
-  },
-  "deviceToolbar.power.off": {
-    "description": "Energie-Tooltip für Ausgeschaltet",
-    "value": "Strom: Aus"
-  },
   "deviceUserConsent.description": {
     "description": "Beschreibung der Einwilligung des Benutzers für Geräte",
     "value": "Für den Zugriff auf das System ist ein von Intel AMT generierter Benutzerzustimmungscode erforderlich."
@@ -1385,7 +1373,7 @@
   },
   "general.amtTrustedDNSSuffix": {
     "description": "Bezeichnung für AMT Trusted DNS Suffix",
-    "value": "AMT-vertrauenswürdiger DNS-Suffix (MEBx):"
+    "value": "AMT Trusted DNS Suffix (MEBx):"
   },
   "general.amtVersion": {
     "description": "Bezeichnung für AMT-Version",
@@ -1651,6 +1639,10 @@
   "kvm.connecting.label": {
     "description": "Bezeichnung, die angezeigt wird, wenn KVM eine Verbindung herstellt",
     "value": "KVM wird verbunden..."
+  },
+  "kvm.sessionClosedByDevice": {
+    "description": "Meldung, wenn AMT die KVM-Sitzung schließt",
+    "value": "KVM-Sitzung wurde von AMT geschlossen"
   },
   "kvm.disconnect.button": {
     "description": "Schaltflächenbeschriftung zum Trennen der Verbindung zur KVM-Sitzung",
@@ -2041,7 +2033,7 @@
     "value": "Boot-Dateipfad"
   },
   "powerOptions.hibernate": {
-    "value": "Winterschlaf"
+    "value": "Hibernate"
   },
   "powerOptions.off": {
     "value": "Aus"
@@ -2050,13 +2042,13 @@
     "value": "Auf"
   },
   "powerOptions.powerCycle": {
-    "value": "Stromzyklus"
+    "value": "Power Cycle"
   },
   "powerOptions.powerUpToBIOS": {
     "value": "Power Up zum BIOS"
   },
   "powerOptions.powerUpToHTTPSBoot": {
-    "value": "Power Up zu HTTPS-Boot (OCR)"
+    "value": "Power Up to HTTPS Boot (OCR)"
   },
   "powerOptions.powerUpToPXE": {
     "value": "Power Up zu PXE"
@@ -2685,6 +2677,10 @@
     "value": "Ziehen und ablegen, um die Reihenfolge zu ändern",
     "description": "Hinweis für das Neuanordnen per Drag-and-Drop"
   },
+  "proxy.removeButton.ariaLabel": {
+    "value": "Proxy-Profil entfernen",
+    "description": "Aria-Label für die Schaltfläche zum Entfernen des Proxy-Profils"
+  },
   "profileDetail.noProxy": {
     "description": "Meldung, wenn keine Proxy-Konfigurationen verfügbar sind",
     "value": "Keine Proxy-Konfigurationen gefunden"
@@ -2788,14 +2784,6 @@
   "common.delete": {
     "value": "Löschen",
     "description": "Text für die Schaltfläche Löschen"
-  },
-  "common.deleteProfile": {
-    "value": "Profil löschen",
-    "description": "Text der Schaltfläche zum Löschen des Profils"
-  },
-  "common.editTags": {
-    "description": "Schaltflächentext zum Bearbeiten von Tags in Massenaktion",
-    "value": "Tags bearbeiten"
   },
   "common.update": {
     "value": "AKTUALISIEREN",
