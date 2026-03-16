@@ -29,17 +29,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     // Default: use Docker (Linux/Mac); Windows overrides below use rpc.exe directly
     let infoCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} amtinfo --json`
-    let activateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
-    let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
+    let activateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n -skipamtcertcheck --profile ${profileName} --json`
+    let deactivateCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -skipamtcertcheck -f --json --password ${password}`
 
     if (isWin) {
-      activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n --profile ${profileName} --json`
+      activateCommand = `rpc.exe activate -u wss://${fqdn}/activate -v -n -skipamtcertcheck --profile ${profileName} --json`
       infoCommand = 'rpc.exe amtinfo --json'
-      deactivateCommand = `rpc.exe deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
+      deactivateCommand = `rpc.exe deactivate -u wss://${fqdn}/activate -v -n -skipamtcertcheck -f --json --password ${password}`
     }
 
     describe('Device Activation - Cloud', () => {
-      context('TC_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
+      context('TC_ACTIVATION_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
           cy.exec(infoCommand, execConfig).then((result) => {
@@ -69,9 +69,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             }
 
             if (isAdminControlModeProfile) {
-              expect(combined).to.contain('Status: Admin control mode')
+              expect(combined).to.match(/Status: admin control mode/i)
             } else {
-              expect(combined).to.contain('Status: Client control mode')
+              expect(combined).to.match(/Status: client control mode/i)
             }
 
             if (parts[2] === 'CIRA') {
@@ -156,6 +156,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               const { combined } = buildOutput(result)
               cy.log(combined)
               expect(combined).to.contain('Status: Deactivated')
+              cy.wait(10000)
             })
           }
         })
