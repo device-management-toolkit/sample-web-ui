@@ -177,7 +177,9 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   private loadAMTFeatures(): void {
-    this.devicesService.getAMTFeatures(this.deviceId()).subscribe((features) => {
+    // Use cached features if fresher than 30s — avoids a duplicate AMT round-trip
+    // when the KVM/SOL component already loaded features moments before the toolbar.
+    this.devicesService.getAMTFeaturesCached(this.deviceId()).subscribe((features) => {
       this.amtFeatures.set(features)
       this.buildPowerOptions()
     })
