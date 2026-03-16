@@ -5,7 +5,7 @@
 
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
-import { Observable, Subject, BehaviorSubject } from 'rxjs'
+import { Observable, Subject, BehaviorSubject, of } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
@@ -43,6 +43,9 @@ export class DevicesService {
   private readonly http = inject(HttpClient)
   // Reactive AMT features stream, keyed by deviceId
   private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
+  // Timestamps for TTL-based features cache — configured via environment.amtFeaturesCacheTtlMs, capped at 3 min
+  private readonly featuresTimestamps = new Map<string, number>()
+  private readonly FEATURES_TTL_MS = Math.min(environment.amtFeaturesCacheTtlMs ?? 30_000, 180_000)
 
   private getOrCreateFeaturesStream(deviceId: string): BehaviorSubject<AMTFeaturesResponse | null> {
     if (!this.amtFeaturesStreams.has(deviceId)) {
@@ -265,11 +268,29 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
+      tap((features) => {
+        this.getOrCreateFeaturesStream(guid).next(features)
+        this.featuresTimestamps.set(guid, Date.now())
+      }),
       catchError((err) => {
         throw err
       })
     )
+  }
+
+  /**
+   * Returns cached AMT features immediately if they are fresher than ttlMs,
+   * otherwise falls back to a real HTTP call. Eliminates duplicate round-trips
+   * when the toolbar and KVM component both load features within the same session.
+   * TTL is read from environment.amtFeaturesCacheTtlMs (default 30 s, max 3 min).
+   */
+  getAMTFeaturesCached(guid: string, ttlMs = this.FEATURES_TTL_MS): Observable<AMTFeaturesResponse> {
+    const cached = this.getOrCreateFeaturesStream(guid).value
+    const ts = this.featuresTimestamps.get(guid) ?? 0
+    if (cached !== null && Date.now() - ts < ttlMs) {
+      return of(cached)
+    }
+    return this.getAMTFeatures(guid)
   }
 
   getAlarmOccurrences(guid: string): Observable<IPSAlarmClockOccurrence[]> {
@@ -366,8 +387,7 @@ export class DevicesService {
   }
 
   getDevice(guid: string): Observable<Device> {
-    const query = `${environment.mpsServer}/api/v1/devices/${guid}`
-    return this.http.get<Device>(query).pipe(
+    return this.http.get<Device>(`${environment.mpsServer}/api/v1/devices/${guid}`).pipe(
       catchError((err) => {
         throw err
       })

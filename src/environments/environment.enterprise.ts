@@ -10,6 +10,7 @@ export const environment = {
   mpsServer: '##CONSOLE_SERVER_API##',
   rpsServer: '##CONSOLE_SERVER_API##',
   vault: '##VAULT_SERVER##',
+  amtFeaturesCacheTtlMs: 30_000, // 30 s default; max 3 min (180_000)
   auth: {
     clientId: '##CLIENTID##',
     issuer: '##ISSUER##',
