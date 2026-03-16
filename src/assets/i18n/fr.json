@@ -1652,6 +1652,10 @@
     "description": "Étiquette affichée lorsque KVM se connecte",
     "value": "Connexion KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Message affiché quand AMT ferme la session KVM",
+    "value": "La session KVM a été fermée par AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Étiquette du bouton pour se déconnecter de la session KVM",
     "value": "Déconnecter KVM"

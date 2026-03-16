@@ -1652,6 +1652,10 @@
     "description": "Метка, отображаемая при подключении KVM",
     "value": "Подключение KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Сообщение, отображаемое когда AMT закрывает сеанс KVM",
+    "value": "Сеанс KVM был закрыт AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Метка кнопки для отключения от сеанса KVM",
     "value": "Отключить KVM"
