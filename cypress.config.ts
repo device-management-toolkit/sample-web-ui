@@ -35,6 +35,15 @@ export default defineConfig({
   e2e: {
     experimentalStudio: true,
     screenshotOnRunFailure: false,
-    specPattern: 'cypress/e2e/integration/**/*.ts'
+    specPattern: 'cypress/e2e/integration/**/*.ts',
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message)
+          return null
+        }
+      })
+      return config
+    }
   }
 })
