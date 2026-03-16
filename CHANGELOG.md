@@ -1,3 +1,10 @@
+## [3.55.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.3...v3.55.4) (2026-03-16)
+
+
+### Bug Fixes
+
+* add skipamtcertcheck flag for AMT19+ activation support ([#3195](https://github.com/device-management-toolkit/sample-web-ui/issues/3195)) ([26eb87a](https://github.com/device-management-toolkit/sample-web-ui/commit/26eb87a67aef8fade90872c76d7ade30e575f99c))
+
 ## [3.55.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.2...v3.55.3) (2026-03-11)
 
 
