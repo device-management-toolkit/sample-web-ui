@@ -1,3 +1,10 @@
+## [3.55.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.5...v3.55.6) (2026-03-16)
+
+
+### Performance Improvements
+
+* cache AMT features to reduce duplicate HTTP requests ([#3169](https://github.com/device-management-toolkit/sample-web-ui/issues/3169)) ([48942cd](https://github.com/device-management-toolkit/sample-web-ui/commit/48942cde89a749d789415bba38bcb440bc18b8ed))
+
 ## [3.55.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.4...v3.55.5) (2026-03-16)
 
 
