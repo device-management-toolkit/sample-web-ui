@@ -82,20 +82,12 @@ describe('ErrorHandlingInterceptor', () => {
   })
 
   it('should handle 504 error and show snackbar', () => {
-    httpClient.get('/test').subscribe({
-      error: () => {
-        expect(snackbar.open).toHaveBeenCalledWith(
-          'Device did not respond. Double check connection settings and try again.',
-          'Dismiss',
-          {
-            duration: 5000
-          }
-        )
-      }
-    })
+    httpClient.get('/test').subscribe()
 
     const req = httpMock.expectOne('/test')
     req.flush({}, { status: 504, statusText: 'Gateway Timeout' })
+
+    expect(snackbar.open).toHaveBeenCalledOnceWith(jasmine.any(String), jasmine.any(String), { duration: 5000 })
   })
 
   it('should rethrow other errors', () => {

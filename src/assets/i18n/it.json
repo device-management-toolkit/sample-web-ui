@@ -1652,6 +1652,10 @@
     "description": "Etichetta visualizzata quando KVM è in fase di connessione",
     "value": "Connessione KVM in corso..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Messaggio mostrato quando AMT chiude la sessione KVM",
+    "value": "La sessione KVM è stata chiusa da AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Etichetta del pulsante per disconnettersi dalla sessione KVM",
     "value": "Disconnetti KVM"

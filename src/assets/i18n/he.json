@@ -1652,6 +1652,10 @@
     "description": "תווית מוצגת כאשר KVM מתחבר",
     "value": "חיבור KVM ..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "הודעה המוצגת כאשר AMT סוגר את הפגישה של KVM",
+    "value": "הפגישה של KVM נסגרה על ידי AMT"
+  },
   "kvm.disconnect.button": {
     "description": "תווית כפתור לניתוק מפגישת KVM",
     "value": "נתק את KVM"

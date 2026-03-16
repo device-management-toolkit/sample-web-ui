@@ -41,7 +41,7 @@
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
         <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
       </button>
-      @if (deviceState() === 0 && !isLoading()) {
+      @if ((deviceState() === 0 || !deviceKVMConnection()) && !isLoading()) {
         <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
           <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
         </button>

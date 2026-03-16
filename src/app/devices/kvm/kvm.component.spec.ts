@@ -32,6 +32,7 @@ describe('KvmComponent', () => {
   let snackBarSpy: jasmine.Spy
   let router: Router
   let displayErrorSpy: jasmine.Spy
+  let displayWarningSpy: jasmine.Spy
   let devicesService: jasmine.SpyObj<DevicesService>
   let userConsentService: jasmine.SpyObj<UserConsentService>
 
@@ -201,6 +202,7 @@ describe('KvmComponent', () => {
     spyOn(router, 'navigate')
 
     displayErrorSpy = spyOn(component, 'displayError').and.callThrough()
+    displayWarningSpy = spyOn(component, 'displayWarning').and.callThrough()
   })
 
   afterEach(() => {
@@ -220,15 +222,39 @@ describe('KvmComponent', () => {
     // Initial state should be disconnected since we changed to signal(false)
     expect(component.deviceKVMConnection()).toBeFalsy()
 
-    // Test connect method
+    // Test connect method — resets state, refreshes token, then re-establishes via init()
+    component.readyToLoadKvm = true
     component.connect()
     expect(component.isDisconnecting).toBeFalsy()
+    expect(tokenSpy).toHaveBeenCalled()
+    // After synchronous observables complete in test env, connection is re-established
     expect(component.deviceKVMConnection()).toBeTruthy()
 
     // Test disconnect method
     component.disconnect()
     expect(component.isDisconnecting).toBeTruthy()
     expect(component.deviceKVMConnection()).toBeFalsy()
+  })
+  it('connect() resets readyToLoadKvm and deviceKVMConnection to false before reconnecting', () => {
+    component.readyToLoadKvm = true
+    component.deviceKVMConnection.set(true)
+    // Intercept init to observe intermediate reset state
+    let readyToLoadKvmAtStartOfInit = true
+    let connectionAtStartOfInit = true
+    spyOn(component, 'init').and.callFake(() => {
+      readyToLoadKvmAtStartOfInit = component.readyToLoadKvm
+      connectionAtStartOfInit = component.deviceKVMConnection()
+    })
+    component.connect()
+    expect(readyToLoadKvmAtStartOfInit).toBeFalse()
+    expect(connectionAtStartOfInit).toBeFalse()
+  })
+  it('connect() refreshes auth token via getRedirectionExpirationToken before calling init', () => {
+    tokenSpy.calls.reset()
+    spyOn(component, 'init')
+    component.connect()
+    expect(tokenSpy).toHaveBeenCalledTimes(1)
+    expect(component.authToken()).toBe('123')
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
@@ -239,10 +265,25 @@ describe('KvmComponent', () => {
   })
   it('should show error and hide loading when isDisconnecting is false', () => {
     component.isDisconnecting = false
+    component.deviceKVMConnection.set(true)
     component.deviceKVMStatus(0)
-    expect(snackBarSpy).toHaveBeenCalledOnceWith('error.kvmConnection.value', undefined, SnackbarDefaults.defaultError)
+    expect(snackBarSpy).toHaveBeenCalledOnceWith(
+      'kvm.sessionClosedByDevice.value',
+      undefined,
+      SnackbarDefaults.defaultWarn
+    )
     expect(component.isLoading()).toBeFalse()
     expect(component.deviceState()).toBe(0)
+    // AMT dropped the connection — deviceKVMConnection must be reset so Connect button appears
+    expect(component.deviceKVMConnection()).toBeFalse()
+  })
+  it('should not reset deviceKVMConnection when isDisconnecting is true (intentional disconnect)', () => {
+    component.isDisconnecting = true
+    component.deviceKVMConnection.set(true)
+    component.deviceKVMStatus(0)
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    // intentional disconnect — caller manages connection state via disconnect()
+    expect(component.deviceKVMConnection()).toBeTrue()
   })
   it('should hide loading when connected', () => {
     component.deviceKVMStatus(2)
@@ -650,7 +691,7 @@ describe('KvmComponent', () => {
     component.isDisconnecting = false
     component.deviceKVMStatus(0)
     expect(component.isLoading()).toEqual(false)
-    expect(displayErrorSpy).toHaveBeenCalled()
+    expect(displayWarningSpy).toHaveBeenCalled()
     expect(component.isDisconnecting).toEqual(false)
   })
   it('displayError', () => {

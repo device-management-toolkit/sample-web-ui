@@ -1652,6 +1652,10 @@
     "description": "KVM-yhteyden muodostamisen aikana näkyvä etiketti",
     "value": "KVM:n yhdistäminen..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Viesti, joka näytetään kun AMT sulkee KVM-istunnon",
+    "value": "AMT sulki KVM-istunnon"
+  },
   "kvm.disconnect.button": {
     "description": "Painikkeen teksti KVM-istunnon katkaisemiseksi",
     "value": "Kytke KVM irti"
