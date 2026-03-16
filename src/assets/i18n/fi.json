@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Teksti langattomalle painikkeelle",
-    "value": "Wired"
+    "value": "Langallinen"
   },
   "common.wireless": {
     "description": "Teksti langalliselle painikkeelle",
@@ -533,7 +533,7 @@
   },
   "configDetail.commonNamePlaceholder": {
     "description": "Paikkamerkki teksti yleiselle nimikentälle",
-    "value": "Cert Common Name (CN=)"
+    "value": "Sertifikaatin yleinen nimi (CN=)"
   },
   "configDetail.configNameHint": {
     "description": "Vihje teksti konfiguraationimikentälle",
@@ -631,7 +631,7 @@
   },
   "configs.table.ciraCert": {
     "description": "Cert Common Name -sarakkeen otsikko",
-    "value": "Cert Common Name (CN=)"
+    "value": "Sertifikaatin yleinen nimi (CN=)"
   },
   "configs.table.ciraMpsserver": {
     "description": "MPS-palvelimen sarakkeen otsikko",
@@ -1061,6 +1061,18 @@
     "description": "Taulukon sarakkeen otsikko tunnisteille",
     "value": "Tunnisteet"
   },
+  "deviceToolbar.power.on": {
+    "description": "Virtatilan vihjeteksti tilalle päällä",
+    "value": "Virta: Päällä"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Virtatilan vihjeteksti tilalle lepotila",
+    "value": "Virta: Lepotila"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Virtatilan vihjeteksti tilalle pois päältä",
+    "value": "Virta: Pois päältä"
+  },
   "deviceUserConsent.description": {
     "description": "Kuvaus laitteiden käyttäjän suostumuksesta",
     "value": "Järjestelmään pääsemiseksi tarvitaan Intel AMT:n luoma käyttäjän suostumus koodi."
@@ -1373,7 +1385,7 @@
   },
   "general.amtTrustedDNSSuffix": {
     "description": "AMT Trusted DNS Suffix -merkki",
-    "value": "AMT Trusted DNS Suffix (MEBx):"
+    "value": "AMT:n luotettu DNS-päätte (MEBx):"
   },
   "general.amtVersion": {
     "description": "AMT-version tunniste",
@@ -1639,6 +1651,10 @@
   "kvm.connecting.label": {
     "description": "KVM-yhteyden muodostamisen aikana näkyvä etiketti",
     "value": "KVM:n yhdistäminen..."
+  },
+  "kvm.sessionClosedByDevice": {
+    "description": "Viesti, joka näytetään kun AMT sulkee KVM-istunnon",
+    "value": "AMT sulki KVM-istunnon"
   },
   "kvm.disconnect.button": {
     "description": "Painikkeen teksti KVM-istunnon katkaisemiseksi",
@@ -2029,10 +2045,10 @@
     "value": "Käynnistystiedoston polku"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "Talvehtiminen"
   },
   "powerOptions.off": {
-    "value": "Off"
+    "value": "Pois"
   },
   "powerOptions.on": {
     "value": "On"
@@ -2044,10 +2060,10 @@
     "value": "Käynnistä BIOS"
   },
   "powerOptions.powerUpToHTTPSBoot": {
-    "value": "Power Up to HTTPS Boot (OCR)"
+    "value": "Käynnistä HTTPS-käynnistys (OCR)"
   },
   "powerOptions.powerUpToPXE": {
-    "value": "Power Up to PXE"
+    "value": "Virta päälle PXE:lle"
   },
   "powerOptions.reset": {
     "value": "Nollaa"
@@ -2065,10 +2081,10 @@
     "value": "Palauta PXE-asetuksiin"
   },
   "powerOptions.sleep": {
-    "value": "Sleep"
+    "value": "Uni"
   },
   "powerOptions.softOff": {
-    "value": "Soft-Off"
+    "value": "Pehmeä sammutus"
   },
   "powerOptions.softReset": {
     "value": "Pehmeä nollaus"
@@ -2673,10 +2689,6 @@
     "value": "Raahaa ja pudota järjestyksen muuttamiseksi",
     "description": "Vihje vetämällä ja pudottamalla tapahtuvaa uudelleenjärjestelyä varten"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "Poista välityspalveluprofiili",
-    "description": "Aria-tunniste välityspalveluprofiilin poistopainikkeelle"
-  },
   "profileDetail.noProxy": {
     "description": "Viesti, kun välityspalvelinasetuksia ei ole saatavilla",
     "value": "Välityspalvelinasetuksia ei löytynyt"
@@ -2780,6 +2792,14 @@
   "common.delete": {
     "value": "Poista",
     "description": "Poista-painikkeen teksti"
+  },
+  "common.deleteProfile": {
+    "value": "Poista profiili",
+    "description": "Profiilin poistopainikkeen teksti"
+  },
+  "common.editTags": {
+    "description": "Painikkeen teksti tunnisteiden massamuokkaukselle",
+    "value": "Muokkaa tunnisteita"
   },
   "common.update": {
     "value": "PÄIVITÄ",

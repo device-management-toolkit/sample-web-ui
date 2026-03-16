@@ -1,3 +1,31 @@
+## [3.55.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.4...v3.55.5) (2026-03-16)
+
+
+### Bug Fixes
+
+* **devices:** show Connect button after disconnect and refresh auth token on reconnect ([#3159](https://github.com/device-management-toolkit/sample-web-ui/issues/3159)) ([3fc4793](https://github.com/device-management-toolkit/sample-web-ui/commit/3fc4793f17b5d91d73b8b0a4be14239a1e10259d))
+
+## [3.55.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.3...v3.55.4) (2026-03-16)
+
+
+### Bug Fixes
+
+* add skipamtcertcheck flag for AMT19+ activation support ([#3195](https://github.com/device-management-toolkit/sample-web-ui/issues/3195)) ([26eb87a](https://github.com/device-management-toolkit/sample-web-ui/commit/26eb87a67aef8fade90872c76d7ade30e575f99c))
+
+## [3.55.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.2...v3.55.3) (2026-03-11)
+
+
+### Bug Fixes
+
+* shows correct error message on device load failure ([56fcf1b](https://github.com/device-management-toolkit/sample-web-ui/commit/56fcf1bbcde8021f6d093252b4bc87b6f112d079))
+
+## [3.55.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.1...v3.55.2) (2026-03-09)
+
+
+### Bug Fixes
+
+* **i18n:** add and update missing translations ([528ea4d](https://github.com/device-management-toolkit/sample-web-ui/commit/528ea4dc5996fc95e047f7ea7905c11950950f70))
+
 ## [3.55.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.0...v3.55.1) (2026-02-26)
 
 

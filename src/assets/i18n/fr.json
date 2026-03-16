@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Texte pour le bouton sans fil",
-    "value": "Wired"
+    "value": "Câblé"
   },
   "common.wireless": {
     "description": "Texte pour le bouton câblé",
@@ -1060,6 +1060,18 @@
   "devices.table.tags": {
     "description": "En-tête de colonne du tableau pour les balises",
     "value": "Balises"
+  },
+  "deviceToolbar.power.on": {
+    "description": "Info-bulle d'alimentation pour l'état allumé",
+    "value": "Alimentation : Allumé"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Info-bulle d'alimentation pour l'état veille",
+    "value": "Alimentation : Veille"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Info-bulle d'alimentation pour l'état éteint",
+    "value": "Alimentation : Éteint"
   },
   "deviceUserConsent.description": {
     "description": "Description du consentement de l'utilisateur pour les appareils",
@@ -1640,6 +1652,10 @@
     "description": "Étiquette affichée lorsque KVM se connecte",
     "value": "Connexion KVM..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "Message affiché quand AMT ferme la session KVM",
+    "value": "La session KVM a été fermée par AMT"
+  },
   "kvm.disconnect.button": {
     "description": "Étiquette du bouton pour se déconnecter de la session KVM",
     "value": "Déconnecter KVM"
@@ -2029,10 +2045,10 @@
     "value": "Chemin d'accès au fichier d'amorçage"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "Hiberner"
   },
   "powerOptions.off": {
-    "value": "Off"
+    "value": "Désactivé"
   },
   "powerOptions.on": {
     "value": "Sur"
@@ -2068,7 +2084,7 @@
     "value": "Sommeil"
   },
   "powerOptions.softOff": {
-    "value": "Soft-Off"
+    "value": "Arrêt progressif"
   },
   "powerOptions.softReset": {
     "value": "Réinitialisation logicielle"
@@ -2673,10 +2689,6 @@
     "value": "Glisser-déposer pour réorganiser",
     "description": "Indice affiché pour le réordonnancement par glisser-déposer"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "Supprimer le profil de proxy",
-    "description": "Libellé aria pour le bouton de suppression du profil de proxy"
-  },
   "profileDetail.noProxy": {
     "description": "Message lorsqu’aucune configuration de proxy n’est disponible",
     "value": "Aucune configuration de proxy trouvée"
@@ -2780,6 +2792,14 @@
   "common.delete": {
     "value": "Supprimer",
     "description": "Texte du bouton Supprimer"
+  },
+  "common.deleteProfile": {
+    "value": "Supprimer le profil",
+    "description": "Texte du bouton de suppression du profil"
+  },
+  "common.editTags": {
+    "description": "Texte du bouton pour modifier les étiquettes en masse",
+    "value": "Modifier les étiquettes"
   },
   "common.update": {
     "value": "METTRE À JOUR",

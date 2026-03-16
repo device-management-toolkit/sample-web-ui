@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "Text för trådlös knapp",
-    "value": "Wired"
+    "value": "Kabelansluten"
   },
   "common.wireless": {
     "description": "Text för kabelansluten knapp",
@@ -533,7 +533,7 @@
   },
   "configDetail.commonNamePlaceholder": {
     "description": "Platshållartext för fältet för vanligt namn",
-    "value": "Cert Common Name (CN=)"
+    "value": "Certifikatets allmänna namn (CN=)"
   },
   "configDetail.configNameHint": {
     "description": "Tips för fältet för konfigurationsnamn",
@@ -631,7 +631,7 @@
   },
   "configs.table.ciraCert": {
     "description": "Cert Common Name-kolumnrubrik",
-    "value": "Cert Common Name (CN=)"
+    "value": "Certifikatets allmänna namn (CN=)"
   },
   "configs.table.ciraMpsserver": {
     "description": "MPS Server-kolumnrubrik",
@@ -1061,6 +1061,18 @@
     "description": "Tabellkolumnrubrik för taggar",
     "value": "Taggar"
   },
+  "deviceToolbar.power.on": {
+    "description": "Strömverktygstips för på",
+    "value": "Ström: På"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "Strömverktygstips för viloläge",
+    "value": "Ström: Viloläge"
+  },
+  "deviceToolbar.power.off": {
+    "description": "Strömverktygstips för av",
+    "value": "Ström: Av"
+  },
   "deviceUserConsent.description": {
     "description": "Beskrivning av användarens samtycke för enheter",
     "value": "En användarkod genererad av Intel AMT krävs för att få åtkomst till systemet."
@@ -1457,7 +1469,7 @@
   },
   "general.windowsRecoveryBoot": {
     "description": "Etikett för Windows Recovery Boot",
-    "value": "Windows Recovery Boot:"
+    "value": "Windows återställningsstart:"
   },
   "general.windowsRecoveryNotSupported": {
     "description": "Verktygstips för Windows Återställning stöds inte",
@@ -1639,6 +1651,10 @@
   "kvm.connecting.label": {
     "description": "Etikett som visas när KVM ansluter",
     "value": "Ansluter KVM..."
+  },
+  "kvm.sessionClosedByDevice": {
+    "description": "Meddelande som visas när AMT stänger KVM-sessionen",
+    "value": "KVM-sessionen stängdes av AMT"
   },
   "kvm.disconnect.button": {
     "description": "Knappetikett för att koppla bort från KVM-sessionen",
@@ -2029,7 +2045,7 @@
     "value": "Sökväg till startfil"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "Vintervila"
   },
   "powerOptions.off": {
     "value": "Av"
@@ -2068,7 +2084,7 @@
     "value": "Sömn"
   },
   "powerOptions.softOff": {
-    "value": "Soft-Off"
+    "value": "Mjuk avstängning"
   },
   "powerOptions.softReset": {
     "value": "Mjuk återställning"
@@ -2673,10 +2689,6 @@
     "value": "Dra och släpp för att ändra ordning",
     "description": "Tips för att ändra ordning med dra-och-släpp"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "Ta bort proxyprofil",
-    "description": "Aria-etikett för knappen för att ta bort proxyprofil"
-  },
   "profileDetail.noProxy": {
     "description": "Meddelande när inga proxyinställningar är tillgängliga",
     "value": "Inga proxyinställningar hittades"
@@ -2780,6 +2792,14 @@
   "common.delete": {
     "value": "Radera",
     "description": "Text på raderaknappen"
+  },
+  "common.deleteProfile": {
+    "value": "Ta bort profil",
+    "description": "Text för knappen för att ta bort profil"
+  },
+  "common.editTags": {
+    "description": "Knapptext för att redigera taggar i bulk",
+    "value": "Redigera taggar"
   },
   "common.update": {
     "value": "UPPDATERA",

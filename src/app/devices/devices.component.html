@@ -16,28 +16,16 @@
       </button>
     </div>
     <div>
-      <button
-        mat-icon-button
-        [matTooltip]="'devices.tooltips.bulkPowerUp.value' | translate"
-        (click)="bulkPowerAction(2)">
+      <button mat-icon-button [matTooltip]="'devices.bulk.powerUp.value' | translate" (click)="bulkPowerAction(2)">
         <mat-icon>power</mat-icon>
       </button>
-      <button
-        mat-icon-button
-        [matTooltip]="'devices.tooltips.bulkPowerOff.value' | translate"
-        (click)="bulkPowerAction(8)">
+      <button mat-icon-button [matTooltip]="'devices.bulk.powerOff.value' | translate" (click)="bulkPowerAction(8)">
         <mat-icon>power_off</mat-icon>
       </button>
-      <button
-        mat-icon-button
-        [matTooltip]="'devices.tooltips.bulkRestart.value' | translate"
-        (click)="bulkPowerAction(5)">
+      <button mat-icon-button [matTooltip]="'devices.bulk.restart.value' | translate" (click)="bulkPowerAction(5)">
         <mat-icon>restart_alt</mat-icon>
       </button>
-      <button
-        mat-icon-button
-        [matTooltip]="'devices.tooltips.bulkDeactivate.value' | translate"
-        (click)="bulkDeactivate()">
+      <button mat-icon-button [matTooltip]="'devices.bulk.deactivate.value' | translate" (click)="bulkDeactivate()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -194,15 +182,13 @@
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let element">
             @if (element.StatusMessage === 'SUCCESS') {
-              <mat-icon color="primary" [matTooltip]="'devices.tooltips.successAction.value' | translate"
+              <mat-icon color="primary" [matTooltip]="'devices.notification.success.value' | translate"
                 >check_circle</mat-icon
               >
             } @else if (element.StatusMessage === 'NOT_READY') {
-              <mat-icon color="warn" [matTooltip]="'devices.tooltips.notReadyAction.value' | translate"
-                >warning</mat-icon
-              >
+              <mat-icon color="warn" [matTooltip]="'devices.notification.notReady.value' | translate">warning</mat-icon>
             } @else if (element.StatusMessage === 'ERROR') {
-              <mat-icon color="warn" [matTooltip]="'devices.tooltips.errorAction.value' | translate">error</mat-icon>
+              <mat-icon color="warn" [matTooltip]="'devices.notification.error.value' | translate">error</mat-icon>
             } @else {}
           </mat-cell>
         </ng-container>
