@@ -9,9 +9,10 @@
 
 describe('Enterprise Deployment', () => {
   context('TC_INSTALL_DEPLOY_CONSOLE', () => {
-    // Store credentials for use in test
+    // Store credentials and port for use in test
     let consoleUsername = 'admin'
     let consolePassword = 'admin'
+    let consolePort = '8181'
     
     before(() => {
       cy.task('log', '=== Starting Fresh Installation Test ===')
@@ -40,7 +41,7 @@ describe('Enterprise Deployment', () => {
         if (!setupAlreadyDone) {
           // First execution - verify this is truly a fresh installation
           const processCheckCmd = isWindows
-            ? 'tasklist /FI "IMAGENAME eq console.exe" /NH'
+            ? 'tasklist /FI "IMAGENAME eq console_windows_x64.exe" /NH 2>nul || tasklist /FI "IMAGENAME eq console.exe" /NH 2>nul'
             : 'pgrep -f "console_linux_x64.*serve"'
           
           cy.exec(processCheckCmd, {
@@ -49,21 +50,20 @@ describe('Enterprise Deployment', () => {
           }).then((processCheck) => {
             // Check if console process is running
             const hasProcess = isWindows
-              ? processCheck.stdout.includes('console.exe')
+              ? (processCheck.stdout.includes('console.exe') || processCheck.stdout.includes('console_windows_x64.exe'))
               : processCheck.stdout && processCheck.stdout.trim() !== ''
             
             if (hasProcess) {
               // Console is running - this is NOT a fresh installation!
-              cy.task('log', '❌ ERROR: Console is already running! This is not a fresh installation.')
-              cy.task('log', 'Please stop the console process before running fresh installation test.')
+              cy.task('log', 'ERROR: Console is already running! This is not a fresh installation.')
               cy.then(() => {
                 throw new Error('Fresh installation test failed: Console already running')
               })
             } else {
-              cy.task('log', '✓ Verified: No console running (fresh system)')
+              cy.task('log', 'Verified: No console running (fresh system)')
               
               // Proceed with fresh installation
-              cy.task('log', '🔧 Starting fresh installation setup...')
+              cy.task('log', 'Starting fresh installation setup...')
           
           // Configure based on platform
           const customConsoleUrl = Cypress.env('CONSOLE_DOWNLOAD_URL')
@@ -75,10 +75,10 @@ describe('Enterprise Deployment', () => {
           let consolePath = ''
           
           if (isWindows) {
-            consoleUrl = customConsoleUrl || `https://github.com/device-management-toolkit/console/releases/${version}/download/console_windows_x64.zip`
-            archiveFile = 'console_windows_x64.zip'
-            extractCmd = `powershell -command "Expand-Archive -Path ${tempDir}\\${archiveFile} -DestinationPath ${tempDir}\\console_extract -Force"`
-            consolePath = `${tempDir}\\console_extract\\console.exe`
+            consoleUrl = customConsoleUrl || `https://github.com/device-management-toolkit/console/releases/${version}/download/console_windows_x64.exe`
+            archiveFile = 'console_windows_x64.exe'
+            extractCmd = '' // No extraction needed for Windows .exe
+            consolePath = `${tempDir}\\${archiveFile}`
           } else {
             consoleUrl = customConsoleUrl || `https://github.com/device-management-toolkit/console/releases/${version}/download/console_linux_x64.tar.gz`
             archiveFile = 'console_linux_x64.tar.gz'
@@ -102,14 +102,17 @@ describe('Enterprise Deployment', () => {
             } else {
               cy.task('log', `Downloading console from: ${consoleUrl}`)
               
-              // Download console archive
-              const downloadPath = `${tempDir}/${archiveFile}`
-              cy.exec(`curl -L -o ${downloadPath} ${consoleUrl}`, { timeout: 60000 })
-              cy.task('log', '✓ Console archive downloaded')
+              // Download console binary/archive
+              const downloadPath = isWindows ? `${tempDir}\\${archiveFile}` : `${tempDir}/${archiveFile}`
+              const curlCmd = isWindows ? `curl.exe -L -o ${downloadPath} ${consoleUrl}` : `curl -L -o ${downloadPath} ${consoleUrl}`
+              cy.exec(curlCmd, { timeout: 120000 })
+              cy.task('log', isWindows ? '✓ Console binary downloaded' : '✓ Console archive downloaded')
               
-              // Extract archive
-              cy.exec(extractCmd, { timeout: 30000 })
-              cy.task('log', '✓ Console archive extracted')
+              // Extract archive (Linux only)
+              if (!isWindows && extractCmd) {
+                cy.exec(extractCmd, { timeout: 30000 })
+                cy.task('log', '✓ Console archive extracted')
+              }
               
               // Make executable on Linux
               if (!isWindows) {
@@ -124,30 +127,37 @@ describe('Enterprise Deployment', () => {
             cy.task('log', '✓ Console binary verified')
           })
           
-          // Start console application in background
-          const consolePort = Cypress.env('CONSOLE_PORT') || '8181'
-          cy.task('log', `Starting console application on port ${consolePort}...`)
+          // Start console application in background (it will use config file port)
+          cy.task('log', `Starting console application...`)
           
           // Kill any existing console process first
           const killCmd = isWindows
-            ? 'taskkill /F /IM console.exe'
+            ? 'taskkill /F /IM console_windows_x64.exe /T 2>nul || taskkill /F /IM console.exe /T 2>nul || exit 0'
             : 'pkill -f console_linux_x64 || true'
           cy.exec(killCmd, { failOnNonZeroExit: false })
           
-          // Start console in background with auto-accept for key generation
-          const logFile = `${tempDir}/console.log`
-          const startCmd = isWindows
-            ? `powershell -command "Start-Process -FilePath '${consolePath}' -ArgumentList 'serve','--port','${consolePort}' -RedirectStandardOutput '${logFile}' -RedirectStandardError '${logFile}' -NoNewWindow -PassThru | ForEach-Object { Write-Output $_.Id }"`
-            : `nohup sh -c "echo 'Y' | BROWSER=none ${consolePath} serve --port ${consolePort} > ${logFile} 2>&1 &"`
+          // Start console in background using Windows Task Scheduler for reliable detachment
+          const logFile = `${tempDir}\\console.log`
           
-          cy.exec(startCmd, { 
-            timeout: 10000,
-            failOnNonZeroExit: false 
-          })
-          cy.task('log', '✓ Console application started')
+          if (isWindows) {
+            // Delete any existing task
+            cy.exec('schtasks /Delete /TN "CypressConsole" /F', { failOnNonZeroExit: false, timeout: 5000 })
+            
+            // Create a scheduled task that runs immediately
+            const createTaskCmd = `schtasks /Create /TN "CypressConsole" /TR "cmd /c cd /D ${tempDir} && console_windows_x64.exe serve > console.log 2>&1" /SC ONCE /ST 00:00 /F`
+            cy.exec(createTaskCmd, { timeout: 5000 })
+            
+            // Run the task immediately
+            cy.exec('schtasks /Run /TN "CypressConsole"', { timeout: 5000 })
+            cy.task('log', '✓ Console application started via task scheduler')
+          } else {
+            const startCmd = `nohup sh -c "cd ${tempDir} && ./console_linux_x64 serve > console.log 2>&1 &"`
+            cy.exec(startCmd, { timeout: 10000, failOnNonZeroExit: false })
+            cy.task('log', '✓ Console application started')
+          }
           
           // Wait for console to be ready (needs time for TLS cert generation and server startup)
-          cy.wait(10000)
+          cy.wait(15000)
           cy.task('log', '✓ Waiting for console to initialize...')
           
           // Create marker file after successful setup
@@ -165,12 +175,10 @@ describe('Enterprise Deployment', () => {
       })
       
       // Read credentials from config file (runs in both executions so variables are set for test)
-      const isWindows2 = Cypress.platform === 'win32'
-      const tempDir2 = isWindows2 ? 'C:\\temp' : '/tmp'
-      const configPath = isWindows2 ? `${tempDir2}\\console_extract\\config` : `${tempDir2}/dist/linux/config`
-      const configFile = `${configPath}${isWindows2 ? '\\' : '/'}config.yml`
+      const configPath = isWindows ? `${tempDir}\\config` : `${tempDir}/dist/linux/config`
+      const configFile = `${configPath}${isWindows ? '\\' : '/'}config.yml`
       
-      const checkConfigCmd = isWindows2
+      const checkConfigCmd = isWindows
         ? `if exist "${configPath}" (echo exists) else (echo not found)`
         : `test -d ${configPath} && echo "exists" || echo "not found"`
       
@@ -179,13 +187,17 @@ describe('Enterprise Deployment', () => {
         failOnNonZeroExit: false 
       }).then((result) => {
         if (result.stdout.includes('exists')) {
-          const readCmd = isWindows2 ? `type "${configFile}"` : `cat ${configFile}`
+          const readCmd = isWindows ? `type "${configFile}"` : `cat ${configFile}`
           cy.exec(readCmd, { failOnNonZeroExit: false }).then((result) => {
             if (result.stdout) {
-              // Parse YAML to extract adminUsername and adminPassword  
+              // Parse YAML to extract port, adminUsername and adminPassword  
+              const portMatch = result.stdout.match(/port:\s*"?(\d+)"?/)
               const usernameMatch = result.stdout.match(/adminUsername:\s*(.+)/)
               const passwordMatch = result.stdout.match(/adminPassword:\s*(.+)/)
               
+              if (portMatch && portMatch[1]) {
+                consolePort = portMatch[1].trim()
+              }
               if (usernameMatch && usernameMatch[1]) {
                 consoleUsername = usernameMatch[1].trim()
               }
@@ -194,7 +206,7 @@ describe('Enterprise Deployment', () => {
               }
               // Only log during first execution when setup was just done
               if (!setupAlreadyDone) {
-                cy.task('log', `✓ Credentials loaded - Username: ${consoleUsername}`)
+                cy.task('log', `✓ Config loaded - Port: ${consolePort}, Username: ${consoleUsername}`)
               }
             }
           })
@@ -203,8 +215,8 @@ describe('Enterprise Deployment', () => {
     })
     
     it('should successfully deploy fresh installation', { retries: 0 }, () => {
-      // Visit console application
-      const consoleAppUrl = Cypress.env('CONSOLE_URL') || 'https://localhost:8181'
+      // Visit console application using port from config file
+      const consoleAppUrl = Cypress.env('CONSOLE_URL') || `https://localhost:${consolePort}`
       
       cy.visit(consoleAppUrl, { failOnStatusCode: false })
       cy.task('log', `✓ Console application accessible at ${consoleAppUrl}`)
@@ -238,23 +250,7 @@ describe('Enterprise Deployment', () => {
         cy.get('body').should('be.visible')
         cy.task('log', '✓ Console dashboard accessible')
         
-      // Cleanup: Stop console application and remove marker file
-      const isWindowsCleanup = Cypress.platform === 'win32'
-      const tempDirCleanup = isWindowsCleanup ? 'C:\\temp' : '/tmp'
-      const markerFileCleanup = `${tempDirCleanup}/cypress-console-setup-done`
-      
-      const killCleanupCmd = isWindowsCleanup
-        ? 'taskkill /F /IM console.exe'
-        : 'pkill -f console_linux_x64 || true'
-      const removeMarkerCmd = isWindowsCleanup
-        ? `del "${markerFileCleanup}"`
-        : `rm -f ${markerFileCleanup}`
-      
-      cy.exec(killCleanupCmd, { failOnNonZeroExit: false })
-      cy.exec(removeMarkerCmd, { failOnNonZeroExit: false })
-      cy.task('log', '✓ Console application stopped')
-      
-      cy.task('log', '=== Fresh Installation Test Completed ===')
+        cy.task('log', '=== Fresh Installation Test Completed ===')
     })
   })
 })
