@@ -178,6 +178,16 @@ class CustomTabularReporter extends mocha.reporters.Spec {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5)
     const baseReportDir = options.reporterOptions?.reportDir || 'cypress/reports'
 
+    // Attach test environment info (written by setupNodeEvents before:run)
+    if (!data.testEnvironment) {
+      const envFilePath = path.join(baseReportDir, '.test-environment.json')
+      if (fs.existsSync(envFilePath)) {
+        try {
+          data.testEnvironment = JSON.parse(fs.readFileSync(envFilePath, 'utf8'))
+        } catch { /* silently skip if file is malformed */ }
+      }
+    }
+
     // Get spec file name from first suite or use default
     const specName =
       data.suites.length > 0
@@ -263,7 +273,8 @@ class CustomTabularReporter extends mocha.reporters.Spec {
         },
         startTime: new Date(Math.min(...allReports.map((r) => new Date(r.data.startTime)))),
         endTime: new Date(Math.max(...allReports.map((r) => new Date(r.data.endTime)))),
-        reports: allReports.map((r) => r.folder)
+        reports: allReports.map((r) => r.folder),
+        testEnvironment: [...allReports].reverse().find((r) => r.data.testEnvironment)?.data.testEnvironment || null
       }
 
       // Aggregate all suites and totals
@@ -745,6 +756,7 @@ class CustomTabularReporter extends mocha.reporters.Spec {
           <span class="header-meta-value">${data.reports.length}</span>
         </div>
       </div>
+      ${this.generateVersionInfoHTML(data.testEnvironment)}
     </div>
     
     <div class="summary">
@@ -830,6 +842,21 @@ class CustomTabularReporter extends mocha.reporters.Spec {
     lines.push(`Test Execution Started:  ${data.startTime.toLocaleString()}`)
     lines.push(`Test Execution Ended:    ${data.endTime.toLocaleString()}`)
     lines.push(`Total Duration:          ${((data.endTime - data.startTime) / 1000).toFixed(2)}s`)
+    if (data.testEnvironment) {
+      const tenv = data.testEnvironment
+      lines.push(`Deployment Type:         ${tenv.deploymentType}`)
+      lines.push('DMT Software Components:')
+      ;(tenv.components || []).forEach((c) => {
+        const note = c.note ? `  [${c.note}]` : ''
+        lines.push(`  ${this.padRight(c.name, 28)} ${c.version}${note}`)
+      })
+      const infra = tenv.infrastructure
+      if (infra) {
+        lines.push('AMT Device & Firmware:')
+        lines.push(`  ${this.padRight('AMT Firmware Version', 28)} ${infra.amtFirmware || 'N/A'}${infra.amtFirmwareNote ? '  [' + infra.amtFirmwareNote + ']' : ''}`)
+        lines.push(`  ${this.padRight('Provisioning Mode', 28)} ${infra.provisioningMode || 'N/A'}${infra.provisioningModeNote ? '  [' + infra.provisioningModeNote + ']' : ''}`)
+      }
+    }
     lines.push(divider)
     lines.push('')
 
@@ -1398,6 +1425,7 @@ class CustomTabularReporter extends mocha.reporters.Spec {
           <span class="header-meta-value">${duration}s</span>
         </div>
       </div>
+      ${this.generateVersionInfoHTML(data.testEnvironment)}
     </div>
     
     <div class="summary">
@@ -1466,6 +1494,105 @@ class CustomTabularReporter extends mocha.reporters.Spec {
 </html>`
 
     return html
+  }
+
+  generateVersionInfoHTML(env) {
+    if (!env) return ''
+
+    const deploymentClass = env.isCloud ? 'cloud' : 'enterprise'
+    const deploymentIcon = env.isCloud ? '&#9729;&#65039;' : '&#128421;&#65039;'
+    const deploymentLabel = this.escapeHtml(
+      env.deploymentType || (env.isCloud ? 'Cloud Deployment (MPS + RPS)' : 'Console Enterprise')
+    )
+
+    const componentChips = (env.components || [])
+      .map((c) => {
+        const isNA = !c.version || c.version === 'N/A'
+        const badgeCls = isNA ? 'vbadge-na' : 'vbadge'
+        const noteHtml = c.note
+          ? `<span class="vnote" title="${this.escapeHtml(c.note)}">&#8505;</span>`
+          : ''
+        return (
+          `<span class="vchip">` +
+          `<span class="vchip-name">${this.escapeHtml(c.name)}</span>` +
+          `<span class="${badgeCls}">${this.escapeHtml(c.version)}</span>` +
+          `${noteHtml}` +
+          `</span>`
+        )
+      })
+      .join('')
+
+    // Infrastructure panel
+    const infra = env.infrastructure || {}
+    const infraDefs = [
+      { icon: '&#128190;', label: 'AMT Firmware',    value: infra.amtFirmware,      note: infra.amtFirmwareNote      || '' },
+      { icon: '&#128737;', label: 'Provisioning Mode', value: infra.provisioningMode, note: infra.provisioningModeNote || '' }
+    ]
+    const infraItemsHTML = infraDefs
+      .map((item) => {
+        const val = item.value
+          ? this.escapeHtml(String(item.value))
+          : `<span style="opacity:.38">N/A</span>`
+        const noteHtml = item.note
+          ? ` <span class="infra-note" title="${this.escapeHtml(item.note)}">&#8505;</span>`
+          : ''
+        return (
+          `<div class="infra-item">` +
+          `<span class="infra-icon">${item.icon}</span>` +
+          `<div class="infra-detail">` +
+          `<span class="infra-label">${this.escapeHtml(item.label)}</span>` +
+          `<span class="infra-value">${val}${noteHtml}</span>` +
+          `</div></div>`
+        )
+      })
+      .join('')
+
+    const hasComponents = (env.components || []).length > 0
+    const fetchedAt = env.fetchedAt
+      ? `<div class="vfetched">Versions captured: ${new Date(env.fetchedAt).toLocaleString()}</div>`
+      : ''
+
+    const componentsHTML = hasComponents
+      ? `<span class="vheader">DMT Software Components</span>
+        <div class="vchips">${componentChips}</div>
+        <div class="infra-section">
+          <span class="vheader">AMT Device &amp; Firmware</span>
+          <div class="infra-grid">${infraItemsHTML}</div>
+        </div>
+        ${fetchedAt}`
+      : `<div class="vfetched">Component version reporting disabled for this run</div>`
+
+    return `
+      <style>
+        .env-panel{margin-top:18px;border-top:1px solid rgba(255,255,255,.18);padding-top:16px}
+        .env-deploy-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:14px}
+        .env-deploy-badge.enterprise{background:linear-gradient(135deg,#2b6cb0,#3182ce);color:#fff;box-shadow:0 2px 8px rgba(49,130,206,.35)}
+        .env-deploy-badge.cloud{background:linear-gradient(135deg,#276749,#38a169);color:#fff;box-shadow:0 2px 8px rgba(56,161,105,.35)}
+        .env-deploy-icon{font-size:17px}
+        .vheader{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px;opacity:.65;margin-bottom:8px}
+        .vchips{display:flex;flex-wrap:wrap;gap:8px}
+        .vchip{display:inline-flex;border-radius:5px;overflow:hidden;font-size:12px;border:1px solid rgba(255,255,255,.18)}
+        .vchip-name{background:rgba(0,0,0,.28);padding:3px 10px;color:rgba(255,255,255,.9);font-weight:600}
+        .vbadge{background:#276749;padding:3px 10px;color:#fff;font-weight:700}
+        .vbadge-na{background:#4a5568;padding:3px 10px;color:rgba(255,255,255,.55);font-style:italic}
+        .vnote{background:rgba(255,255,255,.12);padding:3px 6px;color:rgba(255,255,255,.75);cursor:help;font-size:10px}
+        .infra-section{margin-top:16px}
+        .infra-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+        .infra-item{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:6px 14px}
+        .infra-icon{font-size:15px;line-height:1}
+        .infra-detail{display:flex;flex-direction:column;gap:1px}
+        .infra-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;opacity:.6}
+        .infra-value{font-size:12px;font-weight:700;color:#fff}
+        .infra-note{font-size:10px;opacity:.6;cursor:help;margin-left:4px}
+        .vfetched{margin-top:12px;font-size:11px;opacity:.45}
+      </style>
+      <div class="env-panel">
+        <div class="env-deploy-badge ${deploymentClass}">
+          <span class="env-deploy-icon">${deploymentIcon}</span>
+          ${deploymentLabel}
+        </div>
+        ${componentsHTML}
+      </div>`
   }
 
   generateSuiteHTML(suite, index) {

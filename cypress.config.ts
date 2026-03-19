@@ -37,6 +37,82 @@ export default defineConfig({
   e2e: {
     experimentalStudio: true,
     screenshotOnRunFailure: false,
-    specPattern: 'cypress/e2e/integration/**/*.ts'
+    specPattern: 'cypress/e2e/integration/**/*.ts',
+    setupNodeEvents(on, config) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const fs = require('fs')
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require('path')
+      // ── Restore empty-string keys stripped by Cypress ──────────────────────
+      // Cypress discards CYPRESS_FOO= env vars whose value is an empty string,
+      // so keys like MPS_VERSION="" or RPS_VERSION="" passed via CI never reach
+      // config.env when set as CYPRESS_* env vars.
+      //
+      // Primary fix: CI workflows write component_versions.json to the
+      // sample-web-ui directory before running Cypress. Reading it here restores
+      // ALL keys (including empty-string ones) before version-fetching runs.
+      // Works generically for any future key — no hardcoding needed.
+      //
+      // Fallback: CYPRESS_COMPONENT_VERSIONS env var written by composite action.
+      const cvPath = path.join(process.cwd(), 'component_versions.json')
+      if (fs.existsSync(cvPath)) {
+        try {
+          const parsed = JSON.parse(fs.readFileSync(cvPath, 'utf8'))
+          config.env = { ...config.env, ...parsed }
+        } catch { /* ignore malformed JSON */ }
+      } else {
+        const rawVersions = config.env?.COMPONENT_VERSIONS
+        if (rawVersions) {
+          try {
+            const parsed = JSON.parse(String(rawVersions))
+            config.env = { ...config.env, ...parsed }
+          } catch { /* ignore malformed JSON */ }
+        }
+      }
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const versionFetcher = require('./cypress/support/version-fetcher')
+
+      on('before:run', async () => {
+        const enabled = String(config.env?.REPORT_COMPONENT_VERSIONS).toLowerCase() === 'true'
+        const isCloud = !!config.env?.CLOUD
+        const reportsDir = 'cypress/reports'
+        if (!fs.existsSync(reportsDir)) {
+          fs.mkdirSync(reportsDir, { recursive: true })
+        }
+
+        if (!enabled) {
+          // Always write at least the deployment type so the HTML report header
+          // can show the deployment badge even when version reporting is disabled.
+          const minimal = {
+            isCloud,
+            deploymentType: isCloud ? 'Cloud Deployment (MPS + RPS)' : 'Console Enterprise',
+            components: [],
+            infrastructure: {}
+          }
+          fs.writeFileSync(`${reportsDir}/.test-environment.json`, JSON.stringify(minimal, null, 2))
+          console.log(`\n🔍 DMT Deployment: ${minimal.deploymentType} (version reporting disabled)`)
+          return
+        }
+
+        // Fetch DMT component versions from live APIs and package files.
+        // Results written to cypress/reports/.test-environment.json and
+        // consumed by the custom HTML reporter for the report header.
+        try {
+          const versionInfo = await versionFetcher.fetchVersionInfo(config)
+          fs.writeFileSync(
+            `${reportsDir}/.test-environment.json`,
+            JSON.stringify(versionInfo, null, 2)
+          )
+          console.log('\n🔍 DMT Test Environment:')
+          console.log(`   Deployment : ${versionInfo.deploymentType}`)
+          versionInfo.components.forEach((c: { name: string; version: string }) => {
+            console.log(`   ${c.name.padEnd(30)} ${c.version}`)
+          })
+          console.log()
+        } catch (err) {
+          console.warn('\n⚠️  Could not fetch component version info:', err)
+        }
+      })
+    }
   }
 })
