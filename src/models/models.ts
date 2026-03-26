@@ -324,7 +324,7 @@ export interface DiskInformation {
 
 export interface ValidatorError {
   msg: string
-  param: string
+  path: string
   location: string
   value: string
 }
