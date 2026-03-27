@@ -5,7 +5,7 @@
     "reportName": "cypress-test-report"
   },
   "mochaJunitReporterReporterOptions": {
-    "mochaFile": "cypress-ui-test-output-[hash].xml",
+    "mochaFile": "cypress-e2e-test-output-[hash].xml",
     "toConsole": false
   }
 }
