@@ -1,3 +1,10 @@
+## [3.55.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.7...v3.55.8) (2026-03-30)
+
+
+### Bug Fixes
+
+* show msg only in validation errors ([#3223](https://github.com/device-management-toolkit/sample-web-ui/issues/3223)) ([610d0ed](https://github.com/device-management-toolkit/sample-web-ui/commit/610d0edf061b85799674036a28c8dbfca287994f))
+
 ## [3.55.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.6...v3.55.7) (2026-03-20)
 
 ## [3.55.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.5...v3.55.6) (2026-03-16)
