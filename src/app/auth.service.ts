@@ -168,7 +168,7 @@ export class AuthService {
     const errorMessages: string[] = []
     if (err.error?.errors != null) {
       err.error.errors.forEach((error: ValidatorError) => {
-        errorMessages.push(`${error.msg}: ${error.param}`)
+        errorMessages.push(error.msg)
       })
     } else if (err.error?.message != null) {
       errorMessages.push(err.error.message as string)

@@ -168,14 +168,14 @@ describe('AuthService', () => {
       const mockError = {
         error: {
           errors: [
-            { msg: 'Invalid input', param: 'username' },
-            { msg: 'Required', param: 'password' }
+            { msg: 'Invalid input', path: 'username' },
+            { msg: 'Required', path: 'password' }
           ]
         }
       }
 
       const result = service.onError(mockError)
-      expect(result).toEqual(['Invalid input: username', 'Required: password'])
+      expect(result).toEqual(['Invalid input', 'Required'])
     })
 
     it('should return a single error message if present', () => {
