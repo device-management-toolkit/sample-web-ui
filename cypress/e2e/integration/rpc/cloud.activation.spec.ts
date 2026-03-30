@@ -26,7 +26,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
     const isWin = Cypress.platform === 'win32'
     let majorVersion = ''
-    let skipCertFlag = '-skipamtcertcheck' 
+    let skipCertFlag = '-skipamtcertcheck'
 
     // Default: use Docker (Linux/Mac); Windows overrides below use rpc.exe directly
     let infoCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} amtinfo --json`
@@ -80,10 +80,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     describe('Device Activation - Cloud', () => {
       before(() => {
-        const helpCommand = isWin 
-          ? 'rpc.exe activate --help' 
+        const helpCommand = isWin
+          ? 'rpc.exe activate --help'
           : `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate --help`
-        
+
         cy.exec(helpCommand, { ...execConfig, failOnNonZeroExit: false }).then((result) => {
           const helpOutput = result.stdout + result.stderr
           cy.log('RPC Help Output:', helpOutput)

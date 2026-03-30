@@ -452,15 +452,15 @@ Cypress.Commands.add('enterIEEE8021xInfo', (config: IEEE8021xConfig) => {
 
 Cypress.Commands.add('goToPage', (pageName) => {
   // Close overlay backdrop if present (state-based check)
-  cy.get('body').then($body => {
+  cy.get('body').then(($body) => {
     if ($body.find('.cdk-overlay-backdrop').length > 0) {
-      cy.get('.cdk-overlay-backdrop').click({ force: true });
-      cy.get('.cdk-overlay-backdrop', { timeout: 10000 }).should('not.exist');
+      cy.get('.cdk-overlay-backdrop').click({ force: true })
+      cy.get('.cdk-overlay-backdrop', { timeout: 10000 }).should('not.exist')
     }
-  });
-  
+  })
+
   // Click navigation link
-  cy.get('a').contains(pageName).click();
+  cy.get('a').contains(pageName).click()
 })
 
 Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {
