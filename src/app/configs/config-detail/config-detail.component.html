@@ -30,7 +30,11 @@
             name="configName"
             [placeholder]="'configDetail.configNamePlaceholder.value' | translate"
             required />
-          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          @if (configForm.controls.configName.hasError('required')) {
+            <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          } @else if (configForm.controls.configName.hasError('pattern')) {
+            <mat-error>{{ 'configDetail.configNamePatternError.value' | translate }}</mat-error>
+          }
           <mat-hint>{{ 'configDetail.configNameHint.value' | translate }}</mat-hint>
         </mat-form-field>
         <mat-radio-group

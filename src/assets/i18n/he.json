@@ -539,6 +539,10 @@
     "description": "רמז טקסט לשדה שם תצורה",
     "value": "הזן שם לתצורת CIRA זו"
   },
+  "configDetail.configNamePatternError": {
+    "description": "הודעת שגיאה כאשר שם התצורה מכיל תווים לא חוקיים",
+    "value": "השם יכול להכיל רק אותיות, מספרים, מקפים (-) ומקפים תחתונים (_)"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "טקסט מציין מקום לשדה שם תצורה",
     "value": "לְשֶׁעָבַר. "

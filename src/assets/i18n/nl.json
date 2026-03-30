@@ -539,6 +539,10 @@
     "description": "Hinttekst voor het veld met de configuratienaam",
     "value": "Voer een naam in voor deze CIRA-configuratie."
   },
+  "configDetail.configNamePatternError": {
+    "description": "Foutmelding wanneer de configuratienaam ongeldige tekens bevat",
+    "value": "Naam mag alleen letters, cijfers, koppeltekens (-) en onderstrepingstekens (_) bevatten"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Plaatshoudertekst voor het veld met de configuratienaam",
     "value": "Bijvoorbeeld: ciraConfig1"

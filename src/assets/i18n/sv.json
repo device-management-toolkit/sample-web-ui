@@ -539,6 +539,10 @@
     "description": "Tips för fältet för konfigurationsnamn",
     "value": "Ange ett namn för denna CIRA-konfiguration"
   },
+  "configDetail.configNamePatternError": {
+    "description": "Felmeddelande när konfigurationsnamnet innehåller ogiltiga tecken",
+    "value": "Namnet får endast innehålla bokstäver, siffror, bindestreck (-) och understreck (_)"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Platshållartext för fältet för konfigurationsnamn",
     "value": "ex. ciraConfig1"

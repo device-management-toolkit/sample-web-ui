@@ -539,6 +539,10 @@
     "description": "نص تلميح لحقل اسم التكوين",
     "value": "أدخل اسمًا لتكوين CIRA هذا"
   },
+  "configDetail.configNamePatternError": {
+    "description": "رسالة خطأ عند احتواء اسم التكوين على أحرف غير صالحة",
+    "value": "الاسم يقبل فقط الأحرف والأرقام والشرطات السفلية (_) والشرطات (-)"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "نص مؤقت لحقل اسم التكوين",
     "value": "مثال: ciraConfig1"
