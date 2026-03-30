@@ -1,3 +1,10 @@
+## [3.55.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.8...v3.55.9) (2026-03-30)
+
+
+### Bug Fixes
+
+* add pattern validation for CIRA config name field ([#3233](https://github.com/device-management-toolkit/sample-web-ui/issues/3233)) ([dacbb63](https://github.com/device-management-toolkit/sample-web-ui/commit/dacbb63f566675f188d2384006b8344c3fb19843)), closes [device-management-toolkit/rps#2599](https://github.com/device-management-toolkit/rps/issues/2599)
+
 ## [3.55.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.7...v3.55.8) (2026-03-30)
 
 
