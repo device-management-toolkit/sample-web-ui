@@ -539,6 +539,10 @@
     "description": "Hinweistext für das Feld „Konfigurationsname“",
     "value": "Geben Sie einen Namen für diese CIRA-Konfiguration ein."
   },
+  "configDetail.configNamePatternError": {
+    "description": "Fehlermeldung bei ungültigen Zeichen im Konfigurationsnamen",
+    "value": "Der Name darf nur Buchstaben, Zahlen, Bindestriche (-) und Unterstriche (_) enthalten"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Platzhaltertext für das Feld „Konfigurationsname“",
     "value": "Beispiel: ciraConfig1"

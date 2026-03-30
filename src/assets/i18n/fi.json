@@ -539,6 +539,10 @@
     "description": "Vihje teksti konfiguraationimikentälle",
     "value": "Anna nimi tälle CIRA-määritykselle"
   },
+  "configDetail.configNamePatternError": {
+    "description": "Virheilmoitus kun konfiguraation nimessä on virheellisiä merkkejä",
+    "value": "Nimessä saa olla vain kirjaimia, numeroita, viivoja (-) ja alaviivoja (_)"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Paikkamerkki teksti konfiguraationimikentälle",
     "value": "esim. ciraConfig1"

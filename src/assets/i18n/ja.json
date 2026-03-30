@@ -539,6 +539,10 @@
     "description": "設定名フィールドのヒントテキスト",
     "value": "このCIRA設定の名前を入力してください"
   },
+  "configDetail.configNamePatternError": {
+    "description": "設定名に無効な文字が含まれている場合のエラーメッセージ",
+    "value": "名前は文字、数字、ハイフン（-）、アンダースコア（_）のみを使用できます"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "設定名フィールドのプレースホルダーテキスト",
     "value": "例：ciraConfig1"
