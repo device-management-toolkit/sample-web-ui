@@ -47,18 +47,21 @@ describe('Test CIRA Config Page', () => {
       ciraFixtures.default.addr,
       Cypress.env('MPS_USERNAME')
     )
+    cy.get('input[name=configName]').focus().blur()
+    cy.get('mat-error').should('contain', 'Name accepts letters, numbers, underscore and hyphen only')
+    cy.get('button[type=submit]').click()
+
+    const url = baseUrl + urlFixtures.page.cira + '/' + urlFixtures.extensions.creation
+    cy.url().should('eq', url)
   })
 
   it('invalid username', () => {
     cy.enterCiraInfo(
-      ciraFixtures.wrong.name,
+      ciraFixtures.default.name,
       ciraFixtures.default.format,
       ciraFixtures.default.addr,
       ciraFixtures.wrong.username
     )
-  })
-
-  afterEach('Check that the error occured', () => {
     cy.get('button[type=submit]').click()
 
     cy.wait('@certificate1')

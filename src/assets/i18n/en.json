@@ -695,6 +695,10 @@
     "description": "Hint text for config name field",
     "value": "Enter a name for this CIRA config"
   },
+  "configDetail.configNamePatternError": {
+    "description": "Error text when config name contains invalid characters",
+    "value": "Name accepts letters, numbers, underscore and hyphen only"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Placeholder text for config name field",
     "value": "ex. ciraConfig1"

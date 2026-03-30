@@ -539,6 +539,10 @@
     "description": "Testo suggerimento per il campo del nome di configurazione",
     "value": "Inserire un nome per questa configurazione CIRA."
   },
+  "configDetail.configNamePatternError": {
+    "description": "Messaggio di errore quando il nome della configurazione contiene caratteri non validi",
+    "value": "Il nome può contenere solo lettere, numeri, trattini (-) e trattini bassi (_)"
+  },
   "configDetail.configNamePlaceholder": {
     "description": "Testo segnaposto per il campo del nome di configurazione",
     "value": "Es. ciraConfig1"
