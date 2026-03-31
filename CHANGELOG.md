@@ -1,3 +1,10 @@
+## [3.55.10](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.9...v3.55.10) (2026-03-31)
+
+
+### Bug Fixes
+
+* Fix cloud activation to support version-specific RPC flags and overlay handling ([#3232](https://github.com/device-management-toolkit/sample-web-ui/issues/3232)) ([f15a08f](https://github.com/device-management-toolkit/sample-web-ui/commit/f15a08ff6ba3706fcdf1cbbc58ce5db19af4d179))
+
 ## [3.55.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.8...v3.55.9) (2026-03-30)
 
 
