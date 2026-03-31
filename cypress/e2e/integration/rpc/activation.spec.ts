@@ -61,7 +61,7 @@ export const execWithRetry = (
     return cy.exec(command, config).then((result) => {
       const { combined } = buildOutput(result)
 
-      if (combined.includes('"msg":"interrupted system call"') && attempt < maxRetries) {
+      if (combined.includes('interrupted system call') && attempt < maxRetries) {
         cy.log(`Retry attempt ${attempt + 1}/${maxRetries} after interrupted system call error`)
         cy.wait(retryInterval)
         return attemptExec(attempt + 1)
