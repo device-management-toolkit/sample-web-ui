@@ -157,32 +157,38 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.devicesService.getDevice(this.deviceId()).subscribe((data) => {
-      this.device = data
-      this.devicesService.device.next(this.device)
-      this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
-      this.getPowerState()
-      this.loadAMTFeatures()
-      // react to AMT feature updates emitted by service
-      this.devicesService
-        .featuresChanges(this.deviceId())
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((features) => {
-          if (features) {
-            this.amtFeatures.set(features)
-            this.buildPowerOptions()
-          }
-        })
-    })
+    this.devicesService
+      .getDevice(this.deviceId())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.device = data
+        this.devicesService.device.next(this.device)
+        this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
+        this.getPowerState()
+        this.loadAMTFeatures()
+        // react to AMT feature updates emitted by service
+        this.devicesService
+          .featuresChanges(this.deviceId())
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((features) => {
+            if (features) {
+              this.amtFeatures.set(features)
+              this.buildPowerOptions()
+            }
+          })
+      })
   }
 
   private loadAMTFeatures(): void {
     // Use cached features if fresher than 30s — avoids a duplicate AMT round-trip
     // when the KVM/SOL component already loaded features moments before the toolbar.
-    this.devicesService.getAMTFeaturesCached(this.deviceId()).subscribe((features) => {
-      this.amtFeatures.set(features)
-      this.buildPowerOptions()
-    })
+    this.devicesService
+      .getAMTFeaturesCached(this.deviceId())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((features) => {
+        this.amtFeatures.set(features)
+        this.buildPowerOptions()
+      })
   }
 
   private buildPowerOptions(): void {
@@ -213,30 +219,37 @@ export class DeviceToolbarComponent implements OnInit {
 
   getPowerState(): void {
     this.isLoading().set(true)
-    this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
-      this.powerState.set(
-        powerState.powerstate.toString() === '2'
-          ? 'deviceToolbar.power.on.value'
-          : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-            ? 'deviceToolbar.power.sleep.value'
-            : 'deviceToolbar.power.off.value'
-      )
-      this.isLoading().set(false)
-    })
+    this.devicesService
+      .getPowerState(this.deviceId())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((powerState) => {
+        this.powerState.set(
+          powerState.powerstate.toString() === '2'
+            ? 'deviceToolbar.power.on.value'
+            : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
+              ? 'deviceToolbar.power.sleep.value'
+              : 'deviceToolbar.power.off.value'
+        )
+        this.isLoading().set(false)
+      })
   }
 
   getDeviceCert(): void {
-    this.devicesService.getDeviceCertificate(this.deviceId()).subscribe((data) => {
-      this.matDialog
-        .open(DeviceCertDialogComponent, { data: { certData: data, isPinned: this.isPinned() } })
-        .afterClosed()
-        .subscribe((pinned) => {
-          if (pinned != null) {
-            this.device!.certHash = pinned ? 'yup' : ''
-            this.isPinned.set(!!pinned)
-          }
-        })
-    })
+    this.devicesService
+      .getDeviceCertificate(this.deviceId())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.matDialog
+          .open(DeviceCertDialogComponent, { data: { certData: data, isPinned: this.isPinned() } })
+          .afterClosed()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((pinned) => {
+            if (pinned != null) {
+              this.device!.certHash = pinned ? 'yup' : ''
+              this.isPinned.set(!!pinned)
+            }
+          })
+      })
   }
 
   editDevice(): void {
@@ -246,10 +259,13 @@ export class DeviceToolbarComponent implements OnInit {
         width: '600px',
         data: this.device
       })
-      sub.afterClosed().subscribe(() => {
-        window.location.reload()
-        this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
-      })
+      sub
+        .afterClosed()
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          window.location.reload()
+          this.snackBar.open('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+        })
     }
   }
 
@@ -264,7 +280,10 @@ export class DeviceToolbarComponent implements OnInit {
   performHTTPBoot(action: number): void {
     this.devicesService
       .getAMTVersion(this.deviceId())
-      .pipe(catchError(() => of(null)))
+      .pipe(
+        catchError(() => of(null)),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe((amtVersion) => {
         const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === PROVISIONING_MODE_CCM
         const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
@@ -273,12 +292,15 @@ export class DeviceToolbarComponent implements OnInit {
           data: { isCCM }
         })
 
-        dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
-          if (!bootDetails) {
-            return
-          }
-          this.executeAuthorizedPowerAction(action, false, bootDetails)
-        })
+        dialogRef
+          .afterClosed()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((bootDetails: BootDetails) => {
+            if (!bootDetails) {
+              return
+            }
+            this.executeAuthorizedPowerAction(action, false, bootDetails)
+          })
       })
   }
 
@@ -287,25 +309,30 @@ export class DeviceToolbarComponent implements OnInit {
     forkJoin({
       amtVersion: this.devicesService.getAMTVersion(this.deviceId()).pipe(catchError(() => of(null))),
       sources: this.devicesService.getBootSources(this.deviceId())
-    }).subscribe(({ amtVersion, sources }) => {
-      const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === PROVISIONING_MODE_CCM
-      const pbaSources = sources.filter((s) => s.biosBootString?.toLowerCase().includes('pba'))
-      const dialogRef = this.dialog.open(PBABootDialogComponent, {
-        width: '400px',
-        disableClose: false,
-        data: {
-          pbaBootFilesPath: pbaSources,
-          action: action,
-          isCCM
-        }
-      })
-      dialogRef.afterClosed().subscribe((bootDetails: BootDetails) => {
-        if (!bootDetails) {
-          return
-        }
-        this.executeAuthorizedPowerAction(action, false, bootDetails)
-      })
     })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ amtVersion, sources }) => {
+        const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === PROVISIONING_MODE_CCM
+        const pbaSources = sources.filter((s) => s.biosBootString?.toLowerCase().includes('pba'))
+        const dialogRef = this.dialog.open(PBABootDialogComponent, {
+          width: '400px',
+          disableClose: false,
+          data: {
+            pbaBootFilesPath: pbaSources,
+            action: action,
+            isCCM
+          }
+        })
+        dialogRef
+          .afterClosed()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((bootDetails: BootDetails) => {
+            if (!bootDetails) {
+              return
+            }
+            this.executeAuthorizedPowerAction(action, false, bootDetails)
+          })
+      })
   }
 
   performWinREBoot(action: number): void {
@@ -428,30 +455,34 @@ export class DeviceToolbarComponent implements OnInit {
 
   sendDeactivate(): void {
     const dialogRef = this.matDialog.open(AreYouSureDialogComponent)
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.isLoading().set(true)
-        this.devicesService
-          .sendDeactivate(this.deviceId())
-          .pipe(
-            finalize(() => {
-              this.isLoading().set(false)
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (result === true) {
+          this.isLoading().set(true)
+          this.devicesService
+            .sendDeactivate(this.deviceId())
+            .pipe(
+              takeUntilDestroyed(this.destroyRef),
+              finalize(() => {
+                this.isLoading().set(false)
+              })
+            )
+            .subscribe({
+              next: () => {
+                const msg: string = this.translate.instant('devices.deactivation.value')
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+                void this.navigateTo('devices')
+              },
+              error: (err) => {
+                console.error(err)
+                const msg: string = this.translate.instant('devices.errorDeactivation.value')
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+              }
             })
-          )
-          .subscribe({
-            next: () => {
-              const msg: string = this.translate.instant('devices.deactivation.value')
-              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-              void this.navigateTo('devices')
-            },
-            error: (err) => {
-              console.error(err)
-              const msg: string = this.translate.instant('devices.errorDeactivation.value')
-              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-            }
-          })
-      }
-    })
+        }
+      })
   }
 
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
