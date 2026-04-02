@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -11,7 +11,7 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } 
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { catchError, finalize, forkJoin, throwError } from 'rxjs'
+import { catchError, finalize, forkJoin, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from 'src/environments/environment'
@@ -37,7 +37,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
@@ -94,6 +94,8 @@ export class GeneralComponent implements OnInit {
   public generalSettings: any = {}
   public isCloudMode: boolean = environment.cloud
 
+  private readonly destroy$ = new Subject<void>()
+
   ngOnInit(): void {
     forkJoin({
       amtFeatures: this.devicesService.getAMTFeatures(this.deviceId()).pipe(
@@ -121,7 +123,8 @@ export class GeneralComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading.set(false)
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((results) => {
         this.amtDHCPDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix ?? ''
@@ -156,6 +159,11 @@ export class GeneralComponent implements OnInit {
           localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
         })
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   get isRedirectionRequired(): boolean {

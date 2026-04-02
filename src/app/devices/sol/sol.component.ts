@@ -5,7 +5,7 @@
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
-import { defer, iif, Observable, of, throwError } from 'rxjs'
+import { defer, iif, Observable, of, Subject, takeUntil, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -58,13 +58,14 @@ export class SolComponent implements OnInit, OnDestroy {
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public authToken = signal(environment.cloud ? '' : 'direct')
   public isDisconnecting = false
+  private readonly destroy$ = new Subject<void>()
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
-    this.router.events.subscribe((event) => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isDisconnecting = true
       }
@@ -73,18 +74,11 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting = true
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   ngOnInit(): void {
-    this.devicesService
-      .getRedirectionExpirationToken(this.deviceId())
-      .pipe(
-        tap((result) => {
-          this.authToken.set(result.token)
-        })
-      )
-      .subscribe()
-
     // Initial setup: fetch redirection token before connecting to SOL
     // Note: A fresh redirection token is required for each SOL connection attempt
     this.devicesService
@@ -92,7 +86,8 @@ export class SolComponent implements OnInit, OnDestroy {
       .pipe(
         tap((result) => {
           this.authToken.set(result.token)
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         // Only call init() after auth token is retrieved
@@ -124,6 +119,7 @@ export class SolComponent implements OnInit, OnDestroy {
         ),
         switchMap((result: any) => this.postUserConsentDecision(result))
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe()
       .add(() => {
         this.isLoading.set(false)

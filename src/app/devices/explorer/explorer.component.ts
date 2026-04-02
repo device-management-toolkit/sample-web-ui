@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatSelectModule } from '@angular/material/select'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { Observable, startWith, map } from 'rxjs'
+import { Observable, startWith, map, Subject, takeUntil } from 'rxjs'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
@@ -44,12 +44,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   templateUrl: './explorer.component.html',
   styleUrl: './explorer.component.scss'
 })
-export class ExplorerComponent implements OnInit {
+export class ExplorerComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   public XMLData: any
   public myControl = new FormControl('')
@@ -59,25 +60,31 @@ export class ExplorerComponent implements OnInit {
   public filteredOptions!: Observable<string[]>
 
   ngOnInit(): void {
-    this.devicesService.getWsmanOperations().subscribe((data) => {
-      this.wsmanOperations = data
-      this.selectedWsmanOperation = this.wsmanOperations[0]
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value ?? ''))
-      )
+    this.devicesService
+      .getWsmanOperations()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.wsmanOperations = data
+        this.selectedWsmanOperation = this.wsmanOperations[0]
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filter(value ?? ''))
+        )
 
-      this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
-        next: (data) => {
-          this.XMLData = data
-        },
-        error: (err) => {
-          console.error(err)
-          const msg: string = this.translate.instant('explorer.errorResponse.value')
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-        }
+        this.devicesService
+          .executeExplorerCall(this.deviceId(), this.selectedWsmanOperation)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (data) => {
+              this.XMLData = data
+            },
+            error: (err) => {
+              console.error(err)
+              const msg: string = this.translate.instant('explorer.errorResponse.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+            }
+          })
       })
-    })
   }
 
   private _filter(value: string): string[] {
@@ -92,15 +99,23 @@ export class ExplorerComponent implements OnInit {
 
   inputChanged(event: MatAutocompleteSelectedEvent): void {
     this.selectedWsmanOperation = event.option.value
-    this.devicesService.executeExplorerCall(this.deviceId(), this.selectedWsmanOperation).subscribe({
-      next: (data) => {
-        this.XMLData = data
-      },
-      error: (err) => {
-        console.error(err)
-        const msg: string = this.translate.instant('explorer.errorResponse.value')
-        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-      }
-    })
+    this.devicesService
+      .executeExplorerCall(this.deviceId(), this.selectedWsmanOperation)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.XMLData = data
+        },
+        error: (err) => {
+          console.error(err)
+          const msg: string = this.translate.instant('explorer.errorResponse.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+        }
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

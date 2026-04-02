@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatList, MatListItem, MatListItemTitle, MatListItemLine, MatListModule } from '@angular/material/list'
 import { provideNativeDateAdapter } from '@angular/material/core'
@@ -12,6 +12,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router'
+import { Subject, takeUntil } from 'rxjs'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
 import { CertificatesComponent } from '../certificates/certificates.component'
@@ -60,9 +61,10 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule
   ]
 })
-export class DeviceDetailComponent implements OnInit {
+export class DeviceDetailComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly destroy$ = new Subject<void>()
   public deviceId = ''
   public readonly isCloudMode: boolean = environment.cloud
 
@@ -148,11 +150,16 @@ export class DeviceDetailComponent implements OnInit {
   isCollapsed = false
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
       this.isLoading.set(true)
       this.deviceId = params.id
       this.currentView = params.component || 'general'
     })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   toggleSidenav(): void {

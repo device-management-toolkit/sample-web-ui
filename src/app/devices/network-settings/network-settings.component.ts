@@ -1,7 +1,7 @@
-import { Component, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
 import { DevicesService } from '../devices.service'
 import { MatCardModule } from '@angular/material/card'
-import { catchError, finalize, throwError } from 'rxjs'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatListModule } from '@angular/material/list'
@@ -24,12 +24,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   templateUrl: './network-settings.component.html',
   styleUrl: './network-settings.component.scss'
 })
-export class NetworkSettingsComponent implements OnInit {
+export class NetworkSettingsComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
   public networkResults?: NetworkConfig
@@ -47,8 +48,14 @@ export class NetworkSettingsComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
         this.networkResults = results
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

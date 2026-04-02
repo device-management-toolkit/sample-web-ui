@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input, ViewChild } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal, input, ViewChild } from '@angular/core'
 import {
   FormBuilder,
   FormControl,
@@ -14,7 +14,7 @@ import {
 } from '@angular/forms'
 import { IPSAlarmClockOccurrence, IPSAlarmClockOccurrenceInput } from 'src/models/models'
 import { DevicesService } from '../devices.service'
-import { catchError, finalize, throwError } from 'rxjs'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
@@ -54,12 +54,13 @@ import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sur
   templateUrl: './alarms.component.html',
   styleUrl: './alarms.component.scss'
 })
-export class AlarmsComponent implements OnInit {
+export class AlarmsComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly fb = inject(FormBuilder)
   private readonly translate = inject(TranslateService)
   private readonly dialog = inject(MatDialog)
+  private readonly destroy$ = new Subject<void>()
 
   public readonly deviceId = input('')
 
@@ -187,6 +188,7 @@ export class AlarmsComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
         this.alarmOccurrences.set(results)
       })
@@ -195,36 +197,40 @@ export class AlarmsComponent implements OnInit {
   deleteAlarm = (instanceID: string): void => {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result !== true) return
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result !== true) return
 
-      // Optimistic update - remove alarm immediately from UI
-      const previousAlarms = this.alarmOccurrences()
-      this.alarmOccurrences.set(previousAlarms.filter((alarm) => alarm.InstanceID !== instanceID))
+        // Optimistic update - remove alarm immediately from UI
+        const previousAlarms = this.alarmOccurrences()
+        this.alarmOccurrences.set(previousAlarms.filter((alarm) => alarm.InstanceID !== instanceID))
 
-      this.isLoading.set(true)
-      this.devicesService
-        .deleteAlarmOccurrence(this.deviceId(), instanceID)
-        .pipe(
-          finalize(() => {
-            this.isLoading.set(false)
+        this.isLoading.set(true)
+        this.devicesService
+          .deleteAlarmOccurrence(this.deviceId(), instanceID)
+          .pipe(
+            finalize(() => {
+              this.isLoading.set(false)
+            }),
+            takeUntil(this.destroy$)
+          )
+          .subscribe({
+            next: () => {
+              // Success - alarm already removed from UI
+              const msg: string = this.translate.instant('alarm.successDelete.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+            },
+            error: () => {
+              // Error - restore the alarm and reload to ensure consistency
+              this.alarmOccurrences.set(previousAlarms)
+              this.loadAlarms()
+              const msg: string = this.translate.instant('alarm.errorDelete.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+            }
           })
-        )
-        .subscribe({
-          next: () => {
-            // Success - alarm already removed from UI
-            const msg: string = this.translate.instant('alarm.successDelete.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-          },
-          error: () => {
-            // Error - restore the alarm and reload to ensure consistency
-            this.alarmOccurrences.set(previousAlarms)
-            this.loadAlarms()
-            const msg: string = this.translate.instant('alarm.errorDelete.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          }
-        })
-    })
+      })
   }
 
   addAlarm = (): void => {
@@ -253,6 +259,7 @@ export class AlarmsComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.loadAlarms()
@@ -273,5 +280,10 @@ export class AlarmsComponent implements OnInit {
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

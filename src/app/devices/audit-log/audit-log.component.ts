@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, signal, ViewChild, inject, input } from '@angular/core'
+import { AfterViewInit, Component, OnDestroy, signal, ViewChild, inject, input } from '@angular/core'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { Router } from '@angular/router'
-import { merge, of } from 'rxjs'
-import { catchError, startWith, switchMap } from 'rxjs/operators'
+import { merge, of, Subject } from 'rxjs'
+import { catchError, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from 'src/models/models'
 import { MatCardModule } from '@angular/material/card'
@@ -38,12 +38,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     TranslateModule
   ]
 })
-export class AuditLogComponent implements AfterViewInit {
+export class AuditLogComponent implements AfterViewInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly router = inject(Router)
   private readonly deviceLogService = inject(DeviceLogService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   public devices: Device[] = []
   public isLoading = signal(true)
@@ -67,7 +68,7 @@ export class AuditLogComponent implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     // If the user changes the sort order, reset back to the first page.
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0))
+    this.sort.sortChange.pipe(takeUntil(this.destroy$)).subscribe(() => (this.paginator.pageIndex = 0))
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -81,7 +82,8 @@ export class AuditLogComponent implements AfterViewInit {
           const msg: string = this.translate.instant('audit.errorLog.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return of(this.auditLogData)
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe({
         next: (data) => {
@@ -106,16 +108,24 @@ export class AuditLogComponent implements AfterViewInit {
   }
   download(): void {
     this.isLoading.set(true)
-    this.deviceLogService.downloadAuditLog(this.deviceId()).subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/octet-stream' })
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `audit_${this.deviceId()}.csv`
-      a.click()
+    this.deviceLogService
+      .downloadAuditLog(this.deviceId())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        const blob = new Blob([data], { type: 'application/octet-stream' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `audit_${this.deviceId()}.csv`
+        a.click()
 
-      window.URL.revokeObjectURL(url)
-      this.isLoading.set(false)
-    })
+        window.URL.revokeObjectURL(url)
+        this.isLoading.set(false)
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

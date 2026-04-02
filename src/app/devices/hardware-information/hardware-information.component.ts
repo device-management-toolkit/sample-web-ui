@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
-import { catchError, finalize, throwError } from 'rxjs'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { DiskInformation, HardwareInformation } from 'src/models/models'
@@ -31,11 +31,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   templateUrl: './hardware-information.component.html',
   styleUrl: './hardware-information.component.scss'
 })
-export class HardwareInformationComponent implements OnInit {
+export class HardwareInformationComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
   public hwInfo?: HardwareInformation
@@ -62,6 +63,7 @@ export class HardwareInformationComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
         this.hwInfo = results
         if (!this.isCloudMode) {
@@ -81,11 +83,17 @@ export class HardwareInformationComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading.set(false)
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((diskInfo) => {
         this.diskInfo = diskInfo
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   calculateMediaSize(maxMediaSize: number): string {
