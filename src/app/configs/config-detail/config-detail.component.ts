@@ -78,7 +78,7 @@ export class ConfigDetailComponent implements OnInit {
   public readonly router = inject(Router)
 
   public configForm = this.fb.group({
-    configName: ['', Validators.required],
+    configName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_-]+$/)]],
     mpsServerAddress: ['', Validators.required],
     serverAddressFormat: [3, Validators.required], // 3 = ip, 201 = FQDN? wtf?
     commonName: ['', Validators.required],

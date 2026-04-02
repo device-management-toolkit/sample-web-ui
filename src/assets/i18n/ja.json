@@ -518,7 +518,7 @@
   },
   "common.wired": {
     "description": "ワイヤレスボタン用テキスト",
-    "value": "Wired"
+    "value": "ワイアード"
   },
   "common.wireless": {
     "description": "配線済みボタンのテキスト",
@@ -538,6 +538,10 @@
   "configDetail.configNameHint": {
     "description": "設定名フィールドのヒントテキスト",
     "value": "このCIRA設定の名前を入力してください"
+  },
+  "configDetail.configNamePatternError": {
+    "description": "設定名に無効な文字が含まれている場合のエラーメッセージ",
+    "value": "名前は文字、数字、ハイフン（-）、アンダースコア（_）のみを使用できます"
   },
   "configDetail.configNamePlaceholder": {
     "description": "設定名フィールドのプレースホルダーテキスト",
@@ -1060,6 +1064,18 @@
   "devices.table.tags": {
     "description": "タグ用テーブル列ヘッダー",
     "value": "タグ"
+  },
+  "deviceToolbar.power.on": {
+    "description": "電源オンのツールチップ",
+    "value": "電源: オン"
+  },
+  "deviceToolbar.power.sleep": {
+    "description": "スリープ状態のツールチップ",
+    "value": "電源: スリープ"
+  },
+  "deviceToolbar.power.off": {
+    "description": "電源オフのツールチップ",
+    "value": "電源: オフ"
   },
   "deviceUserConsent.description": {
     "description": "デバイスに関するユーザー同意の説明",
@@ -1640,6 +1656,10 @@
     "description": "KVMが接続中の際に表示されるラベル",
     "value": "KVMを接続中..."
   },
+  "kvm.sessionClosedByDevice": {
+    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
+    "value": "KVMセッションはAMTによって閉じられました"
+  },
   "kvm.disconnect.button": {
     "description": "KVMセッションから切断するボタンラベル",
     "value": "KVMの切断"
@@ -1726,7 +1746,7 @@
   },
   "mqttEvents.connect": {
     "description": "MQTTの接続ボタンテキスト",
-    "value": "Connect"
+    "value": "接続"
   },
   "mqttEvents.connected": {
     "description": "MQTT接続が成功した際のツールチップテキスト",
@@ -2029,7 +2049,7 @@
     "value": "ブートファイルのパス"
   },
   "powerOptions.hibernate": {
-    "value": "Hibernate"
+    "value": "冬眠"
   },
   "powerOptions.off": {
     "value": "オフ"
@@ -2673,10 +2693,6 @@
     "value": "ドラッグ＆ドロップで順序を変更",
     "description": "ドラッグアンドドロップによる並び替えのヒント"
   },
-  "proxy.removeButton.ariaLabel": {
-    "value": "プロキシプロファイルを削除",
-    "description": "プロキシプロファイル削除ボタンのAriaラベル"
-  },
   "profileDetail.noProxy": {
     "description": "利用可能なプロキシ設定がない場合のメッセージ",
     "value": "プロキシ設定が見つかりません"
@@ -2780,6 +2796,14 @@
   "common.delete": {
     "value": "削除",
     "description": "削除ボタンのテキスト"
+  },
+  "common.deleteProfile": {
+    "value": "プロフィールを削除",
+    "description": "プロフィール削除ボタンのテキスト"
+  },
+  "common.editTags": {
+    "description": "タグを一括編集するためのボタンテキスト",
+    "value": "タグを編集"
   },
   "common.update": {
     "value": "更新",

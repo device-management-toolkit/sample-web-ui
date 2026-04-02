@@ -1,3 +1,61 @@
+## [3.55.10](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.9...v3.55.10) (2026-03-31)
+
+
+### Bug Fixes
+
+* Fix cloud activation to support version-specific RPC flags and overlay handling ([#3232](https://github.com/device-management-toolkit/sample-web-ui/issues/3232)) ([f15a08f](https://github.com/device-management-toolkit/sample-web-ui/commit/f15a08ff6ba3706fcdf1cbbc58ce5db19af4d179))
+
+## [3.55.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.8...v3.55.9) (2026-03-30)
+
+
+### Bug Fixes
+
+* add pattern validation for CIRA config name field ([#3233](https://github.com/device-management-toolkit/sample-web-ui/issues/3233)) ([dacbb63](https://github.com/device-management-toolkit/sample-web-ui/commit/dacbb63f566675f188d2384006b8344c3fb19843)), closes [device-management-toolkit/rps#2599](https://github.com/device-management-toolkit/rps/issues/2599)
+
+## [3.55.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.7...v3.55.8) (2026-03-30)
+
+
+### Bug Fixes
+
+* show msg only in validation errors ([#3223](https://github.com/device-management-toolkit/sample-web-ui/issues/3223)) ([610d0ed](https://github.com/device-management-toolkit/sample-web-ui/commit/610d0edf061b85799674036a28c8dbfca287994f))
+
+## [3.55.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.6...v3.55.7) (2026-03-20)
+
+## [3.55.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.5...v3.55.6) (2026-03-16)
+
+
+### Performance Improvements
+
+* cache AMT features to reduce duplicate HTTP requests ([#3169](https://github.com/device-management-toolkit/sample-web-ui/issues/3169)) ([48942cd](https://github.com/device-management-toolkit/sample-web-ui/commit/48942cde89a749d789415bba38bcb440bc18b8ed))
+
+## [3.55.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.4...v3.55.5) (2026-03-16)
+
+
+### Bug Fixes
+
+* **devices:** show Connect button after disconnect and refresh auth token on reconnect ([#3159](https://github.com/device-management-toolkit/sample-web-ui/issues/3159)) ([3fc4793](https://github.com/device-management-toolkit/sample-web-ui/commit/3fc4793f17b5d91d73b8b0a4be14239a1e10259d))
+
+## [3.55.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.3...v3.55.4) (2026-03-16)
+
+
+### Bug Fixes
+
+* add skipamtcertcheck flag for AMT19+ activation support ([#3195](https://github.com/device-management-toolkit/sample-web-ui/issues/3195)) ([26eb87a](https://github.com/device-management-toolkit/sample-web-ui/commit/26eb87a67aef8fade90872c76d7ade30e575f99c))
+
+## [3.55.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.2...v3.55.3) (2026-03-11)
+
+
+### Bug Fixes
+
+* shows correct error message on device load failure ([56fcf1b](https://github.com/device-management-toolkit/sample-web-ui/commit/56fcf1bbcde8021f6d093252b4bc87b6f112d079))
+
+## [3.55.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.1...v3.55.2) (2026-03-09)
+
+
+### Bug Fixes
+
+* **i18n:** add and update missing translations ([528ea4d](https://github.com/device-management-toolkit/sample-web-ui/commit/528ea4dc5996fc95e047f7ea7905c11950950f70))
+
 ## [3.55.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.0...v3.55.1) (2026-02-26)
 
 

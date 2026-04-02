@@ -312,9 +312,18 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   connect(): void {
     this.isDisconnecting = false
-    this.deviceState.set(-1) // Reset device state for reconnection
-    this.init()
-    this.deviceKVMConnection.set(true)
+    this.deviceState.set(-1)
+    this.readyToLoadKvm = false
+    this.deviceKVMConnection.set(false)
+    // Refresh the auth token before reconnecting in case it has expired
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
+      .pipe(
+        tap((result) => {
+          this.authToken.set(result.token)
+        })
+      )
+      .subscribe({ next: () => this.init() })
   }
   @HostListener('window:beforeunload')
   beforeUnloadHandler() {
@@ -509,7 +518,9 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
       this.loadingStatus.set('')
       if (!this.isDisconnecting && !this.isEncodingChange) {
-        this.displayError(this.translate.instant('errors.kvmConnection.value'))
+        // AMT dropped the connection - reset so button shows "Connect KVM"
+        this.deviceKVMConnection.set(false)
+        this.displayWarning(this.translate.instant('kvm.sessionClosedByDevice.value'))
       }
       this.isDisconnecting = false
     }

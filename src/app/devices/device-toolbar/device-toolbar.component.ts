@@ -177,7 +177,9 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   private loadAMTFeatures(): void {
-    this.devicesService.getAMTFeatures(this.deviceId()).subscribe((features) => {
+    // Use cached features if fresher than 30s — avoids a duplicate AMT round-trip
+    // when the KVM/SOL component already loaded features moments before the toolbar.
+    this.devicesService.getAMTFeaturesCached(this.deviceId()).subscribe((features) => {
       this.amtFeatures.set(features)
       this.buildPowerOptions()
     })
@@ -214,10 +216,10 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService.getPowerState(this.deviceId()).subscribe((powerState) => {
       this.powerState.set(
         powerState.powerstate.toString() === '2'
-          ? 'Power: On'
+          ? 'deviceToolbar.power.on.value'
           : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-            ? 'Power: Sleep'
-            : 'Power: Off'
+            ? 'deviceToolbar.power.sleep.value'
+            : 'deviceToolbar.power.off.value'
       )
       this.isLoading().set(false)
     })
