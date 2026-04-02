@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, AfterViewInit, ViewChild, inject, signal, input } from '@angular/core'
+import { Component, AfterViewInit, OnDestroy, ViewChild, inject, signal, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { of } from 'rxjs'
-import { catchError, finalize } from 'rxjs/operators'
+import { of, Subject } from 'rxjs'
+import { catchError, finalize, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { EventLog } from 'src/models/models'
 import { MatCardModule } from '@angular/material/card'
@@ -45,11 +45,12 @@ const EVENTTYPEMAP: EventTypeMap = {
     TranslateModule
   ]
 })
-export class EventLogComponent implements AfterViewInit {
+export class EventLogComponent implements AfterViewInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly deviceLogService = inject(DeviceLogService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -92,6 +93,7 @@ export class EventLogComponent implements AfterViewInit {
             this.isLoading.set(false)
           })
         )
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
           this.dataSource.data = data.records
         })
@@ -114,6 +116,7 @@ export class EventLogComponent implements AfterViewInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.hasMoreRecords = data.hasMoreRecords
         this.dataSource.data = data.records
@@ -137,16 +140,24 @@ export class EventLogComponent implements AfterViewInit {
   }
   download(): void {
     this.isLoading.set(true)
-    this.deviceLogService.downloadEventLog(this.deviceId()).subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/octet-stream' })
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `event_${this.deviceId()}.csv`
-      a.click()
+    this.deviceLogService
+      .downloadEventLog(this.deviceId())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        const blob = new Blob([data], { type: 'application/octet-stream' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `event_${this.deviceId()}.csv`
+        a.click()
 
-      window.URL.revokeObjectURL(url)
-      this.isLoading.set(false)
-    })
+        window.URL.revokeObjectURL(url)
+        this.isLoading.set(false)
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

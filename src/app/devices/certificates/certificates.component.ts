@@ -1,9 +1,9 @@
-import { Component, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { MatProgressBar } from '@angular/material/progress-bar'
-import { catchError, finalize, throwError } from 'rxjs'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import { DevicesService } from '../devices.service'
 
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
@@ -31,11 +31,12 @@ import { MatTooltip } from '@angular/material/tooltip'
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.scss'
 })
-export class CertificatesComponent implements OnInit {
+export class CertificatesComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   snackBar = inject(MatSnackBar)
+  private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
   public certInfo?: any
@@ -63,6 +64,7 @@ export class CertificatesComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((certInfo: any) => {
         this.certInfo = certInfo
         this.isLoading.set(false)
@@ -104,13 +106,16 @@ export class CertificatesComponent implements OnInit {
       disableClose: false
     })
 
-    dialogRef.afterClosed().subscribe((addCert: CertInfo) => {
-      if (!addCert || addCert.cert === '') {
-        return
-      }
-      this.isLoading.set(true)
-      this.addCertificate(addCert)
-    })
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((addCert: CertInfo) => {
+        if (!addCert || addCert.cert === '') {
+          return
+        }
+        this.isLoading.set(true)
+        this.addCertificate(addCert)
+      })
   }
 
   addCertificate(addCert: CertInfo): void {
@@ -129,6 +134,7 @@ export class CertificatesComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.getCertificates()
       })
@@ -137,54 +143,63 @@ export class CertificatesComponent implements OnInit {
   deleteCertificate(cert: any): void {
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.isLoading.set(true)
-        this.devicesService
-          .deleteCertificate(this.deviceId(), cert.instanceID)
-          .pipe(
-            catchError((err) => {
-              this.isLoading.set(false)
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result === true) {
+          this.isLoading.set(true)
+          this.devicesService
+            .deleteCertificate(this.deviceId(), cert.instanceID)
+            .pipe(
+              catchError((err) => {
+                this.isLoading.set(false)
 
-              // Handle specific error types from our API
-              let msg: string
-              switch (err.status) {
-                case 409:
-                  // Certificate is referenced by profiles
-                  msg =
-                    err.error?.errorDescription ||
-                    this.translate.instant('certificates.certificateReferencedError.value')
-                  break
-                case 404:
-                  // Certificate not found
-                  msg = this.translate.instant('certificates.certificateNotFoundError.value')
-                  break
-                case 400:
-                  // Read-only certificate
-                  if (err.error?.errorDescription?.includes('read-only')) {
-                    msg = this.translate.instant('certificates.readOnlyCertificateError.value')
-                  } else {
+                // Handle specific error types from our API
+                let msg: string
+                switch (err.status) {
+                  case 409:
+                    // Certificate is referenced by profiles
+                    msg =
+                      err.error?.errorDescription ||
+                      this.translate.instant('certificates.certificateReferencedError.value')
+                    break
+                  case 404:
+                    // Certificate not found
+                    msg = this.translate.instant('certificates.certificateNotFoundError.value')
+                    break
+                  case 400:
+                    // Read-only certificate
+                    if (err.error?.errorDescription?.includes('read-only')) {
+                      msg = this.translate.instant('certificates.readOnlyCertificateError.value')
+                    } else {
+                      msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+                    }
+                    break
+                  default:
+                    // Generic error
                     msg = this.translate.instant('certificates.errorDeletingCertificate.value')
-                  }
-                  break
-                default:
-                  // Generic error
-                  msg = this.translate.instant('certificates.errorDeletingCertificate.value')
-                  break
-              }
+                    break
+                }
 
-              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return throwError(err)
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+                return throwError(err)
+              })
+            )
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              const msg: string = this.translate.instant('certificates.deletedSuccessfully.value', {
+                name: cert.displayName
+              })
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+              this.getCertificates()
             })
-          )
-          .subscribe(() => {
-            const msg: string = this.translate.instant('certificates.deletedSuccessfully.value', {
-              name: cert.displayName
-            })
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-            this.getCertificates()
-          })
-      }
-    })
+        }
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

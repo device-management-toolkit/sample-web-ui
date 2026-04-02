@@ -1,5 +1,5 @@
-import { Component, OnInit, inject, signal, input } from '@angular/core'
-import { catchError, finalize, throwError } from 'rxjs'
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -19,12 +19,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   templateUrl: './tls.component.html',
   styleUrl: './tls.component.scss'
 })
-export class TLSComponent implements OnInit {
+export class TLSComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   public readonly deviceId = input('')
+  private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
   public tlsData?: any[] = []
@@ -42,8 +43,14 @@ export class TLSComponent implements OnInit {
           this.isLoading.set(false)
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
         this.tlsData = results
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }
