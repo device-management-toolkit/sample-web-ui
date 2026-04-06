@@ -1,3 +1,10 @@
+# [3.56.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.10...v3.56.0) (2026-04-06)
+
+
+### Features
+
+* support cancel requests upon navigating away from page ([7d94c74](https://github.com/device-management-toolkit/sample-web-ui/commit/7d94c741a3ae2ca9ab2874a09d389a1d3f0ea703))
+
 ## [3.55.10](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.9...v3.55.10) (2026-03-31)
 
 
