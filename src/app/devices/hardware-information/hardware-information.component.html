@@ -1,8 +1,8 @@
-@if (isLoading()) {
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-}
-<div class="flex-1 flex-row">
+<div class="flex-1 flex-row flex-col-md">
   <mat-card class="flex flex-50 gap-12">
+    @if (isHwLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-header>
       <mat-card-title>{{ 'hwInfo.systemSummary.title.value' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ 'hwInfo.systemSummary.subtitle.value' | translate }}</mat-card-subtitle>
@@ -14,10 +14,15 @@
             @if (chip.Version !== null) {
               <div class="flex-row flex-1 flex-wrap">
                 <div class="flex flex-25">
-                  <p>{{ 'hwInfo.label.cpu.value' | translate }}</p>
+                  <p>{{ chip.Tag }}:</p>
                 </div>
                 <div class="flex flex-75 justify-end">
-                  <span class="mat-h3" data-cy="chipVersion"> {{ chip.Version }}</span>
+                  <span class="mat-h3" data-cy="chipVersion">
+                    {{ chip.Version }}
+                    @if (getProcessorForChip(chip.Tag); as proc) {
+                      &#64; {{ proc.CurrentClockSpeed }} / {{ proc.MaxClockSpeed }} MHz
+                    }
+                  </span>
                 </div>
               </div>
             }
@@ -52,6 +57,9 @@
   </mat-card>
 
   <mat-card class="flex flex-50 gap-12">
+    @if (isHwLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-header>
       <mat-card-title>{{ 'hwInfo.biosSummary.title.value' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ 'hwInfo.biosSummary.subtitle.value' | translate }}</mat-card-subtitle>
@@ -91,8 +99,11 @@
   </mat-card>
 </div>
 
-<div class="flex-1 flex-row">
+<div class="flex-1 flex-row flex-col-md">
   <mat-card class="flex flex-50 gap-12" id="memorySummary">
+    @if (isHwLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-header>
       <mat-card-title>{{ 'hwInfo.memorySummary.title.value' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ 'hwInfo.memorySummary.subtitle.value' | translate }}</mat-card-subtitle>
@@ -143,6 +154,9 @@
     </mat-card-content>
   </mat-card>
   <mat-card class="flex flex-50 gap-12">
+    @if (isHwLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-header>
       <mat-card-title> {{ 'hwInfo.motherboardSummary.title.value' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ 'hwInfo.motherboardSummary.subtitle.value' | translate }}</mat-card-subtitle>
@@ -178,9 +192,12 @@
   </mat-card>
 </div>
 
-<div class="flex-1 flex-row">
+<div class="flex-1 flex-row flex-col-md">
   @if (!isCloudMode) {
     <mat-card class="flex flex-50 gap-12">
+      @if (isDiskLoading()) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
       <mat-card-header>
         <mat-card-title>{{ 'hwInfo.storageSummary.title.value' | translate }}</mat-card-title>
         <mat-card-subtitle>{{ 'hwInfo.storageSummary.subtitle.value' | translate }}</mat-card-subtitle>
