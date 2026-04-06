@@ -179,12 +179,20 @@ describe('Cloud Deployment - Docker Compose Installation (deploy-cloud.yml)', ()
         cy.task('log', '✓ Existing dmt containers removed')
       })
 
-      //cy.task('log', 'Building Docker images (this may take 10+ minutes)...')
-      //cy.exec(`cd ${cloudDeploymentPath} && docker compose build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY --build-arg NO_PROXY --build-arg http_proxy --build-arg https_proxy --build-arg no_proxy --no-cache`, {
-      //  timeout: 600000
-      //}).then(() => {
-      //  cy.task('log', '✓ Services built successfully')
-     // })
+      cy.task('log', 'Pruning Docker builder cache (30GB bound)...')
+      cy.exec(`docker builder prune -af --max-used-space 30GB || true`, {
+        timeout: 60000,
+        failOnNonZeroExit: false
+      }).then(() => {
+        cy.task('log', '✓ Docker builder cache pruned')
+      })
+
+      cy.task('log', 'Building Docker images (this may take 10+ minutes)...')
+      cy.exec(`cd ${cloudDeploymentPath} && docker compose build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY --build-arg NO_PROXY --build-arg http_proxy --build-arg https_proxy --build-arg no_proxy --no-cache --pull`, {
+        timeout: 600000
+      }).then(() => {
+        cy.task('log', '✓ Services built successfully')
+      })
 
       cy.exec(`cd ${cloudDeploymentPath} && docker compose up -d`, {
         timeout: 120000
