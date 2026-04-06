@@ -9,7 +9,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
-import { DiskInformation, HardwareInformation } from 'src/models/models'
+import { CIMProcessor, DiskInformation, HardwareInformation } from 'src/models/models'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -38,7 +38,8 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
   public readonly deviceId = input('')
   private readonly destroy$ = new Subject<void>()
 
-  public isLoading = signal(true)
+  public isHwLoading = signal(true)
+  public isDiskLoading = signal(false)
   public hwInfo?: HardwareInformation
   public diskInfo?: DiskInformation
   public targetOS: any
@@ -60,7 +61,7 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading.set(false)
+          this.isHwLoading.set(false)
         })
       )
       .pipe(takeUntil(this.destroy$))
@@ -73,6 +74,7 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
   }
 
   getDiskInformation(): void {
+    this.isDiskLoading.set(true)
     this.devicesService
       .getDiskInformation(this.deviceId())
       .pipe(
@@ -82,13 +84,17 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
           return throwError(err)
         }),
         finalize(() => {
-          this.isLoading.set(false)
+          this.isDiskLoading.set(false)
         }),
         takeUntil(this.destroy$)
       )
       .subscribe((diskInfo) => {
         this.diskInfo = diskInfo
       })
+  }
+
+  getProcessorForChip(tag: string): CIMProcessor | undefined {
+    return this.hwInfo?.CIM_Processor?.responses?.find((p: CIMProcessor) => p.DeviceID === tag)
   }
 
   ngOnDestroy(): void {

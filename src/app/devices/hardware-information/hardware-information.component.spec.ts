@@ -8,7 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HardwareInformationComponent } from './hardware-information.component'
 import { DevicesService } from '../devices.service'
 import { ActivatedRoute } from '@angular/router'
-import { of } from 'rxjs'
+import { EMPTY, of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('HardwareInformationComponent', () => {
@@ -73,9 +73,32 @@ describe('HardwareInformationComponent', () => {
     fixture.detectChanges()
   })
 
-  it('should set isLoading to false upon completion or error', () => {
+  it('should set isDiskLoading to true then false upon completion', () => {
     component.getDiskInformation()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isDiskLoading()).toBeFalse()
+  })
+
+  it('should set isDiskLoading to false when request completes without emitting', () => {
+    devicesServiceSpy.getDiskInformation.and.returnValue(EMPTY)
+    component.getDiskInformation()
+    expect(component.isDiskLoading()).toBeFalse()
+  })
+
+  it('should return matching processor for chip tag', () => {
+    const mockProc = { DeviceID: 'CPU0', CurrentClockSpeed: 2400, MaxClockSpeed: 3600 } as any
+    component.hwInfo = { CIM_Processor: { responses: [mockProc] } } as any
+    expect(component.getProcessorForChip('CPU0')).toEqual(mockProc)
+  })
+
+  it('should return undefined for non-matching chip tag', () => {
+    const mockProc = { DeviceID: 'CPU0' } as any
+    component.hwInfo = { CIM_Processor: { responses: [mockProc] } } as any
+    expect(component.getProcessorForChip('CPU1')).toBeUndefined()
+  })
+
+  it('should return undefined when hwInfo has no processor data', () => {
+    component.hwInfo = {} as any
+    expect(component.getProcessorForChip('CPU0')).toBeUndefined()
   })
 
   it('should create', () => {

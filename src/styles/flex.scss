@@ -25,7 +25,13 @@
 // Mostly used with flex-row, when wrapping is desired.
 .flex-col-xs {
   @media screen and (max-width: 599px) {
-    flex-direction: column;
+    flex-direction: column !important;
+  }
+}
+
+.flex-col-md {
+  @media screen and (max-width: 1279px) {
+    flex-direction: column !important;
   }
 }
 
