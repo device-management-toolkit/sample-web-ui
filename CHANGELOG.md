@@ -1,3 +1,10 @@
+# [3.57.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.56.0...v3.57.0) (2026-04-06)
+
+
+### Features
+
+* improves layout for HW Info ([24f0aca](https://github.com/device-management-toolkit/sample-web-ui/commit/24f0aca6eb01e1c9bdf2a44d971f9873a855110f))
+
 # [3.56.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.55.10...v3.56.0) (2026-04-06)
 
 
