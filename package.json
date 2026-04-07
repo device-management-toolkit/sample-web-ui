@@ -15,7 +15,7 @@
     "e2e": "ng e2e",
     "cypress-install": "cypress install",
     "cypress": "cypress open",
-    "cy-runner": "cypress run",
+    "cy-runner": "cypress run --config \"excludeSpecPattern=cypress/e2e/integration/power-control/**/*.ts\"",
     "lint:cypress": "eslint ./cypress"
   },
   "private": true,
@@ -76,6 +76,7 @@
     "karma-junit-reporter": "^2.0.1",
     "mocha-junit-reporter": "^2.2.1",
     "mocha-multi-reporters": "^1.5.1",
+    "prettier": "^3.8.1",
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-multiline-arrays": "^4.1.5",
     "ts-node": "~10.9.2",

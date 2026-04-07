@@ -31,12 +31,120 @@ export default defineConfig({
     PROVISIONING_CERT_PASSWORD: 'Intel123!',
     DOMAIN_SUFFIX: 'mlopshub.com',
     RPC_DOCKER_IMAGE: 'vprodemo.azurecr.io/rpc-go:latest',
-    DEVICE: '192.168.1.1'
+    // IP/hostname of the device under test — used by device UI tests (hostname field)
+    // and by power-control API tests for ping-based disconnect verification.
+    // Override at runtime: --env DEVICE=<ip>
+    DEVICE: '192.168.1.1',
+    // ─── MPS Power Control Functional Tests ───────────────────────────────────
+    // Base URL of the MPS Console backend (same server as Redfish tests)
+    MPS_BASEURL: 'https://localhost:8181',
+    // Auth URL override for Cloud/Kong deployments.
+    // Defaults to MPS_BASEURL when not set; override with --env MPS_AUTH_BASEURL=<url>
+    MPS_AUTH_BASEURL: '',
+    // GUID of a real registered AMT device for power-control functional tests.
+    // Can be supplied in three ways (highest-priority first):
+    //   1. OS env var (no prefix):   DEVICE_GUID=<guid> npx cypress run ...
+    //   2. OS env var (Cypress prefix, handled natively): CYPRESS_DEVICE_GUID=<guid>
+    //   3. CLI flag:                 npx cypress run --env DEVICE_GUID=<guid>
+    //   4. This config file default: leave as '' to auto-fetch the first registered device.
+    DEVICE_GUID: ''
   },
   chromeWebSecurity: false,
   e2e: {
     experimentalStudio: true,
     screenshotOnRunFailure: false,
-    specPattern: 'cypress/e2e/integration/**/*.ts'
+    specPattern: 'cypress/e2e/integration/**/*.ts',
+    setupNodeEvents(on, config) {
+      // ── OS environment variable passthrough ────────────────────────────────
+      // Cypress natively picks up CYPRESS_* prefixed env vars, but not plain ones.
+      // Support both casings so the var works however it is set upstream:
+      //   DEVICE_GUID=<guid>   — uppercase (our convention, CI workflow)
+      //   device_guid=<guid>   — lowercase (e2e-testing Postman/Newman convention)
+      //   CYPRESS_DEVICE_GUID= — Cypress-prefixed (handled natively by Cypress)
+      //   --env DEVICE_GUID=   — CLI flag (handled natively by Cypress)
+      // Priority: DEVICE_GUID > device_guid (uppercase wins if both are set).
+      const osGuid = process.env['DEVICE_GUID'] || process.env['device_guid']
+      if (osGuid) {
+        config.env['DEVICE_GUID'] = osGuid
+      }
+      // Also support DEVICE_IP as a legacy alias for DEVICE (backward compat).
+      const osDevice = process.env['DEVICE'] || process.env['DEVICE_IP']
+      if (osDevice) {
+        config.env['DEVICE'] = osDevice
+      }
+
+      // ── Log file task ──────────────────────────────────────────────────────
+      // Provide cy.task('log') for functional tests — writes to stdout and a
+      // timestamped log file under cypress/logs/ (same pattern as redfish config).
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const fs = require('fs') as typeof import('fs')
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require('path') as typeof import('path')
+      const utcFileTimestamp = (): string =>
+        new Date()
+          .toISOString()
+          .replace(/\.\d{3}Z$/, 'Z')
+          .replace(/:/g, '-')
+      const logsDir = path.join(__dirname, 'cypress', 'logs')
+      if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true })
+      const logFile = path.join(logsDir, `functional-${utcFileTimestamp()}.log`)
+      // ── Allow self-signed / IP-address TLS certs ──────────────────────────────
+      // chromeWebSecurity:false disables CORS but NOT TLS cert validation.
+      // Cypress acts as an HTTPS proxy (Node.js) for all browser traffic — if the
+      // proxy rejects the server's self-signed cert, cy.visit() fails immediately.
+      // NODE_TLS_REJECT_UNAUTHORIZED=0 (set in the calling shell before this run)
+      // tells the Node.js TLS stack to accept any certificate, which lets the
+      // Cypress proxy tunnel to the cloud's self-signed-cert HTTPS endpoint.
+      //
+      // For real Chrome (not Electron), also pass --ignore-certificate-errors so
+      // the renderer process doesn't block navigation independently:
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args = launchOptions.args ?? []
+          launchOptions.args.push('--ignore-certificate-errors')
+        }
+        return launchOptions
+      })
+
+      on('task', {
+        log(message: string): null {
+          const line = `${new Date().toISOString()}  ${message}`
+          process.stdout.write(line + '\n')
+          fs.appendFileSync(logFile, line + '\n', 'utf8')
+          return null
+        },
+        // Runs an ICMP ping to `host` in a child process (Node.js side).
+        // Returns a structured result — never throws into the Cypress command queue.
+        // Used by the power cycle spec to verify physical disconnect / reconnect.
+        ping(args: { host: string; timeoutMs?: number }): { success: boolean; output: string; durationMs: number } {
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { execSync } = require('child_process') as typeof import('child_process')
+          const isWindows = process.platform === 'win32'
+          const waitMs = args.timeoutMs ?? 2000
+          // -n/-c 1  = send one packet
+          // -w (Windows, ms) / -W (Linux, s) / -t (macOS, s) = per-reply timeout
+          const cmd = isWindows
+            ? `ping -n 1 -w ${waitMs} ${args.host}`
+            : process.platform === 'darwin'
+              ? `ping -c 1 -t ${Math.ceil(waitMs / 1000)} ${args.host}`
+              : `ping -c 1 -W ${Math.ceil(waitMs / 1000)} ${args.host}`
+          const start = Date.now()
+          try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const out = (execSync as any)(cmd, { timeout: waitMs + 1500 }).toString() as string
+            const firstLine = out.split('\n').find((l: string) => l.trim()) ?? ''
+            return { success: true, output: firstLine.trim(), durationMs: Date.now() - start }
+          } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const err = e as any
+            const raw: string = (err.stdout?.toString() ?? err.message ?? '').trim()
+            const firstLine = raw.split('\n').find((l: string) => l.trim()) ?? 'no output'
+            return { success: false, output: firstLine.trim(), durationMs: Date.now() - start }
+          }
+        }
+      })
+
+      return config
+    }
   }
 })
