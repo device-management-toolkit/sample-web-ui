@@ -71,5 +71,15 @@ module.exports = tseslint.config(
       ]
     }
   },
+  {
+    // Cypress test files use Chai-style assertions (expect(...).to.be.true,
+    // .and.not.be.empty, etc.) which are property-getter side-effects. Their
+    // return values are intentionally unused, so the no-unused-expressions
+    // rule must be turned off for all Cypress files.
+    files: ['cypress/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off'
+    }
+  },
   eslintConfigPrettier
 )
