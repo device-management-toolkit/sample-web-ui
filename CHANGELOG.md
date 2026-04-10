@@ -1,3 +1,5 @@
+## [3.57.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.0...v3.57.1) (2026-04-10)
+
 # [3.57.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.56.0...v3.57.0) (2026-04-06)
 
 
