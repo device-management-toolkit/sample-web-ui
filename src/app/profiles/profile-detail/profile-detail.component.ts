@@ -364,7 +364,7 @@ export class ProfileDetailComponent implements OnInit {
   generateRandomPassword(length = 16): string {
     const charset = /[a-zA-Z0-9!$%]/
     const bit = new Uint8Array(1)
-    let char = ''
+    let char: string
     let password = ''
     let searching = true
 
