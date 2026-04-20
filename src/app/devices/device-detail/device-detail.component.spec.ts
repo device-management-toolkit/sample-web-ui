@@ -18,7 +18,6 @@ import { TranslateModule } from '@ngx-translate/core'
 describe('DeviceDetailComponent', () => {
   let component: DeviceDetailComponent
   let fixture: ComponentFixture<DeviceDetailComponent>
-  let devicesService: any
   @Component({
     selector: 'app-device-toolbar',
     imports: []
@@ -50,7 +49,7 @@ describe('DeviceDetailComponent', () => {
       providers: [
         provideRouter([]), // Provide an empty router configuration
         provideNativeDateAdapter(),
-        { provide: DevicesService, useValue: devicesService },
+        { provide: DevicesService, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {
