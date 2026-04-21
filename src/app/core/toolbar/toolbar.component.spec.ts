@@ -65,8 +65,7 @@ describe('ToolbarComponent', () => {
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: MatDialog, useValue: matDialogSpy },
-        { provide: Router, useValue: routerSpy }
-      ]
+        { provide: Router, useValue: routerSpy }]
     }).compileComponents()
 
     fixture = TestBed.createComponent(ToolbarComponent)

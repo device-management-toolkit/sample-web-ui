@@ -26,8 +26,7 @@ describe('DeviceEnableKvmComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: MatDialogRef, useValue: dialogMock }
-      ]
+        { provide: MatDialogRef, useValue: dialogMock }]
     })
   })
 

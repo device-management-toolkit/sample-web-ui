@@ -31,7 +31,9 @@ import {
   BootDetails,
   BootSource,
   DisplaySelectionResponse,
-  DisplaySelectionRequest
+  DisplaySelectionRequest,
+  RemoteEraseRequest,
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -375,6 +377,22 @@ export class DevicesService {
     }
   }
 
+  setRemoteEraseOptions(deviceId: string, req: RemoteEraseRequest): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`, req).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {
+    return this.http.get<BootCapabilities>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
       map((tags) => tags.sort(caseInsensitiveCompare)),
@@ -439,13 +457,21 @@ export class DevicesService {
       enableSOL: true,
       enableIDER: true,
       ocr: true,
-      remoteErase: true
+      platformEraseEnabled: true
     }
   ): Observable<AMTFeaturesResponse> {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
-        tap((features) => this.getOrCreateFeaturesStream(deviceId).next(features)),
+        tap((features) => {
+          // The server may omit rpeEnabled in the POST response, so fall back to
+          // what we sent so the cache reflects the actual intended state.
+          const merged: AMTFeaturesResponse = {
+            ...features,
+            rpeEnabled: features.rpeEnabled ?? payload.platformEraseEnabled
+          }
+          this.getOrCreateFeaturesStream(deviceId).next(merged)
+        }),
         catchError((err) => {
           throw err
         })
