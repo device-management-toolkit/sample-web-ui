@@ -1423,6 +1423,10 @@
     "description": "HTTPS ネットワークブートのラベル",
     "value": "HTTPS ネットワークブート:"
   },
+  "general.remotePlatformErase": {
+    "description": "リモートプラットフォーム消去のラベル",
+    "value": "リモートプラットフォーム消去:"
+  },
   "general.ideRedirection": {
     "description": "IDEリダイレクト用ラベル",
     "value": "IDE リダイレクト："
@@ -2812,5 +2816,125 @@
   "common.noData": {
     "value": "利用可能なデータがありません",
     "description": "データが利用できない場合のメッセージ"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "リモートプラットフォーム消去のカテゴリ名",
+    "value": "リモートプラットフォーム消去"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "リモートプラットフォーム消去の説明",
+    "value": "プラットフォームデータを安全に消去する"
+  },
+  "remotePlatformErase.title": {
+    "description": "リモートプラットフォーム消去機能カードのタイトル",
+    "value": "リモートプラットフォーム消去"
+  },
+  "remotePlatformErase.description": {
+    "description": "リモートプラットフォーム消去機能カードのサブタイトル",
+    "value": "このデバイスのリモートプラットフォーム消去機能を有効または無効にする"
+  },
+  "remotePlatformErase.warning": {
+    "description": "リモートプラットフォーム消去の有効化に関する警告メッセージ",
+    "value": "この機能を有効にすると、プラットフォームデータをリモートで消去できます。慎重に使用してください。"
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "リモートプラットフォーム消去を有効にするチェックボックスのラベル",
+    "value": "リモートプラットフォーム消去を有効にする"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "消去開始アクションカードのタイトル",
+    "value": "リモート消去の開始"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "消去開始アクションカードのサブタイトル",
+    "value": "このプラットフォームに保存されているすべてのデータを完全に消去する"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "リモートプラットフォーム消去を開始する前の警告",
+    "value": "この操作は元に戻せません。すべてのプラットフォームデータが完全に消去されます。"
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "リモートプラットフォーム消去を開始するボタンのラベル",
+    "value": "リモート消去を開始"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "リモートプラットフォーム消去機能の切り替え成功メッセージ",
+    "value": "リモートプラットフォーム消去機能を正常に更新しました"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "リモートプラットフォーム消去機能の更新失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去機能の更新に失敗しました"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "リモートプラットフォーム消去開始後の成功メッセージ",
+    "value": "リモートプラットフォーム消去が正常に開始されました"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "リモートプラットフォーム消去の開始失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去の開始に失敗しました"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "リモートプラットフォーム消去機能の状態読み込み失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去機能のステータスの読み込みに失敗しました"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "デバイスでリモートプラットフォーム消去がサポートされていない場合のメッセージ",
+    "value": "リモートプラットフォーム消去はサポートされていません"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "消去機能カードのタイトル",
+    "value": "消去機能"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "消去機能カードのサブタイトル",
+    "value": "消去操作に含める機能を選択してください。サポートされていない機能は選択できません。"
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "機能が有効な場合に表示されるヒント。消去する機能を選択するようユーザーに促す",
+    "value": "消去する機能を選択し、リモート消去を開始をクリックしてください。"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "全SSDのセキュア消去のラベル",
+    "value": "全SSDのセキュア消去"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "全SSDのセキュア消去の説明",
+    "value": "メディア消去と暗号消去の組み合わせにより、ATAおよびNVMドライブからすべてのコンテンツを削除します"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "TPMクリアのラベル",
+    "value": "TPMクリア"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "TPMクリアの説明",
+    "value": "TPMに関連するすべての作成済みキーと、仮想スマートカードやログインPINなど、それらで保護されたデータを削除します"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "BIOSをEOM状態に復元するラベル",
+    "value": "BIOSをEOM状態に復元"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "BIOSをEOM状態に復元する説明",
+    "value": "BIOSをシステム設計者が指定したEnd of Manufacture（EOM）のゴールデン構成に復元します"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Intel CSMEファームウェアの設定解除のラベル",
+    "value": "Intel CSMEファームウェアの設定解除"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "機能が選択されていない場合の消去開始ボタンのツールチップ",
+    "value": "少なくとも1つの消去機能を選択してください"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "リモートプラットフォーム消去を開始する前の確認ダイアログメッセージ",
+    "value": "本当にシステムを消去して再起動しますか？"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Intel CSMEファームウェアの設定解除の説明",
+    "value": "Intel AMTの完全なプロビジョニング解除、デフォルト状態への復帰、およびIntel AMT機能の無効化"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "CSMEの設定解除が選択されたときに表示される情報メッセージ（他のオプションと組み合わせられない理由を説明）",
+    "value": "CSMEの設定解除はIntel AMTの完全なプロビジョニング解除を実行し、他の消去操作と組み合わせることはできません。"
   }
 }

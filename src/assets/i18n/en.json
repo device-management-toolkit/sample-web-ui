@@ -1045,6 +1045,134 @@
     "description": "Description for TLS settings",
     "value": "View TLS configuration"
   },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Category name for Remote Platform Erase",
+    "value": "Remote Platform Erase"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Description for Remote Platform Erase",
+    "value": "Securely erase platform data"
+  },
+  "remotePlatformErase.title": {
+    "description": "Title for the Remote Platform Erase feature card",
+    "value": "Remote Platform Erase"
+  },
+  "remotePlatformErase.description": {
+    "description": "Subtitle for the Remote Platform Erase feature card",
+    "value": "Manage Remote Platform Erase for this device."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Warning message about enabling Remote Platform Erase",
+    "value": "Enabling this feature allows remote erasure of platform data. Use with caution."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Status message shown when Remote Platform Erase is enabled",
+    "value": "Feature is enabled"
+  },
+  "remotePlatformErase.featureDisabled": {
+    "description": "Status message shown when Remote Platform Erase is disabled",
+    "value": "Feature is disabled. Enable it on the AMT Features tab."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Title for the initiate erase action card",
+    "value": "Initiate Remote Erase"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Subtitle for the initiate erase action card",
+    "value": "Permanently erase all data stored on this platform"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Warning before initiating a remote platform erase",
+    "value": "This action is irreversible. All platform data will be permanently erased."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Button label to initiate Remote Platform Erase",
+    "value": "Initiate Remote Erase"
+  },
+  "remotePlatformErase.initiateDisabledTooltip": {
+    "description": "Tooltip shown on the initiate erase button when the feature is disabled",
+    "value": "Enable Remote Platform Erase on the AMT Features tab first"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Tooltip shown on the initiate erase button when no capabilities are selected",
+    "value": "Select at least one erase capability"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Confirmation dialog message before initiating remote platform erase",
+    "value": "Are you sure you wish to erase and restart the system?"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Success message when Remote Platform Erase feature is toggled",
+    "value": "Remote Platform Erase feature updated successfully"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Error message when Remote Platform Erase feature update fails",
+    "value": "Failed to update Remote Platform Erase feature"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Success message after initiating Remote Platform Erase",
+    "value": "Remote Platform Erase initiated successfully"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Error message when Remote Platform Erase fails to initiate",
+    "value": "Failed to initiate Remote Platform Erase"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Error message when loading Remote Platform Erase feature status fails",
+    "value": "Failed to load Remote Platform Erase feature status"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Message shown when Remote Platform Erase is not supported on the device",
+    "value": "Remote Platform Erase is not supported"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Title for the platform erase capabilities card",
+    "value": "Erase Capabilities"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Subtitle for the platform erase capabilities card",
+    "value": "Select which capabilities to include in the erase operation. Unsupported capabilities cannot be selected."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Hint shown when feature is enabled, prompting user to select capabilities to erase",
+    "value": "Select the capabilities you want to erase, then click Initiate Remote Erase."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Label for the Secure Erase of All SSDs capability",
+    "value": "Secure Erase of All SSDs"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Description for the Secure Erase of All SSDs capability",
+    "value": "Removal of all content from ATA and NVM drives through a combination of media erase and crypto erase"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Label for the TPM Clear capability",
+    "value": "TPM Clear"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Description for the TPM Clear capability",
+    "value": "Delete all created keys associated with the TPM and data protected by those keys, such as a virtual smart card or a login PIN"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Label for the Restore BIOS to EOM State capability",
+    "value": "Restore BIOS to EOM State"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Description for the Restore BIOS to EOM State capability",
+    "value": "Restore the BIOS to the End of Manufacture (EOM) golden configuration specified by the system designer"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Label for the Unconfigure Intel CSME Firmware capability",
+    "value": "Unconfigure Intel CSME Firmware"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Description for the Unconfigure Intel CSME Firmware capability",
+    "value": "Full unprovisioning of Intel AMT, returning to the default state and disabling Intel AMT features"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Info message shown when Unconfigure CSME is selected, explaining it cannot be combined with other options",
+    "value": "Unconfigure CSME performs a full unprovision of Intel AMT and cannot be combined with other erase operations."
+  },
   "devices.actions.deactivate": {
     "description": "Tooltip for deactivating/removing a device",
     "value": "Deactivate the device"
@@ -1586,6 +1714,10 @@
   "general.httpsNetworkBoot": {
     "description": "Label for HTTPS Network boot",
     "value": "HTTPS Network boot:"
+  },
+  "general.remotePlatformErase": {
+    "description": "Label for Remote Platform Erase",
+    "value": "Remote Platform Erase:"
   },
   "general.ideRedirection": {
     "description": "Label for IDE Redirection",

@@ -1423,6 +1423,10 @@
     "description": "תווית עבור אתחול רשת HTTPS",
     "value": "אתחול רשת HTTPS:"
   },
+  "general.remotePlatformErase": {
+    "description": "תווית למחיקת פלטפורמה מרחוק",
+    "value": "מחיקת פלטפורמה מרחוק:"
+  },
   "general.ideRedirection": {
     "description": "תווית לניתוב מחדש של IDE",
     "value": "ניתוב מחדש של IDE:"
@@ -2812,5 +2816,125 @@
   "common.noData": {
     "value": "אין נתונים זמינים",
     "description": "הודעה כאשר אין נתונים זמינים"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "שם קטגוריה למחיקת פלטפורמה מרחוק",
+    "value": "מחיקת פלטפורמה מרחוק"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "תיאור למחיקת פלטפורמה מרחוק",
+    "value": "מחיקה מאובטחת של נתוני הפלטפורמה"
+  },
+  "remotePlatformErase.title": {
+    "description": "כותרת לכרטיס תכונת מחיקת פלטפורמה מרחוק",
+    "value": "מחיקת פלטפורמה מרחוק"
+  },
+  "remotePlatformErase.description": {
+    "description": "כותרת משנה לכרטיס תכונת מחיקת פלטפורמה מרחוק",
+    "value": "הפעל או השבת את תכונת מחיקת הפלטפורמה מרחוק במכשיר זה"
+  },
+  "remotePlatformErase.warning": {
+    "description": "הודעת אזהרה על הפעלת מחיקת פלטפורמה מרחוק",
+    "value": "הפעלת תכונה זו מאפשרת מחיקה מרחוק של נתוני הפלטפורמה. השתמש בזהירות."
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "תווית לתיבת הסימון להפעלת מחיקת פלטפורמה מרחוק",
+    "value": "הפעל מחיקת פלטפורמה מרחוק"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "כותרת לכרטיס פעולת התחלת המחיקה",
+    "value": "התחל מחיקה מרחוק"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "כותרת משנה לכרטיס פעולת התחלת המחיקה",
+    "value": "מחק לצמיתות את כל הנתונים המאוחסנים בפלטפורמה זו"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "אזהרה לפני התחלת מחיקת פלטפורמה מרחוק",
+    "value": "פעולה זו אינה הפיכה. כל נתוני הפלטפורמה יימחקו לצמיתות."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "תווית הכפתור להתחלת מחיקת פלטפורמה מרחוק",
+    "value": "התחל מחיקה מרחוק"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "הודעת הצלחה בעת החלפת מצב תכונת מחיקת פלטפורמה מרחוק",
+    "value": "תכונת מחיקת הפלטפורמה מרחוק עודכנה בהצלחה"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "הודעת שגיאה כאשר עדכון תכונת מחיקת פלטפורמה מרחוק נכשל",
+    "value": "עדכון תכונת מחיקת הפלטפורמה מרחוק נכשל"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "הודעת הצלחה לאחר הפעלת מחיקת פלטפורמה מרחוק",
+    "value": "מחיקת הפלטפורמה מרחוק הופעלה בהצלחה"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "הודעת שגיאה כאשר הפעלת מחיקת פלטפורמה מרחוק נכשלת",
+    "value": "הפעלת מחיקת הפלטפורמה מרחוק נכשלה"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "הודעת שגיאה בעת כשל בטעינת סטטוס תכונת מחיקת פלטפורמה מרחוק",
+    "value": "טעינת סטטוס תכונת מחיקת הפלטפורמה מרחוק נכשלה"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "הודעה המוצגת כאשר מחיקת פלטפורמה מרחוק אינה נתמכת במכשיר",
+    "value": "מחיקת פלטפורמה מרחוק אינה נתמכת"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "כותרת כרטיס יכולות המחיקה",
+    "value": "יכולות מחיקה"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "תת-כותרת כרטיס יכולות המחיקה",
+    "value": "בחר את היכולות לכלול בפעולת המחיקה. לא ניתן לבחור יכולות שאינן נתמכות."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "רמז המוצג כאשר התכונה מופעלת, המבקש מהמשתמש לבחור יכולות למחיקה",
+    "value": "בחר את היכולות שברצונך למחוק, ולאחר מכן לחץ על התחל מחיקה מרחוק."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "תווית יכולת מחיקה מאובטחת של כל ה-SSD",
+    "value": "מחיקה מאובטחת של כל ה-SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "תיאור יכולת מחיקה מאובטחת של כל ה-SSD",
+    "value": "הסרת כל התוכן מכוננות ATA ו-NVM באמצעות שילוב של מחיקת מדיה ומחיקה קריפטוגרפית"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "תווית יכולת ניקוי TPM",
+    "value": "ניקוי TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "תיאור יכולת ניקוי TPM",
+    "value": "מחיקת כל המפתחות שנוצרו הקשורים ל-TPM והנתונים המוגנים על ידם, כגון כרטיס חכם וירטואלי או PIN כניסה"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "תווית יכולת שחזור BIOS למצב EOM",
+    "value": "שחזר BIOS למצב EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "תיאור יכולת שחזור BIOS למצב EOM",
+    "value": "שחזר את ה-BIOS לתצורת הבסיס של סוף הייצור (EOM) שנקבעה על ידי מעצב המערכת"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "תווית יכולת ביטול תצורת קושחת Intel CSME",
+    "value": "בטל את תצורת קושחת Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "טיפ כלי על כפתור המחיקה כאשר לא נבחרו יכולות",
+    "value": "בחר לפחות יכולת מחיקה אחת"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "הודעת תיבת הדו-שיח לאישור לפני תחילת מחיקת הפלטפורמה מרחוק",
+    "value": "האם אתה בטוח שברצונך למחוק ולהפעיל מחדש את המערכת?"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "תיאור יכולת ביטול תצורת קושחת Intel CSME",
+    "value": "ביטול מלא של תצורת Intel AMT, חזרה למצב ברירת המחדל והשבתת תכונות Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "הודעת מידע המוצגת כאשר בוחרים בביטול תצורת CSME, ומסבירה מדוע לא ניתן לשלב עם אפשרויות אחרות",
+    "value": "ביטול תצורת CSME מבצע ביטול מלא של תצורת Intel AMT ולא ניתן לשלב אותו עם פעולות מחיקה אחרות."
   }
 }

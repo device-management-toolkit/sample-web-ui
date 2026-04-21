@@ -1423,6 +1423,10 @@
     "description": "Метка для HTTPS Сетевая загрузка",
     "value": "HTTPS Сетевая загрузка:"
   },
+  "general.remotePlatformErase": {
+    "description": "Метка для удалённого стирания платформы",
+    "value": "Удалённое стирание платформы:"
+  },
   "general.ideRedirection": {
     "description": "Метка для перенаправления IDE",
     "value": "Перенаправление IDE:"
@@ -2812,5 +2816,125 @@
   "common.noData": {
     "value": "Нет доступных данных",
     "description": "Сообщение при отсутствии данных"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Имя категории для удалённого стирания платформы",
+    "value": "Удалённое стирание платформы"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Описание удалённого стирания платформы",
+    "value": "Безопасное стирание данных платформы"
+  },
+  "remotePlatformErase.title": {
+    "description": "Заголовок карточки функции удалённого стирания платформы",
+    "value": "Удалённое стирание платформы"
+  },
+  "remotePlatformErase.description": {
+    "description": "Подзаголовок карточки функции удалённого стирания платформы",
+    "value": "Включить или отключить функцию удалённого стирания платформы на этом устройстве"
+  },
+  "remotePlatformErase.warning": {
+    "description": "Предупреждение о включении удалённого стирания платформы",
+    "value": "Включение этой функции позволяет удалённо стирать данные платформы. Используйте с осторожностью."
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "Метка флажка для включения удалённого стирания платформы",
+    "value": "Включить удалённое стирание платформы"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Заголовок карточки действия запуска стирания",
+    "value": "Запустить удалённое стирание"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Подзаголовок карточки действия запуска стирания",
+    "value": "Безвозвратно удалить все данные, хранящиеся на этой платформе"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Предупреждение перед запуском удалённого стирания платформы",
+    "value": "Это действие необратимо. Все данные платформы будут безвозвратно удалены."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Подпись кнопки для запуска удалённого стирания платформы",
+    "value": "Запустить удалённое стирание"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Сообщение об успехе при переключении функции удалённого стирания платформы",
+    "value": "Функция удалённого стирания платформы успешно обновлена"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Сообщение об ошибке при неудачном обновлении функции удалённого стирания платформы",
+    "value": "Не удалось обновить функцию удалённого стирания платформы"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Сообщение об успехе после запуска удалённого стирания платформы",
+    "value": "Удалённое стирание платформы успешно запущено"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Сообщение об ошибке при невозможности запустить удалённое стирание платформы",
+    "value": "Не удалось запустить удалённое стирание платформы"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Сообщение об ошибке при загрузке статуса функции удалённого стирания платформы",
+    "value": "Не удалось загрузить статус функции удалённого стирания платформы"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Сообщение, отображаемое когда удалённое стирание платформы не поддерживается устройством",
+    "value": "Удалённое стирание платформы не поддерживается"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Заголовок карточки возможностей стирания",
+    "value": "Возможности стирания"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Подзаголовок карточки возможностей стирания",
+    "value": "Выберите возможности для включения в операцию стирания. Неподдерживаемые возможности недоступны для выбора."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Подсказка, отображаемая при включённой функции и предлагающая пользователю выбрать возможности для стирания",
+    "value": "Выберите функции, которые хотите стереть, затем нажмите Запустить удалённое стирание."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Метка для безопасного стирания всех SSD",
+    "value": "Безопасное стирание всех SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Описание для безопасного стирания всех SSD",
+    "value": "Удаление всего содержимого с накопителей ATA и NVM с помощью комбинации стирания носителя и криптографического стирания"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Метка для очистки TPM",
+    "value": "Очистка TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Описание для очистки TPM",
+    "value": "Удаление всех созданных ключей, связанных с TPM, и данных, защищённых этими ключами, например виртуальной смарт-карты или PIN-кода входа"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Метка для восстановления BIOS до состояния EOM",
+    "value": "Восстановить BIOS до состояния EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Описание для восстановления BIOS до состояния EOM",
+    "value": "Восстановление BIOS до базовой конфигурации End of Manufacture (EOM), заданной разработчиком системы"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Метка для отмены настройки прошивки Intel CSME",
+    "value": "Отменить настройку прошивки Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Подсказка на кнопке запуска очистки, когда не выбрано ни одной возможности",
+    "value": "Выберите хотя бы одну возможность очистки"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Сообщение диалога подтверждения перед запуском удалённого стирания платформы",
+    "value": "Вы уверены, что хотите стереть данные и перезагрузить систему?"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Описание для отмены настройки прошивки Intel CSME",
+    "value": "Полное отключение Intel AMT, возврат к состоянию по умолчанию и отключение функций Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Информационное сообщение при выборе отмены настройки CSME, объясняющее, что её нельзя объединить с другими параметрами",
+    "value": "Отмена настройки CSME выполняет полное отключение Intel AMT и не может быть объединена с другими операциями стирания."
   }
 }
