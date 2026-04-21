@@ -1,0 +1,81 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<mat-toolbar style="height: 100px" class="flex flex-row">
+  <div class="flex flex-50 items-center"></div>
+  <div class="flex flex-50 justify-end">
+    @if (isPlatformEraseSupported() && platformEraseEnabled()) {
+      <button
+        mat-flat-button
+        color="warn"
+        data-cy="initiateEraseButton"
+        [disabled]="!hasSelectedCaps()"
+        [matTooltip]="!hasSelectedCaps() ? ('remotePlatformErase.initiateNoCapsTooltip.value' | translate) : ''"
+        (click)="initiateErase()">
+        <mat-icon>delete_forever</mat-icon>
+        {{ 'remotePlatformErase.initiateButton.value' | translate }}
+      </button>
+    }
+  </div>
+</mat-toolbar>
+<div class="flex-1 flex-row flex-wrap">
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'remotePlatformErase.description.value' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (isPlatformEraseSupported()) {
+        <div
+          role="alert"
+          class="flex flex-1 items-center gap-8 warn-border"
+          style="padding: 8px 12px; margin-bottom: 16px">
+          <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
+          <span>{{ 'remotePlatformErase.warning.value' | translate }}</span>
+        </div>
+        <mat-checkbox
+          data-cy="remoteEraseCheckbox"
+          [formControl]="featureEnabledControl"
+          (change)="toggleFeature($event.checked)">
+          {{ 'remotePlatformErase.featureEnabled.value' | translate }}
+        </mat-checkbox>
+      } @else if (!isLoading()) {
+        <div data-cy="notSupportedMessage" class="flex flex-1 items-center gap-8" style="padding: 8px 0">
+          <mat-icon color="accent" aria-hidden="true">info</mat-icon>
+          <span>{{ 'remotePlatformErase.notSupported.value' | translate }}</span>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  @if (isPlatformEraseSupported() && platformEraseEnabled()) {
+    <mat-card class="flex flex-50 gap-12">
+      <mat-card-header>
+        <mat-card-title>{{ 'remotePlatformErase.caps.title.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'remotePlatformErase.caps.description.value' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (platformEraseEnabled()) {
+          <div class="flex flex-1 items-center gap-8" style="padding: 8px 0; margin-bottom: 8px">
+            <mat-icon color="primary" aria-hidden="true" style="flex-shrink: 0">checklist</mat-icon>
+            <span>{{ 'remotePlatformErase.caps.selectHint.value' | translate }}</span>
+          </div>
+        }
+        @for (cap of eraseCaps(); track cap.key; let i = $index) {
+          <div class="flex flex-row items-center gap-8" style="padding: 4px 0" data-cy="eraseCapItem">
+            <mat-checkbox
+              [formControl]="eraseCapControl(i)"
+              (change)="onCapChange()"
+              data-cy="eraseCapCheckbox"></mat-checkbox>
+            <div>
+              <span>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</span>
+              <p style="margin: 0; font-size: 0.8em; color: rgba(0, 0, 0, 0.6)">
+                {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
+              </p>
+            </div>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

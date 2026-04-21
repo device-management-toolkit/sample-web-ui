@@ -1423,6 +1423,10 @@
     "description": "Bezeichnung für HTTPS-Netzwerkstart",
     "value": "HTTPS-Netzwerkstart:"
   },
+  "general.remotePlatformErase": {
+    "description": "Bezeichnung für Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung:"
+  },
   "general.ideRedirection": {
     "description": "Bezeichnung für IDE-Umleitung",
     "value": "IDE-Umleitung:"
@@ -2812,5 +2816,125 @@
   "common.noData": {
     "value": "Keine Daten verfügbar",
     "description": "Meldung, wenn keine Daten verfügbar sind"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Kategoriename für Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Beschreibung für Remote-Plattformlöschung",
+    "value": "Plattformdaten sicher löschen"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titel der Funktionskarte für Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung"
+  },
+  "remotePlatformErase.description": {
+    "description": "Untertitel der Funktionskarte für Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschungsfunktion für dieses Gerät aktivieren oder deaktivieren"
+  },
+  "remotePlatformErase.warning": {
+    "description": "Warnmeldung zur Aktivierung der Remote-Plattformlöschung",
+    "value": "Das Aktivieren dieser Funktion ermöglicht die Remote-Löschung von Plattformdaten. Mit Vorsicht verwenden."
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "Bezeichnung der Checkbox zur Aktivierung der Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung aktivieren"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titel der Aktionskarte zum Einleiten der Löschung",
+    "value": "Remote-Löschung einleiten"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Untertitel der Aktionskarte zum Einleiten der Löschung",
+    "value": "Alle auf dieser Plattform gespeicherten Daten dauerhaft löschen"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Warnung vor dem Einleiten der Remote-Plattformlöschung",
+    "value": "Diese Aktion ist unwiderruflich. Alle Plattformdaten werden dauerhaft gelöscht."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Schaltflächenbeschriftung zum Einleiten der Remote-Plattformlöschung",
+    "value": "Remote-Löschung einleiten"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Erfolgsmeldung beim Umschalten der Remote-Plattformlöschungsfunktion",
+    "value": "Remote-Plattformlöschungsfunktion erfolgreich aktualisiert"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Fehlermeldung wenn die Aktualisierung der Remote-Plattformlöschungsfunktion fehlschlägt",
+    "value": "Fehler beim Aktualisieren der Remote-Plattformlöschungsfunktion"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Erfolgsmeldung nach dem Einleiten der Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung erfolgreich eingeleitet"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Fehlermeldung wenn die Remote-Plattformlöschung nicht eingeleitet werden kann",
+    "value": "Fehler beim Einleiten der Remote-Plattformlöschung"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Fehlermeldung beim Laden des Status der Remote-Plattformlöschungsfunktion",
+    "value": "Fehler beim Laden des Status der Remote-Plattformlöschungsfunktion"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Meldung wenn Remote-Plattformlöschung auf dem Gerät nicht unterstützt wird",
+    "value": "Remote-Plattformlöschung wird nicht unterstützt"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titel der Löschfähigkeiten-Karte",
+    "value": "Löschfähigkeiten"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Untertitel der Löschfähigkeiten-Karte",
+    "value": "Wählen Sie die Fähigkeiten aus, die in den Löschvorgang einbezogen werden sollen. Nicht unterstützte Fähigkeiten können nicht ausgewählt werden."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Hinweis, der angezeigt wird, wenn die Funktion aktiviert ist, und den Benutzer auffordert, zu löschende Fähigkeiten auszuwählen",
+    "value": "Wählen Sie die Fähigkeiten aus, die Sie löschen möchten, und klicken Sie dann auf Remote-Löschung einleiten."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Bezeichnung für Sicheres Löschen aller SSDs",
+    "value": "Sicheres Löschen aller SSDs"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Beschreibung für Sicheres Löschen aller SSDs",
+    "value": "Entfernung aller Inhalte von ATA- und NVM-Laufwerken durch eine Kombination aus Medien- und Kryptolöschung"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Bezeichnung für TPM löschen",
+    "value": "TPM löschen"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Beschreibung für TPM löschen",
+    "value": "Alle mit dem TPM verknüpften Schlüssel und damit geschützte Daten wie virtuelle Smartcards oder Anmelde-PINs löschen"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Bezeichnung für BIOS auf EOM-Zustand zurücksetzen",
+    "value": "BIOS auf EOM-Zustand zurücksetzen"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Beschreibung für BIOS auf EOM-Zustand zurücksetzen",
+    "value": "Das BIOS auf die vom Systemdesigner festgelegte EOM-Goldkonfiguration (End of Manufacture) zurücksetzen"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Bezeichnung für Intel CSME-Firmware dekonfigurieren",
+    "value": "Intel CSME-Firmware dekonfigurieren"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Beschreibung für Intel CSME-Firmware dekonfigurieren",
+    "value": "Vollständige Aufhebung der Bereitstellung von Intel AMT, Rückkehr zum Standardzustand und Deaktivierung der Intel AMT-Funktionen"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Informationsmeldung, wenn CSME-Dekonfiguration ausgewählt ist, erklärt, dass sie nicht mit anderen Optionen kombiniert werden kann",
+    "value": "Die CSME-Dekonfiguration führt eine vollständige Deprovisionierung von Intel AMT durch und kann nicht mit anderen Löschvorgängen kombiniert werden."
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Tooltip am Schaltfläche 'Löschen starten', wenn keine Funktion ausgewählt ist",
+    "value": "Mindestens eine Löschfunktion auswählen"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Bestätigungsdialog-Nachricht vor dem Einleiten der Remote-Plattformlöschung",
+    "value": "Sind Sie sicher, dass Sie das System löschen und neu starten möchten?"
   }
 }

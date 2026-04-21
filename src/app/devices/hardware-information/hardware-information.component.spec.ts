@@ -46,7 +46,9 @@ describe('HardwareInformationComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
+        rpeSupported: true,
+        rpeEnabled: true,
+        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',

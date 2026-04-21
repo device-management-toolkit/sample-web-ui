@@ -34,6 +34,7 @@ describe('GeneralComponent', () => {
       'sendBulkDeactivate',
       'getWsmanOperations'
     ])
+<<<<<<< HEAD
     const amtFeaturesResponse = {
       userConsent: 'ALL',
       KVM: true,
@@ -56,6 +57,32 @@ describe('GeneralComponent', () => {
     }
     devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
     devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
+=======
+    devicesServiceSpy.getAMTFeatures.and.returnValue(
+      of({
+        userConsent: 'ALL',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        optInState: 1,
+        kvmAvailable: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeEnabled: true,
+        rpeSupported: true,
+        rpeCaps: 0,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
+      })
+    )
+>>>>>>> 4e74344c (feat(devices): add remote platform erase (RPE) feature)
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({

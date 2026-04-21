@@ -74,7 +74,9 @@ describe('KvmComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
+        rpeSupported: true,
+        rpeEnabled: true,
+        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -83,28 +85,52 @@ describe('KvmComponent', () => {
         }
       })
     )
-    const amtFeaturesResponse = {
-      userConsent: 'none',
-      KVM: true,
-      SOL: true,
-      IDER: true,
-      redirection: true,
-      kvmAvailable: true,
-      optInState: 0,
-      httpsBootSupported: true,
-      ocr: true,
-      winREBootSupported: true,
-      localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
-    }
-    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
-    getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
+      of({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeSupported: true,
+        rpeEnabled: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
+      })
+    )
+    getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.and.returnValue(
+      of({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeSupported: true,
+        rpeEnabled: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
+      })
+    )
     devicesService.getDevice.and.returnValue(
       of({
         hostname: 'test-hostname',
@@ -423,7 +449,9 @@ describe('KvmComponent', () => {
           ocr: true,
           winREBootSupported: true,
           localPBABootSupported: true,
-          remoteErase: true,
+          rpeSupported: true,
+          rpeEnabled: true,
+          rpeCaps: 0x4010044,
           pbaBootFilesPath: [],
           winREBootFilesPath: {
             instanceID: '',
@@ -524,7 +552,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -553,7 +583,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -598,7 +630,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -626,7 +660,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -656,7 +692,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -685,7 +723,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -714,7 +754,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -743,7 +785,9 @@ describe('KvmComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpeSupported: true,
+      rpeEnabled: true,
+      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',

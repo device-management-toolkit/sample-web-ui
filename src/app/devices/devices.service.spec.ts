@@ -80,24 +80,27 @@ describe('DevicesService', () => {
   })
 
   describe('getAMTFeatures', () => {
-    const mockResponse: AMTFeaturesResponse = {
-      userConsent: 'none',
-      optInState: 0,
-      redirection: true,
-      kvmAvailable: true,
-      KVM: true,
-      SOL: true,
-      IDER: true,
-      ocr: false,
-      httpsBootSupported: false,
-      winREBootSupported: false,
-      localPBABootSupported: false,
-      remoteErase: false,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
+    it('should fetch AMT features for a device', () => {
+      const mockResponse: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        kvmAvailable: true,
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        rpeEnabled: false,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
       }
     }
 
@@ -559,7 +562,9 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false,
+        rpeEnabled: true,
+        rpeSupported: true,
+        rpeCaps: 0,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -576,7 +581,7 @@ describe('DevicesService', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        platformEraseEnabled: true
       }
 
       service.setAmtFeatures('device1', payload).subscribe((response) => {

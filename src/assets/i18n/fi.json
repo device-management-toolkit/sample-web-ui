@@ -1423,6 +1423,10 @@
     "description": "HTTPS-verkon käynnistysmerkki",
     "value": "HTTPS-verkkokäynnistys:"
   },
+  "general.remotePlatformErase": {
+    "description": "Etäalustan pyyhinnän etiketti",
+    "value": "Etäalustan pyyhintä:"
+  },
   "general.ideRedirection": {
     "description": "IDE-uudelleenohjauksen etiketti",
     "value": "IDE-uudelleenohjaus:"
@@ -2812,5 +2816,125 @@
   "common.noData": {
     "value": "Ei saatavilla olevaa dataa",
     "description": "Viesti, kun dataa ei ole saatavilla"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Etäalustan pyyhinnän kategorianimeke",
+    "value": "Etäalustan pyyhintä"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Etäalustan pyyhinnän kuvaus",
+    "value": "Tyhjennä alustan tiedot turvallisesti"
+  },
+  "remotePlatformErase.title": {
+    "description": "Etäalustan pyyhintäominaisuuden kortin otsikko",
+    "value": "Etäalustan pyyhintä"
+  },
+  "remotePlatformErase.description": {
+    "description": "Etäalustan pyyhintäominaisuuden kortin alaotsikko",
+    "value": "Ota etäalustan pyyhintä käyttöön tai poista se käytöstä tässä laitteessa"
+  },
+  "remotePlatformErase.warning": {
+    "description": "Varoitusviesti etäalustan pyyhinnän käyttöönotosta",
+    "value": "Tämän ominaisuuden ottaminen käyttöön mahdollistaa alustan tietojen etäpyyhinnan. Käytä varoen."
+  },
+  "remotePlatformErase.enableFeature": {
+    "description": "Etäalustan pyyhinnän käyttöönotto-valintaruudun etiketti",
+    "value": "Ota etäalustan pyyhintä käyttöön"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Pyyhinnan käynnistyskortin otsikko",
+    "value": "Käynnistä etäpyyhintä"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Pyyhinnan käynnistyskortin alaotsikko",
+    "value": "Tyhjennä pysyvästi kaikki tähän alustaan tallennetut tiedot"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Varoitus ennen etäalustan pyyhinnan aloittamista",
+    "value": "Tämä toimenpide on peruuttamaton. Kaikki alustan tiedot poistetaan pysyvästi."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Etäalustan pyyhinnan käynnistyspainikkeen etiketti",
+    "value": "Käynnistä etäpyyhintä"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Onnistumisviesti etäalustan pyyhintäominaisuuden vaihtamisesta",
+    "value": "Etäalustan pyyhintäominaisuus päivitetty onnistuneesti"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Virheviesti etäalustan pyyhintäominaisuuden päivityksen epäonnistuessa",
+    "value": "Etäalustan pyyhintäominaisuuden päivitys epäonnistui"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Onnistumisviesti etäalustan pyyhinnan aloittamisen jälkeen",
+    "value": "Etäalustan pyyhintä käynnistetty onnistuneesti"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Virheviesti etäalustan pyyhinnan käynnistyksen epäonnistuessa",
+    "value": "Etäalustan pyyhinnan käynnistys epäonnistui"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Virheviesti etäalustan pyyhintäominaisuuden tilan latauksen epäonnistuessa",
+    "value": "Etäalustan pyyhintäominaisuuden tilan lataus epäonnistui"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Viesti laitteen etäalustan pyyhinnän tuen puuttuessa",
+    "value": "Etäalustan pyyhintää ei tueta"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Pyyhintäominaisuuksien kortin otsikko",
+    "value": "Pyyhintäominaisuudet"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Pyyhintäominaisuuksien kortin alaotsikko",
+    "value": "Valitse pyyhintätoimintoon sisällytettävät ominaisuudet. Ei-tuettuja ominaisuuksia ei voi valita."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Hint shown when feature is enabled, prompting user to select capabilities to erase",
+    "value": "Valitse poistettavat ominaisuudet ja napsauta sitten Käynnistä etäpyyhintä."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Kaikkien SSD-levyjen turvallisen pyyhinnän nimi",
+    "value": "Kaikkien SSD-levyjen turvallinen pyyhintä"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Kaikkien SSD-levyjen turvallisen pyyhinnän kuvaus",
+    "value": "Kaiken sisällön poistaminen ATA- ja NVM-asemilta median ja salauksen pyyhinnän yhdistelmällä"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "TPM:n tyhjennyksen nimi",
+    "value": "TPM:n tyhjennys"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "TPM:n tyhjennyksen kuvaus",
+    "value": "Kaikkien TPM:hen liittyvien avainten ja niillä suojattujen tietojen poistaminen, kuten virtuaalinen älykortti tai kirjautumis-PIN"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "BIOS EOM-tilaan palauttamisen nimi",
+    "value": "Palauta BIOS EOM-tilaan"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "BIOS EOM-tilaan palauttamisen kuvaus",
+    "value": "Palauta BIOS järjestelmäsuunnittelijan määrittämään End of Manufacture (EOM) -perusmääritykseen"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Intel CSME -laiteohjelmiston konfiguraation poiston nimi",
+    "value": "Poista Intel CSME -laiteohjelmiston konfiguraatio"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Työkaluvihje poistopainikkeen päällä, kun ominaisuuksia ei ole valittu",
+    "value": "Valitse vähintään yksi poisto-ominaisuus"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Vahvistusvalintaikkunan viesti ennen etäalustan pyyhinnän aloittamista",
+    "value": "Haluatko varmasti tyhjentää ja käynnistää järjestelmän uudelleen?"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Intel CSME -laiteohjelmiston konfiguraation poiston kuvaus",
+    "value": "Intel AMT:n täysi poistaminen käytöstä, palautus oletustilaan ja Intel AMT -ominaisuuksien poistaminen käytöstä"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Tietosanoma, joka näytetään kun CSME:n konfiguraation poisto on valittu, selittäen ettei sitä voi yhdistää muihin vaihtoehtoihin",
+    "value": "CSME:n konfiguraation poisto suorittaa Intel AMT:n täydellisen poistamisen ja sitä ei voi yhdistää muihin poistotoimintoihin."
   }
 }
