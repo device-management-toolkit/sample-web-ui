@@ -1059,15 +1059,27 @@
   },
   "remotePlatformErase.description": {
     "description": "Subtitle for the Remote Platform Erase feature card",
-    "value": "Manage Remote Platform Erase for this device."
+    "value": "Remotely trigger a secure erase of drives, TPM, BIOS, or Intel CSME on this device. Erased data cannot be recovered."
   },
   "remotePlatformErase.warning": {
     "description": "Warning message about enabling Remote Platform Erase",
     "value": "Enabling this feature allows remote erasure of platform data. Use with caution."
   },
   "remotePlatformErase.featureEnabled": {
-    "description": "Status message shown when Remote Platform Erase is enabled",
-    "value": "Feature is enabled"
+    "description": "Label for the Remote Platform Erase enable toggle",
+    "value": "Enable Remote Platform Erase on this device"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Helper text under the Remote Platform Erase enable toggle",
+    "value": "Required before any erase operation can be initiated."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Caption showing how many erase capabilities are currently selected",
+    "value": "{{selected}} of {{total}} operations selected"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Caption shown on a capability row when the device does not support it",
+    "value": "Not supported on this device"
   },
   "remotePlatformErase.featureDisabled": {
     "description": "Status message shown when Remote Platform Erase is disabled",
@@ -1098,8 +1110,8 @@
     "value": "Select at least one erase capability"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Confirmation dialog message before initiating remote platform erase",
-    "value": "Are you sure you wish to erase and restart the system?"
+    "description": "Confirmation dialog message before initiating remote platform erase. {{device}} is the friendly name or hostname; {{operations}} is a comma-separated list of selected erase operations.",
+    "value": "Erase and restart {{device}}? This will perform: {{operations}}. This action is irreversible."
   },
   "remotePlatformErase.updateSuccess": {
     "description": "Success message when Remote Platform Erase feature is toggled",

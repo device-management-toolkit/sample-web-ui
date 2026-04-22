@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "リモートプラットフォーム消去機能カードのサブタイトル",
-    "value": "このデバイスのリモートプラットフォーム消去機能を有効または無効にする"
+    "value": "このデバイスのドライブ、TPM、BIOS、または Intel CSME のリモートによる安全な消去を実行します。消去されたデータは復元できません。"
   },
   "remotePlatformErase.warning": {
     "description": "リモートプラットフォーム消去の有効化に関する警告メッセージ",
     "value": "この機能を有効にすると、プラットフォームデータをリモートで消去できます。慎重に使用してください。"
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "リモートプラットフォーム消去を有効にするチェックボックスのラベル",
-    "value": "リモートプラットフォーム消去を有効にする"
+  "remotePlatformErase.featureEnabled": {
+    "description": "リモートプラットフォーム消去の有効化スイッチのラベル",
+    "value": "このデバイスでリモートプラットフォーム消去を有効にする"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "有効化スイッチ下のヘルプテキスト",
+    "value": "消去操作を開始する前に必要です。"
   },
   "remotePlatformErase.initiateTitle": {
     "description": "消去開始アクションカードのタイトル",
@@ -2926,8 +2930,8 @@
     "value": "少なくとも1つの消去機能を選択してください"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "リモートプラットフォーム消去を開始する前の確認ダイアログメッセージ",
-    "value": "本当にシステムを消去して再起動しますか？"
+    "description": "リモートプラットフォーム消去を開始する前の確認ダイアログメッセージ。{{device}} はフレンドリー名またはホスト名、{{operations}} は選択された消去操作のカンマ区切りリスト。",
+    "value": "{{device}} を消去して再起動しますか？ 実行内容: {{operations}}。この操作は元に戻せません。"
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Intel CSMEファームウェアの設定解除の説明",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "CSMEの設定解除が選択されたときに表示される情報メッセージ（他のオプションと組み合わせられない理由を説明）",
     "value": "CSMEの設定解除はIntel AMTの完全なプロビジョニング解除を実行し、他の消去操作と組み合わせることはできません。"
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "現在選択されている消去操作の数を示すキャプション",
+    "value": "{{total}} 件中 {{selected}} 件の操作が選択されています"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "デバイスが対応していない機能の行に表示されるキャプション",
+    "value": "このデバイスでサポートされていません"
   }
 }

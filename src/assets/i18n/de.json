@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Untertitel der Funktionskarte für Remote-Plattformlöschung",
-    "value": "Remote-Plattformlöschungsfunktion für dieses Gerät aktivieren oder deaktivieren"
+    "value": "Löst aus der Ferne ein sicheres Löschen von Laufwerken, TPM, BIOS oder Intel CSME auf diesem Gerät aus. Gelöschte Daten können nicht wiederhergestellt werden."
   },
   "remotePlatformErase.warning": {
     "description": "Warnmeldung zur Aktivierung der Remote-Plattformlöschung",
     "value": "Das Aktivieren dieser Funktion ermöglicht die Remote-Löschung von Plattformdaten. Mit Vorsicht verwenden."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Bezeichnung der Checkbox zur Aktivierung der Remote-Plattformlöschung",
-    "value": "Remote-Plattformlöschung aktivieren"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Bezeichnung des Umschalters zur Aktivierung der Remote-Plattformlöschung",
+    "value": "Remote-Plattformlöschung auf diesem Gerät aktivieren"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Hilfetext unter dem Aktivierungsumschalter",
+    "value": "Erforderlich, bevor ein Löschvorgang eingeleitet werden kann."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Titel der Aktionskarte zum Einleiten der Löschung",
@@ -2934,7 +2938,15 @@
     "value": "Mindestens eine Löschfunktion auswählen"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Bestätigungsdialog-Nachricht vor dem Einleiten der Remote-Plattformlöschung",
-    "value": "Sind Sie sicher, dass Sie das System löschen und neu starten möchten?"
+    "description": "Bestätigungsdialog-Nachricht vor dem Einleiten der Remote-Plattformlöschung. {{device}} ist der Anzeigename oder Hostname; {{operations}} ist eine durch Komma getrennte Liste der ausgewählten Löschvorgänge.",
+    "value": "{{device}} löschen und neu starten? Folgendes wird ausgeführt: {{operations}}. Diese Aktion ist unwiderruflich."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Beschriftung, die anzeigt, wie viele Löschvorgänge derzeit ausgewählt sind",
+    "value": "{{selected}} von {{total}} Vorgängen ausgewählt"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Beschriftung in einer Fähigkeitszeile, wenn das Gerät diese nicht unterstützt",
+    "value": "Auf diesem Gerät nicht unterstützt"
   }
 }

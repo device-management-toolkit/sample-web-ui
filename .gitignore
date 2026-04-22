@@ -53,6 +53,7 @@ testem.log
 cypress.env.*
 cypress.config.dev.ts
 cypress-ui-test-output*
+cypress/reports
 
 TESTS-*
 # System Files

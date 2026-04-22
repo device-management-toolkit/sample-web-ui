@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Subtítulo para la tarjeta de función de borrado remoto de plataforma",
-    "value": "Habilitar o deshabilitar la función de borrado remoto de plataforma en este dispositivo"
+    "value": "Activa de forma remota un borrado seguro de unidades, TPM, BIOS o Intel CSME en este dispositivo. Los datos borrados no se pueden recuperar."
   },
   "remotePlatformErase.warning": {
     "description": "Mensaje de advertencia sobre la habilitación del borrado remoto de plataforma",
     "value": "Habilitar esta función permite el borrado remoto de datos de la plataforma. Úsela con precaución."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Etiqueta de la casilla para habilitar el borrado remoto de plataforma",
-    "value": "Habilitar borrado remoto de plataforma"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etiqueta del interruptor para habilitar el borrado remoto de plataforma",
+    "value": "Habilitar borrado remoto de plataforma en este dispositivo"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Texto de ayuda debajo del interruptor de habilitación",
+    "value": "Requerido antes de iniciar cualquier operación de borrado."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Título de la tarjeta de acción para iniciar el borrado",
@@ -2926,8 +2930,8 @@
     "value": "Seleccione al menos una capacidad de borrado"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Mensaje del cuadro de diálogo de confirmación antes de iniciar el borrado remoto de plataforma",
-    "value": "¿Está seguro de que desea borrar y reiniciar el sistema?"
+    "description": "Mensaje del cuadro de diálogo de confirmación antes de iniciar el borrado remoto de plataforma. {{device}} es el nombre descriptivo o nombre de host; {{operations}} es una lista separada por comas de las operaciones de borrado seleccionadas.",
+    "value": "¿Borrar y reiniciar {{device}}? Esto realizará: {{operations}}. Esta acción es irreversible."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Descripción para desconfigura el firmware Intel CSME",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Mensaje informativo mostrado cuando se selecciona Desconfigurar CSME, explicando que no se puede combinar con otras opciones",
     "value": "La desconfiguración de CSME realiza un desaprovisionamiento completo de Intel AMT y no puede combinarse con otras operaciones de borrado."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
+    "value": "{{selected}} de {{total}} operaciones seleccionadas"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",
+    "value": "No compatible con este dispositivo"
   }
 }

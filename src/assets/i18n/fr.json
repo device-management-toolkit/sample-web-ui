@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Sous-titre de la carte de fonctionnalité d'effacement distant de la plateforme",
-    "value": "Activer ou désactiver la fonctionnalité d'effacement distant de la plateforme sur cet appareil"
+    "value": "Déclenche à distance un effacement sécurisé des disques, TPM, BIOS ou Intel CSME sur cet appareil. Les données effacées ne peuvent pas être récupérées."
   },
   "remotePlatformErase.warning": {
     "description": "Message d'avertissement concernant l'activation de l'effacement distant de la plateforme",
     "value": "L'activation de cette fonctionnalité permet l'effacement à distance des données de la plateforme. À utiliser avec précaution."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Étiquette de la case à cocher pour activer l'effacement distant de la plateforme",
-    "value": "Activer l'effacement distant de la plateforme"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Étiquette du commutateur d'activation de l'effacement distant de la plateforme",
+    "value": "Activer l'effacement distant de la plateforme sur cet appareil"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Texte d'aide sous le commutateur d'activation",
+    "value": "Requis avant d'initier toute opération d'effacement."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Titre de la carte d'action pour lancer l'effacement",
@@ -2926,8 +2930,8 @@
     "value": "Sélectionnez au moins une capacité d'effacement"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Confirmation dialog message before initiating remote platform erase",
-    "value": "Êtes-vous sûr de vouloir effacer et redémarrer le système ?"
+    "description": "Message de la boîte de dialogue de confirmation avant d'initier l'effacement distant de la plateforme. {{device}} est le nom convivial ou le nom d'hôte ; {{operations}} est la liste séparée par des virgules des opérations d'effacement sélectionnées.",
+    "value": "Effacer et redémarrer {{device}} ? Actions effectuées : {{operations}}. Cette action est irréversible."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Description pour la déconfiguration du micrologiciel Intel CSME",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Message d'information affiché lorsque Déconfigurer CSME est sélectionné, expliquant qu'il ne peut pas être combiné avec d'autres options",
     "value": "La déconfiguration de CSME effectue un déprovisionnement complet d'Intel AMT et ne peut pas être combinée avec d'autres opérations d'effacement."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",
+    "value": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Légende affichée sur une ligne de capacité lorsque l'appareil ne la prend pas en charge",
+    "value": "Non pris en charge sur cet appareil"
   }
 }

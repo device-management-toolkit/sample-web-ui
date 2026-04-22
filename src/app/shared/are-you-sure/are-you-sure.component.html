@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ 'delete.question.value' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-  {{ (data?.message ?? 'delete.questionRecord') + '.value' | translate }}
+  {{ (data?.message ?? 'delete.questionRecord') + '.value' | translate: data?.params }}
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button data-cy="no" mat-dialog-close>{{ 'common.no.value' | translate }}</button>

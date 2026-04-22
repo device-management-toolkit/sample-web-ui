@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "כותרת משנה לכרטיס תכונת מחיקת פלטפורמה מרחוק",
-    "value": "הפעל או השבת את תכונת מחיקת הפלטפורמה מרחוק במכשיר זה"
+    "value": "הפעלה מרחוק של מחיקה מאובטחת של כוננים, TPM, BIOS או Intel CSME במכשיר זה. לא ניתן לשחזר נתונים שנמחקו."
   },
   "remotePlatformErase.warning": {
     "description": "הודעת אזהרה על הפעלת מחיקת פלטפורמה מרחוק",
     "value": "הפעלת תכונה זו מאפשרת מחיקה מרחוק של נתוני הפלטפורמה. השתמש בזהירות."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "תווית לתיבת הסימון להפעלת מחיקת פלטפורמה מרחוק",
-    "value": "הפעל מחיקת פלטפורמה מרחוק"
+  "remotePlatformErase.featureEnabled": {
+    "description": "תווית למתג ההפעלה של מחיקת פלטפורמה מרחוק",
+    "value": "הפעל מחיקת פלטפורמה מרחוק במכשיר זה"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "טקסט עזרה מתחת למתג ההפעלה",
+    "value": "נדרש לפני התחלת פעולת מחיקה."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "כותרת לכרטיס פעולת התחלת המחיקה",
@@ -2926,8 +2930,8 @@
     "value": "בחר לפחות יכולת מחיקה אחת"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "הודעת תיבת הדו-שיח לאישור לפני תחילת מחיקת הפלטפורמה מרחוק",
-    "value": "האם אתה בטוח שברצונך למחוק ולהפעיל מחדש את המערכת?"
+    "description": "הודעת תיבת הדו-שיח לאישור לפני תחילת מחיקת הפלטפורמה מרחוק. {{device}} הוא השם הידידותי או שם המארח; {{operations}} היא רשימה מופרדת בפסיקים של פעולות המחיקה שנבחרו.",
+    "value": "למחוק ולהפעיל מחדש את {{device}}? יבוצעו: {{operations}}. לא ניתן לבטל פעולה זו."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "תיאור יכולת ביטול תצורת קושחת Intel CSME",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "הודעת מידע המוצגת כאשר בוחרים בביטול תצורת CSME, ומסבירה מדוע לא ניתן לשלב עם אפשרויות אחרות",
     "value": "ביטול תצורת CSME מבצע ביטול מלא של תצורת Intel AMT ולא ניתן לשלב אותו עם פעולות מחיקה אחרות."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",
+    "value": "נבחרו {{selected}} מתוך {{total}} פעולות"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "תווית המוצגת בשורת יכולת כאשר המכשיר אינו תומך בה",
+    "value": "לא נתמך במכשיר זה"
   }
 }

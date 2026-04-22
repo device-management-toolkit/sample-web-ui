@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "عنوان فرعي لبطاقة ميزة مسح المنصة عن بُعد",
-    "value": "تمكين أو تعطيل ميزة مسح المنصة عن بُعد على هذا الجهاز"
+    "value": "تشغيل محو آمن عن بُعد للأقراص و TPM و BIOS أو Intel CSME على هذا الجهاز. لا يمكن استرداد البيانات الممحوة."
   },
   "remotePlatformErase.warning": {
     "description": "رسالة تحذير حول تمكين مسح المنصة عن بُعد",
     "value": "تمكين هذه الميزة يسمح بمسح بيانات المنصة عن بُعد. استخدمها بحذر."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "تسمية خانة الاختيار لتمكين مسح المنصة عن بُعد",
-    "value": "تمكين مسح المنصة عن بُعد"
+  "remotePlatformErase.featureEnabled": {
+    "description": "تسمية مفتاح تبديل تمكين مسح المنصة عن بُعد",
+    "value": "تمكين مسح المنصة عن بُعد على هذا الجهاز"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "نص تعليمات أسفل مفتاح التبديل",
+    "value": "مطلوب قبل بدء أي عملية محو."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "عنوان بطاقة إجراء بدء المسح",
@@ -2926,8 +2930,8 @@
     "value": "حدد إمكانية مسح واحدة على الأقل"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "رسالة مربع حوار التأكيد قبل بدء مسح النظام الأساسي عن بُعد",
-    "value": "هل أنت متأكد أنك تريد المسح وإعادة تشغيل النظام؟"
+    "description": "رسالة مربع حوار التأكيد قبل بدء مسح المنصة عن بُعد. {{device}} هو الاسم الودي أو اسم المضيف؛ {{operations}} قائمة مفصولة بفواصل لعمليات المحو المحددة.",
+    "value": "محو وإعادة تشغيل {{device}}؟ سيتم تنفيذ: {{operations}}. لا يمكن التراجع عن هذا الإجراء."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "وصف إمكانية إلغاء تهيئة برنامج Intel CSME الثابت",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "رسالة معلومات تظهر عند تحديد إلغاء تهيئة CSME، تشرح سبب عدم إمكانية دمجه مع خيارات أخرى",
     "value": "يؤدي إلغاء تهيئة CSME إلى إلغاء توفير Intel AMT بالكامل ولا يمكن دمجه مع عمليات المسح الأخرى."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",
+    "value": "تم تحديد {{selected}} من أصل {{total}} عمليات"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "تسمية تظهر في صف القدرة عندما لا يدعمها الجهاز",
+    "value": "غير مدعوم على هذا الجهاز"
   }
 }

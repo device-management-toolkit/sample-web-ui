@@ -12,6 +12,7 @@ import { of, throwError } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from 'src/models/models'
 import { parsePlatformEraseCaps, PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
+import { AreYouSureDialogComponent } from 'src/app/shared/are-you-sure/are-you-sure.component'
 
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
@@ -43,8 +44,10 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getAMTFeatures',
       'setAmtFeatures',
-      'sendRemotePlatformErase'
+      'sendRemotePlatformErase',
+      'getDevice'
     ])
+    devicesServiceSpy.getDevice.and.returnValue(of({ guid: '', hostname: 'host-1', friendlyName: 'my-laptop' } as any))
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
@@ -78,20 +81,20 @@ describe('RemotePlatformEraseComponent', () => {
     expect(component.isLoading()).toBeFalse()
   })
 
-  it('should show checkbox as unchecked on init even when rpeEnabled is true', () => {
+  it('should show toggle as unchecked on init even when rpeEnabled is true', () => {
     devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
     component.ngOnInit()
     fixture.detectChanges()
-    const checkbox = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]')
-    expect(checkbox).not.toBeNull()
-    expect(checkbox.checked).toBeFalse()
+    const toggle = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
+    expect(toggle).not.toBeNull()
+    expect(toggle.getAttribute('aria-checked')).toBe('false')
   })
 
   it('should show feature-disabled status when remoteEraseEnabled is false', () => {
     fixture.detectChanges()
-    const checkbox = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]')
-    expect(checkbox).not.toBeNull()
-    expect(checkbox.checked).toBeFalse()
+    const toggle = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
+    expect(toggle).not.toBeNull()
+    expect(toggle.getAttribute('aria-checked')).toBe('false')
   })
 
   it('should show error snackbar when getAMTFeatures fails', () => {
@@ -100,7 +103,7 @@ describe('RemotePlatformEraseComponent', () => {
     expect(snackBarSpy.open).toHaveBeenCalled()
   })
 
-  it('should open confirmation dialog when initiateErase is called', () => {
+  it('should open AreYouSureDialog with the erase confirmation message', () => {
     devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
     component.ngOnInit()
     component.toggleFeature(true)
@@ -108,7 +111,30 @@ describe('RemotePlatformEraseComponent', () => {
     component.onCapChange()
     matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
-    expect(matDialogSpy.open).toHaveBeenCalled()
+    expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+    const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+    expect(config.data.message).toBe('remotePlatformErase.confirmMessage')
+    expect(config.data.params.operations).toBeDefined()
+    expect(config.data.params.device).toBeDefined()
+  })
+
+  it('should pass selected capability labels in the dialog params', () => {
+    devicesServiceSpy.getAMTFeatures.and.returnValue(
+      of({
+        ...mockAMTFeatures,
+        rpeEnabled: true,
+        rpeCaps: PLATFORM_ERASE_CAPABILITIES.reduce((acc, c) => acc | c.bit, 0)
+      })
+    )
+    component.ngOnInit()
+    component.toggleFeature(true)
+    component.eraseCapControl(0).setValue(true)
+    component.eraseCapControl(2).setValue(true)
+    component.onCapChange()
+    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    component.initiateErase()
+    const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+    expect(config.data.params.operations.split(', ').length).toBe(2)
   })
 
   it('should not open confirmation dialog when feature is disabled', () => {
@@ -460,11 +486,6 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.platformEraseEnabled()).toBeFalse()
     })
 
-    it('should reset featureEnabledControl to false', () => {
-      component.initiateErase()
-      expect(component.featureEnabledControl.value).toBeFalse()
-    })
-
     it('should reset amtFeatures.rpeEnabled to false', () => {
       component.initiateErase()
       expect(component.amtFeatures.rpeEnabled).toBeFalse()
@@ -484,6 +505,74 @@ describe('RemotePlatformEraseComponent', () => {
       component.initiateErase()
       expect(component.eraseCapControl(0).disabled).toBeTrue()
       expect(component.eraseCapControl(2).disabled).toBeTrue()
+    })
+  })
+
+  describe('CSME exclusivity', () => {
+    beforeEach(() => {
+      devicesServiceSpy.getAMTFeatures.and.returnValue(
+        of({
+          ...mockAMTFeatures,
+          rpeEnabled: true,
+          rpeCaps: PLATFORM_ERASE_CAPABILITIES.reduce((acc, c) => acc | c.bit, 0)
+        })
+      )
+      component.ngOnInit()
+      component.toggleFeature(true)
+    })
+
+    it('should signal isCsmeExclusiveSelected when CSME is checked', () => {
+      expect(component.isCsmeExclusiveSelected()).toBeFalse()
+      component.eraseCapControl(3).setValue(true) // csmeUnconfigure
+      component.onCapChange()
+      expect(component.isCsmeExclusiveSelected()).toBeTrue()
+    })
+
+    it('should uncheck other caps when CSME is checked', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.eraseCapControl(2).setValue(true)
+      component.onCapChange()
+      expect(component.selectedCapsCount()).toBe(2)
+
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      expect(component.eraseCapControl(0).value).toBeFalse()
+      expect(component.eraseCapControl(2).value).toBeFalse()
+      expect(component.selectedCapsCount()).toBe(1)
+    })
+
+    it('should disable other caps while CSME is selected', () => {
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      expect(component.eraseCapControl(0).disabled).toBeTrue()
+      expect(component.eraseCapControl(2).disabled).toBeTrue()
+      expect(component.eraseCapControl(3).disabled).toBeFalse()
+    })
+
+    it('should re-enable other caps when CSME is unchecked', () => {
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      component.eraseCapControl(3).setValue(false)
+      component.onCapChange()
+      expect(component.eraseCapControl(0).disabled).toBeFalse()
+      expect(component.eraseCapControl(2).disabled).toBeFalse()
+      expect(component.isCsmeExclusiveSelected()).toBeFalse()
+    })
+
+    it('should send only the CSME bit in the erase mask', () => {
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      const csmeBit = PLATFORM_ERASE_CAPABILITIES[3].bit
+      expect(devicesServiceSpy.sendRemotePlatformErase).toHaveBeenCalledWith('', csmeBit)
+    })
+  })
+
+  describe('supportedCapsCount', () => {
+    it('should count only supported capabilities', () => {
+      // mockAMTFeatures.rpeCaps = 0x4000004 → secureEraseSsds + biosRestore = 2
+      expect(component.supportedCapsCount()).toBe(2)
     })
   })
 

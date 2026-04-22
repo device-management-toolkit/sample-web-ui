@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Etäalustan pyyhintäominaisuuden kortin alaotsikko",
-    "value": "Ota etäalustan pyyhintä käyttöön tai poista se käytöstä tässä laitteessa"
+    "value": "Käynnistää etänä suojatun poiston tämän laitteen asemille, TPM:lle, BIOSille tai Intel CSME:lle. Poistettuja tietoja ei voi palauttaa."
   },
   "remotePlatformErase.warning": {
     "description": "Varoitusviesti etäalustan pyyhinnän käyttöönotosta",
     "value": "Tämän ominaisuuden ottaminen käyttöön mahdollistaa alustan tietojen etäpyyhinnan. Käytä varoen."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Etäalustan pyyhinnän käyttöönotto-valintaruudun etiketti",
-    "value": "Ota etäalustan pyyhintä käyttöön"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etäalustan pyyhinnän käyttöönottokytkimen etiketti",
+    "value": "Ota etäalustan pyyhintä käyttöön tässä laitteessa"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Käyttöönottokytkimen alla oleva ohjeteksti",
+    "value": "Vaaditaan ennen minkään poistotoiminnon aloittamista."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Pyyhinnan käynnistyskortin otsikko",
@@ -2926,8 +2930,8 @@
     "value": "Valitse vähintään yksi poisto-ominaisuus"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Vahvistusvalintaikkunan viesti ennen etäalustan pyyhinnän aloittamista",
-    "value": "Haluatko varmasti tyhjentää ja käynnistää järjestelmän uudelleen?"
+    "description": "Vahvistusvalintaikkunan viesti ennen etäalustan pyyhinnän aloittamista. {{device}} on laitteen näyttönimi tai isäntänimi; {{operations}} on pilkuilla eroteltu luettelo valituista pyyhintätoiminnoista.",
+    "value": "Tyhjennä ja käynnistä {{device}} uudelleen? Tämä suorittaa: {{operations}}. Toimintoa ei voi perua."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Intel CSME -laiteohjelmiston konfiguraation poiston kuvaus",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Tietosanoma, joka näytetään kun CSME:n konfiguraation poisto on valittu, selittäen ettei sitä voi yhdistää muihin vaihtoehtoihin",
     "value": "CSME:n konfiguraation poisto suorittaa Intel AMT:n täydellisen poistamisen ja sitä ei voi yhdistää muihin poistotoimintoihin."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",
+    "value": "{{selected}} / {{total}} toimintoa valittu"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Teksti, joka näytetään ominaisuusrivillä, kun laite ei tue sitä",
+    "value": "Ei tuettu tässä laitteessa"
   }
 }
