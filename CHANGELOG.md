@@ -1,3 +1,10 @@
+## [3.57.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.1...v3.57.2) (2026-04-22)
+
+
+### Performance Improvements
+
+* improve KVM connection time ([f97baa2](https://github.com/device-management-toolkit/sample-web-ui/commit/f97baa2ab933b57990faa9a4c124510698135273))
+
 ## [3.57.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.0...v3.57.1) (2026-04-10)
 
 # [3.57.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.56.0...v3.57.0) (2026-04-06)
