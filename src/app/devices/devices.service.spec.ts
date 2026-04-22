@@ -80,28 +80,28 @@ describe('DevicesService', () => {
   })
 
   describe('getAMTFeatures', () => {
-    it('should fetch AMT features for a device', () => {
-      const mockResponse: AMTFeaturesResponse = {
-        userConsent: 'none',
-        optInState: 0,
-        redirection: true,
-        kvmAvailable: true,
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        ocr: false,
-        httpsBootSupported: false,
-        winREBootSupported: false,
-        localPBABootSupported: false,
-        remoteErase: false,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
+    const mockResponse: AMTFeaturesResponse = {
+      userConsent: 'none',
+      optInState: 0,
+      redirection: true,
+      kvmAvailable: true,
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      ocr: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false,
+      remoteErase: false,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
       }
+    }
 
+    it('should fetch AMT features for a device', () => {
       service.getAMTFeatures('device1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
       })
@@ -122,6 +122,49 @@ describe('DevicesService', () => {
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
       req.flush(null, mockError)
+    })
+
+    it('populates the featuresChanges stream on success', () => {
+      const emitted: any[] = []
+      service.featuresChanges('device1').subscribe((v) => emitted.push(v))
+      service.getAMTFeatures('device1').subscribe()
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+      req.flush(mockResponse)
+      expect(emitted).toEqual([
+        null,
+        mockResponse
+      ])
+    })
+
+    describe('getAMTFeaturesCached', () => {
+      it('returns the cached value without an HTTP call when present', () => {
+        service.getAMTFeatures('device1').subscribe()
+        httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(mockResponse)
+
+        let cached: AMTFeaturesResponse | undefined
+        service.getAMTFeaturesCached('device1').subscribe((r) => (cached = r))
+        httpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+        expect(cached).toEqual(mockResponse)
+      })
+
+      it('falls through to HTTP when no cache is present', () => {
+        service.getAMTFeaturesCached('device1').subscribe()
+        const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+        req.flush(mockResponse)
+      })
+
+      it('dedupes simultaneous callers into a single HTTP request', () => {
+        let first: AMTFeaturesResponse | undefined
+        let second: AMTFeaturesResponse | undefined
+        service.getAMTFeaturesCached('device1').subscribe((r) => (first = r))
+        service.getAMTFeaturesCached('device1').subscribe((r) => (second = r))
+
+        const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+        req.flush(mockResponse)
+
+        expect(first).toEqual(mockResponse)
+        expect(second).toEqual(mockResponse)
+      })
     })
   })
 
@@ -561,9 +604,9 @@ describe('DevicesService', () => {
   })
 
   describe('getPowerState', () => {
-    it('should fetch power state for a device', () => {
-      const mockResponse: PowerState = { powerstate: 2 }
+    const mockResponse: PowerState = { powerstate: 2 }
 
+    it('should fetch power state for a device', () => {
       service.getPowerState('device1').subscribe((response) => {
         expect(response).toEqual(mockResponse)
       })
@@ -584,6 +627,46 @@ describe('DevicesService', () => {
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
       req.flush(null, mockError)
+    })
+
+    it('populates the powerStateChanges stream on success', () => {
+      const emitted: any[] = []
+      service.powerStateChanges('device1').subscribe((v) => emitted.push(v))
+      service.getPowerState('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`).flush(mockResponse)
+      expect(emitted).toEqual([
+        null,
+        mockResponse
+      ])
+    })
+
+    describe('getPowerStateCached', () => {
+      it('returns the cached value without an HTTP call when present', () => {
+        service.getPowerState('device1').subscribe()
+        httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`).flush(mockResponse)
+
+        let cached: PowerState | undefined
+        service.getPowerStateCached('device1').subscribe((r) => (cached = r))
+        httpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
+        expect(cached).toEqual(mockResponse)
+      })
+
+      it('falls through to HTTP when no cache is present', () => {
+        service.getPowerStateCached('device1').subscribe()
+        httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`).flush(mockResponse)
+      })
+
+      it('dedupes simultaneous callers into a single HTTP request', () => {
+        let first: PowerState | undefined
+        let second: PowerState | undefined
+        service.getPowerStateCached('device1').subscribe((r) => (first = r))
+        service.getPowerStateCached('device1').subscribe((r) => (second = r))
+
+        httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`).flush(mockResponse)
+
+        expect(first).toEqual(mockResponse)
+        expect(second).toEqual(mockResponse)
+      })
     })
   })
 

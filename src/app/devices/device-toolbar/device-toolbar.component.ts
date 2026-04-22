@@ -219,8 +219,10 @@ export class DeviceToolbarComponent implements OnInit {
 
   getPowerState(): void {
     this.isLoading().set(true)
+    // Goes through the cached variant so a simultaneous KVM deep-link fetch and
+    // this toolbar fetch are deduped into one /power/state round-trip.
     this.devicesService
-      .getPowerState(this.deviceId())
+      .getPowerStateCached(this.deviceId())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((powerState) => {
         this.powerState.set(

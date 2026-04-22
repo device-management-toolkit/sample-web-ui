@@ -23,8 +23,10 @@ describe('KvmComponent', () => {
   let authServiceStub: any
   let setAmtFeaturesSpy: jasmine.Spy
   let getPowerStateSpy: jasmine.Spy
+  let getPowerStateCachedSpy: jasmine.Spy
   let getRedirectionStatusSpy: jasmine.Spy
   let getAMTFeaturesSpy: jasmine.Spy
+  let getAMTFeaturesCachedSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
   let getDisplaySelectionSpy: jasmine.Spy
@@ -43,8 +45,10 @@ describe('KvmComponent', () => {
       'sendPowerAction',
       'getDevice',
       'getPowerState',
+      'getPowerStateCached',
       'setAmtFeatures',
       'getAMTFeatures',
+      'getAMTFeaturesCached',
       'reqUserConsentCode',
       'cancelUserConsentCode',
       'getRedirectionExpirationToken',
@@ -79,28 +83,28 @@ describe('KvmComponent', () => {
         }
       })
     )
-    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(
-      of({
-        userConsent: 'none',
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        redirection: true,
-        kvmAvailable: true,
-        optInState: 0,
-        httpsBootSupported: true,
-        ocr: true,
-        winREBootSupported: true,
-        localPBABootSupported: true,
-        remoteErase: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
-      })
-    )
+    const amtFeaturesResponse = {
+      userConsent: 'none',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: true,
+      kvmAvailable: true,
+      optInState: 0,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    }
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
+    getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
     devicesService.getDevice.and.returnValue(
       of({
         hostname: 'test-hostname',
@@ -119,6 +123,7 @@ describe('KvmComponent', () => {
       of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
     )
     getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
+    getPowerStateCachedSpy = devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
     getDisplaySelectionSpy = devicesService.getDisplaySelection.and.returnValue(
@@ -213,16 +218,31 @@ describe('KvmComponent', () => {
     expect(component).toBeTruthy()
     fixture.detectChanges()
     expect(tokenSpy).toHaveBeenCalled()
-    expect(getPowerStateSpy).toHaveBeenCalled()
-    expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    // init() reads power state and AMT features from the service cache so the
+    // toolbar/general fetches are not duplicated when the user lands on the KVM tab.
+    expect(getPowerStateCachedSpy).toHaveBeenCalled()
+    expect(getAMTFeaturesCachedSpy).toHaveBeenCalled()
+    expect(getPowerStateSpy).not.toHaveBeenCalled()
+    expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
     expect(getRedirectionStatusSpy).toHaveBeenCalled()
-    expect(getDisplaySelectionSpy).toHaveBeenCalled()
+    // Display selection is deferred until the KVM session is actually connected
+    // so it doesn't compete with the relay websocket upgrade on the MPS queue.
+    expect(getDisplaySelectionSpy).not.toHaveBeenCalled()
+  })
+  it('loads displays once the KVM session reports connected (event=2)', () => {
+    fixture.detectChanges()
+    getDisplaySelectionSpy.calls.reset()
+    component.deviceKVMStatus(2)
+    expect(getDisplaySelectionSpy).toHaveBeenCalledTimes(1)
+    // Further connected events on the same session must not refetch
+    component.deviceKVMStatus(2)
+    expect(getDisplaySelectionSpy).toHaveBeenCalledTimes(1)
   })
   it('should have correct state on connect/disconnect methods', () => {
     // Initial state should be disconnected since we changed to signal(false)
     expect(component.deviceKVMConnection()).toBeFalsy()
 
-    // Test connect method — resets state, refreshes token, then re-establishes via init()
+    // Test connect method
     component.readyToLoadKvm = true
     component.connect()
     expect(component.isDisconnecting).toBeFalsy()
@@ -249,12 +269,12 @@ describe('KvmComponent', () => {
     expect(readyToLoadKvmAtStartOfInit).toBeFalse()
     expect(connectionAtStartOfInit).toBeFalse()
   })
-  it('connect() refreshes auth token via getRedirectionExpirationToken before calling init', () => {
+  it('connect() prefetches the auth token in parallel with init() for a reconnect', () => {
     tokenSpy.calls.reset()
-    spyOn(component, 'init')
+    const initSpy = spyOn(component, 'init')
     component.connect()
+    expect(initSpy).toHaveBeenCalledTimes(1)
     expect(tokenSpy).toHaveBeenCalledTimes(1)
-    expect(component.authToken()).toBe('123')
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
@@ -312,6 +332,38 @@ describe('KvmComponent', () => {
     component.postUserConsentDecision(true).subscribe(() => {
       expect(component.loadingStatus()).toBe('kvm.status.connectingKVM.value')
       expect(component.deviceKVMConnection()).toBeTrue()
+      done()
+    })
+  })
+  it('refreshes the auth token before initiating connection (prevents stale-token after consent dialog)', (done) => {
+    tokenSpy.calls.reset()
+    tokenSpy.and.returnValue(of({ token: 'post-consent-token' }))
+    component.authToken.set('stale')
+    component.postUserConsentDecision(true).subscribe(() => {
+      expect(tokenSpy).toHaveBeenCalledWith('')
+      expect(component.authToken()).toBe('post-consent-token')
+      expect(component.deviceKVMConnection()).toBeTrue()
+      done()
+    })
+  })
+  it('skips the token refresh when init() completed fast (no blocking dialog)', (done) => {
+    tokenSpy.calls.reset()
+    component.authToken.set('prefetched-token')
+    ;(component as any).initStartTime = Date.now()
+    component.postUserConsentDecision(true).subscribe(() => {
+      expect(tokenSpy).not.toHaveBeenCalled()
+      expect(component.authToken()).toBe('prefetched-token')
+      expect(component.deviceKVMConnection()).toBeTrue()
+      expect(component.loadingStatus()).toBe('kvm.status.connectingKVM.value')
+      done()
+    })
+  })
+  it('does not refresh the auth token when consent is denied', (done) => {
+    tokenSpy.calls.reset()
+    component.authToken.set('untouched')
+    component.postUserConsentDecision(false).subscribe(() => {
+      expect(tokenSpy).not.toHaveBeenCalled()
+      expect(component.authToken()).toBe('untouched')
       done()
     })
   })
@@ -384,6 +436,23 @@ describe('KvmComponent', () => {
       }
     })
   })
+  it('getAMTFeaturesCached delegates to the service cache variant', (done) => {
+    component.getAMTFeaturesCached().subscribe(() => {
+      expect(getAMTFeaturesCachedSpy).toHaveBeenCalledWith('')
+      expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
+      expect(component.isLoading()).toBeTrue()
+      done()
+    })
+  })
+  it('postUserConsentDecision does not issue a duplicate AMT features fetch', (done) => {
+    getAMTFeaturesSpy.calls.reset()
+    getAMTFeaturesCachedSpy.calls.reset()
+    component.postUserConsentDecision(true).subscribe(() => {
+      expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
+      expect(getAMTFeaturesCachedSpy).not.toHaveBeenCalled()
+      done()
+    })
+  })
   it('should call getRedirectionStatus and return expected data', (done) => {
     component.getRedirectionStatus('test-guid').subscribe((response) => {
       expect(devicesService.getRedirectionStatus).toHaveBeenCalledWith('test-guid')
@@ -418,6 +487,13 @@ describe('KvmComponent', () => {
   it('getPowerState', async () => {
     component.getPowerState('111')
     expect(getPowerStateSpy).toHaveBeenCalled()
+  })
+  it('getPowerStateCached delegates to the service cache variant', async () => {
+    getPowerStateSpy.calls.reset()
+    getPowerStateCachedSpy.calls.reset()
+    component.getPowerStateCached('111').subscribe()
+    expect(getPowerStateCachedSpy).toHaveBeenCalledWith('111')
+    expect(getPowerStateSpy).not.toHaveBeenCalled()
   })
   xit('getPowerState error', (done: any) => {
     component.isLoading.set(true)

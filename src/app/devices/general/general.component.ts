@@ -98,7 +98,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     forkJoin({
-      amtFeatures: this.devicesService.getAMTFeatures(this.deviceId()).pipe(
+      // Reuses the toolbar's in-flight / cached features fetch so device-detail
+      // entry costs one /features round-trip total, not two.
+      amtFeatures: this.devicesService.getAMTFeaturesCached(this.deviceId()).pipe(
         catchError((err) => {
           const msg: string = this.translate.instant('general.errorAMTFeatures.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)

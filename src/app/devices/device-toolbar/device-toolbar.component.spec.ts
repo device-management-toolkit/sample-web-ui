@@ -37,6 +37,7 @@ describe('DeviceToolbarComponent', () => {
       'getDevice',
       'sendDeactivate',
       'getPowerState',
+      'getPowerStateCached',
       'getAMTFeatures',
       'getAMTFeaturesCached',
       'getAMTVersion',
@@ -55,6 +56,7 @@ describe('DeviceToolbarComponent', () => {
     )
 
     devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
+    devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
     const mockAMTFeatures = {
       userConsent: 'None',
       ocr: true,
