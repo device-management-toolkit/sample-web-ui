@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Sottotitolo della scheda funzione di cancellazione remota della piattaforma",
-    "value": "Abilita o disabilita la funzionalità di cancellazione remota della piattaforma su questo dispositivo"
+    "value": "Attiva da remoto una cancellazione sicura di unità, TPM, BIOS o Intel CSME su questo dispositivo. I dati cancellati non possono essere recuperati."
   },
   "remotePlatformErase.warning": {
     "description": "Messaggio di avviso sull'abilitazione della cancellazione remota della piattaforma",
     "value": "L'abilitazione di questa funzionalità consente la cancellazione remota dei dati della piattaforma. Usare con cautela."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Etichetta della casella di controllo per abilitare la cancellazione remota della piattaforma",
-    "value": "Abilita cancellazione remota della piattaforma"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etichetta dell'interruttore di abilitazione della cancellazione remota della piattaforma",
+    "value": "Abilita cancellazione remota della piattaforma su questo dispositivo"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Testo di aiuto sotto l'interruttore di abilitazione",
+    "value": "Richiesto prima di avviare qualsiasi operazione di cancellazione."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Titolo della scheda azione per avviare la cancellazione",
@@ -2926,8 +2930,8 @@
     "value": "Seleziona almeno una funzionalità di cancellazione"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Messaggio della finestra di dialogo di conferma prima di avviare la cancellazione remota della piattaforma",
-    "value": "Sei sicuro di voler cancellare e riavviare il sistema?"
+    "description": "Messaggio della finestra di dialogo di conferma prima di avviare la cancellazione remota della piattaforma. {{device}} è il nome descrittivo o il nome host; {{operations}} è un elenco separato da virgole delle operazioni di cancellazione selezionate.",
+    "value": "Cancellare e riavviare {{device}}? Verrà eseguito: {{operations}}. Questa azione è irreversibile."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Descrizione per la deconfigurazione del firmware Intel CSME",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Messaggio informativo mostrato quando è selezionato Deconfigura CSME, spiegando che non può essere combinato con altre opzioni",
     "value": "La deconfigurazione CSME esegue un deprovisioning completo di Intel AMT e non può essere combinata con altre operazioni di cancellazione."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",
+    "value": "{{selected}} di {{total}} operazioni selezionate"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Didascalia mostrata su una riga di capacità quando il dispositivo non la supporta",
+    "value": "Non supportato su questo dispositivo"
   }
 }

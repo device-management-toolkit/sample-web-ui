@@ -26,7 +26,7 @@ describe('Test Device Page', () => {
 
     cy.myIntercept('GET', /.*power.*/, {
       statusCode: httpCodes.SUCCESS,
-      body: { powerState: 2 }
+      body: { powerstate: 2 }
     }).as('get-powerstate')
 
     cy.myIntercept('GET', /\/devices\/[0-9a-f-]{36}$/, {

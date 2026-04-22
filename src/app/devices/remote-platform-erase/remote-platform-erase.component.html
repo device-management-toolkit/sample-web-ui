@@ -1,9 +1,9 @@
 @if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
-<mat-toolbar style="height: 100px" class="flex flex-row">
-  <div class="flex flex-50 items-center"></div>
-  <div class="flex flex-50 justify-end">
+<mat-card>
+  <mat-card-header style="justify-content: space-between">
+    <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
     @if (isPlatformEraseSupported() && platformEraseEnabled()) {
       <button
         mat-flat-button
@@ -16,66 +16,86 @@
         {{ 'remotePlatformErase.initiateButton.value' | translate }}
       </button>
     }
-  </div>
-</mat-toolbar>
-<div class="flex-1 flex-row flex-wrap">
-  <mat-card class="flex flex-50 gap-12">
-    <mat-card-header>
-      <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
-      <mat-card-subtitle>{{ 'remotePlatformErase.description.value' | translate }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      @if (isPlatformEraseSupported()) {
-        <div
-          role="alert"
-          class="flex flex-1 items-center gap-8 warn-border"
-          style="padding: 8px 12px; margin-bottom: 16px">
-          <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
-          <span>{{ 'remotePlatformErase.warning.value' | translate }}</span>
-        </div>
-        <mat-checkbox
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ 'remotePlatformErase.description.value' | translate }}</p>
+    @if (isPlatformEraseSupported()) {
+      <div role="status" style="padding: 12px 0">
+        <mat-icon color="warn" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">warning</mat-icon>
+        <span>{{ 'remotePlatformErase.initiateWarning.value' | translate }}</span>
+      </div>
+
+      <div style="padding: 8px 0">
+        <mat-slide-toggle
           data-cy="remoteEraseCheckbox"
-          [formControl]="featureEnabledControl"
+          [checked]="platformEraseEnabled()"
+          [disabled]="isLoading()"
           (change)="toggleFeature($event.checked)">
           {{ 'remotePlatformErase.featureEnabled.value' | translate }}
-        </mat-checkbox>
-      } @else if (!isLoading()) {
-        <div data-cy="notSupportedMessage" class="flex flex-1 items-center gap-8" style="padding: 8px 0">
-          <mat-icon color="accent" aria-hidden="true">info</mat-icon>
-          <span>{{ 'remotePlatformErase.notSupported.value' | translate }}</span>
+        </mat-slide-toggle>
+        <div style="padding-top: 4px">
+          <small>{{ 'remotePlatformErase.featureEnabledHint.value' | translate }}</small>
         </div>
-      }
-    </mat-card-content>
-  </mat-card>
+      </div>
 
-  @if (isPlatformEraseSupported() && platformEraseEnabled()) {
-    <mat-card class="flex flex-50 gap-12">
-      <mat-card-header>
-        <mat-card-title>{{ 'remotePlatformErase.caps.title.value' | translate }}</mat-card-title>
-        <mat-card-subtitle>{{ 'remotePlatformErase.caps.description.value' | translate }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        @if (platformEraseEnabled()) {
-          <div class="flex flex-1 items-center gap-8" style="padding: 8px 0; margin-bottom: 8px">
-            <mat-icon color="primary" aria-hidden="true" style="flex-shrink: 0">checklist</mat-icon>
-            <span>{{ 'remotePlatformErase.caps.selectHint.value' | translate }}</span>
-          </div>
-        }
+      @if (platformEraseEnabled()) {
+        <mat-divider style="margin: 16px 0"></mat-divider>
+
+        <h3>
+          <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+            >checklist</mat-icon
+          >
+          <span>{{ 'remotePlatformErase.caps.title.value' | translate }}</span>
+        </h3>
+        <p>{{ 'remotePlatformErase.caps.description.value' | translate }}</p>
+
         @for (cap of eraseCaps(); track cap.key; let i = $index) {
-          <div class="flex flex-row items-center gap-8" style="padding: 4px 0" data-cy="eraseCapItem">
+          <div data-cy="eraseCapItem" style="padding: 4px 0">
             <mat-checkbox
               [formControl]="eraseCapControl(i)"
               (change)="onCapChange()"
-              data-cy="eraseCapCheckbox"></mat-checkbox>
-            <div>
-              <span>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</span>
-              <p style="margin: 0; font-size: 0.8em; color: rgba(0, 0, 0, 0.6)">
-                {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
-              </p>
-            </div>
+              [attr.aria-describedby]="'rpe-cap-desc-' + cap.key"
+              data-cy="eraseCapCheckbox">
+              <div>
+                <div>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</div>
+                <small [id]="'rpe-cap-desc-' + cap.key">
+                  {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
+                </small>
+                @if (!cap.supported) {
+                  <div>
+                    <small
+                      ><em>{{ 'remotePlatformErase.capUnsupported.value' | translate }}</em></small
+                    >
+                  </div>
+                }
+              </div>
+            </mat-checkbox>
           </div>
         }
-      </mat-card-content>
-    </mat-card>
-  }
-</div>
+
+        @if (isCsmeExclusiveSelected()) {
+          <div role="status" data-cy="csmeExclusiveNote" style="padding: 8px 0">
+            <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+              >info</mat-icon
+            >
+            <span>{{ 'remotePlatformErase.csmeUnconfigureExclusive.value' | translate }}</span>
+          </div>
+        }
+
+        <p data-cy="selectionCount" style="margin: 8px 0 0">
+          <small>
+            {{
+              'remotePlatformErase.selectionCount.value'
+                | translate: { selected: selectedCapsCount(), total: supportedCapsCount() }
+            }}
+          </small>
+        </p>
+      }
+    } @else if (!isLoading()) {
+      <div data-cy="notSupportedMessage" style="padding: 8px 0">
+        <mat-icon color="accent" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">info</mat-icon>
+        <span>{{ 'remotePlatformErase.notSupported.value' | translate }}</span>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

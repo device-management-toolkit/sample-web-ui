@@ -79,7 +79,7 @@ describe('Remote Platform Erase', () => {
     cy.wait('@get-features')
 
     cy.get('[data-cy="remoteEraseCheckbox"]').should('exist')
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').should('not.be.checked')
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').should('have.attr', 'aria-checked', 'false')
     cy.get('[data-cy="initiateEraseButton"]').should('not.exist')
   })
 
@@ -92,7 +92,7 @@ describe('Remote Platform Erase', () => {
     navigateToRemotePlatformErase()
     cy.wait('@get-features')
 
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').should('not.be.checked')
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').should('have.attr', 'aria-checked', 'false')
     cy.get('[data-cy="initiateEraseButton"]').should('not.exist')
   })
 
@@ -110,7 +110,7 @@ describe('Remote Platform Erase', () => {
     navigateToRemotePlatformErase()
     cy.wait('@get-features')
 
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features').its('request.body.platformEraseEnabled').should('eq', true)
 
     cy.get('[data-cy="initiateEraseButton"]').should('be.visible')
@@ -131,11 +131,11 @@ describe('Remote Platform Erase', () => {
     cy.wait('@get-features')
 
     // Enable first
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features').its('request.body.platformEraseEnabled').should('eq', true)
 
     // Then disable
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').uncheck({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features').its('request.body.platformEraseEnabled').should('eq', false)
 
     cy.get('[data-cy="initiateEraseButton"]').should('not.exist')
@@ -161,7 +161,7 @@ describe('Remote Platform Erase', () => {
     cy.wait('@get-features')
 
     // Enable the feature first
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features')
 
     cy.get('[data-cy="eraseCapCheckbox"]').first().find('input[type="checkbox"]').check({ force: true })
@@ -193,7 +193,7 @@ describe('Remote Platform Erase', () => {
     cy.wait('@get-features')
 
     // Enable the feature first
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features')
 
     cy.get('[data-cy="eraseCapCheckbox"]').first().find('input[type="checkbox"]').check({ force: true })
@@ -219,7 +219,7 @@ describe('Remote Platform Erase', () => {
     navigateToRemotePlatformErase()
     cy.wait('@get-features')
 
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features-error')
 
     cy.get('mat-snack-bar-container').should('be.visible')
@@ -245,7 +245,7 @@ describe('Remote Platform Erase', () => {
     cy.wait('@get-features')
 
     // Enable the feature first
-    cy.get('[data-cy="remoteEraseCheckbox"] input[type="checkbox"]').check({ force: true })
+    cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]').click({ force: true })
     cy.wait('@post-features')
 
     cy.get('[data-cy="eraseCapCheckbox"]').first().find('input[type="checkbox"]').check({ force: true })

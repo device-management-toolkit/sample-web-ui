@@ -29,5 +29,7 @@ import { TranslateModule } from '@ngx-translate/core'
   ]
 })
 export class AreYouSureDialogComponent {
-  protected readonly data = inject<{ message?: string } | null>(MAT_DIALOG_DATA, { optional: true })
+  protected readonly data = inject<{ message?: string; params?: Record<string, unknown> } | null>(MAT_DIALOG_DATA, {
+    optional: true
+  })
 }

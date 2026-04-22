@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Underrubrik på funktionskortet för fjärrradering av plattform",
-    "value": "Aktivera eller inaktivera fjärrraderingsfunktionen för plattformen på den här enheten"
+    "value": "Utför en säker fjärrradering av diskar, TPM, BIOS eller Intel CSME på den här enheten. Raderade data kan inte återställas."
   },
   "remotePlatformErase.warning": {
     "description": "Varningsmeddelande om aktivering av fjärrradering av plattform",
     "value": "Att aktivera den här funktionen tillåter fjärrradering av plattformsdata. Använd med försiktighet."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Etikett för kryssrutan för att aktivera fjärrradering av plattform",
-    "value": "Aktivera fjärrradering av plattform"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etikett för växlingsknappen för att aktivera fjärrradering av plattform",
+    "value": "Aktivera fjärrradering av plattform på den här enheten"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Hjälptext under aktiveringsknappen",
+    "value": "Krävs innan någon raderingsåtgärd kan startas."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Titel på åtgärdskortet för att starta radering",
@@ -2926,8 +2930,8 @@
     "value": "Välj minst en raderingsfunktion"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Bekräftelsedialogruta meddelande innan fjärrradering av plattform initieras",
-    "value": "Är du säker på att du vill radera och starta om systemet?"
+    "description": "Meddelande i bekräftelsedialogen innan fjärrradering av plattform initieras. {{device}} är det vänliga namnet eller värdnamnet; {{operations}} är en kommaseparerad lista över valda raderingsåtgärder.",
+    "value": "Radera och starta om {{device}}? Följande kommer att utföras: {{operations}}. Den här åtgärden kan inte ångras."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Beskrivning för avkonfigurering av Intel CSME-firmware",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informationsmeddelande som visas när Avkonfigurering av CSME är valt, förklarar att det inte kan kombineras med andra alternativ",
     "value": "Avkonfigurering av CSME utför en fullständig avetablering av Intel AMT och kan inte kombineras med andra raderingsåtgärder."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",
+    "value": "{{selected}} av {{total}} åtgärder valda"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",
+    "value": "Stöds inte på den här enheten"
   }
 }

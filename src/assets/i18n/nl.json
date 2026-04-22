@@ -2831,15 +2831,19 @@
   },
   "remotePlatformErase.description": {
     "description": "Ondertitel van de functiekaart voor extern wissen van het platform",
-    "value": "De functie voor extern wissen van het platform op dit apparaat in- of uitschakelen"
+    "value": "Start op afstand een veilige wissing van schijven, TPM, BIOS of Intel CSME op dit apparaat. Gewiste gegevens kunnen niet worden hersteld."
   },
   "remotePlatformErase.warning": {
     "description": "Waarschuwingsbericht over het inschakelen van extern wissen van het platform",
     "value": "Als u deze functie inschakelt, kunnen platformgegevens op afstand worden gewist. Gebruik met voorzichtigheid."
   },
-  "remotePlatformErase.enableFeature": {
-    "description": "Label van het selectievakje voor extern wissen van het platform",
-    "value": "Extern wissen van het platform inschakelen"
+  "remotePlatformErase.featureEnabled": {
+    "description": "Label van de schakelaar voor extern wissen van het platform",
+    "value": "Extern wissen van het platform op dit apparaat inschakelen"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Helptekst onder de inschakelschakelaar",
+    "value": "Vereist voordat een wisbewerking kan worden gestart."
   },
   "remotePlatformErase.initiateTitle": {
     "description": "Titel van de actiekaart voor het starten van wissen",
@@ -2926,8 +2930,8 @@
     "value": "Selecteer ten minste één verwijdermogelijkheid"
   },
   "remotePlatformErase.confirmMessage": {
-    "description": "Bevestigingsdialoogbericht voordat extern platform wissen wordt gestart",
-    "value": "Weet u zeker dat u het systeem wilt wissen en opnieuw wilt opstarten?"
+    "description": "Bevestigingsdialoogbericht voordat extern platform wissen wordt gestart. {{device}} is de vriendelijke naam of hostnaam; {{operations}} is een komma-gescheiden lijst van geselecteerde wisbewerkingen.",
+    "value": "{{device}} wissen en opnieuw opstarten? Dit voert uit: {{operations}}. Deze actie is onomkeerbaar."
   },
   "remotePlatformErase.cap.csmeUnconfigure.desc": {
     "description": "Beschrijving voor Intel CSME-firmware deconfigureren",
@@ -2936,5 +2940,13 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informatiebericht getoond wanneer CSME deconfigureren is geselecteerd, legt uit dat het niet kan worden gecombineerd met andere opties",
     "value": "CSME-deconfiguratie voert een volledige deprovisioning van Intel AMT uit en kan niet worden gecombineerd met andere wisbewerkingen."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
+    "value": "{{selected}} van {{total}} bewerkingen geselecteerd"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
+    "value": "Niet ondersteund op dit apparaat"
   }
 }

@@ -124,7 +124,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       name: 'deviceDetail.remotePlatformErase.value',
       description: 'deviceDetail.remotePlatformEraseDescription.value',
       component: 'remote-platform-erase',
-      icon: 'cancel_presentation'
+      icon: 'computer_cancel'
     }
   ]
 
