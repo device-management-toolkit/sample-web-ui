@@ -10,6 +10,6 @@ export const environment = {
   mpsServer: '##MPS_SERVER##',
   rpsServer: '##RPS_SERVER##',
   vault: '##VAULT_SERVER##',
-  amtFeaturesCacheTtlMs: 30_000, // 30 s default; max 3 min (180_000)
+  redirTokenRefreshThresholdMs: 5_000,
   auth: {}
 }
