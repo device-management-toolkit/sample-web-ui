@@ -1423,6 +1423,10 @@
     "description": "Label voor HTTPS Netwerkboot",
     "value": "HTTPS Netwerkboot:"
   },
+  "general.remotePlatformErase": {
+    "description": "Label voor extern wissen van het platform",
+    "value": "Extern platform wissen:"
+  },
   "general.ideRedirection": {
     "description": "Label voor IDE-omleiding",
     "value": "IDE-omleiding:"
@@ -2812,5 +2816,137 @@
   "common.noData": {
     "value": "Geen gegevens beschikbaar",
     "description": "Bericht wanneer er geen gegevens beschikbaar zijn"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Categorienaam voor extern wissen van het platform",
+    "value": "Extern platform wissen"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Beschrijving voor extern wissen van het platform",
+    "value": "Platformgegevens veilig wissen"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titel van de functiekaart voor extern wissen van het platform",
+    "value": "Extern platform wissen"
+  },
+  "remotePlatformErase.description": {
+    "description": "Ondertitel van de functiekaart voor extern wissen van het platform",
+    "value": "Start op afstand een veilige wissing van schijven, TPM, BIOS of Intel CSME op dit apparaat. Gewiste gegevens kunnen niet worden hersteld."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Waarschuwingsbericht over het inschakelen van extern wissen van het platform",
+    "value": "Als u deze functie inschakelt, kunnen platformgegevens op afstand worden gewist. Gebruik met voorzichtigheid."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Label van de schakelaar voor extern wissen van het platform",
+    "value": "Extern wissen van het platform op dit apparaat inschakelen"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Helptekst onder de inschakelschakelaar",
+    "value": "Vereist voordat een wisbewerking kan worden gestart."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titel van de actiekaart voor het starten van wissen",
+    "value": "Extern wissen starten"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Ondertitel van de actiekaart voor het starten van wissen",
+    "value": "Alle gegevens op dit platform permanent wissen"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Waarschuwing voor het starten van extern wissen van het platform",
+    "value": "Deze actie is onomkeerbaar. Alle platformgegevens worden permanent gewist."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Knoplaabel voor het starten van extern wissen van het platform",
+    "value": "Extern wissen starten"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Succesbericht bij het in- of uitschakelen van extern wissen van het platform",
+    "value": "Functie voor extern wissen van het platform succesvol bijgewerkt"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Foutbericht wanneer bijwerken van extern wissen van het platform mislukt",
+    "value": "Bijwerken van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Succesbericht na het starten van extern wissen van het platform",
+    "value": "Extern wissen van het platform succesvol gestart"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Foutbericht wanneer extern wissen van het platform niet kan worden gestart",
+    "value": "Starten van extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Foutbericht bij het laden van de status van extern wissen van het platform",
+    "value": "Laden van de status van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Bericht dat wordt weergegeven wanneer extern wissen van het platform niet wordt ondersteund",
+    "value": "Extern wissen van het platform wordt niet ondersteund"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titel van de kaart met wissmogelijkheden",
+    "value": "Wissmogelijkheden"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Ondertitel van de kaart met wissmogelijkheden",
+    "value": "Selecteer welke mogelijkheden u wilt opnemen in de wisbewerking. Niet-ondersteunde mogelijkheden kunnen niet worden geselecteerd."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Hint die wordt weergegeven wanneer de functie is ingeschakeld en de gebruiker vraagt mogelijkheden te selecteren om te wissen",
+    "value": "Selecteer de mogelijkheden die u wilt wissen en klik vervolgens op Extern wissen starten."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Label voor veilig wissen van alle SSD's",
+    "value": "Veilig wissen van alle SSD's"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Beschrijving voor veilig wissen van alle SSD's",
+    "value": "Verwijdering van alle inhoud van ATA- en NVM-schijven door een combinatie van mediawissen en cryptografisch wissen"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Label voor TPM wissen",
+    "value": "TPM wissen"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Beschrijving voor TPM wissen",
+    "value": "Alle gemaakte sleutels die zijn gekoppeld aan de TPM en door die sleutels beschermde gegevens verwijderen, zoals een virtuele smartcard of een inlog-PIN"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Label voor BIOS herstellen naar EOM-status",
+    "value": "BIOS herstellen naar EOM-status"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Beschrijving voor BIOS herstellen naar EOM-status",
+    "value": "Herstel het BIOS naar de gouden configuratie voor End of Manufacture (EOM) zoals opgegeven door de systeemontwerper"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Label voor Intel CSME-firmware deconfigureren",
+    "value": "Intel CSME-firmware deconfigureren"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Tooltip op de verwijderknop wanneer er geen mogelijkheden zijn geselecteerd",
+    "value": "Selecteer ten minste één verwijdermogelijkheid"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Bevestigingsdialoogbericht voordat extern platform wissen wordt gestart. {{device}} is de vriendelijke naam of hostnaam; {{operations}} is een komma-gescheiden lijst van geselecteerde wisbewerkingen.",
+    "value": "{{device}} wissen en opnieuw opstarten? Dit voert uit: {{operations}}. Deze actie is onomkeerbaar."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Beschrijving voor Intel CSME-firmware deconfigureren",
+    "value": "Volledige deprovisioning van Intel AMT, terugkeer naar de standaardstatus en uitschakeling van Intel AMT-functies"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Informatiebericht getoond wanneer CSME deconfigureren is geselecteerd, legt uit dat het niet kan worden gecombineerd met andere opties",
+    "value": "CSME-deconfiguratie voert een volledige deprovisioning van Intel AMT uit en kan niet worden gecombineerd met andere wisbewerkingen."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
+    "value": "{{selected}} van {{total}} bewerkingen geselecteerd"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
+    "value": "Niet ondersteund op dit apparaat"
   }
 }

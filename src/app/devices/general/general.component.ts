@@ -57,7 +57,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    remoteErase: false,
+    rpeSupported: false,
+    rpeEnabled: false,
+    rpeCaps: 0,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
@@ -74,10 +76,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    ocr: false
+    ocr: false,
+    platformEraseEnabled: false,
+    rpeSupported: false
   })
 
   public isLoading = signal(true)
+  public isDataLoaded = signal(false)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
   public amtVersion: string | null = null
@@ -156,8 +161,16 @@ export class GeneralComponent implements OnInit, OnDestroy {
           ],
           httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
           winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
-          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
+          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
+          platformEraseEnabled: [
+            {
+              value: results.amtFeatures.rpeEnabled,
+              disabled: !(results.amtFeatures.rpeSupported ?? false)
+            }
+          ],
+          rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
         })
+        this.isDataLoaded.set(true)
       })
   }
 
@@ -178,8 +191,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.isLoading.set(true)
     this.devicesService
       .setAmtFeatures(this.deviceId(), {
-        ...this.amtEnabledFeatures.getRawValue(),
-        remoteErase: this.amtFeatures.remoteErase
+        ...this.amtEnabledFeatures.getRawValue()
       } as AMTFeaturesRequest)
       .pipe(
         finalize(() => {

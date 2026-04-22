@@ -1423,6 +1423,10 @@
     "description": "Étiquette pour le démarrage réseau HTTPS",
     "value": "HTTPS Démarrage réseau :"
   },
+  "general.remotePlatformErase": {
+    "description": "Étiquette pour l'effacement distant de la plateforme",
+    "value": "Effacement distant de la plateforme :"
+  },
   "general.ideRedirection": {
     "description": "Étiquette pour la redirection IDE",
     "value": "Redirection IDE :"
@@ -2812,5 +2816,137 @@
   "common.noData": {
     "value": "Aucune donnée disponible",
     "description": "Message indiquant qu’aucune donnée n’est disponible"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Nom de catégorie pour l'effacement distant de la plateforme",
+    "value": "Effacement distant de la plateforme"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Description pour l'effacement distant de la plateforme",
+    "value": "Effacer les données de la plateforme en toute sécurité"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titre de la carte de fonctionnalité d'effacement distant de la plateforme",
+    "value": "Effacement distant de la plateforme"
+  },
+  "remotePlatformErase.description": {
+    "description": "Sous-titre de la carte de fonctionnalité d'effacement distant de la plateforme",
+    "value": "Déclenche à distance un effacement sécurisé des disques, TPM, BIOS ou Intel CSME sur cet appareil. Les données effacées ne peuvent pas être récupérées."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Message d'avertissement concernant l'activation de l'effacement distant de la plateforme",
+    "value": "L'activation de cette fonctionnalité permet l'effacement à distance des données de la plateforme. À utiliser avec précaution."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Étiquette du commutateur d'activation de l'effacement distant de la plateforme",
+    "value": "Activer l'effacement distant de la plateforme sur cet appareil"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Texte d'aide sous le commutateur d'activation",
+    "value": "Requis avant d'initier toute opération d'effacement."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titre de la carte d'action pour lancer l'effacement",
+    "value": "Lancer l'effacement distant"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Sous-titre de la carte d'action pour lancer l'effacement",
+    "value": "Effacer définitivement toutes les données stockées sur cette plateforme"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Avertissement avant de lancer un effacement distant de la plateforme",
+    "value": "Cette action est irréversible. Toutes les données de la plateforme seront définitivement effacées."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Étiquette du bouton pour lancer l'effacement distant de la plateforme",
+    "value": "Lancer l'effacement distant"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Message de succès lors de l'activation ou désactivation de l'effacement distant de la plateforme",
+    "value": "Fonctionnalité d'effacement distant de la plateforme mise à jour avec succès"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Message d'erreur quand la mise à jour de l'effacement distant de la plateforme échoue",
+    "value": "Échec de la mise à jour de la fonctionnalité d'effacement distant de la plateforme"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Message de succès après le lancement de l'effacement distant de la plateforme",
+    "value": "Effacement distant de la plateforme lancé avec succès"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Message d'erreur quand l'effacement distant de la plateforme ne peut pas être lancé",
+    "value": "Échec du lancement de l'effacement distant de la plateforme"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Message d'erreur lors du chargement du statut de l'effacement distant de la plateforme",
+    "value": "Échec du chargement du statut de la fonctionnalité d'effacement distant de la plateforme"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Message affiché quand l'effacement distant de la plateforme n'est pas pris en charge",
+    "value": "L'effacement distant de la plateforme n'est pas pris en charge"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titre de la carte des capacités d'effacement",
+    "value": "Capacités d'effacement"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Sous-titre de la carte des capacités d'effacement",
+    "value": "Sélectionnez les capacités à inclure dans l'opération d'effacement. Les capacités non prises en charge ne peuvent pas être sélectionnées."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Indication affichée lorsque la fonctionnalité est activée, invitant l'utilisateur à sélectionner les capacités à effacer",
+    "value": "Sélectionnez les fonctionnalités à effacer, puis cliquez sur Lancer l'effacement distant."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Étiquette pour l'effacement sécurisé de tous les SSD",
+    "value": "Effacement sécurisé de tous les SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Description pour l'effacement sécurisé de tous les SSD",
+    "value": "Suppression de tout le contenu des lecteurs ATA et NVM par une combinaison d'effacement de média et d'effacement cryptographique"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Étiquette pour l'effacement du TPM",
+    "value": "Effacement du TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Description pour l'effacement du TPM",
+    "value": "Suppression de toutes les clés créées associées au TPM et des données protégées par ces clés, telles qu'une carte à puce virtuelle ou un code PIN de connexion"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Étiquette pour la restauration du BIOS à l'état EOM",
+    "value": "Restaurer le BIOS à l'état EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Description pour la restauration du BIOS à l'état EOM",
+    "value": "Restaurer le BIOS à la configuration dorée de fin de fabrication (EOM) spécifiée par le concepteur du système"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Étiquette pour la déconfiguration du micrologiciel Intel CSME",
+    "value": "Déconfigurer le micrologiciel Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Info-bulle sur le bouton d'effacement lorsqu'aucune capacité n'est sélectionnée",
+    "value": "Sélectionnez au moins une capacité d'effacement"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Message de la boîte de dialogue de confirmation avant d'initier l'effacement distant de la plateforme. {{device}} est le nom convivial ou le nom d'hôte ; {{operations}} est la liste séparée par des virgules des opérations d'effacement sélectionnées.",
+    "value": "Effacer et redémarrer {{device}} ? Actions effectuées : {{operations}}. Cette action est irréversible."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Description pour la déconfiguration du micrologiciel Intel CSME",
+    "value": "Annulation complète du provisionnement d'Intel AMT, retour à l'état par défaut et désactivation des fonctionnalités Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Message d'information affiché lorsque Déconfigurer CSME est sélectionné, expliquant qu'il ne peut pas être combiné avec d'autres options",
+    "value": "La déconfiguration de CSME effectue un déprovisionnement complet d'Intel AMT et ne peut pas être combinée avec d'autres opérations d'effacement."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",
+    "value": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Légende affichée sur une ligne de capacité lorsque l'appareil ne la prend pas en charge",
+    "value": "Non pris en charge sur cet appareil"
   }
 }

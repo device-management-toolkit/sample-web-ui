@@ -1,0 +1,101 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<mat-card>
+  <mat-card-header style="justify-content: space-between">
+    <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
+    @if (isPlatformEraseSupported() && platformEraseEnabled()) {
+      <button
+        mat-flat-button
+        color="warn"
+        data-cy="initiateEraseButton"
+        [disabled]="!hasSelectedCaps()"
+        [matTooltip]="!hasSelectedCaps() ? ('remotePlatformErase.initiateNoCapsTooltip.value' | translate) : ''"
+        (click)="initiateErase()">
+        <mat-icon>delete_forever</mat-icon>
+        {{ 'remotePlatformErase.initiateButton.value' | translate }}
+      </button>
+    }
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ 'remotePlatformErase.description.value' | translate }}</p>
+    @if (isPlatformEraseSupported()) {
+      <div role="status" style="padding: 12px 0">
+        <mat-icon color="warn" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">warning</mat-icon>
+        <span>{{ 'remotePlatformErase.initiateWarning.value' | translate }}</span>
+      </div>
+
+      <div style="padding: 8px 0">
+        <mat-slide-toggle
+          data-cy="remoteEraseCheckbox"
+          [checked]="platformEraseEnabled()"
+          [disabled]="isLoading()"
+          (change)="toggleFeature($event.checked)">
+          {{ 'remotePlatformErase.featureEnabled.value' | translate }}
+        </mat-slide-toggle>
+        <div style="padding-top: 4px">
+          <small>{{ 'remotePlatformErase.featureEnabledHint.value' | translate }}</small>
+        </div>
+      </div>
+
+      @if (platformEraseEnabled()) {
+        <mat-divider style="margin: 16px 0"></mat-divider>
+
+        <h3>
+          <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+            >checklist</mat-icon
+          >
+          <span>{{ 'remotePlatformErase.caps.title.value' | translate }}</span>
+        </h3>
+        <p>{{ 'remotePlatformErase.caps.description.value' | translate }}</p>
+
+        @for (cap of eraseCaps(); track cap.key; let i = $index) {
+          <div data-cy="eraseCapItem" style="padding: 4px 0">
+            <mat-checkbox
+              [formControl]="eraseCapControl(i)"
+              (change)="onCapChange()"
+              [attr.aria-describedby]="'rpe-cap-desc-' + cap.key"
+              data-cy="eraseCapCheckbox">
+              <div>
+                <div>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</div>
+                <small [id]="'rpe-cap-desc-' + cap.key">
+                  {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
+                </small>
+                @if (!cap.supported) {
+                  <div>
+                    <small
+                      ><em>{{ 'remotePlatformErase.capUnsupported.value' | translate }}</em></small
+                    >
+                  </div>
+                }
+              </div>
+            </mat-checkbox>
+          </div>
+        }
+
+        @if (isCsmeExclusiveSelected()) {
+          <div role="status" data-cy="csmeExclusiveNote" style="padding: 8px 0">
+            <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+              >info</mat-icon
+            >
+            <span>{{ 'remotePlatformErase.csmeUnconfigureExclusive.value' | translate }}</span>
+          </div>
+        }
+
+        <p data-cy="selectionCount" style="margin: 8px 0 0">
+          <small>
+            {{
+              'remotePlatformErase.selectionCount.value'
+                | translate: { selected: selectedCapsCount(), total: supportedCapsCount() }
+            }}
+          </small>
+        </p>
+      }
+    } @else if (!isLoading()) {
+      <div data-cy="notSupportedMessage" style="padding: 8px 0">
+        <mat-icon color="accent" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">info</mat-icon>
+        <span>{{ 'remotePlatformErase.notSupported.value' | translate }}</span>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

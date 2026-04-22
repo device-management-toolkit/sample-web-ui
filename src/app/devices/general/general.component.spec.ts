@@ -46,7 +46,9 @@ describe('GeneralComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
+        rpeEnabled: true,
+        rpeSupported: true,
+        rpeCaps: 0,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',

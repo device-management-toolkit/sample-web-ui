@@ -156,6 +156,17 @@
             }}
           </div>
         }
+        @if (isDataLoaded() && amtEnabledFeatures.get('rpeSupported')?.value) {
+          <div class="flex flex-50 items-end">
+            <p>{{ 'general.remotePlatformErase.value' | translate }}</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end"
+            [matTooltip]="'general.supported.value' | translate"
+            matTooltipPosition="after">
+            {{ 'general.supported.value' | translate }}
+          </div>
+        }
         <div class="flex flex-50 items-end">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>

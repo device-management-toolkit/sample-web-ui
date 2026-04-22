@@ -202,7 +202,7 @@ export class SolComponent implements OnInit, OnDestroy {
             enableSOL: true,
             enableIDER: this.amtFeatures()?.IDER ?? false,
             ocr: this.amtFeatures()?.ocr ?? false,
-            remoteErase: this.amtFeatures()?.remoteErase ?? false
+            platformEraseEnabled: this.amtFeatures()?.rpeEnabled ?? false
           }
           return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }

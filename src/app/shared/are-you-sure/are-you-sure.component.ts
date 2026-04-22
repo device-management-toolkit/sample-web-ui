@@ -3,10 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
-import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog'
 import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'app-are-you-sure',
@@ -22,4 +28,8 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule
   ]
 })
-export class AreYouSureDialogComponent {}
+export class AreYouSureDialogComponent {
+  protected readonly data = inject<{ message?: string; params?: Record<string, unknown> } | null>(MAT_DIALOG_DATA, {
+    optional: true
+  })
+}
