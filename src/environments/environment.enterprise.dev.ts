@@ -10,7 +10,7 @@ export const environment = {
   mpsServer: 'http://localhost:8181',
   rpsServer: 'http://localhost:8181',
   vault: '',
-  amtFeaturesCacheTtlMs: 30_000, // 30 s default; max 3 min (180_000)
+  redirTokenRefreshThresholdMs: 5_000,
   auth: {
     clientId: '##CLIENTID##',
     issuer: '##ISSUER##',

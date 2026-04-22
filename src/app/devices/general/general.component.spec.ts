@@ -25,6 +25,7 @@ describe('GeneralComponent', () => {
       'getPowerState',
       'getAMTVersion',
       'getAMTFeatures',
+      'getAMTFeaturesCached',
       'getGeneralSettings',
       'PowerStates',
       'sendPowerAction',
@@ -33,28 +34,28 @@ describe('GeneralComponent', () => {
       'sendBulkDeactivate',
       'getWsmanOperations'
     ])
-    devicesServiceSpy.getAMTFeatures.and.returnValue(
-      of({
-        userConsent: 'ALL',
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        redirection: true,
-        optInState: 1,
-        kvmAvailable: true,
-        httpsBootSupported: true,
-        ocr: true,
-        winREBootSupported: true,
-        localPBABootSupported: true,
-        remoteErase: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
-      })
-    )
+    const amtFeaturesResponse = {
+      userConsent: 'ALL',
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      redirection: true,
+      optInState: 1,
+      kvmAvailable: true,
+      httpsBootSupported: true,
+      ocr: true,
+      winREBootSupported: true,
+      localPBABootSupported: true,
+      remoteErase: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    }
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
+    devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({
