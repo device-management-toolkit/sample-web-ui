@@ -26,7 +26,8 @@ describe('DeviceEnableSolComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: MatDialogRef, useValue: dialogMock }]
+        { provide: MatDialogRef, useValue: dialogMock }
+      ]
     })
   })
 
