@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #*********************************************************************/
 ### STAGE 1: Build ###
-FROM node:25-bullseye-slim@sha256:7f01b6e8630fb2843b29568ffd7539b4e4aa45015ceca859cc4943ab2e298666 AS build
+FROM node:25-bullseye-slim@sha256:7ec50c1867732dc73facf8b318e029764dab970271691b06cd6895975c1a038e AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
