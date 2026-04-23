@@ -123,10 +123,6 @@
     "description": "Hinweis zur Verwendung von TLS",
     "value": "Verwenden Sie TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Kontrollkästchen für die Verwendung der CIRA-Verbindung",
-    "value": "CIRA verwenden"
-  },
   "addDevice.guid": {
     "description": "Bezeichnung für das GUID-Feld",
     "value": "GUID"
