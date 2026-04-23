@@ -45,7 +45,8 @@ export const routes: Routes = [
   {
     path: 'profiles/new',
     children: [
-      { path: '', component: ProfileDetailComponent }],
+      { path: '', component: ProfileDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'profiles/:name', component: ProfileDetailComponent, canActivate: [AuthGuard] },
@@ -53,7 +54,8 @@ export const routes: Routes = [
   {
     path: 'ciraconfigs/new',
     children: [
-      { path: '', component: ConfigDetailComponent }],
+      { path: '', component: ConfigDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'ciraconfigs/:name', component: ConfigDetailComponent, canActivate: [AuthGuard] },
@@ -61,7 +63,8 @@ export const routes: Routes = [
   {
     path: 'domains/new',
     children: [
-      { path: '', component: DomainDetailComponent }],
+      { path: '', component: DomainDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'domains/:name', component: DomainDetailComponent, canActivate: [AuthGuard] },
@@ -69,7 +72,8 @@ export const routes: Routes = [
   {
     path: 'wireless/new',
     children: [
-      { path: '', component: WirelessDetailComponent }],
+      { path: '', component: WirelessDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'wireless/:name', component: WirelessDetailComponent, canActivate: [AuthGuard] },
@@ -77,7 +81,8 @@ export const routes: Routes = [
   {
     path: 'ieee8021x/new',
     children: [
-      { path: '', component: IEEE8021xDetailComponent }],
+      { path: '', component: IEEE8021xDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'ieee8021x/:name', component: IEEE8021xDetailComponent, canActivate: [AuthGuard] },
@@ -85,7 +90,8 @@ export const routes: Routes = [
   {
     path: 'proxy-configs/new',
     children: [
-      { path: '', component: ProxyConfigDetailComponent }],
+      { path: '', component: ProxyConfigDetailComponent }
+    ],
     canActivate: [AuthGuard]
   },
   { path: 'proxy-configs/:name', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] }

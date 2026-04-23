@@ -688,7 +688,8 @@ describe('ProfileDetailComponent', () => {
       } as MatAutocompleteSelectedEvent
 
       component.selectedProxyConfigs.set([
-        { priority: 1, name: 'proxy1' }])
+        { priority: 1, name: 'proxy1' }
+      ])
 
       component.selectProxyProfile(event)
       expect(component.selectedProxyConfigs().length).toBe(1)
@@ -722,7 +723,8 @@ describe('ProfileDetailComponent', () => {
       const proxyToRemove = { priority: 1, name: 'proxy1' }
       component.selectedProxyConfigs.set([
         proxyToRemove,
-        { priority: 2, name: 'proxy2' }])
+        { priority: 2, name: 'proxy2' }
+      ])
 
       component.removeProxyProfile(proxyToRemove)
 
