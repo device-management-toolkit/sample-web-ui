@@ -44,7 +44,8 @@ describe('UserConsentService', () => {
         UserConsentService,
         { provide: DevicesService, useValue: devicesService },
         { provide: MatDialog, useValue: dialog },
-        { provide: MatSnackBar, useValue: snackBar }]
+        { provide: MatSnackBar, useValue: snackBar }
+      ]
     })
     service = TestBed.inject(UserConsentService)
     displayErrorSpy = spyOn(service, 'displayError').and.callThrough()
