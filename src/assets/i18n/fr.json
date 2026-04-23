@@ -123,10 +123,6 @@
     "description": "Message pour l'utilisation de TLS",
     "value": "Utilisez TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Case à cocher pour utiliser la connexion CIRA",
-    "value": "Utiliser CIRA"
-  },
   "addDevice.guid": {
     "description": "Étiquette pour le champ GUID",
     "value": "GUID"

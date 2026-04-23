@@ -123,10 +123,6 @@
     "description": "رسالة لاستخدام TLS",
     "value": "استخدم TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "مربع اختيار لاستخدام اتصال CIRA",
-    "value": "استخدام CIRA"
-  },
   "addDevice.guid": {
     "description": "تسمية حقل GUID",
     "value": "GUID"

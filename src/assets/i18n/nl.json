@@ -123,10 +123,6 @@
     "description": "Bericht voor het gebruik van TLS",
     "value": "Gebruik TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
-    "value": "Gebruik CIRA"
-  },
   "addDevice.guid": {
     "description": "Label voor het GUID-veld",
     "value": "GUID"
