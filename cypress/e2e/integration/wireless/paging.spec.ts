@@ -4,9 +4,9 @@
  **********************************************************************/
 
 // Tests the creation of a wireless
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-import { paging } from 'cypress/e2e/fixtures/formEntry/paging'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { wirelessConfigs } from '../../fixtures/api/wireless'
+import { paging } from '../../fixtures/formEntry/paging'
 
 // ---------------------------- Test section ----------------------------
 

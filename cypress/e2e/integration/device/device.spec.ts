@@ -6,7 +6,7 @@
 // Tests the creation of a profile
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { devices } from '../../fixtures/api/device'
-import { tags } from 'cypress/e2e/fixtures/api/tags'
+import { tags } from '../../fixtures/api/tags'
 
 // ---------------------------- Test section ----------------------------
 

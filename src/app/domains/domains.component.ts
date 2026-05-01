@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 
 import { finalize } from 'rxjs/operators'
-import { DataWithCount, Domain, PageEventOptions } from 'src/models/models'
+import { DataWithCount, Domain, PageEventOptions } from '../../models/models'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DomainsService } from './domains.service'

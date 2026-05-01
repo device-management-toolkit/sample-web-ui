@@ -10,7 +10,7 @@ import { of } from 'rxjs'
 
 import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
-import { Domain, DataWithCount } from 'src/models/models'
+import { Domain, DataWithCount } from '../../models/models'
 import { RouterModule } from '@angular/router'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'

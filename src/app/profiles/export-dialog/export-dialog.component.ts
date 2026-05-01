@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { Router } from '@angular/router'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { DomainsService } from 'src/app/domains/domains.service'
-import { type Domain } from 'src/models/models'
+import { DomainsService } from '../../domains/domains.service'
+import { type Domain } from '../../../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({

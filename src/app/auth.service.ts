@@ -7,9 +7,9 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
-import { environment } from 'src/environments/environment'
+import { environment } from '../environments/environment'
 import { Router } from '@angular/router'
-import { ValidatorError, MPSVersion, RPSVersion } from 'src/models/models'
+import { ValidatorError, MPSVersion, RPSVersion } from '../models/models'
 import { OAuthService } from 'angular-oauth2-oidc'
 
 @Injectable({
