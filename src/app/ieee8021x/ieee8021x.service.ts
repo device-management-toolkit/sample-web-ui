@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
-import { environment } from 'src/environments/environment'
-import { DataWithCount, IEEE8021xConfig, PageEventOptions } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { DataWithCount, IEEE8021xConfig, PageEventOptions } from '../../models/models'
 import { AuthService } from '../auth.service'
 
 @Injectable({

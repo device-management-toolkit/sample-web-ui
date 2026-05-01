@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { ProfilesService } from './profiles.service'
 import { AuthService } from '../auth.service'
-import { environment } from 'src/environments/environment'
-import { DataWithCount, PageEventOptions } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { DataWithCount, PageEventOptions } from '../../models/models'
 import { Profile } from './profiles.constants'
 import { TranslateModule } from '@ngx-translate/core'
 

@@ -5,8 +5,8 @@
 
 // Tests the creation of a cira-config
 
-import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { badRequest, empty } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
 import { ciraFixtures } from '../../fixtures/formEntry/cira'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')

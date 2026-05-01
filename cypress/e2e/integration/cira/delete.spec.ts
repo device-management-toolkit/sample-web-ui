@@ -5,10 +5,10 @@
 
 // Tests the creation of a cira-config
 
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { httpCodes } from '../../fixtures/api/httpCodes'
 import { ciraFixtures } from '../../fixtures//formEntry/cira'
-import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
-import { empty } from 'cypress/e2e/fixtures/api/general'
+import { ciraConfig } from '../../fixtures/api/cira'
+import { empty } from '../../fixtures/api/general'
 
 // ---------------------------- Test section ----------------------------
 

@@ -4,8 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { of, throwError, Subject } from 'rxjs'
 import { Router } from '@angular/router'
 import { ExportDialogComponent } from './export-dialog.component'
-import { DomainsService } from 'src/app/domains/domains.service'
-import { type Domain } from 'src/models/models'
+import { DomainsService } from '../../domains/domains.service'
+import { type Domain } from '../../../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('ExportDialogComponent', () => {

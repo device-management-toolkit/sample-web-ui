@@ -4,12 +4,12 @@
  **********************************************************************/
 
 // Tests the creation of a profile
-import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
-import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-import { profileFixtures } from 'cypress/e2e/fixtures/formEntry/profile'
-import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
+import { ciraConfig } from '../../fixtures/api/cira'
+import { badRequest, empty } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { wirelessConfigs } from '../../fixtures/api/wireless'
+import { profileFixtures } from '../../fixtures/formEntry/profile'
+import { urlFixtures } from '../../fixtures/formEntry/urls'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 const baseUrl: string = Cypress.env('BASEURL')
 

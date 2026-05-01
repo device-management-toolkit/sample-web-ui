@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, map, shareReplay, tap } from 'rxjs/operators'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../environments/environment'
 import {
   AMTFeaturesResponse,
   AuditLogResponse,
@@ -32,7 +32,7 @@ import {
   BootSource,
   DisplaySelectionResponse,
   DisplaySelectionRequest
-} from 'src/models/models'
+} from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
 

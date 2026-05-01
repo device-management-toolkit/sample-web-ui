@@ -16,7 +16,7 @@ import { Observable, startWith, map, Subject, takeUntil } from 'rxjs'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({

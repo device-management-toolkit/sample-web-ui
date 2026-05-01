@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { WirelessService } from './wireless.service'
 import { AuthService } from '../auth.service'
-import { environment } from 'src/environments/environment'
-import { WirelessConfig, DataWithCount, PageEventOptions } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { WirelessConfig, DataWithCount, PageEventOptions } from '../../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('WirelessService', () => {

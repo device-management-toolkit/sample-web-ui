@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 import { MatButton } from '@angular/material/button'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatDivider } from '@angular/material/divider'
