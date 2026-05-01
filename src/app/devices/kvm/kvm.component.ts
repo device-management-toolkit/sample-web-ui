@@ -18,17 +18,17 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, interval, Observable, of, throwError } from 'rxjs'
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
-import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
-import { environment } from 'src/environments/environment'
+import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
+import { environment } from '../../../environments/environment'
 import {
   AMTFeaturesRequest,
   AMTFeaturesResponse,
   RedirectionStatus,
   UserConsentResponse,
   DisplaySelectionResponse
-} from 'src/models/models'
+} from '../../../models/models'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 import { KVMComponent, IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
@@ -101,6 +101,11 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   private powerState: any = 0
   private timeInterval!: any
+  private initStartTime = 0
+  private displaysLoaded = false
+  // If init() completes faster than this, we assume no blocking dialog was
+  // shown and the token fetched in ngOnInit is still valid.
+  private readonly REDIR_TOKEN_REFRESH_THRESHOLD_MS = environment.redirTokenRefreshThresholdMs ?? 5_000
 
   public encodings = [
     { value: 1, viewValue: 'RLE 8' },
@@ -160,14 +165,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.devicesService
-      .getRedirectionExpirationToken(this.deviceId())
-      .pipe(
-        tap((result) => {
-          this.authToken.set(result.token)
-        })
-      )
-      .subscribe()
+    this.prefetchAuthToken()
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
     this.timeInterval = interval(15000)
@@ -183,8 +181,57 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.init()
   }
 
+  // Prefetch a redirection token in parallel with init() so the fast path (no
+  // blocking dialogs) doesn't pay a round-trip in postUserConsentDecision.
+  private prefetchAuthToken(): void {
+    this.devicesService
+      .getRedirectionExpirationToken(this.deviceId())
+      .pipe(tap((result) => this.authToken.set(result.token)))
+      .subscribe()
+  }
+
   init(): void {
+    this.initStartTime = Date.now()
     this.isLoading.set(true)
+    // Kick off the connection chain first so its AMT round-trips aren't queued
+    // behind the display-selection fetch. The display list is non-critical for
+    // opening the KVM session and populates the dropdown in parallel.
+    this.loadingStatus.set('kvm.status.checkingPowerState.value')
+    this.getPowerStateCached(this.deviceId())
+      .pipe(
+        tap(() => this.loadingStatus.set('kvm.status.checkingRedirection.value')),
+        switchMap((powerState) => this.handlePowerState(powerState)),
+        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId()))),
+        tap(() => this.loadingStatus.set('kvm.status.checkingAMTFeatures.value')),
+        switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
+        switchMap((result) => (result === null ? of() : this.getAMTFeaturesCached())),
+        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        tap(() => this.loadingStatus.set('kvm.status.checkingConsent.value')),
+        switchMap((result: boolean | any) =>
+          iif(
+            () => result === false,
+            defer(() => of(null)),
+            defer(() => this.checkUserConsent())
+          )
+        ),
+        switchMap((result: any) =>
+          // safely convert null to undefined for type compatibility
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
+        ),
+        switchMap((result: any | UserConsentResponse) =>
+          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'KVM')
+        ),
+        switchMap((result: any) => this.postUserConsentDecision(result)),
+        catchError((err) => {
+          this.isLoading.set(false)
+          this.loadingStatus.set('')
+          return throwError(() => err)
+        })
+      )
+      .subscribe()
+  }
+
+  private loadDisplaySelection(): void {
     this.devicesService.getDisplaySelection(this.deviceId()).subscribe({
       next: (result: DisplaySelectionResponse) => {
         const displays = result?.displays ?? []
@@ -216,57 +263,37 @@ export class KvmComponent implements OnInit, OnDestroy {
         this.selectedDisplay.set(0)
       }
     })
-    // device needs to be powered on in order to start KVM session
-    this.loadingStatus.set('kvm.status.checkingPowerState.value')
-    this.getPowerState(this.deviceId())
-      .pipe(
-        tap(() => this.loadingStatus.set('kvm.status.checkingRedirection.value')),
-        switchMap((powerState) => this.handlePowerState(powerState)),
-        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId()))),
-        tap(() => this.loadingStatus.set('kvm.status.checkingAMTFeatures.value')),
-        switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
-        switchMap((result) => (result === null ? of() : this.getAMTFeatures())),
-        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
-        tap(() => this.loadingStatus.set('kvm.status.checkingConsent.value')),
-        switchMap((result: boolean | any) =>
-          iif(
-            () => result === false,
-            defer(() => of(null)),
-            defer(() => this.checkUserConsent())
-          )
-        ),
-        switchMap((result: any) =>
-          // safely convert null to undefined for type compatibility
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
-        ),
-        switchMap((result: any | UserConsentResponse) =>
-          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'KVM')
-        ),
-        switchMap((result: any) => this.postUserConsentDecision(result)),
-        catchError((err) => {
-          this.isLoading.set(false)
-          this.loadingStatus.set('')
-          return throwError(() => err)
-        })
-      )
-      .subscribe()
   }
 
   postUserConsentDecision(result: boolean): Observable<any> {
-    if (result !== false) {
-      // If result is true OR null (no consent needed), proceed with connection
-      this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
-      // Auto-connect - ensure connection state is properly set
-      this.isDisconnecting = false
-      this.loadingStatus.set('kvm.status.connectingKVM.value')
-      this.deviceKVMConnection.set(true)
-      this.getAMTFeatures()
-    } else {
+    if (result === false) {
       this.isLoading.set(false)
       this.loadingStatus.set('')
       this.deviceState.set(0)
+      return of(null)
     }
-    return of(null)
+    // If no dialog blocked the init() chain long enough to expire the token
+    // prefetched in ngOnInit, skip the refresh round-trip and use it directly.
+    const elapsedMs = Date.now() - this.initStartTime
+    if (elapsedMs < this.REDIR_TOKEN_REFRESH_THRESHOLD_MS && this.authToken()) {
+      this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
+      this.isDisconnecting = false
+      this.loadingStatus.set('kvm.status.connectingKVM.value')
+      this.deviceKVMConnection.set(true)
+      return of(null)
+    }
+    // The init() chain was blocked on a dialog long enough that the prefetched
+    // token may have expired. Refresh it so <amt-kvm> opens the websocket with
+    // a fresh token.
+    return this.devicesService.getRedirectionExpirationToken(this.deviceId()).pipe(
+      tap((token) => {
+        this.authToken.set(token.token)
+        this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
+        this.isDisconnecting = false
+        this.loadingStatus.set('kvm.status.connectingKVM.value')
+        this.deviceKVMConnection.set(true)
+      })
+    )
   }
 
   private handleKeyboardEventCapture = (event: KeyboardEvent): void => {
@@ -315,15 +342,9 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.deviceState.set(-1)
     this.readyToLoadKvm = false
     this.deviceKVMConnection.set(false)
-    // Refresh the auth token before reconnecting in case it has expired
-    this.devicesService
-      .getRedirectionExpirationToken(this.deviceId())
-      .pipe(
-        tap((result) => {
-          this.authToken.set(result.token)
-        })
-      )
-      .subscribe({ next: () => this.init() })
+    this.displaysLoaded = false
+    this.prefetchAuthToken()
+    this.init()
   }
   @HostListener('window:beforeunload')
   beforeUnloadHandler() {
@@ -415,6 +436,17 @@ export class KvmComponent implements OnInit, OnDestroy {
     )
   }
 
+  getPowerStateCached(guid: string): Observable<any> {
+    return this.devicesService.getPowerStateCached(guid).pipe(
+      catchError((err) => {
+        this.isLoading.set(false)
+        const msg: string = this.translate.instant('kvm.errorRetrieve.value')
+        this.displayError(msg)
+        return throwError(() => err)
+      })
+    )
+  }
+
   handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
     this.amtFeatures.set(results)
 
@@ -455,6 +487,11 @@ export class KvmComponent implements OnInit, OnDestroy {
   getAMTFeatures(): Observable<AMTFeaturesResponse> {
     this.isLoading.set(true)
     return this.devicesService.getAMTFeatures(this.deviceId())
+  }
+
+  getAMTFeaturesCached(): Observable<AMTFeaturesResponse> {
+    this.isLoading.set(true)
+    return this.devicesService.getAMTFeaturesCached(this.deviceId())
   }
 
   enableKvmDialog(): Observable<any> {
@@ -514,6 +551,11 @@ export class KvmComponent implements OnInit, OnDestroy {
     if (event === 2) {
       this.isLoading.set(false)
       this.loadingStatus.set('')
+      // Load the display list now that the websocket is up
+      if (!this.displaysLoaded) {
+        this.displaysLoaded = true
+        this.loadDisplaySelection()
+      }
     } else if (event === 0) {
       this.isLoading.set(false)
       this.loadingStatus.set('')

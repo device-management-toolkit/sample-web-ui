@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { empty } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-import { wirelessFixtures } from 'cypress/e2e/fixtures/formEntry/wireless'
+import { empty } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { wirelessConfigs } from '../../fixtures/api/wireless'
+import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
 
 describe('test wireless profiles page', () => {
   beforeEach('clear cache and login', () => {

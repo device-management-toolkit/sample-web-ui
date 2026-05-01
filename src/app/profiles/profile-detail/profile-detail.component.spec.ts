@@ -8,17 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { of, throwError } from 'rxjs'
-import { ConfigsService } from 'src/app/configs/configs.service'
-import { WirelessService } from 'src/app/wireless/wireless.service'
+import { ConfigsService } from '../../configs/configs.service'
+import { WirelessService } from '../../wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
-import { IEEE8021xService } from 'src/app/ieee8021x/ieee8021x.service'
-import { ProxyConfigsService } from 'src/app/proxy-configs/proxy-configs.service'
+import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
+import { ProxyConfigsService } from '../../proxy-configs/proxy-configs.service'
 import { ProfileDetailComponent } from './profile-detail.component'
 import { Profile } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { IEEE8021xConfig } from 'src/models/models'
-import { environment } from 'src/environments/environment'
+import { IEEE8021xConfig } from '../../../models/models'
+import { environment } from '../../../environments/environment'
 import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
@@ -688,7 +688,8 @@ describe('ProfileDetailComponent', () => {
       } as MatAutocompleteSelectedEvent
 
       component.selectedProxyConfigs.set([
-        { priority: 1, name: 'proxy1' }])
+        { priority: 1, name: 'proxy1' }
+      ])
 
       component.selectProxyProfile(event)
       expect(component.selectedProxyConfigs().length).toBe(1)
@@ -722,7 +723,8 @@ describe('ProfileDetailComponent', () => {
       const proxyToRemove = { priority: 1, name: 'proxy1' }
       component.selectedProxyConfigs.set([
         proxyToRemove,
-        { priority: 2, name: 'proxy2' }])
+        { priority: 2, name: 'proxy2' }
+      ])
 
       component.removeProxyProfile(proxyToRemove)
 

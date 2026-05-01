@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Config } from '../../../../src/app/ieee8021x/ieee8021x.constants'
+import { IEEE8021xConfig } from '../../../../src/models/models'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 import { wiredConfigs, wirelessConfigs } from '../../fixtures/formEntry/ieee8021x'
@@ -29,7 +29,7 @@ describe('Test IEEE 8021x Page', () => {
 
   allConfigs.forEach((config) => {
     it(`should delete ${config.profileName}`, () => {
-      const initialNavConfigs: Config[] = []
+      const initialNavConfigs: IEEE8021xConfig[] = []
       for (const cfg of remainingConfigs) {
         initialNavConfigs.push(cfg)
       }

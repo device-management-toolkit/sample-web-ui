@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { domains } from 'cypress/e2e/fixtures/api/domain'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { domains } from '../../fixtures/api/domain'
+import { httpCodes } from '../../fixtures/api/httpCodes'
 
 // ---------------------------- Test section ----------------------------
 

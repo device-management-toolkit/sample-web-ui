@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
-import { empty } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { profiles } from 'cypress/e2e/fixtures/api/profile'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
+import { ciraConfig } from '../../fixtures/api/cira'
+import { empty } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { profiles } from '../../fixtures/api/profile'
+import { wirelessConfigs } from '../../fixtures/api/wireless'
 import { amtProfiles } from '../../fixtures/formEntry/profile'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 

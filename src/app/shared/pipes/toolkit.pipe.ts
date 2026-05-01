@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { Pipe, PipeTransform } from '@angular/core'
-import { FormOption } from 'src/models/models'
+import { FormOption } from '../../../models/models'
 
 @Pipe({
   name: 'toolkit',

@@ -7,14 +7,14 @@ import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/co
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
-import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from 'src/models/models'
+import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from '../../../models/models'
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { catchError, finalize, forkJoin, Subject, takeUntil, throwError } from 'rxjs'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
@@ -98,7 +98,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     forkJoin({
-      amtFeatures: this.devicesService.getAMTFeatures(this.deviceId()).pipe(
+      // Reuses the toolbar's in-flight / cached features fetch so device-detail
+      // entry costs one /features round-trip total, not two.
+      amtFeatures: this.devicesService.getAMTFeaturesCached(this.deviceId()).pipe(
         catchError((err) => {
           const msg: string = this.translate.instant('general.errorAMTFeatures.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)

@@ -10,9 +10,9 @@ import { DeviceToolbarComponent } from './device-toolbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { Subject, of, throwError } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
-import { BootDetails, Device } from 'src/models/models'
+import { BootDetails, Device } from '../../../models/models'
 import { EventEmitter } from '@angular/core'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -37,6 +37,7 @@ describe('DeviceToolbarComponent', () => {
       'getDevice',
       'sendDeactivate',
       'getPowerState',
+      'getPowerStateCached',
       'getAMTFeatures',
       'getAMTFeaturesCached',
       'getAMTVersion',
@@ -55,6 +56,7 @@ describe('DeviceToolbarComponent', () => {
     )
 
     devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
+    devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
     const mockAMTFeatures = {
       userConsent: 'None',
       ocr: true,

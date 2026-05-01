@@ -9,12 +9,12 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { Observable, of, forkJoin } from 'rxjs'
 import { DevicesService } from '../devices.service'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from 'src/models/models'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from '../../../models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
-import { environment } from 'src/environments/environment'
-import { AddDeviceEnterpriseComponent } from 'src/app/shared/add-device-enterprise/add-device-enterprise.component'
+import { environment } from '../../../environments/environment'
+import { AddDeviceEnterpriseComponent } from '../../shared/add-device-enterprise/add-device-enterprise.component'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatDivider } from '@angular/material/divider'
@@ -219,8 +219,10 @@ export class DeviceToolbarComponent implements OnInit {
 
   getPowerState(): void {
     this.isLoading().set(true)
+    // Goes through the cached variant so a simultaneous KVM deep-link fetch and
+    // this toolbar fetch are deduped into one /power/state round-trip.
     this.devicesService
-      .getPowerState(this.deviceId())
+      .getPowerStateCached(this.deviceId())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((powerState) => {
         this.powerState.set(

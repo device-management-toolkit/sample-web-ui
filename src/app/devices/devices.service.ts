@@ -6,8 +6,8 @@
 import { HttpClient } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs'
-import { catchError, map, tap } from 'rxjs/operators'
-import { environment } from 'src/environments/environment'
+import { catchError, finalize, map, shareReplay, tap } from 'rxjs/operators'
+import { environment } from '../../environments/environment'
 import {
   AMTFeaturesResponse,
   AuditLogResponse,
@@ -32,7 +32,7 @@ import {
   BootSource,
   DisplaySelectionResponse,
   DisplaySelectionRequest
-} from 'src/models/models'
+} from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -41,23 +41,33 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class DevicesService {
   private readonly http = inject(HttpClient)
-  // Reactive AMT features stream, keyed by deviceId
   private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
-  // Timestamps for TTL-based features cache — configured via environment.amtFeaturesCacheTtlMs, capped at 3 min
-  private readonly featuresTimestamps = new Map<string, number>()
-  private readonly FEATURES_TTL_MS = Math.min(environment.amtFeaturesCacheTtlMs ?? 30_000, 180_000)
+  private readonly powerStateStreams = new Map<string, BehaviorSubject<PowerState | null>>()
+  // In-flight HTTP requests, shared so simultaneous callers (e.g. toolbar and
+  // general components whose ngOnInit fires together) hit the same response.
+  private readonly featuresInflight = new Map<string, Observable<AMTFeaturesResponse>>()
+  private readonly powerStateInflight = new Map<string, Observable<PowerState>>()
 
   private getOrCreateFeaturesStream(deviceId: string): BehaviorSubject<AMTFeaturesResponse | null> {
     if (!this.amtFeaturesStreams.has(deviceId)) {
       this.amtFeaturesStreams.set(deviceId, new BehaviorSubject<AMTFeaturesResponse | null>(null))
     }
-    // Non-null assertion safe because we just set it above when missing
     return this.amtFeaturesStreams.get(deviceId)!
   }
 
-  // Public observable for other components to react to AMT features changes
+  private getOrCreatePowerStateStream(deviceId: string): BehaviorSubject<PowerState | null> {
+    if (!this.powerStateStreams.has(deviceId)) {
+      this.powerStateStreams.set(deviceId, new BehaviorSubject<PowerState | null>(null))
+    }
+    return this.powerStateStreams.get(deviceId)!
+  }
+
   featuresChanges(deviceId: string): Observable<AMTFeaturesResponse | null> {
     return this.getOrCreateFeaturesStream(deviceId).asObservable()
+  }
+
+  powerStateChanges(deviceId: string): Observable<PowerState | null> {
+    return this.getOrCreatePowerStateStream(deviceId).asObservable()
   }
 
   private readonly translate = inject(TranslateService)
@@ -268,29 +278,33 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      tap((features) => {
-        this.getOrCreateFeaturesStream(guid).next(features)
-        this.featuresTimestamps.set(guid, Date.now())
-      }),
+      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
       catchError((err) => {
         throw err
       })
     )
   }
 
-  /**
-   * Returns cached AMT features immediately if they are fresher than ttlMs,
-   * otherwise falls back to a real HTTP call. Eliminates duplicate round-trips
-   * when the toolbar and KVM component both load features within the same session.
-   * TTL is read from environment.amtFeaturesCacheTtlMs (default 30 s, max 3 min).
-   */
-  getAMTFeaturesCached(guid: string, ttlMs = this.FEATURES_TTL_MS): Observable<AMTFeaturesResponse> {
+  // Returns the cached AMT features if any consumer has already loaded them for
+  // this device; otherwise joins an in-flight fetch (so the toolbar and general
+  // components' simultaneous ngOnInit calls share one HTTP round-trip) or starts
+  // a new one. Downstream tabs (KVM, SOL) always see the cached value when
+  // device-detail was already visited.
+  getAMTFeaturesCached(guid: string): Observable<AMTFeaturesResponse> {
     const cached = this.getOrCreateFeaturesStream(guid).value
-    const ts = this.featuresTimestamps.get(guid) ?? 0
-    if (cached !== null && Date.now() - ts < ttlMs) {
+    if (cached !== null) {
       return of(cached)
     }
-    return this.getAMTFeatures(guid)
+    const existing = this.featuresInflight.get(guid)
+    if (existing) {
+      return existing
+    }
+    const request = this.getAMTFeatures(guid).pipe(
+      finalize(() => this.featuresInflight.delete(guid)),
+      shareReplay({ bufferSize: 1, refCount: false })
+    )
+    this.featuresInflight.set(guid, request)
+    return request
   }
 
   getAlarmOccurrences(guid: string): Observable<IPSAlarmClockOccurrence[]> {
@@ -440,10 +454,33 @@ export class DevicesService {
 
   getPowerState(deviceId: string): Observable<PowerState> {
     return this.http.get<PowerState>(`${environment.mpsServer}/api/v1/amt/power/state/${deviceId}`).pipe(
+      tap((state) => this.getOrCreatePowerStateStream(deviceId).next(state)),
       catchError((err) => {
         throw err
       })
     )
+  }
+
+  // Returns the cached power state if the toolbar (or another consumer) has
+  // already fetched it for this device; otherwise joins an in-flight fetch or
+  // starts a new one. KVM's initial powered-on check hits the cache after the
+  // toolbar loads; the KVM session's own 15 s polling bypasses this and calls
+  // getPowerState directly to keep the mouse cursor from freezing.
+  getPowerStateCached(deviceId: string): Observable<PowerState> {
+    const cached = this.getOrCreatePowerStateStream(deviceId).value
+    if (cached !== null) {
+      return of(cached)
+    }
+    const existing = this.powerStateInflight.get(deviceId)
+    if (existing) {
+      return existing
+    }
+    const request = this.getPowerState(deviceId).pipe(
+      finalize(() => this.powerStateInflight.delete(deviceId)),
+      shareReplay({ bufferSize: 1, refCount: false })
+    )
+    this.powerStateInflight.set(deviceId, request)
+    return request
   }
 
   getStats(): Observable<DeviceStats> {

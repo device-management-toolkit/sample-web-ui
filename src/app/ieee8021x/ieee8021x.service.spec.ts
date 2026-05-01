@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { IEEE8021xService } from './ieee8021x.service'
 import { AuthService } from '../auth.service'
-import { environment } from 'src/environments/environment'
-import { IEEE8021xConfig, DataWithCount, PageEventOptions } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { IEEE8021xConfig, DataWithCount, PageEventOptions } from '../../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('IEEE8021xService', () => {

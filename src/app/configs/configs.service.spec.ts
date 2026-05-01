@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { ConfigsService } from './configs.service'
 import { AuthService } from '../auth.service'
-import { environment } from 'src/environments/environment'
-import { CIRAConfig, DataWithCount, PageEventOptions } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { CIRAConfig, DataWithCount, PageEventOptions } from '../../models/models'
 
 describe('ConfigsService', () => {
   let service: ConfigsService
