@@ -7,7 +7,7 @@ import { httpCodes } from '../../fixtures/api/httpCodes'
 import { devices } from '../../fixtures/api/device'
 import { eventLogs } from '../../fixtures/api/eventlog'
 import { tags } from '../../fixtures/api/tags'
-import stats from 'cypress/e2e/fixtures/api/stats'
+import stats from '../../fixtures/api/stats'
 
 describe('Test device details page', () => {
   beforeEach('', () => {

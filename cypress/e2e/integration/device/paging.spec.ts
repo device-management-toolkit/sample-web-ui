@@ -4,9 +4,9 @@
  **********************************************************************/
 
 // Tests the creation of a device
-import { devices } from 'cypress/e2e/fixtures/api/device'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { tags } from 'cypress/e2e/fixtures/api/tags'
+import { devices } from '../../fixtures/api/device'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { tags } from '../../fixtures/api/tags'
 import { deviceFixtures } from '../../fixtures/formEntry/device'
 
 // ---------------------------- Test section ----------------------------

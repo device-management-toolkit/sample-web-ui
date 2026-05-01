@@ -34,18 +34,18 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete }
 import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips'
 
 // Services
-import { ConfigsService } from 'src/app/configs/configs.service'
+import { ConfigsService } from '../../configs/configs.service'
 import { ProfilesService } from '../profiles.service'
-import { WirelessService } from 'src/app/wireless/wireless.service'
+import { WirelessService } from '../../wireless/wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
-import { ProxyConfigsService } from 'src/app/proxy-configs/proxy-configs.service'
+import { ProxyConfigsService } from '../../proxy-configs/proxy-configs.service'
 
 // Shared components
-import { RandomPassAlertComponent } from 'src/app/shared/random-pass-alert/random-pass-alert.component'
-import { StaticCIRAWarningComponent } from 'src/app/shared/static-cira-warning/static-cira-warning.component'
+import { RandomPassAlertComponent } from '../../shared/random-pass-alert/random-pass-alert.component'
+import { StaticCIRAWarningComponent } from '../../shared/static-cira-warning/static-cira-warning.component'
 
 // Models and constants
-import { CIRAConfig, IEEE8021xConfig } from 'src/models/models'
+import { CIRAConfig, IEEE8021xConfig } from '../../../models/models'
 import {
   ActivationModes,
   Profile,
@@ -55,8 +55,8 @@ import {
   UserConsentModes,
   WiFiConfig
 } from '../profiles.constants'
-import { environment } from 'src/environments/environment'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import { environment } from '../../../environments/environment'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 const NO_WIFI_CONFIGS = 'profileDetail.noWifi.value'
 const NO_PROXY_CONFIGS = 'profileDetail.noProxy.value'

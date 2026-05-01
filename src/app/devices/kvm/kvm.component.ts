@@ -18,17 +18,17 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, interval, Observable, of, throwError } from 'rxjs'
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
-import { PowerUpAlertComponent } from 'src/app/shared/power-up-alert/power-up-alert.component'
-import { environment } from 'src/environments/environment'
+import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
+import { environment } from '../../../environments/environment'
 import {
   AMTFeaturesRequest,
   AMTFeaturesResponse,
   RedirectionStatus,
   UserConsentResponse,
   DisplaySelectionResponse
-} from 'src/models/models'
+} from '../../../models/models'
 import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm.component'
 import { KVMComponent, IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'

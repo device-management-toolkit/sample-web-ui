@@ -4,9 +4,9 @@
  **********************************************************************/
 
 // Tests the creation of a profile
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { profiles } from 'cypress/e2e/fixtures/api/profile'
-import { paging } from 'cypress/e2e/fixtures/formEntry/paging'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { profiles } from '../../fixtures/api/profile'
+import { paging } from '../../fixtures/formEntry/paging'
 // ---------------------------- Test section ----------------------------
 
 describe('Test Profile Page', () => {

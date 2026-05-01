@@ -6,14 +6,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
-import { AuthService } from 'src/app/auth.service'
+import { AuthService } from '../../auth.service'
 import { ToolbarComponent } from './toolbar.component'
 import { BehaviorSubject, of } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent

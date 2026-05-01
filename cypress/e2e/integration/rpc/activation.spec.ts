@@ -79,10 +79,10 @@ export const execWithRetry = (
 // Exported so sub-specs can import them directly when run standalone.
 const isCloud: boolean = Cypress.env('CLOUD') === 'true' || Cypress.env('CLOUD') === true
 
+declare const require: (id: string) => unknown
+
 if (isCloud) {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   require('./cloud.activation.spec')
 } else {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   require('./console.activation.spec')
 }

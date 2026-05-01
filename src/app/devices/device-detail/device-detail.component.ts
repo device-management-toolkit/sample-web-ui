@@ -23,7 +23,7 @@ import { SolComponent } from '../sol/sol.component'
 import { KvmComponent } from '../kvm/kvm.component'
 import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
 import { TranslateModule } from '@ngx-translate/core'
 

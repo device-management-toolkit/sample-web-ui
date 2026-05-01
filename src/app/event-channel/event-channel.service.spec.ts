@@ -7,7 +7,7 @@
 // import { IPacket } from 'mqtt-browser'
 // import { IMqttServiceOptions } from 'ngx-mqtt'
 // import { of, Subject } from 'rxjs'
-// import { MQTTEvent } from 'src/models/models'
+// import { MQTTEvent } from '../../models/models'
 // import { MQTTService } from './event-channel.service'
 // import { Buffer } from 'buffer'
 // describe('EventChannelService', () => {

@@ -5,8 +5,8 @@ import { DevicesService } from './devices.service'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
-import { UserConsentData, UserConsentResponse } from 'src/models/models'
-import { environment } from 'src/environments/environment'
+import { UserConsentData, UserConsentResponse } from '../../models/models'
+import { environment } from '../../environments/environment'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('UserConsentService', () => {

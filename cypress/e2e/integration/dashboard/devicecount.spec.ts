@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
+import { httpCodes } from '../../fixtures/api/httpCodes'
 
 describe('Dashboard Test', () => {
   beforeEach(() => {

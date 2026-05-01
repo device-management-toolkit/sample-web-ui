@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceCertDialogComponent } from './device-cert-dialog.component'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('DeviceCertDialogComponent', () => {

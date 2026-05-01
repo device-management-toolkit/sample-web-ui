@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
 import { DevicesService } from './devices.service'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../environments/environment'
 import {
   AMTFeaturesResponse,
   DataWithCount,
@@ -17,7 +17,7 @@ import {
   IPSAlarmClockOccurrenceInput,
   BootDetails,
   DisplaySelectionResponse
-} from 'src/models/models'
+} from '../../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('DevicesService', () => {

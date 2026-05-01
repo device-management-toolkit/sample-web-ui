@@ -7,10 +7,10 @@
 // different combinations of invalid login info.
 // Also tests things like canceling a login and logging out after the login
 
-import { badRequest } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import stats from 'cypress/e2e/fixtures/api/stats'
-import { urlFixtures } from 'cypress/e2e/fixtures/formEntry/urls'
+import { badRequest } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import stats from '../../fixtures/api/stats'
+import { urlFixtures } from '../../fixtures/formEntry/urls'
 const baseUrl: string = Cypress.env('BASEURL')
 
 // ---------------------------- Test section ----------------------------

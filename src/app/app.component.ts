@@ -11,7 +11,7 @@ import { NavbarComponent } from './core/navbar/navbar.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { BidiModule, Direction } from '@angular/cdk/bidi'
-import { getDirection } from 'src/utils'
+import { getDirection } from '../utils'
 
 @Component({
   selector: 'app-root',

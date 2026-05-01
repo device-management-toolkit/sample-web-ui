@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { catchError, Observable } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { AuditLogResponse, EventLog } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { AuditLogResponse, EventLog } from '../../models/models'
 
 @Injectable({
   providedIn: 'root'

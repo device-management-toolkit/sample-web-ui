@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { FormOption } from 'src/models/models'
+import { FormOption } from '../../../models/models'
 import { ToolkitPipe } from './toolkit.pipe'
 import { TranslateModule } from '@ngx-translate/core'
 

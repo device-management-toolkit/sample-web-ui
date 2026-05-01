@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
 import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatCardModule } from '@angular/material/card'

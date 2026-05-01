@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { Component, inject } from '@angular/core'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'

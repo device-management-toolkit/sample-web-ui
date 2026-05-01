@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
-import { IEEE8021xConfig } from 'src/models/models'
+import { AuthenticationProtocols } from '../../../../src/app/ieee8021x/ieee8021x.constants'
+import { IEEE8021xConfig } from '../../../../src/models/models'
 
 export const wiredConfigs: IEEE8021xConfig[] = []
 AuthenticationProtocols.filter((x) => x.mode === 'wired').forEach((authProtocol) => {

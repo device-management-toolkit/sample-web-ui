@@ -10,8 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
 
 import { finalize, mergeMap } from 'rxjs/operators'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { CIRAConfig } from 'src/models/models'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { CIRAConfig } from '../../../models/models'
 import { ConfigsService } from '../configs.service'
 import { MatButton } from '@angular/material/button'
 import { MatSlideToggle } from '@angular/material/slide-toggle'
@@ -33,7 +33,7 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { environment } from 'src/environments/environment'
+import { environment } from '../../../environments/environment'
 
 @Component({
   selector: 'app-config-detail',

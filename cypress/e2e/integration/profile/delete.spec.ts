@@ -4,9 +4,9 @@
  **********************************************************************/
 
 // Tests the creation of a profile
-import { empty } from 'cypress/e2e/fixtures/api/general'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { profiles } from 'cypress/e2e/fixtures/api/profile'
+import { empty } from '../../fixtures/api/general'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { profiles } from '../../fixtures/api/profile'
 import { amtProfiles } from '../../fixtures/formEntry/profile'
 
 // ---------------------------- Test section ----------------------------

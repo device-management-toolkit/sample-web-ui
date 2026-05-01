@@ -15,7 +15,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { finalize } from 'rxjs/operators'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { IEEE8021xService } from '../ieee8021x.service'
 import { AuthenticationProtocols } from '../ieee8021x.constants'
 import { Observable } from 'rxjs'
@@ -30,8 +30,8 @@ import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angula
 import { MatCard, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
-import { FormOption } from 'src/models/models'
-import { IEEE8021xConfig } from 'src/models/models'
+import { FormOption } from '../../../models/models'
+import { IEEE8021xConfig } from '../../../models/models'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 @Component({

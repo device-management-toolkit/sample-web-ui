@@ -8,7 +8,7 @@ import { httpCodes } from '../../fixtures/api/httpCodes'
 import { wiredConfigs, wirelessConfigs } from '../../fixtures/formEntry/ieee8021x'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 import { noConfigsResponse } from '../../fixtures/api/ieee8021x'
-import { IEEE8021xConfig } from 'src/models/models'
+import { IEEE8021xConfig } from '../../../../src/models/models'
 
 beforeEach('clear cache and login', () => {
   cy.setup()

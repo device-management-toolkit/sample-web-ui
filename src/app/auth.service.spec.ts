@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router'
-import { environment } from 'src/environments/environment'
-import { MPSVersion, RPSVersion } from 'src/models/models'
+import { environment } from '../environments/environment'
+import { MPSVersion, RPSVersion } from '../models/models'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('AuthService', () => {

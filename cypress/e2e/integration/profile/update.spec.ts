@@ -4,11 +4,11 @@
  **********************************************************************/
 
 // Tests the update of a profile
-import { ciraConfig } from 'cypress/e2e/fixtures/api/cira'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { profiles } from 'cypress/e2e/fixtures/api/profile'
-import { wirelessConfigs } from 'cypress/e2e/fixtures/api/wireless'
-// import { profileFixtures } from 'cypress/e2e/fixtures/formEntry/profile'
+import { ciraConfig } from '../../fixtures/api/cira'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { profiles } from '../../fixtures/api/profile'
+import { wirelessConfigs } from '../../fixtures/api/wireless'
+// import { profileFixtures } from '../../fixtures/formEntry/profile'
 // ---------------------------- Test section ----------------------------
 
 describe('Test Update Profile Page', () => {

@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatListModule } from '@angular/material/list'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({

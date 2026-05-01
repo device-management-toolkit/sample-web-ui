@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import stats from 'cypress/e2e/fixtures/api/stats'
-import { AuthenticationProtocols } from 'src/app/ieee8021x/ieee8021x.constants'
+import { httpCodes } from '../e2e/fixtures/api/httpCodes'
+import stats from '../e2e/fixtures/api/stats'
+import { AuthenticationProtocols } from '../../src/app/ieee8021x/ieee8021x.constants'
 import { ActivationModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
-import { IEEE8021xConfig } from 'src/models/models'
+import { IEEE8021xConfig } from '../../src/models/models'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

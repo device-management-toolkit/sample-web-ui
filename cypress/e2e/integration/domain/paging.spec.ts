@@ -4,9 +4,9 @@
  **********************************************************************/
 
 // Tests the creation of a device
-import { domains } from 'cypress/e2e/fixtures/api/domain'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-import { paging } from 'cypress/e2e/fixtures/formEntry/paging'
+import { domains } from '../../fixtures/api/domain'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+import { paging } from '../../fixtures/formEntry/paging'
 
 // ---------------------------- Test section ----------------------------
 

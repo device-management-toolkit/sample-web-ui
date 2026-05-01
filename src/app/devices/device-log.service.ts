@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { catchError, Observable, tap, of } from 'rxjs'
-import { environment } from 'src/environments/environment'
-import { AuditLogResponse, EventLog, EventLogResponse } from 'src/models/models'
+import { environment } from '../../environments/environment'
+import { AuditLogResponse, EventLog, EventLogResponse } from '../../models/models'
 
 const DEFAULT_TOP = 0
 const DEFAULT_SKIP = 120

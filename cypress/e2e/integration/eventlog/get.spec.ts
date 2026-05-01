@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { devices } from 'cypress/e2e/fixtures/api/device'
-import { eventLogs } from 'cypress/e2e/fixtures/api/eventlog'
-import { httpCodes } from 'cypress/e2e/fixtures/api/httpCodes'
-// import { eventLogFixtures } from 'cypress/e2e/fixtures/formEntry/eventlogs'
+import { devices } from '../../fixtures/api/device'
+import { eventLogs } from '../../fixtures/api/eventlog'
+import { httpCodes } from '../../fixtures/api/httpCodes'
+// import { eventLogFixtures } from '../../fixtures/formEntry/eventlogs'
 
 describe('Test event logs page', () => {
   beforeEach('', () => {

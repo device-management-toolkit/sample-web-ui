@@ -6,7 +6,7 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
-import { badRequest, empty } from 'cypress/e2e/fixtures/api/general'
+import { badRequest, empty } from '../../fixtures/api/general'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 
 const baseUrl: string = Cypress.env('BASEURL')
