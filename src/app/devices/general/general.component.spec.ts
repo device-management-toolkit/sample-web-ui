@@ -73,7 +73,30 @@ describe('GeneralComponent', () => {
         localPBABootSupported: true,
         rpeEnabled: true,
         rpeSupported: true,
-        rpeCaps: 0,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
+      })
+    )
+
+    devicesServiceSpy.getAMTFeaturesCached.and.returnValue(
+      of({
+        userConsent: 'ALL',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        optInState: 1,
+        kvmAvailable: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeEnabled: true,
+        rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',

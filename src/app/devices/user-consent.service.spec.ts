@@ -82,7 +82,6 @@ describe('UserConsentService', () => {
       localPBABootSupported: false,
       rpeSupported: true,
       rpeEnabled: false,
-      rpeCaps: 0,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',

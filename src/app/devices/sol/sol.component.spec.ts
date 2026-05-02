@@ -65,7 +65,6 @@ describe('SolComponent', () => {
         localPBABootSupported: true,
         rpeSupported: true,
         rpeEnabled: true,
-        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -89,7 +88,6 @@ describe('SolComponent', () => {
         localPBABootSupported: true,
         rpeSupported: true,
         rpeEnabled: true,
-        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -279,7 +277,6 @@ describe('SolComponent', () => {
           localPBABootSupported: true,
           rpeSupported: true,
           rpeEnabled: true,
-          rpeCaps: 0x4010044,
           pbaBootFilesPath: [],
           winREBootFilesPath: {
             instanceID: '',
@@ -328,7 +325,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -371,7 +367,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -400,7 +395,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -431,7 +425,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -463,7 +456,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -494,7 +486,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -525,7 +516,6 @@ describe('SolComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',

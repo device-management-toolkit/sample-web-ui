@@ -203,7 +203,6 @@ const eventLogs = {
         localPBABootSupported: false,
         rpeEnabled: false,
         rpeSupported: true,
-        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
       }
@@ -223,7 +222,6 @@ const eventLogs = {
         localPBABootSupported: false,
         rpeEnabled: true,
         rpeSupported: true,
-        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
       }

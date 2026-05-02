@@ -139,7 +139,6 @@ export interface AMTFeaturesResponse {
   localPBABootSupported: boolean
   rpeEnabled: boolean
   rpeSupported: boolean
-  rpeCaps: number
   pbaBootFilesPath: BootParams[]
   winREBootFilesPath: BootParams
 }
@@ -151,6 +150,15 @@ export interface AMTFeaturesRequest {
   ocr: boolean
   platformEraseEnabled: boolean
 }
+
+export interface BootCapabilities {
+  secureEraseAllSSDs: boolean
+  tpmClear: boolean
+  restoreBIOSToEOM: boolean
+  unconfigureCSME: boolean
+}
+
+export type RemoteEraseRequest = BootCapabilities
 
 export interface PowerState {
   powerstate: number

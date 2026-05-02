@@ -76,7 +76,6 @@ describe('KvmComponent', () => {
         localPBABootSupported: true,
         rpeSupported: true,
         rpeEnabled: true,
-        rpeCaps: 0x4010044,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -451,7 +450,6 @@ describe('KvmComponent', () => {
           localPBABootSupported: true,
           rpeSupported: true,
           rpeEnabled: true,
-          rpeCaps: 0x4010044,
           pbaBootFilesPath: [],
           winREBootFilesPath: {
             instanceID: '',
@@ -554,7 +552,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -585,7 +582,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -632,7 +628,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -662,7 +657,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -694,7 +688,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -725,7 +718,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -756,7 +748,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -787,7 +778,6 @@ describe('KvmComponent', () => {
       localPBABootSupported: true,
       rpeSupported: true,
       rpeEnabled: true,
-      rpeCaps: 0x4010044,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',

@@ -59,7 +59,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
     localPBABootSupported: false,
     rpeSupported: false,
     rpeEnabled: false,
-    rpeCaps: 0,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }

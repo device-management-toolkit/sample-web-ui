@@ -15,20 +15,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { finalize, throwError } from 'rxjs'
+import { finalize, forkJoin, throwError } from 'rxjs'
 import { DevicesService } from '../devices.service'
-import { AMTFeaturesRequest, AMTFeaturesResponse } from 'src/models/models'
-import {
-  ParsedPlatformEraseCapability,
-  parsePlatformEraseCaps,
-  PLATFORM_ERASE_CAPABILITIES
-} from './remote-platform-erase.constants'
-import SnackbarDefaults from 'src/app/shared/config/snackBarDefault'
-import { AreYouSureDialogComponent } from 'src/app/shared/are-you-sure/are-you-sure.component'
+import { AMTFeaturesRequest, AMTFeaturesResponse, BootCapabilities, RemoteEraseRequest } from '../../../models/models'
+import { ParsedPlatformEraseCapability } from './remote-platform-erase.constants'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
-const ALL_CAPS_BITMASK = PLATFORM_ERASE_CAPABILITIES.reduce((acc, cap) => acc | cap.bit, 0)
 
 @Component({
   selector: 'app-remote-platform-erase',
@@ -82,7 +77,6 @@ export class RemotePlatformEraseComponent implements OnInit {
     localPBABootSupported: false,
     rpeEnabled: false,
     rpeSupported: false,
-    rpeCaps: 0,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
@@ -93,11 +87,13 @@ export class RemotePlatformEraseComponent implements OnInit {
         this.deviceLabel.set(device.friendlyName || device.hostname || this.deviceId())
       }
     })
-    this.devicesService
-      .getAMTFeatures(this.deviceId())
+    forkJoin({
+      features: this.devicesService.getAMTFeatures(this.deviceId()),
+      capabilities: this.devicesService.getRemoteEraseCapabilities(this.deviceId())
+    })
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (features) => this.applyFeatures(features),
+        next: ({ features, capabilities }) => this.applyFeatures(features, capabilities),
         error: (err) => {
           this.snackBar.open(this.t('remotePlatformErase.errorLoad'), undefined, SnackbarDefaults.defaultError)
           return throwError(() => err)
@@ -176,12 +172,16 @@ export class RemotePlatformEraseComponent implements OnInit {
       })
   }
 
-  private applyFeatures(features: AMTFeaturesResponse): void {
+  private applyFeatures(features: AMTFeaturesResponse, capabilities: BootCapabilities): void {
     this.amtFeatures = features
     const supported = features.rpeSupported ?? false
     this.isPlatformEraseSupported.set(supported)
-    const rawCaps = features.rpeCaps ?? 0
-    const caps = parsePlatformEraseCaps(supported && rawCaps === 0 ? ALL_CAPS_BITMASK : rawCaps)
+    const caps: ParsedPlatformEraseCapability[] = [
+      { key: 'secureEraseSsds', supported: capabilities.secureEraseAllSSDs },
+      { key: 'tpmClear', supported: capabilities.tpmClear },
+      { key: 'biosRestore', supported: capabilities.restoreBIOSToEOM },
+      { key: 'csmeUnconfigure', supported: capabilities.unconfigureCSME }
+    ]
     this.eraseCaps.set(caps)
     this.csmeIndex = caps.findIndex((c) => c.key === CSME_UNCONFIGURE_KEY)
     this.eraseCapsArray = this.fb.array(
@@ -193,13 +193,16 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   private executeErase(): void {
-    const eraseMask = PLATFORM_ERASE_CAPABILITIES.reduce(
-      (acc, cap, i) => ((this.eraseCapsArray.at(i)?.value ?? false) ? acc | cap.bit : acc),
-      0
-    )
+    const caps = this.eraseCaps()
+    const req: RemoteEraseRequest = {
+      secureEraseAllSSDs: caps.some((c, i) => c.key === 'secureEraseSsds' && this.eraseCapsArray.at(i)?.value === true),
+      tpmClear: caps.some((c, i) => c.key === 'tpmClear' && this.eraseCapsArray.at(i)?.value === true),
+      restoreBIOSToEOM: caps.some((c, i) => c.key === 'biosRestore' && this.eraseCapsArray.at(i)?.value === true),
+      unconfigureCSME: caps.some((c, i) => c.key === 'csmeUnconfigure' && this.eraseCapsArray.at(i)?.value === true)
+    }
     this.isLoading.set(true)
     this.devicesService
-      .sendRemotePlatformErase(this.deviceId(), eraseMask)
+      .setRemoteEraseOptions(this.deviceId(), req)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {

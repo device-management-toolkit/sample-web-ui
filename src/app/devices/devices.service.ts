@@ -31,7 +31,9 @@ import {
   BootDetails,
   BootSource,
   DisplaySelectionResponse,
-  DisplaySelectionRequest
+  DisplaySelectionRequest,
+  RemoteEraseRequest,
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -375,8 +377,16 @@ export class DevicesService {
     }
   }
 
-  sendRemotePlatformErase(deviceId: string, eraseMask: number): Observable<any> {
-    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/remoteErase/${deviceId}`, { eraseMask }).pipe(
+  setRemoteEraseOptions(deviceId: string, req: RemoteEraseRequest): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`, req).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {
+    return this.http.get<BootCapabilities>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`).pipe(
       catchError((err) => {
         throw err
       })

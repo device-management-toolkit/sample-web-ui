@@ -80,27 +80,25 @@ describe('DevicesService', () => {
   })
 
   describe('getAMTFeatures', () => {
-    it('should fetch AMT features for a device', () => {
-      const mockResponse: AMTFeaturesResponse = {
-        userConsent: 'none',
-        optInState: 0,
-        redirection: true,
-        kvmAvailable: true,
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        ocr: false,
-        httpsBootSupported: false,
-        winREBootSupported: false,
-        localPBABootSupported: false,
-        rpeEnabled: false,
-        rpeSupported: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
+    const mockResponse: AMTFeaturesResponse = {
+      userConsent: 'none',
+      optInState: 0,
+      redirection: true,
+      kvmAvailable: true,
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      ocr: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false,
+      rpeEnabled: false,
+      rpeSupported: true,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
       }
     }
 
@@ -564,7 +562,6 @@ describe('DevicesService', () => {
         localPBABootSupported: false,
         rpeEnabled: true,
         rpeSupported: true,
-        rpeCaps: 0,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
