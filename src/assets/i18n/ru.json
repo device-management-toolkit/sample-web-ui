@@ -123,10 +123,6 @@
     "description": "Сообщение об использовании TLS",
     "value": "Используйте TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Флажок для использования соединения CIRA",
-    "value": "Использовать CIRA"
-  },
   "addDevice.guid": {
     "description": "Метка для поля GUID",
     "value": "GUID"

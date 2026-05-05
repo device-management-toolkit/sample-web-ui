@@ -5,7 +5,7 @@
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { Component, inject } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 import { DevicesService } from '../../devices/devices.service'
@@ -27,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core'
     CdkScrollable,
     MatDialogContent,
     ReactiveFormsModule,
-    FormsModule,
     MatFormField,
     MatLabel,
     MatIcon,
@@ -61,14 +60,10 @@ export class AddDeviceEnterpriseComponent {
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
     useTLS: [false],
-    allowSelfSigned: [false],
-    guid: [''],
-    mpsusername: ['admin'],
-    mpspassword: ['', [Validators.minLength(8)]]
+    allowSelfSigned: [false]
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public tags: string[] = []
-  public useCIRA = false
 
   constructor() {
     const device = this.device
@@ -76,18 +71,8 @@ export class AddDeviceEnterpriseComponent {
     this.deviceOrig = device
     if (device != null) {
       this.tags = device.tags || []
-      // If device has mpsusername set, it's a CIRA device
-      if (device.mpsusername != null && device.mpsusername !== '') {
-        this.useCIRA = true
-      }
     }
     this.form.patchValue(device)
-    // Ensure mpsusername defaults to admin if empty
-    if (!this.form.get('mpsusername')?.value) {
-      this.form.patchValue({ mpsusername: 'admin' })
-    }
-    // Apply CIRA state after patching form
-    this.onCIRAChange(this.useCIRA)
   }
 
   add(event: MatChipInputEvent): void {
@@ -107,48 +92,12 @@ export class AddDeviceEnterpriseComponent {
     }
   }
 
-  onCIRAChange(checked: boolean): void {
-    this.useCIRA = checked
-    if (checked) {
-      // CIRA mode: set values first, then disable controls
-      this.form.patchValue({
-        useTLS: false,
-        allowSelfSigned: false,
-        username: 'admin',
-        mpsusername: 'admin'
-      })
-      this.form.controls['useTLS'].disable()
-      this.form.controls['allowSelfSigned'].disable()
-      this.form.controls['username'].disable()
-      this.form.controls['mpsusername'].disable()
-    } else {
-      // Non-CIRA mode: enable controls first, then set values
-      this.form.controls['useTLS'].enable()
-      this.form.controls['allowSelfSigned'].enable()
-      this.form.controls['username'].enable()
-      this.form.controls['mpsusername'].enable()
-      this.form.patchValue({
-        mpsusername: 'admin',
-        mpspassword: ''
-      })
-    }
-  }
-
-  // Method to submit form
   submitForm(): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.getRawValue() }
       device.tags = this.tags
-      if (this.useCIRA) {
-        // Ensure mpsusername is set to admin for CIRA devices
-        ;(device as any).mpsusername = 'admin'
-      } else {
-        // Remove CIRA fields when not using CIRA
-        delete (device as any).mpsusername
-        delete (device as any).mpspassword
-      }
       if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
-        // Use form's GUID value, don't overwrite with original
+        device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe(() => {
           this.dialog.close({ submitted: true })
         })
