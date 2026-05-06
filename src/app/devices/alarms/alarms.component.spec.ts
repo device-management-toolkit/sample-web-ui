@@ -39,8 +39,7 @@ describe('AlarmsComponent', () => {
       providers: [
         provideNativeDateAdapter(),
         { provide: DevicesService, useValue: devicesServiceSpy },
-        { provide: MatDialog, useValue: dialogSpy }
-      ]
+        { provide: MatDialog, useValue: dialogSpy }]
     })
 
     fixture = TestBed.createComponent(AlarmsComponent)

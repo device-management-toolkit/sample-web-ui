@@ -27,8 +27,7 @@ describe('ErrorHandlingInterceptor', () => {
         provideHttpClientTesting(),
         { provide: AuthService, useValue: authServiceSpy },
         { provide: MatDialog, useValue: dialogSpy },
-        { provide: MatSnackBar, useValue: snackbarSpy }
-      ]
+        { provide: MatSnackBar, useValue: snackbarSpy }]
     })
 
     httpMock = TestBed.inject(HttpTestingController)
