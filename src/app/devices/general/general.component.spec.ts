@@ -34,78 +34,29 @@ describe('GeneralComponent', () => {
       'sendBulkDeactivate',
       'getWsmanOperations'
     ])
-<<<<<<< HEAD
     const amtFeaturesResponse = {
-      userConsent: 'ALL',
-      KVM: true,
-      SOL: true,
-      IDER: true,
-      redirection: true,
-      optInState: 1,
-      kvmAvailable: true,
-      httpsBootSupported: true,
-      ocr: true,
-      winREBootSupported: true,
-      localPBABootSupported: true,
-      remoteErase: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
+       userConsent: 'ALL',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        optInState: 1,
+        kvmAvailable: true,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeEnabled: true,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
     }
     devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
     devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
-=======
-    devicesServiceSpy.getAMTFeatures.and.returnValue(
-      of({
-        userConsent: 'ALL',
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        redirection: true,
-        optInState: 1,
-        kvmAvailable: true,
-        httpsBootSupported: true,
-        ocr: true,
-        winREBootSupported: true,
-        localPBABootSupported: true,
-        rpeEnabled: true,
-        rpeSupported: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
-      })
-    )
-
-    devicesServiceSpy.getAMTFeaturesCached.and.returnValue(
-      of({
-        userConsent: 'ALL',
-        KVM: true,
-        SOL: true,
-        IDER: true,
-        redirection: true,
-        optInState: 1,
-        kvmAvailable: true,
-        httpsBootSupported: true,
-        ocr: true,
-        winREBootSupported: true,
-        localPBABootSupported: true,
-        rpeEnabled: true,
-        rpeSupported: true,
-        pbaBootFilesPath: [],
-        winREBootFilesPath: {
-          instanceID: '',
-          biosBootString: '',
-          bootString: ''
-        }
-      })
-    )
->>>>>>> 4e74344c (feat(devices): add remote platform erase (RPE) feature)
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({
