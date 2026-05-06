@@ -1423,6 +1423,10 @@
     "description": "Etikett för HTTPS Nätverksstart",
     "value": "HTTPS Nätverksstart:"
   },
+  "general.remotePlatformErase": {
+    "description": "Etikett för fjärrradering av plattform",
+    "value": "Fjärrradering av plattform:"
+  },
   "general.ideRedirection": {
     "description": "Etikett för IDE-omdirigering",
     "value": "IDE-omdirigering:"
@@ -2812,5 +2816,137 @@
   "common.noData": {
     "value": "Ingen data tillgänglig",
     "description": "Meddelande när ingen data är tillgänglig"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Kategorinamn för fjärrradering av plattform",
+    "value": "Fjärrradering av plattform"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Beskrivning för fjärrradering av plattform",
+    "value": "Radera plattformsdata på ett säkert sätt"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titel på funktionskortet för fjärrradering av plattform",
+    "value": "Fjärrradering av plattform"
+  },
+  "remotePlatformErase.description": {
+    "description": "Underrubrik på funktionskortet för fjärrradering av plattform",
+    "value": "Utför en säker fjärrradering av diskar, TPM, BIOS eller Intel CSME på den här enheten. Raderade data kan inte återställas."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Varningsmeddelande om aktivering av fjärrradering av plattform",
+    "value": "Att aktivera den här funktionen tillåter fjärrradering av plattformsdata. Använd med försiktighet."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etikett för växlingsknappen för att aktivera fjärrradering av plattform",
+    "value": "Aktivera fjärrradering av plattform på den här enheten"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Hjälptext under aktiveringsknappen",
+    "value": "Krävs innan någon raderingsåtgärd kan startas."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titel på åtgärdskortet för att starta radering",
+    "value": "Starta fjärrradering"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Underrubrik på åtgärdskortet för att starta radering",
+    "value": "Radera permanent alla data som lagras på den här plattformen"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Varning innan fjärrradering av plattform påbörjas",
+    "value": "Den här åtgärden är oåterkallelig. All plattformsdata kommer att raderas permanent."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Knappetikett för att starta fjärrradering av plattform",
+    "value": "Starta fjärrradering"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Framgångsmeddelande när funktionen för fjärrradering växlas",
+    "value": "Fjärrraderingsfunktionen för plattformen har uppdaterats"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Felmeddelande när uppdatering av fjärrradering av plattform misslyckas",
+    "value": "Det gick inte att uppdatera fjärrraderingsfunktionen för plattformen"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Framgångsmeddelande efter att fjärrradering av plattform initierats",
+    "value": "Fjärrradering av plattform har startats"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Felmeddelande när fjärrradering av plattform inte kan initieras",
+    "value": "Det gick inte att starta fjärrraderingen av plattformen"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Felmeddelande vid fel vid inläsning av status för fjärrradering av plattform",
+    "value": "Det gick inte att läsa in statusen för fjärrraderingsfunktionen för plattformen"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Meddelande som visas när fjärrradering av plattform inte stöds på enheten",
+    "value": "Fjärrradering av plattform stöds inte"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titel på kortet med raderingsmöjligheter",
+    "value": "Raderingsmöjligheter"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Undertitel på kortet med raderingsmöjligheter",
+    "value": "Välj vilka funktioner som ska ingå i raderingsoperationen. Funktioner som inte stöds kan inte väljas."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Tips som visas när funktionen är aktiverad och uppmanar användaren att välja funktioner att radera",
+    "value": "Välj de funktioner du vill radera och klicka sedan på Starta fjärrradering."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Etikett för säker radering av alla SSD:er",
+    "value": "Säker radering av alla SSD:er"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Beskrivning för säker radering av alla SSD:er",
+    "value": "Borttagning av allt innehåll från ATA- och NVM-enheter genom en kombination av medieradering och kryptografisk radering"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Etikett för TPM-rensning",
+    "value": "TPM-rensning"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Beskrivning för TPM-rensning",
+    "value": "Ta bort alla skapade nycklar kopplade till TPM och data som skyddas av dessa nycklar, såsom ett virtuellt smartkort eller en inloggnings-PIN"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Etikett för återställning av BIOS till EOM-tillstånd",
+    "value": "Återställ BIOS till EOM-tillstånd"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Beskrivning för återställning av BIOS till EOM-tillstånd",
+    "value": "Återställ BIOS till den av systemdesignern specificerade EOM-guldkonfigurationen (End of Manufacture)"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Etikett för avkonfigurering av Intel CSME-firmware",
+    "value": "Avkonfigurera Intel CSME-firmware"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Verktygstips på raderingsknappen när inga funktioner är valda",
+    "value": "Välj minst en raderingsfunktion"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Meddelande i bekräftelsedialogen innan fjärrradering av plattform initieras. {{device}} är det vänliga namnet eller värdnamnet; {{operations}} är en kommaseparerad lista över valda raderingsåtgärder.",
+    "value": "Radera och starta om {{device}}? Följande kommer att utföras: {{operations}}. Den här åtgärden kan inte ångras."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Beskrivning för avkonfigurering av Intel CSME-firmware",
+    "value": "Fullständig avetablering av Intel AMT, återgång till standardtillståndet och inaktivering av Intel AMT-funktioner"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Informationsmeddelande som visas när Avkonfigurering av CSME är valt, förklarar att det inte kan kombineras med andra alternativ",
+    "value": "Avkonfigurering av CSME utför en fullständig avetablering av Intel AMT och kan inte kombineras med andra raderingsåtgärder."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",
+    "value": "{{selected}} av {{total}} åtgärder valda"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",
+    "value": "Stöds inte på den här enheten"
   }
 }

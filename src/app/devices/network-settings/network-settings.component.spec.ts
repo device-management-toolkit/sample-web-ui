@@ -26,8 +26,7 @@ describe('NetworkSettingsComponent', () => {
     TestBed.configureTestingModule({
       imports: [NetworkSettingsComponent, TranslateModule.forRoot()],
       providers: [
-        { provide: DevicesService, useValue: devicesServiceSpy }
-      ]
+        { provide: DevicesService, useValue: devicesServiceSpy }]
     })
 
     fixture = TestBed.createComponent(NetworkSettingsComponent)

@@ -1423,6 +1423,10 @@
     "description": "Etichetta per avvio di rete HTTPS",
     "value": "Avvio di rete HTTPS:"
   },
+  "general.remotePlatformErase": {
+    "description": "Etichetta per la cancellazione remota della piattaforma",
+    "value": "Cancellazione remota della piattaforma:"
+  },
   "general.ideRedirection": {
     "description": "Etichetta per il reindirizzamento IDE",
     "value": "Reindirizzamento IDE:"
@@ -2812,5 +2816,137 @@
   "common.noData": {
     "value": "Nessun dato disponibile",
     "description": "Messaggio quando non ci sono dati disponibili"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Nome categoria per la cancellazione remota della piattaforma",
+    "value": "Cancellazione remota della piattaforma"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Descrizione per la cancellazione remota della piattaforma",
+    "value": "Cancella in modo sicuro i dati della piattaforma"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titolo della scheda funzione di cancellazione remota della piattaforma",
+    "value": "Cancellazione remota della piattaforma"
+  },
+  "remotePlatformErase.description": {
+    "description": "Sottotitolo della scheda funzione di cancellazione remota della piattaforma",
+    "value": "Attiva da remoto una cancellazione sicura di unità, TPM, BIOS o Intel CSME su questo dispositivo. I dati cancellati non possono essere recuperati."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Messaggio di avviso sull'abilitazione della cancellazione remota della piattaforma",
+    "value": "L'abilitazione di questa funzionalità consente la cancellazione remota dei dati della piattaforma. Usare con cautela."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etichetta dell'interruttore di abilitazione della cancellazione remota della piattaforma",
+    "value": "Abilita cancellazione remota della piattaforma su questo dispositivo"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Testo di aiuto sotto l'interruttore di abilitazione",
+    "value": "Richiesto prima di avviare qualsiasi operazione di cancellazione."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titolo della scheda azione per avviare la cancellazione",
+    "value": "Avvia cancellazione remota"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Sottotitolo della scheda azione per avviare la cancellazione",
+    "value": "Cancella definitivamente tutti i dati archiviati su questa piattaforma"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Avviso prima di avviare la cancellazione remota della piattaforma",
+    "value": "Questa azione è irreversibile. Tutti i dati della piattaforma verranno cancellati definitivamente."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Etichetta del pulsante per avviare la cancellazione remota della piattaforma",
+    "value": "Avvia cancellazione remota"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Messaggio di successo quando la funzione di cancellazione remota viene attivata",
+    "value": "Funzionalità di cancellazione remota della piattaforma aggiornata con successo"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Messaggio di errore quando l'aggiornamento della funzione di cancellazione remota fallisce",
+    "value": "Impossibile aggiornare la funzionalità di cancellazione remota della piattaforma"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Messaggio di successo dopo aver avviato la cancellazione remota della piattaforma",
+    "value": "Cancellazione remota della piattaforma avviata con successo"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Messaggio di errore quando la cancellazione remota della piattaforma non può essere avviata",
+    "value": "Impossibile avviare la cancellazione remota della piattaforma"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Messaggio di errore durante il caricamento dello stato della funzione di cancellazione remota",
+    "value": "Impossibile caricare lo stato della funzionalità di cancellazione remota della piattaforma"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Messaggio mostrato quando la cancellazione remota della piattaforma non è supportata",
+    "value": "La cancellazione remota della piattaforma non è supportata"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titolo della scheda delle capacità di cancellazione",
+    "value": "Capacità di cancellazione"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Sottotitolo della scheda delle capacità di cancellazione",
+    "value": "Seleziona le capacità da includere nell'operazione di cancellazione. Le capacità non supportate non possono essere selezionate."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Suggerimento mostrato quando la funzionalità è abilitata, che chiede all'utente di selezionare le capacità da cancellare",
+    "value": "Seleziona le funzionalità che vuoi cancellare, quindi fai clic su Avvia cancellazione remota."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Etichetta per la cancellazione sicura di tutti gli SSD",
+    "value": "Cancellazione sicura di tutti gli SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Descrizione per la cancellazione sicura di tutti gli SSD",
+    "value": "Rimozione di tutti i contenuti dalle unità ATA e NVM tramite una combinazione di cancellazione dei supporti e cancellazione crittografica"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Etichetta per la cancellazione TPM",
+    "value": "Cancellazione TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Descrizione per la cancellazione TPM",
+    "value": "Eliminazione di tutte le chiavi create associate al TPM e dei dati protetti da esse, come una smart card virtuale o un PIN di accesso"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Etichetta per il ripristino del BIOS allo stato EOM",
+    "value": "Ripristina BIOS allo stato EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Descrizione per il ripristino del BIOS allo stato EOM",
+    "value": "Ripristina il BIOS alla configurazione golden di End of Manufacture (EOM) specificata dal progettista del sistema"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Etichetta per la deconfigurazione del firmware Intel CSME",
+    "value": "Deconfigura il firmware Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Suggerimento sul pulsante di cancellazione quando non sono selezionate funzionalità",
+    "value": "Seleziona almeno una funzionalità di cancellazione"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Messaggio della finestra di dialogo di conferma prima di avviare la cancellazione remota della piattaforma. {{device}} è il nome descrittivo o il nome host; {{operations}} è un elenco separato da virgole delle operazioni di cancellazione selezionate.",
+    "value": "Cancellare e riavviare {{device}}? Verrà eseguito: {{operations}}. Questa azione è irreversibile."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Descrizione per la deconfigurazione del firmware Intel CSME",
+    "value": "Deprovisioning completo di Intel AMT, ritorno allo stato predefinito e disabilitazione delle funzionalità Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Messaggio informativo mostrato quando è selezionato Deconfigura CSME, spiegando che non può essere combinato con altre opzioni",
+    "value": "La deconfigurazione CSME esegue un deprovisioning completo di Intel AMT e non può essere combinata con altre operazioni di cancellazione."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",
+    "value": "{{selected}} di {{total}} operazioni selezionate"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Didascalia mostrata su una riga di capacità quando il dispositivo non la supporta",
+    "value": "Non supportato su questo dispositivo"
   }
 }

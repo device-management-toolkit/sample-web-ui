@@ -1423,6 +1423,10 @@
     "description": "Etiqueta para HTTPS Arranque de red",
     "value": "HTTPS Arranque de red:"
   },
+  "general.remotePlatformErase": {
+    "description": "Etiqueta para el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma:"
+  },
   "general.ideRedirection": {
     "description": "Etiqueta para la redirección IDE",
     "value": "Redirección IDE:"
@@ -2812,5 +2816,137 @@
   "common.noData": {
     "value": "No hay datos disponibles",
     "description": "Mensaje cuando no hay datos disponibles"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Nombre de categoría para el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Descripción para el borrado remoto de plataforma",
+    "value": "Borrar datos de plataforma de forma segura"
+  },
+  "remotePlatformErase.title": {
+    "description": "Título para la tarjeta de función de borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma"
+  },
+  "remotePlatformErase.description": {
+    "description": "Subtítulo para la tarjeta de función de borrado remoto de plataforma",
+    "value": "Activa de forma remota un borrado seguro de unidades, TPM, BIOS o Intel CSME en este dispositivo. Los datos borrados no se pueden recuperar."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Mensaje de advertencia sobre la habilitación del borrado remoto de plataforma",
+    "value": "Habilitar esta función permite el borrado remoto de datos de la plataforma. Úsela con precaución."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etiqueta del interruptor para habilitar el borrado remoto de plataforma",
+    "value": "Habilitar borrado remoto de plataforma en este dispositivo"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Texto de ayuda debajo del interruptor de habilitación",
+    "value": "Requerido antes de iniciar cualquier operación de borrado."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Título de la tarjeta de acción para iniciar el borrado",
+    "value": "Iniciar borrado remoto"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Subtítulo de la tarjeta de acción para iniciar el borrado",
+    "value": "Borrar permanentemente todos los datos almacenados en esta plataforma"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Advertencia antes de iniciar un borrado remoto de plataforma",
+    "value": "Esta acción es irreversible. Todos los datos de la plataforma se borrarán permanentemente."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Etiqueta del botón para iniciar el borrado remoto de plataforma",
+    "value": "Iniciar borrado remoto"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Mensaje de éxito al activar o desactivar la función de borrado remoto de plataforma",
+    "value": "Función de borrado remoto de plataforma actualizada correctamente"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Mensaje de error cuando falla la actualización de la función de borrado remoto de plataforma",
+    "value": "Error al actualizar la función de borrado remoto de plataforma"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Mensaje de éxito tras iniciar el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma iniciado correctamente"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Mensaje de error cuando el borrado remoto de plataforma no puede iniciarse",
+    "value": "Error al iniciar el borrado remoto de plataforma"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Mensaje de error cuando falla la carga del estado de la función de borrado remoto de plataforma",
+    "value": "Error al cargar el estado de la función de borrado remoto de plataforma"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Mensaje que se muestra cuando el borrado remoto de plataforma no es compatible con el dispositivo",
+    "value": "El borrado remoto de plataforma no es compatible"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Título de la tarjeta de capacidades de borrado",
+    "value": "Capacidades de borrado"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Subtítulo de la tarjeta de capacidades de borrado",
+    "value": "Seleccione las capacidades a incluir en la operación de borrado. Las capacidades no compatibles no pueden seleccionarse."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Sugerencia mostrada cuando la función está habilitada, que solicita al usuario seleccionar las capacidades a borrar",
+    "value": "Seleccione las funcionalidades que desea borrar y luego haga clic en Iniciar borrado remoto."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Etiqueta para borrado seguro de todos los SSD",
+    "value": "Borrado seguro de todos los SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Descripción para borrado seguro de todos los SSD",
+    "value": "Eliminación de todo el contenido de las unidades ATA y NVM mediante una combinación de borrado de medios y borrado criptográfico"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Etiqueta para borrar TPM",
+    "value": "Borrar TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Descripción para borrar TPM",
+    "value": "Eliminar todas las claves creadas asociadas al TPM y los datos protegidos por ellas, como una tarjeta inteligente virtual o un PIN de inicio de sesión"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Etiqueta para restaurar BIOS al estado EOM",
+    "value": "Restaurar BIOS al estado EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Descripción para restaurar BIOS al estado EOM",
+    "value": "Restaurar el BIOS a la configuración dorada de fin de fabricación (EOM) especificada por el diseñador del sistema"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Etiqueta para desconfigura el firmware Intel CSME",
+    "value": "Desconfigura el firmware Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Información sobre herramienta en el botón de borrado cuando no hay capacidades seleccionadas",
+    "value": "Seleccione al menos una capacidad de borrado"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Mensaje del cuadro de diálogo de confirmación antes de iniciar el borrado remoto de plataforma. {{device}} es el nombre descriptivo o nombre de host; {{operations}} es una lista separada por comas de las operaciones de borrado seleccionadas.",
+    "value": "¿Borrar y reiniciar {{device}}? Esto realizará: {{operations}}. Esta acción es irreversible."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Descripción para desconfigura el firmware Intel CSME",
+    "value": "Desaprovisionamiento completo de Intel AMT, retorno al estado predeterminado y desactivación de las funciones de Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Mensaje informativo mostrado cuando se selecciona Desconfigurar CSME, explicando que no se puede combinar con otras opciones",
+    "value": "La desconfiguración de CSME realiza un desaprovisionamiento completo de Intel AMT y no puede combinarse con otras operaciones de borrado."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
+    "value": "{{selected}} de {{total}} operaciones seleccionadas"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",
+    "value": "No compatible con este dispositivo"
   }
 }
