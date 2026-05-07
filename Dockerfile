@@ -4,9 +4,9 @@
 #*********************************************************************/
 ### STAGE 1: Build ###
 FROM node:25-bullseye-slim@sha256:7ec50c1867732dc73facf8b318e029764dab970271691b06cd6895975c1a038e AS build
-WORKDIR /usr/src/app
 ARG BUILD_CONFIGURATION=production
 
+WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

@@ -27,7 +27,8 @@ describe('AuthorizeInterceptor', () => {
         provideHttpClient(withInterceptors([authorizationInterceptor])),
         provideHttpClientTesting(),
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: MatDialog, useValue: dialogSpy }]
+        { provide: MatDialog, useValue: dialogSpy }
+      ]
     })
 
     httpClient = TestBed.inject(HttpClient)
