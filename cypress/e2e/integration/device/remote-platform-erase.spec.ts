@@ -6,7 +6,9 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { eventLogs } from '../../fixtures/api/eventlog'
 
-const navigateToRemotePlatformErase = (featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response): void => {
+const navigateToRemotePlatformErase = (
+  featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response
+): void => {
   cy.myIntercept('GET', /.*amt\/features.*/, {
     statusCode: httpCodes.SUCCESS,
     body: featuresBody
@@ -114,16 +116,22 @@ describe('Remote Platform Erase', () => {
   it('should disable the feature after toggling off', () => {
     // Register disable handler first (LIFO: last registered = first matched)
     // so the second POST (disable click) hits the disable response
-    cy.intercept({ method: 'POST', url: /.*amt\/features.*/, times: 1 }, {
-      statusCode: httpCodes.SUCCESS,
-      body: eventLogs.remotePlatformErase.supportedDisabled.response
-    }).as('post-features-disable')
+    cy.intercept(
+      { method: 'POST', url: /.*amt\/features.*/, times: 1 },
+      {
+        statusCode: httpCodes.SUCCESS,
+        body: eventLogs.remotePlatformErase.supportedDisabled.response
+      }
+    ).as('post-features-disable')
 
     // Register enable handler second so it matches the first POST (enable click)
-    cy.intercept({ method: 'POST', url: /.*amt\/features.*/, times: 1 }, {
-      statusCode: httpCodes.SUCCESS,
-      body: eventLogs.remotePlatformErase.supportedEnabled.response
-    }).as('post-features-enable')
+    cy.intercept(
+      { method: 'POST', url: /.*amt\/features.*/, times: 1 },
+      {
+        statusCode: httpCodes.SUCCESS,
+        body: eventLogs.remotePlatformErase.supportedEnabled.response
+      }
+    ).as('post-features-enable')
 
     navigateToRemotePlatformErase()
     cy.wait('@get-features')

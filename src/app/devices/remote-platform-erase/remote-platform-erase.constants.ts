@@ -17,7 +17,8 @@ export const PLATFORM_ERASE_CAPABILITIES: PlatformEraseCapability[] = [
   { key: 'secureEraseSsds' },
   { key: 'tpmClear' },
   { key: 'biosRestore' },
-  { key: 'csmeUnconfigure' }]
+  { key: 'csmeUnconfigure' }
+]
 
 export interface ParsedPlatformEraseCapability {
   key: string
