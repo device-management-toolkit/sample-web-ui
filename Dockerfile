@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #*********************************************************************/
 ### STAGE 1: Build ###
-FROM node:25-bullseye-slim@sha256:7ec50c1867732dc73facf8b318e029764dab970271691b06cd6895975c1a038e AS build
+FROM node:26-bullseye-slim@sha256:c7169ac44eaaf94d105c72d3c48ffca3f97fc5be651ac2cf7c33b1083a8a0220 AS build
 ARG BUILD_CONFIGURATION=production
 
 WORKDIR /usr/src/app
