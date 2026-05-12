@@ -18,6 +18,10 @@
 **/node_modules
 **/npm-debug.log
 **/obj
+**/dist
+**/ui
+**/coverage
+**/.angular
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
