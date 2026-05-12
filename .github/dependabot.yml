@@ -5,36 +5,39 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # Group Angular ecosystem deps so they update together (reduces PR noise)
+    # Keep the whole Angular toolchain in one PR (Angular packages cross-pin exact peer versions).
     groups:
       angular-stack:
         patterns:
-          - '@angular/*'        # covers core, cli, cdk, material, etc.
+          - '@angular/*'
           - '@angular-devkit/*'
+          - '@angular-eslint/*'
+          - 'angular-eslint'
+          - 'typescript-eslint'
           - 'rxjs'
           - 'zone.js'
           - 'typescript'
-        # Only create grouped PRs for safe patch & minor updates; majors handled manually with ng update
         update-types:
           - patch
           - minor
-    # Ignore major version bumps so they don't auto-open without schematics migrations
+    # Majors handled manually via `ng update`.
     ignore:
       - dependency-name: '@angular/*'
-        update-types:
-          - version-update:semver-major
+        update-types: ['version-update:semver-major']
       - dependency-name: '@angular-devkit/*'
-        update-types:
-          - version-update:semver-major
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-eslint/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'angular-eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript-eslint'
+        update-types: ['version-update:semver-major']
       - dependency-name: 'rxjs'
-        update-types:
-          - version-update:semver-major
+        update-types: ['version-update:semver-major']
       - dependency-name: 'zone.js'
-        update-types:
-          - version-update:semver-major
+        update-types: ['version-update:semver-major']
       - dependency-name: 'typescript'
-        update-types:
-          - version-update:semver-major
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
