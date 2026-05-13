@@ -232,10 +232,21 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   setConnectionMode(data: Profile): void {
-    if (data.tlsMode != null) {
+    if (data.tlsMode != null && data.tlsMode > 0) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
     } else if (data.ciraConfigName != null) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.cira)
+    } else {
+      this.profileForm.controls.connectionMode.setValue(this.connectionMode.direct)
+    }
+  }
+
+  // Passwords are optional on edit (the GET response never returns them).
+  private setPasswordRequiredValidator(control: FormControl<string | null>): void {
+    if (this.isEdit()) {
+      control.clearValidators()
+    } else {
+      control.setValidators(Validators.required)
     }
   }
 
@@ -251,7 +262,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.generateRandomMEBxPassword.disable()
     } else {
       this.profileForm.controls.mebxPassword.enable()
-      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.mebxPassword)
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
       this.profileForm.controls.generateRandomMEBxPassword.enable()
@@ -344,7 +355,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.amtPassword.clearValidators()
     } else {
       this.profileForm.controls.amtPassword.enable()
-      this.profileForm.controls.amtPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.amtPassword)
     }
     this.profileForm.controls.amtPassword.updateValueAndValidity()
   }
@@ -356,7 +367,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.clearValidators()
     } else if (this.profileForm.controls.activation.value === 'acmactivate') {
       this.profileForm.controls.mebxPassword.enable()
-      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.mebxPassword)
     }
     this.profileForm.controls.mebxPassword.updateValueAndValidity()
   }
@@ -646,6 +657,12 @@ export class ProfileDetailComponent implements OnInit {
 
     // Always include proxy configurations
     result.proxyConfigs = this.selectedProxyConfigs()
+
+    if (this.isEdit()) {
+      // Omit empty passwords so PATCH leaves the stored credentials untouched.
+      if (!result.amtPassword) delete result.amtPassword
+      if (!result.mebxPassword) delete result.mebxPassword
+    }
 
     const request = this.isEdit() ? this.profilesService.update(result) : this.profilesService.create(result)
 
