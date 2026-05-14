@@ -457,18 +457,18 @@ export class DevicesService {
       enableSOL: true,
       enableIDER: true,
       ocr: true,
-      platformEraseEnabled: true
+      rpe: true
     }
   ): Observable<AMTFeaturesResponse> {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         tap((features) => {
-          // The server may omit rpeEnabled in the POST response, so fall back to
+          // The server may omit rpe in the POST response, so fall back to
           // what we sent so the cache reflects the actual intended state.
           const merged: AMTFeaturesResponse = {
             ...features,
-            rpeEnabled: features.rpeEnabled ?? payload.platformEraseEnabled
+            rpe: features.rpe ?? payload.rpe
           }
           this.getOrCreateFeaturesStream(deviceId).next(merged)
         }),

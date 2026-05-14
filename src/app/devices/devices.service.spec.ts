@@ -92,7 +92,7 @@ describe('DevicesService', () => {
       httpsBootSupported: false,
       winREBootSupported: false,
       localPBABootSupported: false,
-      rpeEnabled: false,
+      rpe: false,
       rpeSupported: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
@@ -560,7 +560,7 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        rpeEnabled: true,
+        rpe: true,
         rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
@@ -578,7 +578,7 @@ describe('DevicesService', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        platformEraseEnabled: true
+        rpe: true
       }
 
       service.setAmtFeatures('device1', payload).subscribe((response) => {

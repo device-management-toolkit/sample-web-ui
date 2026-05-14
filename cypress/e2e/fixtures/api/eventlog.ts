@@ -201,7 +201,7 @@ const eventLogs = {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        rpeEnabled: false,
+        rpe: false,
         rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
@@ -220,7 +220,7 @@ const eventLogs = {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        rpeEnabled: true,
+        rpe: true,
         rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }

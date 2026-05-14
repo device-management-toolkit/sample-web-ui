@@ -119,12 +119,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       description: 'deviceDetail.certificatesDescription.value',
       component: 'certificates',
       icon: 'verified'
-    },
-    {
-      name: 'deviceDetail.remotePlatformErase.value',
-      description: 'deviceDetail.remotePlatformEraseDescription.value',
-      component: 'remote-platform-erase',
-      icon: 'computer_cancel'
     }
   ]
 
@@ -148,6 +142,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           description: 'deviceDetail.tlsSettingsDescription.value',
           component: 'tls',
           icon: 'license'
+        },
+        {
+          name: 'deviceDetail.remotePlatformErase.value',
+          description: 'deviceDetail.remotePlatformEraseDescription.value',
+          component: 'remote-platform-erase',
+          icon: 'computer_cancel'
         }
       )
     }

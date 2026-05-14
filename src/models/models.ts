@@ -137,7 +137,7 @@ export interface AMTFeaturesResponse {
   httpsBootSupported: boolean
   winREBootSupported: boolean
   localPBABootSupported: boolean
-  rpeEnabled: boolean
+  rpe: boolean
   rpeSupported: boolean
   pbaBootFilesPath: BootParams[]
   winREBootFilesPath: BootParams
@@ -148,7 +148,7 @@ export interface AMTFeaturesRequest {
   enableSOL: boolean
   enableIDER: boolean
   ocr: boolean
-  platformEraseEnabled: boolean
+  rpe: boolean
 }
 
 export interface BootCapabilities {

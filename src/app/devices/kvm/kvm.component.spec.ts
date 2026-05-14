@@ -75,7 +75,7 @@ describe('KvmComponent', () => {
         winREBootSupported: true,
         localPBABootSupported: true,
         rpeSupported: true,
-        rpeEnabled: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -98,7 +98,7 @@ describe('KvmComponent', () => {
         winREBootSupported: true,
         localPBABootSupported: true,
         rpeSupported: true,
-        rpeEnabled: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -121,7 +121,7 @@ describe('KvmComponent', () => {
         winREBootSupported: true,
         localPBABootSupported: true,
         rpeSupported: true,
-        rpeEnabled: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -449,7 +449,7 @@ describe('KvmComponent', () => {
           winREBootSupported: true,
           localPBABootSupported: true,
           rpeSupported: true,
-          rpeEnabled: true,
+          rpe: true,
           pbaBootFilesPath: [],
           winREBootFilesPath: {
             instanceID: '',
@@ -551,7 +551,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -581,7 +581,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -627,7 +627,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -656,7 +656,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -687,7 +687,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -717,7 +717,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -747,7 +747,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -777,7 +777,7 @@ describe('KvmComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',

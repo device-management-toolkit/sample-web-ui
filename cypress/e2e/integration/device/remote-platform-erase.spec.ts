@@ -88,7 +88,7 @@ describe('Remote Platform Erase', () => {
     cy.get('[data-cy="initiateEraseButton"]').should('not.exist')
   })
 
-  it('should show checkbox checked when rpeEnabled is true in API response', () => {
+  it('should show checkbox checked when rpe is true in API response', () => {
     navigateToRemotePlatformErase(eventLogs.remotePlatformErase.supportedEnabled.response)
     cy.wait('@get-features')
 
@@ -108,7 +108,7 @@ describe('Remote Platform Erase', () => {
     cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
       .should('not.have.attr', 'aria-disabled', 'true')
       .click()
-    cy.wait('@post-features').its('request.body.platformEraseEnabled').should('eq', true)
+    cy.wait('@post-features').its('request.body.rpe').should('eq', true)
 
     cy.get('[data-cy="initiateEraseButton"]').should('be.visible')
   })
@@ -140,13 +140,13 @@ describe('Remote Platform Erase', () => {
     cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
       .should('not.have.attr', 'aria-disabled', 'true')
       .click()
-    cy.wait('@post-features-enable').its('request.body.platformEraseEnabled').should('eq', true)
+    cy.wait('@post-features-enable').its('request.body.rpe').should('eq', true)
 
     // Then disable
     cy.get('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
       .should('not.have.attr', 'aria-disabled', 'true')
       .click()
-    cy.wait('@post-features-disable').its('request.body.platformEraseEnabled').should('eq', false)
+    cy.wait('@post-features-disable').its('request.body.rpe').should('eq', false)
 
     cy.get('[data-cy="initiateEraseButton"]').should('not.exist')
   })

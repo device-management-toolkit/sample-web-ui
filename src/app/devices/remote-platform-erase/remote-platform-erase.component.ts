@@ -62,26 +62,8 @@ export class RemotePlatformEraseComponent implements OnInit {
   public isCsmeExclusiveSelected = signal(false)
   public hasSelectedCaps = computed(() => this.selectedCapsCount() > 0)
   public supportedCapsCount = computed(() => this.eraseCaps().filter((c) => c.supported).length)
-
+  public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   private csmeIndex = -1
-
-  public amtFeatures: AMTFeaturesResponse = {
-    KVM: false,
-    SOL: false,
-    IDER: false,
-    kvmAvailable: false,
-    redirection: false,
-    optInState: 0,
-    userConsent: 'none',
-    ocr: false,
-    httpsBootSupported: false,
-    winREBootSupported: false,
-    localPBABootSupported: false,
-    rpeEnabled: false,
-    rpeSupported: false,
-    pbaBootFilesPath: [],
-    winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
-  }
 
   ngOnInit(): void {
     this.devicesService.getDevice(this.deviceId()).subscribe({
@@ -108,7 +90,8 @@ export class RemotePlatformEraseComponent implements OnInit {
       .pipe(filter(Boolean), takeUntilDestroyed(this.destroyRef))
       .subscribe((features) => {
         this.isPlatformEraseSupported.set(features.rpeSupported ?? false)
-        this.platformEraseEnabled.set(features.rpeEnabled ?? false)
+        this.platformEraseEnabled.set(features.rpe ?? false)
+        this.amtFeatures.set(features)
         this.updateCapControlStates()
       })
   }
@@ -135,12 +118,12 @@ export class RemotePlatformEraseComponent implements OnInit {
     this.platformEraseEnabled.set(enabled)
     this.updateCapControlStates()
     const payload: AMTFeaturesRequest = {
-      userConsent: this.amtFeatures.userConsent,
-      enableKVM: this.amtFeatures.KVM,
-      enableSOL: this.amtFeatures.SOL,
-      enableIDER: this.amtFeatures.IDER,
-      ocr: this.amtFeatures.ocr,
-      platformEraseEnabled: enabled
+      userConsent: this.amtFeatures()?.userConsent ?? '',
+      enableKVM: this.amtFeatures()?.KVM ?? false,
+      enableSOL: this.amtFeatures()?.SOL ?? false,
+      enableIDER: this.amtFeatures()?.IDER ?? false,
+      ocr: this.amtFeatures()?.ocr ?? false,
+      rpe: enabled
     }
     this.isLoading.set(true)
     this.devicesService
@@ -148,7 +131,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.amtFeatures.rpeEnabled = enabled
+          this.amtFeatures.update((f) => (f ? { ...f, rpe: enabled } : f))
           this.updateCapControlStates()
         },
         error: (err) => {
@@ -185,10 +168,10 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   private applyFeatures(features: AMTFeaturesResponse, capabilities: BootCapabilities): void {
-    this.amtFeatures = features
+    this.amtFeatures.update((f) => (f ? { ...f, ...features } : features))
     const supported = features.rpeSupported ?? false
     this.isPlatformEraseSupported.set(supported)
-    this.platformEraseEnabled.set(features.rpeEnabled ?? false)
+    this.platformEraseEnabled.set(features.rpe ?? false)
     const caps: ParsedPlatformEraseCapability[] = [
       { key: 'secureEraseSsds', supported: capabilities.secureEraseAllSSDs },
       { key: 'tpmClear', supported: capabilities.tpmClear },
@@ -220,7 +203,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       .subscribe({
         next: () => {
           this.snackBar.open(this.t('remotePlatformErase.eraseSuccess'), undefined, SnackbarDefaults.defaultSuccess)
-          this.amtFeatures.rpeEnabled = false
+          this.amtFeatures.update((f) => (f ? { ...f, rpe: false } : f))
           this.platformEraseEnabled.set(false)
           this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
           this.selectedCapsCount.set(0)

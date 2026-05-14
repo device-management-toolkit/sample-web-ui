@@ -476,7 +476,7 @@ export class KvmComponent implements OnInit, OnDestroy {
             enableSOL: this.amtFeatures()?.SOL ?? false,
             enableIDER: this.amtFeatures()?.IDER ?? false,
             ocr: this.amtFeatures()?.ocr ?? false,
-            platformEraseEnabled: this.amtFeatures()?.rpeEnabled ?? false
+            rpe: this.amtFeatures()?.rpe ?? false
           }
           return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }

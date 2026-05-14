@@ -26,7 +26,7 @@ const mockAMTFeatures: AMTFeaturesResponse = {
   ocr: false,
   winREBootSupported: false,
   localPBABootSupported: false,
-  rpeEnabled: false,
+  rpe: false,
   rpeSupported: true,
   pbaBootFilesPath: [],
   winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
@@ -89,8 +89,8 @@ describe('RemotePlatformEraseComponent', () => {
     expect(component.isLoading()).toBeFalse()
   })
 
-  it('should show toggle as checked on init when rpeEnabled is true', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+  it('should show toggle as checked on init when rpe is true', () => {
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     fixture.detectChanges()
     const toggle = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
@@ -112,7 +112,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should open AreYouSureDialog with the erase confirmation message', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -130,7 +130,7 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.getAMTFeatures.and.returnValue(
       of({
         ...mockAMTFeatures,
-        rpeEnabled: true
+        rpe: true
       })
     )
     component.ngOnInit()
@@ -145,14 +145,14 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should not open confirmation dialog when feature is disabled', () => {
-    // mockAMTFeatures has rpeEnabled: false
+    // mockAMTFeatures has rpe: false
     matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
     expect(matDialogSpy.open).not.toHaveBeenCalled()
   })
 
   it('should not open confirmation dialog when no caps are selected', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(false)
@@ -163,7 +163,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should call sendRemotePlatformErase when erase is confirmed', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     // check secureEraseSsds (0x04, bit 2) and biosRestore (0x4000000, bit 26) → mask 0x4000004
@@ -181,7 +181,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should not call setRemoteEraseOptions when erase is cancelled', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -192,7 +192,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should pass deselected capability bitmask to setRemoteEraseOptions', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     // check only biosRestore (index 2, bit 26 = 0x4000000) — secureEraseSsds left unchecked
@@ -209,7 +209,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show success snackbar after erase succeeds', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -220,7 +220,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show error snackbar when sendRemotePlatformErase fails', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -252,7 +252,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should set isLoading to true during initiateErase', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -265,7 +265,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should set isLoading to false after initiateErase fails', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -277,7 +277,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show initiate erase button when feature is enabled', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -289,14 +289,14 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should not show initiate erase button when feature is disabled', () => {
-    // mockAMTFeatures has rpeEnabled: false but rpeSupported: true
+    // mockAMTFeatures has rpe: false but rpeSupported: true
     fixture.detectChanges()
     const button = fixture.nativeElement.querySelector('[data-cy="initiateEraseButton"]')
     expect(button).toBeNull()
   })
 
   it('should disable initiate erase button when all selected caps are unchecked', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -311,7 +311,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should enable initiate erase button when feature is enabled and at least one cap is checked', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -325,7 +325,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show capabilities card when remoteEraseSupported is true', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -334,7 +334,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show a checkbox for each capability, disabled for unsupported ones', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -349,7 +349,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should disable all capability checkboxes when featureEnabled is false', () => {
-    // mockAMTFeatures: rpeEnabled=false — all caps disabled regardless of support
+    // mockAMTFeatures: rpe=false — all caps disabled regardless of support
     fixture.detectChanges()
     expect(component.eraseCapControl(0).disabled).toBeTrue() // supported but feature off → disabled
     expect(component.eraseCapControl(1).disabled).toBeTrue() // not supported → disabled
@@ -383,24 +383,18 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   describe('toggleFeature', () => {
-    it('should call setAmtFeatures with platformEraseEnabled: true when toggling on', () => {
+    it('should call setAmtFeatures with rpe: true when toggling on', () => {
       component.toggleFeature(true)
-      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith(
-        '',
-        jasmine.objectContaining({ platformEraseEnabled: true })
-      )
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', jasmine.objectContaining({ rpe: true }))
     })
 
-    it('should call setAmtFeatures with platformEraseEnabled: false when toggling off', () => {
+    it('should call setAmtFeatures with rpe: false when toggling off', () => {
       component.toggleFeature(false)
-      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith(
-        '',
-        jasmine.objectContaining({ platformEraseEnabled: false })
-      )
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', jasmine.objectContaining({ rpe: false }))
     })
 
-    it('should set platformEraseEnabled immediately before API call completes', () => {
-      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+    it('should set rpe immediately before API call completes', () => {
+      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
       expect(component.platformEraseEnabled()).toBeFalse()
       component.toggleFeature(true)
       expect(component.platformEraseEnabled()).toBeTrue()
@@ -428,7 +422,7 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('should enable supported caps immediately when toggling on', () => {
-      // feature starts off (mockAMTFeatures.rpeEnabled = false) — caps disabled
+      // feature starts off (mockAMTFeatures.rpe = false) — caps disabled
       expect(component.eraseCapControl(0).disabled).toBeTrue()
       component.toggleFeature(true)
       expect(component.eraseCapControl(0).disabled).toBeFalse()
@@ -446,12 +440,13 @@ describe('RemotePlatformEraseComponent', () => {
       expect(secondPayload?.enableKVM).toBe(mockAMTFeatures.KVM)
       expect(secondPayload?.enableSOL).toBe(mockAMTFeatures.SOL)
       expect(secondPayload?.enableIDER).toBe(mockAMTFeatures.IDER)
+      expect(secondPayload?.rpe).toBe(mockAMTFeatures.rpe)
     })
   })
 
   describe('after successful erase', () => {
     beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeEnabled: true }))
+      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
       component.ngOnInit()
       component.toggleFeature(true)
       component.eraseCapControl(0).setValue(true)
@@ -464,9 +459,9 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.platformEraseEnabled()).toBeFalse()
     })
 
-    it('should reset amtFeatures.rpeEnabled to false', () => {
+    it('should reset amtFeatures.rpe to false', () => {
       component.initiateErase()
-      expect(component.amtFeatures.rpeEnabled).toBeFalse()
+      expect(component.amtFeatures()?.rpe).toBeFalse()
     })
 
     it('should reset selectedCapsCount to 0', () => {
@@ -491,7 +486,7 @@ describe('RemotePlatformEraseComponent', () => {
       devicesServiceSpy.getAMTFeatures.and.returnValue(
         of({
           ...mockAMTFeatures,
-          rpeEnabled: true
+          rpe: true
         })
       )
       devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(

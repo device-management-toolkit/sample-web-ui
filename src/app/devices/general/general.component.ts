@@ -11,7 +11,7 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } 
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { catchError, finalize, forkJoin, Subject, takeUntil, throwError } from 'rxjs'
+import { catchError, filter, finalize, forkJoin, Subject, takeUntil, throwError } from 'rxjs'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
@@ -58,7 +58,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     winREBootSupported: false,
     localPBABootSupported: false,
     rpeSupported: false,
-    rpeEnabled: false,
+    rpe: false,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
@@ -76,7 +76,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     winREBootSupported: false,
     localPBABootSupported: false,
     ocr: false,
-    platformEraseEnabled: false,
+    rpe: false,
     rpeSupported: false
   })
 
@@ -164,12 +164,27 @@ export class GeneralComponent implements OnInit, OnDestroy {
           httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
           winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
           localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
-          platformEraseEnabled: [
-            { value: results.amtFeatures.rpeEnabled, disabled: !(results.amtFeatures.rpeSupported ?? false) }
+          rpe: [
+            { value: results.amtFeatures.rpe, disabled: !(results.amtFeatures.rpeSupported ?? false) }
           ],
           rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
         })
         this.isDataLoaded.set(true)
+      })
+    this.devicesService
+      .featuresChanges(this.deviceId())
+      .pipe(filter(Boolean), takeUntil(this.destroy$))
+      .subscribe((features) => {
+        this.amtEnabledFeatures.patchValue({
+          enableIDER: features.IDER,
+          enableKVM: features.KVM,
+          enableSOL: features.SOL,
+          userConsent: features.userConsent,
+          optInState: features.optInState,
+          redirection: features.redirection,
+          ocr: features.ocr,
+          rpe: features.rpe
+        })
       })
   }
 

@@ -69,7 +69,7 @@ describe('DeviceToolbarComponent', () => {
       kvmAvailable: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       rpeSupported: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {

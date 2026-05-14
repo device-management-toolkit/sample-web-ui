@@ -64,7 +64,7 @@ describe('SolComponent', () => {
         winREBootSupported: true,
         localPBABootSupported: true,
         rpeSupported: true,
-        rpeEnabled: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -87,7 +87,7 @@ describe('SolComponent', () => {
         winREBootSupported: true,
         localPBABootSupported: true,
         rpeSupported: true,
-        rpeEnabled: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -276,7 +276,7 @@ describe('SolComponent', () => {
           winREBootSupported: true,
           localPBABootSupported: true,
           rpeSupported: true,
-          rpeEnabled: true,
+          rpe: true,
           pbaBootFilesPath: [],
           winREBootFilesPath: {
             instanceID: '',
@@ -324,7 +324,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -366,7 +366,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -394,7 +394,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -424,7 +424,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -455,7 +455,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -485,7 +485,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -515,7 +515,7 @@ describe('SolComponent', () => {
       winREBootSupported: true,
       localPBABootSupported: true,
       rpeSupported: true,
-      rpeEnabled: true,
+      rpe: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
