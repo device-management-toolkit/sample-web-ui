@@ -860,7 +860,7 @@ class CustomTabularReporter extends mocha.reporters.Spec {
           `  ${this.padRight('AMT Firmware Version', 28)} ${infra.amtFirmware || 'N/A'}${infra.amtFirmwareNote ? '  [' + infra.amtFirmwareNote + ']' : ''}`
         )
         lines.push(
-          `  ${this.padRight('Provisioning Mode', 28)} ${infra.provisioningMode || 'N/A'}${infra.provisioningModeNote ? '  [' + infra.provisioningModeNote + ']' : ''}`
+          `  ${this.padRight('AMT Device OS', 28)} ${infra.amtDeviceOs || 'N/A'}`
         )
       }
     }
@@ -1535,10 +1535,10 @@ class CustomTabularReporter extends mocha.reporters.Spec {
     const infraDefs = [
       { icon: '&#128190;', label: 'AMT Firmware', value: infra.amtFirmware, note: infra.amtFirmwareNote || '' },
       {
-        icon: '&#128737;',
-        label: 'Provisioning Mode',
-        value: infra.provisioningMode,
-        note: infra.provisioningModeNote || ''
+        icon: '&#128187;',
+        label: 'AMT Device OS',
+        value: infra.amtDeviceOs,
+        note: ''
       }
     ]
     const infraItemsHTML = infraDefs
@@ -1565,7 +1565,7 @@ class CustomTabularReporter extends mocha.reporters.Spec {
       ? `<span class="vheader">DMT Software Components</span>
         <div class="vchips">${componentChips}</div>
         <div class="infra-section">
-          <span class="vheader">AMT Device${infra.amtDeviceOs ? ` (on ${this.escapeHtml(infra.amtDeviceOs)})` : ''} &amp; Firmware</span>
+          <span class="vheader">AMT Device &amp; Firmware</span>
           <div class="infra-grid">${infraItemsHTML}</div>
         </div>
         ${fetchedAt}`

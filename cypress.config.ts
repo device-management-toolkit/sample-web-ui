@@ -114,6 +114,8 @@ export default defineConfig({
           console.warn('\n⚠️  Could not fetch component version info:', err)
         }
       })
+
+      return config
     }
   }
 })

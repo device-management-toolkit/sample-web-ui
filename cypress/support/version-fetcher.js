@@ -557,6 +557,22 @@ async function fetchVersionInfo(config) {
             : ''
           : `unreachable: ${url} (${r.reason || 'no response'})`
       }
+    },
+    async SAMPLE_WEB_UI_VERSION() {
+      // Local Cypress run: read version from the sample-web-ui package.json.
+      // If user passed explicit non-AUTO SAMPLE_WEB_UI_VERSION, this fetcher is
+      // not called because the env var value is used directly.
+      try {
+        const pkgPath = path.join(process.cwd(), 'package.json')
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+        const ver = pkg.version ? String(pkg.version) : null
+        return {
+          ver,
+          note: ver ? 'from package.json (local)' : 'version field missing in package.json'
+        }
+      } catch (e) {
+        return { ver: null, note: `could not read package.json: ${e.message}` }
+      }
     }
   }
 
