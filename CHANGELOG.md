@@ -1,3 +1,10 @@
+## [3.57.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.2...v3.57.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* allow editing profile without re-entering passwords ([#3307](https://github.com/device-management-toolkit/sample-web-ui/issues/3307)) ([4df57b2](https://github.com/device-management-toolkit/sample-web-ui/commit/4df57b2723c20a594cd2d5ec34c0f975c4916567))
+
 ## [3.57.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.1...v3.57.2) (2026-04-22)
 
 
