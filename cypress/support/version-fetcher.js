@@ -56,6 +56,7 @@ const fs = require('fs')
 const http = require('http')
 const https = require('https')
 const path = require('path')
+const { execSync } = require('child_process')
 
 /** Sentinel value: set any component version env var to this to hide it from the report. */
 const HIDE_MARKER = 'SKIP'
@@ -142,6 +143,40 @@ function postJSON(url, body, timeoutMs = 5000) {
       resolve({ ok: false, data: null, reason: String(err) })
     }
   })
+}
+
+function resolveSampleWebUiVersionApiUrl(env) {
+  const explicit = env && env.SAMPLE_WEB_UI_VERSION_API_URL ? String(env.SAMPLE_WEB_UI_VERSION_API_URL).trim() : ''
+  if (explicit) return explicit.replace(/\/$/, '')
+
+  const baseUrl = env && env.BASEURL ? String(env.BASEURL).trim().replace(/\/$/, '') : ''
+  if (!baseUrl) return null
+  return `${baseUrl}/version.json`
+}
+
+function readLocalSampleWebUiMetadata() {
+  let version = null
+  let commit = null
+  let versionNote = ''
+  let commitNote = ''
+
+  try {
+    const pkgPath = path.join(process.cwd(), 'package.json')
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+    version = pkg.version ? String(pkg.version) : null
+    versionNote = version ? 'from package.json (local)' : 'version field missing in package.json'
+  } catch (e) {
+    versionNote = `could not read package.json: ${e.message}`
+  }
+
+  try {
+    commit = String(execSync('git rev-parse --short HEAD', { cwd: process.cwd(), encoding: 'utf8' })).trim() || null
+    commitNote = commit ? 'from local git HEAD' : 'local git HEAD unavailable'
+  } catch (e) {
+    commitNote = `could not read local git HEAD: ${e.message}`
+  }
+
+  return { version, commit, versionNote, commitNote }
 }
 
 // ─── Angular Environment Reader ─────────────────────────────────────────────
@@ -452,10 +487,14 @@ async function fetchVersionInfo(config) {
     /* ignore invalid JSON */
   }
 
-  const add = (name, version, note = '') => {
+  const add = (name, version, note = '', commit = null) => {
     if (version === HIDE_MARKER) return // user opted to hide this component
     const entry = { name, version: version || 'N/A', note }
-    if (commitMap[name]) entry.commit = String(commitMap[name]).slice(0, 8)
+    if (commit) {
+      entry.commit = String(commit).slice(0, 8)
+    } else if (commitMap[name]) {
+      entry.commit = String(commitMap[name]).slice(0, 8)
+    }
     result.components.push(entry)
   }
 
@@ -468,10 +507,11 @@ async function fetchVersionInfo(config) {
   //   Console-only: CONSOLE_VERSION, GO_WSMAN_MESSAGES_VERSION
   //   Cloud-only:   MPS_VERSION, RPS_VERSION, MPS_ROUTER_VERSION, WSMAN_MESSAGES_VERSION
   //
-  // Three keys support live API fetching when the value is empty, undefined, or AUTO:
+  // Four keys support live API fetching when the value is empty, undefined, or AUTO:
   //   CONSOLE_VERSION  → GET ${mpsServer}/version
   //   MPS_VERSION      → GET ${mpsServer}/api/v1/version
   //   RPS_VERSION      → GET ${rpsServer}/api/v1/admin/version
+  //   SAMPLE_WEB_UI_VERSION → GET ${BASEURL}/version.json (or SAMPLE_WEB_UI_VERSION_API_URL)
   // All other *_VERSION keys are env-var-only (set SKIP to hide).
   // In CI, prefer "AUTO" over "" — Cypress strips empty CYPRESS_* env vars.
 
@@ -559,19 +599,57 @@ async function fetchVersionInfo(config) {
       }
     },
     async SAMPLE_WEB_UI_VERSION() {
-      // Local Cypress run: read version from the sample-web-ui package.json.
+      // Priority for sample-web-ui metadata:
+      //   1) Runtime API:  GET /version.json (version + commit)
+      //   2) Local repo:   package.json version + git rev-parse --short HEAD
       // If user passed explicit non-AUTO SAMPLE_WEB_UI_VERSION, this fetcher is
       // not called because the env var value is used directly.
-      try {
-        const pkgPath = path.join(process.cwd(), 'package.json')
-        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
-        const ver = pkg.version ? String(pkg.version) : null
+      const apiUrl = resolveSampleWebUiVersionApiUrl(env)
+      let apiVersion = null
+      let apiCommit = null
+      let apiReason = ''
+
+      if (apiUrl) {
+        const r = await fetchJSON(apiUrl, 5000)
+        if (r.ok && r.data && typeof r.data === 'object') {
+          const ver = r.data.version
+          const commit = r.data.commit
+          apiVersion = typeof ver === 'string' && ver.trim() ? ver.trim() : null
+          apiCommit = typeof commit === 'string' && commit.trim() ? commit.trim() : null
+          if (!apiVersion && !apiCommit) {
+            apiReason = `${apiUrl} missing version/commit fields`
+          }
+        } else {
+          apiReason = `${apiUrl} unreachable (${r.reason || (r.statusCode ? `HTTP ${r.statusCode}` : 'no response')})`
+        }
+      } else {
+        apiReason = 'BASEURL/SAMPLE_WEB_UI_VERSION_API_URL not set'
+      }
+
+      const local = readLocalSampleWebUiMetadata()
+      const ver = apiVersion || local.version
+      const commit = apiCommit || local.commit
+
+      if (apiVersion || apiCommit) {
+        const fields = []
+        if (apiVersion) fields.push('version')
+        if (apiCommit) fields.push('commit')
+        const fallback = !apiVersion || !apiCommit ? '; missing field fallback to local repo' : ''
         return {
           ver,
-          note: ver ? 'from package.json (local)' : 'version field missing in package.json'
+          commit,
+          note: `from /version.json (${fields.join('+')})${fallback}`
         }
-      } catch (e) {
-        return { ver: null, note: `could not read package.json: ${e.message}` }
+      }
+
+      try {
+        return {
+          ver,
+          commit,
+          note: `API unavailable (${apiReason}); ${local.versionNote}; ${local.commitNote}`
+        }
+      } catch {
+        return { ver: null, commit: null, note: `API unavailable (${apiReason}); local repo metadata unavailable` }
       }
     }
   }
@@ -589,8 +667,8 @@ async function fetchVersionInfo(config) {
     if (!shouldFetch) {
       add(name, val, `from ${key} env var`)
     } else if (apiFetchers[key]) {
-      const { ver, note } = await apiFetchers[key]()
-      add(name, ver, note)
+      const { ver, note, commit } = await apiFetchers[key]()
+      add(name, ver, note, commit)
     } else {
       add(name, null, `set ${key} env var`)
     }
