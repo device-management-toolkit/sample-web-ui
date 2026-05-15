@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
+import { Validators } from '@angular/forms'
 import { of, throwError } from 'rxjs'
 import { ConfigsService } from '../../configs/configs.service'
 import { WirelessService } from '../../wireless/wireless.service'
@@ -154,15 +155,25 @@ describe('ProfileDetailComponent', () => {
     expect(wirelessGetDataSpy).toHaveBeenCalled()
     expect(proxyGetDataSpy).toHaveBeenCalled()
   })
-  it('should set connectionMode to TLS when tlsMode is not null', () => {
+  it('should set connectionMode to TLS when tlsMode is a TLS mode (1-4)', () => {
     const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
     expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
   })
-  it('should set connectionMode to CIRA when ciraConfigName is not null', () => {
+  it('should set connectionMode to CIRA when ciraConfigName is set and tlsMode is not a TLS mode', () => {
     const profile: Profile = { ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
     expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+  })
+  it('should set connectionMode to DIRECT when tlsMode is 0 and no CIRA config', () => {
+    const profile: Profile = { tlsMode: 0, ciraConfigName: null } as any
+    component.setConnectionMode(profile)
+    expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
+  })
+  it('should set connectionMode to DIRECT when tlsMode is null and no CIRA config', () => {
+    const profile: Profile = { tlsMode: null, ciraConfigName: null } as any
+    component.setConnectionMode(profile)
+    expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
   })
   it('should cancel', async () => {
     const routerSpy = spyOn(component.router, 'navigate')
@@ -218,6 +229,51 @@ describe('ProfileDetailComponent', () => {
 
     expect(profileUpdateSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should not require passwords on update', () => {
+    component.profileForm.patchValue({
+      activation: 'acmactivate',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false
+    })
+
+    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeFalse()
+    expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeFalse()
+  })
+
+  it('should omit empty passwords from the update payload', () => {
+    const routerSpy = spyOn(component.router, 'navigate')
+
+    component.profileForm.patchValue({
+      profileName: 'profile',
+      activation: 'acmactivate',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false,
+      amtPassword: '',
+      mebxPassword: '',
+      dhcpEnabled: true,
+      ciraConfigName: 'config1'
+    })
+    component.confirm()
+
+    expect(routerSpy).toHaveBeenCalled()
+    expect(profileUpdateSpy).toHaveBeenCalled()
+    const payload = profileUpdateSpy.calls.mostRecent().args[0]
+    expect(payload.amtPassword).toBeUndefined()
+    expect(payload.mebxPassword).toBeUndefined()
+  })
+
+  it('should require passwords on create', () => {
+    component.isEdit.set(false)
+    component.profileForm.patchValue({
+      activation: 'acmactivate',
+      generateRandomPassword: false,
+      generateRandomMEBxPassword: false
+    })
+
+    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
+    expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
   })
   it('should submit when valid (create)', () => {
     const routerSpy = spyOn(component.router, 'navigate')
