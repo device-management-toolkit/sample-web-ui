@@ -6,6 +6,8 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { eventLogs } from '../../fixtures/api/eventlog'
 
+const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
+
 const navigateToRemotePlatformErase = (
   featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response
 ): void => {
@@ -66,7 +68,7 @@ const navigateToRemotePlatformErase = (
   cy.get('mat-progress-bar').should('not.exist')
 }
 
-describe('Remote Platform Erase', () => {
+describeWhenNotCloud('Remote Platform Erase', () => {
   beforeEach(() => {
     cy.setup()
   })

@@ -81,8 +81,8 @@ describe('RemotePlatformEraseComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should call getAMTFeaturesCached on init', () => {
-    expect(devicesServiceSpy.getAMTFeaturesCached).toHaveBeenCalled()
+  it('should call getAMTFeatures on init', () => {
+    expect(devicesServiceSpy.getAMTFeatures).toHaveBeenCalled()
   })
 
   it('should set isLoading to false after init completes', () => {

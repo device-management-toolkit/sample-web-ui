@@ -464,12 +464,21 @@ export class DevicesService {
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
         tap((features) => {
-          // The server may omit rpe in the POST response, so fall back to
-          // what we sent so the cache reflects the actual intended state.
+          // The server may return a partial response, so merge onto the existing
+          // cached state so no previously-known fields are lost.
+          const existing = this.getOrCreateFeaturesStream(deviceId).value
           const merged: AMTFeaturesResponse = {
+            ...existing,
             ...features,
-            rpe: features.rpe ?? payload.rpe
+            rpe: features.rpe ?? existing?.rpe ?? payload.rpe,
+            ocr: features.ocr ?? existing?.ocr ?? payload.ocr,
+            SOL: features.SOL ?? existing?.SOL ?? payload.enableSOL,
+            IDER: features.IDER ?? existing?.IDER ?? payload.enableIDER,
+            KVM: features.KVM ?? existing?.KVM ?? payload.enableKVM
           }
+          console.log('[setAmtFeatures] payload:', payload)
+          console.log('[setAmtFeatures] server response (features):', features)
+          console.log('[setAmtFeatures] existing cache:', existing)
           this.getOrCreateFeaturesStream(deviceId).next(merged)
         }),
         catchError((err) => {

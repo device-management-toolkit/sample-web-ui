@@ -5,6 +5,8 @@
 
 import { Component, DestroyRef, OnInit, inject, signal, input, computed } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { of } from 'rxjs'
+import { catchError, switchMap } from 'rxjs/operators'
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -16,13 +18,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { filter, finalize, forkJoin, throwError } from 'rxjs'
+import { filter, finalize, forkJoin, Observable, throwError } from 'rxjs'
 import { DevicesService } from '../devices.service'
-import { AMTFeaturesRequest, AMTFeaturesResponse, BootCapabilities, RemoteEraseRequest } from '../../../models/models'
+import {
+  AMTFeaturesRequest,
+  AMTFeaturesResponse,
+  PowerState,
+  BootCapabilities,
+  RemoteEraseRequest
+} from '../../../models/models'
 import { ParsedPlatformEraseCapability } from './remote-platform-erase.constants'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
 
@@ -53,7 +62,8 @@ export class RemotePlatformEraseComponent implements OnInit {
 
   public readonly deviceId = input('')
   public deviceLabel = signal('')
-  public isLoading = signal(true)
+  public isLoading = signal(false)
+  public powerState: PowerState = { powerstate: 0 }
   public isPlatformEraseSupported = signal(false)
   public platformEraseEnabled = signal(false)
   public eraseCaps = signal<ParsedPlatformEraseCapability[]>([])
@@ -72,7 +82,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       }
     })
     forkJoin({
-      features: this.devicesService.getAMTFeaturesCached(this.deviceId()),
+      features: this.devicesService.getAMTFeatures(this.deviceId()),
       capabilities: this.devicesService.getRemoteEraseCapabilities(this.deviceId())
     })
       .pipe(finalize(() => this.isLoading.set(false)))
@@ -94,6 +104,48 @@ export class RemotePlatformEraseComponent implements OnInit {
         this.amtFeatures.set(features)
         this.updateCapControlStates()
       })
+  }
+
+  init(): void {
+    this.isLoading.set(true)
+    // device needs to be powered on in order to perform RPE
+    this.getPowerState(this.deviceId())
+      .pipe(switchMap((powerState) => this.handlePowerState(powerState)))
+      .subscribe()
+      .add(() => this.isLoading.set(false))
+  }
+
+  handlePowerState(powerState: PowerState): Observable<any> {
+    this.powerState = powerState
+    // If device is not powered on, shows alert to power up device
+    if (this.powerState.powerstate !== 2) {
+      return this.showPowerUpAlert().pipe(
+        switchMap((result) => {
+          // if they said yes, power on the device
+          if (result) {
+            return this.devicesService.sendPowerAction(this.deviceId(), 2)
+          }
+          return of(null)
+        })
+      )
+    }
+    return of(true)
+  }
+
+  getPowerState(guid: string): Observable<any> {
+    return this.devicesService.getPowerState(guid).pipe(
+      catchError((err) => {
+        this.isLoading.set(false)
+        const msg: string = this.translate.instant('sol.errorRetrievingPower.value')
+        this.displayError(msg)
+        return throwError(() => err)
+      })
+    )
+  }
+
+  showPowerUpAlert(): Observable<boolean> {
+    const dialog = this.matDialog.open(PowerUpAlertComponent)
+    return dialog.afterClosed()
   }
 
   onCapChange(): void {
@@ -230,6 +282,10 @@ export class RemotePlatformEraseComponent implements OnInit {
         ctrl.disable({ emitEvent: false })
       }
     })
+  }
+
+  displayError(message: string): void {
+    this.snackBar.open(message, undefined, SnackbarDefaults.defaultError)
   }
 
   private t(key: string): string {
