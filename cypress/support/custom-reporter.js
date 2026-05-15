@@ -859,9 +859,7 @@ class CustomTabularReporter extends mocha.reporters.Spec {
         lines.push(
           `  ${this.padRight('AMT Firmware Version', 28)} ${infra.amtFirmware || 'N/A'}${infra.amtFirmwareNote ? '  [' + infra.amtFirmwareNote + ']' : ''}`
         )
-        lines.push(
-          `  ${this.padRight('AMT Device OS', 28)} ${infra.amtDeviceOs || 'N/A'}`
-        )
+        lines.push(`  ${this.padRight('AMT Device OS', 28)} ${infra.amtDeviceOs || 'N/A'}`)
       }
     }
     lines.push(divider)
