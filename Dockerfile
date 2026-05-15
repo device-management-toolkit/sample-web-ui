@@ -5,6 +5,7 @@
 ### STAGE 1: Build ###
 FROM node:26-bullseye-slim@sha256:c7169ac44eaaf94d105c72d3c48ffca3f97fc5be651ac2cf7c33b1083a8a0220 AS build
 ARG BUILD_CONFIGURATION=production
+ARG APP_COMMIT=N/A
 
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
@@ -17,7 +18,8 @@ RUN npm run build -- --configuration=${BUILD_CONFIGURATION} \
       mv ui/browser /artifact; \
     else \
       echo "build output not found at dist/samplewebui/browser or ui/browser" >&2; exit 1; \
-    fi
+    fi \
+ && printf '{\n  "version": "%s",\n  "commit": "%s"\n}\n' "$(node -p "require('./package.json').version")" "${APP_COMMIT}" > /artifact/version.json
 
 ### STAGE 2: Run ###
 FROM nginx:mainline-alpine-slim@sha256:9e666aeefa9801445bc2ff4994c48d314736dae4cf1f551ace03e38ea0373552
