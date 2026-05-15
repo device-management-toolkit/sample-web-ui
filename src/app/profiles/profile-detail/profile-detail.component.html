@@ -80,7 +80,7 @@
             formControlName="amtPassword"
             matInput
             name="amtPassword"
-            required
+            [required]="!isEdit()"
             minlength="8"
             maxlength="32" />
           <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
@@ -122,7 +122,7 @@
             [type]="mebxInputType()"
             matInput
             formControlName="mebxPassword"
-            required
+            [required]="!isEdit()"
             minlength="8"
             maxlength="32" />
           <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
