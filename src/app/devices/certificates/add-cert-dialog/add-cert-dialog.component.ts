@@ -40,23 +40,36 @@ export class AddCertDialogComponent {
   }
 
   onFileSelected(e: Event): void {
-    if (typeof FileReader !== 'undefined') {
-      const reader = new FileReader()
+    if (typeof FileReader === 'undefined') return
+    if (e.target == null) return
+    const target = e.target as HTMLInputElement
+    const files = target.files
+    if (files == null || files.length === 0) return
 
-      reader.onload = (e2: ProgressEvent<FileReader>) => {
-        const base64: string = e2.target?.result as string
-        const index: number = base64.indexOf('base64,')
-        const cert = base64.substring(index + 7, base64.length)
-        this.certInfo.cert = cert
-        this.cdr.detectChanges()
+    const file = files[0]
+    const isPem = file.name.toLowerCase().endsWith('.pem')
+    const reader = new FileReader()
+
+    reader.onload = (e2: ProgressEvent<FileReader>) => {
+      const result = e2.target?.result as string
+      let cert: string
+      if (isPem) {
+        cert = result
+          .replace(/-----BEGIN CERTIFICATE-----/g, '')
+          .replace(/-----END CERTIFICATE-----/g, '')
+          .replace(/\s+/g, '')
+      } else {
+        const index: number = result.indexOf('base64,')
+        cert = result.substring(index + 7, result.length)
       }
-      if (e.target != null) {
-        const target = e.target as HTMLInputElement
-        const files = target.files
-        if (files != null && files.length > 0) {
-          reader.readAsDataURL(files[0])
-        }
-      }
+      this.certInfo.cert = cert
+      this.cdr.detectChanges()
+    }
+
+    if (isPem) {
+      reader.readAsText(file)
+    } else {
+      reader.readAsDataURL(file)
     }
   }
 

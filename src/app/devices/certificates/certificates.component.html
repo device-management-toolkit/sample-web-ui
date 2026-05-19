@@ -13,12 +13,14 @@
     </div>
   </mat-card-header>
   <mat-list>
-    @if (isLoading()) {
-      <mat-list-item>{{ 'certificates.loading.value' | translate }}</mat-list-item>
-    } @else if (isCertEmpty()) {
-      <mat-list-item>{{ 'certificates.empty.value' | translate }}</mat-list-item>
+    @if (isCertEmpty()) {
+      @if (isLoading()) {
+        <mat-list-item>{{ 'certificates.loading.value' | translate }}</mat-list-item>
+      } @else {
+        <mat-list-item>{{ 'certificates.empty.value' | translate }}</mat-list-item>
+      }
     } @else {
-      @for (cert of certInfo.certificates?.publicKeyCertificateItems; track cert) {
+      @for (cert of certInfo()?.certificates?.publicKeyCertificateItems; track cert) {
         <mat-list-item lines="3">
           <span matListItemTitle>{{ cert.displayName }}</span>
           <span matListItemLine>
@@ -46,9 +48,15 @@
             </button>
             <button
               mat-icon-button
-              [matTooltip]="'certificates.delete.tooltip.value' | translate"
+              [matTooltip]="
+                (cert.associatedProfiles?.length > 0
+                  ? 'certificates.delete.associatedTooltip.value'
+                  : 'certificates.delete.tooltip.value'
+                ) | translate
+              "
               (click)="deleteCertificate(cert)"
-              [disabled]="isLoading() || cert.readOnlyCertificate"
+              [disabled]="isLoading() || cert.readOnlyCertificate || cert.associatedProfiles?.length > 0"
+              [disabledInteractive]="true"
               class="text-red-500">
               <mat-icon>delete</mat-icon>
             </button>

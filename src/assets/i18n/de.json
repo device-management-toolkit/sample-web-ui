@@ -336,6 +336,10 @@
     "description": "Zeigt an, dass es sich bei dem Zertifikat um ein Stammzertifikat handelt.",
     "value": "Wurzel"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltip-Text, wenn die Schaltfläche „Löschen“ deaktiviert ist, weil das Zertifikat von einem oder mehreren Profilen referenziert wird",
+    "value": "Dieses Zertifikat ist derzeit zugeordnet und kann nicht gelöscht werden"
+  },
   "common.addNew": {
     "description": "Text für die Schaltfläche „Neu hinzufügen”",
     "value": "Neu hinzufügen"

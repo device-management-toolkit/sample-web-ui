@@ -5,16 +5,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { CertificatesComponent } from './certificates.component'
 import { DevicesService } from '../devices.service'
-import { of } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 
 describe('CertificatesComponent', () => {
   let component: CertificatesComponent
   let fixture: ComponentFixture<CertificatesComponent>
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let dialogSpy: jasmine.SpyObj<MatDialog>
   let translate: TranslateService
 
   const response = {
@@ -145,10 +147,14 @@ describe('CertificatesComponent', () => {
   beforeEach(() => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
       'getCertificates',
-      'addCertificate'
+      'addCertificate',
+      'deleteCertificate'
     ])
     devicesServiceSpy.getCertificates.and.returnValue(of(response))
     devicesServiceSpy.addCertificate.and.returnValue(of({}))
+    devicesServiceSpy.deleteCertificate.and.returnValue(of({}))
+
+    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -157,6 +163,7 @@ describe('CertificatesComponent', () => {
       ],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
+        { provide: MatDialog, useValue: dialogSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
@@ -176,21 +183,21 @@ describe('CertificatesComponent', () => {
   })
 
   it('isCertEmpty should return true when certificates are undefined', () => {
-    component.certInfo = undefined
+    component.certInfo.set(undefined)
     expect(component.isCertEmpty()).toBeTrue()
   })
 
   it('isCertEmpty should return true when certificates array is empty', () => {
-    component.certInfo = { certificates: {} }
+    component.certInfo.set({ certificates: {} })
     expect(component.isCertEmpty()).toBeTrue()
   })
 
   it('isCertEmpty should return false when certificates array has items', () => {
-    component.certInfo = {
+    component.certInfo.set({
       certificates: {
         '1': { displayName: 'Cert1', x509Certificate: 'cert-data' }
       }
-    }
+    })
     expect(component.isCertEmpty()).toBeFalse()
   })
 
@@ -220,5 +227,58 @@ describe('CertificatesComponent', () => {
     expect(mockAnchor.download).toBe('TestCert.crt')
     expect(mockAnchor.click).toHaveBeenCalled()
     expect(window.URL.revokeObjectURL).toHaveBeenCalledWith(mockUrl)
+  })
+
+  it('removeCertLocally should drop the matching item from the signal', () => {
+    component.certInfo.set({
+      certificates: {
+        publicKeyCertificateItems: [
+          { instanceID: 'a', displayName: 'A' },
+          { instanceID: 'b', displayName: 'B' }
+        ]
+      }
+    })
+
+    component.removeCertLocally('a')
+
+    const items = component.certInfo().certificates.publicKeyCertificateItems
+    expect(items.length).toBe(1)
+    expect(items[0].instanceID).toBe('b')
+  })
+
+  it('removeCertLocally should no-op when there is no list', () => {
+    component.certInfo.set(undefined)
+    expect(() => component.removeCertLocally('a')).not.toThrow()
+    expect(component.certInfo()).toBeUndefined()
+  })
+
+  it('delete success should optimistically remove the cert without refetching', () => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<any>)
+    devicesServiceSpy.getCertificates.calls.reset()
+
+    const target = { instanceID: 'Intel(r) AMT Certificate: Handle: 0', displayName: 'CommonName' }
+    component.deleteCertificate(target)
+
+    expect(devicesServiceSpy.deleteCertificate).toHaveBeenCalledWith('', target.instanceID)
+    expect(devicesServiceSpy.getCertificates).not.toHaveBeenCalled()
+    const items = component.certInfo().certificates.publicKeyCertificateItems
+    expect(items.some((c: any) => c.instanceID === target.instanceID)).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
+  })
+
+  it('add flow should keep isLoading true until the refresh GET resolves', () => {
+    const getResults = new Subject<any>()
+    devicesServiceSpy.getCertificates.and.returnValue(getResults)
+    devicesServiceSpy.addCertificate.and.returnValue(of({}))
+
+    component.addCertificate({ cert: 'abc', isTrusted: false })
+
+    expect(component.isLoading()).toBeTrue()
+
+    getResults.next(response)
+    getResults.complete()
+
+    expect(component.isLoading()).toBeFalse()
+    expect(component.certInfo()).toBe(response)
   })
 })

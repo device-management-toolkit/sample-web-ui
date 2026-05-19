@@ -336,6 +336,10 @@
     "description": "Indikerar att certifikatet är ett rotcertifikat.",
     "value": "Rot"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Verktygstipstext när knappen Ta bort är inaktiverad eftersom certifikatet refereras av en eller flera profiler",
+    "value": "Det här certifikatet är för närvarande kopplat och kan inte tas bort"
+  },
   "common.addNew": {
     "description": "Text för knappen Lägg till ny",
     "value": "Lägg till nytt"

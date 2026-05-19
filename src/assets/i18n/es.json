@@ -336,6 +336,10 @@
     "description": "Indica que el certificado es un certificado raíz.",
     "value": "Raíz"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Texto de información cuando el botón Eliminar está deshabilitado porque el certificado está referenciado por uno o más perfiles",
+    "value": "Este certificado está actualmente asociado y no se puede eliminar"
+  },
   "common.addNew": {
     "description": "Texto para el botón «Añadir nuevo».",
     "value": "Añadir nuevo"

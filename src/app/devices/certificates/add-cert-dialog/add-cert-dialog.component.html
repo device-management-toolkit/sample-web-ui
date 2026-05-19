@@ -9,7 +9,7 @@
       <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
         {{ 'common.chooseFile.value' | translate }}
       </button>
-      <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer" />
+      <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer,.pem" />
     </div>
     <div class="flex flex-50 justify-center items-center">
       @if (certInfo.cert === '') {
