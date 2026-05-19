@@ -65,6 +65,7 @@ describe('AddCertDialogComponent', () => {
   it('should handle file selection correctly', () => {
     const mockFileReader = {
       readAsDataURL: jasmine.createSpy('readAsDataURL'),
+      readAsText: jasmine.createSpy('readAsText'),
       onload: null as any,
       result: 'data:text/plain;base64,SGVsbG8gV29ybGQ='
     }
@@ -78,6 +79,35 @@ describe('AddCertDialogComponent', () => {
     } as unknown as Event
 
     component.onFileSelected(mockEvent)
+    expect(mockFileReader.readAsDataURL).toHaveBeenCalled()
+
+    if (mockFileReader.onload) {
+      mockFileReader.onload({ target: { result: mockFileReader.result } } as unknown as ProgressEvent<FileReader>)
+    }
+
+    expect(component.certInfo.cert).toBe('SGVsbG8gV29ybGQ=')
+  })
+
+  it('should parse PEM files by stripping headers and whitespace', () => {
+    const pemText = '-----BEGIN CERTIFICATE-----\nSGVsbG8g\nV29ybGQ=\n-----END CERTIFICATE-----\n'
+    const mockFileReader = {
+      readAsDataURL: jasmine.createSpy('readAsDataURL'),
+      readAsText: jasmine.createSpy('readAsText'),
+      onload: null as any,
+      result: pemText
+    }
+    spyOn(window, 'FileReader').and.returnValue(mockFileReader as unknown as FileReader)
+
+    const mockFile = new File([pemText], 'test.pem', { type: 'application/x-pem-file' })
+    const mockEvent = {
+      target: {
+        files: [mockFile]
+      }
+    } as unknown as Event
+
+    component.onFileSelected(mockEvent)
+    expect(mockFileReader.readAsText).toHaveBeenCalled()
+    expect(mockFileReader.readAsDataURL).not.toHaveBeenCalled()
 
     if (mockFileReader.onload) {
       mockFileReader.onload({ target: { result: mockFileReader.result } } as unknown as ProgressEvent<FileReader>)

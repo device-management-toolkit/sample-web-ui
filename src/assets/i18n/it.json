@@ -336,6 +336,10 @@
     "description": "Indica che il certificato è un certificato radice.",
     "value": "Radice"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Testo del tooltip quando il pulsante Elimina è disabilitato perché il certificato è referenziato da uno o più profili",
+    "value": "Questo certificato è attualmente associato e non può essere eliminato"
+  },
   "common.addNew": {
     "description": "Testo per il pulsante \"Aggiungi nuovo\".",
     "value": "Aggiungi nuovo"

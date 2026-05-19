@@ -336,6 +336,10 @@
     "description": "証明書がルート証明書であることを示します",
     "value": "ルート"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "証明書が 1 つ以上のプロファイルから参照されているため、削除ボタンが無効になっているときのツールチップ テキスト",
+    "value": "この証明書は現在関連付けられているため、削除できません"
+  },
   "common.addNew": {
     "description": "新規追加ボタン用テキスト",
     "value": "新規追加"

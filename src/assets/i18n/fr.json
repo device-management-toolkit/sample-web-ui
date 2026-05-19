@@ -336,6 +336,10 @@
     "description": "Indique que le certificat est un certificat racine.",
     "value": "Racine"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Texte de l'info-bulle lorsque le bouton Supprimer est désactivé parce que le certificat est référencé par un ou plusieurs profils",
+    "value": "Ce certificat est actuellement associé et ne peut pas être supprimé"
+  },
   "common.addNew": {
     "description": "Texte du bouton « Ajouter nouveau »",
     "value": "Ajouter"
