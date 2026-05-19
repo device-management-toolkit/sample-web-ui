@@ -6,7 +6,7 @@
         <mat-label>{{ 'explorer.WSMANCall.value' | translate }}</mat-label>
         <input
           type="text"
-          placeholder="'explorer.placeHolder.value' | translate"
+          [placeholder]="'explorer.placeHolder.value' | translate"
           matInput
           [formControl]="myControl"
           [matAutocomplete]="auto"
