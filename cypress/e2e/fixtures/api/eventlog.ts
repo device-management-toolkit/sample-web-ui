@@ -167,6 +167,73 @@ const eventLogs = {
         IDER: false
       }
     }
+  },
+  remotePlatformErase: {
+    notSupported: {
+      response: {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        KVM: true,
+        SOL: true,
+        IDER: false,
+        kvmAvailable: false,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        rpe: false,
+        rpeSupported: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+    },
+    supportedDisabled: {
+      response: {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        KVM: true,
+        SOL: true,
+        IDER: false,
+        kvmAvailable: false,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        rpe: false,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+    },
+    supportedEnabled: {
+      response: {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        KVM: true,
+        SOL: true,
+        IDER: false,
+        kvmAvailable: false,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        rpe: true,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+    },
+    capabilities: {
+      response: {
+        secureEraseAllSSDs: true,
+        tpmClear: false,
+        restoreBIOSToEOM: true,
+        unconfigureCSME: false
+      }
+    }
   }
 }
 

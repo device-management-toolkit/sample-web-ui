@@ -25,6 +25,7 @@ import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
+import { RemotePlatformEraseComponent } from '../remote-platform-erase/remote-platform-erase.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
@@ -58,6 +59,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RouterLinkActive,
     NetworkSettingsComponent,
     TLSComponent,
+    RemotePlatformEraseComponent,
     TranslateModule
   ]
 })
@@ -140,6 +142,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           description: 'deviceDetail.tlsSettingsDescription.value',
           component: 'tls',
           icon: 'license'
+        },
+        {
+          name: 'deviceDetail.remotePlatformErase.value',
+          description: 'deviceDetail.remotePlatformEraseDescription.value',
+          component: 'remote-platform-erase',
+          icon: 'computer_cancel'
         }
       )
     }

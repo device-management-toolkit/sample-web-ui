@@ -32,7 +32,8 @@ describe('GeneralComponent', () => {
       'bulkPowerAction',
       'sendDeactivate',
       'sendBulkDeactivate',
-      'getWsmanOperations'
+      'getWsmanOperations',
+      'featuresChanges'
     ])
     const amtFeaturesResponse = {
       userConsent: 'ALL',
@@ -46,7 +47,8 @@ describe('GeneralComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpe: true,
+      rpeSupported: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -56,6 +58,7 @@ describe('GeneralComponent', () => {
     }
     devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
     devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
+    devicesServiceSpy.featuresChanges.and.returnValue(of(null))
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({

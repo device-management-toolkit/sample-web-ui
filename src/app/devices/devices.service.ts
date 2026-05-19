@@ -31,7 +31,9 @@ import {
   BootDetails,
   BootSource,
   DisplaySelectionResponse,
-  DisplaySelectionRequest
+  DisplaySelectionRequest,
+  RemoteEraseRequest,
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -375,6 +377,22 @@ export class DevicesService {
     }
   }
 
+  setRemoteEraseOptions(deviceId: string, req: RemoteEraseRequest): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`, req).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {
+    return this.http.get<BootCapabilities>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
       map((tags) => tags.sort(caseInsensitiveCompare)),
@@ -439,13 +457,30 @@ export class DevicesService {
       enableSOL: true,
       enableIDER: true,
       ocr: true,
-      remoteErase: true
+      rpe: true
     }
   ): Observable<AMTFeaturesResponse> {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
-        tap((features) => this.getOrCreateFeaturesStream(deviceId).next(features)),
+        tap((features) => {
+          // The server may return a partial response, so merge onto the existing
+          // cached state so no previously-known fields are lost.
+          const existing = this.getOrCreateFeaturesStream(deviceId).value
+          const merged: AMTFeaturesResponse = {
+            ...existing,
+            ...features,
+            rpe: features.rpe ?? existing?.rpe ?? payload.rpe,
+            ocr: features.ocr ?? existing?.ocr ?? payload.ocr,
+            SOL: features.SOL ?? existing?.SOL ?? payload.enableSOL,
+            IDER: features.IDER ?? existing?.IDER ?? payload.enableIDER,
+            KVM: features.KVM ?? existing?.KVM ?? payload.enableKVM
+          }
+          console.log('[setAmtFeatures] payload:', payload)
+          console.log('[setAmtFeatures] server response (features):', features)
+          console.log('[setAmtFeatures] existing cache:', existing)
+          this.getOrCreateFeaturesStream(deviceId).next(merged)
+        }),
         catchError((err) => {
           throw err
         })
