@@ -738,7 +738,7 @@ describe('Redfish System Reset Action - All ResetTypes', () => {
             failOnStatusCode: false,
             timeout: 45000
           }).then((response) => {
-              expectAllowedDeviceStatus(response.status, 202, [409])
+            expectAllowedDeviceStatus(response.status, 202, [409])
             if (response.status === 202) {
               expect(response.body['@odata.type']).to.include('Task')
               expect(response.body).to.have.property('TaskState', 'Completed')
