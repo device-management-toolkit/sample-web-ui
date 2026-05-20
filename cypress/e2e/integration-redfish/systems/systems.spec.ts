@@ -14,15 +14,30 @@
  *
  * The {ComputerSystemId} parameter must be a valid UUID/GUID.
  * Tests that target a specific device use the REDFISH_SYSTEM_ID env variable.
- * When a real device is not available, device-specific tests gracefully accept
- * 404 (system not found) alongside success responses.
+ * When ISOLATE=Y, device-specific positive tests may tolerate device-unavailable
+ * statuses (for isolated/off-device runs). When ISOLATE=N, those same tests
+ * require strict on-device success and reject 404/internal error responses.
  */
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { systemsFixtures } from '../../fixtures/api/redfish/systems'
-import { basicAuthHeaders, createSystemIdResolver, redfishUrl } from '../helpers/redfish'
+import { basicAuthHeaders, createSystemIdResolver, deviceAllowedStatuses, redfishUrl } from '../helpers/redfish'
 
 const systemId = createSystemIdResolver(systemsFixtures.testSystemId)
+
+const expectAllowedDeviceStatus = (
+  actualStatus: number,
+  successStatuses: number | number[],
+  statusesAllowedInAllModes: number[] = []
+): void => {
+  const normalizedSuccessStatuses = Array.isArray(successStatuses) ? successStatuses : [successStatuses]
+  const allowedStatuses = deviceAllowedStatuses(
+    [...normalizedSuccessStatuses, ...statusesAllowedInAllModes],
+    [404, httpCodes.INTERNAL_SERVER_ERROR]
+  )
+
+  expect(actualStatus).to.be.oneOf(allowedStatuses)
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GET /redfish/v1/Systems
@@ -94,11 +109,7 @@ describe('Redfish Computer System - GET /redfish/v1/Systems/{ComputerSystemId}',
         headers: basicAuthHeaders(),
         failOnStatusCode: false
       }).then((response) => {
-        expect(response.status).to.be.oneOf([
-          httpCodes.SUCCESS,
-          404,
-          httpCodes.INTERNAL_SERVER_ERROR
-        ])
+        expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
         if (response.status === httpCodes.SUCCESS) {
           expect(response.body['@odata.type']).to.include('ComputerSystem')
           expect(response.body).to.have.property('Id', systemId())
@@ -146,11 +157,7 @@ describe('Redfish Computer System - PATCH /redfish/v1/Systems/{ComputerSystemId}
           body: systemsFixtures.patchBootSettings.request,
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.SUCCESS,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body['@odata.type']).to.include('ComputerSystem')
           }
@@ -185,6 +192,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body).to.have.property('PowerState')
             if (response.body.PowerState) {
@@ -201,6 +209,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body).to.have.property('SystemType')
             if (response.body.SystemType) {
@@ -217,6 +226,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS && response.body.Status) {
             const { Status } = response.body as { Status: Record<string, string> }
             expect(Status).to.be.an('object')
@@ -240,6 +250,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body).to.have.property('BiosVersion')
             if (response.body.BiosVersion != null) {
@@ -256,6 +267,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             if (response.body.Manufacturer != null) {
               expect(response.body.Manufacturer).to.be.a('string')
@@ -277,6 +289,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body).to.have.property('Actions')
             expect(response.body.Actions).to.have.property('#ComputerSystem.Reset')
@@ -295,6 +308,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           failOnStatusCode: false,
           timeout: 45000
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS && response.body.MemorySummary) {
             const mem = response.body.MemorySummary as Record<string, unknown>
             expect(mem).to.be.an('object')
@@ -317,6 +331,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           failOnStatusCode: false,
           timeout: 45000
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS && response.body.ProcessorSummary) {
             const proc = response.body.ProcessorSummary as Record<string, unknown>
             expect(proc).to.be.an('object')
@@ -338,6 +353,7 @@ describe('Redfish Computer System - Detailed Properties', () => {
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body['@odata.context']).to.equal('/redfish/v1/$metadata#ComputerSystem.ComputerSystem')
             expect(response.body['@odata.id']).to.equal(`/redfish/v1/Systems/${systemId()}`)
@@ -427,11 +443,7 @@ describe('Redfish Computer System - PATCH Additional Scenarios', () => {
           failOnStatusCode: false,
           timeout: 45000
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.SUCCESS,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             expect(response.body['@odata.type']).to.include('ComputerSystem')
           }
@@ -446,11 +458,7 @@ describe('Redfish Computer System - PATCH Additional Scenarios', () => {
           body: systemsFixtures.patchBootSettings.invalidTarget,
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.BAD_REQUEST,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.BAD_REQUEST)
           if (response.status === httpCodes.BAD_REQUEST) {
             expect(response.body).to.have.property('error')
           }
@@ -465,11 +473,7 @@ describe('Redfish Computer System - PATCH Additional Scenarios', () => {
           body: systemsFixtures.patchBootSettings.invalidEnabled,
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.BAD_REQUEST,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.BAD_REQUEST)
           if (response.status === httpCodes.BAD_REQUEST) {
             expect(response.body).to.have.property('error')
           }
@@ -498,12 +502,7 @@ describe('Redfish Computer System - PATCH Additional Scenarios', () => {
           failOnStatusCode: false,
           timeout: 45000
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.SUCCESS,
-            httpCodes.BAD_REQUEST,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, [httpCodes.SUCCESS, httpCodes.BAD_REQUEST])
         })
       })
 
@@ -516,11 +515,7 @@ describe('Redfish Computer System - PATCH Additional Scenarios', () => {
           body: '{"Boot": {"BootSourceOverrideEnabled": "Once"',
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.BAD_REQUEST,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.BAD_REQUEST)
           if (response.status === httpCodes.BAD_REQUEST) {
             expect(response.body).to.have.property('error')
           }
@@ -544,6 +539,7 @@ describe('Redfish Computer System - Optional Properties and Method Edge Cases', 
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
+          expectAllowedDeviceStatus(response.status, httpCodes.SUCCESS)
           if (response.status === httpCodes.SUCCESS) {
             if (response.body.Description != null) {
               expect(response.body.Description).to.be.a('string')
@@ -562,7 +558,7 @@ describe('Redfish Computer System - Optional Properties and Method Edge Cases', 
           headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([httpCodes.SUCCESS, 405])
+          expectAllowedDeviceStatus(response.status, [httpCodes.SUCCESS, 405])
           if (response.status === httpCodes.SUCCESS) {
             expect(response.headers['odata-version']).to.eq('4.0')
             expect(response.headers['content-type']).to.include('application/json')
@@ -660,11 +656,7 @@ describe('Redfish System Reset Action - POST /redfish/v1/Systems/{ComputerSystem
           body: systemsFixtures.reset.missingResetType,
           failOnStatusCode: false
         }).then((response) => {
-          expect(response.status).to.be.oneOf([
-            httpCodes.BAD_REQUEST,
-            404,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, httpCodes.BAD_REQUEST)
         })
       })
 
@@ -678,12 +670,7 @@ describe('Redfish System Reset Action - POST /redfish/v1/Systems/{ComputerSystem
         }).then((response) => {
           // 202 Accepted (success), 404 (device not found/registered),
           // or 409 Conflict (device busy — previous reset still in progress)
-          expect(response.status).to.be.oneOf([
-            202,
-            404,
-            409,
-            httpCodes.INTERNAL_SERVER_ERROR
-          ])
+          expectAllowedDeviceStatus(response.status, 202, [409])
           if (response.status === 202) {
             expect(response.body).to.have.property('@odata.type')
             expect(response.body['@odata.type']).to.include('Task')
@@ -751,12 +738,7 @@ describe('Redfish System Reset Action - All ResetTypes', () => {
             failOnStatusCode: false,
             timeout: 45000
           }).then((response) => {
-            expect(response.status).to.be.oneOf([
-              202,
-              404,
-              409,
-              httpCodes.INTERNAL_SERVER_ERROR
-            ])
+              expectAllowedDeviceStatus(response.status, 202, [409])
             if (response.status === 202) {
               expect(response.body['@odata.type']).to.include('Task')
               expect(response.body).to.have.property('TaskState', 'Completed')
@@ -785,11 +767,7 @@ describe('Redfish System Reset Action - Malformed JSON', () => {
         body: '{"ResetType": "On"',
         failOnStatusCode: false
       }).then((response) => {
-        expect(response.status).to.be.oneOf([
-          httpCodes.BAD_REQUEST,
-          404,
-          httpCodes.INTERNAL_SERVER_ERROR
-        ])
+        expectAllowedDeviceStatus(response.status, httpCodes.BAD_REQUEST)
         if (response.status === httpCodes.BAD_REQUEST) {
           expect(response.body).to.have.property('error')
         }
@@ -867,6 +845,7 @@ describe('Redfish Complete BIOS Reset Flow', () => {
           body: systemsFixtures.patchBootSettings.biosSetup,
           failOnStatusCode: false
         }).then((patchResponse) => {
+          expectAllowedDeviceStatus(patchResponse.status, httpCodes.SUCCESS)
           // Only proceed to reset if PATCH succeeded
           if (patchResponse.status === httpCodes.SUCCESS) {
             cy.request({
@@ -876,12 +855,7 @@ describe('Redfish Complete BIOS Reset Flow', () => {
               body: systemsFixtures.reset.forceRestart,
               failOnStatusCode: false
             }).then((resetResponse) => {
-              expect(resetResponse.status).to.be.oneOf([
-                202,
-                409,
-                404,
-                httpCodes.INTERNAL_SERVER_ERROR
-              ])
+              expectAllowedDeviceStatus(resetResponse.status, 202, [409])
               if (resetResponse.status === 202) {
                 expect(resetResponse.body['@odata.type']).to.include('Task')
                 expect(resetResponse.body).to.have.property('TaskState', 'Completed')
