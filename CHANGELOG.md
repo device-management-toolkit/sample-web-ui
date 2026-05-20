@@ -1,3 +1,11 @@
+## [3.57.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.3...v3.57.4) (2026-05-20)
+
+
+### Bug Fixes
+
+* **devices:** bind WSMAN Explorer placeholder via property syntax ([#3320](https://github.com/device-management-toolkit/sample-web-ui/issues/3320)) ([2473592](https://github.com/device-management-toolkit/sample-web-ui/commit/2473592605bc593137632b99922dcc6e5e7d9b8f)), closes [#3319](https://github.com/device-management-toolkit/sample-web-ui/issues/3319)
+* **devices:** refresh certificate list immediately on add and delete ([#3318](https://github.com/device-management-toolkit/sample-web-ui/issues/3318)) ([5874a05](https://github.com/device-management-toolkit/sample-web-ui/commit/5874a05a47a78c5046dfac5e2cc7d715adc667bb)), closes [#3317](https://github.com/device-management-toolkit/sample-web-ui/issues/3317)
+
 ## [3.57.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.2...v3.57.3) (2026-05-15)
 
 
