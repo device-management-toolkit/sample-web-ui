@@ -15,6 +15,34 @@ export const basicAuthHeaders = (): Record<string, string> => {
   return { Authorization: `Basic ${btoa(`${username}:${password}`)}` }
 }
 
+const normalizedIsolationSwitch = (): string | undefined => {
+  const raw = Cypress.env('ISOLATE')
+
+  if (typeof raw === 'boolean') {
+    return raw ? 'Y' : 'N'
+  }
+
+  if (typeof raw !== 'string') {
+    return undefined
+  }
+
+  const normalized = raw.trim().toUpperCase()
+  return normalized.length > 0 ? normalized : undefined
+}
+
+export const isIsolatedRun = (): boolean => normalizedIsolationSwitch() !== 'N'
+
+export const deviceAllowedStatuses = (
+  successStatuses: number | number[],
+  isolatedOnlyStatuses: number[] = []
+): number[] => {
+  const normalizedSuccessStatuses = Array.isArray(successStatuses) ? successStatuses : [successStatuses]
+
+  return isIsolatedRun()
+    ? Array.from(new Set([...normalizedSuccessStatuses, ...isolatedOnlyStatuses]))
+    : normalizedSuccessStatuses
+}
+
 const configuredSystemId = (): string | undefined => {
   const raw = Cypress.env('REDFISH_SYSTEM_ID')
   if (typeof raw !== 'string') return undefined
@@ -37,6 +65,7 @@ export const createSystemIdResolver = (fallbackSystemId: string): (() => string)
   let resolvedSystemId: string | undefined
 
   before(() => {
+    const isolatedRun = isIsolatedRun()
     const configured = configuredSystemId()
     if (configured) {
       resolvedSystemId = configured
@@ -51,6 +80,12 @@ export const createSystemIdResolver = (fallbackSystemId: string): (() => string)
       failOnStatusCode: false
     }).then((response) => {
       if (response.status !== 200) {
+        if (!isolatedRun) {
+          throw new Error(
+            `Non-isolated run requires GET /redfish/v1/Systems to return 200, received HTTP ${response.status}`
+          )
+        }
+
         resolvedSystemId = fallbackSystemId
         cy.log(`System discovery failed (HTTP ${response.status}), fallback ID: ${resolvedSystemId}`)
         return
@@ -61,7 +96,17 @@ export const createSystemIdResolver = (fallbackSystemId: string): (() => string)
       const firstODataId = members.find((member) => typeof member?.['@odata.id'] === 'string')?.['@odata.id']
       const discovered = typeof firstODataId === 'string' ? extractSystemIdFromODataId(firstODataId) : undefined
 
-      resolvedSystemId = discovered ?? fallbackSystemId
+      if (!discovered) {
+        if (!isolatedRun) {
+          throw new Error('Non-isolated run requires at least one system member under /redfish/v1/Systems')
+        }
+
+        resolvedSystemId = fallbackSystemId
+        cy.log(`System discovery returned no members, fallback ID: ${resolvedSystemId}`)
+        return
+      }
+
+      resolvedSystemId = discovered
       cy.log(`Auto-selected REDFISH_SYSTEM_ID: ${resolvedSystemId}`)
     })
   })

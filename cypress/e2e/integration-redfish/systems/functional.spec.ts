@@ -26,9 +26,10 @@
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { systemsFixtures } from '../../fixtures/api/redfish/systems'
-import { basicAuthHeaders, createSystemIdResolver, redfishUrl } from '../helpers/redfish'
+import { basicAuthHeaders, createSystemIdResolver, isIsolatedRun, redfishUrl } from '../helpers/redfish'
 
 const systemId = createSystemIdResolver(systemsFixtures.testSystemId)
+const isolatedRun = isIsolatedRun()
 
 /**
  * Wrapper around cy.request() that logs each API call and its response to:
@@ -71,7 +72,8 @@ const loggedRequest = (
 //   7. Poll GET every 10 s, up to 3 min,  until PowerState = "On"
 //
 // Worst-case: 2 min pre-flight + ~7 min 10 s → test timeout set to 12 min.
-// Skips gracefully when device is unreachable (404/500).
+// In isolated mode the test skips gracefully when the device is unreachable.
+// In non-isolated mode those same responses fail the test immediately.
 // ─────────────────────────────────────────────────────────────────────────────
 describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/Systems/{ComputerSystemId}/Actions/ComputerSystem.Reset', () => {
   context(
@@ -106,7 +108,15 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
           // During boot the device may return 5xx (WSMAN unreachable) — treat as
           // transient and keep polling rather than failing the test immediately.
           if (response.status !== httpCodes.SUCCESS) {
-            cy.task('log', `    ⏳ Transient HTTP ${response.status} — device still booting, retrying …`)
+            const transientServerError = response.status >= 500
+
+            if (!isolatedRun && !transientServerError) {
+              throw new Error(
+                `Non-isolated run expected HTTP 200 while polling for PowerState="${targetState}", received HTTP ${response.status}`
+              )
+            }
+
+            cy.task('log', `    ⏳ HTTP ${response.status} while waiting for boot state — retrying …`)
             if (Date.now() >= deadline) {
               throw new Error(
                 `Timed out waiting for PowerState="${targetState}". Last poll returned HTTP ${response.status}`
@@ -134,6 +144,7 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
         this.timeout(12 * 60 * 1000)
         cy.task('log', '\n════════════════════════════════════════════════════════')
         cy.task('log', ' TEST: Redfish System Power Action Functional Test')
+        cy.task('log', ` MODE: ${isolatedRun ? 'isolated' : 'non-isolated'} (ISOLATE=${isolatedRun ? 'Y' : 'N'})`)
         cy.task('log', '════════════════════════════════════════════════════════')
 
         // ── Pre-flight: ensure device is reachable and PowerState = "On" ────────
@@ -156,6 +167,12 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
                 `  ⏳ Pre-flight HTTP ${preflight.status} — device recovering, retrying in ${POLL_INTERVAL_MS / 1000}s …`
               )
               if (Date.now() >= deadline) {
+                if (!isolatedRun) {
+                  throw new Error(
+                    `Non-isolated run requires pre-flight GET to recover to HTTP 200, last status was ${preflight.status}`
+                  )
+                }
+
                 cy.task('log', `  ⚠️  Pre-flight deadline exceeded after repeated ${preflight.status} — skipping test`)
                 this.skip()
                 return
@@ -166,6 +183,12 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
             }
 
             if (preflight.status !== httpCodes.SUCCESS) {
+              if (!isolatedRun) {
+                throw new Error(
+                  `Non-isolated run requires a reachable system, received HTTP ${preflight.status} for /Systems/${systemId()}`
+                )
+              }
+
               cy.task('log', `  ⚠️  Device unavailable (HTTP ${preflight.status}) — skipping test`)
               this.skip()
               return
@@ -183,6 +206,12 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
                 body: { ResetType: 'On' },
                 failOnStatusCode: false
               }).then((powerOnResp) => {
+                if (!isolatedRun && powerOnResp.status !== 202) {
+                  throw new Error(
+                    `Non-isolated run expected ResetType=On to return HTTP 202, received HTTP ${powerOnResp.status}`
+                  )
+                }
+
                 if (powerOnResp.status === 202) {
                   cy.task('log', `  ✅ Power-on command accepted (202) — waiting for PowerState="On" …`)
                 } else {

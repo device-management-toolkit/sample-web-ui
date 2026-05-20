@@ -18,6 +18,8 @@
  *   REDFISH_BASEURL   Base URL of the Redfish server (default: http://localhost:8181)
  *   REDFISH_USERNAME  Admin username for Basic Auth  (default: standalone)
  *   REDFISH_PASSWORD  Admin password for Basic Auth  (default: G@ppm0ym)
+ *   ISOLATE           Y to allow isolated/off-device fallback behavior, N for
+ *                     strict on-device assertions (default: Y)
  *   REDFISH_SYSTEM_ID UUID of a registered AMT device (optional).
  *                     If empty/unset, Systems tests auto-detect the first
  *                     member under /redfish/v1/Systems.
@@ -66,6 +68,8 @@ export default defineConfig({
     // Credentials for Basic Auth and POST /redfish/v1/SessionService/Sessions
     REDFISH_USERNAME: 'standalone',
     REDFISH_PASSWORD: 'G@ppm0ym',
+    // Y = isolated/off-device tolerant mode, N = strict on-device mode.
+    ISOLATE: 'Y',
     // Optional: a real registered AMT device UUID for Systems tests.
     // If empty, tests auto-detect the first member under /redfish/v1/Systems.
     REDFISH_SYSTEM_ID: ''
