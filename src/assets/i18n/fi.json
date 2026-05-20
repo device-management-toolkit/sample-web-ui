@@ -123,10 +123,6 @@
     "description": "Viesti TLS:n käytöstä",
     "value": "Käytä TLS:ää."
   },
-  "addDevice.useCIRA": {
-    "description": "Valintaruutu CIRA-yhteyden käyttöön",
-    "value": "Käytä CIRAa"
-  },
   "addDevice.guid": {
     "description": "GUID-kentän otsikko",
     "value": "GUID"

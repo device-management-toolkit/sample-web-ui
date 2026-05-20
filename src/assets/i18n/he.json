@@ -123,10 +123,6 @@
     "description": "הודעה לשימוש ב- TLS",
     "value": "השתמש ב- TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "תיבת סימון לשימוש בחיבור CIRA",
-    "value": "השתמש ב-CIRA"
-  },
   "addDevice.guid": {
     "description": "תווית לשדה GUID",
     "value": "GUID"

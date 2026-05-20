@@ -123,10 +123,6 @@
     "description": "TLS ご利用に関するご案内",
     "value": "TLSを使用してください"
   },
-  "addDevice.useCIRA": {
-    "description": "CIRA接続を使用するチェックボックス",
-    "value": "CIRAを使用"
-  },
   "addDevice.guid": {
     "description": "GUIDフィールドのラベル",
     "value": "GUID"

@@ -271,10 +271,6 @@
     "description": "Message for using TLS",
     "value": "Use TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "Checkbox label for using CIRA connection",
-    "value": "Use CIRA"
-  },
   "addDevice.guid": {
     "description": "Label for GUID field",
     "value": "GUID"

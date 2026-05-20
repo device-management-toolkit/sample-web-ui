@@ -123,10 +123,6 @@
     "description": "Meddelande om användning av TLS",
     "value": "Använd TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "Kryssruta för att använda CIRA-anslutning",
-    "value": "Använd CIRA"
-  },
   "addDevice.guid": {
     "description": "Etikett för GUID-fält",
     "value": "GUID"
