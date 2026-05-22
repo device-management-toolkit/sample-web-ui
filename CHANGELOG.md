@@ -1,3 +1,10 @@
+## [3.57.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.5...v3.57.6) (2026-05-22)
+
+
+### Bug Fixes
+
+* correct malformed translate interpolation on proxy label ([#3331](https://github.com/device-management-toolkit/sample-web-ui/issues/3331)) ([82431b2](https://github.com/device-management-toolkit/sample-web-ui/commit/82431b29ccff9f7bfc49076242f16a79b78e8dac))
+
 ## [3.57.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.4...v3.57.5) (2026-05-20)
 
 ## [3.57.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.3...v3.57.4) (2026-05-20)
