@@ -266,12 +266,12 @@
 
           @if (showProxyConfigurations()) {
             <mat-form-field class="flex flex-1" style="margin-top: 20px">
-              <mat-label>{{ 'proxy.configs.label.value' | translate }</mat-label>
+              <mat-label>{{ 'proxy.configs.label.value' | translate }}</mat-label>
               <input
                 matInput
                 type="text"
                 data-cy="proxyAutocomplete"
-                placeholder="'proxy.configs.placeholder.value' | translate"
+                [placeholder]="'proxy.configs.placeholder.value' | translate"
                 [formControl]="proxyAutocomplete"
                 [matAutocomplete]="proxyAuto" />
               <mat-autocomplete
