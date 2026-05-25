@@ -36,7 +36,7 @@
     "@xterm/xterm": "^6.0.0",
     "angular-oauth2-oidc": "^20.0.2",
     "angular-oauth2-oidc-jwks": "^20.0.0",
-    "date-fns": "^4.2.1",
+    "date-fns": "^4.3.0",
     "esbuild": "^0.28.0",
     "monaco-editor": "^0.55.1",
     "ngx-monaco-editor-v2": "^21.1.4",
