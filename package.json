@@ -16,6 +16,10 @@
     "cypress-install": "cypress install",
     "cypress": "cypress open",
     "cy-runner": "cypress run",
+    "cy-runner:redfish": "cypress run --config-file cypress.redfish.config.ts",
+    "cy-runner:all": "cypress run --config-file cypress.config.ts && cypress run --config-file cypress.redfish.config.ts",
+    "cy-open:redfish": "cypress open --config-file cypress.redfish.config.ts",
+    "cy-open:all": "cypress open --config-file cypress.config.ts",
     "lint:cypress": "eslint ./cypress"
   },
   "private": true,
