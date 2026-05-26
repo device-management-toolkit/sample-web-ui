@@ -1,3 +1,10 @@
+## [3.57.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.6...v3.57.7) (2026-05-26)
+
+
+### Bug Fixes
+
+* require password when switching random to static on edit ([#3334](https://github.com/device-management-toolkit/sample-web-ui/issues/3334)) ([f262b20](https://github.com/device-management-toolkit/sample-web-ui/commit/f262b20bd71f6236cbc316df6416ed5ee1788658))
+
 ## [3.57.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.5...v3.57.6) (2026-05-22)
 
 
