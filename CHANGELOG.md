@@ -1,3 +1,10 @@
+## [3.57.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.7...v3.57.8) (2026-05-26)
+
+
+### Bug Fixes
+
+* correctly parse AUTH_MODE_ENABLED ([#3329](https://github.com/device-management-toolkit/sample-web-ui/issues/3329)) ([f4a6f9b](https://github.com/device-management-toolkit/sample-web-ui/commit/f4a6f9b4739ecdd0e93ec7b5dee952ac65a8d735))
+
 ## [3.57.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.6...v3.57.7) (2026-05-26)
 
 
