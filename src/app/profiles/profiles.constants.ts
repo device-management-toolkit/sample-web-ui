@@ -5,9 +5,13 @@
 
 import { FormOption } from '../../models/models'
 
+// Activation mode values as understood by RPS. Use these instead of bare string literals.
+export const ACM_ACTIVATION = 'acmactivate'
+export const CCM_ACTIVATION = 'ccmactivate'
+
 export const ActivationModes: FormOption<string>[] = [
-  { value: 'acmactivate', label: 'profileDetail.activationModeAdmin.value' },
-  { value: 'ccmactivate', label: 'profileDetail.activationModeClient.value' }
+  { value: ACM_ACTIVATION, label: 'profileDetail.activationModeAdmin.value' },
+  { value: CCM_ACTIVATION, label: 'profileDetail.activationModeClient.value' }
 ]
 
 export const UserConsentModes: FormOption<string>[] = [
