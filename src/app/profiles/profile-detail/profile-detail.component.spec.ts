@@ -147,6 +147,21 @@ describe('ProfileDetailComponent', () => {
     TestBed.resetTestingModule()
   })
 
+  // Re-load the edit profile through the real capture path (getRecord -> getAmtProfile) so tests
+  // exercise how originals are derived rather than poking private fields directly.
+  const loadProfileForEdit = (overrides: Partial<Profile>): void => {
+    profileSpy.and.returnValue(
+      of({
+        profileName: 'profile',
+        activation: 'acmactivate',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: true,
+        ...overrides
+      } as any)
+    )
+    component.getAmtProfile('profile')
+  }
+
   it('should create', () => {
     expect(component).toBeTruthy()
     expect(ciraGetDataSpy).toHaveBeenCalled()
@@ -231,20 +246,17 @@ describe('ProfileDetailComponent', () => {
     expect(routerSpy).toHaveBeenCalled()
   })
 
-  it('should not require passwords on update', () => {
-    component.profileForm.patchValue({
-      activation: 'acmactivate',
-      generateRandomPassword: false,
-      generateRandomMEBxPassword: false
-    })
-
+  it('should not require the AMT password on edit when a static password is already stored', () => {
+    // Default mock profile has generateRandomPassword: false, so a static secret is stored server-side.
+    component.generateRandomPasswordChange(false)
     expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeFalse()
-    expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeFalse()
   })
 
   it('should omit empty passwords from the update payload', () => {
     const routerSpy = spyOn(component.router, 'navigate')
 
+    // Both secrets already stored statically server-side, so blank fields preserve them.
+    loadProfileForEdit({ activation: 'acmactivate', generateRandomPassword: false, generateRandomMEBxPassword: false })
     component.profileForm.patchValue({
       profileName: 'profile',
       activation: 'acmactivate',
@@ -702,6 +714,113 @@ describe('ProfileDetailComponent', () => {
 
     expect(profileUpdateSpy).toHaveBeenCalled()
     expect(routerSpy).not.toHaveBeenCalled()
+  })
+
+  // Password preservation on edit: a blank field is allowed only when a static
+  // secret already exists server-side; switching random -> static requires one.
+  describe('Password preservation on edit', () => {
+    it('should capture the original password settings when loading a profile to edit', () => {
+      const profileData = {
+        profileName: 'acm-static',
+        activation: 'acmactivate',
+        generateRandomPassword: true,
+        generateRandomMEBxPassword: false
+      } as any
+      profileSpy.and.returnValue(of(profileData))
+
+      component.getAmtProfile('acm-static')
+
+      expect(component['originalGenerateRandomPassword']).toBeTrue()
+      expect(component['originalGenerateRandomMEBxPassword']).toBeFalse()
+      expect(component['originalActivation']).toBe('acmactivate')
+    })
+
+    it('should require the AMT password when switching from random to static on edit', () => {
+      loadProfileForEdit({ generateRandomPassword: true })
+      component.generateRandomPasswordChange(false)
+      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
+    })
+
+    it('should require the MEBx password when switching from random to static (acm) on edit', () => {
+      // Default mock profile has generateRandomMEBxPassword: true (no stored MEBx secret).
+      component.profileForm.controls.activation.setValue('acmactivate')
+      component.generateRandomMEBxPasswordChange(false)
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+    })
+
+    it('should not require the MEBx password on edit when a static acm secret is already stored', () => {
+      loadProfileForEdit({ activation: 'acmactivate', generateRandomMEBxPassword: false })
+      component.profileForm.controls.activation.setValue('acmactivate')
+      component.generateRandomMEBxPasswordChange(false)
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeFalse()
+    })
+
+    it('should require the MEBx password when an existing ccm profile switches to acm', () => {
+      // Static MEBx secrets are only stored for acm, so a ccm origin has none to preserve.
+      loadProfileForEdit({ activation: 'ccmactivate', generateRandomMEBxPassword: false })
+      component.profileForm.controls.activation.setValue('acmactivate')
+      component.generateRandomMEBxPasswordChange(false)
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+    })
+
+    it('should recompute MEBx validity immediately when switching activation from ccm to acm', () => {
+      // ccm origin has no stored MEBx secret, so acm + empty MEBx must be invalid right away (no stale valid state).
+      loadProfileForEdit({ activation: 'ccmactivate', generateRandomMEBxPassword: false })
+      component.profileForm.controls.mebxPassword.setValue('')
+      component.profileForm.controls.generateRandomMEBxPassword.setValue(false)
+
+      component.activationChange('acmactivate')
+
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(component.profileForm.controls.mebxPassword.valid).toBeFalse()
+    })
+
+    it('should block submit when switching to a static AMT password but leaving the field blank', () => {
+      const routerSpy = spyOn(component.router, 'navigate')
+
+      loadProfileForEdit({ generateRandomPassword: true })
+      component.profileForm.patchValue({
+        profileName: 'profile',
+        activation: 'acmactivate',
+        generateRandomPassword: false,
+        amtPassword: '',
+        generateRandomMEBxPassword: false,
+        mebxPassword: 'Password123',
+        dhcpEnabled: true,
+        ciraConfigName: 'config1'
+      })
+      component.confirm()
+
+      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(profileUpdateSpy).not.toHaveBeenCalled()
+      expect(routerSpy).not.toHaveBeenCalled()
+    })
+
+    it('should surface the server error when the API rejects an omitted password', () => {
+      // The UI allows omitting both passwords (static secrets stored server-side), but if the API
+      // contract drifts and rejects the PATCH, the user must see why rather than a silent no-op.
+      const serverError = ['MEBx password is required for acmactivate']
+      profileUpdateSpy.and.returnValue(throwError(() => serverError))
+      loadProfileForEdit({
+        activation: 'acmactivate',
+        generateRandomPassword: false,
+        generateRandomMEBxPassword: false
+      })
+      component.profileForm.patchValue({
+        profileName: 'profile',
+        activation: 'acmactivate',
+        generateRandomPassword: false,
+        generateRandomMEBxPassword: false,
+        amtPassword: '',
+        mebxPassword: '',
+        dhcpEnabled: true,
+        ciraConfigName: 'config1'
+      })
+      component.confirm()
+
+      expect(profileUpdateSpy).toHaveBeenCalled()
+      expect(component.errorMessages()).toEqual(serverError)
+    })
   })
 
   // Proxy Configuration Tests
