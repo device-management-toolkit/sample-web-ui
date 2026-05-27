@@ -445,11 +445,30 @@ export class DevicesService {
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
       .pipe(
-        tap((features) => this.getOrCreateFeaturesStream(deviceId).next(features)),
+        tap(() => this.applyFeaturesSelection(deviceId, payload)),
         catchError((err) => {
           throw err
         })
       )
+  }
+
+  private applyFeaturesSelection(deviceId: string, payload: AMTFeaturesRequest): void {
+    const stream = this.getOrCreateFeaturesStream(deviceId)
+    const current = stream.value
+    // Nothing cached yet — let the next consumer fetch fresh rather than seed a partial.
+    if (current === null) {
+      return
+    }
+    stream.next({
+      ...current,
+      userConsent: payload.userConsent,
+      KVM: payload.enableKVM,
+      SOL: payload.enableSOL,
+      IDER: payload.enableIDER,
+      redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
+      ocr: payload.ocr,
+      remoteErase: payload.remoteErase
+    })
   }
 
   getPowerState(deviceId: string): Observable<PowerState> {
