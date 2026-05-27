@@ -138,6 +138,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
           results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode ?? 0
         )
         this.generalSettings = results.generalSettings
+        // Keep the loaded features so setAmtFeatures() can send fields the form
+        // doesn't surface (e.g. remoteErase) with their real values.
+        this.amtFeatures = results.amtFeatures
         this.isKVMDisabled = !(results.amtFeatures.kvmAvailable ?? true)
         this.isDisabled = results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode !== 1
         this.amtEnabledFeatures = this.fb.group({
