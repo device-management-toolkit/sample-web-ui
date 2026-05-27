@@ -1,3 +1,10 @@
+## [3.57.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.8...v3.57.9) (2026-05-27)
+
+
+### Bug Fixes
+
+* ensure amt features remain selected upon form re-entry ([#3343](https://github.com/device-management-toolkit/sample-web-ui/issues/3343)) ([e376bd5](https://github.com/device-management-toolkit/sample-web-ui/commit/e376bd5f604f27f326c88652052a4f7450aed809))
+
 ## [3.57.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.7...v3.57.8) (2026-05-26)
 
 
