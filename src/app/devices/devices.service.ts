@@ -475,7 +475,12 @@ export class DevicesService {
             SOL: features.SOL ?? existing?.SOL ?? payload.enableSOL,
             IDER: features.IDER ?? existing?.IDER ?? payload.enableIDER,
             KVM: features.KVM ?? existing?.KVM ?? payload.enableKVM,
-            redirection: features.redirection ?? (features.KVM || features.SOL || features.IDER)
+            userConsent: features.userConsent ?? existing?.userConsent ?? payload.userConsent,
+            redirection:
+              features.redirection ??
+              ((features.KVM ?? payload.enableKVM) ||
+                (features.SOL ?? payload.enableSOL) ||
+                (features.IDER ?? payload.enableIDER))
           }
           this.getOrCreateFeaturesStream(deviceId).next(merged)
         }),
@@ -483,25 +488,6 @@ export class DevicesService {
           throw err
         })
       )
-  }
-
-  private applyFeaturesSelection(deviceId: string, payload: AMTFeaturesRequest): void {
-    const stream = this.getOrCreateFeaturesStream(deviceId)
-    const current = stream.value
-    // Nothing cached yet — let the next consumer fetch fresh rather than seed a partial.
-    if (current === null) {
-      return
-    }
-    stream.next({
-      ...current,
-      userConsent: payload.userConsent,
-      KVM: payload.enableKVM,
-      SOL: payload.enableSOL,
-      IDER: payload.enableIDER,
-      redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
-      ocr: payload.ocr,
-      remoteErase: payload.remoteErase
-    })
   }
 
   getPowerState(deviceId: string): Observable<PowerState> {
