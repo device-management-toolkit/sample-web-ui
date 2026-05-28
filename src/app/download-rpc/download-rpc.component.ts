@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatButton } from '@angular/material/button'
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
@@ -72,7 +72,7 @@ export class DownloadRpcComponent implements OnInit {
   public domains: Domain[] = []
   public availableAssets: RpcAsset[] = []
   public isAcmSelected = false
-  public isLoading = false
+  public isLoading = signal(false)
 
   public form: FormGroup = this.fb.group({
     command: ['activate' as RpcCommand, Validators.required],
@@ -96,12 +96,14 @@ export class DownloadRpcComponent implements OnInit {
     this.profilesService.getData().subscribe({
       next: (res) => {
         this.profiles = res.data
-      }
+      },
+      error: () => this.showError('downloadRpc.failProfiles.value')
     })
     this.domainsService.getData().subscribe({
       next: (res) => {
         this.domains = res.data
-      }
+      },
+      error: () => this.showError('downloadRpc.failDomains.value')
     })
     this.onProfileOrCommandChange()
   }
@@ -144,8 +146,7 @@ export class DownloadRpcComponent implements OnInit {
       profileCtrl?.clearValidators()
     }
 
-    const selected = this.profiles.find((p) => p.profileName === profileCtrl?.value)
-    this.isAcmSelected = isActivate && selected?.activation === ACM_ACTIVATION
+    this.isAcmSelected = this.isAcmProfile()
 
     if (this.isAcmSelected) {
       domainCtrl?.setValidators([Validators.required])
@@ -173,15 +174,15 @@ export class DownloadRpcComponent implements OnInit {
     }
     if (v.command === 'activate') {
       request.profile = v.profile
-      if (this.isAcmSelected) {
+      if (this.isAcmProfile()) {
         request.domain = v.domain
       }
     }
 
-    this.isLoading = true
+    this.isLoading.set(true)
     this.downloadService
       .buildPackage(request)
-      .pipe(finalize(() => (this.isLoading = false)))
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (blob) => {
           this.saveBlob(blob, `rpc-${request.command}-${request.os}-${request.arch}.zip`)
@@ -193,6 +194,12 @@ export class DownloadRpcComponent implements OnInit {
         },
         error: () => this.showError('downloadRpc.failPackage.value')
       })
+  }
+
+  private isAcmProfile(): boolean {
+    const isActivate = this.form.get('command')?.value === 'activate'
+    const selected = this.profiles.find((p) => p.profileName === this.form.get('profile')?.value)
+    return isActivate && selected?.activation === ACM_ACTIVATION
   }
 
   private saveBlob(blob: Blob, filename: string): void {

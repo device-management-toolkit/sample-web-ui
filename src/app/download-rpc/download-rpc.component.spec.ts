@@ -15,6 +15,7 @@ import { DownloadRpcService } from './download-rpc.service'
 import { ProfilesService } from '../profiles/profiles.service'
 import { DomainsService } from '../domains/domains.service'
 import { RpcRelease } from './download-rpc.constants'
+import { ACM_ACTIVATION } from '../profiles/profiles.constants'
 
 describe('DownloadRpcComponent', () => {
   let component: DownloadRpcComponent
@@ -38,7 +39,7 @@ describe('DownloadRpcComponent', () => {
     profilesServiceSpy.getData.and.returnValue(
       of({
         data: [
-          { profileName: 'acmProfile', activation: 'acmactivate' } as any,
+          { profileName: 'acmProfile', activation: ACM_ACTIVATION } as any,
           { profileName: 'ccmProfile', activation: 'ccmactivate' } as any
         ],
         totalCount: 2
@@ -111,6 +112,8 @@ describe('DownloadRpcComponent', () => {
     component.form.get('version')?.setValue('v3.0.1')
     component.onVersionChange()
     expect(component.availableAssets.length).toBe(2)
+    expect(component.form.get('os')?.value).toBe('linux')
+    expect(component.form.get('arch')?.value).toBe('x86_64')
   })
 
   it('onSubmit posts a token activate request and triggers a download', () => {
@@ -143,6 +146,7 @@ describe('DownloadRpcComponent', () => {
       profile: 'ccmProfile'
     })
     expect(anchorSpy.click).toHaveBeenCalled()
+    expect(window.URL.revokeObjectURL).toHaveBeenCalledWith('blob:url')
   })
 
   it('onSubmit includes domain for ACM and username/password for userpass', () => {
@@ -179,6 +183,32 @@ describe('DownloadRpcComponent', () => {
     component.onProfileOrCommandChange()
     component.onSubmit()
     expect(downloadServiceSpy.buildPackage).not.toHaveBeenCalled()
+  })
+
+  it('deactivate submit omits profile and domain from request', () => {
+    spyOn(component as any, 'saveBlob')
+    component.form.setValue({
+      command: 'deactivate',
+      version: 'v3.0.1',
+      os: 'linux',
+      arch: 'x86_64',
+      authMode: 'token',
+      username: '',
+      password: '',
+      profile: '',
+      domain: ''
+    })
+    component.onAuthModeChange()
+    component.onProfileOrCommandChange()
+    component.onSubmit()
+
+    expect(downloadServiceSpy.buildPackage).toHaveBeenCalledWith({
+      command: 'deactivate',
+      version: 'v3.0.1',
+      os: 'linux',
+      arch: 'x86_64',
+      auth: { mode: 'token' }
+    })
   })
 
   it('shows an error when buildPackage fails', () => {
