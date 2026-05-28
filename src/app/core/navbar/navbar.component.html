@@ -46,6 +46,14 @@
     <mat-icon matListItemIcon>devices</mat-icon
     ><span i18n="navlink">{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
   </a>
+
+  @if (cloudMode === false) {
+    <a mat-list-item routerLink="/download-rpc" routerLinkActive="active">
+      <mat-icon matListItemIcon>download</mat-icon
+      ><span i18n="navlink">{{ 'downloadRpc.title.value' | translate }}</span>
+    </a>
+  }
+
   <!-- <a mat-list-item routerLink="/event-channel" routerLinkActive="active">
         <mat-icon matListItemIcon>data_exploration</mat-icon><span i18n="navlink">MQTT Events</span>
     </a> -->
