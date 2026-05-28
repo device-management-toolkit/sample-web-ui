@@ -171,7 +171,7 @@ export class DownloadRpcComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.isLoading()) {
       return
     }
     const v = this.form.value

@@ -6,7 +6,7 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col">
+    <form [formGroup]="form" class="flex flex-col">
       <mat-form-field>
         <mat-label>{{ 'downloadRpc.command.label.value' | translate }}</mat-label>
         <mat-select formControlName="command" (selectionChange)="onProfileOrCommandChange()" data-cy="command">
@@ -94,7 +94,7 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || isLoading()" data-cy="download" (click)="onSubmit()">
+    <button mat-flat-button color="primary" type="button" [disabled]="form.invalid || isLoading()" data-cy="download" (click)="onSubmit()">
       {{ 'downloadRpc.download.value' | translate }}
     </button>
   </mat-card-actions>
