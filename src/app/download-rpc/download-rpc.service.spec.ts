@@ -18,6 +18,7 @@ describe('DownloadRpcService', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>
 
   const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/package`
 
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
@@ -43,47 +44,71 @@ describe('DownloadRpcService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('getVersions should GET the rpc-versions endpoint', () => {
-    const mockReleases: RpcRelease[] = [
-      { version: 'v3.0.1', assets: [{ os: 'linux', arch: 'x86_64' }] }
-    ]
-    service.getVersions().subscribe((res) => {
-      expect(res).toEqual(mockReleases)
+  describe('getVersions', () => {
+    it('should GET the rpc-versions endpoint', () => {
+      const mockReleases: RpcRelease[] = [
+        { version: 'v3.0.1', assets: [{ os: 'linux', arch: 'x86_64' }] }
+      ]
+      service.getVersions().subscribe((res) => {
+        expect(res).toEqual(mockReleases)
+      })
+      const req = httpMock.expectOne(`${mockUrl}/rpc-versions`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockReleases)
     })
-    const req = httpMock.expectOne(`${mockEnvironment.rpsServer}/api/package/rpc-versions`)
-    expect(req.request.method).toBe('GET')
-    req.flush(mockReleases)
+
+    it('should route errors through AuthService.onError', () => {
+      authServiceSpy.onError.and.returnValue(['boom'])
+      service.getVersions().subscribe({
+        error: (err) => {
+          expect(err).toEqual(['boom'])
+        }
+      })
+      const req = httpMock.expectOne(`${mockUrl}/rpc-versions`)
+      req.flush('error', { status: 500, statusText: 'Server Error' })
+      expect(authServiceSpy.onError).toHaveBeenCalled()
+    })
   })
 
-  it('buildPackage should POST the request and return a blob', () => {
-    const body: PackageRequest = {
-      command: 'activate',
-      version: 'v3.0.1',
-      os: 'linux',
-      arch: 'x86_64',
-      auth: { mode: 'token' },
-      profile: 'p1'
-    }
-    const blob = new Blob(['zip'], { type: 'application/zip' })
-    service.buildPackage(body).subscribe((res) => {
-      expect(res).toEqual(blob)
-    })
-    const req = httpMock.expectOne(`${mockEnvironment.rpsServer}/api/package`)
-    expect(req.request.method).toBe('POST')
-    expect(req.request.body).toEqual(body)
-    expect(req.request.responseType).toBe('blob')
-    req.flush(blob)
-  })
-
-  it('getVersions should route errors through AuthService.onError', () => {
-    authServiceSpy.onError.and.returnValue(['boom'])
-    service.getVersions().subscribe({
-      error: (err) => {
-        expect(err).toEqual(['boom'])
+  describe('buildPackage', () => {
+    it('should POST the request and return a blob', () => {
+      const body: PackageRequest = {
+        command: 'activate',
+        version: 'v3.0.1',
+        os: 'linux',
+        arch: 'x86_64',
+        auth: { mode: 'token' },
+        profile: 'p1'
       }
+      const blob = new Blob(['zip'], { type: 'application/zip' })
+      service.buildPackage(body).subscribe((res) => {
+        expect(res).toEqual(blob)
+      })
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(body)
+      expect(req.request.responseType).toBe('blob')
+      req.flush(blob)
     })
-    const req = httpMock.expectOne(`${mockEnvironment.rpsServer}/api/package/rpc-versions`)
-    req.flush('error', { status: 500, statusText: 'Server Error' })
-    expect(authServiceSpy.onError).toHaveBeenCalled()
+
+    it('should route errors through AuthService.onError', () => {
+      authServiceSpy.onError.and.returnValue(['boom'])
+      const body: PackageRequest = {
+        command: 'activate',
+        version: 'v3.0.1',
+        os: 'linux',
+        arch: 'x86_64',
+        auth: { mode: 'token' },
+        profile: 'p1'
+      }
+      service.buildPackage(body).subscribe({
+        error: (err) => {
+          expect(err).toEqual(['boom'])
+        }
+      })
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(new Blob(['error'], { type: 'application/json' }), { status: 500, statusText: 'Server Error' })
+      expect(authServiceSpy.onError).toHaveBeenCalled()
+    })
   })
 })
