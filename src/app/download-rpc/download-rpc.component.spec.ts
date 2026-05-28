@@ -114,6 +114,8 @@ describe('DownloadRpcComponent', () => {
     expect(component.availableAssets.length).toBe(2)
     expect(component.form.get('os')?.value).toBe('linux')
     expect(component.form.get('arch')?.value).toBe('x86_64')
+    expect(component.availableOses).toEqual(['linux', 'windows'])
+    expect(component.availableArchs).toEqual(['x86_64'])
   })
 
   it('onSubmit posts a token activate request and triggers a download', () => {

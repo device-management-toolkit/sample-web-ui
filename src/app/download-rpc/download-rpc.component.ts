@@ -6,8 +6,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatButton } from '@angular/material/button'
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
-import { MatFormField, MatLabel, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
+import { MatFormField, MatLabel, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { MatInput } from '@angular/material/input'
 import { MatSelect } from '@angular/material/select'
 import { MatOption } from '@angular/material/core'
@@ -40,11 +40,13 @@ import {
   imports: [
     ReactiveFormsModule,
     MatCard,
+    MatCardActions,
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
     MatFormField,
     MatLabel,
+    MatError,
     MatInput,
     MatSelect,
     MatOption,
@@ -66,11 +68,14 @@ export class DownloadRpcComponent implements OnInit {
 
   public readonly commands = RpcCommands
   public readonly authMethods = AuthModes
+  public readonly REQUIRED_ERROR_KEY = 'fieldRequired.short.value'
 
   public releases: RpcRelease[] = []
   public profiles: Profile[] = []
   public domains: Domain[] = []
   public availableAssets: RpcAsset[] = []
+  public availableOses: string[] = []
+  public availableArchs: string[] = []
   public isAcmSelected = false
   public isLoading = signal(false)
 
@@ -112,21 +117,20 @@ export class DownloadRpcComponent implements OnInit {
     const version = this.form.get('version')?.value
     const release = this.releases.find((r) => r.version === version)
     this.availableAssets = release ? release.assets : []
+    this.availableOses = [...new Set(this.availableAssets.map((a) => a.os))]
     const detected = detectOS()
-    const match = this.availableAssets.find((a) => a.os === detected) ?? this.availableAssets[0]
-    if (match) {
-      this.form.get('os')?.setValue(match.os)
-      this.form.get('arch')?.setValue(match.arch)
-    }
-  }
-
-  assetArchFor(os: string): string {
-    const asset = this.availableAssets.find((a) => a.os === os)
-    return asset ? asset.arch : ''
+    const os = this.availableOses.includes(detected) ? detected : (this.availableOses[0] ?? '')
+    this.form.get('os')?.setValue(os)
+    this.onOsChange()
   }
 
   onOsChange(): void {
-    this.form.get('arch')?.setValue(this.assetArchFor(this.form.get('os')?.value))
+    const os = this.form.get('os')?.value
+    this.availableArchs = this.availableAssets.filter((a) => a.os === os).map((a) => a.arch)
+    const currentArch = this.form.get('arch')?.value
+    if (!this.availableArchs.includes(currentArch)) {
+      this.form.get('arch')?.setValue(this.availableArchs[0] ?? '')
+    }
   }
 
   onAuthModeChange(): void {
