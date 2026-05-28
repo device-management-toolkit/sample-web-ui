@@ -1,3 +1,48 @@
+## [3.57.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.8...v3.57.9) (2026-05-27)
+
+
+### Bug Fixes
+
+* ensure amt features remain selected upon form re-entry ([#3343](https://github.com/device-management-toolkit/sample-web-ui/issues/3343)) ([e376bd5](https://github.com/device-management-toolkit/sample-web-ui/commit/e376bd5f604f27f326c88652052a4f7450aed809))
+
+## [3.57.8](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.7...v3.57.8) (2026-05-26)
+
+
+### Bug Fixes
+
+* correctly parse AUTH_MODE_ENABLED ([#3329](https://github.com/device-management-toolkit/sample-web-ui/issues/3329)) ([f4a6f9b](https://github.com/device-management-toolkit/sample-web-ui/commit/f4a6f9b4739ecdd0e93ec7b5dee952ac65a8d735))
+
+## [3.57.7](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.6...v3.57.7) (2026-05-26)
+
+
+### Bug Fixes
+
+* require password when switching random to static on edit ([#3334](https://github.com/device-management-toolkit/sample-web-ui/issues/3334)) ([f262b20](https://github.com/device-management-toolkit/sample-web-ui/commit/f262b20bd71f6236cbc316df6416ed5ee1788658))
+
+## [3.57.6](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.5...v3.57.6) (2026-05-22)
+
+
+### Bug Fixes
+
+* correct malformed translate interpolation on proxy label ([#3331](https://github.com/device-management-toolkit/sample-web-ui/issues/3331)) ([82431b2](https://github.com/device-management-toolkit/sample-web-ui/commit/82431b29ccff9f7bfc49076242f16a79b78e8dac))
+
+## [3.57.5](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.4...v3.57.5) (2026-05-20)
+
+## [3.57.4](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.3...v3.57.4) (2026-05-20)
+
+
+### Bug Fixes
+
+* **devices:** bind WSMAN Explorer placeholder via property syntax ([#3320](https://github.com/device-management-toolkit/sample-web-ui/issues/3320)) ([2473592](https://github.com/device-management-toolkit/sample-web-ui/commit/2473592605bc593137632b99922dcc6e5e7d9b8f)), closes [#3319](https://github.com/device-management-toolkit/sample-web-ui/issues/3319)
+* **devices:** refresh certificate list immediately on add and delete ([#3318](https://github.com/device-management-toolkit/sample-web-ui/issues/3318)) ([5874a05](https://github.com/device-management-toolkit/sample-web-ui/commit/5874a05a47a78c5046dfac5e2cc7d715adc667bb)), closes [#3317](https://github.com/device-management-toolkit/sample-web-ui/issues/3317)
+
+## [3.57.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.2...v3.57.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* allow editing profile without re-entering passwords ([#3307](https://github.com/device-management-toolkit/sample-web-ui/issues/3307)) ([4df57b2](https://github.com/device-management-toolkit/sample-web-ui/commit/4df57b2723c20a594cd2d5ec34c0f975c4916567))
+
 ## [3.57.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.1...v3.57.2) (2026-04-22)
 
 

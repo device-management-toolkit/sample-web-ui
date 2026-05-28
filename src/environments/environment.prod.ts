@@ -6,7 +6,7 @@
 export const environment = {
   production: true,
   cloud: true,
-  useOAuth: false, // for use with console
+  useOAuth: ('##AUTH_MODE_ENABLED##' as string) === 'true', // for use with console
   mpsServer: '##MPS_SERVER##',
   rpsServer: '##RPS_SERVER##',
   vault: '##VAULT_SERVER##',

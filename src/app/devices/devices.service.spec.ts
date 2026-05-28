@@ -591,6 +591,154 @@ describe('DevicesService', () => {
       req.flush(mockResponse)
     })
 
+    it('reflects the chosen settings in the featuresChanges stream without caching the POST response', () => {
+      const seeded: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        kvmAvailable: true,
+        KVM: true,
+        SOL: false,
+        IDER: false,
+        ocr: false,
+        httpsBootSupported: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+      const emitted: AMTFeaturesResponse[] = []
+      service.featuresChanges('device1').subscribe((v) => {
+        if (v) emitted.push(v)
+      })
+      // seed the cache with a full features object via GET
+      service.getAMTFeatures('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(seeded)
+
+      const payload = {
+        userConsent: 'all',
+        enableKVM: false,
+        enableSOL: true,
+        enableIDER: true,
+        ocr: true,
+        remoteErase: true
+      }
+      service.setAmtFeatures('device1', payload).subscribe()
+      // cloud-style POST response: a status object, not a full features payload
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+      // no refetch is triggered
+      httpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
+
+      const latest = emitted[emitted.length - 1]
+      expect(latest.KVM).toBe(false)
+      expect(latest.SOL).toBe(true)
+      expect(latest.IDER).toBe(true)
+      expect(latest.ocr).toBe(true)
+      expect(latest.userConsent).toBe('all')
+      expect(latest.remoteErase).toBe(true)
+      // untouched fields are preserved from the cached features
+      expect(latest.kvmAvailable).toBe(true)
+      expect(latest.httpsBootSupported).toBe(true)
+      expect((latest as any).status).toBeUndefined()
+    })
+
+    it('derives redirection from the chosen features rather than keeping the stale cached value', () => {
+      const seeded: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: false,
+        kvmAvailable: true,
+        KVM: false,
+        SOL: false,
+        IDER: false,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+      const emitted: AMTFeaturesResponse[] = []
+      service.featuresChanges('device1').subscribe((v) => {
+        if (v) emitted.push(v)
+      })
+      service.getAMTFeatures('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(seeded)
+
+      // enabling KVM turns redirection on server-side; the cache must reflect that
+      service
+        .setAmtFeatures('device1', {
+          userConsent: 'none',
+          enableKVM: true,
+          enableSOL: false,
+          enableIDER: false,
+          ocr: false,
+          remoteErase: false
+        })
+        .subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+
+      expect(emitted[emitted.length - 1].redirection).toBe(true)
+    })
+
+    it('clears redirection when no redirection feature remains enabled', () => {
+      const seeded: AMTFeaturesResponse = {
+        userConsent: 'all',
+        optInState: 0,
+        redirection: true,
+        kvmAvailable: true,
+        KVM: true,
+        SOL: true,
+        IDER: false,
+        ocr: false,
+        httpsBootSupported: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        remoteErase: false,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+      const emitted: AMTFeaturesResponse[] = []
+      service.featuresChanges('device1').subscribe((v) => {
+        if (v) emitted.push(v)
+      })
+      service.getAMTFeatures('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(seeded)
+
+      service
+        .setAmtFeatures('device1', {
+          userConsent: 'all',
+          enableKVM: false,
+          enableSOL: false,
+          enableIDER: false,
+          ocr: false,
+          remoteErase: false
+        })
+        .subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+
+      expect(emitted[emitted.length - 1].redirection).toBe(false)
+    })
+
+    it('does not seed the cache from a POST response when no features were loaded', () => {
+      const emitted: any[] = []
+      service.featuresChanges('device1').subscribe((v) => emitted.push(v))
+      service
+        .setAmtFeatures('device1', {
+          userConsent: 'all',
+          enableKVM: true,
+          enableSOL: true,
+          enableIDER: true,
+          ocr: true,
+          remoteErase: true
+        })
+        .subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+      expect(emitted).toEqual([null])
+    })
+
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
 

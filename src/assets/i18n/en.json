@@ -480,6 +480,10 @@
     "description": "Tooltip text for delete certificate button",
     "value": "Delete Certificate"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltip text when the delete button is disabled because the certificate is referenced by one or more profiles",
+    "value": "This certificate is currently associated and cannot be deleted"
+  },
   "certificates.errorDeletingCertificate": {
     "description": "Error message displayed when certificate deletion fails",
     "value": "Error deleting certificate"

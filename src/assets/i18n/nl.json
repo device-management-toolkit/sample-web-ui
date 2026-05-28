@@ -336,6 +336,10 @@
     "description": "Geeft aan dat het certificaat een rootcertificaat is.",
     "value": "Root"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltiptekst wanneer de knop Verwijderen is uitgeschakeld omdat het certificaat door een of meer profielen wordt gebruikt",
+    "value": "Dit certificaat is momenteel gekoppeld en kan niet worden verwijderd"
+  },
   "common.addNew": {
     "description": "Tekst voor de knop 'Nieuw toevoegen'",
     "value": "Nieuw toevoegen"

@@ -336,6 +336,10 @@
     "description": "Ilmaisee, että varmenne on juurivarmenne.",
     "value": "Juuri"
   },
+  "certificates.delete.associatedTooltip": {
+    "description": "Työkaluvihjeen teksti, kun Poista-painike on poistettu käytöstä, koska varmenteeseen viitataan yhdessä tai useammassa profiilissa",
+    "value": "Tämä varmenne on tällä hetkellä liitettynä, eikä sitä voi poistaa"
+  },
   "common.addNew": {
     "description": "Teksti \"Lisää uusi\" -painikkeelle",
     "value": "Lisää uusi"

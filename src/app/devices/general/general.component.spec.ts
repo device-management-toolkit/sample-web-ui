@@ -136,4 +136,13 @@ describe('GeneralComponent', () => {
     enableButton.triggerEventHandler('click', null)
     expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalled()
   })
+
+  it('sends remoteErase from the loaded features, not the default', () => {
+    devicesServiceSpy.setAmtFeatures = jasmine.createSpy().and.returnValue(of({}))
+    component.setAmtFeatures()
+    expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith(
+      jasmine.any(String),
+      jasmine.objectContaining({ remoteErase: true })
+    )
+  })
 })

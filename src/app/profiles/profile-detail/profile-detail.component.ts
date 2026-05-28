@@ -47,7 +47,9 @@ import { StaticCIRAWarningComponent } from '../../shared/static-cira-warning/sta
 // Models and constants
 import { CIRAConfig, IEEE8021xConfig } from '../../../models/models'
 import {
+  ACM_ACTIVATION,
   ActivationModes,
+  CCM_ACTIVATION,
   Profile,
   proxyConfig,
   TlsModes,
@@ -163,6 +165,12 @@ export class ProfileDetailComponent implements OnInit {
   public readonly amtInputType = signal<'password' | 'text'>('password')
   public readonly mebxInputType = signal<'password' | 'text'>('password')
 
+  // Original server-side password settings (captured on edit load) to decide if a blank field preserves a stored secret or must be re-entered. Mirrors RPS edit.ts.
+  // Default to the strict direction (treat as random/not-stored) so the brief async-load window before getAmtProfile populates these errs toward requiring a password.
+  private originalGenerateRandomPassword = true
+  private originalGenerateRandomMEBxPassword = true
+  private originalActivation = ''
+
   // Computed properties
   public readonly showIEEE8021xConfigurations = computed(() => this.iee8021xConfigurations().length > 0)
   public readonly showWirelessConfigurations = computed(() => this.wirelessConfigurations().length > 0)
@@ -232,15 +240,36 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   setConnectionMode(data: Profile): void {
-    if (data.tlsMode != null) {
+    if (data.tlsMode != null && data.tlsMode > 0) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
     } else if (data.ciraConfigName != null) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.cira)
+    } else {
+      this.profileForm.controls.connectionMode.setValue(this.connectionMode.direct)
     }
   }
 
+  // Blank allowed only when editing a profile with a stored static secret (RPS reuses it); otherwise required: on create and on random -> static switches.
+  private setPasswordRequiredValidator(control: FormControl<string | null>, canPreserveStoredSecret: boolean): void {
+    if (this.isEdit() && canPreserveStoredSecret) {
+      control.clearValidators()
+    } else {
+      control.setValidators(Validators.required)
+    }
+  }
+
+  // True when the AMT password is already stored statically server-side.
+  private canPreserveStoredAmtPassword(): boolean {
+    return this.originalGenerateRandomPassword === false
+  }
+
+  // True when the MEBx password is already stored statically server-side (only for ACM profiles not using a random password).
+  private canPreserveStoredMebxPassword(): boolean {
+    return this.originalGenerateRandomMEBxPassword === false && this.originalActivation === ACM_ACTIVATION
+  }
+
   activationChange(value: string): void {
-    if (value === 'ccmactivate') {
+    if (value === CCM_ACTIVATION) {
       this.profileForm.controls.userConsent.disable()
       this.profileForm.controls.userConsent.setValue('All')
       this.profileForm.controls.userConsent.clearValidators()
@@ -251,11 +280,15 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.generateRandomMEBxPassword.disable()
     } else {
       this.profileForm.controls.mebxPassword.enable()
-      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.mebxPassword, this.canPreserveStoredMebxPassword())
       this.profileForm.controls.userConsent.enable()
       this.profileForm.controls.userConsent.setValidators(Validators.required)
       this.profileForm.controls.generateRandomMEBxPassword.enable()
     }
+    // setValidators/clearValidators don't recompute validity, so refresh the touched controls to avoid a stale valid state.
+    this.profileForm.controls.mebxPassword.updateValueAndValidity()
+    this.profileForm.controls.userConsent.updateValueAndValidity()
+    this.profileForm.controls.generateRandomMEBxPassword.updateValueAndValidity()
   }
 
   getAmtProfile(name: string): void {
@@ -267,6 +300,11 @@ export class ProfileDetailComponent implements OnInit {
         next: (data) => {
           this.pageTitle.set(data.profileName)
           this.tags.set(data.tags || [])
+          // Capture original password settings before patchValue triggers the subscriptions that read them.
+          // Treat anything other than an explicit `false` (including nullish/legacy rows) as random/not-stored so a blank field can never silently preserve — and then wipe — a secret we can't confirm exists.
+          this.originalGenerateRandomPassword = data.generateRandomPassword !== false
+          this.originalGenerateRandomMEBxPassword = data.generateRandomMEBxPassword !== false
+          this.originalActivation = data.activation ?? ''
           this.profileForm.patchValue(data as any)
           this.selectedWifiConfigs.set(data.wifiConfigs ?? [])
           // Ensure proxy configs have proper priorities
@@ -344,7 +382,7 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.amtPassword.clearValidators()
     } else {
       this.profileForm.controls.amtPassword.enable()
-      this.profileForm.controls.amtPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.amtPassword, this.canPreserveStoredAmtPassword())
     }
     this.profileForm.controls.amtPassword.updateValueAndValidity()
   }
@@ -354,9 +392,9 @@ export class ProfileDetailComponent implements OnInit {
       this.profileForm.controls.mebxPassword.disable()
       this.profileForm.controls.mebxPassword.setValue(null)
       this.profileForm.controls.mebxPassword.clearValidators()
-    } else if (this.profileForm.controls.activation.value === 'acmactivate') {
+    } else if (this.profileForm.controls.activation.value === ACM_ACTIVATION) {
       this.profileForm.controls.mebxPassword.enable()
-      this.profileForm.controls.mebxPassword.setValidators(Validators.required)
+      this.setPasswordRequiredValidator(this.profileForm.controls.mebxPassword, this.canPreserveStoredMebxPassword())
     }
     this.profileForm.controls.mebxPassword.updateValueAndValidity()
   }
@@ -647,6 +685,12 @@ export class ProfileDetailComponent implements OnInit {
     // Always include proxy configurations
     result.proxyConfigs = this.selectedProxyConfigs()
 
+    if (this.isEdit()) {
+      // Omit empty passwords so PATCH leaves the stored credentials untouched.
+      if (!result.amtPassword) delete result.amtPassword
+      if (!result.mebxPassword) delete result.mebxPassword
+    }
+
     const request = this.isEdit() ? this.profilesService.update(result) : this.profilesService.create(result)
 
     request.pipe(finalize(() => this.isLoading.set(false))).subscribe({
@@ -664,7 +708,7 @@ export class ProfileDetailComponent implements OnInit {
   private createProfileForm() {
     return this.fb.group({
       profileName: ['', Validators.required],
-      activation: ['acmactivate', Validators.required],
+      activation: [ACM_ACTIVATION, Validators.required],
       generateRandomPassword: [true, Validators.required],
       amtPassword: [{ value: null as string | null, disabled: true }],
       generateRandomMEBxPassword: [true, Validators.required],

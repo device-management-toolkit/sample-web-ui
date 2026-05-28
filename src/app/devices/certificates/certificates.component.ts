@@ -39,7 +39,7 @@ export class CertificatesComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
-  public certInfo?: any
+  public certInfo = signal<any>(undefined)
   public addCert: CertInfo = {
     cert: '',
     isTrusted: false
@@ -66,7 +66,7 @@ export class CertificatesComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((certInfo: any) => {
-        this.certInfo = certInfo
+        this.certInfo.set(certInfo)
         this.isLoading.set(false)
       })
   }
@@ -93,11 +93,27 @@ export class CertificatesComponent implements OnInit, OnDestroy {
   }
 
   isCertEmpty() {
-    if (this.certInfo?.certificates) {
-      return Object.keys(this.certInfo.certificates).length === 0
+    const info = this.certInfo()
+    if (info?.certificates) {
+      return Object.keys(info.certificates).length === 0
     }
 
     return true
+  }
+
+  removeCertLocally(instanceID: string): void {
+    const current = this.certInfo()
+    const items = current?.certificates?.publicKeyCertificateItems
+    if (!Array.isArray(items)) {
+      return
+    }
+    this.certInfo.set({
+      ...current,
+      certificates: {
+        ...current.certificates,
+        publicKeyCertificateItems: items.filter((c: any) => c.instanceID !== instanceID)
+      }
+    })
   }
 
   openAddCertDialog(): void {
@@ -129,9 +145,6 @@ export class CertificatesComponent implements OnInit, OnDestroy {
 
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return throwError(err)
-        }),
-        finalize(() => {
-          this.isLoading.set(false)
         })
       )
       .pipe(takeUntil(this.destroy$))
@@ -141,6 +154,9 @@ export class CertificatesComponent implements OnInit, OnDestroy {
   }
 
   deleteCertificate(cert: any): void {
+    if (this.isLoading() || cert.readOnlyCertificate || cert.associatedProfiles?.length > 0) {
+      return
+    }
     const dialogRef = this.dialog.open(AreYouSureDialogComponent)
 
     dialogRef
@@ -192,7 +208,8 @@ export class CertificatesComponent implements OnInit, OnDestroy {
                 name: cert.displayName
               })
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-              this.getCertificates()
+              this.removeCertLocally(cert.instanceID)
+              this.isLoading.set(false)
             })
         }
       })
