@@ -1049,6 +1049,86 @@
     "description": "Description for TLS settings",
     "value": "View TLS configuration"
   },
+  "downloadRpc.title": {
+    "description": "Download RPC page title",
+    "value": "Download RPC"
+  },
+  "downloadRpc.command.label": {
+    "description": "RPC command selector label",
+    "value": "Command"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Activate command option",
+    "value": "Activate"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Deactivate command option",
+    "value": "Deactivate"
+  },
+  "downloadRpc.version.label": {
+    "description": "rpc-go version selector label",
+    "value": "rpc-go Version"
+  },
+  "downloadRpc.os.label": {
+    "description": "Operating system selector label",
+    "value": "Operating System"
+  },
+  "downloadRpc.arch.label": {
+    "description": "Architecture selector label",
+    "value": "Architecture"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Profile selector label",
+    "value": "Profile"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Domain selector label",
+    "value": "Domain"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Authentication method group label",
+    "value": "Authentication"
+  },
+  "downloadRpc.auth.token": {
+    "description": "Generate token auth option",
+    "value": "Generate token"
+  },
+  "downloadRpc.auth.userpass": {
+    "description": "Username and password auth option",
+    "value": "Username / Password"
+  },
+  "downloadRpc.username.label": {
+    "description": "Username field label",
+    "value": "Username"
+  },
+  "downloadRpc.password.label": {
+    "description": "Password field label",
+    "value": "Password"
+  },
+  "downloadRpc.download": {
+    "description": "Download button label",
+    "value": "Download"
+  },
+  "downloadRpc.success": {
+    "description": "Package downloaded success message",
+    "value": "Package downloaded"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Failed to load rpc-go versions message",
+    "value": "Failed to load rpc-go versions"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Failed to build package message",
+    "value": "Failed to build package"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Failed to load profiles message",
+    "value": "Failed to load profiles"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Failed to load domains message",
+    "value": "Failed to load domains"
+  },
   "devices.actions.deactivate": {
     "description": "Tooltip for deactivating/removing a device",
     "value": "Deactivate the device"
