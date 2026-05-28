@@ -1,1 +1,81 @@
-<div></div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title i18n>{{ 'downloadRpc.title.value' | translate }}</mat-card-title>
+  </mat-card-header>
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col">
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.command.label.value' | translate }}</mat-label>
+        <mat-select formControlName="command" (selectionChange)="onProfileOrCommandChange()">
+          @for (c of commands; track c.value) {
+            <mat-option [value]="c.value">{{ c.label | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.version.label.value' | translate }}</mat-label>
+        <mat-select formControlName="version" (selectionChange)="onVersionChange()">
+          @for (r of releases; track r.version) {
+            <mat-option [value]="r.version">{{ r.version }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.asset.label.value' | translate }}</mat-label>
+        <mat-select formControlName="os" (selectionChange)="onOsChange()">
+          @for (a of availableAssets; track a.os + a.arch) {
+            <mat-option [value]="a.os">{{ a.os }} / {{ a.arch }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (form.get('command')?.value === 'activate') {
+        <mat-form-field>
+          <mat-label>{{ 'downloadRpc.profile.label.value' | translate }}</mat-label>
+          <mat-select formControlName="profile" (selectionChange)="onProfileOrCommandChange()">
+            @for (p of profiles; track p.profileName) {
+              <mat-option [value]="p.profileName">{{ p.profileName }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        @if (isAcmSelected) {
+          <mat-form-field>
+            <mat-label>{{ 'downloadRpc.domain.label.value' | translate }}</mat-label>
+            <mat-select formControlName="domain">
+              @for (d of domains; track d.profileName) {
+                <mat-option [value]="d.profileName">{{ d.profileName }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      }
+
+      <mat-radio-group formControlName="authMode" (change)="onAuthModeChange()" class="flex flex-col">
+        @for (m of authMethods; track m.value) {
+          <mat-radio-button [value]="m.value">{{ m.label | translate }}</mat-radio-button>
+        }
+      </mat-radio-group>
+
+      @if (form.get('authMode')?.value === 'userpass') {
+        <mat-form-field>
+          <mat-label>{{ 'downloadRpc.username.label.value' | translate }}</mat-label>
+          <input matInput formControlName="username" autocomplete="off" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'downloadRpc.password.label.value' | translate }}</mat-label>
+          <input matInput type="password" formControlName="password" autocomplete="off" />
+        </mat-form-field>
+      }
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading()">
+        {{ 'downloadRpc.download.value' | translate }}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

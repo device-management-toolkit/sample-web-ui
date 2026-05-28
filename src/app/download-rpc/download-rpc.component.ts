@@ -120,6 +120,15 @@ export class DownloadRpcComponent implements OnInit {
     }
   }
 
+  assetArchFor(os: string): string {
+    const asset = this.availableAssets.find((a) => a.os === os)
+    return asset ? asset.arch : ''
+  }
+
+  onOsChange(): void {
+    this.form.get('arch')?.setValue(this.assetArchFor(this.form.get('os')?.value))
+  }
+
   onAuthModeChange(): void {
     const userpass = this.form.get('authMode')?.value === 'userpass'
     const username = this.form.get('username')
