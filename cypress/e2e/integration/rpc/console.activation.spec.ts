@@ -51,7 +51,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             const { stdout, stderr, combined } = buildOutput(result)
             cy.log(combined)
             const source = stdout.length > 0 ? stdout : stderr
-            amtInfo = JSON.parse(source)
+            const jsonOutput = source.substring(source.indexOf('{'))
+            amtInfo = JSON.parse(jsonOutput)
             const versions: string[] = amtInfo.amt.split('.')
             majorVersion = versions.length > 1 ? versions[0] : '0'
           })
