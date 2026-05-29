@@ -733,7 +733,7 @@ describe('DevicesService', () => {
       expect(emitted[emitted.length - 1].redirection).toBe(false)
     })
 
-    it('seeds the features cache from payload defaults when POST response is partial', () => {
+    it('does not seed the cache from a POST response when no features were loaded', () => {
       const emitted: any[] = []
       service.featuresChanges('device1').subscribe((v) => emitted.push(v))
       service
@@ -747,10 +747,7 @@ describe('DevicesService', () => {
         })
         .subscribe()
       httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
-      expect(emitted.length).toBe(2)
-      expect(emitted[1]).toEqual(
-        jasmine.objectContaining({ KVM: true, SOL: true, IDER: true, rpe: true, userConsent: 'all' })
-      )
+      expect(emitted).toEqual([null])
     })
 
     it('should handle errors', () => {
