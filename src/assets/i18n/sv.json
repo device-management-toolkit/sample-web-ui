@@ -2881,6 +2881,10 @@
     "description": "Framgångsmeddelande efter att fjärrradering av plattform initierats",
     "value": "Fjärrradering av plattform har startats"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Framgångsmeddelande efter radering av OS-enhet – uppmanar till ominstallation",
+    "value": "OS-enheten har raderats. Installera om ett operativsystem innan du använder den här enheten."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Felmeddelande när fjärrradering av plattform inte kan initieras",
     "value": "Det gick inte att starta fjärrraderingen av plattformen"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Felmeddelande vid fel vid inläsning av status för fjärrradering av plattform",
     "value": "Det gick inte att läsa in statusen för fjärrraderingsfunktionen för plattformen"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Felmeddelande vid hämtning av strömstatus under fjärrradering",
+    "value": "Fel vid hämtning av strömstatus"
   },
   "remotePlatformErase.notSupported": {
     "description": "Meddelande som visas när fjärrradering av plattform inte stöds på enheten",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informationsmeddelande som visas när Avkonfigurering av CSME är valt, förklarar att det inte kan kombineras med andra alternativ",
     "value": "Avkonfigurering av CSME utför en fullständig avetablering av Intel AMT och kan inte kombineras med andra raderingsåtgärder."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Framgångsmeddelande efter CSME-avkonfigurering – uppmanar till omkonfigurering och informerar om att enheten tas bort från konsolen",
+    "value": "CSME avkonfigurerades. Konfigurera om CSME. Den här enheten tas bort från konsolen."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",

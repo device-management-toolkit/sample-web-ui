@@ -2881,6 +2881,10 @@
     "description": "Messaggio di successo dopo aver avviato la cancellazione remota della piattaforma",
     "value": "Cancellazione remota della piattaforma avviata con successo"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Messaggio di successo dopo la cancellazione dell'unità OS – invita alla reinstallazione",
+    "value": "Unità OS cancellata con successo. Reinstallare un sistema operativo prima di utilizzare questo dispositivo."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Messaggio di errore quando la cancellazione remota della piattaforma non può essere avviata",
     "value": "Impossibile avviare la cancellazione remota della piattaforma"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Messaggio di errore durante il caricamento dello stato della funzione di cancellazione remota",
     "value": "Impossibile caricare lo stato della funzionalità di cancellazione remota della piattaforma"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Messaggio di errore durante il recupero dello stato di alimentazione nella cancellazione remota",
+    "value": "Errore durante il recupero dello stato di alimentazione"
   },
   "remotePlatformErase.notSupported": {
     "description": "Messaggio mostrato quando la cancellazione remota della piattaforma non è supportata",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Messaggio informativo mostrato quando è selezionato Deconfigura CSME, spiegando che non può essere combinato con altre opzioni",
     "value": "La deconfigurazione CSME esegue un deprovisioning completo di Intel AMT e non può essere combinata con altre operazioni di cancellazione."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Messaggio di successo dopo la deconfigurazione CSME – invita alla riconfigurazione e informa che il dispositivo verrà rimosso dalla console",
+    "value": "CSME deconfigurato con successo. Riconfigurare CSME. Questo dispositivo verrà rimosso dalla console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",

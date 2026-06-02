@@ -14,6 +14,7 @@ import { AMTFeaturesResponse } from '../../../models/models'
 import { PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { HttpErrorResponse } from '@angular/common/http'
+import { Router } from '@angular/router'
 
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
@@ -39,6 +40,7 @@ describe('RemotePlatformEraseComponent', () => {
   let devicesServiceSpy: jasmine.SpyObj<DevicesService>
   let matDialogSpy: jasmine.SpyObj<MatDialog>
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
+  let routerSpy: jasmine.SpyObj<Router>
 
   beforeEach(async () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
@@ -48,7 +50,8 @@ describe('RemotePlatformEraseComponent', () => {
       'setAmtFeatures',
       'getDevice',
       'getRemoteEraseCapabilities',
-      'setRemoteEraseOptions'
+      'setRemoteEraseOptions',
+      'sendDeactivate'
     ])
     devicesServiceSpy.getDevice.and.returnValue(of({ guid: '', hostname: 'host-1', friendlyName: 'my-laptop' } as any))
     devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
@@ -56,6 +59,8 @@ describe('RemotePlatformEraseComponent', () => {
     )
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
+    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
+    routerSpy.navigate.and.returnValue(Promise.resolve(true))
 
     devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures }))
     // Delegate getAMTFeaturesCached to getAMTFeatures so per-test returnValue configs apply to both
@@ -63,13 +68,15 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.featuresChanges.and.returnValue(of(null))
     devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures }))
     devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+    devicesServiceSpy.sendDeactivate.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
       imports: [RemotePlatformEraseComponent, TranslateModule.forRoot()],
       providers: [
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: MatDialog, useValue: matDialogSpy },
-        { provide: MatSnackBar, useValue: snackBarSpy }
+        { provide: MatSnackBar, useValue: snackBarSpy },
+        { provide: Router, useValue: routerSpy }
       ]
     }).compileComponents()
 
@@ -123,6 +130,30 @@ describe('RemotePlatformEraseComponent', () => {
     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     expect(snackBarSpy.open).toHaveBeenCalledWith('AMT device unreachable', undefined, jasmine.any(Object))
+  })
+
+  it('should show OS erase success message when secureEraseAllSSDs is selected', () => {
+    component.eraseCaps.set([
+      { key: 'secureEraseSsds', supported: true },
+      { key: 'tpmClear', supported: false },
+      { key: 'biosRestore', supported: false },
+      { key: 'csmeUnconfigure', supported: false }
+    ])
+    component.eraseCapsArray.at(0).enable()
+    component.eraseCapsArray.at(0).setValue(true)
+    component.selectedCapsCount.set(1)
+    component.platformEraseEnabled.set(true)
+
+    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+
+    component.initiateErase()
+
+    expect(snackBarSpy.open).toHaveBeenCalledWith(
+      'remotePlatformErase.osEraseSuccess.value',
+      undefined,
+      jasmine.anything()
+    )
   })
 
   it('should show fallback message in snackbar when setRemoteEraseOptions fails without message', () => {
@@ -525,6 +556,23 @@ describe('RemotePlatformEraseComponent', () => {
       )
       component.ngOnInit()
       component.toggleFeature(true)
+    })
+
+    it('should call sendDeactivate after CSME erase succeeds', () => {
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      expect(devicesServiceSpy.sendDeactivate).toHaveBeenCalledWith('')
+    })
+
+    it('should navigate to /devices after CSME erase succeeds', () => {
+      const router = TestBed.inject(Router)
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      expect(router.navigate).toHaveBeenCalledWith(['/devices'])
     })
 
     it('should signal isCsmeExclusiveSelected when CSME is checked', () => {

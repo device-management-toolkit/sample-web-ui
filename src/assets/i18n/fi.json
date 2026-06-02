@@ -2881,6 +2881,10 @@
     "description": "Onnistumisviesti etäalustan pyyhinnan aloittamisen jälkeen",
     "value": "Etäalustan pyyhintä käynnistetty onnistuneesti"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Onnistumisviesti käyttöjärjestelmäaseman pyyhinnän jälkeen – kehottaa uudelleenasennukseen",
+    "value": "Käyttöjärjestelmän asema pyyhitty onnistuneesti. Asenna käyttöjärjestelmä uudelleen ennen tämän laitteen käyttöä."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Virheviesti etäalustan pyyhinnan käynnistyksen epäonnistuessa",
     "value": "Etäalustan pyyhinnan käynnistys epäonnistui"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Virheviesti etäalustan pyyhintäominaisuuden tilan latauksen epäonnistuessa",
     "value": "Etäalustan pyyhintäominaisuuden tilan lataus epäonnistui"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Virheviesti virran tilan hakemisen epäonnistuessa etäpyyhinnän aikana",
+    "value": "Virhe virran tilan hakemisessa"
   },
   "remotePlatformErase.notSupported": {
     "description": "Viesti laitteen etäalustan pyyhinnän tuen puuttuessa",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Tietosanoma, joka näytetään kun CSME:n konfiguraation poisto on valittu, selittäen ettei sitä voi yhdistää muihin vaihtoehtoihin",
     "value": "CSME:n konfiguraation poisto suorittaa Intel AMT:n täydellisen poistamisen ja sitä ei voi yhdistää muihin poistotoimintoihin."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Onnistumisviesti CSME:n konfiguraation poiston jälkeen – kehottaa uudelleenkonfigurointiin ja ilmoittaa, että laite poistetaan konsolista",
+    "value": "CSME:n konfiguraatio poistettu onnistuneesti. Konfiguroi CSME uudelleen. Tämä laite poistetaan konsolista."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",

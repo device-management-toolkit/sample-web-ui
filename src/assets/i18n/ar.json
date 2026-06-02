@@ -2881,6 +2881,10 @@
     "description": "رسالة نجاح بعد بدء مسح المنصة عن بُعد",
     "value": "تم بدء مسح المنصة عن بُعد بنجاح"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "رسالة نجاح بعد مسح محرك نظام التشغيل – تطلب إعادة التثبيت",
+    "value": "تم مسح محرك نظام التشغيل بنجاح. يرجى إعادة تثبيت نظام تشغيل قبل استخدام هذا الجهاز."
+  },
   "remotePlatformErase.eraseError": {
     "description": "رسالة خطأ عند فشل بدء مسح المنصة عن بُعد",
     "value": "فشل بدء مسح المنصة عن بُعد"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "رسالة خطأ عند فشل تحميل حالة ميزة مسح المنصة عن بُعد",
     "value": "فشل تحميل حالة ميزة مسح المنصة عن بُعد"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "رسالة خطأ عند استرداد حالة الطاقة أثناء المسح البعيد",
+    "value": "خطأ في استرداد حالة الطاقة"
   },
   "remotePlatformErase.notSupported": {
     "description": "الرسالة المعروضة عندما لا يدعم الجهاز مسح المنصة عن بُعد",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "رسالة معلومات تظهر عند تحديد إلغاء تهيئة CSME، تشرح سبب عدم إمكانية دمجه مع خيارات أخرى",
     "value": "يؤدي إلغاء تهيئة CSME إلى إلغاء توفير Intel AMT بالكامل ولا يمكن دمجه مع عمليات المسح الأخرى."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "رسالة نجاح بعد إلغاء تهيئة CSME – تطلب إعادة التهيئة وتُعلم بأن الجهاز سيُزال من وحدة التحكم",
+    "value": "تم إلغاء تهيئة CSME بنجاح. يرجى إعادة تهيئة CSME. سيتم إزالة هذا الجهاز من وحدة التحكم."
   },
   "remotePlatformErase.selectionCount": {
     "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",

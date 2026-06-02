@@ -2881,6 +2881,10 @@
     "description": "Erfolgsmeldung nach dem Einleiten der Remote-Plattformlöschung",
     "value": "Remote-Plattformlöschung erfolgreich eingeleitet"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Erfolgsmeldung nach dem Löschen des OS-Laufwerks – fordert zur Neuinstallation auf",
+    "value": "OS-Laufwerk erfolgreich gelöscht. Bitte installieren Sie ein Betriebssystem neu, bevor Sie dieses Gerät verwenden."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Fehlermeldung wenn die Remote-Plattformlöschung nicht eingeleitet werden kann",
     "value": "Fehler beim Einleiten der Remote-Plattformlöschung"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Fehlermeldung beim Laden des Status der Remote-Plattformlöschungsfunktion",
     "value": "Fehler beim Laden des Status der Remote-Plattformlöschungsfunktion"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Fehlermeldung beim Abrufen des Stromstatus während der Remote-Plattformlöschung",
+    "value": "Fehler beim Abrufen des Stromstatus"
   },
   "remotePlatformErase.notSupported": {
     "description": "Meldung wenn Remote-Plattformlöschung auf dem Gerät nicht unterstützt wird",
@@ -2940,6 +2948,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informationsmeldung, wenn CSME-Dekonfiguration ausgewählt ist, erklärt, dass sie nicht mit anderen Optionen kombiniert werden kann",
     "value": "Die CSME-Dekonfiguration führt eine vollständige Deprovisionierung von Intel AMT durch und kann nicht mit anderen Löschvorgängen kombiniert werden."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Erfolgsmeldung nach CSME-Dekonfiguration – fordert zur Neukonfiguration auf und teilt mit, dass das Gerät aus der Konsole entfernt wird",
+    "value": "CSME erfolgreich dekonfiguriert. Bitte konfigurieren Sie CSME neu. Dieses Gerät wird von der Konsole entfernt."
   },
   "remotePlatformErase.initiateNoCapsTooltip": {
     "description": "Tooltip am Schaltfläche 'Löschen starten', wenn keine Funktion ausgewählt ist",

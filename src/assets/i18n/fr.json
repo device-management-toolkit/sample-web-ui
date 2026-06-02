@@ -2881,6 +2881,10 @@
     "description": "Message de succès après le lancement de l'effacement distant de la plateforme",
     "value": "Effacement distant de la plateforme lancé avec succès"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Message de succès après l'effacement du lecteur OS – invite à réinstaller",
+    "value": "Lecteur OS effacé avec succès. Veuillez réinstaller un système d'exploitation avant d'utiliser cet appareil."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Message d'erreur quand l'effacement distant de la plateforme ne peut pas être lancé",
     "value": "Échec du lancement de l'effacement distant de la plateforme"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Message d'erreur lors du chargement du statut de l'effacement distant de la plateforme",
     "value": "Échec du chargement du statut de la fonctionnalité d'effacement distant de la plateforme"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Message d'erreur lors de la récupération de l'état d'alimentation pendant l'effacement distant",
+    "value": "Erreur lors de la récupération de l'état d'alimentation"
   },
   "remotePlatformErase.notSupported": {
     "description": "Message affiché quand l'effacement distant de la plateforme n'est pas pris en charge",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Message d'information affiché lorsque Déconfigurer CSME est sélectionné, expliquant qu'il ne peut pas être combiné avec d'autres options",
     "value": "La déconfiguration de CSME effectue un déprovisionnement complet d'Intel AMT et ne peut pas être combinée avec d'autres opérations d'effacement."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Message de succès après la déconfiguration CSME – invite à reconfigurer et informe que l'appareil sera supprimé de la console",
+    "value": "CSME déconfigurée avec succès. Veuillez reconfigurer CSME. Cet appareil sera supprimé de la console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",

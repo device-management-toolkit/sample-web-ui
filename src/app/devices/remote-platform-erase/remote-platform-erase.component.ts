@@ -5,6 +5,7 @@
 
 import { Component, DestroyRef, OnInit, inject, signal, input, computed } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { Router } from '@angular/router'
 import { catchError, switchMap } from 'rxjs/operators'
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
@@ -58,6 +59,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   private readonly matDialog = inject(MatDialog)
   private readonly fb = inject(FormBuilder)
   private readonly translate = inject(TranslateService)
+  private readonly router = inject(Router)
 
   public readonly deviceId = input('')
   public deviceLabel = signal('')
@@ -138,7 +140,7 @@ export class RemotePlatformEraseComponent implements OnInit {
     return this.devicesService.getPowerState(guid).pipe(
       catchError((err) => {
         this.isLoading.set(false)
-        const msg: string = this.translate.instant('sol.errorRetrievingPower.value')
+        const msg: string = err.error?.message || this.t('remotePlatformErase.errorRetrievingPower')
         this.displayError(msg)
         return EMPTY
       })
@@ -266,13 +268,30 @@ export class RemotePlatformEraseComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.snackBar.open(this.t('remotePlatformErase.eraseSuccess'), undefined, SnackbarDefaults.defaultSuccess)
-          this.amtFeatures.update((f) => (f ? { ...f, rpe: false } : f))
-          this.platformEraseEnabled.set(false)
-          this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
-          this.selectedCapsCount.set(0)
-          this.isCsmeExclusiveSelected.set(false)
-          this.updateCapControlStates()
+          if (req.unconfigureCSME) {
+            this.devicesService
+              .sendDeactivate(this.deviceId())
+              .pipe(catchError(() => EMPTY))
+              .subscribe(() => {
+                this.snackBar.open(
+                  this.t('remotePlatformErase.csmeEraseSuccess'),
+                  undefined,
+                  SnackbarDefaults.defaultSuccess
+                )
+                void this.router.navigate(['/devices'])
+              })
+          } else {
+            const successMsg = req.secureEraseAllSSDs
+              ? this.t('remotePlatformErase.osEraseSuccess')
+              : this.t('remotePlatformErase.eraseSuccess')
+            this.snackBar.open(successMsg, undefined, SnackbarDefaults.defaultSuccess)
+            this.amtFeatures.update((f) => (f ? { ...f, rpe: false } : f))
+            this.platformEraseEnabled.set(false)
+            this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
+            this.selectedCapsCount.set(0)
+            this.isCsmeExclusiveSelected.set(false)
+            this.updateCapControlStates()
+          }
         }
       })
   }

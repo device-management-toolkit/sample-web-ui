@@ -2881,6 +2881,10 @@
     "description": "Succesbericht na het starten van extern wissen van het platform",
     "value": "Extern wissen van het platform succesvol gestart"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Succesbericht na het wissen van de OS-schijf – vraagt om herinstallatie",
+    "value": "OS-schijf succesvol gewist. Installeer een besturingssysteem opnieuw voordat u dit apparaat gebruikt."
+  },
   "remotePlatformErase.eraseError": {
     "description": "Foutbericht wanneer extern wissen van het platform niet kan worden gestart",
     "value": "Starten van extern wissen van het platform mislukt"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "Foutbericht bij het laden van de status van extern wissen van het platform",
     "value": "Laden van de status van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Foutbericht bij het ophalen van de stroomstatus tijdens extern wissen",
+    "value": "Fout bij het ophalen van de stroomstatus"
   },
   "remotePlatformErase.notSupported": {
     "description": "Bericht dat wordt weergegeven wanneer extern wissen van het platform niet wordt ondersteund",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informatiebericht getoond wanneer CSME deconfigureren is geselecteerd, legt uit dat het niet kan worden gecombineerd met andere opties",
     "value": "CSME-deconfiguratie voert een volledige deprovisioning van Intel AMT uit en kan niet worden gecombineerd met andere wisbewerkingen."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Succesbericht na CSME-deconfiguratie – vraagt om herconfiguratie en meldt dat het apparaat uit de console wordt verwijderd",
+    "value": "CSME succesvol gedeconfigureerd. Configureer CSME opnieuw. Dit apparaat wordt verwijderd uit de console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",

@@ -2881,6 +2881,10 @@
     "description": "הודעת הצלחה לאחר הפעלת מחיקת פלטפורמה מרחוק",
     "value": "מחיקת הפלטפורמה מרחוק הופעלה בהצלחה"
   },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "הודעת הצלחה לאחר מחיקת כונן מערכת ההפעלה – מבקשת התקנה מחדש",
+    "value": "כונן מערכת ההפעלה נמחק בהצלחה. אנא התקן מחדש מערכת הפעלה לפני השימוש במכשיר זה."
+  },
   "remotePlatformErase.eraseError": {
     "description": "הודעת שגיאה כאשר הפעלת מחיקת פלטפורמה מרחוק נכשלת",
     "value": "הפעלת מחיקת הפלטפורמה מרחוק נכשלה"
@@ -2888,6 +2892,10 @@
   "remotePlatformErase.errorLoad": {
     "description": "הודעת שגיאה בעת כשל בטעינת סטטוס תכונת מחיקת פלטפורמה מרחוק",
     "value": "טעינת סטטוס תכונת מחיקת הפלטפורמה מרחוק נכשלה"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "הודעת שגיאה בעת כשל באחזור סטטוס כוח במהלך מחיקת פלטפורמה מרחוק",
+    "value": "שגיאה באחזור סטטוס כוח"
   },
   "remotePlatformErase.notSupported": {
     "description": "הודעה המוצגת כאשר מחיקת פלטפורמה מרחוק אינה נתמכת במכשיר",
@@ -2948,6 +2956,10 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "הודעת מידע המוצגת כאשר בוחרים בביטול תצורת CSME, ומסבירה מדוע לא ניתן לשלב עם אפשרויות אחרות",
     "value": "ביטול תצורת CSME מבצע ביטול מלא של תצורת Intel AMT ולא ניתן לשלב אותו עם פעולות מחיקה אחרות."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "הודעת הצלחה לאחר ביטול תצורת CSME – מבקשת הגדרה מחדש ומודיעה שהמכשיר יוסר מהקונסולה",
+    "value": "תצורת CSME בוטלה בהצלחה. אנא הגדר מחדש את CSME. מכשיר זה יוסר מהקונסולה."
   },
   "remotePlatformErase.selectionCount": {
     "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",
