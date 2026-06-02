@@ -5,7 +5,6 @@
 
 import { Component, DestroyRef, OnInit, inject, signal, input, computed } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { of } from 'rxjs'
 import { catchError, switchMap } from 'rxjs/operators'
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
@@ -18,7 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { filter, finalize, forkJoin, Observable, throwError } from 'rxjs'
+import { filter, finalize, forkJoin, Observable, of, EMPTY } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import {
   AMTFeaturesRequest,
@@ -85,13 +84,16 @@ export class RemotePlatformEraseComponent implements OnInit {
       features: this.devicesService.getAMTFeatures(this.deviceId()),
       capabilities: this.devicesService.getRemoteEraseCapabilities(this.deviceId())
     })
-      .pipe(finalize(() => this.isLoading.set(false)))
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        catchError((err) => {
+          const msg: string = err.error?.message || this.t('remotePlatformErase.errorLoad')
+          this.displayError(msg)
+          return EMPTY
+        })
+      )
       .subscribe({
-        next: ({ features, capabilities }) => this.applyFeatures(features, capabilities),
-        error: (err) => {
-          this.snackBar.open(this.t('remotePlatformErase.errorLoad'), undefined, SnackbarDefaults.defaultError)
-          return throwError(() => err)
-        }
+        next: ({ features, capabilities }) => this.applyFeatures(features, capabilities)
       })
 
     // Reactively update the slider whenever features change (e.g. after General tab saves)
@@ -138,7 +140,7 @@ export class RemotePlatformEraseComponent implements OnInit {
         this.isLoading.set(false)
         const msg: string = this.translate.instant('sol.errorRetrievingPower.value')
         this.displayError(msg)
-        return throwError(() => err)
+        return EMPTY
       })
     )
   }
@@ -180,17 +182,20 @@ export class RemotePlatformEraseComponent implements OnInit {
     this.isLoading.set(true)
     this.devicesService
       .setAmtFeatures(this.deviceId(), payload)
-      .pipe(finalize(() => this.isLoading.set(false)))
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        catchError((err) => {
+          this.platformEraseEnabled.set(!enabled)
+          this.updateCapControlStates()
+          const msg: string = err.error?.message || this.t('remotePlatformErase.toggleFeatureError')
+          this.displayError(msg)
+          return EMPTY
+        })
+      )
       .subscribe({
         next: () => {
           this.amtFeatures.update((f) => (f ? { ...f, rpe: enabled } : f))
           this.updateCapControlStates()
-        },
-        error: (err) => {
-          this.platformEraseEnabled.set(!enabled)
-          this.updateCapControlStates()
-          this.snackBar.open(this.t('remotePlatformErase.updateError'), undefined, SnackbarDefaults.defaultError)
-          return throwError(() => err)
         }
       })
   }
@@ -251,7 +256,14 @@ export class RemotePlatformEraseComponent implements OnInit {
     this.isLoading.set(true)
     this.devicesService
       .setRemoteEraseOptions(this.deviceId(), req)
-      .pipe(finalize(() => this.isLoading.set(false)))
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        catchError((err) => {
+          const msg: string = err.error?.message || this.t('remotePlatformErase.eraseError')
+          this.displayError(msg)
+          return EMPTY
+        })
+      )
       .subscribe({
         next: () => {
           this.snackBar.open(this.t('remotePlatformErase.eraseSuccess'), undefined, SnackbarDefaults.defaultSuccess)
@@ -261,10 +273,6 @@ export class RemotePlatformEraseComponent implements OnInit {
           this.selectedCapsCount.set(0)
           this.isCsmeExclusiveSelected.set(false)
           this.updateCapControlStates()
-        },
-        error: (err) => {
-          this.snackBar.open(this.t('remotePlatformErase.eraseError'), undefined, SnackbarDefaults.defaultError)
-          return throwError(() => err)
         }
       })
   }

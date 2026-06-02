@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from '../../../models/models'
 import { PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
+import { HttpErrorResponse } from '@angular/common/http'
 
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
@@ -109,6 +110,36 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.getAMTFeatures.and.returnValue(throwError(() => new Error('error')))
     component.ngOnInit()
     expect(snackBarSpy.open).toHaveBeenCalled()
+  })
+
+  it('should show server message in snackbar when setRemoteEraseOptions fails with it', () => {
+    const serverError = new HttpErrorResponse({ error: { message: 'AMT device unreachable' }, status: 500 })
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    component.ngOnInit()
+    component.toggleFeature(true)
+    component.eraseCapControl(0).setValue(true)
+    component.onCapChange()
+    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => serverError))
+    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    component.initiateErase()
+    expect(snackBarSpy.open).toHaveBeenCalledWith('AMT device unreachable', undefined, jasmine.any(Object))
+  })
+
+  it('should show fallback message in snackbar when setRemoteEraseOptions fails without message', () => {
+    const serverError = new HttpErrorResponse({ error: {}, status: 500 })
+    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    component.ngOnInit()
+    component.toggleFeature(true)
+    component.eraseCapControl(0).setValue(true)
+    component.onCapChange()
+    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => serverError))
+    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    component.initiateErase()
+    expect(snackBarSpy.open).toHaveBeenCalledWith(
+      'remotePlatformErase.eraseError.value',
+      undefined,
+      jasmine.any(Object)
+    )
   })
 
   it('should open AreYouSureDialog with the erase confirmation message', () => {
