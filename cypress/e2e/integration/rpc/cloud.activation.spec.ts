@@ -26,7 +26,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
     const isWin = Cypress.platform === 'win32'
     let majorVersion = ''
-    let skipCertFlag = '-skipamtcertcheck'
 
     // Default: use Docker (Linux/Mac); Windows overrides below use rpc.exe directly
     let infoCommand = `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} amtinfo --json`
@@ -41,33 +40,22 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       return `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate -u wss://${fqdn}/activate -v -n${flagPart} --profile ${profileName} --json`
     }
 
-    const buildDeactivateCommand = (useFlag: boolean, flag = '') => {
-      const flagPart = useFlag ? ` ${flag}` : ''
+    const buildDeactivateCommand = () => {
       if (isWin) {
-        return `rpc.exe deactivate -u wss://${fqdn}/activate -v -n${flagPart} -f --json --password ${password}`
+        return `rpc.exe deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
       }
-      return `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n${flagPart} -f --json --password ${password}`
-    }
-
-    const detectRPCCommandFormat = (helpOutput: string): void => {
-      if (helpOutput.includes('--skip-amt-cert-check')) {
-        skipCertFlag = '--skip-amt-cert-check'
-        cy.log('Detected flag format: --skip-amt-cert-check')
-      } else {
-        cy.log('Detected flag format: -skipamtcertcheck')
-      }
+      return `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} deactivate -u wss://${fqdn}/activate -v -n -f --json --password ${password}`
     }
 
     const updateCommandsForVersion = (version: string): void => {
-      if (parseInt(version) >= 19) {
-        cy.log(`AMT version ${version} detected (>= 19), using skipamtcertcheck flag: ${skipCertFlag}`)
-        activateCommand = buildActivateCommand(true, skipCertFlag)
-        deactivateCommand = buildDeactivateCommand(true, skipCertFlag)
+      if (parseInt(version) <= 18) {
+        cy.log(`AMT version ${version} detected (<= 18), using -tls-tunnel flag for activate`)
+        activateCommand = buildActivateCommand(true, '-tls-tunnel')
       } else {
-        cy.log(`AMT version ${version} detected (< 19), not using skipamtcertcheck flag`)
+        cy.log(`AMT version ${version} detected (> 18), no extra flag needed`)
         activateCommand = buildActivateCommand(false)
-        deactivateCommand = buildDeactivateCommand(false)
       }
+      deactivateCommand = buildDeactivateCommand()
     }
 
     if (isWin) {
@@ -76,21 +64,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     // Set initial commands without flag (will be updated based on AMT version)
     activateCommand = buildActivateCommand(false)
-    deactivateCommand = buildDeactivateCommand(false)
+    deactivateCommand = buildDeactivateCommand()
 
     describe('Device Activation - Cloud', () => {
-      before(() => {
-        const helpCommand = isWin
-          ? 'rpc.exe activate --help'
-          : `docker run --rm --network host --device=/dev/mei0 ${rpcDockerImage} activate --help`
-
-        cy.exec(helpCommand, { ...execConfig, failOnNonZeroExit: false }).then((result) => {
-          const helpOutput = result.stdout + result.stderr
-          cy.log('RPC Help Output:', helpOutput)
-          detectRPCCommandFormat(helpOutput)
-        })
-      })
-
       context('TC_ACTIVATION_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
@@ -121,16 +97,19 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               return
             }
 
+            expect(combined).not.to.match(/failed/i)
             if (isAdminControlModeProfile) {
-              expect(combined).to.match(/Status: admin control mode/i)
+              expect(combined).to.match(/admin control mode/i)
             } else {
-              expect(combined).to.match(/Status: client control mode/i)
+              expect(combined).to.match(/client control mode/i)
             }
 
             if (parts[2] === 'CIRA') {
-              expect(combined).to.contain('CIRA: Configured')
+              expect(combined).to.match(/CIRA: Configured/i)
+            } else if (parseInt(majorVersion) >= 19) {
+              expect(combined).to.match(/TLS: Already Configured/i)
             } else {
-              expect(combined).to.contain('TLS: Configured')
+              expect(combined).to.match(/TLS: Configured/i)
             }
 
             if (profileName.endsWith('WiFi')) {
@@ -217,6 +196,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     })
 
     context('Negative Activation Test', () => {
+      beforeEach(() => {
+        cy.exec(infoCommand, execConfig).then((result) => {
+          const { stdout, stderr } = buildOutput(result)
+          const source = stdout.length > 0 ? stdout : stderr
+          const info = JSON.parse(source)
+          const versions: string[] = info.amt.split('.')
+          const version = versions.length > 1 ? versions[0] : '0'
+          updateCommandsForVersion(version)
+        })
+      })
+
       if (isAdminControlModeProfile) {
         it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
           activateCommand += ' -d dontmatch.com'
