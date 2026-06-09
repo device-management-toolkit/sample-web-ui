@@ -2145,6 +2145,14 @@
     "description": "תווית לשדה תצורת CIRA",
     "value": "תצורת CIRA"
   },
+  "profileDetail.ciraDisabledOption": {
+    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
+    "value": "(CIRA מושבת בשרת זה)"
+  },
+  "profileDetail.ciraDisabledWarning": {
+    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
+    "value": "CIRA מושבת בשרת זה. פרופיל זה משתמש ב-CIRA לחיבור הניהול שלו ולא יעבוד עד ש-CIRA יופעל מחדש."
+  },
   "profileDetail.connectionConfiguration": {
     "description": "תווית לקטע תצורת חיבור",
     "value": "תצורת חיבור אספקת"
@@ -2332,6 +2340,10 @@
   "profiles.deleteProfile": {
     "description": "הודעה לפרופילים שנמחקו",
     "value": "הפרופיל נמחק בהצלחה"
+  },
+  "profiles.ciraExportDisabled": {
+    "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
+    "value": "CIRA מושבת בשרת זה. פרופיל זה משתמש ב-CIRA לחיבור הניהול שלו ולא יעבוד עד ש-CIRA יופעל מחדש."
   },
   "profiles.exportProfile": {
     "description": "הודעה לפרופילים מיוצאים",
