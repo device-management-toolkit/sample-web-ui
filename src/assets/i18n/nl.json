@@ -2921,6 +2921,14 @@
     "description": "Beschrijving voor veilig wissen van alle SSD's",
     "value": "Verwijdering van alle inhoud van ATA- en NVM-schijven door een combinatie van mediawissen en cryptografisch wissen"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD vereist schijfcoderingssleutel"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Schijfwachtwoord"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Label voor TPM wissen",
     "value": "TPM wissen"

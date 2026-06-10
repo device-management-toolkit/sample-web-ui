@@ -158,7 +158,9 @@ export interface BootCapabilities {
   unconfigureCSME: boolean
 }
 
-export type RemoteEraseRequest = BootCapabilities
+export interface RemoteEraseRequest extends BootCapabilities {
+  ssdPassword?: string
+}
 
 export interface PowerState {
   powerstate: number

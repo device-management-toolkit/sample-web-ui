@@ -1169,6 +1169,14 @@
     "description": "Description for the Secure Erase of All SSDs capability",
     "value": "Removal of all content from ATA and NVM drives through a combination of media erase and crypto erase"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD requires disk encryption key"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Drive Password"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Label for the TPM Clear capability",
     "value": "TPM Clear"

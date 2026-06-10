@@ -70,6 +70,27 @@
                 }
               </div>
             </mat-checkbox>
+            @if (cap.key === 'secureEraseSsds' && isSsdSelected()) {
+              <div style="padding-left: 40px; padding-top: 8px">
+                <mat-checkbox
+                  [formControl]="ssdEncryptedControl"
+                  (change)="onSsdEncryptedChange($event.checked)"
+                  data-cy="ssdEncryptedCheckbox">
+                  {{ 'remotePlatformErase.ssdEncrypted.label.value' | translate }}
+                </mat-checkbox>
+                @if (isSsdEncrypted()) {
+                  <mat-form-field style="display: block; padding-top: 8px">
+                    <mat-label>{{ 'remotePlatformErase.ssdPassword.label.value' | translate }}</mat-label>
+                    <input
+                      matInput
+                      type="password"
+                      [formControl]="ssdPasswordControl"
+                      data-cy="ssdPasswordInput"
+                      autocomplete="off" />
+                  </mat-form-field>
+                }
+              </div>
+            }
           </div>
         }
 

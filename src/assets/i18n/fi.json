@@ -2921,6 +2921,14 @@
     "description": "Kaikkien SSD-levyjen turvallisen pyyhinnän kuvaus",
     "value": "Kaiken sisällön poistaminen ATA- ja NVM-asemilta median ja salauksen pyyhinnän yhdistelmällä"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD vaatii levyn salausavaimen"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Aseman salasana"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "TPM:n tyhjennyksen nimi",
     "value": "TPM:n tyhjennys"

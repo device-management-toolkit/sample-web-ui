@@ -2921,6 +2921,14 @@
     "description": "全SSDのセキュア消去の説明",
     "value": "メディア消去と暗号消去の組み合わせにより、ATAおよびNVMドライブからすべてのコンテンツを削除します"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSDにはディスク暗号化キーが必要です"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "ドライブパスワード"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "TPMクリアのラベル",
     "value": "TPMクリア"

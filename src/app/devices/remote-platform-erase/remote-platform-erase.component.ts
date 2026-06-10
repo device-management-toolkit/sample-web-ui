@@ -15,6 +15,8 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -34,6 +36,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
+const SSD_ERASE_KEY = 'secureEraseSsds'
 
 @Component({
   selector: 'app-remote-platform-erase',
@@ -49,6 +52,8 @@ const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
     MatIcon,
     MatButton,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
     TranslateModule
   ]
 })
@@ -75,6 +80,11 @@ export class RemotePlatformEraseComponent implements OnInit {
   public supportedCapsCount = computed(() => this.eraseCaps().filter((c) => c.supported).length)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   private csmeIndex = -1
+  private ssdIndex = -1
+  public isSsdSelected = signal(false)
+  public isSsdEncrypted = signal(false)
+  public ssdEncryptedControl = this.fb.control<boolean | null>(false)
+  public ssdPasswordControl = this.fb.control<string | null>('')
 
   ngOnInit(): void {
     this.devicesService.getDevice(this.deviceId()).subscribe({
@@ -163,7 +173,19 @@ export class RemotePlatformEraseComponent implements OnInit {
     }
     this.isCsmeExclusiveSelected.set(csmeSelected)
     this.selectedCapsCount.set(this.eraseCapsArray.getRawValue().filter((v) => v === true).length)
+    const ssdSelected = this.ssdIndex >= 0 && this.eraseCapsArray.at(this.ssdIndex)?.value === true
+    this.isSsdSelected.set(ssdSelected)
+    if (!ssdSelected) {
+      this.resetSsdControls()
+    }
     this.updateCapControlStates()
+  }
+
+  onSsdEncryptedChange(checked: boolean): void {
+    this.isSsdEncrypted.set(checked)
+    if (!checked) {
+      this.ssdPasswordControl.setValue('')
+    }
   }
 
   eraseCapControl(index: number): FormControl<boolean | null> {
@@ -239,11 +261,13 @@ export class RemotePlatformEraseComponent implements OnInit {
     ]
     this.eraseCaps.set(caps)
     this.csmeIndex = caps.findIndex((c) => c.key === CSME_UNCONFIGURE_KEY)
+    this.ssdIndex = caps.findIndex((c) => c.key === SSD_ERASE_KEY)
     this.eraseCapsArray = this.fb.array(
       caps.map((cap) => this.fb.control<boolean | null>({ value: false, disabled: !cap.supported }))
     )
     this.selectedCapsCount.set(0)
     this.isCsmeExclusiveSelected.set(false)
+    this.resetSsdControls()
     this.updateCapControlStates()
   }
 
@@ -254,6 +278,9 @@ export class RemotePlatformEraseComponent implements OnInit {
       tpmClear: caps.some((c, i) => c.key === 'tpmClear' && this.eraseCapsArray.at(i)?.value === true),
       restoreBIOSToEOM: caps.some((c, i) => c.key === 'biosRestore' && this.eraseCapsArray.at(i)?.value === true),
       unconfigureCSME: caps.some((c, i) => c.key === 'csmeUnconfigure' && this.eraseCapsArray.at(i)?.value === true)
+    }
+    if (req.secureEraseAllSSDs && this.isSsdEncrypted()) {
+      req.ssdPassword = this.ssdPasswordControl.value ?? ''
     }
     this.isLoading.set(true)
     this.devicesService
@@ -290,6 +317,7 @@ export class RemotePlatformEraseComponent implements OnInit {
             this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
             this.selectedCapsCount.set(0)
             this.isCsmeExclusiveSelected.set(false)
+            this.resetSsdControls()
             this.updateCapControlStates()
           }
         }
@@ -309,6 +337,16 @@ export class RemotePlatformEraseComponent implements OnInit {
         ctrl.disable({ emitEvent: false })
       }
     })
+    if (!featureEnabled && this.isSsdSelected()) {
+      this.resetSsdControls()
+    }
+  }
+
+  private resetSsdControls(): void {
+    this.isSsdSelected.set(false)
+    this.isSsdEncrypted.set(false)
+    this.ssdEncryptedControl.setValue(false)
+    this.ssdPasswordControl.setValue('')
   }
 
   displayError(message: string): void {

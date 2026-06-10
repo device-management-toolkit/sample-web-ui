@@ -2921,6 +2921,14 @@
     "description": "תיאור יכולת מחיקה מאובטחת של כל ה-SSD",
     "value": "הסרת כל התוכן מכוננות ATA ו-NVM באמצעות שילוב של מחיקת מדיה ומחיקה קריפטוגרפית"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "ה-SSD דורש מפתח הצפנה של הדיסק"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "סיסמת הכונן"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "תווית יכולת ניקוי TPM",
     "value": "ניקוי TPM"

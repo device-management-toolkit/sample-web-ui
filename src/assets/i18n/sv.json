@@ -2921,6 +2921,14 @@
     "description": "Beskrivning för säker radering av alla SSD:er",
     "value": "Borttagning av allt innehåll från ATA- och NVM-enheter genom en kombination av medieradering och kryptografisk radering"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD kräver diskkrypteringsnyckel"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Enhetslösenord"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Etikett för TPM-rensning",
     "value": "TPM-rensning"

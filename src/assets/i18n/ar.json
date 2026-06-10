@@ -2921,6 +2921,14 @@
     "description": "وصف إمكانية المسح الآمن لجميع أقراص SSD",
     "value": "إزالة جميع المحتويات من محركات ATA وNVM من خلال مزيج من مسح الوسائط ومسح التشفير"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "يتطلب SSD مفتاح تشفير القرص"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "كلمة مرور محرك الأقراص"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "تسمية إمكانية مسح TPM",
     "value": "مسح TPM"

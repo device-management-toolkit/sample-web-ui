@@ -2921,6 +2921,14 @@
     "description": "Описание для безопасного стирания всех SSD",
     "value": "Удаление всего содержимого с накопителей ATA и NVM с помощью комбинации стирания носителя и криптографического стирания"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD требует ключ шифрования диска"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Пароль диска"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Метка для очистки TPM",
     "value": "Очистка TPM"

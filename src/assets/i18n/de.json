@@ -2921,6 +2921,14 @@
     "description": "Beschreibung für Sicheres Löschen aller SSDs",
     "value": "Entfernung aller Inhalte von ATA- und NVM-Laufwerken durch eine Kombination aus Medien- und Kryptolöschung"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "SSD erfordert Festplattenverschlüsselungsschlüssel"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Laufwerk-Passwort"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Bezeichnung für TPM löschen",
     "value": "TPM löschen"

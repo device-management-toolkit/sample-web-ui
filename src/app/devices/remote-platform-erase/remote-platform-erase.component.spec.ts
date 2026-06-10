@@ -626,6 +626,106 @@ describe('RemotePlatformEraseComponent', () => {
       })
     })
   })
+  describe('SSD encrypted password', () => {
+    beforeEach(() => {
+      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+      component.ngOnInit()
+      component.toggleFeature(true)
+    })
+
+    it('should show encrypted checkbox when SSD cap is selected', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      expect(component.isSsdSelected()).toBeTrue()
+    })
+
+    it('should hide encrypted checkbox when SSD cap is deselected', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.eraseCapControl(0).setValue(false)
+      component.onCapChange()
+      expect(component.isSsdSelected()).toBeFalse()
+    })
+
+    it('should show password input when encrypted checkbox is checked', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      expect(component.isSsdEncrypted()).toBeTrue()
+    })
+
+    it('should hide password input and clear it when encrypted checkbox is unchecked', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      component.ssdPasswordControl.setValue('secret')
+      component.onSsdEncryptedChange(false)
+      expect(component.isSsdEncrypted()).toBeFalse()
+      expect(component.ssdPasswordControl.value).toBe('')
+    })
+
+    it('should include ssdPassword in request when encrypted and SSD selected', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      component.ssdPasswordControl.setValue('mypassword')
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith(
+        '',
+        jasmine.objectContaining({ secureEraseAllSSDs: true, ssdPassword: 'mypassword' })
+      )
+    })
+
+    it('should not include ssdPassword when encrypted checkbox is not checked', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      const call = devicesServiceSpy.setRemoteEraseOptions.calls.mostRecent()
+      expect(call.args[1].ssdPassword).toBeUndefined()
+    })
+
+    it('should reset SSD controls when feature is toggled off', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      component.ssdPasswordControl.setValue('secret')
+      component.toggleFeature(false)
+      expect(component.isSsdSelected()).toBeFalse()
+      expect(component.isSsdEncrypted()).toBeFalse()
+      expect(component.ssdPasswordControl.value).toBe('')
+    })
+
+    it('should reset SSD controls after successful erase', () => {
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      component.ssdPasswordControl.setValue('secret')
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.initiateErase()
+      expect(component.isSsdSelected()).toBeFalse()
+      expect(component.isSsdEncrypted()).toBeFalse()
+      expect(component.ssdPasswordControl.value).toBe('')
+    })
+
+    it('should reset SSD controls when CSME is selected', () => {
+      devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
+        of({ secureEraseAllSSDs: true, tpmClear: false, restoreBIOSToEOM: true, unconfigureCSME: true })
+      )
+      component.ngOnInit()
+      component.toggleFeature(true)
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      component.onSsdEncryptedChange(true)
+      // Now select CSME (index 3) — deselects SSD
+      component.eraseCapControl(3).setValue(true)
+      component.onCapChange()
+      expect(component.isSsdSelected()).toBeFalse()
+      expect(component.isSsdEncrypted()).toBeFalse()
+    })
+  })
+
   describe('supportedCapsCount', () => {
     it('should count only supported capabilities', () => {
       expect(component.supportedCapsCount()).toBe(2)

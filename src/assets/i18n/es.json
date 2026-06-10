@@ -2921,6 +2921,14 @@
     "description": "Descripción para borrado seguro de todos los SSD",
     "value": "Eliminación de todo el contenido de las unidades ATA y NVM mediante una combinación de borrado de medios y borrado criptográfico"
   },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "value": "El SSD requiere clave de cifrado de disco"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label for the SSD drive encryption password input field",
+    "value": "Contraseña de la unidad"
+  },
   "remotePlatformErase.cap.tpmClear.label": {
     "description": "Etiqueta para borrar TPM",
     "value": "Borrar TPM"
