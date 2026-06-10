@@ -1,3 +1,12 @@
+## [3.57.11](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.10...v3.57.11) (2026-06-04)
+
+
+### Bug Fixes
+
+* **e2e:** update cloud activation spec for tls-tunnel implementation ([#3352](https://github.com/device-management-toolkit/sample-web-ui/issues/3352)) ([3d2f199](https://github.com/device-management-toolkit/sample-web-ui/commit/3d2f199ce77c0d864c961e94ac6ead8dc45e13b7))
+
+## [3.57.10](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.9...v3.57.10) (2026-06-03)
+
 ## [3.57.9](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.8...v3.57.9) (2026-05-27)
 
 
