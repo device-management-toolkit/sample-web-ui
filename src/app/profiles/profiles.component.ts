@@ -35,7 +35,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { environment } from '../../environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 
 @Component({
@@ -62,7 +62,7 @@ import { ExportDialogComponent } from './export-dialog/export-dialog.component'
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class ProfilesComponent implements OnInit {

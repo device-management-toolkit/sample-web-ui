@@ -9,7 +9,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatDivider } from '@angular/material/divider'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { NetworkConfig } from '../../../models/models'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-network-settings',
@@ -19,7 +19,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatDivider,
     MatIcon,
     MatProgressBarModule,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './network-settings.component.html',
   styleUrl: './network-settings.component.scss'

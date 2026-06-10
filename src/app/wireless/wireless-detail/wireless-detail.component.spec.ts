@@ -11,7 +11,7 @@ import { WirelessService } from '../wireless.service'
 import { WirelessDetailComponent } from './wireless-detail.component'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
@@ -52,10 +52,10 @@ describe('WirelessDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        WirelessDetailComponent,
-        TranslateModule.forRoot()
+        WirelessDetailComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: WirelessService, useValue: wirelessService },
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: ActivatedRoute, useValue: { params: of({ name: 'profile' }) } },

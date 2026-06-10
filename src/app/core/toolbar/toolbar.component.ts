@@ -17,7 +17,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatIconButton } from '@angular/material/button'
 import { MatDivider } from '@angular/material/divider'
 import { MatToolbar } from '@angular/material/toolbar'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { availableLangs } from '../../../constants'
 import { getDirection } from '../../../utils'
 
@@ -33,7 +33,7 @@ import { getDirection } from '../../../utils'
     MatIcon,
     MatMenu,
     MatMenuItem,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class ToolbarComponent implements OnInit {

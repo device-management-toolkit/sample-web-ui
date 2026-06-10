@@ -12,7 +12,7 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
-import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('LoginComponent', () => {
@@ -33,8 +33,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         LoginComponent,
-        ReactiveFormsModule,
-        TranslateModule.forRoot()
+        ReactiveFormsModule
       ],
       providers: [
         provideNoopAnimations(),

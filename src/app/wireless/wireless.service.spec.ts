@@ -5,7 +5,7 @@ import { WirelessService } from './wireless.service'
 import { AuthService } from '../auth.service'
 import { environment } from '../../environments/environment'
 import { WirelessConfig, DataWithCount, PageEventOptions } from '../../models/models'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('WirelessService', () => {
   let service: WirelessService
@@ -19,8 +19,8 @@ describe('WirelessService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         WirelessService,
         { provide: AuthService, useValue: authServiceSpy },
         { provide: environment, useValue: mockEnvironment },

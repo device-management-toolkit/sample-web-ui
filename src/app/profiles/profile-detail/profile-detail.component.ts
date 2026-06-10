@@ -13,7 +13,7 @@ import { forkJoin, Observable } from 'rxjs'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
 import { NgClass, AsyncPipe } from '@angular/common'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 // Material UI imports
 import { MatToolbar } from '@angular/material/toolbar'
@@ -104,7 +104,7 @@ const NO_PROXY_CONFIGS = 'profileDetail.noProxy.value'
     MatCardActions,
     MatButton,
     AsyncPipe,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class ProfileDetailComponent implements OnInit {

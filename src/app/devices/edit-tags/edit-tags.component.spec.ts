@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { RouterModule } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('EditTagsComponent', () => {
   let component: DeviceEditTagsComponent
@@ -25,10 +25,10 @@ describe('EditTagsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceEditTagsComponent,
-        TranslateModule.forRoot()
+        DeviceEditTagsComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: tags },
         { provide: MatDialogRef, useValue: dialogMock }
       ]

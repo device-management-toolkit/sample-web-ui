@@ -13,7 +13,7 @@ import { ProfilesService } from './profiles.service'
 import { RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfilesComponent', () => {
@@ -51,10 +51,10 @@ describe('ProfilesComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ProfilesComponent,
-        TranslateModule.forRoot()
+        ProfilesComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ProfilesService, useValue: profilesService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

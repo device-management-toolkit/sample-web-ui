@@ -12,7 +12,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('NavbarComponent', () => {
@@ -27,10 +27,10 @@ describe('NavbarComponent', () => {
         MatDividerModule,
         MatListModule,
         RouterModule,
-        NavbarComponent,
-        TranslateModule.forRoot()
+        NavbarComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
