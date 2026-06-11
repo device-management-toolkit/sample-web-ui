@@ -14,6 +14,7 @@ import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ProfilesService } from './profiles.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { Profile, TlsModes } from './profiles.constants'
+import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import {
   MatTable,
   MatColumnDef,
@@ -32,18 +33,18 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
-import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
+import { MatTooltip } from '@angular/material/tooltip'
 import { environment } from '../../environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
+import { ServerFeaturesService } from '../server-features.service'
 
 @Component({
   selector: 'app-profiles',
   templateUrl: './profiles.component.html',
   styleUrls: ['./profiles.component.scss'],
   imports: [
-    ToolkitPipe,
     MatToolbar,
     MatButton,
     MatIcon,
@@ -62,6 +63,8 @@ import { ExportDialogComponent } from './export-dialog/export-dialog.component'
     MatRowDef,
     MatRow,
     MatPaginator,
+    MatTooltip,
+    ToolkitPipe,
     TranslateModule
   ]
 })
@@ -69,6 +72,7 @@ export class ProfilesComponent implements OnInit {
   // Dependency Injection
   private readonly dialog = inject(MatDialog)
   private readonly profilesService = inject(ProfilesService)
+  private readonly serverFeaturesService = inject(ServerFeaturesService)
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
@@ -76,7 +80,6 @@ export class ProfilesComponent implements OnInit {
   public profiles = new MatTableDataSource<Profile>()
   public readonly isLoading = signal(true)
   public totalCount = signal(0)
-  public readonly tlsModes = TlsModes
   public readonly displayedColumns: string[] = [
     'name',
     'networkConfig',
@@ -90,11 +93,23 @@ export class ProfilesComponent implements OnInit {
     count: 'true'
   }
   public readonly cloudMode = environment.cloud
+  // Assume CIRA is enabled until the server says otherwise, so the list never
+  // flashes false "CIRA disabled" warnings or blocks export during the brief
+  // window before getFeatures() resolves. Cloud always keeps it true; in
+  // enterprise the API flips it. Matches the fail-open error handler below.
+  public readonly ciraEnabled = signal(true)
+  public readonly tlsModes = TlsModes
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
     this.getData(this.pageEvent)
+    if (this.cloudMode === false) {
+      this.serverFeaturesService.getFeatures().subscribe({
+        next: (features) => this.ciraEnabled.set(features.ciraEnabled),
+        error: () => this.ciraEnabled.set(true)
+      })
+    }
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -131,6 +146,13 @@ export class ProfilesComponent implements OnInit {
       return
     }
 
+    if (!this.ciraEnabled() && profile.ciraConfigName) {
+      const msg: string = this.translate.instant('profiles.ciraExportDisabled.value')
+
+      this.snackBar.open(msg, undefined, SnackbarDefaults.longError)
+      return
+    }
+
     if (profile.activation === 'acmactivate') {
       const dialogRef = this.dialog.open(ExportDialogComponent, {
         width: '400px',
@@ -163,10 +185,15 @@ export class ProfilesComponent implements OnInit {
 
         this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
       },
-      error: () => {
-        const msg: string = this.translate.instant('profiles.failExportProfile.value')
+      error: (err) => {
+        // Surface the backend reason (e.g. CIRA disabled) when present, like delete does.
+        if (err?.length > 0) {
+          this.snackBar.open(err.join(', '), undefined, SnackbarDefaults.longError)
+        } else {
+          const msg: string = this.translate.instant('profiles.failExportProfile.value')
 
-        this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+        }
       }
     })
   }
@@ -193,7 +220,7 @@ export class ProfilesComponent implements OnInit {
             },
             error: (err) => {
               if (err?.length > 0) {
-                this.snackBar.open(err as string, undefined, SnackbarDefaults.longError)
+                this.snackBar.open(err.join(', '), undefined, SnackbarDefaults.longError)
               } else {
                 const msg: string = this.translate.instant('profiles.failDeleteProfie.value')
 

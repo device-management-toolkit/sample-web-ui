@@ -24,7 +24,17 @@
           <mat-header-cell *matHeaderCellDef style="flex: 1 1 0">
             {{ 'profiles.table.name.value' | translate }}
           </mat-header-cell>
-          <mat-cell *matCellDef="let element" style="flex: 1 1 0"> {{ element.profileName }} </mat-cell>
+          <mat-cell *matCellDef="let element" style="flex: 1 1 0">
+            {{ element.profileName }}
+            @if (!ciraEnabled() && element.ciraConfigName) {
+              <mat-icon
+                color="warn"
+                [matTooltip]="'profileDetail.ciraDisabledWarning.value' | translate"
+                style="font-size: 18px; height: 18px; width: 18px; vertical-align: middle; margin-left: 4px"
+                >warning</mat-icon
+              >
+            }
+          </mat-cell>
         </ng-container>
         <!-- network config Column -->
         <ng-container matColumnDef="networkConfig">
