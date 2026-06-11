@@ -1,3 +1,10 @@
+# [3.58.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.11...v3.58.0) (2026-06-11)
+
+
+### Features
+
+* gate CIRA UI on server features API (enterprise) ([#3350](https://github.com/device-management-toolkit/sample-web-ui/issues/3350)) ([ed104ea](https://github.com/device-management-toolkit/sample-web-ui/commit/ed104ea31450887a433e7e170075d5279d49804c)), closes [#3200](https://github.com/device-management-toolkit/sample-web-ui/issues/3200)
+
 ## [3.57.11](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.10...v3.57.11) (2026-06-04)
 
 
