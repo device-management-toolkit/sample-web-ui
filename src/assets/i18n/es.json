@@ -79,10 +79,6 @@
     "description": "Descripción que explica cómo activar un dispositivo.",
     "value": "Para activar un dispositivo, deberá ejecutar un comando en el dispositivo AMT. Este cuadro de diálogo le ayudará a generar el comando que debe ejecutar."
   },
-  "addDevice.enterGuid": {
-    "description": "Sugerencia para ingresar GUID",
-    "value": "Ingrese GUID"
-  },
   "addDevice.enterTags": {
     "description": "Sugerencia para introducir etiquetas",
     "value": "Puede introducir etiquetas para ayudar a organizar y consultar los dispositivos a medida que crece su lista de dispositivos gestionados. Escriba una etiqueta y, a continuación, pulse Intro o una coma."
@@ -95,10 +91,6 @@
     "description": "Error en los nombres descriptivos obligatorios.",
     "value": "Se requiere un nombre descriptivo."
   },
-  "addDevice.guid": {
-    "description": "Etiqueta para el campo GUID",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Error por nombres de host no válidos",
     "value": "Formato de nombre de host no válido."
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "Error para los nombres de host requeridos",
     "value": "Se requiere el nombre de host."
-  },
-  "addDevice.mpsPassword": {
-    "description": "Etiqueta para el campo de contraseña MPS",
-    "value": "Contraseña MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Sugerencia para el campo de contraseña MPS",
-    "value": "Introducir contraseña MPS"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Etiqueta para el campo de nombre de usuario MPS",
-    "value": "Nombre de usuario MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Sugerencia para el campo de nombre de usuario MPS",
-    "value": "Nombre de usuario MPS (predeterminado: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Etiqueta de casilla de verificación para desactivar la comprobación de certificados autofirmados.",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "Título del cuadro de diálogo para añadir un nuevo dispositivo",
     "value": "Añadir un nuevo dispositivo"
-  },
-  "addDevice.useCIRA": {
-    "description": "Casilla de verificación para usar conexión CIRA",
-    "value": "Usar CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "Error por nombre de usuario no válido.",

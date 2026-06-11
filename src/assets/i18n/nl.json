@@ -79,10 +79,6 @@
     "description": "Beschrijving waarin wordt uitgelegd hoe een apparaat kan worden geactiveerd.",
     "value": "Om een apparaat te activeren, dient u een opdracht uit te voeren op het AMT-apparaat. Dit dialoogvenster helpt u bij het genereren van de uit te voeren opdracht."
   },
-  "addDevice.enterGuid": {
-    "description": "Hint voor het invoeren van GUID",
-    "value": "Voer GUID in"
-  },
   "addDevice.enterTags": {
     "description": "Tip voor het invoeren van tags",
     "value": "U kunt tags invoeren om te helpen bij het organiseren en opvragen van apparaten naarmate uw lijst met beheerde apparaten groeit. Typ een tag en druk vervolgens op Enter of komma."
@@ -95,10 +91,6 @@
     "description": "Fout bij vereiste vriendelijke namen",
     "value": "Vriendelijke naam is vereist."
   },
-  "addDevice.guid": {
-    "description": "Label voor het GUID-veld",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Fout voor ongeldige hostnamen",
     "value": "Ongeldig hostnaamformaat"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "Fout voor vereiste hostnamen",
     "value": "Hostnaam is vereist."
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label voor het MPS-wachtwoord-veld",
-    "value": "MPS-wachtwoord"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint voor het MPS-wachtwoord-veld",
-    "value": "Voer MPS-wachtwoord in"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam (standaard: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Selectievakje om controle van zelfondertekende certificaten uit te schakelen",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "Dialoogvenster voor het toevoegen van een nieuw apparaat",
     "value": "Een nieuw apparaat toevoegen"
-  },
-  "addDevice.useCIRA": {
-    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
-    "value": "Gebruik CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "Foutmelding voor ongeldige gebruikersnaam",

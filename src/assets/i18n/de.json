@@ -79,10 +79,6 @@
     "description": "Beschreibung zur Aktivierung eines Geräts",
     "value": "Um ein Gerät zu aktivieren, müssen Sie einen Befehl auf dem AMT-Gerät ausführen. Dieser Dialog hilft Ihnen bei der Generierung des auszuführenden Befehls."
   },
-  "addDevice.enterGuid": {
-    "description": "Hinweis zur Eingabe der GUID",
-    "value": "GUID eingeben"
-  },
   "addDevice.enterTags": {
     "description": "Hinweis zur Eingabe von Tags",
     "value": "Sie können Tags eingeben, um die Organisation und Abfrage von Geräten zu erleichtern, wenn Ihre Liste der verwalteten Geräte wächst. Geben Sie ein Tag ein und drücken Sie dann die Eingabetaste oder ein Komma."
@@ -95,10 +91,6 @@
     "description": "Fehler bei erforderlichen Anzeigenamen",
     "value": "Der Friendly Name ist erforderlich."
   },
-  "addDevice.guid": {
-    "description": "Bezeichnung für das GUID-Feld",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Fehler bei ungültigen Hostnamen",
     "value": "Ungültiges Hostnamenformat"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "Fehler bei erforderlichen Hostnamen",
     "value": "Der Hostname ist erforderlich."
-  },
-  "addDevice.mpsPassword": {
-    "description": "Bezeichnung für das MPS-Passwort-Feld",
-    "value": "MPS-Passwort"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hinweis für das MPS-Passwort-Feld",
-    "value": "MPS-Passwort eingeben"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Bezeichnung für das MPS-Benutzername-Feld",
-    "value": "MPS-Benutzername"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hinweis für das MPS-Benutzername-Feld",
-    "value": "MPS-Benutzername (Standard: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Kontrollkästchen zum Deaktivieren der Überprüfung selbstsignierter Zertifikate",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "Dialogtitel zum Hinzufügen eines neuen Geräts",
     "value": "Neues Gerät hinzufügen"
-  },
-  "addDevice.useCIRA": {
-    "description": "Kontrollkästchen für die Verwendung der CIRA-Verbindung",
-    "value": "CIRA verwenden"
   },
   "addDevice.userNameInvalid": {
     "description": "Fehler wegen ungültigem Benutzernamen",

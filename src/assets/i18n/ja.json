@@ -79,10 +79,6 @@
     "description": "デバイスのアクティベーション方法の説明",
     "value": "デバイスをアクティベートするには、AMTデバイス上でコマンドを実行する必要があります。このダイアログは、実行するコマンドを生成するのに役立ちます。"
   },
-  "addDevice.enterGuid": {
-    "description": "GUIDを入力するヒント",
-    "value": "GUIDを入力"
-  },
   "addDevice.enterTags": {
     "description": "タグ入力のヒント",
     "value": "管理対象デバイスが増加するにつれ、デバイスの整理や検索に役立つタグを入力できます。タグを入力後、Enterキーまたはコンマを入力してください。"
@@ -95,10 +91,6 @@
     "description": "必須のフレンドリーネームに関するエラー",
     "value": "フレンドリーネームは必須です"
   },
-  "addDevice.guid": {
-    "description": "GUIDフィールドのラベル",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "無効なホスト名に関するエラー",
     "value": "ホスト名の形式が無効です"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "必須ホスト名に関するエラー",
     "value": "ホスト名は必須です"
-  },
-  "addDevice.mpsPassword": {
-    "description": "MPSパスワードフィールドのラベル",
-    "value": "MPSパスワード"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "MPSパスワードフィールドのヒント",
-    "value": "MPSパスワードを入力"
-  },
-  "addDevice.mpsUsername": {
-    "description": "MPSユーザー名フィールドのラベル",
-    "value": "MPSユーザー名"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "MPSユーザー名フィールドのヒント",
-    "value": "MPSユーザー名（デフォルト: admin）"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "自己署名証明書のチェックを無効化するチェックボックスのラベル",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "新しいデバイスを追加するためのダイアログタイトル",
     "value": "新しいデバイスを追加する"
-  },
-  "addDevice.useCIRA": {
-    "description": "CIRA接続を使用するチェックボックス",
-    "value": "CIRAを使用"
   },
   "addDevice.userNameInvalid": {
     "description": "無効なユーザー名のためエラーが発生しました",
