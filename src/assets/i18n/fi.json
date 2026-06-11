@@ -123,34 +123,6 @@
     "description": "Viesti TLS:n käytöstä",
     "value": "Käytä TLS:ää."
   },
-  "addDevice.useCIRA": {
-    "description": "Valintaruutu CIRA-yhteyden käyttöön",
-    "value": "Käytä CIRAa"
-  },
-  "addDevice.guid": {
-    "description": "GUID-kentän otsikko",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Vihje GUID:n syöttämiseen",
-    "value": "Syötä GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "MPS-käyttäjänimi-kentän otsikko",
-    "value": "MPS-käyttäjänimi"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Vihje MPS-käyttäjänimi-kenttään",
-    "value": "MPS-käyttäjänimi (oletus: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "MPS-salasana-kentän otsikko",
-    "value": "MPS-salasana"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Vihje MPS-salasana-kenttään",
-    "value": "Syötä MPS-salasana"
-  },
   "addDevice.amtPassword": {
     "description": "AMT-salasana-kentän otsikko",
     "value": "AMT-salasana"

@@ -123,34 +123,6 @@
     "description": "Bericht voor het gebruik van TLS",
     "value": "Gebruik TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
-    "value": "Gebruik CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Label voor het GUID-veld",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Hint voor het invoeren van GUID",
-    "value": "Voer GUID in"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam (standaard: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label voor het MPS-wachtwoord-veld",
-    "value": "MPS-wachtwoord"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint voor het MPS-wachtwoord-veld",
-    "value": "Voer MPS-wachtwoord in"
-  },
   "addDevice.amtPassword": {
     "description": "Label voor het AMT-wachtwoord-veld",
     "value": "AMT-wachtwoord"
