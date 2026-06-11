@@ -1,0 +1,190 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+.network-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.network-form-title {
+  font-weight: 600;
+}
+
+.network-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.network-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.network-form-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.wireless-profile-list {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0;
+}
+
+.wireless-profile-item:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.network-form-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.network-form-upload-label {
+  font-size: 75%;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.network-form-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.network-form-upload-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 85%;
+}
+
+.like-mat-hint {
+  font-size: 75%;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.network-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.network-tabs {
+  ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  ::ng-deep .mat-mdc-tab-body-content {
+    overflow-x: hidden;
+  }
+}
+
+.network-tab-icon {
+  margin-right: 8px;
+}
+
+.status-up {
+  color: map.get(mat.$m2-green-palette, 700);
+  font-weight: 600;
+}
+
+.status-down {
+  color: map.get(mat.$m2-red-palette, 700);
+  font-weight: 600;
+}
+
+.ieee-status-label {
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.ieee-status-text {
+  font-weight: 600;
+}
+
+.ieee-expand-icon {
+  flex: 0 0 auto;
+  margin-left: -20px;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.ieee-sub-item {
+  p {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+mat-card {
+  position: relative;
+
+  mat-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.card-edit-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+}
+
+.profile-add-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  font-weight: bold;
+}
+
+.network-config-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.network-config-section .network-form {
+  margin-bottom: 0;
+}
+
+@media (max-width: 960px) {
+  .network-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
