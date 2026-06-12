@@ -12,7 +12,7 @@ import { IEEE8021xDetailComponent } from './ieee8021x-detail.component'
 import { AuthenticationProtocols } from '../ieee8021x.constants'
 import { IEEE8021xConfig } from '../../../models/models'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -46,10 +46,10 @@ describe('IEEE8021xDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        IEEE8021xDetailComponent,
-        TranslateModule.forRoot()
+        IEEE8021xDetailComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: IEEE8021xService, useValue: ieee8021xService },
         {
           provide: ActivatedRoute,

@@ -7,7 +7,7 @@ import { Component, inject } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
 import { CdkScrollable } from '@angular/cdk/scrolling'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-dialog-content',
@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    TranslateModule,
+    TranslatePipe,
     MatDialogClose
   ]
 })

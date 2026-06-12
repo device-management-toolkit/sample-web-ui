@@ -5,7 +5,7 @@ import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-key-display-dialog',
@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatButtonModule,
     ClipboardModule,
     MatIconModule,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './key-display-dialog.component.html',
   styleUrl: './key-display-dialog.component.scss'

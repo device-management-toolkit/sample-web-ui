@@ -10,7 +10,7 @@ import { AuthService } from '../../auth.service'
 import { ToolbarComponent } from './toolbar.component'
 import { BehaviorSubject, of } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { environment } from '../../../environments/environment'
@@ -56,10 +56,10 @@ describe('ToolbarComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        ToolbarComponent,
-        TranslateModule.forRoot()
+        ToolbarComponent
       ],
       providers: [
+        provideTranslateService(),
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },

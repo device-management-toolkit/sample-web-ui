@@ -10,7 +10,7 @@ import { Router, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
@@ -45,10 +45,10 @@ describe('AppComponent', () => {
         RouterModule,
         MatSidenavModule,
         TestToolbarComponent,
-        AppComponent,
-        TranslateModule.forRoot()
+        AppComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: AuthService, useValue: authServiceStub },
         {
           provide: Router,

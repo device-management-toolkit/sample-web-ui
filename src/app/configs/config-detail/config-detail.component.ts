@@ -32,7 +32,7 @@ import {
 } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { environment } from '../../../environments/environment'
 
 @Component({
@@ -65,7 +65,7 @@ import { environment } from '../../../environments/environment'
     MatTooltip,
     MatListItemIcon,
     MatListItemTitle,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class ConfigDetailComponent implements OnInit {

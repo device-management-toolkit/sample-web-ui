@@ -28,7 +28,7 @@ import {
   MatCardActions,
   MatCardFooter
 } from '@angular/material/card'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { OAuthService } from 'angular-oauth2-oidc'
 
 @Component({
@@ -55,7 +55,7 @@ import { OAuthService } from 'angular-oauth2-oidc'
     MatCardActions,
     MatButton,
     MatCardFooter,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class LoginComponent {

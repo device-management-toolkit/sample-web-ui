@@ -5,7 +5,7 @@ import { IEEE8021xService } from './ieee8021x.service'
 import { AuthService } from '../auth.service'
 import { environment } from '../../environments/environment'
 import { IEEE8021xConfig, DataWithCount, PageEventOptions } from '../../models/models'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('IEEE8021xService', () => {
   let service: IEEE8021xService
@@ -19,8 +19,8 @@ describe('IEEE8021xService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         IEEE8021xService,
         { provide: AuthService, useValue: authServiceSpy },
         { provide: environment, useValue: mockEnvironment },

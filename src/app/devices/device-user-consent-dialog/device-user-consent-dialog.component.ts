@@ -22,7 +22,7 @@ import { MatButton } from '@angular/material/button'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatError, MatHint } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-user-consent-dialog',
@@ -39,7 +39,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatHint,
     MatDialogActions,
     MatButton,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class DeviceUserConsentDialogComponent {
