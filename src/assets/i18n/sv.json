@@ -123,34 +123,6 @@
     "description": "Meddelande om användning av TLS",
     "value": "Använd TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "Kryssruta för att använda CIRA-anslutning",
-    "value": "Använd CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Etikett för GUID-fält",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Tips för att ange GUID",
-    "value": "Ange GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Etikett för MPS-användarnamnsfält",
-    "value": "MPS-användarnamn"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Tips för MPS-användarnamnsfält",
-    "value": "MPS-användarnamn (standard: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Etikett för MPS-lösenordsfält",
-    "value": "MPS-lösenord"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Tips för MPS-lösenordsfält",
-    "value": "Ange MPS-lösenord"
-  },
   "addDevice.amtPassword": {
     "description": "Etikett för AMT-lösenordsfält",
     "value": "AMT-lösenord"

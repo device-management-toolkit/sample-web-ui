@@ -123,34 +123,6 @@
     "description": "Message pour l'utilisation de TLS",
     "value": "Utilisez TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Case à cocher pour utiliser la connexion CIRA",
-    "value": "Utiliser CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Étiquette pour le champ GUID",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Indication pour entrer le GUID",
-    "value": "Entrez le GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Étiquette pour le champ nom d'utilisateur MPS",
-    "value": "Nom d'utilisateur MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Indication pour le champ nom d'utilisateur MPS",
-    "value": "Nom d'utilisateur MPS (par défaut: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Étiquette pour le champ mot de passe MPS",
-    "value": "Mot de passe MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Indication pour le champ mot de passe MPS",
-    "value": "Entrer le mot de passe MPS"
-  },
   "addDevice.amtPassword": {
     "description": "Étiquette pour le champ mot de passe AMT",
     "value": "Mot de passe AMT"

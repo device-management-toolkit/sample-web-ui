@@ -123,34 +123,6 @@
     "description": "رسالة لاستخدام TLS",
     "value": "استخدم TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "مربع اختيار لاستخدام اتصال CIRA",
-    "value": "استخدام CIRA"
-  },
-  "addDevice.guid": {
-    "description": "تسمية حقل GUID",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "تلميح لإدخال GUID",
-    "value": "أدخل GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "تسمية حقل اسم مستخدم MPS",
-    "value": "اسم مستخدم MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "تلميح لحقل اسم مستخدم MPS",
-    "value": "اسم مستخدم MPS (افتراضي: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "تسمية حقل كلمة مرور MPS",
-    "value": "كلمة مرور MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "تلميح لحقل كلمة مرور MPS",
-    "value": "أدخل كلمة مرور MPS"
-  },
   "addDevice.amtPassword": {
     "description": "تسمية حقل كلمة مرور AMT",
     "value": "كلمة مرور AMT"
