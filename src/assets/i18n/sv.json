@@ -2145,6 +2145,14 @@
     "description": "Etikett för CIRA-konfigurationsfält",
     "value": "CIRA-konfiguration"
   },
+  "profileDetail.ciraDisabledOption": {
+    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
+    "value": "(CIRA är inaktiverat på den här servern)"
+  },
+  "profileDetail.ciraDisabledWarning": {
+    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
+    "value": "CIRA är inaktiverat på den här servern. Den här profilen använder CIRA för sin hanteringsanslutning och fungerar inte förrän CIRA återaktiveras."
+  },
   "profileDetail.connectionConfiguration": {
     "description": "Etikett för avsnittet om anslutningskonfiguration",
     "value": "Konfiguration av tillhandahållen anslutning"
@@ -2332,6 +2340,10 @@
   "profiles.deleteProfile": {
     "description": "Meddelande för raderade profiler",
     "value": "Profilen har raderats"
+  },
+  "profiles.ciraExportDisabled": {
+    "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
+    "value": "CIRA är inaktiverat på den här servern. Den här profilen använder CIRA för sin hanteringsanslutning och fungerar inte förrän CIRA återaktiveras."
   },
   "profiles.exportProfile": {
     "description": "Meddelande för exporterade profiler",

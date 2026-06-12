@@ -14,6 +14,7 @@ import { WirelessService } from '../../wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import { ProxyConfigsService } from '../../proxy-configs/proxy-configs.service'
+import { ServerFeaturesService } from '../../server-features.service'
 import { ProfileDetailComponent } from './profile-detail.component'
 import { Profile } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
@@ -58,6 +59,7 @@ describe('ProfileDetailComponent', () => {
   let ieee8021xGetDataSpy: jasmine.Spy
   let wirelessGetDataSpy: jasmine.Spy
   let proxyGetDataSpy: jasmine.Spy
+  let serverFeaturesGetFeaturesSpy: jasmine.Spy
   // let tlsConfigSpy: jasmine.Spy
   let translate: TranslateService
 
@@ -76,6 +78,7 @@ describe('ProfileDetailComponent', () => {
     const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
     const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
     const proxyConfigsService = jasmine.createSpyObj('ProxyConfigsService', ['getData'])
+    const serverFeaturesService = jasmine.createSpyObj('ServerFeaturesService', ['getFeatures'])
     // const tlsService = jasmine.createSpyObj('TLSService', ['getData'])
     const profileResponse = {
       profileName: 'profile1',
@@ -103,6 +106,7 @@ describe('ProfileDetailComponent', () => {
     proxyGetDataSpy = proxyConfigsService.getData.and.returnValue(
       of({ data: mockProxyConfigs, totalCount: mockProxyConfigs.length })
     )
+    serverFeaturesGetFeaturesSpy = serverFeaturesService.getFeatures.and.returnValue(of({ ciraEnabled: true }))
     // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
     TestBed.configureTestingModule({
       imports: [
@@ -119,6 +123,7 @@ describe('ProfileDetailComponent', () => {
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: WirelessService, useFactory: () => wirelessService },
         { provide: ProxyConfigsService, useValue: proxyConfigsService },
+        { provide: ServerFeaturesService, useValue: serverFeaturesService },
         // { provide: TLSService, useValue: tlsService },
         {
           provide: ActivatedRoute,
@@ -819,6 +824,62 @@ describe('ProfileDetailComponent', () => {
 
       expect(profileUpdateSpy).toHaveBeenCalled()
       expect(component.errorMessages()).toEqual(serverError)
+    })
+  })
+
+  // CIRA gating in enterprise mode (driven by the Console server's APP_DISABLE_CIRA setting).
+  describe('CIRA gating (enterprise mode)', () => {
+    const originalCloud = environment.cloud
+
+    // Re-create the component in enterprise mode so initializeData() takes the
+    // server-features branch instead of the cloud branch.
+    const createEnterpriseComponent = (): ProfileDetailComponent => {
+      environment.cloud = false
+      const enterpriseFixture = TestBed.createComponent(ProfileDetailComponent)
+      enterpriseFixture.detectChanges()
+      return enterpriseFixture.componentInstance
+    }
+
+    afterEach(() => {
+      environment.cloud = originalCloud
+    })
+
+    it('should not fetch CIRA configs when the server reports CIRA disabled', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      ciraGetDataSpy.calls.reset()
+
+      createEnterpriseComponent()
+
+      expect(serverFeaturesGetFeaturesSpy).toHaveBeenCalled()
+      expect(ciraGetDataSpy).not.toHaveBeenCalled()
+    })
+
+    it('should expose ciraEnabled() === false after the features call resolves with CIRA disabled', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+
+      const enterpriseComponent = createEnterpriseComponent()
+
+      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+    })
+
+    it('should fetch CIRA configs when the server reports CIRA enabled', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: true }))
+      ciraGetDataSpy.calls.reset()
+
+      const enterpriseComponent = createEnterpriseComponent()
+
+      expect(ciraGetDataSpy).toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+    })
+
+    it('should fail open and fetch CIRA configs when the features call errors', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(throwError(() => new Error('nope')))
+      ciraGetDataSpy.calls.reset()
+
+      const enterpriseComponent = createEnterpriseComponent()
+
+      expect(ciraGetDataSpy).toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
     })
   })
 

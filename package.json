@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.57.11",
+  "version": "3.58.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -41,7 +41,7 @@
     "angular-oauth2-oidc": "^20.0.2",
     "angular-oauth2-oidc-jwks": "^20.0.0",
     "date-fns": "^4.4.0",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "monaco-editor": "^0.55.1",
     "ngx-monaco-editor-v2": "^21.1.4",
     "rxjs": "~7.8.2",

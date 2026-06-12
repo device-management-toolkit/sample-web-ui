@@ -2145,6 +2145,14 @@
     "description": "تسمية حقل تكوين CIRA",
     "value": "تكوين CIRA"
   },
+  "profileDetail.ciraDisabledOption": {
+    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
+    "value": "(CIRA معطّل على هذا الخادم)"
+  },
+  "profileDetail.ciraDisabledWarning": {
+    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
+    "value": "CIRA معطّل على هذا الخادم. يستخدم هذا الملف الشخصي CIRA لاتصال الإدارة الخاص به ولن يعمل حتى تتم إعادة تمكين CIRA."
+  },
   "profileDetail.connectionConfiguration": {
     "description": "تسمية قسم تكوين الاتصال",
     "value": "تكوين الاتصال المُوفر"
@@ -2332,6 +2340,10 @@
   "profiles.deleteProfile": {
     "description": "رسالة للملفات الشخصية المحذوفة",
     "value": "تم حذف الملف الشخصي بنجاح"
+  },
+  "profiles.ciraExportDisabled": {
+    "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
+    "value": "CIRA معطّل على هذا الخادم. يستخدم هذا الملف الشخصي CIRA لاتصال الإدارة الخاص به ولن يعمل حتى تتم إعادة تمكين CIRA."
   },
   "profiles.exportProfile": {
     "description": "رسالة للملفات الشخصية المصدرة",
