@@ -15,6 +15,7 @@ import { PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
+import { UserConsentService } from '../user-consent.service'
 
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
@@ -41,6 +42,7 @@ describe('RemotePlatformEraseComponent', () => {
   let matDialogSpy: jasmine.SpyObj<MatDialog>
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>
   let routerSpy: jasmine.SpyObj<Router>
+  let userConsentServiceSpy: jasmine.SpyObj<UserConsentService>
 
   beforeEach(async () => {
     devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
@@ -61,6 +63,12 @@ describe('RemotePlatformEraseComponent', () => {
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     routerSpy.navigate.and.returnValue(Promise.resolve(true))
+    userConsentServiceSpy = jasmine.createSpyObj('UserConsentService', [
+      'handleUserConsentDecision',
+      'handleUserConsentResponse'
+    ])
+    userConsentServiceSpy.handleUserConsentDecision.and.returnValue(of(null))
+    userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
 
     devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures }))
     // Delegate getAMTFeaturesCached to getAMTFeatures so per-test returnValue configs apply to both
@@ -76,7 +84,8 @@ describe('RemotePlatformEraseComponent', () => {
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: MatSnackBar, useValue: snackBarSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: Router, useValue: routerSpy },
+        { provide: UserConsentService, useValue: userConsentServiceSpy }
       ]
     }).compileComponents()
 
@@ -774,6 +783,154 @@ describe('RemotePlatformEraseComponent', () => {
       fixture.detectChanges()
       const hint = fixture.nativeElement.querySelector('mat-icon[color="primary"]')
       expect(hint).toBeNull()
+    })
+  })
+
+  describe('checkUserConsent', () => {
+    it('should return true and set readyToErase when userConsent is none', (done) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'none' })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBeTrue()
+        expect(component.readyToErase).toBeTrue()
+        done()
+      })
+    })
+
+    it('should return true and set readyToErase when optInState is 3', (done) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 3 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBeTrue()
+        expect(component.readyToErase).toBeTrue()
+        done()
+      })
+    })
+
+    it('should return true and set readyToErase when optInState is 4', (done) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 4 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBeTrue()
+        expect(component.readyToErase).toBeTrue()
+        done()
+      })
+    })
+
+    it('should return false and not set readyToErase when userConsent is all and consent is required', (done) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 1 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBeFalse()
+        expect(component.readyToErase).toBeFalse()
+        done()
+      })
+    })
+  })
+
+  describe('postUserConsentDecision', () => {
+    const operations = 'SSD Erase'
+
+    it('should open AreYouSureDialog when result is null (consent not required)', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.postUserConsentDecision(null, operations).subscribe()
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+    })
+
+    it('should open AreYouSureDialog when result is true (consent granted)', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.postUserConsentDecision(true, operations).subscribe()
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+    })
+
+    it('should not open AreYouSureDialog when result is false (consent denied)', () => {
+      component.postUserConsentDecision(false, operations).subscribe()
+      expect(matDialogSpy.open).not.toHaveBeenCalled()
+    })
+
+    it('should call executeErase when AreYouSure dialog is confirmed', () => {
+      component.platformEraseEnabled.set(true)
+      component.eraseCaps.set([
+        { key: 'secureEraseSsds', supported: true },
+        { key: 'tpmClear', supported: false },
+        { key: 'biosRestore', supported: false },
+        { key: 'csmeUnconfigure', supported: false }
+      ])
+      component.eraseCapsArray.at(0).enable()
+      component.eraseCapsArray.at(0).setValue(true)
+      component.selectedCapsCount.set(1)
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      component.postUserConsentDecision(null, operations).subscribe()
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
+    })
+
+    it('should not call executeErase when AreYouSure dialog is cancelled', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.postUserConsentDecision(null, operations).subscribe()
+      expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
+    })
+
+    it('should pass device label and operations in the dialog data', () => {
+      component.deviceLabel.set('my-device')
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.postUserConsentDecision(null, operations).subscribe()
+      const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+      expect(config.data.params.device).toBe('my-device')
+      expect(config.data.params.operations).toBe(operations)
+    })
+  })
+
+  describe('initiateErase user consent flow', () => {
+    beforeEach(() => {
+      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+      component.ngOnInit()
+      component.toggleFeature(true)
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+    })
+
+    it('should call handleUserConsentDecision via UserConsentService', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.initiateErase()
+      expect(userConsentServiceSpy.handleUserConsentDecision).toHaveBeenCalled()
+    })
+
+    it('should call handleUserConsentDecision with deviceId and amtFeatures', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.initiateErase()
+      expect(userConsentServiceSpy.handleUserConsentDecision).toHaveBeenCalledWith(
+        jasmine.anything(),
+        '',
+        component.amtFeatures() ?? undefined
+      )
+    })
+
+    it('should call handleUserConsentResponse with RPE as feature name', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.initiateErase()
+      expect(userConsentServiceSpy.handleUserConsentResponse).toHaveBeenCalledWith('', null, 'RPE')
+    })
+
+    it('should open AreYouSure dialog when handleUserConsentResponse returns null (consent not required)', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.initiateErase()
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+    })
+
+    it('should open AreYouSure dialog when handleUserConsentResponse returns true (consent granted)', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(true))
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      component.initiateErase()
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+    })
+
+    it('should not open AreYouSure dialog when consent is denied', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(false))
+      component.initiateErase()
+      expect(matDialogSpy.open).not.toHaveBeenCalled()
+    })
+
+    it('should not call setRemoteEraseOptions when consent is denied', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(false))
+      component.initiateErase()
+      expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
     })
   })
 })

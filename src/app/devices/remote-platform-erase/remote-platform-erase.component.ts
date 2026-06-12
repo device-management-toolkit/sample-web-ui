@@ -22,12 +22,14 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { filter, finalize, forkJoin, Observable, of, EMPTY } from 'rxjs'
 import { DevicesService } from '../devices.service'
+import { UserConsentService } from '../user-consent.service'
 import {
   AMTFeaturesRequest,
   AMTFeaturesResponse,
   PowerState,
   BootCapabilities,
-  RemoteEraseRequest
+  RemoteEraseRequest,
+  UserConsentResponse
 } from '../../../models/models'
 import { ParsedPlatformEraseCapability } from './remote-platform-erase.constants'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -65,6 +67,9 @@ export class RemotePlatformEraseComponent implements OnInit {
   private readonly fb = inject(FormBuilder)
   private readonly translate = inject(TranslateService)
   private readonly router = inject(Router)
+  private readonly userConsentService = inject(UserConsentService)
+
+  public deviceConnection = signal(false)
 
   public readonly deviceId = input('')
   public deviceLabel = signal('')
@@ -82,6 +87,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   private csmeIndex = -1
   private ssdIndex = -1
   public isSsdSelected = signal(false)
+  public readyToErase = false
   public isSsdEncrypted = signal(false)
   public ssdEncryptedControl = this.fb.control<boolean | null>(false)
   public ssdPasswordControl = this.fb.control<string | null>('')
@@ -233,7 +239,25 @@ export class RemotePlatformEraseComponent implements OnInit {
       .map((cap) => this.t(`remotePlatformErase.cap.${cap.key}.label`))
       .join(', ')
 
-    this.matDialog
+    this.checkUserConsent()
+      .pipe(
+        switchMap((result: any) =>
+          // safely convert null to undefined for type compatibility
+          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
+        ),
+        switchMap((result: any | UserConsentResponse) =>
+          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'RPE')
+        ),
+        switchMap((result: any) => this.postUserConsentDecision(result, operations))
+      )
+      .subscribe()
+  }
+
+  postUserConsentDecision(result: any, operations: string): Observable<any> {
+    if (result === false) {
+      return of(null)
+    }
+    return this.matDialog
       .open(AreYouSureDialogComponent, {
         data: {
           message: 'remotePlatformErase.confirmMessage',
@@ -241,11 +265,14 @@ export class RemotePlatformEraseComponent implements OnInit {
         }
       })
       .afterClosed()
-      .subscribe((result) => {
-        if (result === true) {
-          this.executeErase()
-        }
-      })
+      .pipe(
+        switchMap((confirmed: boolean) => {
+          if (confirmed === true) {
+            this.executeErase()
+          }
+          return of(null)
+        })
+      )
   }
 
   private applyFeatures(features: AMTFeaturesResponse, capabilities: BootCapabilities): void {
@@ -340,6 +367,20 @@ export class RemotePlatformEraseComponent implements OnInit {
     if (!featureEnabled && this.isSsdSelected()) {
       this.resetSsdControls()
     }
+  }
+
+  checkUserConsent(): Observable<any> {
+    if (
+      this.amtFeatures()?.userConsent === 'none' ||
+      this.amtFeatures()?.optInState === 3 ||
+      this.amtFeatures()?.optInState === 4
+    ) {
+      this.readyToErase = true
+      // Auto-connect when user consent is not required
+      this.deviceConnection.set(true)
+      return of(true)
+    }
+    return of(false)
   }
 
   private resetSsdControls(): void {
