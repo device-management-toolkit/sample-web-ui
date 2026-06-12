@@ -156,6 +156,18 @@
             }}
           </div>
         }
+        @if (!cloudMode) {
+          <div class="flex flex-50 items-end">
+            <p>{{ 'general.remotePlatformErase.value' | translate }}</p>
+          </div>
+          <div
+            class="flex flex-50 justify-end items-start"
+            [matTooltip]="'general.remotePlatformEraseNotSupported.value' | translate"
+            [matTooltipDisabled]="!amtEnabledFeatures.get('rpe')?.disabled"
+            matTooltipPosition="after">
+            <mat-checkbox formControlName="rpe" (change)="setAmtFeatures()"></mat-checkbox>
+          </div>
+        }
         <div class="flex flex-50 items-end">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>
