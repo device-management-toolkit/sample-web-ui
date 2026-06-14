@@ -1,0 +1,79 @@
+.network-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.network-form-title {
+  font-weight: 600;
+}
+
+.network-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.network-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.network-form-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.wireless-profile-list {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0;
+}
+
+.wireless-profile-item:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.network-form-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.network-form-upload-label {
+  font-size: 75%;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.network-form-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.network-form-upload-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 85%;
+}
+
+.like-mat-hint {
+  font-size: 75%;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+@media (max-width: 960px) {
+  .network-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
