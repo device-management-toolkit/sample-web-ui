@@ -550,3 +550,8 @@ export interface DisplaySelectionResponse {
 export interface DisplaySelectionRequest {
   displayIndex: number
 }
+
+// Server-level capability flags exposed by the Console API (enterprise build).
+export interface ServerFeatures {
+  ciraEnabled: boolean
+}

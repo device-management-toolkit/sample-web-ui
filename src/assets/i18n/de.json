@@ -2153,6 +2153,14 @@
     "description": "Bezeichnung für das CIRA-Konfigurationsfeld",
     "value": "CIRA-Konfiguration"
   },
+  "profileDetail.ciraDisabledOption": {
+    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
+    "value": "(CIRA ist auf diesem Server deaktiviert)"
+  },
+  "profileDetail.ciraDisabledWarning": {
+    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
+    "value": "CIRA ist auf diesem Server deaktiviert. Dieses Profil verwendet CIRA für seine Verwaltungsverbindung und funktioniert erst, wenn CIRA wieder aktiviert wird."
+  },
   "profileDetail.connectionConfiguration": {
     "description": "Bezeichnung für den Abschnitt zur Verbindungskonfiguration",
     "value": "Konfiguration der bereitgestellten Verbindung"
@@ -2340,6 +2348,10 @@
   "profiles.deleteProfile": {
     "description": "Nachricht für gelöschte Profile",
     "value": "Profil erfolgreich gelöscht"
+  },
+  "profiles.ciraExportDisabled": {
+    "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
+    "value": "CIRA ist auf diesem Server deaktiviert. Dieses Profil verwendet CIRA für seine Verwaltungsverbindung und funktioniert erst, wenn CIRA wieder aktiviert wird."
   },
   "profiles.exportProfile": {
     "description": "Nachricht für exportierte Profile",
