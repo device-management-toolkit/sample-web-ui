@@ -2153,6 +2153,14 @@
     "description": "CIRA設定フィールドのラベル",
     "value": "CIRA設定"
   },
+  "profileDetail.ciraDisabledOption": {
+    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
+    "value": "(このサーバーでは CIRA が無効になっています)"
+  },
+  "profileDetail.ciraDisabledWarning": {
+    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
+    "value": "このサーバーでは CIRA が無効になっています。このプロファイルは管理接続に CIRA を使用しているため、CIRA が再度有効になるまで機能しません。"
+  },
   "profileDetail.connectionConfiguration": {
     "description": "接続設定セクションのラベル",
     "value": "プロビジョニング済み接続設定"
@@ -2340,6 +2348,10 @@
   "profiles.deleteProfile": {
     "description": "削除されたプロフィールに関するメッセージ",
     "value": "プロファイルの削除が正常に完了しました"
+  },
+  "profiles.ciraExportDisabled": {
+    "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
+    "value": "このサーバーでは CIRA が無効になっています。このプロファイルは管理接続に CIRA を使用しているため、CIRA が再度有効になるまで機能しません。"
   },
   "profiles.exportProfile": {
     "description": "エクスポートされたプロファイルに関するメッセージ",

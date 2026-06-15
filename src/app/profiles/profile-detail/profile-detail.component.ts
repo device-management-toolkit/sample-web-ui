@@ -39,6 +39,7 @@ import { ProfilesService } from '../profiles.service'
 import { WirelessService } from '../../wireless/wireless.service'
 import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import { ProxyConfigsService } from '../../proxy-configs/proxy-configs.service'
+import { ServerFeaturesService } from '../../server-features.service'
 
 // Shared components
 import { RandomPassAlertComponent } from '../../shared/random-pass-alert/random-pass-alert.component'
@@ -133,6 +134,7 @@ export class ProfileDetailComponent implements OnInit {
   private readonly wirelessService = inject(WirelessService)
   private readonly ieee8021xService = inject(IEEE8021xService)
   private readonly proxyConfigsService = inject(ProxyConfigsService)
+  private readonly serverFeaturesService = inject(ServerFeaturesService)
   private readonly dialog = inject(MatDialog)
   private readonly translate = inject(TranslateService)
   public readonly router = inject(Router)
@@ -140,6 +142,11 @@ export class ProfileDetailComponent implements OnInit {
   NO_PROXY_CONFIGS = this.translate.instant(NO_PROXY_CONFIGS)
   // Computed properties and signals
   public readonly cloudMode = environment.cloud
+  // CIRA connection-mode availability. Cloud (MPS+RPS) always supports it; in
+  // enterprise it is driven by the Console server's APP_DISABLE_CIRA setting
+  // (fetched on init). Start from cloudMode so enterprise hides CIRA until the
+  // API responds, avoiding a flash when the server reports CIRA disabled.
+  public readonly ciraEnabled = signal(this.cloudMode)
   public readonly isLoading = signal(false)
   public readonly errorMessages = signal<string[]>([])
 
@@ -201,9 +208,24 @@ export class ProfileDetailComponent implements OnInit {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
     if (this.cloudMode) {
+      // Cloud always has CIRA; proxy configs are cloud-only too.
       this.getProxyConfigs()
+      this.getCiraConfigs()
+    } else {
+      // Enterprise: only fetch CIRA configs when the server reports CIRA enabled,
+      // otherwise the CIRA-configs endpoint 404s.
+      this.serverFeaturesService.getFeatures().subscribe({
+        next: (features) => {
+          this.ciraEnabled.set(features.ciraEnabled)
+          if (features.ciraEnabled) this.getCiraConfigs()
+        },
+        // Fail open: if the features call fails, assume CIRA is enabled.
+        error: () => {
+          this.ciraEnabled.set(true)
+          this.getCiraConfigs()
+        }
+      })
     }
-    this.getCiraConfigs()
   }
 
   private setupFormSubscriptions(): void {
