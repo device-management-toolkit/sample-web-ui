@@ -2922,11 +2922,11 @@
     "value": "Eliminación de todo el contenido de las unidades ATA y NVM mediante una combinación de borrado de medios y borrado criptográfico"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "Etiqueta para la casilla de verificación que indica que la unidad SSD requiere una clave de cifrado de disco",
     "value": "El SSD requiere clave de cifrado de disco"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "Etiqueta para el campo de entrada de la contraseña de cifrado de la unidad SSD",
     "value": "Contraseña de la unidad"
   },
   "remotePlatformErase.cap.tpmClear.label": {

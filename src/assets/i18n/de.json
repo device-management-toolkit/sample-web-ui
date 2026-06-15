@@ -2922,11 +2922,11 @@
     "value": "Entfernung aller Inhalte von ATA- und NVM-Laufwerken durch eine Kombination aus Medien- und Kryptolöschung"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "Beschriftung für das Kontrollkästchen, das angibt, dass das SSD-Laufwerk einen Festplattenverschlüsselungsschlüssel benötigt",
     "value": "SSD erfordert Festplattenverschlüsselungsschlüssel"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "Beschriftung für das Eingabefeld des Verschlüsselungspassworts des SSD-Laufwerks",
     "value": "Laufwerk-Passwort"
   },
   "remotePlatformErase.cap.tpmClear.label": {

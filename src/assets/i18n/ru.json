@@ -2922,11 +2922,11 @@
     "value": "Удаление всего содержимого с накопителей ATA и NVM с помощью комбинации стирания носителя и криптографического стирания"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "Метка флажка, указывающего, что SSD-накопитель требует ключ шифрования диска",
     "value": "SSD требует ключ шифрования диска"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "Метка поля ввода пароля шифрования SSD-накопителя",
     "value": "Пароль диска"
   },
   "remotePlatformErase.cap.tpmClear.label": {

@@ -2922,11 +2922,11 @@
     "value": "הסרת כל התוכן מכוננות ATA ו-NVM באמצעות שילוב של מחיקת מדיה ומחיקה קריפטוגרפית"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "תווית תיבת הסימון המציינת שכונן ה-SSD דורש מפתח הצפנה של הדיסק",
     "value": "ה-SSD דורש מפתח הצפנה של הדיסק"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "תווית שדה הזנת סיסמת ההצפנה של כונן ה-SSD",
     "value": "סיסמת הכונן"
   },
   "remotePlatformErase.cap.tpmClear.label": {

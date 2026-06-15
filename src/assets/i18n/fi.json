@@ -2922,11 +2922,11 @@
     "value": "Kaiken sisällön poistaminen ATA- ja NVM-asemilta median ja salauksen pyyhinnän yhdistelmällä"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "Valintaruudun otsikko, joka ilmaisee, että SSD-asema vaatii levyn salausavaimen",
     "value": "SSD vaatii levyn salausavaimen"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "SSD-aseman salaussalasanan syöttökentän otsikko",
     "value": "Aseman salasana"
   },
   "remotePlatformErase.cap.tpmClear.label": {

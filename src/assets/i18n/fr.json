@@ -2922,11 +2922,11 @@
     "value": "Suppression de tout le contenu des lecteurs ATA et NVM par une combinaison d'effacement de média et d'effacement cryptographique"
   },
   "remotePlatformErase.ssdEncrypted.label": {
-    "description": "Label for the checkbox indicating the SSD drive requires a disk encryption key",
+    "description": "Étiquette pour la case à cocher indiquant que le lecteur SSD nécessite une clé de chiffrement de disque",
     "value": "Le SSD nécessite une clé de chiffrement de disque"
   },
   "remotePlatformErase.ssdPassword.label": {
-    "description": "Label for the SSD drive encryption password input field",
+    "description": "Étiquette pour le champ de saisie du mot de passe de chiffrement du lecteur SSD",
     "value": "Mot de passe du lecteur"
   },
   "remotePlatformErase.cap.tpmClear.label": {
