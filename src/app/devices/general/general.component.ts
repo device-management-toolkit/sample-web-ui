@@ -18,7 +18,7 @@ import { environment } from '../../../environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-general',
@@ -30,7 +30,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     FormsModule,
     ReactiveFormsModule,
     MatTooltip,
-    TranslateModule,
+    TranslatePipe,
     MatIcon,
     MatButton
   ],

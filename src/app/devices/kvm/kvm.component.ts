@@ -40,7 +40,7 @@ import { MatSelect } from '@angular/material/select'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { MatToolbar } from '@angular/material/toolbar'
 import { UserConsentService } from '../user-consent.service'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-kvm',
@@ -60,7 +60,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatProgressSpinner,
     KVMComponent,
     IDERComponent,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class KvmComponent implements OnInit, OnDestroy {

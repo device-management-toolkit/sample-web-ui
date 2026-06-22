@@ -9,7 +9,7 @@ import { DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -60,10 +60,10 @@ describe('PBABootDialogComponent', () => {
       imports: [
         PBABootDialogComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
-        TranslateModule.forRoot()
+        NoopAnimationsModule
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
@@ -222,10 +222,10 @@ describe('PBABootDialogComponent in CCM mode', () => {
       imports: [
         PBABootDialogComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
-        TranslateModule.forRoot()
+        NoopAnimationsModule
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },

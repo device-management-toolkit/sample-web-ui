@@ -10,7 +10,7 @@ import { of, throwError } from 'rxjs'
 import { ProxyConfigsService } from '../proxy-configs.service'
 import { ProxyConfigDetailComponent } from './proxy-config-detail.component'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
@@ -44,10 +44,10 @@ describe('ProxyConfigDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ProxyConfigDetailComponent,
-        TranslateModule.forRoot()
+        ProxyConfigDetailComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ProxyConfigsService, useValue: proxyConfigsService },
         { provide: ActivatedRoute, useValue: { params: of({ name: 'test-proxy' }) } },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },

@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
 import { MatTooltip } from '@angular/material/tooltip'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { ServerFeaturesService } from '../../server-features.service'
 
 @Component({
@@ -26,7 +26,7 @@ import { ServerFeaturesService } from '../../server-features.service'
     MatIcon,
     MatListItemIcon,
     MatTooltip,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class NavbarComponent implements OnInit {

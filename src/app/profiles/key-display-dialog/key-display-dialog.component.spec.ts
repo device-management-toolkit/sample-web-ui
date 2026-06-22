@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyDisplayDialogComponent } from './key-display-dialog.component'
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
 import { provideNoopAnimations } from '@angular/platform-browser/animations'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('KeyDisplayDialogComponent', () => {
   let component: KeyDisplayDialogComponent
@@ -12,6 +12,7 @@ describe('KeyDisplayDialogComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        provideTranslateService(),
         provideNoopAnimations(),
         {
           provide: MAT_DIALOG_DATA,
@@ -20,8 +21,7 @@ describe('KeyDisplayDialogComponent', () => {
       ],
       imports: [
         KeyDisplayDialogComponent,
-        MatDialogModule,
-        TranslateModule.forRoot()
+        MatDialogModule
       ]
     })
 

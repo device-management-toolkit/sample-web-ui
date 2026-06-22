@@ -7,7 +7,7 @@ import { CertificatesComponent } from './certificates.component'
 import { DevicesService } from '../devices.service'
 import { of, Subject } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
@@ -158,10 +158,10 @@ describe('CertificatesComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        CertificatesComponent,
-        TranslateModule.forRoot()
+        CertificatesComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },

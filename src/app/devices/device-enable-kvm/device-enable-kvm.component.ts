@@ -12,7 +12,7 @@ import {
   MatDialogContent
 } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-enable-kvm',
@@ -23,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    TranslateModule,
+    TranslatePipe,
     MatDialogClose
   ]
 })

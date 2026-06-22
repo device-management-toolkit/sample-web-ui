@@ -12,7 +12,7 @@ import { ConfigsComponent } from './configs.component'
 import { ConfigsService } from './configs.service'
 import { RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -49,10 +49,10 @@ describe('ConfigsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ConfigsComponent,
-        TranslateModule.forRoot()
+        ConfigsComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ConfigsService, useValue: configsService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { of } from 'rxjs'
 import { UserConsentData, UserConsentResponse } from '../../models/models'
 import { environment } from '../../environments/environment'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('UserConsentService', () => {
   let service: UserConsentService
@@ -39,8 +39,8 @@ describe('UserConsentService', () => {
     }
     userConsentData = { deviceId: '111', results: userConsentResponse }
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         UserConsentService,
         { provide: DevicesService, useValue: devicesService },
         { provide: MatDialog, useValue: dialog },

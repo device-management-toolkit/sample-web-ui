@@ -18,7 +18,7 @@ import {
   BootDetails,
   DisplaySelectionResponse
 } from '../../models/models'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DevicesService', () => {
   let service: DevicesService
@@ -31,8 +31,8 @@ describe('DevicesService', () => {
     environment.rpsServer = mockEnvironment.rpsServer
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         DevicesService,
         { provide: environment, useValue: mockEnvironment },
         provideHttpClient(),

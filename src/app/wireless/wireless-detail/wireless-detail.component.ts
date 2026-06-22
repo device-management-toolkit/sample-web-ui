@@ -23,7 +23,7 @@ import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angula
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card'
 import { MatToolbar } from '@angular/material/toolbar'
 import { WirelessConfig } from '../../../models/models'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatProgressBar } from '@angular/material/progress-bar'
 
 @Component({
@@ -53,7 +53,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
     MatListItemIcon,
     MatListItemTitle,
     MatProgressBar,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class WirelessDetailComponent implements OnInit {

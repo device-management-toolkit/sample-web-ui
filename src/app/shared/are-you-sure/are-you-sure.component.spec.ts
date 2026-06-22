@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { AreYouSureDialogComponent } from './are-you-sure.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('AreYouSureComponent', () => {
   let component: AreYouSureDialogComponent
@@ -19,9 +19,9 @@ describe('AreYouSureComponent', () => {
       imports: [
         MatDialogModule,
         MatButtonModule,
-        AreYouSureDialogComponent,
-        TranslateModule.forRoot()
-      ]
+        AreYouSureDialogComponent
+      ],
+      providers: [provideTranslateService()]
     })
   })
 

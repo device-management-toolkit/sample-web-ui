@@ -7,7 +7,7 @@ import { Component, inject } from '@angular/core'
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { MatButton } from '@angular/material/button'
 import { MatCardContent } from '@angular/material/card'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-enable-sol',
@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatCardContent,
     MatDialogActions,
     MatButton,
-    TranslateModule,
+    TranslatePipe,
     MatDialogClose
   ]
 })

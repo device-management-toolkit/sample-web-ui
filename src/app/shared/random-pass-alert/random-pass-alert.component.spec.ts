@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { RandomPassAlertComponent } from './random-pass-alert.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('RandomPassAlertComponent', () => {
   let component: RandomPassAlertComponent
@@ -17,9 +17,9 @@ describe('RandomPassAlertComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
-        RandomPassAlertComponent,
-        TranslateModule.forRoot()
-      ]
+        RandomPassAlertComponent
+      ],
+      providers: [provideTranslateService()]
     })
   })
 

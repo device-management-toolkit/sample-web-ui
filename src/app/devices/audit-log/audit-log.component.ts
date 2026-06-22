@@ -20,7 +20,7 @@ import { DeviceLogService } from '../device-log.service'
 import { MatButtonModule } from '@angular/material/button'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-audit-log',
@@ -35,7 +35,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatPaginatorModule,
     AmDateFormatterPipe,
     AmTimeAgoFormatterPipe,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class AuditLogComponent implements AfterViewInit, OnDestroy {

@@ -19,7 +19,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
 import { AmTimeAgoFormatterPipe } from '../../shared/pipes/time-ago-formatter.pipe.ts.pipe'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 type EventTypeMap = Record<number, string>
 const EVENTTYPEMAP: EventTypeMap = {
@@ -42,7 +42,7 @@ const EVENTTYPEMAP: EventTypeMap = {
     MatIconModule,
     AmTimeAgoFormatterPipe,
     AmDateFormatterPipe,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class EventLogComponent implements AfterViewInit, OnDestroy {

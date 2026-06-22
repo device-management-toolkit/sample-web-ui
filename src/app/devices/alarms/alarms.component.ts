@@ -29,7 +29,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { environment } from '../../../environments/environment'
 import { MatTooltip } from '@angular/material/tooltip'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 
@@ -48,7 +48,7 @@ import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sur
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    TranslateModule,
+    TranslatePipe,
     MatTooltip
   ],
   templateUrl: './alarms.component.html',

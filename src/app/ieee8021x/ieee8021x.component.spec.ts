@@ -12,7 +12,7 @@ import { IEEE8021xComponent } from './ieee8021x.component'
 import { IEEE8021xService } from './ieee8021x.service'
 import { RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -41,10 +41,10 @@ describe('IEEE8021xComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        IEEE8021xComponent,
-        TranslateModule.forRoot()
+        IEEE8021xComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: IEEE8021xService, useValue: ieee8021xService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

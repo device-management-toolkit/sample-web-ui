@@ -9,7 +9,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AuditLogComponent } from './audit-log.component'
 import { DeviceLogService } from '../device-log.service'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('AuditLogComponent', () => {
   let component: AuditLogComponent
@@ -24,10 +24,10 @@ describe('AuditLogComponent', () => {
       imports: [
         NoopAnimationsModule,
         RouterModule,
-        AuditLogComponent,
-        TranslateModule.forRoot()
+        AuditLogComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DeviceLogService, useValue: devicesService },
         {
           provide: ActivatedRoute,

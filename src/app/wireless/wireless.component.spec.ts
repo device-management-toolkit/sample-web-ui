@@ -11,7 +11,7 @@ import { of } from 'rxjs'
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
 import { RouterModule } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -45,10 +45,10 @@ describe('WirelessComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        WirelessComponent,
-        TranslateModule.forRoot()
+        WirelessComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: WirelessService, useValue: wirelessService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

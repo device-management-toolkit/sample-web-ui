@@ -20,7 +20,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { UserConsentService } from '../user-consent.service'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-sol',
@@ -32,7 +32,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatIcon,
     MatButton,
     SOLComponent,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class SolComponent implements OnInit, OnDestroy {

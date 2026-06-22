@@ -11,7 +11,7 @@ import { of, throwError } from 'rxjs'
 import { ProxyConfigsComponent } from './proxy-configs.component'
 import { ProxyConfigsService } from './proxy-configs.service'
 import { RouterModule } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -44,10 +44,10 @@ describe('ProxyConfigsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ProxyConfigsComponent,
-        TranslateModule.forRoot()
+        ProxyConfigsComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ProxyConfigsService, useValue: proxyConfigsService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

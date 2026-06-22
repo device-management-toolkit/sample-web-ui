@@ -28,7 +28,7 @@ import { UserConsentService } from '../user-consent.service'
 import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
 import { PBABootDialogComponent } from './pba-boot-dialog/pba-boot-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 const PROVISIONING_MODE_CCM = 4
 
@@ -52,7 +52,7 @@ interface PowerOptions {
     MatMenu,
     MatMenuItem,
     MatProgressBar,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class DeviceToolbarComponent implements OnInit {

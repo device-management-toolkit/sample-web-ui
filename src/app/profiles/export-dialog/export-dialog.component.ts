@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { DomainsService } from '../../domains/domains.service'
 import { type Domain } from '../../../models/models'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-export-dialog',
@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ReactiveFormsModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './export-dialog.component.html',
   styleUrl: './export-dialog.component.scss'

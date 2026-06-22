@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 
 import { AboutComponent } from './about.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('AboutComponent', () => {
   let component: AboutComponent
@@ -21,9 +21,9 @@ describe('AboutComponent', () => {
         MatListModule,
         MatIconModule,
         MatDialogModule,
-        AboutComponent,
-        TranslateModule.forRoot()
-      ]
+        AboutComponent
+      ],
+      providers: [provideTranslateService()]
     })
   })
 

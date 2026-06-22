@@ -16,7 +16,7 @@ import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-add-device-enterprise',
@@ -37,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatError,
     MatCheckbox,
     MatButton,
-    TranslateModule
+    TranslatePipe
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }]
 })
