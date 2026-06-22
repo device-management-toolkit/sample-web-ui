@@ -123,34 +123,6 @@
     "description": "הודעה לשימוש ב- TLS",
     "value": "השתמש ב- TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "תיבת סימון לשימוש בחיבור CIRA",
-    "value": "השתמש ב-CIRA"
-  },
-  "addDevice.guid": {
-    "description": "תווית לשדה GUID",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "רמז להזנת GUID",
-    "value": "הזן GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "תווית לשדה שם משתמש MPS",
-    "value": "שם משתמש MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "רמז לשדה שם משתמש MPS",
-    "value": "שם משתמש MPS (ברירת מחדל: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "תווית לשדה סיסמת MPS",
-    "value": "סיסמת MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "רמז לשדה סיסמת MPS",
-    "value": "הזן סיסמת MPS"
-  },
   "addDevice.amtPassword": {
     "description": "תווית לשדה סיסמת AMT",
     "value": "סיסמת AMT"

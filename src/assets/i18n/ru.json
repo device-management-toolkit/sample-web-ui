@@ -123,34 +123,6 @@
     "description": "Сообщение об использовании TLS",
     "value": "Используйте TLS."
   },
-  "addDevice.useCIRA": {
-    "description": "Флажок для использования соединения CIRA",
-    "value": "Использовать CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Метка для поля GUID",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Подсказка для ввода GUID",
-    "value": "Введите GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Метка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Подсказка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS (по умолчанию: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Метка для поля пароля MPS",
-    "value": "Пароль MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Подсказка для поля пароля MPS",
-    "value": "Введите пароль MPS"
-  },
   "addDevice.amtPassword": {
     "description": "Метка для поля пароля AMT",
     "value": "Пароль AMT"

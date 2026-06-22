@@ -271,34 +271,6 @@
     "description": "Message for using TLS",
     "value": "Use TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "Checkbox label for using CIRA connection",
-    "value": "Use CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Label for GUID field",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Hint for entering GUID",
-    "value": "Enter GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label for MPS Username field",
-    "value": "MPS Username"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint for MPS Username field",
-    "value": "MPS Username (default: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label for MPS Password field",
-    "value": "MPS Password"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint for MPS Password field",
-    "value": "Enter MPS Password"
-  },
   "addDevice.amtPassword": {
     "description": "Label for AMT Password field",
     "value": "AMT Password"
