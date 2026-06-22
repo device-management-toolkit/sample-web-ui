@@ -48,10 +48,16 @@
     "tslib": "^2.8.1"
   },
   "overrides": {
-    "dompurify": "^3.4.5",
+    "@babel/core": "^7.29.6",
     "diff": "^8.0.4",
+    "dompurify": "^3.4.11",
+    "esbuild": "^0.28.1",
+    "http-proxy-middleware": "^3.0.7",
+    "piscina": "^5.1.5",
     "serialize-javascript": "^7.0.5",
-    "webpack-dev-server": "^5.2.4"
+    "undici": "^7.28.0",
+    "uuid": "^11.1.1",
+    "vite": "^7.3.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~21.2.16",
