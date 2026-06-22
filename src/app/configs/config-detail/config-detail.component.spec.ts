@@ -12,7 +12,7 @@ import { ConfigsService } from '../configs.service'
 import { ConfigDetailComponent } from './config-detail.component'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ConfigDetailComponent', () => {
@@ -40,10 +40,10 @@ describe('ConfigDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ConfigDetailComponent,
-        TranslateModule.forRoot()
+        ConfigDetailComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: ConfigsService, useValue: configsService },
         {
           provide: ActivatedRoute,

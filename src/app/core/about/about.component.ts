@@ -11,7 +11,7 @@ import { MatDivider } from '@angular/material/divider'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-about',
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     FormsModule,
     MatButton,
     MatDialogClose,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class AboutComponent implements OnDestroy, OnInit {

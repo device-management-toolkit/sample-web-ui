@@ -15,7 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { By } from '@angular/platform-browser'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
@@ -45,10 +45,10 @@ describe('ExplorerComponent', () => {
         MatSnackBarModule,
         MatDialogModule,
         MonacoEditorModule,
-        ExplorerComponent,
-        TranslateModule.forRoot()
+        ExplorerComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesServiceSpy },
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: NGX_MONACO_EDITOR_CONFIG, useValue: { onMonacoLoad: () => {} } },

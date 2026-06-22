@@ -21,7 +21,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
 import { DataWithCount } from '../../../models/models'
 import { Profile } from '../../profiles/profiles.constants'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-add-device',
@@ -45,7 +45,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatSuffix,
     CdkCopyToClipboard,
     MatIcon,
-    TranslateModule,
+    TranslatePipe,
     ReactiveFormsModule
   ]
 })

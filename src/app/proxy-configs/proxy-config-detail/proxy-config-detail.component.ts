@@ -7,7 +7,7 @@ import { Component, OnInit, inject, signal } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { catchError, finalize, of } from 'rxjs'
 import { ProxyConfig } from '../../../models/models'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -40,7 +40,7 @@ import { MatIcon } from '@angular/material/icon'
     MatList,
     MatListItem,
     MatIcon,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class ProxyConfigDetailComponent implements OnInit {

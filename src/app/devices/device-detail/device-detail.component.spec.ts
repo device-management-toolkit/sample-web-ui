@@ -13,7 +13,7 @@ import { provideNativeDateAdapter } from '@angular/material/core'
 import { Component, signal, input } from '@angular/core'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { GeneralComponent } from '../general/general.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DeviceDetailComponent', () => {
   let component: DeviceDetailComponent
@@ -43,10 +43,10 @@ describe('DeviceDetailComponent', () => {
         NoopAnimationsModule,
         RouterModule,
         DeviceDetailComponent,
-        TestDeviceToolbarComponent,
-        TranslateModule.forRoot()
+        TestDeviceToolbarComponent
       ],
       providers: [
+        provideTranslateService(),
         provideRouter([]), // Provide an empty router configuration
         provideNativeDateAdapter(),
         { provide: DevicesService, useValue: {} },

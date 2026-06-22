@@ -5,7 +5,7 @@ import { DomainsService } from './domains.service'
 import { AuthService } from '../auth.service'
 import { environment } from '../../environments/environment'
 import { DataWithCount, Domain, PageEventOptions } from '../../models/models'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DomainsService', () => {
   let service: DomainsService
@@ -19,8 +19,8 @@ describe('DomainsService', () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
     environment.rpsServer = 'https://test-server'
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         DomainsService,
         { provide: AuthService, useValue: authServiceSpy },
         { provide: environment, useValue: mockEnvironment },

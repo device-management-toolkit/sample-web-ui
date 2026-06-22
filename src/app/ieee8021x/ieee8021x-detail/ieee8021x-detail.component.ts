@@ -32,7 +32,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
 import { FormOption } from '../../../models/models'
 import { IEEE8021xConfig } from '../../../models/models'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-ieee8021x-detail',
@@ -60,7 +60,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatListItemIcon,
     MatListItemTitle,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class IEEE8021xDetailComponent implements OnInit {

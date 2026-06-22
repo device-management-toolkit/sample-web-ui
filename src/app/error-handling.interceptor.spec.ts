@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { errorHandlingInterceptor } from './error-handling.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('ErrorHandlingInterceptor', () => {
   let httpMock: HttpTestingController
@@ -21,8 +21,8 @@ describe('ErrorHandlingInterceptor', () => {
     const snackbarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideTranslateService(),
         provideHttpClient(withInterceptors([errorHandlingInterceptor])),
         provideHttpClientTesting(),
         { provide: AuthService, useValue: authServiceSpy },

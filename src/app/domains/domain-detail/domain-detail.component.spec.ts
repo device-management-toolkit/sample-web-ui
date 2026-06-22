@@ -11,7 +11,7 @@ import { DomainsService } from '../domains.service'
 
 import { DomainDetailComponent } from './domain-detail.component'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -36,10 +36,10 @@ describe('DomainDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DomainDetailComponent,
-        TranslateModule.forRoot()
+        DomainDetailComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DomainsService, useValue: domainsService },
         {
           provide: ActivatedRoute,

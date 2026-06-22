@@ -9,7 +9,7 @@ import { DevicesService } from '../devices/devices.service'
 import { DashboardComponent } from './dashboard.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -26,10 +26,10 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterModule,
-        DashboardComponent,
-        TranslateModule.forRoot()
+        DashboardComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
         {
           provide: ActivatedRoute,
