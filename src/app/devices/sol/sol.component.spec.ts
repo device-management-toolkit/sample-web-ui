@@ -14,7 +14,7 @@ import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
 import { UserConsentService } from '../user-consent.service'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -155,10 +155,10 @@ describe('SolComponent', () => {
         RouterModule,
         SolComponent,
         TestDeviceToolbarComponent,
-        TestAMTSOLComponent,
-        TranslateModule.forRoot()
+        TestAMTSOLComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
         { provide: UserConsentService, useValue: userConsentService },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }

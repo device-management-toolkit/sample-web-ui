@@ -14,7 +14,7 @@ import { BootDetails, Device } from '../../../models/models'
 import { EventEmitter } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
@@ -96,10 +96,10 @@ describe('DeviceToolbarComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceToolbarComponent,
-        TranslateModule.forRoot()
+        DeviceToolbarComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
         { provide: MatSnackBar, useValue: snackBar },
         {

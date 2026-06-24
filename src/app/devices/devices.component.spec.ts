@@ -15,7 +15,7 @@ import { Device } from '../../models/models'
 import { MatSelectChange } from '@angular/material/select'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('DevicesComponent', () => {
@@ -88,10 +88,10 @@ describe('DevicesComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
-        DevicesComponent,
-        TranslateModule.forRoot()
+        DevicesComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

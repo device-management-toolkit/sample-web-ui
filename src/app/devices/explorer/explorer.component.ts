@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { AsyncPipe } from '@angular/common'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-explorer',
@@ -33,7 +33,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatAutocompleteModule,
     FormsModule,
     AsyncPipe,
-    TranslateModule
+    TranslatePipe
   ],
   providers: [
     {

@@ -21,7 +21,7 @@ import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { IEEE8021xConfig } from '../../../models/models'
 import { environment } from '../../../environments/environment'
-import { provideTranslateService, TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -112,8 +112,7 @@ describe('ProfileDetailComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        ProfileDetailComponent,
-        TranslateModule.forRoot()
+        ProfileDetailComponent
       ],
       providers: [
         provideTranslateService({

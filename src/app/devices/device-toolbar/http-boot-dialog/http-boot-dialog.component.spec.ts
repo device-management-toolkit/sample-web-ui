@@ -10,7 +10,7 @@ import { DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -28,10 +28,10 @@ describe('HTTPBootDialogComponent', () => {
       imports: [
         HTTPBootDialogComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
-        TranslateModule.forRoot()
+        NoopAnimationsModule
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
@@ -158,10 +158,10 @@ describe('HTTPBootDialogComponent in CCM mode', () => {
       imports: [
         HTTPBootDialogComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
-        TranslateModule.forRoot()
+        NoopAnimationsModule
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: { isCCM: true } },
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },

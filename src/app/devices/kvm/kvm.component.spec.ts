@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
 import { UserConsentService } from '../user-consent.service'
 import { IDERComponent, KVMComponent } from '@device-management-toolkit/ui-toolkit-angular'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('KvmComponent', () => {
   let component: KvmComponent
@@ -212,10 +212,10 @@ describe('KvmComponent', () => {
       imports: [
         NoopAnimationsModule,
         RouterModule,
-        KvmComponent,
-        TranslateModule.forRoot()
+        KvmComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: { ...devicesService, ...websocketStub, ...authServiceStub } },
         { provide: UserConsentService, useValue: userConsentService },
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }

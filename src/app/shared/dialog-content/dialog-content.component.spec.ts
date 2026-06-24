@@ -6,7 +6,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { DialogContentComponent } from './dialog-content.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DialogContentComponent', () => {
   let component: DialogContentComponent
@@ -16,10 +16,10 @@ describe('DialogContentComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
-        DialogContentComponent,
-        TranslateModule.forRoot()
+        DialogContentComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ]

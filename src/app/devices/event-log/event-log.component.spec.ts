@@ -8,7 +8,7 @@ import { EventLogComponent } from './event-log.component'
 import { DeviceLogService } from '../device-log.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from '../../../environments/environment'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('EventLogComponent', () => {
   let component: EventLogComponent
@@ -51,8 +51,9 @@ describe('EventLogComponent', () => {
     snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
-      imports: [EventLogComponent, TranslateModule.forRoot()],
+      imports: [EventLogComponent],
       providers: [
+        provideTranslateService(),
         { provide: DeviceLogService, useValue: deviceLogServiceSpy },
         { provide: MatSnackBar, useValue: snackBarSpy }
       ]

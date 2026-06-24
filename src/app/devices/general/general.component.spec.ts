@@ -9,7 +9,7 @@ import { GeneralComponent } from './general.component'
 import { ActivatedRoute } from '@angular/router'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 
 describe('GeneralComponent', () => {
@@ -62,8 +62,9 @@ describe('GeneralComponent', () => {
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({
-      imports: [GeneralComponent, TranslateModule.forRoot()],
+      imports: [GeneralComponent],
       providers: [
+        provideTranslateService(),
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]
