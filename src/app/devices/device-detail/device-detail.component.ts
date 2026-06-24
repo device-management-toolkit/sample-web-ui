@@ -26,7 +26,6 @@ import { NetworkSettingsComponent } from '../network-settings/network-settings.c
 import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
 import { RemotePlatformEraseComponent } from '../remote-platform-erase/remote-platform-erase.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
@@ -61,7 +60,6 @@ import { TranslatePipe } from '@ngx-translate/core'
     NetworkSettingsComponent,
     TLSComponent,
     RemotePlatformEraseComponent,
-    TranslateModule
     TranslatePipe
   ]
 })

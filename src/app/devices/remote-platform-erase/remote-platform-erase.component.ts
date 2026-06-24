@@ -32,7 +32,7 @@ import {
 import { ParsedPlatformEraseCapability } from './remote-platform-erase.constants'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
@@ -54,7 +54,7 @@ const SSD_ERASE_KEY = 'secureEraseSsds'
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class RemotePlatformEraseComponent implements OnInit {
@@ -312,8 +312,22 @@ export class RemotePlatformEraseComponent implements OnInit {
               ? this.t('remotePlatformErase.osEraseSuccess')
               : this.t('remotePlatformErase.eraseSuccess')
             this.snackBar.open(successMsg, undefined, SnackbarDefaults.defaultSuccess)
+            const payload: AMTFeaturesRequest = {
+              userConsent: this.amtFeatures()?.userConsent ?? '',
+              enableKVM: this.amtFeatures()?.KVM ?? false,
+              enableSOL: this.amtFeatures()?.SOL ?? false,
+              enableIDER: this.amtFeatures()?.IDER ?? false,
+              ocr: this.amtFeatures()?.ocr ?? false,
+              rpe: false
+            }
+            this.devicesService.markRpeDisabledAfterErase(this.deviceId())
+            this.devicesService
+              .setAmtFeatures(this.deviceId(), payload)
+              .pipe(catchError(() => EMPTY))
+              .subscribe()
             this.amtFeatures.update((f) => (f ? { ...f, rpe: false } : f))
             this.platformEraseEnabled.set(false)
+
             this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
             this.selectedCapsCount.set(0)
             this.isCsmeExclusiveSelected.set(false)

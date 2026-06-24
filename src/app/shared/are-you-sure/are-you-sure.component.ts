@@ -13,7 +13,6 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog'
-import { TranslateModule } from '@ngx-translate/core'
 import { TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'app-are-you-sure',

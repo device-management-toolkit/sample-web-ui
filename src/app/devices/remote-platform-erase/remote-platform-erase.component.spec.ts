@@ -9,7 +9,7 @@ import { DevicesService } from '../devices.service'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { of, throwError } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from '../../../models/models'
 import { PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
@@ -47,6 +47,8 @@ describe('RemotePlatformEraseComponent', () => {
       'getAMTFeatures',
       'getAMTFeaturesCached',
       'featuresChanges',
+      'updateAmtFeaturesCache',
+      'markRpeDisabledAfterErase',
       'setAmtFeatures',
       'getDevice',
       'getRemoteEraseCapabilities',
@@ -71,8 +73,9 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.sendDeactivate.and.returnValue(of({}))
 
     await TestBed.configureTestingModule({
-      imports: [RemotePlatformEraseComponent, TranslateModule.forRoot()],
+      imports: [RemotePlatformEraseComponent],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: MatSnackBar, useValue: snackBarSpy },
