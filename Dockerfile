@@ -20,7 +20,7 @@ RUN npm run build -- --configuration=${BUILD_CONFIGURATION} \
     fi
 
 ### STAGE 2: Run ###
-FROM nginx:mainline-alpine-slim@sha256:22c50af94b90d8b89d12fb7c36cdefb82f40b243f6d605e8db839ca87a2684b2
+FROM nginx:mainline-alpine-slim@sha256:dd722b8ee8794f3c273bfaf8b5351b0652a68ccd73c17e5f0d029857a58f25ef
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
   copyright='Copyright (c) 2021: Intel'
