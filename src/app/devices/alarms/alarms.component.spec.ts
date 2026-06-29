@@ -10,7 +10,7 @@ import { DevicesService } from '../devices.service'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { of, throwError } from 'rxjs'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 import { MatDialog } from '@angular/material/dialog'
 
 describe('AlarmsComponent', () => {
@@ -33,10 +33,10 @@ describe('AlarmsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        AlarmsComponent,
-        TranslateModule.forRoot()
+        AlarmsComponent
       ],
       providers: [
+        provideTranslateService(),
         provideNativeDateAdapter(),
         { provide: DevicesService, useValue: devicesServiceSpy },
         { provide: MatDialog, useValue: dialogSpy }

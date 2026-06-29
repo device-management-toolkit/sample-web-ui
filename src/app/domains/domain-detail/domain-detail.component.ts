@@ -27,7 +27,7 @@ import {
 } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatToolbar } from '@angular/material/toolbar'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-domain-detail',
@@ -56,7 +56,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatCardActions,
     MatListItemIcon,
     MatListItemTitle,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class DomainDetailComponent implements OnInit {

@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
 import { AmDateFormatterPipe } from '../../shared/pipes/date-formatter.pipe.ts.pipe'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-hardware-information',
@@ -26,7 +26,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
     MatDividerModule,
     MatIconModule,
     AmDateFormatterPipe,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './hardware-information.component.html',
   styleUrl: './hardware-information.component.scss'

@@ -25,7 +25,7 @@ import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-detail',
@@ -58,7 +58,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RouterLinkActive,
     NetworkSettingsComponent,
     TLSComponent,
-    TranslateModule
+    TranslatePipe
   ]
 })
 export class DeviceDetailComponent implements OnInit, OnDestroy {

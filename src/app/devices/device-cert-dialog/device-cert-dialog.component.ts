@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { DevicesService } from '../devices.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-device-cert-dialog',
@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatButtonModule,
     MatListModule,
     DatePipe,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './device-cert-dialog.component.html',
   styleUrl: './device-cert-dialog.component.scss'

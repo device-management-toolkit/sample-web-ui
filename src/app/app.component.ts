@@ -9,7 +9,7 @@ import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'
 import { NavbarComponent } from './core/navbar/navbar.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { BidiModule, Direction } from '@angular/cdk/bidi'
 import { getDirection } from '../utils'
 
@@ -22,8 +22,7 @@ import { getDirection } from '../utils'
     ToolbarComponent,
     NavbarComponent,
     MatSidenavModule,
-    BidiModule,
-    TranslateModule
+    BidiModule
   ]
 })
 export class AppComponent implements OnInit {
@@ -40,7 +39,7 @@ export class AppComponent implements OnInit {
     })
 
     this.translate.setFallbackLang('en')
-    this.setDirection(this.translate.getCurrentLang())
+    this.setDirection(this.translate.getCurrentLang() ?? 'en')
 
     this.translate.onLangChange.subscribe((event) => {
       this.setDirection(event.lang)

@@ -12,7 +12,7 @@ import { DomainsComponent } from './domains.component'
 import { DomainsService } from './domains.service'
 import { Domain, DataWithCount } from '../../models/models'
 import { RouterModule } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -70,10 +70,10 @@ describe('DomainsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DomainsComponent,
-        TranslateModule.forRoot()
+        DomainsComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DomainsService, useValue: domainsService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,

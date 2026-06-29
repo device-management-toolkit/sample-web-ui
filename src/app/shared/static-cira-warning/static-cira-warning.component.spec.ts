@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { StaticCIRAWarningComponent } from './static-cira-warning.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('StaticCIRAWarningComponent', () => {
   let component: StaticCIRAWarningComponent
@@ -17,9 +17,9 @@ describe('StaticCIRAWarningComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
-        StaticCIRAWarningComponent,
-        TranslateModule.forRoot()
-      ]
+        StaticCIRAWarningComponent
+      ],
+      providers: [provideTranslateService()]
     })
   })
 

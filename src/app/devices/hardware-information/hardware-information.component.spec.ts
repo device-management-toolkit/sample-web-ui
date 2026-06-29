@@ -9,7 +9,7 @@ import { HardwareInformationComponent } from './hardware-information.component'
 import { DevicesService } from '../devices.service'
 import { ActivatedRoute } from '@angular/router'
 import { EMPTY, of } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('HardwareInformationComponent', () => {
   let component: HardwareInformationComponent
@@ -61,8 +61,9 @@ describe('HardwareInformationComponent', () => {
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     devicesServiceSpy.TargetOSMap = { 0: '' } as any
     TestBed.configureTestingModule({
-      imports: [HardwareInformationComponent, TranslateModule.forRoot()],
+      imports: [HardwareInformationComponent],
       providers: [
+        provideTranslateService(),
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: DevicesService, useValue: devicesServiceSpy }
       ]

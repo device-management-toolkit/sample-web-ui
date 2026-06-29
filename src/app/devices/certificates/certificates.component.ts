@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { CertInfo } from '../../../models/models'
 import { AddCertDialogComponent } from './add-cert-dialog/add-cert-dialog.component'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatButtonModule, MatIconButton } from '@angular/material/button'
 import { MatTooltip } from '@angular/material/tooltip'
 
@@ -24,7 +24,7 @@ import { MatTooltip } from '@angular/material/tooltip'
     MatIcon,
     MatButtonModule,
     MatListModule,
-    TranslateModule,
+    TranslatePipe,
     MatTooltip,
     MatIconButton
   ],

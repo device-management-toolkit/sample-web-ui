@@ -10,7 +10,7 @@ import { of } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { DeviceUserConsentDialogComponent } from './device-user-consent-dialog.component'
 import { RouterModule } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('DeviceUserConsentDialogComponent', () => {
   let component: DeviceUserConsentDialogComponent
@@ -32,10 +32,10 @@ describe('DeviceUserConsentDialogComponent', () => {
       imports: [
         BrowserAnimationsModule,
         RouterModule,
-        DeviceUserConsentDialogComponent,
-        TranslateModule.forRoot()
+        DeviceUserConsentDialogComponent
       ],
       providers: [
+        provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: 'deviceId' } },
         { provide: MatDialogRef, useValue: dialogMock }

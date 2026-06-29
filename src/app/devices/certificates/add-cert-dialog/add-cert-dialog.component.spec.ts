@@ -7,7 +7,7 @@ import { of } from 'rxjs'
 import { FormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { provideHttpClient } from '@angular/common/http'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 
@@ -28,10 +28,10 @@ describe('AddCertDialogComponent', () => {
         AddCertDialogComponent,
         NoopAnimationsModule,
         FormsModule,
-        MatCheckboxModule,
-        TranslateModule.forRoot()
+        MatCheckboxModule
       ],
       providers: [
+        provideTranslateService(),
         { provide: MAT_DIALOG_DATA, useValue: { deviceId: '123' } },
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: DevicesService, useValue: mockDevicesService },
