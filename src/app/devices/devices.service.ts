@@ -283,7 +283,14 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      tap((features) => this.getOrCreateFeaturesStream(guid).next(this.applyRpeOverride(guid, features))),
+      map((features) => {
+        const stream = this.getOrCreateFeaturesStream(guid)
+        const current = stream.value
+        const merged = current === null ? features : { ...features, rpe: current.rpe }
+        const nextFeatures = this.applyRpeOverride(guid, merged)
+        stream.next(nextFeatures)
+        return nextFeatures
+      }),
       catchError((err) => {
         throw err
       })
@@ -466,8 +473,16 @@ export class DevicesService {
     if (payload.rpe) {
       this.rpeDisabledAfterErase.delete(deviceId)
     }
+    const requestBody = {
+      userConsent: payload.userConsent,
+      enableKVM: payload.enableKVM,
+      enableSOL: payload.enableSOL,
+      enableIDER: payload.enableIDER,
+      ocr: payload.ocr,
+      platformEraseEnabled: payload.rpe
+    }
     return this.http
-      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
+      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, requestBody)
       .pipe(
         tap(() => this.applyFeaturesSelection(deviceId, payload)),
         catchError((err) => {

@@ -164,7 +164,7 @@
           [matTooltip]="'general.remotePlatformEraseNotSupported.value' | translate"
           [matTooltipDisabled]="!amtEnabledFeatures.get('rpe')?.disabled"
           matTooltipPosition="after">
-          <mat-checkbox formControlName="rpe" (change)="setAmtFeatures()"></mat-checkbox>
+          <mat-checkbox formControlName="rpe" (change)="setAmtFeatures({ rpe: $event.checked })"></mat-checkbox>
         </div>
         <div class="flex flex-50 items-end">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>

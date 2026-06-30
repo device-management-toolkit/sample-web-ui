@@ -587,7 +587,14 @@ describe('DevicesService', () => {
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
       expect(req.request.method).toBe('POST')
-      expect(req.request.body).toEqual(payload)
+      expect(req.request.body).toEqual({
+        userConsent: 'none',
+        enableKVM: true,
+        enableSOL: true,
+        enableIDER: true,
+        ocr: true,
+        platformEraseEnabled: true
+      })
       req.flush(mockResponse)
     })
 
@@ -650,6 +657,56 @@ describe('DevicesService', () => {
       expect(latest.kvmAvailable).toBe(true)
       expect(latest.httpsBootSupported).toBe(true)
       expect((latest as any).status).toBeUndefined()
+    })
+
+    it('keeps the cached rpe value when a stale GET response arrives after a save', () => {
+      const seeded: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        kvmAvailable: true,
+        KVM: true,
+        SOL: false,
+        IDER: false,
+        ocr: false,
+        httpsBootSupported: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpe: true,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+      const emitted: AMTFeaturesResponse[] = []
+      service.featuresChanges('device1').subscribe((v) => {
+        if (v) emitted.push(v)
+      })
+      service.getAMTFeatures('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(seeded)
+
+      service
+        .setAmtFeatures('device1', {
+          userConsent: 'all',
+          enableKVM: true,
+          enableSOL: true,
+          enableIDER: true,
+          ocr: true,
+          rpe: false
+        })
+        .subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+
+      let latestGet: AMTFeaturesResponse | undefined
+      service.getAMTFeatures('device1').subscribe((r) => {
+        latestGet = r
+      })
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({
+        ...seeded,
+        rpe: true
+      })
+
+      expect(emitted[emitted.length - 1].rpe).toBe(false)
+      expect(latestGet?.rpe).toBe(false)
     })
 
     it('derives redirection from the chosen features rather than keeping the stale cached value', () => {

@@ -189,12 +189,14 @@ export class GeneralComponent implements OnInit, OnDestroy {
     return !!(enableKVM || enableSOL || enableIDER)
   }
 
-  setAmtFeatures(): void {
+  setAmtFeatures(override: Partial<AMTFeaturesRequest> = {}): void {
     this.isLoading.set(true)
+    const payload = {
+      ...this.amtEnabledFeatures.getRawValue(),
+      ...override
+    } as AMTFeaturesRequest
     this.devicesService
-      .setAmtFeatures(this.deviceId(), {
-        ...this.amtEnabledFeatures.getRawValue()
-      } as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), payload)
       .pipe(
         finalize(() => {
           this.isLoading.set(false)
