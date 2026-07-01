@@ -31,7 +31,9 @@ import {
   BootDetails,
   BootSource,
   DisplaySelectionResponse,
-  DisplaySelectionRequest
+  DisplaySelectionRequest,
+  RemoteEraseRequest,
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -43,6 +45,9 @@ export class DevicesService {
   private readonly http = inject(HttpClient)
   private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
   private readonly powerStateStreams = new Map<string, BehaviorSubject<PowerState | null>>()
+  // After successful platform erase we may temporarily get stale feature payloads
+  // while the device reboots. Keep RPE forced off until a user explicitly re-enables it.
+  private readonly rpeDisabledAfterErase = new Set<string>()
   // In-flight HTTP requests, shared so simultaneous callers (e.g. toolbar and
   // general components whose ngOnInit fires together) hit the same response.
   private readonly featuresInflight = new Map<string, Observable<AMTFeaturesResponse>>()
@@ -278,7 +283,14 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
+      map((features) => {
+        const stream = this.getOrCreateFeaturesStream(guid)
+        const current = stream.value
+        const merged = current === null ? features : { ...features, rpe: current.rpe }
+        const nextFeatures = this.applyRpeOverride(guid, merged)
+        stream.next(nextFeatures)
+        return nextFeatures
+      }),
       catchError((err) => {
         throw err
       })
@@ -375,6 +387,22 @@ export class DevicesService {
     }
   }
 
+  setRemoteEraseOptions(deviceId: string, req: RemoteEraseRequest): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`, req).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {
+    return this.http.get<BootCapabilities>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
       map((tags) => tags.sort(caseInsensitiveCompare)),
@@ -439,11 +467,22 @@ export class DevicesService {
       enableSOL: true,
       enableIDER: true,
       ocr: true,
-      remoteErase: true
+      rpe: true
     }
   ): Observable<AMTFeaturesResponse> {
+    if (payload.rpe) {
+      this.rpeDisabledAfterErase.delete(deviceId)
+    }
+    const requestBody = {
+      userConsent: payload.userConsent,
+      enableKVM: payload.enableKVM,
+      enableSOL: payload.enableSOL,
+      enableIDER: payload.enableIDER,
+      ocr: payload.ocr,
+      platformEraseEnabled: payload.rpe
+    }
     return this.http
-      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
+      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, requestBody)
       .pipe(
         tap(() => this.applyFeaturesSelection(deviceId, payload)),
         catchError((err) => {
@@ -459,16 +498,42 @@ export class DevicesService {
     if (current === null) {
       return
     }
-    stream.next({
-      ...current,
-      userConsent: payload.userConsent,
-      KVM: payload.enableKVM,
-      SOL: payload.enableSOL,
-      IDER: payload.enableIDER,
-      redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
-      ocr: payload.ocr,
-      remoteErase: payload.remoteErase
-    })
+    stream.next(
+      this.applyRpeOverride(deviceId, {
+        ...current,
+        userConsent: payload.userConsent,
+        KVM: payload.enableKVM,
+        SOL: payload.enableSOL,
+        IDER: payload.enableIDER,
+        redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
+        ocr: payload.ocr,
+        rpe: payload.rpe
+      })
+    )
+  }
+
+  updateAmtFeaturesCache(deviceId: string, patch: Partial<AMTFeaturesResponse>): void {
+    const stream = this.getOrCreateFeaturesStream(deviceId)
+    const current = stream.value
+    if (current === null) {
+      return
+    }
+    stream.next(
+      this.applyRpeOverride(deviceId, {
+        ...current,
+        ...patch
+      })
+    )
+  }
+
+  private applyRpeOverride(deviceId: string, features: AMTFeaturesResponse): AMTFeaturesResponse {
+    if (!this.rpeDisabledAfterErase.has(deviceId)) {
+      return features
+    }
+    return {
+      ...features,
+      rpe: false
+    }
   }
 
   getPowerState(deviceId: string): Observable<PowerState> {

@@ -137,7 +137,8 @@ export interface AMTFeaturesResponse {
   httpsBootSupported: boolean
   winREBootSupported: boolean
   localPBABootSupported: boolean
-  remoteErase: boolean
+  rpe: boolean
+  rpeSupported: boolean
   pbaBootFilesPath: BootParams[]
   winREBootFilesPath: BootParams
 }
@@ -147,7 +148,18 @@ export interface AMTFeaturesRequest {
   enableSOL: boolean
   enableIDER: boolean
   ocr: boolean
-  remoteErase: boolean
+  rpe: boolean
+}
+
+export interface BootCapabilities {
+  secureEraseAllSSDs: boolean
+  tpmClear: boolean
+  restoreBIOSToEOM: boolean
+  unconfigureCSME: boolean
+}
+
+export interface RemoteEraseRequest extends BootCapabilities {
+  ssdPassword?: string
 }
 
 export interface PowerState {

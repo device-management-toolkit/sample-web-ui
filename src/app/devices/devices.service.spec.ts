@@ -92,7 +92,8 @@ describe('DevicesService', () => {
       httpsBootSupported: false,
       winREBootSupported: false,
       localPBABootSupported: false,
-      remoteErase: false,
+      rpe: false,
+      rpeSupported: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -559,7 +560,8 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false,
+        rpe: true,
+        rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
@@ -576,7 +578,7 @@ describe('DevicesService', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true
+        rpe: true
       }
 
       service.setAmtFeatures('device1', payload).subscribe((response) => {
@@ -585,11 +587,18 @@ describe('DevicesService', () => {
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
       expect(req.request.method).toBe('POST')
-      expect(req.request.body).toEqual(payload)
+      expect(req.request.body).toEqual({
+        userConsent: 'none',
+        enableKVM: true,
+        enableSOL: true,
+        enableIDER: true,
+        ocr: true,
+        platformEraseEnabled: true
+      })
       req.flush(mockResponse)
     })
 
-    it('reflects the chosen settings in the featuresChanges stream without caching the POST response', () => {
+    it('merges server response onto the cached features after setAmtFeatures', () => {
       const seeded: AMTFeaturesResponse = {
         userConsent: 'none',
         optInState: 0,
@@ -602,7 +611,8 @@ describe('DevicesService', () => {
         httpsBootSupported: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: false,
+        rpe: false,
+        rpeSupported: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
       }
@@ -620,11 +630,19 @@ describe('DevicesService', () => {
         enableSOL: true,
         enableIDER: true,
         ocr: true,
-        remoteErase: true
+        rpe: true
       }
       service.setAmtFeatures('device1', payload).subscribe()
-      // cloud-style POST response: a status object, not a full features payload
-      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+      // server returns the full applied features
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({
+        userConsent: 'all',
+        KVM: false,
+        SOL: true,
+        IDER: true,
+        ocr: true,
+        rpe: true,
+        redirection: true
+      } as any)
       // no refetch is triggered
       httpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`)
 
@@ -634,11 +652,61 @@ describe('DevicesService', () => {
       expect(latest.IDER).toBe(true)
       expect(latest.ocr).toBe(true)
       expect(latest.userConsent).toBe('all')
-      expect(latest.remoteErase).toBe(true)
+      expect(latest.rpe).toBe(true)
       // untouched fields are preserved from the cached features
       expect(latest.kvmAvailable).toBe(true)
       expect(latest.httpsBootSupported).toBe(true)
       expect((latest as any).status).toBeUndefined()
+    })
+
+    it('keeps the cached rpe value when a stale GET response arrives after a save', () => {
+      const seeded: AMTFeaturesResponse = {
+        userConsent: 'none',
+        optInState: 0,
+        redirection: true,
+        kvmAvailable: true,
+        KVM: true,
+        SOL: false,
+        IDER: false,
+        ocr: false,
+        httpsBootSupported: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpe: true,
+        rpeSupported: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      }
+      const emitted: AMTFeaturesResponse[] = []
+      service.featuresChanges('device1').subscribe((v) => {
+        if (v) emitted.push(v)
+      })
+      service.getAMTFeatures('device1').subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush(seeded)
+
+      service
+        .setAmtFeatures('device1', {
+          userConsent: 'all',
+          enableKVM: true,
+          enableSOL: true,
+          enableIDER: true,
+          ocr: true,
+          rpe: false
+        })
+        .subscribe()
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
+
+      let latestGet: AMTFeaturesResponse | undefined
+      service.getAMTFeatures('device1').subscribe((r) => {
+        latestGet = r
+      })
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({
+        ...seeded,
+        rpe: true
+      })
+
+      expect(emitted[emitted.length - 1].rpe).toBe(false)
+      expect(latestGet?.rpe).toBe(false)
     })
 
     it('derives redirection from the chosen features rather than keeping the stale cached value', () => {
@@ -654,7 +722,8 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false,
+        rpeSupported: false,
+        rpe: false,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
       }
@@ -673,7 +742,7 @@ describe('DevicesService', () => {
           enableSOL: false,
           enableIDER: false,
           ocr: false,
-          remoteErase: false
+          rpe: false
         })
         .subscribe()
       httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
@@ -694,7 +763,8 @@ describe('DevicesService', () => {
         httpsBootSupported: false,
         winREBootSupported: false,
         localPBABootSupported: false,
-        remoteErase: false,
+        rpeSupported: false,
+        rpe: false,
         pbaBootFilesPath: [],
         winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
       }
@@ -712,7 +782,7 @@ describe('DevicesService', () => {
           enableSOL: false,
           enableIDER: false,
           ocr: false,
-          remoteErase: false
+          rpe: false
         })
         .subscribe()
       httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
@@ -730,7 +800,7 @@ describe('DevicesService', () => {
           enableSOL: true,
           enableIDER: true,
           ocr: true,
-          remoteErase: true
+          rpe: true
         })
         .subscribe()
       httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/features/device1`).flush({ status: 'SUCCESS' } as any)
