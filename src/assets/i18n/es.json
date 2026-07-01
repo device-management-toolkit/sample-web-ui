@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Subtítulo para la tarjeta de función de borrado remoto de plataforma",
-    "value": "Activa de forma remota un borrado seguro de unidades, TPM, BIOS o Intel CSME en este dispositivo. Los datos borrados no se pueden recuperar."
+    "value": "Activa de forma remota un borrado seguro de unidades, TPM y BIOS en este dispositivo. Los datos borrados no se pueden recuperar.",
+    "_value_old": "Activa de forma remota un borrado seguro de unidades, TPM, BIOS o Intel CSME en este dispositivo. Los datos borrados no se pueden recuperar."
   },
   "remotePlatformErase.warning": {
     "description": "Mensaje de advertencia sobre la habilitación del borrado remoto de plataforma",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
-    "value": "{{selected}} de {{total}} operaciones seleccionadas"
+    "value": "{{selected}} de 3 operaciones seleccionadas",
+    "_value_old": "{{selected}} de {{total}} operaciones seleccionadas"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",

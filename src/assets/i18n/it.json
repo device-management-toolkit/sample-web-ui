@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Sottotitolo della scheda funzione di cancellazione remota della piattaforma",
-    "value": "Attiva da remoto una cancellazione sicura di unità, TPM, BIOS o Intel CSME su questo dispositivo. I dati cancellati non possono essere recuperati."
+    "value": "Attiva da remoto una cancellazione sicura di unità, TPM e BIOS su questo dispositivo. I dati cancellati non possono essere recuperati.",
+    "_value_old": "Attiva da remoto una cancellazione sicura di unità, TPM, BIOS o Intel CSME su questo dispositivo. I dati cancellati non possono essere recuperati."
   },
   "remotePlatformErase.warning": {
     "description": "Messaggio di avviso sull'abilitazione della cancellazione remota della piattaforma",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",
-    "value": "{{selected}} di {{total}} operazioni selezionate"
+    "value": "{{selected}} di 3 operazioni selezionate",
+    "_value_old": "{{selected}} di {{total}} operazioni selezionate"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Didascalia mostrata su una riga di capacità quando il dispositivo non la supporta",

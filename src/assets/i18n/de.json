@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Untertitel der Funktionskarte für Remote-Plattformlöschung",
-    "value": "Löst aus der Ferne ein sicheres Löschen von Laufwerken, TPM, BIOS oder Intel CSME auf diesem Gerät aus. Gelöschte Daten können nicht wiederhergestellt werden."
+    "value": "Löst aus der Ferne ein sicheres Löschen von Laufwerken, TPM und BIOS auf diesem Gerät aus. Gelöschte Daten können nicht wiederhergestellt werden.",
+    "_value_old": "Löst aus der Ferne ein sicheres Löschen von Laufwerken, TPM, BIOS oder Intel CSME auf diesem Gerät aus. Gelöschte Daten können nicht wiederhergestellt werden."
   },
   "remotePlatformErase.warning": {
     "description": "Warnmeldung zur Aktivierung der Remote-Plattformlöschung",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Beschriftung, die anzeigt, wie viele Löschvorgänge derzeit ausgewählt sind",
-    "value": "{{selected}} von {{total}} Vorgängen ausgewählt"
+    "value": "{{selected}} von 3 Vorgängen ausgewählt",
+    "_value_old": "{{selected}} von {{total}} Vorgängen ausgewählt"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Beschriftung in einer Fähigkeitszeile, wenn das Gerät diese nicht unterstützt",

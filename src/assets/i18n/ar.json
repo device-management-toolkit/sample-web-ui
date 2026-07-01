@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "عنوان فرعي لبطاقة ميزة مسح المنصة عن بُعد",
-    "value": "تشغيل محو آمن عن بُعد للأقراص و TPM و BIOS أو Intel CSME على هذا الجهاز. لا يمكن استرداد البيانات الممحوة."
+    "value": "تشغيل محو آمن عن بُعد للأقراص و TPM و BIOS على هذا الجهاز. لا يمكن استرداد البيانات الممحوة.",
+    "_value_old": "تشغيل محو آمن عن بُعد للأقراص و TPM و BIOS أو Intel CSME على هذا الجهاز. لا يمكن استرداد البيانات الممحوة."
   },
   "remotePlatformErase.warning": {
     "description": "رسالة تحذير حول تمكين مسح المنصة عن بُعد",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",
-    "value": "تم تحديد {{selected}} من أصل {{total}} عمليات"
+    "value": "تم تحديد {{selected}} من أصل 3 عمليات",
+    "_value_old": "تم تحديد {{selected}} من أصل {{total}} عمليات"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "تسمية تظهر في صف القدرة عندما لا يدعمها الجهاز",

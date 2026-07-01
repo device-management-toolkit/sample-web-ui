@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Etäalustan pyyhintäominaisuuden kortin alaotsikko",
-    "value": "Käynnistää etänä suojatun poiston tämän laitteen asemille, TPM:lle, BIOSille tai Intel CSME:lle. Poistettuja tietoja ei voi palauttaa."
+    "value": "Käynnistää etänä suojatun poiston tämän laitteen asemille, TPM:lle ja BIOSille. Poistettuja tietoja ei voi palauttaa.",
+    "_value_old": "Käynnistää etänä suojatun poiston tämän laitteen asemille, TPM:lle, BIOSille tai Intel CSME:lle. Poistettuja tietoja ei voi palauttaa."
   },
   "remotePlatformErase.warning": {
     "description": "Varoitusviesti etäalustan pyyhinnän käyttöönotosta",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",
-    "value": "{{selected}} / {{total}} toimintoa valittu"
+    "value": "{{selected}} / 3 toimintoa valittu",
+    "_value_old": "{{selected}} / {{total}} toimintoa valittu"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Teksti, joka näytetään ominaisuusrivillä, kun laite ei tue sitä",

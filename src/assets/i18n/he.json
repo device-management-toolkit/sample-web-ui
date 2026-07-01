@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "כותרת משנה לכרטיס תכונת מחיקת פלטפורמה מרחוק",
-    "value": "הפעלה מרחוק של מחיקה מאובטחת של כוננים, TPM, BIOS או Intel CSME במכשיר זה. לא ניתן לשחזר נתונים שנמחקו."
+    "value": "הפעלה מרחוק של מחיקה מאובטחת של כוננים, TPM ו-BIOS במכשיר זה. לא ניתן לשחזר נתונים שנמחקו.",
+    "_value_old": "הפעלה מרחוק של מחיקה מאובטחת של כוננים, TPM, BIOS או Intel CSME במכשיר זה. לא ניתן לשחזר נתונים שנמחקו."
   },
   "remotePlatformErase.warning": {
     "description": "הודעת אזהרה על הפעלת מחיקת פלטפורמה מרחוק",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",
-    "value": "נבחרו {{selected}} מתוך {{total}} פעולות"
+    "value": "נבחרו {{selected}} מתוך 3 פעולות",
+    "_value_old": "נבחרו {{selected}} מתוך {{total}} פעולות"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "תווית המוצגת בשורת יכולת כאשר המכשיר אינו תומך בה",

@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "リモートプラットフォーム消去機能カードのサブタイトル",
-    "value": "このデバイスのドライブ、TPM、BIOS、または Intel CSME のリモートによる安全な消去を実行します。消去されたデータは復元できません。"
+    "value": "このデバイスのドライブ、TPM、BIOS のリモートによる安全な消去を実行します。消去されたデータは復元できません。",
+    "_value_old": "このデバイスのドライブ、TPM、BIOS、または Intel CSME のリモートによる安全な消去を実行します。消去されたデータは復元できません。"
   },
   "remotePlatformErase.warning": {
     "description": "リモートプラットフォーム消去の有効化に関する警告メッセージ",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "現在選択されている消去操作の数を示すキャプション",
-    "value": "{{total}} 件中 {{selected}} 件の操作が選択されています"
+    "value": "3 件中 {{selected}} 件の操作が選択されています",
+    "_value_old": "{{total}} 件中 {{selected}} 件の操作が選択されています"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "デバイスが対応していない機能の行に表示されるキャプション",

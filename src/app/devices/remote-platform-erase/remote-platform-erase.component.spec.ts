@@ -17,6 +17,8 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { UserConsentService } from '../user-consent.service'
 
+const VISIBLE_PLATFORM_ERASE_CAPABILITIES = PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
+
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
   KVM: true,
@@ -404,7 +406,7 @@ describe('RemotePlatformEraseComponent', () => {
     component.toggleFeature(true)
     fixture.detectChanges()
     const capItems = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapItem"]')
-    expect(capItems.length).toBe(PLATFORM_ERASE_CAPABILITIES.length)
+    expect(capItems.length).toBe(VISIBLE_PLATFORM_ERASE_CAPABILITIES.length)
   })
 
   it('should show a checkbox for each capability, disabled for unsupported ones', () => {
@@ -413,7 +415,7 @@ describe('RemotePlatformEraseComponent', () => {
     component.toggleFeature(true)
     fixture.detectChanges()
     const checkboxes = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapCheckbox"]')
-    expect(checkboxes.length).toBe(PLATFORM_ERASE_CAPABILITIES.length)
+    expect(checkboxes.length).toBe(VISIBLE_PLATFORM_ERASE_CAPABILITIES.length)
     // tpmClear (index 1) and csmeUnconfigure (index 3) not supported — always disabled
     expect(component.eraseCapControl(1).disabled).toBeTrue()
     expect(component.eraseCapControl(3).disabled).toBeTrue()
@@ -515,43 +517,6 @@ describe('RemotePlatformEraseComponent', () => {
       expect(secondPayload?.enableSOL).toBe(mockAMTFeatures.SOL)
       expect(secondPayload?.enableIDER).toBe(mockAMTFeatures.IDER)
       expect(secondPayload?.rpe).toBe(mockAMTFeatures.rpe)
-    })
-  })
-
-  describe('after successful erase', () => {
-    beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
-      component.ngOnInit()
-      component.toggleFeature(true)
-      component.eraseCapControl(0).setValue(true)
-      component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
-    })
-
-    it('should reset platformEraseEnabled to false', () => {
-      component.initiateErase()
-      expect(component.platformEraseEnabled()).toBeFalse()
-    })
-
-    it('should reset amtFeatures.rpe to false', () => {
-      component.initiateErase()
-      expect(component.amtFeatures()?.rpe).toBeFalse()
-    })
-
-    it('should reset selectedCapsCount to 0', () => {
-      component.initiateErase()
-      expect(component.selectedCapsCount()).toBe(0)
-    })
-
-    it('should uncheck all cap form controls', () => {
-      component.initiateErase()
-      expect(component.eraseCapControl(0).value).toBeFalse()
-    })
-
-    it('should disable capability checkboxes after successful erase', () => {
-      component.initiateErase()
-      expect(component.eraseCapControl(0).disabled).toBeTrue()
-      expect(component.eraseCapControl(2).disabled).toBeTrue()
     })
   })
 
@@ -704,18 +669,6 @@ describe('RemotePlatformEraseComponent', () => {
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('secret')
       component.toggleFeature(false)
-      expect(component.isSsdSelected()).toBeFalse()
-      expect(component.isSsdEncrypted()).toBeFalse()
-      expect(component.ssdPasswordControl.value).toBe('')
-    })
-
-    it('should reset SSD controls after successful erase', () => {
-      component.eraseCapControl(0).setValue(true)
-      component.onCapChange()
-      component.onSsdEncryptedChange(true)
-      component.ssdPasswordControl.setValue('secret')
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
-      component.initiateErase()
       expect(component.isSsdSelected()).toBeFalse()
       expect(component.isSsdEncrypted()).toBeFalse()
       expect(component.ssdPasswordControl.value).toBe('')

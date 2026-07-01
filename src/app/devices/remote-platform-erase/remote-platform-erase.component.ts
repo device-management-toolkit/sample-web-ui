@@ -252,6 +252,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       )
       .subscribe()
   }
+
   postUserConsentDecision(result: any, operations: string): Observable<any> {
     if (result === false) {
       return of(null)
@@ -344,21 +345,15 @@ export class RemotePlatformEraseComponent implements OnInit {
               enableSOL: this.amtFeatures()?.SOL ?? false,
               enableIDER: this.amtFeatures()?.IDER ?? false,
               ocr: this.amtFeatures()?.ocr ?? false,
-              rpe: false
+              rpe: true
             }
-            this.devicesService.markRpeDisabledAfterErase(this.deviceId())
             this.devicesService
               .setAmtFeatures(this.deviceId(), payload)
               .pipe(catchError(() => EMPTY))
               .subscribe()
-            this.amtFeatures.update((f) => (f ? { ...f, rpe: false } : f))
-            this.platformEraseEnabled.set(false)
 
-            this.eraseCapsArray.controls.forEach((c) => c.setValue(false, { emitEvent: false }))
-            this.selectedCapsCount.set(0)
-            this.isCsmeExclusiveSelected.set(false)
-            this.resetSsdControls()
-            this.updateCapControlStates()
+            // Preserve selected operations after completion and refresh computed UI state.
+            this.onCapChange()
           }
         }
       })
