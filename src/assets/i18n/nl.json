@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Ondertitel van de functiekaart voor extern wissen van het platform",
-    "value": "Start op afstand een veilige wissing van schijven, TPM, BIOS of Intel CSME op dit apparaat. Gewiste gegevens kunnen niet worden hersteld."
+    "value": "Start op afstand een veilige wissing van schijven, TPM en BIOS op dit apparaat. Gewiste gegevens kunnen niet worden hersteld.",
+    "_value_old": "Start op afstand een veilige wissing van schijven, TPM, BIOS of Intel CSME op dit apparaat. Gewiste gegevens kunnen niet worden hersteld."
   },
   "remotePlatformErase.warning": {
     "description": "Waarschuwingsbericht over het inschakelen van extern wissen van het platform",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
-    "value": "{{selected}} van {{total}} bewerkingen geselecteerd"
+    "value": "{{selected}} van 3 bewerkingen geselecteerd",
+    "_value_old": "{{selected}} van {{total}} bewerkingen geselecteerd"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",

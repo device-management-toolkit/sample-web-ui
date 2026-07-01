@@ -526,11 +526,6 @@ export class DevicesService {
     )
   }
 
-  markRpeDisabledAfterErase(deviceId: string): void {
-    this.rpeDisabledAfterErase.add(deviceId)
-    this.updateAmtFeaturesCache(deviceId, { rpe: false })
-  }
-
   private applyRpeOverride(deviceId: string, features: AMTFeaturesResponse): AMTFeaturesResponse {
     if (!this.rpeDisabledAfterErase.has(deviceId)) {
       return features

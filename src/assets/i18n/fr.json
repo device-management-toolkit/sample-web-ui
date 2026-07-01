@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Sous-titre de la carte de fonctionnalité d'effacement distant de la plateforme",
-    "value": "Déclenche à distance un effacement sécurisé des disques, TPM, BIOS ou Intel CSME sur cet appareil. Les données effacées ne peuvent pas être récupérées."
+    "value": "Déclenche à distance un effacement sécurisé des disques, TPM et BIOS sur cet appareil. Les données effacées ne peuvent pas être récupérées.",
+    "_value_old": "Déclenche à distance un effacement sécurisé des disques, TPM, BIOS ou Intel CSME sur cet appareil. Les données effacées ne peuvent pas être récupérées."
   },
   "remotePlatformErase.warning": {
     "description": "Message d'avertissement concernant l'activation de l'effacement distant de la plateforme",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",
-    "value": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
+    "value": "{{selected}} opération(s) sélectionnée(s) sur 3",
+    "_value_old": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Légende affichée sur une ligne de capacité lorsque l'appareil ne la prend pas en charge",

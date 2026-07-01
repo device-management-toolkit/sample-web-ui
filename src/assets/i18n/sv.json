@@ -2851,7 +2851,8 @@
   },
   "remotePlatformErase.description": {
     "description": "Underrubrik på funktionskortet för fjärrradering av plattform",
-    "value": "Utför en säker fjärrradering av diskar, TPM, BIOS eller Intel CSME på den här enheten. Raderade data kan inte återställas."
+    "value": "Utför en säker fjärrradering av diskar, TPM och BIOS på den här enheten. Raderade data kan inte återställas.",
+    "_value_old": "Utför en säker fjärrradering av diskar, TPM, BIOS eller Intel CSME på den här enheten. Raderade data kan inte återställas."
   },
   "remotePlatformErase.warning": {
     "description": "Varningsmeddelande om aktivering av fjärrradering av plattform",
@@ -2983,7 +2984,8 @@
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",
-    "value": "{{selected}} av {{total}} åtgärder valda"
+    "value": "{{selected}} av 3 åtgärder valda",
+    "_value_old": "{{selected}} av {{total}} åtgärder valda"
   },
   "remotePlatformErase.capUnsupported": {
     "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",

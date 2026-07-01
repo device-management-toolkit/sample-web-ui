@@ -27,6 +27,7 @@
 
       <div style="padding: 8px 0">
         <mat-slide-toggle
+          color="primary"
           data-cy="remoteEraseCheckbox"
           [checked]="platformEraseEnabled()"
           [disabled]="isLoading()"
@@ -50,48 +51,51 @@
         <p>{{ 'remotePlatformErase.caps.description.value' | translate }}</p>
 
         @for (cap of eraseCaps(); track cap.key; let i = $index) {
-          <div data-cy="eraseCapItem" style="padding: 4px 0">
-            <mat-checkbox
-              [formControl]="eraseCapControl(i)"
-              (change)="onCapChange()"
-              [attr.aria-describedby]="'rpe-cap-desc-' + cap.key"
-              data-cy="eraseCapCheckbox">
-              <div>
-                <div>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</div>
-                <small [id]="'rpe-cap-desc-' + cap.key">
-                  {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
-                </small>
-                @if (!cap.supported) {
-                  <div>
-                    <small
-                      ><em>{{ 'remotePlatformErase.capUnsupported.value' | translate }}</em></small
-                    >
-                  </div>
-                }
-              </div>
-            </mat-checkbox>
-            @if (cap.key === 'secureEraseSsds' && isSsdSelected()) {
-              <div style="padding-left: 40px; padding-top: 8px">
-                <mat-checkbox
-                  [formControl]="ssdEncryptedControl"
-                  (change)="onSsdEncryptedChange($event.checked)"
-                  data-cy="ssdEncryptedCheckbox">
-                  {{ 'remotePlatformErase.ssdEncrypted.label.value' | translate }}
-                </mat-checkbox>
-                @if (isSsdEncrypted()) {
-                  <mat-form-field style="display: block; padding-top: 8px">
-                    <mat-label>{{ 'remotePlatformErase.ssdPassword.label.value' | translate }}</mat-label>
-                    <input
-                      matInput
-                      type="password"
-                      [formControl]="ssdPasswordControl"
-                      data-cy="ssdPasswordInput"
-                      autocomplete="off" />
-                  </mat-form-field>
-                }
-              </div>
-            }
-          </div>
+          <!-- Hide the CSME unconfigure option for now until we have a better way to control the power of this option. -->
+          @if (cap.key !== 'csmeUnconfigure') {
+            <div data-cy="eraseCapItem" style="padding: 4px 0">
+              <mat-checkbox
+                [formControl]="eraseCapControl(i)"
+                (change)="onCapChange()"
+                [attr.aria-describedby]="'rpe-cap-desc-' + cap.key"
+                data-cy="eraseCapCheckbox">
+                <div>
+                  <div>{{ 'remotePlatformErase.cap.' + cap.key + '.label.value' | translate }}</div>
+                  <small [id]="'rpe-cap-desc-' + cap.key">
+                    {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
+                  </small>
+                  @if (!cap.supported) {
+                    <div>
+                      <small
+                        ><em>{{ 'remotePlatformErase.capUnsupported.value' | translate }}</em></small
+                      >
+                    </div>
+                  }
+                </div>
+              </mat-checkbox>
+              @if (cap.key === 'secureEraseSsds' && isSsdSelected()) {
+                <div style="padding-left: 40px; padding-top: 8px">
+                  <mat-checkbox
+                    [formControl]="ssdEncryptedControl"
+                    (change)="onSsdEncryptedChange($event.checked)"
+                    data-cy="ssdEncryptedCheckbox">
+                    {{ 'remotePlatformErase.ssdEncrypted.label.value' | translate }}
+                  </mat-checkbox>
+                  @if (isSsdEncrypted()) {
+                    <mat-form-field style="display: block; padding-top: 8px">
+                      <mat-label>{{ 'remotePlatformErase.ssdPassword.label.value' | translate }}</mat-label>
+                      <input
+                        matInput
+                        type="password"
+                        [formControl]="ssdPasswordControl"
+                        data-cy="ssdPasswordInput"
+                        autocomplete="off" />
+                    </mat-form-field>
+                  }
+                </div>
+              }
+            </div>
+          }
         }
 
         @if (isCsmeExclusiveSelected()) {
