@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Etichetta per la sincronizzazione wireless del profilo locale",
-    "value": "Sincronizzazione del profilo locale"
+    "value": "Sincronizzazione dei profili Wi-Fi del sistema operativo"
   },
   "network.wireless.macAddress": {
     "description": "Etichetta per indirizzo MAC wireless",
