@@ -176,21 +176,24 @@ export interface DeactivateCommandOptions {
   rpcDockerImage: string
   password: string
   amtVersion: string
+  // console-only
+  isAdminControlModeProfile?: boolean
   // cloud-only
   fqdn?: string
 }
 
 export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string => {
   const cmd = `deactivate`
-  const common_flag = `-v -f --json --password ${opts.password}`
+  const common_flag = `-v -f --json`
   if (isCloud) {
     const flagPart = parseInt(opts.amtVersion) <= 18 ? ' -tls-tunnel' : ''
-    const args = `${cmd} -u wss://${opts.fqdn}/activate -n${flagPart} ${common_flag}`
+    const args = `${cmd} -u wss://${opts.fqdn}/activate -n${flagPart} --password ${opts.password} ${common_flag}`
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
 
   const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
-  const args = `${cmd} --local${flagPart} ${common_flag}`
+  const passPart = opts.isAdminControlModeProfile ? ` --password ${opts.password}` : ''
+  const args = `${cmd} --local${flagPart}${passPart} ${common_flag}`
   return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
 }
 
