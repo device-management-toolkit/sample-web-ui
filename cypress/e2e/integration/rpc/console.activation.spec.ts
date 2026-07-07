@@ -58,7 +58,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           isWin,
           rpcDockerImage,
           password,
-          amtVersion
+          amtVersion,
+          isAdminControlModeProfile
         })
       })
     })
@@ -153,7 +154,11 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           })
         })
 
-        it('should NOT deactivate device - invalid password', () => {
+        it('should NOT deactivate device - invalid password', function () {
+          if (!isAdminControlModeProfile) {
+            this.skip()
+          }
+
           if (!notActivatedControlModes.includes(amtInfo.controlMode)) {
             const invalidCommand =
               deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
