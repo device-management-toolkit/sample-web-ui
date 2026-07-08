@@ -99,13 +99,13 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
             expect(combined).not.to.match(/failed/i)
             if (isAdminControlModeProfile) {
-              expect(combined).to.match(/admin control mode/i)
+              expect(combined).to.match(/Activation:.*admin control mode/i)
             } else {
-              expect(combined).to.match(/client control mode/i)
+              expect(combined).to.match(/Activation:.*client control mode/i)
             }
 
             if (parts[2] === 'CIRA') {
-              expect(combined).to.match(/cira[^\n]*configured/i)
+              expect(combined).to.match(/CIRA Connection:.*Configured/i)
             } else if (parseInt(majorVersion) >= 19) {
               expect(combined).to.match(/TLS: Already Configured/i)
             } else {
@@ -115,7 +115,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             if (profileName.endsWith('WiFi')) {
               expect(combined).to.contain('Network: Wired Network Configured. Wireless Configured')
             } else {
-              expect(combined).to.contain('Network: Wired Network Configured')
+              expect(combined).to.match(/Wired Network:\s*Wired Network Configured/i)
             }
 
             if (primaryOutput.length > 0) {
