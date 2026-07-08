@@ -63,6 +63,14 @@
     "description": "自己署名証明書を許可するメッセージ",
     "value": "自己署名証明書を許可する"
   },
+  "addDevice.amtPassword": {
+    "description": "AMTパスワードフィールドのラベル",
+    "value": "AMTパスワード"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "AMTパスワードフィールドのヒント",
+    "value": "AMTパスワードを入力"
+  },
   "addDevice.chooseProfile": {
     "description": "プロフィール選択フィールドのラベル",
     "value": "プロフィールを選択してください"
@@ -70,6 +78,10 @@
   "addDevice.description": {
     "description": "デバイスのアクティベーション方法の説明",
     "value": "デバイスをアクティベートするには、AMTデバイス上でコマンドを実行する必要があります。このダイアログは、実行するコマンドを生成するのに役立ちます。"
+  },
+  "addDevice.enterGuid": {
+    "description": "GUIDを入力するヒント",
+    "value": "GUIDを入力"
   },
   "addDevice.enterTags": {
     "description": "タグ入力のヒント",
@@ -83,6 +95,10 @@
     "description": "必須のフレンドリーネームに関するエラー",
     "value": "フレンドリーネームは必須です"
   },
+  "addDevice.guid": {
+    "description": "GUIDフィールドのラベル",
+    "value": "GUID"
+  },
   "addDevice.hostNameInvalid": {
     "description": "無効なホスト名に関するエラー",
     "value": "ホスト名の形式が無効です"
@@ -90,6 +106,22 @@
   "addDevice.hostNameRequired": {
     "description": "必須ホスト名に関するエラー",
     "value": "ホスト名は必須です"
+  },
+  "addDevice.mpsPassword": {
+    "description": "MPSパスワードフィールドのラベル",
+    "value": "MPSパスワード"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "MPSパスワードフィールドのヒント",
+    "value": "MPSパスワードを入力"
+  },
+  "addDevice.mpsUsername": {
+    "description": "MPSユーザー名フィールドのラベル",
+    "value": "MPSユーザー名"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "MPSユーザー名フィールドのヒント",
+    "value": "MPSユーザー名（デフォルト: admin）"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "自己署名証明書のチェックを無効化するチェックボックスのラベル",
@@ -111,6 +143,10 @@
     "description": "新しいデバイスを追加するためのダイアログタイトル",
     "value": "新しいデバイスを追加する"
   },
+  "addDevice.useCIRA": {
+    "description": "CIRA接続を使用するチェックボックス",
+    "value": "CIRAを使用"
+  },
   "addDevice.userNameInvalid": {
     "description": "無効なユーザー名のためエラーが発生しました",
     "value": "ユーザー名は5文字以上16文字以下である必要があります。"
@@ -122,42 +158,6 @@
   "addDevice.useTLS": {
     "description": "TLS ご利用に関するご案内",
     "value": "TLSを使用してください"
-  },
-  "addDevice.useCIRA": {
-    "description": "CIRA接続を使用するチェックボックス",
-    "value": "CIRAを使用"
-  },
-  "addDevice.guid": {
-    "description": "GUIDフィールドのラベル",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "GUIDを入力するヒント",
-    "value": "GUIDを入力"
-  },
-  "addDevice.mpsUsername": {
-    "description": "MPSユーザー名フィールドのラベル",
-    "value": "MPSユーザー名"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "MPSユーザー名フィールドのヒント",
-    "value": "MPSユーザー名（デフォルト: admin）"
-  },
-  "addDevice.mpsPassword": {
-    "description": "MPSパスワードフィールドのラベル",
-    "value": "MPSパスワード"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "MPSパスワードフィールドのヒント",
-    "value": "MPSパスワードを入力"
-  },
-  "addDevice.amtPassword": {
-    "description": "AMTパスワードフィールドのラベル",
-    "value": "AMTパスワード"
-  },
-  "addDevice.amtPasswordHint": {
-    "description": "AMTパスワードフィールドのヒント",
-    "value": "AMTパスワードを入力"
   },
   "alarm.errorAdding": {
     "description": "エラーの追加について",
@@ -195,6 +195,10 @@
     "description": "完了時に削除するラベルのスライドトグル",
     "value": "完了時に削除してください"
   },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "完了時に削除：{{deleteFinal}}"
+  },
   "alarmService.elementNameWithInstance": {
     "description": "アラーム要素名とそのInstanceID",
     "value": "{{elementName}} (InstanceID:{{instanceId}})"
@@ -226,10 +230,6 @@
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
     "value": "開始時刻：{{startTime}}"
-  },
-  "alarmService.deleteOnCompletionRange": {
-    "description": "Label for delete on completion slide toggle",
-    "value": "完了時に削除：{{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "開始時刻入力用プレースホルダー",
@@ -272,6 +272,22 @@
     "description": "証明書追加ボタンのツールチップ",
     "value": "証明書を追加する"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "削除する証明書が見つからないエラー",
+    "value": "証明書が見つからないか、既に削除されています"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "プロファイルから参照されているため証明書を削除できないエラー",
+    "value": "証明書は現在AMTプロファイルから参照されているため削除できません。まず参照を削除してください。"
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "証明書が 1 つ以上のプロファイルから参照されているため、削除ボタンが無効になっているときのツールチップ テキスト",
+    "value": "この証明書は現在関連付けられているため、削除できません"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "証明書が削除されたときの成功メッセージ",
+    "value": "証明書 '{{name}}' を正常に削除しました"
+  },
   "certificates.download.tooltip": {
     "description": "証明書ダウンロードのツールチップ",
     "value": "証明書をダウンロード"
@@ -287,22 +303,6 @@
   "certificates.errorRetrievingCertificates": {
     "description": "証明書情報の取得エラー",
     "value": "証明書情報の取得に失敗しました"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "プロファイルから参照されているため証明書を削除できないエラー",
-    "value": "証明書は現在AMTプロファイルから参照されているため削除できません。まず参照を削除してください。"
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "削除する証明書が見つからないエラー",
-    "value": "証明書が見つからないか、既に削除されています"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "読み取り専用証明書を削除しようとしたときのエラー",
-    "value": "読み取り専用証明書は削除できません"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "証明書が削除されたときの成功メッセージ",
-    "value": "証明書 '{{name}}' を正常に削除しました"
   },
   "certificates.list": {
     "description": "証明書一覧のテキスト",
@@ -320,6 +320,10 @@
     "description": "証明書にプロファイルが関連付けられていない場合に表示されます",
     "value": "関連性なし"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "読み取り専用証明書を削除しようとしたときのエラー",
+    "value": "読み取り専用証明書は削除できません"
+  },
   "certificates.title": {
     "description": "証明書用タイトル",
     "value": "証明書"
@@ -335,10 +339,6 @@
   "certificates.typeRoot": {
     "description": "証明書がルート証明書であることを示します",
     "value": "ルート"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "証明書が 1 つ以上のプロファイルから参照されているため、削除ボタンが無効になっているときのツールチップ テキスト",
-    "value": "この証明書は現在関連付けられているため、削除できません"
   },
   "common.addNew": {
     "description": "新規追加ボタン用テキスト",
@@ -379,9 +379,17 @@
   "common.continue": {
     "value": "続行"
   },
+  "common.delete": {
+    "description": "削除ボタンのテキスト",
+    "value": "削除"
+  },
   "common.deleteConfiguration": {
     "description": "削除された設定に関するメッセージ",
     "value": "設定の削除が正常に完了しました"
+  },
+  "common.deleteProfile": {
+    "description": "プロフィール削除ボタンのテキスト",
+    "value": "プロフィールを削除"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "ログインサブタイトルのメッセージ",
@@ -405,6 +413,10 @@
   },
   "common.down": {
     "value": "ダウン"
+  },
+  "common.editTags": {
+    "description": "タグを一括編集するためのボタンテキスト",
+    "value": "タグを編集"
   },
   "common.enabled": {
     "description": "ローカルプロファイル同期が有効な場合に使用されます",
@@ -456,6 +468,10 @@
   },
   "common.no": {
     "value": "いいえ"
+  },
+  "common.noData": {
+    "description": "データが利用できない場合のメッセージ",
+    "value": "利用可能なデータがありません"
   },
   "common.notApplicable": {
     "description": "OSエントリが該当しない場合に表示されます",
@@ -516,6 +532,10 @@
   "common.up": {
     "value": "Up"
   },
+  "common.update": {
+    "description": "更新ボタンのテキスト",
+    "value": "更新"
+  },
   "common.userName": {
     "description": "ユーザー名に関するメッセージ",
     "value": "ユーザー名"
@@ -555,6 +575,10 @@
     "description": "FQDN ラジオボタン ラベル",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "ランダムパスワード生成トグルのテキスト",
+    "value": "デバイスのアクティベーション時にデバイスごとにランダムパスワードを生成"
+  },
   "configDetail.ipv4": {
     "description": "IPv4 ラジオボタン ラベル",
     "value": "IPv4"
@@ -574,10 +598,6 @@
   "configDetail.portPlaceholder": {
     "description": "ポートフィールド用プレースホルダーテキスト",
     "value": "ポート"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "ランダムパスワード生成トグルのテキスト",
-    "value": "デバイスのアクティベーション時にデバイスごとにランダムパスワードを生成"
   },
   "configDetail.usernameHint": {
     "description": "ユーザー名フィールドのヒントテキスト",
@@ -849,6 +869,14 @@
     "description": "ハードウェア情報に関する説明",
     "value": "メモリ、CPUなど..."
   },
+  "deviceDetail.ider": {
+    "description": "IDERのカテゴリ名",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "IDERの説明",
+    "value": "リモートで起動する、またはメディアをマウントする"
+  },
   "deviceDetail.kvm": {
     "description": "KVMのカテゴリ名",
     "value": "KVM"
@@ -1069,6 +1097,10 @@
     "description": "タグ用テーブル列ヘッダー",
     "value": "タグ"
   },
+  "deviceToolbar.power.off": {
+    "description": "電源オフのツールチップ",
+    "value": "電源: オフ"
+  },
   "deviceToolbar.power.on": {
     "description": "電源オンのツールチップ",
     "value": "電源: オン"
@@ -1076,10 +1108,6 @@
   "deviceToolbar.power.sleep": {
     "description": "スリープ状態のツールチップ",
     "value": "電源: スリープ"
-  },
-  "deviceToolbar.power.off": {
-    "description": "電源オフのツールチップ",
-    "value": "電源: オフ"
   },
   "deviceUserConsent.description": {
     "description": "デバイスに関するユーザー同意の説明",
@@ -1101,6 +1129,10 @@
     "description": "デバイスに関するユーザー同意のタイトル",
     "value": "ユーザー同意"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "英数字検証のエラーメッセージ",
+    "value": "ドメイン名は文字、数字、ハイフン（-）、アンダースコア（_）のみを含むことができます"
+  },
   "domainDetail.completeProfile": {
     "description": "完了したドメインプロファイルに関するメッセージ",
     "value": "ドメインプロファイルの保存に成功しました"
@@ -1108,14 +1140,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "削除されたドメインプロファイルに関するエラー",
     "value": "ドメインプロファイルの作成/更新中にエラーが発生しました"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "一意キー違反のエラーメッセージ",
-    "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "英数字検証のエラーメッセージ",
-    "value": "ドメイン名は文字、数字、ハイフン（-）、アンダースコア（_）のみを含むことができます"
   },
   "domainDetail.fqdn": {
     "description": "FQDNフィールドに関するヒント",
@@ -1136,6 +1160,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "プロビジョニング証明書パスワードに関するヒント",
     "value": "プロビジョニング証明書のパスワード"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "一意キー違反のエラーメッセージ",
+    "value": "ドメイン NewDomain のIDまたはサフィックスは既に存在します"
   },
   "domains.certExpired": {
     "description": "有効期限切れの証明書に関するメッセージ",
@@ -1399,6 +1427,10 @@
     "description": "AMT バージョン用ラベル",
     "value": "AMTバージョン："
   },
+  "general.collapse": {
+    "description": "折りたたみのラベル",
+    "value": "折りたたむ"
+  },
   "general.errorAMTFeatures": {
     "description": "AMT機能の取得中にエラーが発生しました",
     "value": "AMT機能の取得に失敗しました"
@@ -1410,6 +1442,10 @@
   "general.errorGeneralSettings": {
     "description": "一般設定の取得エラー",
     "value": "一般設定の取得中にエラーが発生しました"
+  },
+  "general.expand": {
+    "description": "展開のラベル",
+    "value": "展開"
   },
   "general.failAMTFeatures": {
     "description": "機能更新時のエラー",
@@ -1439,6 +1475,10 @@
     "description": "KVMのツールチップはサポートされていません",
     "value": "KVMはサポートされていません"
   },
+  "general.notSupported": {
+    "description": "無効なAMT機能のラベル",
+    "value": "サポートされていません"
+  },
   "general.oneClickRecovery": {
     "description": "ワンクリック復元用のラベル",
     "value": "ワンクリック復元（OCR）："
@@ -1463,9 +1503,21 @@
     "description": "プロビジョニングモードのラベル",
     "value": "プロビジョニングモード："
   },
+  "general.redirectionEnable": {
+    "description": "リダイレクトを有効にするボタンラベル",
+    "value": "有効にする"
+  },
+  "general.redirectionWarning": {
+    "description": "リダイレクトが無効でKVM/SOL/IDERが有効な場合の警告",
+    "value": "リダイレクトが無効です。KVM、SOL、IDERにはリダイレクトの有効化が必要です。"
+  },
   "general.serialOverLan": {
     "description": "SOL用ラベル",
     "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.supported": {
+    "description": "有効なAMT機能のラベル",
+    "value": "サポートされています"
   },
   "general.userConsent": {
     "description": "ユーザー同意ラベル",
@@ -1486,14 +1538,6 @@
   "general.windowsRecoverySupported": {
     "description": "Windows リカバリのツールチップがサポートされています",
     "value": "Windows Recovery はサポートされています"
-  },
-  "general.redirectionWarning": {
-    "description": "リダイレクトが無効でKVM/SOL/IDERが有効な場合の警告",
-    "value": "リダイレクトが無効です。KVM、SOL、IDERにはリダイレクトの有効化が必要です。"
-  },
-  "general.redirectionEnable": {
-    "description": "リダイレクトを有効にするボタンラベル",
-    "value": "有効にする"
   },
   "httpBoot.enforce": {
     "value": "セキュアブートの実施"
@@ -1584,6 +1628,54 @@
   "hwInfo.systemSummary.title": {
     "value": "システム概要"
   },
+  "ider.attachDisk.label": {
+    "description": "IDER用ディスクイメージを添付するボタンラベル",
+    "value": "ディスクイメージ（.iso）を添付してください"
+  },
+  "ider.enable": {
+    "description": "IDERを有効にするメッセージ",
+    "value": "現在、このデバイスではIDERが有効になっておりません。有効にしますか？"
+  },
+  "ider.errorAccessCancel": {
+    "description": "有効化要求がキャンセルされた場合のアクセスエラー",
+    "value": "IDERにアクセスできません - IDER有効化のリクエストはキャンセルされました"
+  },
+  "ider.errorAccessEnable": {
+    "description": "有効化要求時のアクセスエラー",
+    "value": "IDERにアクセスできません - IDERの有効化に失敗しました"
+  },
+  "ider.errorRetrieve": {
+    "description": "リダイレクトステータスの取得エラー",
+    "value": "リダイレクトステータスの取得に失敗しました"
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "AMT機能を取得している間に表示されるステータスメッセージ",
+    "value": "AMT機能を取得しています..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "ユーザーの同意確認中に表示されるステータスメッセージ",
+    "value": "同意モードを確認しています..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "電源状態を確認している間に表示されるステータスメッセージ",
+    "value": "電源状態を確認しています..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "リダイレクト状態を確認している間に表示されるステータスメッセージ",
+    "value": "リダイレクト状態を確認しています..."
+  },
+  "ider.status.connectingIder": {
+    "description": "IDERコンポーネントが接続中のときに表示されるステータスメッセージ",
+    "value": "IDERに接続しています..."
+  },
+  "ider.stopIder.label": {
+    "description": "IDERセッションを停止するボタンラベル",
+    "value": "Stop IDER"
+  },
+  "ider.title": {
+    "description": "IDERのタイトル",
+    "value": "IDERを有効にする"
+  },
   "ieee.authProtocol": {
     "description": "認証プロトコルに関するテキスト",
     "value": "認証プロトコル"
@@ -1660,10 +1752,6 @@
     "description": "KVMが接続中の際に表示されるラベル",
     "value": "KVMを接続中..."
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
-    "value": "KVMセッションはAMTによって閉じられました"
-  },
   "kvm.disconnect.button": {
     "description": "KVMセッションから切断するボタンラベル",
     "value": "KVMの切断"
@@ -1712,17 +1800,9 @@
     "description": "選択したホットキーを送信するボタンラベル",
     "value": "送信"
   },
-  "kvm.stopIder.label": {
-    "description": "IDERセッションを停止するボタンラベル",
-    "value": "Stop IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "電源状態の確認中に表示されるステータスメッセージ",
-    "value": "電源状態を確認しています..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "リダイレクト状態の確認中に表示されるステータスメッセージ",
-    "value": "リダイレクト状態を確認しています..."
+  "kvm.sessionClosedByDevice": {
+    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
+    "value": "KVMセッションはAMTによって閉じられました"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "AMT機能の取得中に表示されるステータスメッセージ",
@@ -1732,9 +1812,21 @@
     "description": "ユーザーの同意確認中に表示されるステータスメッセージ",
     "value": "同意モードを確認しています..."
   },
+  "kvm.status.checkingPowerState": {
+    "description": "電源状態の確認中に表示されるステータスメッセージ",
+    "value": "電源状態を確認しています..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "リダイレクト状態の確認中に表示されるステータスメッセージ",
+    "value": "リダイレクト状態を確認しています..."
+  },
   "kvm.status.connectingKVM": {
     "description": "KVMコンポーネントの接続中に表示されるステータスメッセージ",
     "value": "KVMに接続しています..."
+  },
+  "kvm.stopIder.label": {
+    "description": "IDERセッションを停止するボタンラベル",
+    "value": "Stop IDER"
   },
   "kvm.title": {
     "description": "KVMのタイトル",
@@ -2016,6 +2108,14 @@
     "description": "無線ネットワーク設定カードの見出し",
     "value": "ワイヤレスネットワーク設定"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "認証方式：{{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "暗号化方式：{{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "ネットワーク名：{{name}}"
@@ -2023,14 +2123,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID：{{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "暗号化方式：{{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "認証方式：{{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "ワイヤレスネットワークカードの説明文",
@@ -2070,8 +2162,14 @@
   "powerOptions.powerUpToHTTPSBoot": {
     "value": "HTTPSブート（OCR）へのパワーアップ"
   },
+  "powerOptions.powerUpToPBA": {
+    "value": "PBAまで電源を入れる (OCR)"
+  },
   "powerOptions.powerUpToPXE": {
     "value": "PXEへの電源投入"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "WinReまで電源を入れる (OCR)"
   },
   "powerOptions.reset": {
     "value": "リセット"
@@ -2085,8 +2183,14 @@
   "powerOptions.resetToIDER": {
     "value": "IDE-R（CD-ROM）にリセット"
   },
+  "powerOptions.resetToPBA": {
+    "value": "PBAにリセット (OCR)"
+  },
   "powerOptions.resetToPXE": {
     "value": "PXEにリセット"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "WinReにリセット (OCR)"
   },
   "powerOptions.sleep": {
     "value": "スリープ"
@@ -2257,6 +2361,10 @@
     "description": "非TLSオプションに関するヒント",
     "value": "AMT 16.1以降では、AMTが自己署名証明書を提供します。このオプションを選択すると、ツールキット提供の自己署名証明書ではなく、AMTの証明書が使用されます。"
   },
+  "profileDetail.noProxy": {
+    "description": "利用可能なプロキシ設定がない場合のメッセージ",
+    "value": "プロキシ設定が見つかりません"
+  },
   "profileDetail.noWifi": {
     "description": "WiFi設定が利用できない場合のメッセージ",
     "value": "Wi-Fi設定が見つかりません"
@@ -2337,13 +2445,13 @@
     "description": "有線802.1x設定フィールドのラベル",
     "value": "有線 802.1x 設定"
   },
-  "profiles.deleteProfile": {
-    "description": "削除されたプロフィールに関するメッセージ",
-    "value": "プロファイルの削除が正常に完了しました"
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "このサーバーでは CIRA が無効になっています。このプロファイルは管理接続に CIRA を使用しているため、CIRA が再度有効になるまで機能しません。"
+  },
+  "profiles.deleteProfile": {
+    "description": "削除されたプロフィールに関するメッセージ",
+    "value": "プロファイルの削除が正常に完了しました"
   },
   "profiles.exportProfile": {
     "description": "エクスポートされたプロファイルに関するメッセージ",
@@ -2388,6 +2496,126 @@
   "profiles.table.network": {
     "description": "ネットワーク設定の列見出し",
     "value": "ネットワーク設定"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "ドラッグアンドドロップによる並び替えのヒント",
+    "value": "ドラッグ＆ドロップで順序を変更"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "関連プロキシプロファイルリストのラベル",
+    "value": "関連プロキシプロファイル（優先順）"
+  },
+  "proxy.configs.hint": {
+    "description": "プロキシ設定入力フィールドの下に表示されるヒント",
+    "value": "このプロファイルにプロキシを割り当てることができます"
+  },
+  "proxy.configs.label": {
+    "description": "プロキシ設定入力フィールドのラベル",
+    "value": "プロキシ設定"
+  },
+  "proxy.configs.placeholder": {
+    "description": "プロキシ設定を検索するためのプレースホルダー",
+    "value": "追加するプロキシ設定を検索"
+  },
+  "proxy.label": {
+    "description": "プロキシセクションのラベル",
+    "value": "プロキシ"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "アドレス形式フィールドのラベル",
+    "value": "アドレス形式"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "プロキシアドレスフィールドのプレースホルダー",
+    "value": "プロキシサーバーのアドレスを入力"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "DNSサフィックスフィールドのラベル",
+    "value": "ネットワークDNSサフィックス"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "DNSサフィックスフィールドのプレースホルダー",
+    "value": "example.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "アドレス形式の列ヘッダー",
+    "value": "アドレス形式"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "ネットワークDNSサフィックスの列ヘッダー",
+    "value": "ネットワークDNSサフィックス"
+  },
+  "proxyConfigs.header.name": {
+    "description": "プロキシ設定名の列ヘッダー",
+    "value": "名前"
+  },
+  "proxyConfigs.header.port": {
+    "description": "ポートの列ヘッダー",
+    "value": "ポート"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "プロキシアドレスの列ヘッダー",
+    "value": "プロキシアドレス"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "プロキシ設定のタイトル",
+    "value": "プロキシ設定"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "プロキシ設定作成成功メッセージ",
+    "value": "プロキシ設定が正常に作成されました"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "プロキシ設定削除成功メッセージ",
+    "value": "プロキシ設定 {{name}} が正常に削除されました"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "プロキシ設定更新成功メッセージ",
+    "value": "プロキシ設定が正常に更新されました"
+  },
+  "proxyConfigs.name": {
+    "description": "プロキシ設定名フィールドのラベル",
+    "value": "名前"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "プロキシ設定名フィールドのプレースホルダー",
+    "value": "プロキシ設定名を入力"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "プロキシ設定編集ページのタイトル",
+    "value": "プロキシ設定を編集"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "新しいプロキシ設定ページのタイトル",
+    "value": "新しいプロキシ設定"
+  },
+  "proxyConfigs.port": {
+    "description": "ポートフィールドのラベル",
+    "value": "ポート"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "プロキシアドレスフィールドのラベル",
+    "value": "プロキシアドレス"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "DNSサフィックス最大長のバリデーションメッセージ",
+    "value": "ネットワークDNSサフィックスは192文字以内である必要があります"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "DNSサフィックス必須のバリデーションメッセージ",
+    "value": "ネットワークDNSサフィックスは必須です"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "名前必須のバリデーションメッセージ",
+    "value": "名前は必須です"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "ポート範囲のバリデーションメッセージ",
+    "value": "ポートは0から65535の間である必要があります"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "ポート必須のバリデーションメッセージ",
+    "value": "ポートは必須です"
   },
   "randomPassword.learnMore": {
     "description": "サポートリンクのメッセージ",
@@ -2656,177 +2884,5 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "無線プロファイル名フィールドのヒント",
     "value": "ワイヤレスプロファイルの名称をご提供ください"
-  },
-  "general.supported": {
-    "description": "有効なAMT機能のラベル",
-    "value": "サポートされています"
-  },
-  "general.notSupported": {
-    "description": "無効なAMT機能のラベル",
-    "value": "サポートされていません"
-  },
-  "powerOptions.powerUpToPBA": {
-    "value": "PBAまで電源を入れる (OCR)"
-  },
-  "powerOptions.powerUpToWinRe": {
-    "value": "WinReまで電源を入れる (OCR)"
-  },
-  "powerOptions.resetToPBA": {
-    "value": "PBAにリセット (OCR)"
-  },
-  "powerOptions.resetToWinRe": {
-    "value": "WinReにリセット (OCR)"
-  },
-  "general.expand": {
-    "description": "展開のラベル",
-    "value": "展開"
-  },
-  "general.collapse": {
-    "description": "折りたたみのラベル",
-    "value": "折りたたむ"
-  },
-  "proxy.label": {
-    "value": "プロキシ",
-    "description": "プロキシセクションのラベル"
-  },
-  "proxy.configs.label": {
-    "value": "プロキシ設定",
-    "description": "プロキシ設定入力フィールドのラベル"
-  },
-  "proxy.configs.placeholder": {
-    "value": "追加するプロキシ設定を検索",
-    "description": "プロキシ設定を検索するためのプレースホルダー"
-  },
-  "proxy.configs.hint": {
-    "value": "このプロファイルにプロキシを割り当てることができます",
-    "description": "プロキシ設定入力フィールドの下に表示されるヒント"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "関連プロキシプロファイル（優先順）",
-    "description": "関連プロキシプロファイルリストのラベル"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "ドラッグ＆ドロップで順序を変更",
-    "description": "ドラッグアンドドロップによる並び替えのヒント"
-  },
-  "profileDetail.noProxy": {
-    "description": "利用可能なプロキシ設定がない場合のメッセージ",
-    "value": "プロキシ設定が見つかりません"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "value": "プロキシ設定",
-    "description": "プロキシ設定のタイトル"
-  },
-  "proxyConfigs.header.name": {
-    "value": "名前",
-    "description": "プロキシ設定名の列ヘッダー"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "プロキシアドレス",
-    "description": "プロキシアドレスの列ヘッダー"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "アドレス形式",
-    "description": "アドレス形式の列ヘッダー"
-  },
-  "proxyConfigs.header.port": {
-    "value": "ポート",
-    "description": "ポートの列ヘッダー"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "ネットワークDNSサフィックス",
-    "description": "ネットワークDNSサフィックスの列ヘッダー"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "新しいプロキシ設定",
-    "description": "新しいプロキシ設定ページのタイトル"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "プロキシ設定を編集",
-    "description": "プロキシ設定編集ページのタイトル"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "プロキシアドレス",
-    "description": "プロキシアドレスフィールドのラベル"
-  },
-  "proxyConfigs.name": {
-    "value": "名前",
-    "description": "プロキシ設定名フィールドのラベル"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "プロキシ設定名を入力",
-    "description": "プロキシ設定名フィールドのプレースホルダー"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "プロキシサーバーのアドレスを入力",
-    "description": "プロキシアドレスフィールドのプレースホルダー"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "アドレス形式",
-    "description": "アドレス形式フィールドのラベル"
-  },
-  "proxyConfigs.port": {
-    "value": "ポート",
-    "description": "ポートフィールドのラベル"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "ネットワークDNSサフィックス",
-    "description": "DNSサフィックスフィールドのラベル"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "example.com",
-    "description": "DNSサフィックスフィールドのプレースホルダー"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "ポートは必須です",
-    "description": "ポート必須のバリデーションメッセージ"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "ポートは0から65535の間である必要があります",
-    "description": "ポート範囲のバリデーションメッセージ"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "名前は必須です",
-    "description": "名前必須のバリデーションメッセージ"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "ネットワークDNSサフィックスは必須です",
-    "description": "DNSサフィックス必須のバリデーションメッセージ"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "ネットワークDNSサフィックスは192文字以内である必要があります",
-    "description": "DNSサフィックス最大長のバリデーションメッセージ"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "プロキシ設定が正常に作成されました",
-    "description": "プロキシ設定作成成功メッセージ"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "プロキシ設定が正常に更新されました",
-    "description": "プロキシ設定更新成功メッセージ"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "プロキシ設定 {{name}} が正常に削除されました",
-    "description": "プロキシ設定削除成功メッセージ"
-  },
-  "common.delete": {
-    "value": "削除",
-    "description": "削除ボタンのテキスト"
-  },
-  "common.deleteProfile": {
-    "value": "プロフィールを削除",
-    "description": "プロフィール削除ボタンのテキスト"
-  },
-  "common.editTags": {
-    "description": "タグを一括編集するためのボタンテキスト",
-    "value": "タグを編集"
-  },
-  "common.update": {
-    "value": "更新",
-    "description": "更新ボタンのテキスト"
-  },
-  "common.noData": {
-    "value": "利用可能なデータがありません",
-    "description": "データが利用できない場合のメッセージ"
   }
 }

@@ -1,152 +1,4 @@
 {
-  "proxyConfigs.header.proxyTitle": {
-    "value": "Proxy Configs",
-    "description": "Proxy Configs title"
-  },
-  "proxyConfigs.header.name": {
-    "value": "Name",
-    "description": "Proxy config name column header"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "Proxy Address",
-    "description": "Proxy Address column header"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "Address Format",
-    "description": "Address Format column header"
-  },
-  "proxyConfigs.header.port": {
-    "value": "Port",
-    "description": "Port column header"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "Network DNS Suffix",
-    "description": "Network DNS Suffix column header"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "New Proxy Config",
-    "description": "New Proxy Config page title"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "Edit Proxy Config",
-    "description": "Edit Proxy Config page title"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "Proxy Address",
-    "description": "Proxy Address field label"
-  },
-  "proxyConfigs.name": {
-    "value": "Name",
-    "description": "Proxy config name field label"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "Enter proxy config name",
-    "description": "Proxy config name placeholder"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "Enter proxy server address",
-    "description": "Placeholder for proxy address field"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "Address Format",
-    "description": "Address Format field label"
-  },
-  "proxyConfigs.port": {
-    "value": "Port",
-    "description": "Port field label"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "Network DNS Suffix",
-    "description": "DNS Suffix field label"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "example.com",
-    "description": "Placeholder for DNS suffix field"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "Port is required",
-    "description": "Port required validation message"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "Port must be between 0 and 65535",
-    "description": "Port range validation message"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "Name is required",
-    "description": "Name required validation message"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Network DNS suffix is required",
-    "description": "DNS suffix required validation message"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Network DNS suffix must be 192 characters or less",
-    "description": "DNS suffix max length validation message"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "Proxy config created successfully",
-    "description": "Success message for creating proxy config"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "Proxy config updated successfully",
-    "description": "Success message for updating proxy config"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "Proxy config {{name}} deleted successfully",
-    "description": "Success message for deleting proxy config"
-  },
-  "proxy.label": {
-    "value": "Proxies",
-    "description": "Label for the proxies section"
-  },
-  "proxy.configs.label": {
-    "value": "Proxy Configs",
-    "description": "Label for the proxy configs input field"
-  },
-  "proxy.configs.placeholder": {
-    "value": "Search for Proxy Configs to Add",
-    "description": "Placeholder text for searching proxy configs"
-  },
-  "proxy.configs.hint": {
-    "value": "Proxies can be assigned to this profile",
-    "description": "Hint shown under the proxy configs input field"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "Associated Proxy Profiles (In Priority Order)",
-    "description": "Label for the associated proxy profiles list"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "Drag and Drop to reorder",
-    "description": "Hint shown for drag-and-drop reordering"
-  },
-  "common.delete": {
-    "value": "Delete",
-    "description": "Delete button text"
-  },
-  "common.deleteProfile": {
-    "value": "Delete Profile",
-    "description": "Delete profile button text"
-  },
-  "common.editTags": {
-    "description": "Button text for editing tags in bulk",
-    "value": "Edit tags"
-  },
-  "common.cancel": {
-    "value": "CANCEL",
-    "description": "Cancel button text"
-  },
-  "common.save": {
-    "value": "SAVE",
-    "description": "Save button text"
-  },
-  "common.update": {
-    "value": "UPDATE",
-    "description": "Update button text"
-  },
-  "common.noData": {
-    "value": "No data available",
-    "description": "No data available message"
-  },
   "about.cloudMode": {
     "description": "Title for the about section in cloud mode",
     "value": "About the Device Management Toolkit Sample Web UI"
@@ -211,6 +63,14 @@
     "description": "Message for allowing self-signed certificates",
     "value": "Allow Self-Signed Certificates"
   },
+  "addDevice.amtPassword": {
+    "description": "Label for AMT Password field",
+    "value": "AMT Password"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hint for AMT Password field",
+    "value": "Enter AMT Password"
+  },
   "addDevice.chooseProfile": {
     "description": "Label for profile select field",
     "value": "Choose Profile"
@@ -218,6 +78,10 @@
   "addDevice.description": {
     "description": "Description explaining how to activate a device",
     "value": "In order to activate a device, you'll need to execute a command on the AMT Device. This dialog will help generate the command to run."
+  },
+  "addDevice.enterGuid": {
+    "description": "Hint for entering GUID",
+    "value": "Enter GUID"
   },
   "addDevice.enterTags": {
     "description": "Hint for entering tags",
@@ -231,6 +95,10 @@
     "description": "Error for required friendly names",
     "value": "Friendly Name is required"
   },
+  "addDevice.guid": {
+    "description": "Label for GUID field",
+    "value": "GUID"
+  },
   "addDevice.hostNameInvalid": {
     "description": "Error for invalid hostnames",
     "value": "Invalid hostname format"
@@ -238,6 +106,22 @@
   "addDevice.hostNameRequired": {
     "description": "Error for required hostnames",
     "value": "Hostname is required"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Label for MPS Password field",
+    "value": "MPS Password"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hint for MPS Password field",
+    "value": "Enter MPS Password"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Label for MPS Username field",
+    "value": "MPS Username"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hint for MPS Username field",
+    "value": "MPS Username (default: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Checkbox label to disable self-signed certificate check",
@@ -259,6 +143,10 @@
     "description": "Dialog title for adding a new device",
     "value": "Add a New Device"
   },
+  "addDevice.useCIRA": {
+    "description": "Checkbox label for using CIRA connection",
+    "value": "Use CIRA"
+  },
   "addDevice.userNameInvalid": {
     "description": "Error for invalid username",
     "value": "Username must be at least 5 characters long and no more than 16"
@@ -271,53 +159,17 @@
     "description": "Message for using TLS",
     "value": "Use TLS"
   },
-  "addDevice.useCIRA": {
-    "description": "Checkbox label for using CIRA connection",
-    "value": "Use CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Label for GUID field",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Hint for entering GUID",
-    "value": "Enter GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label for MPS Username field",
-    "value": "MPS Username"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint for MPS Username field",
-    "value": "MPS Username (default: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label for MPS Password field",
-    "value": "MPS Password"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint for MPS Password field",
-    "value": "Enter MPS Password"
-  },
-  "addDevice.amtPassword": {
-    "description": "Label for AMT Password field",
-    "value": "AMT Password"
-  },
-  "addDevice.amtPasswordHint": {
-    "description": "Hint for AMT Password field",
-    "value": "Enter AMT Password"
-  },
   "alarm.errorAdding": {
     "description": "Error for adding",
     "value": "Error adding Alarm Occurrences"
   },
+  "alarm.errorAlarmName": {
+    "description": "Error when alarm name is empty",
+    "value": "Alarm name is required"
+  },
   "alarm.errorDelete": {
     "description": "Error for deleting",
     "value": "Error deleting Alarm Occurrences"
-  },
-  "alarm.successDelete": {
-    "description": "Success message for deleting alarm",
-    "value": "Alarm deleted successfully"
   },
   "alarm.errorRetrieve": {
     "description": "Error for retrieving",
@@ -327,9 +179,9 @@
     "description": "Success message for adding alarm",
     "value": "Alarm created successfully"
   },
-  "alarm.errorAlarmName": {
-    "description": "Error when alarm name is empty",
-    "value": "Alarm name is required"
+  "alarm.successDelete": {
+    "description": "Success message for deleting alarm",
+    "value": "Alarm deleted successfully"
   },
   "alarmService.addNew": {
     "description": "Button text to add a new alarm",
@@ -428,6 +280,26 @@
     "description": "Tooltip for add certificate button",
     "value": "Add certificate"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "Error message when certificate to delete is not found",
+    "value": "Certificate not found or has already been deleted"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "Error message when certificate cannot be deleted because it's referenced by profiles",
+    "value": "Certificate cannot be deleted as it is currently referenced by AMT profiles. Remove the references first."
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltip text when the delete button is disabled because the certificate is referenced by one or more profiles",
+    "value": "This certificate is currently associated and cannot be deleted"
+  },
+  "certificates.delete.tooltip": {
+    "description": "Tooltip text for delete certificate button",
+    "value": "Delete Certificate"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Success message displayed when certificate is deleted",
+    "value": "Certificate '{{name}}' deleted successfully"
+  },
   "certificates.download.tooltip": {
     "description": "Tooltip for downloading a certificate",
     "value": "Download certificate"
@@ -439,6 +311,10 @@
   "certificates.errorAddingCertificates": {
     "description": "Error for adding certificates",
     "value": "Error adding certificate"
+  },
+  "certificates.errorDeletingCertificate": {
+    "description": "Error message displayed when certificate deletion fails",
+    "value": "Error deleting certificate"
   },
   "certificates.errorRetrievingCertificates": {
     "description": "Error for retrieving certificate info",
@@ -460,6 +336,10 @@
     "description": "Shown when a certificate has no profile associations",
     "value": "Unassociated"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "Error message when trying to delete a read-only certificate",
+    "value": "Cannot delete read-only certificate"
+  },
   "certificates.title": {
     "description": "Title for certificates",
     "value": "Certificates"
@@ -476,37 +356,13 @@
     "description": "Indicates the certificate is a root certificate",
     "value": "Root"
   },
-  "certificates.delete.tooltip": {
-    "description": "Tooltip text for delete certificate button",
-    "value": "Delete Certificate"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "Tooltip text when the delete button is disabled because the certificate is referenced by one or more profiles",
-    "value": "This certificate is currently associated and cannot be deleted"
-  },
-  "certificates.errorDeletingCertificate": {
-    "description": "Error message displayed when certificate deletion fails",
-    "value": "Error deleting certificate"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "Error message when certificate cannot be deleted because it's referenced by profiles",
-    "value": "Certificate cannot be deleted as it is currently referenced by AMT profiles. Remove the references first."
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "Error message when certificate to delete is not found",
-    "value": "Certificate not found or has already been deleted"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "Error message when trying to delete a read-only certificate",
-    "value": "Cannot delete read-only certificate"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "Success message displayed when certificate is deleted",
-    "value": "Certificate '{{name}}' deleted successfully"
-  },
   "common.addNew": {
     "description": "Text for the add new button",
     "value": "Add New"
+  },
+  "common.cancel": {
+    "description": "Cancel button text",
+    "value": "CANCEL"
   },
   "common.cancelLower": {
     "description": "Text for cancel button",
@@ -539,9 +395,17 @@
   "common.continue": {
     "value": "Continue"
   },
+  "common.delete": {
+    "description": "Delete button text",
+    "value": "Delete"
+  },
   "common.deleteConfiguration": {
     "description": "Message for deleted configurations",
     "value": "Configuration deleted successfully"
+  },
+  "common.deleteProfile": {
+    "description": "Delete profile button text",
+    "value": "Delete Profile"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Message for the log in subtitle",
@@ -565,6 +429,10 @@
   },
   "common.down": {
     "value": "Down"
+  },
+  "common.editTags": {
+    "description": "Button text for editing tags in bulk",
+    "value": "Edit tags"
   },
   "common.enabled": {
     "description": "Used when the local profile synchronization is enabled",
@@ -617,6 +485,10 @@
   "common.no": {
     "value": "No"
   },
+  "common.noData": {
+    "description": "No data available message",
+    "value": "No data available"
+  },
   "common.notApplicable": {
     "description": "Displayed when the OS entry does not apply",
     "value": "Not Applicable"
@@ -649,6 +521,10 @@
     "description": "Text for remove button",
     "value": "Remove"
   },
+  "common.save": {
+    "description": "Save button text",
+    "value": "SAVE"
+  },
   "common.showHidePassword": {
     "description": "Tooltip for showing or hiding the password",
     "value": "Show / Hide Password"
@@ -671,6 +547,10 @@
   },
   "common.up": {
     "value": "Up"
+  },
+  "common.update": {
+    "description": "Update button text",
+    "value": "UPDATE"
   },
   "common.userName": {
     "description": "Message for username",
@@ -711,6 +591,10 @@
     "description": "FQDN radio button label",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "Text for generate random password toggle",
+    "value": "Generate Random Password Per Device Upon Device Activation"
+  },
   "configDetail.ipv4": {
     "description": "IPv4 radio button label",
     "value": "IPv4"
@@ -723,6 +607,14 @@
     "description": "Placeholder text for MPS server address field",
     "value": "MPS Address"
   },
+  "configDetail.passwordHint": {
+    "description": "Hint text for password field",
+    "value": "Enter a static password (8-32 characters)"
+  },
+  "configDetail.passwordPlaceholder": {
+    "description": "Placeholder text for password field",
+    "value": "Password"
+  },
   "configDetail.portHint": {
     "description": "Hint text for port field",
     "value": "Enter the CIRA Port for the MPS Instance. The default is 4433."
@@ -730,18 +622,6 @@
   "configDetail.portPlaceholder": {
     "description": "Placeholder text for port field",
     "value": "Port"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "Text for generate random password toggle",
-    "value": "Generate Random Password Per Device Upon Device Activation"
-  },
-  "configDetail.passwordPlaceholder": {
-    "description": "Placeholder text for password field",
-    "value": "Password"
-  },
-  "configDetail.passwordHint": {
-    "description": "Hint text for password field",
-    "value": "Enter a static password (8-32 characters)"
   },
   "configDetail.usernameHint": {
     "description": "Hint text for username field",
@@ -1013,6 +893,14 @@
     "description": "Description for hardware information",
     "value": "Memory, CPU, etc..."
   },
+  "deviceDetail.ider": {
+    "description": "Category name for IDER",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "Description for IDER",
+    "value": "Remotely boot or mount media"
+  },
   "deviceDetail.kvm": {
     "description": "Category name for KVM",
     "value": "KVM"
@@ -1233,6 +1121,10 @@
     "description": "Table column header for tags",
     "value": "Tags"
   },
+  "deviceToolbar.power.off": {
+    "description": "Power tooltip for Off",
+    "value": "Power: Off"
+  },
   "deviceToolbar.power.on": {
     "description": "Power tooltip for On",
     "value": "Power: On"
@@ -1240,10 +1132,6 @@
   "deviceToolbar.power.sleep": {
     "description": "Power tooltip for Sleep",
     "value": "Power: Sleep"
-  },
-  "deviceToolbar.power.off": {
-    "description": "Power tooltip for Off",
-    "value": "Power: Off"
   },
   "deviceUserConsent.description": {
     "description": "Description for user consent for devices",
@@ -1265,6 +1153,10 @@
     "description": "Title for user consent for devices",
     "value": "User Consent"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Error message for alphanumeric validation",
+    "value": "Domain name can only contain letters, numbers, hyphens (-), and underscores (_)"
+  },
   "domainDetail.completeProfile": {
     "description": "Message for completed domain profiles",
     "value": "Domain profile saved successfully"
@@ -1272,14 +1164,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "Error for deleted domain profiles",
     "value": "Error creating/updating domain profile"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "Error message for unique key violation",
-    "value": "Domain NewDomain ID or Suffix already exists"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "Error message for alphanumeric validation",
-    "value": "Domain name can only contain letters, numbers, hyphens (-), and underscores (_)"
   },
   "domainDetail.fqdn": {
     "description": "Hint for the FQDN field",
@@ -1300,6 +1184,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "Hint for the provisioning certificate password",
     "value": "The password for the provisioning certificate"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Error message for unique key violation",
+    "value": "Domain NewDomain ID or Suffix already exists"
   },
   "domains.certExpired": {
     "description": "Message for expired certificates",
@@ -1563,6 +1451,10 @@
     "description": "Label for AMT Version",
     "value": "AMT Version:"
   },
+  "general.collapse": {
+    "description": "Label for collapse",
+    "value": "Collapse"
+  },
   "general.errorAMTFeatures": {
     "description": "Error retrieving for AMT features",
     "value": "Error retrieving AMT Features"
@@ -1574,6 +1466,10 @@
   "general.errorGeneralSettings": {
     "description": "Error for retrieving general settings",
     "value": "Error retrieving General Settings"
+  },
+  "general.expand": {
+    "description": "Label for expand",
+    "value": "Expand"
   },
   "general.failAMTFeatures": {
     "description": "Error for updating features",
@@ -1603,6 +1499,10 @@
     "description": "Tooltip for KVM not supported",
     "value": "KVM not supported"
   },
+  "general.notSupported": {
+    "description": "Label for disabled AMT features",
+    "value": "Not Supported"
+  },
   "general.oneClickRecovery": {
     "description": "Label for One Click Recovery",
     "value": "One Click Recovery(OCR):"
@@ -1627,6 +1527,14 @@
     "description": "Label for Provisioning Mode",
     "value": "Provisioning Mode:"
   },
+  "general.redirectionEnable": {
+    "description": "Button label to enable redirection",
+    "value": "Enable"
+  },
+  "general.redirectionWarning": {
+    "description": "Warning shown when redirection is disabled but KVM/SOL/IDER is enabled",
+    "value": "Redirection is disabled. KVM, SOL, and IDER require redirection to be enabled."
+  },
   "general.serialOverLan": {
     "description": "Label for SOL",
     "value": "Serial-Over-Lan (SOL):"
@@ -1635,21 +1543,9 @@
     "description": "Label for enabled AMT features",
     "value": "Supported"
   },
-  "general.notSupported": {
-    "description": "Label for disabled AMT features",
-    "value": "Not Supported"
-  },
   "general.userConsent": {
     "description": "Label for User Consent",
     "value": "User Consent:"
-  },
-  "general.expand": {
-    "description": "Label for expand",
-    "value": "Expand"
-  },
-  "general.collapse": {
-    "description": "Label for collapse",
-    "value": "Collapse"
   },
   "general.userConsentNotConfigurable": {
     "description": "Tooltip for User Consent not configurable",
@@ -1666,14 +1562,6 @@
   "general.windowsRecoverySupported": {
     "description": "Tooltip for Windows Recovery supported",
     "value": "Windows Recovery is supported"
-  },
-  "general.redirectionWarning": {
-    "description": "Warning shown when redirection is disabled but KVM/SOL/IDER is enabled",
-    "value": "Redirection is disabled. KVM, SOL, and IDER require redirection to be enabled."
-  },
-  "general.redirectionEnable": {
-    "description": "Button label to enable redirection",
-    "value": "Enable"
   },
   "httpBoot.enforce": {
     "value": "Enforce Secure Boot"
@@ -1767,6 +1655,54 @@
   "hwInfo.systemSummary.title": {
     "value": "System Summary"
   },
+  "ider.attachDisk.label": {
+    "description": "Button label to attach a disk image for IDER",
+    "value": "Attach Disk Image (.iso)"
+  },
+  "ider.enable": {
+    "description": "Message for enabling IDER",
+    "value": "IDER is not currently enabled on this device. Would you like to enable it?"
+  },
+  "ider.errorAccessCancel": {
+    "description": "Error for accessing when requesting to enable is cancelled",
+    "value": "IDER cannot be accessed - request to enable IDER is cancelled"
+  },
+  "ider.errorAccessEnable": {
+    "description": "Error for accessing when requesting to enable",
+    "value": "IDER cannot be accessed - failed to enable IDER"
+  },
+  "ider.errorRetrieve": {
+    "description": "Error for retrieving redirection status",
+    "value": "Error retrieving redirection status"
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "Status message shown while retrieving AMT features",
+    "value": "Retrieving AMT features..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "Status message shown while checking user consent",
+    "value": "Checking consent mode..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "Status message shown while checking power state",
+    "value": "Checking power status..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "Status message shown while checking redirection status",
+    "value": "Checking redirection status..."
+  },
+  "ider.status.connectingIder": {
+    "description": "Status message shown while IDER component is connecting",
+    "value": "Connecting to IDER..."
+  },
+  "ider.stopIder.label": {
+    "description": "Button label to stop the IDER session",
+    "value": "Stop IDER"
+  },
+  "ider.title": {
+    "description": "Title for IDER",
+    "value": "Enable IDER"
+  },
   "ieee.authProtocol": {
     "description": "Text for authentication protocol",
     "value": "Authentication Protocol"
@@ -1847,10 +1783,6 @@
     "description": "Button label to disconnect from KVM session",
     "value": "Disconnect KVM"
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "Message shown when AMT closes the KVM session (e.g. idle timeout)",
-    "value": "KVM session was closed by AMT"
-  },
   "kvm.enable": {
     "description": "Message for enabling KVM",
     "value": "KVM is not currently enabled on this device. Would you like to enable it?"
@@ -1895,17 +1827,9 @@
     "description": "Button label to send the selected hotkey",
     "value": "Send"
   },
-  "kvm.stopIder.label": {
-    "description": "Button label to stop the IDER session",
-    "value": "Stop IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "Status message shown while checking power state",
-    "value": "Checking power status..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "Status message shown while checking redirection status",
-    "value": "Checking redirection status..."
+  "kvm.sessionClosedByDevice": {
+    "description": "Message shown when AMT closes the KVM session (e.g. idle timeout)",
+    "value": "KVM session was closed by AMT"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Status message shown while retrieving AMT features",
@@ -1915,9 +1839,21 @@
     "description": "Status message shown while checking user consent",
     "value": "Checking consent mode..."
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Status message shown while checking power state",
+    "value": "Checking power status..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Status message shown while checking redirection status",
+    "value": "Checking redirection status..."
+  },
   "kvm.status.connectingKVM": {
     "description": "Status message shown while KVM component is connecting",
     "value": "Connecting to KVM..."
+  },
+  "kvm.stopIder.label": {
+    "description": "Button label to stop the IDER session",
+    "value": "Stop IDER"
   },
   "kvm.title": {
     "description": "Title for KVM",
@@ -2199,6 +2135,14 @@
     "description": "Title of the wireless network settings card",
     "value": "Wireless Network Settings"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authentication: {{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Encryption: {{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Network Name: {{name}}"
@@ -2206,14 +2150,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID: {{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Encryption: {{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Authentication: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Subtitle of the wireless networks card",
@@ -2455,13 +2391,13 @@
     "description": "Hint for Non TLS option",
     "value": "On AMT 16.1 and newer, AMT provides self-signed certificates. Choosing this option will use those instead of toolkit provided self-signed certs"
   },
-  "profileDetail.noWifi": {
-    "description": "Message for no WiFi configurations available",
-    "value": "No Wifi Configs Found"
-  },
   "profileDetail.noProxy": {
     "description": "Message for no Proxy configurations available",
     "value": "No Proxy Configs Found"
+  },
+  "profileDetail.noWifi": {
+    "description": "Message for no WiFi configurations available",
+    "value": "No Wifi Configs Found"
   },
   "profileDetail.osWifiSyncHint": {
     "description": "Hint for OS WiFi sync",
@@ -2539,13 +2475,13 @@
     "description": "Label for wired 802.1x configuration field",
     "value": "Wired 802.1x Configuration"
   },
-  "profiles.deleteProfile": {
-    "description": "Message for deleted profiles",
-    "value": "Profile deleted successfully"
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "CIRA is disabled on this server. This profile uses CIRA for its management connection and won't work until CIRA is re-enabled."
+  },
+  "profiles.deleteProfile": {
+    "description": "Message for deleted profiles",
+    "value": "Profile deleted successfully"
   },
   "profiles.exportProfile": {
     "description": "Message for exported profiles",
@@ -2590,6 +2526,126 @@
   "profiles.table.network": {
     "description": "Network Config column header",
     "value": "Network Config"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "Hint shown for drag-and-drop reordering",
+    "value": "Drag and Drop to reorder"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "Label for the associated proxy profiles list",
+    "value": "Associated Proxy Profiles (In Priority Order)"
+  },
+  "proxy.configs.hint": {
+    "description": "Hint shown under the proxy configs input field",
+    "value": "Proxies can be assigned to this profile"
+  },
+  "proxy.configs.label": {
+    "description": "Label for the proxy configs input field",
+    "value": "Proxy Configs"
+  },
+  "proxy.configs.placeholder": {
+    "description": "Placeholder text for searching proxy configs",
+    "value": "Search for Proxy Configs to Add"
+  },
+  "proxy.label": {
+    "description": "Label for the proxies section",
+    "value": "Proxies"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "Address Format field label",
+    "value": "Address Format"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "Placeholder for proxy address field",
+    "value": "Enter proxy server address"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "DNS Suffix field label",
+    "value": "Network DNS Suffix"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "Placeholder for DNS suffix field",
+    "value": "example.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "Address Format column header",
+    "value": "Address Format"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "Network DNS Suffix column header",
+    "value": "Network DNS Suffix"
+  },
+  "proxyConfigs.header.name": {
+    "description": "Proxy config name column header",
+    "value": "Name"
+  },
+  "proxyConfigs.header.port": {
+    "description": "Port column header",
+    "value": "Port"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "Proxy Address column header",
+    "value": "Proxy Address"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "Proxy Configs title",
+    "value": "Proxy Configs"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "Success message for creating proxy config",
+    "value": "Proxy config created successfully"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "Success message for deleting proxy config",
+    "value": "Proxy config {{name}} deleted successfully"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "Success message for updating proxy config",
+    "value": "Proxy config updated successfully"
+  },
+  "proxyConfigs.name": {
+    "description": "Proxy config name field label",
+    "value": "Name"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "Proxy config name placeholder",
+    "value": "Enter proxy config name"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "Edit Proxy Config page title",
+    "value": "Edit Proxy Config"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "New Proxy Config page title",
+    "value": "New Proxy Config"
+  },
+  "proxyConfigs.port": {
+    "description": "Port field label",
+    "value": "Port"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "Proxy Address field label",
+    "value": "Proxy Address"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "DNS suffix max length validation message",
+    "value": "Network DNS suffix must be 192 characters or less"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "DNS suffix required validation message",
+    "value": "Network DNS suffix is required"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "Name required validation message",
+    "value": "Name is required"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "Port range validation message",
+    "value": "Port must be between 0 and 65535"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "Port required validation message",
+    "value": "Port is required"
   },
   "randomPassword.learnMore": {
     "description": "Message for a support link",

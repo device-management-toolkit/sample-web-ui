@@ -1,0 +1,25 @@
+<mat-toolbar style="height: 100px" class="flex flex-row">
+  <div class="flex flex-50 justify-end">
+    <button mat-flat-button color="primary" (click)="fileInput.click()">
+      <mat-icon>upload_file</mat-icon>{{ 'ider.attachDisk.label.value' | translate }}
+    </button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
+    @if (isIDERActive()) {
+      <button mat-flat-button color="warn" (click)="onCancelIDER()" class="stop-ider-button">
+        <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
+      </button>
+    }
+  </div>
+</mat-toolbar>
+@if (diskImage && deviceIDERConnection()) {
+  <amt-ider
+    class="ider"
+    [deviceId]="deviceId()"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken()"
+    [deviceConnection]="deviceIDERConnection()"
+    [cdrom]="diskImage"
+    [floppy]="null"
+    (deviceStatus)="deviceIDERStatus($event)">
+  </amt-ider>
+}

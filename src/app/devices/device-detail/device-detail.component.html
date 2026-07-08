@@ -10,7 +10,7 @@
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
-      @for (item of categories; track item) {
+      @for (item of categories(); track item) {
         <a
           mat-list-item
           (click)="setCurrentView(item)"
@@ -40,6 +40,9 @@
       }
       @case ('kvm') {
         <app-kvm [deviceId]="deviceId"></app-kvm>
+      }
+      @case ('ider') {
+        <app-ider [deviceId]="deviceId"></app-ider>
       }
       @case ('sol') {
         <app-sol [deviceId]="deviceId"></app-sol>
