@@ -78,6 +78,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   })
 
   public isLoading = signal(true)
+  public isUpdatingFeatures = signal(false)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
   public amtVersion: string | null = null
@@ -95,6 +96,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public isCloudMode: boolean = environment.cloud
 
   private readonly destroy$ = new Subject<void>()
+  private pendingFeatureUpdates = 0
 
   ngOnInit(): void {
     forkJoin({
@@ -180,15 +182,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   setAmtFeatures(): void {
-    this.isLoading.set(true)
+    this.pendingFeatureUpdates += 1
+    this.isUpdatingFeatures.set(true)
     this.devicesService
       .setAmtFeatures(this.deviceId(), {
         ...this.amtEnabledFeatures.getRawValue(),
         remoteErase: this.amtFeatures.remoteErase
       } as AMTFeaturesRequest)
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => {
-          this.isLoading.set(false)
+          this.pendingFeatureUpdates = Math.max(0, this.pendingFeatureUpdates - 1)
+          this.isUpdatingFeatures.set(this.pendingFeatureUpdates > 0)
         })
       )
       .subscribe({
