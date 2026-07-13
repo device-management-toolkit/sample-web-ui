@@ -1552,6 +1552,10 @@
     "description": "Meddelande för att aktivera IDER",
     "value": "IDER är för närvarande inte aktiverat på den här enheten. Vill du aktivera det?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Varning som visas när en diskavbild försöker anslutas medan IDER redan är aktivt",
+    "value": "IDER är redan aktivt. Stoppa först IDER innan du ansluter en annan diskavbild."
+  },
   "ider.errorAccessCancel": {
     "description": "Fel vid åtkomst när begäran om aktivering avbryts",
     "value": "IDER kan inte nås – begäran om att aktivera IDER har avbrutits."
@@ -1583,6 +1587,18 @@
   "ider.status.connectingIder": {
     "description": "Statusmeddelande som visas när IDER-komponenten ansluter",
     "value": "Ansluter till IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Statusmeddelande som visas när ingen IDER-session är ansluten",
+    "value": "IDER är inte ansluten"
+  },
+  "ider.status.attachHelp": {
+    "description": "Hjälptext som visas när IDER är inaktivt och uppmanar användaren att ansluta en diskavbild",
+    "value": "Klicka på \"Anslut diskavbild\" för att ansluta och starta en IDER-session"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Meddelande i tomt IDER-läge som uppmanar användaren att välja en ISO",
+    "value": "Välj en ISO-fil för att starta IDE-omdirigering."
   },
   "ider.stopIder.label": {
     "description": "Knappetikett för att avsluta IDER-sessionen",

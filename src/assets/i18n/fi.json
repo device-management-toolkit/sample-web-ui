@@ -1640,6 +1640,10 @@
     "description": "Viesti IDERin käyttöönotosta",
     "value": "IDER ei ole tällä hetkellä käytössä tässä laitteessa. Haluatko ottaa sen käyttöön?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Varoitus, joka näytetään, kun levykuvaa yritetään liittää IDER-istunnon ollessa jo aktiivinen",
+    "value": "IDER on jo aktiivinen. Pysäytä ensin IDER ennen toisen levykuvan liittämistä."
+  },
   "ider.errorAccessCancel": {
     "description": "Virhe käytettäessä, kun käyttöönottopyyntö peruutetaan",
     "value": "IDER:ään ei pääse käsiksi – IDER:n käyttöönottopyyntö on peruutettu."
@@ -1671,6 +1675,18 @@
   "ider.status.connectingIder": {
     "description": "Tilailmoitus IDER-komponentin yhdistäessä",
     "value": "Yhdistetään IDER:ään..."
+  },
+  "ider.status.notConnected": {
+    "description": "Tilailmoitus, kun IDER-istuntoa ei ole yhdistetty",
+    "value": "IDER ei ole yhdistetty"
+  },
+  "ider.status.attachHelp": {
+    "description": "Ohjeteksti, joka näytetään kun IDER on käyttämättömänä ja käyttäjää pyydetään liittämään levykuva",
+    "value": "Napsauta \"Liitä levykuva\" muodostaaksesi yhteyden ja aloittaaksesi IDER-istunnon"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Viesti IDERin tyhjätilassa, joka pyytää valitsemaan ISO-tiedoston",
+    "value": "Valitse ISO-tiedosto aloittaaksesi IDE-uudelleenohjauksen."
   },
   "ider.stopIder.label": {
     "description": "Painikkeen teksti IDER-istunnon lopettamiseksi",

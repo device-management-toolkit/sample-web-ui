@@ -10,7 +10,7 @@
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
-      @for (item of categories(); track item) {
+      @for (item of categories(); track item.component) {
         <a
           mat-list-item
           (click)="setCurrentView(item)"
@@ -39,10 +39,22 @@
         <app-general [deviceId]="deviceId"></app-general>
       }
       @case ('kvm') {
-        <app-kvm [deviceId]="deviceId"></app-kvm>
+        @if (isLoading()) {
+          <app-general [deviceId]="deviceId"></app-general>
+        } @else if (!isISMSystem()) {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        } @else {
+          <app-ider [deviceId]="deviceId"></app-ider>
+        }
       }
       @case ('ider') {
-        <app-ider [deviceId]="deviceId"></app-ider>
+        @if (isLoading()) {
+          <app-general [deviceId]="deviceId"></app-general>
+        } @else if (isISMSystem()) {
+          <app-ider [deviceId]="deviceId"></app-ider>
+        } @else {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        }
       }
       @case ('sol') {
         <app-sol [deviceId]="deviceId"></app-sol>

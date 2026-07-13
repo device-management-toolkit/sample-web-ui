@@ -1644,6 +1644,10 @@
     "description": "Message pour activer IDER",
     "value": "IDER n'est actuellement pas activé sur cet appareil. Souhaitez-vous l'activer ?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Avertissement affiché lorsqu'un utilisateur tente de joindre une image disque alors qu'IDER est déjà actif",
+    "value": "IDER est déjà actif. Arrêtez d'abord IDER avant de joindre une autre image disque."
+  },
   "ider.errorAccessCancel": {
     "description": "Erreur d'accès lorsque la demande d'activation est annulée",
     "value": "Impossible d'accéder à IDER - la demande d'activation de IDER est annulée."
@@ -1675,6 +1679,18 @@
   "ider.status.connectingIder": {
     "description": "Message d'état lorsque le composant IDER se connecte",
     "value": "Connexion à IDER en cours..."
+  },
+  "ider.status.notConnected": {
+    "description": "Message d'état lorsqu'aucune session IDER n'est connectée",
+    "value": "IDER non connecté"
+  },
+  "ider.status.attachHelp": {
+    "description": "Texte d'aide affiché lorsque IDER est inactif pour inviter l'utilisateur à joindre une image disque",
+    "value": "Cliquez sur \"Joindre une image disque\" pour vous connecter et démarrer une session IDER"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Message affiché dans l'état vide IDER invitant l'utilisateur à sélectionner un ISO",
+    "value": "Sélectionnez un fichier ISO pour démarrer la redirection IDE."
   },
   "ider.stopIder.label": {
     "description": "Étiquette du bouton pour arrêter la session IDER",

@@ -29,7 +29,6 @@ describe('IderComponent', () => {
   let getAMTFeaturesCachedSpy: jasmine.Spy
   let sendPowerActionSpy: jasmine.Spy
   let tokenSpy: jasmine.Spy
-  let setDisplaySelectionSpy: jasmine.Spy
   let snackBarSpy: jasmine.Spy
   let eventSubject: Subject<RouterEvent>
   let displayErrorSpy: jasmine.Spy
@@ -148,12 +147,27 @@ describe('IderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
     fixture.detectChanges()
-    expect(tokenSpy).toHaveBeenCalled()
-    expect(getPowerStateCachedSpy).toHaveBeenCalled()
+    expect(tokenSpy).not.toHaveBeenCalled()
+    expect(getPowerStateCachedSpy).not.toHaveBeenCalled()
     expect(getAMTFeaturesCachedSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).not.toHaveBeenCalled()
     expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
-    expect(getRedirectionStatusSpy).toHaveBeenCalled()
+    expect(getRedirectionStatusSpy).not.toHaveBeenCalled()
+  })
+
+  it('prompts to enable IDER on tab load when IDER is disabled', () => {
+    getAMTFeaturesCachedSpy.and.returnValue(
+      of({
+        ...amtFeaturesResponse,
+        IDER: false,
+        redirection: true
+      })
+    )
+
+    fixture.detectChanges()
+
+    expect(dialogSpy.open).toHaveBeenCalled()
+    expect(setAmtFeaturesSpy).toHaveBeenCalled()
   })
 
   it('should set isDisconnecting to true on NavigationStart event', () => {
@@ -223,9 +237,25 @@ describe('IderComponent', () => {
     })
   })
 
+  it('postUserConsentDecision short-circuits when file selection was canceled', (done) => {
+    tokenSpy.calls.reset()
+    ;(component as any).diskSelectionCanceled = true
+    component.isLoading.set(true)
+    component.loadingStatus.set('ider.status.connectingIder.value')
+
+    component.postUserConsentDecision(true).subscribe((result) => {
+      expect(result).toBeNull()
+      expect(component.isLoading()).toBeFalse()
+      expect(component.loadingStatus()).toBe('')
+      expect(tokenSpy).not.toHaveBeenCalled()
+      expect((component as any).diskSelectionCanceled).toBeFalse()
+      done()
+    })
+  })
+
   it('init runs consent handlers and refreshes token after consent success', () => {
     tokenSpy.calls.reset()
-    fixture.detectChanges()
+    component.connect()
     expect(component.loadingStatus()).toBe('ider.status.connectingIder.value')
     expect(userConsentService.handleUserConsentDecision).toHaveBeenCalledWith(
       true,
@@ -233,6 +263,21 @@ describe('IderComponent', () => {
       jasmine.objectContaining({ userConsent: 'none' })
     )
     expect(userConsentService.handleUserConsentResponse).toHaveBeenCalledWith('', true, 'IDER')
+    expect(tokenSpy.calls.count()).toBe(1)
+  })
+
+  it('init stops before consent handlers when enabling IDER is declined', () => {
+    tokenSpy.calls.reset()
+    userConsentService.handleUserConsentDecision.calls.reset()
+    userConsentService.handleUserConsentResponse.calls.reset()
+    spyOn(component, 'handleAMTFeaturesResponse').and.returnValue(of(false))
+
+    component.connect()
+
+    expect(userConsentService.handleUserConsentDecision).not.toHaveBeenCalled()
+    expect(userConsentService.handleUserConsentResponse).not.toHaveBeenCalled()
+    expect(component.isLoading()).toBeFalse()
+    expect(component.loadingStatus()).toBe('')
     expect(tokenSpy.calls.count()).toBe(1)
   })
 
@@ -477,11 +522,107 @@ describe('IderComponent', () => {
     expect(component.diskImage).toBeNull()
   })
 
+  it('onAttachDiskImage starts connection and opens file picker', () => {
+    const connectSpy = spyOn(component, 'connect')
+    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    mockFileInput.value = 'existing.iso'
+
+    component.onAttachDiskImage(mockFileInput)
+
+    expect(mockFileInput.value).toBe('')
+    expect(connectSpy).toHaveBeenCalled()
+    expect(mockFileInput.click).toHaveBeenCalled()
+  })
+
+  it('onFileSelected does not start connection when a file is selected during active attach flow', () => {
+    const connectSpy = spyOn(component, 'connect')
+    const mockFile = new File([''], 'test-file.iso', { type: 'application/octet-stream' })
+    const mockEvt = { target: { files: [mockFile] } } as unknown as Event
+    component.isLoading.set(true)
+
+    component.onFileSelected(mockEvt)
+
+    expect(connectSpy).not.toHaveBeenCalled()
+  })
+
+  it('onFileSelected does not start connection when file selection is canceled', () => {
+    const connectSpy = spyOn(component, 'connect')
+    component.isLoading.set(true)
+    component.loadingStatus.set('ider.status.connectingIder.value')
+    const mockEvt = { target: { files: [] } } as unknown as Event
+
+    component.onFileSelected(mockEvt)
+
+    expect(component.diskImage).toBeNull()
+    expect(component.deviceIDERConnection()).toBeFalse()
+    expect(component.isLoading()).toBeFalse()
+    expect(component.loadingStatus()).toBe('')
+    expect(connectSpy).not.toHaveBeenCalled()
+  })
+
+  it('onAttachDiskImage ignores clicks while loading', () => {
+    const connectSpy = spyOn(component, 'connect')
+    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    component.isLoading.set(true)
+
+    component.onAttachDiskImage(mockFileInput)
+
+    expect(connectSpy).not.toHaveBeenCalled()
+    expect(mockFileInput.click).not.toHaveBeenCalled()
+  })
+
+  it('onAttachDiskImage warns and does not reconnect when IDER is already active', () => {
+    const connectSpy = spyOn(component, 'connect')
+    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    component.isIDERActive.set(true)
+
+    component.onAttachDiskImage(mockFileInput)
+
+    expect(displayWarningSpy).toHaveBeenCalledWith('ider.alreadyActiveWarning.value')
+    expect(connectSpy).not.toHaveBeenCalled()
+    expect(mockFileInput.click).not.toHaveBeenCalled()
+  })
+
+  it('onAttachDiskImage clears loading when picker closes without selecting a file', () => {
+    const connectSpy = spyOn(component, 'connect')
+    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+
+    component.onAttachDiskImage(mockFileInput)
+    component.isLoading.set(true)
+    component.loadingStatus.set('ider.status.connectingIder.value')
+
+    window.dispatchEvent(new Event('focus'))
+
+    expect(connectSpy).toHaveBeenCalled()
+    expect(component.diskImage).toBeNull()
+    expect(component.isLoading()).toBeFalse()
+    expect(component.loadingStatus()).toBe('')
+  })
+
+  it('disables the Attach button when IDER is already active', () => {
+    component.isIDERActive.set(true)
+    fixture.detectChanges()
+
+    const attachButton = fixture.nativeElement.querySelector('button[color="primary"]') as HTMLButtonElement
+
+    expect(attachButton.disabled).toBeTrue()
+  })
+
   // onCancelIDER()
   it('should set deviceIDERConnection to false on cancel IDER', () => {
     const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
     component.onCancelIDER()
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
+  })
+
+  it('should clear loading state on cancel IDER', () => {
+    component.isLoading.set(true)
+    component.loadingStatus.set('ider.status.connectingIder.value')
+
+    component.onCancelIDER()
+
+    expect(component.isLoading()).toBeFalse()
+    expect(component.loadingStatus()).toBe('')
   })
 
   it('should clear file input value on cancel IDER', () => {
@@ -497,14 +638,6 @@ describe('IderComponent', () => {
 
   it('should not throw when file input element does not exist on cancel IDER', () => {
     expect(() => component.onCancelIDER()).not.toThrow()
-  })
-
-  // onDisplayChange()
-  it('should change display and call setDisplaySelection', () => {
-    fixture.detectChanges()
-    component.onDisplayChange(1)
-    expect(setDisplaySelectionSpy).toHaveBeenCalledWith('', { displayIndex: 1 })
-    expect(component.selectedDisplay()).toBe(1)
   })
 
   // deviceIDERStatus()
@@ -535,32 +668,6 @@ describe('IderComponent', () => {
     component.deviceIDERStatus(1)
     expect(component.isIDERActive()).toBeFalse()
     expect(snackBarSpy).not.toHaveBeenCalled()
-  })
-
-  // sendHotkey()
-  it('should send hotkey when sendHotkey is called with selectedHotkey', () => {
-    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
-    component.selectedHotkey = 'ctrl-alt-del'
-    component.sendHotkey()
-    expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-del')
-  })
-
-  it('should not send hotkey when selectedHotkey is null', () => {
-    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
-    component.selectedHotkey = null
-    component.sendHotkey()
-    expect(hotKeySignalSpy).not.toHaveBeenCalled()
-  })
-
-  it('should reset hotkey signal to null after 100ms', (done) => {
-    const hotKeySignalSpy = spyOn(component.hotKeySignal, 'set')
-    component.selectedHotkey = 'ctrl-alt-del'
-    component.sendHotkey()
-    expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-del')
-    setTimeout(() => {
-      expect(hotKeySignalSpy).toHaveBeenCalledWith(null)
-      done()
-    }, 150)
   })
 
   // displayError() / displayWarning()

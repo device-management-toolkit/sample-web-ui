@@ -1,23 +1,94 @@
 .canvas {
   background-color: black;
 }
+.ider-toolbar {
+  min-height: 96px;
+  height: auto;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ider-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #f5f7fa;
+}
+.ider-status mat-icon {
+  color: #616161;
+}
+.ider-status.loading mat-icon {
+  color: #1976d2;
+  animation: spin 1.5s linear infinite;
+}
+.ider-status.active mat-icon {
+  color: #2e7d32;
+}
+.ider-status-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ider-status-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+}
+.ider-status-subtitle {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.ider-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+.ider-actions .loading-icon {
+  animation: spin 1.5s linear infinite;
+}
 .loading-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 12px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 .loading-status {
   color: rgba(0, 0, 0, 0.87);
   font-size: 14px;
   font-weight: 500;
   text-align: center;
-  margin-top: 8px;
 }
 .stop-ider-button {
   margin-inline-start: 8px;
+}
+.ider-empty-state {
+  margin-top: 16px;
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+}
+.ider-empty-state mat-icon {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

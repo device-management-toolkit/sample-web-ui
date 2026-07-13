@@ -1640,6 +1640,10 @@
     "description": "Nachricht zum Aktivieren von IDER",
     "value": "IDER ist auf diesem Gerät derzeit nicht aktiviert. Möchten Sie es aktivieren?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Warnung, die angezeigt wird, wenn ein Datenträgerabbild angehängt werden soll, obwohl IDER bereits aktiv ist",
+    "value": "IDER ist bereits aktiv. Beenden Sie IDER zuerst, bevor Sie ein weiteres Datenträgerabbild anhängen."
+  },
   "ider.errorAccessCancel": {
     "description": "Fehler beim Zugriff, wenn die Aktivierungsanfrage abgebrochen wird",
     "value": "Auf IDER kann nicht zugegriffen werden – die Anfrage zur Aktivierung von IDER wurde abgebrochen."
@@ -1672,9 +1676,21 @@
     "description": "Statusmeldung während der IDER-Verbindungsherstellung",
     "value": "Verbindung zu IDER wird hergestellt..."
   },
+  "ider.status.notConnected": {
+    "description": "Statusmeldung, wenn keine IDER-Sitzung verbunden ist",
+    "value": "IDER nicht verbunden"
+  },
+  "ider.status.attachHelp": {
+    "description": "Hilfetext, der angezeigt wird, wenn IDER inaktiv ist, und zum Anhängen eines Datenträgerabbilds auffordert",
+    "value": "Klicken Sie auf \"Datenträgerabbild anhängen\", um eine Verbindung herzustellen und eine IDER-Sitzung zu starten"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Meldung im IDER-Leerzustand, die zur Auswahl einer ISO auffordert",
+    "value": "Wählen Sie eine ISO-Datei aus, um die IDE-Umleitung zu starten."
+  },
   "ider.stopIder.label": {
     "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
-    "value": "Stop IDER"
+    "value": "IDER beenden"
   },
   "ider.title": {
     "description": "Titel für IDER",
@@ -1830,7 +1846,7 @@
   },
   "kvm.stopIder.label": {
     "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
-    "value": "Stop IDER"
+    "value": "IDER beenden"
   },
   "kvm.title": {
     "description": "Titel für KVM",

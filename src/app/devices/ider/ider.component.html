@@ -1,9 +1,46 @@
-<mat-toolbar style="height: 100px" class="flex flex-row">
-  <div class="flex flex-50 justify-end">
-    <button mat-flat-button color="primary" (click)="fileInput.click()">
-      <mat-icon>upload_file</mat-icon>{{ 'ider.attachDisk.label.value' | translate }}
+<mat-toolbar class="flex flex-row ider-toolbar">
+  <div class="ider-status" [class.active]="isIDERActive()" [class.loading]="isLoading()">
+    <mat-icon>
+      @if (isLoading()) {
+        sync
+      } @else if (isIDERActive()) {
+        check_circle
+      } @else {
+        radio_button_unchecked
+      }
+    </mat-icon>
+    <div class="ider-status-copy">
+      <div class="ider-status-title">
+        @if (isIDERActive()) {
+          {{ 'warning.iderActive.value' | translate }}
+        } @else if (isLoading() && loadingStatus()) {
+          {{ loadingStatus() | translate }}
+        } @else {
+          {{ 'ider.status.notConnected.value' | translate }}
+        }
+      </div>
+      @if (!isIDERActive() && !isLoading()) {
+        <div class="ider-status-subtitle">{{ 'ider.status.attachHelp.value' | translate }}</div>
+      }
+    </div>
+  </div>
+
+  <div class="ider-actions">
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="isLoading() || isIDERActive()"
+      (click)="onAttachDiskImage(fileInput)">
+      <mat-icon [class.loading-icon]="isLoading()">
+        @if (isLoading()) {
+          sync
+        } @else {
+          upload_file
+        }
+      </mat-icon>
+      {{ 'ider.attachDisk.label.value' | translate }}
     </button>
-    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso" />
     @if (isIDERActive()) {
       <button mat-flat-button color="warn" (click)="onCancelIDER()" class="stop-ider-button">
         <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
@@ -11,6 +48,20 @@
     }
   </div>
 </mat-toolbar>
+
+@if (isLoading()) {
+  <div class="loading-container">
+    <div class="loading-status">{{ loadingStatus() | translate }}</div>
+  </div>
+}
+
+@if (!diskImage && !isLoading()) {
+  <div class="ider-empty-state">
+    <mat-icon>dns</mat-icon>
+    <p>{{ 'ider.emptyState.selectIso.value' | translate }}</p>
+  </div>
+}
+
 @if (diskImage && deviceIDERConnection()) {
   <amt-ider
     class="ider"

@@ -1636,6 +1636,10 @@
     "description": "IDERを有効にするメッセージ",
     "value": "現在、このデバイスではIDERが有効になっておりません。有効にしますか？"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "IDER がすでにアクティブな状態でディスクイメージをアタッチしようとしたときに表示される警告",
+    "value": "IDER はすでにアクティブです。別のディスクイメージをアタッチする前に、先に IDER を停止してください。"
+  },
   "ider.errorAccessCancel": {
     "description": "有効化要求がキャンセルされた場合のアクセスエラー",
     "value": "IDERにアクセスできません - IDER有効化のリクエストはキャンセルされました"
@@ -1667,6 +1671,18 @@
   "ider.status.connectingIder": {
     "description": "IDERコンポーネントが接続中のときに表示されるステータスメッセージ",
     "value": "IDERに接続しています..."
+  },
+  "ider.status.notConnected": {
+    "description": "IDER セッションが接続されていないときに表示されるステータスメッセージ",
+    "value": "IDER は未接続です"
+  },
+  "ider.status.attachHelp": {
+    "description": "IDER が待機中のときに、ディスクイメージのアタッチを促すヘルプテキスト",
+    "value": "\"ディスクイメージをアタッチ\" をクリックして接続し、IDER セッションを開始してください"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "IDER の空状態で ISO の選択を促すメッセージ",
+    "value": "IDE リダイレクトを開始するには ISO ファイルを選択してください。"
   },
   "ider.stopIder.label": {
     "description": "IDERセッションを停止するボタンラベル",

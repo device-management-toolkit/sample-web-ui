@@ -1663,6 +1663,10 @@
     "description": "Message for enabling IDER",
     "value": "IDER is not currently enabled on this device. Would you like to enable it?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Warning shown when a user tries to attach a disk image while IDER is already active",
+    "value": "IDER is already active. Stop IDER first before attaching another disk image."
+  },
   "ider.errorAccessCancel": {
     "description": "Error for accessing when requesting to enable is cancelled",
     "value": "IDER cannot be accessed - request to enable IDER is cancelled"
@@ -1694,6 +1698,18 @@
   "ider.status.connectingIder": {
     "description": "Status message shown while IDER component is connecting",
     "value": "Connecting to IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Status message shown when no IDER session is connected",
+    "value": "IDER not connected"
+  },
+  "ider.status.attachHelp": {
+    "description": "Helper text shown when IDER is idle, prompting user to attach a disk image",
+    "value": "Click \"Attach Disk Image\" to connect and start an IDER session"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Message shown in the IDER empty state prompting the user to select an ISO",
+    "value": "Select an ISO file to begin IDE redirection."
   },
   "ider.stopIder.label": {
     "description": "Button label to stop the IDER session",

@@ -1636,6 +1636,10 @@
     "description": "הודעה להפעלת IDER",
     "value": "IDER אינו מופעל כרגע במכשיר זה. האם ברצונך להפעיל אותו?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "אזהרה שמוצגת כאשר מנסים לצרף תמונת דיסק בזמן ש-IDER כבר פעיל",
+    "value": "IDER כבר פעיל. עצור תחילה את IDER לפני צירוף תמונת דיסק נוספת."
+  },
   "ider.errorAccessCancel": {
     "description": "שגיאת גישה כאשר בקשת ההפעלה מבוטלת",
     "value": "לא ניתן לגשת ל-IDER - הבקשה להפעלת IDER בוטלה"
@@ -1667,6 +1671,18 @@
   "ider.status.connectingIder": {
     "description": "הודעת סטאטוס כאשר רכיב IDER מתחבר",
     "value": "מתחבר ל-IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "הודעת סטאטוס כאשר אין חיבור לסשן IDER",
+    "value": "IDER לא מחובר"
+  },
+  "ider.status.attachHelp": {
+    "description": "טקסט עזרה שמוצג כאשר IDER אינו פעיל ומבקש מהמשתמש לצרף תמונת דיסק",
+    "value": "לחץ על \"צרף תמונת דיסק\" כדי להתחבר ולהתחיל סשן IDER"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "הודעה במצב ריק של IDER שמבקשת לבחור קובץ ISO",
+    "value": "בחר קובץ ISO כדי להתחיל הפניית IDE."
   },
   "ider.stopIder.label": {
     "description": "תווית כפתור כדי לעצור את הפעלת ider",

@@ -1644,6 +1644,10 @@
     "description": "رسالة لتمكين IDER",
     "value": "IDER غير ممكّن حاليًا على هذا الجهاز. هل ترغب في تمكينه؟"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "تحذير يظهر عند محاولة إرفاق صورة قرص بينما IDER نشط بالفعل",
+    "value": "جلسة IDER نشطة بالفعل. أوقف IDER أولاً قبل إرفاق صورة قرص أخرى."
+  },
   "ider.errorAccessCancel": {
     "description": "خطأ للوصول عند إلغاء طلب التمكين",
     "value": "لا يمكن الوصول إلى IDER - تم إلغاء طلب تمكين IDER"
@@ -1675,6 +1679,18 @@
   "ider.status.connectingIder": {
     "description": "رسالة الحالة المعروضة أثناء اتصال مكوّن IDER",
     "value": "جارٍ الاتصال بـ IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "رسالة الحالة المعروضة عندما لا تكون هناك جلسة IDER متصلة",
+    "value": "IDER غير متصل"
+  },
+  "ider.status.attachHelp": {
+    "description": "نص مساعد يظهر عندما يكون IDER في وضع الخمول ويطلب من المستخدم إرفاق صورة قرص",
+    "value": "انقر فوق \"إرفاق صورة القرص\" للاتصال وبدء جلسة IDER"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "رسالة تظهر في الحالة الفارغة لـ IDER وتطلب اختيار ملف ISO",
+    "value": "حدد ملف ISO لبدء إعادة توجيه IDE."
   },
   "ider.stopIder.label": {
     "description": "تسمية الزر لإيقاف جلسة IDER",

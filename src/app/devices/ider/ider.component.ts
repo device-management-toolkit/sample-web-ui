@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, Component, DestroyRef, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { NavigationStart, Router } from '@angular/router'
-import { defer, EMPTY, iif, Observable, of, throwError } from 'rxjs'
+import { EMPTY, Observable, of, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -18,7 +19,6 @@ import { DeviceEnableIderComponent } from '../device-enable-ider/device-enable-i
 import { IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatToolbar } from '@angular/material/toolbar'
 import { UserConsentService } from '../user-consent.service'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
@@ -30,8 +30,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     MatToolbar,
-    ReactiveFormsModule,
-    FormsModule,
     MatButton,
     MatIcon,
     IDERComponent,
@@ -46,34 +44,29 @@ export class IderComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
+  private readonly destroyRef = inject(DestroyRef)
 
   public readonly deviceId = input('')
 
   public deviceIDERConnection = signal(false)
 
-  public selectedEncoding = signal(1)
-
-  public isFullscreen = signal(false)
   public isLoading = signal(false)
   public loadingStatus = signal('')
   public deviceState = signal(-1)
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public authToken = signal('')
-  public selectedHotkey: string | null = null
   public isIDERActive = signal(false)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public diskImage: File | null = null
   public isDisconnecting = false
   public redirectionStatus: RedirectionStatus | null = null
-  public hotKeySignal = signal<any>(null)
-  public displays: { value: number; viewValue: string; disabled: boolean }[] = []
-  public selectedDisplay = signal(0)
 
   private powerState: any = 0
-  private timeInterval!: any
   private initStartTime = 0
+  private awaitingDiskSelection = false
+  private diskSelectionCanceled = false
   // If init() completes faster than this, we assume no blocking dialog was
-  // shown and the token fetched in ngOnInit is still valid.
+  // shown and the token prefetched at connect()time is still valid.
   private readonly REDIR_TOKEN_REFRESH_THRESHOLD_MS = environment.redirTokenRefreshThresholdMs ?? 5_000
 
   constructor() {
@@ -81,7 +74,7 @@ export class IderComponent implements OnInit, OnDestroy {
       // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
-    this.router.events.subscribe((event) => {
+    this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isDisconnecting = true
       }
@@ -89,9 +82,21 @@ export class IderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.prefetchAuthToken()
+    this.promptEnableIderIfNeeded()
+  }
 
-    this.init()
+  private promptEnableIderIfNeeded(): void {
+    this.devicesService
+      .getAMTFeaturesCached(this.deviceId())
+      .pipe(
+        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
+        catchError(() => {
+          const msg: string = this.translate.instant('ider.errorRetrieve.value')
+          this.displayError(msg)
+          return EMPTY
+        })
+      )
+      .subscribe()
   }
 
   // Prefetch a redirection token in parallel with init() so the fast path (no
@@ -99,14 +104,17 @@ export class IderComponent implements OnInit, OnDestroy {
   private prefetchAuthToken(): void {
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
-      .pipe(tap((result) => this.authToken.set(result.token)))
+      .pipe(
+        tap((result) => this.authToken.set(result.token)),
+        catchError(() => EMPTY)
+      )
       .subscribe()
   }
 
   init(): void {
     this.initStartTime = Date.now()
     this.isLoading.set(true)
-    // Kick off the connection chain immedicately do AMT round-trips can begin without delay.
+    // Kick off the connection chain immediately so AMT round-trips can begin without delay.
     this.loadingStatus.set('ider.status.checkingPowerState.value')
     this.getPowerStateCached(this.deviceId())
       .pipe(
@@ -132,15 +140,15 @@ export class IderComponent implements OnInit, OnDestroy {
         }),
         switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
         tap(() => this.loadingStatus.set('ider.status.checkingConsent.value')),
-        switchMap((result: boolean | any) =>
-          iif(
-            () => result === false,
-            defer(() => of(null)),
-            defer(() => this.checkUserConsent())
-          )
-        ),
+        switchMap((result: boolean | any) => {
+          if (result === false) {
+            this.isLoading.set(false)
+            this.loadingStatus.set('')
+            return EMPTY
+          }
+          return this.checkUserConsent()
+        }),
         switchMap((result: any) =>
-          // safely convert null to undefined for type compatibility
           this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
         ),
         switchMap((result: any | UserConsentResponse) =>
@@ -153,10 +161,18 @@ export class IderComponent implements OnInit, OnDestroy {
           return throwError(() => err)
         })
       )
-      .subscribe()
+      .subscribe({ error: () => undefined })
   }
 
   postUserConsentDecision(result: boolean): Observable<any> {
+    // If file selection was canceled, stop the connect flow cleanly.
+    if (this.diskSelectionCanceled) {
+      this.diskSelectionCanceled = false
+      this.isLoading.set(false)
+      this.loadingStatus.set('')
+      return of(null)
+    }
+
     if (result === false) {
       this.isLoading.set(false)
       this.loadingStatus.set('')
@@ -164,7 +180,7 @@ export class IderComponent implements OnInit, OnDestroy {
       return of(null)
     }
     // If no dialog blocked the init() chain long enough to expire the token
-    // prefetched in ngOnInit, skip the refresh round-trip and use it directly.
+    // prefetched in connect(), skip the refresh round-trip and use it directly.
     const elapsedMs = Date.now() - this.initStartTime
     if (elapsedMs < this.REDIR_TOKEN_REFRESH_THRESHOLD_MS && this.authToken()) {
       this.isDisconnecting = false
@@ -200,15 +216,62 @@ export class IderComponent implements OnInit, OnDestroy {
     this.init()
   }
 
+  onAttachDiskImage(fileInput: HTMLInputElement): void {
+    if (this.isIDERActive()) {
+      this.displayWarning(this.translate.instant('ider.alreadyActiveWarning.value'))
+      return
+    }
+    if (this.isLoading()) {
+      return
+    }
+    fileInput.value = ''
+    this.diskImage = null
+    this.deviceIDERConnection.set(false)
+    this.awaitingDiskSelection = true
+    this.diskSelectionCanceled = false
+    window.addEventListener('focus', this.onFilePickerClosed, { once: true })
+    this.connect()
+    fileInput.click()
+  }
+
   onFileSelected(event: Event): void {
+    this.awaitingDiskSelection = false
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null
-    // Set the deviceIDERConnection signal based on whether a file is selected
     this.deviceIDERConnection.set(this.diskImage !== null)
+
+    if (this.diskImage === null) {
+      this.diskSelectionCanceled = true
+      this.isLoading.set(false)
+      this.loadingStatus.set('')
+      return
+    }
+
+    this.diskSelectionCanceled = false
+
+    // Fallback in case file selection is triggered without going through Attach.
+    if (!this.isLoading() && !this.isIDERActive()) {
+      this.connect()
+    }
+  }
+
+  private readonly onFilePickerClosed = (): void => {
+    if (!this.awaitingDiskSelection) {
+      return
+    }
+
+    this.awaitingDiskSelection = false
+    if (this.diskImage === null) {
+      this.diskSelectionCanceled = true
+      this.isLoading.set(false)
+      this.loadingStatus.set('')
+    }
   }
 
   onCancelIDER(): void {
     // close the dialog, perform other actions as needed
+    this.isLoading.set(false)
+    this.loadingStatus.set('')
     this.deviceIDERConnection.set(false)
     this.isIDERActive.set(false)
     this.diskImage = null
@@ -216,22 +279,6 @@ export class IderComponent implements OnInit, OnDestroy {
     const fileInput = document.getElementById('file') as HTMLInputElement
     if (fileInput) {
       fileInput.value = ''
-    }
-  }
-
-  onDisplayChange = (e: number): void => {
-    this.selectedDisplay.set(e)
-    // optionally notify backend of selection
-    this.devicesService.setDisplaySelection(this.deviceId(), { displayIndex: e }).subscribe()
-  }
-
-  sendHotkey(): void {
-    if (this.selectedHotkey) {
-      this.hotKeySignal.set(this.selectedHotkey)
-      // Reset the signal after a short delay to allow the same hotkey to be sent again
-      setTimeout(() => {
-        this.hotKeySignal.set(null)
-      }, 100)
     }
   }
 
@@ -304,7 +351,7 @@ export class IderComponent implements OnInit, OnDestroy {
       catchError((err) => {
         const msg: string = this.translate.instant('ider.errorRetrieve.value')
         this.displayError(msg)
-        throw err
+        return throwError(() => err)
       }),
       switchMap((data?: boolean) => {
         if (data == null || !data) {
@@ -343,9 +390,13 @@ export class IderComponent implements OnInit, OnDestroy {
 
   deviceIDERStatus = (event: any): void => {
     if (event === 0) {
+      this.isLoading.set(false)
+      this.loadingStatus.set('')
       this.isIDERActive.set(false)
       this.displayWarning(this.translate.instant('warning.iderEnded.value'))
     } else if (event === 3) {
+      this.isLoading.set(false)
+      this.loadingStatus.set('')
       this.isIDERActive.set(true)
       this.displayWarning(this.translate.instant('warning.iderActive.value'))
     }
@@ -380,9 +431,7 @@ export class IderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('focus', this.onFilePickerClosed)
     this.isDisconnecting = true
-    if (this.timeInterval) {
-      this.timeInterval.unsubscribe()
-    }
   }
 }

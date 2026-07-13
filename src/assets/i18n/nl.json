@@ -1644,6 +1644,10 @@
     "description": "Bericht voor het inschakelen van IDER",
     "value": "IDER is momenteel niet ingeschakeld op dit apparaat. Wilt u het inschakelen?"
   },
+  "ider.alreadyActiveWarning": {
+    "description": "Waarschuwing die wordt weergegeven wanneer een schijfimage wordt gekoppeld terwijl IDER al actief is",
+    "value": "IDER is al actief. Stop eerst IDER voordat u een andere schijfimage koppelt."
+  },
   "ider.errorAccessCancel": {
     "description": "Toegangsfout wanneer het verzoek om in te schakelen wordt geannuleerd",
     "value": "IDER is niet toegankelijk - verzoek om IDER in te schakelen is geannuleerd."
@@ -1675,6 +1679,18 @@
   "ider.status.connectingIder": {
     "description": "Statusbericht weergegeven terwijl het IDER-component verbinding maakt",
     "value": "Verbinding maken met IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Statusbericht wanneer er geen IDER-sessie is verbonden",
+    "value": "IDER niet verbonden"
+  },
+  "ider.status.attachHelp": {
+    "description": "Helptekst die wordt weergegeven wanneer IDER inactief is en de gebruiker vraagt een schijfimage te koppelen",
+    "value": "Klik op \"Schijfimage koppelen\" om verbinding te maken en een IDER-sessie te starten"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Bericht in de IDER-leegstatus dat vraagt om een ISO te selecteren",
+    "value": "Selecteer een ISO-bestand om IDE-omleiding te starten."
   },
   "ider.stopIder.label": {
     "description": "Knoplabel om de IDER-sessie te stoppen",

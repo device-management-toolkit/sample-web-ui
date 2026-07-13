@@ -179,23 +179,31 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((params) => {
-          this.isLoading.set(true)
+          const deviceChanged = params.id !== this.deviceId
           this.deviceId = params.id
           this.currentView = params.component || 'general'
+
+          if (!deviceChanged) {
+            return of(undefined)
+          }
+          this.isLoading.set(true)
+
           return this.devicesService.getAMTVersion(this.deviceId).pipe(
             catchError(() => {
               const msg: string = this.translate.instant('general.errorAMTVersion.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return of(null)
+              return of(undefined)
             })
           )
         })
       )
       .subscribe({
         next: (amtVersion) => {
-          const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses[4]?.VersionString ?? ''
-          const isIsm = sku === this.ismSku
-          this.isISMSystem.set(isIsm)
+          if (amtVersion !== undefined) {
+            const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses?.[4]?.VersionString ?? ''
+            this.isISMSystem.set(sku === this.ismSku)
+          }
+          const isIsm = this.isISMSystem()
           if (isIsm && this.currentView === 'kvm') this.currentView = 'ider'
           if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
           this.isLoading.set(false)
