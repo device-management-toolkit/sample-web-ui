@@ -1,3 +1,12 @@
+## [3.58.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.1...v3.58.2) (2026-07-06)
+
+
+### Bug Fixes
+
+* **e2e:** update rpc-go v3 CLI flags ([#3407](https://github.com/device-management-toolkit/sample-web-ui/issues/3407)) ([9ccec21](https://github.com/device-management-toolkit/sample-web-ui/commit/9ccec2131ad19b9719dca90caff2595305565f57))
+
+## [3.58.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.0...v3.58.1) (2026-07-01)
+
 # [3.58.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.57.11...v3.58.0) (2026-06-11)
 
 

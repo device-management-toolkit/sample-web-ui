@@ -16,6 +16,8 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { UserConsentService } from '../user-consent.service'
 
+const VISIBLE_PLATFORM_ERASE_CAPABILITIES = PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
+
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
   KVM: true,
