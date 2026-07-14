@@ -184,7 +184,10 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           this.currentView = params.component || 'general'
 
           if (!deviceChanged) {
-            return of(undefined)
+            const isIsm = this.isISMSystem()
+            if (isIsm && this.currentView === 'kvm') this.currentView = 'ider'
+            if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
+            return of(null)
           }
           this.isLoading.set(true)
 
@@ -199,6 +202,10 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (amtVersion) => {
+          if (amtVersion == null) {
+            this.isLoading.set(false)
+            return
+          }
           const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses?.[4]?.VersionString ?? ''
           this.isISMSystem.set(sku === this.ismSku)
           const isIsm = this.isISMSystem()
