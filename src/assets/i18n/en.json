@@ -2773,6 +2773,10 @@
     "description": "Dialog title for random password warning",
     "value": "Using Random Generated Passwords"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Error message when SSD password exceeds 32 bytes",
+    "value": "SSD password must not exceed 32 bytes"
+  },
   "sol.connect": {
     "description": "Button for connecting to SOL",
     "value": "Connect SOL"

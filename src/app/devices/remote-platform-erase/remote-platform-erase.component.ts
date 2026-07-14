@@ -7,7 +7,14 @@ import { Component, DestroyRef, OnInit, inject, signal, input, computed } from '
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
 import { catchError, switchMap } from 'rxjs/operators'
-import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms'
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatDivider } from '@angular/material/divider'
@@ -39,6 +46,7 @@ import { UserConsentService } from '../user-consent.service'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
 const SSD_ERASE_KEY = 'secureEraseSsds'
+const SSD_PASSWORD_MAX_BYTES = 32
 
 @Component({
   selector: 'app-remote-platform-erase',
@@ -90,7 +98,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   public readyToErase = false
   public isSsdEncrypted = signal(false)
   public ssdEncryptedControl = this.fb.control<boolean | null>(false)
-  public ssdPasswordControl = this.fb.control<string | null>('')
+  public ssdPasswordControl = this.fb.control<string | null>('', [this.validateSsdPasswordBytes.bind(this)])
 
   ngOnInit(): void {
     this.devicesService.getDevice(this.deviceId()).subscribe({
@@ -234,6 +242,12 @@ export class RemotePlatformEraseComponent implements OnInit {
     if (!this.platformEraseEnabled() || !this.hasSelectedCaps()) {
       return
     }
+    // Validate SSD password if encrypted SSD erase is selected
+    if (this.isSsdSelected() && this.isSsdEncrypted() && this.ssdPasswordControl.invalid) {
+      const msg: string = this.t('remotePlatformErase.ssdPasswordTooLong')
+      this.displayError(msg)
+      return
+    }
     const operations = this.eraseCaps()
       .filter((_, i) => this.eraseCapsArray.at(i)?.value === true)
       .map((cap) => this.t(`remotePlatformErase.cap.${cap.key}.label`))
@@ -252,7 +266,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       )
       .subscribe()
   }
-  
+
   postUserConsentDecision(result: any, operations: string): Observable<any> {
     if (result === false) {
       return of(null)
@@ -397,6 +411,18 @@ export class RemotePlatformEraseComponent implements OnInit {
     this.isSsdEncrypted.set(false)
     this.ssdEncryptedControl.setValue(false)
     this.ssdPasswordControl.setValue('')
+  }
+
+  private validateSsdPasswordBytes(control: AbstractControl): ValidationErrors | null {
+    const value = control.value as string | null
+    if (!value) {
+      return null
+    }
+    const byteLength = new TextEncoder().encode(value).length
+    if (byteLength > SSD_PASSWORD_MAX_BYTES) {
+      return { ssdPasswordTooLong: { maxBytes: SSD_PASSWORD_MAX_BYTES, actualBytes: byteLength } }
+    }
+    return null
   }
 
   displayError(message: string): void {

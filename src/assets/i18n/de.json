@@ -2409,6 +2409,10 @@
     "description": "Dialog-Titel für Warnung zu zufälligen Passwörtern",
     "value": "Verwendung zufällig generierter Passwörter"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Fehlermeldung wenn SSD-Passwort 32 Bytes überschreitet",
+    "value": "Das SSD-Passwort darf 32 Bytes nicht überschreiten"
+  },
   "sol.connect": {
     "description": "Schaltfläche für die Verbindung mit SOL",
     "value": "Verbinden Sie SOL"

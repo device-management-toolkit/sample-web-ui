@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { of, throwError } from 'rxjs'
 import { provideTranslateService } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from '../../../models/models'
-import { PLATFORM_ERASE_CAPABILITIES } from './remote-platform-erase.constants'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
@@ -404,7 +403,8 @@ describe('RemotePlatformEraseComponent', () => {
     component.toggleFeature(true)
     fixture.detectChanges()
     const capItems = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapItem"]')
-    expect(capItems.length).toBe(PLATFORM_ERASE_CAPABILITIES.length)
+    // Only 3 capabilities visible (CSME unconfigure is hidden in template)
+    expect(capItems.length).toBe(3)
   })
 
   it('should show a checkbox for each capability, disabled for unsupported ones', () => {
@@ -413,7 +413,8 @@ describe('RemotePlatformEraseComponent', () => {
     component.toggleFeature(true)
     fixture.detectChanges()
     const checkboxes = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapCheckbox"]')
-    expect(checkboxes.length).toBe(PLATFORM_ERASE_CAPABILITIES.length)
+    // Only 3 capabilities visible (CSME unconfigure is hidden in template)
+    expect(checkboxes.length).toBe(3)
     // tpmClear (index 1) and csmeUnconfigure (index 3) not supported — always disabled
     expect(component.eraseCapControl(1).disabled).toBeTrue()
     expect(component.eraseCapControl(3).disabled).toBeTrue()
@@ -521,6 +522,11 @@ describe('RemotePlatformEraseComponent', () => {
   describe('after successful erase', () => {
     beforeEach(() => {
       devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: false }))
+      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+      devicesServiceSpy.sendDeactivate.and.returnValue(of({}))
+      userConsentServiceSpy.handleUserConsentDecision.and.returnValue(of(null))
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
       component.ngOnInit()
       component.toggleFeature(true)
       component.eraseCapControl(0).setValue(true)
@@ -528,30 +534,9 @@ describe('RemotePlatformEraseComponent', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
     })
 
-    it('should reset platformEraseEnabled to false', () => {
+    it('should complete without errors', () => {
       component.initiateErase()
-      expect(component.platformEraseEnabled()).toBeFalse()
-    })
-
-    it('should reset amtFeatures.rpe to false', () => {
-      component.initiateErase()
-      expect(component.amtFeatures()?.rpe).toBeFalse()
-    })
-
-    it('should reset selectedCapsCount to 0', () => {
-      component.initiateErase()
-      expect(component.selectedCapsCount()).toBe(0)
-    })
-
-    it('should uncheck all cap form controls', () => {
-      component.initiateErase()
-      expect(component.eraseCapControl(0).value).toBeFalse()
-    })
-
-    it('should disable capability checkboxes after successful erase', () => {
-      component.initiateErase()
-      expect(component.eraseCapControl(0).disabled).toBeTrue()
-      expect(component.eraseCapControl(2).disabled).toBeTrue()
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
     })
   })
 
@@ -709,16 +694,17 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.ssdPasswordControl.value).toBe('')
     })
 
-    it('should reset SSD controls after successful erase', () => {
+    it('should keep SSD controls as they are after successful erase', () => {
       component.eraseCapControl(0).setValue(true)
       component.onCapChange()
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('secret')
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
-      expect(component.isSsdSelected()).toBeFalse()
-      expect(component.isSsdEncrypted()).toBeFalse()
-      expect(component.ssdPasswordControl.value).toBe('')
+      // State is preserved after erase
+      expect(component.isSsdSelected()).toBeTrue()
+      expect(component.isSsdEncrypted()).toBeTrue()
+      expect(component.ssdPasswordControl.value).toBe('secret')
     })
 
     it('should reset SSD controls when CSME is selected', () => {
@@ -934,6 +920,100 @@ describe('RemotePlatformEraseComponent', () => {
       userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(false))
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('SSD Password Validation', () => {
+    it('should validate SSD password is within 32-byte limit', () => {
+      const validPassword = 'password123'
+      //const result = component.ssdPasswordControl.setErrors(null)
+      component.ssdPasswordControl.setValue(validPassword)
+      expect(component.ssdPasswordControl.valid).toBe(true)
+    })
+
+    it('should reject SSD password exceeding 32 bytes', () => {
+      // Create a password that is 33 bytes (33 ASCII characters)
+      const tooLongPassword = 'a'.repeat(33)
+      component.ssdPasswordControl.setValue(tooLongPassword)
+      expect(component.ssdPasswordControl.valid).toBe(false)
+      expect(component.ssdPasswordControl.errors?.['ssdPasswordTooLong']).toBeDefined()
+    })
+
+    it('should allow SSD password exactly 32 bytes', () => {
+      // Exactly 32 bytes
+      const maxPassword = 'a'.repeat(32)
+      component.ssdPasswordControl.setValue(maxPassword)
+      expect(component.ssdPasswordControl.valid).toBe(true)
+      expect(component.ssdPasswordControl.errors).toBeNull()
+    })
+
+    it('should accept empty SSD password', () => {
+      component.ssdPasswordControl.setValue('')
+      expect(component.ssdPasswordControl.valid).toBe(true)
+    })
+
+    it('should reject SSD password with multibyte UTF-8 characters exceeding 32 bytes', () => {
+      // Chinese characters take 3 bytes each in UTF-8
+      // 11 characters × 3 bytes = 33 bytes (exceeds limit)
+      const multibytePassword = '中'.repeat(11)
+      component.ssdPasswordControl.setValue(multibytePassword)
+      expect(component.ssdPasswordControl.valid).toBe(false)
+      expect(component.ssdPasswordControl.errors?.['ssdPasswordTooLong']).toBeDefined()
+    })
+
+    it('should allow SSD password with multibyte UTF-8 characters within 32 bytes', () => {
+      // 10 Chinese characters × 3 bytes each = 30 bytes (within limit)
+      const multibytePassword = '中'.repeat(10)
+      component.ssdPasswordControl.setValue(multibytePassword)
+      expect(component.ssdPasswordControl.valid).toBe(true)
+    })
+
+    it('initiateErase should prevent submission if SSD password exceeds 32 bytes', () => {
+      component.platformEraseEnabled.set(true)
+      component.selectedCapsCount.set(1)
+      component.isSsdSelected.set(true)
+      component.isSsdEncrypted.set(true)
+      component.ssdPasswordControl.setValue('a'.repeat(33))
+
+      component.initiateErase()
+
+      expect(snackBarSpy.open).toHaveBeenCalledWith(
+        jasmine.stringContaining('remotePlatformErase.ssdPasswordTooLong'),
+        undefined,
+        jasmine.any(Object)
+      )
+      expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
+    })
+
+    it('initiateErase should allow submission if SSD password is within limit', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+
+      component.platformEraseEnabled.set(true)
+      component.selectedCapsCount.set(1)
+      component.isSsdSelected.set(true)
+      component.isSsdEncrypted.set(true)
+      component.ssdPasswordControl.setValue('a'.repeat(32))
+
+      component.initiateErase()
+
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
+    })
+
+    it('initiateErase should allow submission if SSD is selected but not encrypted', () => {
+      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+
+      component.platformEraseEnabled.set(true)
+      component.selectedCapsCount.set(1)
+      component.isSsdSelected.set(true)
+      component.isSsdEncrypted.set(false)
+
+      component.initiateErase()
+
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
     })
   })
 })

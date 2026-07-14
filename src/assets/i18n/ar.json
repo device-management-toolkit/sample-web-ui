@@ -2409,6 +2409,10 @@
     "description": "عنوان مربع الحوار لتحذير كلمة المرور العشوائية",
     "value": "استخدام كلمات مرور عشوائية"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "رسالة خطأ عند تجاوز كلمة مرور SSD 32 بايت",
+    "value": "يجب أن لا تتجاوز كلمة مرور SSD 32 بايت"
+  },
   "sol.connect": {
     "description": "زر للاتصال بـ SOL",
     "value": "ربط SOL"

@@ -2409,6 +2409,10 @@
     "description": "Titolo della finestra di dialogo per l'avviso relativo alla password casuale",
     "value": "Utilizzo di password generate in modo casuale"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Messaggio di errore quando la password SSD supera i 32 byte",
+    "value": "La password SSD non deve superare i 32 byte"
+  },
   "sol.connect": {
     "description": "Pulsante per la connessione a SOL",
     "value": "Connettersi a SOL"

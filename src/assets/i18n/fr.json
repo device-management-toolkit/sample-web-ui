@@ -2409,6 +2409,10 @@
     "description": "Titre de la boîte de dialogue pour l'avertissement relatif au mot de passe aléatoire",
     "value": "Utilisation de mots de passe générés aléatoirement"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Message d'erreur lorsque le mot de passe SSD dépasse 32 bytes",
+    "value": "Le mot de passe SSD ne doit pas dépasser 32 bytes"
+  },
   "sol.connect": {
     "description": "Bouton pour se connecter à SOL",
     "value": "Connectez SOL"

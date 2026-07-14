@@ -2409,6 +2409,10 @@
     "description": "ランダムパスワード警告ダイアログのタイトル",
     "value": "ランダム生成パスワードの使用について"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "SSDパスワードが32バイトを超える場合のエラーメッセージ",
+    "value": "SSDパスワードは32バイトを超えることはできません"
+  },
   "sol.connect": {
     "description": "SOL接続用ボタン",
     "value": "Connect SOL"

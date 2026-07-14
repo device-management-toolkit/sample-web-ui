@@ -2409,6 +2409,10 @@
     "description": "Dialogrubrik för varning om slumpmässigt lösenord",
     "value": "Använda slumpmässigt genererade lösenord"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Felmeddelande när SSD-lösenordet överskrider 32 bytes",
+    "value": "SSD-lösenordet får inte överskrida 32 bytes"
+  },
   "sol.connect": {
     "description": "Knapp för anslutning till SOL",
     "value": "Anslut SOL"
