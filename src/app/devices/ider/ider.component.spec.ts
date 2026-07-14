@@ -88,8 +88,7 @@ describe('IderComponent', () => {
     getPowerStateCachedSpy = devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
     tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
-    setDisplaySelectionSpy = devicesService.setDisplaySelection.and.returnValue(of({ success: true }))
-
+   
     userConsentService.handleUserConsentDecision.and.returnValue(of(true))
     userConsentService.handleUserConsentResponse.and.returnValue(of(true))
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])

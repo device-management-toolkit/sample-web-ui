@@ -40,7 +40,7 @@
       }
       @case ('kvm') {
         @if (isLoading()) {
-          <app-general [deviceId]="deviceId"></app-general>
+          <div aria-busy="true"></div>
         } @else if (!isISMSystem()) {
           <app-kvm [deviceId]="deviceId"></app-kvm>
         } @else {
@@ -49,7 +49,7 @@
       }
       @case ('ider') {
         @if (isLoading()) {
-          <app-general [deviceId]="deviceId"></app-general>
+          <div aria-busy="true"></div>
         } @else if (isISMSystem()) {
           <app-ider [deviceId]="deviceId"></app-ider>
         } @else {

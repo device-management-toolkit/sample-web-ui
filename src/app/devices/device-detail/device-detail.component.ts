@@ -199,10 +199,8 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (amtVersion) => {
-          if (amtVersion !== undefined) {
-            const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses?.[4]?.VersionString ?? ''
-            this.isISMSystem.set(sku === this.ismSku)
-          }
+          const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses?.[4]?.VersionString ?? ''
+          this.isISMSystem.set(sku === this.ismSku)
           const isIsm = this.isISMSystem()
           if (isIsm && this.currentView === 'kvm') this.currentView = 'ider'
           if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
