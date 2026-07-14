@@ -66,7 +66,12 @@
     }
   </div>
 </mat-toolbar>
-@if (isLoading() && deviceState() !== 2) {
+@if (isIsm()) {
+  <div class="loading-container">
+    <mat-icon class="ism-icon">info</mat-icon>
+    <div class="ism-message">{{ 'kvm.notSupportedISM.value' | translate }}</div>
+  </div>
+} @else if (isLoading() && deviceState() !== 2) {
   <div class="loading-container">
     <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
     @if (loadingStatus()) {

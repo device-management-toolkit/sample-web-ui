@@ -1851,6 +1851,10 @@
     "description": "Message shown when AMT closes the KVM session (e.g. idle timeout)",
     "value": "KVM session was closed by AMT"
   },
+  "kvm.notSupportedISM": {
+    "description": "Message shown when the device is Intel® Standard Manageability, which does not support KVM",
+    "value": "KVM is not supported on Intel® Standard Manageability devices."
+  },
   "kvm.enable": {
     "description": "Message for enabling KVM",
     "value": "KVM is not currently enabled on this device. Would you like to enable it?"

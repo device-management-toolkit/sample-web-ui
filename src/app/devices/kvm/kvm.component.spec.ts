@@ -49,6 +49,7 @@ describe('KvmComponent', () => {
       'setAmtFeatures',
       'getAMTFeatures',
       'getAMTFeaturesCached',
+      'getAMTVersion',
       'reqUserConsentCode',
       'cancelUserConsentCode',
       'getRedirectionExpirationToken',
@@ -105,6 +106,10 @@ describe('KvmComponent', () => {
     }
     getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
     getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
+    // AMT SKU (16392) at index 4 so isIsm resolves false and the KVM flow runs.
+    devicesService.getAMTVersion.and.returnValue(
+      of({ CIM_SoftwareIdentity: { responses: [{}, {}, {}, {}, { VersionString: '16392' }] } })
+    )
     devicesService.getDevice.and.returnValue(
       of({
         hostname: 'test-hostname',
@@ -203,6 +208,7 @@ describe('KvmComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(KvmComponent)
     component = fixture.componentInstance
+    component.isIsm.set(false)
     snackBarSpy = spyOn(component.snackBar, 'open')
     spyOn(router, 'navigate')
 
@@ -228,6 +234,19 @@ describe('KvmComponent', () => {
     // Display selection is deferred until the KVM session is actually connected
     // so it doesn't compete with the relay websocket upgrade on the MPS queue.
     expect(getDisplaySelectionSpy).not.toHaveBeenCalled()
+  })
+  it('marks an ISM device (SKU 16400) as unsupported and skips the KVM flow', () => {
+    devicesService.getAMTVersion.and.returnValue(
+      of({ CIM_SoftwareIdentity: { responses: [{}, {}, {}, {}, { VersionString: '16400' }] } })
+    )
+    fixture.detectChanges()
+    expect(component.isIsm()).toBeTrue()
+    expect(component.isLoading()).toBeFalse()
+    // The KVM connect chain must not run for ISM (no spinner, no AMT round-trips)...
+    expect(getPowerStateCachedSpy).not.toHaveBeenCalled()
+    expect(getAMTFeaturesCachedSpy).not.toHaveBeenCalled()
+    // ...but a redirection token is still fetched so IDER disk attach works.
+    expect(tokenSpy).toHaveBeenCalled()
   })
   it('loads displays once the KVM session reports connected (event=2)', () => {
     fixture.detectChanges()

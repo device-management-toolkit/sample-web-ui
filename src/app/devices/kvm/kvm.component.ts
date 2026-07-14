@@ -42,6 +42,12 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { UserConsentService } from '../user-consent.service'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
+// AMT SKU string identifying Intel® Standard Manageability, which does not
+// support KVM (matches the value mapped in general.component's skuLookup). The
+// SKU lives at index 4 of the CIM_SoftwareIdentity responses from getAMTVersion.
+const ISM_SKU = '16400'
+const ISM_SKU_INDEX = 4
+
 @Component({
   selector: 'app-kvm',
   templateUrl: './kvm.component.html',
@@ -82,6 +88,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   public selectedEncoding = signal(1)
 
   public isFullscreen = signal(false)
+  public isIsm = signal(false)
   public isLoading = signal(false)
   public loadingStatus = signal('')
   public deviceState = signal(-1)
@@ -165,6 +172,28 @@ export class KvmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Detect Intel® Standard Manageability from the AMT SKU before doing any KVM
+    // work. ISM doesn't support KVM, so it shows a not-supported message instead
+    // of the connect spinner. If the SKU can't be read, assume AMT and proceed.
+    this.devicesService
+      .getAMTVersion(this.deviceId())
+      .pipe(catchError(() => of(null)))
+      .subscribe((result: any) => {
+        const sku = result?.CIM_SoftwareIdentity?.responses?.[ISM_SKU_INDEX]?.VersionString ?? ''
+        this.isIsm.set(sku === ISM_SKU)
+        this.startKvmSession()
+      })
+  }
+
+  // Starts the KVM connect flow for AMT devices. ISM devices skip it (no KVM
+  // support), but still fetch a redirection token so IDER disk attach works.
+  private startKvmSession(): void {
+    if (this.isIsm()) {
+      this.isLoading.set(false)
+      this.prefetchAuthToken()
+      return
+    }
+
     this.prefetchAuthToken()
 
     // we need to get power state every 15 seconds to keep the KVM/mouse from freezing
