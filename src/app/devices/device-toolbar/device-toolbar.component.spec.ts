@@ -138,6 +138,16 @@ describe('DeviceToolbarComponent', () => {
     expect(component.isLoading()()).toBeFalse()
   })
 
+  it('should fetch power state using non-cached API on refresh', () => {
+    devicesService.getPowerState.calls.reset()
+    devicesService.getPowerStateCached.calls.reset()
+
+    component.refreshPowerState()
+
+    expect(devicesService.getPowerState).toHaveBeenCalledWith('guid')
+    expect(devicesService.getPowerStateCached).not.toHaveBeenCalled()
+  })
+
   it('should navigate to device', async () => {
     fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
     const routerSpy = spyOn(component.router, 'navigate')

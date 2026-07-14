@@ -7,7 +7,7 @@ import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/c
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { Observable, of, forkJoin } from 'rxjs'
+import { Observable, of, forkJoin, EMPTY } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from '../../../models/models'
@@ -164,7 +164,7 @@ export class DeviceToolbarComponent implements OnInit {
         this.device = data
         this.devicesService.device.next(this.device)
         this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
-        this.getPowerState()
+        this.loadPowerState()
         this.loadAMTFeatures()
         // react to AMT feature updates emitted by service
         this.devicesService
@@ -217,13 +217,21 @@ export class DeviceToolbarComponent implements OnInit {
     this.powerOptions.set(options)
   }
 
-  getPowerState(): void {
+  private loadPowerState(): void {
+    // Use cached to dedupe simultaneous requests (KVM deep-link + toolbar both loading).
     this.isLoading().set(true)
-    // Bypass the cache so a manual refresh always fetches the latest state from
-    // the device rather than returning a previously cached value.
     this.devicesService
-      .getPowerState(this.deviceId())
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .getPowerStateCached(this.deviceId())
+      .pipe(
+        catchError(() => {
+          // Network/backend failure; silently skip update and let UI show previous state.
+          return EMPTY
+        }),
+        finalize(() => {
+          this.isLoading().set(false)
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe((powerState) => {
         this.powerState.set(
           powerState.powerstate.toString() === '2'
@@ -232,7 +240,33 @@ export class DeviceToolbarComponent implements OnInit {
               ? 'deviceToolbar.power.sleep.value'
               : 'deviceToolbar.power.off.value'
         )
-        this.isLoading().set(false)
+      })
+  }
+
+  refreshPowerState(): void {
+    this.isLoading().set(true)
+    // Bypass the cache so manual refresh always fetches the latest state from the
+    // device rather than returning a previously cached value.
+    this.devicesService
+      .getPowerState(this.deviceId())
+      .pipe(
+        catchError(() => {
+          // Network/backend failure; finalize will reset loading state.
+          return EMPTY
+        }),
+        finalize(() => {
+          this.isLoading().set(false)
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((powerState) => {
+        this.powerState.set(
+          powerState.powerstate.toString() === '2'
+            ? 'deviceToolbar.power.on.value'
+            : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
+              ? 'deviceToolbar.power.sleep.value'
+              : 'deviceToolbar.power.off.value'
+        )
       })
   }
 
