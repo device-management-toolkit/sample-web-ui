@@ -148,6 +148,15 @@ describe('DeviceToolbarComponent', () => {
     expect(devicesService.getPowerStateCached).not.toHaveBeenCalled()
   })
 
+  it('should show snackbar and reset loading state when refresh power state fails', () => {
+    devicesService.getPowerState.and.returnValue(throwError(() => new Error('Network error')))
+
+    component.refreshPowerState()
+
+    expect(snackBar.open).toHaveBeenCalled()
+    expect(component.isLoading()()).toBeFalse()
+  })
+
   it('should navigate to device', async () => {
     fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
     const routerSpy = spyOn(component.router, 'navigate')

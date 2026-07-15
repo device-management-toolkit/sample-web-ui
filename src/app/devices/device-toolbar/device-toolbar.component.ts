@@ -217,6 +217,16 @@ export class DeviceToolbarComponent implements OnInit {
     this.powerOptions.set(options)
   }
 
+  private setPowerStateLabel(powerstate: number): void {
+    this.powerState.set(
+      powerstate.toString() === '2'
+        ? 'deviceToolbar.power.on.value'
+        : powerstate.toString() === '3' || powerstate.toString() === '4'
+          ? 'deviceToolbar.power.sleep.value'
+          : 'deviceToolbar.power.off.value'
+    )
+  }
+
   private loadPowerState(): void {
     // Use cached to dedupe simultaneous requests (KVM deep-link + toolbar both loading).
     this.isLoading().set(true)
@@ -233,13 +243,7 @@ export class DeviceToolbarComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((powerState) => {
-        this.powerState.set(
-          powerState.powerstate.toString() === '2'
-            ? 'deviceToolbar.power.on.value'
-            : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-              ? 'deviceToolbar.power.sleep.value'
-              : 'deviceToolbar.power.off.value'
-        )
+        this.setPowerStateLabel(powerState.powerstate)
       })
   }
 
@@ -250,8 +254,10 @@ export class DeviceToolbarComponent implements OnInit {
     this.devicesService
       .getPowerState(this.deviceId())
       .pipe(
-        catchError(() => {
-          // Network/backend failure; finalize will reset loading state.
+        catchError((err) => {
+          console.error(err)
+          const msg: string = this.translate.instant('kvm.errorRetrievePower.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
           return EMPTY
         }),
         finalize(() => {
@@ -260,13 +266,7 @@ export class DeviceToolbarComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((powerState) => {
-        this.powerState.set(
-          powerState.powerstate.toString() === '2'
-            ? 'deviceToolbar.power.on.value'
-            : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-              ? 'deviceToolbar.power.sleep.value'
-              : 'deviceToolbar.power.off.value'
-        )
+        this.setPowerStateLabel(powerState.powerstate)
       })
   }
 

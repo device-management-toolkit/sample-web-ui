@@ -62,7 +62,9 @@
           ? 'green'
           : powerState() === 'deviceToolbar.power.sleep.value'
             ? 'yellow'
-            : 'red'
+            : powerState() === 'deviceToolbar.power.off.value'
+              ? 'red'
+              : 'gray'
       "
       (click)="refreshPowerState()">
       <mat-icon>mode_standby</mat-icon>
