@@ -791,7 +791,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Beskrivning av IDER",
-    "value": "Fjärrstart eller montering av media"
+    "value": "Montera avbildning på distans"
   },
   "deviceDetail.kvm": {
     "description": "Kategorinamn för KVM",
@@ -1603,6 +1603,34 @@
   "ider.stopIder.label": {
     "description": "Knappetikett för att avsluta IDER-sessionen",
     "value": "Stoppa IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Överför diskdata…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Session aktiv – väntar på diskaktivitet"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Överförd data"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM stöds inte på Intel® Standard Manageability (ISM)-system."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-omdirigering (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Anslut en startbar diskavbildning från din dator till den här enheten via nätverket. Den visas för fjärrdatorn som en lokalt ansluten cd/dvd-enhet, så att enheten kan starta eller köra från den."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
   },
   "ider.title": {
     "description": "Titel för IDER",

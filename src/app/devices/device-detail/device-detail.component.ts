@@ -106,6 +106,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         icon: 'keyboard'
       },
       {
+        name: 'deviceDetail.ider.value',
+        description: 'deviceDetail.iderDescription.value',
+        component: 'ider',
+        icon: 'storage'
+      },
+      {
         name: 'deviceDetail.hardwareInfo.value',
         description: 'deviceDetail.hardwareInfoDescription.value',
         component: 'hardware-info',
@@ -134,12 +140,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         description: 'deviceDetail.certificatesDescription.value',
         component: 'certificates',
         icon: 'verified'
-      },
-      {
-        name: 'deviceDetail.ider.value',
-        description: 'deviceDetail.iderDescription.value',
-        component: 'ider',
-        icon: 'storage'
       }
     ]
     const filtered = base

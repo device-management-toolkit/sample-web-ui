@@ -1,66 +1,51 @@
-<mat-toolbar class="flex flex-row ider-toolbar">
-  <div class="ider-status" [class.active]="isIDERActive()" [class.loading]="isLoading()">
-    <mat-icon>
-      @if (isLoading()) {
-        sync
-      } @else if (isIDERActive()) {
-        check_circle
-      } @else {
-        radio_button_unchecked
+<div class="flex flex-row flex-wrap gap-16" style="margin-top: 16px">
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>{{ 'ider.overview.title.value' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'ider.overview.lead.value' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (isISM()) {
+        <div class="flex items-start gap-8">
+          <mat-icon color="primary" style="flex: none">info</mat-icon>
+          <span style="font-size: 15px; font-weight: 500">{{ 'ider.ism.info.value' | translate }}</span>
+        </div>
       }
-    </mat-icon>
-    <div class="ider-status-copy">
-      <div class="ider-status-title">
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="flex flex-50 gap-12">
+    <mat-card-header>
+      <mat-card-title>{{ 'ider.status.title.value' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex items-center space-between flex-wrap gap-12">
+      <app-ider-status
+        [active]="isIDERActive()"
+        [transferring]="isTransferring()"
+        [connecting]="isLoading()"
+        [statusLabel]="loadingStatus()"
+        [bytes]="bytesTransferred()"
+        [idleHint]="'ider.status.attachHelp.value'" />
+
+      <div class="flex items-center gap-8">
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="isLoading() || isIDERActive()"
+          (click)="onAttachDiskImage(fileInput)">
+          <mat-icon>upload_file</mat-icon>
+          {{ 'ider.attachDisk.label.value' | translate }}
+        </button>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso" />
         @if (isIDERActive()) {
-          {{ 'warning.iderActive.value' | translate }}
-        } @else if (isLoading() && loadingStatus()) {
-          {{ loadingStatus() | translate }}
-        } @else {
-          {{ 'ider.status.notConnected.value' | translate }}
+          <button mat-flat-button color="warn" (click)="onCancelIDER()">
+            <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
+          </button>
         }
       </div>
-      @if (!isIDERActive() && !isLoading()) {
-        <div class="ider-status-subtitle">{{ 'ider.status.attachHelp.value' | translate }}</div>
-      }
-    </div>
-  </div>
-
-  <div class="ider-actions">
-    <button
-      mat-flat-button
-      color="primary"
-      [disabled]="isLoading() || isIDERActive()"
-      (click)="onAttachDiskImage(fileInput)">
-      <mat-icon [class.loading-icon]="isLoading()">
-        @if (isLoading()) {
-          sync
-        } @else {
-          upload_file
-        }
-      </mat-icon>
-      {{ 'ider.attachDisk.label.value' | translate }}
-    </button>
-    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso" />
-    @if (isIDERActive()) {
-      <button mat-flat-button color="warn" (click)="onCancelIDER()" class="stop-ider-button">
-        <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
-      </button>
-    }
-  </div>
-</mat-toolbar>
-
-@if (isLoading()) {
-  <div class="loading-container">
-    <div class="loading-status">{{ loadingStatus() | translate }}</div>
-  </div>
-}
-
-@if (!diskImage && !isLoading()) {
-  <div class="ider-empty-state">
-    <mat-icon>dns</mat-icon>
-    <p>{{ 'ider.emptyState.selectIso.value' | translate }}</p>
-  </div>
-}
+    </mat-card-content>
+  </mat-card>
+</div>
 
 @if (diskImage && deviceIDERConnection()) {
   <amt-ider
@@ -71,6 +56,7 @@
     [deviceConnection]="deviceIDERConnection()"
     [cdrom]="diskImage"
     [floppy]="null"
-    (deviceStatus)="deviceIDERStatus($event)">
+    (deviceStatus)="deviceIDERStatus($event)"
+    (iderData)="onIderData($event)">
   </amt-ider>
 }

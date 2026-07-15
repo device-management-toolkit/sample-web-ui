@@ -879,7 +879,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Descripción de IDER",
-    "value": "Arranque remoto o montaje de medios"
+    "value": "Montar imagen de forma remota"
   },
   "deviceDetail.kvm": {
     "description": "Nombre de la categoría para KVM",
@@ -1691,6 +1691,34 @@
   "ider.stopIder.label": {
     "description": "Etiqueta del botón para detener la sesión IDER",
     "value": "Detener IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Transfiriendo datos del disco…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Sesión activa: esperando actividad del disco"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Datos transferidos"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM no es compatible con los sistemas Intel® Standard Manageability (ISM)."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "Redirección IDE (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Adjunte una imagen de disco de arranque desde su equipo a este dispositivo a través de la red. Aparece en el equipo remoto como una unidad de CD/DVD conectada localmente, por lo que el dispositivo puede arrancar o ejecutarse desde ella."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Estado"
   },
   "ider.title": {
     "description": "Título para IDER",

@@ -59,6 +59,7 @@ describe('DeviceDetailComponent', () => {
   })
   class TestIderComponent {
     public readonly deviceId = input('')
+    public readonly isISM = input(false)
   }
 
   beforeEach(() => {

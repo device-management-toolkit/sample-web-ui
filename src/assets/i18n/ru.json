@@ -883,7 +883,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Описание для IDER",
-    "value": "Удалённая загрузка или подключение носителя"
+    "value": "Удалённое монтирование образа"
   },
   "deviceDetail.kvm": {
     "description": "Название категории для KVM",
@@ -1695,6 +1695,34 @@
   "ider.stopIder.label": {
     "description": "Метка кнопки для остановки сеанса IDER",
     "value": "Прекратите IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Передача данных диска…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Сеанс активен — ожидание активности диска"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Переданные данные"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM не поддерживается в системах Intel® Standard Manageability (ISM)."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "Перенаправление IDE (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Подключите загрузочный образ диска с вашего компьютера к этому устройству по сети. Для удалённой машины он выглядит как локально подключённый привод CD/DVD, поэтому устройство может загрузиться или работать с него."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Состояние"
   },
   "ider.title": {
     "description": "Заголовок для IDER",

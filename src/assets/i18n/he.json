@@ -875,7 +875,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "תיאור ל- IDER",
-    "value": "אתחול מרחוק או טעינת מדיה"
+    "value": "טעינת תמונת דיסק מרחוק"
   },
   "deviceDetail.kvm": {
     "description": "שם קטגוריה עבור KVM",
@@ -1687,6 +1687,34 @@
   "ider.stopIder.label": {
     "description": "תווית כפתור כדי לעצור את הפעלת ider",
     "value": "עצור אידיר"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "מעביר נתוני דיסק…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "הפעלה פעילה — ממתין לפעילות דיסק"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "נתונים שהועברו"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "‏KVM אינו נתמך במערכות Intel® Standard Manageability‏ (ISM)."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "ניתוב מחדש של IDE‏ (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "חבר תמונת דיסק שניתן לאתחל ממנה מהמחשב שלך אל התקן זה דרך הרשת. היא מופיעה במחשב המרוחק ככונן CD/DVD המחובר מקומית, כך שההתקן יכול לאתחל או לפעול ממנה."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "סטטוס"
   },
   "ider.title": {
     "description": "כותרת ל-IDER",

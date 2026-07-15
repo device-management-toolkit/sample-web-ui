@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { CUSTOM_ELEMENTS_SCHEMA, Component, DestroyRef, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal, input } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -16,24 +16,25 @@ import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-aler
 import { environment } from '../../../environments/environment'
 import { AMTFeaturesRequest, AMTFeaturesResponse, RedirectionStatus, UserConsentResponse } from '../../../models/models'
 import { DeviceEnableIderComponent } from '../device-enable-ider/device-enable-ider.component'
-import { IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
+import { IDERComponent, IDERData } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
-import { MatToolbar } from '@angular/material/toolbar'
+import { MatCardModule } from '@angular/material/card'
 import { UserConsentService } from '../user-consent.service'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { IderStatusComponent } from '../ider-status/ider-status.component'
 
 @Component({
   selector: 'app-ider',
   templateUrl: './ider.component.html',
-  styleUrls: ['./ider.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    MatToolbar,
     MatButton,
     MatIcon,
+    MatCardModule,
     IDERComponent,
-    TranslatePipe
+    TranslatePipe,
+    IderStatusComponent
   ]
 })
 export class IderComponent implements OnInit, OnDestroy {
@@ -47,6 +48,9 @@ export class IderComponent implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef)
 
   public readonly deviceId = input('')
+  // The dedicated IDER tab is only shown on ISM systems; this drives the
+  // contextual "ISM has no KVM, use IDER like vPro" note.
+  public readonly isISM = input(false)
 
   public deviceIDERConnection = signal(false)
 
@@ -61,10 +65,26 @@ export class IderComponent implements OnInit, OnDestroy {
   public isDisconnecting = false
   public redirectionStatus: RedirectionStatus | null = null
 
+  // Live disk-transfer stats emitted by <amt-ider> while a session is active.
+  public iderData = signal<IDERData | null>(null)
+  public isTransferring = signal(false)
+  // Cumulative bytes moved between the console and the device (read + write).
+  public bytesTransferred = computed(() => {
+    const data = this.iderData()
+    if (data == null) {
+      return 0
+    }
+    return data.cdromRead + data.cdromWrite + data.floppyRead + data.floppyWrite
+  })
+
   private powerState: any = 0
   private initStartTime = 0
   private awaitingDiskSelection = false
   private diskSelectionCanceled = false
+  private transferIdleTimer: ReturnType<typeof setTimeout> | null = null
+  // How long after the last sector transfer we keep showing the "transferring"
+  // indicator before dropping back to an idle "session active" state.
+  private readonly TRANSFER_IDLE_MS = 1_500
   // If init() completes faster than this, we assume no blocking dialog was
   // shown and the token prefetched at connect()time is still valid.
   private readonly REDIR_TOKEN_REFRESH_THRESHOLD_MS = environment.redirTokenRefreshThresholdMs ?? 5_000
@@ -212,6 +232,7 @@ export class IderComponent implements OnInit, OnDestroy {
 
   connect(): void {
     this.deviceState.set(-1)
+    this.resetTransferStats()
     this.prefetchAuthToken()
     this.init()
   }
@@ -274,6 +295,7 @@ export class IderComponent implements OnInit, OnDestroy {
     this.loadingStatus.set('')
     this.deviceIDERConnection.set(false)
     this.isIDERActive.set(false)
+    this.resetTransferStats()
     this.diskImage = null
     // Clear the file input so the same file can be selected again
     const fileInput = document.getElementById('file') as HTMLInputElement
@@ -393,6 +415,7 @@ export class IderComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
       this.loadingStatus.set('')
       this.isIDERActive.set(false)
+      this.resetTransferStats()
       this.displayWarning(this.translate.instant('warning.iderEnded.value'))
     } else if (event === 3) {
       this.isLoading.set(false)
@@ -400,6 +423,26 @@ export class IderComponent implements OnInit, OnDestroy {
       this.isIDERActive.set(true)
       this.displayWarning(this.translate.instant('warning.iderActive.value'))
     }
+  }
+
+  // Fired by <amt-ider> on every sector transfer. Surfaces live progress so the
+  // user can see the session is actively moving disk data.
+  onIderData(data: IDERData): void {
+    this.iderData.set(data)
+    this.isTransferring.set(true)
+    if (this.transferIdleTimer != null) {
+      clearTimeout(this.transferIdleTimer)
+    }
+    this.transferIdleTimer = setTimeout(() => this.isTransferring.set(false), this.TRANSFER_IDLE_MS)
+  }
+
+  private resetTransferStats(): void {
+    if (this.transferIdleTimer != null) {
+      clearTimeout(this.transferIdleTimer)
+      this.transferIdleTimer = null
+    }
+    this.iderData.set(null)
+    this.isTransferring.set(false)
   }
 
   enableIderDialog(): Observable<any> {
@@ -432,6 +475,9 @@ export class IderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     window.removeEventListener('focus', this.onFilePickerClosed)
+    if (this.transferIdleTimer != null) {
+      clearTimeout(this.transferIdleTimer)
+    }
     this.isDisconnecting = true
   }
 }

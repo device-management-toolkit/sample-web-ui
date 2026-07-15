@@ -883,7 +883,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "وصف لـ IDER",
-    "value": "تمهيد عن بُعد أو تحميل وسيط"
+    "value": "تحميل الصورة عن بُعد"
   },
   "deviceDetail.kvm": {
     "description": "اسم الفئة لـ KVM",
@@ -1695,6 +1695,34 @@
   "ider.stopIder.label": {
     "description": "تسمية الزر لإيقاف جلسة IDER",
     "value": "إيقاف IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "جارٍ نقل بيانات القرص…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "الجلسة نشطة — في انتظار نشاط القرص"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "البيانات المنقولة"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "‏KVM غير مدعوم في أنظمة Intel® Standard Manageability‏ (ISM)."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "إعادة توجيه IDE‏ (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "أرفق صورة قرص قابلة للإقلاع من جهاز الكمبيوتر لديك إلى هذا الجهاز عبر الشبكة. تظهر للجهاز البعيد كمحرك أقراص CD/DVD متصل محليًا، بحيث يمكن للجهاز الإقلاع أو التشغيل منها."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "الحالة"
   },
   "ider.title": {
     "description": "عنوان IDER",

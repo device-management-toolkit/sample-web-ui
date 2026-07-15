@@ -899,7 +899,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Description for IDER",
-    "value": "Remotely boot or mount media"
+    "value": "Remotely mount image"
   },
   "deviceDetail.kvm": {
     "description": "Category name for KVM",
@@ -1707,6 +1707,10 @@
     "description": "Helper text shown when IDER is idle, prompting user to attach a disk image",
     "value": "Click \"Attach Disk Image\" to connect and start an IDER session"
   },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
+  },
   "ider.emptyState.selectIso": {
     "description": "Message shown in the IDER empty state prompting the user to select an ISO",
     "value": "Select an ISO file to begin IDE redirection."
@@ -1714,6 +1718,30 @@
   "ider.stopIder.label": {
     "description": "Button label to stop the IDER session",
     "value": "Stop IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Transferring disk data…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Session active — waiting for disk activity"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Data transferred"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM is not supported on Intel® Standard Manageability (ISM) systems."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE Redirection (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Attach a bootable disk image from your computer to this device over the network. It appears to the remote machine as a locally connected CD/DVD drive, so the device can boot or run from it."
   },
   "ider.title": {
     "description": "Title for IDER",

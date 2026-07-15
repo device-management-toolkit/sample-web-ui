@@ -669,6 +669,83 @@ describe('IderComponent', () => {
     expect(snackBarSpy).not.toHaveBeenCalled()
   })
 
+  // onIderData() / live transfer stats
+  it('onIderData stores stats and marks the session as transferring', () => {
+    component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+    expect(component.iderData()).toEqual({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+    expect(component.isTransferring()).toBeTrue()
+    expect(component.bytesTransferred()).toBe(2048)
+  })
+
+  it('bytesTransferred sums cdrom and floppy read/write', () => {
+    component.onIderData({ cdromRead: 2048, cdromWrite: 1024, floppyRead: 512, floppyWrite: 512 })
+    expect(component.bytesTransferred()).toBe(4096)
+  })
+
+  it('bytesTransferred is 0 when no data has been received', () => {
+    expect(component.iderData()).toBeNull()
+    expect(component.bytesTransferred()).toBe(0)
+  })
+
+  it('isTransferring clears after the idle timeout but stats remain visible', () => {
+    jasmine.clock().install()
+    try {
+      component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+      expect(component.isTransferring()).toBeTrue()
+      jasmine.clock().tick(1500)
+      expect(component.isTransferring()).toBeFalse()
+      expect(component.bytesTransferred()).toBe(2048)
+    } finally {
+      jasmine.clock().uninstall()
+    }
+  })
+
+  it('deviceIDERStatus(0) resets the live transfer stats', () => {
+    component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+    component.deviceIDERStatus(0)
+    expect(component.iderData()).toBeNull()
+    expect(component.isTransferring()).toBeFalse()
+  })
+
+  it('onCancelIDER resets the live transfer stats', () => {
+    component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+    component.onCancelIDER()
+    expect(component.iderData()).toBeNull()
+    expect(component.isTransferring()).toBeFalse()
+  })
+
+  it('clears the transfer idle timer on destroy so no callback fires afterwards', () => {
+    jasmine.clock().install()
+    try {
+      component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+      component.ngOnDestroy()
+      jasmine.clock().tick(1500)
+      // Timer was cancelled, so isTransferring is left untouched (not reset by a late callback)
+      expect(component.isTransferring()).toBeTrue()
+    } finally {
+      jasmine.clock().uninstall()
+    }
+  })
+
+  it('renders the shared IDER status strip with transferred bytes when IDER is active', () => {
+    component.isIDERActive.set(true)
+    component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
+    fixture.detectChanges()
+    const strip = fixture.nativeElement.querySelector('app-ider-status')
+    expect(strip).toBeTruthy()
+    expect(strip.textContent).toContain('2.0 KB')
+  })
+
+  it('shows the ISM note only on ISM systems', () => {
+    fixture.componentRef.setInput('isISM', true)
+    fixture.detectChanges()
+    expect(fixture.nativeElement.textContent).toContain('ider.ism.info.value')
+
+    fixture.componentRef.setInput('isISM', false)
+    fixture.detectChanges()
+    expect(fixture.nativeElement.textContent).not.toContain('ider.ism.info.value')
+  })
+
   // displayError() / displayWarning()
   it('displayError calls snackBar.open', () => {
     component.displayError('test error')

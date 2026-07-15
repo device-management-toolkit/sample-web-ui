@@ -883,7 +883,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Beschrijving voor IDER",
-    "value": "Op afstand opstarten of media koppelen"
+    "value": "Image op afstand koppelen"
   },
   "deviceDetail.kvm": {
     "description": "Categorienaam voor KVM",
@@ -1695,6 +1695,34 @@
   "ider.stopIder.label": {
     "description": "Knoplabel om de IDER-sessie te stoppen",
     "value": "Stop IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Schijfgegevens overdragen…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Sessie actief — wachten op schijfactiviteit"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Overgedragen gegevens"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM wordt niet ondersteund op Intel® Standard Manageability (ISM)-systemen."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-omleiding (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Koppel een opstartbare schijfkopie van uw computer via het netwerk aan dit apparaat. Deze verschijnt op de externe machine als een lokaal aangesloten cd/dvd-station, zodat het apparaat ervan kan opstarten of uitvoeren."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
   },
   "ider.title": {
     "description": "Titel voor IDER",

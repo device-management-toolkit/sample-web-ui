@@ -879,7 +879,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "IDER:n kuvaus",
-    "value": "Etäkäynnistys tai median liittäminen"
+    "value": "Liitä levykuva etänä"
   },
   "deviceDetail.kvm": {
     "description": "KVM:n luokkanimi",
@@ -1691,6 +1691,34 @@
   "ider.stopIder.label": {
     "description": "Painikkeen teksti IDER-istunnon lopettamiseksi",
     "value": "Lopeta IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Siirretään levytietoja…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Istunto aktiivinen – odotetaan levytoimintaa"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Siirretyt tiedot"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM:ää ei tueta Intel® Standard Manageability (ISM) -järjestelmissä."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-uudelleenohjaus (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Liitä käynnistettävä levykuva tietokoneeltasi tähän laitteeseen verkon kautta. Se näkyy etäkoneelle paikallisesti liitettynä CD/DVD-asemana, joten laite voi käynnistyä tai suorittaa siitä."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Tila"
   },
   "ider.title": {
     "description": "IDERin otsikko",

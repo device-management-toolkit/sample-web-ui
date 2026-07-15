@@ -875,7 +875,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "IDERの説明",
-    "value": "リモートで起動する、またはメディアをマウントする"
+    "value": "リモートでイメージをマウント"
   },
   "deviceDetail.kvm": {
     "description": "KVMのカテゴリ名",
@@ -1687,6 +1687,34 @@
   "ider.stopIder.label": {
     "description": "IDERセッションを停止するボタンラベル",
     "value": "Stop IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "ディスクデータを転送中…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "セッションがアクティブです — ディスクアクティビティを待機中"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "転送されたデータ"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM は Intel® Standard Manageability (ISM) システムではサポートされていません。"
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE リダイレクション (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "起動可能なディスクイメージをお使いのコンピューターからネットワーク経由でこのデバイスに接続します。リモートマシンにはローカル接続された CD/DVD ドライブとして認識されるため、デバイスはそこから起動または実行できます。"
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "ステータス"
   },
   "ider.title": {
     "description": "IDERのタイトル",

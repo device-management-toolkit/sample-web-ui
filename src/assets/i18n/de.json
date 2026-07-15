@@ -879,7 +879,7 @@
   },
   "deviceDetail.iderDescription": {
     "description": "Beschreibung für IDER",
-    "value": "Remote Medien booten oder einbinden"
+    "value": "Image remote einbinden"
   },
   "deviceDetail.kvm": {
     "description": "Kategoriename für KVM",
@@ -1691,6 +1691,34 @@
   "ider.stopIder.label": {
     "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
     "value": "IDER beenden"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Datenträgerdaten werden übertragen…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Sitzung aktiv – Warten auf Datenträgeraktivität"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Übertragene Daten"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM wird auf Intel® Standard Manageability (ISM)-Systemen nicht unterstützt."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-Umleitung (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Binden Sie ein bootfähiges Datenträgerabbild von Ihrem Computer über das Netzwerk an dieses Gerät an. Es erscheint dem Remote-Computer als lokal angeschlossenes CD/DVD-Laufwerk, sodass das Gerät davon booten oder es ausführen kann."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
   },
   "ider.title": {
     "description": "Titel für IDER",
