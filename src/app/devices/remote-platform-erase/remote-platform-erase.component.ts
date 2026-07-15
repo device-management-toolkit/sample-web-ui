@@ -46,7 +46,7 @@ import { UserConsentService } from '../user-consent.service'
 
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
 const SSD_ERASE_KEY = 'secureEraseSsds'
-const SSD_PASSWORD_MAX_BYTES = 32
+const SSD_PASSWORD_MAX_BYTES = 64
 
 @Component({
   selector: 'app-remote-platform-erase',

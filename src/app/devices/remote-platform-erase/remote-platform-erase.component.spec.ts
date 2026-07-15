@@ -16,7 +16,8 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { UserConsentService } from '../user-consent.service'
 
-const VISIBLE_PLATFORM_ERASE_CAPABILITIES = PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
+// Temporary set to 3 until CSME unconfigure is supported in the UI. The 4th capability is hidden in the template and not tested here.
+const VISIBLE_PLATFORM_ERASE_CAPABILITIES = 3 //PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
 
 const mockAMTFeatures: AMTFeaturesResponse = {
   userConsent: 'none',
@@ -406,7 +407,7 @@ describe('RemotePlatformEraseComponent', () => {
     fixture.detectChanges()
     const capItems = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapItem"]')
     // Only 3 capabilities visible (CSME unconfigure is hidden in template)
-    expect(capItems.length).toBe(3)
+    expect(capItems.length).toBe(VISIBLE_PLATFORM_ERASE_CAPABILITIES)
   })
 
   it('should show a checkbox for each capability, disabled for unsupported ones', () => {
@@ -416,7 +417,7 @@ describe('RemotePlatformEraseComponent', () => {
     fixture.detectChanges()
     const checkboxes = fixture.nativeElement.querySelectorAll('[data-cy="eraseCapCheckbox"]')
     // Only 3 capabilities visible (CSME unconfigure is hidden in template)
-    expect(checkboxes.length).toBe(3)
+    expect(checkboxes.length).toBe(VISIBLE_PLATFORM_ERASE_CAPABILITIES)
     // tpmClear (index 1) and csmeUnconfigure (index 3) not supported — always disabled
     expect(component.eraseCapControl(1).disabled).toBeTrue()
     expect(component.eraseCapControl(3).disabled).toBeTrue()
@@ -926,24 +927,23 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   describe('SSD Password Validation', () => {
-    it('should validate SSD password is within 32-byte limit', () => {
+    it('should validate SSD password is within 64-byte limit', () => {
       const validPassword = 'password123'
-      //const result = component.ssdPasswordControl.setErrors(null)
       component.ssdPasswordControl.setValue(validPassword)
       expect(component.ssdPasswordControl.valid).toBe(true)
     })
 
-    it('should reject SSD password exceeding 32 bytes', () => {
-      // Create a password that is 33 bytes (33 ASCII characters)
-      const tooLongPassword = 'a'.repeat(33)
+    it('should reject SSD password exceeding 64 bytes', () => {
+      // Create a password that is 65 bytes (65 ASCII characters)
+      const tooLongPassword = 'a'.repeat(65)
       component.ssdPasswordControl.setValue(tooLongPassword)
       expect(component.ssdPasswordControl.valid).toBe(false)
       expect(component.ssdPasswordControl.errors?.['ssdPasswordTooLong']).toBeDefined()
     })
 
-    it('should allow SSD password exactly 32 bytes', () => {
-      // Exactly 32 bytes
-      const maxPassword = 'a'.repeat(32)
+    it('should allow SSD password exactly 64 bytes', () => {
+      // Exactly 64 bytes
+      const maxPassword = 'a'.repeat(64)
       component.ssdPasswordControl.setValue(maxPassword)
       expect(component.ssdPasswordControl.valid).toBe(true)
       expect(component.ssdPasswordControl.errors).toBeNull()
@@ -954,28 +954,28 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.ssdPasswordControl.valid).toBe(true)
     })
 
-    it('should reject SSD password with multibyte UTF-8 characters exceeding 32 bytes', () => {
+    it('should reject SSD password with multibyte UTF-8 characters exceeding 64 bytes', () => {
       // Chinese characters take 3 bytes each in UTF-8
-      // 11 characters × 3 bytes = 33 bytes (exceeds limit)
-      const multibytePassword = '中'.repeat(11)
+      // 22 characters × 3 bytes = 66 bytes (exceeds limit)
+      const multibytePassword = '中'.repeat(22)
       component.ssdPasswordControl.setValue(multibytePassword)
       expect(component.ssdPasswordControl.valid).toBe(false)
       expect(component.ssdPasswordControl.errors?.['ssdPasswordTooLong']).toBeDefined()
     })
 
-    it('should allow SSD password with multibyte UTF-8 characters within 32 bytes', () => {
-      // 10 Chinese characters × 3 bytes each = 30 bytes (within limit)
-      const multibytePassword = '中'.repeat(10)
+    it('should allow SSD password with multibyte UTF-8 characters within 64 bytes', () => {
+      // 21 Chinese characters × 3 bytes each = 63 bytes (within limit)
+      const multibytePassword = '中'.repeat(21)
       component.ssdPasswordControl.setValue(multibytePassword)
       expect(component.ssdPasswordControl.valid).toBe(true)
     })
 
-    it('initiateErase should prevent submission if SSD password exceeds 32 bytes', () => {
+    it('initiateErase should prevent submission if SSD password exceeds 64 bytes', () => {
       component.platformEraseEnabled.set(true)
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(true)
-      component.ssdPasswordControl.setValue('a'.repeat(33))
+      component.ssdPasswordControl.setValue('a'.repeat(65))
 
       component.initiateErase()
 
