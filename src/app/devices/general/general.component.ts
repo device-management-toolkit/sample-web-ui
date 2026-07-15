@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, computed, inject, signal, input } from '@angular/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -78,7 +78,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   })
 
   public isLoading = signal(true)
-  public isUpdatingFeatures = signal(false)
+  public readonly isUpdatingFeatures = computed(() => this.pendingFeatureUpdates() > 0)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
   public amtVersion: string | null = null
@@ -96,7 +96,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public isCloudMode: boolean = environment.cloud
 
   private readonly destroy$ = new Subject<void>()
-  private pendingFeatureUpdates = 0
+  private readonly pendingFeatureUpdates = signal(0)
 
   ngOnInit(): void {
     forkJoin({
@@ -182,18 +182,15 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   setAmtFeatures(): void {
-    this.pendingFeatureUpdates += 1
-    this.isUpdatingFeatures.set(true)
+    this.pendingFeatureUpdates.update((count) => count + 1)
     this.devicesService
       .setAmtFeatures(this.deviceId(), {
         ...this.amtEnabledFeatures.getRawValue(),
         remoteErase: this.amtFeatures.remoteErase
       } as AMTFeaturesRequest)
       .pipe(
-        takeUntil(this.destroy$),
         finalize(() => {
-          this.pendingFeatureUpdates = Math.max(0, this.pendingFeatureUpdates - 1)
-          this.isUpdatingFeatures.set(this.pendingFeatureUpdates > 0)
+          this.pendingFeatureUpdates.update((count) => count - 1)
         })
       )
       .subscribe({

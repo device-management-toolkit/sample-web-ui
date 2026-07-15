@@ -200,7 +200,7 @@ describe('GeneralComponent', () => {
     expect(component.isUpdatingFeatures()).toBeFalse()
   })
 
-  it('stops tracking an in-flight feature update when the component is destroyed', () => {
+  it('keeps tracking an in-flight feature update after destroy until it completes', () => {
     const response$ = new Subject<any>()
     devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
 
@@ -209,6 +209,11 @@ describe('GeneralComponent', () => {
     expect(component.isUpdatingFeatures()).toBeTrue()
 
     component.ngOnDestroy()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    response$.next({ redirection: true, status: 'ok' })
+    response$.complete()
 
     expect(component.isUpdatingFeatures()).toBeFalse()
   })
