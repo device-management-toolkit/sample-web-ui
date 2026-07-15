@@ -138,6 +138,11 @@ describe('DeviceToolbarComponent', () => {
     expect(component.isLoading()()).toBeFalse()
   })
 
+  it('should fetch power state using cached API on initial load', () => {
+    expect(devicesService.getPowerStateCached).toHaveBeenCalledWith('guid')
+    expect(devicesService.getPowerState).not.toHaveBeenCalled()
+  })
+
   it('should fetch power state using non-cached API on refresh', () => {
     devicesService.getPowerState.calls.reset()
     devicesService.getPowerStateCached.calls.reset()

@@ -218,13 +218,17 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   private setPowerStateLabel(powerstate: number): void {
-    this.powerState.set(
-      powerstate.toString() === '2'
-        ? 'deviceToolbar.power.on.value'
-        : powerstate.toString() === '3' || powerstate.toString() === '4'
-          ? 'deviceToolbar.power.sleep.value'
-          : 'deviceToolbar.power.off.value'
-    )
+    switch (powerstate) {
+      case 2:
+        this.powerState.set('deviceToolbar.power.on.value')
+        break
+      case 3:
+      case 4:
+        this.powerState.set('deviceToolbar.power.sleep.value')
+        break
+      default:
+        this.powerState.set('deviceToolbar.power.off.value')
+    }
   }
 
   private loadPowerState(): void {
