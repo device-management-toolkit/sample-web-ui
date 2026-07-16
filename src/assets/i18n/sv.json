@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Etikett för trådlös lokal profilsynkronisering",
-    "value": "Synkronisering av lokala profiler"
+    "value": "Synkronisering av OS Wi-Fi-profiler"
   },
   "network.wireless.macAddress": {
     "description": "Etikett för trådlös MAC-adress",

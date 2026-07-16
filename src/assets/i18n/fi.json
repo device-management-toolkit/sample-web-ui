@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Langattoman paikallisen profiilin synkronoinnin tunniste",
-    "value": "Paikallisen profiilin synkronointi"
+    "value": "Käyttöjärjestelmän Wi-Fi-profiilien synkronointi"
   },
   "network.wireless.macAddress": {
     "description": "Langattoman MAC-osoitteen tunniste",
