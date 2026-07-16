@@ -2145,14 +2145,6 @@
     "description": "CIRA-määrityskentän nimi",
     "value": "CIRA-konfiguraatio"
   },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA on poistettu käytöstä tällä palvelimella)"
-  },
-  "profileDetail.ciraDisabledWarning": {
-    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
-    "value": "CIRA on poistettu käytöstä tällä palvelimella. Tämä profiili käyttää CIRAa hallintayhteyteensä eikä toimi, ennen kuin CIRA otetaan uudelleen käyttöön."
-  },
   "profileDetail.connectionConfiguration": {
     "description": "Yhteysasetusten osion nimike",
     "value": "Provisioitu yhteyden konfigurointi"

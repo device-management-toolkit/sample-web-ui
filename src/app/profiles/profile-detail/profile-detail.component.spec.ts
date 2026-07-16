@@ -187,6 +187,26 @@ describe('ProfileDetailComponent', () => {
     component.setConnectionMode(profile)
     expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
   })
+  it('should not set connectionMode to CIRA when CIRA is disabled and availability is resolved', () => {
+    component.profileForm.controls.ciraConfigName.setValue('config1')
+    component.ciraEnabled.set(false)
+    ;(component as any).ciraAvailabilityResolved.set(true)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
+    expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
+    expect(component.profileForm.controls.ciraConfigName.value).toBeNull()
+  })
+  it('should keep CIRA connectionMode before enterprise feature availability resolves', () => {
+    component.ciraEnabled.set(false)
+    ;(component as any).ciraAvailabilityResolved.set(false)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
+    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+  })
   it('should set connectionMode to DIRECT when tlsMode is 0 and no CIRA config', () => {
     const profile: Profile = { tlsMode: 0, ciraConfigName: null } as any
     component.setConnectionMode(profile)

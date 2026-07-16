@@ -2615,14 +2615,6 @@
     "description": "Label for CIRA configuration field",
     "value": "CIRA Configuration"
   },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA is disabled on this server)"
-  },
-  "profileDetail.ciraDisabledWarning": {
-    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
-    "value": "CIRA is disabled on this server. This profile uses CIRA for its management connection and won't work until CIRA is re-enabled."
-  },
   "profileDetail.connectionConfiguration": {
     "description": "Label for connection configuration section",
     "value": "Provisioned Connection Configuration"
