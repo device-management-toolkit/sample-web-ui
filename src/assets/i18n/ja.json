@@ -2114,7 +2114,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "ワイヤレスローカルプロファイル同期のラベル",
-    "value": "ローカルプロファイルの同期"
+    "value": "OS Wi-Fiプロファイル同期"
   },
   "network.wireless.macAddress": {
     "description": "無線MACアドレスのラベル",

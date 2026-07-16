@@ -26,6 +26,14 @@ import {
   IPSAlarmClockOccurrence,
   Certificates,
   NetworkConfig,
+  WiredNetworkSettings,
+  WiredNetworkConfigRequest,
+  WirelessStateResponse,
+  WirelessStateChangeRequest,
+  WirelessProfileSyncRequest,
+  WirelessProfileSyncResponse,
+  DeviceWirelessProfileRequest,
+  DeviceWirelessProfileResponse,
   TLSSettings,
   CertInfo,
   BootDetails,
@@ -589,6 +597,117 @@ export class DevicesService {
       })
     )
   }
+
+  getWiredNetworkSettings(guid: string): Observable<WiredNetworkSettings> {
+    return this.http
+      .get<WiredNetworkSettings>(`${environment.mpsServer}/api/v1/amt/networkSettings/wired/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  patchWiredNetworkSettings(guid: string, payload: WiredNetworkConfigRequest): Observable<void> {
+    return this.http.patch<void>(`${environment.mpsServer}/api/v1/amt/networkSettings/wired/${guid}`, payload).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getWirelessState(guid: string): Observable<WirelessStateResponse> {
+    return this.http
+      .get<WirelessStateResponse>(`${environment.mpsServer}/api/v1/amt/networkSettings/wireless/state/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  requestWirelessStateChange(guid: string, payload: WirelessStateChangeRequest): Observable<WirelessStateResponse> {
+    return this.http
+      .post<WirelessStateResponse>(
+        `${environment.mpsServer}/api/v1/amt/networkSettings/wireless/state/${guid}`,
+        payload
+      )
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getWirelessProfileSync(guid: string): Observable<WirelessProfileSyncResponse> {
+    return this.http
+      .get<WirelessProfileSyncResponse>(
+        `${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profileSync/${guid}`
+      )
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  setWirelessProfileSync(guid: string, payload: WirelessProfileSyncRequest): Observable<WirelessProfileSyncResponse> {
+    return this.http
+      .post<WirelessProfileSyncResponse>(
+        `${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profileSync/${guid}`,
+        payload
+      )
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  getWirelessProfiles(guid: string): Observable<DeviceWirelessProfileResponse[]> {
+    return this.http
+      .get<
+        DeviceWirelessProfileResponse[]
+      >(`${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/${guid}`)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  addWirelessProfile(guid: string, payload: DeviceWirelessProfileRequest): Observable<void> {
+    return this.http
+      .post<void>(`${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/${guid}`, payload)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  updateWirelessProfile(guid: string, payload: DeviceWirelessProfileRequest): Observable<void> {
+    return this.http
+      .patch<void>(`${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/${guid}`, payload)
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
+  deleteWirelessProfile(guid: string, profileName: string): Observable<void> {
+    return this.http
+      .delete<void>(
+        `${environment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/${guid}/${encodeURIComponent(profileName)}`
+      )
+      .pipe(
+        catchError((err) => {
+          throw err
+        })
+      )
+  }
+
   getTLSSettings(guid: string): Observable<TLSSettings[]> {
     return this.http.get<any>(`${environment.mpsServer}/api/v1/amt/tls/${guid}`).pipe(
       catchError((err) => {

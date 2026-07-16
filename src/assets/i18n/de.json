@@ -2118,7 +2118,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Bezeichnung für die drahtlose lokale Profilsynchronisierung",
-    "value": "Lokale Profilsynchronisierung"
+    "value": "Synchronisierung von OS-Wi-Fi-Profilen"
   },
   "network.wireless.macAddress": {
     "description": "Bezeichnung für drahtlose MAC-Adresse",

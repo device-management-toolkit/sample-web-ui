@@ -1,3 +1,17 @@
+# [3.60.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.59.0...v3.60.0) (2026-07-16)
+
+
+### Features
+
+* **devices:** enable device network settings in cloud mode ([#3396](https://github.com/device-management-toolkit/sample-web-ui/issues/3396)) ([b48c200](https://github.com/device-management-toolkit/sample-web-ui/commit/b48c20067898c501bdfce092e015b534b28c1fa6)), closes [#3376](https://github.com/device-management-toolkit/sample-web-ui/issues/3376)
+
+# [3.59.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.2...v3.59.0) (2026-07-16)
+
+
+### Features
+
+* **devices:** add network settings management for AMT devices ([#3370](https://github.com/device-management-toolkit/sample-web-ui/issues/3370)) ([d7b3829](https://github.com/device-management-toolkit/sample-web-ui/commit/d7b382911bc4bbf8e4e4ddabf8d83b06bdd1fac8)), closes [#3353](https://github.com/device-management-toolkit/sample-web-ui/issues/3353)
+
 ## [3.58.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.1...v3.58.2) (2026-07-06)
 
 

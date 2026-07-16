@@ -2122,7 +2122,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "تسمية لمزامنة الملفات الشخصية المحلية اللاسلكية",
-    "value": "مزامنة الملف الشخصي المحلي"
+    "value": "مزامنة ملفات تعريف Wi-Fi في نظام التشغيل"
   },
   "network.wireless.macAddress": {
     "description": "تسمية عنوان MAC اللاسلكي",

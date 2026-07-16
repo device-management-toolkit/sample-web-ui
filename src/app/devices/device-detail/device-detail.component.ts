@@ -140,11 +140,19 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         description: 'deviceDetail.certificatesDescription.value',
         component: 'certificates',
         icon: 'verified'
+      },
+      {
+        name: 'deviceDetail.networkSettings.value',
+        description: 'deviceDetail.networkSettingsDescription.value',
+        component: 'network-settings',
+        icon: 'lan'
       }
     ]
     const filtered = base
       .filter((c) => !(this.isISMSystem() && c.component === 'kvm'))
       .filter((c) => !(!this.isISMSystem() && c.component === 'ider'))
+    
+    constructor() {
     if (!this.isCloudMode) {
       filtered.push(
         {
@@ -152,12 +160,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           description: 'deviceDetail.explorerDescription.value',
           component: 'explorer',
           icon: 'search'
-        },
-        {
-          name: 'deviceDetail.networkSettings.value',
-          description: 'deviceDetail.networkSettingsDescription.value',
-          component: 'network-settings',
-          icon: 'lan'
         },
         {
           name: 'deviceDetail.tlsSettings.value',

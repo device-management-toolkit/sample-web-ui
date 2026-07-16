@@ -2114,7 +2114,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Метка для беспроводной синхронизации локального профиля",
-    "value": "Синхронизация локального профиля"
+    "value": "Синхронизация Wi-Fi-профилей ОС"
   },
   "network.wireless.macAddress": {
     "description": "Метка для беспроводного MAC-адреса",
