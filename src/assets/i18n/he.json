@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "תווית לסנכרון פרופיל מקומי אלחוטי",
-    "value": "סנכרון פרופיל מקומי"
+    "value": "סנכרון פרופילי Wi-Fi של מערכת ההפעלה"
   },
   "network.wireless.macAddress": {
     "description": "תווית לכתובת MAC אלחוטית",

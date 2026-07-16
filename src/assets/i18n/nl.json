@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Label voor draadloze lokale profielsynchronisatie",
-    "value": "Lokale profielsynchronisatie"
+    "value": "Synchronisatie van OS-wifi-profielen"
   },
   "network.wireless.macAddress": {
     "description": "Label voor draadloos MAC-adres",

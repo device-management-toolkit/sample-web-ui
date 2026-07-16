@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ 'network.changeAlert.title.value' | translate }}</h2>
+<mat-dialog-content class="mat-typography">{{ data.messageKey | translate }}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button data-cy="network-change-cancel" mat-dialog-close>
+    {{ 'common.cancelLower.value' | translate }}
+  </button>
+  <button mat-button data-cy="network-change-continue" [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'common.continue.value' | translate }}
+  </button>
+</mat-dialog-actions>
