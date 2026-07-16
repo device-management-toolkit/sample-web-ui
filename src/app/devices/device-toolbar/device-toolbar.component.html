@@ -55,8 +55,7 @@
       mat-icon-button
       type="button"
       [matTooltip]="powerState() | translate"
-      aria-label="Refresh power status"
-      style="padding: 0 18px 0 12px"
+      [attr.aria-label]="'deviceToolbar.power.refreshAriaLabel.value' | translate"
       [style.color]="
         powerState() === 'deviceToolbar.power.on.value'
           ? 'green'
