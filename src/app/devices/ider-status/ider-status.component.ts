@@ -17,7 +17,11 @@ import { TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'app-ider-status',
   templateUrl: './ider-status.component.html',
-  imports: [MatIcon, MatProgressSpinner, TranslatePipe]
+  imports: [
+    MatIcon,
+    MatProgressSpinner,
+    TranslatePipe
+  ]
 })
 export class IderStatusComponent {
   // Session is established and running.
@@ -38,7 +42,13 @@ export class IderStatusComponent {
     if (!bytes || bytes < 0) {
       return '0 B'
     }
-    const units = ['B', 'KB', 'MB', 'GB', 'TB']
+    const units = [
+      'B',
+      'KB',
+      'MB',
+      'GB',
+      'TB'
+    ]
     const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
     const value = bytes / Math.pow(1024, exponent)
     return `${value.toFixed(exponent === 0 ? 0 : 1)} ${units[exponent]}`

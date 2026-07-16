@@ -19,9 +19,7 @@
       }
     </span>
     @if (active()) {
-      <span class="mat-caption">
-        {{ 'ider.activity.transferred.value' | translate }}: {{ formatBytes(bytes()) }}
-      </span>
+      <span class="mat-caption"> {{ 'ider.activity.transferred.value' | translate }}: {{ formatBytes(bytes()) }} </span>
     } @else if (!connecting() && idleHint()) {
       <span class="mat-caption">{{ idleHint() | translate }}</span>
     }
