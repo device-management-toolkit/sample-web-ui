@@ -151,8 +151,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     const filtered = base
       .filter((c) => !(this.isISMSystem() && c.component === 'kvm'))
       .filter((c) => !(!this.isISMSystem() && c.component === 'ider'))
-    
-    constructor() {
+
     if (!this.isCloudMode) {
       filtered.push(
         {
@@ -169,6 +168,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         }
       )
     }
+
     return filtered
   })
 

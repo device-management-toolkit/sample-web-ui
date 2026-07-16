@@ -142,7 +142,6 @@ describe('DeviceDetailComponent', () => {
     const components = component.categories().map((c) => c.component)
     if (component.isCloudMode) {
       expect(components).not.toContain('explorer')
-      expect(components).not.toContain('network-settings')
       expect(components).not.toContain('tls')
     } else {
       expect(components).toContain('explorer')

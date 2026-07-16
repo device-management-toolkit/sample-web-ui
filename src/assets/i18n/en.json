@@ -2430,6 +2430,7 @@
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Network Name: {{name}}"
+  },
   "network.wireless.configSubtitle": {
     "description": "Subtitle for the wireless network configuration card",
     "value": "Configure wireless network settings for this device"
@@ -2621,6 +2622,7 @@
   "network.wirelessNetworks.subtitle": {
     "description": "Subtitle of the wireless networks card",
     "value": "View wireless networks for this device"
+  },
   "network.wirelessProfile.deleteError": {
     "description": "Error message when deleting a wireless profile fails",
     "value": "Error deleting wireless profile"
