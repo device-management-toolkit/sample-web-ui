@@ -330,7 +330,6 @@
                   [value]="connectionMode.cira"
                   [disabled]="ciraConfigurations().length === 0">
                   {{ 'profileDetail.ciraCloud.value' | translate }}
-                  <span>{{ 'profileDetail.ciraDisabledOption.value' | translate }}</span>
                   @if (ciraConfigurations().length === 0) {
                     <span>{{ 'profileDetail.noCiraConfigs.value' | translate }}</span>
                   }

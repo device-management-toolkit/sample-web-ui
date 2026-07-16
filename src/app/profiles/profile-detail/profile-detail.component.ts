@@ -147,6 +147,9 @@ export class ProfileDetailComponent implements OnInit {
   // (fetched on init). Start from cloudMode so enterprise hides CIRA until the
   // API responds, avoiding a flash when the server reports CIRA disabled.
   public readonly ciraEnabled = signal(this.cloudMode)
+  // Enterprise starts with ciraEnabled=false before server features return; track
+  // when availability is actually known to avoid coercing a saved CIRA profile too early.
+  private readonly ciraAvailabilityResolved = signal(this.cloudMode)
   public readonly isLoading = signal(false)
   public readonly errorMessages = signal<string[]>([])
 
@@ -217,15 +220,33 @@ export class ProfileDetailComponent implements OnInit {
       this.serverFeaturesService.getFeatures().subscribe({
         next: (features) => {
           this.ciraEnabled.set(features.ciraEnabled)
+          this.ciraAvailabilityResolved.set(true)
+          if (!features.ciraEnabled) {
+            this.coerceConnectionModeIfCiraUnavailable()
+          }
           if (features.ciraEnabled) this.getCiraConfigs()
         },
         // Fail open: if the features call fails, assume CIRA is enabled.
         error: () => {
           this.ciraEnabled.set(true)
+          this.ciraAvailabilityResolved.set(true)
           this.getCiraConfigs()
         }
       })
     }
+  }
+
+  private coerceConnectionModeIfCiraUnavailable(): void {
+    if (this.profileForm.controls.connectionMode.value !== this.connectionMode.cira) {
+      return
+    }
+
+    // Keep existing TLS profiles on TLS; otherwise fall back to DIRECT.
+    const fallbackMode =
+      this.profileForm.controls.tlsMode.value != null && this.profileForm.controls.tlsMode.value > 0
+        ? this.connectionMode.tls
+        : this.connectionMode.direct
+    this.profileForm.controls.connectionMode.setValue(fallbackMode)
   }
 
   private setupFormSubscriptions(): void {
@@ -262,9 +283,11 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   setConnectionMode(data: Profile): void {
+    const canUseCira = this.ciraEnabled() || !this.ciraAvailabilityResolved()
+
     if (data.tlsMode != null && data.tlsMode > 0) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
-    } else if (data.ciraConfigName != null) {
+    } else if (data.ciraConfigName != null && canUseCira) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.cira)
     } else {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.direct)
