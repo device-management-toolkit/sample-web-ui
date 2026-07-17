@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{ 'network.wirelessProfile.wifiDisabledAlertTitle.value' | translate }}</h2>
+<mat-dialog-content class="mat-typography">{{
+  'network.wirelessProfile.wifiDisabledAlert.value' | translate
+}}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button data-cy="wifi-disabled-alert-ok" [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'common.ok.value' | translate }}
+  </button>
+</mat-dialog-actions>

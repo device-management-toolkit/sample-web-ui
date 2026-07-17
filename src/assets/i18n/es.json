@@ -1978,7 +1978,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Etiqueta para la sincronización inalámbrica de perfiles locales.",
-    "value": "Sincronización de perfiles locales"
+    "value": "Sincronización de perfiles WiFi del sistema operativo"
   },
   "network.wireless.macAddress": {
     "description": "Etiqueta para la dirección MAC inalámbrica",
