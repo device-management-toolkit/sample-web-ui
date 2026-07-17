@@ -6,12 +6,12 @@
   } @else {
     <mat-icon>storage</mat-icon>
   }
-  <div class="flex-col">
+  <div class="flex flex-col">
     <span>
       @if (transferring()) {
         {{ 'ider.activity.transferring.value' | translate }}
       } @else if (active()) {
-        {{ 'warning.iderActive.value' | translate }}
+        {{ 'ider.activity.idle.value' | translate }}
       } @else if (connecting() && statusLabel()) {
         {{ statusLabel() | translate }}
       } @else {

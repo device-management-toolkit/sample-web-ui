@@ -33,10 +33,10 @@
   <mat-sidenav-content>
     @switch (currentView) {
       @default {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('general') {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('kvm') {
         @if (isLoading()) {

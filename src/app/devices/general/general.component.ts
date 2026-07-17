@@ -44,6 +44,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService)
 
   public readonly deviceId = input('')
+  public readonly isISM = input(false)
 
   public amtFeatures: AMTFeaturesResponse = {
     KVM: false,

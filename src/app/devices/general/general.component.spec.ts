@@ -135,6 +135,26 @@ describe('GeneralComponent', () => {
     expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalled()
   })
 
+  it('shows ISM redirection warning text for ISM systems', () => {
+    fixture.componentRef.setInput('isISM', true)
+    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.textContent).toContain('general.redirectionWarningISM.value')
+    expect(fixture.nativeElement.textContent).not.toContain('general.redirectionWarning.value')
+  })
+
+  it('shows standard redirection warning text for non-ISM systems', () => {
+    fixture.componentRef.setInput('isISM', false)
+    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.textContent).toContain('general.redirectionWarning.value')
+    expect(fixture.nativeElement.textContent).not.toContain('general.redirectionWarningISM.value')
+  })
+
   it('sends remoteErase from the loaded features, not the default', () => {
     devicesServiceSpy.setAmtFeatures = jasmine.createSpy().and.returnValue(of({}))
     component.setAmtFeatures()

@@ -1519,6 +1519,10 @@
     "description": "Предупреждение, когда перенаправление отключено, но KVM/SOL/IDER включен",
     "value": "Перенаправление отключено. KVM, SOL и IDER требуют включения перенаправления."
   },
+  "general.redirectionWarningISM": {
+    "description": "Предупреждение, когда перенаправление отключено, но SOL/IDER включен",
+    "value": "Перенаправление отключено. SOL и IDER требуют включения перенаправления."
+  },
   "general.serialOverLan": {
     "description": "Метка для SOL",
     "value": "Serial-Over-Lan (SOL):"

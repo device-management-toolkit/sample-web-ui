@@ -191,13 +191,15 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
             if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
             return of(null)
           }
+          // Reset derived capability flags so they don't stay stale if the AMT version call fails.
+          this.isISMSystem.set(false)
           this.isLoading.set(true)
 
           return this.devicesService.getAMTVersion(this.deviceId).pipe(
             catchError(() => {
               const msg: string = this.translate.instant('general.errorAMTVersion.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return of(undefined)
+              return of(null)
             })
           )
         })

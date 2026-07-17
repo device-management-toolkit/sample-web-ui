@@ -1515,6 +1515,10 @@
     "description": "Varoitus, kun uudelleenohjaus on poistettu käytöstä, mutta KVM/SOL/IDER on käytössä",
     "value": "Uudelleenohjaus on poistettu käytöstä. KVM, SOL ja IDER vaativat uudelleenohjauksen käyttöönottoa."
   },
+  "general.redirectionWarningISM": {
+    "description": "Varoitus, kun uudelleenohjaus on poistettu käytöstä, mutta SOL/IDER on käytössä",
+    "value": "Uudelleenohjaus on poistettu käytöstä. SOL ja IDER vaativat uudelleenohjauksen käyttöönottoa."
+  },
   "general.serialOverLan": {
     "description": "SOL-merkki",
     "value": "Serial-Over-Lan (SOL):"

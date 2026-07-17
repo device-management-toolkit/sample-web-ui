@@ -28,14 +28,17 @@ export class UserConsentService {
     if (result == null || result) {
       return of(null)
     }
+    // 2-DISPLAYED: the consent code was already shown and can be re-entered
+    // without requesting a new code.
+    if (amtFeatures?.optInState === 2) {
+      return of(true)
+    }
     //  If OptIn is KVM / All user consent is required
     //  3 - RECEIVED: user consent code was successfully entered by the IT operator.
     //  4 - IN SESSION: There is a Storage Redirection or KVM session open.
     if (amtFeatures?.optInState !== 3 && amtFeatures?.optInState !== 4) {
       return this.reqUserConsentCode(deviceId)
     }
-    // This should handle optInState === 2
-    // 2-DISPLAYED: the user consent code was displayed to the user.
     return of(true)
   }
 

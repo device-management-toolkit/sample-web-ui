@@ -1511,6 +1511,10 @@
     "description": "Schaltflächenbeschriftung zum Aktivieren der Umleitung",
     "value": "Aktivieren"
   },
+  "general.redirectionWarningISM": {
+    "description": "Warnung, wenn Umleitung deaktiviert ist, aber SOL/IDER aktiviert ist",
+    "value": "Umleitung ist deaktiviert. SOL und IDER erfordern eine aktivierte Umleitung."
+  },
   "general.redirectionWarning": {
     "description": "Warnung, wenn Umleitung deaktiviert ist, aber KVM/SOL/IDER aktiviert ist",
     "value": "Umleitung ist deaktiviert. KVM, SOL und IDER erfordern eine aktivierte Umleitung."

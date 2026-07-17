@@ -1519,6 +1519,10 @@
     "description": "تحذير عندما يكون إعادة التوجيه معطلاً ولكن KVM/SOL/IDER مفعل",
     "value": "إعادة التوجيه معطلة. يتطلب KVM وSOL وIDER تفعيل إعادة التوجيه."
   },
+  "general.redirectionWarningISM": {
+    "description": "تحذير عندما يكون إعادة التوجيه معطلاً ولكن SOL/IDER مفعل",
+    "value": "إعادة التوجيه معطلة. يتطلب SOL وIDER تفعيل إعادة التوجيه."
+  },
   "general.serialOverLan": {
     "description": "تسمية SOL",
     "value": "Serial-Over-Lan (SOL):"

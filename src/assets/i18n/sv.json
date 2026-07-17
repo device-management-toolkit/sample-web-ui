@@ -1427,6 +1427,10 @@
     "description": "Varning när omdirigering är inaktiverad men KVM/SOL/IDER är aktiverat",
     "value": "Omdirigering är inaktiverad. KVM, SOL och IDER kräver att omdirigering är aktiverad."
   },
+  "general.redirectionWarningISM": {
+    "description": "Varning när omdirigering är inaktiverad men SOL/IDER är aktiverat",
+    "value": "Omdirigering är inaktiverad. SOL och IDER kräver att omdirigering är aktiverad."
+  },
   "general.serialOverLan": {
     "description": "Etikett för SOL",
     "value": "Serial-Over-Lan (SOL):"

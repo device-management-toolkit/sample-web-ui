@@ -1511,6 +1511,10 @@
     "description": "Avviso quando il reindirizzamento è disabilitato ma KVM/SOL/IDER è abilitato",
     "value": "Il reindirizzamento è disabilitato. KVM, SOL e IDER richiedono l'abilitazione del reindirizzamento."
   },
+  "general.redirectionWarningISM": {
+    "description": "Avviso quando il reindirizzamento è disabilitato ma SOL/IDER è abilitato",
+    "value": "Il reindirizzamento è disabilitato. SOL e IDER richiedono l'abilitazione del reindirizzamento."
+  },
   "general.serialOverLan": {
     "description": "Etichetta per SOL",
     "value": "Serial-Over-Lan (SOL):"

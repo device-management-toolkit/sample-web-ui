@@ -1511,6 +1511,10 @@
     "description": "אזהרה כאשר הפניה מושבתת אך KVM/SOL/IDER מופעל",
     "value": "הפניה מושבתת. KVM, SOL ו-IDER דורשים שהפניה תהיה מופעלת."
   },
+  "general.redirectionWarningISM": {
+    "description": "אזהרה כאשר הפניה מושבתת אך SOL/IDER מופעל",
+    "value": "הפניה מושבתת. SOL ו-IDER דורשים שהפניה תהיה מופעלת."
+  },
   "general.serialOverLan": {
     "description": "תווית לסול",
     "value": "סדרתי-אובר-לאן (סול):"

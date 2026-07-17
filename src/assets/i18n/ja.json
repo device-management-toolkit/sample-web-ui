@@ -1511,6 +1511,10 @@
     "description": "リダイレクトが無効でKVM/SOL/IDERが有効な場合の警告",
     "value": "リダイレクトが無効です。KVM、SOL、IDERにはリダイレクトの有効化が必要です。"
   },
+  "general.redirectionWarningISM": {
+    "description": "リダイレクトが無効でSOL/IDERが有効な場合の警告",
+    "value": "リダイレクトが無効です。SOLおよびIDERにはリダイレクトの有効化が必要です。"
+  },
   "general.serialOverLan": {
     "description": "SOL用ラベル",
     "value": "Serial-Over-Lan (SOL):"

@@ -150,7 +150,7 @@ describe('IderComponent', () => {
     expect(getPowerStateCachedSpy).not.toHaveBeenCalled()
     expect(getAMTFeaturesCachedSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).not.toHaveBeenCalled()
-    expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
+    expect(getAMTFeaturesSpy).toHaveBeenCalled()
     expect(getRedirectionStatusSpy).not.toHaveBeenCalled()
   })
 
@@ -200,7 +200,7 @@ describe('IderComponent', () => {
 
   // postUserConsentDecision()
   it('should set isLoading to false, loadingStatus to empty, and deviceState to 0 when result is false', (done) => {
-    component.postUserConsentDecision(false).subscribe(() => {
+    component.finalizeConnectionStart(false).subscribe(() => {
       expect(component.isLoading()).toBeFalse()
       expect(component.loadingStatus()).toBe('')
       expect(component.deviceState()).toBe(0)
@@ -209,7 +209,7 @@ describe('IderComponent', () => {
   })
 
   it('should return of(null) when result is false', (done) => {
-    component.postUserConsentDecision(false).subscribe((result) => {
+    component.finalizeConnectionStart(false).subscribe((result) => {
       expect(result).toBeNull()
       done()
     })
@@ -218,7 +218,7 @@ describe('IderComponent', () => {
   it('does not refresh the auth token when consent is denied', (done) => {
     tokenSpy.calls.reset()
     component.authToken.set('untouched')
-    component.postUserConsentDecision(false).subscribe(() => {
+    component.finalizeConnectionStart(false).subscribe(() => {
       expect(tokenSpy).not.toHaveBeenCalled()
       expect(component.authToken()).toBe('untouched')
       done()
@@ -229,7 +229,7 @@ describe('IderComponent', () => {
     tokenSpy.calls.reset()
     tokenSpy.and.returnValue(of({ token: 'post-consent-token' }))
     component.authToken.set('stale')
-    component.postUserConsentDecision(true).subscribe(() => {
+    component.finalizeConnectionStart(true).subscribe(() => {
       expect(tokenSpy).toHaveBeenCalled()
       expect(component.authToken()).toBe('post-consent-token')
       done()
@@ -242,7 +242,7 @@ describe('IderComponent', () => {
     component.isLoading.set(true)
     component.loadingStatus.set('ider.status.connectingIder.value')
 
-    component.postUserConsentDecision(true).subscribe((result) => {
+    component.finalizeConnectionStart(true).subscribe((result) => {
       expect(result).toBeNull()
       expect(component.isLoading()).toBeFalse()
       expect(component.loadingStatus()).toBe('')
@@ -252,16 +252,12 @@ describe('IderComponent', () => {
     })
   })
 
-  it('init runs consent handlers and refreshes token after consent success', () => {
+  it('init skips consent handlers when cached consent is already satisfied', () => {
     tokenSpy.calls.reset()
     component.connect()
     expect(component.loadingStatus()).toBe('ider.status.connectingIder.value')
-    expect(userConsentService.handleUserConsentDecision).toHaveBeenCalledWith(
-      true,
-      '',
-      jasmine.objectContaining({ userConsent: 'none' })
-    )
-    expect(userConsentService.handleUserConsentResponse).toHaveBeenCalledWith('', true, 'IDER')
+    expect(userConsentService.handleUserConsentDecision).not.toHaveBeenCalled()
+    expect(userConsentService.handleUserConsentResponse).not.toHaveBeenCalled()
     expect(tokenSpy.calls.count()).toBe(1)
   })
 
@@ -283,7 +279,7 @@ describe('IderComponent', () => {
   it('postUserConsentDecision does not issue a duplicate AMT features fetch', (done) => {
     getAMTFeaturesSpy.calls.reset()
     getAMTFeaturesCachedSpy.calls.reset()
-    component.postUserConsentDecision(true).subscribe(() => {
+    component.finalizeConnectionStart(true).subscribe(() => {
       expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
       expect(getAMTFeaturesCachedSpy).not.toHaveBeenCalled()
       done()
@@ -327,6 +323,16 @@ describe('IderComponent', () => {
     component.amtFeatures.set(null)
     component.checkUserConsent().subscribe((result) => {
       expect(result).toBeFalse()
+      done()
+    })
+  })
+
+  it('checkUserConsent returns false when consentReady is stale and AMT state requires consent', (done) => {
+    ;(component as any).consentReady = true
+    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 0 })
+    component.checkUserConsent().subscribe((result) => {
+      expect(result).toBeFalse()
+      expect((component as any).consentReady).toBeFalse()
       done()
     })
   })
@@ -504,15 +510,17 @@ describe('IderComponent', () => {
   })
 
   // onFileSelected()
-  it('should set diskImage and set deviceIDERConnection to true on file selection', () => {
+  it('should set diskImage and start connection on file selection', () => {
     const mockFile = new File([''], 'test-file.iso', { type: 'application/octet-stream' })
     const mockEvt = { target: { files: [mockFile] } } as unknown as Event
     const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
+    const connectSpy = spyOn(component, 'connect')
 
     component.onFileSelected(mockEvt)
 
     expect(component.diskImage).toEqual(mockFile)
-    expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(true)
+    expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
+    expect(connectSpy).toHaveBeenCalled()
   })
 
   it('should set diskImage to null when no file is selected', () => {
@@ -522,14 +530,12 @@ describe('IderComponent', () => {
   })
 
   it('onAttachDiskImage starts connection and opens file picker', () => {
-    const connectSpy = spyOn(component, 'connect')
     const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
     mockFileInput.value = 'existing.iso'
 
     component.onAttachDiskImage(mockFileInput)
 
     expect(mockFileInput.value).toBe('')
-    expect(connectSpy).toHaveBeenCalled()
     expect(mockFileInput.click).toHaveBeenCalled()
   })
 
@@ -583,7 +589,6 @@ describe('IderComponent', () => {
   })
 
   it('onAttachDiskImage clears loading when picker closes without selecting a file', () => {
-    const connectSpy = spyOn(component, 'connect')
     const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
 
     component.onAttachDiskImage(mockFileInput)
@@ -592,7 +597,6 @@ describe('IderComponent', () => {
 
     window.dispatchEvent(new Event('focus'))
 
-    expect(connectSpy).toHaveBeenCalled()
     expect(component.diskImage).toBeNull()
     expect(component.isLoading()).toBeFalse()
     expect(component.loadingStatus()).toBe('')

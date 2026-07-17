@@ -51,6 +51,7 @@ describe('DeviceDetailComponent', () => {
     readonly isLoading = input(signal(false))
 
     public readonly deviceId = input('')
+    public readonly isISM = input(false)
   }
 
   @Component({

@@ -1519,6 +1519,10 @@
     "description": "Avertissement lorsque la redirection est désactivée mais KVM/SOL/IDER est activé",
     "value": "La redirection est désactivée. KVM, SOL et IDER nécessitent l'activation de la redirection."
   },
+  "general.redirectionWarningISM": {
+    "description": "Avertissement lorsque la redirection est désactivée mais SOL/IDER est activé",
+    "value": "La redirection est désactivée. SOL et IDER nécessitent l'activation de la redirection."
+  },
   "general.serialOverLan": {
     "description": "Étiquette pour SOL",
     "value": "Serial-Over-Lan (SOL) :"

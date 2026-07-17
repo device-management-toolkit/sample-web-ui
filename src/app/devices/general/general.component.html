@@ -72,7 +72,9 @@
             style="margin-bottom: 16px; padding: 8px 12px">
             <div class="flex items-center">
               <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
-              <span>{{ 'general.redirectionWarning.value' | translate }}</span>
+              <span>{{
+                (isISM() ? 'general.redirectionWarningISM.value' : 'general.redirectionWarning.value') | translate
+              }}</span>
             </div>
             <button mat-stroked-button (click)="setAmtFeatures()">
               {{ 'general.redirectionEnable.value' | translate }}
