@@ -32,9 +32,20 @@ export class AuthService {
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
-    if (localStorage.loggedInUser != null) {
-      this.isLoggedIn = true
-      this.loggedInSubject$.next(this.isLoggedIn)
+    // Cloud mode (MPS + RPS): JWT lives in localStorage, sent as Bearer header.
+    // Enterprise mode (Console, same-origin): JWT is in an HttpOnly cookie set by
+    // the server. We detect an active session by checking for the readable
+    // XSRF-TOKEN cookie that is always paired with the session cookie.
+    if (environment.cloud) {
+      if (localStorage.loggedInUser != null) {
+        this.isLoggedIn = true
+        this.loggedInSubject$.next(this.isLoggedIn)
+      }
+    } else {
+      if (this.hasValidCookieSession()) {
+        this.isLoggedIn = true
+        this.loggedInSubject$.next(this.isLoggedIn)
+      }
     }
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
@@ -51,6 +62,14 @@ export class AuthService {
         .pipe(filter((e) => ['session_terminated', 'session_error'].includes(e.type)))
         .subscribe(() => this.logout())
     }
+  }
+
+  // hasValidCookieSession returns true when the readable XSRF-TOKEN cookie is
+  // present, indicating that the server has set an active HttpOnly session cookie.
+  // The XSRF-TOKEN cookie is always created and expired together with the session
+  // cookie, so its presence is a reliable proxy for session liveness.
+  private hasValidCookieSession(): boolean {
+    return document.cookie.split(';').some((c) => c.trim().startsWith('XSRF-TOKEN='))
   }
 
   public runInitialLoginSequence(): Promise<void> {
@@ -115,11 +134,16 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.url, { username, password }).pipe(
+    return this.http.post<any>(this.url, { username, password }, { withCredentials: true }).pipe(
       map((data: any) => {
         if (!environment.useOAuth) {
           this.isLoggedIn = true
-          localStorage.loggedInUser = JSON.stringify(data)
+          // Cloud mode: store JWT in localStorage for Bearer-header auth.
+          // Enterprise mode: the server set the HttpOnly session cookie in the
+          // response — nothing to store client-side.
+          if (environment.cloud) {
+            localStorage.loggedInUser = JSON.stringify(data)
+          }
           this.loggedInSubject$.next(this.isLoggedIn)
         }
         return data
@@ -136,6 +160,13 @@ export class AuthService {
     localStorage.removeItem('loggedInUser')
     if (environment.useOAuth) {
       this.oauthService?.logOut()
+    }
+    // Enterprise mode: ask the server to expire the HttpOnly session cookie and
+    // the XSRF-TOKEN cookie. Fire-and-forget — we navigate away regardless.
+    if (!environment.cloud) {
+      this.http
+        .post(`${environment.mpsServer}/api/v1/logout`, {}, { withCredentials: true })
+        .subscribe({ error: () => {} })
     }
     this.router.navigate(['/login'])
   }

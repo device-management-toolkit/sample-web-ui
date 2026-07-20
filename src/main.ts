@@ -10,7 +10,7 @@ import { provideRouter } from '@angular/router'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { routes } from './app/routes'
 import { bootstrapApplication } from '@angular/platform-browser'
-import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http'
 import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc'
 import { AuthGuard } from './app/shared/auth-guard.service'
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks'
@@ -47,7 +47,12 @@ const providers = [
 ]
 if (environment.useOAuth) {
   providers.push(
-    provideHttpClient(withInterceptors([errorHandlingInterceptor]), withInterceptorsFromDi()),
+    provideHttpClient(
+      withInterceptors([errorHandlingInterceptor]),
+      withInterceptorsFromDi(),
+      // XSRF: reads XSRF-TOKEN cookie, sends X-XSRF-TOKEN header on POST/PUT/DELETE/PATCH
+      withXsrfConfiguration({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' })
+    ),
     provideOAuthClient(
       {
         resourceServer: {
@@ -64,7 +69,14 @@ if (environment.useOAuth) {
     })
   )
 } else {
-  providers.push(provideHttpClient(withInterceptors([authorizationInterceptor, errorHandlingInterceptor])))
+  providers.push(
+    provideHttpClient(
+      withInterceptors([authorizationInterceptor, errorHandlingInterceptor]),
+      // XSRF: reads XSRF-TOKEN cookie, sends X-XSRF-TOKEN header on POST/PUT/DELETE/PATCH.
+      // No-op when the XSRF-TOKEN cookie is absent (cloud / Bearer-token mode).
+      withXsrfConfiguration({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' })
+    )
+  )
 }
 bootstrapApplication(AppComponent, {
   providers
