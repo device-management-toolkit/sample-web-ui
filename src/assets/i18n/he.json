@@ -1082,8 +1082,8 @@
     "value": "חשמל: כבוי"
   },
   "deviceToolbar.power.refreshAriaLabel": {
-    "description": "Aria label עבור כפתור עדכון זיכרון חשמל",
-    "value": "עדכן זיכרון חשמל"
+    "description": "Aria label עבור כפתור עדכון מצב חשמל",
+    "value": "עדכן מצב חשמל"
   },
   "deviceUserConsent.description": {
     "description": "תיאור להסכמת משתמש למכשירים",
