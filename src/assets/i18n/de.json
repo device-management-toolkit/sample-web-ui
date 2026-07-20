@@ -1081,6 +1081,10 @@
     "description": "Energie-Tooltip für Ausgeschaltet",
     "value": "Strom: Aus"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria-Label für die Schaltfläche zum Aktualisieren des Energiestatus",
+    "value": "Energiestatus aktualisieren"
+  },
   "deviceUserConsent.description": {
     "description": "Beschreibung der Einwilligung des Benutzers für Geräte",
     "value": "Für den Zugriff auf das System ist ein von Intel AMT generierter Benutzerzustimmungscode erforderlich."
