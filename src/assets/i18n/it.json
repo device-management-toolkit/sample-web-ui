@@ -1081,6 +1081,10 @@
     "description": "Tooltip di alimentazione per spento",
     "value": "Alimentazione: Spento"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Etichetta aria per il pulsante di aggiornamento dello stato di alimentazione",
+    "value": "Aggiorna stato di alimentazione"
+  },
   "deviceUserConsent.description": {
     "description": "Descrizione del consenso dell'utente per i dispositivi",
     "value": "Per accedere al sistema è necessario un codice di consenso dell'utente generato da Intel AMT."
