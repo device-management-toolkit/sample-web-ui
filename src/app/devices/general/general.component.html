@@ -63,6 +63,9 @@
       <mat-card-title>{{ 'general.amtEnabledFeatures.value' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ 'general.amtEnabledFeaturesDescription.value' | translate }}</mat-card-subtitle>
     </mat-card-header>
+    @if (isUpdatingFeatures()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-content class="amt-features" [formGroup]="amtEnabledFeatures">
       <div class="flex-row flex-wrap">
         @if (isRedirectionRequired && !amtEnabledFeatures.get('redirection')?.value) {
