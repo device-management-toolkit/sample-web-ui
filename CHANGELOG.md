@@ -1,3 +1,10 @@
+## [3.60.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.0...v3.60.1) (2026-07-20)
+
+
+### Bug Fixes
+
+* fix refresh power button issue ([#3441](https://github.com/device-management-toolkit/sample-web-ui/issues/3441)) ([98210d2](https://github.com/device-management-toolkit/sample-web-ui/commit/98210d29feeb823ef62df84b4b2300a37d49d9a9))
+
 # [3.60.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.59.0...v3.60.0) (2026-07-16)
 
 
