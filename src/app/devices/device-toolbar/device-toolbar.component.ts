@@ -7,7 +7,7 @@ import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/c
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { Observable, of, forkJoin } from 'rxjs'
+import { Observable, of, forkJoin, EMPTY, timer } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from '../../../models/models'
@@ -164,7 +164,7 @@ export class DeviceToolbarComponent implements OnInit {
         this.device = data
         this.devicesService.device.next(this.device)
         this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
-        this.getPowerState()
+        this.loadPowerState()
         this.loadAMTFeatures()
         // react to AMT feature updates emitted by service
         this.devicesService
@@ -217,22 +217,78 @@ export class DeviceToolbarComponent implements OnInit {
     this.powerOptions.set(options)
   }
 
-  getPowerState(): void {
-    this.isLoading().set(true)
-    // Goes through the cached variant so a simultaneous KVM deep-link fetch and
-    // this toolbar fetch are deduped into one /power/state round-trip.
-    this.devicesService
-      .getPowerStateCached(this.deviceId())
-      .pipe(takeUntilDestroyed(this.destroyRef))
+  private setOptimisticPowerState(action: number): void {
+    // Immediately reflect the expected outcome so the UI doesn't show the
+    // old state while waiting for the device to transition.
+    switch (action) {
+      case 2: // power on
+        this.powerState.set('deviceToolbar.power.on.value')
+        break
+      case 8: // power off
+      case 12: // soft off
+        this.powerState.set('deviceToolbar.power.off.value')
+        break
+      default: // reset, cycle, etc. — state is transitioning
+        this.powerState.set('Unknown')
+    }
+  }
+
+  private setPowerStateLabel(powerstate: number): void {
+    switch (powerstate) {
+      case 2:
+        this.powerState.set('deviceToolbar.power.on.value')
+        break
+      case 3:
+      case 4:
+        this.powerState.set('deviceToolbar.power.sleep.value')
+        break
+      default:
+        this.powerState.set('deviceToolbar.power.off.value')
+    }
+  }
+
+  private loadPowerState(): void {
+    // Use cached to dedupe simultaneous requests (KVM deep-link + toolbar both loading).
+    this.fetchPowerState(this.devicesService.getPowerStateCached(this.deviceId()))
+  }
+
+  refreshPowerState(): void {
+    // Bypass the cache so manual refresh always fetches the latest state from the device.
+    this.fetchPowerState(this.devicesService.getPowerState(this.deviceId()), false, () => {
+      const msg: string = this.translate.instant('kvm.errorRetrievePower.value')
+      this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+    })
+  }
+
+  private silentRefreshPowerState(): void {
+    // Refresh without showing the loading spinner — used after a power action
+    // where the optimistic state is already shown to the user.
+    this.fetchPowerState(this.devicesService.getPowerState(this.deviceId()), true)
+  }
+
+  private fetchPowerState(source: Observable<any>, silent = false, onError?: () => void): void {
+    if (!silent) {
+      this.isLoading().set(true)
+    }
+
+    source
+      .pipe(
+        catchError((err) => {
+          if (onError) {
+            console.error(err)
+            onError()
+          }
+          return EMPTY
+        }),
+        finalize(() => {
+          if (!silent) {
+            this.isLoading().set(false)
+          }
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe((powerState) => {
-        this.powerState.set(
-          powerState.powerstate.toString() === '2'
-            ? 'deviceToolbar.power.on.value'
-            : powerState.powerstate.toString() === '3' || powerState.powerstate.toString() === '4'
-              ? 'deviceToolbar.power.sleep.value'
-              : 'deviceToolbar.power.off.value'
-        )
-        this.isLoading().set(false)
+        this.setPowerStateLabel(powerState.powerstate)
       })
   }
 
@@ -437,6 +493,14 @@ export class DeviceToolbarComponent implements OnInit {
             const msg: string = this.translate.instant('devices.powerActionSent.value')
             console.log('Power action sent successfully:', data)
             this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+            // Set expected state immediately for instant feedback.
+            this.setOptimisticPowerState(action)
+            // Then silently confirm actual state after device transitions — no loading spinner.
+            timer(5000)
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe(() => {
+                this.silentRefreshPowerState()
+              })
           } else {
             console.log('Power action failed:', data)
             const msg: string = this.translate.instant('devices.failPowerAction.value')

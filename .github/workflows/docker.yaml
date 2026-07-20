@@ -25,8 +25,13 @@ jobs:
           egress-policy: audit
 
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
       - name: Build the Docker image
-        run: docker buildx build --platform linux/amd64,linux/arm64 . --file Dockerfile --tag ${{ github.event.inputs.docker_registry }}/${{ github.event.inputs.docker_tag_name }}
+        env:
+          DOCKER_REGISTRY: ${{ github.event.inputs.docker_registry }}
+          DOCKER_TAG_NAME: ${{ github.event.inputs.docker_tag_name }}
+        run: docker buildx build --platform linux/amd64,linux/arm64 . --file Dockerfile --tag "$DOCKER_REGISTRY/$DOCKER_TAG_NAME"
       - name: Docker Login
         uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
@@ -34,5 +39,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           logout: true
-      - name: Push the Docker image to ${{ github.event.inputs.docker_registry }}
-        run: docker push ${{ github.event.inputs.docker_registry }}/${{ github.event.inputs.docker_tag_name }}
+      - name: Push the Docker image
+        env:
+          DOCKER_REGISTRY: ${{ github.event.inputs.docker_registry }}
+          DOCKER_TAG_NAME: ${{ github.event.inputs.docker_tag_name }}
+        run: docker push "$DOCKER_REGISTRY/$DOCKER_TAG_NAME"
