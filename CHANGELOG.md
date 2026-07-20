@@ -1,3 +1,10 @@
+# [3.61.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.1...v3.61.0) (2026-07-20)
+
+
+### Features
+
+* avoid reloading AMT Summary when updating AMT Features ([#3427](https://github.com/device-management-toolkit/sample-web-ui/issues/3427)) ([2703ec1](https://github.com/device-management-toolkit/sample-web-ui/commit/2703ec1281c86d3c1664e4857ed3631900b28f7c))
+
 ## [3.60.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.0...v3.60.1) (2026-07-20)
 
 
