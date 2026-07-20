@@ -51,19 +51,23 @@
   </button>
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
   @if (!isLoading()()) {
-    <mat-icon
-      (click)="getPowerState()"
-      style="padding: 0 18px 0 12px; cursor: pointer"
+    <button
+      mat-icon-button
+      type="button"
+      [matTooltip]="powerState() | translate"
+      [attr.aria-label]="'deviceToolbar.power.refreshAriaLabel.value' | translate"
       [style.color]="
         powerState() === 'deviceToolbar.power.on.value'
           ? 'green'
           : powerState() === 'deviceToolbar.power.sleep.value'
             ? 'yellow'
-            : 'red'
+            : powerState() === 'deviceToolbar.power.off.value'
+              ? 'red'
+              : 'gray'
       "
-      [matTooltip]="powerState() | translate"
-      >mode_standby</mat-icon
-    >
+      (click)="refreshPowerState()">
+      <mat-icon>mode_standby</mat-icon>
+    </button>
   }
   <mat-divider style="height: 40px" vertical="true"></mat-divider>
   <button mat-icon-button [matTooltip]="'devices.actions.powerUp.value' | translate" (click)="sendPowerAction(2)">
