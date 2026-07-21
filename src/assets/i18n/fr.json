@@ -1073,6 +1073,10 @@
     "description": "En-tête de colonne du tableau pour l'état de l'appareil",
     "value": "Statut"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Type de produit"
+  },
   "devices.table.tags": {
     "description": "En-tête de colonne du tableau pour les balises",
     "value": "Balises"
@@ -1080,6 +1084,18 @@
   "deviceToolbar.power.off": {
     "description": "Info-bulle d'alimentation pour l'état éteint",
     "value": "Alimentation : Éteint"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Tous"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Activé"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Découvert"
   },
   "deviceToolbar.power.on": {
     "description": "Info-bulle d'alimentation pour l'état allumé",
