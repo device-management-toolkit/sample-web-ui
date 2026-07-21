@@ -47,6 +47,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
+import { MatTabGroup, MatTab } from '@angular/material/tabs'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -86,6 +87,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatPaginator,
     MatHint,
     RouterModule,
+    MatTabGroup,
+    MatTab,
     TranslatePipe
   ]
 })
@@ -108,6 +111,62 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
 
+  public activeTab = signal(0)
+  public allDevicesData: Device[] = []
+  private serverTotalCount = 0
+
+  get allCount(): number {
+    return this.serverTotalCount
+  }
+
+  get allTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.all.value')} (${this.allCount})`
+  }
+
+  get activatedTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.activated.value')} (${this.activatedCount})`
+  }
+
+  get discoveredTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.discovered.value')} (${this.discoveredCount})`
+  }
+
+  get activatedCount(): number {
+    return this.allDevicesData.filter(
+      (d) => d.deviceInfo?.currentMode != null && d.deviceInfo.currentMode !== 'not activated'
+    ).length
+  }
+
+  get discoveredCount(): number {
+    return this.allDevicesData.filter((d) => d.deviceInfo?.discovered === true).length
+  }
+
+  onTabChange(index: number): void {
+    this.activeTab.set(index)
+    this.applyTabFilter()
+  }
+
+  private applyTabFilter(): void {
+    let filtered: Device[]
+    switch (this.activeTab()) {
+      case 1:
+        filtered = this.allDevicesData.filter(
+          (d) => d.deviceInfo?.currentMode != null && d.deviceInfo.currentMode !== 'not activated'
+        )
+        this.totalCount.set(filtered.length)
+        break
+      case 2:
+        filtered = this.allDevicesData.filter((d) => d.deviceInfo?.discovered === true)
+        this.totalCount.set(filtered.length)
+        break
+      default:
+        filtered = this.allDevicesData
+        this.totalCount.set(this.serverTotalCount)
+        break
+    }
+    this.devices.data = filtered
+  }
+
   get deleteDeviceLabel(): string {
     return this.isCloudMode
       ? this.translate.instant('devices.actions.deactivateCloud.value')
@@ -119,6 +178,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     'hostname',
     'guid',
     'status',
+    'productType',
     'tags',
     'actions',
     'notification'
@@ -140,6 +200,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       this.displayedColumns = [
         'select',
         'hostname',
+        'productType',
         'tags',
         'actions',
         'notification'
@@ -211,6 +272,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .pipe(
         switchMap((res) => {
           this.totalCount.set(res.totalCount)
+          this.serverTotalCount = res.totalCount
 
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
@@ -251,7 +313,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((devices) => {
-        this.devices.data = devices
+        this.allDevicesData = devices
+        this.applyTabFilter()
 
         // Restore selection state on data retrieval
         this.selectedDevices.clear()
@@ -335,11 +398,21 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount() === 0
+    return !this.isLoading() && this.allDevicesData.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {
     await this.router.navigate([`/devices/${path}`])
+  }
+
+  getProductType(device: Device): string {
+    const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
+    if (isNaN(skuNum)) return ''
+    const isISM = (skuNum & 0x10) > 0
+    const isVPro = (skuNum & 0x08) > 0
+    if (isISM) return 'ISM'
+    if (isVPro) return 'vPro'
+    return ''
   }
 
   translateConnectionStatus(status?: boolean): string {
