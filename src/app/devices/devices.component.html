@@ -53,6 +53,11 @@
         }
       </h3>
     } @else {
+      <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+        <mat-tab [label]="allTabLabel"></mat-tab>
+        <mat-tab [label]="activatedTabLabel"></mat-tab>
+        <mat-tab [label]="discoveredTabLabel"></mat-tab>
+      </mat-tab-group>
       <div class="flex-row flex-wrap flex-1">
         <div class="flex flex-66" style="width: 66%">
           <mat-form-field data-cy="filterSearch" style="width: 100%">
