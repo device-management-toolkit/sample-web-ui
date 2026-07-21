@@ -1065,9 +1065,25 @@
     "description": "כותרת עמודות טבלה למצב המכשיר",
     "value": "סטָטוּס"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "סוג מוצר"
+  },
   "devices.table.tags": {
     "description": "כותרת עמודות טבלה לתגיות",
     "value": "תגיות"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "הכל"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "מופעל"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "התגלה"
   },
   "deviceToolbar.power.on": {
     "description": "רמז מצב צריכת חשמל עבור פועל",

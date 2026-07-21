@@ -1237,9 +1237,25 @@
     "description": "Table column header for device status",
     "value": "Status"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Product Type"
+  },
   "devices.table.tags": {
     "description": "Table column header for tags",
     "value": "Tags"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "All"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Activated"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Discovered"
   },
   "deviceToolbar.power.on": {
     "description": "Power tooltip for On",
@@ -1252,10 +1268,6 @@
   "deviceToolbar.power.off": {
     "description": "Power tooltip for Off",
     "value": "Power: Off"
-  },
-  "deviceToolbar.power.refreshAriaLabel": {
-    "description": "Aria label for the refresh power status button",
-    "value": "Refresh power status"
   },
   "deviceUserConsent.description": {
     "description": "Description for user consent for devices",

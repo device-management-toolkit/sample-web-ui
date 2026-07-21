@@ -1065,9 +1065,25 @@
     "description": "Intestazione della colonna della tabella per lo stato del dispositivo",
     "value": "Stato"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Tipo di prodotto"
+  },
   "devices.table.tags": {
     "description": "Intestazione della colonna della tabella per i tag",
     "value": "Tag"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Tutti"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Attivato"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Scoperto"
   },
   "deviceToolbar.power.on": {
     "description": "Tooltip di alimentazione per acceso",
