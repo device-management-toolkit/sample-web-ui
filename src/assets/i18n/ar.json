@@ -1081,6 +1081,10 @@
     "description": "تلميح الطاقة للحالة إيقاف",
     "value": "الطاقة: إيقاف"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "تسمية aria للزر تحديث حالة الطاقة",
+    "value": "تحديث حالة الطاقة"
+  },
   "deviceUserConsent.description": {
     "description": "وصف موافقة المستخدم للأجهزة",
     "value": "يلزم وجود رمز موافقة المستخدم الذي تم إنشاؤه بواسطة Intel AMT للوصول إلى النظام."
