@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { GeneralComponent } from './general.component'
 import { ActivatedRoute } from '@angular/router'
-import { of } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import { provideTranslateService } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
@@ -32,7 +32,8 @@ describe('GeneralComponent', () => {
       'bulkPowerAction',
       'sendDeactivate',
       'sendBulkDeactivate',
-      'getWsmanOperations'
+      'getWsmanOperations',
+      'setAmtFeatures'
     ])
     const amtFeaturesResponse = {
       userConsent: 'ALL',
@@ -162,5 +163,78 @@ describe('GeneralComponent', () => {
       jasmine.any(String),
       jasmine.objectContaining({ remoteErase: true })
     )
+  })
+
+  it('should update only feature loading state while setAmtFeatures is in flight', () => {
+    const response$ = new Subject<any>()
+    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+    const loadingBefore = component.isLoading()
+
+    component.setAmtFeatures()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isLoading()).toBe(loadingBefore)
+
+    response$.next({ redirection: true, status: 'ok' })
+    response$.complete()
+
+    expect(component.isUpdatingFeatures()).toBeFalse()
+    expect(component.isLoading()).toBe(loadingBefore)
+  })
+
+  it('keeps summary loading state independent from feature update state', () => {
+    const response$ = new Subject<any>()
+    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+
+    component.isLoading.set(false)
+    component.setAmtFeatures()
+
+    expect(component.isLoading()).toBeFalse()
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    response$.next({ redirection: true, status: 'ok' })
+    response$.complete()
+
+    expect(component.isLoading()).toBeFalse()
+    expect(component.isUpdatingFeatures()).toBeFalse()
+  })
+
+  it('keeps feature loading state true until the last overlapping update completes', () => {
+    const firstResponse$ = new Subject<any>()
+    const secondResponse$ = new Subject<any>()
+    devicesServiceSpy.setAmtFeatures.and.returnValues(firstResponse$, secondResponse$)
+
+    component.setAmtFeatures()
+    component.setAmtFeatures()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    firstResponse$.next({ redirection: true, status: 'ok' })
+    firstResponse$.complete()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    secondResponse$.next({ redirection: true, status: 'ok' })
+    secondResponse$.complete()
+
+    expect(component.isUpdatingFeatures()).toBeFalse()
+  })
+
+  it('keeps tracking an in-flight feature update after destroy until it completes', () => {
+    const response$ = new Subject<any>()
+    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+
+    component.setAmtFeatures()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    component.ngOnDestroy()
+
+    expect(component.isUpdatingFeatures()).toBeTrue()
+
+    response$.next({ redirection: true, status: 'ok' })
+    response$.complete()
+
+    expect(component.isUpdatingFeatures()).toBeFalse()
   })
 })

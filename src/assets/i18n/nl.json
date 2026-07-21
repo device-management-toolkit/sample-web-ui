@@ -1117,6 +1117,14 @@
     "description": "Energie-tooltip voor slaapstand",
     "value": "Stroom: Slaapstand"
   },
+  "deviceToolbar.power.off": {
+    "description": "Energie-tooltip voor uitgeschakeld",
+    "value": "Stroom: Uit"
+  },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria-label voor de knop voor het vernieuwen van de energiestatus",
+    "value": "Energiestatus vernieuwen"
+  },
   "deviceUserConsent.description": {
     "description": "Beschrijving voor toestemming van de gebruiker voor apparaten",
     "value": "Er is een door Intel AMT gegenereerde gebruikersinstemmingscode vereist om toegang te krijgen tot het systeem."

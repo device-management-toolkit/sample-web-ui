@@ -1109,6 +1109,14 @@
     "description": "スリープ状態のツールチップ",
     "value": "電源: スリープ"
   },
+  "deviceToolbar.power.off": {
+    "description": "電源オフのツールチップ",
+    "value": "電源: オフ"
+  },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "電源ステータス更新ボタンの aria ラベル",
+    "value": "電源ステータスを更新"
+  },
   "deviceUserConsent.description": {
     "description": "デバイスに関するユーザー同意の説明",
     "value": "システムにアクセスするには、Intel AMTによって生成されたユーザー同意コードが必要となります。"
