@@ -1065,9 +1065,25 @@
     "description": "Заголовок столбца таблицы для состояния устройства",
     "value": "Статус"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Тип продукта"
+  },
   "devices.table.tags": {
     "description": "Заголовок столбца таблицы для тегов",
     "value": "Теги"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Все"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Активирован"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Обнаружен"
   },
   "deviceToolbar.power.on": {
     "description": "Подсказка питания для состояния включено",

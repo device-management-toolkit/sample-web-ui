@@ -1065,9 +1065,25 @@
     "description": "Encabezado de columna de la tabla para el estado del dispositivo",
     "value": "Estado"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Tipo de producto"
+  },
   "devices.table.tags": {
     "description": "Encabezado de columna de tabla para etiquetas",
     "value": "Etiquetas"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Todos"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Activado"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Descubierto"
   },
   "deviceToolbar.power.on": {
     "description": "Información de energía para Encendido",
