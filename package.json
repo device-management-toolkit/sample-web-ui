@@ -68,7 +68,7 @@
     "@eslint/js": "^10.0.1",
     "@types/jasmine": "~6.0.0",
     "angular-eslint": "21.4.0",
-    "cypress": "^15.18.1",
+    "cypress": "^15.19.0",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.9.0",
@@ -89,6 +89,6 @@
     "typescript-eslint": "^8.65.0"
   },
   "optionalDependencies": {
-    "cypress": "^15.18.1"
+    "cypress": "^15.19.0"
   }
 }
