@@ -33,7 +33,6 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
-import { MatTooltip } from '@angular/material/tooltip'
 import { environment } from '../../environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
@@ -63,7 +62,6 @@ import { ServerFeaturesService } from '../server-features.service'
     MatRowDef,
     MatRow,
     MatPaginator,
-    MatTooltip,
     ToolkitPipe,
     TranslatePipe
   ]

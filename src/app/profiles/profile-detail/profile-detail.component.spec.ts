@@ -27,6 +27,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
+  const defaultCloudMode = environment.cloud
   let component: ProfileDetailComponent
   let fixture: ComponentFixture<ProfileDetailComponent>
   let profileSpy: jasmine.Spy
@@ -148,6 +149,7 @@ describe('ProfileDetailComponent', () => {
   })
 
   afterEach(() => {
+    environment.cloud = defaultCloudMode
     TestBed.resetTestingModule()
   })
 
@@ -174,6 +176,7 @@ describe('ProfileDetailComponent', () => {
     expect(wirelessGetDataSpy).toHaveBeenCalled()
     expect(proxyGetDataSpy).toHaveBeenCalled()
   })
+
   it('should set connectionMode to TLS when tlsMode is a TLS mode (1-4)', () => {
     const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
@@ -182,6 +185,26 @@ describe('ProfileDetailComponent', () => {
   it('should set connectionMode to CIRA when ciraConfigName is set and tlsMode is not a TLS mode', () => {
     const profile: Profile = { ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
+    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+  })
+  it('should not set connectionMode to CIRA when CIRA is disabled and availability is resolved', () => {
+    component.profileForm.controls.ciraConfigName.setValue('config1')
+    component.ciraEnabled.set(false)
+    ;(component as any).ciraAvailabilityResolved.set(true)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
+    expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
+    expect(component.profileForm.controls.ciraConfigName.value).toBeNull()
+  })
+  it('should keep CIRA connectionMode before enterprise feature availability resolves', () => {
+    component.ciraEnabled.set(false)
+    ;(component as any).ciraAvailabilityResolved.set(false)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
     expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
   })
   it('should set connectionMode to DIRECT when tlsMode is 0 and no CIRA config', () => {
@@ -835,9 +858,11 @@ describe('ProfileDetailComponent', () => {
     // server-features branch instead of the cloud branch.
     const createEnterpriseComponent = (): ProfileDetailComponent => {
       environment.cloud = false
-      const enterpriseFixture = TestBed.createComponent(ProfileDetailComponent)
-      enterpriseFixture.detectChanges()
-      return enterpriseFixture.componentInstance
+      fixture.destroy()
+      fixture = TestBed.createComponent(ProfileDetailComponent)
+      component = fixture.componentInstance
+      fixture.detectChanges()
+      return component
     }
 
     afterEach(() => {
@@ -848,10 +873,12 @@ describe('ProfileDetailComponent', () => {
       serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
       ciraGetDataSpy.calls.reset()
 
-      createEnterpriseComponent()
+      const enterpriseComponent = createEnterpriseComponent()
 
       expect(serverFeaturesGetFeaturesSpy).toHaveBeenCalled()
       expect(ciraGetDataSpy).not.toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).toBeNull()
     })
 
     it('should expose ciraEnabled() === false after the features call resolves with CIRA disabled', () => {
@@ -870,6 +897,7 @@ describe('ProfileDetailComponent', () => {
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
       expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
     it('should fail open and fetch CIRA configs when the features call errors', () => {
@@ -880,6 +908,7 @@ describe('ProfileDetailComponent', () => {
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
       expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
   })
 

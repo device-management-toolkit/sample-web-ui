@@ -2149,14 +2149,6 @@
     "description": "Label voor CIRA-configuratieveld",
     "value": "CIRA-configuratie"
   },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA is uitgeschakeld op deze server)"
-  },
-  "profileDetail.ciraDisabledWarning": {
-    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
-    "value": "CIRA is uitgeschakeld op deze server. Dit profiel gebruikt CIRA voor zijn beheerverbinding en werkt pas als CIRA opnieuw is ingeschakeld."
-  },
   "profileDetail.connectionConfiguration": {
     "description": "Label voor het gedeelte over verbindingsconfiguratie",
     "value": "Configuratie van de geleverde verbinding"

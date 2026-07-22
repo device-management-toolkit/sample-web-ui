@@ -2149,14 +2149,6 @@
     "description": "Étiquette pour le champ de configuration CIRA",
     "value": "Configuration CIRA"
   },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA est désactivé sur ce serveur)"
-  },
-  "profileDetail.ciraDisabledWarning": {
-    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
-    "value": "CIRA est désactivé sur ce serveur. Ce profil utilise CIRA pour sa connexion de gestion et ne fonctionnera pas tant que CIRA n'est pas réactivé."
-  },
   "profileDetail.connectionConfiguration": {
     "description": "Étiquette pour la section de configuration de la connexion",
     "value": "Configuration de la connexion provisionnée"

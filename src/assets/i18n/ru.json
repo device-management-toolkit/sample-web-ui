@@ -2149,14 +2149,6 @@
     "description": "Метка для поля конфигурации CIRA",
     "value": "Конфигурация CIRA"
   },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA отключён на этом сервере)"
-  },
-  "profileDetail.ciraDisabledWarning": {
-    "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
-    "value": "CIRA отключён на этом сервере. Этот профиль использует CIRA для подключения управления и не будет работать, пока CIRA не будет снова включён."
-  },
   "profileDetail.connectionConfiguration": {
     "description": "Метка для раздела настройки подключения",
     "value": "Настройка предоставленного соединения"
