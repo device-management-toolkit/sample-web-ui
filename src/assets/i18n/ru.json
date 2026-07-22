@@ -63,6 +63,14 @@
     "description": "Сообщение о разрешении самоподписанных сертификатов",
     "value": "Разрешить самоподписанные сертификаты"
   },
+  "addDevice.amtPassword": {
+    "description": "Метка для поля пароля AMT",
+    "value": "Пароль AMT"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Подсказка для поля пароля AMT",
+    "value": "Введите пароль AMT"
+  },
   "addDevice.chooseProfile": {
     "description": "Метка для поля выбора профиля",
     "value": "Выберите профиль"
@@ -70,6 +78,10 @@
   "addDevice.description": {
     "description": "Описание, объясняющее, как активировать устройство.",
     "value": "Для активации устройства необходимо выполнить команду на устройстве AMT. Это диалоговое окно поможет сгенерировать команду для запуска."
+  },
+  "addDevice.enterGuid": {
+    "description": "Подсказка для ввода GUID",
+    "value": "Введите GUID"
   },
   "addDevice.enterTags": {
     "description": "Подсказка для ввода тегов",
@@ -83,6 +95,10 @@
     "description": "Ошибка для обязательных дружественных имен",
     "value": "Требуется дружественное имя."
   },
+  "addDevice.guid": {
+    "description": "Метка для поля GUID",
+    "value": "GUID"
+  },
   "addDevice.hostNameInvalid": {
     "description": "Ошибка для недопустимых имен хостов",
     "value": "Неверный формат имени хоста"
@@ -90,6 +106,22 @@
   "addDevice.hostNameRequired": {
     "description": "Ошибка для обязательных имен хостов",
     "value": "Имя хоста является обязательным"
+  },
+  "addDevice.mpsPassword": {
+    "description": "Метка для поля пароля MPS",
+    "value": "Пароль MPS"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Подсказка для поля пароля MPS",
+    "value": "Введите пароль MPS"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Метка для поля имени пользователя MPS",
+    "value": "Имя пользователя MPS"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Подсказка для поля имени пользователя MPS",
+    "value": "Имя пользователя MPS (по умолчанию: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Флажок для отключения проверки самоподписанного сертификата.",
@@ -111,6 +143,10 @@
     "description": "Заголовок диалогового окна для добавления нового устройства",
     "value": "Добавить новое устройство"
   },
+  "addDevice.useCIRA": {
+    "description": "Флажок для использования соединения CIRA",
+    "value": "Использовать CIRA"
+  },
   "addDevice.userNameInvalid": {
     "description": "Ошибка при вводе неверного имени пользователя",
     "value": "Имя пользователя должно состоять не менее чем из 5 и не более чем из 16 символов."
@@ -122,42 +158,6 @@
   "addDevice.useTLS": {
     "description": "Сообщение об использовании TLS",
     "value": "Используйте TLS."
-  },
-  "addDevice.useCIRA": {
-    "description": "Флажок для использования соединения CIRA",
-    "value": "Использовать CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Метка для поля GUID",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Подсказка для ввода GUID",
-    "value": "Введите GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Метка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Подсказка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS (по умолчанию: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Метка для поля пароля MPS",
-    "value": "Пароль MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Подсказка для поля пароля MPS",
-    "value": "Введите пароль MPS"
-  },
-  "addDevice.amtPassword": {
-    "description": "Метка для поля пароля AMT",
-    "value": "Пароль AMT"
-  },
-  "addDevice.amtPasswordHint": {
-    "description": "Подсказка для поля пароля AMT",
-    "value": "Введите пароль AMT"
   },
   "alarm.errorAdding": {
     "description": "Ошибка при добавлении",
@@ -195,6 +195,10 @@
     "description": "Метка для удаления по завершении, переключатель слайда",
     "value": "Удалите после завершения."
   },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Удалить после завершения: {{deleteFinal}}"
+  },
   "alarmService.elementNameWithInstance": {
     "description": "Название элемента сигнала тревоги, за которым следует его InstanceID.",
     "value": "{{elementName}} (InstanceID: {{instanceId}})"
@@ -226,10 +230,6 @@
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
     "value": "Время начала: {{startTime}}"
-  },
-  "alarmService.deleteOnCompletionRange": {
-    "description": "Label for delete on completion slide toggle",
-    "value": "Удалить после завершения: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Заполнитель для ввода времени начала",
@@ -272,6 +272,30 @@
     "description": "Всплывающая подсказка для кнопки «Добавить сертификат»",
     "value": "Добавить сертификат"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "Ошибка, когда сертификат для удаления не найден",
+    "value": "Сертификат не найден или уже был удален"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "Ошибка, когда сертификат нельзя удалить, поскольку на него ссылаются профили",
+    "value": "Сертификат не может быть удален, поскольку в настоящее время на него ссылаются профили AMT. Сначала удалите ссылки."
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "Текст подсказки, когда кнопка удаления отключена, поскольку сертификат связан с одним или несколькими профилями",
+    "value": "Этот сертификат связан и не может быть удалён"
+  },
+  "certificates.delete.tooltip": {
+    "description": "Всплывающая подсказка для кнопки удаления сертификата",
+    "value": "Удалить сертификат"
+  },
+  "certificates.errorDeletingCertificate": {
+    "description": "Сообщение об ошибке при неудачном удалении сертификата",
+    "value": "Ошибка при удалении сертификата"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Сообщение об успехе при удалении сертификата",
+    "value": "Сертификат '{{name}}' успешно удален"
+  },
   "certificates.download.tooltip": {
     "description": "Всплывающая подсказка для загрузки сертификата",
     "value": "Скачать сертификат"
@@ -287,22 +311,6 @@
   "certificates.errorRetrievingCertificates": {
     "description": "Ошибка при получении информации о сертификате",
     "value": "Ошибка при получении информации о сертификате"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "Ошибка, когда сертификат нельзя удалить, поскольку на него ссылаются профили",
-    "value": "Сертификат не может быть удален, поскольку в настоящее время на него ссылаются профили AMT. Сначала удалите ссылки."
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "Ошибка, когда сертификат для удаления не найден",
-    "value": "Сертификат не найден или уже был удален"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "Ошибка при попытке удалить сертификат только для чтения",
-    "value": "Невозможно удалить сертификат только для чтения"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "Сообщение об успехе при удалении сертификата",
-    "value": "Сертификат '{{name}}' успешно удален"
   },
   "certificates.list": {
     "description": "Текст для списка сертификатов",
@@ -320,6 +328,10 @@
     "description": "Отображается, когда сертификат не имеет ассоциаций с профилем.",
     "value": "Несвязанные"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "Ошибка при попытке удалить сертификат только для чтения",
+    "value": "Невозможно удалить сертификат только для чтения"
+  },
   "certificates.title": {
     "description": "Название сертификатов",
     "value": "Сертификаты"
@@ -335,10 +347,6 @@
   "certificates.typeRoot": {
     "description": "Указывает, что сертификат является корневым сертификатом.",
     "value": "Корневой"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "Текст подсказки, когда кнопка удаления отключена, поскольку сертификат связан с одним или несколькими профилями",
-    "value": "Этот сертификат связан и не может быть удалён"
   },
   "common.addNew": {
     "description": "Текст для кнопки «Добавить новый»",
@@ -379,9 +387,17 @@
   "common.continue": {
     "value": "Продолжить"
   },
+  "common.delete": {
+    "description": "Текст кнопки удаления",
+    "value": "Удалить"
+  },
   "common.deleteConfiguration": {
     "description": "Сообщение об удаленных конфигурациях",
     "value": "Конфигурация удалена успешно."
+  },
+  "common.deleteProfile": {
+    "description": "Текст кнопки удаления профиля",
+    "value": "Удалить профиль"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Сообщение для подзаголовка входа в систему",
@@ -405,6 +421,10 @@
   },
   "common.down": {
     "value": "Вниз"
+  },
+  "common.editTags": {
+    "description": "Текст кнопки для массового редактирования тегов",
+    "value": "Редактировать теги"
   },
   "common.enabled": {
     "description": "Используется, когда включена синхронизация локального профиля.",
@@ -456,6 +476,10 @@
   },
   "common.no": {
     "value": "Нет"
+  },
+  "common.noData": {
+    "description": "Сообщение при отсутствии данных",
+    "value": "Нет доступных данных"
   },
   "common.notApplicable": {
     "description": "Отображается, когда запись ОС не применима.",
@@ -516,6 +540,10 @@
   "common.up": {
     "value": "Вверх"
   },
+  "common.update": {
+    "description": "Текст кнопки обновления",
+    "value": "ОБНОВИТЬ"
+  },
   "common.userName": {
     "description": "Сообщение для имени пользователя",
     "value": "Имя пользователя"
@@ -555,6 +583,10 @@
     "description": "Метка радиокнопки FQDN",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "Текст для переключателя генерации случайного пароля",
+    "value": "Генерировать случайный пароль для каждого устройства при активации устройства"
+  },
   "configDetail.ipv4": {
     "description": "Метка радиокнопки IPv4",
     "value": "IPv4"
@@ -574,10 +606,6 @@
   "configDetail.portPlaceholder": {
     "description": "Заполнитель текста для поля порта",
     "value": "Порт"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "Текст для переключателя генерации случайного пароля",
-    "value": "Генерировать случайный пароль для каждого устройства при активации устройства"
   },
   "configDetail.usernameHint": {
     "description": "Подсказка для поля имени пользователя",
@@ -849,6 +877,14 @@
     "description": "Описание информации об оборудовании",
     "value": "Память, ЦП и т. д."
   },
+  "deviceDetail.ider": {
+    "description": "Название категории для IDER",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "Описание для IDER",
+    "value": "Удалённое монтирование образа"
+  },
   "deviceDetail.kvm": {
     "description": "Название категории для KVM",
     "value": "KVM"
@@ -1069,6 +1105,10 @@
     "description": "Заголовок столбца таблицы для тегов",
     "value": "Теги"
   },
+  "deviceToolbar.power.off": {
+    "description": "Подсказка питания для состояния выключено",
+    "value": "Питание: Выключено"
+  },
   "deviceToolbar.power.on": {
     "description": "Подсказка питания для состояния включено",
     "value": "Питание: Включено"
@@ -1105,6 +1145,10 @@
     "description": "Заголовок для согласия пользователя на использование устройств",
     "value": "Согласие пользователя"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Сообщение об ошибке для буквенно-цифровой проверки",
+    "value": "Имя домена может содержать только буквы, цифры, дефисы (-) и подчеркивания (_)"
+  },
   "domainDetail.completeProfile": {
     "description": "Сообщение о завершении профилей доменов",
     "value": "Профиль домена успешно сохранен."
@@ -1112,14 +1156,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "Ошибка при удалении профилей домена",
     "value": "Ошибка при создании/обновлении профиля домена"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "Сообщение об ошибке при нарушении уникального ключа",
-    "value": "ID или суффикс домена NewDomain уже существует"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "Сообщение об ошибке для буквенно-цифровой проверки",
-    "value": "Имя домена может содержать только буквы, цифры, дефисы (-) и подчеркивания (_)"
   },
   "domainDetail.fqdn": {
     "description": "Подсказка для поля FQDN",
@@ -1140,6 +1176,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "Подсказка для пароля сертификата предоставления",
     "value": "Пароль для сертификата предоставления"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Сообщение об ошибке при нарушении уникального ключа",
+    "value": "ID или суффикс домена NewDomain уже существует"
   },
   "domains.certExpired": {
     "description": "Сообщение об истекших сертификатах",
@@ -1403,6 +1443,10 @@
     "description": "Метка для версии AMT",
     "value": "Версия AMT:"
   },
+  "general.collapse": {
+    "description": "Метка для сворачивания",
+    "value": "Свернуть"
+  },
   "general.errorAMTFeatures": {
     "description": "Ошибка при извлечении функций AMT",
     "value": "Ошибка при извлечении функций AMT"
@@ -1414,6 +1458,10 @@
   "general.errorGeneralSettings": {
     "description": "Ошибка при извлечении общих настроек",
     "value": "Ошибка при извлечении общих настроек"
+  },
+  "general.expand": {
+    "description": "Метка для разворачивания",
+    "value": "Развернуть"
   },
   "general.failAMTFeatures": {
     "description": "Ошибка при обновлении функций",
@@ -1443,6 +1491,10 @@
     "description": "Всплывающая подсказка для KVM не поддерживается",
     "value": "KVM не поддерживается"
   },
+  "general.notSupported": {
+    "description": "Метка для отключённых функций AMT",
+    "value": "Не поддерживается"
+  },
   "general.oneClickRecovery": {
     "description": "Метка для восстановления в один клик",
     "value": "Восстановление одним щелчком (OCR):"
@@ -1467,9 +1519,25 @@
     "description": "Метка для режима предоставления",
     "value": "Режим предоставления:"
   },
+  "general.redirectionEnable": {
+    "description": "Надпись кнопки для включения перенаправления",
+    "value": "Включить"
+  },
+  "general.redirectionWarning": {
+    "description": "Предупреждение, когда перенаправление отключено, но KVM/SOL/IDER включен",
+    "value": "Перенаправление отключено. KVM, SOL и IDER требуют включения перенаправления."
+  },
+  "general.redirectionWarningISM": {
+    "description": "Предупреждение, когда перенаправление отключено, но SOL/IDER включен",
+    "value": "Перенаправление отключено. SOL и IDER требуют включения перенаправления."
+  },
   "general.serialOverLan": {
     "description": "Метка для SOL",
     "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.supported": {
+    "description": "Метка для включённых функций AMT",
+    "value": "Поддерживается"
   },
   "general.userConsent": {
     "description": "Метка для согласия пользователя",
@@ -1490,14 +1558,6 @@
   "general.windowsRecoverySupported": {
     "description": "Подсказка для Windows Восстановление поддерживается",
     "value": "Поддерживается восстановление Windows."
-  },
-  "general.redirectionWarning": {
-    "description": "Предупреждение, когда перенаправление отключено, но KVM/SOL/IDER включен",
-    "value": "Перенаправление отключено. KVM, SOL и IDER требуют включения перенаправления."
-  },
-  "general.redirectionEnable": {
-    "description": "Надпись кнопки для включения перенаправления",
-    "value": "Включить"
   },
   "httpBoot.enforce": {
     "value": "Обеспечьте безопасную загрузку."
@@ -1588,6 +1648,98 @@
   "hwInfo.systemSummary.title": {
     "value": "Краткое описание системы"
   },
+  "ider.attachDisk.label": {
+    "description": "Метка кнопки для прикрепления образа диска для IDER",
+    "value": "Прикрепить образ диска (.iso)"
+  },
+  "ider.enable": {
+    "description": "Сообщение для включения IDER",
+    "value": "IDER в настоящее время не включен на этом устройстве. Желаете ли вы включить его?"
+  },
+  "ider.alreadyActiveWarning": {
+    "description": "Предупреждение, отображаемое при попытке подключить образ диска, когда IDER уже активен",
+    "value": "Сеанс IDER уже активен. Сначала остановите IDER, прежде чем подключать другой образ диска."
+  },
+  "ider.errorAccessCancel": {
+    "description": "Ошибка доступа при отмене запроса на включение",
+    "value": "Доступ к IDER невозможен — запрос на включение IDER отменен."
+  },
+  "ider.errorAccessEnable": {
+    "description": "Ошибка доступа при запросе на включение",
+    "value": "Невозможно получить доступ к IDER — не удалось включить IDER."
+  },
+  "ider.errorRetrieve": {
+    "description": "Ошибка при получении статуса перенаправления",
+    "value": "Ошибка при получении статуса перенаправления"
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "Сообщение о состоянии при получении функций AMT",
+    "value": "Получение функций AMT..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "Сообщение о состоянии при проверке согласия пользователя",
+    "value": "Проверка режима согласия..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "Сообщение о состоянии при проверке состояния питания",
+    "value": "Проверка состояния питания..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "Сообщение о состоянии при проверке статуса перенаправления",
+    "value": "Проверка статуса перенаправления..."
+  },
+  "ider.status.connectingIder": {
+    "description": "Сообщение о состоянии, когда компонент IDER подключается",
+    "value": "Подключение к IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Сообщение о состоянии, когда сеанс IDER не подключен",
+    "value": "IDER не подключен"
+  },
+  "ider.status.attachHelp": {
+    "description": "Подсказка, показываемая в состоянии простоя IDER с предложением подключить образ диска",
+    "value": "Нажмите \"Подключить образ диска\", чтобы подключиться и начать сеанс IDER"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Сообщение в пустом состоянии IDER с предложением выбрать ISO",
+    "value": "Выберите ISO-файл, чтобы начать IDE-перенаправление."
+  },
+  "ider.stopIder.label": {
+    "description": "Метка кнопки для остановки сеанса IDER",
+    "value": "Прекратите IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Передача данных диска…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Сеанс активен — ожидание активности диска"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Переданные данные"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM не поддерживается в системах Intel® Standard Manageability (ISM)."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "Перенаправление IDE (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Подключите загрузочный образ диска с вашего компьютера к этому устройству по сети. Для удалённой машины он выглядит как локально подключённый привод CD/DVD, поэтому устройство может загрузиться или работать с него."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Состояние"
+  },
+  "ider.title": {
+    "description": "Заголовок для IDER",
+    "value": "Включить IDER"
+  },
   "ieee.authProtocol": {
     "description": "Текст для протокола аутентификации",
     "value": "Протокол аутентификации"
@@ -1664,10 +1816,6 @@
     "description": "Метка, отображаемая при подключении KVM",
     "value": "Подключение KVM..."
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "Сообщение, отображаемое когда AMT закрывает сеанс KVM",
-    "value": "Сеанс KVM был закрыт AMT"
-  },
   "kvm.disconnect.button": {
     "description": "Метка кнопки для отключения от сеанса KVM",
     "value": "Отключить KVM"
@@ -1708,25 +1856,9 @@
     "description": "Метка для раскрывающегося списка горячих клавиш на панели инструментов KVM",
     "value": "Горячие клавиши"
   },
-  "kvm.hotKeys.placeholder": {
-    "description": "Заполнитель текста для раскрывающегося списка горячих клавиш",
-    "value": "Выберите горячую клавишу для отправки"
-  },
   "kvm.hotKeys.send": {
     "description": "Метка кнопки для отправки выбранной горячей клавиши.",
     "value": "Отправить"
-  },
-  "kvm.stopIder.label": {
-    "description": "Метка кнопки для остановки сеанса IDER",
-    "value": "Прекратите IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "Сообщение о состоянии при проверке состояния питания",
-    "value": "Проверка состояния питания..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "Сообщение о состоянии при проверке статуса перенаправления",
-    "value": "Проверка статуса перенаправления..."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Сообщение о состоянии при получении функций AMT",
@@ -1736,9 +1868,21 @@
     "description": "Сообщение о состоянии при проверке согласия пользователя",
     "value": "Проверка режима согласия..."
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Сообщение о состоянии при проверке состояния питания",
+    "value": "Проверка состояния питания..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Сообщение о состоянии при проверке статуса перенаправления",
+    "value": "Проверка статуса перенаправления..."
+  },
   "kvm.status.connectingKVM": {
     "description": "Сообщение о состоянии при подключении компонента KVM",
     "value": "Подключение к KVM..."
+  },
+  "kvm.stopIder.label": {
+    "description": "Метка кнопки для остановки сеанса IDER",
+    "value": "Прекратите IDER"
   },
   "kvm.title": {
     "description": "Название для KVM",
@@ -2020,6 +2164,14 @@
     "description": "Название карты настроек беспроводной сети",
     "value": "Настройки беспроводной сети"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Аутентификация: {{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Шифрование: {{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Имя сети: {{name}}"
@@ -2027,14 +2179,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID: {{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Шифрование: {{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Аутентификация: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Подзаголовок карты беспроводных сетей",
@@ -2074,8 +2218,14 @@
   "powerOptions.powerUpToHTTPSBoot": {
     "value": "Переход на HTTPS Загрузка (OCR)"
   },
+  "powerOptions.powerUpToPBA": {
+    "value": "Включить до PBA (OCR)"
+  },
   "powerOptions.powerUpToPXE": {
     "value": "Включение питания в PXE"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Включить до WinRe (OCR)"
   },
   "powerOptions.reset": {
     "value": "Сбросить"
@@ -2089,8 +2239,14 @@
   "powerOptions.resetToIDER": {
     "value": "Сброс до IDE-R (CD-ROM)"
   },
+  "powerOptions.resetToPBA": {
+    "value": "Сброс до PBA (OCR)"
+  },
   "powerOptions.resetToPXE": {
     "value": "Сброс до PXE"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Сброс до WinRe (OCR)"
   },
   "powerOptions.sleep": {
     "value": "Сон"
@@ -2261,6 +2417,10 @@
     "description": "Подсказка для опции без TLS",
     "value": "В AMT 16.1 и более поздних версиях AMT предоставляет самоподписанные сертификаты. При выборе этой опции будут использоваться эти сертификаты вместо самоподписанных сертификатов, предоставляемых набором инструментов."
   },
+  "profileDetail.noProxy": {
+    "description": "Сообщение при отсутствии доступных настроек прокси",
+    "value": "Настройки прокси не найдены"
+  },
   "profileDetail.noWifi": {
     "description": "Сообщение об отсутствии доступных конфигураций WiFi",
     "value": "Не обнаружено конфигураций Wi-Fi"
@@ -2341,13 +2501,13 @@
     "description": "Метка для поля настройки проводного соединения 802.1x",
     "value": "Конфигурация Wired 802.1x"
   },
-  "profiles.deleteProfile": {
-    "description": "Сообщение об удаленных профилях",
-    "value": "Профиль удален успешно"
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "CIRA отключён на этом сервере. Этот профиль использует CIRA для подключения управления и не будет работать, пока CIRA не будет снова включён."
+  },
+  "profiles.deleteProfile": {
+    "description": "Сообщение об удаленных профилях",
+    "value": "Профиль удален успешно"
   },
   "profiles.exportProfile": {
     "description": "Сообщение для экспортированных профилей",
@@ -2392,6 +2552,126 @@
   "profiles.table.network": {
     "description": "Заголовок столбца «Конфигурация сети»",
     "value": "Конфигурация сети"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "Подсказка для изменения порядка методом drag-and-drop",
+    "value": "Перетащите для изменения порядка"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "Метка для списка связанных профилей прокси",
+    "value": "Связанные профили прокси (по приоритету)"
+  },
+  "proxy.configs.hint": {
+    "description": "Подсказка под полем ввода настроек прокси",
+    "value": "Прокси можно назначить этому профилю"
+  },
+  "proxy.configs.label": {
+    "description": "Метка для поля ввода настроек прокси",
+    "value": "Настройки прокси"
+  },
+  "proxy.configs.placeholder": {
+    "description": "Текст-подсказка для поиска настроек прокси",
+    "value": "Поиск настроек прокси для добавления"
+  },
+  "proxy.label": {
+    "description": "Метка для раздела прокси",
+    "value": "Прокси"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "Метка поля формата адреса",
+    "value": "Формат адреса"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "Подсказка для поля адреса прокси",
+    "value": "Введите адрес прокси-сервера"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "Метка поля сетевого DNS-суффикса",
+    "value": "Суффикс DNS сети"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "Подсказка для поля сетевого DNS-суффикса",
+    "value": "example.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "Заголовок столбца для формата адреса",
+    "value": "Формат адреса"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "Заголовок столбца для сетевого DNS-суффикса",
+    "value": "Суффикс DNS сети"
+  },
+  "proxyConfigs.header.name": {
+    "description": "Заголовок столбца для имени настройки прокси",
+    "value": "Имя"
+  },
+  "proxyConfigs.header.port": {
+    "description": "Заголовок столбца для порта",
+    "value": "Порт"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "Заголовок столбца для адреса прокси",
+    "value": "Адрес прокси"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "Заголовок настроек прокси",
+    "value": "Настройки прокси"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "Сообщение об успешном создании настройки прокси",
+    "value": "Настройка прокси успешно создана"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "Сообщение об успешном удалении настройки прокси",
+    "value": "Настройка прокси {{name}} успешно удалена"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "Сообщение об успешном обновлении настройки прокси",
+    "value": "Настройка прокси успешно обновлена"
+  },
+  "proxyConfigs.name": {
+    "description": "Метка поля имени настройки прокси",
+    "value": "Имя"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "Подсказка для поля имени настройки прокси",
+    "value": "Введите имя настройки прокси"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "Заголовок страницы редактирования настройки прокси",
+    "value": "Редактировать настройку прокси"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "Заголовок страницы создания новой настройки прокси",
+    "value": "Новая настройка прокси"
+  },
+  "proxyConfigs.port": {
+    "description": "Метка поля порта",
+    "value": "Порт"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "Метка поля адреса прокси",
+    "value": "Адрес прокси"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "Сообщение проверки максимальной длины DNS-суффикса",
+    "value": "Суффикс DNS сети должен быть не более 192 символов"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "Сообщение проверки: суффикс DNS обязателен",
+    "value": "Суффикс DNS сети обязателен"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "Сообщение проверки: имя обязательно",
+    "value": "Имя обязательно"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "Сообщение проверки диапазона порта",
+    "value": "Порт должен быть в диапазоне от 0 до 65535"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "Сообщение проверки: порт обязателен",
+    "value": "Порт обязателен"
   },
   "randomPassword.learnMore": {
     "description": "Сообщение для ссылки поддержки",
@@ -2660,177 +2940,5 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Подсказка для поля имени беспроводного профиля",
     "value": "Укажите название беспроводного профиля."
-  },
-  "general.supported": {
-    "description": "Метка для включённых функций AMT",
-    "value": "Поддерживается"
-  },
-  "general.notSupported": {
-    "description": "Метка для отключённых функций AMT",
-    "value": "Не поддерживается"
-  },
-  "powerOptions.powerUpToPBA": {
-    "value": "Включить до PBA (OCR)"
-  },
-  "powerOptions.powerUpToWinRe": {
-    "value": "Включить до WinRe (OCR)"
-  },
-  "powerOptions.resetToPBA": {
-    "value": "Сброс до PBA (OCR)"
-  },
-  "powerOptions.resetToWinRe": {
-    "value": "Сброс до WinRe (OCR)"
-  },
-  "general.expand": {
-    "description": "Метка для разворачивания",
-    "value": "Развернуть"
-  },
-  "general.collapse": {
-    "description": "Метка для сворачивания",
-    "value": "Свернуть"
-  },
-  "proxy.label": {
-    "value": "Прокси",
-    "description": "Метка для раздела прокси"
-  },
-  "proxy.configs.label": {
-    "value": "Настройки прокси",
-    "description": "Метка для поля ввода настроек прокси"
-  },
-  "proxy.configs.placeholder": {
-    "value": "Поиск настроек прокси для добавления",
-    "description": "Текст-подсказка для поиска настроек прокси"
-  },
-  "proxy.configs.hint": {
-    "value": "Прокси можно назначить этому профилю",
-    "description": "Подсказка под полем ввода настроек прокси"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "Связанные профили прокси (по приоритету)",
-    "description": "Метка для списка связанных профилей прокси"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "Перетащите для изменения порядка",
-    "description": "Подсказка для изменения порядка методом drag-and-drop"
-  },
-  "profileDetail.noProxy": {
-    "description": "Сообщение при отсутствии доступных настроек прокси",
-    "value": "Настройки прокси не найдены"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "value": "Настройки прокси",
-    "description": "Заголовок настроек прокси"
-  },
-  "proxyConfigs.header.name": {
-    "value": "Имя",
-    "description": "Заголовок столбца для имени настройки прокси"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "Адрес прокси",
-    "description": "Заголовок столбца для адреса прокси"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "Формат адреса",
-    "description": "Заголовок столбца для формата адреса"
-  },
-  "proxyConfigs.header.port": {
-    "value": "Порт",
-    "description": "Заголовок столбца для порта"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "Суффикс DNS сети",
-    "description": "Заголовок столбца для сетевого DNS-суффикса"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "Новая настройка прокси",
-    "description": "Заголовок страницы создания новой настройки прокси"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "Редактировать настройку прокси",
-    "description": "Заголовок страницы редактирования настройки прокси"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "Адрес прокси",
-    "description": "Метка поля адреса прокси"
-  },
-  "proxyConfigs.name": {
-    "value": "Имя",
-    "description": "Метка поля имени настройки прокси"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "Введите имя настройки прокси",
-    "description": "Подсказка для поля имени настройки прокси"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "Введите адрес прокси-сервера",
-    "description": "Подсказка для поля адреса прокси"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "Формат адреса",
-    "description": "Метка поля формата адреса"
-  },
-  "proxyConfigs.port": {
-    "value": "Порт",
-    "description": "Метка поля порта"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "Суффикс DNS сети",
-    "description": "Метка поля сетевого DNS-суффикса"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "example.com",
-    "description": "Подсказка для поля сетевого DNS-суффикса"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "Порт обязателен",
-    "description": "Сообщение проверки: порт обязателен"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "Порт должен быть в диапазоне от 0 до 65535",
-    "description": "Сообщение проверки диапазона порта"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "Имя обязательно",
-    "description": "Сообщение проверки: имя обязательно"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Суффикс DNS сети обязателен",
-    "description": "Сообщение проверки: суффикс DNS обязателен"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Суффикс DNS сети должен быть не более 192 символов",
-    "description": "Сообщение проверки максимальной длины DNS-суффикса"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "Настройка прокси успешно создана",
-    "description": "Сообщение об успешном создании настройки прокси"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "Настройка прокси успешно обновлена",
-    "description": "Сообщение об успешном обновлении настройки прокси"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "Настройка прокси {{name}} успешно удалена",
-    "description": "Сообщение об успешном удалении настройки прокси"
-  },
-  "common.delete": {
-    "value": "Удалить",
-    "description": "Текст кнопки удаления"
-  },
-  "common.deleteProfile": {
-    "value": "Удалить профиль",
-    "description": "Текст кнопки удаления профиля"
-  },
-  "common.editTags": {
-    "description": "Текст кнопки для массового редактирования тегов",
-    "value": "Редактировать теги"
-  },
-  "common.update": {
-    "value": "ОБНОВИТЬ",
-    "description": "Текст кнопки обновления"
-  },
-  "common.noData": {
-    "value": "Нет доступных данных",
-    "description": "Сообщение при отсутствии данных"
   }
 }

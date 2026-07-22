@@ -63,6 +63,14 @@
     "description": "Bericht voor het toestaan van zelfondertekende certificaten",
     "value": "Zelfondertekende certificaten toestaan"
   },
+  "addDevice.amtPassword": {
+    "description": "Label voor het AMT-wachtwoord-veld",
+    "value": "AMT-wachtwoord"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hint voor het AMT-wachtwoord-veld",
+    "value": "Voer AMT-wachtwoord in"
+  },
   "addDevice.chooseProfile": {
     "description": "Label voor profielselectieveld",
     "value": "Kies profiel"
@@ -70,6 +78,10 @@
   "addDevice.description": {
     "description": "Beschrijving waarin wordt uitgelegd hoe een apparaat kan worden geactiveerd.",
     "value": "Om een apparaat te activeren, dient u een opdracht uit te voeren op het AMT-apparaat. Dit dialoogvenster helpt u bij het genereren van de uit te voeren opdracht."
+  },
+  "addDevice.enterGuid": {
+    "description": "Hint voor het invoeren van GUID",
+    "value": "Voer GUID in"
   },
   "addDevice.enterTags": {
     "description": "Tip voor het invoeren van tags",
@@ -83,6 +95,10 @@
     "description": "Fout bij vereiste vriendelijke namen",
     "value": "Vriendelijke naam is vereist."
   },
+  "addDevice.guid": {
+    "description": "Label voor het GUID-veld",
+    "value": "GUID"
+  },
   "addDevice.hostNameInvalid": {
     "description": "Fout voor ongeldige hostnamen",
     "value": "Ongeldig hostnaamformaat"
@@ -90,6 +106,22 @@
   "addDevice.hostNameRequired": {
     "description": "Fout voor vereiste hostnamen",
     "value": "Hostnaam is vereist."
+  },
+  "addDevice.mpsPassword": {
+    "description": "Label voor het MPS-wachtwoord-veld",
+    "value": "MPS-wachtwoord"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hint voor het MPS-wachtwoord-veld",
+    "value": "Voer MPS-wachtwoord in"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Label voor het MPS-gebruikersnaam-veld",
+    "value": "MPS-gebruikersnaam"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hint voor het MPS-gebruikersnaam-veld",
+    "value": "MPS-gebruikersnaam (standaard: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Selectievakje om controle van zelfondertekende certificaten uit te schakelen",
@@ -111,6 +143,10 @@
     "description": "Dialoogvenster voor het toevoegen van een nieuw apparaat",
     "value": "Een nieuw apparaat toevoegen"
   },
+  "addDevice.useCIRA": {
+    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
+    "value": "Gebruik CIRA"
+  },
   "addDevice.userNameInvalid": {
     "description": "Foutmelding voor ongeldige gebruikersnaam",
     "value": "De gebruikersnaam moet minimaal 5 tekens lang zijn en mag niet langer zijn dan 16 tekens."
@@ -122,42 +158,6 @@
   "addDevice.useTLS": {
     "description": "Bericht voor het gebruik van TLS",
     "value": "Gebruik TLS."
-  },
-  "addDevice.useCIRA": {
-    "description": "Selectievakje voor het gebruik van CIRA-verbinding",
-    "value": "Gebruik CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Label voor het GUID-veld",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Hint voor het invoeren van GUID",
-    "value": "Voer GUID in"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint voor het MPS-gebruikersnaam-veld",
-    "value": "MPS-gebruikersnaam (standaard: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label voor het MPS-wachtwoord-veld",
-    "value": "MPS-wachtwoord"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint voor het MPS-wachtwoord-veld",
-    "value": "Voer MPS-wachtwoord in"
-  },
-  "addDevice.amtPassword": {
-    "description": "Label voor het AMT-wachtwoord-veld",
-    "value": "AMT-wachtwoord"
-  },
-  "addDevice.amtPasswordHint": {
-    "description": "Hint voor het AMT-wachtwoord-veld",
-    "value": "Voer AMT-wachtwoord in"
   },
   "alarm.errorAdding": {
     "description": "Fout bij toevoegen",
@@ -195,6 +195,10 @@
     "description": "Label voor verwijderen na voltooiing schuifknop",
     "value": "Verwijderen na voltooiing."
   },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Verwijderen na voltooiing: {{deleteFinal}}"
+  },
   "alarmService.elementNameWithInstance": {
     "description": "Naam van het alarmelement gevolgd door de InstanceID.",
     "value": "{{elementName}} (InstanceID: {{instanceId}})"
@@ -226,10 +230,6 @@
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
     "value": "Starttijd: {{startTime}}"
-  },
-  "alarmService.deleteOnCompletionRange": {
-    "description": "Label for delete on completion slide toggle",
-    "value": "Verwijderen na voltooiing: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Plaatshouder voor invoer van starttijd",
@@ -272,6 +272,26 @@
     "description": "Tooltip voor knop 'Certificaat toevoegen'",
     "value": "Certificaat toevoegen"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "Fout wanneer het te verwijderen certificaat niet wordt gevonden",
+    "value": "Certificaat niet gevonden of is al verwijderd"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "Fout wanneer certificaat niet kan worden verwijderd omdat het wordt gerefereerd door profielen",
+    "value": "Certificaat kan niet worden verwijderd omdat er momenteel naar wordt verwezen door AMT-profielen. Verwijder eerst de referenties."
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltiptekst wanneer de knop Verwijderen is uitgeschakeld omdat het certificaat door een of meer profielen wordt gebruikt",
+    "value": "Dit certificaat is momenteel gekoppeld en kan niet worden verwijderd"
+  },
+  "certificates.delete.tooltip": {
+    "description": "Tooltip voor de knop Certificaat verwijderen",
+    "value": "Certificaat verwijderen"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Succesbericht wanneer certificaat is verwijderd",
+    "value": "Certificaat '{{name}}' succesvol verwijderd"
+  },
   "certificates.download.tooltip": {
     "description": "Tooltip voor het downloaden van een certificaat",
     "value": "Certificaat downloaden"
@@ -284,25 +304,13 @@
     "description": "Fout bij het toevoegen van certificaten",
     "value": "Fout bij het toevoegen van certificaat"
   },
+  "certificates.errorDeletingCertificate": {
+    "description": "Foutmelding weergegeven wanneer het verwijderen van een certificaat mislukt",
+    "value": "Fout bij het verwijderen van certificaat"
+  },
   "certificates.errorRetrievingCertificates": {
     "description": "Fout bij het ophalen van certificaatinformatie",
     "value": "Fout bij het ophalen van certificaatinformatie"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "Fout wanneer certificaat niet kan worden verwijderd omdat het wordt gerefereerd door profielen",
-    "value": "Certificaat kan niet worden verwijderd omdat er momenteel naar wordt verwezen door AMT-profielen. Verwijder eerst de referenties."
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "Fout wanneer het te verwijderen certificaat niet wordt gevonden",
-    "value": "Certificaat niet gevonden of is al verwijderd"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "Fout bij het proberen een alleen-lezen certificaat te verwijderen",
-    "value": "Kan alleen-lezen certificaat niet verwijderen"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "Succesbericht wanneer certificaat is verwijderd",
-    "value": "Certificaat '{{name}}' succesvol verwijderd"
   },
   "certificates.list": {
     "description": "Tekst voor de lijst met certificaten",
@@ -320,6 +328,10 @@
     "description": "Wordt weergegeven wanneer een certificaat geen profielkoppelingen heeft.",
     "value": "Niet-gerelateerd"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fout bij het proberen een alleen-lezen certificaat te verwijderen",
+    "value": "Kan alleen-lezen certificaat niet verwijderen"
+  },
   "certificates.title": {
     "description": "Titel voor certificaten",
     "value": "Certificaten"
@@ -335,10 +347,6 @@
   "certificates.typeRoot": {
     "description": "Geeft aan dat het certificaat een rootcertificaat is.",
     "value": "Root"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "Tooltiptekst wanneer de knop Verwijderen is uitgeschakeld omdat het certificaat door een of meer profielen wordt gebruikt",
-    "value": "Dit certificaat is momenteel gekoppeld en kan niet worden verwijderd"
   },
   "common.addNew": {
     "description": "Tekst voor de knop 'Nieuw toevoegen'",
@@ -379,9 +387,17 @@
   "common.continue": {
     "value": "Doorgaan"
   },
+  "common.delete": {
+    "description": "Tekst voor de knop Verwijderen",
+    "value": "Verwijderen"
+  },
   "common.deleteConfiguration": {
     "description": "Bericht voor verwijderde configuraties",
     "value": "Configuratie succesvol verwijderd."
+  },
+  "common.deleteProfile": {
+    "description": "Knoptekst voor het verwijderen van een profiel",
+    "value": "Profiel verwijderen"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Bericht voor de ondertitel bij het inloggen",
@@ -405,6 +421,10 @@
   },
   "common.down": {
     "value": "Down"
+  },
+  "common.editTags": {
+    "description": "Knoptekst voor het in bulk bewerken van tags",
+    "value": "Tags bewerken"
   },
   "common.enabled": {
     "description": "Wordt gebruikt wanneer de lokale profielsynchronisatie is ingeschakeld.",
@@ -456,6 +476,10 @@
   },
   "common.no": {
     "value": "Nee"
+  },
+  "common.noData": {
+    "description": "Bericht wanneer er geen gegevens beschikbaar zijn",
+    "value": "Geen gegevens beschikbaar"
   },
   "common.notApplicable": {
     "description": "Wordt weergegeven wanneer de OS-vermelding niet van toepassing is.",
@@ -516,6 +540,10 @@
   "common.up": {
     "value": "Omhoog"
   },
+  "common.update": {
+    "description": "Tekst voor de knop Bijwerken",
+    "value": "BIJWERKEN"
+  },
   "common.userName": {
     "description": "Bericht voor gebruikersnaam",
     "value": "Gebruikersnaam"
@@ -555,6 +583,10 @@
     "description": "FQDN-keuzerondje-label",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "Tekst voor het genereren van een willekeurig wachtwoord",
+    "value": "Genereer willekeurig wachtwoord per apparaat bij apparaatactivering"
+  },
   "configDetail.ipv4": {
     "description": "IPv4-keuzerondje-label",
     "value": "IPv4"
@@ -574,10 +606,6 @@
   "configDetail.portPlaceholder": {
     "description": "Plaatshoudertekst voor poortveld",
     "value": "Port"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "Tekst voor het genereren van een willekeurig wachtwoord",
-    "value": "Genereer willekeurig wachtwoord per apparaat bij apparaatactivering"
   },
   "configDetail.usernameHint": {
     "description": "Hinttekst voor het veld voor de gebruikersnaam",
@@ -849,6 +877,14 @@
     "description": "Beschrijving voor hardware-informatie",
     "value": "Geheugen, CPU, enz."
   },
+  "deviceDetail.ider": {
+    "description": "Categorienaam voor IDER",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "Beschrijving voor IDER",
+    "value": "Image op afstand koppelen"
+  },
   "deviceDetail.kvm": {
     "description": "Categorienaam voor KVM",
     "value": "KVM"
@@ -1069,6 +1105,10 @@
     "description": "Tabelkolomkop voor tags",
     "value": "Tags"
   },
+  "deviceToolbar.power.off": {
+    "description": "Energie-tooltip voor uitgeschakeld",
+    "value": "Stroom: Uit"
+  },
   "deviceToolbar.power.on": {
     "description": "Energie-tooltip voor ingeschakeld",
     "value": "Stroom: Aan"
@@ -1105,6 +1145,10 @@
     "description": "Titel voor toestemming van de gebruiker voor apparaten",
     "value": "Toestemming van de gebruiker"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Foutmelding voor alfanumerieke validatie",
+    "value": "Domeinnaam mag alleen letters, cijfers, koppeltekens (-) en onderstrepingstekens (_) bevatten"
+  },
   "domainDetail.completeProfile": {
     "description": "Bericht voor voltooide domeinprofielen",
     "value": "Domeinprofiel succesvol opgeslagen."
@@ -1112,14 +1156,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "Fout bij verwijderde domeinprofielen",
     "value": "Fout bij het aanmaken/bijwerken van domeinprofiel"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "Foutmelding voor schending van unieke sleutel",
-    "value": "Domein NewDomain ID of Suffix bestaat al"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "Foutmelding voor alfanumerieke validatie",
-    "value": "Domeinnaam mag alleen letters, cijfers, koppeltekens (-) en onderstrepingstekens (_) bevatten"
   },
   "domainDetail.fqdn": {
     "description": "Tip voor het FQDN-veld",
@@ -1140,6 +1176,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "Tip voor het wachtwoord van het provisioningcertificaat",
     "value": "Het wachtwoord voor het provisioningcertificaat"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Foutmelding voor schending van unieke sleutel",
+    "value": "Domein NewDomain ID of Suffix bestaat al"
   },
   "domains.certExpired": {
     "description": "Bericht voor verlopen certificaten",
@@ -1403,6 +1443,10 @@
     "description": "Label voor AMT-versie",
     "value": "AMT-versie:"
   },
+  "general.collapse": {
+    "description": "Label om in te vouwen",
+    "value": "Invouwen"
+  },
   "general.errorAMTFeatures": {
     "description": "Fout bij het ophalen van AMT-functies",
     "value": "Fout bij het ophalen van AMT-functies"
@@ -1414,6 +1458,10 @@
   "general.errorGeneralSettings": {
     "description": "Fout bij het ophalen van algemene instellingen",
     "value": "Fout bij het ophalen van algemene instellingen"
+  },
+  "general.expand": {
+    "description": "Label om uit te vouwen",
+    "value": "Uitvouwen"
   },
   "general.failAMTFeatures": {
     "description": "Fout bij het bijwerken van functies",
@@ -1443,6 +1491,10 @@
     "description": "Tooltip voor KVM wordt niet ondersteund",
     "value": "KVM wordt niet ondersteund."
   },
+  "general.notSupported": {
+    "description": "Label voor uitgeschakelde AMT-functies",
+    "value": "Niet ondersteund"
+  },
   "general.oneClickRecovery": {
     "description": "Label voor herstel met één klik",
     "value": "One Click Recovery (OCR):"
@@ -1467,9 +1519,25 @@
     "description": "Label voor provisioningmodus",
     "value": "Provisioningmodus:"
   },
+  "general.redirectionEnable": {
+    "description": "Knoplabel om omleiding in te schakelen",
+    "value": "Inschakelen"
+  },
+  "general.redirectionWarning": {
+    "description": "Waarschuwing wanneer omleiding is uitgeschakeld maar KVM/SOL/IDER is ingeschakeld",
+    "value": "Omleiding is uitgeschakeld. KVM, SOL en IDER vereisen dat omleiding is ingeschakeld."
+  },
+  "general.redirectionWarningISM": {
+    "description": "Waarschuwing wanneer omleiding is uitgeschakeld maar SOL/IDER is ingeschakeld",
+    "value": "Omleiding is uitgeschakeld. SOL en IDER vereisen dat omleiding is ingeschakeld."
+  },
   "general.serialOverLan": {
     "description": "Label voor SOL",
     "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.supported": {
+    "description": "Label voor ingeschakelde AMT-functies",
+    "value": "Ondersteund"
   },
   "general.userConsent": {
     "description": "Label voor toestemming van de gebruiker",
@@ -1490,14 +1558,6 @@
   "general.windowsRecoverySupported": {
     "description": "Tooltip voor Windows Recovery ondersteund",
     "value": "Windows Recovery wordt ondersteund."
-  },
-  "general.redirectionWarning": {
-    "description": "Waarschuwing wanneer omleiding is uitgeschakeld maar KVM/SOL/IDER is ingeschakeld",
-    "value": "Omleiding is uitgeschakeld. KVM, SOL en IDER vereisen dat omleiding is ingeschakeld."
-  },
-  "general.redirectionEnable": {
-    "description": "Knoplabel om omleiding in te schakelen",
-    "value": "Inschakelen"
   },
   "httpBoot.enforce": {
     "value": "Dwing Secure Boot af."
@@ -1588,6 +1648,98 @@
   "hwInfo.systemSummary.title": {
     "value": "Systeemoverzicht"
   },
+  "ider.attachDisk.label": {
+    "description": "Knoplabel om een schijfimage voor IDER toe te voegen.",
+    "value": "Diskimage (.iso) bijvoegen"
+  },
+  "ider.enable": {
+    "description": "Bericht voor het inschakelen van IDER",
+    "value": "IDER is momenteel niet ingeschakeld op dit apparaat. Wilt u het inschakelen?"
+  },
+  "ider.alreadyActiveWarning": {
+    "description": "Waarschuwing die wordt weergegeven wanneer een schijfimage wordt gekoppeld terwijl IDER al actief is",
+    "value": "IDER is al actief. Stop eerst IDER voordat u een andere schijfimage koppelt."
+  },
+  "ider.errorAccessCancel": {
+    "description": "Toegangsfout wanneer het verzoek om in te schakelen wordt geannuleerd",
+    "value": "IDER is niet toegankelijk - verzoek om IDER in te schakelen is geannuleerd."
+  },
+  "ider.errorAccessEnable": {
+    "description": "Toegangsfout wanneer om inschakelen wordt gevraagd",
+    "value": "IDER is niet toegankelijk - IDER kan niet worden ingeschakeld."
+  },
+  "ider.errorRetrieve": {
+    "description": "Fout bij het ophalen van de omleidingsstatus",
+    "value": "Fout bij het ophalen van de omleidingsstatus."
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
+    "value": "AMT-functies ophalen..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "Statusbericht weergegeven tijdens het controleren van gebruikerstoestemming",
+    "value": "Toestemmingsmodus controleren..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de energiestatus",
+    "value": "Energietoestand controleren..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de omleidingsstatus",
+    "value": "Omleidingsstatus controleren..."
+  },
+  "ider.status.connectingIder": {
+    "description": "Statusbericht weergegeven terwijl het IDER-component verbinding maakt",
+    "value": "Verbinding maken met IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Statusbericht wanneer er geen IDER-sessie is verbonden",
+    "value": "IDER niet verbonden"
+  },
+  "ider.status.attachHelp": {
+    "description": "Helptekst die wordt weergegeven wanneer IDER inactief is en de gebruiker vraagt een schijfimage te koppelen",
+    "value": "Klik op \"Schijfimage koppelen\" om verbinding te maken en een IDER-sessie te starten"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Bericht in de IDER-leegstatus dat vraagt om een ISO te selecteren",
+    "value": "Selecteer een ISO-bestand om IDE-omleiding te starten."
+  },
+  "ider.stopIder.label": {
+    "description": "Knoplabel om de IDER-sessie te stoppen",
+    "value": "Stop IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Schijfgegevens overdragen…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Sessie actief — wachten op schijfactiviteit"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Overgedragen gegevens"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM wordt niet ondersteund op Intel® Standard Manageability (ISM)-systemen."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-omleiding (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Koppel een opstartbare schijfkopie van uw computer via het netwerk aan dit apparaat. Deze verschijnt op de externe machine als een lokaal aangesloten cd/dvd-station, zodat het apparaat ervan kan opstarten of uitvoeren."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
+  },
+  "ider.title": {
+    "description": "Titel voor IDER",
+    "value": "Schakel IDER in."
+  },
   "ieee.authProtocol": {
     "description": "Tekst voor authenticatieprotocol",
     "value": "Authenticatieprotocol"
@@ -1664,10 +1816,6 @@
     "description": "Label dat wordt weergegeven wanneer KVM verbinding maakt",
     "value": "KVM verbinden..."
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "Bericht getoond wanneer AMT de KVM-sessie sluit",
-    "value": "KVM-sessie is gesloten door AMT"
-  },
   "kvm.disconnect.button": {
     "description": "Knoplabel om de verbinding met de KVM-sessie te verbreken",
     "value": "KVM loskoppelen"
@@ -1716,17 +1864,9 @@
     "description": "Knoplabel om de geselecteerde sneltoets te verzenden",
     "value": "Verzenden"
   },
-  "kvm.stopIder.label": {
-    "description": "Knoplabel om de IDER-sessie te stoppen",
-    "value": "Stop IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "Statusbericht weergegeven tijdens het controleren van de energiestatus",
-    "value": "Energiestatus controleren..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "Statusbericht weergegeven tijdens het controleren van de omleidingsstatus",
-    "value": "Omleidingsstatus controleren..."
+  "kvm.sessionClosedByDevice": {
+    "description": "Bericht getoond wanneer AMT de KVM-sessie sluit",
+    "value": "KVM-sessie is gesloten door AMT"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
@@ -1736,9 +1876,21 @@
     "description": "Statusbericht weergegeven tijdens het controleren van gebruikerstoestemming",
     "value": "Toestemmingsmodus controleren..."
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de energiestatus",
+    "value": "Energiestatus controleren..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Statusbericht weergegeven tijdens het controleren van de omleidingsstatus",
+    "value": "Omleidingsstatus controleren..."
+  },
   "kvm.status.connectingKVM": {
     "description": "Statusbericht weergegeven terwijl het KVM-onderdeel verbinding maakt",
     "value": "Verbinding maken met KVM..."
+  },
+  "kvm.stopIder.label": {
+    "description": "Knoplabel om de IDER-sessie te stoppen",
+    "value": "Stop IDER"
   },
   "kvm.title": {
     "description": "Titel voor KVM",
@@ -2020,6 +2172,14 @@
     "description": "Titel van de kaart met instellingen voor het draadloze netwerk",
     "value": "Instellingen voor draadloze netwerken"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authenticatie: {{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Versleuteling: {{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Netwerknaam: {{name}}"
@@ -2027,14 +2187,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID: {{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Versleuteling: {{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Authenticatie: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Ondertitel van de kaart voor draadloze netwerken",
@@ -2074,8 +2226,14 @@
   "powerOptions.powerUpToHTTPSBoot": {
     "value": "Power Up naar HTTPS Boot (OCR)"
   },
+  "powerOptions.powerUpToPBA": {
+    "value": "Opstarten tot PBA (OCR)"
+  },
   "powerOptions.powerUpToPXE": {
     "value": "Power Up naar PXE"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Opstarten tot WinRe (OCR)"
   },
   "powerOptions.reset": {
     "value": "Reset"
@@ -2089,8 +2247,14 @@
   "powerOptions.resetToIDER": {
     "value": "Terugzetten naar IDE-R (cd-rom)"
   },
+  "powerOptions.resetToPBA": {
+    "value": "Reset naar PBA (OCR)"
+  },
   "powerOptions.resetToPXE": {
     "value": "Terugzetten naar PXE"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Reset naar WinRe (OCR)"
   },
   "powerOptions.sleep": {
     "value": "Slaap"
@@ -2261,6 +2425,10 @@
     "description": "Tip voor de optie zonder TLS",
     "value": "Op AMT 16.1 en nieuwer biedt AMT zelfondertekende certificaten. Als u deze optie kiest, worden deze gebruikt in plaats van de zelfondertekende certificaten van de toolkit."
   },
+  "profileDetail.noProxy": {
+    "description": "Bericht wanneer er geen proxyconfiguraties beschikbaar zijn",
+    "value": "Geen proxyconfiguraties gevonden"
+  },
   "profileDetail.noWifi": {
     "description": "Bericht voor geen wifi-configuraties beschikbaar",
     "value": "Geen wifi-configuraties gevonden"
@@ -2341,13 +2509,13 @@
     "description": "Label voor het configuratieveld voor bekabelde 802.1x",
     "value": "Wired 802.1x-configuratie"
   },
-  "profiles.deleteProfile": {
-    "description": "Bericht voor verwijderde profielen",
-    "value": "Profiel succesvol verwijderd."
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "CIRA is uitgeschakeld op deze server. Dit profiel gebruikt CIRA voor zijn beheerverbinding en werkt pas als CIRA opnieuw is ingeschakeld."
+  },
+  "profiles.deleteProfile": {
+    "description": "Bericht voor verwijderde profielen",
+    "value": "Profiel succesvol verwijderd."
   },
   "profiles.exportProfile": {
     "description": "Bericht voor geëxporteerde profielen",
@@ -2392,6 +2560,126 @@
   "profiles.table.network": {
     "description": "Kolomkop Netwerkconfiguratie",
     "value": "Netwerkconfiguratie"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "Hint voor het herschikken met slepen en neerzetten",
+    "value": "Slepen en neerzetten om de volgorde te wijzigen"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "Label voor de lijst met gekoppelde proxyprofielen",
+    "value": "Gekoppelde Proxyprofielen (in prioriteitsvolgorde)"
+  },
+  "proxy.configs.hint": {
+    "description": "Hint die onder het invoerveld voor proxyconfiguraties wordt weergegeven",
+    "value": "Proxies kunnen aan dit profiel worden toegewezen"
+  },
+  "proxy.configs.label": {
+    "description": "Label voor het invoerveld van proxyconfiguraties",
+    "value": "Proxyconfiguraties"
+  },
+  "proxy.configs.placeholder": {
+    "description": "Placeholdertekst voor het zoeken naar proxyconfiguraties",
+    "value": "Zoek naar proxyconfiguraties om toe te voegen"
+  },
+  "proxy.label": {
+    "description": "Label voor de proxysectie",
+    "value": "Gevolmachtigden"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "Label voor het veld adresformaat",
+    "value": "Adresformaat"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "Placeholdertekst voor het proxyadresveld",
+    "value": "Voer het adres van de proxyserver in"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "Label voor het DNS-achtervoegselveld",
+    "value": "Netwerk-DNS-achtervoegsel"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "Placeholder voor het DNS-achtervoegselveld",
+    "value": "voorbeeld.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "Kolomkop voor het adresformaat",
+    "value": "Adresformaat"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "Kolomkop voor het netwerk-DNS-achtervoegsel",
+    "value": "Netwerk-DNS-achtervoegsel"
+  },
+  "proxyConfigs.header.name": {
+    "description": "Kolomkop voor de naam van de proxyconfiguratie",
+    "value": "Naam"
+  },
+  "proxyConfigs.header.port": {
+    "description": "Kolomkop voor de poort",
+    "value": "Poort"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "Kolomkop voor het proxyadres",
+    "value": "Proxyadres"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "Titel van de proxyconfiguraties",
+    "value": "Proxyconfiguraties"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "Succesbericht voor het aanmaken van een proxyconfiguratie",
+    "value": "Proxyconfiguratie succesvol aangemaakt"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "Succesbericht voor het verwijderen van een proxyconfiguratie",
+    "value": "Proxyconfiguratie {{name}} succesvol verwijderd"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "Succesbericht voor het bijwerken van een proxyconfiguratie",
+    "value": "Proxyconfiguratie succesvol bijgewerkt"
+  },
+  "proxyConfigs.name": {
+    "description": "Label voor het naamveld van de proxyconfiguratie",
+    "value": "Naam"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "Placeholdertekst voor het naamveld van de proxyconfiguratie",
+    "value": "Voer de naam van de proxyconfiguratie in"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "Paginatitel voor het bewerken van een proxyconfiguratie",
+    "value": "Proxyconfiguratie bewerken"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "Paginatitel voor nieuwe proxyconfiguratie",
+    "value": "Nieuwe Proxyconfiguratie"
+  },
+  "proxyConfigs.port": {
+    "description": "Label voor het poortveld",
+    "value": "Poort"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "Label voor het veld proxyadres",
+    "value": "Proxyadres"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "Validatiebericht voor de maximale lengte van het DNS-achtervoegsel",
+    "value": "Het netwerk-DNS-achtervoegsel mag maximaal 192 tekens bevatten"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "Validatiebericht: DNS-achtervoegsel is verplicht",
+    "value": "Netwerk-DNS-achtervoegsel is verplicht"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "Validatiebericht: naam is verplicht",
+    "value": "Naam is verplicht"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "Validatiebericht voor het poortbereik",
+    "value": "Poort moet tussen 0 en 65535 liggen"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "Validatiebericht: poort is verplicht",
+    "value": "Poort is verplicht"
   },
   "randomPassword.learnMore": {
     "description": "Bericht voor een ondersteuningslink",
@@ -2660,177 +2948,5 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Tip voor het veld voor de naam van het draadloze profiel",
     "value": "Geef een naam op voor het draadloze profiel."
-  },
-  "general.supported": {
-    "description": "Label voor ingeschakelde AMT-functies",
-    "value": "Ondersteund"
-  },
-  "general.notSupported": {
-    "description": "Label voor uitgeschakelde AMT-functies",
-    "value": "Niet ondersteund"
-  },
-  "powerOptions.powerUpToPBA": {
-    "value": "Opstarten tot PBA (OCR)"
-  },
-  "powerOptions.powerUpToWinRe": {
-    "value": "Opstarten tot WinRe (OCR)"
-  },
-  "powerOptions.resetToPBA": {
-    "value": "Reset naar PBA (OCR)"
-  },
-  "powerOptions.resetToWinRe": {
-    "value": "Reset naar WinRe (OCR)"
-  },
-  "general.expand": {
-    "description": "Label om uit te vouwen",
-    "value": "Uitvouwen"
-  },
-  "general.collapse": {
-    "description": "Label om in te vouwen",
-    "value": "Invouwen"
-  },
-  "proxy.label": {
-    "value": "Gevolmachtigden",
-    "description": "Label voor de proxysectie"
-  },
-  "proxy.configs.label": {
-    "value": "Proxyconfiguraties",
-    "description": "Label voor het invoerveld van proxyconfiguraties"
-  },
-  "proxy.configs.placeholder": {
-    "value": "Zoek naar proxyconfiguraties om toe te voegen",
-    "description": "Placeholdertekst voor het zoeken naar proxyconfiguraties"
-  },
-  "proxy.configs.hint": {
-    "value": "Proxies kunnen aan dit profiel worden toegewezen",
-    "description": "Hint die onder het invoerveld voor proxyconfiguraties wordt weergegeven"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "Gekoppelde Proxyprofielen (in prioriteitsvolgorde)",
-    "description": "Label voor de lijst met gekoppelde proxyprofielen"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "Slepen en neerzetten om de volgorde te wijzigen",
-    "description": "Hint voor het herschikken met slepen en neerzetten"
-  },
-  "profileDetail.noProxy": {
-    "description": "Bericht wanneer er geen proxyconfiguraties beschikbaar zijn",
-    "value": "Geen proxyconfiguraties gevonden"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "value": "Proxyconfiguraties",
-    "description": "Titel van de proxyconfiguraties"
-  },
-  "proxyConfigs.header.name": {
-    "value": "Naam",
-    "description": "Kolomkop voor de naam van de proxyconfiguratie"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "Proxyadres",
-    "description": "Kolomkop voor het proxyadres"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "Adresformaat",
-    "description": "Kolomkop voor het adresformaat"
-  },
-  "proxyConfigs.header.port": {
-    "value": "Poort",
-    "description": "Kolomkop voor de poort"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "Netwerk-DNS-achtervoegsel",
-    "description": "Kolomkop voor het netwerk-DNS-achtervoegsel"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "Nieuwe Proxyconfiguratie",
-    "description": "Paginatitel voor nieuwe proxyconfiguratie"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "Proxyconfiguratie bewerken",
-    "description": "Paginatitel voor het bewerken van een proxyconfiguratie"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "Proxyadres",
-    "description": "Label voor het veld proxyadres"
-  },
-  "proxyConfigs.name": {
-    "value": "Naam",
-    "description": "Label voor het naamveld van de proxyconfiguratie"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "Voer de naam van de proxyconfiguratie in",
-    "description": "Placeholdertekst voor het naamveld van de proxyconfiguratie"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "Voer het adres van de proxyserver in",
-    "description": "Placeholdertekst voor het proxyadresveld"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "Adresformaat",
-    "description": "Label voor het veld adresformaat"
-  },
-  "proxyConfigs.port": {
-    "value": "Poort",
-    "description": "Label voor het poortveld"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "Netwerk-DNS-achtervoegsel",
-    "description": "Label voor het DNS-achtervoegselveld"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "voorbeeld.com",
-    "description": "Placeholder voor het DNS-achtervoegselveld"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "Poort is verplicht",
-    "description": "Validatiebericht: poort is verplicht"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "Poort moet tussen 0 en 65535 liggen",
-    "description": "Validatiebericht voor het poortbereik"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "Naam is verplicht",
-    "description": "Validatiebericht: naam is verplicht"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Netwerk-DNS-achtervoegsel is verplicht",
-    "description": "Validatiebericht: DNS-achtervoegsel is verplicht"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Het netwerk-DNS-achtervoegsel mag maximaal 192 tekens bevatten",
-    "description": "Validatiebericht voor de maximale lengte van het DNS-achtervoegsel"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "Proxyconfiguratie succesvol aangemaakt",
-    "description": "Succesbericht voor het aanmaken van een proxyconfiguratie"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "Proxyconfiguratie succesvol bijgewerkt",
-    "description": "Succesbericht voor het bijwerken van een proxyconfiguratie"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "Proxyconfiguratie {{name}} succesvol verwijderd",
-    "description": "Succesbericht voor het verwijderen van een proxyconfiguratie"
-  },
-  "common.delete": {
-    "value": "Verwijderen",
-    "description": "Tekst voor de knop Verwijderen"
-  },
-  "common.deleteProfile": {
-    "value": "Profiel verwijderen",
-    "description": "Knoptekst voor het verwijderen van een profiel"
-  },
-  "common.editTags": {
-    "description": "Knoptekst voor het in bulk bewerken van tags",
-    "value": "Tags bewerken"
-  },
-  "common.update": {
-    "value": "BIJWERKEN",
-    "description": "Tekst voor de knop Bijwerken"
-  },
-  "common.noData": {
-    "value": "Geen gegevens beschikbaar",
-    "description": "Bericht wanneer er geen gegevens beschikbaar zijn"
   }
 }

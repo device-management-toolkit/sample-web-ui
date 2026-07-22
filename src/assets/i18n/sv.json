@@ -52,98 +52,6 @@
     "value": "Detta exempel på användargränssnitt är avsett för följande:"
   },
   "about.setUp": {
-    "description": "Meddelande för inställningar",
-    "value": "Konfigurera profiler, inställningar och domäner"
-  },
-  "about.understand": {
-    "description": "Meddelande för att förstå verktygslådan",
-    "value": "Förstå Device Management Toolkits implementering av REST-API:er och hur de kan användas i din egen applikation."
-  },
-  "addDevice.allowSelfSignedCertificates": {
-    "description": "Meddelande för att tillåta självsignerade certifikat",
-    "value": "Tillåt självsignerade certifikat"
-  },
-  "addDevice.chooseProfile": {
-    "description": "Etikett för fält för profilval",
-    "value": "Välj profil"
-  },
-  "addDevice.description": {
-    "description": "Beskrivning som förklarar hur man aktiverar en enhet",
-    "value": "För att aktivera en enhet måste du utföra ett kommando på AMT-enheten. Denna dialogruta hjälper dig att generera kommandot som ska köras."
-  },
-  "addDevice.enterTags": {
-    "description": "Tips för att ange taggar",
-    "value": "Du kan ange taggar för att underlätta organisering och sökning av enheter när din lista över hanterade enheter växer. Skriv en tagg och tryck sedan på Enter eller komma."
-  },
-  "addDevice.friendlyNameInvalid": {
-    "description": "Fel för ogiltiga vänliga namn",
-    "value": "Vänligt namn får inte vara längre än 50 tecken."
-  },
-  "addDevice.friendlyNameRequired": {
-    "description": "Fel för obligatoriska vänliga namn",
-    "value": "Vänligt namn krävs"
-  },
-  "addDevice.hostNameInvalid": {
-    "description": "Fel för ogiltiga värdnamn",
-    "value": "Ogiltigt format för värdnamn"
-  },
-  "addDevice.hostNameRequired": {
-    "description": "Fel för obligatoriska värdnamn",
-    "value": "Värdnamn krävs"
-  },
-  "addDevice.noSelfSignedCertCheck": {
-    "description": "Kryssruta för att inaktivera kontroll av självsignerade certifikat",
-    "value": "Ingen kontroll av självsignerade certifikat"
-  },
-  "addDevice.placeholderNewTag": {
-    "description": "Platshållare för att lägga till en ny tagg",
-    "value": "Ny tagg..."
-  },
-  "addDevice.profileRequired": {
-    "description": "Valideringsfelmeddelande när profil inte är vald",
-    "value": "Profil krävs"
-  },
-  "addDevice.showVerbose": {
-    "description": "Kryssruta för att aktivera detaljerad utdata",
-    "value": "Visa detaljerad information"
-  },
-  "addDevice.title": {
-    "description": "Dialogrubrik för att lägga till en ny enhet",
-    "value": "Lägg till en ny enhet"
-  },
-  "addDevice.userNameInvalid": {
-    "description": "Fel för ogiltigt användarnamn",
-    "value": "Användarnamnet måste bestå av minst 5 tecken och högst 16 tecken."
-  },
-  "addDevice.userNameRequired": {
-    "description": "Fel för obligatoriskt användarnamn",
-    "value": "Användarnamn krävs"
-  },
-  "addDevice.useTLS": {
-    "description": "Meddelande om användning av TLS",
-    "value": "Använd TLS"
-  },
-  "addDevice.useCIRA": {
-    "description": "Kryssruta för att använda CIRA-anslutning",
-    "value": "Använd CIRA"
-  },
-  "addDevice.guid": {
-    "description": "Etikett för GUID-fält",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Tips för att ange GUID",
-    "value": "Ange GUID"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Etikett för MPS-användarnamnsfält",
-    "value": "MPS-användarnamn"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Tips för MPS-användarnamnsfält",
-    "value": "MPS-användarnamn (standard: admin)"
-  },
-  "addDevice.mpsPassword": {
     "description": "Etikett för MPS-lösenordsfält",
     "value": "MPS-lösenord"
   },
@@ -151,31 +59,39 @@
     "description": "Tips för MPS-lösenordsfält",
     "value": "Ange MPS-lösenord"
   },
-  "addDevice.amtPassword": {
-    "description": "Etikett för AMT-lösenordsfält",
-    "value": "AMT-lösenord"
+  "addDevice.mpsUsername": {
+    "description": "Etikett för MPS-användarnamnsfält",
+    "value": "MPS-användarnamn"
   },
-  "addDevice.amtPasswordHint": {
-    "description": "Tips för AMT-lösenordsfält",
-    "value": "Ange AMT-lösenord"
+  "addDevice.mpsUsernameHint": {
+    "description": "Tips för MPS-användarnamnsfält",
+    "ider.status.checkingAMTFeatures": {
+      "description": "Statusmeddelande som visas när AMT-funktioner hämtas",
+      "value": "Hämtar AMT-funktioner..."
+    },
+    "ider.status.checkingConsent": {
+      "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
+      "value": "Kontrollerar samtyckesläge..."
+    },
+    "ider.status.checkingRedirection": {
+      "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
+      "value": "Kontrollerar omdirigeringsstatus..."
+    },
+    "ider.status.connectingIder": {
+      "description": "Statusmeddelande som visas när IDER-komponenten ansluter",
+      "value": "Ansluter till IDER..."
+    },
+    "ider.stopIder.label": {
+      "description": "Knappetikett för att stoppa IDER-sessionen",
+      "value": "Stoppa IDER"
+    },
+    "value": "MPS-användarnamn (standard: admin)"
   },
-  "alarm.errorAdding": {
-    "description": "Fel vid tillägg",
-    "value": "Fel vid tillägg av larmhändelser"
-  },
-  "alarm.errorDelete": {
+  "addDevice.noSelfSignedCertCheck": {
     "description": "Fel vid radering",
     "value": "Fel vid radering av larmhändelser"
   },
   "alarm.errorRetrieve": {
-    "description": "Fel vid hämtning",
-    "value": "Fel vid hämtning av larmhändelser"
-  },
-  "alarm.successAdding": {
-    "description": "Framgångsmeddelande för tillägg av larm",
-    "value": "Larm skapades framgångsrikt"
-  },
-  "alarmService.addNew": {
     "description": "Knapptext för att lägga till ett nytt larm",
     "value": "Lägg till nytt"
   },
@@ -194,6 +110,10 @@
   "alarmService.deleteOnCompletion": {
     "description": "Etikett för radering vid slutförande av bildväxling",
     "value": "Ta bort när du är klar."
+  },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Ta bort vid slutförande: {{deleteFinal}}"
   },
   "alarmService.elementNameWithInstance": {
     "description": "Alarmelementets namn följt av dess InstanceID",
@@ -226,10 +146,6 @@
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
     "value": "Starttid: {{startTime}}"
-  },
-  "alarmService.deleteOnCompletionRange": {
-    "description": "Label for delete on completion slide toggle",
-    "value": "Ta bort vid slutförande: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Platshållare för inmatning av starttid",
@@ -272,6 +188,22 @@
     "description": "Verktygstips för knappen Lägg till certifikat",
     "value": "Lägg till certifikat"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "Fel när certifikat som ska raderas inte hittas",
+    "value": "Certifikat hittades inte eller har redan raderats"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "Fel när certifikat inte kan raderas eftersom det refereras av profiler",
+    "value": "Certifikatet kan inte raderas eftersom det för närvarande refereras av AMT-profiler. Ta bort referenserna först."
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "Verktygstipstext när knappen Ta bort är inaktiverad eftersom certifikatet refereras av en eller flera profiler",
+    "value": "Det här certifikatet är för närvarande kopplat och kan inte tas bort"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Framgångsmeddelande när certifikat raderas",
+    "value": "Certifikat '{{name}}' raderat framgångsrikt"
+  },
   "certificates.download.tooltip": {
     "description": "Verktygstips för nedladdning av certifikat",
     "value": "Ladda ner certifikat"
@@ -287,22 +219,6 @@
   "certificates.errorRetrievingCertificates": {
     "description": "Fel vid hämtning av certifikatinformation",
     "value": "Fel vid hämtning av certifikatinformation"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "Fel när certifikat inte kan raderas eftersom det refereras av profiler",
-    "value": "Certifikatet kan inte raderas eftersom det för närvarande refereras av AMT-profiler. Ta bort referenserna först."
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "Fel när certifikat som ska raderas inte hittas",
-    "value": "Certifikat hittades inte eller har redan raderats"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "Fel vid försök att radera skrivskyddat certifikat",
-    "value": "Kan inte radera skrivskyddat certifikat"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "Framgångsmeddelande när certifikat raderas",
-    "value": "Certifikat '{{name}}' raderat framgångsrikt"
   },
   "certificates.list": {
     "description": "Text för listan över certifikat",
@@ -320,6 +236,10 @@
     "description": "Visas när ett certifikat inte har några profilassociationer.",
     "value": "Oassocierat"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fel vid försök att radera skrivskyddat certifikat",
+    "value": "Kan inte radera skrivskyddat certifikat"
+  },
   "certificates.title": {
     "description": "Titel för certifikat",
     "value": "Certifikat"
@@ -335,10 +255,6 @@
   "certificates.typeRoot": {
     "description": "Indikerar att certifikatet är ett rotcertifikat.",
     "value": "Rot"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "Verktygstipstext när knappen Ta bort är inaktiverad eftersom certifikatet refereras av en eller flera profiler",
-    "value": "Det här certifikatet är för närvarande kopplat och kan inte tas bort"
   },
   "common.addNew": {
     "description": "Text för knappen Lägg till ny",
@@ -379,9 +295,17 @@
   "common.continue": {
     "value": "Fortsätt"
   },
+  "common.delete": {
+    "description": "Text på raderaknappen",
+    "value": "Radera"
+  },
   "common.deleteConfiguration": {
     "description": "Meddelande för raderade konfigurationer",
     "value": "Konfigurationen har raderats"
+  },
+  "common.deleteProfile": {
+    "description": "Text för knappen för att ta bort profil",
+    "value": "Ta bort profil"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Meddelande för undertexten för inloggning",
@@ -405,6 +329,10 @@
   },
   "common.down": {
     "value": "Ned"
+  },
+  "common.editTags": {
+    "description": "Knapptext för att redigera taggar i bulk",
+    "value": "Redigera taggar"
   },
   "common.enabled": {
     "description": "Används när lokal profilsynkronisering är aktiverad.",
@@ -456,6 +384,10 @@
   },
   "common.no": {
     "value": "Nej"
+  },
+  "common.noData": {
+    "description": "Meddelande när ingen data är tillgänglig",
+    "value": "Ingen data tillgänglig"
   },
   "common.notApplicable": {
     "description": "Visas när OS-posten inte är tillämplig.",
@@ -516,6 +448,10 @@
   "common.up": {
     "value": "Upp"
   },
+  "common.update": {
+    "description": "Text på uppdateringsknappen",
+    "value": "UPPDATERA"
+  },
   "common.userName": {
     "description": "Meddelande för användarnamn",
     "value": "Användarnamn"
@@ -555,6 +491,10 @@
     "description": "FQDN-radioknappens etikett",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "Text för att generera slumpmässigt lösenord",
+    "value": "Generera slumpmässigt lösenord per enhet vid enhetsaktivering"
+  },
   "configDetail.ipv4": {
     "description": "IPv4-radioknappetikett",
     "value": "IPv4"
@@ -574,10 +514,6 @@
   "configDetail.portPlaceholder": {
     "description": "Platshållartext för portfält",
     "value": "Port"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "Text för att generera slumpmässigt lösenord",
-    "value": "Generera slumpmässigt lösenord per enhet vid enhetsaktivering"
   },
   "configDetail.usernameHint": {
     "description": "Tips för användarnamnsfältet",
@@ -849,6 +785,14 @@
     "description": "Beskrivning av hårdvaruinformation",
     "value": "Minne, CPU, etc..."
   },
+  "deviceDetail.ider": {
+    "description": "Kategorinamn för IDER",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "Beskrivning av IDER",
+    "value": "Montera avbildning på distans"
+  },
   "deviceDetail.kvm": {
     "description": "Kategorinamn för KVM",
     "value": "KVM"
@@ -1069,6 +1013,10 @@
     "description": "Tabellkolumnrubrik för taggar",
     "value": "Taggar"
   },
+  "deviceToolbar.power.off": {
+    "description": "Strömverktygstips för av",
+    "value": "Ström: Av"
+  },
   "deviceToolbar.power.on": {
     "description": "Strömverktygstips för på",
     "value": "Ström: På"
@@ -1105,6 +1053,10 @@
     "description": "Titel för användarens samtycke för enheter",
     "value": "Användarens samtycke"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Felmeddelande för alfanumerisk validering",
+    "value": "Domännamnet får endast innehålla bokstäver, siffror, bindestreck (-) och understreck (_)"
+  },
   "domainDetail.completeProfile": {
     "description": "Meddelande för färdiga domänprofiler",
     "value": "Domänprofil sparad"
@@ -1112,14 +1064,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "Fel för raderade domänprofiler",
     "value": "Fel vid skapande/uppdatering av domänprofil"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "Felmeddelande för brott mot unik nyckel",
-    "value": "Domänens NewDomain ID eller suffix finns redan"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "Felmeddelande för alfanumerisk validering",
-    "value": "Domännamnet får endast innehålla bokstäver, siffror, bindestreck (-) och understreck (_)"
   },
   "domainDetail.fqdn": {
     "description": "Tips för fältet FQDN",
@@ -1140,6 +1084,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "Tips för lösenordet till provisioneringscertifikatet",
     "value": "Lösenordet för provisioneringscertifikatet"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Felmeddelande för brott mot unik nyckel",
+    "value": "Domänens NewDomain ID eller suffix finns redan"
   },
   "domains.certExpired": {
     "description": "Meddelande om utgångna certifikat",
@@ -1403,6 +1351,10 @@
     "description": "Etikett för AMT-version",
     "value": "AMT-version:"
   },
+  "general.collapse": {
+    "description": "Etikett för att komprimera",
+    "value": "Komprimera"
+  },
   "general.errorAMTFeatures": {
     "description": "Fel vid hämtning av AMT-funktioner",
     "value": "Fel vid hämtning av AMT-funktioner"
@@ -1414,6 +1366,10 @@
   "general.errorGeneralSettings": {
     "description": "Fel vid hämtning av allmänna inställningar",
     "value": "Fel vid hämtning av allmänna inställningar"
+  },
+  "general.expand": {
+    "description": "Etikett för att expandera",
+    "value": "Expandera"
   },
   "general.failAMTFeatures": {
     "description": "Fel vid uppdatering av funktioner",
@@ -1443,6 +1399,10 @@
     "description": "Verktygstips för KVM stöds inte",
     "value": "KVM stöds inte"
   },
+  "general.notSupported": {
+    "description": "Etikett för inaktiverade AMT-funktioner",
+    "value": "Stöds inte"
+  },
   "general.oneClickRecovery": {
     "description": "Etikett för återställning med ett klick",
     "value": "One Click Recovery (OCR):"
@@ -1467,9 +1427,25 @@
     "description": "Etikett för provisioneringsläge",
     "value": "Provisioneringsläge:"
   },
+  "general.redirectionEnable": {
+    "description": "Knappetikett för att aktivera omdirigering",
+    "value": "Aktivera"
+  },
+  "general.redirectionWarning": {
+    "description": "Varning när omdirigering är inaktiverad men KVM/SOL/IDER är aktiverat",
+    "value": "Omdirigering är inaktiverad. KVM, SOL och IDER kräver att omdirigering är aktiverad."
+  },
+  "general.redirectionWarningISM": {
+    "description": "Varning när omdirigering är inaktiverad men SOL/IDER är aktiverat",
+    "value": "Omdirigering är inaktiverad. SOL och IDER kräver att omdirigering är aktiverad."
+  },
   "general.serialOverLan": {
     "description": "Etikett för SOL",
     "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.supported": {
+    "description": "Etikett för aktiverade AMT-funktioner",
+    "value": "Stöds"
   },
   "general.userConsent": {
     "description": "Etikett för användarens samtycke",
@@ -1490,14 +1466,6 @@
   "general.windowsRecoverySupported": {
     "description": "Verktygstips för Windows Återställning stöds",
     "value": "Windows Recovery stöds"
-  },
-  "general.redirectionWarning": {
-    "description": "Varning när omdirigering är inaktiverad men KVM/SOL/IDER är aktiverat",
-    "value": "Omdirigering är inaktiverad. KVM, SOL och IDER kräver att omdirigering är aktiverad."
-  },
-  "general.redirectionEnable": {
-    "description": "Knappetikett för att aktivera omdirigering",
-    "value": "Aktivera"
   },
   "httpBoot.enforce": {
     "value": "Tillämpa säker uppstart"
@@ -1588,6 +1556,98 @@
   "hwInfo.systemSummary.title": {
     "value": "Systemöversikt"
   },
+  "ider.attachDisk.label": {
+    "description": "Knappetikett för att bifoga en diskbild för IDER",
+    "value": "Bifoga diskavbildning (.iso)"
+  },
+  "ider.enable": {
+    "description": "Meddelande för att aktivera IDER",
+    "value": "IDER är för närvarande inte aktiverat på den här enheten. Vill du aktivera det?"
+  },
+  "ider.alreadyActiveWarning": {
+    "description": "Varning som visas när en diskavbild försöker anslutas medan IDER redan är aktivt",
+    "value": "IDER är redan aktivt. Stoppa först IDER innan du ansluter en annan diskavbild."
+  },
+  "ider.errorAccessCancel": {
+    "description": "Fel vid åtkomst när begäran om aktivering avbryts",
+    "value": "IDER kan inte nås – begäran om att aktivera IDER har avbrutits."
+  },
+  "ider.errorAccessEnable": {
+    "description": "Fel vid åtkomst när du begär att aktivera",
+    "value": "IDER kan inte nås – det gick inte att aktivera IDER"
+  },
+  "ider.errorRetrieve": {
+    "description": "Fel vid hämtning av omdirigeringsstatus",
+    "value": "Fel vid hämtning av omdirigeringsstatus"
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "Statusmeddelande som visas när AMT-funktioner hämtas",
+    "value": "Hämtar AMT-funktioner..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
+    "value": "Kontrollerar samtyckesläge..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "Statusmeddelande som visas vid kontroll av energistatus",
+    "value": "Kontrollerar energistatus..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
+    "value": "Kontrollerar omdirigeringsstatus..."
+  },
+  "ider.status.connectingIder": {
+    "description": "Statusmeddelande som visas när IDER-komponenten ansluter",
+    "value": "Ansluter till IDER..."
+  },
+  "ider.status.notConnected": {
+    "description": "Statusmeddelande som visas när ingen IDER-session är ansluten",
+    "value": "IDER är inte ansluten"
+  },
+  "ider.status.attachHelp": {
+    "description": "Hjälptext som visas när IDER är inaktivt och uppmanar användaren att ansluta en diskavbild",
+    "value": "Klicka på \"Anslut diskavbild\" för att ansluta och starta en IDER-session"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Meddelande i tomt IDER-läge som uppmanar användaren att välja en ISO",
+    "value": "Välj en ISO-fil för att starta IDE-omdirigering."
+  },
+  "ider.stopIder.label": {
+    "description": "Knappetikett för att avsluta IDER-sessionen",
+    "value": "Stoppa IDER"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Överför diskdata…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Session aktiv – väntar på diskaktivitet"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Överförd data"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM stöds inte på Intel® Standard Manageability (ISM)-system."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-omdirigering (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Anslut en startbar diskavbildning från din dator till den här enheten via nätverket. Den visas för fjärrdatorn som en lokalt ansluten cd/dvd-enhet, så att enheten kan starta eller köra från den."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
+  },
+  "ider.title": {
+    "description": "Titel för IDER",
+    "value": "Aktivera IDER"
+  },
   "ieee.authProtocol": {
     "description": "Text för autentiseringsprotokoll",
     "value": "Autentiseringsprotokoll"
@@ -1664,10 +1724,6 @@
     "description": "Etikett som visas när KVM ansluter",
     "value": "Ansluter KVM..."
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "Meddelande som visas när AMT stänger KVM-sessionen",
-    "value": "KVM-sessionen stängdes av AMT"
-  },
   "kvm.disconnect.button": {
     "description": "Knappetikett för att koppla bort från KVM-sessionen",
     "value": "Koppla bort KVM"
@@ -1708,45 +1764,9 @@
     "description": "Etikett för rullgardinsmenyn med snabbtangenter i KVM-verktygsfältet",
     "value": "Snabbtangenter"
   },
-  "kvm.hotKeys.placeholder": {
-    "description": "Platshållartext för rullgardinsmenyn med snabbtangenter",
-    "value": "Välj snabbtangent för att skicka"
-  },
-  "kvm.hotKeys.send": {
-    "description": "Knappetikett för att skicka den valda snabbtangenten",
-    "value": "Skicka"
-  },
   "kvm.stopIder.label": {
     "description": "Knappetikett för att avsluta IDER-sessionen",
     "value": "Stoppa IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "Statusmeddelande som visas vid kontroll av energistatus",
-    "value": "Kontrollerar energistatus..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
-    "value": "Kontrollerar omdirigeringsstatus..."
-  },
-  "kvm.status.checkingAMTFeatures": {
-    "description": "Statusmeddelande som visas vid hämtning av AMT-funktioner",
-    "value": "Hämtar AMT-funktioner..."
-  },
-  "kvm.status.checkingConsent": {
-    "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
-    "value": "Kontrollerar samtyckesläge..."
-  },
-  "kvm.status.connectingKVM": {
-    "description": "Statusmeddelande som visas när KVM-komponenten ansluter",
-    "value": "Ansluter till KVM..."
-  },
-  "kvm.title": {
-    "description": "Titel för KVM",
-    "value": "Aktivera KVM"
-  },
-  "login.error": {
-    "description": "Fel vid inloggning",
-    "value": "Fel vid inloggning"
   },
   "login.header.loginTitle": {
     "description": "Titel på inloggningssidan",
@@ -2020,6 +2040,14 @@
     "description": "Titel på kortet för inställningar för trådlöst nätverk",
     "value": "Inställningar för trådlöst nätverk"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Autentisering: {{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Kryptering: {{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Nätverksnamn: {{name}}"
@@ -2027,14 +2055,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID: {{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Kryptering: {{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Autentisering: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Underrubrik för kortet för trådlösa nätverk",
@@ -2074,8 +2094,14 @@
   "powerOptions.powerUpToHTTPSBoot": {
     "value": "Power Up till HTTPS Boot (OCR)"
   },
+  "powerOptions.powerUpToPBA": {
+    "value": "Starta upp till PBA (OCR)"
+  },
   "powerOptions.powerUpToPXE": {
     "value": "Power Up till PXE"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Starta upp till WinRe (OCR)"
   },
   "powerOptions.reset": {
     "value": "Återställ"
@@ -2089,8 +2115,14 @@
   "powerOptions.resetToIDER": {
     "value": "Återställ till IDE-R (CD-ROM)"
   },
+  "powerOptions.resetToPBA": {
+    "value": "Återställ till PBA (OCR)"
+  },
   "powerOptions.resetToPXE": {
     "value": "Återställ till PXE"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Återställ till WinRe (OCR)"
   },
   "powerOptions.sleep": {
     "value": "Sömn"
@@ -2261,6 +2293,10 @@
     "description": "Tips för alternativet utan TLS",
     "value": "I AMT 16.1 och nyare versioner tillhandahåller AMT självsignerade certifikat. Om du väljer det här alternativet kommer dessa att användas istället för de självsignerade certifikat som tillhandahålls av verktygssatsen."
   },
+  "profileDetail.noProxy": {
+    "description": "Meddelande när inga proxyinställningar är tillgängliga",
+    "value": "Inga proxyinställningar hittades"
+  },
   "profileDetail.noWifi": {
     "description": "Meddelande om att inga WiFi-konfigurationer är tillgängliga",
     "value": "Inga wifi-konfigurationer hittades"
@@ -2341,13 +2377,13 @@
     "description": "Etikett för fältet för trådbunden 802.1x-konfiguration",
     "value": "Wired 802.1x-konfiguration"
   },
-  "profiles.deleteProfile": {
-    "description": "Meddelande för raderade profiler",
-    "value": "Profilen har raderats"
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "CIRA är inaktiverat på den här servern. Den här profilen använder CIRA för sin hanteringsanslutning och fungerar inte förrän CIRA återaktiveras."
+  },
+  "profiles.deleteProfile": {
+    "description": "Meddelande för raderade profiler",
+    "value": "Profilen har raderats"
   },
   "profiles.exportProfile": {
     "description": "Meddelande för exporterade profiler",
@@ -2392,6 +2428,126 @@
   "profiles.table.network": {
     "description": "Kolumnrubrik för nätverkskonfiguration",
     "value": "Nätverkskonfiguration"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "Tips för att ändra ordning med dra-och-släpp",
+    "value": "Dra och släpp för att ändra ordning"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "Etikett för listan över associerade proxyprofiler",
+    "value": "Associerade proxyprofiler (i prioriteringsordning)"
+  },
+  "proxy.configs.hint": {
+    "description": "Tips som visas under inmatningsfältet för proxyinställningar",
+    "value": "Proxys kan tilldelas denna profil"
+  },
+  "proxy.configs.label": {
+    "description": "Etikett för inmatningsfältet för proxyinställningar",
+    "value": "Proxyinställningar"
+  },
+  "proxy.configs.placeholder": {
+    "description": "Platshållartext för att söka proxyinställningar",
+    "value": "Sök efter proxyinställningar att lägga till"
+  },
+  "proxy.label": {
+    "description": "Etikett för proxysektionen",
+    "value": "Proxys"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "Etikett för adressformatfältet",
+    "value": "Adressformat"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "Platshållare för proxyadressfältet",
+    "value": "Ange proxyserveradress"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "Etikett för DNS-suffixfältet",
+    "value": "Nätverks-DNS-suffix"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "Platshållare för DNS-suffixfältet",
+    "value": "exempel.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "Kolumnrubrik för adressformat",
+    "value": "Adressformat"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "Kolumnrubrik för nätverks-DNS-suffix",
+    "value": "Nätverks-DNS-suffix"
+  },
+  "proxyConfigs.header.name": {
+    "description": "Kolumnrubrik för proxyinställningens namn",
+    "value": "Namn"
+  },
+  "proxyConfigs.header.port": {
+    "description": "Kolumnrubrik för port",
+    "value": "Port"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "Kolumnrubrik för proxyadress",
+    "value": "Proxyadress"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "Titel för proxyinställningar",
+    "value": "Proxyinställningar"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "Meddelande vid lyckad skapande av proxyinställning",
+    "value": "Proxyinställning skapad framgångsrikt"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "Meddelande vid lyckad borttagning av proxyinställning",
+    "value": "Proxyinställning {{name}} raderad framgångsrikt"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "Meddelande vid lyckad uppdatering av proxyinställning",
+    "value": "Proxyinställning uppdaterad framgångsrikt"
+  },
+  "proxyConfigs.name": {
+    "description": "Etikett för fältet för proxyinställningens namn",
+    "value": "Namn"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "Platshållare för fältet för proxyinställningens namn",
+    "value": "Ange namn på proxyinställning"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "Sidtitel för att redigera en proxyinställning",
+    "value": "Redigera proxyinställning"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "Sidtitel för att skapa en ny proxyinställning",
+    "value": "Ny proxyinställning"
+  },
+  "proxyConfigs.port": {
+    "description": "Etikett för portfältet",
+    "value": "Port"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "Etikett för proxyadressfältet",
+    "value": "Proxyadress"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "Valideringsmeddelande för maxlängd på DNS-suffix",
+    "value": "Nätverks-DNS-suffix får vara högst 192 tecken"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "Valideringsmeddelande: DNS-suffix krävs",
+    "value": "Nätverks-DNS-suffix krävs"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "Valideringsmeddelande: namn krävs",
+    "value": "Namn krävs"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "Valideringsmeddelande för portintervall",
+    "value": "Porten måste vara mellan 0 och 65535"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "Valideringsmeddelande: port krävs",
+    "value": "Port krävs"
   },
   "randomPassword.learnMore": {
     "description": "Meddelande för en supportlänk",
@@ -2660,177 +2816,5 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Tips för fältet för trådlöst profilnamn",
     "value": "Ange ett namn för den trådlösa profilen"
-  },
-  "general.supported": {
-    "description": "Etikett för aktiverade AMT-funktioner",
-    "value": "Stöds"
-  },
-  "general.notSupported": {
-    "description": "Etikett för inaktiverade AMT-funktioner",
-    "value": "Stöds inte"
-  },
-  "powerOptions.powerUpToPBA": {
-    "value": "Starta upp till PBA (OCR)"
-  },
-  "powerOptions.powerUpToWinRe": {
-    "value": "Starta upp till WinRe (OCR)"
-  },
-  "powerOptions.resetToPBA": {
-    "value": "Återställ till PBA (OCR)"
-  },
-  "powerOptions.resetToWinRe": {
-    "value": "Återställ till WinRe (OCR)"
-  },
-  "general.expand": {
-    "description": "Etikett för att expandera",
-    "value": "Expandera"
-  },
-  "general.collapse": {
-    "description": "Etikett för att komprimera",
-    "value": "Komprimera"
-  },
-  "proxy.label": {
-    "value": "Proxys",
-    "description": "Etikett för proxysektionen"
-  },
-  "proxy.configs.label": {
-    "value": "Proxyinställningar",
-    "description": "Etikett för inmatningsfältet för proxyinställningar"
-  },
-  "proxy.configs.placeholder": {
-    "value": "Sök efter proxyinställningar att lägga till",
-    "description": "Platshållartext för att söka proxyinställningar"
-  },
-  "proxy.configs.hint": {
-    "value": "Proxys kan tilldelas denna profil",
-    "description": "Tips som visas under inmatningsfältet för proxyinställningar"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "Associerade proxyprofiler (i prioriteringsordning)",
-    "description": "Etikett för listan över associerade proxyprofiler"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "Dra och släpp för att ändra ordning",
-    "description": "Tips för att ändra ordning med dra-och-släpp"
-  },
-  "profileDetail.noProxy": {
-    "description": "Meddelande när inga proxyinställningar är tillgängliga",
-    "value": "Inga proxyinställningar hittades"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "value": "Proxyinställningar",
-    "description": "Titel för proxyinställningar"
-  },
-  "proxyConfigs.header.name": {
-    "value": "Namn",
-    "description": "Kolumnrubrik för proxyinställningens namn"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "Proxyadress",
-    "description": "Kolumnrubrik för proxyadress"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "Adressformat",
-    "description": "Kolumnrubrik för adressformat"
-  },
-  "proxyConfigs.header.port": {
-    "value": "Port",
-    "description": "Kolumnrubrik för port"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "Nätverks-DNS-suffix",
-    "description": "Kolumnrubrik för nätverks-DNS-suffix"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "Ny proxyinställning",
-    "description": "Sidtitel för att skapa en ny proxyinställning"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "Redigera proxyinställning",
-    "description": "Sidtitel för att redigera en proxyinställning"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "Proxyadress",
-    "description": "Etikett för proxyadressfältet"
-  },
-  "proxyConfigs.name": {
-    "value": "Namn",
-    "description": "Etikett för fältet för proxyinställningens namn"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "Ange namn på proxyinställning",
-    "description": "Platshållare för fältet för proxyinställningens namn"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "Ange proxyserveradress",
-    "description": "Platshållare för proxyadressfältet"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "Adressformat",
-    "description": "Etikett för adressformatfältet"
-  },
-  "proxyConfigs.port": {
-    "value": "Port",
-    "description": "Etikett för portfältet"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "Nätverks-DNS-suffix",
-    "description": "Etikett för DNS-suffixfältet"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "exempel.com",
-    "description": "Platshållare för DNS-suffixfältet"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "Port krävs",
-    "description": "Valideringsmeddelande: port krävs"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "Porten måste vara mellan 0 och 65535",
-    "description": "Valideringsmeddelande för portintervall"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "Namn krävs",
-    "description": "Valideringsmeddelande: namn krävs"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Nätverks-DNS-suffix krävs",
-    "description": "Valideringsmeddelande: DNS-suffix krävs"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Nätverks-DNS-suffix får vara högst 192 tecken",
-    "description": "Valideringsmeddelande för maxlängd på DNS-suffix"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "Proxyinställning skapad framgångsrikt",
-    "description": "Meddelande vid lyckad skapande av proxyinställning"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "Proxyinställning uppdaterad framgångsrikt",
-    "description": "Meddelande vid lyckad uppdatering av proxyinställning"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "Proxyinställning {{name}} raderad framgångsrikt",
-    "description": "Meddelande vid lyckad borttagning av proxyinställning"
-  },
-  "common.delete": {
-    "value": "Radera",
-    "description": "Text på raderaknappen"
-  },
-  "common.deleteProfile": {
-    "value": "Ta bort profil",
-    "description": "Text för knappen för att ta bort profil"
-  },
-  "common.editTags": {
-    "description": "Knapptext för att redigera taggar i bulk",
-    "value": "Redigera taggar"
-  },
-  "common.update": {
-    "value": "UPPDATERA",
-    "description": "Text på uppdateringsknappen"
-  },
-  "common.noData": {
-    "value": "Ingen data tillgänglig",
-    "description": "Meddelande när ingen data är tillgänglig"
   }
 }

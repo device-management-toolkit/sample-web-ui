@@ -16,7 +16,7 @@ import {
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
-import { defer, iif, interval, Observable, of, throwError } from 'rxjs'
+import { defer, EMPTY, iif, interval, Observable, of, throwError } from 'rxjs'
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { DevicesService } from '../devices.service'
@@ -201,10 +201,24 @@ export class KvmComponent implements OnInit, OnDestroy {
       .pipe(
         tap(() => this.loadingStatus.set('kvm.status.checkingRedirection.value')),
         switchMap((powerState) => this.handlePowerState(powerState)),
-        switchMap((result) => (result === null ? of() : this.getRedirectionStatus(this.deviceId()))),
+        switchMap((result) => {
+          if (result === null) {
+            this.isLoading.set(false)
+            this.loadingStatus.set('')
+            return EMPTY
+          }
+          return this.getRedirectionStatus(this.deviceId())
+        }),
         tap(() => this.loadingStatus.set('kvm.status.checkingAMTFeatures.value')),
         switchMap((result: RedirectionStatus) => this.handleRedirectionStatus(result)),
-        switchMap((result) => (result === null ? of() : this.getAMTFeaturesCached())),
+        switchMap((result) => {
+          if (result === null) {
+            this.isLoading.set(false)
+            this.loadingStatus.set('')
+            return EMPTY
+          }
+          return this.getAMTFeaturesCached()
+        }),
         switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
         tap(() => this.loadingStatus.set('kvm.status.checkingConsent.value')),
         switchMap((result: boolean | any) =>
@@ -358,12 +372,15 @@ export class KvmComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
     this.diskImage = target.files?.[0] ?? null
-    this.deviceIDERConnection.set(true)
+    // Set the deviceIDERConnection signal based on whether a file is selected
+    this.deviceIDERConnection.set(this.diskImage !== null)
   }
 
   onCancelIDER(): void {
     // close the dialog, perform other actions as needed
     this.deviceIDERConnection.set(false)
+    this.isIDERActive.set(false)
+    this.diskImage = null
     // Clear the file input so the same file can be selected again
     const fileInput = document.getElementById('file') as HTMLInputElement
     if (fileInput) {

@@ -10,7 +10,7 @@
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
-      @for (item of categories; track item) {
+      @for (item of categories(); track item.component) {
         <a
           mat-list-item
           (click)="setCurrentView(item)"
@@ -33,13 +33,28 @@
   <mat-sidenav-content>
     @switch (currentView) {
       @default {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('general') {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('kvm') {
-        <app-kvm [deviceId]="deviceId"></app-kvm>
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (!isISMSystem()) {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        } @else {
+          <app-ider [deviceId]="deviceId" [isISM]="isISMSystem()"></app-ider>
+        }
+      }
+      @case ('ider') {
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (isISMSystem()) {
+          <app-ider [deviceId]="deviceId" [isISM]="isISMSystem()"></app-ider>
+        } @else {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        }
       }
       @case ('sol') {
         <app-sol [deviceId]="deviceId"></app-sol>
