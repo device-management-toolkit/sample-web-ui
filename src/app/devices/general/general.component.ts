@@ -57,7 +57,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    remoteErase: false,
+    rpeSupported: false,
+    rpe: false,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
@@ -74,10 +75,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    ocr: false
+    ocr: false,
+    rpe: false,
+    rpeSupported: false
   })
 
   public isLoading = signal(true)
+  public isDataLoaded = signal(false)
   public readonly isUpdatingFeatures = computed(() => this.pendingFeatureUpdates() > 0)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
@@ -161,10 +165,16 @@ export class GeneralComponent implements OnInit, OnDestroy {
                 !results.amtFeatures.localPBABootSupported
             }
           ],
+
           httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
           winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
-          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
+          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
+          rpe: [
+            { value: results.amtFeatures.rpe, disabled: !(results.amtFeatures.rpeSupported ?? false) }
+          ],
+          rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
         })
+        this.isDataLoaded.set(true)
       })
   }
 
@@ -184,10 +194,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   setAmtFeatures(): void {
     this.pendingFeatureUpdates.update((count) => count + 1)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), {
-        ...this.amtEnabledFeatures.getRawValue(),
-        remoteErase: this.amtFeatures.remoteErase
-      } as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), payload)
       .pipe(
         finalize(() => {
           this.pendingFeatureUpdates.update((count) => count - 1)

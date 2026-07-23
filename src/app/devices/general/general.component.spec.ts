@@ -33,6 +33,7 @@ describe('GeneralComponent', () => {
       'sendDeactivate',
       'sendBulkDeactivate',
       'getWsmanOperations',
+      'featuresChanges'
       'setAmtFeatures'
     ])
     const amtFeaturesResponse = {
@@ -47,7 +48,8 @@ describe('GeneralComponent', () => {
       ocr: true,
       winREBootSupported: true,
       localPBABootSupported: true,
-      remoteErase: true,
+      rpe: true,
+      rpeSupported: true,
       pbaBootFilesPath: [],
       winREBootFilesPath: {
         instanceID: '',
@@ -57,6 +59,7 @@ describe('GeneralComponent', () => {
     }
     devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
     devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
+    devicesServiceSpy.featuresChanges.and.returnValue(of(null))
     devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
     devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
     TestBed.configureTestingModule({
@@ -136,12 +139,12 @@ describe('GeneralComponent', () => {
     expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalled()
   })
 
-  it('sends remoteErase from the loaded features, not the default', () => {
+  it('sends rpe from the loaded features, not the default', () => {
     devicesServiceSpy.setAmtFeatures = jasmine.createSpy().and.returnValue(of({}))
     component.setAmtFeatures()
     expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith(
       jasmine.any(String),
-      jasmine.objectContaining({ remoteErase: true })
+      jasmine.objectContaining({ rpe: true })
     )
   })
 

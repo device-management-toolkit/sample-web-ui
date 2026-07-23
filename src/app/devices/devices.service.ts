@@ -39,7 +39,9 @@ import {
   BootDetails,
   BootSource,
   DisplaySelectionResponse,
-  DisplaySelectionRequest
+  DisplaySelectionRequest,
+  RemoteEraseRequest,
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -286,7 +288,14 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      tap((features) => this.getOrCreateFeaturesStream(guid).next(features)),
+      map((features) => {
+        const stream = this.getOrCreateFeaturesStream(guid)
+        const current = stream.value
+        // Use cache if it exists (it's fresher); otherwise use server response
+        const merged = current !== null ? current : features
+        stream.next(merged)
+        return merged
+      }),
       catchError((err) => {
         throw err
       })
@@ -383,6 +392,22 @@ export class DevicesService {
     }
   }
 
+  setRemoteEraseOptions(deviceId: string, req: RemoteEraseRequest): Observable<any> {
+    return this.http.post<any>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`, req).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
+  getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {
+    return this.http.get<BootCapabilities>(`${environment.mpsServer}/api/v1/amt/boot/remoteErase/${deviceId}`).pipe(
+      catchError((err) => {
+        throw err
+      })
+    )
+  }
+
   getTags(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.mpsServer}/api/v1/devices/tags`).pipe(
       map((tags) => tags.sort(caseInsensitiveCompare)),
@@ -447,11 +472,25 @@ export class DevicesService {
       enableSOL: true,
       enableIDER: true,
       ocr: true,
-      remoteErase: true
+      rpe: true
     }
   ): Observable<AMTFeaturesResponse> {
+    // Update cache immediately so any in-flight GET responses will read the
+    // updated value and preserve it (rather than being overwritten).
+    this.applyFeaturesSelection(deviceId, payload)
+
+    const requestBody = {
+      userConsent: payload.userConsent,
+      enableKVM: payload.enableKVM,
+      enableSOL: payload.enableSOL,
+      enableIDER: payload.enableIDER,
+      ocr: payload.ocr,
+      ...(payload.winREBootSupported !== undefined && { winREBootSupported: payload.winREBootSupported }),
+      ...(payload.localPBABootSupported !== undefined && { localPBABootSupported: payload.localPBABootSupported }),
+      rpe: payload.rpe
+    }
     return this.http
-      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, payload)
+      .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, requestBody)
       .pipe(
         tap(() => this.applyFeaturesSelection(deviceId, payload)),
         catchError((err) => {
@@ -463,20 +502,29 @@ export class DevicesService {
   private applyFeaturesSelection(deviceId: string, payload: AMTFeaturesRequest): void {
     const stream = this.getOrCreateFeaturesStream(deviceId)
     const current = stream.value
-    // Nothing cached yet — let the next consumer fetch fresh rather than seed a partial.
+    // Only update if we have cached features; otherwise the payload is incomplete
+    // and shouldn't be broadcast until the full features are fetched.
+    if (current !== null) {
+      stream.next({
+        ...current,
+        userConsent: payload.userConsent,
+        KVM: payload.enableKVM,
+        SOL: payload.enableSOL,
+        IDER: payload.enableIDER,
+        redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
+        ocr: payload.ocr,
+        rpe: payload.rpe
+      })
+    }
+  }
+
+  updateAmtFeaturesCache(deviceId: string, patch: Partial<AMTFeaturesResponse>): void {
+    const stream = this.getOrCreateFeaturesStream(deviceId)
+    const current = stream.value
     if (current === null) {
       return
     }
-    stream.next({
-      ...current,
-      userConsent: payload.userConsent,
-      KVM: payload.enableKVM,
-      SOL: payload.enableSOL,
-      IDER: payload.enableIDER,
-      redirection: payload.enableKVM || payload.enableSOL || payload.enableIDER,
-      ocr: payload.ocr,
-      remoteErase: payload.remoteErase
-    })
+    stream.next({ ...current, ...patch })
   }
 
   getPowerState(deviceId: string): Observable<PowerState> {
