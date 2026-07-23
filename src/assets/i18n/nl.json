@@ -1081,6 +1081,10 @@
     "description": "Energie-tooltip voor uitgeschakeld",
     "value": "Stroom: Uit"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria-label voor de knop voor het vernieuwen van de energiestatus",
+    "value": "Energiestatus vernieuwen"
+  },
   "deviceUserConsent.description": {
     "description": "Beschrijving voor toestemming van de gebruiker voor apparaten",
     "value": "Er is een door Intel AMT gegenereerde gebruikersinstemmingscode vereist om toegang te krijgen tot het systeem."
@@ -1986,7 +1990,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Label voor draadloze lokale profielsynchronisatie",
-    "value": "Lokale profielsynchronisatie"
+    "value": "Synchronisatie van OS-wifi-profielen"
   },
   "network.wireless.macAddress": {
     "description": "Label voor draadloos MAC-adres",

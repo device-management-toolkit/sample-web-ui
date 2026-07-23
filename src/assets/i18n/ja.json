@@ -1081,6 +1081,10 @@
     "description": "電源オフのツールチップ",
     "value": "電源: オフ"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "電源ステータス更新ボタンの aria ラベル",
+    "value": "電源ステータスを更新"
+  },
   "deviceUserConsent.description": {
     "description": "デバイスに関するユーザー同意の説明",
     "value": "システムにアクセスするには、Intel AMTによって生成されたユーザー同意コードが必要となります。"
@@ -1986,7 +1990,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "ワイヤレスローカルプロファイル同期のラベル",
-    "value": "ローカルプロファイルの同期"
+    "value": "OS Wi-Fiプロファイル同期"
   },
   "network.wireless.macAddress": {
     "description": "無線MACアドレスのラベル",

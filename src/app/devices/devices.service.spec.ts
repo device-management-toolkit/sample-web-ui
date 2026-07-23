@@ -16,7 +16,9 @@ import {
   IPSAlarmClockOccurrence,
   IPSAlarmClockOccurrenceInput,
   BootDetails,
-  DisplaySelectionResponse
+  DisplaySelectionResponse,
+  WirelessProfileSyncResponse,
+  WirelessProfileSyncRequest
 } from '../../models/models'
 import { provideTranslateService } from '@ngx-translate/core'
 
@@ -1194,6 +1196,175 @@ describe('DevicesService', () => {
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/tls/guid1`)
       req.flush(null, mockError)
+    })
+  })
+
+  describe('getWiredNetworkSettings', () => {
+    it('should fetch wired network settings for a device', () => {
+      const mockResponse = { dhcpEnabled: true } as any
+
+      service.getWiredNetworkSettings('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wired/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+  })
+
+  describe('patchWiredNetworkSettings', () => {
+    it('should patch wired network settings for a device', () => {
+      const payload = {
+        dhcpEnabled: false,
+        ipSyncEnabled: false,
+        ipAddress: '192.168.1.20',
+        subnetMask: '255.255.255.0',
+        defaultGateway: '192.168.1.1',
+        primaryDNS: '8.8.8.8'
+      }
+
+      service.patchWiredNetworkSettings('guid1', payload).subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wired/guid1`)
+      expect(req.request.method).toBe('PATCH')
+      expect(req.request.body).toEqual(payload)
+      req.flush(null)
+    })
+  })
+
+  describe('wireless network configuration endpoints', () => {
+    it('should get wireless state', () => {
+      const mockResponse = { state: 'WifiEnabledS0SxAC' }
+
+      service.getWirelessState('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse as any)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/state/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should request wireless state change', () => {
+      const payload = { state: 'WifiDisabled' }
+
+      service.requestWirelessStateChange('guid1', payload as any).subscribe((response) => {
+        expect(response).toEqual(payload as any)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/state/guid1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(payload)
+    })
+
+    it('should get profile sync setting', () => {
+      const mockResponse: WirelessProfileSyncResponse = {
+        localProfileSync: true,
+        uefiProfileSync: false,
+        uefiProfileSyncSupported: true
+      }
+
+      service.getWirelessProfileSync('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profileSync/guid1`
+      )
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should update profile sync setting', () => {
+      const payload: WirelessProfileSyncRequest = {
+        localProfileSync: true,
+        uefiProfileSync: false
+      }
+
+      const mockResponse: WirelessProfileSyncResponse = {
+        localProfileSync: true,
+        uefiProfileSync: false,
+        uefiProfileSyncSupported: true
+      }
+
+      service.setWirelessProfileSync('guid1', payload).subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profileSync/guid1`
+      )
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(mockResponse)
+    })
+
+    it('should get wireless profiles', () => {
+      const mockResponse = [
+        {
+          profileName: 'office',
+          ssid: 'CorpNet',
+          authenticationMethod: 'WPA2PSK',
+          encryptionMethod: 'CCMP',
+          priority: 1
+        }
+      ]
+
+      service.getWirelessProfiles('guid1').subscribe((response) => {
+        expect(response).toEqual(mockResponse as any)
+      })
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/guid1`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should add wireless profile', () => {
+      const payload = {
+        profileName: 'office',
+        ssid: 'CorpNet',
+        authenticationMethod: 'WPA2PSK',
+        encryptionMethod: 'CCMP',
+        priority: 1,
+        password: 'password123'
+      }
+
+      service.addWirelessProfile('guid1', payload).subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/guid1`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(payload)
+      req.flush(null)
+    })
+
+    it('should update wireless profile', () => {
+      const payload = {
+        profileName: 'office',
+        ssid: 'CorpNet-2',
+        authenticationMethod: 'WPA2PSK',
+        encryptionMethod: 'CCMP',
+        priority: 2,
+        password: 'password123'
+      }
+
+      service.updateWirelessProfile('guid1', payload).subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/guid1`)
+      expect(req.request.method).toBe('PATCH')
+      expect(req.request.body).toEqual(payload)
+      req.flush(null)
+    })
+
+    it('should delete wireless profile', () => {
+      service.deleteWirelessProfile('guid1', 'office profile').subscribe()
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/amt/networkSettings/wireless/profile/guid1/${encodeURIComponent('office profile')}`
+      )
+      expect(req.request.method).toBe('DELETE')
+      req.flush(null)
     })
   })
 

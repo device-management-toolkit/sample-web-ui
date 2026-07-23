@@ -125,6 +125,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       description: 'deviceDetail.remotePlatformEraseDescription.value',
       component: 'remote-platform-erase',
       icon: 'computer_cancel'
+    },
+    {
+      name: 'deviceDetail.networkSettings.value',
+      description: 'deviceDetail.networkSettingsDescription.value',
+      component: 'network-settings',
+      icon: 'lan'
     }
   ]
 
@@ -136,12 +142,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           description: 'deviceDetail.explorerDescription.value',
           component: 'explorer',
           icon: 'search'
-        },
-        {
-          name: 'deviceDetail.networkSettings.value',
-          description: 'deviceDetail.networkSettingsDescription.value',
-          component: 'network-settings',
-          icon: 'lan'
         },
         {
           name: 'deviceDetail.tlsSettings.value',

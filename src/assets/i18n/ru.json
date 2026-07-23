@@ -1081,6 +1081,10 @@
     "description": "Подсказка питания для состояния выключено",
     "value": "Питание: Выключено"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Пометка aria для кнопки обновления статуса питания",
+    "value": "Обновить статус питания"
+  },
   "deviceUserConsent.description": {
     "description": "Описание согласия пользователя для устройств",
     "value": "Для доступа к системе требуется код согласия пользователя, сгенерированный Intel AMT."
@@ -1986,7 +1990,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Метка для беспроводной синхронизации локального профиля",
-    "value": "Синхронизация локального профиля"
+    "value": "Синхронизация Wi-Fi-профилей ОС"
   },
   "network.wireless.macAddress": {
     "description": "Метка для беспроводного MAC-адреса",

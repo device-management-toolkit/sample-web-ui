@@ -139,6 +139,14 @@
     "value": "SAVE",
     "description": "Save button text"
   },
+  "common.edit": {
+    "value": "Edit",
+    "description": "Edit button text"
+  },
+  "common.editSettings": {
+    "value": "Edit Settings",
+    "description": "Edit settings button text"
+  },
   "common.update": {
     "value": "UPDATE",
     "description": "Update button text"
@@ -1027,7 +1035,7 @@
   },
   "deviceDetail.networkSettingsDescription": {
     "description": "Description for network settings",
-    "value": "View network settings"
+    "value": "Manage network settings"
   },
   "deviceDetail.noEventLog": {
     "description": "Category name for no event logs",
@@ -1406,6 +1414,10 @@
   "deviceToolbar.power.off": {
     "description": "Power tooltip for Off",
     "value": "Power: Off"
+  },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria label for the refresh power status button",
+    "value": "Refresh power status"
   },
   "deviceUserConsent.description": {
     "description": "Description for user consent for devices",
@@ -2165,6 +2177,14 @@
     "description": "Table header for MQTT event type",
     "value": "Type"
   },
+  "network.disabled": {
+    "description": "Used when a network setting is disabled",
+    "value": "Disabled"
+  },
+  "network.enabled": {
+    "description": "Used when a network setting is enabled",
+    "value": "Enabled"
+  },
   "network.errorNetworkSetting": {
     "description": "Error for retrieving network settings",
     "value": "Error retrieving network settings"
@@ -2217,6 +2237,10 @@
     "description": "Label for IEEE 8021x wireless server certificate name",
     "value": "Server Certificate Name"
   },
+  "network.ieee.status": {
+    "description": "Label for the 802.1x authentication section in the network status card",
+    "value": "802.1x Authentication"
+  },
   "network.ieee.subtitle": {
     "description": "Subtitle for the IEEE 8021x network settings card",
     "value": "View IEEE 8021x network settings for this device"
@@ -2244,6 +2268,10 @@
   "network.wired.ipSyncEnabled": {
     "description": "Label for wired IP sync enabled status",
     "value": "IP Sync Enabled"
+  },
+  "network.wired.ipSyncHintEnabled": {
+    "description": "Hint for wired IP sync when enabled on the network settings page",
+    "value": "Requires LMS to perform synchronization"
   },
   "network.wired.linkControl": {
     "description": "Label for wired link control",
@@ -2285,17 +2313,61 @@
     "description": "Label for wired shared static IP",
     "value": "Shared Static IP"
   },
+  "network.wired.sharedIP": {
+    "description": "Label for the derived wired shared IP status",
+    "value": "Shared IP"
+  },
   "network.wired.subnetMask": {
     "description": "Label for the wired subnet mask",
     "value": "Subnet Mask"
   },
   "network.wired.subtitle": {
     "description": "Subtitle for the wired network settings card",
-    "value": "View wired network settings for this device"
+    "value": "View or configure wired network settings for this device"
   },
   "network.wired.title": {
     "description": "Title of the wired network settings card",
     "value": "Wired Network Settings"
+  },
+  "network.wired.configSubtitle": {
+    "description": "Subtitle for the wired network configuration card",
+    "value": "Configure wired network settings for this device"
+  },
+  "network.wired.detailsTitle": {
+    "description": "Title of the wired network read-only details card",
+    "value": "Wired Network Details"
+  },
+  "network.wired.currentStatus": {
+    "description": "Title of the current wired network status card",
+    "value": "Current Wired Status"
+  },
+  "network.wired.configTitle": {
+    "description": "Title of the wired network configuration form",
+    "value": "Configure Wired Settings"
+  },
+  "network.wired.updateSuccess": {
+    "description": "Success message after updating wired network settings",
+    "value": "Wired network settings updated"
+  },
+  "network.wired.updateError": {
+    "description": "Error message when updating wired network settings fails",
+    "value": "Error updating wired network settings"
+  },
+  "network.changeAlert.title": {
+    "description": "Title of the dialog confirming a network settings change that may affect connectivity",
+    "value": "Confirm Network Change"
+  },
+  "network.changeAlert.message": {
+    "description": "Warning shown before saving a network change that may affect connectivity to the device",
+    "value": "Saving these settings may interrupt the connection to this device. Depending on the settings you chose, the connection may drop entirely (and require you to reconnect manually) or only briefly while the device requests a new DHCP address and reconnects. Do you want to continue?"
+  },
+  "network.changeAlert.wifiDisableNoWired": {
+    "description": "Warning shown before disabling WiFi on a device that has no wired adapter",
+    "value": "This device has no wired adapter, so disabling WiFi will drop the connection and there will be no way to reconnect to it remotely. Do you want to continue?"
+  },
+  "network.changeAlert.wifiDisableWithWired": {
+    "description": "Warning shown before disabling WiFi on a device that also has a wired adapter",
+    "value": "Disabling WiFi will permanently drop any WiFi connection to this device. Make sure you are connected through the wired adapter, or that you still have access to the device via the wired adapter, otherwise the connection will be lost. Do you want to continue?"
   },
   "network.wireless.defaultGateway": {
     "description": "Label for the wireless default gateway",
@@ -2331,7 +2403,15 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Label for wireless local profile synchronization",
-    "value": "Local Profile Synchronization"
+    "value": "OS WiFi Profile Synchronization"
+  },
+  "network.wireless.state": {
+    "description": "Label for wireless state",
+    "value": "WiFi Enabled"
+  },
+  "network.wireless.uefiProfileSync": {
+    "description": "Label for wireless UEFI profile synchronization status",
+    "value": "UEFI/CSME Wi-Fi Profile Sharing"
   },
   "network.wireless.macAddress": {
     "description": "Label for wireless MAC address",
@@ -2357,41 +2437,237 @@
     "description": "Label for wireless shared static IP",
     "value": "Shared Static IP"
   },
+  "network.wireless.sharedIP": {
+    "description": "Label for the derived wireless shared IP status",
+    "value": "Shared IP"
+  },
+  "network.sharedIP.static": {
+    "description": "Value shown when the device shares the host static IP address",
+    "value": "Shared (Static)"
+  },
+  "network.sharedIP.dynamic": {
+    "description": "Value shown when the device shares the host dynamic (DHCP) IP address",
+    "value": "Shared (Dynamic)"
+  },
+  "network.sharedIP.none": {
+    "description": "Value shown when the device does not share the host IP address",
+    "value": "Not Shared"
+  },
   "network.wireless.subnetMask": {
     "description": "Label for the wireless subnet mask",
     "value": "Subnet Mask"
   },
   "network.wireless.subtitle": {
     "description": "Subtitle for the wireless network settings card",
-    "value": "View wireless network settings for this device"
+    "value": "View or configure wireless network settings for this device"
   },
   "network.wireless.title": {
     "description": "Title of the wireless network settings card",
     "value": "Wireless Network Settings"
   },
-  "network.wirelessNetworks.name": {
-    "description": "Label for wireless network name",
-    "value": "Network Name: {{name}}"
+  "network.wireless.configSubtitle": {
+    "description": "Subtitle for the wireless network configuration card",
+    "value": "Configure wireless network settings for this device"
   },
-  "network.wirelessNetworks.ssid": {
-    "description": "Label for SSID",
-    "value": "SSID: {{ssid}}"
+  "network.wireless.detailsTitle": {
+    "description": "Title of the wireless network read-only details card",
+    "value": "Wireless Network Details"
   },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Encryption: {{encryptMethod}}"
+  "network.wireless.currentStatus": {
+    "description": "Title of the current wireless network status card",
+    "value": "Current Wireless Status"
   },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Authentication: {{authMethod}}"
+  "network.wireless.configTitle": {
+    "description": "Title of the wireless configuration form",
+    "value": "Configure Wireless Settings"
   },
-  "network.wirelessNetworks.subtitle": {
-    "description": "Subtitle of the wireless networks card",
-    "value": "View wireless networks for this device"
+  "network.wireless.wifiEnabled": {
+    "description": "Label for the wireless state toggle when WiFi is enabled",
+    "value": "WiFi Enabled"
   },
-  "network.wirelessNetworks.title": {
-    "description": "Title of the wireless networks card",
-    "value": "Wireless Networks"
+  "network.wireless.wifiDisabled": {
+    "description": "Label for the wireless state toggle when WiFi is disabled",
+    "value": "WiFi Disabled"
+  },
+  "network.wireless.localProfileSyncToggle": {
+    "description": "Label for the local profile sync toggle",
+    "value": "Enable OS WiFi Profile Synchronization"
+  },
+  "network.wireless.uefiProfileSyncToggle": {
+    "description": "Label for the UEFI profile sync toggle",
+    "value": "Enable UEFI/CSME Wi-Fi Profile Sharing"
+  },
+  "network.wireless.uefiProfileSyncUnsupported": {
+    "description": "Hint shown when the device firmware does not support UEFI/CSME Wi-Fi profile sharing",
+    "value": "This device does not support UEFI/CSME Wi-Fi profile sharing."
+  },
+  "network.wireless.updateSuccess": {
+    "description": "Success message after updating wireless settings",
+    "value": "Wireless settings updated"
+  },
+  "network.wireless.updateError": {
+    "description": "Error message when updating wireless settings fails",
+    "value": "Error updating wireless settings"
+  },
+  "network.wirelessProfile.manageTitle": {
+    "description": "Title of the wireless profile management form",
+    "value": "Wireless Profile Management"
+  },
+  "network.wirelessProfile.manageSubtitle": {
+    "description": "Subtitle of the wireless profile management card",
+    "value": "Add, edit, or remove wireless profiles for this device"
+  },
+  "network.wirelessProfile.profileName": {
+    "description": "Label for the wireless profile name input",
+    "value": "Profile Name"
+  },
+  "network.wirelessProfile.ssid": {
+    "description": "Label for the wireless profile SSID input",
+    "value": "SSID"
+  },
+  "network.wirelessProfile.priority": {
+    "description": "Label for the wireless profile priority input",
+    "value": "Priority"
+  },
+  "network.wirelessProfile.authMethod": {
+    "description": "Label for the wireless profile authentication method select",
+    "value": "Authentication Method"
+  },
+  "network.wirelessProfile.encryptionMethod": {
+    "description": "Label for the wireless profile encryption method select",
+    "value": "Encryption Method"
+  },
+  "network.wirelessProfile.password": {
+    "description": "Label for the wireless profile password input",
+    "value": "Password"
+  },
+  "network.wirelessProfile.ieee8021xUsername": {
+    "description": "Label for the wireless profile 802.1x username input",
+    "value": "802.1x Username"
+  },
+  "network.wirelessProfile.ieee8021xProtocol": {
+    "description": "Label for the wireless profile 802.1x authentication protocol select",
+    "value": "802.1x Authentication Protocol"
+  },
+  "network.wirelessProfile.ieee8021xPassword": {
+    "description": "Label for the wireless profile 802.1x password input",
+    "value": "802.1x Password"
+  },
+  "network.wirelessProfile.ieee8021xPasswordRequired": {
+    "description": "Validation message when the 802.1x password is empty",
+    "value": "802.1x password is required"
+  },
+  "network.wirelessProfile.ieee8021xClientCert": {
+    "description": "Label for the wireless profile 802.1x client certificate input",
+    "value": "Client Certificate"
+  },
+  "network.wirelessProfile.ieee8021xClientCertRequired": {
+    "description": "Validation message when the 802.1x client certificate is empty",
+    "value": "Client certificate is required"
+  },
+  "network.wirelessProfile.ieee8021xPrivateKey": {
+    "description": "Label for the wireless profile 802.1x private key input",
+    "value": "Private Key"
+  },
+  "network.wirelessProfile.ieee8021xPrivateKeyRequired": {
+    "description": "Validation message when the 802.1x private key is empty",
+    "value": "Private key is required"
+  },
+  "network.wirelessProfile.ieee8021xCACert": {
+    "description": "Label for the wireless profile 802.1x CA certificate input",
+    "value": "CA Certificate"
+  },
+  "network.wirelessProfile.ieee8021xCACertHint": {
+    "description": "Hint for the optional wireless profile 802.1x CA certificate input",
+    "value": "Optional. Used to validate the RADIUS server certificate."
+  },
+  "network.wirelessProfile.ieee8021xCertUploaded": {
+    "description": "Status shown when an 802.1x certificate or key file has been uploaded",
+    "value": "Uploaded"
+  },
+  "network.wirelessProfile.ieee8021xCertNotUploaded": {
+    "description": "Status shown when no 802.1x certificate or key file has been uploaded",
+    "value": "No file selected"
+  },
+  "network.wirelessProfile.edit": {
+    "description": "Label for the edit wireless profile button",
+    "value": "Edit"
+  },
+  "network.wirelessProfile.addNew": {
+    "description": "Label for the add new wireless profile button",
+    "value": "Add Profile"
+  },
+  "network.wirelessProfile.empty": {
+    "description": "Message shown when there are no wireless profiles on the device",
+    "value": "No wireless profiles configured. Click \"Add Profile\" to create one."
+  },
+  "network.wirelessProfile.addTitle": {
+    "description": "Title for the add wireless profile form",
+    "value": "Add Wireless Profile"
+  },
+  "network.wirelessProfile.editTitle": {
+    "description": "Title for the edit wireless profile form",
+    "value": "Edit Wireless Profile"
+  },
+  "network.wirelessProfile.profileNameRequired": {
+    "description": "Validation message when the wireless profile name is empty",
+    "value": "Profile name is required"
+  },
+  "network.wirelessProfile.profileNamePattern": {
+    "description": "Validation message when the wireless profile name has invalid characters",
+    "value": "Only letters and numbers are allowed"
+  },
+  "network.wirelessProfile.ssidRequired": {
+    "description": "Validation message when the SSID is empty",
+    "value": "SSID is required"
+  },
+  "network.wirelessProfile.priorityRequired": {
+    "description": "Validation message when the priority is empty",
+    "value": "Priority is required"
+  },
+  "network.wirelessProfile.priorityRange": {
+    "description": "Validation message when the priority is out of range",
+    "value": "Priority must be between 1 and 255"
+  },
+  "network.wirelessProfile.priorityConflict": {
+    "description": "Validation message when the priority is already used by another wireless profile",
+    "value": "Priority is already in use by another profile"
+  },
+  "network.wirelessProfile.passwordRequired": {
+    "description": "Validation message when the password is too short or empty",
+    "value": "Password must be at least 8 characters"
+  },
+  "network.wirelessProfile.usernameRequired": {
+    "description": "Validation message when the 802.1x username is empty",
+    "value": "802.1x username is required"
+  },
+  "network.wirelessProfile.saveSuccess": {
+    "description": "Success message after saving a wireless profile",
+    "value": "Wireless profile saved"
+  },
+  "network.wirelessProfile.saveError": {
+    "description": "Error message when saving a wireless profile fails",
+    "value": "Error saving wireless profile"
+  },
+  "network.wirelessProfile.deleteSuccess": {
+    "description": "Success message after deleting a wireless profile",
+    "value": "Wireless profile deleted"
+  },
+  "network.wirelessProfile.deleteError": {
+    "description": "Error message when deleting a wireless profile fails",
+    "value": "Error deleting wireless profile"
+  },
+  "network.wirelessProfile.limitReached": {
+    "description": "Tooltip shown on the add button when the device already has the maximum number of wireless profiles",
+    "value": "Maximum of {{max}} wireless profiles reached. Remove a profile before adding a new one."
+  },
+  "network.wirelessProfile.wifiDisabledAlertTitle": {
+    "description": "Title of the dialog shown when adding a profile while WiFi is disabled",
+    "value": "WiFi Disabled"
+  },
+  "network.wirelessProfile.wifiDisabledAlert": {
+    "description": "Warning message shown when adding a profile while WiFi is disabled",
+    "value": "WiFi is currently disabled. This profile will not take effect until WiFi is enabled."
   },
   "pba.enforceCCMMessage": {
     "value": "Secure Boot is always enforced in Client Control Mode (CCM)"

@@ -31,7 +31,8 @@ export interface DeviceInfo {
   currentMode: string
   features: string
   ipAddress: string
-  lastUpdated?: Date
+  firstDiscovered?: Date
+  lastSynced?: Date
 }
 export interface DeviceStats {
   totalCount: number
@@ -397,7 +398,7 @@ export interface TLSSettings {
   NonSecureConnectionsSupported: boolean
 }
 
-interface WiFiPortConfigService {
+export interface WiFiPortConfigService {
   requestedState: number
   enabledState: number
   healthState: number
@@ -412,7 +413,7 @@ interface WiFiPortConfigService {
   uefiWiFiProfileShareEnabled: boolean
 }
 
-interface WiredNetworkSettings {
+export interface WiredNetworkSettings {
   elementName: string
   instanceID: string
   vlanTag: number
@@ -436,7 +437,7 @@ interface WiredNetworkSettings {
   ieee8021x: Ieee8021x
 }
 
-interface WirelessNetworkSettings {
+export interface WirelessNetworkSettings {
   elementName: string
   instanceID: string
   vlanTag: number
@@ -467,6 +468,74 @@ interface WirelessNetworkSettings {
 export interface NetworkConfig {
   wired: WiredNetworkSettings
   wireless: WirelessNetworkSettings
+}
+
+export interface WiredNetworkConfigRequest {
+  dhcpEnabled: boolean
+  ipSyncEnabled?: boolean
+  ipAddress?: string
+  subnetMask?: string
+  defaultGateway?: string
+  primaryDNS?: string
+  secondaryDNS?: string
+  ieee8021x?: {
+    profileName: string
+    authenticationProtocol: number
+    username: string
+    password: string
+    privateKey: string
+    clientCert: string
+    caCert: string
+  }
+}
+
+export type WirelessState = 'WifiDisabled' | 'WifiEnabledS0' | 'WifiEnabledS0SxAC'
+
+export interface WirelessStateResponse {
+  state: WirelessState
+}
+
+export interface WirelessStateChangeRequest {
+  state: WirelessState
+}
+
+export interface WirelessProfileSyncRequest {
+  localProfileSync: boolean
+  uefiProfileSync: boolean
+}
+
+export interface WirelessProfileSyncResponse {
+  localProfileSync: boolean
+  uefiProfileSync: boolean
+  uefiProfileSyncSupported: boolean
+}
+
+export interface DeviceWirelessIEEE8021x {
+  username: string
+  authenticationProtocol: number
+  password?: string
+  clientCert?: string
+  privateKey?: string
+  caCert?: string
+}
+
+export interface DeviceWirelessProfileRequest {
+  profileName: string
+  ssid: string
+  authenticationMethod: string
+  encryptionMethod: string
+  priority: number
+  password?: string
+  ieee8021x?: DeviceWirelessIEEE8021x
+}
+
+export interface DeviceWirelessProfileResponse {
+  profileName: string
+  ssid: string
+  authenticationMethod: string
+  encryptionMethod: string
+  priority: number
+  ieee8021x?: DeviceWirelessIEEE8021x
 }
 
 export interface RedirectionStatus {

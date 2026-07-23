@@ -1081,6 +1081,10 @@
     "description": "Información de energía para Apagado",
     "value": "Energía: Apagado"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Etiqueta aria para el botón de actualización del estado de energía",
+    "value": "Actualizar estado de energía"
+  },
   "deviceUserConsent.description": {
     "description": "Descripción del consentimiento del usuario para los dispositivos.",
     "value": "Se requiere un código de consentimiento del usuario generado por Intel AMT para acceder al sistema."
@@ -1986,7 +1990,7 @@
   },
   "network.wireless.localProfileSync": {
     "description": "Etiqueta para la sincronización inalámbrica de perfiles locales.",
-    "value": "Sincronización de perfiles locales"
+    "value": "Sincronización de perfiles WiFi del sistema operativo"
   },
   "network.wireless.macAddress": {
     "description": "Etiqueta para la dirección MAC inalámbrica",

@@ -1,3 +1,31 @@
+# [3.61.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.1...v3.61.0) (2026-07-20)
+
+
+### Features
+
+* avoid reloading AMT Summary when updating AMT Features ([#3427](https://github.com/device-management-toolkit/sample-web-ui/issues/3427)) ([2703ec1](https://github.com/device-management-toolkit/sample-web-ui/commit/2703ec1281c86d3c1664e4857ed3631900b28f7c))
+
+## [3.60.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.0...v3.60.1) (2026-07-20)
+
+
+### Bug Fixes
+
+* fix refresh power button issue ([#3441](https://github.com/device-management-toolkit/sample-web-ui/issues/3441)) ([98210d2](https://github.com/device-management-toolkit/sample-web-ui/commit/98210d29feeb823ef62df84b4b2300a37d49d9a9))
+
+# [3.60.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.59.0...v3.60.0) (2026-07-16)
+
+
+### Features
+
+* **devices:** enable device network settings in cloud mode ([#3396](https://github.com/device-management-toolkit/sample-web-ui/issues/3396)) ([b48c200](https://github.com/device-management-toolkit/sample-web-ui/commit/b48c20067898c501bdfce092e015b534b28c1fa6)), closes [#3376](https://github.com/device-management-toolkit/sample-web-ui/issues/3376)
+
+# [3.59.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.2...v3.59.0) (2026-07-16)
+
+
+### Features
+
+* **devices:** add network settings management for AMT devices ([#3370](https://github.com/device-management-toolkit/sample-web-ui/issues/3370)) ([d7b3829](https://github.com/device-management-toolkit/sample-web-ui/commit/d7b382911bc4bbf8e4e4ddabf8d83b06bdd1fac8)), closes [#3353](https://github.com/device-management-toolkit/sample-web-ui/issues/3353)
+
 ## [3.58.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.58.1...v3.58.2) (2026-07-06)
 
 
