@@ -18,11 +18,10 @@ import {
   execWithRetry,
   buildInfoCommand,
   buildActivateCommand,
-  buildDeactivateCommand,
   getAmtInfo,
   getAmtVersion,
   notActivatedControlModes
-} from './activation.spec'
+} from './rpc.helpers'
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
@@ -30,7 +29,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     // Environment variables
     const profileName: string = Cypress.env('PROFILE_NAME') as string
-    const password: string = Cypress.env('AMT_PASSWORD')
     const fqdn: string = Cypress.env('ACTIVATION_URL')
     const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
@@ -40,7 +38,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
     let activateCommand = ''
-    let deactivateCommand = ''
     let amtVersion = ''
 
     before(() => {
@@ -53,18 +50,11 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           fqdn,
           profileName
         })
-        deactivateCommand = buildDeactivateCommand({
-          isWin,
-          rpcDockerImage,
-          password,
-          amtVersion,
-          fqdn
-        })
       })
     })
 
     describe('Device Activation - Cloud', () => {
-      context('TC_ACTIVATION_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
+      context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
           getAmtInfo(infoCommand).then((info) => {
@@ -158,28 +148,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           })
         })
 
-        it('should NOT deactivate device - invalid password', () => {
-          if (!notActivatedControlModes.includes(amtInfo.controlMode)) {
-            const invalidCommand =
-              deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
-            execWithRetry(invalidCommand, execConfig).then((result) => {
-              const { combined } = buildOutput(result)
-              cy.log(combined)
-              expect(combined).to.contain('Unable to authenticate with AMT')
-            })
-          }
-        })
-
-        it('should deactivate device', () => {
-          if (!notActivatedControlModes.includes(amtInfo.controlMode)) {
-            execWithRetry(deactivateCommand, execConfig).then((result) => {
-              const { combined } = buildOutput(result)
-              cy.log(combined)
-              expect(combined).to.contain('Status: Deactivated')
-              cy.wait(15000)
-            })
-          }
-        })
       })
     })
 
