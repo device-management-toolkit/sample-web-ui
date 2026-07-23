@@ -49,6 +49,14 @@
   },
   "overrides": {
     "@babel/core": "^7.29.6",
+    "@angular-devkit/build-angular": {
+      "webpack-dev-server": "5.2.6"
+    },
+    "@angular/cli": {
+      "@modelcontextprotocol/sdk": {
+        "@hono/node-server": "2.0.11"
+      }
+    },
     "diff": "^8.0.4",
     "dompurify": "^3.4.11",
     "esbuild": "^0.28.1",
