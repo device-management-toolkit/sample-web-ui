@@ -4,7 +4,7 @@
 <mat-card>
   <mat-card-header style="justify-content: space-between">
     <mat-card-title>{{ 'remotePlatformErase.title.value' | translate }}</mat-card-title>
-    @if (isPlatformEraseSupported() && platformEraseEnabled()) {
+    @if (isPlatformEraseSupported() && rpe()) {
       <button
         mat-flat-button
         color="warn"
@@ -29,8 +29,8 @@
         <mat-slide-toggle
           color="primary"
           data-cy="remoteEraseCheckbox"
-          [checked]="platformEraseEnabled()"
-          [disabled]="isLoading()"
+          [checked]="rpe()"
+          [disabled]="isLoading() || !amtFeatures()"
           (change)="toggleFeature($event.checked)">
           {{ 'remotePlatformErase.featureEnabled.value' | translate }}
         </mat-slide-toggle>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      @if (platformEraseEnabled()) {
+      @if (rpe()) {
         <mat-divider style="margin: 16px 0"></mat-divider>
 
         <h3>
@@ -97,16 +97,6 @@
             </div>
           }
         }
-
-        @if (isCsmeExclusiveSelected()) {
-          <div role="status" data-cy="csmeExclusiveNote" style="padding: 8px 0">
-            <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
-              >info</mat-icon
-            >
-            <span>{{ 'remotePlatformErase.csmeUnconfigureExclusive.value' | translate }}</span>
-          </div>
-        }
-
         <p data-cy="selectionCount" style="margin: 8px 0 0">
           <small>
             {{

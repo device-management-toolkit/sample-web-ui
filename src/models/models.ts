@@ -148,6 +148,8 @@ export interface AMTFeaturesRequest {
   enableSOL: boolean
   enableIDER: boolean
   ocr: boolean
+  winREBootSupported?: boolean
+  localPBABootSupported?: boolean
   rpe: boolean
 }
 

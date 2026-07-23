@@ -45,9 +45,6 @@ export class DevicesService {
   private readonly http = inject(HttpClient)
   private readonly amtFeaturesStreams = new Map<string, BehaviorSubject<AMTFeaturesResponse | null>>()
   private readonly powerStateStreams = new Map<string, BehaviorSubject<PowerState | null>>()
-  // After successful platform erase we may temporarily get stale feature payloads
-  // while the device reboots. Keep RPE forced off until a user explicitly re-enables it.
-  private readonly rpeDisabledAfterErase = new Set<string>()
   // In-flight HTTP requests, shared so simultaneous callers (e.g. toolbar and
   // general components whose ngOnInit fires together) hit the same response.
   private readonly featuresInflight = new Map<string, Observable<AMTFeaturesResponse>>()
@@ -286,10 +283,10 @@ export class DevicesService {
       map((features) => {
         const stream = this.getOrCreateFeaturesStream(guid)
         const current = stream.value
-        const merged = current === null ? features : { ...features, rpe: current.rpe }
-        const nextFeatures = this.applyRpeOverride(guid, merged)
-        stream.next(nextFeatures)
-        return nextFeatures
+        // Use cache if it exists (it's fresher); otherwise use server response
+        const merged = current !== null ? current : features
+        stream.next(merged)
+        return merged
       }),
       catchError((err) => {
         throw err
@@ -470,16 +467,19 @@ export class DevicesService {
       rpe: true
     }
   ): Observable<AMTFeaturesResponse> {
-    if (payload.rpe) {
-      this.rpeDisabledAfterErase.delete(deviceId)
-    }
+    // Update cache immediately so any in-flight GET responses will read the
+    // updated value and preserve it (rather than being overwritten).
+    this.applyFeaturesSelection(deviceId, payload)
+
     const requestBody = {
       userConsent: payload.userConsent,
       enableKVM: payload.enableKVM,
       enableSOL: payload.enableSOL,
       enableIDER: payload.enableIDER,
       ocr: payload.ocr,
-      platformEraseEnabled: payload.rpe
+      ...(payload.winREBootSupported !== undefined && { winREBootSupported: payload.winREBootSupported }),
+      ...(payload.localPBABootSupported !== undefined && { localPBABootSupported: payload.localPBABootSupported }),
+      rpe: payload.rpe
     }
     return this.http
       .post<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${deviceId}`, requestBody)
@@ -494,12 +494,10 @@ export class DevicesService {
   private applyFeaturesSelection(deviceId: string, payload: AMTFeaturesRequest): void {
     const stream = this.getOrCreateFeaturesStream(deviceId)
     const current = stream.value
-    // Nothing cached yet — let the next consumer fetch fresh rather than seed a partial.
-    if (current === null) {
-      return
-    }
-    stream.next(
-      this.applyRpeOverride(deviceId, {
+    // Only update if we have cached features; otherwise the payload is incomplete
+    // and shouldn't be broadcast until the full features are fetched.
+    if (current !== null) {
+      stream.next({
         ...current,
         userConsent: payload.userConsent,
         KVM: payload.enableKVM,
@@ -509,7 +507,7 @@ export class DevicesService {
         ocr: payload.ocr,
         rpe: payload.rpe
       })
-    )
+    }
   }
 
   updateAmtFeaturesCache(deviceId: string, patch: Partial<AMTFeaturesResponse>): void {
@@ -518,22 +516,7 @@ export class DevicesService {
     if (current === null) {
       return
     }
-    stream.next(
-      this.applyRpeOverride(deviceId, {
-        ...current,
-        ...patch
-      })
-    )
-  }
-
-  private applyRpeOverride(deviceId: string, features: AMTFeaturesResponse): AMTFeaturesResponse {
-    if (!this.rpeDisabledAfterErase.has(deviceId)) {
-      return features
-    }
-    return {
-      ...features,
-      rpe: false
-    }
+    stream.next({ ...current, ...patch })
   }
 
   getPowerState(deviceId: string): Observable<PowerState> {

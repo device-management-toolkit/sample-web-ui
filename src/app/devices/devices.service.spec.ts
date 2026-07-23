@@ -593,7 +593,9 @@ describe('DevicesService', () => {
         enableSOL: true,
         enableIDER: true,
         ocr: true,
-        platformEraseEnabled: true
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpe: true
       })
       req.flush(mockResponse)
     })

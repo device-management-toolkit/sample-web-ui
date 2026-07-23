@@ -84,11 +84,10 @@ export class RemotePlatformEraseComponent implements OnInit {
   public isLoading = signal(false)
   public powerState: PowerState = { powerstate: 0 }
   public isPlatformEraseSupported = signal(false)
-  public platformEraseEnabled = signal(false)
+  public rpe = signal(false)
   public eraseCaps = signal<ParsedPlatformEraseCapability[]>([])
   public eraseCapsArray: FormArray<FormControl<boolean | null>> = this.fb.array<boolean>([])
   public selectedCapsCount = signal(0)
-  public isCsmeExclusiveSelected = signal(false)
   public hasSelectedCaps = computed(() => this.selectedCapsCount() > 0)
   public supportedCapsCount = computed(() => this.eraseCaps().filter((c) => c.supported).length)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
@@ -128,47 +127,10 @@ export class RemotePlatformEraseComponent implements OnInit {
       .pipe(filter(Boolean), takeUntilDestroyed(this.destroyRef))
       .subscribe((features) => {
         this.isPlatformEraseSupported.set(features.rpeSupported ?? false)
-        this.platformEraseEnabled.set(features.rpe ?? false)
+        this.rpe.set(features.rpe ?? false)
         this.amtFeatures.set(features)
         this.updateCapControlStates()
       })
-  }
-
-  init(): void {
-    this.isLoading.set(true)
-    // device needs to be powered on in order to perform RPE
-    this.getPowerState(this.deviceId())
-      .pipe(switchMap((powerState) => this.handlePowerState(powerState)))
-      .subscribe()
-      .add(() => this.isLoading.set(false))
-  }
-
-  handlePowerState(powerState: PowerState): Observable<any> {
-    this.powerState = powerState
-    // If device is not powered on, shows alert to power up device
-    if (this.powerState.powerstate !== 2) {
-      return this.showPowerUpAlert().pipe(
-        switchMap((result) => {
-          // if they said yes, power on the device
-          if (result) {
-            return this.devicesService.sendPowerAction(this.deviceId(), 2)
-          }
-          return of(null)
-        })
-      )
-    }
-    return of(true)
-  }
-
-  getPowerState(guid: string): Observable<any> {
-    return this.devicesService.getPowerState(guid).pipe(
-      catchError((err) => {
-        this.isLoading.set(false)
-        const msg: string = err.error?.message || this.t('remotePlatformErase.errorRetrievingPower')
-        this.displayError(msg)
-        return EMPTY
-      })
-    )
   }
 
   showPowerUpAlert(): Observable<boolean> {
@@ -177,15 +139,6 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   onCapChange(): void {
-    const csmeSelected = this.csmeIndex >= 0 && this.eraseCapsArray.at(this.csmeIndex)?.value === true
-    if (csmeSelected) {
-      this.eraseCapsArray.controls.forEach((ctrl, i) => {
-        if (i !== this.csmeIndex && ctrl.value) {
-          ctrl.setValue(false, { emitEvent: false })
-        }
-      })
-    }
-    this.isCsmeExclusiveSelected.set(csmeSelected)
     this.selectedCapsCount.set(this.eraseCapsArray.getRawValue().filter((v) => v === true).length)
     const ssdSelected = this.ssdIndex >= 0 && this.eraseCapsArray.at(this.ssdIndex)?.value === true
     this.isSsdSelected.set(ssdSelected)
@@ -207,10 +160,10 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   toggleFeature(enabled: boolean): void {
-    this.platformEraseEnabled.set(enabled)
+    this.rpe.set(enabled)
     this.updateCapControlStates()
     const payload: AMTFeaturesRequest = {
-      userConsent: this.amtFeatures()?.userConsent ?? '',
+      userConsent: this.amtFeatures()?.userConsent ?? 'none',
       enableKVM: this.amtFeatures()?.KVM ?? false,
       enableSOL: this.amtFeatures()?.SOL ?? false,
       enableIDER: this.amtFeatures()?.IDER ?? false,
@@ -223,7 +176,7 @@ export class RemotePlatformEraseComponent implements OnInit {
       .pipe(
         finalize(() => this.isLoading.set(false)),
         catchError((err) => {
-          this.platformEraseEnabled.set(!enabled)
+          this.rpe.set(!enabled)
           this.updateCapControlStates()
           const msg: string = err.error?.message || this.t('remotePlatformErase.toggleFeatureError')
           this.displayError(msg)
@@ -239,7 +192,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   initiateErase(): void {
-    if (!this.platformEraseEnabled() || !this.hasSelectedCaps()) {
+    if (!this.rpe() || !this.hasSelectedCaps()) {
       return
     }
     // Validate SSD password if encrypted SSD erase is selected
@@ -293,7 +246,7 @@ export class RemotePlatformEraseComponent implements OnInit {
     this.amtFeatures.update((f) => (f ? { ...f, ...features } : features))
     const supported = features.rpeSupported ?? false
     this.isPlatformEraseSupported.set(supported)
-    this.platformEraseEnabled.set(features.rpe ?? false)
+    this.rpe.set(features.rpe ?? false)
     const caps: ParsedPlatformEraseCapability[] = [
       { key: 'secureEraseSsds', supported: capabilities.secureEraseAllSSDs },
       { key: 'tpmClear', supported: capabilities.tpmClear },
@@ -307,7 +260,6 @@ export class RemotePlatformEraseComponent implements OnInit {
       caps.map((cap) => this.fb.control<boolean | null>({ value: false, disabled: !cap.supported }))
     )
     this.selectedCapsCount.set(0)
-    this.isCsmeExclusiveSelected.set(false)
     this.resetSsdControls()
     this.updateCapControlStates()
   }
@@ -354,7 +306,7 @@ export class RemotePlatformEraseComponent implements OnInit {
               : this.t('remotePlatformErase.eraseSuccess')
             this.snackBar.open(successMsg, undefined, SnackbarDefaults.defaultSuccess)
             const payload: AMTFeaturesRequest = {
-              userConsent: this.amtFeatures()?.userConsent ?? '',
+              userConsent: this.amtFeatures()?.userConsent ?? 'none',
               enableKVM: this.amtFeatures()?.KVM ?? false,
               enableSOL: this.amtFeatures()?.SOL ?? false,
               enableIDER: this.amtFeatures()?.IDER ?? false,
@@ -374,12 +326,10 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   private updateCapControlStates(): void {
-    const featureEnabled = this.platformEraseEnabled()
-    const csmeSelected = this.isCsmeExclusiveSelected()
+    const featureEnabled = this.rpe()
     this.eraseCaps().forEach((cap, i) => {
       const ctrl = this.eraseCapsArray.at(i)
-      const blockedByCsme = csmeSelected && i !== this.csmeIndex
-      const shouldEnable = cap.supported && featureEnabled && !blockedByCsme
+      const shouldEnable = cap.supported && featureEnabled
       if (shouldEnable) {
         ctrl.enable({ emitEvent: false })
       } else {

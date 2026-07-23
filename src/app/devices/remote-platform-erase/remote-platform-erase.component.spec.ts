@@ -52,7 +52,6 @@ describe('RemotePlatformEraseComponent', () => {
       'getAMTFeaturesCached',
       'featuresChanges',
       'updateAmtFeaturesCache',
-      'markRpeDisabledAfterErase',
       'setAmtFeatures',
       'getDevice',
       'getRemoteEraseCapabilities',
@@ -156,7 +155,7 @@ describe('RemotePlatformEraseComponent', () => {
     component.eraseCapsArray.at(0).enable()
     component.eraseCapsArray.at(0).setValue(true)
     component.selectedCapsCount.set(1)
-    component.platformEraseEnabled.set(true)
+    component.rpe.set(true)
 
     devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
@@ -473,15 +472,15 @@ describe('RemotePlatformEraseComponent', () => {
 
     it('should set rpe immediately before API call completes', () => {
       devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
-      expect(component.platformEraseEnabled()).toBeFalse()
+      expect(component.rpe()).toBeFalse()
       component.toggleFeature(true)
-      expect(component.platformEraseEnabled()).toBeTrue()
+      expect(component.rpe()).toBeTrue()
     })
 
-    it('should revert platformEraseEnabled when setAmtFeatures fails', () => {
+    it('should revert rpe when setAmtFeatures fails', () => {
       devicesServiceSpy.setAmtFeatures.and.returnValue(throwError(() => new Error('error')))
       component.toggleFeature(true)
-      expect(component.platformEraseEnabled()).toBeFalse()
+      expect(component.rpe()).toBeFalse()
     })
 
     it('should show error snackbar when setAmtFeatures fails', () => {
@@ -573,44 +572,6 @@ describe('RemotePlatformEraseComponent', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       expect(router.navigate).toHaveBeenCalledWith(['/devices'])
-    })
-
-    it('should signal isCsmeExclusiveSelected when CSME is checked', () => {
-      expect(component.isCsmeExclusiveSelected()).toBeFalse()
-      component.eraseCapControl(3).setValue(true) // csmeUnconfigure
-      component.onCapChange()
-      expect(component.isCsmeExclusiveSelected()).toBeTrue()
-    })
-
-    it('should uncheck other caps when CSME is checked', () => {
-      component.eraseCapControl(0).setValue(true)
-      component.eraseCapControl(2).setValue(true)
-      component.onCapChange()
-      expect(component.selectedCapsCount()).toBe(2)
-
-      component.eraseCapControl(3).setValue(true)
-      component.onCapChange()
-      expect(component.eraseCapControl(0).value).toBeFalse()
-      expect(component.eraseCapControl(2).value).toBeFalse()
-      expect(component.selectedCapsCount()).toBe(1)
-    })
-
-    it('should disable other caps while CSME is selected', () => {
-      component.eraseCapControl(3).setValue(true)
-      component.onCapChange()
-      expect(component.eraseCapControl(0).disabled).toBeTrue()
-      expect(component.eraseCapControl(2).disabled).toBeTrue()
-      expect(component.eraseCapControl(3).disabled).toBeFalse()
-    })
-
-    it('should re-enable other caps when CSME is unchecked', () => {
-      component.eraseCapControl(3).setValue(true)
-      component.onCapChange()
-      component.eraseCapControl(3).setValue(false)
-      component.onCapChange()
-      expect(component.eraseCapControl(0).disabled).toBeFalse()
-      expect(component.eraseCapControl(2).disabled).toBeFalse()
-      expect(component.isCsmeExclusiveSelected()).toBeFalse()
     })
 
     it('should send only the CSME bit in the erase mask', () => {
@@ -709,22 +670,6 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.isSsdEncrypted()).toBeTrue()
       expect(component.ssdPasswordControl.value).toBe('secret')
     })
-
-    it('should reset SSD controls when CSME is selected', () => {
-      devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
-        of({ secureEraseAllSSDs: true, tpmClear: false, restoreBIOSToEOM: true, unconfigureCSME: true })
-      )
-      component.ngOnInit()
-      component.toggleFeature(true)
-      component.eraseCapControl(0).setValue(true)
-      component.onCapChange()
-      component.onSsdEncryptedChange(true)
-      // Now select CSME (index 3) — deselects SSD
-      component.eraseCapControl(3).setValue(true)
-      component.onCapChange()
-      expect(component.isSsdSelected()).toBeFalse()
-      expect(component.isSsdEncrypted()).toBeFalse()
-    })
   })
 
   describe('supportedCapsCount', () => {
@@ -764,14 +709,14 @@ describe('RemotePlatformEraseComponent', () => {
       expect(warn).toBeNull()
     })
 
-    it('should show selectHint when platformEraseEnabled is true', () => {
-      component.toggleFeature(true)
+    it('should show selectHint when rpe is true', () => {
+      component.rpe.set(true)
       fixture.detectChanges()
       const hint = fixture.nativeElement.querySelector('mat-icon[color="primary"]')
       expect(hint).not.toBeNull()
     })
 
-    it('should hide selectHint when platformEraseEnabled is false', () => {
+    it('should hide selectHint when rpe is false', () => {
       fixture.detectChanges()
       const hint = fixture.nativeElement.querySelector('mat-icon[color="primary"]')
       expect(hint).toBeNull()
@@ -837,7 +782,7 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('should call executeErase when AreYouSure dialog is confirmed', () => {
-      component.platformEraseEnabled.set(true)
+      component.rpe.set(true)
       component.eraseCaps.set([
         { key: 'secureEraseSsds', supported: true },
         { key: 'tpmClear', supported: false },
@@ -971,7 +916,7 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('initiateErase should prevent submission if SSD password exceeds 64 bytes', () => {
-      component.platformEraseEnabled.set(true)
+      component.rpe.set(true)
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(true)
@@ -992,7 +937,7 @@ describe('RemotePlatformEraseComponent', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
       devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
 
-      component.platformEraseEnabled.set(true)
+      component.rpe.set(true)
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(true)
@@ -1008,7 +953,7 @@ describe('RemotePlatformEraseComponent', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
       devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
 
-      component.platformEraseEnabled.set(true)
+      component.rpe.set(true)
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(false)
