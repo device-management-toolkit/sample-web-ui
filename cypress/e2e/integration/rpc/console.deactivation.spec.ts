@@ -38,7 +38,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   })
 
   describe('Device Deactivation - Console', () => {
-    context('TC_ACTIVATION_DEVICE_DEACTIVATE', () => {
+    context('TC_DEACTIVATION_DEVICE_DEACTIVATE', () => {
       beforeEach(() => {
         cy.setup()
         getAmtInfo(infoCommand).then((info) => {

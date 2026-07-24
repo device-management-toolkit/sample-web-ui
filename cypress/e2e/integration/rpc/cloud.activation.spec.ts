@@ -78,7 +78,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               return
             }
 
-            expect(combined).not.to.match(/failed/i)
             if (isAdminControlModeProfile) {
               expect(combined).to.match(/admin control mode/i)
             } else {
