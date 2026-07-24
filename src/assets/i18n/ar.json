@@ -1065,9 +1065,25 @@
     "description": "عنوان عمود الجدول لحالة الجهاز",
     "value": "الحالة"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "نوع المنتج"
+  },
   "devices.table.tags": {
     "description": "عنوان عمود الجدول للعلامات",
     "value": "العلامات"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "الكل"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "مُفعَّل"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "مكتشَف"
   },
   "deviceToolbar.power.on": {
     "description": "تلميح الطاقة للحالة تشغيل",

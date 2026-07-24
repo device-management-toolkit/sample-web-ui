@@ -46,6 +46,11 @@
         }
       </h3>
     } @else {
+      <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+        <mat-tab [label]="allTabLabel"></mat-tab>
+        <mat-tab [label]="activatedTabLabel"></mat-tab>
+        <mat-tab [label]="discoveredTabLabel"></mat-tab>
+      </mat-tab-group>
       <div class="flex-row flex-wrap flex-1">
         <div class="flex flex-66" style="width: 66%">
           <mat-form-field data-cy="filterSearch" style="width: 100%">
@@ -118,6 +123,15 @@
             } @else {
               Power: {{ powerStates[element.powerstate] }}
             }
+          </mat-cell>
+        </ng-container>
+        <!-- productType Column -->
+        <ng-container matColumnDef="productType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+            'devices.table.productType.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            {{ getProductType(element) }}
           </mat-cell>
         </ng-container>
         <!-- tags Column -->
@@ -203,7 +217,7 @@
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
           [pageSize]="pageEvent.pageSize"
-          [length]="totalCount()"
+          [length]="allCount"
           (page)="pageChanged($event)"
           showFirstLastButtons>
         </mat-paginator>

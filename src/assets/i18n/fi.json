@@ -1065,9 +1065,25 @@
     "description": "Laitteen tilan taulukon sarakkeen otsikko",
     "value": "Tila"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Tuotetyyppi"
+  },
   "devices.table.tags": {
     "description": "Taulukon sarakkeen otsikko tunnisteille",
     "value": "Tunnisteet"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Kaikki"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Aktivoitu"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Löydetty"
   },
   "deviceToolbar.power.on": {
     "description": "Virtatilan vihjeteksti tilalle päällä",
