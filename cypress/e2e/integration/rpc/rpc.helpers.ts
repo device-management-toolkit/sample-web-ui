@@ -149,7 +149,7 @@ export interface ActivateCommandOptions {
 export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
   const commonFlag = '-v --json'
   if (isCloud) {
-    const flagPart = parseInt(opts.amtVersion) <= 18 ? ' -tls-tunnel' : ''
+    const flagPart = parseInt(opts.amtVersion) <= 18 ? ' --tls-tunnel' : ''
     const args = `activate -u wss://${opts.fqdn}/activate --profile ${opts.profileName} -n${flagPart} ${commonFlag}`
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
@@ -184,7 +184,7 @@ export interface DeactivateCommandOptions {
 export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string => {
   const commonFlag = '-v -f --json'
   if (isCloud) {
-    const flagPart = parseInt(opts.amtVersion) <= 18 ? ' -tls-tunnel' : ''
+    const flagPart = parseInt(opts.amtVersion) <= 18 ? ' --tls-tunnel' : ''
     const args = `deactivate -u wss://${opts.fqdn}/activate -n${flagPart} --password ${opts.password} ${commonFlag}`
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
