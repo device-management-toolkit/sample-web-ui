@@ -49,10 +49,19 @@ describe('AuthorizeInterceptor', () => {
   })
 
   it('should not add Authorization header for /authorize endpoint', () => {
-    httpClient.get('/authorize').subscribe()
+    httpClient.get('/api/v1/authorize').subscribe()
 
-    const req = httpTestingController.expectOne('/authorize')
+    const req = httpTestingController.expectOne('/api/v1/authorize')
     expect(req.request.headers.has('Authorization')).toBeFalse()
+  })
+
+  it('should add Authorization header for /authorize/validate endpoint', () => {
+    authServiceSpy.getLoggedUserToken.and.returnValue('test-token')
+
+    httpClient.get('/api/v1/authorize/validate').subscribe()
+
+    const req = httpTestingController.expectOne('/api/v1/authorize/validate')
+    expect(req.request.headers.get('Authorization')).toBe('Bearer test-token')
   })
 
   it('should add if-match header if body contains version', () => {

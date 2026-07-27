@@ -13,8 +13,21 @@ describe('AuthService', () => {
   let routerSpy: jasmine.SpyObj<Router>
 
   const mockEnvironment = { mpsServer: 'https://test-mps', rpsServer: 'https://test-rps' }
+  const createJwtWithExp = (expSeconds: number): string => {
+    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/g, '')
+    const payload = btoa(JSON.stringify({ exp: expSeconds }))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/g, '')
+    return `${header}.${payload}.signature`
+  }
 
   beforeEach(() => {
+    localStorage.clear()
+
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     environment.mpsServer = mockEnvironment.mpsServer
     environment.rpsServer = mockEnvironment.rpsServer
@@ -35,6 +48,7 @@ describe('AuthService', () => {
 
   afterEach(() => {
     httpMock.verify()
+    localStorage.clear()
   })
 
   it('should be created', () => {
@@ -198,6 +212,140 @@ describe('AuthService', () => {
       expect(service.compareSemver('1.0.0', '1.0.1')).toBeLessThan(0)
       expect(service.compareSemver('1.2.0', '1.1.5')).toBeGreaterThan(0)
       expect(service.compareSemver('1.0.0', '1.0.0')).toBe(0)
+    })
+  })
+
+  describe('constructor token validation', () => {
+    it('should accept a non-expired token from localStorage', () => {
+      const validJwt = createJwtWithExp(Math.floor(Date.now() / 1000) + 300)
+      localStorage.setItem('loggedInUser', JSON.stringify({ token: validJwt }))
+
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const newService = TestBed.inject(AuthService)
+      const newHttpMock = TestBed.inject(HttpTestingController)
+
+      // Should not make any HTTP calls during construction
+      newHttpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+
+      expect(newService.isLoggedIn).toBeTrue()
+      expect(localStorage.getItem('loggedInUser')).not.toBeNull()
+      newHttpMock.verify()
+    })
+
+    it('should accept a recently expired token within the clock-skew tolerance', () => {
+      // Token expired 3 minutes ago (within 5-minute tolerance)
+      const toleratedJwt = createJwtWithExp(Math.floor(Date.now() / 1000) - 3 * 60)
+      localStorage.setItem('loggedInUser', JSON.stringify({ token: toleratedJwt }))
+
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const newService = TestBed.inject(AuthService)
+      const newHttpMock = TestBed.inject(HttpTestingController)
+
+      // Should not make a server call for tokens still valid within skew tolerance
+      newHttpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+
+      expect(newService.isLoggedIn).toBeTrue()
+      expect(localStorage.getItem('loggedInUser')).not.toBeNull()
+      newHttpMock.verify()
+    })
+
+    it('should clear expired token from localStorage', () => {
+      // Token expired 10 minutes ago (beyond 5-minute tolerance)
+      const expiredJwt = createJwtWithExp(Math.floor(Date.now() / 1000) - 10 * 60)
+      localStorage.setItem('loggedInUser', JSON.stringify({ token: expiredJwt }))
+
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const newService = TestBed.inject(AuthService)
+      const newHttpMock = TestBed.inject(HttpTestingController)
+
+      // Should not make a server call for expired tokens
+      newHttpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+
+      expect(newService.isLoggedIn).toBeFalse()
+      expect(localStorage.getItem('loggedInUser')).toBeNull()
+      newHttpMock.verify()
+    })
+
+    it('should clear malformed token from localStorage', () => {
+      localStorage.setItem('loggedInUser', JSON.stringify({ token: 'bad.jwt' }))
+
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const newService = TestBed.inject(AuthService)
+      const newHttpMock = TestBed.inject(HttpTestingController)
+
+      // Should not make a server call for malformed tokens
+      newHttpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+
+      expect(newService.isLoggedIn).toBeFalse()
+      expect(localStorage.getItem('loggedInUser')).toBeNull()
+      newHttpMock.verify()
+    })
+
+    it('should handle corrupted localStorage JSON gracefully', () => {
+      // Simulate corrupted localStorage (invalid JSON)
+      localStorage.setItem('loggedInUser', 'not-valid-json{]')
+
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const newService = TestBed.inject(AuthService)
+      const newHttpMock = TestBed.inject(HttpTestingController)
+
+      // Should not crash app startup
+      newHttpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+
+      // Should clear corrupted data and not be logged in
+      expect(newService.isLoggedIn).toBeFalse()
+      expect(localStorage.getItem('loggedInUser')).toBeNull()
+      newHttpMock.verify()
     })
   })
 })

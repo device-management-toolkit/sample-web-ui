@@ -16,14 +16,23 @@ import { OAuthService } from 'angular-oauth2-oidc'
   providedIn: 'root'
 })
 export class AuthService {
+  // Clock skew tolerance for distributed systems
+  // Allows 5 minutes for clock differences between client, edge nodes, and backend
+  // This handles timezone/NTP drift without allowing truly expired tokens through
+  private static readonly clockSkewToleranceMs = 5 * 60 * 1000
   private readonly http = inject(HttpClient)
   private oauthService
   router = inject(Router)
   loggedInSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private authStateInitialized$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
   public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
-    this.loggedInSubject$
-  ]).pipe(map((values) => values.every((b) => b)))
+    this.loggedInSubject$,
+    this.authStateInitialized$
+  ]).pipe(
+    filter(([, initialized]) => initialized),
+    map(([isLoggedIn]) => isLoggedIn)
+  )
 
   isLoggedIn = false
   url = `${environment.mpsServer}/api/v1/authorize`
@@ -32,10 +41,15 @@ export class AuthService {
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
-    if (localStorage.loggedInUser != null) {
-      this.isLoggedIn = true
-      this.loggedInSubject$.next(this.isLoggedIn)
+    // Only restore from localStorage for JWT-based auth, not OAuth
+    if (!environment.useOAuth) {
+      if (localStorage.getItem('loggedInUser') != null) {
+        this.restoreSessionFromStorage()
+      } else {
+        this.authStateInitialized$.next(true)
+      }
     }
+    // OAuth initialization happens below after access token validity is checked
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
       this.url = `${environment.mpsServer}/login/api/v1/authorize`
@@ -46,6 +60,7 @@ export class AuthService {
       })
 
       this.loggedInSubject$.next(this.oauthService.hasValidAccessToken())
+      this.authStateInitialized$.next(true)
 
       this.oauthService.events
         .pipe(filter((e) => ['session_terminated', 'session_error'].includes(e.type)))
@@ -108,10 +123,81 @@ export class AuthService {
   getLoggedUserToken(): string {
     const loggedInUser: string = localStorage.getItem('loggedInUser') ?? ''
     if (loggedInUser !== '') {
-      const token: string = JSON.parse(loggedInUser).token
-      return token
+      try {
+        const token: string = JSON.parse(loggedInUser).token
+        return token
+      } catch {
+        // Corrupted localStorage - clear it to allow app recovery
+        localStorage.removeItem('loggedInUser')
+        return ''
+      }
     }
     return ''
+  }
+
+  private restoreSessionFromStorage(): void {
+    const token = this.getLoggedUserToken()
+    if (!token) {
+      this.clearSessionAndMarkInitialized()
+      return
+    }
+
+    // Validate token client-side
+    if (!this.isTokenValidClientSide(token)) {
+      this.clearSessionAndMarkInitialized()
+      return
+    }
+
+    // Token is valid client-side, allow login but mark for validation
+    // The first API call will verify if the token is actually valid server-side
+    // If it gets a 401, the error interceptor will handle logout
+    this.isLoggedIn = true
+    this.loggedInSubject$.next(true)
+    this.authStateInitialized$.next(true)
+  }
+
+  private isTokenValidClientSide(token: string): boolean {
+    try {
+      const payloadPart = token.split('.')[1]
+      if (!payloadPart) {
+        return false
+      }
+
+      const payload = JSON.parse(this.decodeBase64Url(payloadPart)) as { exp?: number }
+      if (typeof payload.exp !== 'number') {
+        return false
+      }
+
+      // Check if token is expired, with tolerance for clock skew
+      // In distributed systems, client/edge/backend clocks may differ
+      // Allow tokens that expired within the last 5 minutes (clock skew tolerance)
+      // but reject anything older than that
+      const expirationMs = payload.exp * 1000
+      const now = Date.now()
+
+      // Token is valid if: expiration time + tolerance > current time
+      // This means tokens expired >5 minutes ago are rejected
+      return expirationMs + AuthService.clockSkewToleranceMs > now
+    } catch {
+      return false
+    }
+  }
+
+  private clearSession(): void {
+    localStorage.removeItem('loggedInUser')
+    this.isLoggedIn = false
+    this.loggedInSubject$.next(false)
+  }
+
+  private clearSessionAndMarkInitialized(): void {
+    this.clearSession()
+    this.authStateInitialized$.next(true)
+  }
+
+  private decodeBase64Url(value: string): string {
+    const base64 = value.replace(/-/g, '+').replace(/_/g, '/')
+    const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=')
+    return atob(padded)
   }
 
   login(username: string, password: string): Observable<any> {
@@ -121,6 +207,7 @@ export class AuthService {
           this.isLoggedIn = true
           localStorage.loggedInUser = JSON.stringify(data)
           this.loggedInSubject$.next(this.isLoggedIn)
+          this.authStateInitialized$.next(true)
         }
         return data
       }),
@@ -133,6 +220,7 @@ export class AuthService {
   logout(): void {
     this.isLoggedIn = false
     this.loggedInSubject$.next(this.isLoggedIn)
+    this.authStateInitialized$.next(true)
     localStorage.removeItem('loggedInUser')
     if (environment.useOAuth) {
       this.oauthService?.logOut()

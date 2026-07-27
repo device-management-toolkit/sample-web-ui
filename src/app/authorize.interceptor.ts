@@ -9,9 +9,11 @@ import { AuthService } from './auth.service'
 
 export const authorizationInterceptor: HttpInterceptorFn = (request, next) => {
   const authService = inject(AuthService)
+  const url = request.url.toString()
+  const isLoginEndpoint = /\/(login\/)?api\/v1\/authorize$/.test(url)
 
-  if (request.url.toString().includes('/authorize') && !request.url.toString().includes('/authorize/redirection')) {
-    // Skip adding authorization headers for specific routes
+  if (isLoginEndpoint) {
+    // Login endpoint should not include bearer token.
     return next(request)
   }
 
