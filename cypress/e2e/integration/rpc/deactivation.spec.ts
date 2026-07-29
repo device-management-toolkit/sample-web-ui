@@ -8,7 +8,7 @@ import { isCloud } from './rpc.helpers'
 declare const require: (id: string) => unknown
 
 if (isCloud) {
-  require('./cloud.activation.spec')
+  require('./cloud.deactivation.spec')
 } else {
-  require('./console.activation.spec')
+  require('./console.deactivation.spec')
 }
