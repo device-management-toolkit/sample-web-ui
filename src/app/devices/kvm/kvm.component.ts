@@ -376,16 +376,12 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.deviceIDERConnection.set(this.diskImage !== null)
   }
 
-  onCancelIDER(): void {
+  onCancelIDER(fileInput: HTMLInputElement): void {
     // close the dialog, perform other actions as needed
     this.deviceIDERConnection.set(false)
     this.isIDERActive.set(false)
     this.diskImage = null
-    // Clear the file input so the same file can be selected again
-    const fileInput = document.getElementById('file') as HTMLInputElement
-    if (fileInput) {
-      fileInput.value = ''
-    }
+    fileInput.value = ''
   }
 
   onDisplayChange = (e: number): void => {

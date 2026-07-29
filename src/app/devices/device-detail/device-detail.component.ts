@@ -11,8 +11,9 @@ import { MatIcon } from '@angular/material/icon'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { catchError, of, Subject, switchMap, takeUntil } from 'rxjs'
+import { getSkuFromAmtVersion, isISMSku } from '../sku'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
 import { CertificatesComponent } from '../certificates/certificates.component'
@@ -76,14 +77,15 @@ interface DeviceDetailCategory {
 })
 export class DeviceDetailComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly router = inject(Router)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
   private readonly snackBar = inject(MatSnackBar)
   private readonly destroy$ = new Subject<void>()
-  private readonly ismSku = '16400'
   public deviceId = ''
   public readonly isCloudMode: boolean = environment.cloud
   public isISMSystem = signal(false)
+  public isDeviceTypeKnown = signal(false)
   public categories = computed(() => {
     const base: DeviceDetailCategory[] = [
       {
@@ -149,8 +151,8 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       }
     ]
     const filtered = base
-      .filter((c) => !(this.isISMSystem() && c.component === 'kvm'))
-      .filter((c) => !(!this.isISMSystem() && c.component === 'ider'))
+      .filter((c) => !(c.component === 'kvm' && (!this.isDeviceTypeKnown() || this.isISMSystem())))
+      .filter((c) => !(c.component === 'ider' && (!this.isDeviceTypeKnown() || !this.isISMSystem())))
 
     if (!this.isCloudMode) {
       filtered.push(
@@ -186,13 +188,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           this.currentView = params.component || 'general'
 
           if (!deviceChanged) {
-            const isIsm = this.isISMSystem()
-            if (isIsm && this.currentView === 'kvm') this.currentView = 'ider'
-            if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
+            this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
             return of(null)
           }
           // Reset derived capability flags so they don't stay stale if the AMT version call fails.
           this.isISMSystem.set(false)
+          this.isDeviceTypeKnown.set(false)
           this.isLoading.set(true)
 
           return this.devicesService.getAMTVersion(this.deviceId).pipe(
@@ -207,14 +208,14 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (amtVersion) => {
           if (amtVersion == null) {
+            this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
             this.isLoading.set(false)
             return
           }
-          const sku: string = amtVersion?.CIM_SoftwareIdentity?.responses?.[4]?.VersionString ?? ''
-          this.isISMSystem.set(sku === this.ismSku)
-          const isIsm = this.isISMSystem()
-          if (isIsm && this.currentView === 'kvm') this.currentView = 'ider'
-          if (!isIsm && this.currentView === 'ider') this.currentView = 'kvm'
+          const sku: string = getSkuFromAmtVersion(amtVersion?.CIM_SoftwareIdentity?.responses ?? [])
+          this.isISMSystem.set(isISMSku(sku))
+          this.isDeviceTypeKnown.set(true)
+          this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
           this.isLoading.set(false)
         },
         error: () => {
@@ -230,6 +231,34 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
   toggleSidenav(): void {
     this.isCollapsed = !this.isCollapsed
+  }
+
+  private syncCurrentViewForSku(isIsm: boolean, isKnown: boolean): void {
+    let nextView = this.currentView
+
+    // Fail closed while SKU is unknown to avoid showing a potentially unsupported KVM view.
+    if (!isKnown && (this.currentView === 'kvm' || this.currentView === 'ider')) {
+      nextView = 'general'
+    }
+
+    if (isKnown) {
+      if (isIsm && this.currentView === 'kvm') nextView = 'ider'
+      if (!isIsm && this.currentView === 'ider') nextView = 'kvm'
+    }
+
+    if (nextView === this.currentView) {
+      return
+    }
+
+    this.currentView = nextView
+    this.router.navigate(
+      [
+        '/devices',
+        this.deviceId,
+        nextView
+      ],
+      { replaceUrl: true }
+    )
   }
 
   setCurrentView(category: any): void {

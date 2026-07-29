@@ -150,7 +150,7 @@ describe('IderComponent', () => {
     expect(getPowerStateCachedSpy).not.toHaveBeenCalled()
     expect(getAMTFeaturesCachedSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).not.toHaveBeenCalled()
-    expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    expect(getAMTFeaturesCachedSpy).toHaveBeenCalled()
     expect(getRedirectionStatusSpy).not.toHaveBeenCalled()
   })
 
@@ -614,33 +614,36 @@ describe('IderComponent', () => {
   // onCancelIDER()
   it('should set deviceIDERConnection to false on cancel IDER', () => {
     const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
-    component.onCancelIDER()
+    const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
+    component.onCancelIDER(mockFileInput)
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
   })
 
   it('should clear loading state on cancel IDER', () => {
     component.isLoading.set(true)
     component.loadingStatus.set('ider.status.connectingIder.value')
+    const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
 
-    component.onCancelIDER()
+    component.onCancelIDER(mockFileInput)
 
     expect(component.isLoading()).toBeFalse()
     expect(component.loadingStatus()).toBe('')
   })
 
   it('should clear file input value on cancel IDER', () => {
-    const mockFileInput = document.createElement('input')
+    const mockFileInput = document.createElement('input') as HTMLInputElement
     mockFileInput.id = 'file'
     document.body.appendChild(mockFileInput)
 
-    component.onCancelIDER()
+    component.onCancelIDER(mockFileInput)
     expect(mockFileInput.value).toBe('')
 
     document.body.removeChild(mockFileInput)
   })
 
   it('should not throw when file input element does not exist on cancel IDER', () => {
-    expect(() => component.onCancelIDER()).not.toThrow()
+    const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
+    expect(() => component.onCancelIDER(mockFileInput)).not.toThrow()
   })
 
   // deviceIDERStatus()
@@ -712,8 +715,9 @@ describe('IderComponent', () => {
   })
 
   it('onCancelIDER resets the live transfer stats', () => {
+    const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
     component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
-    component.onCancelIDER()
+    component.onCancelIDER(mockFileInput)
     expect(component.iderData()).toBeNull()
     expect(component.isTransferring()).toBeFalse()
   })

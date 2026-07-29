@@ -135,7 +135,7 @@ export class IderComponent implements OnInit, OnDestroy {
     this.loadingStatus.set('ider.status.checkingConsent.value')
     this.consentReady = false
 
-    return this.getAMTFeatures().pipe(
+    return this.getAMTFeaturesCached().pipe(
       tap((features: AMTFeaturesResponse) => this.amtFeatures.set(features)),
       switchMap(() => this.checkUserConsent()),
       switchMap((consentNotRequired: boolean) => {
@@ -356,7 +356,7 @@ export class IderComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancelIDER(): void {
+  onCancelIDER(fileInput: HTMLInputElement): void {
     // close the dialog, perform other actions as needed
     this.isLoading.set(false)
     this.loadingStatus.set('')
@@ -364,11 +364,7 @@ export class IderComponent implements OnInit, OnDestroy {
     this.isIDERActive.set(false)
     this.resetTransferStats()
     this.diskImage = null
-    // Clear the file input so the same file can be selected again
-    const fileInput = document.getElementById('file') as HTMLInputElement
-    if (fileInput) {
-      fileInput.value = ''
-    }
+    fileInput.value = ''
   }
 
   handlePowerState(powerState: any): Observable<any> {

@@ -38,7 +38,7 @@
         </button>
         <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso" />
         @if (isIDERActive()) {
-          <button mat-flat-button color="warn" (click)="onCancelIDER()">
+          <button mat-flat-button color="warn" (click)="onCancelIDER(fileInput)">
             <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
           </button>
         }

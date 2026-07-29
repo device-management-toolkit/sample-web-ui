@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
 import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from '../../../models/models'
+import { getSkuFromAmtVersion, skuLabel } from '../sku'
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -136,7 +137,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.amtTrustedDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix ?? ''
         this.amtVersion = results.amtVersion?.CIM_SoftwareIdentity?.responses[10].VersionString ?? ''
         this.amtBuild = results.amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ?? ''
-        this.amtSKU = this.skuLookup(results.amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ?? '')
+        this.amtSKU = skuLabel(getSkuFromAmtVersion(results.amtVersion?.CIM_SoftwareIdentity?.responses ?? []))
         this.amtProvisioningMode = this.parseProvisioningMode(
           results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode ?? 0
         )
@@ -224,17 +225,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
         return 'profileDetail.activationModeClient.value'
       default:
         return 'common.unknown.value'
-    }
-  }
-
-  skuLookup(sku: string): string {
-    switch (sku) {
-      case '16400':
-        return 'Intel® Standard Manageability'
-      case '16392':
-        return 'Intel® Active Management Technology'
-      default:
-        return sku
     }
   }
 }
