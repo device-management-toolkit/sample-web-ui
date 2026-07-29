@@ -194,7 +194,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   setAmtFeatures(): void {
     this.pendingFeatureUpdates.update((count) => count + 1)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), payload)
+      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.getRawValue() as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.pendingFeatureUpdates.update((count) => count - 1)

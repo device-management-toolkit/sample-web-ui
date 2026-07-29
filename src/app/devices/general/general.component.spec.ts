@@ -33,7 +33,7 @@ describe('GeneralComponent', () => {
       'sendDeactivate',
       'sendBulkDeactivate',
       'getWsmanOperations',
-      'featuresChanges'
+      'featuresChanges',
       'setAmtFeatures'
     ])
     const amtFeaturesResponse = {
