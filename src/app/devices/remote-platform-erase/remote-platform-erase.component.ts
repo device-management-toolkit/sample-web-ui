@@ -100,6 +100,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   public ssdPasswordControl = this.fb.control<string | null>('', [this.validateSsdPasswordBytes.bind(this)])
 
   ngOnInit(): void {
+    this.isLoading.set(true)
     this.devicesService.getDevice(this.deviceId()).subscribe({
       next: (device) => {
         this.deviceLabel.set(device.friendlyName || device.hostname || this.deviceId())

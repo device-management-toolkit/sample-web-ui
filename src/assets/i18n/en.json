@@ -1095,10 +1095,6 @@
     "description": "Caption shown on a capability row when the device does not support it",
     "value": "Not supported on this device"
   },
-  "remotePlatformErase.featureDisabled": {
-    "description": "Status message shown when Remote Platform Erase is disabled",
-    "value": "Feature is disabled. Enable it on the AMT Features tab."
-  },
   "remotePlatformErase.initiateTitle": {
     "description": "Title for the initiate erase action card",
     "value": "Initiate Remote Erase"
@@ -1114,10 +1110,6 @@
   "remotePlatformErase.initiateButton": {
     "description": "Button label to initiate Remote Platform Erase",
     "value": "Initiate Remote Erase"
-  },
-  "remotePlatformErase.initiateDisabledTooltip": {
-    "description": "Tooltip shown on the initiate erase button when the feature is disabled",
-    "value": "Enable Remote Platform Erase on the AMT Features tab first"
   },
   "remotePlatformErase.initiateNoCapsTooltip": {
     "description": "Tooltip shown on the initiate erase button when no capabilities are selected",
@@ -3050,8 +3042,8 @@
     "value": "Using Random Generated Passwords"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Error message when SSD password exceeds 32 bytes",
-    "value": "SSD password must not exceed 32 bytes"
+    "description": "Error message when SSD password exceeds 64 bytes",
+    "value": "SSD password must not exceed 64 bytes"
   },
   "sol.connect": {
     "description": "Button for connecting to SOL",

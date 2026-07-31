@@ -2414,8 +2414,8 @@
     "value": "Gebruik van willekeurig gegenereerde wachtwoorden"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Foutbericht wanneer SSD-wachtwoord meer dan 32 bytes is",
-    "value": "SSD-wachtwoord mag niet meer dan 32 bytes zijn"
+    "description": "Foutbericht wanneer SSD-wachtwoord meer dan 64 bytes is",
+    "value": "SSD-wachtwoord mag niet meer dan 64 bytes zijn"
   },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",

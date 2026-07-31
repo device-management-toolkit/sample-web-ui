@@ -2414,8 +2414,8 @@
     "value": "Uso de contraseñas generadas aleatoriamente"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Mensaje de error cuando la contraseña SSD excede 32 bytes",
-    "value": "La contraseña SSD no debe exceder 32 bytes"
+    "description": "Mensaje de error cuando la contraseña SSD excede 64 bytes",
+    "value": "La contraseña SSD no debe exceder 64 bytes"
   },
   "sol.connect": {
     "description": "Botón para conectarse a SOL.",

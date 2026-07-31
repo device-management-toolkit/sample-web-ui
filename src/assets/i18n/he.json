@@ -2414,8 +2414,8 @@
     "value": "באמצעות סיסמאות שנוצרו אקראיות"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "הודעת שגיאה כאשר סיסמת SSD עולה על 32 בתים",
-    "value": "סיסמת SSD לא יכולה להעלות על 32 בתים"
+    "description": "הודעת שגיאה כאשר סיסמת SSD עולה על 64 בתים",
+    "value": "סיסמת SSD לא יכולה להעלות על 64 בתים"
   },
   "sol.connect": {
     "description": "כפתור לחיבור ל- SOL",

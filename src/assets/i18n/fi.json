@@ -2414,8 +2414,8 @@
     "value": "Satunnaisesti luotujen salasanojen käyttö"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Virheilmoitus kun SSD-salasana ylittää 32 tavua",
-    "value": "SSD-salasana ei saa ylittää 32 tavua"
+    "description": "Virheilmoitus kun SSD-salasana ylittää 64 tavua",
+    "value": "SSD-salasana ei saa ylittää 64 tavua"
   },
   "sol.connect": {
     "description": "Painike SOL-yhteyden muodostamiseksi",
