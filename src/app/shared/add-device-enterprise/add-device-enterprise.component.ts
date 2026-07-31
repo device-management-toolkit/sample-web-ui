@@ -60,7 +60,7 @@ export class AddDeviceEnterpriseComponent {
       ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
-    useTLS: [false],
+    useTLS: [true],
     allowSelfSigned: [false],
     guid: [''],
     mpsusername: ['admin'],
