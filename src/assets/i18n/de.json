@@ -63,6 +63,14 @@
     "description": "Meldung zum Zulassen selbstsignierter Zertifikate",
     "value": "Selbstsignierte Zertifikate zulassen"
   },
+  "addDevice.amtPassword": {
+    "description": "Bezeichnung für das AMT-Passwort-Feld",
+    "value": "AMT-Passwort"
+  },
+  "addDevice.amtPasswordHint": {
+    "description": "Hinweis für das AMT-Passwort-Feld",
+    "value": "AMT-Passwort eingeben"
+  },
   "addDevice.chooseProfile": {
     "description": "Bezeichnung für das Profilauswahlfeld",
     "value": "Profil auswählen"
@@ -70,6 +78,10 @@
   "addDevice.description": {
     "description": "Beschreibung zur Aktivierung eines Geräts",
     "value": "Um ein Gerät zu aktivieren, müssen Sie einen Befehl auf dem AMT-Gerät ausführen. Dieser Dialog hilft Ihnen bei der Generierung des auszuführenden Befehls."
+  },
+  "addDevice.enterGuid": {
+    "description": "Hinweis zur Eingabe der GUID",
+    "value": "GUID eingeben"
   },
   "addDevice.enterTags": {
     "description": "Hinweis zur Eingabe von Tags",
@@ -83,6 +95,10 @@
     "description": "Fehler bei erforderlichen Anzeigenamen",
     "value": "Der Friendly Name ist erforderlich."
   },
+  "addDevice.guid": {
+    "description": "Bezeichnung für das GUID-Feld",
+    "value": "GUID"
+  },
   "addDevice.hostNameInvalid": {
     "description": "Fehler bei ungültigen Hostnamen",
     "value": "Ungültiges Hostnamenformat"
@@ -90,6 +106,22 @@
   "addDevice.hostNameRequired": {
     "description": "Fehler bei erforderlichen Hostnamen",
     "value": "Der Hostname ist erforderlich."
+  },
+  "addDevice.mpsPassword": {
+    "description": "Bezeichnung für das MPS-Passwort-Feld",
+    "value": "MPS-Passwort"
+  },
+  "addDevice.mpsPasswordHint": {
+    "description": "Hinweis für das MPS-Passwort-Feld",
+    "value": "MPS-Passwort eingeben"
+  },
+  "addDevice.mpsUsername": {
+    "description": "Bezeichnung für das MPS-Benutzername-Feld",
+    "value": "MPS-Benutzername"
+  },
+  "addDevice.mpsUsernameHint": {
+    "description": "Hinweis für das MPS-Benutzername-Feld",
+    "value": "MPS-Benutzername (Standard: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Kontrollkästchen zum Deaktivieren der Überprüfung selbstsignierter Zertifikate",
@@ -111,6 +143,10 @@
     "description": "Dialogtitel zum Hinzufügen eines neuen Geräts",
     "value": "Neues Gerät hinzufügen"
   },
+  "addDevice.useCIRA": {
+    "description": "Kontrollkästchen für die Verwendung der CIRA-Verbindung",
+    "value": "CIRA verwenden"
+  },
   "addDevice.userNameInvalid": {
     "description": "Fehler wegen ungültigem Benutzernamen",
     "value": "Der Benutzername muss mindestens 5 Zeichen und darf höchstens 16 Zeichen lang sein."
@@ -122,42 +158,6 @@
   "addDevice.useTLS": {
     "description": "Hinweis zur Verwendung von TLS",
     "value": "Verwenden Sie TLS."
-  },
-  "addDevice.useCIRA": {
-    "description": "Kontrollkästchen für die Verwendung der CIRA-Verbindung",
-    "value": "CIRA verwenden"
-  },
-  "addDevice.guid": {
-    "description": "Bezeichnung für das GUID-Feld",
-    "value": "GUID"
-  },
-  "addDevice.enterGuid": {
-    "description": "Hinweis zur Eingabe der GUID",
-    "value": "GUID eingeben"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Bezeichnung für das MPS-Benutzername-Feld",
-    "value": "MPS-Benutzername"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hinweis für das MPS-Benutzername-Feld",
-    "value": "MPS-Benutzername (Standard: admin)"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Bezeichnung für das MPS-Passwort-Feld",
-    "value": "MPS-Passwort"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hinweis für das MPS-Passwort-Feld",
-    "value": "MPS-Passwort eingeben"
-  },
-  "addDevice.amtPassword": {
-    "description": "Bezeichnung für das AMT-Passwort-Feld",
-    "value": "AMT-Passwort"
-  },
-  "addDevice.amtPasswordHint": {
-    "description": "Hinweis für das AMT-Passwort-Feld",
-    "value": "AMT-Passwort eingeben"
   },
   "alarm.errorAdding": {
     "description": "Fehler beim Hinzufügen",
@@ -195,6 +195,10 @@
     "description": "Beschriftung für „Nach Fertigstellung löschen” – Schieberegler",
     "value": "Nach Fertigstellung löschen."
   },
+  "alarmService.deleteOnCompletionRange": {
+    "description": "Label for delete on completion slide toggle",
+    "value": "Nach Abschluss löschen: {{deleteFinal}}"
+  },
   "alarmService.elementNameWithInstance": {
     "description": "Name des Alarmelements gefolgt von seiner InstanceID",
     "value": "{{elementName}} (InstanceID: {{instanceId}})"
@@ -226,10 +230,6 @@
   "alarmService.startTime": {
     "description": "Label for the alarm start time",
     "value": "Startzeit: {{startTime}}"
-  },
-  "alarmService.deleteOnCompletionRange": {
-    "description": "Label for delete on completion slide toggle",
-    "value": "Nach Abschluss löschen: {{deleteFinal}}"
   },
   "alarmService.startTimePlaceholder": {
     "description": "Platzhalter für die Eingabe der Startzeit",
@@ -272,6 +272,26 @@
     "description": "Tooltip für die Schaltfläche „Zertifikat hinzufügen”",
     "value": "Zertifikat hinzufügen"
   },
+  "certificates.certificateNotFoundError": {
+    "description": "Fehlermeldung, wenn das zu löschende Zertifikat nicht gefunden wird",
+    "value": "Zertifikat nicht gefunden oder bereits gelöscht"
+  },
+  "certificates.certificateReferencedError": {
+    "description": "Fehlermeldung, wenn ein Zertifikat nicht gelöscht werden kann, da es von Profilen referenziert wird",
+    "value": "Zertifikat kann nicht gelöscht werden, da es derzeit von AMT-Profilen referenziert wird. Entfernen Sie zuerst die Referenzen."
+  },
+  "certificates.delete.associatedTooltip": {
+    "description": "Tooltip-Text, wenn die Schaltfläche „Löschen“ deaktiviert ist, weil das Zertifikat von einem oder mehreren Profilen referenziert wird",
+    "value": "Dieses Zertifikat ist derzeit zugeordnet und kann nicht gelöscht werden"
+  },
+  "certificates.delete.tooltip": {
+    "description": "Tooltip für die Schaltfläche „Zertifikat löschen“",
+    "value": "Zertifikat löschen"
+  },
+  "certificates.deletedSuccessfully": {
+    "description": "Erfolgsmeldung, wenn ein Zertifikat gelöscht wurde",
+    "value": "Zertifikat '{{name}}' erfolgreich gelöscht"
+  },
   "certificates.download.tooltip": {
     "description": "Tooltip zum Herunterladen eines Zertifikats",
     "value": "Zertifikat herunterladen"
@@ -287,22 +307,6 @@
   "certificates.errorRetrievingCertificates": {
     "description": "Fehler beim Abrufen der Zertifikatsinformationen",
     "value": "Fehler beim Abrufen der Zertifikatsinformationen"
-  },
-  "certificates.certificateReferencedError": {
-    "description": "Fehlermeldung, wenn ein Zertifikat nicht gelöscht werden kann, da es von Profilen referenziert wird",
-    "value": "Zertifikat kann nicht gelöscht werden, da es derzeit von AMT-Profilen referenziert wird. Entfernen Sie zuerst die Referenzen."
-  },
-  "certificates.certificateNotFoundError": {
-    "description": "Fehlermeldung, wenn das zu löschende Zertifikat nicht gefunden wird",
-    "value": "Zertifikat nicht gefunden oder bereits gelöscht"
-  },
-  "certificates.readOnlyCertificateError": {
-    "description": "Fehlermeldung beim Versuch, ein schreibgeschütztes Zertifikat zu löschen",
-    "value": "Schreibgeschütztes Zertifikat kann nicht gelöscht werden"
-  },
-  "certificates.deletedSuccessfully": {
-    "description": "Erfolgsmeldung, wenn ein Zertifikat gelöscht wurde",
-    "value": "Zertifikat '{{name}}' erfolgreich gelöscht"
   },
   "certificates.list": {
     "description": "Text für die Liste der Zertifikate",
@@ -320,6 +324,10 @@
     "description": "Wird angezeigt, wenn ein Zertifikat keine Profilzuordnungen hat.",
     "value": "Nicht zugeordnet"
   },
+  "certificates.readOnlyCertificateError": {
+    "description": "Fehlermeldung beim Versuch, ein schreibgeschütztes Zertifikat zu löschen",
+    "value": "Schreibgeschütztes Zertifikat kann nicht gelöscht werden"
+  },
   "certificates.title": {
     "description": "Titel für Zertifikate",
     "value": "Zertifikate"
@@ -335,10 +343,6 @@
   "certificates.typeRoot": {
     "description": "Zeigt an, dass es sich bei dem Zertifikat um ein Stammzertifikat handelt.",
     "value": "Wurzel"
-  },
-  "certificates.delete.associatedTooltip": {
-    "description": "Tooltip-Text, wenn die Schaltfläche „Löschen“ deaktiviert ist, weil das Zertifikat von einem oder mehreren Profilen referenziert wird",
-    "value": "Dieses Zertifikat ist derzeit zugeordnet und kann nicht gelöscht werden"
   },
   "common.addNew": {
     "description": "Text für die Schaltfläche „Neu hinzufügen”",
@@ -379,9 +383,17 @@
   "common.continue": {
     "value": "Weiter"
   },
+  "common.delete": {
+    "description": "Text für die Schaltfläche Löschen",
+    "value": "Löschen"
+  },
   "common.deleteConfiguration": {
     "description": "Meldung für gelöschte Konfigurationen",
     "value": "Konfiguration erfolgreich gelöscht"
+  },
+  "common.deleteProfile": {
+    "description": "Text der Schaltfläche zum Löschen des Profils",
+    "value": "Profil löschen"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Nachricht für den Untertitel der Anmeldung",
@@ -405,6 +417,10 @@
   },
   "common.down": {
     "value": "Down"
+  },
+  "common.editTags": {
+    "description": "Schaltflächentext zum Bearbeiten von Tags in Massenaktion",
+    "value": "Tags bearbeiten"
   },
   "common.enabled": {
     "description": "Wird verwendet, wenn die lokale Profilsynchronisierung aktiviert ist.",
@@ -456,6 +472,10 @@
   },
   "common.no": {
     "value": "Nein"
+  },
+  "common.noData": {
+    "description": "Meldung, wenn keine Daten verfügbar sind",
+    "value": "Keine Daten verfügbar"
   },
   "common.notApplicable": {
     "description": "Wird angezeigt, wenn der OS-Eintrag nicht zutrifft.",
@@ -516,6 +536,10 @@
   "common.up": {
     "value": "Nach oben"
   },
+  "common.update": {
+    "description": "Text für die Schaltfläche Aktualisieren",
+    "value": "AKTUALISIEREN"
+  },
   "common.userName": {
     "description": "Nachricht für Benutzernamen",
     "value": "Benutzername"
@@ -555,6 +579,10 @@
     "description": "FQDN-Optionsfeld-Bezeichnung",
     "value": "FQDN"
   },
+  "configDetail.generateRandomPassword": {
+    "description": "Text für die Option „Zufälliges Passwort generieren",
+    "value": "Zufälliges Passwort pro Gerät bei Geräteaktivierung generieren"
+  },
   "configDetail.ipv4": {
     "description": "IPv4-Optionsfeld-Bezeichnung",
     "value": "IPv4"
@@ -574,10 +602,6 @@
   "configDetail.portPlaceholder": {
     "description": "Platzhaltertext für das Feld „Port“",
     "value": "Port"
-  },
-  "configDetail.generateRandomPassword": {
-    "description": "Text für die Option „Zufälliges Passwort generieren",
-    "value": "Zufälliges Passwort pro Gerät bei Geräteaktivierung generieren"
   },
   "configDetail.usernameHint": {
     "description": "Hinweistext für das Feld „Benutzername”",
@@ -849,6 +873,14 @@
     "description": "Beschreibung für Hardware-Informationen",
     "value": "Speicher, CPU usw."
   },
+  "deviceDetail.ider": {
+    "description": "Kategoriename für IDER",
+    "value": "IDER"
+  },
+  "deviceDetail.iderDescription": {
+    "description": "Beschreibung für IDER",
+    "value": "Image remote einbinden"
+  },
   "deviceDetail.kvm": {
     "description": "Kategoriename für KVM",
     "value": "KVM"
@@ -1069,6 +1101,10 @@
     "description": "Tabellen-Spaltenüberschrift für Tags",
     "value": "Tags"
   },
+  "deviceToolbar.power.off": {
+    "description": "Energie-Tooltip für Ausgeschaltet",
+    "value": "Strom: Aus"
+  },
   "deviceToolbar.power.on": {
     "description": "Energie-Tooltip für Eingeschaltet",
     "value": "Strom: Ein"
@@ -1105,6 +1141,10 @@
     "description": "Titel für die Einwilligung des Benutzers für Geräte",
     "value": "Zustimmung des Benutzers"
   },
+  "domainDetail.alphanumValidation": {
+    "description": "Fehlermeldung für alphanumerische Validierung",
+    "value": "Der Domänenname darf nur Buchstaben, Zahlen, Bindestriche (-) und Unterstriche (_) enthalten"
+  },
   "domainDetail.completeProfile": {
     "description": "Nachricht für abgeschlossene Domain-Profile",
     "value": "Domänenprofil erfolgreich gespeichert"
@@ -1112,14 +1152,6 @@
   "domainDetail.errorDeleteConfiguration": {
     "description": "Fehler bei gelöschten Domain-Profilen",
     "value": "Fehler beim Erstellen/Aktualisieren des Domain-Profils"
-  },
-  "domainDetail.uniqueKeyViolation": {
-    "description": "Fehlermeldung bei Verletzung des eindeutigen Schlüssels",
-    "value": "Domain NewDomain ID oder Suffix existiert bereits"
-  },
-  "domainDetail.alphanumValidation": {
-    "description": "Fehlermeldung für alphanumerische Validierung",
-    "value": "Der Domänenname darf nur Buchstaben, Zahlen, Bindestriche (-) und Unterstriche (_) enthalten"
   },
   "domainDetail.fqdn": {
     "description": "Hinweis für das Feld „FQDN“",
@@ -1140,6 +1172,10 @@
   "domainDetail.provisioningCertPassword": {
     "description": "Hinweis zum Passwort für das Bereitstellungszertifikat",
     "value": "Das Passwort für das Bereitstellungszertifikat"
+  },
+  "domainDetail.uniqueKeyViolation": {
+    "description": "Fehlermeldung bei Verletzung des eindeutigen Schlüssels",
+    "value": "Domain NewDomain ID oder Suffix existiert bereits"
   },
   "domains.certExpired": {
     "description": "Meldung für abgelaufene Zertifikate",
@@ -1403,6 +1439,10 @@
     "description": "Bezeichnung für AMT-Version",
     "value": "AMT-Version:"
   },
+  "general.collapse": {
+    "description": "Bezeichnung zum Einklappen",
+    "value": "Einklappen"
+  },
   "general.errorAMTFeatures": {
     "description": "Fehler beim Abrufen der AMT-Funktionen",
     "value": "Fehler beim Abrufen der AMT-Funktionen"
@@ -1414,6 +1454,10 @@
   "general.errorGeneralSettings": {
     "description": "Fehler beim Abrufen der allgemeinen Einstellungen",
     "value": "Fehler beim Abrufen der allgemeinen Einstellungen"
+  },
+  "general.expand": {
+    "description": "Bezeichnung zum Erweitern",
+    "value": "Erweitern"
   },
   "general.failAMTFeatures": {
     "description": "Fehler beim Aktualisieren von Funktionen",
@@ -1443,6 +1487,10 @@
     "description": "Tooltip für KVM wird nicht unterstützt",
     "value": "KVM wird nicht unterstützt."
   },
+  "general.notSupported": {
+    "description": "Bezeichnung für deaktivierte AMT-Funktionen",
+    "value": "Nicht unterstützt"
+  },
   "general.oneClickRecovery": {
     "description": "Bezeichnung für die Ein-Klick-Wiederherstellung",
     "value": "One Click Recovery (OCR):"
@@ -1467,9 +1515,25 @@
     "description": "Bezeichnung für den Bereitstellungsmodus",
     "value": "Bereitstellungsmodus:"
   },
+  "general.redirectionEnable": {
+    "description": "Schaltflächenbeschriftung zum Aktivieren der Umleitung",
+    "value": "Aktivieren"
+  },
+  "general.redirectionWarningISM": {
+    "description": "Warnung, wenn Umleitung deaktiviert ist, aber SOL/IDER aktiviert ist",
+    "value": "Umleitung ist deaktiviert. SOL und IDER erfordern eine aktivierte Umleitung."
+  },
+  "general.redirectionWarning": {
+    "description": "Warnung, wenn Umleitung deaktiviert ist, aber KVM/SOL/IDER aktiviert ist",
+    "value": "Umleitung ist deaktiviert. KVM, SOL und IDER erfordern eine aktivierte Umleitung."
+  },
   "general.serialOverLan": {
     "description": "Bezeichnung für SOL",
     "value": "Serial-Over-Lan (SOL):"
+  },
+  "general.supported": {
+    "description": "Bezeichnung für aktivierte AMT-Funktionen",
+    "value": "Unterstützt"
   },
   "general.userConsent": {
     "description": "Bezeichnung für die Zustimmung des Benutzers",
@@ -1490,14 +1554,6 @@
   "general.windowsRecoverySupported": {
     "description": "Tooltip für Windows-Wiederherstellung wird unterstützt",
     "value": "Windows Recovery wird unterstützt."
-  },
-  "general.redirectionWarning": {
-    "description": "Warnung, wenn Umleitung deaktiviert ist, aber KVM/SOL/IDER aktiviert ist",
-    "value": "Umleitung ist deaktiviert. KVM, SOL und IDER erfordern eine aktivierte Umleitung."
-  },
-  "general.redirectionEnable": {
-    "description": "Schaltflächenbeschriftung zum Aktivieren der Umleitung",
-    "value": "Aktivieren"
   },
   "httpBoot.enforce": {
     "value": "Sicheres Booten erzwingen"
@@ -1588,6 +1644,98 @@
   "hwInfo.systemSummary.title": {
     "value": "Systemzusammenfassung"
   },
+  "ider.attachDisk.label": {
+    "description": "Schaltflächenbeschriftung zum Anhängen eines Disk-Images für IDER",
+    "value": "Disk-Image (.iso) anhängen"
+  },
+  "ider.enable": {
+    "description": "Nachricht zum Aktivieren von IDER",
+    "value": "IDER ist auf diesem Gerät derzeit nicht aktiviert. Möchten Sie es aktivieren?"
+  },
+  "ider.alreadyActiveWarning": {
+    "description": "Warnung, die angezeigt wird, wenn ein Datenträgerabbild angehängt werden soll, obwohl IDER bereits aktiv ist",
+    "value": "IDER ist bereits aktiv. Beenden Sie IDER zuerst, bevor Sie ein weiteres Datenträgerabbild anhängen."
+  },
+  "ider.errorAccessCancel": {
+    "description": "Fehler beim Zugriff, wenn die Aktivierungsanfrage abgebrochen wird",
+    "value": "Auf IDER kann nicht zugegriffen werden – die Anfrage zur Aktivierung von IDER wurde abgebrochen."
+  },
+  "ider.errorAccessEnable": {
+    "description": "Fehler beim Zugriff, wenn die Aktivierung angefordert wird",
+    "value": "Auf IDER kann nicht zugegriffen werden – IDER konnte nicht aktiviert werden."
+  },
+  "ider.errorRetrieve": {
+    "description": "Fehler beim Abrufen des Umleitungsstatus",
+    "value": "Fehler beim Abrufen des Weiterleitungsstatus"
+  },
+  "ider.status.checkingAMTFeatures": {
+    "description": "Statusmeldung beim Abrufen der AMT-Funktionen",
+    "value": "AMT-Funktionen werden abgerufen..."
+  },
+  "ider.status.checkingConsent": {
+    "description": "Statusmeldung beim Überprüfen der Benutzerzustimmung",
+    "value": "Zustimmungsmodus wird überprüft..."
+  },
+  "ider.status.checkingPowerState": {
+    "description": "Statusmeldung beim Überprüfen des Energiestatus",
+    "value": "Energiestatus wird überprüft..."
+  },
+  "ider.status.checkingRedirection": {
+    "description": "Statusmeldung beim Überprüfen des Umleitungsstatus",
+    "value": "Umleitungsstatus wird überprüft..."
+  },
+  "ider.status.connectingIder": {
+    "description": "Statusmeldung während der IDER-Verbindungsherstellung",
+    "value": "Verbindung zu IDER wird hergestellt..."
+  },
+  "ider.status.notConnected": {
+    "description": "Statusmeldung, wenn keine IDER-Sitzung verbunden ist",
+    "value": "IDER nicht verbunden"
+  },
+  "ider.status.attachHelp": {
+    "description": "Hilfetext, der angezeigt wird, wenn IDER inaktiv ist, und zum Anhängen eines Datenträgerabbilds auffordert",
+    "value": "Klicken Sie auf \"Datenträgerabbild anhängen\", um eine Verbindung herzustellen und eine IDER-Sitzung zu starten"
+  },
+  "ider.emptyState.selectIso": {
+    "description": "Meldung im IDER-Leerzustand, die zur Auswahl einer ISO auffordert",
+    "value": "Wählen Sie eine ISO-Datei aus, um die IDE-Umleitung zu starten."
+  },
+  "ider.stopIder.label": {
+    "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
+    "value": "IDER beenden"
+  },
+  "ider.activity.transferring": {
+    "description": "Status shown while an active IDER session is transferring disk data",
+    "value": "Datenträgerdaten werden übertragen…"
+  },
+  "ider.activity.idle": {
+    "description": "Status shown when an IDER session is active but no disk activity is happening",
+    "value": "Sitzung aktiv – Warten auf Datenträgeraktivität"
+  },
+  "ider.activity.transferred": {
+    "description": "Label for the running total of data transferred during an IDER session",
+    "value": "Übertragene Daten"
+  },
+  "ider.ism.info": {
+    "description": "Informational note shown on the IDER tab for Intel Standard Manageability (ISM) systems, which do not support KVM",
+    "value": "KVM wird auf Intel® Standard Manageability (ISM)-Systemen nicht unterstützt."
+  },
+  "ider.overview.title": {
+    "description": "Heading for the IDER overview shown while idle",
+    "value": "IDE-Umleitung (IDER)"
+  },
+  "ider.overview.lead": {
+    "description": "Lead paragraph explaining what IDER does",
+    "value": "Binden Sie ein bootfähiges Datenträgerabbild von Ihrem Computer über das Netzwerk an dieses Gerät an. Es erscheint dem Remote-Computer als lokal angeschlossenes CD/DVD-Laufwerk, sodass das Gerät davon booten oder es ausführen kann."
+  },
+  "ider.status.title": {
+    "description": "Title for the IDER session status card",
+    "value": "Status"
+  },
+  "ider.title": {
+    "description": "Titel für IDER",
+    "value": "IDER aktivieren"
+  },
   "ieee.authProtocol": {
     "description": "Text für das Authentifizierungsprotokoll",
     "value": "Authentifizierungsprotokoll"
@@ -1664,10 +1812,6 @@
     "description": "Bezeichnung, die angezeigt wird, wenn KVM eine Verbindung herstellt",
     "value": "KVM wird verbunden..."
   },
-  "kvm.sessionClosedByDevice": {
-    "description": "Meldung, wenn AMT die KVM-Sitzung schließt",
-    "value": "KVM-Sitzung wurde von AMT geschlossen"
-  },
   "kvm.disconnect.button": {
     "description": "Schaltflächenbeschriftung zum Trennen der Verbindung zur KVM-Sitzung",
     "value": "KVM trennen"
@@ -1716,17 +1860,9 @@
     "description": "Schaltflächenbeschriftung zum Senden des ausgewählten Hotkeys",
     "value": "Senden"
   },
-  "kvm.stopIder.label": {
-    "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
-    "value": "Stop IDER"
-  },
-  "kvm.status.checkingPowerState": {
-    "description": "Statusmeldung beim Überprüfen des Energiestatus",
-    "value": "Energiestatus wird überprüft..."
-  },
-  "kvm.status.checkingRedirection": {
-    "description": "Statusmeldung beim Überprüfen des Umleitungsstatus",
-    "value": "Umleitungsstatus wird überprüft..."
+  "kvm.sessionClosedByDevice": {
+    "description": "Meldung, wenn AMT die KVM-Sitzung schließt",
+    "value": "KVM-Sitzung wurde von AMT geschlossen"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Statusmeldung beim Abrufen der AMT-Funktionen",
@@ -1736,9 +1872,21 @@
     "description": "Statusmeldung beim Überprüfen der Benutzerzustimmung",
     "value": "Zustimmungsmodus wird überprüft..."
   },
+  "kvm.status.checkingPowerState": {
+    "description": "Statusmeldung beim Überprüfen des Energiestatus",
+    "value": "Energiestatus wird überprüft..."
+  },
+  "kvm.status.checkingRedirection": {
+    "description": "Statusmeldung beim Überprüfen des Umleitungsstatus",
+    "value": "Umleitungsstatus wird überprüft..."
+  },
   "kvm.status.connectingKVM": {
     "description": "Statusmeldung während der KVM-Verbindungsherstellung",
     "value": "Verbindung zu KVM wird hergestellt..."
+  },
+  "kvm.stopIder.label": {
+    "description": "Schaltflächenbeschriftung zum Beenden der IDER-Sitzung",
+    "value": "IDER beenden"
   },
   "kvm.title": {
     "description": "Titel für KVM",
@@ -2020,6 +2168,14 @@
     "description": "Titel der Karte für die WLAN-Netzwerkeinstellungen",
     "value": "Einstellungen für drahtlose Netzwerke"
   },
+  "network.wirelessNetworks.auth": {
+    "description": "Label for authentication method",
+    "value": "Authentifizierung: {{authMethod}}"
+  },
+  "network.wirelessNetworks.encryption": {
+    "description": "Label for encryption method",
+    "value": "Verschlüsselung: {{encryptMethod}}"
+  },
   "network.wirelessNetworks.name": {
     "description": "Label for wireless network name",
     "value": "Netzwerkname: {{name}}"
@@ -2027,14 +2183,6 @@
   "network.wirelessNetworks.ssid": {
     "description": "Label for SSID",
     "value": "SSID: {{ssid}}"
-  },
-  "network.wirelessNetworks.encryption": {
-    "description": "Label for encryption method",
-    "value": "Verschlüsselung: {{encryptMethod}}"
-  },
-  "network.wirelessNetworks.auth": {
-    "description": "Label for authentication method",
-    "value": "Authentifizierung: {{authMethod}}"
   },
   "network.wirelessNetworks.subtitle": {
     "description": "Untertitel der Karte „Drahtlose Netzwerke”",
@@ -2074,8 +2222,14 @@
   "powerOptions.powerUpToHTTPSBoot": {
     "value": "Power Up zu HTTPS-Boot (OCR)"
   },
+  "powerOptions.powerUpToPBA": {
+    "value": "Einschalten bis PBA (OCR)"
+  },
   "powerOptions.powerUpToPXE": {
     "value": "Power Up zu PXE"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Einschalten bis WinRe (OCR)"
   },
   "powerOptions.reset": {
     "value": "Zurücksetzen"
@@ -2089,8 +2243,14 @@
   "powerOptions.resetToIDER": {
     "value": "Zurücksetzen auf IDE-R (CD-ROM)"
   },
+  "powerOptions.resetToPBA": {
+    "value": "Zurücksetzen auf PBA (OCR)"
+  },
   "powerOptions.resetToPXE": {
     "value": "Zurücksetzen auf PXE"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Zurücksetzen auf WinRe (OCR)"
   },
   "powerOptions.sleep": {
     "value": "Schlaf"
@@ -2261,6 +2421,10 @@
     "description": "Hinweis für die Option „Nicht-TLS”",
     "value": "Ab AMT 16.1 stellt AMT selbstsignierte Zertifikate zur Verfügung. Wenn Sie diese Option auswählen, werden diese anstelle der vom Toolkit bereitgestellten selbstsignierten Zertifikate verwendet."
   },
+  "profileDetail.noProxy": {
+    "description": "Meldung, wenn keine Proxy-Konfigurationen verfügbar sind",
+    "value": "Keine Proxy-Konfigurationen gefunden"
+  },
   "profileDetail.noWifi": {
     "description": "Meldung für keine verfügbaren WLAN-Konfigurationen",
     "value": "Keine WLAN-Konfigurationen gefunden"
@@ -2341,13 +2505,13 @@
     "description": "Bezeichnung für das Feld zur kabelgebundenen 802.1x-Konfiguration",
     "value": "Wired 802.1x-Konfiguration"
   },
-  "profiles.deleteProfile": {
-    "description": "Nachricht für gelöschte Profile",
-    "value": "Profil erfolgreich gelöscht"
-  },
   "profiles.ciraExportDisabled": {
     "description": "Shown when exporting a CIRA profile while CIRA is disabled on the server",
     "value": "CIRA ist auf diesem Server deaktiviert. Dieses Profil verwendet CIRA für seine Verwaltungsverbindung und funktioniert erst, wenn CIRA wieder aktiviert wird."
+  },
+  "profiles.deleteProfile": {
+    "description": "Nachricht für gelöschte Profile",
+    "value": "Profil erfolgreich gelöscht"
   },
   "profiles.exportProfile": {
     "description": "Nachricht für exportierte Profile",
@@ -2392,6 +2556,126 @@
   "profiles.table.network": {
     "description": "Spaltenüberschrift „Netzwerkkonfiguration”",
     "value": "Netzwerkkonfiguration"
+  },
+  "proxy.associatedProfiles.hint": {
+    "description": "Hinweis für das Neuanordnen per Drag-and-Drop",
+    "value": "Ziehen und ablegen, um die Reihenfolge zu ändern"
+  },
+  "proxy.associatedProfiles.label": {
+    "description": "Bezeichnung für die Liste der zugeordneten Proxy-Profile",
+    "value": "Zugeordnete Proxy-Profile (nach Priorität geordnet)"
+  },
+  "proxy.configs.hint": {
+    "description": "Hinweis, der unter dem Eingabefeld für Proxy-Konfigurationen angezeigt wird",
+    "value": "Proxys können diesem Profil zugewiesen werden"
+  },
+  "proxy.configs.label": {
+    "description": "Bezeichnung für das Eingabefeld der Proxy-Konfigurationen",
+    "value": "Proxy-Konfigurationen"
+  },
+  "proxy.configs.placeholder": {
+    "description": "Platzhaltertext für die Suche nach Proxy-Konfigurationen",
+    "value": "Nach hinzuzufügenden Proxy-Konfigurationen suchen"
+  },
+  "proxy.label": {
+    "description": "Bezeichnung für den Proxy-Bereich",
+    "value": "Proxys"
+  },
+  "proxyConfigs.addressFormat": {
+    "description": "Bezeichnung für das Feld Adressformat",
+    "value": "Adressformat"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "description": "Platzhaltertext für das Feld der Proxy-Adresse",
+    "value": "Adresse des Proxy-Servers eingeben"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "description": "Bezeichnung für das DNS-Suffix-Feld",
+    "value": "Netzwerk-DNS-Suffix"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "description": "Platzhalter für das DNS-Suffix-Feld",
+    "value": "beispiel.com"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "description": "Spaltenüberschrift für das Adressformat",
+    "value": "Adressformat"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "description": "Spaltenüberschrift für das Netzwerk-DNS-Suffix",
+    "value": "Netzwerk-DNS-Suffix"
+  },
+  "proxyConfigs.header.name": {
+    "description": "Spaltenüberschrift für den Namen der Proxy-Konfiguration",
+    "value": "Name"
+  },
+  "proxyConfigs.header.port": {
+    "description": "Spaltenüberschrift für den Port",
+    "value": "Port"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "description": "Spaltenüberschrift für die Proxy-Adresse",
+    "value": "Proxy-Adresse"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "description": "Titel der Proxy-Konfigurationen",
+    "value": "Proxy-Konfigurationen"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "description": "Erfolgsmeldung für das Erstellen einer Proxy-Konfiguration",
+    "value": "Proxy-Konfiguration erfolgreich erstellt"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "description": "Erfolgsmeldung für das Löschen einer Proxy-Konfiguration",
+    "value": "Proxy-Konfiguration {{name}} erfolgreich gelöscht"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "description": "Erfolgsmeldung für das Aktualisieren einer Proxy-Konfiguration",
+    "value": "Proxy-Konfiguration erfolgreich aktualisiert"
+  },
+  "proxyConfigs.name": {
+    "description": "Bezeichnung für das Namensfeld der Proxy-Konfiguration",
+    "value": "Name"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "description": "Platzhaltertext für das Namensfeld der Proxy-Konfiguration",
+    "value": "Namen der Proxy-Konfiguration eingeben"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "description": "Seitentitel für das Bearbeiten einer Proxy-Konfiguration",
+    "value": "Proxy-Konfiguration bearbeiten"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "description": "Seitentitel für neue Proxy-Konfiguration",
+    "value": "Neue Proxy-Konfiguration"
+  },
+  "proxyConfigs.port": {
+    "description": "Bezeichnung für das Port-Feld",
+    "value": "Port"
+  },
+  "proxyConfigs.proxyAddress": {
+    "description": "Bezeichnung für das Feld der Proxy-Adresse",
+    "value": "Proxy-Adresse"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "description": "Validierungsmeldung für die maximale Länge des DNS-Suffixes",
+    "value": "Das Netzwerk-DNS-Suffix darf höchstens 192 Zeichen lang sein"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "description": "Validierungsmeldung: DNS-Suffix ist erforderlich",
+    "value": "Netzwerk-DNS-Suffix ist erforderlich"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "description": "Validierungsmeldung: Name ist erforderlich",
+    "value": "Name ist erforderlich"
+  },
+  "proxyConfigs.validation.portRange": {
+    "description": "Validierungsmeldung für den Portbereich",
+    "value": "Port muss zwischen 0 und 65535 liegen"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "description": "Validierungsmeldung: Port ist erforderlich",
+    "value": "Port ist erforderlich"
   },
   "randomPassword.learnMore": {
     "description": "Nachricht für einen Support-Link",
@@ -2660,177 +2944,5 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Hinweis für das Feld „Name des WLAN-Profils“",
     "value": "Geben Sie einen Namen für das WLAN-Profil an."
-  },
-  "general.supported": {
-    "description": "Bezeichnung für aktivierte AMT-Funktionen",
-    "value": "Unterstützt"
-  },
-  "general.notSupported": {
-    "description": "Bezeichnung für deaktivierte AMT-Funktionen",
-    "value": "Nicht unterstützt"
-  },
-  "powerOptions.powerUpToPBA": {
-    "value": "Einschalten bis PBA (OCR)"
-  },
-  "powerOptions.powerUpToWinRe": {
-    "value": "Einschalten bis WinRe (OCR)"
-  },
-  "powerOptions.resetToPBA": {
-    "value": "Zurücksetzen auf PBA (OCR)"
-  },
-  "powerOptions.resetToWinRe": {
-    "value": "Zurücksetzen auf WinRe (OCR)"
-  },
-  "general.expand": {
-    "description": "Bezeichnung zum Erweitern",
-    "value": "Erweitern"
-  },
-  "general.collapse": {
-    "description": "Bezeichnung zum Einklappen",
-    "value": "Einklappen"
-  },
-  "proxy.label": {
-    "value": "Proxys",
-    "description": "Bezeichnung für den Proxy-Bereich"
-  },
-  "proxy.configs.label": {
-    "value": "Proxy-Konfigurationen",
-    "description": "Bezeichnung für das Eingabefeld der Proxy-Konfigurationen"
-  },
-  "proxy.configs.placeholder": {
-    "value": "Nach hinzuzufügenden Proxy-Konfigurationen suchen",
-    "description": "Platzhaltertext für die Suche nach Proxy-Konfigurationen"
-  },
-  "proxy.configs.hint": {
-    "value": "Proxys können diesem Profil zugewiesen werden",
-    "description": "Hinweis, der unter dem Eingabefeld für Proxy-Konfigurationen angezeigt wird"
-  },
-  "proxy.associatedProfiles.label": {
-    "value": "Zugeordnete Proxy-Profile (nach Priorität geordnet)",
-    "description": "Bezeichnung für die Liste der zugeordneten Proxy-Profile"
-  },
-  "proxy.associatedProfiles.hint": {
-    "value": "Ziehen und ablegen, um die Reihenfolge zu ändern",
-    "description": "Hinweis für das Neuanordnen per Drag-and-Drop"
-  },
-  "profileDetail.noProxy": {
-    "description": "Meldung, wenn keine Proxy-Konfigurationen verfügbar sind",
-    "value": "Keine Proxy-Konfigurationen gefunden"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "value": "Proxy-Konfigurationen",
-    "description": "Titel der Proxy-Konfigurationen"
-  },
-  "proxyConfigs.header.name": {
-    "value": "Name",
-    "description": "Spaltenüberschrift für den Namen der Proxy-Konfiguration"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "value": "Proxy-Adresse",
-    "description": "Spaltenüberschrift für die Proxy-Adresse"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "value": "Adressformat",
-    "description": "Spaltenüberschrift für das Adressformat"
-  },
-  "proxyConfigs.header.port": {
-    "value": "Port",
-    "description": "Spaltenüberschrift für den Port"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "value": "Netzwerk-DNS-Suffix",
-    "description": "Spaltenüberschrift für das Netzwerk-DNS-Suffix"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "value": "Neue Proxy-Konfiguration",
-    "description": "Seitentitel für neue Proxy-Konfiguration"
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "value": "Proxy-Konfiguration bearbeiten",
-    "description": "Seitentitel für das Bearbeiten einer Proxy-Konfiguration"
-  },
-  "proxyConfigs.proxyAddress": {
-    "value": "Proxy-Adresse",
-    "description": "Bezeichnung für das Feld der Proxy-Adresse"
-  },
-  "proxyConfigs.name": {
-    "value": "Name",
-    "description": "Bezeichnung für das Namensfeld der Proxy-Konfiguration"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "value": "Namen der Proxy-Konfiguration eingeben",
-    "description": "Platzhaltertext für das Namensfeld der Proxy-Konfiguration"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "value": "Adresse des Proxy-Servers eingeben",
-    "description": "Platzhaltertext für das Feld der Proxy-Adresse"
-  },
-  "proxyConfigs.addressFormat": {
-    "value": "Adressformat",
-    "description": "Bezeichnung für das Feld Adressformat"
-  },
-  "proxyConfigs.port": {
-    "value": "Port",
-    "description": "Bezeichnung für das Port-Feld"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "value": "Netzwerk-DNS-Suffix",
-    "description": "Bezeichnung für das DNS-Suffix-Feld"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "beispiel.com",
-    "description": "Platzhalter für das DNS-Suffix-Feld"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "value": "Port ist erforderlich",
-    "description": "Validierungsmeldung: Port ist erforderlich"
-  },
-  "proxyConfigs.validation.portRange": {
-    "value": "Port muss zwischen 0 und 65535 liegen",
-    "description": "Validierungsmeldung für den Portbereich"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "value": "Name ist erforderlich",
-    "description": "Validierungsmeldung: Name ist erforderlich"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Netzwerk-DNS-Suffix ist erforderlich",
-    "description": "Validierungsmeldung: DNS-Suffix ist erforderlich"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Das Netzwerk-DNS-Suffix darf höchstens 192 Zeichen lang sein",
-    "description": "Validierungsmeldung für die maximale Länge des DNS-Suffixes"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "value": "Proxy-Konfiguration erfolgreich erstellt",
-    "description": "Erfolgsmeldung für das Erstellen einer Proxy-Konfiguration"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "value": "Proxy-Konfiguration erfolgreich aktualisiert",
-    "description": "Erfolgsmeldung für das Aktualisieren einer Proxy-Konfiguration"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "value": "Proxy-Konfiguration {{name}} erfolgreich gelöscht",
-    "description": "Erfolgsmeldung für das Löschen einer Proxy-Konfiguration"
-  },
-  "common.delete": {
-    "value": "Löschen",
-    "description": "Text für die Schaltfläche Löschen"
-  },
-  "common.deleteProfile": {
-    "value": "Profil löschen",
-    "description": "Text der Schaltfläche zum Löschen des Profils"
-  },
-  "common.editTags": {
-    "description": "Schaltflächentext zum Bearbeiten von Tags in Massenaktion",
-    "value": "Tags bearbeiten"
-  },
-  "common.update": {
-    "value": "AKTUALISIEREN",
-    "description": "Text für die Schaltfläche Aktualisieren"
-  },
-  "common.noData": {
-    "value": "Keine Daten verfügbar",
-    "description": "Meldung, wenn keine Daten verfügbar sind"
   }
 }
