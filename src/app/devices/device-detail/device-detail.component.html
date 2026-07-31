@@ -10,7 +10,7 @@
         matTooltipPosition="left">
         <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
       </a>
-      @for (item of categories; track item) {
+      @for (item of categories(); track item.component) {
         <a
           mat-list-item
           (click)="setCurrentView(item)"
@@ -31,15 +31,34 @@
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    @if (!isLoading() && !isDeviceTypeKnown()) {
+      <div style="padding: 12px 16px; color: #8a6d3b">{{ 'general.errorAMTVersion.value' | translate }}</div>
+    }
+
     @switch (currentView) {
       @default {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('general') {
-        <app-general [deviceId]="deviceId"></app-general>
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
       }
       @case ('kvm') {
-        <app-kvm [deviceId]="deviceId"></app-kvm>
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (isDeviceTypeKnown() && !isISMSystem()) {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        } @else {
+          <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+        }
+      }
+      @case ('ider') {
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (isDeviceTypeKnown() && isISMSystem()) {
+          <app-ider [deviceId]="deviceId" [isISM]="isISMSystem()"></app-ider>
+        } @else {
+          <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+        }
       }
       @case ('sol') {
         <app-sol [deviceId]="deviceId"></app-sol>

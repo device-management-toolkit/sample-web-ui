@@ -803,9 +803,11 @@ describe('KvmComponent', () => {
   })
   it('should emit false on canceling IDER', () => {
     const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
-    component.onCancelIDER()
+    const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
+    component.onCancelIDER(mockFileInput)
 
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
+    expect(mockFileInput.value).toBe('')
   })
 
   // Hot Key tests

@@ -67,7 +67,7 @@ describe('UserConsentService', () => {
       done()
     })
   })
-  it('handleUserConsentDecision false', async () => {
+  it('handleUserConsentDecision reopens consent dialog path when optInState is displayed (2)', async () => {
     service.handleUserConsentDecision(false, '111', {
       userConsent: 'all',
       redirection: true,
@@ -76,6 +76,29 @@ describe('UserConsentService', () => {
       SOL: true,
       IDER: true,
       optInState: 2,
+      ocr: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false,
+      remoteErase: false,
+      pbaBootFilesPath: [],
+      winREBootFilesPath: {
+        instanceID: '',
+        biosBootString: '',
+        bootString: ''
+      }
+    })
+    expect(reqUserConsentCodeSpy).not.toHaveBeenCalled()
+  })
+  it('handleUserConsentDecision requests a new code when optInState is not displayed/received/in-session', async () => {
+    service.handleUserConsentDecision(false, '111', {
+      userConsent: 'all',
+      redirection: true,
+      kvmAvailable: true,
+      KVM: true,
+      SOL: true,
+      IDER: true,
+      optInState: 0,
       ocr: false,
       httpsBootSupported: false,
       winREBootSupported: false,
