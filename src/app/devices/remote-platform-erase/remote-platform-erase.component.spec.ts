@@ -941,7 +941,7 @@ describe('RemotePlatformEraseComponent', () => {
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(true)
-      component.ssdPasswordControl.setValue('a'.repeat(32))
+      component.ssdPasswordControl.setValue('a'.repeat(64))
 
       component.initiateErase()
 

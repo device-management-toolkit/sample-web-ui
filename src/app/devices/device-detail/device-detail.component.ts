@@ -122,6 +122,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         icon: 'memory'
       },
       {
+        name: 'deviceDetail.remotePlatformErase.value',
+        description: 'deviceDetail.remotePlatformEraseDescription.value',
+        component: 'remote-platform-erase',
+        icon: 'computer_cancel'
+      },
+      {
         name: 'deviceDetail.auditLog.value',
         description: 'deviceDetail.auditLogDescription.value',
         component: 'audit-log',
@@ -156,71 +162,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       .filter((c) => !(c.component === 'kvm' && (!this.isDeviceTypeKnown() || this.isISMSystem())))
       .filter((c) => !(c.component === 'ider' && (!this.isDeviceTypeKnown() || !this.isISMSystem())))
 
-  categories = [
-    {
-      name: 'deviceDetail.general.value',
-      description: 'deviceDetail.generalDescription.value',
-      description2: '',
-      component: 'general',
-      icon: 'info'
-    },
-    {
-      name: 'deviceDetail.kvm.value',
-      description: 'deviceDetail.kvmDescription.value',
-      component: 'kvm',
-      icon: 'tv'
-    },
-    {
-      name: 'deviceDetail.sol.value',
-      description: 'deviceDetail.solDescription.value',
-      component: 'sol',
-      icon: 'keyboard'
-    },
-    {
-      name: 'deviceDetail.hardwareInfo.value',
-      description: 'deviceDetail.hardwareInfoDescription.value',
-      component: 'hardware-info',
-      icon: 'memory'
-    },
-    {
-      name: 'deviceDetail.auditLog.value',
-      description: 'deviceDetail.auditLogDescription.value',
-      component: 'audit-log',
-      icon: 'history'
-    },
-    {
-      name: 'deviceDetail.eventLog.value',
-      description: 'deviceDetail.eventLogDescription.value',
-      component: 'event-log',
-      icon: 'event_list'
-    },
-    {
-      name: 'deviceDetail.alarms.value',
-      description: 'deviceDetail.alarmsDescription.value',
-      component: 'alarms',
-      icon: 'alarm'
-    },
-    {
-      name: 'deviceDetail.certificates.value',
-      description: 'deviceDetail.certificatesDescription.value',
-      component: 'certificates',
-      icon: 'verified'
-    },
-    {
-      name: 'deviceDetail.remotePlatformErase.value',
-      description: 'deviceDetail.remotePlatformEraseDescription.value',
-      component: 'remote-platform-erase',
-      icon: 'computer_cancel'
-    },
-    {
-      name: 'deviceDetail.networkSettings.value',
-      description: 'deviceDetail.networkSettingsDescription.value',
-      component: 'network-settings',
-      icon: 'lan'
-    }
-  ]
-
-  constructor() {
     if (!this.isCloudMode) {
       filtered.push(
         {

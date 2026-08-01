@@ -288,13 +288,8 @@ export class DevicesService {
 
   getAMTFeatures(guid: string): Observable<AMTFeaturesResponse> {
     return this.http.get<AMTFeaturesResponse>(`${environment.mpsServer}/api/v1/amt/features/${guid}`).pipe(
-      map((features) => {
-        const stream = this.getOrCreateFeaturesStream(guid)
-        const current = stream.value
-        // Use cache if it exists (it's fresher); otherwise use server response
-        const merged = current !== null ? current : features
-        stream.next(merged)
-        return merged
+      tap((features) => {
+        this.getOrCreateFeaturesStream(guid).next(features)
       }),
       catchError((err) => {
         throw err

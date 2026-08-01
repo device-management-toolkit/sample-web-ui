@@ -89,7 +89,9 @@ export class RemotePlatformEraseComponent implements OnInit {
   public eraseCapsArray: FormArray<FormControl<boolean | null>> = this.fb.array<boolean>([])
   public selectedCapsCount = signal(0)
   public hasSelectedCaps = computed(() => this.selectedCapsCount() > 0)
-  public supportedCapsCount = computed(() => this.eraseCaps().filter((c) => c.supported).length)
+  public supportedCapsCount = computed(
+    () => this.eraseCaps().filter((c) => c.supported && c.key !== 'csmeUnconfigure').length
+  )
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   private csmeIndex = -1
   private ssdIndex = -1

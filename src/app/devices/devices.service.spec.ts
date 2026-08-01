@@ -663,7 +663,7 @@ describe('DevicesService', () => {
       expect((latest as any).status).toBeUndefined()
     })
 
-    it('keeps the cached rpe value when a stale GET response arrives after a save', () => {
+    it('applies the server rpe value when a GET response arrives, overwriting the optimistic POST cache', () => {
       const seeded: AMTFeaturesResponse = {
         userConsent: 'none',
         optInState: 0,
@@ -709,8 +709,8 @@ describe('DevicesService', () => {
         rpe: true
       })
 
-      expect(emitted[emitted.length - 1].rpe).toBe(false)
-      expect(latestGet?.rpe).toBe(false)
+      expect(emitted[emitted.length - 1].rpe).toBe(true)
+      expect(latestGet?.rpe).toBe(true)
     })
 
     it('derives redirection from the chosen features rather than keeping the stale cached value', () => {
