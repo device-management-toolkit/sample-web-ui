@@ -23,10 +23,13 @@ import { MatPaginatorIntl } from '@angular/material/paginator'
 import { TranslatePaginatorIntl } from './assets/i18n/translate-paginator-intl'
 import { availableLangs } from './constants'
 import { getDirection } from './utils'
+import { patchAmtIderLargeMediaSupport } from './app/shared/amt-ider-large-media'
 
 if (environment.production) {
   enableProdMode()
 }
+
+patchAmtIderLargeMediaSupport()
 
 const providers = [
   AuthGuard,

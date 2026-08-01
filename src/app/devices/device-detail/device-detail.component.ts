@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core'
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatList, MatListItem, MatListItemTitle, MatListItemLine, MatListModule } from '@angular/material/list'
 import { provideNativeDateAdapter } from '@angular/material/core'
@@ -11,8 +11,9 @@ import { MatIcon } from '@angular/material/icon'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router'
-import { Subject, takeUntil } from 'rxjs'
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
+import { catchError, of, Subject, switchMap, takeUntil } from 'rxjs'
+import { getSkuFromAmtVersion, isISMSku } from '../sku'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
 import { CertificatesComponent } from '../certificates/certificates.component'
@@ -21,12 +22,24 @@ import { AuditLogComponent } from '../audit-log/audit-log.component'
 import { HardwareInformationComponent } from '../hardware-information/hardware-information.component'
 import { SolComponent } from '../sol/sol.component'
 import { KvmComponent } from '../kvm/kvm.component'
+import { IderComponent } from '../ider/ider.component'
 import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
 import { RemotePlatformEraseComponent } from '../remote-platform-erase/remote-platform-erase.component'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { DevicesService } from '../devices.service'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { MatSnackBar } from '@angular/material/snack-bar'
+
+interface DeviceDetailCategory {
+  name: string
+  description: string
+  description2?: string
+  component: string
+  icon: string
+}
 
 @Component({
   selector: 'app-device-detail',
@@ -41,6 +54,7 @@ import { TranslatePipe } from '@ngx-translate/core'
     HardwareInformationComponent,
     SolComponent,
     KvmComponent,
+    IderComponent,
     GeneralComponent,
     ExplorerComponent,
     DeviceToolbarComponent,
@@ -64,11 +78,83 @@ import { TranslatePipe } from '@ngx-translate/core'
   ]
 })
 export class DeviceDetailComponent implements OnInit, OnDestroy {
-  // Dependency Injection
   private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly router = inject(Router)
+  private readonly devicesService = inject(DevicesService)
+  private readonly translate = inject(TranslateService)
+  private readonly snackBar = inject(MatSnackBar)
   private readonly destroy$ = new Subject<void>()
   public deviceId = ''
   public readonly isCloudMode: boolean = environment.cloud
+  public isISMSystem = signal(false)
+  public isDeviceTypeKnown = signal(false)
+  public categories = computed(() => {
+    const base: DeviceDetailCategory[] = [
+      {
+        name: 'deviceDetail.general.value',
+        description: 'deviceDetail.generalDescription.value',
+        description2: '',
+        component: 'general',
+        icon: 'info'
+      },
+      {
+        name: 'deviceDetail.kvm.value',
+        description: 'deviceDetail.kvmDescription.value',
+        component: 'kvm',
+        icon: 'tv'
+      },
+      {
+        name: 'deviceDetail.sol.value',
+        description: 'deviceDetail.solDescription.value',
+        component: 'sol',
+        icon: 'keyboard'
+      },
+      {
+        name: 'deviceDetail.ider.value',
+        description: 'deviceDetail.iderDescription.value',
+        component: 'ider',
+        icon: 'storage'
+      },
+      {
+        name: 'deviceDetail.hardwareInfo.value',
+        description: 'deviceDetail.hardwareInfoDescription.value',
+        component: 'hardware-info',
+        icon: 'memory'
+      },
+      {
+        name: 'deviceDetail.auditLog.value',
+        description: 'deviceDetail.auditLogDescription.value',
+        component: 'audit-log',
+        icon: 'history'
+      },
+      {
+        name: 'deviceDetail.eventLog.value',
+        description: 'deviceDetail.eventLogDescription.value',
+        component: 'event-log',
+        icon: 'event_list'
+      },
+      {
+        name: 'deviceDetail.alarms.value',
+        description: 'deviceDetail.alarmsDescription.value',
+        component: 'alarms',
+        icon: 'alarm'
+      },
+      {
+        name: 'deviceDetail.certificates.value',
+        description: 'deviceDetail.certificatesDescription.value',
+        component: 'certificates',
+        icon: 'verified'
+      },
+      {
+        name: 'deviceDetail.networkSettings.value',
+        description: 'deviceDetail.networkSettingsDescription.value',
+        component: 'network-settings',
+        icon: 'lan'
+      }
+    ]
+    const filtered = base
+      .filter((c) => !(c.component === 'kvm' && (!this.isDeviceTypeKnown() || this.isISMSystem())))
+      .filter((c) => !(c.component === 'ider' && (!this.isDeviceTypeKnown() || !this.isISMSystem())))
 
   categories = [
     {
@@ -136,7 +222,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
   constructor() {
     if (!this.isCloudMode) {
-      this.categories.push(
+      filtered.push(
         {
           name: 'deviceDetail.explorer.value',
           description: 'deviceDetail.explorerDescription.value',
@@ -151,18 +237,58 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         }
       )
     }
-  }
+
+    return filtered
+  })
 
   public currentView = 'general'
   public isLoading = signal(false)
   isCollapsed = false
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      this.isLoading.set(true)
-      this.deviceId = params.id
-      this.currentView = params.component || 'general'
-    })
+    this.activatedRoute.params
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((params) => {
+          const deviceChanged = params.id !== this.deviceId
+          this.deviceId = params.id
+          this.currentView = params.component || 'general'
+
+          if (!deviceChanged) {
+            this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
+            return of(null)
+          }
+          // Reset derived capability flags so they don't stay stale if the AMT version call fails.
+          this.isISMSystem.set(false)
+          this.isDeviceTypeKnown.set(false)
+          this.isLoading.set(true)
+
+          return this.devicesService.getAMTVersion(this.deviceId).pipe(
+            catchError(() => {
+              const msg: string = this.translate.instant('general.errorAMTVersion.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+              return of(null)
+            })
+          )
+        })
+      )
+      .subscribe({
+        next: (amtVersion) => {
+          if (amtVersion == null) {
+            this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
+            this.isLoading.set(false)
+            return
+          }
+          const sku: string = getSkuFromAmtVersion(amtVersion?.CIM_SoftwareIdentity?.responses ?? [])
+          this.isISMSystem.set(isISMSku(sku))
+          this.isDeviceTypeKnown.set(true)
+          this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
+          this.isLoading.set(false)
+        },
+        error: () => {
+          this.isLoading.set(false)
+        }
+      })
   }
 
   ngOnDestroy(): void {
@@ -172,6 +298,34 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
   toggleSidenav(): void {
     this.isCollapsed = !this.isCollapsed
+  }
+
+  private syncCurrentViewForSku(isIsm: boolean, isKnown: boolean): void {
+    let nextView = this.currentView
+
+    // Fail closed while SKU is unknown to avoid showing a potentially unsupported KVM view.
+    if (!isKnown && (this.currentView === 'kvm' || this.currentView === 'ider')) {
+      nextView = 'general'
+    }
+
+    if (isKnown) {
+      if (isIsm && this.currentView === 'kvm') nextView = 'ider'
+      if (!isIsm && this.currentView === 'ider') nextView = 'kvm'
+    }
+
+    if (nextView === this.currentView) {
+      return
+    }
+
+    this.currentView = nextView
+    this.router.navigate(
+      [
+        '/devices',
+        this.deviceId,
+        nextView
+      ],
+      { replaceUrl: true }
+    )
   }
 
   setCurrentView(category: any): void {
