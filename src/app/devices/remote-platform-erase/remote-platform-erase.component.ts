@@ -181,7 +181,7 @@ export class RemotePlatformEraseComponent implements OnInit {
         catchError((err) => {
           this.rpe.set(!enabled)
           this.updateCapControlStates()
-          const msg: string = err.error?.message || this.t('remotePlatformErase.toggleFeatureError')
+          const msg: string = err.error?.message || this.t('remotePlatformErase.updateError')
           this.displayError(msg)
           return EMPTY
         })
