@@ -1,3 +1,10 @@
+# [3.63.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.62.0...v3.63.0) (2026-08-04)
+
+
+### Features
+
+* **devices:** add remote platform erase support ([#3206](https://github.com/device-management-toolkit/sample-web-ui/issues/3206)) ([d63792c](https://github.com/device-management-toolkit/sample-web-ui/commit/d63792c027e12b4f99462049c4cae6746c36b24a))
+
 # [3.62.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.61.1...v3.62.0) (2026-07-31)
 
 
