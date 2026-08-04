@@ -54,6 +54,12 @@ describe('AddDeviceEnterpriseComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should default useTLS and allowSelfSigned to true', () => {
+    expect(component.form.get('useTLS')?.value).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(true)
+  })
+
   it('should submit form when valid', () => {
     component.form.setValue({
       hostname: 'example.com',
@@ -62,7 +68,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: 'password',
       tenantId: '',
       useTLS: true,
-      allowSelfSigned: false,
+      allowSelfSigned: true,
       guid: '',
       mpsusername: 'admin',
       mpspassword: ''
@@ -76,7 +82,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: 'password',
       tenantId: '',
       useTLS: true,
-      allowSelfSigned: false,
+      allowSelfSigned: true,
       guid: '',
       tags: ['']
     })
@@ -91,7 +97,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: '',
       tenantId: '',
       useTLS: true,
-      allowSelfSigned: false,
+      allowSelfSigned: true,
       guid: '',
       mpsusername: 'admin',
       mpspassword: ''
@@ -132,7 +138,7 @@ describe('AddDeviceEnterpriseComponent', () => {
       password: 'password',
       tenantId: '',
       useTLS: true,
-      allowSelfSigned: false,
+      allowSelfSigned: true,
       guid: 'test-guid-123',
       mpsusername: 'customUser',
       mpspassword: ''
@@ -164,6 +170,19 @@ describe('AddDeviceEnterpriseComponent', () => {
     expect(component.form.get('useTLS')?.disabled).toBe(false)
     expect(component.form.get('allowSelfSigned')?.disabled).toBe(false)
     expect(component.form.get('username')?.disabled).toBe(false)
+  })
+
+  it('should restore prior non-CIRA TLS values after toggling CIRA off', () => {
+    component.form.patchValue({
+      useTLS: false,
+      allowSelfSigned: true
+    })
+
+    component.onCIRAChange(true)
+    component.onCIRAChange(false)
+
+    expect(component.form.get('useTLS')?.value).toBe(false)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(true)
   })
 
   it('should set useCIRA when device has mpsusername', () => {
@@ -204,6 +223,8 @@ describe('AddDeviceEnterpriseComponent with CIRA device', () => {
             friendlyName: 'Test CIRA Device',
             username: 'admin',
             password: 'testpass',
+            useTLS: true,
+            allowSelfSigned: true,
             guid: 'test-guid-123',
             mpsusername: 'admin',
             tags: ['cira']
@@ -237,5 +258,73 @@ describe('AddDeviceEnterpriseComponent with CIRA device', () => {
 
   it('should preserve guid value for CIRA device', () => {
     expect(component.form.get('guid')?.value).toBe('test-guid-123')
+  })
+
+  it('should restore loaded TLS values when CIRA is toggled off', () => {
+    component.onCIRAChange(false)
+
+    expect(component.form.get('useTLS')?.value).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(true)
+  })
+})
+
+describe('AddDeviceEnterpriseComponent with existing non-CIRA device', () => {
+  let component: AddDeviceEnterpriseComponent
+  let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
+
+  beforeEach(() => {
+    const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice', 'editDevice'])
+    deviceService.addDevice.and.returnValue(of({}))
+    deviceService.editDevice.and.returnValue(of({}))
+
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        AddDeviceEnterpriseComponent
+      ],
+      providers: [
+        provideTranslateService(),
+        { provide: DevicesService, useValue: deviceService },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            hostname: 'test-device.local',
+            friendlyName: 'Existing Device',
+            username: 'admin',
+            password: 'testpass',
+            useTLS: false,
+            allowSelfSigned: false,
+            guid: 'test-guid-456',
+            tags: ['existing']
+          }
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {
+              /* empty */
+            }
+          }
+        }
+      ]
+    })
+    fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
+
+  it('should preserve loaded non-CIRA TLS values after initialization', () => {
+    expect(component.useCIRA).toBe(false)
+    expect(component.form.get('useTLS')?.value).toBe(false)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(false)
+    expect(component.form.get('useTLS')?.enabled).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.enabled).toBe(true)
   })
 })
