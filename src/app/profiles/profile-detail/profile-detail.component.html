@@ -320,24 +320,22 @@
               <mat-error>{{ 'profileDetail.connectionModeRequired.value' | translate }}</mat-error>
             </p>
           }
-          <fieldset>
-            <legend>{{ 'profileDetail.internetModeLegend.value' | translate }}</legend>
-            <p>{{ 'profileDetail.internetModeDescription.value' | translate }}</p>
-            <p>
-              <mat-radio-button
-                data-cy="radio-cira"
-                [value]="connectionMode.cira"
-                [disabled]="!ciraEnabled() || ciraConfigurations().length === 0">
-                {{ 'profileDetail.ciraCloud.value' | translate }}
-                @if (!ciraEnabled()) {
-                  <span>{{ 'profileDetail.ciraDisabledOption.value' | translate }}</span>
-                } @else if (ciraConfigurations().length === 0) {
-                  <span>{{ 'profileDetail.noCiraConfigs.value' | translate }}</span>
-                }
-              </mat-radio-button>
-            </p>
-            @if (profileForm.get('connectionMode')?.value === 'CIRA') {
-              @if (ciraEnabled()) {
+          @if (ciraEnabled()) {
+            <fieldset>
+              <legend>{{ 'profileDetail.internetModeLegend.value' | translate }}</legend>
+              <p>{{ 'profileDetail.internetModeDescription.value' | translate }}</p>
+              <p>
+                <mat-radio-button
+                  data-cy="radio-cira"
+                  [value]="connectionMode.cira"
+                  [disabled]="ciraConfigurations().length === 0">
+                  {{ 'profileDetail.ciraCloud.value' | translate }}
+                  @if (ciraConfigurations().length === 0) {
+                    <span>{{ 'profileDetail.noCiraConfigs.value' | translate }}</span>
+                  }
+                </mat-radio-button>
+              </p>
+              @if (profileForm.get('connectionMode')?.value === 'CIRA') {
                 <mat-form-field class="flex flex-1">
                   <mat-label>{{ 'profileDetail.ciraConfiguration.value' | translate }}</mat-label>
                   <mat-select formControlName="ciraConfigName">
@@ -352,20 +350,9 @@
                     {{ 'profileDetail.ciraConfigHint.value' | translate }}
                   </mat-hint>
                 </mat-form-field>
-              } @else {
-                <!-- CIRA disabled on this server but the profile still references a CIRA config.
-                     Show it read-only with a warning and let the user switch to TLS/Direct. -->
-                <p class="error-messages-container">
-                  <mat-icon color="warn">warning</mat-icon>
-                  <span class="error-messages">{{ 'profileDetail.ciraDisabledWarning.value' | translate }}</span>
-                </p>
-                <mat-form-field class="flex flex-1">
-                  <mat-label>{{ 'profileDetail.ciraConfiguration.value' | translate }}</mat-label>
-                  <input matInput formControlName="ciraConfigName" readonly />
-                </mat-form-field>
               }
-            }
-          </fieldset>
+            </fieldset>
+          }
           <fieldset>
             <legend>{{ 'profileDetail.directConnectLegend.value' | translate }}</legend>
             <p>
