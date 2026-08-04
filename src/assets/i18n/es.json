@@ -1475,6 +1475,10 @@
     "description": "Etiqueta para HTTPS Arranque de red",
     "value": "HTTPS Arranque de red:"
   },
+  "general.remotePlatformErase": {
+    "description": "Etiqueta para el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma:"
+  },
   "general.ideRedirection": {
     "description": "Etiqueta para la redirección IDE",
     "value": "Redirección IDE:"
@@ -1498,6 +1502,10 @@
   "general.oneClickRecoveryNotSupported": {
     "description": "No se admite la información sobre herramientas para la recuperación con un solo clic.",
     "value": "No se admite la recuperación con un solo clic."
+  },
+  "general.remotePlatformEraseNotSupported": {
+    "description": "No se admite la información sobre herramientas para Remote Platform Erase.",
+    "value": "Remote Platform Erase no es compatible."
   },
   "general.pbaBootShort": {
     "description": "Etiqueta para el arranque de PBA",
@@ -2689,6 +2697,10 @@
     "description": "Título del cuadro de diálogo para la advertencia de contraseña aleatoria",
     "value": "Uso de contraseñas generadas aleatoriamente"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Mensaje de error cuando la contraseña SSD excede 64 bytes",
+    "value": "La contraseña SSD no debe exceder 64 bytes"
+  },
   "sol.connect": {
     "description": "Botón para conectarse a SOL.",
     "value": "Conecte SOL"
@@ -2944,5 +2956,331 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Sugerencia para el campo del nombre del perfil inalámbrico",
     "value": "Proporcione un nombre para el perfil inalámbrico."
+  },
+  "general.supported": {
+    "description": "Etiqueta para funciones AMT habilitadas",
+    "value": "Compatible"
+  },
+  "general.notSupported": {
+    "description": "Etiqueta para funciones AMT deshabilitadas",
+    "value": "No compatible"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Encender hasta PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Encender hasta WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Reiniciar a PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Reiniciar a WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Etiqueta para expandir",
+    "value": "Expandir"
+  },
+  "general.collapse": {
+    "description": "Etiqueta para contraer",
+    "value": "Contraer"
+  },
+  "proxy.label": {
+    "value": "Apoderados",
+    "description": "Etiqueta para la sección de proxies"
+  },
+  "proxy.configs.label": {
+    "value": "Configuraciones de Proxy",
+    "description": "Etiqueta para el campo de entrada de configuraciones de proxy"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Buscar configuraciones de proxy para agregar",
+    "description": "Texto del marcador de posición para buscar configuraciones de proxy"
+  },
+  "proxy.configs.hint": {
+    "value": "Los proxies pueden asignarse a este perfil",
+    "description": "Sugerencia mostrada debajo del campo de configuraciones de proxy"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Perfiles de Proxy Asociados (en orden de prioridad)",
+    "description": "Etiqueta para la lista de perfiles de proxy asociados"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Arrastra y suelta para reordenar",
+    "description": "Sugerencia mostrada para reordenar mediante arrastrar y soltar"
+  },
+  "profileDetail.noProxy": {
+    "description": "Mensaje cuando no hay configuraciones de proxy disponibles",
+    "value": "No se encontraron configuraciones de proxy"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Configuraciones de Proxy",
+    "description": "Título de las configuraciones de proxy"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Nombre",
+    "description": "Encabezado de columna para el nombre de la configuración de proxy"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Dirección del Proxy",
+    "description": "Encabezado de columna para la dirección del proxy"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Formato de Dirección",
+    "description": "Encabezado de columna para el formato de dirección"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Puerto",
+    "description": "Encabezado de columna para el puerto"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Sufijo DNS de Red",
+    "description": "Encabezado de columna para el sufijo DNS de red"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Nueva Configuración de Proxy",
+    "description": "Título de la página para nueva configuración de proxy"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Editar Configuración de Proxy",
+    "description": "Título de la página para editar configuración de proxy"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Dirección del Proxy",
+    "description": "Etiqueta para el campo de dirección del proxy"
+  },
+  "proxyConfigs.name": {
+    "value": "Nombre",
+    "description": "Etiqueta para el campo de nombre de la configuración de proxy"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Ingrese el nombre de la configuración de proxy",
+    "description": "Marcador de posición para el campo de nombre de configuración de proxy"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Ingrese la dirección del servidor proxy",
+    "description": "Marcador de posición para el campo de dirección del proxy"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Formato de Dirección",
+    "description": "Etiqueta para el campo de formato de dirección"
+  },
+  "proxyConfigs.port": {
+    "value": "Puerto",
+    "description": "Etiqueta para el campo de puerto"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Sufijo DNS de Red",
+    "description": "Etiqueta para el campo de sufijo DNS"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "ejemplo.com",
+    "description": "Marcador de posición para el campo de sufijo DNS"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "El puerto es obligatorio",
+    "description": "Mensaje de validación para puerto obligatorio"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "El puerto debe estar entre 0 y 65535",
+    "description": "Mensaje de validación para el rango de puerto"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "El nombre es obligatorio",
+    "description": "Mensaje de validación para nombre obligatorio"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "El sufijo DNS de red es obligatorio",
+    "description": "Mensaje de validación para sufijo DNS obligatorio"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "El sufijo DNS de red debe tener 192 caracteres o menos",
+    "description": "Mensaje de validación para la longitud máxima del sufijo DNS"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Configuración de proxy creada con éxito",
+    "description": "Mensaje de éxito al crear una configuración de proxy"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Configuración de proxy actualizada con éxito",
+    "description": "Mensaje de éxito al actualizar una configuración de proxy"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Configuración de proxy {{name}} eliminada con éxito",
+    "description": "Mensaje de éxito al eliminar una configuración de proxy"
+  },
+  "common.delete": {
+    "value": "Eliminar",
+    "description": "Texto del botón Eliminar"
+  },
+  "common.deleteProfile": {
+    "value": "Eliminar perfil",
+    "description": "Texto del botón para eliminar el perfil"
+  },
+  "common.editTags": {
+    "description": "Texto del botón para editar etiquetas en acción masiva",
+    "value": "Editar etiquetas"
+  },
+  "common.update": {
+    "value": "ACTUALIZAR",
+    "description": "Texto del botón Actualizar"
+  },
+  "common.noData": {
+    "value": "No hay datos disponibles",
+    "description": "Mensaje cuando no hay datos disponibles"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Nombre de categoría para el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Descripción para el borrado remoto de plataforma",
+    "value": "Borrar datos de plataforma de forma segura"
+  },
+  "remotePlatformErase.title": {
+    "description": "Título para la tarjeta de función de borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma"
+  },
+  "remotePlatformErase.description": {
+    "description": "Subtítulo para la tarjeta de función de borrado remoto de plataforma",
+    "value": "Activa de forma remota un borrado seguro de unidades, TPM y BIOS en este dispositivo. Los datos borrados no se pueden recuperar.",
+    "_value_old": "Activa de forma remota un borrado seguro de unidades, TPM, BIOS o Intel CSME en este dispositivo. Los datos borrados no se pueden recuperar."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Mensaje de advertencia sobre la habilitación del borrado remoto de plataforma",
+    "value": "Habilitar esta función permite el borrado remoto de datos de la plataforma. Úsela con precaución."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Etiqueta del interruptor para habilitar el borrado remoto de plataforma",
+    "value": "Habilitar borrado remoto de plataforma en este dispositivo"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Texto de ayuda debajo del interruptor de habilitación",
+    "value": "Requerido antes de iniciar cualquier operación de borrado."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Título de la tarjeta de acción para iniciar el borrado",
+    "value": "Iniciar borrado remoto"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Subtítulo de la tarjeta de acción para iniciar el borrado",
+    "value": "Borrar permanentemente todos los datos almacenados en esta plataforma"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Advertencia antes de iniciar un borrado remoto de plataforma",
+    "value": "Esta acción es irreversible. Todos los datos de la plataforma se borrarán permanentemente."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Etiqueta del botón para iniciar el borrado remoto de plataforma",
+    "value": "Iniciar borrado remoto"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Mensaje de éxito al activar o desactivar la función de borrado remoto de plataforma",
+    "value": "Función de borrado remoto de plataforma actualizada correctamente"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Mensaje de error cuando falla la actualización de la función de borrado remoto de plataforma",
+    "value": "Error al actualizar la función de borrado remoto de plataforma"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Mensaje de éxito tras iniciar el borrado remoto de plataforma",
+    "value": "Borrado remoto de plataforma iniciado correctamente"
+  },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Mensaje de éxito tras borrar la unidad del SO – solicita reinstalación",
+    "value": "Unidad del sistema operativo borrada correctamente. Reinstale un sistema operativo antes de usar este dispositivo."
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Mensaje de error cuando el borrado remoto de plataforma no puede iniciarse",
+    "value": "Error al iniciar el borrado remoto de plataforma"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Mensaje de error cuando falla la carga del estado de la función de borrado remoto de plataforma",
+    "value": "Error al cargar el estado de la función de borrado remoto de plataforma"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Mensaje de error al recuperar el estado de alimentación durante el borrado remoto",
+    "value": "Error al recuperar el estado de alimentación"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Mensaje que se muestra cuando el borrado remoto de plataforma no es compatible con el dispositivo",
+    "value": "El borrado remoto de plataforma no es compatible"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Título de la tarjeta de capacidades de borrado",
+    "value": "Capacidades de borrado"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Subtítulo de la tarjeta de capacidades de borrado",
+    "value": "Seleccione las capacidades a incluir en la operación de borrado. Las capacidades no compatibles no pueden seleccionarse."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Sugerencia mostrada cuando la función está habilitada, que solicita al usuario seleccionar las capacidades a borrar",
+    "value": "Seleccione las funcionalidades que desea borrar y luego haga clic en Iniciar borrado remoto."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Etiqueta para borrado seguro de todos los SSD",
+    "value": "Borrado seguro de todos los SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Descripción para borrado seguro de todos los SSD",
+    "value": "Eliminación de todo el contenido de las unidades ATA y NVM mediante una combinación de borrado de medios y borrado criptográfico"
+  },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Etiqueta para la casilla de verificación que indica que la unidad SSD requiere una clave de cifrado de disco",
+    "value": "El SSD requiere clave de cifrado de disco"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Etiqueta para el campo de entrada de la contraseña de cifrado de la unidad SSD",
+    "value": "Contraseña de la unidad"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Etiqueta para borrar TPM",
+    "value": "Borrar TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Descripción para borrar TPM",
+    "value": "Eliminar todas las claves creadas asociadas al TPM y los datos protegidos por ellas, como una tarjeta inteligente virtual o un PIN de inicio de sesión"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Etiqueta para restaurar BIOS al estado EOM",
+    "value": "Restaurar BIOS al estado EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Descripción para restaurar BIOS al estado EOM",
+    "value": "Restaurar el BIOS a la configuración dorada de fin de fabricación (EOM) especificada por el diseñador del sistema"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Etiqueta para desconfigura el firmware Intel CSME",
+    "value": "Desconfigura el firmware Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Información sobre herramienta en el botón de borrado cuando no hay capacidades seleccionadas",
+    "value": "Seleccione al menos una capacidad de borrado"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Mensaje del cuadro de diálogo de confirmación antes de iniciar el borrado remoto de plataforma. {{device}} es el nombre descriptivo o nombre de host; {{operations}} es una lista separada por comas de las operaciones de borrado seleccionadas.",
+    "value": "¿Borrar y reiniciar {{device}}? Esto realizará: {{operations}}. Esta acción es irreversible."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Descripción para desconfigura el firmware Intel CSME",
+    "value": "Desaprovisionamiento completo de Intel AMT, retorno al estado predeterminado y desactivación de las funciones de Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Mensaje informativo mostrado cuando se selecciona Desconfigurar CSME, explicando que no se puede combinar con otras opciones",
+    "value": "La desconfiguración de CSME realiza un desaprovisionamiento completo de Intel AMT y no puede combinarse con otras operaciones de borrado."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Mensaje de éxito tras desconfigurar CSME – solicita reconfiguración e informa de que el dispositivo se eliminará de la consola",
+    "value": "CSME desconfigurado correctamente. Vuelva a configurar CSME. Este dispositivo será eliminado de la consola."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
+    "value": "{{selected}} de 3 operaciones seleccionadas",
+    "_value_old": "{{selected}} de {{total}} operaciones seleccionadas"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",
+    "value": "No compatible con este dispositivo"
   }
 }
