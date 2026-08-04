@@ -1479,6 +1479,10 @@
     "description": "Label voor HTTPS Netwerkboot",
     "value": "HTTPS Netwerkboot:"
   },
+  "general.remotePlatformErase": {
+    "description": "Label voor extern wissen van het platform",
+    "value": "Extern platform wissen:"
+  },
   "general.ideRedirection": {
     "description": "Label voor IDE-omleiding",
     "value": "IDE-omleiding:"
@@ -1502,6 +1506,10 @@
   "general.oneClickRecoveryNotSupported": {
     "description": "Tooltip voor herstel met één klik wordt niet ondersteund.",
     "value": "One Click Recovery wordt niet ondersteund."
+  },
+  "general.remotePlatformEraseNotSupported": {
+    "description": "Tooltip voor Remote Platform Erase wordt niet ondersteund.",
+    "value": "Remote Platform Erase wordt niet ondersteund."
   },
   "general.pbaBootShort": {
     "description": "Label voor PBA-opstart",
@@ -2693,6 +2701,10 @@
     "description": "Dialoogvenster voor waarschuwing over willekeurig wachtwoord",
     "value": "Gebruik van willekeurig gegenereerde wachtwoorden"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Foutbericht wanneer SSD-wachtwoord meer dan 64 bytes is",
+    "value": "SSD-wachtwoord mag niet meer dan 64 bytes zijn"
+  },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",
     "value": "Connect SOL"
@@ -2948,5 +2960,331 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Tip voor het veld voor de naam van het draadloze profiel",
     "value": "Geef een naam op voor het draadloze profiel."
+  },
+  "general.supported": {
+    "description": "Label voor ingeschakelde AMT-functies",
+    "value": "Ondersteund"
+  },
+  "general.notSupported": {
+    "description": "Label voor uitgeschakelde AMT-functies",
+    "value": "Niet ondersteund"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Opstarten tot PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Opstarten tot WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Reset naar PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Reset naar WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Label om uit te vouwen",
+    "value": "Uitvouwen"
+  },
+  "general.collapse": {
+    "description": "Label om in te vouwen",
+    "value": "Invouwen"
+  },
+  "proxy.label": {
+    "value": "Gevolmachtigden",
+    "description": "Label voor de proxysectie"
+  },
+  "proxy.configs.label": {
+    "value": "Proxyconfiguraties",
+    "description": "Label voor het invoerveld van proxyconfiguraties"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Zoek naar proxyconfiguraties om toe te voegen",
+    "description": "Placeholdertekst voor het zoeken naar proxyconfiguraties"
+  },
+  "proxy.configs.hint": {
+    "value": "Proxies kunnen aan dit profiel worden toegewezen",
+    "description": "Hint die onder het invoerveld voor proxyconfiguraties wordt weergegeven"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Gekoppelde Proxyprofielen (in prioriteitsvolgorde)",
+    "description": "Label voor de lijst met gekoppelde proxyprofielen"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Slepen en neerzetten om de volgorde te wijzigen",
+    "description": "Hint voor het herschikken met slepen en neerzetten"
+  },
+  "profileDetail.noProxy": {
+    "description": "Bericht wanneer er geen proxyconfiguraties beschikbaar zijn",
+    "value": "Geen proxyconfiguraties gevonden"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Proxyconfiguraties",
+    "description": "Titel van de proxyconfiguraties"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Naam",
+    "description": "Kolomkop voor de naam van de proxyconfiguratie"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Proxyadres",
+    "description": "Kolomkop voor het proxyadres"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Adresformaat",
+    "description": "Kolomkop voor het adresformaat"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Poort",
+    "description": "Kolomkop voor de poort"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Netwerk-DNS-achtervoegsel",
+    "description": "Kolomkop voor het netwerk-DNS-achtervoegsel"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Nieuwe Proxyconfiguratie",
+    "description": "Paginatitel voor nieuwe proxyconfiguratie"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Proxyconfiguratie bewerken",
+    "description": "Paginatitel voor het bewerken van een proxyconfiguratie"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Proxyadres",
+    "description": "Label voor het veld proxyadres"
+  },
+  "proxyConfigs.name": {
+    "value": "Naam",
+    "description": "Label voor het naamveld van de proxyconfiguratie"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Voer de naam van de proxyconfiguratie in",
+    "description": "Placeholdertekst voor het naamveld van de proxyconfiguratie"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Voer het adres van de proxyserver in",
+    "description": "Placeholdertekst voor het proxyadresveld"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Adresformaat",
+    "description": "Label voor het veld adresformaat"
+  },
+  "proxyConfigs.port": {
+    "value": "Poort",
+    "description": "Label voor het poortveld"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Netwerk-DNS-achtervoegsel",
+    "description": "Label voor het DNS-achtervoegselveld"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "voorbeeld.com",
+    "description": "Placeholder voor het DNS-achtervoegselveld"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Poort is verplicht",
+    "description": "Validatiebericht: poort is verplicht"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Poort moet tussen 0 en 65535 liggen",
+    "description": "Validatiebericht voor het poortbereik"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Naam is verplicht",
+    "description": "Validatiebericht: naam is verplicht"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Netwerk-DNS-achtervoegsel is verplicht",
+    "description": "Validatiebericht: DNS-achtervoegsel is verplicht"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Het netwerk-DNS-achtervoegsel mag maximaal 192 tekens bevatten",
+    "description": "Validatiebericht voor de maximale lengte van het DNS-achtervoegsel"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Proxyconfiguratie succesvol aangemaakt",
+    "description": "Succesbericht voor het aanmaken van een proxyconfiguratie"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Proxyconfiguratie succesvol bijgewerkt",
+    "description": "Succesbericht voor het bijwerken van een proxyconfiguratie"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Proxyconfiguratie {{name}} succesvol verwijderd",
+    "description": "Succesbericht voor het verwijderen van een proxyconfiguratie"
+  },
+  "common.delete": {
+    "value": "Verwijderen",
+    "description": "Tekst voor de knop Verwijderen"
+  },
+  "common.deleteProfile": {
+    "value": "Profiel verwijderen",
+    "description": "Knoptekst voor het verwijderen van een profiel"
+  },
+  "common.editTags": {
+    "description": "Knoptekst voor het in bulk bewerken van tags",
+    "value": "Tags bewerken"
+  },
+  "common.update": {
+    "value": "BIJWERKEN",
+    "description": "Tekst voor de knop Bijwerken"
+  },
+  "common.noData": {
+    "value": "Geen gegevens beschikbaar",
+    "description": "Bericht wanneer er geen gegevens beschikbaar zijn"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Categorienaam voor extern wissen van het platform",
+    "value": "Extern platform wissen"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Beschrijving voor extern wissen van het platform",
+    "value": "Platformgegevens veilig wissen"
+  },
+  "remotePlatformErase.title": {
+    "description": "Titel van de functiekaart voor extern wissen van het platform",
+    "value": "Extern platform wissen"
+  },
+  "remotePlatformErase.description": {
+    "description": "Ondertitel van de functiekaart voor extern wissen van het platform",
+    "value": "Start op afstand een veilige wissing van schijven, TPM en BIOS op dit apparaat. Gewiste gegevens kunnen niet worden hersteld.",
+    "_value_old": "Start op afstand een veilige wissing van schijven, TPM, BIOS of Intel CSME op dit apparaat. Gewiste gegevens kunnen niet worden hersteld."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Waarschuwingsbericht over het inschakelen van extern wissen van het platform",
+    "value": "Als u deze functie inschakelt, kunnen platformgegevens op afstand worden gewist. Gebruik met voorzichtigheid."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Label van de schakelaar voor extern wissen van het platform",
+    "value": "Extern wissen van het platform op dit apparaat inschakelen"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Helptekst onder de inschakelschakelaar",
+    "value": "Vereist voordat een wisbewerking kan worden gestart."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Titel van de actiekaart voor het starten van wissen",
+    "value": "Extern wissen starten"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Ondertitel van de actiekaart voor het starten van wissen",
+    "value": "Alle gegevens op dit platform permanent wissen"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Waarschuwing voor het starten van extern wissen van het platform",
+    "value": "Deze actie is onomkeerbaar. Alle platformgegevens worden permanent gewist."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Knoplaabel voor het starten van extern wissen van het platform",
+    "value": "Extern wissen starten"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Succesbericht bij het in- of uitschakelen van extern wissen van het platform",
+    "value": "Functie voor extern wissen van het platform succesvol bijgewerkt"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Foutbericht wanneer bijwerken van extern wissen van het platform mislukt",
+    "value": "Bijwerken van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Succesbericht na het starten van extern wissen van het platform",
+    "value": "Extern wissen van het platform succesvol gestart"
+  },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Succesbericht na het wissen van de OS-schijf – vraagt om herinstallatie",
+    "value": "OS-schijf succesvol gewist. Installeer een besturingssysteem opnieuw voordat u dit apparaat gebruikt."
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Foutbericht wanneer extern wissen van het platform niet kan worden gestart",
+    "value": "Starten van extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Foutbericht bij het laden van de status van extern wissen van het platform",
+    "value": "Laden van de status van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Foutbericht bij het ophalen van de stroomstatus tijdens extern wissen",
+    "value": "Fout bij het ophalen van de stroomstatus"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Bericht dat wordt weergegeven wanneer extern wissen van het platform niet wordt ondersteund",
+    "value": "Extern wissen van het platform wordt niet ondersteund"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Titel van de kaart met wissmogelijkheden",
+    "value": "Wissmogelijkheden"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Ondertitel van de kaart met wissmogelijkheden",
+    "value": "Selecteer welke mogelijkheden u wilt opnemen in de wisbewerking. Niet-ondersteunde mogelijkheden kunnen niet worden geselecteerd."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Hint die wordt weergegeven wanneer de functie is ingeschakeld en de gebruiker vraagt mogelijkheden te selecteren om te wissen",
+    "value": "Selecteer de mogelijkheden die u wilt wissen en klik vervolgens op Extern wissen starten."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Label voor veilig wissen van alle SSD's",
+    "value": "Veilig wissen van alle SSD's"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Beschrijving voor veilig wissen van alle SSD's",
+    "value": "Verwijdering van alle inhoud van ATA- en NVM-schijven door een combinatie van mediawissen en cryptografisch wissen"
+  },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Label voor het selectievakje dat aangeeft dat de SSD-schijf een schijfcoderingssleutel vereist",
+    "value": "SSD vereist schijfcoderingssleutel"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Label voor het invoerveld voor het coderingswachtwoord van de SSD-schijf",
+    "value": "Schijfwachtwoord"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Label voor TPM wissen",
+    "value": "TPM wissen"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Beschrijving voor TPM wissen",
+    "value": "Alle gemaakte sleutels die zijn gekoppeld aan de TPM en door die sleutels beschermde gegevens verwijderen, zoals een virtuele smartcard of een inlog-PIN"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Label voor BIOS herstellen naar EOM-status",
+    "value": "BIOS herstellen naar EOM-status"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Beschrijving voor BIOS herstellen naar EOM-status",
+    "value": "Herstel het BIOS naar de gouden configuratie voor End of Manufacture (EOM) zoals opgegeven door de systeemontwerper"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Label voor Intel CSME-firmware deconfigureren",
+    "value": "Intel CSME-firmware deconfigureren"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Tooltip op de verwijderknop wanneer er geen mogelijkheden zijn geselecteerd",
+    "value": "Selecteer ten minste één verwijdermogelijkheid"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Bevestigingsdialoogbericht voordat extern platform wissen wordt gestart. {{device}} is de vriendelijke naam of hostnaam; {{operations}} is een komma-gescheiden lijst van geselecteerde wisbewerkingen.",
+    "value": "{{device}} wissen en opnieuw opstarten? Dit voert uit: {{operations}}. Deze actie is onomkeerbaar."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Beschrijving voor Intel CSME-firmware deconfigureren",
+    "value": "Volledige deprovisioning van Intel AMT, terugkeer naar de standaardstatus en uitschakeling van Intel AMT-functies"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Informatiebericht getoond wanneer CSME deconfigureren is geselecteerd, legt uit dat het niet kan worden gecombineerd met andere opties",
+    "value": "CSME-deconfiguratie voert een volledige deprovisioning van Intel AMT uit en kan niet worden gecombineerd met andere wisbewerkingen."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Succesbericht na CSME-deconfiguratie – vraagt om herconfiguratie en meldt dat het apparaat uit de console wordt verwijderd",
+    "value": "CSME succesvol gedeconfigureerd. Configureer CSME opnieuw. Dit apparaat wordt verwijderd uit de console."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
+    "value": "{{selected}} van 3 bewerkingen geselecteerd",
+    "_value_old": "{{selected}} van {{total}} bewerkingen geselecteerd"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
+    "value": "Niet ondersteund op dit apparaat"
   }
 }

@@ -1479,6 +1479,10 @@
     "description": "Метка для HTTPS Сетевая загрузка",
     "value": "HTTPS Сетевая загрузка:"
   },
+  "general.remotePlatformErase": {
+    "description": "Метка для удалённого стирания платформы",
+    "value": "Удалённое стирание платформы:"
+  },
   "general.ideRedirection": {
     "description": "Метка для перенаправления IDE",
     "value": "Перенаправление IDE:"
@@ -1502,6 +1506,10 @@
   "general.oneClickRecoveryNotSupported": {
     "description": "Всплывающая подсказка для функции «Восстановление в один клик» не поддерживается.",
     "value": "Восстановление одним щелчком мыши не поддерживается."
+  },
+  "general.remotePlatformEraseNotSupported": {
+    "description": "Всплывающая подсказка для удалённого стирания платформы не поддерживается.",
+    "value": "Удалённое стирание платформы не поддерживается."
   },
   "general.pbaBootShort": {
     "description": "Метка для загрузки PBA",
@@ -2685,6 +2693,10 @@
     "description": "Заголовок диалогового окна для предупреждения о случайном пароле",
     "value": "Использование случайно сгенерированных паролей"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "Сообщение об ошибке когда пароль SSD превышает 64 байта",
+    "value": "Пароль SSD не должен превышать 64 байта"
+  },
   "sol.connect": {
     "description": "Кнопка для подключения к SOL",
     "value": "Подключите SOL"
@@ -2940,5 +2952,331 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Подсказка для поля имени беспроводного профиля",
     "value": "Укажите название беспроводного профиля."
+  },
+  "general.supported": {
+    "description": "Метка для включённых функций AMT",
+    "value": "Поддерживается"
+  },
+  "general.notSupported": {
+    "description": "Метка для отключённых функций AMT",
+    "value": "Не поддерживается"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "Включить до PBA (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "Включить до WinRe (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "Сброс до PBA (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "Сброс до WinRe (OCR)"
+  },
+  "general.expand": {
+    "description": "Метка для разворачивания",
+    "value": "Развернуть"
+  },
+  "general.collapse": {
+    "description": "Метка для сворачивания",
+    "value": "Свернуть"
+  },
+  "proxy.label": {
+    "value": "Прокси",
+    "description": "Метка для раздела прокси"
+  },
+  "proxy.configs.label": {
+    "value": "Настройки прокси",
+    "description": "Метка для поля ввода настроек прокси"
+  },
+  "proxy.configs.placeholder": {
+    "value": "Поиск настроек прокси для добавления",
+    "description": "Текст-подсказка для поиска настроек прокси"
+  },
+  "proxy.configs.hint": {
+    "value": "Прокси можно назначить этому профилю",
+    "description": "Подсказка под полем ввода настроек прокси"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "Связанные профили прокси (по приоритету)",
+    "description": "Метка для списка связанных профилей прокси"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "Перетащите для изменения порядка",
+    "description": "Подсказка для изменения порядка методом drag-and-drop"
+  },
+  "profileDetail.noProxy": {
+    "description": "Сообщение при отсутствии доступных настроек прокси",
+    "value": "Настройки прокси не найдены"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "Настройки прокси",
+    "description": "Заголовок настроек прокси"
+  },
+  "proxyConfigs.header.name": {
+    "value": "Имя",
+    "description": "Заголовок столбца для имени настройки прокси"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "Адрес прокси",
+    "description": "Заголовок столбца для адреса прокси"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "Формат адреса",
+    "description": "Заголовок столбца для формата адреса"
+  },
+  "proxyConfigs.header.port": {
+    "value": "Порт",
+    "description": "Заголовок столбца для порта"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "Суффикс DNS сети",
+    "description": "Заголовок столбца для сетевого DNS-суффикса"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "Новая настройка прокси",
+    "description": "Заголовок страницы создания новой настройки прокси"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "Редактировать настройку прокси",
+    "description": "Заголовок страницы редактирования настройки прокси"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "Адрес прокси",
+    "description": "Метка поля адреса прокси"
+  },
+  "proxyConfigs.name": {
+    "value": "Имя",
+    "description": "Метка поля имени настройки прокси"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "Введите имя настройки прокси",
+    "description": "Подсказка для поля имени настройки прокси"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "Введите адрес прокси-сервера",
+    "description": "Подсказка для поля адреса прокси"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "Формат адреса",
+    "description": "Метка поля формата адреса"
+  },
+  "proxyConfigs.port": {
+    "value": "Порт",
+    "description": "Метка поля порта"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "Суффикс DNS сети",
+    "description": "Метка поля сетевого DNS-суффикса"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "Подсказка для поля сетевого DNS-суффикса"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "Порт обязателен",
+    "description": "Сообщение проверки: порт обязателен"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "Порт должен быть в диапазоне от 0 до 65535",
+    "description": "Сообщение проверки диапазона порта"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "Имя обязательно",
+    "description": "Сообщение проверки: имя обязательно"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "Суффикс DNS сети обязателен",
+    "description": "Сообщение проверки: суффикс DNS обязателен"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "Суффикс DNS сети должен быть не более 192 символов",
+    "description": "Сообщение проверки максимальной длины DNS-суффикса"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "Настройка прокси успешно создана",
+    "description": "Сообщение об успешном создании настройки прокси"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "Настройка прокси успешно обновлена",
+    "description": "Сообщение об успешном обновлении настройки прокси"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "Настройка прокси {{name}} успешно удалена",
+    "description": "Сообщение об успешном удалении настройки прокси"
+  },
+  "common.delete": {
+    "value": "Удалить",
+    "description": "Текст кнопки удаления"
+  },
+  "common.deleteProfile": {
+    "value": "Удалить профиль",
+    "description": "Текст кнопки удаления профиля"
+  },
+  "common.editTags": {
+    "description": "Текст кнопки для массового редактирования тегов",
+    "value": "Редактировать теги"
+  },
+  "common.update": {
+    "value": "ОБНОВИТЬ",
+    "description": "Текст кнопки обновления"
+  },
+  "common.noData": {
+    "value": "Нет доступных данных",
+    "description": "Сообщение при отсутствии данных"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "Имя категории для удалённого стирания платформы",
+    "value": "Удалённое стирание платформы"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "Описание удалённого стирания платформы",
+    "value": "Безопасное стирание данных платформы"
+  },
+  "remotePlatformErase.title": {
+    "description": "Заголовок карточки функции удалённого стирания платформы",
+    "value": "Удалённое стирание платформы"
+  },
+  "remotePlatformErase.description": {
+    "description": "Подзаголовок карточки функции удалённого стирания платформы",
+    "value": "Удалённый запуск безопасного стирания данных с дисков, TPM и BIOS на этом устройстве. Стёртые данные невозможно восстановить.",
+    "_value_old": "Удалённый запуск безопасного стирания данных с дисков, TPM, BIOS или Intel CSME на этом устройстве. Стёртые данные невозможно восстановить."
+  },
+  "remotePlatformErase.warning": {
+    "description": "Предупреждение о включении удалённого стирания платформы",
+    "value": "Включение этой функции позволяет удалённо стирать данные платформы. Используйте с осторожностью."
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "Метка переключателя для включения удалённого стирания платформы",
+    "value": "Включить удалённое стирание платформы на этом устройстве"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "Пояснительный текст под переключателем включения",
+    "value": "Требуется перед началом любой операции стирания."
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "Заголовок карточки действия запуска стирания",
+    "value": "Запустить удалённое стирание"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "Подзаголовок карточки действия запуска стирания",
+    "value": "Безвозвратно удалить все данные, хранящиеся на этой платформе"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "Предупреждение перед запуском удалённого стирания платформы",
+    "value": "Это действие необратимо. Все данные платформы будут безвозвратно удалены."
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "Подпись кнопки для запуска удалённого стирания платформы",
+    "value": "Запустить удалённое стирание"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "Сообщение об успехе при переключении функции удалённого стирания платформы",
+    "value": "Функция удалённого стирания платформы успешно обновлена"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "Сообщение об ошибке при неудачном обновлении функции удалённого стирания платформы",
+    "value": "Не удалось обновить функцию удалённого стирания платформы"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "Сообщение об успехе после запуска удалённого стирания платформы",
+    "value": "Удалённое стирание платформы успешно запущено"
+  },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "Сообщение об успехе после стирания диска ОС — предлагает переустановить ОС",
+    "value": "Диск ОС успешно стёрт. Пожалуйста, переустановите операционную систему перед использованием этого устройства."
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "Сообщение об ошибке при невозможности запустить удалённое стирание платформы",
+    "value": "Не удалось запустить удалённое стирание платформы"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "Сообщение об ошибке при загрузке статуса функции удалённого стирания платформы",
+    "value": "Не удалось загрузить статус функции удалённого стирания платформы"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "Сообщение об ошибке при получении статуса питания во время удалённого стирания",
+    "value": "Ошибка при получении информации о состоянии питания"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "Сообщение, отображаемое когда удалённое стирание платформы не поддерживается устройством",
+    "value": "Удалённое стирание платформы не поддерживается"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "Заголовок карточки возможностей стирания",
+    "value": "Возможности стирания"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "Подзаголовок карточки возможностей стирания",
+    "value": "Выберите возможности для включения в операцию стирания. Неподдерживаемые возможности недоступны для выбора."
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "Подсказка, отображаемая при включённой функции и предлагающая пользователю выбрать возможности для стирания",
+    "value": "Выберите функции, которые хотите стереть, затем нажмите Запустить удалённое стирание."
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "Метка для безопасного стирания всех SSD",
+    "value": "Безопасное стирание всех SSD"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "Описание для безопасного стирания всех SSD",
+    "value": "Удаление всего содержимого с накопителей ATA и NVM с помощью комбинации стирания носителя и криптографического стирания"
+  },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "Метка флажка, указывающего, что SSD-накопитель требует ключ шифрования диска",
+    "value": "SSD требует ключ шифрования диска"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "Метка поля ввода пароля шифрования SSD-накопителя",
+    "value": "Пароль диска"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "Метка для очистки TPM",
+    "value": "Очистка TPM"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "Описание для очистки TPM",
+    "value": "Удаление всех созданных ключей, связанных с TPM, и данных, защищённых этими ключами, например виртуальной смарт-карты или PIN-кода входа"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "Метка для восстановления BIOS до состояния EOM",
+    "value": "Восстановить BIOS до состояния EOM"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "Описание для восстановления BIOS до состояния EOM",
+    "value": "Восстановление BIOS до базовой конфигурации End of Manufacture (EOM), заданной разработчиком системы"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Метка для отмены настройки прошивки Intel CSME",
+    "value": "Отменить настройку прошивки Intel CSME"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "Подсказка на кнопке запуска очистки, когда не выбрано ни одной возможности",
+    "value": "Выберите хотя бы одну возможность очистки"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "Сообщение диалога подтверждения перед запуском удалённого стирания платформы. {{device}} — дружественное имя или имя хоста; {{operations}} — список выбранных операций стирания через запятую.",
+    "value": "Стереть и перезапустить {{device}}? Будет выполнено: {{operations}}. Это действие необратимо."
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Описание для отмены настройки прошивки Intel CSME",
+    "value": "Полное отключение Intel AMT, возврат к состоянию по умолчанию и отключение функций Intel AMT"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "Информационное сообщение при выборе отмены настройки CSME, объясняющее, что её нельзя объединить с другими параметрами",
+    "value": "Отмена настройки CSME выполняет полное отключение Intel AMT и не может быть объединена с другими операциями стирания."
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "Сообщение об успехе после отмены настройки CSME – предлагает перенастроить CSME и сообщает, что устройство будет удалено из консоли",
+    "value": "Настройка CSME успешно отменена. Пожалуйста, перенастройте CSME. Это устройство будет удалено из консоли."
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "Подпись, показывающая, сколько операций стирания выбрано в данный момент",
+    "value": "Выбрано операций: {{selected}} из 3",
+    "_value_old": "Выбрано операций: {{selected}} из {{total}}"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Подпись в строке возможности, когда устройство её не поддерживает",
+    "value": "Не поддерживается на этом устройстве"
   }
 }

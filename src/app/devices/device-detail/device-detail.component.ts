@@ -27,6 +27,7 @@ import { GeneralComponent } from '../general/general.component'
 import { NetworkSettingsComponent } from '../network-settings/network-settings.component'
 import { environment } from '../../../environments/environment'
 import { TLSComponent } from '../tls/tls.component'
+import { RemotePlatformEraseComponent } from '../remote-platform-erase/remote-platform-erase.component'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -72,6 +73,7 @@ interface DeviceDetailCategory {
     RouterLinkActive,
     NetworkSettingsComponent,
     TLSComponent,
+    RemotePlatformEraseComponent,
     TranslatePipe
   ]
 })
@@ -118,6 +120,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         description: 'deviceDetail.hardwareInfoDescription.value',
         component: 'hardware-info',
         icon: 'memory'
+      },
+      {
+        name: 'deviceDetail.remotePlatformErase.value',
+        description: 'deviceDetail.remotePlatformEraseDescription.value',
+        component: 'remote-platform-erase',
+        icon: 'computer_cancel'
       },
       {
         name: 'deviceDetail.auditLog.value',
