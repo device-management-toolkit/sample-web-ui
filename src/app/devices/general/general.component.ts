@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
 import { AMTFeaturesRequest, AMTFeaturesResponse, Device, HardwareInformation } from '../../../models/models'
+import { getSkuFromAmtVersion, skuLabel } from '../sku'
 import { DevicesService } from '../devices.service'
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -44,6 +45,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService)
 
   public readonly deviceId = input('')
+  public readonly isISM = input(false)
 
   public amtFeatures: AMTFeaturesResponse = {
     KVM: false,
@@ -57,7 +59,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    remoteErase: false,
+    rpeSupported: false,
+    rpe: false,
     pbaBootFilesPath: [],
     winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
   }
@@ -74,10 +77,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
     httpsBootSupported: false,
     winREBootSupported: false,
     localPBABootSupported: false,
-    ocr: false
+    ocr: false,
+    rpe: false,
+    rpeSupported: false
   })
 
   public isLoading = signal(true)
+  public isDataLoaded = signal(false)
   public readonly isUpdatingFeatures = computed(() => this.pendingFeatureUpdates() > 0)
   public amtDHCPDNSSuffix: string | null = null
   public amtTrustedDNSSuffix: string | null = null
@@ -135,7 +141,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.amtTrustedDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix ?? ''
         this.amtVersion = results.amtVersion?.CIM_SoftwareIdentity?.responses[10].VersionString ?? ''
         this.amtBuild = results.amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ?? ''
-        this.amtSKU = this.skuLookup(results.amtVersion?.CIM_SoftwareIdentity?.responses[4].VersionString ?? '')
+        this.amtSKU = skuLabel(getSkuFromAmtVersion(results.amtVersion?.CIM_SoftwareIdentity?.responses ?? []))
         this.amtProvisioningMode = this.parseProvisioningMode(
           results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode ?? 0
         )
@@ -161,10 +167,16 @@ export class GeneralComponent implements OnInit, OnDestroy {
                 !results.amtFeatures.localPBABootSupported
             }
           ],
+
           httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
           winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
-          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }]
+          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
+          rpe: [
+            { value: results.amtFeatures.rpe, disabled: !(results.amtFeatures.rpeSupported ?? false) }
+          ],
+          rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
         })
+        this.isDataLoaded.set(true)
       })
   }
 
@@ -184,10 +196,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   setAmtFeatures(): void {
     this.pendingFeatureUpdates.update((count) => count + 1)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), {
-        ...this.amtEnabledFeatures.getRawValue(),
-        remoteErase: this.amtFeatures.remoteErase
-      } as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.getRawValue() as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.pendingFeatureUpdates.update((count) => count - 1)
@@ -223,17 +232,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
         return 'profileDetail.activationModeClient.value'
       default:
         return 'common.unknown.value'
-    }
-  }
-
-  skuLookup(sku: string): string {
-    switch (sku) {
-      case '16400':
-        return 'Intel® Standard Manageability'
-      case '16392':
-        return 'Intel® Active Management Technology'
-      default:
-        return sku
     }
   }
 }

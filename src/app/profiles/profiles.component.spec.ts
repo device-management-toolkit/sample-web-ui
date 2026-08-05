@@ -131,26 +131,39 @@ describe('ProfilesComponent', () => {
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })
   it('should fetch features and set ciraEnabled false in enterprise mode when CIRA is disabled', () => {
-    // cloudMode is captured from environment.cloud at construction, so flip it
-    // to false and build a fresh component to exercise the enterprise fetch path.
     const originalCloud = environment.cloud
     ;(environment as { cloud: boolean }).cloud = false
-    serverFeaturesServiceSpy.getFeatures.calls.reset()
-    serverFeaturesServiceSpy.getFeatures.and.returnValue(of({ ciraEnabled: false }))
+    try {
+      serverFeaturesServiceSpy.getFeatures.calls.reset()
+      serverFeaturesServiceSpy.getFeatures.and.returnValue(of({ ciraEnabled: false }))
 
-    const enterpriseFixture = TestBed.createComponent(ProfilesComponent)
-    const enterpriseComponent = enterpriseFixture.componentInstance
-    enterpriseFixture.detectChanges()
+      const enterpriseFixture = TestBed.createComponent(ProfilesComponent)
+      const enterpriseComponent = enterpriseFixture.componentInstance
+      enterpriseFixture.detectChanges()
 
-    expect(serverFeaturesServiceSpy.getFeatures).toHaveBeenCalled()
-    expect(enterpriseComponent.ciraEnabled()).toBeFalse()
-    ;(environment as { cloud: boolean }).cloud = originalCloud
+      expect(enterpriseComponent.cloudMode).toBeFalse()
+      expect(serverFeaturesServiceSpy.getFeatures).toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+    } finally {
+      ;(environment as { cloud: boolean }).cloud = originalCloud
+    }
   })
 
   it('should keep CIRA enabled in cloud mode without calling the features API', () => {
-    // Default test env is cloud (environment.cloud === true): no features call, CIRA stays on.
-    expect(component.cloudMode).toBeTrue()
-    expect(serverFeaturesServiceSpy.getFeatures).not.toHaveBeenCalled()
-    expect(component.ciraEnabled()).toBeTrue()
+    const originalCloud = environment.cloud
+    ;(environment as { cloud: boolean }).cloud = true
+    try {
+      serverFeaturesServiceSpy.getFeatures.calls.reset()
+
+      const cloudFixture = TestBed.createComponent(ProfilesComponent)
+      const cloudComponent = cloudFixture.componentInstance
+      cloudFixture.detectChanges()
+
+      expect(cloudComponent.cloudMode).toBeTrue()
+      expect(serverFeaturesServiceSpy.getFeatures).not.toHaveBeenCalled()
+      expect(cloudComponent.ciraEnabled()).toBeTrue()
+    } finally {
+      ;(environment as { cloud: boolean }).cloud = originalCloud
+    }
   })
 })

@@ -1,3 +1,17 @@
+# [3.63.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.62.0...v3.63.0) (2026-08-04)
+
+
+### Features
+
+* **devices:** add remote platform erase support ([#3206](https://github.com/device-management-toolkit/sample-web-ui/issues/3206)) ([d63792c](https://github.com/device-management-toolkit/sample-web-ui/commit/d63792c027e12b4f99462049c4cae6746c36b24a))
+
+# [3.62.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.61.1...v3.62.0) (2026-07-31)
+
+
+### Features
+
+* hide KVM tab on ISM systems.  Use IDER tab instead ([#3418](https://github.com/device-management-toolkit/sample-web-ui/issues/3418)) ([0823640](https://github.com/device-management-toolkit/sample-web-ui/commit/08236406f9e23a1583fa86b9bd0a600c1bec4f19))
+
 ## [3.61.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.61.0...v3.61.1) (2026-07-28)
 
 # [3.61.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.1...v3.61.0) (2026-07-20)

@@ -46,7 +46,8 @@ describe('HardwareInformationComponent', () => {
         ocr: true,
         winREBootSupported: true,
         localPBABootSupported: true,
-        remoteErase: true,
+        rpeSupported: true,
+        rpe: true,
         pbaBootFilesPath: [],
         winREBootFilesPath: {
           instanceID: '',
