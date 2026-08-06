@@ -450,7 +450,7 @@ export class IderComponent implements OnInit, OnDestroy {
             enableSOL: this.amtFeatures()?.SOL ?? false,
             enableIDER: true,
             ocr: this.amtFeatures()?.ocr ?? false,
-            remoteErase: this.amtFeatures()?.remoteErase ?? false
+            rpe: this.amtFeatures()?.rpe ?? false
           }
           return this.devicesService.setAmtFeatures(this.deviceId(), payload)
         }

@@ -1471,6 +1471,10 @@
     "description": "HTTPS ネットワークブートのラベル",
     "value": "HTTPS ネットワークブート:"
   },
+  "general.remotePlatformErase": {
+    "description": "リモートプラットフォーム消去のラベル",
+    "value": "リモートプラットフォーム消去:"
+  },
   "general.ideRedirection": {
     "description": "IDEリダイレクト用ラベル",
     "value": "IDE リダイレクト："
@@ -1494,6 +1498,10 @@
   "general.oneClickRecoveryNotSupported": {
     "description": "ワンクリック復元機能のツールチップはサポートされていません",
     "value": "ワンクリック復元はサポートされていません"
+  },
+  "general.remotePlatformEraseNotSupported": {
+    "description": "リモートプラットフォーム消去のツールチップはサポートされていません",
+    "value": "リモートプラットフォーム消去はサポートされていません"
   },
   "general.pbaBootShort": {
     "description": "PBAブート用ラベル",
@@ -2685,6 +2693,10 @@
     "description": "ランダムパスワード警告ダイアログのタイトル",
     "value": "ランダム生成パスワードの使用について"
   },
+  "remotePlatformErase.ssdPasswordTooLong": {
+    "description": "SSDパスワードが64バイトを超える場合のエラーメッセージ",
+    "value": "SSDパスワードは64バイトを超えることはできません"
+  },
   "sol.connect": {
     "description": "SOL接続用ボタン",
     "value": "Connect SOL"
@@ -2940,5 +2952,331 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "無線プロファイル名フィールドのヒント",
     "value": "ワイヤレスプロファイルの名称をご提供ください"
+  },
+  "general.supported": {
+    "description": "有効なAMT機能のラベル",
+    "value": "サポートされています"
+  },
+  "general.notSupported": {
+    "description": "無効なAMT機能のラベル",
+    "value": "サポートされていません"
+  },
+  "powerOptions.powerUpToPBA": {
+    "value": "PBAまで電源を入れる (OCR)"
+  },
+  "powerOptions.powerUpToWinRe": {
+    "value": "WinReまで電源を入れる (OCR)"
+  },
+  "powerOptions.resetToPBA": {
+    "value": "PBAにリセット (OCR)"
+  },
+  "powerOptions.resetToWinRe": {
+    "value": "WinReにリセット (OCR)"
+  },
+  "general.expand": {
+    "description": "展開のラベル",
+    "value": "展開"
+  },
+  "general.collapse": {
+    "description": "折りたたみのラベル",
+    "value": "折りたたむ"
+  },
+  "proxy.label": {
+    "value": "プロキシ",
+    "description": "プロキシセクションのラベル"
+  },
+  "proxy.configs.label": {
+    "value": "プロキシ設定",
+    "description": "プロキシ設定入力フィールドのラベル"
+  },
+  "proxy.configs.placeholder": {
+    "value": "追加するプロキシ設定を検索",
+    "description": "プロキシ設定を検索するためのプレースホルダー"
+  },
+  "proxy.configs.hint": {
+    "value": "このプロファイルにプロキシを割り当てることができます",
+    "description": "プロキシ設定入力フィールドの下に表示されるヒント"
+  },
+  "proxy.associatedProfiles.label": {
+    "value": "関連プロキシプロファイル（優先順）",
+    "description": "関連プロキシプロファイルリストのラベル"
+  },
+  "proxy.associatedProfiles.hint": {
+    "value": "ドラッグ＆ドロップで順序を変更",
+    "description": "ドラッグアンドドロップによる並び替えのヒント"
+  },
+  "profileDetail.noProxy": {
+    "description": "利用可能なプロキシ設定がない場合のメッセージ",
+    "value": "プロキシ設定が見つかりません"
+  },
+  "proxyConfigs.header.proxyTitle": {
+    "value": "プロキシ設定",
+    "description": "プロキシ設定のタイトル"
+  },
+  "proxyConfigs.header.name": {
+    "value": "名前",
+    "description": "プロキシ設定名の列ヘッダー"
+  },
+  "proxyConfigs.header.proxyAddress": {
+    "value": "プロキシアドレス",
+    "description": "プロキシアドレスの列ヘッダー"
+  },
+  "proxyConfigs.header.addressFormat": {
+    "value": "アドレス形式",
+    "description": "アドレス形式の列ヘッダー"
+  },
+  "proxyConfigs.header.port": {
+    "value": "ポート",
+    "description": "ポートの列ヘッダー"
+  },
+  "proxyConfigs.header.dnsSuffix": {
+    "value": "ネットワークDNSサフィックス",
+    "description": "ネットワークDNSサフィックスの列ヘッダー"
+  },
+  "proxyConfigs.pageTitle.newProxy": {
+    "value": "新しいプロキシ設定",
+    "description": "新しいプロキシ設定ページのタイトル"
+  },
+  "proxyConfigs.pageTitle.editProxy": {
+    "value": "プロキシ設定を編集",
+    "description": "プロキシ設定編集ページのタイトル"
+  },
+  "proxyConfigs.proxyAddress": {
+    "value": "プロキシアドレス",
+    "description": "プロキシアドレスフィールドのラベル"
+  },
+  "proxyConfigs.name": {
+    "value": "名前",
+    "description": "プロキシ設定名フィールドのラベル"
+  },
+  "proxyConfigs.namePlaceholder": {
+    "value": "プロキシ設定名を入力",
+    "description": "プロキシ設定名フィールドのプレースホルダー"
+  },
+  "proxyConfigs.addressPlaceholder": {
+    "value": "プロキシサーバーのアドレスを入力",
+    "description": "プロキシアドレスフィールドのプレースホルダー"
+  },
+  "proxyConfigs.addressFormat": {
+    "value": "アドレス形式",
+    "description": "アドレス形式フィールドのラベル"
+  },
+  "proxyConfigs.port": {
+    "value": "ポート",
+    "description": "ポートフィールドのラベル"
+  },
+  "proxyConfigs.dnsSuffix": {
+    "value": "ネットワークDNSサフィックス",
+    "description": "DNSサフィックスフィールドのラベル"
+  },
+  "proxyConfigs.dnsSuffixPlaceholder": {
+    "value": "example.com",
+    "description": "DNSサフィックスフィールドのプレースホルダー"
+  },
+  "proxyConfigs.validation.portRequired": {
+    "value": "ポートは必須です",
+    "description": "ポート必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.portRange": {
+    "value": "ポートは0から65535の間である必要があります",
+    "description": "ポート範囲のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.nameRequired": {
+    "value": "名前は必須です",
+    "description": "名前必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.dnsSuffixRequired": {
+    "value": "ネットワークDNSサフィックスは必須です",
+    "description": "DNSサフィックス必須のバリデーションメッセージ"
+  },
+  "proxyConfigs.validation.dnsSuffixMaxLength": {
+    "value": "ネットワークDNSサフィックスは192文字以内である必要があります",
+    "description": "DNSサフィックス最大長のバリデーションメッセージ"
+  },
+  "proxyConfigs.messages.createdSuccess": {
+    "value": "プロキシ設定が正常に作成されました",
+    "description": "プロキシ設定作成成功メッセージ"
+  },
+  "proxyConfigs.messages.updatedSuccess": {
+    "value": "プロキシ設定が正常に更新されました",
+    "description": "プロキシ設定更新成功メッセージ"
+  },
+  "proxyConfigs.messages.deletedSuccess": {
+    "value": "プロキシ設定 {{name}} が正常に削除されました",
+    "description": "プロキシ設定削除成功メッセージ"
+  },
+  "common.delete": {
+    "value": "削除",
+    "description": "削除ボタンのテキスト"
+  },
+  "common.deleteProfile": {
+    "value": "プロフィールを削除",
+    "description": "プロフィール削除ボタンのテキスト"
+  },
+  "common.editTags": {
+    "description": "タグを一括編集するためのボタンテキスト",
+    "value": "タグを編集"
+  },
+  "common.update": {
+    "value": "更新",
+    "description": "更新ボタンのテキスト"
+  },
+  "common.noData": {
+    "value": "利用可能なデータがありません",
+    "description": "データが利用できない場合のメッセージ"
+  },
+  "deviceDetail.remotePlatformErase": {
+    "description": "リモートプラットフォーム消去のカテゴリ名",
+    "value": "リモートプラットフォーム消去"
+  },
+  "deviceDetail.remotePlatformEraseDescription": {
+    "description": "リモートプラットフォーム消去の説明",
+    "value": "プラットフォームデータを安全に消去する"
+  },
+  "remotePlatformErase.title": {
+    "description": "リモートプラットフォーム消去機能カードのタイトル",
+    "value": "リモートプラットフォーム消去"
+  },
+  "remotePlatformErase.description": {
+    "description": "リモートプラットフォーム消去機能カードのサブタイトル",
+    "value": "このデバイスのドライブ、TPM、BIOS のリモートによる安全な消去を実行します。消去されたデータは復元できません。",
+    "_value_old": "このデバイスのドライブ、TPM、BIOS、または Intel CSME のリモートによる安全な消去を実行します。消去されたデータは復元できません。"
+  },
+  "remotePlatformErase.warning": {
+    "description": "リモートプラットフォーム消去の有効化に関する警告メッセージ",
+    "value": "この機能を有効にすると、プラットフォームデータをリモートで消去できます。慎重に使用してください。"
+  },
+  "remotePlatformErase.featureEnabled": {
+    "description": "リモートプラットフォーム消去の有効化スイッチのラベル",
+    "value": "このデバイスでリモートプラットフォーム消去を有効にする"
+  },
+  "remotePlatformErase.featureEnabledHint": {
+    "description": "有効化スイッチ下のヘルプテキスト",
+    "value": "消去操作を開始する前に必要です。"
+  },
+  "remotePlatformErase.initiateTitle": {
+    "description": "消去開始アクションカードのタイトル",
+    "value": "リモート消去の開始"
+  },
+  "remotePlatformErase.initiateDescription": {
+    "description": "消去開始アクションカードのサブタイトル",
+    "value": "このプラットフォームに保存されているすべてのデータを完全に消去する"
+  },
+  "remotePlatformErase.initiateWarning": {
+    "description": "リモートプラットフォーム消去を開始する前の警告",
+    "value": "この操作は元に戻せません。すべてのプラットフォームデータが完全に消去されます。"
+  },
+  "remotePlatformErase.initiateButton": {
+    "description": "リモートプラットフォーム消去を開始するボタンのラベル",
+    "value": "リモート消去を開始"
+  },
+  "remotePlatformErase.updateSuccess": {
+    "description": "リモートプラットフォーム消去機能の切り替え成功メッセージ",
+    "value": "リモートプラットフォーム消去機能を正常に更新しました"
+  },
+  "remotePlatformErase.updateError": {
+    "description": "リモートプラットフォーム消去機能の更新失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去機能の更新に失敗しました"
+  },
+  "remotePlatformErase.eraseSuccess": {
+    "description": "リモートプラットフォーム消去開始後の成功メッセージ",
+    "value": "リモートプラットフォーム消去が正常に開始されました"
+  },
+  "remotePlatformErase.osEraseSuccess": {
+    "description": "OSドライブ消去後の成功メッセージ – 再インストールを促す",
+    "value": "OSドライブが正常に消去されました。このデバイスを使用する前にOSを再インストールしてください。"
+  },
+  "remotePlatformErase.eraseError": {
+    "description": "リモートプラットフォーム消去の開始失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去の開始に失敗しました"
+  },
+  "remotePlatformErase.errorLoad": {
+    "description": "リモートプラットフォーム消去機能の状態読み込み失敗エラーメッセージ",
+    "value": "リモートプラットフォーム消去機能のステータスの読み込みに失敗しました"
+  },
+  "remotePlatformErase.errorRetrievingPower": {
+    "description": "リモート消去中の電源状態取得失敗エラーメッセージ",
+    "value": "電源状態の取得に失敗しました"
+  },
+  "remotePlatformErase.notSupported": {
+    "description": "デバイスでリモートプラットフォーム消去がサポートされていない場合のメッセージ",
+    "value": "リモートプラットフォーム消去はサポートされていません"
+  },
+  "remotePlatformErase.caps.title": {
+    "description": "消去機能カードのタイトル",
+    "value": "消去機能"
+  },
+  "remotePlatformErase.caps.description": {
+    "description": "消去機能カードのサブタイトル",
+    "value": "消去操作に含める機能を選択してください。サポートされていない機能は選択できません。"
+  },
+  "remotePlatformErase.caps.selectHint": {
+    "description": "機能が有効な場合に表示されるヒント。消去する機能を選択するようユーザーに促す",
+    "value": "消去する機能を選択し、リモート消去を開始をクリックしてください。"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.label": {
+    "description": "全SSDのセキュア消去のラベル",
+    "value": "全SSDのセキュア消去"
+  },
+  "remotePlatformErase.cap.secureEraseSsds.desc": {
+    "description": "全SSDのセキュア消去の説明",
+    "value": "メディア消去と暗号消去の組み合わせにより、ATAおよびNVMドライブからすべてのコンテンツを削除します"
+  },
+  "remotePlatformErase.ssdEncrypted.label": {
+    "description": "SSDドライブにディスク暗号化キーが必要であることを示すチェックボックスのラベル",
+    "value": "SSDにはディスク暗号化キーが必要です"
+  },
+  "remotePlatformErase.ssdPassword.label": {
+    "description": "SSDドライブの暗号化パスワード入力フィールドのラベル",
+    "value": "ドライブパスワード"
+  },
+  "remotePlatformErase.cap.tpmClear.label": {
+    "description": "TPMクリアのラベル",
+    "value": "TPMクリア"
+  },
+  "remotePlatformErase.cap.tpmClear.desc": {
+    "description": "TPMクリアの説明",
+    "value": "TPMに関連するすべての作成済みキーと、仮想スマートカードやログインPINなど、それらで保護されたデータを削除します"
+  },
+  "remotePlatformErase.cap.biosRestore.label": {
+    "description": "BIOSをEOM状態に復元するラベル",
+    "value": "BIOSをEOM状態に復元"
+  },
+  "remotePlatformErase.cap.biosRestore.desc": {
+    "description": "BIOSをEOM状態に復元する説明",
+    "value": "BIOSをシステム設計者が指定したEnd of Manufacture（EOM）のゴールデン構成に復元します"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.label": {
+    "description": "Intel CSMEファームウェアの設定解除のラベル",
+    "value": "Intel CSMEファームウェアの設定解除"
+  },
+  "remotePlatformErase.initiateNoCapsTooltip": {
+    "description": "機能が選択されていない場合の消去開始ボタンのツールチップ",
+    "value": "少なくとも1つの消去機能を選択してください"
+  },
+  "remotePlatformErase.confirmMessage": {
+    "description": "リモートプラットフォーム消去を開始する前の確認ダイアログメッセージ。{{device}} はフレンドリー名またはホスト名、{{operations}} は選択された消去操作のカンマ区切りリスト。",
+    "value": "{{device}} を消去して再起動しますか？ 実行内容: {{operations}}。この操作は元に戻せません。"
+  },
+  "remotePlatformErase.cap.csmeUnconfigure.desc": {
+    "description": "Intel CSMEファームウェアの設定解除の説明",
+    "value": "Intel AMTの完全なプロビジョニング解除、デフォルト状態への復帰、およびIntel AMT機能の無効化"
+  },
+  "remotePlatformErase.csmeUnconfigureExclusive": {
+    "description": "CSMEの設定解除が選択されたときに表示される情報メッセージ（他のオプションと組み合わせられない理由を説明）",
+    "value": "CSMEの設定解除はIntel AMTの完全なプロビジョニング解除を実行し、他の消去操作と組み合わせることはできません。"
+  },
+  "remotePlatformErase.csmeEraseSuccess": {
+    "description": "CSMEの設定解除後の成功メッセージ – 再設定を促し、デバイスがコンソールから削除されることを通知",
+    "value": "CSMEの設定が正常に解除されました。CSMEを再設定してください。このデバイスはコンソールから削除されます。"
+  },
+  "remotePlatformErase.selectionCount": {
+    "description": "現在選択されている消去操作の数を示すキャプション",
+    "value": "3 件中 {{selected}} 件の操作が選択されています",
+    "_value_old": "{{total}} 件中 {{selected}} 件の操作が選択されています"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "デバイスが対応していない機能の行に表示されるキャプション",
+    "value": "このデバイスでサポートされていません"
   }
 }

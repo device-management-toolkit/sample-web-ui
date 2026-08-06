@@ -49,7 +49,8 @@ describe('IderComponent', () => {
     ocr: true,
     winREBootSupported: true,
     localPBABootSupported: true,
-    remoteErase: false,
+    rpe: false,
+    rpeSupported: false,
     pbaBootFilesPath: [],
     winREBootFilesPath: {
       instanceID: '',
@@ -494,7 +495,7 @@ describe('IderComponent', () => {
           enableIDER: true,
           ocr: false,
           enableKVM: false,
-          remoteErase: false
+          rpe: false
         })
       )
       done()
