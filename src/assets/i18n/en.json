@@ -1423,6 +1423,10 @@
     "description": "Table column header for product type",
     "value": "Product Type"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type (Activated/Discovered/Both)",
+    "value": "Type"
+  },
   "devices.table.tags": {
     "description": "Table column header for tags",
     "value": "Tags"

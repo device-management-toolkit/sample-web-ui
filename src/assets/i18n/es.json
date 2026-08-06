@@ -1101,6 +1101,10 @@
     "description": "Table column header for product type",
     "value": "Tipo de producto"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type (Activated/Discovered/Both)",
+    "value": "Tipo"
+  },
   "devices.table.tags": {
     "description": "Encabezado de columna de tabla para etiquetas",
     "value": "Etiquetas"

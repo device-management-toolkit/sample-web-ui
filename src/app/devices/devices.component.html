@@ -134,6 +134,15 @@
             {{ getProductType(element) }}
           </mat-cell>
         </ng-container>
+        <!-- type Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+            'devices.table.type.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            {{ getDeviceType(element) }}
+          </mat-cell>
+        </ng-container>
         <!-- tags Column -->
         <ng-container matColumnDef="tags">
           <mat-header-cell *matHeaderCellDef mat-sort-header>

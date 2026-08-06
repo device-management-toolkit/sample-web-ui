@@ -1105,6 +1105,10 @@
     "description": "Table column header for product type",
     "value": "Тип продукта"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type (Activated/Discovered/Both)",
+    "value": "Тип"
+  },
   "devices.table.tags": {
     "description": "Заголовок столбца таблицы для тегов",
     "value": "Теги"

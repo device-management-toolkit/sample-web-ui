@@ -1097,6 +1097,10 @@
     "description": "Table column header for product type",
     "value": "Tipo di prodotto"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type (Activated/Discovered/Both)",
+    "value": "Tipo"
+  },
   "devices.table.tags": {
     "description": "Intestazione della colonna della tabella per i tag",
     "value": "Tag"

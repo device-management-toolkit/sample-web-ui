@@ -179,6 +179,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     'guid',
     'status',
     'productType',
+    'type',
     'tags',
     'actions',
     'notification'
@@ -201,6 +202,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         'select',
         'hostname',
         'productType',
+        'type',
         'tags',
         'actions',
         'notification'
@@ -407,11 +409,21 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getProductType(device: Device): string {
     const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
-    if (isNaN(skuNum)) return ''
+    if (isNaN(skuNum)) return 'Non-vPro'
     const isISM = (skuNum & 0x10) > 0
     const isVPro = (skuNum & 0x08) > 0
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
+    return 'Non-vPro'
+  }
+
+  getDeviceType(device: Device): string {
+    const isActivated =
+      device.deviceInfo?.currentMode != null && device.deviceInfo.currentMode !== 'not activated'
+    const isDiscovered = device.deviceInfo?.discovered === true
+    if (isActivated && isDiscovered) return 'Both'
+    if (isActivated) return 'Activated'
+    if (isDiscovered) return 'Discovered'
     return ''
   }
 

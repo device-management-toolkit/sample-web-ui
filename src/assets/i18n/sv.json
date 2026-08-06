@@ -1013,6 +1013,10 @@
     "description": "Table column header for product type",
     "value": "Produkttyp"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type (Activated/Discovered/Both)",
+    "value": "Typ"
+  },
   "devices.table.tags": {
     "description": "Tabellkolumnrubrik för taggar",
     "value": "Taggar"
