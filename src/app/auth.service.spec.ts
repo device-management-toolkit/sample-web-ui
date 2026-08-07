@@ -1,3 +1,8 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
@@ -79,6 +84,16 @@ describe('AuthService', () => {
       expect(service.isLoggedIn).toBeFalse()
       expect(localStorage.removeItem).toHaveBeenCalledWith('loggedInUser')
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
+    })
+  })
+
+  describe('verifyStoredSession', () => {
+    it('should call a protected endpoint so the server can reject a dead token', () => {
+      service.verifyStoredSession().subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+      expect(req.request.method).toBe('GET')
+      req.flush({})
     })
   })
 

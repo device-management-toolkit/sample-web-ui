@@ -13,6 +13,7 @@ import { bootstrapApplication } from '@angular/platform-browser'
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
 import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc'
 import { AuthGuard } from './app/shared/auth-guard.service'
+import { AuthService } from './app/auth.service'
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks'
 import { errorHandlingInterceptor } from './app/error-handling.interceptor'
 import { authorizationInterceptor } from './app/authorize.interceptor'
@@ -67,7 +68,20 @@ if (environment.useOAuth) {
     })
   )
 } else {
-  providers.push(provideHttpClient(withInterceptors([authorizationInterceptor, errorHandlingInterceptor])))
+  providers.push(
+    provideHttpClient(withInterceptors([authorizationInterceptor, errorHandlingInterceptor])),
+    provideAppInitializer(() => {
+      const authService = inject(AuthService)
+
+      // A restored session is unchecked; let the server reject a dead token before any route renders.
+      if (!authService.isLoggedIn) {
+        return Promise.resolve()
+      }
+
+      // The interceptor handles a 401; other failures must not block startup.
+      return firstValueFrom(authService.verifyStoredSession()).catch(() => undefined)
+    })
+  )
 }
 bootstrapApplication(AppComponent, {
   providers

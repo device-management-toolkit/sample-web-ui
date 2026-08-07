@@ -140,6 +140,11 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
 
+  /** Vets a session restored from storage; a 401 logs the user out. */
+  verifyStoredSession(): Observable<any> {
+    return this.http.get(`${environment.mpsServer}/api/v1/devices/stats`)
+  }
+
   getMPSVersion(): Observable<any> {
     return this.http.get<MPSVersion>(`${environment.mpsServer}/api/v1/version`).pipe(
       catchError((err) => {
