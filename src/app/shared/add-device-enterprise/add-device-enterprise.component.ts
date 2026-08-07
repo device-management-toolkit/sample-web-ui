@@ -49,6 +49,8 @@ export class AddDeviceEnterpriseComponent {
   public readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
 
   private deviceOrig: Device
+  private lastNonCIRAUseTLS = true
+  private lastNonCIRAAllowSelfSigned = true
 
   public form: FormGroup = this.fb.group({
     hostname: ['', [Validators.required]],
@@ -60,8 +62,8 @@ export class AddDeviceEnterpriseComponent {
       ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
-    useTLS: [false],
-    allowSelfSigned: [false],
+    useTLS: [true],
+    allowSelfSigned: [true],
     guid: [''],
     mpsusername: ['admin'],
     mpspassword: ['', [Validators.minLength(8)]]
@@ -108,8 +110,14 @@ export class AddDeviceEnterpriseComponent {
   }
 
   onCIRAChange(checked: boolean): void {
+    const wasCIRA = this.useCIRA
     this.useCIRA = checked
     if (checked) {
+      // Preserve non-CIRA checkbox state before enforcing CIRA constraints.
+      if (this.form.controls['useTLS'].enabled && this.form.controls['allowSelfSigned'].enabled) {
+        this.lastNonCIRAUseTLS = this.form.get('useTLS')?.value ?? true
+        this.lastNonCIRAAllowSelfSigned = this.form.get('allowSelfSigned')?.value ?? true
+      }
       // CIRA mode: set values first, then disable controls
       this.form.patchValue({
         useTLS: false,
@@ -127,10 +135,19 @@ export class AddDeviceEnterpriseComponent {
       this.form.controls['allowSelfSigned'].enable()
       this.form.controls['username'].enable()
       this.form.controls['mpsusername'].enable()
-      this.form.patchValue({
-        mpsusername: 'admin',
-        mpspassword: ''
-      })
+      if (wasCIRA) {
+        this.form.patchValue({
+          useTLS: this.lastNonCIRAUseTLS,
+          allowSelfSigned: this.lastNonCIRAAllowSelfSigned,
+          mpsusername: 'admin',
+          mpspassword: ''
+        })
+      } else {
+        this.form.patchValue({
+          mpsusername: 'admin',
+          mpspassword: ''
+        })
+      }
     }
   }
 
