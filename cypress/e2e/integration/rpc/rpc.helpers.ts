@@ -94,6 +94,27 @@ export const getAmtInfo = (
   })
 }
 
+export const getAmtInfoWithRetry = (
+  infoCommand: string,
+  config: Cypress.ExecOptions = execConfig,
+  maxRetries = 3,
+  retryInterval = 5000
+): Cypress.Chainable<AMTInfo> => {
+  const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
+    return getAmtInfo(infoCommand, config).then((info) => {
+      if (info.controlMode || attempt >= maxRetries) {
+        return info
+      }
+
+      cy.log(`Retrying rpc amtinfo after response without controlMode (${attempt}/${maxRetries})`)
+      cy.wait(retryInterval)
+      return attemptGetInfo(attempt + 1)
+    })
+  }
+
+  return attemptGetInfo(1)
+}
+
 // Extracts the major AMT version (e.g. "16.1.5" -> "16") from an AMTInfo object.
 export const getAmtVersion = (amtInfo: AMTInfo): string => {
   const versions: string[] = amtInfo.amt.split('.')
