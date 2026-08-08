@@ -1,0 +1,74 @@
+# Dockerfile for Cypress using Debian-based Node.js image for better compatibility
+FROM node:18-bullseye
+
+# Build arguments for proxy settings
+ARG HTTP_PROXY
+ARG http_proxy
+ARG HTTPS_PROXY
+ARG https_proxy
+ARG FTP_PROXY
+ARG ftp_proxy
+ARG NO_PROXY
+ARG no_proxy
+
+# Set proxy environment variables for build process
+ENV HTTP_PROXY=$HTTP_PROXY
+ENV http_proxy=$http_proxy
+ENV HTTPS_PROXY=$HTTPS_PROXY
+ENV https_proxy=$https_proxy
+ENV FTP_PROXY=$FTP_PROXY
+ENV ftp_proxy=$ftp_proxy
+ENV NO_PROXY=$NO_PROXY
+ENV no_proxy=$no_proxy
+
+# Install Cypress dependencies for Debian
+USER root
+RUN apt-get update && apt-get install -y \
+    libgtk2.0-0 \
+    libgtk-3-0 \
+    libgbm-dev \
+    libnotify-dev \
+    libnss3 \
+    libxss1 \
+    libasound2 \
+    libxtst6 \
+    xauth \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install Cypress
+COPY package*.json ./
+RUN npm install cypress --save-dev
+
+# Copy TypeScript and Cypress configuration files
+COPY tsconfig*.json ./
+COPY angular.json ./
+COPY cypress.config.ts ./
+COPY cypress/ ./cypress/
+# Copy source files that Cypress tests depend on
+COPY src/ ./src/
+
+# Set environment variables for runtime
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+
+# Install Cypress binary
+RUN npx cypress install
+
+# Clear build-time proxy variables and set runtime NO_PROXY
+ENV HTTP_PROXY=
+ENV http_proxy=
+ENV HTTPS_PROXY=
+ENV https_proxy=
+ENV FTP_PROXY=
+ENV ftp_proxy=
+ENV NO_PROXY=localhost,127.0.0.1,0.0.0.0,::1
+ENV no_proxy=localhost,127.0.0.1,0.0.0.0,::1
+
+# Create entrypoint script for Cypress
+RUN printf '#!/bin/bash\nset -e\n\n# Set no-proxy environment variables\nexport NO_PROXY="${NO_PROXY:-localhost,127.0.0.1,0.0.0.0,::1}"\nexport no_proxy="$NO_PROXY"\n\n# Force colored output\nexport FORCE_COLOR=1\nexport CI=false\n\necho "Docker Cypress Configuration:"\necho "  Base URL: ${CYPRESS_BASEURL:-https://localhost/}"\necho "  FQDN: ${CYPRESS_FQDN:-localhost}"\necho "  Vault URL: ${CYPRESS_VAULT_ADDRESS:-http://localhost:8200}"\necho "  Browser: Electron (headless)"\necho "  NO_PROXY: $NO_PROXY"\necho ""\n\n# Start Xvfb for headless execution\nXvfb :99 -ac -screen 0 1280x1024x16 &\nexport DISPLAY=:99\n\n# Run Cypress with Electron browser\nexec npx cypress "$@" --browser electron\n' > /cypress-entrypoint.sh && chmod +x /cypress-entrypoint.sh
+
+ENTRYPOINT ["/cypress-entrypoint.sh"]
+CMD ["run"]
