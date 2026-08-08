@@ -41,7 +41,7 @@ describe('Test Device Page', () => {
     if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
       cy.myIntercept('GET', '**/devices?tags=Windows&$top=25&$skip=0&$count=true', {
         statusCode: httpCodes.SUCCESS,
-        body: devices.getAll.windows.response.data
+        body: devices.getAll.windows.response
       }).as('get-windows')
 
       cy.goToPage('Devices')

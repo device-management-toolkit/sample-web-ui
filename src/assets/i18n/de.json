@@ -1097,9 +1097,25 @@
     "description": "Tabellen-Spaltenüberschrift für Gerätestatus",
     "value": "Status"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Produkttyp"
+  },
   "devices.table.tags": {
     "description": "Tabellen-Spaltenüberschrift für Tags",
     "value": "Tags"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Alle"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Aktiviert"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Entdeckt"
   },
   "deviceToolbar.power.off": {
     "description": "Energie-Tooltip für Ausgeschaltet",

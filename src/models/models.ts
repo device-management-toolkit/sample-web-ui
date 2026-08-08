@@ -31,6 +31,7 @@ export interface DeviceInfo {
   currentMode: string
   features: string
   ipAddress: string
+  discovered?: boolean
   firstDiscovered?: Date
   lastSynced?: Date
 }
