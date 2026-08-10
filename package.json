@@ -57,11 +57,11 @@
     "webpack-dev-server": "^5.2.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~21.2.19",
+    "@angular-devkit/build-angular": "~21.2.20",
     "@angular-eslint/builder": "~21.3.0",
     "@angular-eslint/schematics": "~21.4.0",
     "@angular-eslint/template-parser": "~21.4.0",
-    "@angular/cli": "~21.2.19",
+    "@angular/cli": "~21.2.20",
     "@angular/compiler-cli": "~21.2.19",
     "@angular/localize": "~21.2.19",
     "@eslint/js": "^10.0.1",
