@@ -5,6 +5,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
+import { By } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 
@@ -152,5 +153,22 @@ describe('ProfilesComponent', () => {
     expect(component.cloudMode).toBeTrue()
     expect(serverFeaturesServiceSpy.getFeatures).not.toHaveBeenCalled()
     expect(component.ciraEnabled()).toBeTrue()
+  })
+
+  it('should show warning icon on profiles that use CIRA when CIRA is disabled', () => {
+    component.ciraEnabled.set(false)
+    fixture.detectChanges()
+
+    const icons = fixture.debugElement.queryAll(By.css('mat-icon[color="warn"]'))
+    // The mock data has one profile with ciraConfigName set
+    expect(icons.length).toBe(1)
+  })
+
+  it('should not show warning icon when CIRA is enabled', () => {
+    // ciraEnabled is true by default in cloud mode
+    fixture.detectChanges()
+
+    const icons = fixture.debugElement.queryAll(By.css('mat-icon[color="warn"]'))
+    expect(icons.length).toBe(0)
   })
 })
