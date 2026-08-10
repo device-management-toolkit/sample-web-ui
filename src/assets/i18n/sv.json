@@ -1081,6 +1081,10 @@
     "description": "Strömverktygstips för av",
     "value": "Ström: Av"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria-etikett för strömstatusuppdateringsknappen",
+    "value": "Uppdatera strömstatus"
+  },
   "deviceUserConsent.description": {
     "description": "Beskrivning av användarens samtycke för enheter",
     "value": "En användarkod genererad av Intel AMT krävs för att få åtkomst till systemet."

@@ -31,7 +31,8 @@ export interface DeviceInfo {
   currentMode: string
   features: string
   ipAddress: string
-  lastUpdated?: Date
+  firstDiscovered?: Date
+  lastSynced?: Date
 }
 export interface DeviceStats {
   totalCount: number

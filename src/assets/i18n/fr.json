@@ -1081,6 +1081,10 @@
     "description": "Info-bulle d'alimentation pour l'état éteint",
     "value": "Alimentation : Éteint"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Libellé aria pour le bouton d'actualisation de l'état d'alimentation",
+    "value": "Actualiser l'état d'alimentation"
+  },
   "deviceUserConsent.description": {
     "description": "Description du consentement de l'utilisateur pour les appareils",
     "value": "Un code de consentement utilisateur généré par Intel AMT est nécessaire pour accéder au système."

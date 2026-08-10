@@ -1081,6 +1081,10 @@
     "description": "Virtatilan vihjeteksti tilalle pois päältä",
     "value": "Virta: Pois päältä"
   },
+  "deviceToolbar.power.refreshAriaLabel": {
+    "description": "Aria-nimike virtatilan päivityspainikkeen osalta",
+    "value": "Päivitä virran tila"
+  },
   "deviceUserConsent.description": {
     "description": "Kuvaus laitteiden käyttäjän suostumuksesta",
     "value": "Järjestelmään pääsemiseksi tarvitaan Intel AMT:n luoma käyttäjän suostumus koodi."
