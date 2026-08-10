@@ -79,10 +79,6 @@
     "description": "Описание, объясняющее, как активировать устройство.",
     "value": "Для активации устройства необходимо выполнить команду на устройстве AMT. Это диалоговое окно поможет сгенерировать команду для запуска."
   },
-  "addDevice.enterGuid": {
-    "description": "Подсказка для ввода GUID",
-    "value": "Введите GUID"
-  },
   "addDevice.enterTags": {
     "description": "Подсказка для ввода тегов",
     "value": "Вы можете вводить теги, чтобы облегчить организацию и поиск устройств по мере роста списка управляемых устройств. Введите тег, затем нажмите Enter или запятую."
@@ -95,10 +91,6 @@
     "description": "Ошибка для обязательных дружественных имен",
     "value": "Требуется дружественное имя."
   },
-  "addDevice.guid": {
-    "description": "Метка для поля GUID",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Ошибка для недопустимых имен хостов",
     "value": "Неверный формат имени хоста"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "Ошибка для обязательных имен хостов",
     "value": "Имя хоста является обязательным"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Метка для поля пароля MPS",
-    "value": "Пароль MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Подсказка для поля пароля MPS",
-    "value": "Введите пароль MPS"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Метка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Подсказка для поля имени пользователя MPS",
-    "value": "Имя пользователя MPS (по умолчанию: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Флажок для отключения проверки самоподписанного сертификата.",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "Заголовок диалогового окна для добавления нового устройства",
     "value": "Добавить новое устройство"
-  },
-  "addDevice.useCIRA": {
-    "description": "Флажок для использования соединения CIRA",
-    "value": "Использовать CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "Ошибка при вводе неверного имени пользователя",

@@ -55,38 +55,6 @@
     "description": "Etikett för MPS-lösenordsfält",
     "value": "MPS-lösenord"
   },
-  "addDevice.mpsPasswordHint": {
-    "description": "Tips för MPS-lösenordsfält",
-    "value": "Ange MPS-lösenord"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Etikett för MPS-användarnamnsfält",
-    "value": "MPS-användarnamn"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Tips för MPS-användarnamnsfält",
-    "ider.status.checkingAMTFeatures": {
-      "description": "Statusmeddelande som visas när AMT-funktioner hämtas",
-      "value": "Hämtar AMT-funktioner..."
-    },
-    "ider.status.checkingConsent": {
-      "description": "Statusmeddelande som visas vid kontroll av användarens samtycke",
-      "value": "Kontrollerar samtyckesläge..."
-    },
-    "ider.status.checkingRedirection": {
-      "description": "Statusmeddelande som visas vid kontroll av omdirigeringsstatus",
-      "value": "Kontrollerar omdirigeringsstatus..."
-    },
-    "ider.status.connectingIder": {
-      "description": "Statusmeddelande som visas när IDER-komponenten ansluter",
-      "value": "Ansluter till IDER..."
-    },
-    "ider.stopIder.label": {
-      "description": "Knappetikett för att stoppa IDER-sessionen",
-      "value": "Stoppa IDER"
-    },
-    "value": "MPS-användarnamn (standard: admin)"
-  },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Fel vid radering",
     "value": "Fel vid radering av larmhändelser"
