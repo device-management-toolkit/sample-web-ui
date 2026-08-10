@@ -1,3 +1,10 @@
+## [3.63.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.0...v3.63.1) (2026-08-10)
+
+
+### Bug Fixes
+
+* remove "Use CIRA" option from Add Device dialog ([#3282](https://github.com/device-management-toolkit/sample-web-ui/issues/3282)) ([9eae667](https://github.com/device-management-toolkit/sample-web-ui/commit/9eae667df28e39b39b280cdec4b20052bc721afe))
+
 # [3.63.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.62.0...v3.63.0) (2026-08-04)
 
 
