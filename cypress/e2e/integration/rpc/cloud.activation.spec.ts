@@ -19,6 +19,7 @@ import {
   buildInfoCommand,
   buildActivateCommand,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
@@ -72,7 +73,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
             )
           })
-          getAmtInfo(infoCommand).its('controlMode').should('be.oneOf', notActivatedControlModes)
+          getAmtInfoWithRetry(infoCommand).then((info) => {
+            expect(info.controlMode).to.be.oneOf(notActivatedControlModes)
+          })
         })
       }
     })
