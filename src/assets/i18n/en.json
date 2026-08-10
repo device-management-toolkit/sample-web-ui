@@ -227,10 +227,6 @@
     "description": "Description explaining how to activate a device",
     "value": "In order to activate a device, you'll need to execute a command on the AMT Device. This dialog will help generate the command to run."
   },
-  "addDevice.enterGuid": {
-    "description": "Hint for entering GUID",
-    "value": "Enter GUID"
-  },
   "addDevice.enterTags": {
     "description": "Hint for entering tags",
     "value": "You can enter tags to help in organizing and querying devices as your list of managed devices grow. Type a tag, then present enter or comma."
@@ -243,10 +239,6 @@
     "description": "Error for required friendly names",
     "value": "Friendly Name is required"
   },
-  "addDevice.guid": {
-    "description": "Label for GUID field",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Error for invalid hostnames",
     "value": "Invalid hostname format"
@@ -254,22 +246,6 @@
   "addDevice.hostNameRequired": {
     "description": "Error for required hostnames",
     "value": "Hostname is required"
-  },
-  "addDevice.mpsPassword": {
-    "description": "Label for MPS Password field",
-    "value": "MPS Password"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Hint for MPS Password field",
-    "value": "Enter MPS Password"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Label for MPS Username field",
-    "value": "MPS Username"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Hint for MPS Username field",
-    "value": "MPS Username (default: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Checkbox label to disable self-signed certificate check",
@@ -290,10 +266,6 @@
   "addDevice.title": {
     "description": "Dialog title for adding a new device",
     "value": "Add a New Device"
-  },
-  "addDevice.useCIRA": {
-    "description": "Checkbox label for using CIRA connection",
-    "value": "Use CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "Error for invalid username",

@@ -79,10 +79,6 @@
     "description": "وصف يشرح كيفية تنشيط الجهاز",
     "value": "لتنشيط جهاز، ستحتاج إلى تنفيذ أمر على جهاز AMT. سيساعدك مربع الحوار هذا في إنشاء الأمر المطلوب تنفيذه."
   },
-  "addDevice.enterGuid": {
-    "description": "تلميح لإدخال GUID",
-    "value": "أدخل GUID"
-  },
   "addDevice.enterTags": {
     "description": "تلميح لإدخال العلامات",
     "value": "يمكنك إدخال علامات للمساعدة في تنظيم الأجهزة والاستعلام عنها مع نمو قائمة الأجهزة المدارة. اكتب علامة، ثم اضغط على Enter أو ضع فاصلة."
@@ -95,10 +91,6 @@
     "description": "خطأ في الأسماء المطلوبة",
     "value": "الاسم المألوف مطلوب"
   },
-  "addDevice.guid": {
-    "description": "تسمية حقل GUID",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "خطأ في أسماء المضيفين غير الصالحة",
     "value": "تنسيق اسم المضيف غير صالح"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "خطأ في أسماء المضيف المطلوبة",
     "value": "اسم المضيف مطلوب"
-  },
-  "addDevice.mpsPassword": {
-    "description": "تسمية حقل كلمة مرور MPS",
-    "value": "كلمة مرور MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "تلميح لحقل كلمة مرور MPS",
-    "value": "أدخل كلمة مرور MPS"
-  },
-  "addDevice.mpsUsername": {
-    "description": "تسمية حقل اسم مستخدم MPS",
-    "value": "اسم مستخدم MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "تلميح لحقل اسم مستخدم MPS",
-    "value": "اسم مستخدم MPS (افتراضي: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "تسمية مربع الاختيار لتعطيل التحقق من الشهادة الموقعة ذاتيًا",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "عنوان مربع الحوار لإضافة جهاز جديد",
     "value": "إضافة جهاز جديد"
-  },
-  "addDevice.useCIRA": {
-    "description": "مربع اختيار لاستخدام اتصال CIRA",
-    "value": "استخدام CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "خطأ في اسم المستخدم غير صالح",
