@@ -79,10 +79,6 @@
     "description": "Description expliquant comment activer un appareil",
     "value": "Afin d'activer un appareil, vous devrez exécuter une commande sur l'appareil AMT. Cette boîte de dialogue vous aidera à générer la commande à exécuter."
   },
-  "addDevice.enterGuid": {
-    "description": "Indication pour entrer le GUID",
-    "value": "Entrez le GUID"
-  },
   "addDevice.enterTags": {
     "description": "Conseil pour la saisie des balises",
     "value": "Vous pouvez saisir des balises pour faciliter l'organisation et la recherche des appareils à mesure que votre liste d'appareils gérés s'allonge. Saisissez une balise, puis appuyez sur Entrée ou ajoutez une virgule."
@@ -95,10 +91,6 @@
     "description": "Erreur pour les noms conviviaux requis",
     "value": "Le nom convivial est obligatoire."
   },
-  "addDevice.guid": {
-    "description": "Étiquette pour le champ GUID",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "Erreur pour les noms d'hôte non valides",
     "value": "Format de nom d'hôte non valide"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "Erreur pour les noms d'hôte requis",
     "value": "Le nom d'hôte est obligatoire."
-  },
-  "addDevice.mpsPassword": {
-    "description": "Étiquette pour le champ mot de passe MPS",
-    "value": "Mot de passe MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "Indication pour le champ mot de passe MPS",
-    "value": "Entrer le mot de passe MPS"
-  },
-  "addDevice.mpsUsername": {
-    "description": "Étiquette pour le champ nom d'utilisateur MPS",
-    "value": "Nom d'utilisateur MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "Indication pour le champ nom d'utilisateur MPS",
-    "value": "Nom d'utilisateur MPS (par défaut: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "Étiquette de case à cocher pour désactiver la vérification des certificats auto-signés",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "Titre de la boîte de dialogue pour ajouter un nouvel appareil",
     "value": "Ajouter un nouvel appareil"
-  },
-  "addDevice.useCIRA": {
-    "description": "Case à cocher pour utiliser la connexion CIRA",
-    "value": "Utiliser CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "Erreur pour nom d'utilisateur non valide",

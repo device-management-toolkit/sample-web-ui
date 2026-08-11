@@ -79,10 +79,6 @@
     "description": "תיאור מסביר כיצד להפעיל מכשיר",
     "value": "על מנת להפעיל מכשיר, תצטרך לבצע פקודה במכשיר AMT. "
   },
-  "addDevice.enterGuid": {
-    "description": "רמז להזנת GUID",
-    "value": "הזן GUID"
-  },
   "addDevice.enterTags": {
     "description": "רמז להיכנס לתגיות",
     "value": "אתה יכול להזין תגיות כדי לעזור בארגון ושאילתות מכשירי כאשר רשימת המכשירים המנוהלים שלך צומחת. "
@@ -95,10 +91,6 @@
     "description": "שגיאה לשמות ידידותיים נדרשים",
     "value": "נדרש שם ידידותי"
   },
-  "addDevice.guid": {
-    "description": "תווית לשדה GUID",
-    "value": "GUID"
-  },
   "addDevice.hostNameInvalid": {
     "description": "שגיאה עבור שמות מארח לא חוקיים",
     "value": "פורמט שם מארח לא חוקי"
@@ -106,22 +98,6 @@
   "addDevice.hostNameRequired": {
     "description": "שגיאה עבור שמות מארח נדרשים",
     "value": "שם מארח נדרש"
-  },
-  "addDevice.mpsPassword": {
-    "description": "תווית לשדה סיסמת MPS",
-    "value": "סיסמת MPS"
-  },
-  "addDevice.mpsPasswordHint": {
-    "description": "רמז לשדה סיסמת MPS",
-    "value": "הזן סיסמת MPS"
-  },
-  "addDevice.mpsUsername": {
-    "description": "תווית לשדה שם משתמש MPS",
-    "value": "שם משתמש MPS"
-  },
-  "addDevice.mpsUsernameHint": {
-    "description": "רמז לשדה שם משתמש MPS",
-    "value": "שם משתמש MPS (ברירת מחדל: admin)"
   },
   "addDevice.noSelfSignedCertCheck": {
     "description": "תווית תיבת סימון כדי להשבית בדיקת אישור חתימה עצמית",
@@ -142,10 +118,6 @@
   "addDevice.title": {
     "description": "כותרת דו -שיח להוספת מכשיר חדש",
     "value": "הוסף מכשיר חדש"
-  },
-  "addDevice.useCIRA": {
-    "description": "תיבת סימון לשימוש בחיבור CIRA",
-    "value": "השתמש ב-CIRA"
   },
   "addDevice.userNameInvalid": {
     "description": "שגיאה בשם משתמש לא חוקי",

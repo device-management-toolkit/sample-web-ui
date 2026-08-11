@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.63.0",
+  "version": "3.63.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -57,17 +57,17 @@
     "webpack-dev-server": "^5.2.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~21.2.19",
+    "@angular-devkit/build-angular": "~21.2.20",
     "@angular-eslint/builder": "~21.3.0",
     "@angular-eslint/schematics": "~21.4.0",
     "@angular-eslint/template-parser": "~21.4.0",
-    "@angular/cli": "~21.2.19",
+    "@angular/cli": "~21.2.20",
     "@angular/compiler-cli": "~21.2.19",
     "@angular/localize": "~21.2.19",
     "@eslint/js": "^10.0.1",
     "@types/jasmine": "~6.0.0",
     "angular-eslint": "21.4.0",
-    "cypress": "^15.19.0",
+    "cypress": "^15.20.0",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.9.0",
@@ -88,6 +88,6 @@
     "typescript-eslint": "^8.66.0"
   },
   "optionalDependencies": {
-    "cypress": "^15.19.0"
+    "cypress": "^15.20.0"
   }
 }
