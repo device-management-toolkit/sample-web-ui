@@ -18,7 +18,7 @@ describe('AuthorizeInterceptor', () => {
   let dialogSpy: jasmine.SpyObj<MatDialog>
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['getLoggedUserToken', 'logout'])
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['logout'])
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
 
     TestBed.configureTestingModule({
@@ -39,25 +39,29 @@ describe('AuthorizeInterceptor', () => {
     httpTestingController.verify()
   })
 
-  it('should add Authorization header if not calling /authorize', () => {
-    authServiceSpy.getLoggedUserToken.and.returnValue('test-token')
-
+  it('should send credentials so the session cookie travels with the request', () => {
     httpClient.get('/test').subscribe()
 
     const req = httpTestingController.expectOne('/test')
-    expect(req.request.headers.get('Authorization')).toBe('Bearer test-token')
+    expect(req.request.withCredentials).toBeTrue()
   })
 
-  it('should not add Authorization header for /authorize endpoint', () => {
-    httpClient.get('/authorize').subscribe()
+  it('should never attach an Authorization header', () => {
+    httpClient.get('/test').subscribe()
+
+    const req = httpTestingController.expectOne('/test')
+    expect(req.request.headers.has('Authorization')).toBeFalse()
+  })
+
+  it('should send credentials on /authorize so the cookie is stored', () => {
+    httpClient.post('/authorize', { username: 'u', password: 'p' }).subscribe()
 
     const req = httpTestingController.expectOne('/authorize')
+    expect(req.request.withCredentials).toBeTrue()
     expect(req.request.headers.has('Authorization')).toBeFalse()
   })
 
   it('should add if-match header if body contains version', () => {
-    authServiceSpy.getLoggedUserToken.and.returnValue('test-token')
-
     httpClient.post('/test', { version: '123' }).subscribe()
 
     const req = httpTestingController.expectOne('/test')
