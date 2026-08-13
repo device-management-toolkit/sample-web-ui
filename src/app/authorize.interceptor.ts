@@ -3,28 +3,20 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { inject } from '@angular/core'
 import { HttpInterceptorFn } from '@angular/common/http'
-import { AuthService } from './auth.service'
 
 export const authorizationInterceptor: HttpInterceptorFn = (request, next) => {
-  const authService = inject(AuthService)
-
-  if (request.url.toString().includes('/authorize') && !request.url.toString().includes('/authorize/redirection')) {
-    // Skip adding authorization headers for specific routes
-    return next(request)
-  }
-
-  const headers: any = {
-    Authorization: `Bearer ${authService.getLoggedUserToken()}`
-  }
+  const headers: any = {}
 
   if ((request.body as any)?.version != null && (request.body as any)?.version !== '') {
     headers['if-match'] = (request.body as any).version
   }
 
+  // No token to attach: the session is an HttpOnly cookie. withCredentials lets
+  // the browser store and send it across origins, login request included.
   request = request.clone({
-    setHeaders: headers
+    setHeaders: headers,
+    withCredentials: true
   })
 
   return next(request)
