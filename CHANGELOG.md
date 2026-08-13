@@ -1,3 +1,10 @@
+# [3.64.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.1...v3.64.0) (2026-08-12)
+
+
+### Features
+
+* **login:** use HttpOnly session cookie instead of localStorage ([#3499](https://github.com/device-management-toolkit/sample-web-ui/issues/3499)) ([f008ded](https://github.com/device-management-toolkit/sample-web-ui/commit/f008dedadc2530b8674ad8e7ed1289682bff8b74))
+
 ## [3.63.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.0...v3.63.1) (2026-08-10)
 
 

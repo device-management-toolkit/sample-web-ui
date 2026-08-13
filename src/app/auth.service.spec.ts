@@ -20,6 +20,9 @@ describe('AuthService', () => {
   const mockEnvironment = { mpsServer: 'https://test-mps', rpsServer: 'https://test-rps' }
 
   beforeEach(() => {
+    // The constructor reads the session flag, and spec order is random, so a
+    // leftover flag makes the suite fail intermittently.
+    localStorage.clear()
     routerSpy = jasmine.createSpyObj('Router', ['navigate'])
     environment.mpsServer = mockEnvironment.mpsServer
     environment.rpsServer = mockEnvironment.rpsServer
@@ -40,25 +43,58 @@ describe('AuthService', () => {
 
   afterEach(() => {
     httpMock.verify()
+    localStorage.clear()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
+  describe('session flag on start-up', () => {
+    // Only the exact value login() writes counts as a session.
+    const cases = [
+      { flag: 'true', expected: true },
+      { flag: 'false', expected: false },
+      { flag: '1', expected: false },
+      { flag: '', expected: false }
+    ]
+
+    cases.forEach(({ flag, expected }) => {
+      it(`treats sessionActive="${flag}" as loggedIn=${expected}`, () => {
+        localStorage.setItem('sessionActive', flag)
+        TestBed.resetTestingModule()
+        TestBed.configureTestingModule({
+          providers: [
+            provideTranslateService(),
+            AuthService,
+            { provide: Router, useValue: routerSpy },
+            provideHttpClient(),
+            provideHttpClientTesting()
+          ]
+        })
+
+        expect(TestBed.inject(AuthService).isLoggedIn).toBe(expected)
+        httpMock = TestBed.inject(HttpTestingController)
+      })
+    })
+  })
+
   describe('login', () => {
-    it('should log in a user and update state', () => {
+    it('should log in a user and update state without persisting the token', () => {
       const mockResponse = { token: 'test-token' }
 
       service.login('testUser', 'testPass').subscribe(() => {
         expect(service.isLoggedIn).toBeTrue()
-        expect(localStorage.getItem('loggedInUser')).toBe(JSON.stringify(mockResponse))
+        expect(localStorage.getItem('sessionActive')).toBe('true')
       })
 
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize`)
       expect(req.request.method).toBe('POST')
       expect(req.request.body).toEqual({ username: 'testUser', password: 'testPass' })
       req.flush(mockResponse)
+
+      // Nothing readable may hold the session.
+      expect(JSON.stringify(localStorage)).not.toContain('test-token')
     })
 
     it('should handle errors', () => {
@@ -76,13 +112,38 @@ describe('AuthService', () => {
   })
 
   describe('logout', () => {
-    it('should log out the user and navigate to login', () => {
+    it('should clear session state and navigate to login', () => {
       spyOn(localStorage, 'removeItem')
 
       service.logout()
 
       expect(service.isLoggedIn).toBeFalse()
+      expect(localStorage.removeItem).toHaveBeenCalledWith('sessionActive')
       expect(localStorage.removeItem).toHaveBeenCalledWith('loggedInUser')
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
+    })
+
+    it('should ask the server to expire the cookie when a session was active', () => {
+      service.isLoggedIn = true
+
+      service.logout()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/logout`)
+      expect(req.request.method).toBe('POST')
+      req.flush({ message: 'logged out' })
+
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
+    })
+
+    it('should still log out locally when the server call fails', () => {
+      service.isLoggedIn = true
+
+      service.logout()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/logout`)
+      req.flush(null, { status: 500, statusText: 'Server Error' })
+
+      expect(service.isLoggedIn).toBeFalse()
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
     })
   })
