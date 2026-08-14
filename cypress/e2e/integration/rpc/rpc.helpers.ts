@@ -159,9 +159,13 @@ export interface ActivateCommandOptions {
   isWin: boolean
   rpcDockerImage: string
   amtVersion: string
+  rpcVersion?: string
   // console-only
   profileYamlFile?: string
   encryptionKey?: string
+  authEndpoint?: string  // enables auto-add to console
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
   profileName?: string
@@ -182,8 +186,26 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     ? opts.profileYamlFile.substring(opts.profileYamlFile.lastIndexOf('/') + 1)
     : ''
   const profilePath = opts.isWin ? opts.profileYamlFile : `/config/${profileFileName}`
+
+  const rpcVersion = opts.rpcVersion ?? 'v3'
+
+  if (rpcVersion === 'v2') {
+    const skipFlag = parseInt(opts.amtVersion) > 18 ? ' -skipamtcertcheck' : ''
+    const args = `activate -local -configv2 ${profilePath} -configencryptionkey "${opts.encryptionKey}"${skipFlag} ${commonFlag}`
+    return buildRpcCommand(
+      { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
+      'rpc.exe',
+      args
+    )
+  }
+
   const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
-  const args = `activate --profile ${profilePath} --key ${opts.encryptionKey}${flagPart} ${commonFlag}`
+
+  const authPart = opts.authEndpoint
+    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username=${opts.authUsername} --auth-password=${opts.authPassword} --skip-cert-check`
+    : ''
+
+  const args = `activate --local --profile ${profilePath} --key ${opts.encryptionKey}${flagPart}${authPart} ${commonFlag}`
   return buildRpcCommand(
     { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
     'rpc.exe',

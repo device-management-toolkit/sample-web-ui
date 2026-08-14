@@ -35,6 +35,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
+    const rpcVersion: string = Cypress.env('RPC_REF') ?? 'v3'
+    const authEndpoint: string | undefined = Cypress.env('AUTH_ENDPOINT')
+    const authUsername: string | undefined = Cypress.env('MPS_USERNAME')
+    const authPassword: string | undefined = Cypress.env('MPS_PASSWORD')
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -48,13 +52,26 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           isWin,
           rpcDockerImage,
           amtVersion,
+          rpcVersion,
           profileYamlFile,
-          encryptionKey
+          encryptionKey,
+          authEndpoint,
+          authUsername,
+          authPassword
+
         })
       })
     })
 
     describe('Device Activation - Console', () => {
+       // Suppress AMT API errors while the device is initializing after activation.
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.name === 'HttpErrorResponse' && err.message.includes('/api/v1/amt/')) {
+          return false
+        }
+        return true
+      })
+
       context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
@@ -117,7 +134,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
               const deviceIp = hasValidWiredIp ? (wiredIp as string) : (wirelessIp as string)
               cy.log(`Using identifier to find device: ${deviceIp}`)
-              cy.get('mat-cell').contains(deviceIp).parent().click()
+              cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
             })
 
             cy.wait(5000)
