@@ -7,8 +7,8 @@ FROM node:26-bullseye-slim@sha256:f422c39c7bcf66b27069df685287a0d253b44dec6af9e3
 ARG BUILD_CONFIGURATION=production
 
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json package-lock.json .npmrc ./
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build -- --configuration=${BUILD_CONFIGURATION} \
  && if [ -d dist/samplewebui/browser ]; then \
