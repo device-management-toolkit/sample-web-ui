@@ -26,9 +26,9 @@
   "dependencies": {
     "@angular/animations": "~21.2.19",
     "@angular/cdk": "~21.2.3",
-    "@angular/common": "~21.2.19",
-    "@angular/compiler": "~21.2.19",
-    "@angular/core": "~21.2.19",
+    "@angular/common": "~21.2.20",
+    "@angular/compiler": "~21.2.20",
+    "@angular/core": "~21.2.20",
     "@angular/forms": "~21.2.19",
     "@angular/material": "~21.2.3",
     "@angular/platform-browser": "~21.2.19",
@@ -57,11 +57,11 @@
     "webpack-dev-server": "^5.2.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~21.2.20",
+    "@angular-devkit/build-angular": "~21.2.21",
     "@angular-eslint/builder": "~21.3.0",
     "@angular-eslint/schematics": "~21.4.0",
     "@angular-eslint/template-parser": "~21.4.0",
-    "@angular/cli": "~21.2.20",
+    "@angular/cli": "~21.2.21",
     "@angular/compiler-cli": "~21.2.19",
     "@angular/localize": "~21.2.19",
     "@eslint/js": "^10.0.1",
