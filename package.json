@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "3.64.0",
+  "version": "3.64.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -67,7 +67,7 @@
     "@eslint/js": "^10.0.1",
     "@types/jasmine": "~6.0.0",
     "angular-eslint": "21.4.0",
-    "cypress": "^15.20.0",
+    "cypress": "^15.20.1",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-license-header": "^0.9.0",
@@ -85,9 +85,9 @@
     "prettier-plugin-multiline-arrays": "^4.1.11",
     "ts-node": "~10.9.2",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.67.0"
   },
   "optionalDependencies": {
-    "cypress": "^15.20.0"
+    "cypress": "^15.20.1"
   }
 }

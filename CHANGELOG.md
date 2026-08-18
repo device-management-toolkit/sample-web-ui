@@ -1,3 +1,10 @@
+## [3.64.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.0...v3.64.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* **login:** keep bearer auth for cloud builds ([#3501](https://github.com/device-management-toolkit/sample-web-ui/issues/3501)) ([301146f](https://github.com/device-management-toolkit/sample-web-ui/commit/301146fbca41aa9bd272c5583561112338400f0a)), closes [#3499](https://github.com/device-management-toolkit/sample-web-ui/issues/3499)
+
 # [3.64.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.1...v3.64.0) (2026-08-12)
 
 
