@@ -2044,6 +2044,22 @@
     "description": "Titel der Karte „Drahtlose Netzwerke”",
     "value": "Drahtlose Netzwerke"
   },
+  "noCira.confirm": {
+    "description": "Bestätigungsfrage im Dialog für die CIRA-Warnung",
+    "value": "Möchten Sie fortfahren?"
+  },
+  "noCira.hint": {
+    "description": "Hinweis im Dialog zur Wiederaktivierung von CIRA auf dem Server",
+    "value": "Um die CIRA-Konfiguration beizubehalten, aktivieren Sie CIRA auf dem Server, indem Sie APP_DISABLE_CIRA auf false setzen."
+  },
+  "noCira.message": {
+    "description": "Dialogmeldung mit Warnung, dass CIRA aus dem Profil entfernt wird",
+    "value": "Dieses Profil verfügt über eine vorhandene CIRA-Konfiguration, aber CIRA ist derzeit auf dem Server deaktiviert. Das Speichern dieses Profils entfernt die CIRA-Konfiguration."
+  },
+  "noCira.title": {
+    "description": "Dialog-Titel für CIRA-Entfernungswarnung",
+    "value": "CIRA-Konfiguration wird entfernt"
+  },
   "pba.label": {
     "description": "Bezeichnung für das Kontrollkästchen zum Aktivieren oder Deaktivieren der sicheren Boot-Erzwingung",
     "value": "Secure Boot erzwingen"

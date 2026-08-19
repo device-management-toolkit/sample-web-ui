@@ -2044,6 +2044,22 @@
     "description": "Titolo della scheda delle reti wireless",
     "value": "Reti wireless"
   },
+  "noCira.confirm": {
+    "description": "Domanda di conferma della finestra di dialogo per l'avviso senza CIRA",
+    "value": "Vuoi continuare?"
+  },
+  "noCira.hint": {
+    "description": "Suggerimento della finestra di dialogo per spiegare come riabilitare CIRA sul server",
+    "value": "Per mantenere la configurazione CIRA, abilita CIRA sul server impostando APP_DISABLE_CIRA su false."
+  },
+  "noCira.message": {
+    "description": "Messaggio della finestra di dialogo che avvisa che la configurazione CIRA verrà rimossa dal profilo",
+    "value": "Questo profilo ha una configurazione CIRA esistente, ma CIRA è attualmente disabilitato sul server. Il salvataggio di questo profilo rimuoverà la configurazione CIRA."
+  },
+  "noCira.title": {
+    "description": "Titolo della finestra di dialogo per l'avviso di rimozione CIRA",
+    "value": "La configurazione CIRA verrà rimossa"
+  },
   "pba.label": {
     "description": "Etichetta per la casella di controllo per abilitare o disabilitare l'applicazione del secure boot",
     "value": "Applicare l'avvio sicuro"

@@ -195,7 +195,7 @@ describe('ProfileDetailComponent', () => {
     const profile: Profile = { ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
 
-    expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
+    expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
     expect(component.profileForm.controls.ciraConfigName.value).toBeNull()
   })
   it('should keep CIRA connectionMode before enterprise feature availability resolves', () => {

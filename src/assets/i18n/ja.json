@@ -2044,6 +2044,22 @@
     "description": "無線ネットワークカードの見出し",
     "value": "ワイヤレスネットワーク"
   },
+  "noCira.confirm": {
+    "description": "CIRA警告ダイアログの確認質問",
+    "value": "続行しますか？"
+  },
+  "noCira.hint": {
+    "description": "サーバーでCIRAを再有効化する方法を説明するダイアログのヒント",
+    "value": "CIRA設定を維持するには、APP_DISABLE_CIRAをfalseに設定してサーバーでCIRAを有効にしてください。"
+  },
+  "noCira.message": {
+    "description": "CIRA設定がプロファイルから削除されることを警告するダイアログメッセージ",
+    "value": "このプロファイルには既存のCIRA設定がありますが、CIRAは現在サーバーで無効になっています。このプロファイルを保存すると、CIRA設定が削除されます。"
+  },
+  "noCira.title": {
+    "description": "CIRA削除警告のダイアログタイトル",
+    "value": "CIRA設定が削除されます"
+  },
   "pba.label": {
     "description": "セキュアブートの実施を有効または無効にするチェックボックスのラベル",
     "value": "セキュアブートの強制"

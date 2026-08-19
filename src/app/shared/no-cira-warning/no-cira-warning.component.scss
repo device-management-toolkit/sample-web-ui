@@ -1,0 +1,23 @@
+.dialog-top-spacer {
+  height: 20px;
+}
+
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+mat-dialog-content {
+  padding: 0 24px;
+  overflow: visible;
+  color: #616161;
+
+  p {
+    color: #616161;
+  }
+}
+
+mat-dialog-content.mat-typography p {
+  color: #616161;
+}
