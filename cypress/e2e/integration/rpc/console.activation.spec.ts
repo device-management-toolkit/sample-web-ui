@@ -19,6 +19,7 @@ import {
   buildInfoCommand,
   buildActivateCommand,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
@@ -35,10 +36,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
-    const rpcVersion: string = Cypress.env('RPC_REF') ?? 'v3'
-    const authEndpoint: string | undefined = Cypress.env('AUTH_ENDPOINT')
-    const authUsername: string | undefined = Cypress.env('MPS_USERNAME')
-    const authPassword: string | undefined = Cypress.env('MPS_PASSWORD')
+    const rpcRef: string = Cypress.env('RPC_REF') ?? 'main'
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -52,26 +50,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           isWin,
           rpcDockerImage,
           amtVersion,
-          rpcVersion,
+          rpcRef,
           profileYamlFile,
-          encryptionKey,
-          authEndpoint,
-          authUsername,
-          authPassword
-
+          encryptionKey
         })
+        cy.task('log', `\n>>> RPC version : ${rpcRef}`)
+        cy.task('log', `>>> AMT version : ${amtVersion}`)
+        cy.task('log', `>>> Activate cmd : ${activateCommand}\n`)
       })
     })
 
     describe('Device Activation - Console', () => {
-       // Suppress AMT API errors while the device is initializing after activation.
-      Cypress.on('uncaught:exception', (err) => {
-        if (err.name === 'HttpErrorResponse' && err.message.includes('/api/v1/amt/')) {
-          return false
-        }
-        return true
-      })
-
       context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
@@ -84,6 +73,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         it('Should Activate Device', () => {
           expect(amtInfo.controlMode).to.be.oneOf(notActivatedControlModes)
 
+          cy.task('log', `\n>>> Activate command: ${activateCommand}\n`)
           execWithRetry(activateCommand, execConfig).then((result) => {
             const { stdout, stderr, combined } = buildOutput(result)
             cy.log(combined)
@@ -115,7 +105,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             cy.wait(120000)
 
             // Re-query amtinfo after activation to get the updated IP address
-            getAmtInfo(infoCommand).then((postActivationInfo) => {
+            // Use retry logic since device may need time to report valid IP after activation
+            getAmtInfoWithRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
