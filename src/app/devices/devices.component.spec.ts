@@ -250,4 +250,100 @@ describe('DevicesComponent', () => {
     component.tagFilterChange(matSelectChange)
     expect(component.filteredTags()).toBe(mockValue)
   })
+
+  describe('getProductType', () => {
+    it('should return ISM when bit 4 (0x10) is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return vPro when bit 3 (0x08) is set and bit 4 is not', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '8' } } as Device // 0x08 = 8
+      expect(component.getProductType(device)).toBe('vPro')
+    })
+
+    it('should return ISM when both bit 4 and bit 3 are set (ISM takes priority)', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '24' } } as Device // 0x18 = 24
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return empty string when neither bit is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '4' } } as Device // 0x04 = 4
+      expect(component.getProductType(device)).toBe('')
+    })
+
+    it('should return empty string when fwSku is undefined', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+
+    it('should return empty string when fwSku is not a number', () => {
+      const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+  })
+
+  describe('onTabChange / applyTabFilter', () => {
+    beforeEach(() => {
+      const baseInfo = { fwVersion: '', fwBuild: '', fwSku: '0', features: '', ipAddress: '' }
+      component.allDevicesData = [
+        { ...device01, deviceInfo: { ...baseInfo, currentMode: 'acm', discovered: false } },
+        { ...device02, deviceInfo: { ...baseInfo, currentMode: 'not activated', discovered: true } }
+      ]
+    })
+
+    it('should show all devices on tab 0', () => {
+      component.onTabChange(0)
+      expect(component.devices.data.length).toBe(2)
+    })
+
+    it('should filter to activated devices on tab 1', () => {
+      component.onTabChange(1)
+      expect(component.devices.data.length).toBe(1)
+      expect(component.devices.data[0].guid).toBe(device01.guid)
+    })
+
+    it('should filter to discovered devices on tab 2', () => {
+      component.onTabChange(2)
+      expect(component.devices.data.length).toBe(1)
+      expect(component.devices.data[0].guid).toBe(device02.guid)
+    })
+
+    it('should set totalCount to serverTotalCount on tab 0', () => {
+      ;(component as any).serverTotalCount = 42
+      component.onTabChange(0)
+      expect(component.totalCount()).toBe(42)
+    })
+
+    it('should set totalCount to filtered length on tab 1', () => {
+      component.onTabChange(1)
+      expect(component.totalCount()).toBe(1)
+    })
+
+    it('should set totalCount to filtered length on tab 2', () => {
+      component.onTabChange(2)
+      expect(component.totalCount()).toBe(1)
+    })
+  })
+
+  describe('isNoData', () => {
+    it('should return false when allDevicesData has entries regardless of totalCount', () => {
+      component.allDevicesData = [device01]
+      component.isLoading.set(false)
+      component.totalCount.set(0) // filtered tab has 0 — should not trigger no-data
+      expect(component.isNoData()).toBeFalse()
+    })
+
+    it('should return true only when allDevicesData is empty and not loading', () => {
+      component.allDevicesData = []
+      component.isLoading.set(false)
+      expect(component.isNoData()).toBeTrue()
+    })
+
+    it('should return false when loading even if allDevicesData is empty', () => {
+      component.allDevicesData = []
+      component.isLoading.set(true)
+      expect(component.isNoData()).toBeFalse()
+    })
+  })
 })
