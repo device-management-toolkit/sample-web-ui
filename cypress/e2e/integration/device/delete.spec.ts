@@ -10,9 +10,17 @@ import { tags } from '../../fixtures/api/tags'
 
 const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
 
+// Detect auto-add device mode by checking if AUTH_ENDPOINT is present (non-empty)
+const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+const autoAddDevice = authEndpoint && authEndpoint.trim().length > 0
+
+// When auto-add device is enabled, device is automatically removed during deactivation,
+// so skip the manual deletion tests
+const describeWhenNoAutoDelete = autoAddDevice ? describe.skip : describeWhenNotCloud
+
 // ---------------------------- Test section ----------------------------
 
-describeWhenNotCloud('Test Device Deletion', () => {
+describeWhenNoAutoDelete('Test Device Deletion', () => {
   beforeEach('Setup and login', () => {
     cy.setup()
   })

@@ -82,15 +82,15 @@ export const getAmtInfo = (
 ): Cypress.Chainable<AMTInfo> => {
   return cy.exec(infoCommand, config).then((result) => {
     const { stdout, stderr, combined } = buildOutput(result)
-    return cy.log(combined).then(() => {
-      const source = stdout.length > 0 ? stdout : stderr
-      const jsonStart = source.indexOf('{')
-      if (jsonStart < 0) {
-        throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
-      }
-      const jsonOutput = source.substring(jsonStart)
-      return JSON.parse(jsonOutput) as AMTInfo
-    })
+    cy.log(combined)
+    const source = stdout.length > 0 ? stdout : stderr
+    const jsonStart = source.indexOf('{')
+    if (jsonStart < 0) {
+      throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
+    }
+    const jsonOutput = source.substring(jsonStart)
+    const parsed = JSON.parse(jsonOutput) as AMTInfo
+    return cy.wrap(parsed)
   })
 }
 
@@ -103,12 +103,11 @@ export const getAmtInfoWithRetry = (
   const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
     return getAmtInfo(infoCommand, config).then((info) => {
       if (info.controlMode || attempt >= maxRetries) {
-        return info
+        return cy.wrap(info)
       }
 
       cy.log(`Retrying rpc amtinfo after response without controlMode (${attempt}/${maxRetries})`)
-      cy.wait(retryInterval)
-      return attemptGetInfo(attempt + 1)
+      return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
     })
   }
 
@@ -124,6 +123,19 @@ export const getAmtVersion = (amtInfo: AMTInfo): string => {
 // rpc-go has reported the not-yet-activated control mode under different
 // strings across versions/builds; treat either as "not activated".
 export const notActivatedControlModes: string[] = ['pre-provisioning state', 'not activated']
+
+// Builds the skip-cert flag part based on auto-add mode and AMT version
+// Auto-add mode: use --skip-cert-check for all AMT versions
+// Normal mode: use --skip-amt-cert-check only for AMT > 18
+const buildSkipCertPart = (isAutoAdd: boolean, amtVersion: string): string => {
+  if (isAutoAdd) {
+    // For auto-add: always use --skip-cert-check, plus --skip-amt-cert-check for AMT > 18
+    const amtCertFlag = parseInt(amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+    return ` --skip-cert-check${amtCertFlag}`
+  } else {
+    return parseInt(amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+  }
+}
 
 // ---- Computed environment flags -------------------------------------------
 
@@ -159,10 +171,12 @@ export interface ActivateCommandOptions {
   isWin: boolean
   rpcDockerImage: string
   amtVersion: string
-  rpcRef?: string // 'v2' | 'v3' | 'main'
   // console-only
   profileYamlFile?: string
   encryptionKey?: string
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
   profileName?: string
@@ -184,7 +198,7 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     : ''
   const profilePath = opts.isWin ? opts.profileYamlFile : `/config/${profileFileName}`
 
-  const rpcVersion = (opts.rpcRef ?? 'main').split('.')[0]
+  const rpcVersion = Cypress.env('RPC_VERSION')
 
   if (rpcVersion === 'v2') {
     const skipFlag = parseInt(opts.amtVersion) > 18 ? ' -skipamtcertcheck' : ''
@@ -196,9 +210,14 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     )
   }
 
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
+  // RPC v3: check if auto-add mode (all auth params present)
+  const isAutoAdd = !!(opts.authEndpoint && opts.authUsername && opts.authPassword)
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username ${opts.authUsername} --auth-password ${opts.authPassword}`
+    : ''
+  const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
 
-  const args = `activate --local --profile ${profilePath} --key ${opts.encryptionKey}${flagPart} ${commonFlag}`
+  const args = `activate --local --profile ${profilePath} --key ${opts.encryptionKey}${authPart}${skipCertPart} ${commonFlag}`
   return buildRpcCommand(
     { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
     'rpc.exe',
@@ -213,6 +232,9 @@ export interface DeactivateCommandOptions {
   amtVersion: string
   // console-only
   isAdminControlModeProfile?: boolean
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
 }
@@ -224,8 +246,23 @@ export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string =
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
 
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
+  const rpcVersion = Cypress.env('RPC_VERSION')
+
+  if (rpcVersion === 'v2') {
+    const skipFlag = parseInt(opts.amtVersion) > 18 ? ' -skipamtcertcheck' : ''
+    const passPart = opts.isAdminControlModeProfile ? ` -password ${opts.password}` : ''
+    const args = `deactivate -local${skipFlag}${passPart} ${commonFlag}`
+    return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+  }
+
+  // RPC v3: check if auto-add mode (all auth params present)
+  const isAutoAdd = !!(opts.authEndpoint && opts.authUsername && opts.authPassword)
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username ${opts.authUsername} --auth-password ${opts.authPassword}`
+    : ''
+  const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
+
   const passPart = opts.isAdminControlModeProfile ? ` --password ${opts.password}` : ''
-  const args = `deactivate --local${flagPart}${passPart} ${commonFlag}`
+  const args = `deactivate --local${authPart}${skipCertPart}${passPart} ${commonFlag}`
   return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
 }

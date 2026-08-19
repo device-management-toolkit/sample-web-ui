@@ -36,7 +36,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
-    const rpcRef: string = Cypress.env('RPC_REF') ?? 'main'
+    const authEndpoint = Cypress.env('AUTH_ENDPOINT')
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -50,13 +50,12 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           isWin,
           rpcDockerImage,
           amtVersion,
-          rpcRef,
           profileYamlFile,
-          encryptionKey
+          encryptionKey,
+          authEndpoint: authEndpoint,
+          authUsername: Cypress.env('MPS_USERNAME'),
+          authPassword: Cypress.env('MPS_PASSWORD')
         })
-        cy.task('log', `\n>>> RPC version : ${rpcRef}`)
-        cy.task('log', `>>> AMT version : ${amtVersion}`)
-        cy.task('log', `>>> Activate cmd : ${activateCommand}\n`)
       })
     })
 
@@ -73,7 +72,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         it('Should Activate Device', () => {
           expect(amtInfo.controlMode).to.be.oneOf(notActivatedControlModes)
 
-          cy.task('log', `\n>>> Activate command: ${activateCommand}\n`)
           execWithRetry(activateCommand, execConfig).then((result) => {
             const { stdout, stderr, combined } = buildOutput(result)
             cy.log(combined)

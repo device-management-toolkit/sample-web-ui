@@ -27,12 +27,18 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
   before(() => {
     getAmtInfo(infoCommand).then((info) => {
+      const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+      const amtVersion = getAmtVersion(info)
+
       deactivateCommand = buildDeactivateCommand({
         isWin,
         rpcDockerImage,
         password,
-        amtVersion: getAmtVersion(info),
-        isAdminControlModeProfile
+        amtVersion,
+        isAdminControlModeProfile,
+        authEndpoint: authEndpoint,
+        authUsername: Cypress.env('MPS_USERNAME'),
+        authPassword: Cypress.env('MPS_PASSWORD')
       })
     })
   })
