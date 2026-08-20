@@ -54,6 +54,12 @@ describe('AddDeviceEnterpriseComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should default useTLS and allowSelfSigned to true', () => {
+    expect(component.form.get('useTLS')?.value).toBe(true)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(true)
+  })
+
   it('should submit form when valid', () => {
     component.form.setValue({
       hostname: 'example.com',
@@ -61,8 +67,8 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      useTLS: false,
-      allowSelfSigned: false
+      useTLS: true,
+      allowSelfSigned: true
     })
     component.submitForm()
 
@@ -72,8 +78,8 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      useTLS: false,
-      allowSelfSigned: false,
+      useTLS: true,
+      allowSelfSigned: true,
       tags: ['']
     })
     expect(dialogCloseSpy).toHaveBeenCalledWith({ submitted: true })
@@ -86,12 +92,70 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: '',
       password: '',
       tenantId: '',
-      useTLS: false,
-      allowSelfSigned: false
+      useTLS: true,
+      allowSelfSigned: true
     })
     component.submitForm()
 
     expect(addDeviceSpy).not.toHaveBeenCalled()
     expect(dialogCloseSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('AddDeviceEnterpriseComponent with existing device', () => {
+  let component: AddDeviceEnterpriseComponent
+  let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
+
+  beforeEach(() => {
+    const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice', 'editDevice'])
+    deviceService.addDevice.and.returnValue(of({}))
+    deviceService.editDevice.and.returnValue(of({}))
+
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        AddDeviceEnterpriseComponent
+      ],
+      providers: [
+        provideTranslateService(),
+        { provide: DevicesService, useValue: deviceService },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            hostname: 'test-device.local',
+            friendlyName: 'Existing Device',
+            username: 'admin',
+            password: 'testpass',
+            useTLS: false,
+            allowSelfSigned: false,
+            guid: 'test-guid-456',
+            tags: ['existing']
+          }
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {
+              /* empty */
+            }
+          }
+        }
+      ]
+    })
+    fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
+
+  it('should preserve loaded TLS values instead of applying the defaults', () => {
+    expect(component.form.get('useTLS')?.value).toBe(false)
+    expect(component.form.get('allowSelfSigned')?.value).toBe(false)
   })
 })
