@@ -1,3 +1,10 @@
+# [3.65.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.1...v3.65.0) (2026-08-20)
+
+
+### Features
+
+* **devices:** default useTLS and allowSelfSigned on add device ([#3480](https://github.com/device-management-toolkit/sample-web-ui/issues/3480)) ([ede6745](https://github.com/device-management-toolkit/sample-web-ui/commit/ede6745b210c407afc89dc36bfd5c572665025fa))
+
 ## [3.64.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.0...v3.64.1) (2026-08-13)
 
 
