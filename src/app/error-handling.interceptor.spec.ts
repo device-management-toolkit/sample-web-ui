@@ -17,7 +17,10 @@ describe('ErrorHandlingInterceptor', () => {
 
   beforeEach(() => {
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['logout'])
-    const dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
+    const dialogSpy = jasmine.createSpyObj('MatDialog', [
+      'open',
+      'getDialogById'
+    ])
     const snackbarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
@@ -47,6 +50,7 @@ describe('ErrorHandlingInterceptor', () => {
       error: () => {
         expect(authService.logout).toHaveBeenCalled()
         expect(dialog.open).toHaveBeenCalledWith(DialogContentComponent, {
+          id: 'session-timed-out',
           data: { name: 'error.sessionTimedOut.value' }
         })
       }
@@ -54,6 +58,62 @@ describe('ErrorHandlingInterceptor', () => {
 
     const req = httpMock.expectOne('/test')
     req.flush({ exp: 'token expired' }, { status: 401, statusText: 'Unauthorized' })
+  })
+
+  it('should report a session timeout for a 401 that does not describe the token', () => {
+    // Console's wording for an expired token
+    httpClient.get('/test').subscribe({
+      error: () => {
+        expect(authService.logout).toHaveBeenCalled()
+        expect(dialog.open).toHaveBeenCalledWith(DialogContentComponent, {
+          id: 'session-timed-out',
+          data: { name: 'error.sessionTimedOut.value' }
+        })
+      }
+    })
+
+    const req = httpMock.expectOne('/test')
+    req.flush({ error: 'invalid access token' }, { status: 401, statusText: 'Unauthorized' })
+  })
+
+  it('should report a session timeout for a 401 with an empty body', () => {
+    httpClient.get('/test').subscribe({
+      error: () => {
+        expect(authService.logout).toHaveBeenCalled()
+        expect(dialog.open).toHaveBeenCalledTimes(1)
+      }
+    })
+
+    const req = httpMock.expectOne('/test')
+    req.flush(null, { status: 401, statusText: 'Unauthorized' })
+  })
+
+  it('should leave a failed login to the login page', () => {
+    httpClient.post('http://localhost:3000/api/v1/authorize', {}).subscribe({
+      error: (error) => {
+        expect(error.status).toBe(401)
+        expect(dialog.open).not.toHaveBeenCalled()
+        expect(authService.logout).not.toHaveBeenCalled()
+      }
+    })
+
+    const req = httpMock.expectOne('http://localhost:3000/api/v1/authorize')
+    req.flush({ message: 'Incorrect Username and/or Password!' }, { status: 401, statusText: 'Unauthorized' })
+  })
+
+  it('should open a single session timeout dialog for concurrent 401s', () => {
+    dialog.open.and.callFake(() => {
+      dialog.getDialogById.and.returnValue({} as any)
+      return {} as any
+    })
+
+    httpClient.get('/one').subscribe({ error: () => undefined })
+    httpClient.get('/two').subscribe({ error: () => undefined })
+
+    httpMock.expectOne('/one').flush(null, { status: 401, statusText: 'Unauthorized' })
+    httpMock.expectOne('/two').flush(null, { status: 401, statusText: 'Unauthorized' })
+
+    expect(dialog.open).toHaveBeenCalledTimes(1)
   })
 
   it('should handle 412 error and show dialog', () => {
