@@ -193,13 +193,37 @@ Cypress.Commands.add('setup', () => {
     }
   })
 
-  // Wait for login form to appear
-  cy.get('[name=userId]', { timeout: 10000 }).should('be.visible')
-
   const mpsUsername = Cypress.env('MPS_USERNAME')
   const mpsPassword = Cypress.env('MPS_PASSWORD')
-  cy.login(mpsUsername, mpsPassword)
-  cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
+
+  // Wait for whichever login UI the deployment uses.
+  // Local login renders userId/password; OAuth renders an SSO button.
+  cy.get('body', { timeout: 60000 }).should(($body) => {
+    const hasLocalLogin = $body.find('[name=userId]').length > 0
+    const hasOAuthButton = $body.find('button').filter((_, el) => el.textContent?.includes('Login w/ SSO')).length > 0
+    expect(hasLocalLogin || hasOAuthButton, `Login UI not rendered. Current URL: ${window.location.href}`).to.equal(
+      true
+    )
+  })
+
+  cy.get('body').then(($body) => {
+    const hasLocalLogin = $body.find('[name=userId]').length > 0
+    const hasOAuthButton = $body.find('button').filter((_, el) => el.textContent?.includes('Login w/ SSO')).length > 0
+
+    if (hasLocalLogin) {
+      cy.get('[name=userId]').should('be.visible')
+      cy.login(mpsUsername, mpsPassword)
+      cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
+      return
+    }
+
+    if (hasOAuthButton) {
+      cy.contains('button', 'Login w/ SSO').click({ force: true })
+      return
+    }
+
+    throw new Error('Login page loaded without local or OAuth login controls')
+  })
 
   // Close about notice (only appears when environment.cloud = true)
   // Check if the application is running in cloud mode using Cypress environment
