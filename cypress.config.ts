@@ -114,7 +114,12 @@ export default defineConfig({
           console.warn('\n⚠️  Could not fetch component version info:', err)
         }
       })
-
+      on('task', {
+        log(message: string) {
+          console.log(message)
+          return null
+        }
+      })
       return config
     }
   }

@@ -19,6 +19,7 @@ import {
   buildInfoCommand,
   buildActivateCommand,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
@@ -35,6 +36,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
+    const rpcRef: string = Cypress.env('RPC_REF')
+    // Detect auto-add device mode by checking if AUTH_ENDPOINT is present (non-empty)
+    const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+    const autoAddDevice = authEndpoint && authEndpoint.trim().length > 0
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -48,9 +53,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           isWin,
           rpcDockerImage,
           amtVersion,
+          rpcRef,
           profileYamlFile,
-          encryptionKey
+          encryptionKey,
+          authEndpoint: autoAddDevice ? authEndpoint : undefined,
+          authUsername: autoAddDevice ? Cypress.env('MPS_USERNAME') : undefined,
+          authPassword: autoAddDevice ? Cypress.env('MPS_PASSWORD') : undefined
         })
+        cy.task('log', `\n>>> RPC version : ${rpcRef}`)
+        cy.task('log', `>>> AMT version : ${amtVersion}`)
+        cy.task('log', `>>> Auto-Add Device : ${autoAddDevice}`)
+        cy.task('log', `>>> Activate cmd : ${activateCommand}\n`)
       })
     })
 
@@ -67,6 +80,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
         it('Should Activate Device', () => {
           expect(amtInfo.controlMode).to.be.oneOf(notActivatedControlModes)
 
+          cy.task('log', `\n>>> Activate command: ${activateCommand}\n`)
           execWithRetry(activateCommand, execConfig).then((result) => {
             const { stdout, stderr, combined } = buildOutput(result)
             cy.log(combined)
@@ -98,7 +112,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             cy.wait(120000)
 
             // Re-query amtinfo after activation to get the updated IP address
-            getAmtInfo(infoCommand).then((postActivationInfo) => {
+            // Use retry logic since device may need time to report valid IP after activation
+            getAmtInfoWithRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
@@ -117,7 +132,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
               const deviceIp = hasValidWiredIp ? (wiredIp as string) : (wirelessIp as string)
               cy.log(`Using identifier to find device: ${deviceIp}`)
-              cy.get('mat-cell').contains(deviceIp).parent().click()
+              cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
             })
 
             cy.wait(5000)

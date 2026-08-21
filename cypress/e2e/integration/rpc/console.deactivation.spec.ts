@@ -27,12 +27,20 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
   before(() => {
     getAmtInfo(infoCommand).then((info) => {
+      // Detect auto-add device mode by checking if AUTH_ENDPOINT is present (non-empty)
+      const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+      const autoAddDevice = authEndpoint && authEndpoint.trim().length > 0
+
       deactivateCommand = buildDeactivateCommand({
         isWin,
         rpcDockerImage,
         password,
         amtVersion: getAmtVersion(info),
-        isAdminControlModeProfile
+        rpcRef: Cypress.env('RPC_REF'),
+        isAdminControlModeProfile,
+        authEndpoint: autoAddDevice ? authEndpoint : undefined,
+        authUsername: autoAddDevice ? Cypress.env('MPS_USERNAME') : undefined,
+        authPassword: autoAddDevice ? Cypress.env('MPS_PASSWORD') : undefined
       })
     })
   })

@@ -159,9 +159,13 @@ export interface ActivateCommandOptions {
   isWin: boolean
   rpcDockerImage: string
   amtVersion: string
+  rpcRef?: string
   // console-only
   profileYamlFile?: string
   encryptionKey?: string
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
   profileName?: string
@@ -182,8 +186,39 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     ? opts.profileYamlFile.substring(opts.profileYamlFile.lastIndexOf('/') + 1)
     : ''
   const profilePath = opts.isWin ? opts.profileYamlFile : `/config/${profileFileName}`
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
-  const args = `activate --profile ${profilePath} --key ${opts.encryptionKey}${flagPart} ${commonFlag}`
+
+  const rpcVersion = opts.rpcRef
+
+  if (rpcVersion === 'v2') {
+    const skipFlag = parseInt(opts.amtVersion) > 18 ? ' -skipamtcertcheck' : ''
+    const args = `activate -local -configv2 ${profilePath} -configencryptionkey "${opts.encryptionKey}"${skipFlag} ${commonFlag}`
+    return buildRpcCommand(
+      { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
+      'rpc.exe',
+      args
+    )
+  }
+
+  // RPC v3: check if auto-add mode (all auth params present)
+  const isAutoAdd = opts.authEndpoint && opts.authUsername && opts.authPassword
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username=${opts.authUsername} --auth-password=${opts.authPassword}`
+    : ''
+
+  // Auto-add mode: use --skip-cert-check for both AMT versions
+  // Normal mode: use --skip-amt-cert-check only for AMT > 18
+  let skipCertPart = ''
+  if (isAutoAdd) {
+    skipCertPart = ' --skip-cert-check'
+    // For auto-add AMT > 18, also add --skip-amt-cert-check
+    if (parseInt(opts.amtVersion) > 18) {
+      skipCertPart += ' --skip-amt-cert-check'
+    }
+  } else {
+    skipCertPart = parseInt(opts.amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+  }
+
+  const args = `activate --local --profile ${profilePath} --key ${opts.encryptionKey}${authPart}${skipCertPart} ${commonFlag}`
   return buildRpcCommand(
     { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
     'rpc.exe',
@@ -196,8 +231,12 @@ export interface DeactivateCommandOptions {
   rpcDockerImage: string
   password: string
   amtVersion: string
+  rpcRef?: string
   // console-only
   isAdminControlModeProfile?: boolean
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
 }
@@ -209,8 +248,35 @@ export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string =
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
 
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
+  const rpcVersion = opts.rpcRef
+
+  if (rpcVersion === 'v2') {
+    const skipFlag = parseInt(opts.amtVersion) > 18 ? ' -skipamtcertcheck' : ''
+    const passPart = opts.isAdminControlModeProfile ? ` -password ${opts.password}` : ''
+    const args = `deactivate -local${skipFlag}${passPart} ${commonFlag}`
+    return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+  }
+
+  // RPC v3: check if auto-add mode (all auth params present)
+  const isAutoAdd = opts.authEndpoint && opts.authUsername && opts.authPassword
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username=${opts.authUsername} --auth-password=${opts.authPassword}`
+    : ''
+
+  // Auto-add mode: use --skip-cert-check for both AMT versions
+  // Normal mode: use --skip-amt-cert-check only for AMT > 18
+  let skipCertPart = ''
+  if (isAutoAdd) {
+    skipCertPart = ' --skip-cert-check'
+    // For auto-add AMT > 18, also add --skip-amt-cert-check
+    if (parseInt(opts.amtVersion) > 18) {
+      skipCertPart += ' --skip-amt-cert-check'
+    }
+  } else {
+    skipCertPart = parseInt(opts.amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+  }
+
   const passPart = opts.isAdminControlModeProfile ? ` --password ${opts.password}` : ''
-  const args = `deactivate --local${flagPart}${passPart} ${commonFlag}`
+  const args = `deactivate --local${authPart}${skipCertPart}${passPart} ${commonFlag}`
   return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
 }
