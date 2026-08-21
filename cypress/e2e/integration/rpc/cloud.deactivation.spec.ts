@@ -5,12 +5,13 @@
 
 import {
   AMTInfo,
-  buildDeactivateCommand,
+  buildCloudDeactivateCommandCandidates,
   buildInfoCommand,
   buildOutput,
   execConfig,
-  execWithRetry,
+  execWithCompatibilityFallback,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
@@ -22,11 +23,11 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const isWin = Cypress.platform === 'win32'
   const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
-  let deactivateCommand = ''
+  let deactivateCommands: string[] = []
 
   before(() => {
     getAmtInfo(infoCommand).then((info) => {
-      deactivateCommand = buildDeactivateCommand({
+      deactivateCommands = buildCloudDeactivateCommandCandidates({
         isWin,
         rpcDockerImage,
         password,
@@ -49,8 +50,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       })
 
       it('should NOT deactivate device with an invalid password', () => {
-        const invalidCommand = deactivateCommand.replace(/--password\s+\S+/, '--password invalidpassword')
-        execWithRetry(invalidCommand, execConfig).then((result) => {
+        const invalidCommands = deactivateCommands.map((command) =>
+          command.replace(/--password\s+\S+/, '--password invalidpassword')
+        )
+        execWithCompatibilityFallback(invalidCommands, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Unable to authenticate with AMT')
@@ -59,12 +62,14 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
       it('should deactivate device and verify the final control mode', () => {
         expect(amtInfo.controlMode).not.to.be.oneOf(notActivatedControlModes)
-        execWithRetry(deactivateCommand, execConfig).then((result) => {
+        execWithCompatibilityFallback(deactivateCommands, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Status: Deactivated')
-          cy.wait(15000)
-          getAmtInfo(infoCommand).its('controlMode').should('be.oneOf', notActivatedControlModes)
+          // Deactivation is asynchronous, so poll AMT instead of relying on a fixed delay.
+          getAmtInfoWithRetry(infoCommand, execConfig, 6, 5000)
+            .its('controlMode')
+            .should('be.oneOf', notActivatedControlModes)
         })
       })
     })
