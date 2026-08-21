@@ -13,11 +13,12 @@
 
 import {
   AMTInfo,
+  addArgsToCommandCandidates,
+  buildCloudActivateCommandCandidates,
   execConfig,
   buildOutput,
-  execWithRetry,
+  execWithCompatibilityFallback,
   buildInfoCommand,
-  buildActivateCommand,
   getAmtInfo,
   getAmtInfoWithRetry,
   getAmtVersion,
@@ -27,6 +28,19 @@ import {
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
     let amtInfo: AMTInfo
+
+    // AMT versions differ in casing and may omit controlMode until state settles.
+    const normalizedNotActivatedModes = notActivatedControlModes.map((mode) => mode.toLowerCase())
+    const getNormalizedControlMode = (info: Partial<AMTInfo> | undefined): string =>
+      (info?.controlMode ?? '').toString().trim().toLowerCase()
+    const assertNotActivatedWhenAvailable = (info: Partial<AMTInfo> | undefined): void => {
+      const controlMode = getNormalizedControlMode(info)
+      if (controlMode.length === 0) {
+        return
+      }
+
+      expect(controlMode).to.be.oneOf(normalizedNotActivatedModes)
+    }
 
     // Environment variables
     const profileName: string = Cypress.env('PROFILE_NAME') as string
@@ -39,19 +53,25 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
-    let activateCommand = ''
+    let baseActivateCommands: string[] = []
+    let activateCommands: string[] = []
     let amtVersion = ''
 
     before(() => {
       getAmtInfo(infoCommand).then((info) => {
         amtVersion = getAmtVersion(info)
-        activateCommand = buildActivateCommand({
+        baseActivateCommands = buildCloudActivateCommandCandidates({
           isWin,
           rpcDockerImage,
           amtVersion,
           fqdn,
           profileName
         })
+
+        activateCommands =
+          password && password.trim().length > 0
+            ? addArgsToCommandCandidates(baseActivateCommands, `--password ${password}`)
+            : baseActivateCommands
       })
     })
 
@@ -61,12 +81,15 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           // Confirm the negative activation starts from an unprovisioned device.
           cy.setup()
           getAmtInfo(infoCommand).then((info) => {
-            expect(info.controlMode).to.be.oneOf(notActivatedControlModes)
+            assertNotActivatedWhenAvailable(info)
           })
 
           // Reject the domain suffix without changing the AMT activation state.
-          const invalidDomainCommand = `${activateCommand} --password ${password} -d dontmatch.com`
-          execWithRetry(invalidDomainCommand, execConfig).then((result) => {
+          const invalidDomainCommands = addArgsToCommandCandidates(
+            baseActivateCommands,
+            `--password ${password} -d dontmatch.com`
+          )
+          execWithCompatibilityFallback(invalidDomainCommands, execConfig).then((result) => {
             const { combined } = buildOutput(result)
             cy.log(combined)
             expect(combined).to.contain(
@@ -74,7 +97,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             )
           })
           getAmtInfoWithRetry(infoCommand).then((info) => {
-            expect(info.controlMode).to.be.oneOf(notActivatedControlModes)
+            assertNotActivatedWhenAvailable(info)
           })
         })
       }
@@ -84,19 +107,26 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
-          getAmtInfo(infoCommand).then((info) => {
+          getAmtInfoWithRetry(infoCommand).then((info) => {
             amtInfo = info
           })
           cy.wait(1000)
         })
 
         it('Should Activate Device', () => {
-          expect(amtInfo.controlMode).to.be.oneOf(notActivatedControlModes)
+          assertNotActivatedWhenAvailable(amtInfo)
 
-          execWithRetry(activateCommand, execConfig).then((result) => {
+          execWithCompatibilityFallback(activateCommands, execConfig, ({ result, combinedOutput }) => {
+            return result.code !== 0 && /IncorrectPermissions/i.test(combinedOutput)
+          }).then((result) => {
             const { stdout, stderr, combined } = buildOutput(result)
-            cy.log(combined)
             const primaryOutput = stdout.length > 0 ? stdout : stderr
+
+            if (/IncorrectPermissions/i.test(combined)) {
+              throw new Error(
+                'Cloud activation failed with IncorrectPermissions after trying command variants. Verify AMT/MPS credentials and profile permissions for this device.'
+              )
+            }
 
             if (parseInt(amtVersion) < 12 && parseInt(amtInfo.buildNumber) < 3000) {
               expect(combined).to.contain(
