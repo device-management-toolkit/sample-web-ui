@@ -698,7 +698,7 @@ export class ProfileDetailComponent implements OnInit {
     // Warn user of risk if CIRA configuration and static network are selected simultaneously
     if (this.profileForm.valid) {
       const result: any = Object.assign({}, this.profileForm.getRawValue())
-      const dialogs: Array<() => Observable<any>> = []
+      const dialogs: (() => Observable<any>)[] = []
       if (result.connectionMode !== this.connectionMode.cira) {
         dialogs.push(() => this.noCIRAWarning())
       }

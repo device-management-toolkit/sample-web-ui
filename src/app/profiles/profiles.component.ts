@@ -128,7 +128,7 @@ export class ProfilesComponent implements OnInit {
         error: () => {
           const msg: string = this.translate.instant('profiles.failLoadConfiguration.value')
 
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)          
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
         }
       })
   }

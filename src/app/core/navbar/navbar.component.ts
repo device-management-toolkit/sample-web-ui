@@ -6,12 +6,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatIcon } from '@angular/material/icon'
-import { RouterLink, RouterLinkActive } from '@angular/router'
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
 import { MatTooltip } from '@angular/material/tooltip'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { ServerFeaturesService } from '../../server-features.service'
+import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-navbar',
@@ -37,17 +38,27 @@ export class NavbarComponent implements OnInit {
   // Start from cloudMode so enterprise hides the tab until the API responds,
   // avoiding a flash of the tab when the server reports CIRA disabled.
   ciraEnabled = signal(this.cloudMode)
+  private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   private readonly serverFeaturesService = inject(ServerFeaturesService)
 
   ngOnInit(): void {
     if (this.cloudMode === false) {
-      this.serverFeaturesService.getFeatures().subscribe({
-        next: (features) => this.ciraEnabled.set(features.ciraEnabled),
-        // Fail open: if the features call fails, keep the CIRA tab visible.
-        error: () => this.ciraEnabled.set(true)
+      this.refreshCiraAvailability()
+      // Re-check server feature flags on navigation so runtime server setting
+      // changes (like enabling CIRA) are reflected without full page reload.
+      this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+        this.refreshCiraAvailability()
       })
     }
+  }
+
+  private refreshCiraAvailability(): void {
+    this.serverFeaturesService.getFeatures().subscribe({
+      next: (features) => this.ciraEnabled.set(features.ciraEnabled),
+      // Fail open: if the features call fails, keep the CIRA tab visible.
+      error: () => this.ciraEnabled.set(true)
+    })
   }
 
   get ciraTitle(): string {
