@@ -34,6 +34,14 @@
                 >warning</mat-icon
               >
             }
+            @if (!ciraEnabled() && !element.ciraConfigName && !element.tlsMode) {
+              <mat-icon
+                color="warn"
+                [matTooltip]="'profiles.ciraDisabledNoConfig.value' | translate"
+                style="font-size: 18px; height: 18px; width: 18px; vertical-align: middle; margin-left: 4px"
+                >warning</mat-icon
+              >
+            }
           </mat-cell>
         </ng-container>
         <!-- network config Column -->

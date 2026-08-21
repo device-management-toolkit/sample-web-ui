@@ -2040,6 +2040,22 @@
     "description": "Titel på kortet för trådlösa nätverk",
     "value": "Trådlösa nätverk"
   },
+  "noCira.confirm": {
+    "description": "Bekräftelsefråga i dialogen för CIRA-varningen",
+    "value": "Vill du fortsätta?"
+  },
+  "noCira.hint": {
+    "description": "Tips i dialogen om hur man återaktiverar CIRA på servern",
+    "value": "För att behålla CIRA-konfigurationen, aktivera CIRA på servern genom att ange APP_DISABLE_CIRA till false."
+  },
+  "noCira.message": {
+    "description": "Dialogmeddelande som varnar för att CIRA-konfigurationen tas bort från profilen",
+    "value": "Den här profilen har en befintlig CIRA-konfiguration, men CIRA är för närvarande inaktiverat på servern. Om du sparar den här profilen tas CIRA-konfigurationen bort."
+  },
+  "noCira.title": {
+    "description": "Dialogtitel för CIRA-borttagningsvarningen",
+    "value": "CIRA-konfigurationen kommer att tas bort"
+  },
   "pba.label": {
     "description": "Etikett för kryssrutan för att aktivera eller inaktivera säker start",
     "value": "Genomdriva säker start"
