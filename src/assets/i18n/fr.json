@@ -2176,6 +2176,22 @@
     "description": "Titre de la carte des réseaux sans fil",
     "value": "Réseaux sans fil"
   },
+  "noCira.confirm": {
+    "description": "Question de confirmation de la boîte de dialogue pour l'avertissement sans CIRA",
+    "value": "Voulez-vous continuer ?"
+  },
+  "noCira.hint": {
+    "description": "Indication de la boîte de dialogue pour expliquer comment réactiver CIRA sur le serveur",
+    "value": "Pour conserver la configuration CIRA, activez CIRA sur le serveur en définissant APP_DISABLE_CIRA sur false."
+  },
+  "noCira.message": {
+    "description": "Message de la boîte de dialogue avertissant que la configuration CIRA sera supprimée du profil",
+    "value": "Ce profil dispose d'une configuration CIRA existante, mais CIRA est actuellement désactivé sur le serveur. L'enregistrement de ce profil supprimera la configuration CIRA."
+  },
+  "noCira.title": {
+    "description": "Titre de la boîte de dialogue pour l'avertissement de suppression de CIRA",
+    "value": "La configuration CIRA sera supprimée"
+  },
   "pba.label": {
     "description": "Étiquette de la case à cocher permettant d'activer ou de désactiver la mise en œuvre du démarrage sécurisé",
     "value": "Mise en œuvre de l'amorçage sécurisé"

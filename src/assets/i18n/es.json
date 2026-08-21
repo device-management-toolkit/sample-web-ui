@@ -2172,6 +2172,22 @@
     "description": "Título de la tarjeta de redes inalámbricas",
     "value": "Redes inalámbricas"
   },
+  "noCira.confirm": {
+    "description": "Pregunta de confirmación del cuadro de diálogo para la advertencia sin CIRA",
+    "value": "¿Desea continuar?"
+  },
+  "noCira.hint": {
+    "description": "Sugerencia del cuadro de diálogo para explicar cómo volver a habilitar CIRA en el servidor",
+    "value": "Para mantener la configuración CIRA, habilite CIRA en el servidor estableciendo APP_DISABLE_CIRA en false."
+  },
+  "noCira.message": {
+    "description": "Mensaje del cuadro de diálogo que advierte que CIRA se eliminará del perfil",
+    "value": "Este perfil tiene una configuración CIRA existente, pero CIRA está actualmente deshabilitado en el servidor. Guardar este perfil eliminará la configuración CIRA."
+  },
+  "noCira.title": {
+    "description": "Título del cuadro de diálogo para la advertencia de eliminación de CIRA",
+    "value": "Se eliminará la configuración CIRA"
+  },
   "pba.label": {
     "description": "Etiqueta para la casilla de verificación para activar o desactivar la aplicación de arranque seguro",
     "value": "Aplicar Secure Boot"
