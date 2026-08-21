@@ -84,8 +84,9 @@ describeWhenNotCloud('Test Device Deletion', () => {
       body: empty.response
     }).as('get-devices-after-delete')
 
-    // Click delete and confirm
-    cy.get('mat-cell').contains('delete').click()
+    // Scope deletion to this device's row (matched by hostname/IP) so that
+    // multiple devices sharing the friendly name are not affected (ISOLATE=N).
+    cy.contains('mat-row', Cypress.env('DEVICE')).find('mat-cell').contains('delete').click()
     cy.get('button').contains('Yes').click()
 
     // Wait for delete and list refresh requests
@@ -94,8 +95,8 @@ describeWhenNotCloud('Test Device Deletion', () => {
     })
     cy.wait('@get-devices-after-delete').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
-    // Verify the device no longer appears in the list
+    // Only this device (matched by hostname/IP) must be gone; under ISOLATE=N other
+    // devices may still carry the shared 'Test Device' friendly name.
     cy.contains(Cypress.env('DEVICE')).should('not.exist')
-    cy.contains('Test Device').should('not.exist')
   })
 })
