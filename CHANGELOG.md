@@ -1,3 +1,47 @@
+# [3.65.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.1...v3.65.0) (2026-08-20)
+
+
+### Features
+
+* **devices:** default useTLS and allowSelfSigned on add device ([#3480](https://github.com/device-management-toolkit/sample-web-ui/issues/3480)) ([ede6745](https://github.com/device-management-toolkit/sample-web-ui/commit/ede6745b210c407afc89dc36bfd5c572665025fa))
+
+## [3.64.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.0...v3.64.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* **login:** keep bearer auth for cloud builds ([#3501](https://github.com/device-management-toolkit/sample-web-ui/issues/3501)) ([301146f](https://github.com/device-management-toolkit/sample-web-ui/commit/301146fbca41aa9bd272c5583561112338400f0a)), closes [#3499](https://github.com/device-management-toolkit/sample-web-ui/issues/3499)
+
+# [3.64.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.1...v3.64.0) (2026-08-12)
+
+
+### Features
+
+* **login:** use HttpOnly session cookie instead of localStorage ([#3499](https://github.com/device-management-toolkit/sample-web-ui/issues/3499)) ([f008ded](https://github.com/device-management-toolkit/sample-web-ui/commit/f008dedadc2530b8674ad8e7ed1289682bff8b74))
+
+## [3.63.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.63.0...v3.63.1) (2026-08-10)
+
+
+### Bug Fixes
+
+* remove "Use CIRA" option from Add Device dialog ([#3282](https://github.com/device-management-toolkit/sample-web-ui/issues/3282)) ([9eae667](https://github.com/device-management-toolkit/sample-web-ui/commit/9eae667df28e39b39b280cdec4b20052bc721afe))
+
+# [3.63.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.62.0...v3.63.0) (2026-08-04)
+
+
+### Features
+
+* **devices:** add remote platform erase support ([#3206](https://github.com/device-management-toolkit/sample-web-ui/issues/3206)) ([d63792c](https://github.com/device-management-toolkit/sample-web-ui/commit/d63792c027e12b4f99462049c4cae6746c36b24a))
+
+# [3.62.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.61.1...v3.62.0) (2026-07-31)
+
+
+### Features
+
+* hide KVM tab on ISM systems.  Use IDER tab instead ([#3418](https://github.com/device-management-toolkit/sample-web-ui/issues/3418)) ([0823640](https://github.com/device-management-toolkit/sample-web-ui/commit/08236406f9e23a1583fa86b9bd0a600c1bec4f19))
+
+## [3.61.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.61.0...v3.61.1) (2026-07-28)
+
 # [3.61.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.60.1...v3.61.0) (2026-07-20)
 
 

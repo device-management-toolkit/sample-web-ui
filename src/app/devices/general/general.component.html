@@ -75,7 +75,9 @@
             style="margin-bottom: 16px; padding: 8px 12px">
             <div class="flex items-center">
               <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
-              <span>{{ 'general.redirectionWarning.value' | translate }}</span>
+              <span>{{
+                (isISM() ? 'general.redirectionWarningISM.value' : 'general.redirectionWarning.value') | translate
+              }}</span>
             </div>
             <button mat-stroked-button (click)="setAmtFeatures()">
               {{ 'general.redirectionEnable.value' | translate }}
@@ -159,6 +161,16 @@
             }}
           </div>
         }
+        <div class="flex flex-50 items-end">
+          <p>{{ 'general.remotePlatformErase.value' | translate }}</p>
+        </div>
+        <div
+          class="flex flex-50 justify-end items-start"
+          [matTooltip]="'general.remotePlatformEraseNotSupported.value' | translate"
+          [matTooltipDisabled]="!amtEnabledFeatures.get('rpe')?.disabled"
+          matTooltipPosition="after">
+          <mat-checkbox formControlName="rpe" (change)="setAmtFeatures()"></mat-checkbox>
+        </div>
         <div class="flex flex-50 items-end">
           <p>{{ 'general.ideRedirection.value' | translate }}</p>
         </div>

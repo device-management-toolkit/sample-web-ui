@@ -12,6 +12,12 @@ import { Router } from '@angular/router'
 import { ValidatorError, MPSVersion, RPSVersion } from '../models/models'
 import { OAuthService } from 'angular-oauth2-oidc'
 
+// A UI hint, not a credential. The Console binary's session is an HttpOnly cookie.
+const SESSION_FLAG = 'sessionActive'
+
+// The session JWT. Cloud sends it; the Console binary purges it.
+const TOKEN_KEY = 'loggedInUser'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,9 +38,18 @@ export class AuthService {
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
-    if (localStorage.loggedInUser != null) {
-      this.isLoggedIn = true
-      this.loggedInSubject$.next(this.isLoggedIn)
+    // Match what login() writes, and only in the mode that writes it.
+    if (environment.cloud) {
+      if (!environment.useOAuth && this.getLoggedUserToken() !== '') {
+        this.isLoggedIn = true
+        this.loggedInSubject$.next(this.isLoggedIn)
+      }
+    } else {
+      localStorage.removeItem(TOKEN_KEY)
+      if (!environment.useOAuth && localStorage.getItem(SESSION_FLAG) === 'true') {
+        this.isLoggedIn = true
+        this.loggedInSubject$.next(this.isLoggedIn)
+      }
     }
     if (environment.mpsServer.includes('/mps')) {
       // handles kong route
@@ -106,12 +121,16 @@ export class AuthService {
   }
 
   getLoggedUserToken(): string {
-    const loggedInUser: string = localStorage.getItem('loggedInUser') ?? ''
-    if (loggedInUser !== '') {
-      const token: string = JSON.parse(loggedInUser).token
-      return token
+    const loggedInUser: string = localStorage.getItem(TOKEN_KEY) ?? ''
+    if (loggedInUser === '') {
+      return ''
     }
-    return ''
+    try {
+      // The constructor calls this, so a corrupt value must not throw.
+      return JSON.parse(loggedInUser).token ?? ''
+    } catch {
+      return ''
+    }
   }
 
   login(username: string, password: string): Observable<any> {
@@ -119,7 +138,13 @@ export class AuthService {
       map((data: any) => {
         if (!environment.useOAuth) {
           this.isLoggedIn = true
-          localStorage.loggedInUser = JSON.stringify(data)
+          if (environment.cloud) {
+            // Kong verifies the JWT, so keep a copy to send.
+            localStorage.setItem(TOKEN_KEY, JSON.stringify(data))
+          } else {
+            // The body token is for REST clients; the browser uses the cookie.
+            localStorage.setItem(SESSION_FLAG, 'true')
+          }
           this.loggedInSubject$.next(this.isLoggedIn)
         }
         return data
@@ -131,12 +156,20 @@ export class AuthService {
   }
 
   logout(): void {
+    const hadSession = this.isLoggedIn
+
     this.isLoggedIn = false
     this.loggedInSubject$.next(this.isLoggedIn)
-    localStorage.removeItem('loggedInUser')
+    localStorage.removeItem(SESSION_FLAG)
+    localStorage.removeItem(TOKEN_KEY)
+
     if (environment.useOAuth) {
       this.oauthService?.logOut()
+    } else if (!environment.cloud && hadSession) {
+      // Only the server can expire an HttpOnly cookie. MPS has no such route.
+      this.http.post(`${this.url}/logout`, {}).subscribe({ error: () => undefined })
     }
+
     this.router.navigate(['/login'])
   }
 

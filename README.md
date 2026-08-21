@@ -21,6 +21,23 @@ The Sample Web UI provides a reference UI solution to help demonstrate the core 
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### Backend CORS settings for the session cookie
+
+The two builds carry the session differently. The cloud build (`npm start`) authenticates against MPS and RPS with an `Authorization: Bearer` header, because Kong verifies the JWT itself and reads it only from that header. It sends no credentials, so nothing below applies to it.
+
+The Console/enterprise build authenticates with an HttpOnly session cookie, so every API request is sent with `withCredentials: true`. A browser discards a credentialed response whose `Access-Control-Allow-Origin` is the `*` wildcard, which means the backend has to name the UI origin explicitly and allow credentials. There is no dev proxy, so this applies to every local setup: the UI is served from `http://localhost:4200` while the backend listens on a different port.
+
+For the Console/enterprise build (`npm run enterprise`, backend on `:8181`), set on the Console side:
+
+```
+HTTP_ALLOWED_ORIGINS=http://localhost:4200
+HTTP_ALLOW_CREDENTIALS=true
+```
+
+Console defaults to `AllowedOrigins: ["*"]` with `AllowCredentials: false`, so both values are required — otherwise every API call fails CORS and the login request never stores its cookie.
+
+Deployments that serve the UI from the same origin as the API need no CORS changes.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

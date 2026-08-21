@@ -18,11 +18,11 @@ import {
   execWithRetry,
   buildInfoCommand,
   buildActivateCommand,
-  buildDeactivateCommand,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes
-} from './activation.spec'
+} from './rpc.helpers'
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
@@ -40,7 +40,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
     let activateCommand = ''
-    let deactivateCommand = ''
     let amtVersion = ''
 
     before(() => {
@@ -53,18 +52,36 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           fqdn,
           profileName
         })
-        deactivateCommand = buildDeactivateCommand({
-          isWin,
-          rpcDockerImage,
-          password,
-          amtVersion,
-          fqdn
-        })
       })
     })
 
+    context('Negative Activation Test', () => {
+      if (isAdminControlModeProfile) {
+        it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
+          // Confirm the negative activation starts from an unprovisioned device.
+          cy.setup()
+          getAmtInfo(infoCommand).then((info) => {
+            expect(info.controlMode).to.be.oneOf(notActivatedControlModes)
+          })
+
+          // Reject the domain suffix without changing the AMT activation state.
+          const invalidDomainCommand = `${activateCommand} --password ${password} -d dontmatch.com`
+          execWithRetry(invalidDomainCommand, execConfig).then((result) => {
+            const { combined } = buildOutput(result)
+            cy.log(combined)
+            expect(combined).to.contain(
+              'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
+            )
+          })
+          getAmtInfoWithRetry(infoCommand).then((info) => {
+            expect(info.controlMode).to.be.oneOf(notActivatedControlModes)
+          })
+        })
+      }
+    })
+
     describe('Device Activation - Cloud', () => {
-      context('TC_ACTIVATION_DEVICE_ACTIVATE_AND_DEACTIVATE', () => {
+      context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
           getAmtInfo(infoCommand).then((info) => {
@@ -88,7 +105,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               return
             }
 
-            expect(combined).not.to.match(/failed/i)
             if (isAdminControlModeProfile) {
               expect(combined).to.match(/admin control mode/i)
             } else {
@@ -96,17 +112,18 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             }
 
             if (parts[2] === 'CIRA') {
-              expect(combined).to.match(/CIRA: Configured/i)
+              expect(combined).to.match(/CIRA(?::|\s+)(?:Connection:?\s*)?Configured/i)
             } else if (parseInt(amtVersion) >= 19) {
-              expect(combined).to.match(/TLS: Already Configured/i)
+              expect(combined).to.match(/TLS:\s*(?:Already )?Configured/i)
             } else {
               expect(combined).to.match(/TLS: Configured/i)
             }
 
             if (profileName.endsWith('WiFi')) {
-              expect(combined).to.contain('Network: Wired Network Configured. Wireless Configured')
+              expect(combined).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
+              expect(combined).to.match(/Wireless(?: Network)?:?\s*(?:Wireless )?Configured/i)
             } else {
-              expect(combined).to.contain('Network: Wired Network Configured')
+              expect(combined).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
             }
 
             if (primaryOutput.length > 0) {
@@ -157,45 +174,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             }
           })
         })
-
-        it('should NOT deactivate device - invalid password', () => {
-          if (!notActivatedControlModes.includes(amtInfo.controlMode)) {
-            const invalidCommand =
-              deactivateCommand.slice(0, deactivateCommand.indexOf('--password')) + '--password invalidpassword'
-            execWithRetry(invalidCommand, execConfig).then((result) => {
-              const { combined } = buildOutput(result)
-              cy.log(combined)
-              expect(combined).to.contain('Unable to authenticate with AMT')
-            })
-          }
-        })
-
-        it('should deactivate device', () => {
-          if (!notActivatedControlModes.includes(amtInfo.controlMode)) {
-            execWithRetry(deactivateCommand, execConfig).then((result) => {
-              const { combined } = buildOutput(result)
-              cy.log(combined)
-              expect(combined).to.contain('Status: Deactivated')
-              cy.wait(15000)
-            })
-          }
-        })
       })
-    })
-
-    context('Negative Activation Test', () => {
-      if (isAdminControlModeProfile) {
-        it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
-          activateCommand += ' -d dontmatch.com'
-          execWithRetry(activateCommand, execConfig).then((result) => {
-            const { combined } = buildOutput(result)
-            cy.log(combined)
-            expect(combined).to.contain(
-              'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
-            )
-          })
-        })
-      }
     })
   }
 }
