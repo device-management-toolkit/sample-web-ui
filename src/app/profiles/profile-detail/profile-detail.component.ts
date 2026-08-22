@@ -207,9 +207,9 @@ export class ProfileDetailComponent implements OnInit {
   private initializeData(): void {
     this.getIEEE8021xConfigs()
     this.getWirelessConfigs()
+    this.getProxyConfigs()
     if (this.cloudMode) {
-      // Cloud always has CIRA; proxy configs are cloud-only too.
-      this.getProxyConfigs()
+      // Cloud always has CIRA.
       this.getCiraConfigs()
     } else {
       // Enterprise: only fetch CIRA configs when the server reports CIRA enabled,
@@ -523,21 +523,26 @@ export class ProfileDetailComponent implements OnInit {
     this.wirelessAutocomplete.patchValue('')
   }
 
-  selectProxyProfile(event: MatAutocompleteSelectedEvent): void {
-    if (event.option.value === NO_PROXY_CONFIGS) return
+  selectProxyProfile(event: MatAutocompleteSelectedEvent | string): void {
+    const proxyName = typeof event === 'string' ? event : (event.option.value as string)
+    if (proxyName === NO_PROXY_CONFIGS) return
 
     const selectedProfiles = this.selectedProxyConfigs().map((proxy) => proxy.name)
-    if (selectedProfiles.includes(event.option.value as string)) return
+    if (selectedProfiles.includes(proxyName)) return
 
     this.selectedProxyConfigs.update((configs) => [
       ...configs,
       {
         priority: configs.length + 1,
-        name: event.option.value
+        name: proxyName
       }
     ])
 
     this.proxyAutocomplete.patchValue('')
+  }
+
+  isProxyProfileSelected(proxyName: string): boolean {
+    return this.selectedProxyConfigs().some((config) => config.name === proxyName)
   }
 
   localWifiSyncChange(isEnabled: boolean): void {
