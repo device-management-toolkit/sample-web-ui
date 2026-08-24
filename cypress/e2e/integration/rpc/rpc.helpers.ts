@@ -241,8 +241,9 @@ const buildCloudActivateCommandArgsCandidates = (opts: ActivateCommandOptions): 
   // rpc v2 and v3 use different long-flag syntax for the profile argument.
   const profileFlag = rpcVersion === '2' ? `-profile=${opts.profileName}` : `--profile=${opts.profileName}`
   const modeArg = ' -n'
+  const tlsTunnelFlag = rpcVersion === '2' ? ' -tls-tunnel' : ' --tls-tunnel'
   // AMT 18 and older accept both tunnel variants; newer AMT requires no tunnel flag.
-  const tlsCandidates = parseInt(opts.amtVersion) <= 18 ? [' --tls-tunnel', ''] : ['']
+  const tlsCandidates = parseInt(opts.amtVersion) <= 18 ? [tlsTunnelFlag, ''] : ['']
 
   const commands: string[] = []
   tlsCandidates.forEach((tlsArg) => {
