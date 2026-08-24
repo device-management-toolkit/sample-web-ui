@@ -336,14 +336,10 @@ export interface DeactivateCommandOptions {
 
 const buildCloudDeactivateCommandArgsCandidates = (opts: DeactivateCommandOptions): string[] => {
   const rpcVersion = getRpcMajorVersion()
-  // rpc v2 keeps the legacy single-dash JSON and TLS tunnel flags.
+  // rpc v2 keeps the legacy single-dash JSON flag for deactivate; the TLS tunnel flag is not required here.
   const jsonFlag = rpcVersion === '2' ? '-json' : '--json'
-  const tlsTunnelFlag = rpcVersion === '2' ? ' -tls-tunnel' : ' --tls-tunnel'
-  const tlsCandidates = parseInt(opts.amtVersion) <= 18 ? [tlsTunnelFlag, ''] : [tlsTunnelFlag]
 
-  return tlsCandidates.map(
-    (tlsArg) => `deactivate -u wss://${opts.fqdn}/activate -n${tlsArg} -v -f ${jsonFlag}`
-  )
+  return [`deactivate -u wss://${opts.fqdn}/activate -n -v -f ${jsonFlag}`]
 }
 
 export const buildCloudDeactivateCommandCandidates = (opts: DeactivateCommandOptions): string[] => {
