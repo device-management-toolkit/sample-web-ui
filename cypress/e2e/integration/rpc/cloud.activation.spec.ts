@@ -68,10 +68,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           profileName
         })
 
-        activateCommands =
-          password && password.trim().length > 0
-            ? addArgsToCommandCandidates(baseActivateCommands, `--password ${password}`)
-            : baseActivateCommands
+        activateCommands = baseActivateCommands
       })
     })
 
