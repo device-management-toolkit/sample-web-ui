@@ -327,7 +327,6 @@ export const execWithCompatibilityFallback = (
 export interface DeactivateCommandOptions {
   isWin: boolean
   rpcDockerImage: string
-  password: string
   amtVersion: string
   // console-only
   isAdminControlModeProfile?: boolean
@@ -343,7 +342,7 @@ const buildCloudDeactivateCommandArgsCandidates = (opts: DeactivateCommandOption
   const tlsCandidates = parseInt(opts.amtVersion) <= 18 ? [tlsTunnelFlag, ''] : [tlsTunnelFlag]
 
   return tlsCandidates.map(
-    (tlsArg) => `deactivate -u wss://${opts.fqdn}/activate -n${tlsArg} --password ${opts.password} -v -f ${jsonFlag}`
+    (tlsArg) => `deactivate -u wss://${opts.fqdn}/activate -n${tlsArg} -v -f ${jsonFlag}`
   )
 }
 

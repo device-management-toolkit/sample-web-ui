@@ -18,7 +18,6 @@ import {
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
-  const password: string = Cypress.env('AMT_PASSWORD')
   const fqdn: string = Cypress.env('ACTIVATION_URL')
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const isWin = Cypress.platform === 'win32'
@@ -30,7 +29,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       deactivateCommands = buildCloudDeactivateCommandCandidates({
         isWin,
         rpcDockerImage,
-        password,
         amtVersion: getAmtVersion(info),
         fqdn
       })
@@ -46,17 +44,6 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           expect(info.controlMode, 'Device must be activated before deactivation').not.to.be.oneOf(
             notActivatedControlModes
           )
-        })
-      })
-
-      it('should NOT deactivate device with an invalid password', () => {
-        const invalidCommands = deactivateCommands.map((command) =>
-          command.replace(/--password\s+\S+/, '--password invalidpassword')
-        )
-        execWithCompatibilityFallback(invalidCommands, execConfig).then((result) => {
-          const { combined } = buildOutput(result)
-          cy.log(combined)
-          expect(combined).to.contain('Unable to authenticate with AMT')
         })
       })
 
