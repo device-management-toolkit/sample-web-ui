@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ 'staticCira.title.value' | translate }}</h2>
+<mat-dialog-content class="mat-typography">{{ 'staticCira.message.value' | translate }}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button data-cy="static-cira-alert-ok" [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'common.continue.value' | translate }}
+  </button>
+</mat-dialog-actions>

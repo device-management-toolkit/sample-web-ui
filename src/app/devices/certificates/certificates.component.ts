@@ -1,0 +1,222 @@
+import { Component, OnDestroy, OnInit, inject, signal, input } from '@angular/core'
+import { MatCardModule } from '@angular/material/card'
+import { MatIcon } from '@angular/material/icon'
+import { MatListModule } from '@angular/material/list'
+import { MatProgressBar } from '@angular/material/progress-bar'
+import { catchError, finalize, Subject, takeUntil, throwError } from 'rxjs'
+import { DevicesService } from '../devices.service'
+
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+import { CertInfo } from '../../../models/models'
+import { AddCertDialogComponent } from './add-cert-dialog/add-cert-dialog.component'
+import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { MatButtonModule, MatIconButton } from '@angular/material/button'
+import { MatTooltip } from '@angular/material/tooltip'
+
+@Component({
+  selector: 'app-certificates',
+  imports: [
+    MatProgressBar,
+    MatCardModule,
+    MatIcon,
+    MatButtonModule,
+    MatListModule,
+    TranslatePipe,
+    MatTooltip,
+    MatIconButton
+  ],
+  templateUrl: './certificates.component.html',
+  styleUrl: './certificates.component.scss'
+})
+export class CertificatesComponent implements OnInit, OnDestroy {
+  private readonly dialog = inject(MatDialog)
+  private readonly devicesService = inject(DevicesService)
+  private readonly translate = inject(TranslateService)
+  snackBar = inject(MatSnackBar)
+  private readonly destroy$ = new Subject<void>()
+
+  public isLoading = signal(true)
+  public certInfo = signal<any>(undefined)
+  public addCert: CertInfo = {
+    cert: '',
+    isTrusted: false
+  }
+
+  public readonly deviceId = input('')
+
+  ngOnInit(): void {
+    this.getCertificates()
+  }
+
+  getCertificates(): void {
+    this.devicesService
+      .getCertificates(this.deviceId())
+      .pipe(
+        catchError((err) => {
+          const msg: string = this.translate.instant('certificates.errorRetrievingCertificates.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        }),
+        finalize(() => {
+          this.isLoading.set(false)
+        })
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((certInfo: any) => {
+        this.certInfo.set(certInfo)
+        this.isLoading.set(false)
+      })
+  }
+
+  downloadCert(cert: any): void {
+    let text = ''
+    const extension = 'crt'
+
+    text += '-----BEGIN CERTIFICATE-----\n'
+    text += cert.x509Certificate
+    text += '\n-----END CERTIFICATE-----'
+
+    const blob = new Blob([text], { type: 'application/octet-stream' })
+    const url = window.URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${cert.displayName}.${extension}`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    window.URL.revokeObjectURL(url)
+  }
+
+  isCertEmpty() {
+    const info = this.certInfo()
+    if (info?.certificates) {
+      return Object.keys(info.certificates).length === 0
+    }
+
+    return true
+  }
+
+  removeCertLocally(instanceID: string): void {
+    const current = this.certInfo()
+    const items = current?.certificates?.publicKeyCertificateItems
+    if (!Array.isArray(items)) {
+      return
+    }
+    this.certInfo.set({
+      ...current,
+      certificates: {
+        ...current.certificates,
+        publicKeyCertificateItems: items.filter((c: any) => c.instanceID !== instanceID)
+      }
+    })
+  }
+
+  openAddCertDialog(): void {
+    const dialogRef = this.dialog.open(AddCertDialogComponent, {
+      width: '600px',
+      disableClose: false
+    })
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((addCert: CertInfo) => {
+        if (!addCert || addCert.cert === '') {
+          return
+        }
+        this.isLoading.set(true)
+        this.addCertificate(addCert)
+      })
+  }
+
+  addCertificate(addCert: CertInfo): void {
+    this.isLoading.set(true)
+    this.devicesService
+      .addCertificate(this.deviceId(), addCert)
+      .pipe(
+        catchError((err) => {
+          this.isLoading.set(false)
+          const msg: string = this.translate.instant('certificates.errorAddingCertificates.value')
+
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+          return throwError(err)
+        })
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.getCertificates()
+      })
+  }
+
+  deleteCertificate(cert: any): void {
+    if (this.isLoading() || cert.readOnlyCertificate || cert.associatedProfiles?.length > 0) {
+      return
+    }
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent)
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result === true) {
+          this.isLoading.set(true)
+          this.devicesService
+            .deleteCertificate(this.deviceId(), cert.instanceID)
+            .pipe(
+              catchError((err) => {
+                this.isLoading.set(false)
+
+                // Handle specific error types from our API
+                let msg: string
+                switch (err.status) {
+                  case 409:
+                    // Certificate is referenced by profiles
+                    msg =
+                      err.error?.errorDescription ||
+                      this.translate.instant('certificates.certificateReferencedError.value')
+                    break
+                  case 404:
+                    // Certificate not found
+                    msg = this.translate.instant('certificates.certificateNotFoundError.value')
+                    break
+                  case 400:
+                    // Read-only certificate
+                    if (err.error?.errorDescription?.includes('read-only')) {
+                      msg = this.translate.instant('certificates.readOnlyCertificateError.value')
+                    } else {
+                      msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+                    }
+                    break
+                  default:
+                    // Generic error
+                    msg = this.translate.instant('certificates.errorDeletingCertificate.value')
+                    break
+                }
+
+                this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+                return throwError(err)
+              })
+            )
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              const msg: string = this.translate.instant('certificates.deletedSuccessfully.value', {
+                name: cert.displayName
+              })
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
+              this.removeCertLocally(cert.instanceID)
+              this.isLoading.set(false)
+            })
+        }
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
+  }
+}

@@ -1,0 +1,105 @@
+<mat-card style="margin: 16px">
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card-header>
+    <mat-card-title>
+      <h3>{{ pageTitle | translate }}</h3>
+    </mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="proxyConfigForm" (ngSubmit)="onSubmit()">
+    <mat-card-content style="margin-top: 16px" class="flex-row flex-wrap">
+      <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'proxyConfigs.name.value' | translate }}</mat-label>
+        <input
+          data-cy="proxy-name"
+          matInput
+          formControlName="name"
+          [placeholder]="'proxyConfigs.namePlaceholder.value' | translate"
+          required />
+        @if (proxyConfigForm.controls.name.hasError('required')) {
+          <mat-error>{{ 'proxyConfigs.validation.nameRequired.value' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'proxyConfigs.proxyAddress.value' | translate }}</mat-label>
+        <input
+          data-cy="access-info"
+          matInput
+          formControlName="address"
+          [placeholder]="'proxyConfigs.addressPlaceholder.value' | translate"
+          required />
+        @if (proxyConfigForm.controls.address.invalid && proxyConfigForm.controls.address.touched) {
+          <mat-error>{{ getaddressError() }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'proxyConfigs.port.value' | translate }}</mat-label>
+        <input data-cy="port" matInput type="number" formControlName="port" required />
+        @if (proxyConfigForm.controls.port.hasError('required')) {
+          <mat-error>{{ 'proxyConfigs.validation.portRequired.value' | translate }}</mat-error>
+        }
+        @if (proxyConfigForm.controls.port.hasError('min') || proxyConfigForm.controls.port.hasError('max')) {
+          <mat-error>{{ 'proxyConfigs.validation.portRange.value' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="flex flex-1">
+        <mat-label>{{ 'proxyConfigs.dnsSuffix.value' | translate }}</mat-label>
+        <input
+          data-cy="dns-suffix"
+          matInput
+          formControlName="networkDnsSuffix"
+          [placeholder]="'proxyConfigs.dnsSuffixPlaceholder.value' | translate"
+          required />
+        @if (proxyConfigForm.controls.networkDnsSuffix.hasError('required')) {
+          <mat-error>{{ 'proxyConfigs.validation.dnsSuffixRequired.value' | translate }}</mat-error>
+        }
+        @if (proxyConfigForm.controls.networkDnsSuffix.hasError('maxlength')) {
+          <mat-error>{{ 'proxyConfigs.validation.dnsSuffixMaxLength.value' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      @if (errorMessages.length > 0) {
+        <mat-card>
+          <mat-card-content>
+            <mat-list>
+              @for (message of errorMessages; track message) {
+                <mat-list-item>
+                  <mat-icon matListItemIcon color="warn">warning</mat-icon>
+                  <div matListItemTitle>{{ message }}</div>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      }
+    </mat-card-content>
+
+    <mat-card-actions class="flex-row">
+      <div class="flex flex-50 justify-center">
+        <button
+          data-cy="cancel-config-btn"
+          mat-stroked-button
+          color="primary"
+          type="button"
+          [disabled]="isLoading()"
+          (click)="cancel()">
+          {{ 'common.cancel.value' | translate }}
+        </button>
+      </div>
+      <div class="flex flex-50 justify-center">
+        <button
+          data-cy="save-config-btn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="proxyConfigForm.invalid || isLoading()">
+          {{ (isEdit ? 'common.update.value' : 'common.save.value') | translate }}
+        </button>
+      </div>
+    </mat-card-actions>
+  </form>
+</mat-card>

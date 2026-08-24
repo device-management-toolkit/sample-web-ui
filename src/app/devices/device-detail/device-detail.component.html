@@ -1,0 +1,95 @@
+<app-device-toolbar [deviceId]="deviceId"></app-device-toolbar>
+<mat-sidenav-container autosize>
+  <mat-sidenav mode="side" position="end" opened [style.width.px]="isCollapsed ? 60 : 250">
+    <mat-list>
+      <a
+        mat-list-item
+        style="cursor: pointer"
+        (click)="toggleSidenav()"
+        [matTooltip]="isCollapsed ? ('general.expand.value' | translate) : ('general.collapse.value' | translate)"
+        matTooltipPosition="left">
+        <mat-icon matListItemIcon>{{ !isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+      </a>
+      @for (item of categories(); track item.component) {
+        <a
+          mat-list-item
+          (click)="setCurrentView(item)"
+          [routerLink]="'/devices/' + deviceId + '/' + item.component"
+          routerLinkActive="active"
+          style="cursor: pointer"
+          [matTooltip]="item.name | translate"
+          matTooltipPosition="left">
+          @if (!isCollapsed) {
+            <h3 matListItemTitle>{{ item.name | translate }}</h3>
+          }
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          @if (!isCollapsed) {
+            <p matListItemLine>{{ item.description | translate }}</p>
+          }
+        </a>
+      }
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    @if (!isLoading() && !isDeviceTypeKnown()) {
+      <div style="padding: 12px 16px; color: #8a6d3b">{{ 'general.errorAMTVersion.value' | translate }}</div>
+    }
+
+    @switch (currentView) {
+      @default {
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+      }
+      @case ('general') {
+        <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+      }
+      @case ('kvm') {
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (isDeviceTypeKnown() && !isISMSystem()) {
+          <app-kvm [deviceId]="deviceId"></app-kvm>
+        } @else {
+          <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+        }
+      }
+      @case ('ider') {
+        @if (isLoading()) {
+          <div aria-busy="true"></div>
+        } @else if (isDeviceTypeKnown() && isISMSystem()) {
+          <app-ider [deviceId]="deviceId" [isISM]="isISMSystem()"></app-ider>
+        } @else {
+          <app-general [deviceId]="deviceId" [isISM]="isISMSystem()"></app-general>
+        }
+      }
+      @case ('sol') {
+        <app-sol [deviceId]="deviceId"></app-sol>
+      }
+      @case ('hardware-info') {
+        <app-hardware-information [deviceId]="deviceId"></app-hardware-information>
+      }
+      @case ('audit-log') {
+        <app-audit-log [deviceId]="deviceId"></app-audit-log>
+      }
+      @case ('event-log') {
+        <app-event-log [deviceId]="deviceId"></app-event-log>
+      }
+      @case ('alarms') {
+        <app-alarms [deviceId]="deviceId"></app-alarms>
+      }
+      @case ('certificates') {
+        <app-certificates [deviceId]="deviceId"></app-certificates>
+      }
+      @case ('explorer') {
+        <app-explorer [deviceId]="deviceId"></app-explorer>
+      }
+      @case ('network-settings') {
+        <app-network-settings [deviceId]="deviceId"></app-network-settings>
+      }
+      @case ('tls') {
+        <app-tls [deviceId]="deviceId"></app-tls>
+      }
+      @case ('remote-platform-erase') {
+        <app-remote-platform-erase [deviceId]="deviceId"></app-remote-platform-erase>
+      }
+    }
+  </mat-sidenav-content>
+</mat-sidenav-container>

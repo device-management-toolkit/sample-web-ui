@@ -1,0 +1,76 @@
+<div class="flex-row" id="login">
+  <div class="flex-20"></div>
+  <div class="flex-60">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ 'login.header.loginTitle.value' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'login.header.loginTitle.value' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <div [hidden]="!isLoading()">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+      @if (!useOAuth) {
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-card-content class="flex-row flex-wrap">
+            <mat-form-field class="flex flex-1">
+              <input
+                formControlName="userId"
+                matInput
+                name="userId"
+                [placeholder]="'common.userName.value' | translate" />
+              <mat-error i18n="@@field.required">{{ 'fieldRequired.short.value' | translate }}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex flex-1">
+              <input
+                formControlName="password"
+                [type]="loginPassInputType"
+                matInput
+                name="Password"
+                [placeholder]="'common.password.value' | translate"
+                minlength="7" />
+              <mat-error i18n="@@field.required">{{ 'fieldRequired.short.value' | translate }}</mat-error>
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                [matTooltip]="'profileDetail.showHidePassword.value' | translate"
+                (click)="toggleLoginPassVisibility()">
+                @if (loginPassInputType !== 'text') {
+                  <mat-icon>visibility</mat-icon>
+                } @else {
+                  <mat-icon>visibility_off</mat-icon>
+                }
+              </button>
+            </mat-form-field>
+            <div class="flex flex-1 justify-center">
+              @if (errorMessage !== '') {
+                <mat-chip-listbox>
+                  <mat-chip-option color="accent">{{ errorMessage }}</mat-chip-option>
+                </mat-chip-listbox>
+              }
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="flex-row">
+            <div class="flex flex-1 justify-center">
+              <button id="btnLogin" type="submit" mat-flat-button color="primary">
+                <span>{{ 'common.loginUpper.value' | translate }}</span>
+                <span class="glyphicon glyphicon-log-in padding10L"></span>
+              </button>
+            </div>
+          </mat-card-actions>
+        </form>
+      } @else {
+        <mat-card-content> </mat-card-content>
+        <mat-card-actions style="margin: 0 auto; padding: 24px 0">
+          <button mat-flat-button color="primary" type="button" (click)="oauthLogin()">Login w/ SSO</button>
+        </mat-card-actions>
+      }
+      <mat-card-footer>
+        <div style="margin: 12px">
+          <div>{{ 'common.intelCopyright.value' | translate: { year: currentYear } }}</div>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  <div class="flex-20"></div>
+</div>

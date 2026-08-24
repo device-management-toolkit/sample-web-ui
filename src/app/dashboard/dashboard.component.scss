@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+@use 'src/styles/_variables.scss' as vars;
+
+h1,
+.mat-headline-4,
+.mat-headline-3 {
+  margin-bottom: 12px;
+  padding-bottom: 0;
+}
+
+.mat-headline-2 {
+  margin: 12px;
+}
+
+.mat-icon {
+  font-size: 48px;
+  height: 48px;
+  line-height: 1;
+  width: 48px;
+  color: mat.m2-get-color-from-palette(vars.$samplewebui-primary, A200);
+}
+
+.mat-mdc-icon-button {
+  width: 100px;
+  height: 100px;
+  border: 2px solid mat.m2-get-color-from-palette(vars.$samplewebui-accent, A100);
+}
+
+.mat-mdc-card {
+  background-color: mat.m2-get-color-from-palette(vars.$samplewebui-accent, A100);
+}
+
+mat-divider {
+  margin: 24px 0;
+}
+
+h3 {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}

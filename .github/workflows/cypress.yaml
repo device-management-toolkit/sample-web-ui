@@ -1,0 +1,65 @@
+# This workflow will do a clean install of node dependencies, build the sample web ui in a docker container and run tests on the ui isolated from mps and rps
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Cypress CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install cypress
+      - run: docker build . --file Dockerfile --tag vprodemo.azurecr.ui/samplewebui:latest
+      - run: docker run -d -p 4200:80 vprodemo.azurecr.ui/samplewebui:latest
+      - run: npm run cy-runner
+      - name: Publish Cypress Test Results
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
+        if: always()
+        with:
+          name: Cypress Tests
+          path: cypress-ui-test-output-*.xml
+          reporter: java-junit
+          fail-on-error: false
+      - name: Upload Cypress UI Test Results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: sample-web-ui-ui-test
+          path: cypress-ui-test-output-*.xml
+      - name: Upload Cypress UI Images
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: sample-web-ui-ui-test-screenshots
+          path: /home/runner/work/sample-web-ui/sample-web-ui/cypress/screenshots/**/*.png

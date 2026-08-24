@@ -1,0 +1,57 @@
+<mat-card-header>
+  <mat-card-title-group>
+    <mat-card-title>{{ 'exportDialog.selectDomainTitle.value' | translate }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ 'exportDialog.selectDomainSubtitle.value' | translate }}
+      <a href="http://github.com/device-management-toolkit/rpc-go">RPC-GO</a>
+    </mat-card-subtitle>
+  </mat-card-title-group>
+</mat-card-header>
+<mat-dialog-content>
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="32"></mat-spinner>
+      <span>{{ 'exportDialog.loadingDomains.value' | translate }}</span>
+    </div>
+  } @else if (errorMessages().length > 0) {
+    <div class="error-container">
+      <h4>{{ 'exportDialog.errorLoadingDomains.value' | translate }}</h4>
+      @for (error of errorMessages(); track error) {
+        <p>{{ error }}</p>
+      }
+    </div>
+  } @else if (hasNoDomains()) {
+    <div class="flex flex-col items-center">
+      <p>{{ 'exportDialog.noDomainsConfigured.value' | translate }}</p>
+      <ul class="flex flex-col">
+        <li>{{ 'exportDialog.addDomainsFirst.value' | translate }}</li>
+        <li>{{ 'exportDialog.skipDomainActivated.value' | translate }}</li>
+      </ul>
+    </div>
+  } @else {
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>{{ 'exportDialog.domainSuffix.value' | translate }}</mat-label>
+      <mat-select [formControl]="selectedDomainControl">
+        @for (domain of domains(); track domain.profileName) {
+          <mat-option [value]="domain.profileName">{{ domain.domainSuffix }}</mat-option>
+        }
+      </mat-select>
+      @if (selectedDomainControl.errors?.['required']) {
+        <mat-error>{{ 'exportDialog.selectDomainRequired.value' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <p>
+      {{ 'exportDialog.skipDomainInstructions.value' | translate }}
+    </p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (hasNoDomains() && !isLoading()) {
+    <button mat-button (click)="navigateToDomains()">{{ 'exportDialog.addDomains.value' | translate }}</button>
+  }
+  <button mat-button (click)="onSkipDomain()">{{ 'exportDialog.skipDomain.value' | translate }}</button>
+  <button mat-button (click)="onCancel()">{{ 'common.cancel.value' | translate }}</button>
+  <button mat-button (click)="onOk()" color="primary" [disabled]="!isFormValid() || isLoading()">
+    {{ 'common.ok.value' | translate }}
+  </button>
+</mat-dialog-actions>

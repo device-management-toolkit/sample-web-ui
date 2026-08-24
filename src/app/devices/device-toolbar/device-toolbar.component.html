@@ -1,0 +1,95 @@
+<mat-toolbar>
+  @if (device?.useTLS && !isCloudMode) {
+    <div style="padding-right: 12px">
+      <button
+        [color]="isPinned() ? 'primary' : 'warn'"
+        mat-icon-button
+        [matTooltip]="isPinned() ? 'TLS w/ Pinned Certificate' : 'TLS (not pinned)'"
+        (click)="getDeviceCert()">
+        <mat-icon>lock</mat-icon>
+      </button>
+    </div>
+  }
+  <span>
+    @if (device?.friendlyName) {
+      <span>{{ device?.friendlyName }}</span>
+    } @else {
+      <span>{{ device?.hostname }}</span>
+    }
+    <div class="mat-caption">
+      @if (isCloudMode) {
+        {{ deviceId() }}
+      }
+      @if (device?.friendlyName) {
+        <span>
+          @if (isCloudMode) {
+            -
+          }
+          {{ device?.hostname }}</span
+        >
+      }
+    </div>
+  </span>
+  <mat-chip-set class="flex-1 pad-15">
+    @for (tag of device?.tags; track tag) {
+      <mat-chip>{{ tag }}</mat-chip>
+    }
+  </mat-chip-set>
+  @if (!isCloudMode) {
+    <button mat-icon-button [matTooltip]="'devices.editDevice.value' | translate" (click)="editDevice()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  }
+
+  <button
+    mat-icon-button
+    [matTooltip]="
+      isCloudMode ? ('devices.actions.deactivateCloud.value' | translate) : ('devices.actions.remove.value' | translate)
+    "
+    (click)="sendDeactivate()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <mat-divider style="height: 40px" vertical="true"></mat-divider>
+  @if (!isLoading()()) {
+    <button
+      mat-icon-button
+      type="button"
+      [matTooltip]="powerState() | translate"
+      [attr.aria-label]="'deviceToolbar.power.refreshAriaLabel.value' | translate"
+      [style.color]="
+        powerState() === 'deviceToolbar.power.on.value'
+          ? 'green'
+          : powerState() === 'deviceToolbar.power.sleep.value'
+            ? 'yellow'
+            : powerState() === 'deviceToolbar.power.off.value'
+              ? 'red'
+              : 'gray'
+      "
+      (click)="refreshPowerState()">
+      <mat-icon>mode_standby</mat-icon>
+    </button>
+  }
+  <mat-divider style="height: 40px" vertical="true"></mat-divider>
+  <button mat-icon-button [matTooltip]="'devices.actions.powerUp.value' | translate" (click)="sendPowerAction(2)">
+    <mat-icon>power</mat-icon>
+  </button>
+  <button mat-icon-button [matTooltip]="'devices.actions.powerOff.value' | translate" (click)="sendPowerAction(8)">
+    <mat-icon>power_off</mat-icon>
+  </button>
+  <button mat-icon-button [matTooltip]="'devices.actions.reset.value' | translate" (click)="sendPowerAction(10)">
+    <mat-icon>restart_alt</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="'devices.moreOptionsTooltip.value' | translate">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    @for (option of powerOptions(); track option) {
+      <button mat-menu-item (click)="sendPowerAction(option.action)">
+        <span>{{ option.label | translate }}</span>
+      </button>
+    }
+  </mat-menu>
+</mat-toolbar>
+@if (isLoading()()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}

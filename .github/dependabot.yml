@@ -1,0 +1,55 @@
+version: 2
+updates:
+  # Maintain dependencies for npm modules
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # Keep the whole Angular toolchain in one PR (Angular packages cross-pin exact peer versions).
+    groups:
+      angular-stack:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
+          - '@angular-eslint/*'
+          - 'angular-eslint'
+          - 'typescript-eslint'
+          - 'rxjs'
+          - 'zone.js'
+          - 'typescript'
+        update-types:
+          - patch
+          - minor
+    # Majors handled manually via `ng update`.
+    ignore:
+      - dependency-name: '@angular/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-devkit/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-eslint/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'angular-eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript-eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'rxjs'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'zone.js'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    # codeql-action's sub-actions release in lockstep; one PR instead of four.
+    groups:
+      codeql-action:
+        patterns:
+          - 'github/codeql-action*'
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: daily

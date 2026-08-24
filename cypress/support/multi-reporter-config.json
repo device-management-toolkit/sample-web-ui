@@ -1,0 +1,11 @@
+{
+  "reporterEnabled": "cypress/support/custom-reporter.js, mocha-junit-reporter",
+  "cypressSupportCustomReporterJsReporterOptions": {
+    "reportDir": "cypress/reports",
+    "reportName": "cypress-test-report"
+  },
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "cypress-ui-test-output-[hash].xml",
+    "toConsole": false
+  }
+}
