@@ -59,8 +59,8 @@ export class AddDeviceEnterpriseComponent {
       ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
-    useTLS: [false],
-    allowSelfSigned: [false]
+    useTLS: [true],
+    allowSelfSigned: [true]
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public tags: string[] = []

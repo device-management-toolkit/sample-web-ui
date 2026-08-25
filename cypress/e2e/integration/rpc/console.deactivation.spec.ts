@@ -22,13 +22,14 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const isAdminControlModeProfile = profileName.startsWith('acmactivate')
   const isWin = Cypress.platform === 'win32'
+  const authEndpoint = Cypress.env('AUTH_ENDPOINT')
   const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
   let deactivateCommand = ''
+  let amtVersion = ''
 
   before(() => {
     getAmtInfo(infoCommand).then((info) => {
-      const authEndpoint = Cypress.env('AUTH_ENDPOINT')
-      const amtVersion = getAmtVersion(info)
+      amtVersion = getAmtVersion(info)
 
       deactivateCommand = buildDeactivateCommand({
         isWin,

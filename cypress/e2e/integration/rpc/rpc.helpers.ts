@@ -82,15 +82,13 @@ export const getAmtInfo = (
 ): Cypress.Chainable<AMTInfo> => {
   return cy.exec(infoCommand, config).then((result) => {
     const { stdout, stderr, combined } = buildOutput(result)
-    cy.log(combined)
     const source = stdout.length > 0 ? stdout : stderr
     const jsonStart = source.indexOf('{')
     if (jsonStart < 0) {
       throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
     }
     const jsonOutput = source.substring(jsonStart)
-    const parsed = JSON.parse(jsonOutput) as AMTInfo
-    return cy.wrap(parsed)
+    return JSON.parse(jsonOutput) as AMTInfo
   })
 }
 
