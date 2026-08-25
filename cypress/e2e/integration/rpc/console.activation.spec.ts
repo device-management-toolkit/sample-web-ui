@@ -21,7 +21,8 @@ import {
   getAmtInfo,
   getAmtInfoWithRetry,
   getAmtVersion,
-  notActivatedControlModes
+  notActivatedControlModes,
+  getAuthEndpoint
 } from './rpc.helpers'
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
@@ -36,7 +37,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
-    const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+    const authEndpoint = getAuthEndpoint()
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })

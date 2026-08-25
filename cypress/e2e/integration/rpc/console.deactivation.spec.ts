@@ -12,7 +12,8 @@ import {
   execWithRetry,
   getAmtInfo,
   getAmtVersion,
-  notActivatedControlModes
+  notActivatedControlModes,
+  getAuthEndpoint
 } from './rpc.helpers'
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
@@ -22,20 +23,17 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const isAdminControlModeProfile = profileName.startsWith('acmactivate')
   const isWin = Cypress.platform === 'win32'
-  const authEndpoint = Cypress.env('AUTH_ENDPOINT')
+  const authEndpoint = getAuthEndpoint()
   const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
   let deactivateCommand = ''
-  let amtVersion = ''
 
   before(() => {
     getAmtInfo(infoCommand).then((info) => {
-      amtVersion = getAmtVersion(info)
-
       deactivateCommand = buildDeactivateCommand({
         isWin,
         rpcDockerImage,
         password,
-        amtVersion,
+        amtVersion: getAmtVersion(info),
         isAdminControlModeProfile,
         authEndpoint: authEndpoint,
         authUsername: Cypress.env('MPS_USERNAME'),
