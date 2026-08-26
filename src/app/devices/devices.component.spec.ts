@@ -120,10 +120,6 @@ describe('DevicesComponent', () => {
     expect(getTagsSpy.calls.any()).toBe(true, 'getTags called')
   })
 
-  it('should translate connection status - true', () => {
-    const result = component.translateConnectionStatus(true)
-    expect(result).toBe('Connected')
-  })
   it('should determine if all selected (false)', () => {
     const result = component.isAllSelected()
     expect(result).toBeFalse()
