@@ -50,6 +50,9 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
     const isWin = Cypress.platform === 'win32'
+    const passwordFlag = String(Cypress.env('RPC_VERSION') ?? 'v3').trim().toLowerCase().startsWith('v2')
+      ? '-password'
+      : '--password'
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -70,7 +73,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
         activateCommands =
           password && password.trim().length > 0
-            ? addArgsToCommandCandidates(baseActivateCommands, `--password ${password}`)
+            ? addArgsToCommandCandidates(baseActivateCommands, `${passwordFlag} ${password}`)
             : baseActivateCommands
       })
     })
