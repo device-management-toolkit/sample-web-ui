@@ -18,6 +18,7 @@ import {
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
+  const password: string = Cypress.env('AMT_PASSWORD')
   const fqdn: string = Cypress.env('ACTIVATION_URL')
   const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
   const isWin = Cypress.platform === 'win32'
@@ -29,6 +30,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       deactivateCommands = buildCloudDeactivateCommandCandidates({
         isWin,
         rpcDockerImage,
+        password,
         amtVersion: getAmtVersion(info),
         fqdn
       })

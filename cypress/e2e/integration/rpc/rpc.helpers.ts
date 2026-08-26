@@ -327,6 +327,7 @@ export const execWithCompatibilityFallback = (
 export interface DeactivateCommandOptions {
   isWin: boolean
   rpcDockerImage: string
+  password: string
   amtVersion: string
   // console-only
   isAdminControlModeProfile?: boolean
@@ -339,7 +340,7 @@ const buildCloudDeactivateCommandArgsCandidates = (opts: DeactivateCommandOption
   // rpc v2 keeps the legacy single-dash JSON flag for deactivate; the TLS tunnel flag is not required here.
   const jsonFlag = rpcVersion === '2' ? '-json' : '--json'
 
-  return [`deactivate -u wss://${opts.fqdn}/activate -n -v -f ${jsonFlag}`]
+  return [`deactivate -u wss://${opts.fqdn}/activate -n --password ${opts.password} -v -f ${jsonFlag}`]
 }
 
 export const buildCloudDeactivateCommandCandidates = (opts: DeactivateCommandOptions): string[] => {
@@ -349,7 +350,8 @@ export const buildCloudDeactivateCommandCandidates = (opts: DeactivateCommandOpt
 }
 
 export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string => {
-  const commonFlag = '-v -f --json'
+  const rpcVersion = getRpcMajorVersion()
+  const commonFlag = rpcVersion === '2' ? '-v -f -json' : '-v -f --json'
   if (isCloud) {
     return buildCloudDeactivateCommandCandidates(opts)[0]
   }
