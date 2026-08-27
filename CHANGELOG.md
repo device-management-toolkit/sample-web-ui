@@ -1,3 +1,10 @@
+# [3.66.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.65.1...v3.66.0) (2026-08-27)
+
+
+### Features
+
+* hide CIRA in profile when disabled on the server ([c120b55](https://github.com/device-management-toolkit/sample-web-ui/commit/c120b5544aff2c0d4f38f937cb9cdf9afbb74733))
+
 ## [3.65.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.65.0...v3.65.1) (2026-08-26)
 
 # [3.65.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.64.1...v3.65.0) (2026-08-20)
