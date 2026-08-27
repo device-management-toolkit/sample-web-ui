@@ -2176,6 +2176,22 @@
     "description": "Titel van de kaart voor draadloze netwerken",
     "value": "Draadloze netwerken"
   },
+  "noCira.confirm": {
+    "description": "Bevestigingsvraag van het dialoogvenster voor de CIRA-waarschuwing",
+    "value": "Wilt u doorgaan?"
+  },
+  "noCira.hint": {
+    "description": "Hint in het dialoogvenster over het opnieuw inschakelen van CIRA op de server",
+    "value": "Om de CIRA-configuratie te behouden, schakel CIRA in op de server door APP_DISABLE_CIRA in te stellen op false."
+  },
+  "noCira.message": {
+    "description": "Bericht in het dialoogvenster dat waarschuwt dat de CIRA-configuratie uit het profiel wordt verwijderd",
+    "value": "Dit profiel heeft een bestaande CIRA-configuratie, maar CIRA is momenteel uitgeschakeld op de server. Het opslaan van dit profiel verwijdert de CIRA-configuratie."
+  },
+  "noCira.title": {
+    "description": "Titel van het dialoogvenster voor de CIRA-verwijderingswaarschuwing",
+    "value": "CIRA-configuratie wordt verwijderd"
+  },
   "pba.label": {
     "description": "Label voor het selectievakje om veilige opstart te activeren of deactiveren",
     "value": "Secure Boot afdwingen"
@@ -2292,10 +2308,6 @@
   "profileDetail.ciraConfiguration": {
     "description": "Label voor CIRA-configuratieveld",
     "value": "CIRA-configuratie"
-  },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA is uitgeschakeld op deze server)"
   },
   "profileDetail.ciraDisabledWarning": {
     "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",

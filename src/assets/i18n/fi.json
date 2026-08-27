@@ -2172,6 +2172,22 @@
     "description": "Langattomien verkkojen kortin otsikko",
     "value": "Langattomat verkot"
   },
+  "noCira.confirm": {
+    "description": "Vahvistuskysymys valintaikkunassa CIRA-varoitukselle",
+    "value": "Haluatko jatkaa?"
+  },
+  "noCira.hint": {
+    "description": "Valintaikkunan vihje CIRA:n uudelleenaktivoimiseksi palvelimella",
+    "value": "Säilytä CIRA-kokoonpano ottamalla CIRA käyttöön palvelimella asettamalla APP_DISABLE_CIRA arvoon false."
+  },
+  "noCira.message": {
+    "description": "Valintaikkunan viesti, joka varoittaa CIRA:n poistamisesta profiilista",
+    "value": "Tällä profiililla on olemassa oleva CIRA-kokoonpano, mutta CIRA on tällä hetkellä poistettu käytöstä palvelimella. Tämän profiilin tallentaminen poistaa CIRA-kokoonpanon."
+  },
+  "noCira.title": {
+    "description": "Valintaikkunan otsikko CIRA:n poistovaroitukselle",
+    "value": "CIRA-kokoonpano poistetaan"
+  },
   "pba.label": {
     "description": "Merkintä valintaruudulle, jolla suojatun käynnistyksen valvonta otetaan käyttöön tai poistetaan käytöstä.",
     "value": "Secure Bootin käyttöönotto"
@@ -2288,10 +2304,6 @@
   "profileDetail.ciraConfiguration": {
     "description": "CIRA-määrityskentän nimi",
     "value": "CIRA-konfiguraatio"
-  },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA on poistettu käytöstä tällä palvelimella)"
   },
   "profileDetail.ciraDisabledWarning": {
     "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",

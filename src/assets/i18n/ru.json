@@ -2168,6 +2168,22 @@
     "description": "Название карты беспроводных сетей",
     "value": "Беспроводные сети"
   },
+  "noCira.confirm": {
+    "description": "Вопрос подтверждения в диалоге предупреждения без CIRA",
+    "value": "Хотите продолжить?"
+  },
+  "noCira.hint": {
+    "description": "Подсказка в диалоге о повторном включении CIRA на сервере",
+    "value": "Чтобы сохранить конфигурацию CIRA, включите CIRA на сервере, установив APP_DISABLE_CIRA в значение false."
+  },
+  "noCira.message": {
+    "description": "Сообщение диалога с предупреждением об удалении конфигурации CIRA из профиля",
+    "value": "Этот профиль имеет существующую конфигурацию CIRA, но CIRA в настоящее время отключён на сервере. Сохранение этого профиля удалит конфигурацию CIRA."
+  },
+  "noCira.title": {
+    "description": "Заголовок диалога для предупреждения об удалении CIRA",
+    "value": "Конфигурация CIRA будет удалена"
+  },
   "pba.label": {
     "description": "Метка для флажка, позволяющего включить или отключить применение безопасной загрузки",
     "value": "Обеспечение безопасной загрузки"
@@ -2284,10 +2300,6 @@
   "profileDetail.ciraConfiguration": {
     "description": "Метка для поля конфигурации CIRA",
     "value": "Конфигурация CIRA"
-  },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA отключён на этом сервере)"
   },
   "profileDetail.ciraDisabledWarning": {
     "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
