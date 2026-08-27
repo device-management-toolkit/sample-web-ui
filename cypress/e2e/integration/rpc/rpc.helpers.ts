@@ -8,7 +8,8 @@
 export interface AMTInfo {
   amt: string
   buildNumber: string
-  controlMode: string
+  controlMode?: string
+  heciAvailable?: boolean
   dnsSuffix: string
   dnsSuffixOS: string
   hostnameOS: string
@@ -74,24 +75,60 @@ export const execWithRetry = (
   return attemptExec(1)
 }
 
-// Runs `rpc amtinfo` and parses the JSON result. Tolerates leading log noise
-// (e.g. logrus-formatted warnings) by locating the first '{' in the output.
+// AMT can be briefly unreachable right after a state change (e.g. deactivation
+// restarts the ME), so amtinfo may return these transient errors.
+const transientAmtErrorPattern = /empty response from AMT|AMT Unavailable|no such device/i
+
+// Runs `rpc amtinfo` and selects the AMT payload from JSON output with log records.
 export const getAmtInfo = (
   infoCommand: string,
-  config: Cypress.ExecOptions = execConfig
+  config: Cypress.ExecOptions = execConfig,
+  maxRetries = 5,
+  retryInterval = 5000
 ): Cypress.Chainable<AMTInfo> => {
-  return cy.exec(infoCommand, config).then((result) => {
-    const { stdout, stderr, combined } = buildOutput(result)
-    return cy.log(combined).then(() => {
-      const source = stdout.length > 0 ? stdout : stderr
-      const jsonStart = source.indexOf('{')
-      if (jsonStart < 0) {
-        throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
-      }
-      const jsonOutput = source.substring(jsonStart)
-      return JSON.parse(jsonOutput) as AMTInfo
+  const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
+    return cy.exec(infoCommand, config).then((result) => {
+      const { stdout, stderr, combined } = buildOutput(result)
+      return cy.log(combined).then(() => {
+        const source = stdout.length > 0 ? stdout : stderr
+        const jsonStart = source.indexOf('{')
+
+        // rpc may emit JSON-formatted logs before the final amtinfo payload.
+        const candidates: number[] = jsonStart < 0 ? [] : [jsonStart]
+        let nextObjectStart = source.indexOf('\n{', jsonStart)
+        while (jsonStart >= 0 && nextObjectStart >= 0) {
+          candidates.push(nextObjectStart + 1)
+          nextObjectStart = source.indexOf('\n{', nextObjectStart + 1)
+        }
+
+        // Prefer the final JSON object because it is the most recent response.
+        for (const candidateStart of candidates.reverse()) {
+          try {
+            const parsed = JSON.parse(source.substring(candidateStart)) as Record<string, unknown>
+            if ('amt' in parsed || 'AMT' in parsed || 'version' in parsed) {
+              return parsed as unknown as AMTInfo
+            }
+          } catch {
+            // Try the next JSON object when leading log records are present.
+          }
+        }
+
+        // Retry when AMT is momentarily unavailable after a state change.
+        if (transientAmtErrorPattern.test(combined) && attempt < maxRetries) {
+          cy.log(`Retrying rpc amtinfo after transient AMT-unavailable error (${attempt}/${maxRetries})`)
+          return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
+        }
+
+        if (jsonStart < 0) {
+          throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
+        }
+
+        throw new Error(`rpc amtinfo did not contain an AMT version payload. Output:\n${combined}`)
+      })
     })
-  })
+  }
+
+  return attemptGetInfo(1)
 }
 
 export const getAmtInfoWithRetry = (
@@ -106,6 +143,7 @@ export const getAmtInfoWithRetry = (
         return cy.wrap(info)
       }
 
+      // AMT can answer before its control mode is populated after a state change.
       cy.log(`Retrying rpc amtinfo after response without controlMode (${attempt}/${maxRetries})`)
       return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
     })
@@ -116,8 +154,15 @@ export const getAmtInfoWithRetry = (
 
 // Extracts the major AMT version (e.g. "16.1.5" -> "16") from an AMTInfo object.
 export const getAmtVersion = (amtInfo: AMTInfo): string => {
-  const versions: string[] = amtInfo.amt.split('.')
-  return versions.length > 1 ? versions[0] : '0'
+  const info = amtInfo as unknown as Record<string, unknown>
+  const rawVersion = info?.amt ?? info?.AMT ?? info?.version
+
+  if (typeof rawVersion !== 'string' || rawVersion.trim().length === 0) {
+    return '0'
+  }
+
+  const versions: string[] = rawVersion.split('.')
+  return versions.length > 0 && versions[0].length > 0 ? versions[0] : '0'
 }
 
 // rpc-go has reported the not-yet-activated control mode under different
@@ -176,16 +221,24 @@ export interface RpcCommandOptions {
 }
 
 const buildRpcCommand = (opts: RpcCommandOptions, winExe: string, args: string): string => {
+  const rpcBinary = Cypress.env('RPC_BINARY') as string | undefined
+
   if (opts.isWin) {
     return `${winExe} ${args}`
   }
+
+  // Use a local rpc binary when explicitly provided for non-Windows runs.
+  if (rpcBinary && rpcBinary.trim().length > 0) {
+    return `${rpcBinary.trim()} ${args}`
+  }
+
   const volumeFlag = opts.volumeMount ? ` -v ${opts.volumeMount}` : ''
   return `docker run --rm --network host --device=/dev/mei0${volumeFlag} ${opts.rpcDockerImage} ${args}`
 }
 
 export const buildInfoCommand = (opts: RpcCommandOptions): string => {
-  const rpcVersion = Cypress.env('RPC_VERSION')
-  const args = rpcVersion === 'v2' ? 'amtinfo -json' : 'amtinfo --json'
+  const rpcVersion = getRpcMajorVersion()
+  const args = rpcVersion === '2' ? 'amtinfo -json' : 'amtinfo --json'
   return buildRpcCommand(opts, 'rpc.exe', args)
 }
 
@@ -204,12 +257,67 @@ export interface ActivateCommandOptions {
   profileName?: string
 }
 
+export interface RpcExecResult {
+  code: number
+  stdout?: string
+  stderr?: string
+}
+
+export interface ExecFallbackContext {
+  command: string
+  index: number
+  commands: string[]
+  result: RpcExecResult
+  combinedOutput: string
+}
+
+export type ExecFallbackRetryPredicate = (context: ExecFallbackContext) => boolean
+
+const getRpcMajorVersion = (): string => {
+  const rpcVersion = String(Cypress.env('RPC_VERSION') ?? 'v3')
+    .trim()
+    .toLowerCase()
+  return /^v?2(?:\.|$)/.test(rpcVersion) ? '2' : '3'
+}
+
+const uniqueCommands = (commands: string[]): string[] => {
+  const seen: Record<string, boolean> = {}
+  return commands.filter((command) => {
+    if (seen[command]) {
+      return false
+    }
+    seen[command] = true
+    return true
+  })
+}
+
+const buildCloudActivateCommandArgsCandidates = (opts: ActivateCommandOptions): string[] => {
+  const rpcVersion = getRpcMajorVersion()
+  // rpc v2 and v3 use different long-flag syntax for the profile argument.
+  const profileFlag = rpcVersion === '2' ? `-profile=${opts.profileName}` : `--profile=${opts.profileName}`
+  const modeArg = ' -n'
+  const tlsTunnelFlag = rpcVersion === '2' ? ' -tls-tunnel' : ' --tls-tunnel'
+  // AMT 18 and older accept both tunnel variants; newer AMT requires no tunnel flag.
+  const tlsCandidates = parseInt(opts.amtVersion) <= 18 ? [tlsTunnelFlag, ''] : ['']
+
+  const commands: string[] = []
+  tlsCandidates.forEach((tlsArg) => {
+    commands.push(`activate -u wss://${opts.fqdn}/activate ${profileFlag}${modeArg}${tlsArg}`)
+  })
+
+  return uniqueCommands(commands)
+}
+
+export const buildCloudActivateCommandCandidates = (opts: ActivateCommandOptions): string[] => {
+  const argsCandidates = buildCloudActivateCommandArgsCandidates(opts)
+  return argsCandidates.map((args) =>
+    buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+  )
+}
+
 export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
-  const commonFlag = '-v --json'
   if (isCloud) {
-    const flagPart = parseInt(opts.amtVersion) <= 18 ? ' --tls-tunnel' : ''
-    const args = `activate -u wss://${opts.fqdn}/activate --profile ${opts.profileName} -n${flagPart} ${commonFlag}`
-    return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+    return buildCloudActivateCommandCandidates(opts)[0]
   }
 
   const profileDir = opts.profileYamlFile
@@ -220,17 +328,17 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     : ''
   const profilePath = opts.isWin ? opts.profileYamlFile : `/config/${profileFileName}`
 
-  const rpcVersion = Cypress.env('RPC_VERSION')
+  const rpcVersion = getRpcMajorVersion()
+  const commonFlag = rpcVersion === '2' ? '-v -json' : '-v --json'
   const amtVersionNum = parseInt(opts.amtVersion)
 
-  if (rpcVersion === 'v2') {
+  if (rpcVersion === '2') {
     cy.task('log', `>>> RPC VERSION : v2`)
     cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
     cy.task('log', `>>> Auto-Add Device : false (v2 does not support auto-add)`)
 
     const skipFlag = amtVersionNum > 18 ? ' -skipamtcertcheck' : ''
-    const v2Flag = '-v -json'  // v2 uses single-dash syntax
-    const args = `activate -local -configv2 ${profilePath} -configencryptionkey "${opts.encryptionKey}"${skipFlag} ${v2Flag}`
+    const args = `activate -local -configv2 ${profilePath} -configencryptionkey "${opts.encryptionKey}"${skipFlag} ${commonFlag}`
     return buildRpcCommand(
       { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
       'rpc.exe',
@@ -245,8 +353,12 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
   cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
   cy.task('log', `>>> Auto-Add Device : ${isAutoAdd}`)
 
+  if (isAutoAdd && (!opts.authEndpoint || !opts.authUsername || !opts.authPassword)) {
+    throw new Error('AUTO_ADD_DEVICE requires authEndpoint/authUsername/authPassword')
+  }
+
   const authPart = isAutoAdd
-    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username ${opts.authUsername} --auth-password ${opts.authPassword}`
+    ? ` --auth-endpoint "${opts.authEndpoint}" --auth-username "${opts.authUsername}" --auth-password "${opts.authPassword}"`
     : ''
   const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
 
@@ -256,6 +368,49 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     'rpc.exe',
     args
   )
+}
+
+export const addArgsToCommandCandidates = (commands: string[], argsToAppend: string): string[] =>
+  commands.map((command) => `${command} ${argsToAppend}`)
+
+const isRpcCliCompatibilityError = (combinedOutput: string): boolean => {
+  return /unknown flag|unknown shorthand flag|flag provided but not defined|invalid argument|unrecognized option/i.test(
+    combinedOutput
+  )
+}
+
+export const execWithCompatibilityFallback = (
+  commands: string[],
+  config: Cypress.ExecOptions,
+  shouldRetry?: ExecFallbackRetryPredicate
+): Cypress.Chainable<RpcExecResult> => {
+  const attemptExec = (index: number): Cypress.Chainable<RpcExecResult> => {
+    const command = commands[index]
+    return execWithRetry(command, config).then((result) => {
+      const execResult = result as unknown as RpcExecResult
+      const { combined } = buildOutput(execResult)
+      const fallbackContext: ExecFallbackContext = {
+        command,
+        index,
+        commands,
+        result: execResult,
+        combinedOutput: combined
+      }
+
+      const shouldRetryCurrent =
+        isRpcCliCompatibilityError(combined) || (shouldRetry != null && shouldRetry(fallbackContext))
+
+      // Do not hide operation failures: retry only known CLI incompatibilities or caller-approved cases.
+      if (execResult.code === 0 || index >= commands.length - 1 || !shouldRetryCurrent) {
+        return cy.wrap(execResult)
+      }
+
+      cy.log(`Retrying with compatibility command variant ${index + 2}/${commands.length}`)
+      return attemptExec(index + 1)
+    })
+  }
+
+  return attemptExec(0)
 }
 
 export interface DeactivateCommandOptions {
@@ -272,25 +427,38 @@ export interface DeactivateCommandOptions {
   fqdn?: string
 }
 
+const buildCloudDeactivateCommandArgsCandidates = (opts: DeactivateCommandOptions): string[] => {
+  const rpcVersion = getRpcMajorVersion()
+  // rpc v2 keeps the legacy single-dash JSON flag for deactivate; the TLS tunnel flag is not required here.
+  const jsonFlag = rpcVersion === '2' ? '-json' : '--json'
+  const passwordFlag = rpcVersion === '2' ? '-password' : '--password'
+
+  return [`deactivate -u wss://${opts.fqdn}/activate -n ${passwordFlag} ${opts.password} -v -f ${jsonFlag}`]
+}
+
+export const buildCloudDeactivateCommandCandidates = (opts: DeactivateCommandOptions): string[] => {
+  return buildCloudDeactivateCommandArgsCandidates(opts).map((args) =>
+    buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+  )
+}
+
 export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string => {
-  const commonFlag = '-v -f --json'
+  const rpcVersion = getRpcMajorVersion()
+  const commonFlag = rpcVersion === '2' ? '-v -f -json' : '-v -f --json'
   if (isCloud) {
-    const args = `deactivate -u wss://${opts.fqdn}/activate -n --password ${opts.password} ${commonFlag}`
-    return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+    return buildCloudDeactivateCommandCandidates(opts)[0]
   }
 
-  const rpcVersion = Cypress.env('RPC_VERSION')
   const amtVersionNum = parseInt(opts.amtVersion)
 
-  if (rpcVersion === 'v2') {
+  if (rpcVersion === '2') {
     cy.task('log', `>>> RPC VERSION : v2`)
     cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
     cy.task('log', `>>> Auto-Add Device : false (v2 does not support auto-add)`)
 
     const skipFlag = amtVersionNum > 18 ? ' -skipamtcertcheck' : ''
     const passPart = opts.isAdminControlModeProfile ? ` -password ${opts.password}` : ''
-    const v2Flag = '-v -f -json'  // v2 uses single-dash syntax
-    const args = `deactivate -local${skipFlag}${passPart} ${v2Flag}`
+    const args = `deactivate -local${skipFlag}${passPart} ${commonFlag}`
     return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
   }
 
@@ -301,8 +469,12 @@ export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string =
   cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
   cy.task('log', `>>> Auto-Add Device : ${isAutoAdd}`)
 
+  if (isAutoAdd && (!opts.authEndpoint || !opts.authUsername || !opts.authPassword)) {
+    throw new Error('AUTO_ADD_DEVICE requires authEndpoint/authUsername/authPassword')
+  }
+
   const authPart = isAutoAdd
-    ? ` --auth-endpoint ${opts.authEndpoint} --auth-username ${opts.authUsername} --auth-password ${opts.authPassword}`
+    ? ` --auth-endpoint "${opts.authEndpoint}" --auth-username "${opts.authUsername}" --auth-password "${opts.authPassword}"`
     : ''
   const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
 

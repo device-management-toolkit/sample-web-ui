@@ -59,7 +59,6 @@ describe('NavbarComponent', () => {
 
   it('should not query server features in cloud mode and keep the CIRA tab enabled', () => {
     component.cloudMode = true
-    component.ciraEnabled.set(true) // Update signal when cloudMode changes
     serverFeaturesSpy.getFeatures.calls.reset()
     component.ngOnInit()
     expect(serverFeaturesSpy.getFeatures).not.toHaveBeenCalled()

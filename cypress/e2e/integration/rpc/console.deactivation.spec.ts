@@ -11,6 +11,7 @@ import {
   execConfig,
   execWithRetry,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
   notActivatedControlModes,
   getAuthEndpoint
@@ -59,7 +60,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           this.skip()
         }
 
-        const invalidCommand = deactivateCommand.replace(/--password\s+\S+/, '--password invalidpassword')
+        // Match both v2 (-password) and v3 (--password) syntax by capturing the dash(es) and preserving them
+        const invalidCommand = deactivateCommand.replace(/(-{1,2})password\s+\S+/, '$1password invalidpassword')
         execWithRetry(invalidCommand, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
@@ -73,7 +75,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           const { combined } = buildOutput(result)
           cy.log(combined)
           expect(combined).to.contain('Status: Device deactivated')
-          getAmtInfo(infoCommand).its('controlMode').should('be.oneOf', notActivatedControlModes)
+          getAmtInfoWithRetry(infoCommand).its('controlMode').should('be.oneOf', notActivatedControlModes)
         })
       })
     })
