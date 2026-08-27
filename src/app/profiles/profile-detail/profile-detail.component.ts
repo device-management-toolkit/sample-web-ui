@@ -8,8 +8,8 @@ import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angu
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-import { finalize, map, startWith } from 'rxjs/operators'
-import { forkJoin, Observable } from 'rxjs'
+import { concatMap, finalize, map, startWith, takeWhile, toArray } from 'rxjs/operators'
+import { from, Observable } from 'rxjs'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop'
 import { NgClass, AsyncPipe } from '@angular/common'
@@ -44,6 +44,7 @@ import { ServerFeaturesService } from '../../server-features.service'
 // Shared components
 import { RandomPassAlertComponent } from '../../shared/random-pass-alert/random-pass-alert.component'
 import { StaticCIRAWarningComponent } from '../../shared/static-cira-warning/static-cira-warning.component'
+import { NoCIRAWarningComponent } from '../../shared/no-cira-warning/no-cira-warning.component'
 
 // Models and constants
 import { CIRAConfig, IEEE8021xConfig } from '../../../models/models'
@@ -144,9 +145,12 @@ export class ProfileDetailComponent implements OnInit {
   public readonly cloudMode = environment.cloud
   // CIRA connection-mode availability. Cloud (MPS+RPS) always supports it; in
   // enterprise it is driven by the Console server's APP_DISABLE_CIRA setting
-  // (fetched on init). Start from cloudMode so enterprise hides CIRA until the
-  // API responds, avoiding a flash when the server reports CIRA disabled.
+  // (fetched on init).
   public readonly ciraEnabled = signal(this.cloudMode)
+  // Enterprise starts with ciraEnabled=false before server features return; track
+  // when availability is actually known so the template can keep CIRA visible (but
+  // disabled) while the call is in flight, and so a saved CIRA profile isn't coerced too early.
+  public readonly ciraAvailabilityResolved = signal(this.cloudMode)
   public readonly isLoading = signal(false)
   public readonly errorMessages = signal<string[]>([])
 
@@ -177,6 +181,7 @@ export class ProfileDetailComponent implements OnInit {
   private originalGenerateRandomPassword = true
   private originalGenerateRandomMEBxPassword = true
   private originalActivation = ''
+  private originalCiraConfigName: string | null = null
 
   // Computed properties
   public readonly showIEEE8021xConfigurations = computed(() => this.iee8021xConfigurations().length > 0)
@@ -216,16 +221,34 @@ export class ProfileDetailComponent implements OnInit {
       // otherwise the CIRA-configs endpoint 404s.
       this.serverFeaturesService.getFeatures().subscribe({
         next: (features) => {
-          this.ciraEnabled.set(features.ciraEnabled)
-          if (features.ciraEnabled) this.getCiraConfigs()
+          // Fail open like the error handler: only an explicit false disables CIRA, so a
+          // response without the flag can never coerce the form or offer to drop a config.
+          const ciraEnabled = features?.ciraEnabled !== false
+          this.ciraEnabled.set(ciraEnabled)
+          this.ciraAvailabilityResolved.set(true)
+          if (ciraEnabled) {
+            this.getCiraConfigs()
+          } else {
+            this.coerceConnectionModeIfCiraUnavailable()
+          }
         },
         // Fail open: if the features call fails, assume CIRA is enabled.
         error: () => {
           this.ciraEnabled.set(true)
+          this.ciraAvailabilityResolved.set(true)
           this.getCiraConfigs()
         }
       })
     }
+  }
+
+  private coerceConnectionModeIfCiraUnavailable(): void {
+    if (this.profileForm.controls.connectionMode.value !== this.connectionMode.cira) {
+      return
+    }
+
+    // CIRA is unavailable, so prefer secure direct TLS over unsecured DIRECT.
+    this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
   }
 
   private setupFormSubscriptions(): void {
@@ -262,10 +285,15 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   setConnectionMode(data: Profile): void {
+    const canUseCira = this.ciraEnabled() || !this.ciraAvailabilityResolved()
+
     if (data.tlsMode != null && data.tlsMode > 0) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
-    } else if (data.ciraConfigName != null) {
+    } else if (data.ciraConfigName != null && canUseCira) {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.cira)
+    } else if (data.ciraConfigName != null && !canUseCira) {
+      // Existing CIRA profiles should default to TLS when CIRA is disabled.
+      this.profileForm.controls.connectionMode.setValue(this.connectionMode.tls)
     } else {
       this.profileForm.controls.connectionMode.setValue(this.connectionMode.direct)
     }
@@ -327,6 +355,7 @@ export class ProfileDetailComponent implements OnInit {
           this.originalGenerateRandomPassword = data.generateRandomPassword !== false
           this.originalGenerateRandomMEBxPassword = data.generateRandomMEBxPassword !== false
           this.originalActivation = data.activation ?? ''
+          this.originalCiraConfigName = data.ciraConfigName ?? null
           this.profileForm.patchValue(data as any)
           this.selectedWifiConfigs.set(data.wifiConfigs ?? [])
           // Ensure proxy configs have proper priorities
@@ -480,6 +509,12 @@ export class ProfileDetailComponent implements OnInit {
     if (value === this.connectionMode.tls) {
       this.profileForm.controls.ciraConfigName.clearValidators()
       this.profileForm.controls.ciraConfigName.setValue(null)
+      // A stored non-TLS profile comes back with tlsMode 0, which Validators.required accepts
+      // (it only rejects null/empty) while the select renders blank. Blank it out so the user
+      // has to pick a real mode instead of silently saving a TLS profile with TLS off.
+      if (!TlsModes.some((mode) => mode.value === this.profileForm.controls.tlsMode.value)) {
+        this.profileForm.controls.tlsMode.setValue(null)
+      }
       this.profileForm.controls.tlsMode.setValidators(Validators.required)
       // set a default value if not set already
       if (!this.profileForm.controls.tlsSigningAuthority.value) {
@@ -660,6 +695,11 @@ export class ProfileDetailComponent implements OnInit {
     return dialog.afterClosed()
   }
 
+  private noCIRAWarning(): Observable<any> {
+    const dialog = this.dialog.open(NoCIRAWarningComponent, { width: '750px' })
+    return dialog.afterClosed()
+  }
+
   private randPasswordWarning(): Observable<any> {
     const dialog = this.dialog.open(RandomPassAlertComponent, this.matDialogConfig)
     return dialog.afterClosed()
@@ -670,23 +710,42 @@ export class ProfileDetailComponent implements OnInit {
     // Warn user of risk if CIRA configuration and static network are selected simultaneously
     if (this.profileForm.valid) {
       const result: any = Object.assign({}, this.profileForm.getRawValue())
-      const dialogs = []
-      if (!this.isEdit() && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
-        dialogs.push(this.randPasswordWarning())
+      const dialogs: (() => Observable<any>)[] = []
+      // Only warn when saving actually drops a stored CIRA config, i.e. the profile was
+      // created with one and the server has confirmed CIRA is disabled. Checking
+      // ciraAvailabilityResolved() keeps the dialog from claiming CIRA is off while the
+      // features call is still in flight, matching setConnectionMode() and the template.
+      if (
+        this.isEdit() &&
+        this.ciraAvailabilityResolved() &&
+        !this.ciraEnabled() &&
+        this.originalCiraConfigName != null &&
+        result.connectionMode !== this.connectionMode.cira
+      ) {
+        dialogs.push(() => this.noCIRAWarning())
       }
       if (result.connectionMode === this.connectionMode.cira && result.dhcpEnabled === false) {
-        dialogs.push(this.CIRAStaticWarning())
+        dialogs.push(() => this.CIRAStaticWarning())
+      }
+      if (!this.isEdit() && (result.generateRandomPassword || result.generateRandomMEBxPassword)) {
+        dialogs.push(() => this.randPasswordWarning())
       }
 
       if (dialogs.length === 0) {
         this.onSubmit()
         return
       }
-      forkJoin(dialogs).subscribe((data) => {
-        if (data.every((x) => x === true)) {
-          this.onSubmit()
-        }
-      })
+      from(dialogs)
+        .pipe(
+          concatMap((factory) => factory()),
+          takeWhile((result) => result === true),
+          toArray()
+        )
+        .subscribe((results) => {
+          if (results.length === dialogs.length) {
+            this.onSubmit()
+          }
+        })
     } else {
       this.profileForm.markAllAsTouched()
     }

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { Validators } from '@angular/forms'
-import { of, throwError } from 'rxjs'
+import { NEVER, of, throwError } from 'rxjs'
 import { ConfigsService } from '../../configs/configs.service'
 import { WirelessService } from '../../wireless/wireless.service'
 import { ProfilesService } from '../profiles.service'
@@ -16,6 +16,7 @@ import { IEEE8021xService } from '../../ieee8021x/ieee8021x.service'
 import { ProxyConfigsService } from '../../proxy-configs/proxy-configs.service'
 import { ServerFeaturesService } from '../../server-features.service'
 import { ProfileDetailComponent } from './profile-detail.component'
+import { NoCIRAWarningComponent } from '../../shared/no-cira-warning/no-cira-warning.component'
 import { Profile } from '../profiles.constants'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
@@ -27,6 +28,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 
 describe('ProfileDetailComponent', () => {
+  const defaultCloudMode = environment.cloud
   let component: ProfileDetailComponent
   let fixture: ComponentFixture<ProfileDetailComponent>
   let profileSpy: jasmine.Spy
@@ -148,6 +150,7 @@ describe('ProfileDetailComponent', () => {
   })
 
   afterEach(() => {
+    environment.cloud = defaultCloudMode
     TestBed.resetTestingModule()
   })
 
@@ -174,6 +177,7 @@ describe('ProfileDetailComponent', () => {
     expect(wirelessGetDataSpy).toHaveBeenCalled()
     expect(proxyGetDataSpy).toHaveBeenCalled()
   })
+
   it('should set connectionMode to TLS when tlsMode is a TLS mode (1-4)', () => {
     const profile: Profile = { tlsMode: 4, ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
@@ -182,6 +186,26 @@ describe('ProfileDetailComponent', () => {
   it('should set connectionMode to CIRA when ciraConfigName is set and tlsMode is not a TLS mode', () => {
     const profile: Profile = { ciraConfigName: 'config1' } as any
     component.setConnectionMode(profile)
+    expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
+  })
+  it('should not set connectionMode to CIRA when CIRA is disabled and availability is resolved', () => {
+    component.profileForm.controls.ciraConfigName.setValue('config1')
+    component.ciraEnabled.set(false)
+    component.ciraAvailabilityResolved.set(true)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
+    expect(component.profileForm.controls.connectionMode.value).toBe('TLS')
+    expect(component.profileForm.controls.ciraConfigName.value).toBeNull()
+  })
+  it('should keep CIRA connectionMode before enterprise feature availability resolves', () => {
+    component.ciraEnabled.set(false)
+    component.ciraAvailabilityResolved.set(false)
+
+    const profile: Profile = { ciraConfigName: 'config1' } as any
+    component.setConnectionMode(profile)
+
     expect(component.profileForm.controls.connectionMode.value).toBe('CIRA')
   })
   it('should set connectionMode to DIRECT when tlsMode is 0 and no CIRA config', () => {
@@ -693,6 +717,18 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(component.tlsDefaultSigningAuthority)
     expect(component.profileForm.controls.tlsSigningAuthority.valid).toBeTrue()
   })
+  it('should clear a non-TLS tlsMode of 0 when TLS is selected', () => {
+    component.profileForm.controls.tlsMode.setValue(0)
+    component.connectionModeChange('TLS')
+    expect(component.profileForm.controls.tlsMode.value).toEqual(null)
+    expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
+  })
+  it('should keep an already selected tlsMode when TLS is selected', () => {
+    component.profileForm.controls.tlsMode.setValue(2)
+    component.connectionModeChange('TLS')
+    expect(component.profileForm.controls.tlsMode.value).toEqual(2)
+    expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
+  })
   it('should set the tlsMode property to null when CIRA Selected', () => {
     component.connectionModeChange('CIRA')
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
@@ -835,9 +871,11 @@ describe('ProfileDetailComponent', () => {
     // server-features branch instead of the cloud branch.
     const createEnterpriseComponent = (): ProfileDetailComponent => {
       environment.cloud = false
-      const enterpriseFixture = TestBed.createComponent(ProfileDetailComponent)
-      enterpriseFixture.detectChanges()
-      return enterpriseFixture.componentInstance
+      fixture.destroy()
+      fixture = TestBed.createComponent(ProfileDetailComponent)
+      component = fixture.componentInstance
+      fixture.detectChanges()
+      return component
     }
 
     afterEach(() => {
@@ -848,10 +886,12 @@ describe('ProfileDetailComponent', () => {
       serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
       ciraGetDataSpy.calls.reset()
 
-      createEnterpriseComponent()
+      const enterpriseComponent = createEnterpriseComponent()
 
       expect(serverFeaturesGetFeaturesSpy).toHaveBeenCalled()
       expect(ciraGetDataSpy).not.toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).toBeNull()
     })
 
     it('should expose ciraEnabled() === false after the features call resolves with CIRA disabled', () => {
@@ -870,6 +910,7 @@ describe('ProfileDetailComponent', () => {
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
       expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
     it('should fail open and fetch CIRA configs when the features call errors', () => {
@@ -880,6 +921,99 @@ describe('ProfileDetailComponent', () => {
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
       expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
+    })
+
+    // Mike's review feedback on #3445: hiding the section while /server/features is still in
+    // flight leaves a saved CIRA profile with no visible selection at all, which reads as a bug
+    // on a server where CIRA is actually enabled.
+    it('should keep the CIRA option visible but disabled while the features call is in flight', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(NEVER)
+
+      const enterpriseComponent = createEnterpriseComponent()
+      loadProfileForEdit({ ciraConfigName: 'config1' })
+      fixture.detectChanges()
+
+      const radio = fixture.nativeElement.querySelector('[data-cy="radio-cira"]')
+      expect(enterpriseComponent.ciraAvailabilityResolved()).toBeFalse()
+      expect(radio).not.toBeNull()
+      expect(radio.classList).toContain('mat-mdc-radio-disabled')
+      // The saved CIRA selection stays visible rather than rendering an empty radio group.
+      expect(enterpriseComponent.profileForm.controls.connectionMode.value).toBe('CIRA')
+    })
+
+    it('should warn before saving an edited profile whose stored CIRA config is about to be dropped', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      const enterpriseComponent = createEnterpriseComponent()
+
+      // Stored profile still references CIRA, so setConnectionMode() coerces the form to TLS.
+      loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true, ciraConfigName: 'config1' })
+      expect(enterpriseComponent.profileForm.controls.connectionMode.value).toBe('TLS')
+
+      spyOn(enterpriseComponent.router, 'navigate')
+      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue({
+        afterClosed: () => of(true)
+      } as any)
+      enterpriseComponent.profileForm.patchValue({ profileName: 'profile', dhcpEnabled: true, tlsMode: 1 })
+      enterpriseComponent.confirm()
+
+      expect(dialogSpy).toHaveBeenCalledWith(NoCIRAWarningComponent, jasmine.anything())
+      expect(profileUpdateSpy).toHaveBeenCalled()
+    })
+
+    // A Console that answers 200 without the flag must not read as "CIRA disabled", or the
+    // save flow would offer to drop a stored CIRA config on a server where CIRA still works.
+    it('should fail open when the features response omits ciraEnabled', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({} as any))
+      ciraGetDataSpy.calls.reset()
+
+      const enterpriseComponent = createEnterpriseComponent()
+
+      expect(ciraGetDataSpy).toHaveBeenCalled()
+      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
+    })
+
+    it('should not warn about a dropped CIRA config while the features call is in flight', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(NEVER)
+      const enterpriseComponent = createEnterpriseComponent()
+
+      loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true, ciraConfigName: 'config1' })
+      expect(enterpriseComponent.ciraAvailabilityResolved()).toBeFalse()
+
+      spyOn(enterpriseComponent.router, 'navigate')
+      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open')
+      // User switches the profile to TLS themselves before the server answers.
+      enterpriseComponent.profileForm.patchValue({
+        profileName: 'profile',
+        dhcpEnabled: true,
+        connectionMode: 'TLS',
+        tlsMode: 1
+      })
+      enterpriseComponent.confirm()
+
+      expect(dialogSpy).not.toHaveBeenCalled()
+      expect(profileUpdateSpy).toHaveBeenCalled()
+    })
+
+    it('should not warn when saving a non-CIRA profile that never had a CIRA config', () => {
+      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      const enterpriseComponent = createEnterpriseComponent()
+
+      loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true })
+
+      spyOn(enterpriseComponent.router, 'navigate')
+      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open')
+      enterpriseComponent.profileForm.patchValue({
+        profileName: 'profile',
+        dhcpEnabled: true,
+        connectionMode: 'TLS',
+        tlsMode: 1
+      })
+      enterpriseComponent.confirm()
+
+      expect(dialogSpy).not.toHaveBeenCalled()
+      expect(profileUpdateSpy).toHaveBeenCalled()
     })
   })
 

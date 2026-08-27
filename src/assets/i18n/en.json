@@ -2777,6 +2777,22 @@
     "description": "Warning message shown when adding a profile while WiFi is disabled",
     "value": "WiFi is currently disabled. This profile will not take effect until WiFi is enabled."
   },
+  "noCira.confirm": {
+    "description": "Dialog confirmation question for no CIRA warning",
+    "value": "Do you want to continue?"
+  },
+  "noCira.hint": {
+    "description": "Dialog hint explaining how to re-enable CIRA on the server",
+    "value": "To keep the CIRA configuration, enable CIRA on the server by setting APP_DISABLE_CIRA to false."
+  },
+  "noCira.message": {
+    "description": "Dialog message warning that CIRA will be removed from the profile",
+    "value": "This profile has an existing CIRA configuration, but CIRA is currently disabled on the server. Saving this profile will remove the CIRA configuration."
+  },
+  "noCira.title": {
+    "description": "Dialog title for CIRA removal warning",
+    "value": "CIRA configuration will be removed"
+  },
   "pba.enforceCCMMessage": {
     "value": "Secure Boot is always enforced in Client Control Mode (CCM)"
   },
@@ -2896,10 +2912,6 @@
   "profileDetail.ciraConfiguration": {
     "description": "Label for CIRA configuration field",
     "value": "CIRA Configuration"
-  },
-  "profileDetail.ciraDisabledOption": {
-    "description": "Inline note on the CIRA radio when CIRA is disabled on the server",
-    "value": "(CIRA is disabled on this server)"
   },
   "profileDetail.ciraDisabledWarning": {
     "description": "Warning shown when editing a profile that uses CIRA while CIRA is disabled on the server",
