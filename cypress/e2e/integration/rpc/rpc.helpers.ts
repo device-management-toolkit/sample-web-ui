@@ -169,11 +169,42 @@ export const getAmtVersion = (amtInfo: AMTInfo): string => {
 // strings across versions/builds; treat either as "not activated".
 export const notActivatedControlModes: string[] = ['pre-provisioning state', 'not activated']
 
+// Builds the skip-cert flag part based on auto-add mode and AMT version
+// Auto-add mode: use --skip-cert-check for all AMT versions
+// Normal mode: use --skip-amt-cert-check only for AMT > 18
+const buildSkipCertPart = (isAutoAdd: boolean, amtVersion: string): string => {
+  if (isAutoAdd) {
+    // For auto-add: always use --skip-cert-check, plus --skip-amt-cert-check for AMT > 18
+    const amtCertFlag = parseInt(amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+    return ` --skip-cert-check${amtCertFlag}`
+  } else {
+    return parseInt(amtVersion) > 18 ? ' --skip-amt-cert-check' : ''
+  }
+}
+
 // ---- Computed environment flags -------------------------------------------
 
 // Exported so sub-specs (and the builders below) can use it to pick the
 // cloud vs. console command variant.
 export const isCloud: boolean = Cypress.env('CLOUD') === 'true' || Cypress.env('CLOUD') === true
+
+/**
+ * Constructs the authorization endpoint URL for auto-add device mode from BASEURL.
+ * Returns empty string if BASEURL is not available.
+ *
+ * @returns Authorization endpoint URL or empty string
+ */
+export const getAuthEndpoint = (): string => {
+  const baseUrl = Cypress.env('BASEURL')
+  if (baseUrl) {
+    // BASEURL format: https://host:port/
+    // Auth endpoint format: https://host:port/api/v1/authorize
+    const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl
+    return `${normalizedBase}/api/v1/authorize`
+  }
+
+  return ''
+}
 
 // ---- Shared rpc-go command builders ---------------------------------------
 //
@@ -205,7 +236,11 @@ const buildRpcCommand = (opts: RpcCommandOptions, winExe: string, args: string):
   return `docker run --rm --network host --device=/dev/mei0${volumeFlag} ${opts.rpcDockerImage} ${args}`
 }
 
-export const buildInfoCommand = (opts: RpcCommandOptions): string => buildRpcCommand(opts, 'rpc.exe', 'amtinfo --json')
+export const buildInfoCommand = (opts: RpcCommandOptions): string => {
+  const rpcVersion = getRpcMajorVersion()
+  const args = rpcVersion === '2' ? 'amtinfo -json' : 'amtinfo --json'
+  return buildRpcCommand(opts, 'rpc.exe', args)
+}
 
 export interface ActivateCommandOptions {
   isWin: boolean
@@ -214,6 +249,9 @@ export interface ActivateCommandOptions {
   // console-only
   profileYamlFile?: string
   encryptionKey?: string
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
   profileName?: string
@@ -289,8 +327,42 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
     ? opts.profileYamlFile.substring(opts.profileYamlFile.lastIndexOf('/') + 1)
     : ''
   const profilePath = opts.isWin ? opts.profileYamlFile : `/config/${profileFileName}`
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
-  const args = `activate --profile ${profilePath} --key ${opts.encryptionKey}${flagPart} -v --json`
+
+  const rpcVersion = getRpcMajorVersion()
+  const commonFlag = rpcVersion === '2' ? '-v -json' : '-v --json'
+  const amtVersionNum = parseInt(opts.amtVersion)
+
+  if (rpcVersion === '2') {
+    cy.task('log', `>>> RPC VERSION : v2`)
+    cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
+    cy.task('log', `>>> Auto-Add Device : false (v2 does not support auto-add)`)
+
+    const skipFlag = amtVersionNum > 18 ? ' -skipamtcertcheck' : ''
+    const args = `activate -local -configv2 ${profilePath} -configencryptionkey "${opts.encryptionKey}"${skipFlag} ${commonFlag}`
+    return buildRpcCommand(
+      { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
+      'rpc.exe',
+      args
+    )
+  }
+
+  // RPC v3: check if auto-add mode via explicit environment variable
+  const isAutoAdd = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+
+  cy.task('log', `>>> RPC VERSION : v3`)
+  cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
+  cy.task('log', `>>> Auto-Add Device : ${isAutoAdd}`)
+
+  if (isAutoAdd && (!opts.authEndpoint || !opts.authUsername || !opts.authPassword)) {
+    throw new Error('AUTO_ADD_DEVICE requires authEndpoint/authUsername/authPassword')
+  }
+
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint "${opts.authEndpoint}" --auth-username "${opts.authUsername}" --auth-password "${opts.authPassword}"`
+    : ''
+  const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
+
+  const args = `activate --local --profile ${profilePath} --key ${opts.encryptionKey}${authPart}${skipCertPart} ${commonFlag}`
   return buildRpcCommand(
     { isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage, volumeMount: `${profileDir}:/config` },
     'rpc.exe',
@@ -348,6 +420,9 @@ export interface DeactivateCommandOptions {
   amtVersion: string
   // console-only
   isAdminControlModeProfile?: boolean
+  authEndpoint?: string
+  authUsername?: string
+  authPassword?: string
   // cloud-only
   fqdn?: string
 }
@@ -374,8 +449,36 @@ export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string =
     return buildCloudDeactivateCommandCandidates(opts)[0]
   }
 
-  const flagPart = parseInt(opts.amtVersion) <= 18 ? '' : ' --skip-amt-cert-check'
+  const amtVersionNum = parseInt(opts.amtVersion)
+
+  if (rpcVersion === '2') {
+    cy.task('log', `>>> RPC VERSION : v2`)
+    cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
+    cy.task('log', `>>> Auto-Add Device : false (v2 does not support auto-add)`)
+
+    const skipFlag = amtVersionNum > 18 ? ' -skipamtcertcheck' : ''
+    const passPart = opts.isAdminControlModeProfile ? ` -password ${opts.password}` : ''
+    const args = `deactivate -local${skipFlag}${passPart} ${commonFlag}`
+    return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+  }
+
+  // RPC v3: check if auto-add mode via explicit environment variable
+  const isAutoAdd = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+
+  cy.task('log', `>>> RPC VERSION : v3`)
+  cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
+  cy.task('log', `>>> Auto-Add Device : ${isAutoAdd}`)
+
+  if (isAutoAdd && (!opts.authEndpoint || !opts.authUsername || !opts.authPassword)) {
+    throw new Error('AUTO_ADD_DEVICE requires authEndpoint/authUsername/authPassword')
+  }
+
+  const authPart = isAutoAdd
+    ? ` --auth-endpoint "${opts.authEndpoint}" --auth-username "${opts.authUsername}" --auth-password "${opts.authPassword}"`
+    : ''
+  const skipCertPart = buildSkipCertPart(isAutoAdd, opts.amtVersion)
+
   const passPart = opts.isAdminControlModeProfile ? ` --password ${opts.password}` : ''
-  const args = `deactivate --local${flagPart}${passPart} ${commonFlag}`
+  const args = `deactivate --local${authPart}${skipCertPart}${passPart} ${commonFlag}`
   return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
 }

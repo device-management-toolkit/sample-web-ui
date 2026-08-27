@@ -10,9 +10,16 @@ import { tags } from '../../fixtures/api/tags'
 
 const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
 
+// Detect auto-add device mode via the same flag used by the RPC helpers
+const autoAddDevice = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+
+// When auto-add device is enabled, device is automatically removed during deactivation,
+// so skip the manual deletion tests
+const describeWhenNoAutoDelete = autoAddDevice ? describe.skip : describeWhenNotCloud
+
 // ---------------------------- Test section ----------------------------
 
-describeWhenNotCloud('Test Device Deletion', () => {
+describeWhenNoAutoDelete('Test Device Deletion', () => {
   beforeEach('Setup and login', () => {
     cy.setup()
   })

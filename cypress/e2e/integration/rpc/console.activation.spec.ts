@@ -19,8 +19,10 @@ import {
   buildInfoCommand,
   buildActivateCommand,
   getAmtInfo,
+  getAmtInfoWithRetry,
   getAmtVersion,
-  notActivatedControlModes
+  notActivatedControlModes,
+  getAuthEndpoint
 } from './rpc.helpers'
 
 if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
@@ -35,6 +37,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
     const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
     const isWin = Cypress.platform === 'win32'
+    const authEndpoint = getAuthEndpoint()
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -49,7 +52,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           rpcDockerImage,
           amtVersion,
           profileYamlFile,
-          encryptionKey
+          encryptionKey,
+          authEndpoint: authEndpoint,
+          authUsername: Cypress.env('MPS_USERNAME'),
+          authPassword: Cypress.env('MPS_PASSWORD')
         })
       })
     })
@@ -98,7 +104,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             cy.wait(120000)
 
             // Re-query amtinfo after activation to get the updated IP address
-            getAmtInfo(infoCommand).then((postActivationInfo) => {
+            // Use retry logic since device may need time to report valid IP after activation
+            getAmtInfoWithRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
@@ -117,7 +124,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
               const deviceIp = hasValidWiredIp ? (wiredIp as string) : (wirelessIp as string)
               cy.log(`Using identifier to find device: ${deviceIp}`)
-              cy.get('mat-cell').contains(deviceIp).parent().click()
+              cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
             })
 
             cy.wait(5000)
