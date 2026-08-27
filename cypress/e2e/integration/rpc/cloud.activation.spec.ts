@@ -150,7 +150,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             } else if (parseInt(amtVersion) >= 19) {
               expect(combined).to.match(/TLS:\s*(?:Already )?Configured/i)
             } else {
-              expect(combined).to.match(/TLS: Configured/i)
+              expect(combined).to.match(/TLS:\s*Configured/i)
             }
 
             if (profileName.endsWith('WiFi')) {

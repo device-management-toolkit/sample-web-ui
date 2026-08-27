@@ -75,43 +75,60 @@ export const execWithRetry = (
   return attemptExec(1)
 }
 
+// AMT can be briefly unreachable right after a state change (e.g. deactivation
+// restarts the ME), so amtinfo may return these transient errors.
+const transientAmtErrorPattern = /empty response from AMT|AMT Unavailable|no such device/i
+
 // Runs `rpc amtinfo` and selects the AMT payload from JSON output with log records.
 export const getAmtInfo = (
   infoCommand: string,
-  config: Cypress.ExecOptions = execConfig
+  config: Cypress.ExecOptions = execConfig,
+  maxRetries = 5,
+  retryInterval = 5000
 ): Cypress.Chainable<AMTInfo> => {
-  return cy.exec(infoCommand, config).then((result) => {
-    const { stdout, stderr, combined } = buildOutput(result)
-    return cy.log(combined).then(() => {
-      const source = stdout.length > 0 ? stdout : stderr
-      const jsonStart = source.indexOf('{')
-      if (jsonStart < 0) {
-        throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
-      }
+  const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
+    return cy.exec(infoCommand, config).then((result) => {
+      const { stdout, stderr, combined } = buildOutput(result)
+      return cy.log(combined).then(() => {
+        const source = stdout.length > 0 ? stdout : stderr
+        const jsonStart = source.indexOf('{')
 
-      // rpc may emit JSON-formatted logs before the final amtinfo payload.
-      const candidates: number[] = [jsonStart]
-      let nextObjectStart = source.indexOf('\n{', jsonStart)
-      while (nextObjectStart >= 0) {
-        candidates.push(nextObjectStart + 1)
-        nextObjectStart = source.indexOf('\n{', nextObjectStart + 1)
-      }
-
-      // Prefer the final JSON object because it is the most recent response.
-      for (const candidateStart of candidates.reverse()) {
-        try {
-          const parsed = JSON.parse(source.substring(candidateStart)) as Record<string, unknown>
-          if ('amt' in parsed || 'AMT' in parsed || 'version' in parsed) {
-            return parsed as unknown as AMTInfo
-          }
-        } catch {
-          // Try the next JSON object when leading log records are present.
+        // rpc may emit JSON-formatted logs before the final amtinfo payload.
+        const candidates: number[] = jsonStart < 0 ? [] : [jsonStart]
+        let nextObjectStart = source.indexOf('\n{', jsonStart)
+        while (jsonStart >= 0 && nextObjectStart >= 0) {
+          candidates.push(nextObjectStart + 1)
+          nextObjectStart = source.indexOf('\n{', nextObjectStart + 1)
         }
-      }
 
-      throw new Error(`rpc amtinfo did not contain an AMT version payload. Output:\n${combined}`)
+        // Prefer the final JSON object because it is the most recent response.
+        for (const candidateStart of candidates.reverse()) {
+          try {
+            const parsed = JSON.parse(source.substring(candidateStart)) as Record<string, unknown>
+            if ('amt' in parsed || 'AMT' in parsed || 'version' in parsed) {
+              return parsed as unknown as AMTInfo
+            }
+          } catch {
+            // Try the next JSON object when leading log records are present.
+          }
+        }
+
+        // Retry when AMT is momentarily unavailable after a state change.
+        if (transientAmtErrorPattern.test(combined) && attempt < maxRetries) {
+          cy.log(`Retrying rpc amtinfo after transient AMT-unavailable error (${attempt}/${maxRetries})`)
+          return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
+        }
+
+        if (jsonStart < 0) {
+          throw new Error(`rpc amtinfo did not return JSON. Output:\n${combined}`)
+        }
+
+        throw new Error(`rpc amtinfo did not contain an AMT version payload. Output:\n${combined}`)
+      })
     })
-  })
+  }
+
+  return attemptGetInfo(1)
 }
 
 export const getAmtInfoWithRetry = (
