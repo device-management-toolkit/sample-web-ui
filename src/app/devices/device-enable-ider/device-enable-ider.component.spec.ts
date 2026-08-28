@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
 import { DeviceEnableIderComponent } from './device-enable-ider.component'
@@ -13,7 +14,7 @@ describe('DeviceEnableIderComponent', () => {
   let component: DeviceEnableIderComponent
   let fixture: ComponentFixture<DeviceEnableIderComponent>
   const dialogMock = {
-    close: jasmine.createSpy('close')
+    close: vi.fn()
   }
 
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe('DeviceEnableIderComponent', () => {
     fixture = TestBed.createComponent(DeviceEnableIderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-    dialogMock.close = jasmine.createSpy('close')
+    dialogMock.close = vi.fn()
   })
 
   afterEach(() => {

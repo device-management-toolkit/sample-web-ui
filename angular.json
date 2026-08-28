@@ -144,31 +144,29 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "codeCoverage": true,
-            "main": "src/test.ts",
-            "polyfills": [
-              "@angular/localize/init"
-            ],
+            "buildTarget": "samplewebui:build",
+            "runner": "vitest",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
+            "setupFiles": [
+              "src/test-setup.ts"
             ],
-            "styles": [
-              "src/styles/styles.scss",
-              "src/styles/css2.css"
+            "browsers": [
+              "chromium"
             ],
-            "scripts": []
-          },
-          "configurations": {
-            "ci": {
-              "watch": false,
-              "progress": false,
-              "browsers": "ChromeHeadlessCI"
-            }
+            "headless": true,
+            "coverage": true,
+            "coverageReporters": [
+              "html",
+              "text-summary",
+              "lcov"
+            ],
+            "reporters": [
+              "junit",
+              "default"
+            ],
+            "outputFile": "sample-web-ui.xml"
           }
         },
         "lint": {

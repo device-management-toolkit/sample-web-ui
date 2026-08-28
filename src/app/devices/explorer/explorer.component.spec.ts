@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ExplorerComponent } from './explorer.component'
 import { DevicesService } from '../devices.service'
@@ -20,10 +22,10 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent
   let fixture: ComponentFixture<ExplorerComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let devicesServiceSpy: SpyObj<DevicesService>
 
   beforeEach(() => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
       'getTags',
@@ -56,8 +58,8 @@ describe('ExplorerComponent', () => {
       ]
     })
 
-    devicesServiceSpy.getWsmanOperations.and.returnValue(of(['Operation1', 'Operation2']))
-    devicesServiceSpy.executeExplorerCall.and.returnValue(of('<xml>Data</xml>'))
+    devicesServiceSpy.getWsmanOperations.mockReturnValue(of(['Operation1', 'Operation2']))
+    devicesServiceSpy.executeExplorerCall.mockReturnValue(of('<xml>Data</xml>'))
 
     fixture = TestBed.createComponent(ExplorerComponent)
     component = fixture.componentInstance

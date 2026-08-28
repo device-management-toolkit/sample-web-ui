@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -14,11 +16,11 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('AuditLogComponent', () => {
   let component: AuditLogComponent
   let fixture: ComponentFixture<AuditLogComponent>
-  let getAuditLogSpy: jasmine.Spy
+  let getAuditLogSpy: MockInstance
 
   beforeEach(() => {
-    const devicesService = jasmine.createSpyObj('DeviceLogService', ['getAuditLog'])
-    getAuditLogSpy = devicesService.getAuditLog.and.returnValue(of({ totalCnt: 0, records: [] }))
+    const devicesService = createSpyObj('DeviceLogService', ['getAuditLog'])
+    getAuditLogSpy = devicesService.getAuditLog.mockReturnValue(of({ totalCnt: 0, records: [] }))
 
     TestBed.configureTestingModule({
       imports: [
@@ -51,6 +53,6 @@ describe('AuditLogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getAuditLogSpy.calls.any()).toBe(true, 'getAuditLog called')
+    expect(getAuditLogSpy.mock.calls.length > 0, 'getAuditLog called').toBe(true)
   })
 })

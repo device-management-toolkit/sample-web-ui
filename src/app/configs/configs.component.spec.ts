@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,13 +21,13 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('ConfigsComponent', () => {
   let component: ConfigsComponent
   let fixture: ComponentFixture<ConfigsComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(async () => {
-    const configsService = jasmine.createSpyObj('ConfigsService', ['getData', 'delete'])
-    getDataSpy = configsService.getData.and.returnValue(
+    const configsService = createSpyObj('ConfigsService', ['getData', 'delete'])
+    getDataSpy = configsService.getData.mockReturnValue(
       of({
         data: [
           {
@@ -44,7 +46,7 @@ describe('ConfigsComponent', () => {
         totalCount: 1
       })
     )
-    deleteSpy = configsService.delete.and.returnValue(of(null))
+    deleteSpy = configsService.delete.mockReturnValue(of(null))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -76,12 +78,12 @@ describe('ConfigsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(getDataSpy.mock.calls.length > 0, 'getData called').toBe(true)
   })
 
   it('should change the page', () => {
     component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
+    expect(getDataSpy.mock.calls.length > 0, 'getData called').toBe(true)
     expect(component.paginator.length).toBe(1)
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
@@ -89,21 +91,21 @@ describe('ConfigsComponent', () => {
   })
 
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs', 'path'])
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs', 'new'])
   })
 
   it('should delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('ciraconfig1')
     expect(dialogSpy).toHaveBeenCalled()

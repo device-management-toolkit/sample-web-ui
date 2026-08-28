@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, provideRouter, Router } from '@angular/router'
@@ -24,7 +26,7 @@ describe('DeviceDetailComponent', () => {
   let router: Router
   let snackBar: MatSnackBar
   let routeParams$: ReplaySubject<any>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let devicesServiceSpy: SpyObj<DevicesService>
 
   const makeAmtVersion = (sku: string) => ({
     CIM_SoftwareIdentity: {
@@ -33,6 +35,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   @Component({
+    template: '',
     selector: 'app-device-toolbar',
     imports: []
   })
@@ -42,6 +45,7 @@ describe('DeviceDetailComponent', () => {
     public readonly deviceId = input('')
   }
   @Component({
+    template: '',
     selector: 'app-general',
     imports: []
   })
@@ -53,6 +57,7 @@ describe('DeviceDetailComponent', () => {
   }
 
   @Component({
+    template: '',
     selector: 'app-ider',
     imports: []
   })
@@ -62,6 +67,7 @@ describe('DeviceDetailComponent', () => {
   }
 
   @Component({
+    template: '',
     selector: 'app-kvm',
     imports: []
   })
@@ -71,8 +77,8 @@ describe('DeviceDetailComponent', () => {
 
   beforeEach(() => {
     routeParams$ = new ReplaySubject<any>(1)
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', ['getAMTVersion'])
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(makeAmtVersion('16400') as any))
+    devicesServiceSpy = createSpyObj('DevicesService', ['getAMTVersion'])
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('16400') as any))
 
     TestBed.configureTestingModule({
       imports: [
@@ -130,7 +136,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('shows KVM and hides IDER for non-ISM systems', () => {
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(makeAmtVersion('99999') as any))
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('99999') as any))
     routeParams$.next({ id: 'guid' })
     fixture.detectChanges()
 
@@ -147,13 +153,13 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('fails closed to general and hides KVM when AMT version cannot be retrieved', () => {
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(null as any))
-    const navigateSpy = spyOn(router, 'navigate').and.resolveTo(true)
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(null as any))
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
 
     routeParams$.next({ id: 'guid', component: 'kvm' })
     fixture.detectChanges()
 
-    expect(component.isDeviceTypeKnown()).toBeFalse()
+    expect(component.isDeviceTypeKnown()).toBe(false)
     expect(component.currentView).toBe('general')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
@@ -169,7 +175,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('navigates from kvm to ider with replaceUrl for same-device ISM updates', () => {
-    const navigateSpy = spyOn(router, 'navigate').and.resolveTo(true)
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
 
     routeParams$.next({ id: 'guid', component: 'general' })
     fixture.detectChanges()
@@ -188,8 +194,8 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('navigates from ider to kvm with replaceUrl for same-device non-ISM updates', () => {
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(makeAmtVersion('99999') as any))
-    const navigateSpy = spyOn(router, 'navigate').and.resolveTo(true)
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('99999') as any))
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
 
     routeParams$.next({ id: 'guid', component: 'general' })
     fixture.detectChanges()
@@ -208,7 +214,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('does not navigate when the current route is already valid for the resolved SKU', () => {
-    const navigateSpy = spyOn(router, 'navigate').and.resolveTo(true)
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
 
     routeParams$.next({ id: 'guid', component: 'ider' })
     fixture.detectChanges()
@@ -220,14 +226,14 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('fails closed and shows AMT version error snackbar when getAMTVersion throws', () => {
-    devicesServiceSpy.getAMTVersion.and.returnValue(throwError(() => new Error('amt version failed')))
-    const navigateSpy = spyOn(router, 'navigate').and.resolveTo(true)
-    spyOn(snackBar, 'open')
+    devicesServiceSpy.getAMTVersion.mockReturnValue(throwError(() => new Error('amt version failed')))
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
+    vi.spyOn(snackBar, 'open').mockImplementation((() => undefined) as any)
 
     routeParams$.next({ id: 'guid', component: 'kvm' })
     fixture.detectChanges()
 
-    expect(component.isDeviceTypeKnown()).toBeFalse()
+    expect(component.isDeviceTypeKnown()).toBe(false)
     expect(component.currentView).toBe('general')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
@@ -240,7 +246,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('shows unknown-device-type warning only when loading is complete and device type is unknown', () => {
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(null as any))
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(null as any))
 
     routeParams$.next({ id: 'guid', component: 'general' })
     fixture.detectChanges()

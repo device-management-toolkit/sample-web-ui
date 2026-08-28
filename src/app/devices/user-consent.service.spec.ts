@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { TestBed } from '@angular/core/testing'
 
 import { UserConsentService } from './user-consent.service'
@@ -11,22 +18,22 @@ import { provideTranslateService } from '@ngx-translate/core'
 
 describe('UserConsentService', () => {
   let service: UserConsentService
-  let devicesService: jasmine.SpyObj<DevicesService>
-  let dialog: jasmine.SpyObj<MatDialog>
-  let snackBar: jasmine.SpyObj<MatSnackBar>
-  let reqUserConsentCodeSpy: jasmine.Spy
-  let cancelUserConsentCodeSpy: jasmine.Spy
+  let devicesService: SpyObj<DevicesService>
+  let dialog: SpyObj<MatDialog>
+  let snackBar: SpyObj<MatSnackBar>
+  let reqUserConsentCodeSpy: MockInstance
+  let cancelUserConsentCodeSpy: MockInstance
   let userConsentResponse: UserConsentResponse
   let userConsentData: UserConsentData
-  let displayErrorSpy: jasmine.Spy
+  let displayErrorSpy: MockInstance
 
   beforeEach(() => {
-    devicesService = jasmine.createSpyObj('DevicesService', ['reqUserConsentCode', 'cancelUserConsentCode'])
-    dialog = jasmine.createSpyObj('MatDialog', ['open'])
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
+    devicesService = createSpyObj('DevicesService', ['reqUserConsentCode', 'cancelUserConsentCode'])
+    dialog = createSpyObj('MatDialog', ['open'])
+    snackBar = createSpyObj('MatSnackBar', ['open'])
     const reqUserConsentResponse: UserConsentResponse = {} as any
-    reqUserConsentCodeSpy = devicesService.reqUserConsentCode.and.returnValue(of(reqUserConsentResponse))
-    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of(reqUserConsentResponse))
+    reqUserConsentCodeSpy = devicesService.reqUserConsentCode.mockReturnValue(of(reqUserConsentResponse))
+    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.mockReturnValue(of(reqUserConsentResponse))
     userConsentResponse = {
       Body: { ReturnValue: 0, ReturnValueStr: 'Success' },
       Header: {
@@ -48,23 +55,25 @@ describe('UserConsentService', () => {
       ]
     })
     service = TestBed.inject(UserConsentService)
-    displayErrorSpy = spyOn(service, 'displayError').and.callThrough()
+    displayErrorSpy = vi.spyOn(service, 'displayError')
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-  it('should handle user consent response correctly', (done) => {
-    environment.cloud = true
-    const mockDialogData: UserConsentData = {
-      deviceId: 'test-guid',
-      results: userConsentResponse
-    }
-    dialog.open.and.returnValue({ afterClosed: () => of(mockDialogData) } as any)
-    service.handleUserConsentResponse('test-guid', userConsentResponse, 'KVM').subscribe((result) => {
-      expect(result).toBeTrue()
-      expect(dialog.open).toHaveBeenCalled()
-      done()
+  it('should handle user consent response correctly', async () => {
+    await new Promise<void>((done) => {
+      environment.cloud = true
+      const mockDialogData: UserConsentData = {
+        deviceId: 'test-guid',
+        results: userConsentResponse
+      }
+      dialog.open.mockReturnValue({ afterClosed: () => of(mockDialogData) } as any)
+      service.handleUserConsentResponse('test-guid', userConsentResponse, 'KVM').subscribe((result) => {
+        expect(result).toBe(true)
+        expect(dialog.open).toHaveBeenCalled()
+        done()
+      })
     })
   })
   it('handleUserConsentDecision reopens consent dialog path when optInState is displayed (2)', async () => {
@@ -122,7 +131,7 @@ describe('UserConsentService', () => {
   it('should handle SendOptInCodeResponse in cloud environment', () => {
     environment.cloud = true
     const result = service.afterUserConsentDialogClosed(userConsentData, 'KVM')
-    expect(result).toBeTrue()
+    expect(result).toBe(true)
   })
   it('cancelOptInCodeResponse 0', async () => {
     service.cancelOptInCodeResponse(userConsentResponse, 'KVM')
@@ -157,8 +166,8 @@ describe('UserConsentService', () => {
     expect(cancelUserConsentCodeSpy).toHaveBeenCalled()
   })
   it('should show dialog when called', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: () => of(null) })
-    dialog.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null) })
+    dialog.open.mockReturnValue(dialogRefSpyObj)
     service.userConsentDialog('111')
     expect(dialog.open).toHaveBeenCalled()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()

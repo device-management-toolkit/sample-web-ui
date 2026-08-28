@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -20,13 +22,13 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('DomainsComponent', () => {
   let component: DomainsComponent
   let fixture: ComponentFixture<DomainsComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
-  let domainsService: jasmine.SpyObj<DomainsService>
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
+  let domainsService: SpyObj<DomainsService>
   let translate: TranslateService
 
   beforeEach(() => {
-    domainsService = jasmine.createSpyObj('DomainsService', ['getData', 'delete'])
+    domainsService = createSpyObj('DomainsService', ['getData', 'delete'])
 
     const today = new Date()
     const okayDate = new Date(today)
@@ -57,14 +59,14 @@ describe('DomainsComponent', () => {
       }
     ] as any
 
-    getDataSpy = domainsService.getData.and.returnValue(
+    getDataSpy = domainsService.getData.mockReturnValue(
       of({
         data: domains,
         totalCount: 3
       } satisfies DataWithCount<Domain>)
     )
 
-    deleteSpy = domainsService.delete.and.returnValue(of({}))
+    deleteSpy = domainsService.delete.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [
@@ -97,13 +99,13 @@ describe('DomainsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).toBe(true, 'getData called')
-    expect(component.isLoading()).toBeFalse()
+    expect(getDataSpy.mock.calls.length > 0, 'getData called').toBe(true)
+    expect(component.isLoading()).toBe(false)
   })
 
   it('should change the page', () => {
     component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
-    expect(getDataSpy.calls.any()).toBe(true, 'getDevices called')
+    expect(getDataSpy.mock.calls.length > 0, 'getDevices called').toBe(true)
     expect(component.paginator.length).toBe(3)
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
@@ -111,20 +113,20 @@ describe('DomainsComponent', () => {
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/domains/new'])
   })
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/domains/path'])
   })
 
   it('should delete the domain on click of confirm delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('domain1')
     expect(dialogSpy).toHaveBeenCalled()
@@ -135,9 +137,9 @@ describe('DomainsComponent', () => {
   })
 
   it('should not delete the domain on cancel', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('domain')
     expect(dialogSpy).toHaveBeenCalled()
@@ -167,7 +169,7 @@ describe('DomainsComponent', () => {
   })
 
   it('should ', () => {
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.expirationWarning()
     expect(snackBarSpy).toHaveBeenCalled()

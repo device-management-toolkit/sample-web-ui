@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TLSComponent } from './tls.component'
 import { DevicesService } from '../devices.service'
@@ -15,8 +22,8 @@ describe('TLSComponent', () => {
   const mockTLSData = [{}, {}]
 
   beforeEach(() => {
-    mockDevicesService = jasmine.createSpyObj('DevicesService', ['getTLSSettings'])
-    mockSnackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
+    mockDevicesService = createSpyObj('DevicesService', ['getTLSSettings'])
+    mockSnackBar = createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -37,7 +44,7 @@ describe('TLSComponent', () => {
     component = fixture.componentInstance
 
     fixture.componentRef.setInput('deviceId', 'test-device-id')
-    mockDevicesService.getTLSSettings.and.returnValue(of(mockTLSData))
+    mockDevicesService.getTLSSettings.mockReturnValue(of(mockTLSData))
   })
 
   it('should create the component', () => {
@@ -49,6 +56,6 @@ describe('TLSComponent', () => {
 
     expect(mockDevicesService.getTLSSettings).toHaveBeenCalledWith('test-device-id')
     expect(component.tlsData).toEqual(mockTLSData)
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
   })
 })

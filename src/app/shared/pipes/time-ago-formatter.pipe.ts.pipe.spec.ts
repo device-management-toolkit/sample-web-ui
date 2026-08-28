@@ -1,3 +1,9 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
 import { AmTimeAgoFormatterPipe } from './time-ago-formatter.pipe.ts.pipe'
 
 describe('AmTimeAgoFormatterPipe', () => {

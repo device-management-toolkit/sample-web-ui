@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddCertDialogComponent } from './add-cert-dialog.component'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
@@ -14,14 +21,14 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('AddCertDialogComponent', () => {
   let component: AddCertDialogComponent
   let fixture: ComponentFixture<AddCertDialogComponent>
-  let mockDialogRef: jasmine.SpyObj<MatDialogRef<AddCertDialogComponent>>
-  let mockDevicesService: jasmine.SpyObj<DevicesService>
+  let mockDialogRef: SpyObj<MatDialogRef<AddCertDialogComponent>>
+  let mockDevicesService: SpyObj<DevicesService>
   let translate: TranslateService
 
   beforeEach(() => {
-    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
-    mockDevicesService = jasmine.createSpyObj('DevicesService', ['addCertificate'])
-    mockDevicesService.addCertificate.and.returnValue(of({}))
+    mockDialogRef = createSpyObj('MatDialogRef', ['close'])
+    mockDevicesService = createSpyObj('DevicesService', ['addCertificate'])
+    mockDevicesService.addCertificate.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [
@@ -54,7 +61,7 @@ describe('AddCertDialogComponent', () => {
   })
 
   it('should initialize with isTrustedRoot set to false', () => {
-    expect(component.certInfo.isTrusted).toBeFalse()
+    expect(component.certInfo.isTrusted).toBe(false)
   })
 
   it('should close dialog when onCancel is called', () => {
@@ -64,12 +71,14 @@ describe('AddCertDialogComponent', () => {
 
   it('should handle file selection correctly', () => {
     const mockFileReader = {
-      readAsDataURL: jasmine.createSpy('readAsDataURL'),
-      readAsText: jasmine.createSpy('readAsText'),
+      readAsDataURL: vi.fn(),
+      readAsText: vi.fn(),
       onload: null as any,
       result: 'data:text/plain;base64,SGVsbG8gV29ybGQ='
     }
-    spyOn(window, 'FileReader').and.returnValue(mockFileReader as unknown as FileReader)
+    vi.spyOn(window, 'FileReader').mockImplementation(function () {
+      return mockFileReader as unknown as FileReader
+    } as any)
 
     const mockFile = new File(['dummy content'], 'test.cer', { type: 'application/x-x509-ca-cert' })
     const mockEvent = {
@@ -91,12 +100,14 @@ describe('AddCertDialogComponent', () => {
   it('should parse PEM files by stripping headers and whitespace', () => {
     const pemText = '-----BEGIN CERTIFICATE-----\nSGVsbG8g\nV29ybGQ=\n-----END CERTIFICATE-----\n'
     const mockFileReader = {
-      readAsDataURL: jasmine.createSpy('readAsDataURL'),
-      readAsText: jasmine.createSpy('readAsText'),
+      readAsDataURL: vi.fn(),
+      readAsText: vi.fn(),
       onload: null as any,
       result: pemText
     }
-    spyOn(window, 'FileReader').and.returnValue(mockFileReader as unknown as FileReader)
+    vi.spyOn(window, 'FileReader').mockImplementation(function () {
+      return mockFileReader as unknown as FileReader
+    } as any)
 
     const mockFile = new File([pemText], 'test.pem', { type: 'application/x-pem-file' })
     const mockEvent = {
@@ -119,16 +130,16 @@ describe('AddCertDialogComponent', () => {
   it('should toggle isTrustedRoot when checkbox is clicked', () => {
     const checkbox = fixture.nativeElement.querySelector('mat-checkbox input')
 
-    expect(component.certInfo.isTrusted).toBeFalse()
+    expect(component.certInfo.isTrusted).toBe(false)
 
     checkbox.click()
     fixture.detectChanges()
 
-    expect(component.certInfo.isTrusted).toBeTrue()
+    expect(component.certInfo.isTrusted).toBe(true)
 
     checkbox.click()
     fixture.detectChanges()
 
-    expect(component.certInfo.isTrusted).toBeFalse()
+    expect(component.certInfo.isTrusted).toBe(false)
   })
 })

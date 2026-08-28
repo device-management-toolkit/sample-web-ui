@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
@@ -20,11 +22,11 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent
   let fixture: ComponentFixture<NavbarComponent>
   let translate: TranslateService
-  let serverFeaturesSpy: jasmine.SpyObj<ServerFeaturesService>
+  let serverFeaturesSpy: SpyObj<ServerFeaturesService>
 
   beforeEach(() => {
-    serverFeaturesSpy = jasmine.createSpyObj('ServerFeaturesService', ['getFeatures'])
-    serverFeaturesSpy.getFeatures.and.returnValue(of({ ciraEnabled: true }))
+    serverFeaturesSpy = createSpyObj('ServerFeaturesService', ['getFeatures'])
+    serverFeaturesSpy.getFeatures.mockReturnValue(of({ ciraEnabled: true }))
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
@@ -59,33 +61,33 @@ describe('NavbarComponent', () => {
 
   it('should not query server features in cloud mode and keep the CIRA tab enabled', () => {
     component.cloudMode = true
-    serverFeaturesSpy.getFeatures.calls.reset()
+    serverFeaturesSpy.getFeatures.mockClear()
     component.ngOnInit()
     expect(serverFeaturesSpy.getFeatures).not.toHaveBeenCalled()
-    expect(component.ciraEnabled()).toBeTrue()
+    expect(component.ciraEnabled()).toBe(true)
   })
 
   it('should disable the CIRA tab when the server reports CIRA disabled (enterprise mode)', () => {
     component.cloudMode = false
-    serverFeaturesSpy.getFeatures.and.returnValue(of({ ciraEnabled: false }))
+    serverFeaturesSpy.getFeatures.mockReturnValue(of({ ciraEnabled: false }))
     fixture.detectChanges()
     expect(serverFeaturesSpy.getFeatures).toHaveBeenCalled()
-    expect(component.ciraEnabled()).toBeFalse()
+    expect(component.ciraEnabled()).toBe(false)
     expect(fixture.nativeElement.querySelector('a[routerlink="/ciraconfigs"]')).toBeNull()
   })
 
   it('should enable the CIRA tab when the server reports CIRA enabled (enterprise mode)', () => {
     component.cloudMode = false
-    serverFeaturesSpy.getFeatures.and.returnValue(of({ ciraEnabled: true }))
+    serverFeaturesSpy.getFeatures.mockReturnValue(of({ ciraEnabled: true }))
     fixture.detectChanges()
-    expect(component.ciraEnabled()).toBeTrue()
+    expect(component.ciraEnabled()).toBe(true)
     expect(fixture.nativeElement.querySelector('a[routerlink="/ciraconfigs"]')).not.toBeNull()
   })
 
   it('should fail open and keep the CIRA tab enabled when the features call errors (enterprise mode)', () => {
     component.cloudMode = false
-    serverFeaturesSpy.getFeatures.and.returnValue(throwError(() => new Error('failed')))
+    serverFeaturesSpy.getFeatures.mockReturnValue(throwError(() => new Error('failed')))
     component.ngOnInit()
-    expect(component.ciraEnabled()).toBeTrue()
+    expect(component.ciraEnabled()).toBe(true)
   })
 })

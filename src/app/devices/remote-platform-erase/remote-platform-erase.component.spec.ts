@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RemotePlatformEraseComponent } from './remote-platform-erase.component'
 import { DevicesService } from '../devices.service'
@@ -40,14 +42,14 @@ const mockAMTFeatures: AMTFeaturesResponse = {
 describe('RemotePlatformEraseComponent', () => {
   let component: RemotePlatformEraseComponent
   let fixture: ComponentFixture<RemotePlatformEraseComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let matDialogSpy: jasmine.SpyObj<MatDialog>
-  let snackBarSpy: jasmine.SpyObj<MatSnackBar>
-  let routerSpy: jasmine.SpyObj<Router>
-  let userConsentServiceSpy: jasmine.SpyObj<UserConsentService>
+  let devicesServiceSpy: SpyObj<DevicesService>
+  let matDialogSpy: SpyObj<MatDialog>
+  let snackBarSpy: SpyObj<MatSnackBar>
+  let routerSpy: SpyObj<Router>
+  let userConsentServiceSpy: SpyObj<UserConsentService>
 
   beforeEach(async () => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getAMTFeatures',
       'getAMTFeaturesCached',
       'featuresChanges',
@@ -58,28 +60,28 @@ describe('RemotePlatformEraseComponent', () => {
       'setRemoteEraseOptions',
       'sendDeactivate'
     ])
-    devicesServiceSpy.getDevice.and.returnValue(of({ guid: '', hostname: 'host-1', friendlyName: 'my-laptop' } as any))
-    devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
+    devicesServiceSpy.getDevice.mockReturnValue(of({ guid: '', hostname: 'host-1', friendlyName: 'my-laptop' } as any))
+    devicesServiceSpy.getRemoteEraseCapabilities.mockReturnValue(
       of({ secureEraseAllSSDs: true, tpmClear: false, restoreBIOSToEOM: true, unconfigureCSME: false })
     )
-    matDialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
-    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-    routerSpy.navigate.and.returnValue(Promise.resolve(true))
-    userConsentServiceSpy = jasmine.createSpyObj('UserConsentService', [
+    matDialogSpy = createSpyObj('MatDialog', ['open'])
+    snackBarSpy = createSpyObj('MatSnackBar', ['open'])
+    routerSpy = createSpyObj('Router', ['navigate'])
+    routerSpy.navigate.mockReturnValue(Promise.resolve(true))
+    userConsentServiceSpy = createSpyObj('UserConsentService', [
       'handleUserConsentDecision',
       'handleUserConsentResponse'
     ])
-    userConsentServiceSpy.handleUserConsentDecision.and.returnValue(of(null))
-    userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
+    userConsentServiceSpy.handleUserConsentDecision.mockReturnValue(of(null))
+    userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(null))
 
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures }))
     // Delegate getAMTFeaturesCached to getAMTFeatures so per-test returnValue configs apply to both
-    devicesServiceSpy.getAMTFeaturesCached.and.callFake((guid: string) => devicesServiceSpy.getAMTFeatures(guid))
-    devicesServiceSpy.featuresChanges.and.returnValue(of(null))
-    devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures }))
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
-    devicesServiceSpy.sendDeactivate.and.returnValue(of({}))
+    devicesServiceSpy.getAMTFeaturesCached.mockImplementation((guid: string) => devicesServiceSpy.getAMTFeatures(guid))
+    devicesServiceSpy.featuresChanges.mockReturnValue(of(null))
+    devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ ...mockAMTFeatures }))
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+    devicesServiceSpy.sendDeactivate.mockReturnValue(of({}))
 
     await TestBed.configureTestingModule({
       imports: [RemotePlatformEraseComponent],
@@ -107,11 +109,11 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should set isLoading to false after init completes', () => {
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
   })
 
   it('should show toggle as checked on init when rpe is true', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     fixture.detectChanges()
     const toggle = fixture.nativeElement.querySelector('[data-cy="remoteEraseCheckbox"] button[role="switch"]')
@@ -127,22 +129,22 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show error snackbar when getAMTFeatures fails', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(throwError(() => new Error('error')))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(throwError(() => new Error('error')))
     component.ngOnInit()
     expect(snackBarSpy.open).toHaveBeenCalled()
   })
 
   it('should show server message in snackbar when setRemoteEraseOptions fails with it', () => {
     const serverError = new HttpErrorResponse({ error: { message: 'AMT device unreachable' }, status: 500 })
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => serverError))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(throwError(() => serverError))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
-    expect(snackBarSpy.open).toHaveBeenCalledWith('AMT device unreachable', undefined, jasmine.any(Object))
+    expect(snackBarSpy.open).toHaveBeenCalledWith('AMT device unreachable', undefined, expect.any(Object))
   })
 
   it('should show OS erase success message when secureEraseAllSSDs is selected', () => {
@@ -157,52 +159,48 @@ describe('RemotePlatformEraseComponent', () => {
     component.selectedCapsCount.set(1)
     component.rpe.set(true)
 
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
 
     component.initiateErase()
 
     expect(snackBarSpy.open).toHaveBeenCalledWith(
       'remotePlatformErase.osEraseSuccess.value',
       undefined,
-      jasmine.anything()
+      expect.anything()
     )
   })
 
   it('should show fallback message in snackbar when setRemoteEraseOptions fails without message', () => {
     const serverError = new HttpErrorResponse({ error: {}, status: 500 })
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => serverError))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(throwError(() => serverError))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
-    expect(snackBarSpy.open).toHaveBeenCalledWith(
-      'remotePlatformErase.eraseError.value',
-      undefined,
-      jasmine.any(Object)
-    )
+    expect(snackBarSpy.open).toHaveBeenCalledWith('remotePlatformErase.eraseError.value', undefined, expect.any(Object))
   })
 
   it('should open AreYouSureDialog with the erase confirmation message', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
-    expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
-    const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+    expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, expect.any(Object))
+    const config = matDialogSpy.open.mock.lastCall![1] as any
     expect(config.data.message).toBe('remotePlatformErase.confirmMessage')
     expect(config.data.params.operations).toBeDefined()
     expect(config.data.params.device).toBeDefined()
   })
 
   it('should pass selected capability labels in the dialog params', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(
       of({
         ...mockAMTFeatures,
         rpe: true
@@ -213,39 +211,39 @@ describe('RemotePlatformEraseComponent', () => {
     component.eraseCapControl(0).setValue(true)
     component.eraseCapControl(2).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
-    const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+    const config = matDialogSpy.open.mock.lastCall![1] as any
     expect(config.data.params.operations.split(', ').length).toBe(2)
   })
 
   it('should not open confirmation dialog when feature is disabled', () => {
     // mockAMTFeatures has rpe: false
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
     expect(matDialogSpy.open).not.toHaveBeenCalled()
   })
 
   it('should not open confirmation dialog when no caps are selected', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(false)
     component.eraseCapControl(2).setValue(false)
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
     expect(matDialogSpy.open).not.toHaveBeenCalled()
   })
 
   it('should call sendRemotePlatformErase when erase is confirmed', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     // check secureEraseSsds (0x04, bit 2) and biosRestore (0x4000000, bit 26) → mask 0x4000004
     component.eraseCapControl(0).setValue(true)
     component.eraseCapControl(2).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('', {
       secureEraseAllSSDs: true,
@@ -256,24 +254,24 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should not call setRemoteEraseOptions when erase is cancelled', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
     component.initiateErase()
     expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
   })
 
   it('should pass deselected capability bitmask to setRemoteEraseOptions', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     // check only biosRestore (index 2, bit 26 = 0x4000000) — secureEraseSsds left unchecked
     component.eraseCapControl(2).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('', {
       secureEraseAllSSDs: false,
@@ -284,75 +282,75 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show success snackbar after erase succeeds', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     expect(snackBarSpy.open).toHaveBeenCalled()
   })
 
   it('should show error snackbar when sendRemotePlatformErase fails', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => new Error('error')))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(throwError(() => new Error('error')))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     expect(snackBarSpy.open).toHaveBeenCalled()
   })
 
   it('should set isRemoteEraseSupported to true when remoteEraseSupported is true', () => {
-    expect(component.isPlatformEraseSupported()).toBeTrue()
+    expect(component.isPlatformEraseSupported()).toBe(true)
   })
 
   it('should set isRemoteEraseSupported to false when remoteEraseSupported is false', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeSupported: false }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpeSupported: false }))
     component.ngOnInit()
     fixture.detectChanges()
-    expect(component.isPlatformEraseSupported()).toBeFalse()
+    expect(component.isPlatformEraseSupported()).toBe(false)
   })
 
   it('should set isRemoteEraseSupported to false when remoteEraseSupported is absent', () => {
     const featuresWithoutSupported = { ...mockAMTFeatures } as Partial<AMTFeaturesResponse>
     delete featuresWithoutSupported.rpeSupported
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of(featuresWithoutSupported as AMTFeaturesResponse))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of(featuresWithoutSupported as AMTFeaturesResponse))
     component.ngOnInit()
     fixture.detectChanges()
-    expect(component.isPlatformEraseSupported()).toBeFalse()
+    expect(component.isPlatformEraseSupported()).toBe(false)
   })
 
   it('should set isLoading to true during initiateErase', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
     // isLoading is set true before the observable completes
     expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
   })
 
   it('should set isLoading to false after initiateErase fails', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
     component.onCapChange()
-    devicesServiceSpy.setRemoteEraseOptions.and.returnValue(throwError(() => new Error('erase failed')))
-    matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+    devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(throwError(() => new Error('erase failed')))
+    matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     component.initiateErase()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
   })
 
   it('should show initiate erase button when feature is enabled', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     component.eraseCapControl(0).setValue(true)
@@ -360,7 +358,7 @@ describe('RemotePlatformEraseComponent', () => {
     fixture.detectChanges()
     const button = fixture.nativeElement.querySelector('[data-cy="initiateEraseButton"]')
     expect(button).not.toBeNull()
-    expect(button.disabled).toBeFalse()
+    expect(button.disabled).toBe(false)
   })
 
   it('should not show initiate erase button when feature is disabled', () => {
@@ -371,7 +369,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should disable initiate erase button when all selected caps are unchecked', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -382,11 +380,11 @@ describe('RemotePlatformEraseComponent', () => {
     fixture.detectChanges()
     const button = fixture.nativeElement.querySelector('[data-cy="initiateEraseButton"]')
     expect(button).not.toBeNull()
-    expect(button.disabled).toBeTrue()
+    expect(button.disabled).toBe(true)
   })
 
   it('should enable initiate erase button when feature is enabled and at least one cap is checked', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -396,11 +394,11 @@ describe('RemotePlatformEraseComponent', () => {
     fixture.detectChanges()
     const button = fixture.nativeElement.querySelector('[data-cy="initiateEraseButton"]')
     expect(button).not.toBeNull()
-    expect(button.disabled).toBeFalse()
+    expect(button.disabled).toBe(false)
   })
 
   it('should show capabilities card when remoteEraseSupported is true', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -410,7 +408,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   it('should show a checkbox for each capability, disabled for unsupported ones', () => {
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
     component.ngOnInit()
     component.toggleFeature(true)
     fixture.detectChanges()
@@ -418,73 +416,73 @@ describe('RemotePlatformEraseComponent', () => {
     // Only 3 capabilities visible (CSME unconfigure is hidden in template)
     expect(checkboxes.length).toBe(VISIBLE_PLATFORM_ERASE_CAPABILITIES)
     // tpmClear (index 1) and csmeUnconfigure (index 3) not supported — always disabled
-    expect(component.eraseCapControl(1).disabled).toBeTrue()
-    expect(component.eraseCapControl(3).disabled).toBeTrue()
+    expect(component.eraseCapControl(1).disabled).toBe(true)
+    expect(component.eraseCapControl(3).disabled).toBe(true)
     // secureEraseSsds (index 0) and biosRestore (index 2) supported — always enabled
-    expect(component.eraseCapControl(0).disabled).toBeFalse()
-    expect(component.eraseCapControl(2).disabled).toBeFalse()
+    expect(component.eraseCapControl(0).disabled).toBe(false)
+    expect(component.eraseCapControl(2).disabled).toBe(false)
   })
 
   it('should disable all capability checkboxes when featureEnabled is false', () => {
     // mockAMTFeatures: rpe=false — all caps disabled regardless of support
     fixture.detectChanges()
-    expect(component.eraseCapControl(0).disabled).toBeTrue() // supported but feature off → disabled
-    expect(component.eraseCapControl(1).disabled).toBeTrue() // not supported → disabled
-    expect(component.eraseCapControl(2).disabled).toBeTrue() // supported but feature off → disabled
-    expect(component.eraseCapControl(3).disabled).toBeTrue() // not supported → disabled
+    expect(component.eraseCapControl(0).disabled).toBe(true) // supported but feature off → disabled
+    expect(component.eraseCapControl(1).disabled).toBe(true) // not supported → disabled
+    expect(component.eraseCapControl(2).disabled).toBe(true) // supported but feature off → disabled
+    expect(component.eraseCapControl(3).disabled).toBe(true) // not supported → disabled
   })
 
   it('should keep supported capability checkboxes enabled when featureEnabled becomes true', () => {
     component.toggleFeature(true)
     // 0x05: secureErase(0) + storageDrives(2) supported → always enabled
-    expect(component.eraseCapControl(0).disabled).toBeFalse()
-    expect(component.eraseCapControl(1).disabled).toBeTrue() // tpmClear not supported
-    expect(component.eraseCapControl(2).disabled).toBeFalse()
-    expect(component.eraseCapControl(3).disabled).toBeTrue() // meRegion not supported
+    expect(component.eraseCapControl(0).disabled).toBe(false)
+    expect(component.eraseCapControl(1).disabled).toBe(true) // tpmClear not supported
+    expect(component.eraseCapControl(2).disabled).toBe(false)
+    expect(component.eraseCapControl(3).disabled).toBe(true) // meRegion not supported
   })
 
   it('should default eraseCaps to all-supported when getRemoteEraseCapabilities returns all supported', () => {
-    devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
+    devicesServiceSpy.getRemoteEraseCapabilities.mockReturnValue(
       of({ secureEraseAllSSDs: true, tpmClear: true, restoreBIOSToEOM: true, unconfigureCSME: true })
     )
     component.ngOnInit()
-    expect(component.eraseCaps().every((c) => c.supported)).toBeTrue()
+    expect(component.eraseCaps().every((c) => c.supported)).toBe(true)
   })
 
   it('should default eraseCaps to all-unsupported when getRemoteEraseCapabilities returns all unsupported', () => {
-    devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
+    devicesServiceSpy.getRemoteEraseCapabilities.mockReturnValue(
       of({ secureEraseAllSSDs: false, tpmClear: false, restoreBIOSToEOM: false, unconfigureCSME: false })
     )
     component.ngOnInit()
-    expect(component.eraseCaps().every((c) => !c.supported)).toBeTrue()
+    expect(component.eraseCaps().every((c) => !c.supported)).toBe(true)
   })
 
   describe('toggleFeature', () => {
     it('should call setAmtFeatures with rpe: true when toggling on', () => {
       component.toggleFeature(true)
-      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', jasmine.objectContaining({ rpe: true }))
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', expect.objectContaining({ rpe: true }))
     })
 
     it('should call setAmtFeatures with rpe: false when toggling off', () => {
       component.toggleFeature(false)
-      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', jasmine.objectContaining({ rpe: false }))
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', expect.objectContaining({ rpe: false }))
     })
 
     it('should set rpe immediately before API call completes', () => {
-      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
-      expect(component.rpe()).toBeFalse()
+      devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
+      expect(component.rpe()).toBe(false)
       component.toggleFeature(true)
-      expect(component.rpe()).toBeTrue()
+      expect(component.rpe()).toBe(true)
     })
 
     it('should revert rpe when setAmtFeatures fails', () => {
-      devicesServiceSpy.setAmtFeatures.and.returnValue(throwError(() => new Error('error')))
+      devicesServiceSpy.setAmtFeatures.mockReturnValue(throwError(() => new Error('error')))
       component.toggleFeature(true)
-      expect(component.rpe()).toBeFalse()
+      expect(component.rpe()).toBe(false)
     })
 
     it('should show error snackbar when setAmtFeatures fails', () => {
-      devicesServiceSpy.setAmtFeatures.and.returnValue(throwError(() => new Error('error')))
+      devicesServiceSpy.setAmtFeatures.mockReturnValue(throwError(() => new Error('error')))
       component.toggleFeature(true)
       expect(snackBarSpy.open).toHaveBeenCalled()
     })
@@ -492,27 +490,27 @@ describe('RemotePlatformEraseComponent', () => {
     it('should disable caps immediately when toggling off', () => {
       component.toggleFeature(true)
       // caps should be enabled for supported ones with feature on
-      expect(component.eraseCapControl(0).disabled).toBeFalse()
+      expect(component.eraseCapControl(0).disabled).toBe(false)
       component.toggleFeature(false)
       // caps should be disabled immediately
-      expect(component.eraseCapControl(0).disabled).toBeTrue()
+      expect(component.eraseCapControl(0).disabled).toBe(true)
     })
 
     it('should enable supported caps immediately when toggling on', () => {
       // feature starts off (mockAMTFeatures.rpe = false) — caps disabled
-      expect(component.eraseCapControl(0).disabled).toBeTrue()
+      expect(component.eraseCapControl(0).disabled).toBe(true)
       component.toggleFeature(true)
-      expect(component.eraseCapControl(0).disabled).toBeFalse()
+      expect(component.eraseCapControl(0).disabled).toBe(false)
     })
 
     it('should not corrupt amtFeatures after successful toggle', () => {
       // The API returns { status: '...' }, not a full AMTFeaturesResponse.
       // Verify that amtFeatures fields are preserved so subsequent toggles send valid payloads.
-      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ status: 'SUCCESS' } as any))
+      devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ status: 'SUCCESS' } as any))
       component.toggleFeature(true)
       component.toggleFeature(false)
-      const calls = devicesServiceSpy.setAmtFeatures.calls.all()
-      const secondPayload = calls[1]?.args[1]
+      const calls = devicesServiceSpy.setAmtFeatures.mock.calls
+      const secondPayload = calls[1]?.[1]
       expect(secondPayload?.userConsent).toBe(mockAMTFeatures.userConsent)
       expect(secondPayload?.enableKVM).toBe(mockAMTFeatures.KVM)
       expect(secondPayload?.enableSOL).toBe(mockAMTFeatures.SOL)
@@ -523,17 +521,17 @@ describe('RemotePlatformEraseComponent', () => {
 
   describe('after successful erase', () => {
     beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
-      devicesServiceSpy.setAmtFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: false }))
-      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
-      devicesServiceSpy.sendDeactivate.and.returnValue(of({}))
-      userConsentServiceSpy.handleUserConsentDecision.and.returnValue(of(null))
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
+      devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
+      devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: false }))
+      devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+      devicesServiceSpy.sendDeactivate.mockReturnValue(of({}))
+      userConsentServiceSpy.handleUserConsentDecision.mockReturnValue(of(null))
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(null))
       component.ngOnInit()
       component.toggleFeature(true)
       component.eraseCapControl(0).setValue(true)
       component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
     })
 
     it('should complete without errors', () => {
@@ -544,13 +542,13 @@ describe('RemotePlatformEraseComponent', () => {
 
   describe('CSME exclusivity', () => {
     beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(
+      devicesServiceSpy.getAMTFeatures.mockReturnValue(
         of({
           ...mockAMTFeatures,
           rpe: true
         })
       )
-      devicesServiceSpy.getRemoteEraseCapabilities.and.returnValue(
+      devicesServiceSpy.getRemoteEraseCapabilities.mockReturnValue(
         of({ secureEraseAllSSDs: true, tpmClear: false, restoreBIOSToEOM: true, unconfigureCSME: true })
       )
       component.ngOnInit()
@@ -560,7 +558,7 @@ describe('RemotePlatformEraseComponent', () => {
     it('should call sendDeactivate after CSME erase succeeds', () => {
       component.eraseCapControl(3).setValue(true)
       component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       expect(devicesServiceSpy.sendDeactivate).toHaveBeenCalledWith('')
     })
@@ -569,7 +567,7 @@ describe('RemotePlatformEraseComponent', () => {
       const router = TestBed.inject(Router)
       component.eraseCapControl(3).setValue(true)
       component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       expect(router.navigate).toHaveBeenCalledWith(['/devices'])
     })
@@ -577,7 +575,7 @@ describe('RemotePlatformEraseComponent', () => {
     it('should send only the CSME bit in the erase mask', () => {
       component.eraseCapControl(3).setValue(true)
       component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('', {
         secureEraseAllSSDs: false,
@@ -589,7 +587,7 @@ describe('RemotePlatformEraseComponent', () => {
   })
   describe('SSD encrypted password', () => {
     beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+      devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
       component.ngOnInit()
       component.toggleFeature(true)
     })
@@ -597,7 +595,7 @@ describe('RemotePlatformEraseComponent', () => {
     it('should show encrypted checkbox when SSD cap is selected', () => {
       component.eraseCapControl(0).setValue(true)
       component.onCapChange()
-      expect(component.isSsdSelected()).toBeTrue()
+      expect(component.isSsdSelected()).toBe(true)
     })
 
     it('should hide encrypted checkbox when SSD cap is deselected', () => {
@@ -605,14 +603,14 @@ describe('RemotePlatformEraseComponent', () => {
       component.onCapChange()
       component.eraseCapControl(0).setValue(false)
       component.onCapChange()
-      expect(component.isSsdSelected()).toBeFalse()
+      expect(component.isSsdSelected()).toBe(false)
     })
 
     it('should show password input when encrypted checkbox is checked', () => {
       component.eraseCapControl(0).setValue(true)
       component.onCapChange()
       component.onSsdEncryptedChange(true)
-      expect(component.isSsdEncrypted()).toBeTrue()
+      expect(component.isSsdEncrypted()).toBe(true)
     })
 
     it('should hide password input and clear it when encrypted checkbox is unchecked', () => {
@@ -621,7 +619,7 @@ describe('RemotePlatformEraseComponent', () => {
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('secret')
       component.onSsdEncryptedChange(false)
-      expect(component.isSsdEncrypted()).toBeFalse()
+      expect(component.isSsdEncrypted()).toBe(false)
       expect(component.ssdPasswordControl.value).toBe('')
     })
 
@@ -630,21 +628,21 @@ describe('RemotePlatformEraseComponent', () => {
       component.onCapChange()
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('mypassword')
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith(
         '',
-        jasmine.objectContaining({ secureEraseAllSSDs: true, ssdPassword: 'mypassword' })
+        expect.objectContaining({ secureEraseAllSSDs: true, ssdPassword: 'mypassword' })
       )
     })
 
     it('should not include ssdPassword when encrypted checkbox is not checked', () => {
       component.eraseCapControl(0).setValue(true)
       component.onCapChange()
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
-      const call = devicesServiceSpy.setRemoteEraseOptions.calls.mostRecent()
-      expect(call.args[1].ssdPassword).toBeUndefined()
+      const call = devicesServiceSpy.setRemoteEraseOptions.mock.lastCall!
+      expect(call[1].ssdPassword).toBeUndefined()
     })
 
     it('should reset SSD controls when feature is toggled off', () => {
@@ -653,8 +651,8 @@ describe('RemotePlatformEraseComponent', () => {
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('secret')
       component.toggleFeature(false)
-      expect(component.isSsdSelected()).toBeFalse()
-      expect(component.isSsdEncrypted()).toBeFalse()
+      expect(component.isSsdSelected()).toBe(false)
+      expect(component.isSsdEncrypted()).toBe(false)
       expect(component.ssdPasswordControl.value).toBe('')
     })
 
@@ -663,11 +661,11 @@ describe('RemotePlatformEraseComponent', () => {
       component.onCapChange()
       component.onSsdEncryptedChange(true)
       component.ssdPasswordControl.setValue('secret')
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.initiateErase()
       // State is preserved after erase
-      expect(component.isSsdSelected()).toBeTrue()
-      expect(component.isSsdEncrypted()).toBeTrue()
+      expect(component.isSsdSelected()).toBe(true)
+      expect(component.isSsdEncrypted()).toBe(true)
       expect(component.ssdPasswordControl.value).toBe('secret')
     })
   })
@@ -702,7 +700,7 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('should not show warning when isPlatformEraseSupported is false', () => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpeSupported: false }))
+      devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpeSupported: false }))
       component.ngOnInit()
       fixture.detectChanges()
       const warn = fixture.nativeElement.querySelector('mat-icon[color="warn"]')
@@ -724,39 +722,47 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   describe('checkUserConsent', () => {
-    it('should return true and set readyToErase when userConsent is none', (done) => {
-      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'none' })
-      component.checkUserConsent().subscribe((result) => {
-        expect(result).toBeTrue()
-        expect(component.readyToErase).toBeTrue()
-        done()
+    it('should return true and set readyToErase when userConsent is none', async () => {
+      await new Promise<void>((done) => {
+        component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'none' })
+        component.checkUserConsent().subscribe((result) => {
+          expect(result).toBe(true)
+          expect(component.readyToErase).toBe(true)
+          done()
+        })
       })
     })
 
-    it('should return true and set readyToErase when optInState is 3', (done) => {
-      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 3 })
-      component.checkUserConsent().subscribe((result) => {
-        expect(result).toBeTrue()
-        expect(component.readyToErase).toBeTrue()
-        done()
+    it('should return true and set readyToErase when optInState is 3', async () => {
+      await new Promise<void>((done) => {
+        component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 3 })
+        component.checkUserConsent().subscribe((result) => {
+          expect(result).toBe(true)
+          expect(component.readyToErase).toBe(true)
+          done()
+        })
       })
     })
 
-    it('should return true and set readyToErase when optInState is 4', (done) => {
-      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 4 })
-      component.checkUserConsent().subscribe((result) => {
-        expect(result).toBeTrue()
-        expect(component.readyToErase).toBeTrue()
-        done()
+    it('should return true and set readyToErase when optInState is 4', async () => {
+      await new Promise<void>((done) => {
+        component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 4 })
+        component.checkUserConsent().subscribe((result) => {
+          expect(result).toBe(true)
+          expect(component.readyToErase).toBe(true)
+          done()
+        })
       })
     })
 
-    it('should return false and not set readyToErase when userConsent is all and consent is required', (done) => {
-      component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 1 })
-      component.checkUserConsent().subscribe((result) => {
-        expect(result).toBeFalse()
-        expect(component.readyToErase).toBeFalse()
-        done()
+    it('should return false and not set readyToErase when userConsent is all and consent is required', async () => {
+      await new Promise<void>((done) => {
+        component.amtFeatures.set({ ...mockAMTFeatures, userConsent: 'all', optInState: 1 })
+        component.checkUserConsent().subscribe((result) => {
+          expect(result).toBe(false)
+          expect(component.readyToErase).toBe(false)
+          done()
+        })
       })
     })
   })
@@ -765,15 +771,15 @@ describe('RemotePlatformEraseComponent', () => {
     const operations = 'SSD Erase'
 
     it('should open AreYouSureDialog when result is null (consent not required)', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.postUserConsentDecision(null, operations).subscribe()
-      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, expect.any(Object))
     })
 
     it('should open AreYouSureDialog when result is true (consent granted)', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.postUserConsentDecision(true, operations).subscribe()
-      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, expect.any(Object))
     })
 
     it('should not open AreYouSureDialog when result is false (consent denied)', () => {
@@ -792,22 +798,22 @@ describe('RemotePlatformEraseComponent', () => {
       component.eraseCapsArray.at(0).enable()
       component.eraseCapsArray.at(0).setValue(true)
       component.selectedCapsCount.set(1)
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
       component.postUserConsentDecision(null, operations).subscribe()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
     })
 
     it('should not call executeErase when AreYouSure dialog is cancelled', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.postUserConsentDecision(null, operations).subscribe()
       expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
     })
 
     it('should pass device label and operations in the dialog data', () => {
       component.deviceLabel.set('my-device')
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.postUserConsentDecision(null, operations).subscribe()
-      const config = matDialogSpy.open.calls.mostRecent().args[1] as any
+      const config = matDialogSpy.open.mock.lastCall![1] as any
       expect(config.data.params.device).toBe('my-device')
       expect(config.data.params.operations).toBe(operations)
     })
@@ -815,7 +821,7 @@ describe('RemotePlatformEraseComponent', () => {
 
   describe('initiateErase user consent flow', () => {
     beforeEach(() => {
-      devicesServiceSpy.getAMTFeatures.and.returnValue(of({ ...mockAMTFeatures, rpe: true }))
+      devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpe: true }))
       component.ngOnInit()
       component.toggleFeature(true)
       component.eraseCapControl(0).setValue(true)
@@ -823,49 +829,49 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('should call handleUserConsentDecision via UserConsentService', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.initiateErase()
       expect(userConsentServiceSpy.handleUserConsentDecision).toHaveBeenCalled()
     })
 
     it('should call handleUserConsentDecision with deviceId and amtFeatures', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.initiateErase()
       expect(userConsentServiceSpy.handleUserConsentDecision).toHaveBeenCalledWith(
-        jasmine.anything(),
+        expect.anything(),
         '',
         component.amtFeatures() ?? undefined
       )
     })
 
     it('should call handleUserConsentResponse with RPE as feature name', () => {
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.initiateErase()
       expect(userConsentServiceSpy.handleUserConsentResponse).toHaveBeenCalledWith('', null, 'RPE')
     })
 
     it('should open AreYouSure dialog when handleUserConsentResponse returns null (consent not required)', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(null))
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.initiateErase()
-      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, expect.any(Object))
     })
 
     it('should open AreYouSure dialog when handleUserConsentResponse returns true (consent granted)', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(true))
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as any)
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(true))
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(false) } as any)
       component.initiateErase()
-      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, jasmine.any(Object))
+      expect(matDialogSpy.open).toHaveBeenCalledWith(AreYouSureDialogComponent, expect.any(Object))
     })
 
     it('should not open AreYouSure dialog when consent is denied', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(false))
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(false))
       component.initiateErase()
       expect(matDialogSpy.open).not.toHaveBeenCalled()
     })
 
     it('should not call setRemoteEraseOptions when consent is denied', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(false))
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(false))
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
     })
@@ -925,17 +931,17 @@ describe('RemotePlatformEraseComponent', () => {
       component.initiateErase()
 
       expect(snackBarSpy.open).toHaveBeenCalledWith(
-        jasmine.stringContaining('remotePlatformErase.ssdPasswordTooLong'),
+        expect.stringContaining('remotePlatformErase.ssdPasswordTooLong'),
         undefined,
-        jasmine.any(Object)
+        expect.any(Object)
       )
       expect(devicesServiceSpy.setRemoteEraseOptions).not.toHaveBeenCalled()
     })
 
     it('initiateErase should allow submission if SSD password is within limit', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
-      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(null))
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
+      devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
 
       component.rpe.set(true)
       component.selectedCapsCount.set(1)
@@ -949,9 +955,9 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('initiateErase should allow submission if SSD is selected but not encrypted', () => {
-      userConsentServiceSpy.handleUserConsentResponse.and.returnValue(of(null))
-      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any)
-      devicesServiceSpy.setRemoteEraseOptions.and.returnValue(of({}))
+      userConsentServiceSpy.handleUserConsentResponse.mockReturnValue(of(null))
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
+      devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
 
       component.rpe.set(true)
       component.selectedCapsCount.set(1)

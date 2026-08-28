@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http'
@@ -11,14 +18,14 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('ErrorHandlingInterceptor', () => {
   let httpMock: HttpTestingController
   let httpClient: HttpClient
-  let authService: jasmine.SpyObj<AuthService>
-  let dialog: jasmine.SpyObj<MatDialog>
-  let snackbar: jasmine.SpyObj<MatSnackBar>
+  let authService: SpyObj<AuthService>
+  let dialog: SpyObj<MatDialog>
+  let snackbar: SpyObj<MatSnackBar>
 
   beforeEach(() => {
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['logout'])
-    const dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
-    const snackbarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
+    const authServiceSpy = createSpyObj('AuthService', ['logout'])
+    const dialogSpy = createSpyObj('MatDialog', ['open'])
+    const snackbarSpy = createSpyObj('MatSnackBar', ['open'])
 
     TestBed.configureTestingModule({
       providers: [
@@ -33,9 +40,9 @@ describe('ErrorHandlingInterceptor', () => {
 
     httpMock = TestBed.inject(HttpTestingController)
     httpClient = TestBed.inject(HttpClient)
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>
-    dialog = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>
-    snackbar = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>
+    authService = TestBed.inject(AuthService) as SpyObj<AuthService>
+    dialog = TestBed.inject(MatDialog) as SpyObj<MatDialog>
+    snackbar = TestBed.inject(MatSnackBar) as SpyObj<MatSnackBar>
   })
 
   afterEach(() => {
@@ -88,7 +95,7 @@ describe('ErrorHandlingInterceptor', () => {
     const req = httpMock.expectOne('/test')
     req.flush({}, { status: 504, statusText: 'Gateway Timeout' })
 
-    expect(snackbar.open).toHaveBeenCalledOnceWith(jasmine.any(String), jasmine.any(String), { duration: 5000 })
+    expect(snackbar.open).toHaveBeenCalledExactlyOnceWith(expect.any(String), expect.any(String), { duration: 5000 })
   })
 
   it('should rethrow other errors', () => {

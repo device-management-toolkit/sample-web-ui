@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { describe } from 'vitest'
+
+// The specs below are commented out; vitest fails a file without a suite.
+describe.todo('EventChannelComponent')
+
 // import { ComponentFixture, TestBed } from '@angular/core/testing'
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 // // // import { EventChannelComponent } from './event-channel.component'
@@ -14,12 +19,12 @@
 //   let fixture: ComponentFixture<EventChannelComponent>
 //   const eventChannelStub = {
 //     mqttConfig: { hostname: 'test', port: '', path: 'test' },
-//     connect: jasmine.createSpy('connect'),
-//     subscribeToTopic: jasmine.createSpy('connect'),
+//     connect: vi.fn(),
+//     subscribeToTopic: vi.fn(),
 //     messageSource: of(),
 //     connectionStatusSubject: of(),
-//     changeConnection: jasmine.createSpy('changeConnection'),
-//     destroy: jasmine.createSpy('destroy')
+//     changeConnection: vi.fn(),
+//     destroy: vi.fn()
 //   }
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({

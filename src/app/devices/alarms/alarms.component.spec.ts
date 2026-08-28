@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AlarmsComponent } from './alarms.component'
@@ -16,20 +18,20 @@ import { MatDialog } from '@angular/material/dialog'
 describe('AlarmsComponent', () => {
   let component: AlarmsComponent
   let fixture: ComponentFixture<AlarmsComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let dialogSpy: jasmine.SpyObj<MatDialog>
+  let devicesServiceSpy: SpyObj<DevicesService>
+  let dialogSpy: SpyObj<MatDialog>
 
   beforeEach(() => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getAlarmOccurrences',
       'addAlarmOccurrence',
       'deleteAlarmOccurrence'
     ])
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
+    dialogSpy = createSpyObj('MatDialog', ['open'])
 
-    devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([{ StartTime: {} } as any]))
-    devicesServiceSpy.addAlarmOccurrence.and.returnValue(of({}))
-    devicesServiceSpy.deleteAlarmOccurrence.and.returnValue(of({}))
+    devicesServiceSpy.getAlarmOccurrences.mockReturnValue(of([{ StartTime: {} } as any]))
+    devicesServiceSpy.addAlarmOccurrence.mockReturnValue(of({}))
+    devicesServiceSpy.deleteAlarmOccurrence.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
@@ -81,10 +83,10 @@ describe('AlarmsComponent', () => {
       minute: '00'
     })
 
-    const callCount = devicesServiceSpy.addAlarmOccurrence.calls.count()
+    const callCount = devicesServiceSpy.addAlarmOccurrence.mock.calls.length
     component.addAlarm()
 
-    expect(devicesServiceSpy.addAlarmOccurrence.calls.count()).toBe(callCount)
+    expect(devicesServiceSpy.addAlarmOccurrence.mock.calls.length).toBe(callCount)
   })
 
   it('should not add alarm if alarm name contains spaces', () => {
@@ -96,10 +98,10 @@ describe('AlarmsComponent', () => {
       minute: '00'
     })
 
-    const callCount = devicesServiceSpy.addAlarmOccurrence.calls.count()
+    const callCount = devicesServiceSpy.addAlarmOccurrence.mock.calls.length
     component.addAlarm()
 
-    expect(devicesServiceSpy.addAlarmOccurrence.calls.count()).toBe(callCount)
+    expect(devicesServiceSpy.addAlarmOccurrence.mock.calls.length).toBe(callCount)
   })
 
   it('should not add alarm if alarm name contains special characters', () => {
@@ -111,15 +113,15 @@ describe('AlarmsComponent', () => {
       minute: '00'
     })
 
-    const callCount = devicesServiceSpy.addAlarmOccurrence.calls.count()
+    const callCount = devicesServiceSpy.addAlarmOccurrence.mock.calls.length
     component.addAlarm()
 
-    expect(devicesServiceSpy.addAlarmOccurrence.calls.count()).toBe(callCount)
+    expect(devicesServiceSpy.addAlarmOccurrence.mock.calls.length).toBe(callCount)
   })
 
   it('should delete alarm successfully', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
 
     component.deleteAlarm('test-instance-id')
 
@@ -128,14 +130,14 @@ describe('AlarmsComponent', () => {
   })
 
   it('should not delete alarm if user cancels', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
 
-    const callCount = devicesServiceSpy.deleteAlarmOccurrence.calls.count()
+    const callCount = devicesServiceSpy.deleteAlarmOccurrence.mock.calls.length
     component.deleteAlarm('test-instance-id')
 
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
-    expect(devicesServiceSpy.deleteAlarmOccurrence.calls.count()).toBe(callCount)
+    expect(devicesServiceSpy.deleteAlarmOccurrence.mock.calls.length).toBe(callCount)
   })
 
   it('should mark form as touched when adding alarm with invalid form', () => {
@@ -147,15 +149,15 @@ describe('AlarmsComponent', () => {
       minute: '00'
     })
 
-    spyOn(component.newAlarmForm, 'markAllAsTouched')
+    vi.spyOn(component.newAlarmForm, 'markAllAsTouched').mockImplementation(() => undefined)
     component.addAlarm()
 
     expect(component.newAlarmForm.markAllAsTouched).toHaveBeenCalled()
   })
 
   it('should optimistically remove alarm from UI when deleting', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
     component.alarmOccurrences.set([
       { InstanceID: 'test-instance-id', StartTime: {} } as any,
       { InstanceID: 'other-instance-id', StartTime: {} } as any
@@ -169,16 +171,16 @@ describe('AlarmsComponent', () => {
   })
 
   it('should call getAlarmOccurrences when delete fails', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
     const mockAlarms = [
       { InstanceID: 'test-instance-id', StartTime: {} } as any,
       { InstanceID: 'other-instance-id', StartTime: {} } as any
     ]
     component.alarmOccurrences.set([...mockAlarms])
 
-    devicesServiceSpy.deleteAlarmOccurrence.and.returnValue(throwError(() => new Error('Delete failed')))
-    devicesServiceSpy.getAlarmOccurrences.and.returnValue(of([...mockAlarms]))
+    devicesServiceSpy.deleteAlarmOccurrence.mockReturnValue(throwError(() => new Error('Delete failed')))
+    devicesServiceSpy.getAlarmOccurrences.mockReturnValue(of([...mockAlarms]))
 
     component.deleteAlarm('test-instance-id')
 

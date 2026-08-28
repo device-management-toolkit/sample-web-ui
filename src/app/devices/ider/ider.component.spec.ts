@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, NavigationStart, RouterEvent, Router } from '@angular/router'
@@ -21,21 +23,21 @@ describe('IderComponent', () => {
   let component: IderComponent
   let fixture: ComponentFixture<IderComponent>
   let authServiceStub: any
-  let setAmtFeaturesSpy: jasmine.Spy
-  let getPowerStateSpy: jasmine.Spy
-  let getPowerStateCachedSpy: jasmine.Spy
-  let getRedirectionStatusSpy: jasmine.Spy
-  let getAMTFeaturesSpy: jasmine.Spy
-  let getAMTFeaturesCachedSpy: jasmine.Spy
-  let sendPowerActionSpy: jasmine.Spy
-  let tokenSpy: jasmine.Spy
-  let snackBarSpy: jasmine.Spy
+  let setAmtFeaturesSpy: MockInstance
+  let getPowerStateSpy: MockInstance
+  let getPowerStateCachedSpy: MockInstance
+  let getRedirectionStatusSpy: MockInstance
+  let getAMTFeaturesSpy: MockInstance
+  let getAMTFeaturesCachedSpy: MockInstance
+  let sendPowerActionSpy: MockInstance
+  let tokenSpy: MockInstance
+  let snackBarSpy: MockInstance
   let eventSubject: Subject<RouterEvent>
-  let displayErrorSpy: jasmine.Spy
-  let displayWarningSpy: jasmine.Spy
-  let devicesService: jasmine.SpyObj<DevicesService>
-  let userConsentService: jasmine.SpyObj<UserConsentService>
-  let dialogSpy: jasmine.SpyObj<MatDialog>
+  let displayErrorSpy: MockInstance
+  let displayWarningSpy: MockInstance
+  let devicesService: SpyObj<DevicesService>
+  let userConsentService: SpyObj<UserConsentService>
+  let dialogSpy: SpyObj<MatDialog>
 
   const amtFeaturesResponse = {
     userConsent: 'none',
@@ -62,7 +64,7 @@ describe('IderComponent', () => {
   beforeEach(async () => {
     eventSubject = new Subject<RouterEvent>()
 
-    devicesService = jasmine.createSpyObj('DevicesService', [
+    devicesService = createSpyObj('DevicesService', [
       'sendPowerAction',
       'getDevice',
       'getPowerState',
@@ -74,26 +76,26 @@ describe('IderComponent', () => {
       'getRedirectionStatus',
       'setDisplaySelection'
     ])
-    userConsentService = jasmine.createSpyObj('UserConsentService', [
+    userConsentService = createSpyObj('UserConsentService', [
       'handleUserConsentDecision',
       'handleUserConsentResponse'
     ])
 
-    setAmtFeaturesSpy = devicesService.setAmtFeatures.and.returnValue(of(amtFeaturesResponse))
-    getAMTFeaturesSpy = devicesService.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
-    getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
-    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(
+    setAmtFeaturesSpy = devicesService.setAmtFeatures.mockReturnValue(of(amtFeaturesResponse))
+    getAMTFeaturesSpy = devicesService.getAMTFeatures.mockReturnValue(of(amtFeaturesResponse))
+    getAMTFeaturesCachedSpy = devicesService.getAMTFeaturesCached.mockReturnValue(of(amtFeaturesResponse))
+    getRedirectionStatusSpy = devicesService.getRedirectionStatus.mockReturnValue(
       of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
     )
-    getPowerStateSpy = devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    getPowerStateCachedSpy = devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({} as any))
-    tokenSpy = devicesService.getRedirectionExpirationToken.and.returnValue(of({ token: '123' }))
+    getPowerStateSpy = devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+    getPowerStateCachedSpy = devicesService.getPowerStateCached.mockReturnValue(of({ powerstate: 2 }))
+    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({} as any))
+    tokenSpy = devicesService.getRedirectionExpirationToken.mockReturnValue(of({ token: '123' }))
 
-    userConsentService.handleUserConsentDecision.and.returnValue(of(true))
-    userConsentService.handleUserConsentResponse.and.returnValue(of(true))
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
-    dialogSpy.open.and.returnValue(jasmine.createSpyObj({ afterClosed: of(true), close: null }))
+    userConsentService.handleUserConsentDecision.mockReturnValue(of(true))
+    userConsentService.handleUserConsentResponse.mockReturnValue(of(true))
+    dialogSpy = createSpyObj('MatDialog', ['open'])
+    dialogSpy.open.mockReturnValue(createSpyObj({ afterClosed: of(true), close: null }))
 
     devicesService.device = new Subject<Device>()
     devicesService.deviceState = new EventEmitter<number>()
@@ -101,6 +103,7 @@ describe('IderComponent', () => {
     authServiceStub = {}
 
     @Component({
+      template: '',
       // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'amt-ider',
       imports: []
@@ -125,7 +128,7 @@ describe('IderComponent', () => {
         { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } },
         {
           provide: Router,
-          useValue: jasmine.createSpyObj('Router', ['navigate'], { events: eventSubject.asObservable() })
+          useValue: createSpyObj('Router', ['navigate'], { events: eventSubject.asObservable() })
         }
       ]
     })
@@ -134,10 +137,10 @@ describe('IderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IderComponent)
     component = fixture.componentInstance
-    snackBarSpy = spyOn(component.snackBar, 'open')
+    snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
-    displayErrorSpy = spyOn(component, 'displayError').and.callThrough()
-    displayWarningSpy = spyOn(component, 'displayWarning').and.callThrough()
+    displayErrorSpy = vi.spyOn(component, 'displayError')
+    displayWarningSpy = vi.spyOn(component, 'displayWarning')
   })
 
   afterEach(() => {
@@ -156,7 +159,7 @@ describe('IderComponent', () => {
   })
 
   it('prompts to enable IDER on tab load when IDER is disabled', () => {
-    getAMTFeaturesCachedSpy.and.returnValue(
+    getAMTFeaturesCachedSpy.mockReturnValue(
       of({
         ...amtFeaturesResponse,
         IDER: false,
@@ -172,9 +175,9 @@ describe('IderComponent', () => {
 
   it('should set isDisconnecting to true on NavigationStart event', () => {
     fixture.detectChanges()
-    expect(component.isDisconnecting).toBeFalse()
+    expect(component.isDisconnecting).toBe(false)
     eventSubject.next(new NavigationStart(1, '/some-route'))
-    expect(component.isDisconnecting).toBeTrue()
+    expect(component.isDisconnecting).toBe(true)
   })
 
   it('should not show error when NavigationStart triggers', () => {
@@ -184,7 +187,7 @@ describe('IderComponent', () => {
 
   // connect()
   it('should reset deviceState to -1 and call init on connect', () => {
-    const initSpy = spyOn(component, 'init')
+    const initSpy = vi.spyOn(component, 'init').mockImplementation(() => undefined)
     component.deviceState.set(0)
     component.connect()
     expect(component.deviceState()).toBe(-1)
@@ -192,237 +195,277 @@ describe('IderComponent', () => {
   })
 
   it('connect() prefetches the auth token in parallel with init()', () => {
-    tokenSpy.calls.reset()
-    const initSpy = spyOn(component, 'init')
+    tokenSpy.mockClear()
+    const initSpy = vi.spyOn(component, 'init').mockImplementation(() => undefined)
     component.connect()
     expect(initSpy).toHaveBeenCalledTimes(1)
     expect(tokenSpy).toHaveBeenCalledTimes(1)
   })
 
   // postUserConsentDecision()
-  it('should set isLoading to false, loadingStatus to empty, and deviceState to 0 when result is false', (done) => {
-    component.finalizeConnectionStart(false).subscribe(() => {
-      expect(component.isLoading()).toBeFalse()
-      expect(component.loadingStatus()).toBe('')
-      expect(component.deviceState()).toBe(0)
-      done()
+  it('should set isLoading to false, loadingStatus to empty, and deviceState to 0 when result is false', async () => {
+    await new Promise<void>((done) => {
+      component.finalizeConnectionStart(false).subscribe(() => {
+        expect(component.isLoading()).toBe(false)
+        expect(component.loadingStatus()).toBe('')
+        expect(component.deviceState()).toBe(0)
+        done()
+      })
     })
   })
 
-  it('should return of(null) when result is false', (done) => {
-    component.finalizeConnectionStart(false).subscribe((result) => {
-      expect(result).toBeNull()
-      done()
+  it('should return of(null) when result is false', async () => {
+    await new Promise<void>((done) => {
+      component.finalizeConnectionStart(false).subscribe((result) => {
+        expect(result).toBeNull()
+        done()
+      })
     })
   })
 
-  it('does not refresh the auth token when consent is denied', (done) => {
-    tokenSpy.calls.reset()
-    component.authToken.set('untouched')
-    component.finalizeConnectionStart(false).subscribe(() => {
-      expect(tokenSpy).not.toHaveBeenCalled()
-      expect(component.authToken()).toBe('untouched')
-      done()
+  it('does not refresh the auth token when consent is denied', async () => {
+    await new Promise<void>((done) => {
+      tokenSpy.mockClear()
+      component.authToken.set('untouched')
+      component.finalizeConnectionStart(false).subscribe(() => {
+        expect(tokenSpy).not.toHaveBeenCalled()
+        expect(component.authToken()).toBe('untouched')
+        done()
+      })
     })
   })
 
-  it('refreshes the auth token before completing when result is true', (done) => {
-    tokenSpy.calls.reset()
-    tokenSpy.and.returnValue(of({ token: 'post-consent-token' }))
-    component.authToken.set('stale')
-    component.finalizeConnectionStart(true).subscribe(() => {
-      expect(tokenSpy).toHaveBeenCalled()
-      expect(component.authToken()).toBe('post-consent-token')
-      done()
+  it('refreshes the auth token before completing when result is true', async () => {
+    await new Promise<void>((done) => {
+      tokenSpy.mockClear()
+      tokenSpy.mockReturnValue(of({ token: 'post-consent-token' }))
+      component.authToken.set('stale')
+      component.finalizeConnectionStart(true).subscribe(() => {
+        expect(tokenSpy).toHaveBeenCalled()
+        expect(component.authToken()).toBe('post-consent-token')
+        done()
+      })
     })
   })
 
-  it('postUserConsentDecision short-circuits when file selection was canceled', (done) => {
-    tokenSpy.calls.reset()
-    ;(component as any).diskSelectionCanceled = true
-    component.isLoading.set(true)
-    component.loadingStatus.set('ider.status.connectingIder.value')
+  it('postUserConsentDecision short-circuits when file selection was canceled', async () => {
+    await new Promise<void>((done) => {
+      tokenSpy.mockClear()
+      ;(component as any).diskSelectionCanceled = true
+      component.isLoading.set(true)
+      component.loadingStatus.set('ider.status.connectingIder.value')
 
-    component.finalizeConnectionStart(true).subscribe((result) => {
-      expect(result).toBeNull()
-      expect(component.isLoading()).toBeFalse()
-      expect(component.loadingStatus()).toBe('')
-      expect(tokenSpy).not.toHaveBeenCalled()
-      expect((component as any).diskSelectionCanceled).toBeFalse()
-      done()
+      component.finalizeConnectionStart(true).subscribe((result) => {
+        expect(result).toBeNull()
+        expect(component.isLoading()).toBe(false)
+        expect(component.loadingStatus()).toBe('')
+        expect(tokenSpy).not.toHaveBeenCalled()
+        expect((component as any).diskSelectionCanceled).toBe(false)
+        done()
+      })
     })
   })
 
   it('init skips consent handlers when cached consent is already satisfied', () => {
-    tokenSpy.calls.reset()
+    tokenSpy.mockClear()
     component.connect()
     expect(component.loadingStatus()).toBe('ider.status.connectingIder.value')
     expect(userConsentService.handleUserConsentDecision).not.toHaveBeenCalled()
     expect(userConsentService.handleUserConsentResponse).not.toHaveBeenCalled()
-    expect(tokenSpy.calls.count()).toBe(1)
+    expect(tokenSpy.mock.calls.length).toBe(1)
   })
 
   it('init stops before consent handlers when enabling IDER is declined', () => {
-    tokenSpy.calls.reset()
-    userConsentService.handleUserConsentDecision.calls.reset()
-    userConsentService.handleUserConsentResponse.calls.reset()
-    spyOn(component, 'handleAMTFeaturesResponse').and.returnValue(of(false))
+    tokenSpy.mockClear()
+    userConsentService.handleUserConsentDecision.mockClear()
+    userConsentService.handleUserConsentResponse.mockClear()
+    vi.spyOn(component, 'handleAMTFeaturesResponse').mockReturnValue(of(false))
 
     component.connect()
 
     expect(userConsentService.handleUserConsentDecision).not.toHaveBeenCalled()
     expect(userConsentService.handleUserConsentResponse).not.toHaveBeenCalled()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
-    expect(tokenSpy.calls.count()).toBe(1)
+    expect(tokenSpy.mock.calls.length).toBe(1)
   })
 
-  it('postUserConsentDecision does not issue a duplicate AMT features fetch', (done) => {
-    getAMTFeaturesSpy.calls.reset()
-    getAMTFeaturesCachedSpy.calls.reset()
-    component.finalizeConnectionStart(true).subscribe(() => {
-      expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
-      expect(getAMTFeaturesCachedSpy).not.toHaveBeenCalled()
-      done()
+  it('postUserConsentDecision does not issue a duplicate AMT features fetch', async () => {
+    await new Promise<void>((done) => {
+      getAMTFeaturesSpy.mockClear()
+      getAMTFeaturesCachedSpy.mockClear()
+      component.finalizeConnectionStart(true).subscribe(() => {
+        expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
+        expect(getAMTFeaturesCachedSpy).not.toHaveBeenCalled()
+        done()
+      })
     })
   })
 
   // checkUserConsent()
-  it('checkUserConsent returns true when userConsent is none', (done) => {
-    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'none' })
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeTrue()
-      done()
+  it('checkUserConsent returns true when userConsent is none', async () => {
+    await new Promise<void>((done) => {
+      component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'none' })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
     })
   })
 
-  it('checkUserConsent returns true when optInState is 3', (done) => {
-    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 3 })
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeTrue()
-      done()
+  it('checkUserConsent returns true when optInState is 3', async () => {
+    await new Promise<void>((done) => {
+      component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 3 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
     })
   })
 
-  it('checkUserConsent returns true when optInState is 4', (done) => {
-    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 4 })
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeTrue()
-      done()
+  it('checkUserConsent returns true when optInState is 4', async () => {
+    await new Promise<void>((done) => {
+      component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 4 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
     })
   })
 
-  it('checkUserConsent returns false when userConsent is not none and optInState is not 3 or 4', (done) => {
-    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 0 })
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeFalse()
-      done()
+  it('checkUserConsent returns false when userConsent is not none and optInState is not 3 or 4', async () => {
+    await new Promise<void>((done) => {
+      component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 0 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
     })
   })
 
-  it('checkUserConsent returns false when amtFeatures is null', (done) => {
-    component.amtFeatures.set(null)
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeFalse()
-      done()
+  it('checkUserConsent returns false when amtFeatures is null', async () => {
+    await new Promise<void>((done) => {
+      component.amtFeatures.set(null)
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
     })
   })
 
-  it('checkUserConsent returns false when consentReady is stale and AMT state requires consent', (done) => {
-    ;(component as any).consentReady = true
-    component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 0 })
-    component.checkUserConsent().subscribe((result) => {
-      expect(result).toBeFalse()
-      expect((component as any).consentReady).toBeFalse()
-      done()
+  it('checkUserConsent returns false when consentReady is stale and AMT state requires consent', async () => {
+    await new Promise<void>((done) => {
+      ;(component as any).consentReady = true
+      component.amtFeatures.set({ ...amtFeaturesResponse, userConsent: 'ider', optInState: 0 })
+      component.checkUserConsent().subscribe((result) => {
+        expect(result).toBe(false)
+        expect((component as any).consentReady).toBe(false)
+        done()
+      })
     })
   })
 
   // handlePowerState()
-  it('handlePowerState returns true when device is powered on (powerstate 2)', (done) => {
-    component.handlePowerState({ powerstate: 2 }).subscribe((result) => {
-      expect(result).toBeTrue()
-      done()
+  it('handlePowerState returns true when device is powered on (powerstate 2)', async () => {
+    await new Promise<void>((done) => {
+      component.handlePowerState({ powerstate: 2 }).subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
     })
   })
 
   it('handlePowerState shows power up alert when device is not powered on', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
     component.handlePowerState({ powerstate: 0 }).subscribe()
     expect(dialogSpy.open).toHaveBeenCalled()
   })
 
-  it('handlePowerState calls sendPowerAction when user confirms power up', (done) => {
-    spyOn(component, 'showPowerUpAlert').and.returnValue(of(true))
-    component.handlePowerState({ powerstate: 0 }).subscribe(() => {
-      expect(sendPowerActionSpy).toHaveBeenCalledWith(component.deviceId(), 2)
-      done()
+  it('handlePowerState calls sendPowerAction when user confirms power up', async () => {
+    await new Promise<void>((done) => {
+      vi.spyOn(component, 'showPowerUpAlert').mockReturnValue(of(true))
+      component.handlePowerState({ powerstate: 0 }).subscribe(() => {
+        expect(sendPowerActionSpy).toHaveBeenCalledWith(component.deviceId(), 2)
+        done()
+      })
     })
   })
 
-  it('handlePowerState returns null when user declines power up', (done) => {
-    spyOn(component, 'showPowerUpAlert').and.returnValue(of(false))
-    component.handlePowerState({ powerstate: 0 }).subscribe((result) => {
-      expect(result).toBeNull()
-      expect(sendPowerActionSpy).not.toHaveBeenCalled()
-      done()
+  it('handlePowerState returns null when user declines power up', async () => {
+    await new Promise<void>((done) => {
+      vi.spyOn(component, 'showPowerUpAlert').mockReturnValue(of(false))
+      component.handlePowerState({ powerstate: 0 }).subscribe((result) => {
+        expect(result).toBeNull()
+        expect(sendPowerActionSpy).not.toHaveBeenCalled()
+        done()
+      })
     })
   })
 
   // getRedirectionStatus()
-  it('should call getRedirectionStatus and return expected data', (done) => {
-    component.getRedirectionStatus('test-guid').subscribe((response) => {
-      expect(devicesService.getRedirectionStatus).toHaveBeenCalledWith('test-guid')
-      expect(response).toEqual({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
-      done()
-    })
-  })
-
-  it('getRedirectionStatus error', (done) => {
-    component.isLoading.set(true)
-    getRedirectionStatusSpy = devicesService.getRedirectionStatus.and.returnValue(throwError(() => new Error('err')))
-    component.getRedirectionStatus('test-guid').subscribe({
-      error: () => {
-        expect(getRedirectionStatusSpy).toHaveBeenCalled()
-        expect(displayErrorSpy).toHaveBeenCalled()
-        devicesService.getRedirectionStatus.and.returnValue(
-          of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
-        )
+  it('should call getRedirectionStatus and return expected data', async () => {
+    await new Promise<void>((done) => {
+      component.getRedirectionStatus('test-guid').subscribe((response) => {
+        expect(devicesService.getRedirectionStatus).toHaveBeenCalledWith('test-guid')
+        expect(response).toEqual({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
         done()
-      }
+      })
     })
   })
 
-  it('should set redirectionStatus and return true when IDER is not connected', (done) => {
-    const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }
-    component.amtFeatures.set({ ...amtFeaturesResponse, IDER: true })
-    component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
-      expect(component.redirectionStatus).toEqual(mockRedirectionStatus)
-      expect(result).toBeTrue()
-      done()
+  it('getRedirectionStatus error', async () => {
+    await new Promise<void>((done) => {
+      component.isLoading.set(true)
+      getRedirectionStatusSpy = devicesService.getRedirectionStatus.mockReturnValue(throwError(() => new Error('err')))
+      component.getRedirectionStatus('test-guid').subscribe({
+        error: () => {
+          expect(getRedirectionStatusSpy).toHaveBeenCalled()
+          expect(displayErrorSpy).toHaveBeenCalled()
+          devicesService.getRedirectionStatus.mockReturnValue(
+            of({ isKVMConnected: false, isSOLConnected: false, isIDERConnected: false })
+          )
+          done()
+        }
+      })
     })
   })
 
-  it('should return null and display error when IDER is already connected', (done) => {
-    const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: true }
-    component.amtFeatures.set({ ...amtFeaturesResponse, IDER: true })
-    component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
-      expect(result).toBeNull()
-      expect(displayWarningSpy).toHaveBeenCalled()
-      expect(displayErrorSpy).not.toHaveBeenCalled()
-      done()
+  it('should set redirectionStatus and return true when IDER is not connected', async () => {
+    await new Promise<void>((done) => {
+      const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: false }
+      component.amtFeatures.set({ ...amtFeaturesResponse, IDER: true })
+      component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
+        expect(component.redirectionStatus).toEqual(mockRedirectionStatus)
+        expect(result).toBe(true)
+        done()
+      })
     })
   })
 
-  it('should return null when IDER is connected even if AMT IDER feature is false', (done) => {
-    const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: true }
-    component.amtFeatures.set({ ...amtFeaturesResponse, IDER: false })
-    component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
-      expect(result).toBeNull()
-      expect(displayWarningSpy).toHaveBeenCalled()
-      expect(displayErrorSpy).not.toHaveBeenCalled()
-      done()
+  it('should return null and display error when IDER is already connected', async () => {
+    await new Promise<void>((done) => {
+      const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: true }
+      component.amtFeatures.set({ ...amtFeaturesResponse, IDER: true })
+      component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
+        expect(result).toBeNull()
+        expect(displayWarningSpy).toHaveBeenCalled()
+        expect(displayErrorSpy).not.toHaveBeenCalled()
+        done()
+      })
+    })
+  })
+
+  it('should return null when IDER is connected even if AMT IDER feature is false', async () => {
+    await new Promise<void>((done) => {
+      const mockRedirectionStatus = { isKVMConnected: false, isSOLConnected: false, isIDERConnected: true }
+      component.amtFeatures.set({ ...amtFeaturesResponse, IDER: false })
+      component.handleRedirectionStatus(mockRedirectionStatus).subscribe((result) => {
+        expect(result).toBeNull()
+        expect(displayWarningSpy).toHaveBeenCalled()
+        expect(displayErrorSpy).not.toHaveBeenCalled()
+        done()
+      })
     })
   })
 
@@ -432,80 +475,90 @@ describe('IderComponent', () => {
     expect(getPowerStateSpy).toHaveBeenCalledWith('111')
   })
 
-  it('getPowerState error', (done) => {
-    component.isLoading.set(true)
-    getPowerStateSpy = devicesService.getPowerState.and.returnValue(throwError(() => new Error('err')))
-    component.getPowerState('111').subscribe({
-      error: () => {
-        expect(getPowerStateSpy).toHaveBeenCalled()
-        expect(displayErrorSpy).toHaveBeenCalled()
-        devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-        done()
-      }
+  it('getPowerState error', async () => {
+    await new Promise<void>((done) => {
+      component.isLoading.set(true)
+      getPowerStateSpy = devicesService.getPowerState.mockReturnValue(throwError(() => new Error('err')))
+      component.getPowerState('111').subscribe({
+        error: () => {
+          expect(getPowerStateSpy).toHaveBeenCalled()
+          expect(displayErrorSpy).toHaveBeenCalled()
+          devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+          done()
+        }
+      })
     })
   })
 
   // getPowerStateCached()
   it('getPowerStateCached delegates to the service cache variant', () => {
-    getPowerStateSpy.calls.reset()
-    getPowerStateCachedSpy.calls.reset()
+    getPowerStateSpy.mockClear()
+    getPowerStateCachedSpy.mockClear()
     component.getPowerStateCached('111').subscribe()
     expect(getPowerStateCachedSpy).toHaveBeenCalledWith('111')
     expect(getPowerStateSpy).not.toHaveBeenCalled()
   })
 
   // getAMTFeatures()
-  it('getAMTFeatures sets isLoading to true and calls service', (done) => {
-    component.isLoading.set(false)
-    component.getAMTFeatures().subscribe((result) => {
-      expect(getAMTFeaturesSpy).toHaveBeenCalled()
-      expect(result).toEqual(amtFeaturesResponse)
-      expect(component.isLoading()).toBeTrue()
-      done()
+  it('getAMTFeatures sets isLoading to true and calls service', async () => {
+    await new Promise<void>((done) => {
+      component.isLoading.set(false)
+      component.getAMTFeatures().subscribe((result) => {
+        expect(getAMTFeaturesSpy).toHaveBeenCalled()
+        expect(result).toEqual(amtFeaturesResponse)
+        expect(component.isLoading()).toBe(true)
+        done()
+      })
     })
   })
 
   // getAMTFeaturesCached()
-  it('getAMTFeaturesCached delegates to the service cache variant', (done) => {
-    component.getAMTFeaturesCached().subscribe(() => {
-      expect(getAMTFeaturesCachedSpy).toHaveBeenCalledWith('')
-      expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
-      expect(component.isLoading()).toBeTrue()
-      done()
+  it('getAMTFeaturesCached delegates to the service cache variant', async () => {
+    await new Promise<void>((done) => {
+      component.getAMTFeaturesCached().subscribe(() => {
+        expect(getAMTFeaturesCachedSpy).toHaveBeenCalledWith('')
+        expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
+        expect(component.isLoading()).toBe(true)
+        done()
+      })
     })
   })
 
   // handleAMTFeaturesResponse()
-  it('handleAMTFeaturesResponse sets amtFeatures and skips setAmtFeatures when IDER is already connected', (done) => {
-    component.handleAMTFeaturesResponse(amtFeaturesResponse as any).subscribe(() => {
-      expect(component.amtFeatures()).toEqual(amtFeaturesResponse as any)
-      expect(setAmtFeaturesSpy).not.toHaveBeenCalled()
-      done()
+  it('handleAMTFeaturesResponse sets amtFeatures and skips setAmtFeatures when IDER is already connected', async () => {
+    await new Promise<void>((done) => {
+      component.handleAMTFeaturesResponse(amtFeaturesResponse as any).subscribe(() => {
+        expect(component.amtFeatures()).toEqual(amtFeaturesResponse as any)
+        expect(setAmtFeaturesSpy).not.toHaveBeenCalled()
+        done()
+      })
     })
   })
 
-  it('handleAMTFeaturesResponse uses default values when AMT features properties are undefined', (done) => {
-    const partialFeatures = { userConsent: undefined } as any
-    component.handleAMTFeaturesResponse(partialFeatures).subscribe(() => {
-      expect(setAmtFeaturesSpy).toHaveBeenCalledWith(
-        component.deviceId(),
-        jasmine.objectContaining({
-          userConsent: '',
-          enableSOL: false,
-          enableIDER: true,
-          ocr: false,
-          enableKVM: false,
-          rpe: false
-        })
-      )
-      done()
+  it('handleAMTFeaturesResponse uses default values when AMT features properties are undefined', async () => {
+    await new Promise<void>((done) => {
+      const partialFeatures = { userConsent: undefined } as any
+      component.handleAMTFeaturesResponse(partialFeatures).subscribe(() => {
+        expect(setAmtFeaturesSpy).toHaveBeenCalledWith(
+          component.deviceId(),
+          expect.objectContaining({
+            userConsent: '',
+            enableSOL: false,
+            enableIDER: true,
+            ocr: false,
+            enableKVM: false,
+            rpe: false
+          })
+        )
+        done()
+      })
     })
   })
 
   // showPowerUpAlert()
   it('power up alert dialog', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    dialogSpy.open.and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    dialogSpy.open.mockReturnValue(dialogRefSpyObj)
     component.showPowerUpAlert()
     expect(dialogSpy.open).toHaveBeenCalled()
   })
@@ -514,8 +567,8 @@ describe('IderComponent', () => {
   it('should set diskImage and start connection on file selection', () => {
     const mockFile = new File([''], 'test-file.iso', { type: 'application/octet-stream' })
     const mockEvt = { target: { files: [mockFile] } } as unknown as Event
-    const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
-    const connectSpy = spyOn(component, 'connect')
+    const deviceIDERConnectionSpy = vi.spyOn(component.deviceIDERConnection, 'set').mockImplementation(() => undefined)
+    const connectSpy = vi.spyOn(component, 'connect').mockImplementation(() => undefined)
 
     component.onFileSelected(mockEvt)
 
@@ -531,7 +584,7 @@ describe('IderComponent', () => {
   })
 
   it('onAttachDiskImage starts connection and opens file picker', () => {
-    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    const mockFileInput = createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
     mockFileInput.value = 'existing.iso'
 
     component.onAttachDiskImage(mockFileInput)
@@ -541,7 +594,7 @@ describe('IderComponent', () => {
   })
 
   it('onFileSelected does not start connection when a file is selected during active attach flow', () => {
-    const connectSpy = spyOn(component, 'connect')
+    const connectSpy = vi.spyOn(component, 'connect').mockImplementation(() => undefined)
     const mockFile = new File([''], 'test-file.iso', { type: 'application/octet-stream' })
     const mockEvt = { target: { files: [mockFile] } } as unknown as Event
     component.isLoading.set(true)
@@ -552,7 +605,7 @@ describe('IderComponent', () => {
   })
 
   it('onFileSelected does not start connection when file selection is canceled', () => {
-    const connectSpy = spyOn(component, 'connect')
+    const connectSpy = vi.spyOn(component, 'connect').mockImplementation(() => undefined)
     component.isLoading.set(true)
     component.loadingStatus.set('ider.status.connectingIder.value')
     const mockEvt = { target: { files: [] } } as unknown as Event
@@ -560,15 +613,15 @@ describe('IderComponent', () => {
     component.onFileSelected(mockEvt)
 
     expect(component.diskImage).toBeNull()
-    expect(component.deviceIDERConnection()).toBeFalse()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.deviceIDERConnection()).toBe(false)
+    expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
     expect(connectSpy).not.toHaveBeenCalled()
   })
 
   it('onAttachDiskImage ignores clicks while loading', () => {
-    const connectSpy = spyOn(component, 'connect')
-    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    const connectSpy = vi.spyOn(component, 'connect').mockImplementation(() => undefined)
+    const mockFileInput = createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
     component.isLoading.set(true)
 
     component.onAttachDiskImage(mockFileInput)
@@ -578,8 +631,8 @@ describe('IderComponent', () => {
   })
 
   it('onAttachDiskImage warns and does not reconnect when IDER is already active', () => {
-    const connectSpy = spyOn(component, 'connect')
-    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    const connectSpy = vi.spyOn(component, 'connect').mockImplementation(() => undefined)
+    const mockFileInput = createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
     component.isIDERActive.set(true)
 
     component.onAttachDiskImage(mockFileInput)
@@ -590,7 +643,7 @@ describe('IderComponent', () => {
   })
 
   it('onAttachDiskImage clears loading when picker closes without selecting a file', () => {
-    const mockFileInput = jasmine.createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
+    const mockFileInput = createSpyObj('HTMLInputElement', ['click']) as HTMLInputElement
 
     component.onAttachDiskImage(mockFileInput)
     component.isLoading.set(true)
@@ -599,7 +652,7 @@ describe('IderComponent', () => {
     window.dispatchEvent(new Event('focus'))
 
     expect(component.diskImage).toBeNull()
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
   })
 
@@ -609,12 +662,12 @@ describe('IderComponent', () => {
 
     const attachButton = fixture.nativeElement.querySelector('button[color="primary"]') as HTMLButtonElement
 
-    expect(attachButton.disabled).toBeTrue()
+    expect(attachButton.disabled).toBe(true)
   })
 
   // onCancelIDER()
   it('should set deviceIDERConnection to false on cancel IDER', () => {
-    const deviceIDERConnectionSpy = spyOn(component.deviceIDERConnection, 'set')
+    const deviceIDERConnectionSpy = vi.spyOn(component.deviceIDERConnection, 'set').mockImplementation(() => undefined)
     const mockFileInput = { value: 'some-file.iso' } as HTMLInputElement
     component.onCancelIDER(mockFileInput)
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
@@ -627,7 +680,7 @@ describe('IderComponent', () => {
 
     component.onCancelIDER(mockFileInput)
 
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
   })
 
@@ -651,7 +704,7 @@ describe('IderComponent', () => {
   it('should set isIDERActive to false when event is 0', () => {
     component.isIDERActive.set(true)
     component.deviceIDERStatus(0)
-    expect(component.isIDERActive()).toBeFalse()
+    expect(component.isIDERActive()).toBe(false)
   })
 
   it('should display warning with iderEnded key when event is 0', () => {
@@ -662,7 +715,7 @@ describe('IderComponent', () => {
   it('should set isIDERActive to true when event is 3', () => {
     component.isIDERActive.set(false)
     component.deviceIDERStatus(3)
-    expect(component.isIDERActive()).toBeTrue()
+    expect(component.isIDERActive()).toBe(true)
   })
 
   it('should display warning with iderActive key when event is 3', () => {
@@ -673,7 +726,7 @@ describe('IderComponent', () => {
   it('should not change isIDERActive for other event values', () => {
     component.isIDERActive.set(false)
     component.deviceIDERStatus(1)
-    expect(component.isIDERActive()).toBeFalse()
+    expect(component.isIDERActive()).toBe(false)
     expect(snackBarSpy).not.toHaveBeenCalled()
   })
 
@@ -681,7 +734,7 @@ describe('IderComponent', () => {
   it('onIderData stores stats and marks the session as transferring', () => {
     component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
     expect(component.iderData()).toEqual({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
-    expect(component.isTransferring()).toBeTrue()
+    expect(component.isTransferring()).toBe(true)
     expect(component.bytesTransferred()).toBe(2048)
   })
 
@@ -696,15 +749,15 @@ describe('IderComponent', () => {
   })
 
   it('isTransferring clears after the idle timeout but stats remain visible', () => {
-    jasmine.clock().install()
+    vi.useFakeTimers()
     try {
       component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
-      expect(component.isTransferring()).toBeTrue()
-      jasmine.clock().tick(1500)
-      expect(component.isTransferring()).toBeFalse()
+      expect(component.isTransferring()).toBe(true)
+      vi.advanceTimersByTime(1500)
+      expect(component.isTransferring()).toBe(false)
       expect(component.bytesTransferred()).toBe(2048)
     } finally {
-      jasmine.clock().uninstall()
+      vi.useRealTimers()
     }
   })
 
@@ -712,7 +765,7 @@ describe('IderComponent', () => {
     component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
     component.deviceIDERStatus(0)
     expect(component.iderData()).toBeNull()
-    expect(component.isTransferring()).toBeFalse()
+    expect(component.isTransferring()).toBe(false)
   })
 
   it('onCancelIDER resets the live transfer stats', () => {
@@ -720,19 +773,19 @@ describe('IderComponent', () => {
     component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
     component.onCancelIDER(mockFileInput)
     expect(component.iderData()).toBeNull()
-    expect(component.isTransferring()).toBeFalse()
+    expect(component.isTransferring()).toBe(false)
   })
 
   it('clears the transfer idle timer on destroy so no callback fires afterwards', () => {
-    jasmine.clock().install()
+    vi.useFakeTimers()
     try {
       component.onIderData({ cdromRead: 2048, cdromWrite: 0, floppyRead: 0, floppyWrite: 0 })
       component.ngOnDestroy()
-      jasmine.clock().tick(1500)
+      vi.advanceTimersByTime(1500)
       // Timer was cancelled, so isTransferring is left untouched (not reset by a late callback)
-      expect(component.isTransferring()).toBeTrue()
+      expect(component.isTransferring()).toBe(true)
     } finally {
-      jasmine.clock().uninstall()
+      vi.useRealTimers()
     }
   })
 
@@ -770,7 +823,7 @@ describe('IderComponent', () => {
   it('should set isDisconnecting to true on destroy', () => {
     component.isDisconnecting = false
     component.ngOnDestroy()
-    expect(component.isDisconnecting).toBeTrue()
+    expect(component.isDisconnecting).toBe(true)
   })
 
   it('should not throw when timeInterval is not set on destroy', () => {

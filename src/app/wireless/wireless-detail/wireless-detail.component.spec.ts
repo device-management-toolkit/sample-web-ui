@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -18,23 +20,23 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('WirelessDetailComponent', () => {
   let component: WirelessDetailComponent
   let fixture: ComponentFixture<WirelessDetailComponent>
-  let wirelessSpy: jasmine.Spy
-  let wirelessCreateSpy: jasmine.Spy
-  let wirelessUpdateSpy: jasmine.Spy
-  let routerSpy: jasmine.Spy
+  let wirelessSpy: MockInstance
+  let wirelessCreateSpy: MockInstance
+  let wirelessUpdateSpy: MockInstance
+  let routerSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const wirelessService = jasmine.createSpyObj('WirelessService', [
+    const wirelessService = createSpyObj('WirelessService', [
       'getRecord',
       'update',
       'create'
     ])
-    wirelessSpy = wirelessService.getRecord.and.returnValue(of({}))
-    wirelessCreateSpy = wirelessService.create.and.returnValue(of({}))
-    wirelessUpdateSpy = wirelessService.update.and.returnValue(of({}))
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
-    ieee8021xService.getData.and.returnValue(
+    wirelessSpy = wirelessService.getRecord.mockReturnValue(of({}))
+    wirelessCreateSpy = wirelessService.create.mockReturnValue(of({}))
+    wirelessUpdateSpy = wirelessService.update.mockReturnValue(of({}))
+    const ieee8021xService = createSpyObj('IEEE8021xService', ['getData'])
+    ieee8021xService.getData.mockReturnValue(
       of({
         data: [
           {
@@ -73,7 +75,7 @@ describe('WirelessDetailComponent', () => {
     translate = TestBed.inject(TranslateService)
     translate.setFallbackLang('en')
     fixture.detectChanges()
-    routerSpy = spyOn(component.router, 'navigate')
+    routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
   })
 
   afterEach(() => {
@@ -170,16 +172,16 @@ describe('WirelessDetailComponent', () => {
 
   it('should support PSK passphrase and ieee8021x visibility', () => {
     component.onAuthenticationMethodChange(4) // WPA PSK
-    expect(component.showPSKPassPhrase).toBeTrue()
-    expect(component.showIEEE8021x).toBeFalse()
+    expect(component.showPSKPassPhrase).toBe(true)
+    expect(component.showIEEE8021x).toBe(false)
     component.onAuthenticationMethodChange(6) // WPA2 PSK
-    expect(component.showPSKPassPhrase).toBeTrue()
-    expect(component.showIEEE8021x).toBeFalse()
+    expect(component.showPSKPassPhrase).toBe(true)
+    expect(component.showIEEE8021x).toBe(false)
     component.onAuthenticationMethodChange(5) // WPA IEEE8021X
-    expect(component.showPSKPassPhrase).toBeFalse()
-    expect(component.showIEEE8021x).toBeTrue()
+    expect(component.showPSKPassPhrase).toBe(false)
+    expect(component.showIEEE8021x).toBe(true)
     component.onAuthenticationMethodChange(7) // WPA2 IEEE8021X
-    expect(component.showPSKPassPhrase).toBeFalse()
-    expect(component.showIEEE8021x).toBeTrue()
+    expect(component.showPSKPassPhrase).toBe(false)
+    expect(component.showIEEE8021x).toBe(true)
   })
 })

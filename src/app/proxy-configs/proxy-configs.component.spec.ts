@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,13 +21,13 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('ProxyConfigsComponent', () => {
   let component: ProxyConfigsComponent
   let fixture: ComponentFixture<ProxyConfigsComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const proxyConfigsService = jasmine.createSpyObj('ProxyConfigsService', ['getData', 'delete'])
-    getDataSpy = proxyConfigsService.getData.and.returnValue(
+    const proxyConfigsService = createSpyObj('ProxyConfigsService', ['getData', 'delete'])
+    getDataSpy = proxyConfigsService.getData.mockReturnValue(
       of({
         data: [
           {
@@ -39,7 +41,7 @@ describe('ProxyConfigsComponent', () => {
         totalCount: 1
       })
     )
-    deleteSpy = proxyConfigsService.delete.and.returnValue(of(null))
+    deleteSpy = proxyConfigsService.delete.mockReturnValue(of(null))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -75,34 +77,34 @@ describe('ProxyConfigsComponent', () => {
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/proxy-configs/new'])
   })
 
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('test-proxy')
     expect(routerSpy).toHaveBeenCalledWith(['/proxy-configs/test-proxy'])
   })
 
   it('should delete successfully', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('test-proxy')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
     expect(deleteSpy).toHaveBeenCalledWith('test-proxy')
-    expect(snackBarSpy).toHaveBeenCalledWith('Configuration deleted successfully', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Configuration deleted successfully', undefined, expect.any(Object))
   })
 
   it('should not delete when dialog is cancelled', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('test-proxy')
     expect(dialogSpy).toHaveBeenCalled()
@@ -114,11 +116,11 @@ describe('ProxyConfigsComponent', () => {
 
   it('should handle delete error with server message', () => {
     const errorResponse = { error: { message: 'Proxy profile: test is associated with an AMT Profile.' } }
-    deleteSpy.and.returnValue(throwError(() => errorResponse))
+    deleteSpy.mockReturnValue(throwError(() => errorResponse))
 
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('test-proxy')
     expect(dialogSpy).toHaveBeenCalled()
@@ -127,23 +129,23 @@ describe('ProxyConfigsComponent', () => {
     expect(snackBarSpy).toHaveBeenCalledWith(
       'Proxy profile: test is associated with an AMT Profile.',
       undefined,
-      jasmine.any(Object)
+      expect.any(Object)
     )
   })
 
   it('should handle delete error without server message', () => {
     const errorResponse = { error: {} }
-    deleteSpy.and.returnValue(throwError(() => errorResponse))
+    deleteSpy.mockReturnValue(throwError(() => errorResponse))
 
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('test-proxy')
     expect(dialogSpy).toHaveBeenCalled()
     fixture.detectChanges()
     expect(deleteSpy).toHaveBeenCalledWith('test-proxy')
-    expect(snackBarSpy).toHaveBeenCalledWith('Unable to delete configuration', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Unable to delete configuration', undefined, expect.any(Object))
   })
 
   it('should change the page', () => {

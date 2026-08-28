@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceComponent } from './add-device.component'
 import { ProfilesService } from '../../profiles/profiles.service'
@@ -23,11 +25,11 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('AddDeviceComponent', () => {
   let component: AddDeviceComponent
   let fixture: ComponentFixture<AddDeviceComponent>
-  let getDataSpy: jasmine.Spy
+  let getDataSpy: MockInstance
 
   beforeEach(async () => {
-    const profileService = jasmine.createSpyObj('ProfilesService', ['getData'])
-    getDataSpy = profileService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    const profileService = createSpyObj('ProfilesService', ['getData'])
+    getDataSpy = profileService.getData.mockReturnValue(of({ data: [], totalCount: 0 }))
 
     await TestBed.configureTestingModule({
       imports: [
@@ -63,7 +65,7 @@ describe('AddDeviceComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).toBe(true)
+    expect(getDataSpy.mock.calls.length > 0).toBe(true)
   })
 
   it('should initialize with default values', () => {

@@ -14,6 +14,15 @@ const eslintConfigPrettier = require('eslint-config-prettier')
 // Export our config array, which is composed together thanks to the typed utility function from typescript-eslint
 module.exports = tseslint.config(
   {
+    // Flat config does not honour .gitignore; without this the generated
+    // coverage HTML report fails to parse under the lint globs.
+    ignores: [
+      'coverage/',
+      'dist/',
+      'ui/'
+    ]
+  },
+  {
     // Everything in this config object targets our TypeScript files (Components, Directives, Pipes etc)
     files: ['**/*.ts'],
     extends: [

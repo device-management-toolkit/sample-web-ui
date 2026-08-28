@@ -2,6 +2,8 @@
  * Copyright (c) Intel Corporation 2025
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HTTPBootDialogComponent } from '././http-boot-dialog.component'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
@@ -18,11 +20,11 @@ describe('HTTPBootDialogComponent', () => {
   let component: HTTPBootDialogComponent
   let fixture: ComponentFixture<HTTPBootDialogComponent>
   let debugElement: DebugElement
-  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<HTTPBootDialogComponent>>
+  let dialogRefSpy: SpyObj<MatDialogRef<HTTPBootDialogComponent>>
   let translate: TranslateService
 
   beforeEach(() => {
-    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
+    dialogRefSpy = createSpyObj('MatDialogRef', ['close'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -149,10 +151,10 @@ describe('HTTPBootDialogComponent', () => {
 describe('HTTPBootDialogComponent in CCM mode', () => {
   let component: HTTPBootDialogComponent
   let fixture: ComponentFixture<HTTPBootDialogComponent>
-  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<HTTPBootDialogComponent>>
+  let dialogRefSpy: SpyObj<MatDialogRef<HTTPBootDialogComponent>>
 
   beforeEach(() => {
-    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close'])
+    dialogRefSpy = createSpyObj('MatDialogRef', ['close'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -179,17 +181,17 @@ describe('HTTPBootDialogComponent in CCM mode', () => {
   })
 
   it('should have isCCM set to true', () => {
-    expect(component.isCCM).toBeTrue()
+    expect(component.isCCM).toBe(true)
   })
 
   it('should have enforceSecureBoot disabled in CCM mode', () => {
     const secureBootControl = component.bootForm.get('enforceSecureBoot')
-    expect(secureBootControl?.disabled).toBeTrue()
+    expect(secureBootControl?.disabled).toBe(true)
   })
 
   it('should have enforceSecureBoot checked (true) in CCM mode', () => {
     const secureBootControl = component.bootForm.get('enforceSecureBoot')
-    expect(secureBootControl?.value).toBeTrue()
+    expect(secureBootControl?.value).toBe(true)
   })
 
   it('should submit with enforceSecureBoot true even when disabled', () => {

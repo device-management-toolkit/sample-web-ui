@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { HardwareInformationComponent } from './hardware-information.component'
@@ -14,10 +16,10 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('HardwareInformationComponent', () => {
   let component: HardwareInformationComponent
   let fixture: ComponentFixture<HardwareInformationComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let devicesServiceSpy: SpyObj<DevicesService>
 
   beforeEach(async () => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
       'getTags',
@@ -33,7 +35,7 @@ describe('HardwareInformationComponent', () => {
       'sendBulkDeactivate',
       'getWsmanOperations'
     ])
-    devicesServiceSpy.getAMTFeatures.and.returnValue(
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(
       of({
         userConsent: 'ALL',
         KVM: true,
@@ -57,9 +59,9 @@ describe('HardwareInformationComponent', () => {
       })
     )
 
-    devicesServiceSpy.getHardwareInformation.and.returnValue(of({} as any))
-    devicesServiceSpy.getDiskInformation.and.returnValue(of({} as any))
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
+    devicesServiceSpy.getHardwareInformation.mockReturnValue(of({} as any))
+    devicesServiceSpy.getDiskInformation.mockReturnValue(of({} as any))
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(['']))
     devicesServiceSpy.TargetOSMap = { 0: '' } as any
     TestBed.configureTestingModule({
       imports: [HardwareInformationComponent],
@@ -77,13 +79,13 @@ describe('HardwareInformationComponent', () => {
 
   it('should set isDiskLoading to true then false upon completion', () => {
     component.getDiskInformation()
-    expect(component.isDiskLoading()).toBeFalse()
+    expect(component.isDiskLoading()).toBe(false)
   })
 
   it('should set isDiskLoading to false when request completes without emitting', () => {
-    devicesServiceSpy.getDiskInformation.and.returnValue(EMPTY)
+    devicesServiceSpy.getDiskInformation.mockReturnValue(EMPTY)
     component.getDiskInformation()
-    expect(component.isDiskLoading()).toBeFalse()
+    expect(component.isDiskLoading()).toBe(false)
   })
 
   it('should return matching processor for chip tag', () => {

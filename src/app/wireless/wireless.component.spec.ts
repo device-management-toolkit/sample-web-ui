@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,13 +21,13 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('WirelessComponent', () => {
   let component: WirelessComponent
   let fixture: ComponentFixture<WirelessComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const wirelessService = jasmine.createSpyObj('WirelessService', ['getData', 'delete'])
-    getDataSpy = wirelessService.getData.and.returnValue(
+    const wirelessService = createSpyObj('WirelessService', ['getData', 'delete'])
+    getDataSpy = wirelessService.getData.mockReturnValue(
       of({
         data: [
           {
@@ -40,7 +42,7 @@ describe('WirelessComponent', () => {
         totalCount: 1
       })
     )
-    deleteSpy = wirelessService.delete.and.returnValue(of(null))
+    deleteSpy = wirelessService.delete.mockReturnValue(of(null))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -76,21 +78,21 @@ describe('WirelessComponent', () => {
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/wireless/new'])
   })
 
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/wireless/path'])
   })
 
   it('should delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
@@ -100,9 +102,9 @@ describe('WirelessComponent', () => {
     expect(snackBarSpy).toHaveBeenCalled()
   })
   it('should not delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()

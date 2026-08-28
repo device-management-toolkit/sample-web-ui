@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { EventEmitter, Component, input } from '@angular/core'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
@@ -17,6 +18,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 // import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
+  template: '',
   selector: 'app-toolbar',
   imports: [RouterModule, MatSidenavModule]
 })
@@ -30,9 +32,9 @@ describe('AppComponent', () => {
   let translate: TranslateService
 
   // const eventChannelStub = {
-  //   connect: jasmine.createSpy('connect'),
-  //   subscribeToTopic: jasmine.createSpy('connect'),
-  //   destroy: jasmine.createSpy('destroy')
+  //   connect: vi.fn(),
+  //   subscribeToTopic: vi.fn(),
+  //   destroy: vi.fn()
   // }
 
   beforeEach(() => {
@@ -77,6 +79,6 @@ describe('AppComponent', () => {
     // expect(component.mqttService.connect).toHaveBeenCalled()
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('mps/#')
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('rps/#')
-    expect(component.isLoggedIn).toBeFalse()
+    expect(component.isLoggedIn).toBe(false)
   })
 })

@@ -1,3 +1,9 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
 import { AmDateFormatterPipe } from './date-formatter.pipe.ts.pipe'
 
 describe('AmDateFormatterPipe', () => {

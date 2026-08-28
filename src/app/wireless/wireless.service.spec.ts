@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
@@ -10,13 +17,13 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('WirelessService', () => {
   let service: WirelessService
   let httpMock: HttpTestingController
-  let authServiceSpy: jasmine.SpyObj<AuthService>
+  let authServiceSpy: SpyObj<AuthService>
 
   const mockEnvironment = { rpsServer: 'https://test-server' }
   const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/wirelessconfigs`
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    authServiceSpy = createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
       providers: [
@@ -91,7 +98,7 @@ describe('WirelessService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getData().subscribe({
         error: (error) => {
@@ -125,7 +132,7 @@ describe('WirelessService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getRecord('wifiConfig1').subscribe({
         error: (error) => {
@@ -159,7 +166,7 @@ describe('WirelessService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service
         .create({ profileName: 'wifiConfig1', authenticationMethod: 1, encryptionMethod: 1, ssid: 'testSSID' })
@@ -195,7 +202,7 @@ describe('WirelessService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service
         .update({ profileName: 'wifiConfig1', authenticationMethod: 1, encryptionMethod: 1, ssid: 'testSSID' })
@@ -223,7 +230,7 @@ describe('WirelessService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.delete('wifiConfig1').subscribe({
         error: (error) => {

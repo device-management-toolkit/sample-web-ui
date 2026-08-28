@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
@@ -18,8 +20,8 @@ import { environment } from '../../../environments/environment'
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent
   let fixture: ComponentFixture<ToolbarComponent>
-  let authService: jasmine.SpyObj<AuthService>
-  let matDialog: jasmine.SpyObj<MatDialog>
+  let authService: SpyObj<AuthService>
+  let matDialog: SpyObj<MatDialog>
   let isLoggedInSubject: BehaviorSubject<boolean>
 
   beforeEach(async () => {
@@ -31,7 +33,7 @@ describe('ToolbarComponent', () => {
 
     isLoggedInSubject = new BehaviorSubject<boolean>(false)
 
-    const authServiceSpy = jasmine.createSpyObj(
+    const authServiceSpy = createSpyObj(
       'AuthService',
       [
         'logout',
@@ -46,13 +48,13 @@ describe('ToolbarComponent', () => {
       }
     )
 
-    authServiceSpy.getMPSVersion.and.returnValue(of({ version: '1.0.0' }))
-    authServiceSpy.getRPSVersion.and.returnValue(of({ version: '1.0.0' }))
-    authServiceSpy.getConsoleVersion.and.returnValue(of({ version: '1.0.0' }))
-    authServiceSpy.compareSemver.and.returnValue(1)
+    authServiceSpy.getMPSVersion.mockReturnValue(of({ version: '1.0.0' }))
+    authServiceSpy.getRPSVersion.mockReturnValue(of({ version: '1.0.0' }))
+    authServiceSpy.getConsoleVersion.mockReturnValue(of({ version: '1.0.0' }))
+    authServiceSpy.compareSemver.mockReturnValue(1)
 
-    const matDialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate'])
+    const matDialogSpy = createSpyObj('MatDialog', ['open'])
+    const routerSpy = createSpyObj('Router', ['navigate'])
 
     await TestBed.configureTestingModule({
       imports: [
@@ -71,8 +73,8 @@ describe('ToolbarComponent', () => {
 
     fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>
-    matDialog = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>
+    authService = TestBed.inject(AuthService) as SpyObj<AuthService>
+    matDialog = TestBed.inject(MatDialog) as SpyObj<MatDialog>
   })
 
   afterEach(() => {

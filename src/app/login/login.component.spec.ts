@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LoginComponent } from './login.component'
 import { AuthService } from '../auth.service'
@@ -18,17 +25,20 @@ import { provideTranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-t
 describe('LoginComponent', () => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  let authServiceSpy: jasmine.SpyObj<AuthService>
-  let snackBarSpy: jasmine.SpyObj<MatSnackBar>
-  let dialogSpy: jasmine.SpyObj<MatDialog>
-  let routerSpy: jasmine.SpyObj<Router>
+  let authServiceSpy: SpyObj<AuthService>
+  let snackBarSpy: SpyObj<MatSnackBar>
+  let dialogSpy: SpyObj<MatDialog>
+  let routerSpy: SpyObj<Router>
   let translate: TranslateService
 
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['login'])
-    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open'])
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
-    routerSpy = jasmine.createSpyObj('Router', ['navigate'])
+    // Every spec file shares one localStorage, so start from a clean store
+    // rather than stubbing the global (which would leak into other files).
+    localStorage.clear()
+    authServiceSpy = createSpyObj('AuthService', ['login'])
+    snackBarSpy = createSpyObj('MatSnackBar', ['open'])
+    dialogSpy = createSpyObj('MatDialog', ['open'])
+    routerSpy = createSpyObj('Router', ['navigate'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -66,8 +76,7 @@ describe('LoginComponent', () => {
   describe('onSubmit', () => {
     it('should log in the user and navigate to home on success', () => {
       const mockLoginResponse = { token: 'test-token' }
-      authServiceSpy.login.and.returnValue(of(mockLoginResponse))
-      spyOn(localStorage, 'setItem')
+      authServiceSpy.login.mockReturnValue(of(mockLoginResponse))
 
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
@@ -78,8 +87,7 @@ describe('LoginComponent', () => {
 
     it('should open the About dialog if environment.cloud is true and doNotShowAgain is false', () => {
       const mockLoginResponse = { token: 'test-token' }
-      authServiceSpy.login.and.returnValue(of(mockLoginResponse))
-      spyOn(localStorage, 'getItem').and.returnValue(null)
+      authServiceSpy.login.mockReturnValue(of(mockLoginResponse))
       environment.cloud = true
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
@@ -89,7 +97,7 @@ describe('LoginComponent', () => {
 
     it('should display an error snackbar for 401/405 errors', () => {
       const mockError = { status: 401, error: { message: 'Unauthorized' } }
-      authServiceSpy.login.and.returnValue(throwError(mockError))
+      authServiceSpy.login.mockReturnValue(throwError(() => mockError))
 
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
@@ -99,7 +107,7 @@ describe('LoginComponent', () => {
 
     it('should display a generic error snackbar for other errors', () => {
       const mockError = { status: 500 }
-      authServiceSpy.login.and.returnValue(throwError(mockError))
+      authServiceSpy.login.mockReturnValue(throwError(() => mockError))
 
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
@@ -108,12 +116,12 @@ describe('LoginComponent', () => {
     })
 
     it('should set isLoading to false after login attempt', () => {
-      authServiceSpy.login.and.returnValue(of({ token: 'test-token' }))
+      authServiceSpy.login.mockReturnValue(of({ token: 'test-token' }))
 
       component.loginForm.setValue({ userId: 'testUser', password: 'testPass' })
       component.onSubmit()
 
-      expect(component.isLoading()).toBeFalse()
+      expect(component.isLoading()).toBe(false)
     })
   })
 
@@ -136,8 +144,8 @@ describe('LoginComponent', () => {
 
     it('should initialize the login form', () => {
       expect(component.loginForm).toBeTruthy()
-      expect(component.loginForm.contains('userId')).toBeTrue()
-      expect(component.loginForm.contains('password')).toBeTrue()
+      expect(component.loginForm.contains('userId')).toBe(true)
+      expect(component.loginForm.contains('password')).toBe(true)
     })
   })
 })

@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
@@ -9,13 +16,13 @@ import { CIRAConfig, DataWithCount, PageEventOptions } from '../../models/models
 describe('ConfigsService', () => {
   let service: ConfigsService
   let httpMock: HttpTestingController
-  let authServiceSpy: jasmine.SpyObj<AuthService>
+  let authServiceSpy: SpyObj<AuthService>
 
   const mockEnvironment = { rpsServer: 'https://test-server', mpsServer: 'https://mps-server' }
   const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/ciraconfigs`
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    authServiceSpy = createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     environment.mpsServer = mockEnvironment.mpsServer
     TestBed.configureTestingModule({
@@ -100,7 +107,7 @@ describe('ConfigsService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getData().subscribe({
         error: (error) => {
@@ -139,7 +146,7 @@ describe('ConfigsService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getRecord('config1').subscribe({
         error: (error) => {
@@ -178,7 +185,7 @@ describe('ConfigsService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service
         .create({
@@ -230,7 +237,7 @@ describe('ConfigsService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service
         .update({
@@ -269,7 +276,7 @@ describe('ConfigsService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.delete('config1').subscribe({
         error: (error) => {

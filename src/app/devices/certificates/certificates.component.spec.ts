@@ -2,6 +2,8 @@
  * Copyright (c) Intel Corporation 2025
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { CertificatesComponent } from './certificates.component'
 import { DevicesService } from '../devices.service'
@@ -15,8 +17,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 describe('CertificatesComponent', () => {
   let component: CertificatesComponent
   let fixture: ComponentFixture<CertificatesComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let dialogSpy: jasmine.SpyObj<MatDialog>
+  let devicesServiceSpy: SpyObj<DevicesService>
+  let dialogSpy: SpyObj<MatDialog>
   let translate: TranslateService
 
   const response = {
@@ -145,16 +147,16 @@ describe('CertificatesComponent', () => {
   }
 
   beforeEach(() => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getCertificates',
       'addCertificate',
       'deleteCertificate'
     ])
-    devicesServiceSpy.getCertificates.and.returnValue(of(response))
-    devicesServiceSpy.addCertificate.and.returnValue(of({}))
-    devicesServiceSpy.deleteCertificate.and.returnValue(of({}))
+    devicesServiceSpy.getCertificates.mockReturnValue(of(response))
+    devicesServiceSpy.addCertificate.mockReturnValue(of({}))
+    devicesServiceSpy.deleteCertificate.mockReturnValue(of({}))
 
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open'])
+    dialogSpy = createSpyObj('MatDialog', ['open'])
 
     TestBed.configureTestingModule({
       imports: [
@@ -184,12 +186,12 @@ describe('CertificatesComponent', () => {
 
   it('isCertEmpty should return true when certificates are undefined', () => {
     component.certInfo.set(undefined)
-    expect(component.isCertEmpty()).toBeTrue()
+    expect(component.isCertEmpty()).toBe(true)
   })
 
   it('isCertEmpty should return true when certificates array is empty', () => {
     component.certInfo.set({ certificates: {} })
-    expect(component.isCertEmpty()).toBeTrue()
+    expect(component.isCertEmpty()).toBe(true)
   })
 
   it('isCertEmpty should return false when certificates array has items', () => {
@@ -198,7 +200,7 @@ describe('CertificatesComponent', () => {
         '1': { displayName: 'Cert1', x509Certificate: 'cert-data' }
       }
     })
-    expect(component.isCertEmpty()).toBeFalse()
+    expect(component.isCertEmpty()).toBe(false)
   })
 
   it('should call getCertificates on init', () => {
@@ -208,25 +210,35 @@ describe('CertificatesComponent', () => {
   it('should handle certificate download', () => {
     const mockUrl = 'blob:mock-url'
     const mockAnchor = document.createElement('a')
+    const createElement = document.createElement.bind(document)
 
-    spyOn(window.URL, 'createObjectURL').and.returnValue(mockUrl)
-    spyOn(window.URL, 'revokeObjectURL')
-    spyOn(document, 'createElement').and.returnValue(mockAnchor)
-    spyOn(document.body, 'appendChild')
-    spyOn(document.body, 'removeChild')
-    spyOn(mockAnchor, 'click')
+    const createObjectURLSpy = vi.spyOn(window.URL, 'createObjectURL').mockReturnValue(mockUrl)
+    const revokeObjectURLSpy = vi.spyOn(window.URL, 'revokeObjectURL').mockImplementation(() => undefined)
+    // Only intercept the download anchor: every spec file shares this document, and
+    // TestBed needs the real createElement to mount component fixtures.
+    const createElementSpy = vi
+      .spyOn(document, 'createElement')
+      .mockImplementation(((tagName: string, options?: ElementCreationOptions) =>
+        tagName === 'a' ? mockAnchor : createElement(tagName, options)) as any)
+    const clickSpy = vi.spyOn(mockAnchor, 'click').mockImplementation(() => undefined)
 
     const cert = {
       displayName: 'TestCert',
       x509Certificate: 'MIIC1TCCAb2gAwIBAgIJAOjOBRLbw3l7MA0GCSqGSIb3DQEBCwUAMCExHzAdBgNV'
     }
 
-    component.downloadCert(cert)
+    try {
+      component.downloadCert(cert)
 
-    expect(window.URL.createObjectURL).toHaveBeenCalled()
-    expect(mockAnchor.download).toBe('TestCert.crt')
-    expect(mockAnchor.click).toHaveBeenCalled()
-    expect(window.URL.revokeObjectURL).toHaveBeenCalledWith(mockUrl)
+      expect(createObjectURLSpy).toHaveBeenCalled()
+      expect(mockAnchor.download).toBe('TestCert.crt')
+      expect(clickSpy).toHaveBeenCalled()
+      expect(revokeObjectURLSpy).toHaveBeenCalledWith(mockUrl)
+    } finally {
+      createElementSpy.mockRestore()
+      createObjectURLSpy.mockRestore()
+      revokeObjectURLSpy.mockRestore()
+    }
   })
 
   it('removeCertLocally should drop the matching item from the signal', () => {
@@ -253,8 +265,8 @@ describe('CertificatesComponent', () => {
   })
 
   it('delete success should optimistically remove the cert without refetching', () => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<any>)
-    devicesServiceSpy.getCertificates.calls.reset()
+    dialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as MatDialogRef<any>)
+    devicesServiceSpy.getCertificates.mockClear()
 
     const target = { instanceID: 'Intel(r) AMT Certificate: Handle: 0', displayName: 'CommonName' }
     component.deleteCertificate(target)
@@ -262,23 +274,23 @@ describe('CertificatesComponent', () => {
     expect(devicesServiceSpy.deleteCertificate).toHaveBeenCalledWith('', target.instanceID)
     expect(devicesServiceSpy.getCertificates).not.toHaveBeenCalled()
     const items = component.certInfo().certificates.publicKeyCertificateItems
-    expect(items.some((c: any) => c.instanceID === target.instanceID)).toBeFalse()
-    expect(component.isLoading()).toBeFalse()
+    expect(items.some((c: any) => c.instanceID === target.instanceID)).toBe(false)
+    expect(component.isLoading()).toBe(false)
   })
 
   it('add flow should keep isLoading true until the refresh GET resolves', () => {
     const getResults = new Subject<any>()
-    devicesServiceSpy.getCertificates.and.returnValue(getResults)
-    devicesServiceSpy.addCertificate.and.returnValue(of({}))
+    devicesServiceSpy.getCertificates.mockReturnValue(getResults)
+    devicesServiceSpy.addCertificate.mockReturnValue(of({}))
 
     component.addCertificate({ cert: 'abc', isTrusted: false })
 
-    expect(component.isLoading()).toBeTrue()
+    expect(component.isLoading()).toBe(true)
 
     getResults.next(response)
     getResults.complete()
 
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(component.certInfo()).toBe(response)
   })
 })

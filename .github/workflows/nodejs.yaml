@@ -39,14 +39,22 @@ jobs:
       - run: npm run lint:cypress
         if: ${{ matrix.node-version == '22.x' }}
       - run: npm run ci-prettify
-      - run: npm run test-ci
+      - name: Install Playwright Chromium
+        # Unit tests run in a real headless Chromium via Vitest browser mode
+        # (@vitest/browser-playwright); the runner image does not ship that browser.
+        run: npx playwright install --with-deps chromium
+      - run: npm run test-ci -- --output-file=sample-web-ui-$NODE_VERSION.xml
+        env:
+          NODE_VERSION: ${{ matrix.node-version }}
       - uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         name: Upload Coverage Results
         if: ${{ matrix.node-version == '22.x' }}
         with:
           directory: ./coverage/samplewebui
-      - name: Upload Karma Results
+      - name: Upload Test Results
+        # Run even when Test fails — that is exactly when the junit report matters.
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sample-web-ui-unit-${{ matrix.node-version }}
-          path: TESTS-Chrome-${{ matrix.node-version }}_*.xml
+          path: sample-web-ui-${{ matrix.node-version }}.xml

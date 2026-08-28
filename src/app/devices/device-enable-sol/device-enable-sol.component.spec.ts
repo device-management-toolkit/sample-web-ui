@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -14,7 +15,7 @@ describe('DeviceEnableSolComponent', () => {
   let component: DeviceEnableSolComponent
   let fixture: ComponentFixture<DeviceEnableSolComponent>
   const dialogMock = {
-    close: jasmine.createSpy('close')
+    close: vi.fn()
   }
 
   beforeEach(() => {
@@ -35,7 +36,7 @@ describe('DeviceEnableSolComponent', () => {
     fixture = TestBed.createComponent(DeviceEnableSolComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-    dialogMock.close = jasmine.createSpy('close')
+    dialogMock.close = vi.fn()
   })
 
   afterEach(() => {

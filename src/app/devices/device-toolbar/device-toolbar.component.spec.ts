@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DevicesService } from '../devices.service'
@@ -15,24 +17,24 @@ import { EventEmitter } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { provideTranslateService } from '@ngx-translate/core'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
   let fixture: ComponentFixture<DeviceToolbarComponent>
-  let sendPowerActionSpy: jasmine.Spy
-  let getDeviceSpy: jasmine.Spy
-  let sendDeactivateSpy: jasmine.Spy
-  let sendDeactivateErrorSpy: jasmine.Spy
-  let devicesService: jasmine.SpyObj<DevicesService>
-  let snackBar: jasmine.SpyObj<MatSnackBar>
+  let sendPowerActionSpy: MockInstance
+  let getDeviceSpy: MockInstance
+  let sendDeactivateSpy: MockInstance
+  let devicesService: SpyObj<DevicesService>
+  let snackBar: SpyObj<MatSnackBar>
 
   const isCloudMode = environment.cloud
 
   beforeEach(async () => {
     // Create a spy for the snackBar service
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
+    snackBar = createSpyObj('MatSnackBar', ['open'])
 
-    devicesService = jasmine.createSpyObj('DevicesService', [
+    devicesService = createSpyObj('DevicesService', [
       'sendPowerAction',
       'getDevice',
       'sendDeactivate',
@@ -43,11 +45,11 @@ describe('DeviceToolbarComponent', () => {
       'getAMTVersion',
       'featuresChanges'
     ])
-    devicesService.featuresChanges.and.returnValue(of(null))
+    devicesService.featuresChanges.mockReturnValue(of(null))
     devicesService.deviceState = new EventEmitter<number>()
 
     devicesService.TargetOSMap = { 0: 'Unknown' } as any
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(
+    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(
       of({
         Body: {
           ReturnValueStr: 'NOT_READY'
@@ -55,8 +57,8 @@ describe('DeviceToolbarComponent', () => {
       })
     )
 
-    devicesService.getPowerState.and.returnValue(of({ powerstate: 2 }))
-    devicesService.getPowerStateCached.and.returnValue(of({ powerstate: 2 }))
+    devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+    devicesService.getPowerStateCached.mockReturnValue(of({ powerstate: 2 }))
     const mockAMTFeatures = {
       userConsent: 'None',
       ocr: true,
@@ -78,12 +80,11 @@ describe('DeviceToolbarComponent', () => {
         bootString: ''
       }
     } as any
-    devicesService.getAMTFeatures.and.returnValue(of(mockAMTFeatures))
-    devicesService.getAMTFeaturesCached.and.returnValue(of(mockAMTFeatures))
-    getDeviceSpy = devicesService.getDevice.and.returnValue(of({ guid: 'guid' } as any))
-    sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
-    sendDeactivateErrorSpy = devicesService.sendDeactivate.and.returnValue(throwError({ error: 'Error' }))
-    devicesService.getAMTVersion.and.returnValue(
+    devicesService.getAMTFeatures.mockReturnValue(of(mockAMTFeatures))
+    devicesService.getAMTFeaturesCached.mockReturnValue(of(mockAMTFeatures))
+    getDeviceSpy = devicesService.getDevice.mockReturnValue(of({ guid: 'guid' } as any))
+    sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
+    devicesService.getAMTVersion.mockReturnValue(
       of({
         AMT_SetupAndConfigurationService: {
           response: { ProvisioningMode: 1 } // Default to ACM mode
@@ -136,7 +137,7 @@ describe('DeviceToolbarComponent', () => {
 
     expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false, {})
     fixture.detectChanges()
-    expect(component.isLoading()()).toBeFalse()
+    expect(component.isLoading()()).toBe(false)
   })
 
   it('should fetch power state using cached API on initial load', () => {
@@ -145,8 +146,8 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should fetch power state using non-cached API on refresh', () => {
-    devicesService.getPowerState.calls.reset()
-    devicesService.getPowerStateCached.calls.reset()
+    devicesService.getPowerState.mockClear()
+    devicesService.getPowerStateCached.mockClear()
 
     component.refreshPowerState()
 
@@ -155,17 +156,17 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should show snackbar and reset loading state when refresh power state fails', () => {
-    devicesService.getPowerState.and.returnValue(throwError(() => new Error('Network error')))
+    devicesService.getPowerState.mockReturnValue(throwError(() => new Error('Network error')))
 
     component.refreshPowerState()
 
     expect(snackBar.open).toHaveBeenCalled()
-    expect(component.isLoading()()).toBeFalse()
+    expect(component.isLoading()()).toBe(false)
   })
 
   it('should navigate to device', async () => {
     fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('guid')
     expect(routerSpy).toHaveBeenCalledWith([`/devices/${component.deviceId()}/guid`])
   })
@@ -173,21 +174,45 @@ describe('DeviceToolbarComponent', () => {
   it('should navigate to devices', async () => {
     fixture.componentRef.setInput('deviceId', '12345-pokli-456772')
 
-    const routerSpy = spyOn(component.router, 'navigate')
-    spyOnProperty(component.router, 'url', 'get').and.returnValue(`/devices/${component.deviceId()}`)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    vi.spyOn(component.router, 'url', 'get').mockReturnValue(`/devices/${component.deviceId()}`)
     await component.navigateTo('devices')
     expect(routerSpy).toHaveBeenCalledWith(['/devices'])
   })
 
-  it('should send deactivate action', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+  it('should send deactivate action', async () => {
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const navigateToSpy = vi.spyOn(component, 'navigateTo').mockResolvedValue()
 
     component.sendDeactivate()
+    await fixture.whenStable()
+
     expect(dialogSpy).toHaveBeenCalled()
     expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
-    expect(sendDeactivateSpy).toHaveBeenCalled()
-    expect(sendDeactivateErrorSpy).toHaveBeenCalled()
+    expect(sendDeactivateSpy).toHaveBeenCalledWith(component.deviceId())
+    expect(snackBar.open).toHaveBeenCalledWith('devices.deactivation.value', undefined, SnackbarDefaults.defaultSuccess)
+    expect(navigateToSpy).toHaveBeenCalledWith('devices')
+    expect(component.isLoading()()).toBe(false)
+  })
+
+  it('should show an error when deactivate fails', async () => {
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const navigateToSpy = vi.spyOn(component, 'navigateTo').mockResolvedValue()
+    sendDeactivateSpy.mockReturnValueOnce(throwError(() => ({ error: 'Error' })))
+
+    component.sendDeactivate()
+    await fixture.whenStable()
+
+    expect(sendDeactivateSpy).toHaveBeenCalledWith(component.deviceId())
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'devices.errorDeactivation.value',
+      undefined,
+      SnackbarDefaults.defaultError
+    )
+    expect(navigateToSpy).not.toHaveBeenCalled()
+    expect(component.isLoading()()).toBe(false)
   })
 
   it('should open PBABootDialogComponent and send filtered PBA sources', () => {
@@ -211,19 +236,19 @@ describe('DeviceToolbarComponent', () => {
         description: 'Other Boot'
       }
     ]
-    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
-    devicesService.getAMTVersion.and.returnValue(
+    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
+    devicesService.getAMTVersion.mockReturnValue(
       of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 1 } } })
     )
-    const dialogRefSpyObj = jasmine.createSpyObj({
+    const dialogRefSpyObj = createSpyObj({
       afterClosed: of({ bootPath: 'OemPba.efi', enforceSecureBoot: true }),
       close: null
     })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
     component.performPBABoot(107)
     expect(devicesService.getBootSources).toHaveBeenCalledWith('guid')
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: {
@@ -247,7 +272,7 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should call executeAuthorizedPowerAction for WinRE without boot details', () => {
-    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
     component.performWinREBoot(109)
     expect(executeAuthSpy).toHaveBeenCalledWith(109, false, { enforceSecureBoot: true })
   })
@@ -266,12 +291,12 @@ describe('DeviceToolbarComponent', () => {
     environment.cloud = false
     component.isCloudMode = false
 
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.performHTTPBoot(105)
 
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: { isCCM: false }
@@ -289,10 +314,10 @@ describe('DeviceToolbarComponent', () => {
       password: 'pass',
       enforceSecureBoot: true
     }
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(bootDetails), close: null })
-    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(bootDetails), close: null })
+    vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
-    const executeAuthSpy = spyOn(component, 'executeAuthorizedPowerAction').and.stub()
+    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
 
     component.performHTTPBoot(105)
 
@@ -300,16 +325,16 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should pass isCCM true to HTTPBootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
-    devicesService.getAMTVersion.and.returnValue(
+    devicesService.getAMTVersion.mockReturnValue(
       of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
     )
 
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.performHTTPBoot(105)
 
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: { isCCM: true }
@@ -317,14 +342,14 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should still open HTTPBootDialog with isCCM false when getAMTVersion fails', () => {
-    devicesService.getAMTVersion.and.returnValue(throwError(() => new Error('Network error')))
+    devicesService.getAMTVersion.mockReturnValue(throwError(() => new Error('Network error')))
 
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.performHTTPBoot(105)
 
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: { isCCM: false }
@@ -332,7 +357,7 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should still open PBABootDialog with isCCM false when getAMTVersion fails but boot sources succeed', () => {
-    devicesService.getAMTVersion.and.returnValue(throwError(() => new Error('Network error')))
+    devicesService.getAMTVersion.mockReturnValue(throwError(() => new Error('Network error')))
 
     const pbaSources = [
       {
@@ -344,13 +369,13 @@ describe('DeviceToolbarComponent', () => {
         structuredBootString: ''
       }
     ]
-    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.performPBABoot(107)
 
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: {
@@ -362,7 +387,7 @@ describe('DeviceToolbarComponent', () => {
   })
 
   it('should pass isCCM true to PBABootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
-    devicesService.getAMTVersion.and.returnValue(
+    devicesService.getAMTVersion.mockReturnValue(
       of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
     )
 
@@ -376,13 +401,13 @@ describe('DeviceToolbarComponent', () => {
         structuredBootString: ''
       }
     ]
-    devicesService.getBootSources = jasmine.createSpy().and.returnValue(of(pbaSources))
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.performPBABoot(107)
 
-    expect(dialogSpy).toHaveBeenCalledWith(jasmine.any(Function), {
+    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
       width: '400px',
       disableClose: false,
       data: {

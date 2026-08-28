@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -18,20 +20,20 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('DomainDetailComponent', () => {
   let component: DomainDetailComponent
   let fixture: ComponentFixture<DomainDetailComponent>
-  let getRecordSpy: jasmine.Spy
-  let updateRecordSpy: jasmine.Spy
-  let createRecordSpy: jasmine.Spy
+  let getRecordSpy: MockInstance
+  let updateRecordSpy: MockInstance
+  let createRecordSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const domainsService = jasmine.createSpyObj('DomainsService', [
+    const domainsService = createSpyObj('DomainsService', [
       'getRecord',
       'update',
       'create'
     ])
-    getRecordSpy = domainsService.getRecord.and.returnValue(of({ profileName: 'domain' }))
-    updateRecordSpy = domainsService.update.and.returnValue(of({}))
-    createRecordSpy = domainsService.create.and.returnValue(of({}))
+    getRecordSpy = domainsService.getRecord.mockReturnValue(of({ profileName: 'domain' }))
+    updateRecordSpy = domainsService.update.mockReturnValue(of({}))
+    createRecordSpy = domainsService.create.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -67,20 +69,20 @@ describe('DomainDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')
-    expect(component.isLoading()).toBeFalse()
-    expect(component.isEdit).toBeTrue()
+    expect(getRecordSpy.mock.calls.length > 0, 'getRecord called').toBe(true)
+    expect(component.isLoading()).toBe(false)
+    expect(component.isEdit).toBe(true)
     expect(component.pageTitle).toEqual('domain')
   })
 
   it('should cancel', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/domains'])
   })
 
   it('should submit when valid(update)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.domainForm.patchValue({
       profileName: 'domain1',
       domainSuffix: 'domain.com',
@@ -96,7 +98,7 @@ describe('DomainDetailComponent', () => {
   })
 
   it('should submit when form is valid(create)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.domainForm.patchValue({
       profileName: 'domain1',
       domainSuffix: 'domain.com',
