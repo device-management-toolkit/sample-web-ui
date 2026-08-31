@@ -66,7 +66,8 @@ describe('DevicesComponent', () => {
       'sendPowerAction',
       'bulkPowerAction',
       'sendDeactivate',
-      'sendBulkDeactivate'
+      'sendBulkDeactivate',
+      'getStats'
     ])
     devicesService.PowerStates.mockReturnValue({
       2: 'On',
@@ -82,10 +83,13 @@ describe('DevicesComponent', () => {
     updateDeviceSpy = devicesService.updateDevice.mockImplementation((device: any) => {
       return of(device)
     })
-    getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
-    devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
-    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
-    sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
+      getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+      devicesService.getStats.mockReturnValue(
+        of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
+      )
+    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
+    sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -281,65 +285,67 @@ describe('DevicesComponent', () => {
     })
   })
 
-  describe('onTabChange / applyTabFilter', () => {
+  describe('onTabChange / server-side counts', () => {
     beforeEach(() => {
-      const baseInfo = { fwVersion: '', fwBuild: '', fwSku: '0', features: '', ipAddress: '' }
-      component.allDevicesData = [
-        { ...device01, deviceInfo: { ...baseInfo, currentMode: 'acm', discovered: false } },
-        { ...device02, deviceInfo: { ...baseInfo, currentMode: 'not activated', discovered: true } }
-      ]
+      getDevicesSpy.calls.reset()
     })
 
-    it('should show all devices on tab 0', () => {
+    it('should request all devices (no status filter) on tab 0', () => {
       component.onTabChange(0)
-      expect(component.devices.data.length).toBe(2)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: undefined }))
     })
 
-    it('should filter to activated devices on tab 1', () => {
+    it('should request activated devices from the server on tab 1', () => {
       component.onTabChange(1)
-      expect(component.devices.data.length).toBe(1)
-      expect(component.devices.data[0].guid).toBe(device01.guid)
+      expect(component.activeTab()).toBe(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: 'activated' }))
     })
 
-    it('should filter to discovered devices on tab 2', () => {
+    it('should request discovered devices from the server on tab 2', () => {
       component.onTabChange(2)
-      expect(component.devices.data.length).toBe(1)
-      expect(component.devices.data[0].guid).toBe(device02.guid)
+      expect(component.activeTab()).toBe(2)
+      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: 'discovered' }))
     })
 
-    it('should set totalCount to serverTotalCount on tab 0', () => {
-      ;(component as any).serverTotalCount = 42
+    it('should reset paging to the first page when switching tabs', () => {
+      component.pageEvent.startsFrom = 50
+      component.onTabChange(1)
+      expect(component.pageEvent.startsFrom).toBe(0)
+    })
+
+    it('should expose server-provided counts', () => {
+      expect(component.allCount).toBe(42)
+      expect(component.activatedCount).toBe(7)
+      expect(component.discoveredCount).toBe(3)
+    })
+
+    it('should set currentTabCount from the active tab', () => {
       component.onTabChange(0)
-      expect(component.totalCount()).toBe(42)
-    })
-
-    it('should set totalCount to filtered length on tab 1', () => {
+      expect(component.currentTabCount).toBe(42)
       component.onTabChange(1)
-      expect(component.totalCount()).toBe(1)
-    })
-
-    it('should set totalCount to filtered length on tab 2', () => {
+      expect(component.currentTabCount).toBe(7)
       component.onTabChange(2)
-      expect(component.totalCount()).toBe(1)
+      expect(component.currentTabCount).toBe(3)
     })
   })
 
   describe('isNoData', () => {
-    it('should return false when allDevicesData has entries regardless of totalCount', () => {
-      component.allDevicesData = [device01]
+    it('should return false when the table has entries regardless of totalCount', () => {
+      component.devices.data = [device01]
       component.isLoading.set(false)
       component.totalCount.set(0) // filtered tab has 0 — should not trigger no-data
       expect(component.isNoData()).toBeFalse()
     })
 
-    it('should return true only when allDevicesData is empty and not loading', () => {
-      component.allDevicesData = []
+    it('should return true only when the table is empty and not loading', () => {
+      component.devices.data = []
       component.isLoading.set(false)
       expect(component.isNoData()).toBeTrue()
     })
 
-    it('should return false when loading even if allDevicesData is empty', () => {
-      component.allDevicesData = []
+    it('should return false when loading even if the table is empty', () => {
+      component.devices.data = []
       component.isLoading.set(true)
       expect(component.isNoData()).toBeFalse()
     })

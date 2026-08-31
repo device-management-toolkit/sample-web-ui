@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
 import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
-import { Device, PageEventOptions } from '../../models/models'
+import { Device, DeviceFilterStatus, PageEventOptions } from '../../models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
@@ -112,11 +112,24 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public isCloudMode: boolean = environment.cloud
 
   public activeTab = signal(0)
-  public allDevicesData: Device[] = []
   private serverTotalCount = 0
+  private serverActivatedCount = 0
+  private serverDiscoveredCount = 0
 
   get allCount(): number {
     return this.serverTotalCount
+  }
+
+  // Count for the currently selected tab, used to drive the paginator length.
+  get currentTabCount(): number {
+    switch (this.activeTab()) {
+      case 1:
+        return this.serverActivatedCount
+      case 2:
+        return this.serverDiscoveredCount
+      default:
+        return this.serverTotalCount
+    }
   }
 
   get allTabLabel(): string {
@@ -132,39 +145,46 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   get activatedCount(): number {
-    return this.allDevicesData.filter(
-      (d) => d.deviceInfo?.currentMode != null && d.deviceInfo.currentMode !== 'not activated'
-    ).length
+    return this.serverActivatedCount
   }
 
   get discoveredCount(): number {
-    return this.allDevicesData.filter((d) => d.deviceInfo?.discovered === true).length
+    return this.serverDiscoveredCount
   }
 
   onTabChange(index: number): void {
     this.activeTab.set(index)
-    this.applyTabFilter()
+    // Different tabs return different result sets, so reset paging to the first page.
+    this.pageEvent.startsFrom = 0
+    if (this.paginator) {
+      this.paginator.pageIndex = 0
+    }
+    this.getDevices()
   }
 
-  private applyTabFilter(): void {
-    let filtered: Device[]
+  private currentTabStatus(): DeviceFilterStatus | undefined {
     switch (this.activeTab()) {
       case 1:
-        filtered = this.allDevicesData.filter(
-          (d) => d.deviceInfo?.currentMode != null && d.deviceInfo.currentMode !== 'not activated'
-        )
-        this.totalCount.set(filtered.length)
-        break
+        return 'activated'
       case 2:
-        filtered = this.allDevicesData.filter((d) => d.deviceInfo?.discovered === true)
-        this.totalCount.set(filtered.length)
-        break
+        return 'discovered'
       default:
-        filtered = this.allDevicesData
-        this.totalCount.set(this.serverTotalCount)
-        break
+        return undefined
     }
-    this.devices.data = filtered
+  }
+
+  private loadStats(): void {
+    this.devicesService.getStats().subscribe({
+      next: (stats) => {
+        this.serverTotalCount = stats.totalCount
+        this.serverActivatedCount = stats.activatedCount
+        this.serverDiscoveredCount = stats.discoveredCount
+        this.totalCount.set(this.currentTabCount)
+      },
+      error: (err) => {
+        console.error('Error loading device stats:', err)
+      }
+    })
   }
 
   get deleteDeviceLabel(): string {
@@ -264,16 +284,17 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   getDevices(): void {
     this.isLoading.set(true)
 
+    // Counts (all/activated/discovered) are computed server-side and shared with
+    // headless/API consumers, so refresh them alongside the current page.
+    this.loadStats()
+
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
 
     this.devicesService
-      .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
+      .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
-          this.totalCount.set(res.totalCount)
-          this.serverTotalCount = res.totalCount
-
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
           }
@@ -313,8 +334,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((devices) => {
-        this.allDevicesData = devices
-        this.applyTabFilter()
+        this.devices.data = devices
 
         // Restore selection state on data retrieval
         this.selectedDevices.clear()
@@ -398,7 +418,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.allDevicesData.length === 0
+    return !this.isLoading() && this.devices.data.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {

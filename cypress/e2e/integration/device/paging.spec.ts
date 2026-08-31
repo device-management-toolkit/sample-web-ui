@@ -20,6 +20,17 @@ describe('Test Device Page', () => {
       body: devices.getAll.forPaging.response
     }).as('get-devices')
 
+    cy.myIntercept('GET', 'api/v1/devices/stats', {
+      statusCode: httpCodes.SUCCESS,
+      body: {
+        totalCount: deviceFixtures.totalCount,
+        connectedCount: 0,
+        disconnectedCount: 0,
+        activatedCount: 0,
+        discoveredCount: 0
+      }
+    }).as('get-device-stats')
+
     cy.myIntercept('GET', /tags$/, {
       statusCode: httpCodes.SUCCESS,
       body: tags.getAll.success.response
@@ -31,6 +42,7 @@ describe('Test Device Page', () => {
     }).as('get-powerstate')
 
     cy.goToPage('Devices')
+    cy.wait('@get-device-stats')
   })
 
   it('pagination for next page', () => {
