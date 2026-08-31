@@ -443,6 +443,11 @@ export class DevicesService {
     } else {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     }
+    if (pageEvent?.status === 'activated') {
+      query += '&activated=true'
+    } else if (pageEvent?.status === 'discovered') {
+      query += '&discovered=true'
+    }
     return this.http.get<DataWithCount<Device>>(query).pipe(
       catchError((err) => {
         throw err
