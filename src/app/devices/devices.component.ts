@@ -199,6 +199,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     'guid',
     'status',
     'productType',
+    'deviceType',
     'tags',
     'actions',
     'notification'
@@ -221,6 +222,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         'select',
         'hostname',
         'productType',
+        'deviceType',
         'tags',
         'actions',
         'notification'
@@ -433,6 +435,11 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
     return ''
+  }
+
+  getDeviceType(device: Device): DeviceFilterStatus {
+    const currentMode = device.deviceInfo?.currentMode?.trim().toLowerCase()
+    return currentMode && currentMode !== 'not activated' ? 'activated' : 'discovered'
   }
 
   translateConnectionStatus(status?: boolean): string {

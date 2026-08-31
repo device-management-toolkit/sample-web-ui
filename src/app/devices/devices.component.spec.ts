@@ -285,6 +285,23 @@ describe('DevicesComponent', () => {
     })
   })
 
+  describe('getDeviceType', () => {
+    it('should return activated for a real AMT control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'client control mode' } } as Device
+      expect(component.getDeviceType(device)).toBe('activated')
+    })
+
+    it('should return discovered when the device is not activated', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'not activated' } } as Device
+      expect(component.getDeviceType(device)).toBe('discovered')
+    })
+
+    it('should return discovered when currentMode is missing', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getDeviceType(device)).toBe('discovered')
+    })
+  })
+
   describe('onTabChange / server-side counts', () => {
     beforeEach(() => {
       getDevicesSpy.mockClear()

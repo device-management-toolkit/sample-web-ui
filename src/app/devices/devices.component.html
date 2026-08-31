@@ -132,7 +132,18 @@
           <!-- not sortable: productType is computed, not a real Device property -->
           <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
-            {{ getProductType(element) }}
+            <span class="product-type-chip">{{ getProductType(element) }}</span>
+          </mat-cell>
+        </ng-container>
+        <!-- deviceType Column -->
+        <ng-container matColumnDef="deviceType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+            'devices.table.type.value' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            <span class="device-type-chip" [class.activated]="getDeviceType(element) === 'activated'">
+              {{ 'devices.tabs.' + getDeviceType(element) + '.value' | translate }}
+            </span>
           </mat-cell>
         </ng-container>
         <!-- tags Column -->

@@ -1073,6 +1073,10 @@
     "description": "Table column header for product type",
     "value": "Tuotetyyppi"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "Tyyppi"
+  },
   "devices.table.tags": {
     "description": "Taulukon sarakkeen otsikko tunnisteille",
     "value": "Tunnisteet"
