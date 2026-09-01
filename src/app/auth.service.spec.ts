@@ -253,6 +253,16 @@ describe('AuthService', () => {
     })
   })
 
+  describe('verifyStoredSession', () => {
+    it('should call a protected endpoint so the server can reject a dead token', () => {
+      service.verifyStoredSession().subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/stats`)
+      expect(req.request.method).toBe('GET')
+      req.flush({})
+    })
+  })
+
   describe('getMPSVersion', () => {
     it('should fetch the MPS version', () => {
       const mockResponse: MPSVersion = { serviceVersion: '1.0.0' }
