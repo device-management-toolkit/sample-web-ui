@@ -30,7 +30,11 @@
             name="name"
             [placeholder]="'configs.table.ciraName.value' | translate"
             required />
-          <mat-error>{{ profileNameErrors }}</mat-error>
+          @if (domainForm.controls.profileName.hasError('required')) {
+            <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          } @else if (domainForm.controls.profileName.hasError('pattern')) {
+            <mat-error>{{ 'domainDetail.alphanumValidation.value' | translate }}</mat-error>
+          }
           <mat-hint>{{ 'domainDetail.nameHint.value' | translate }}</mat-hint>
         </mat-form-field>
 

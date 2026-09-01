@@ -91,20 +91,6 @@ export class DomainDetailComponent implements OnInit {
   public pageTitle: string
   public errorMessages: string[] = []
 
-  // ProfileName validation errors
-  get profileNameErrors() {
-    const control = this.domainForm.get('profileName')
-    if (control?.errors && (control.dirty || control.touched)) {
-      if (control.errors['required']) {
-        return this.translate.instant('fieldRequired.short.value')
-      }
-      if (control.errors['pattern']) {
-        return this.translate.instant('domainDetail.alphanumValidation.value')
-      }
-    }
-    return ''
-  }
-
   constructor() {
     this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
   }
