@@ -48,7 +48,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Vitest](https://vitest.dev) in headless Chromium (Playwright). Run `npx playwright install chromium` once before the first test run.
+Run `ng test` to execute the unit tests via [Vitest](https://vitest.dev). Tests run in Node against a simulated DOM ([happy-dom](https://github.com/capricorn86/happy-dom)) — no browser download is required.
 
 ## Using devcontainer
 

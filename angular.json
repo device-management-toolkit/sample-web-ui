@@ -21,7 +21,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/samplewebui"
@@ -121,7 +121,7 @@
           "defaultConfiguration": ""
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "buildTarget": "samplewebui:build",
             "host": "0.0.0.0"
@@ -138,7 +138,7 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "samplewebui:build"
           }
@@ -152,10 +152,6 @@
             "setupFiles": [
               "src/test-setup.ts"
             ],
-            "browsers": [
-              "chromium"
-            ],
-            "headless": true,
             "coverage": true,
             "coverageReporters": [
               "html",
@@ -166,7 +162,8 @@
               "junit",
               "default"
             ],
-            "outputFile": "sample-web-ui.xml"
+            "outputFile": "sample-web-ui.xml",
+            "runnerConfig": "vitest.config.ts"
           }
         },
         "lint": {

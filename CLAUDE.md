@@ -18,7 +18,7 @@ npm start                       # ng serve on http://localhost:4200 (cloud/dev b
 npm run enterprise              # ng serve with the enterprise.dev environment
 npm run build                   # ng build (dev, no optimization) → dist/samplewebui/browser/
 npm run build-enterprise        # production-style build with token placeholders → ui/browser/
-npm test                        # Vitest (@angular/build:unit-test), watch mode, headless Chromium via Playwright
+npm test                        # Vitest (@angular/build:unit-test), watch mode, happy-dom in Node
 npm run test-ci                 # single-run, JUnit report (sample-web-ui.xml) + coverage
 npm run lint                    # ng lint (TS + HTML via angular-eslint)
 npm run prettify                # write Prettier formatting across the repo
@@ -26,7 +26,7 @@ npm run cypress                 # open Cypress runner (interactive)
 npm run cy-runner               # cypress run (headless)
 ```
 
-Run a single Vitest spec with `it.only`/`describe.only`, or by passing `--include` to `ng test` (e.g. `npm test -- --include='**/devices.component.spec.ts'`). Playwright Chromium must be installed once: `npx playwright install chromium`.
+Run a single Vitest spec with `it.only`/`describe.only`, or by passing `--include` to `ng test` (e.g. `npm test -- --include='**/devices.component.spec.ts'`).
 Run a single Cypress spec: `npx cypress run --spec "cypress/e2e/integration/<area>/<file>.cy.ts"`.
 The `Makefile` (`make cy`, `make runner`, `make e2e-runner`) wraps Cypress with `ISOLATED` / `BASEURL` env vars used by the test suite to switch between mocked and live backends.
 
@@ -52,7 +52,7 @@ Standalone-component app bootstrapped from `src/main.ts`; routes live in `src/ap
 
 ### Tests
 
-- Unit: Vitest (browser mode, headless Chromium via Playwright), every `*.spec.ts` next to its source. `src/test-setup.ts` restores all spies after each spec (jasmine parity); `src/test-helpers.ts` provides `createSpyObj`/`SpyObj`. The builder initialises TestBed with `destroyAfterEach: true` and `errorOnUnknownElements`/`errorOnUnknownProperties: true` (stricter than the old karma `src/test.ts`), and runs every spec file in one shared browser document — never leave a stub on `document`/`window` behind. Coverage is on by default; HTML output lands in `coverage/samplewebui/`.
+- Unit: Vitest in Node against a simulated DOM (happy-dom — no browser download), every `*.spec.ts` next to its source. `src/test-setup.ts` restores all spies after each spec (jasmine parity) and shims `localStorage`; `src/test-helpers.ts` provides `createSpyObj`/`SpyObj`. The builder initialises TestBed with `destroyAfterEach: true` and `errorOnUnknownElements`/`errorOnUnknownProperties: true` (stricter than the old karma `src/test.ts`). `vitest.config.ts` inlines `@device-management-toolkit/*` so Node does not have to resolve its ESM directory imports. Coverage is on by default; HTML output lands in `coverage/samplewebui/`.
 - E2E: Cypress under `cypress/e2e/integration/<feature>/`. Specs depend on `ISOLATED` (true → fixtures only) vs a live backend at `BASEURL`. JUnit XML reports land at the repo root.
 
 ## Conventions

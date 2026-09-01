@@ -39,10 +39,6 @@ jobs:
       - run: npm run lint:cypress
         if: ${{ matrix.node-version == '22.x' }}
       - run: npm run ci-prettify
-      - name: Install Playwright Chromium
-        # Unit tests run in a real headless Chromium via Vitest browser mode
-        # (@vitest/browser-playwright); the runner image does not ship that browser.
-        run: npx playwright install --with-deps chromium
       - run: npm run test-ci -- --output-file=sample-web-ui-$NODE_VERSION.xml
         env:
           NODE_VERSION: ${{ matrix.node-version }}
