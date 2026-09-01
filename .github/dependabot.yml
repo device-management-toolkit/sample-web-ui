@@ -24,7 +24,6 @@ updates:
         patterns:
           - 'vitest'
           - '@vitest/*'
-          - 'playwright'
     # Majors handled manually via `ng update`.
     ignore:
       - dependency-name: '@angular/*'

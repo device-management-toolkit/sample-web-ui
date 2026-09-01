@@ -32,8 +32,7 @@ describe('LoginComponent', () => {
   let translate: TranslateService
 
   beforeEach(async () => {
-    // Every spec file shares one localStorage, so start from a clean store
-    // rather than stubbing the global (which would leak into other files).
+    // Start from a clean store rather than stubbing the global.
     localStorage.clear()
     authServiceSpy = createSpyObj('AuthService', ['login'])
     snackBarSpy = createSpyObj('MatSnackBar', ['open'])
