@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DeviceEditTagsComponent } from './edit-tags.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -15,12 +16,13 @@ describe('EditTagsComponent', () => {
   let component: DeviceEditTagsComponent
   let fixture: ComponentFixture<DeviceEditTagsComponent>
   let tags: string[]
-  const dialogMock = {
-    close: jasmine.createSpy('close')
-  }
+  let dialogMock: { close: ReturnType<typeof vi.fn> }
 
   beforeEach(() => {
     tags = ['tag1', 'tag2']
+    dialogMock = {
+      close: vi.fn()
+    }
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -62,7 +64,7 @@ describe('EditTagsComponent', () => {
     const e = {
       value: ' newtag ',
       chipInput: {
-        clear: jasmine.createSpy()
+        clear: vi.fn()
       }
     }
     component.add(e as unknown as MatChipInputEvent)

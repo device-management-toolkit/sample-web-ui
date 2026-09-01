@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { describe, expect, it } from 'vitest'
 import { getSkuFromAmtVersion, isISMSku, skuLabel, SKU_AMT, SKU_ISM } from './sku'
 
 describe('sku helpers', () => {
@@ -44,15 +45,15 @@ describe('sku helpers', () => {
 
   describe('isISMSku', () => {
     it('returns true for the ISM SKU constant', () => {
-      expect(isISMSku(SKU_ISM)).toBeTrue()
+      expect(isISMSku(SKU_ISM)).toBe(true)
     })
 
     it('returns false for the AMT SKU constant', () => {
-      expect(isISMSku(SKU_AMT)).toBeFalse()
+      expect(isISMSku(SKU_AMT)).toBe(false)
     })
 
     it('returns false for an unknown SKU', () => {
-      expect(isISMSku('99999')).toBeFalse()
+      expect(isISMSku('99999')).toBe(false)
     })
   })
 

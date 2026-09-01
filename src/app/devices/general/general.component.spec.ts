@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { GeneralComponent } from './general.component'
@@ -15,10 +17,10 @@ import { By } from '@angular/platform-browser'
 describe('GeneralComponent', () => {
   let component: GeneralComponent
   let fixture: ComponentFixture<GeneralComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
+  let devicesServiceSpy: SpyObj<DevicesService>
 
   beforeEach(() => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getDevices',
       'updateDevice',
       'getTags',
@@ -57,11 +59,11 @@ describe('GeneralComponent', () => {
         bootString: ''
       }
     }
-    devicesServiceSpy.getAMTFeatures.and.returnValue(of(amtFeaturesResponse))
-    devicesServiceSpy.getAMTFeaturesCached.and.returnValue(of(amtFeaturesResponse))
-    devicesServiceSpy.featuresChanges.and.returnValue(of(null))
-    devicesServiceSpy.getGeneralSettings.and.returnValue(of({}))
-    devicesServiceSpy.getAMTVersion.and.returnValue(of(['']))
+    devicesServiceSpy.getAMTFeatures.mockReturnValue(of(amtFeaturesResponse))
+    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of(amtFeaturesResponse))
+    devicesServiceSpy.featuresChanges.mockReturnValue(of(null))
+    devicesServiceSpy.getGeneralSettings.mockReturnValue(of({}))
+    devicesServiceSpy.getAMTVersion.mockReturnValue(of(['']))
     TestBed.configureTestingModule({
       imports: [GeneralComponent],
       providers: [
@@ -88,7 +90,7 @@ describe('GeneralComponent', () => {
     fixture.detectChanges()
     const icons = fixture.debugElement.queryAll(By.css('mat-icon'))
     const hasWarning = icons.some((el) => el.nativeElement.textContent.trim() === 'warning')
-    expect(hasWarning).toBeTrue()
+    expect(hasWarning).toBe(true)
   })
 
   it('should not show warning when redirection is true', () => {
@@ -97,7 +99,7 @@ describe('GeneralComponent', () => {
     fixture.detectChanges()
     const icons = fixture.debugElement.queryAll(By.css('mat-icon'))
     const hasWarning = icons.some((el) => el.nativeElement.textContent.trim() === 'warning')
-    expect(hasWarning).toBeFalse()
+    expect(hasWarning).toBe(false)
   })
 
   it('should not show warning when no features are enabled', () => {
@@ -110,25 +112,25 @@ describe('GeneralComponent', () => {
     fixture.detectChanges()
     const icons = fixture.debugElement.queryAll(By.css('mat-icon'))
     const hasWarning = icons.some((el) => el.nativeElement.textContent.trim() === 'warning')
-    expect(hasWarning).toBeFalse()
+    expect(hasWarning).toBe(false)
   })
 
   it('should report isRedirectionRequired when any feature is enabled', () => {
     component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
     component.amtEnabledFeatures.get('enableSOL')?.setValue(false)
     component.amtEnabledFeatures.get('enableIDER')?.setValue(false)
-    expect(component.isRedirectionRequired).toBeTrue()
+    expect(component.isRedirectionRequired).toBe(true)
   })
 
   it('should not require redirection when no features are enabled', () => {
     component.amtEnabledFeatures.get('enableKVM')?.setValue(false)
     component.amtEnabledFeatures.get('enableSOL')?.setValue(false)
     component.amtEnabledFeatures.get('enableIDER')?.setValue(false)
-    expect(component.isRedirectionRequired).toBeFalse()
+    expect(component.isRedirectionRequired).toBe(false)
   })
 
   it('should call setAmtFeatures when Enable button is clicked', () => {
-    devicesServiceSpy.setAmtFeatures = jasmine.createSpy().and.returnValue(of({}))
+    devicesServiceSpy.setAmtFeatures = vi.fn().mockReturnValue(of({}))
     component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
     component.amtEnabledFeatures.get('redirection')?.setValue(false)
     fixture.changeDetectorRef.markForCheck()
@@ -160,84 +162,84 @@ describe('GeneralComponent', () => {
   })
 
   it('sends remoteErase from the loaded features, not the default', () => {
-    devicesServiceSpy.setAmtFeatures = jasmine.createSpy().and.returnValue(of({}))
+    devicesServiceSpy.setAmtFeatures = vi.fn().mockReturnValue(of({}))
     component.setAmtFeatures()
     expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({ rpe: true })
+      expect.any(String),
+      expect.objectContaining({ rpe: true })
     )
   })
 
   it('should update only feature loading state while setAmtFeatures is in flight', () => {
     const response$ = new Subject<any>()
-    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+    devicesServiceSpy.setAmtFeatures.mockReturnValue(response$)
     const loadingBefore = component.isLoading()
 
     component.setAmtFeatures()
 
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isUpdatingFeatures()).toBe(true)
     expect(component.isLoading()).toBe(loadingBefore)
 
     response$.next({ redirection: true, status: 'ok' })
     response$.complete()
 
-    expect(component.isUpdatingFeatures()).toBeFalse()
+    expect(component.isUpdatingFeatures()).toBe(false)
     expect(component.isLoading()).toBe(loadingBefore)
   })
 
   it('keeps summary loading state independent from feature update state', () => {
     const response$ = new Subject<any>()
-    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+    devicesServiceSpy.setAmtFeatures.mockReturnValue(response$)
 
     component.isLoading.set(false)
     component.setAmtFeatures()
 
-    expect(component.isLoading()).toBeFalse()
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isLoading()).toBe(false)
+    expect(component.isUpdatingFeatures()).toBe(true)
 
     response$.next({ redirection: true, status: 'ok' })
     response$.complete()
 
-    expect(component.isLoading()).toBeFalse()
-    expect(component.isUpdatingFeatures()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
+    expect(component.isUpdatingFeatures()).toBe(false)
   })
 
   it('keeps feature loading state true until the last overlapping update completes', () => {
     const firstResponse$ = new Subject<any>()
     const secondResponse$ = new Subject<any>()
-    devicesServiceSpy.setAmtFeatures.and.returnValues(firstResponse$, secondResponse$)
+    devicesServiceSpy.setAmtFeatures.mockReturnValueOnce(firstResponse$).mockReturnValueOnce(secondResponse$)
 
     component.setAmtFeatures()
     component.setAmtFeatures()
 
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isUpdatingFeatures()).toBe(true)
 
     firstResponse$.next({ redirection: true, status: 'ok' })
     firstResponse$.complete()
 
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isUpdatingFeatures()).toBe(true)
 
     secondResponse$.next({ redirection: true, status: 'ok' })
     secondResponse$.complete()
 
-    expect(component.isUpdatingFeatures()).toBeFalse()
+    expect(component.isUpdatingFeatures()).toBe(false)
   })
 
   it('keeps tracking an in-flight feature update after destroy until it completes', () => {
     const response$ = new Subject<any>()
-    devicesServiceSpy.setAmtFeatures.and.returnValue(response$)
+    devicesServiceSpy.setAmtFeatures.mockReturnValue(response$)
 
     component.setAmtFeatures()
 
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isUpdatingFeatures()).toBe(true)
 
     component.ngOnDestroy()
 
-    expect(component.isUpdatingFeatures()).toBeTrue()
+    expect(component.isUpdatingFeatures()).toBe(true)
 
     response$.next({ redirection: true, status: 'ok' })
     response$.complete()
 
-    expect(component.isUpdatingFeatures()).toBeFalse()
+    expect(component.isUpdatingFeatures()).toBe(false)
   })
 })

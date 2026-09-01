@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatIconModule } from '@angular/material/icon'
@@ -28,6 +29,7 @@ describe('AboutComponent', () => {
   })
 
   beforeEach(() => {
+    localStorage.clear()
     fixture = TestBed.createComponent(AboutComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -42,8 +44,11 @@ describe('AboutComponent', () => {
   })
 
   it('should initialize doNotShowAgain from localStorage', () => {
-    spyOn(localStorage, 'getItem').and.returnValue('true')
+    localStorage.setItem('doNotShowAgain', 'true')
+    const getItemSpy = vi.spyOn(localStorage, 'getItem')
+
     component.ngOnInit()
-    expect(localStorage.getItem).toHaveBeenCalledWith('doNotShowAgain')
+
+    expect(getItemSpy).toHaveBeenCalledWith('doNotShowAgain')
   })
 })

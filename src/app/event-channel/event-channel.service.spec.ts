@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { describe } from 'vitest'
+
+// The specs below are commented out; vitest fails a file without a suite.
+describe.todo('MQTTService')
+
 // import { TestBed } from '@angular/core/testing'
 // import { IPacket } from 'mqtt-browser'
 // import { IMqttServiceOptions } from 'ngx-mqtt'
@@ -13,8 +18,8 @@
 // describe('EventChannelService', () => {
 //   const packet: IPacket = { cmd: 'publish' }
 //   let service: MQTTService
-//   let localStorageSetSpy: jasmine.Spy
-//   let resetSpy: jasmine.Spy
+//   let localStorageSetSpy: MockInstance
+//   let resetSpy: MockInstance
 //   const encVal = Buffer.from(JSON.stringify({
 //     guid: 'd12428be-9fa1-4226-9784-54b2038beab6',
 //     message: 'Sent Power State',
@@ -33,15 +38,15 @@
 //     payload: encVal
 
 //   }
-//   const mqttservice = jasmine.createSpyObj('mqttService', ['observe', 'connect', 'destroy'])
+//   const mqttservice = createSpyObj('mqttService', ['observe', 'connect', 'destroy'])
 //   mqttservice.state = new Subject()
-//   mqttservice.observe.and.returnValue(of())
+//   mqttservice.observe.mockReturnValue(of())
 
 //   beforeEach(() => {
 //     TestBed.configureTestingModule({
 //       imports: []
 //     })
-//     localStorageSetSpy = spyOn(localStorage, 'setItem').and.callThrough()
+//     localStorageSetSpy = vi.spyOn(localStorage, 'setItem')
 //     service = new MQTTService(mqttservice)
 //   })
 //   afterEach(() => {
@@ -71,13 +76,13 @@
 //   it('should NOT change connection when same', () => {
 //     const same: IMqttServiceOptions = { hostname: 'localhost', path: '/mosquitto/mqtt', protocol: 'wss' }
 //     service.changeConnection(same)
-//     expect(service.clearData).toBeFalse()
+//     expect(service.clearData).toBe(false)
 //   })
 
 //   it('should change connection when difference', () => {
 //     const different: IMqttServiceOptions = { hostname: 'localhost', path: '/mosquitto', protocol: 'wss' }
 //     service.changeConnection(different)
-//     expect(service.clearData).toBeTrue()
+//     expect(service.clearData).toBe(true)
 //     expect(service.mqttService.connect).toHaveBeenCalled()
 //   })
 //   it('should process the message getting from MQTT', () => {
@@ -105,7 +110,7 @@
 //     expect(service.mqttEvents.length).toBe(0)
 //     expect(localStorageSetSpy).toHaveBeenCalledWith('oact_telemetry', '')
 //     expect(localStorageSetSpy).toHaveBeenCalledWith('oact_config', JSON.stringify({ hostname: 'localhost', path: '/mosquitto/mqtt', protocol: 'wss' }))
-//     expect(service.clearData).toBeFalse()
+//     expect(service.clearData).toBe(false)
 //   })
 
 //   it('should connect', () => {
@@ -113,7 +118,7 @@
 //     expect(service.mqttService.connect).toHaveBeenCalled()
 //   })
 //   it('should call reset when clearData true and connected', () => {
-//     resetSpy = spyOn(service, 'reset')
+//     resetSpy = vi.spyOn(service, 'reset').mockImplementation(() => undefined)
 
 //     service.clearData = true
 //     service.mqttService.state.next(2)

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -15,19 +17,19 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('DeviceUserConsentDialogComponent', () => {
   let component: DeviceUserConsentDialogComponent
   let fixture: ComponentFixture<DeviceUserConsentDialogComponent>
-  let sendUserConsentCodeSpy: jasmine.Spy
-  let cancelUserConsentCodeSpy: jasmine.Spy
+  let sendUserConsentCodeSpy: MockInstance
+  let cancelUserConsentCodeSpy: MockInstance
   const dialogMock = {
-    close: jasmine.createSpy('close')
+    close: vi.fn()
   }
 
   beforeEach(() => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
+    const devicesService = createSpyObj('DevicesService', ['sendUserConsentCode', 'cancelUserConsentCode'])
     devicesService.TargetOSMap = { 0: 'Unknown' }
-    sendUserConsentCodeSpy = devicesService.sendUserConsentCode.and.returnValue(
+    sendUserConsentCodeSpy = devicesService.sendUserConsentCode.mockReturnValue(
       of({ deviceId: 'deviceId', results: {} })
     )
-    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.and.returnValue(of({}))
+    cancelUserConsentCodeSpy = devicesService.cancelUserConsentCode.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -47,7 +49,7 @@ describe('DeviceUserConsentDialogComponent', () => {
     fixture = TestBed.createComponent(DeviceUserConsentDialogComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-    dialogMock.close = jasmine.createSpy('close')
+    dialogMock.close = vi.fn()
   })
 
   afterEach(() => {

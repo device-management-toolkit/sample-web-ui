@@ -55,6 +55,8 @@ cypress.config.dev.ts
 cypress-ui-test-output*
 
 TESTS-*
+sample-web-ui*.xml
+__screenshots__/
 # System Files
 .DS_Store
 Thumbs.db

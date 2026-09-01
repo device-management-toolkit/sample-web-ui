@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -31,10 +33,10 @@ describe('ProfileDetailComponent', () => {
   const defaultCloudMode = environment.cloud
   let component: ProfileDetailComponent
   let fixture: ComponentFixture<ProfileDetailComponent>
-  let profileSpy: jasmine.Spy
-  let ciraGetDataSpy: jasmine.Spy
-  let profileCreateSpy: jasmine.Spy
-  let profileUpdateSpy: jasmine.Spy
+  let profileSpy: MockInstance
+  let ciraGetDataSpy: MockInstance
+  let profileCreateSpy: MockInstance
+  let profileUpdateSpy: MockInstance
   const ieee8021xAvailableConfigs: IEEE8021xConfig[] = [
     {
       profileName: '8021x-config-1',
@@ -58,11 +60,11 @@ describe('ProfileDetailComponent', () => {
       version: ''
     }
   ]
-  let ieee8021xGetDataSpy: jasmine.Spy
-  let wirelessGetDataSpy: jasmine.Spy
-  let proxyGetDataSpy: jasmine.Spy
-  let serverFeaturesGetFeaturesSpy: jasmine.Spy
-  // let tlsConfigSpy: jasmine.Spy
+  let ieee8021xGetDataSpy: MockInstance
+  let wirelessGetDataSpy: MockInstance
+  let proxyGetDataSpy: MockInstance
+  let serverFeaturesGetFeaturesSpy: MockInstance
+  // let tlsConfigSpy: MockInstance
   let translate: TranslateService
 
   const mockProxyConfigs = [
@@ -71,17 +73,17 @@ describe('ProfileDetailComponent', () => {
   ]
 
   beforeEach(() => {
-    const profilesService = jasmine.createSpyObj('ProfilesService', [
+    const profilesService = createSpyObj('ProfilesService', [
       'getRecord',
       'update',
       'create'
     ])
-    const configsService = jasmine.createSpyObj('ConfigsService', ['getData'])
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', ['getData'])
-    const wirelessService = jasmine.createSpyObj('WirelessService', ['getData'])
-    const proxyConfigsService = jasmine.createSpyObj('ProxyConfigsService', ['getData'])
-    const serverFeaturesService = jasmine.createSpyObj('ServerFeaturesService', ['getFeatures'])
-    // const tlsService = jasmine.createSpyObj('TLSService', ['getData'])
+    const configsService = createSpyObj('ConfigsService', ['getData'])
+    const ieee8021xService = createSpyObj('IEEE8021xService', ['getData'])
+    const wirelessService = createSpyObj('WirelessService', ['getData'])
+    const proxyConfigsService = createSpyObj('ProxyConfigsService', ['getData'])
+    const serverFeaturesService = createSpyObj('ServerFeaturesService', ['getFeatures'])
+    // const tlsService = createSpyObj('TLSService', ['getData'])
     const profileResponse = {
       profileName: 'profile1',
       amtPassword: 'P@ssw0rd',
@@ -97,19 +99,19 @@ describe('ProfileDetailComponent', () => {
       wifiConfigs: [{ priority: 1, profileName: 'wifi' }],
       proxyConfigs: [{ priority: 1, name: 'proxy1' }]
     }
-    profileSpy = profilesService.getRecord.and.returnValue(of(profileResponse))
-    profileCreateSpy = profilesService.create.and.returnValue(of({}))
-    profileUpdateSpy = profilesService.update.and.returnValue(of({}))
-    ciraGetDataSpy = configsService.getData.and.returnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
-    ieee8021xGetDataSpy = ieee8021xService.getData.and.returnValue(
+    profileSpy = profilesService.getRecord.mockReturnValue(of(profileResponse))
+    profileCreateSpy = profilesService.create.mockReturnValue(of({}))
+    profileUpdateSpy = profilesService.update.mockReturnValue(of({}))
+    ciraGetDataSpy = configsService.getData.mockReturnValue(of({ data: [{ profileName: '' }], totalCount: 0 }))
+    ieee8021xGetDataSpy = ieee8021xService.getData.mockReturnValue(
       of({ data: ieee8021xAvailableConfigs, totalCount: ieee8021xAvailableConfigs.length })
     )
-    wirelessGetDataSpy = wirelessService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
-    proxyGetDataSpy = proxyConfigsService.getData.and.returnValue(
+    wirelessGetDataSpy = wirelessService.getData.mockReturnValue(of({ data: [], totalCount: 0 }))
+    proxyGetDataSpy = proxyConfigsService.getData.mockReturnValue(
       of({ data: mockProxyConfigs, totalCount: mockProxyConfigs.length })
     )
-    serverFeaturesGetFeaturesSpy = serverFeaturesService.getFeatures.and.returnValue(of({ ciraEnabled: true }))
-    // tlsConfigSpy = tlsService.getData.and.returnValue(of({ data: [], totalCount: 0 }))
+    serverFeaturesGetFeaturesSpy = serverFeaturesService.getFeatures.mockReturnValue(of({ ciraEnabled: true }))
+    // tlsConfigSpy = tlsService.getData.mockReturnValue(of({ data: [], totalCount: 0 }))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -157,7 +159,7 @@ describe('ProfileDetailComponent', () => {
   // Re-load the edit profile through the real capture path (getRecord -> getAmtProfile) so tests
   // exercise how originals are derived rather than poking private fields directly.
   const loadProfileForEdit = (overrides: Partial<Profile>): void => {
-    profileSpy.and.returnValue(
+    profileSpy.mockReturnValue(
       of({
         profileName: 'profile',
         activation: 'acmactivate',
@@ -219,7 +221,7 @@ describe('ProfileDetailComponent', () => {
     expect(component.profileForm.controls.connectionMode.value).toBe('DIRECT')
   })
   it('should cancel', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles'])
   })
@@ -228,34 +230,34 @@ describe('ProfileDetailComponent', () => {
       activation: 'ccmactivate',
       generateRandomMEBxPassword: false
     })
-    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.mebxPassword.disabled).toBe(true)
     component.generateRandomMEBxPasswordChange(false)
-    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.mebxPassword.disabled).toBe(true)
   })
   it('should disable mebxPassword when generateRandomMEBxPassword is true', () => {
     component.profileForm.patchValue({
       activation: 'acmactivate',
       generateRandomMEBxPassword: false
     })
-    expect(component.profileForm.controls.mebxPassword.disabled).toBeFalse()
+    expect(component.profileForm.controls.mebxPassword.disabled).toBe(false)
     component.generateRandomMEBxPasswordChange(true)
-    expect(component.profileForm.controls.mebxPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.mebxPassword.disabled).toBe(true)
   })
   it('should enable amtPassword when generateRandomPassword is false', () => {
     component.profileForm.patchValue({ generateRandomPassword: true })
-    expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.amtPassword.disabled).toBe(true)
     component.generateRandomPasswordChange(false)
-    expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
+    expect(component.profileForm.controls.amtPassword.disabled).toBe(false)
   })
   it('should disable amtPassword when generateRandomPassword is true', () => {
     component.profileForm.patchValue({ generateRandomPassword: false })
-    expect(component.profileForm.controls.amtPassword.disabled).toBeFalse()
+    expect(component.profileForm.controls.amtPassword.disabled).toBe(false)
     component.profileForm.patchValue({ generateRandomPassword: true })
-    expect(component.profileForm.controls.amtPassword.disabled).toBeTrue()
+    expect(component.profileForm.controls.amtPassword.disabled).toBe(true)
   })
 
   it('should submit when valid (update)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
     component.profileForm.patchValue({
       profileName: 'profile',
@@ -277,11 +279,11 @@ describe('ProfileDetailComponent', () => {
   it('should not require the AMT password on edit when a static password is already stored', () => {
     // Default mock profile has generateRandomPassword: false, so a static secret is stored server-side.
     component.generateRandomPasswordChange(false)
-    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeFalse()
+    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBe(false)
   })
 
   it('should omit empty passwords from the update payload', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
     // Both secrets already stored statically server-side, so blank fields preserve them.
     loadProfileForEdit({ activation: 'acmactivate', generateRandomPassword: false, generateRandomMEBxPassword: false })
@@ -299,7 +301,7 @@ describe('ProfileDetailComponent', () => {
 
     expect(routerSpy).toHaveBeenCalled()
     expect(profileUpdateSpy).toHaveBeenCalled()
-    const payload = profileUpdateSpy.calls.mostRecent().args[0]
+    const payload = profileUpdateSpy.mock.lastCall![0]
     expect(payload.amtPassword).toBeUndefined()
     expect(payload.mebxPassword).toBeUndefined()
   })
@@ -312,11 +314,11 @@ describe('ProfileDetailComponent', () => {
       generateRandomMEBxPassword: false
     })
 
-    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
-    expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+    expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBe(true)
+    expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBe(true)
   })
   it('should submit when valid (create)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -336,9 +338,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should submit when valid with random passwords (create)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -360,9 +362,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should cancel submit with random passwords', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -410,9 +412,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should submit if cira config and static network are simultaneously selected and user confirms', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -438,9 +440,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should cancel submit if cira config and static network are simultaneously selected and user cancels', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -462,9 +464,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should submit if cira config and static network are simultaneously selected + randomly generated password and user confirms', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -486,9 +488,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should cancel submit if cira config and static network are simultaneously selected + randomly generated password and user cancels dialog', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -510,9 +512,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should submit when valid with only random mebx password + acm activation', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
     component.isEdit.set(false)
     component.profileForm.patchValue({
       profileName: 'profile',
@@ -537,9 +539,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -561,9 +563,9 @@ describe('ProfileDetailComponent', () => {
   })
 
   it('should cancel submit if cira config and static network are simultaneously selected + only random mebx password + ccm activation', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
     component.isEdit.set(false)
     component.profileForm.patchValue({
@@ -630,7 +632,7 @@ describe('ProfileDetailComponent', () => {
     const e = {
       value: '',
       chipInput: {
-        clear: jasmine.createSpy()
+        clear: vi.fn()
       }
     }
     e.value = '  ccm '
@@ -712,32 +714,32 @@ describe('ProfileDetailComponent', () => {
   it('should set the ciraCofigName property to null when TLS Selected', () => {
     component.connectionModeChange('TLS')
     expect(component.profileForm.controls.ciraConfigName.value).toEqual(null)
-    expect(component.profileForm.controls.ciraConfigName.valid).toBeTrue()
-    expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
+    expect(component.profileForm.controls.ciraConfigName.valid).toBe(true)
+    expect(component.profileForm.controls.tlsMode.valid).toBe(false)
     expect(component.profileForm.controls.tlsSigningAuthority.value).toEqual(component.tlsDefaultSigningAuthority)
-    expect(component.profileForm.controls.tlsSigningAuthority.valid).toBeTrue()
+    expect(component.profileForm.controls.tlsSigningAuthority.valid).toBe(true)
   })
   it('should clear a non-TLS tlsMode of 0 when TLS is selected', () => {
     component.profileForm.controls.tlsMode.setValue(0)
     component.connectionModeChange('TLS')
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
-    expect(component.profileForm.controls.tlsMode.valid).toBeFalse()
+    expect(component.profileForm.controls.tlsMode.valid).toBe(false)
   })
   it('should keep an already selected tlsMode when TLS is selected', () => {
     component.profileForm.controls.tlsMode.setValue(2)
     component.connectionModeChange('TLS')
     expect(component.profileForm.controls.tlsMode.value).toEqual(2)
-    expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
+    expect(component.profileForm.controls.tlsMode.valid).toBe(true)
   })
   it('should set the tlsMode property to null when CIRA Selected', () => {
     component.connectionModeChange('CIRA')
     expect(component.profileForm.controls.tlsMode.value).toEqual(null)
-    expect(component.profileForm.controls.tlsMode.valid).toBeTrue()
+    expect(component.profileForm.controls.tlsMode.valid).toBe(true)
     expect(component.profileForm.controls.ciraConfigName.value).toBe('config1')
   })
   it('should return update error', () => {
-    profileUpdateSpy.and.returnValue(throwError(() => new Error('nope')))
-    const routerSpy = spyOn(component.router, 'navigate')
+    profileUpdateSpy.mockReturnValue(throwError(() => new Error('nope')))
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
     component.profileForm.patchValue({
       profileName: 'profile',
@@ -766,33 +768,33 @@ describe('ProfileDetailComponent', () => {
         generateRandomPassword: true,
         generateRandomMEBxPassword: false
       } as any
-      profileSpy.and.returnValue(of(profileData))
+      profileSpy.mockReturnValue(of(profileData))
 
       component.getAmtProfile('acm-static')
 
-      expect(component['originalGenerateRandomPassword']).toBeTrue()
-      expect(component['originalGenerateRandomMEBxPassword']).toBeFalse()
+      expect(component['originalGenerateRandomPassword']).toBe(true)
+      expect(component['originalGenerateRandomMEBxPassword']).toBe(false)
       expect(component['originalActivation']).toBe('acmactivate')
     })
 
     it('should require the AMT password when switching from random to static on edit', () => {
       loadProfileForEdit({ generateRandomPassword: true })
       component.generateRandomPasswordChange(false)
-      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBe(true)
     })
 
     it('should require the MEBx password when switching from random to static (acm) on edit', () => {
       // Default mock profile has generateRandomMEBxPassword: true (no stored MEBx secret).
       component.profileForm.controls.activation.setValue('acmactivate')
       component.generateRandomMEBxPasswordChange(false)
-      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBe(true)
     })
 
     it('should not require the MEBx password on edit when a static acm secret is already stored', () => {
       loadProfileForEdit({ activation: 'acmactivate', generateRandomMEBxPassword: false })
       component.profileForm.controls.activation.setValue('acmactivate')
       component.generateRandomMEBxPasswordChange(false)
-      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeFalse()
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBe(false)
     })
 
     it('should require the MEBx password when an existing ccm profile switches to acm', () => {
@@ -800,7 +802,7 @@ describe('ProfileDetailComponent', () => {
       loadProfileForEdit({ activation: 'ccmactivate', generateRandomMEBxPassword: false })
       component.profileForm.controls.activation.setValue('acmactivate')
       component.generateRandomMEBxPasswordChange(false)
-      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBe(true)
     })
 
     it('should recompute MEBx validity immediately when switching activation from ccm to acm', () => {
@@ -811,12 +813,12 @@ describe('ProfileDetailComponent', () => {
 
       component.activationChange('acmactivate')
 
-      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBeTrue()
-      expect(component.profileForm.controls.mebxPassword.valid).toBeFalse()
+      expect(component.profileForm.controls.mebxPassword.hasValidator(Validators.required)).toBe(true)
+      expect(component.profileForm.controls.mebxPassword.valid).toBe(false)
     })
 
     it('should block submit when switching to a static AMT password but leaving the field blank', () => {
-      const routerSpy = spyOn(component.router, 'navigate')
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
       loadProfileForEdit({ generateRandomPassword: true })
       component.profileForm.patchValue({
@@ -831,7 +833,7 @@ describe('ProfileDetailComponent', () => {
       })
       component.confirm()
 
-      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBeTrue()
+      expect(component.profileForm.controls.amtPassword.hasValidator(Validators.required)).toBe(true)
       expect(profileUpdateSpy).not.toHaveBeenCalled()
       expect(routerSpy).not.toHaveBeenCalled()
     })
@@ -840,7 +842,7 @@ describe('ProfileDetailComponent', () => {
       // The UI allows omitting both passwords (static secrets stored server-side), but if the API
       // contract drifts and rejects the PATCH, the user must see why rather than a silent no-op.
       const serverError = ['MEBx password is required for acmactivate']
-      profileUpdateSpy.and.returnValue(throwError(() => serverError))
+      profileUpdateSpy.mockReturnValue(throwError(() => serverError))
       loadProfileForEdit({
         activation: 'acmactivate',
         generateRandomPassword: false,
@@ -883,44 +885,44 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should not fetch CIRA configs when the server reports CIRA disabled', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
-      ciraGetDataSpy.calls.reset()
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({ ciraEnabled: false }))
+      ciraGetDataSpy.mockClear()
 
       const enterpriseComponent = createEnterpriseComponent()
 
       expect(serverFeaturesGetFeaturesSpy).toHaveBeenCalled()
       expect(ciraGetDataSpy).not.toHaveBeenCalled()
-      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+      expect(enterpriseComponent.ciraEnabled()).toBe(false)
       expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).toBeNull()
     })
 
     it('should expose ciraEnabled() === false after the features call resolves with CIRA disabled', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({ ciraEnabled: false }))
 
       const enterpriseComponent = createEnterpriseComponent()
 
-      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+      expect(enterpriseComponent.ciraEnabled()).toBe(false)
     })
 
     it('should fetch CIRA configs when the server reports CIRA enabled', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: true }))
-      ciraGetDataSpy.calls.reset()
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({ ciraEnabled: true }))
+      ciraGetDataSpy.mockClear()
 
       const enterpriseComponent = createEnterpriseComponent()
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
-      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(enterpriseComponent.ciraEnabled()).toBe(true)
       expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
     it('should fail open and fetch CIRA configs when the features call errors', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(throwError(() => new Error('nope')))
-      ciraGetDataSpy.calls.reset()
+      serverFeaturesGetFeaturesSpy.mockReturnValue(throwError(() => new Error('nope')))
+      ciraGetDataSpy.mockClear()
 
       const enterpriseComponent = createEnterpriseComponent()
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
-      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(enterpriseComponent.ciraEnabled()).toBe(true)
       expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
@@ -928,14 +930,14 @@ describe('ProfileDetailComponent', () => {
     // flight leaves a saved CIRA profile with no visible selection at all, which reads as a bug
     // on a server where CIRA is actually enabled.
     it('should keep the CIRA option visible but disabled while the features call is in flight', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(NEVER)
+      serverFeaturesGetFeaturesSpy.mockReturnValue(NEVER)
 
       const enterpriseComponent = createEnterpriseComponent()
       loadProfileForEdit({ ciraConfigName: 'config1' })
       fixture.detectChanges()
 
       const radio = fixture.nativeElement.querySelector('[data-cy="radio-cira"]')
-      expect(enterpriseComponent.ciraAvailabilityResolved()).toBeFalse()
+      expect(enterpriseComponent.ciraAvailabilityResolved()).toBe(false)
       expect(radio).not.toBeNull()
       expect(radio.classList).toContain('mat-mdc-radio-disabled')
       // The saved CIRA selection stays visible rather than rendering an empty radio group.
@@ -943,46 +945,46 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should warn before saving an edited profile whose stored CIRA config is about to be dropped', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({ ciraEnabled: false }))
       const enterpriseComponent = createEnterpriseComponent()
 
       // Stored profile still references CIRA, so setConnectionMode() coerces the form to TLS.
       loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true, ciraConfigName: 'config1' })
       expect(enterpriseComponent.profileForm.controls.connectionMode.value).toBe('TLS')
 
-      spyOn(enterpriseComponent.router, 'navigate')
-      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue({
+      vi.spyOn(enterpriseComponent.router, 'navigate').mockImplementation((() => undefined) as any)
+      const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue({
         afterClosed: () => of(true)
       } as any)
       enterpriseComponent.profileForm.patchValue({ profileName: 'profile', dhcpEnabled: true, tlsMode: 1 })
       enterpriseComponent.confirm()
 
-      expect(dialogSpy).toHaveBeenCalledWith(NoCIRAWarningComponent, jasmine.anything())
+      expect(dialogSpy).toHaveBeenCalledWith(NoCIRAWarningComponent, expect.anything())
       expect(profileUpdateSpy).toHaveBeenCalled()
     })
 
     // A Console that answers 200 without the flag must not read as "CIRA disabled", or the
     // save flow would offer to drop a stored CIRA config on a server where CIRA still works.
     it('should fail open when the features response omits ciraEnabled', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({} as any))
-      ciraGetDataSpy.calls.reset()
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({} as any))
+      ciraGetDataSpy.mockClear()
 
       const enterpriseComponent = createEnterpriseComponent()
 
       expect(ciraGetDataSpy).toHaveBeenCalled()
-      expect(enterpriseComponent.ciraEnabled()).toBeTrue()
+      expect(enterpriseComponent.ciraEnabled()).toBe(true)
       expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
     it('should not warn about a dropped CIRA config while the features call is in flight', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(NEVER)
+      serverFeaturesGetFeaturesSpy.mockReturnValue(NEVER)
       const enterpriseComponent = createEnterpriseComponent()
 
       loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true, ciraConfigName: 'config1' })
-      expect(enterpriseComponent.ciraAvailabilityResolved()).toBeFalse()
+      expect(enterpriseComponent.ciraAvailabilityResolved()).toBe(false)
 
-      spyOn(enterpriseComponent.router, 'navigate')
-      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open')
+      vi.spyOn(enterpriseComponent.router, 'navigate').mockImplementation((() => undefined) as any)
+      const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockImplementation((() => undefined) as any)
       // User switches the profile to TLS themselves before the server answers.
       enterpriseComponent.profileForm.patchValue({
         profileName: 'profile',
@@ -997,13 +999,13 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should not warn when saving a non-CIRA profile that never had a CIRA config', () => {
-      serverFeaturesGetFeaturesSpy.and.returnValue(of({ ciraEnabled: false }))
+      serverFeaturesGetFeaturesSpy.mockReturnValue(of({ ciraEnabled: false }))
       const enterpriseComponent = createEnterpriseComponent()
 
       loadProfileForEdit({ generateRandomPassword: true, generateRandomMEBxPassword: true })
 
-      spyOn(enterpriseComponent.router, 'navigate')
-      const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open')
+      vi.spyOn(enterpriseComponent.router, 'navigate').mockImplementation((() => undefined) as any)
+      const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockImplementation((() => undefined) as any)
       enterpriseComponent.profileForm.patchValue({
         profileName: 'profile',
         dhcpEnabled: true,
@@ -1179,7 +1181,7 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should include proxy configs in form submission', () => {
-      const routerSpy = spyOn(component.router, 'navigate')
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
       component.isEdit.set(false)
       component.selectedProxyConfigs.set([
@@ -1203,7 +1205,7 @@ describe('ProfileDetailComponent', () => {
       expect(profileCreateSpy).toHaveBeenCalled()
       expect(routerSpy).toHaveBeenCalled()
       expect(profileCreateSpy).toHaveBeenCalledWith(
-        jasmine.objectContaining({
+        expect.objectContaining({
           proxyConfigs: [
             { priority: 1, name: 'proxy1' },
             { priority: 2, name: 'proxy2' }
@@ -1221,7 +1223,7 @@ describe('ProfileDetailComponent', () => {
         ]
       } as any
 
-      profileSpy.and.returnValue(of(profileData))
+      profileSpy.mockReturnValue(of(profileData))
 
       component.getAmtProfile('test-profile')
 
@@ -1232,7 +1234,7 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should handle error when loading proxy configs', () => {
-      proxyGetDataSpy.and.returnValue(throwError(() => new Error('Proxy load error')))
+      proxyGetDataSpy.mockReturnValue(throwError(() => new Error('Proxy load error')))
 
       component['getProxyConfigs']()
 
@@ -1245,7 +1247,7 @@ describe('ProfileDetailComponent', () => {
       } as MatAutocompleteSelectedEvent
 
       component.selectedProxyConfigs.set([])
-      const patchValueSpy = spyOn(component.proxyAutocomplete, 'patchValue')
+      const patchValueSpy = vi.spyOn(component.proxyAutocomplete, 'patchValue').mockImplementation(() => undefined)
 
       component.selectProxyProfile(event)
 

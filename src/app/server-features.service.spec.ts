@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
@@ -14,14 +16,14 @@ import { ServerFeatures } from '../models/models'
 describe('ServerFeaturesService', () => {
   let service: ServerFeaturesService
   let httpMock: HttpTestingController
-  let authServiceSpy: jasmine.SpyObj<AuthService>
+  let authServiceSpy: SpyObj<AuthService>
 
   const mockEnvironment = { rpsServer: 'https://rps-server' }
   const mockUrl = `${mockEnvironment.rpsServer}/api/v1/server/features`
   let originalRpsServer: string
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    authServiceSpy = createSpyObj('AuthService', ['onError'])
     originalRpsServer = environment.rpsServer
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
@@ -61,7 +63,7 @@ describe('ServerFeaturesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 500, statusText: 'Internal Server Error' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getFeatures().subscribe({
         error: (error) => {

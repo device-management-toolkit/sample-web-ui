@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterAll, beforeAll, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { AMTIDER } from '@device-management-toolkit/ui-toolkit/core'
 import { getMediaSectorCount, patchAmtIderLargeMediaSupport } from './amt-ider-large-media'
 
@@ -11,9 +12,9 @@ const PATCH_FLAG = '__sampleWebUiLargeMediaPatched__'
 interface IderContext {
   floppy: File | null
   cdrom: File | null
-  sendCommandEndResponse: jasmine.Spy
-  sendDiskDataEx: jasmine.Spy
-  sectorStats: jasmine.Spy | null
+  sendCommandEndResponse: MockInstance
+  sendDiskDataEx: MockInstance
+  sectorStats: MockInstance | null
   g_media: File | null
   g_readQueue: { media: File | null; dev: number; lba: number; len: number; fr: number }[]
   g_dev: number
@@ -25,9 +26,9 @@ function makeFakeIder(cdromSizeBytes: number): IderContext {
   return {
     floppy: null,
     cdrom: { size: cdromSizeBytes } as File,
-    sendCommandEndResponse: jasmine.createSpy('sendCommandEndResponse'),
-    sendDiskDataEx: jasmine.createSpy('sendDiskDataEx'),
-    sectorStats: jasmine.createSpy('sectorStats'),
+    sendCommandEndResponse: vi.fn(),
+    sendDiskDataEx: vi.fn(),
+    sectorStats: vi.fn(),
     g_media: null,
     g_readQueue: [],
     g_dev: 0,

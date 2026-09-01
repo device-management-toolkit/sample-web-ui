@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -10,17 +17,17 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('DeviceCertDialogComponent', () => {
   let component: DeviceCertDialogComponent
   let fixture: ComponentFixture<DeviceCertDialogComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let snackBarSpy: jasmine.SpyObj<MatSnackBar>
-  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<DeviceCertDialogComponent>>
+  let devicesServiceSpy: SpyObj<DevicesService>
+  let snackBarSpy: SpyObj<MatSnackBar>
+  let dialogRefSpy: SpyObj<MatDialogRef<DeviceCertDialogComponent>>
 
   beforeEach(() => {
-    const spyDevicesService = jasmine.createSpyObj('DevicesService', [
+    const spyDevicesService = createSpyObj('DevicesService', [
       'pinDeviceCertificate',
       'deleteDeviceCertificate'
     ])
-    const spySnackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
-    const spyDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
+    const spySnackBar = createSpyObj('MatSnackBar', ['open'])
+    const spyDialogRef = createSpyObj('MatDialogRef', ['close'])
 
     TestBed.configureTestingModule({
       imports: [DeviceCertDialogComponent],
@@ -38,13 +45,13 @@ describe('DeviceCertDialogComponent', () => {
 
     fixture = TestBed.createComponent(DeviceCertDialogComponent)
     component = fixture.componentInstance
-    devicesServiceSpy = TestBed.inject(DevicesService) as jasmine.SpyObj<DevicesService>
-    snackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>
-    dialogRefSpy = TestBed.inject(MatDialogRef) as jasmine.SpyObj<MatDialogRef<DeviceCertDialogComponent>>
+    devicesServiceSpy = TestBed.inject(DevicesService) as SpyObj<DevicesService>
+    snackBarSpy = TestBed.inject(MatSnackBar) as SpyObj<MatSnackBar>
+    dialogRefSpy = TestBed.inject(MatDialogRef) as SpyObj<MatDialogRef<DeviceCertDialogComponent>>
   })
 
   it('should pin the device certificate and show a success message', () => {
-    devicesServiceSpy.pinDeviceCertificate.and.returnValue(of(null))
+    devicesServiceSpy.pinDeviceCertificate.mockReturnValue(of(null))
 
     component.pin()
 
@@ -54,7 +61,7 @@ describe('DeviceCertDialogComponent', () => {
   })
 
   it('should remove the device certificate and show a success message', () => {
-    devicesServiceSpy.deleteDeviceCertificate.and.returnValue(of(null))
+    devicesServiceSpy.deleteDeviceCertificate.mockReturnValue(of(null))
 
     component.remove()
 

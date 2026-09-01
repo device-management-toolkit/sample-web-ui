@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { of } from 'rxjs'
 import { DevicesService } from '../devices/devices.service'
@@ -16,13 +18,13 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('DashboardComponent', () => {
   let component: DashboardComponent
   let fixture: ComponentFixture<DashboardComponent>
-  let getStatsSpy: jasmine.Spy
+  let getStatsSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(async () => {
-    const devicesService = jasmine.createSpyObj('DevicesService', ['getStats'])
+    const devicesService = createSpyObj('DevicesService', ['getStats'])
 
-    getStatsSpy = devicesService.getStats.and.returnValue(of({}))
+    getStatsSpy = devicesService.getStats.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         RouterModule,

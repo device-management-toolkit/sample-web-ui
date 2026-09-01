@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceEnterpriseComponent } from './add-device-enterprise.component'
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
@@ -19,11 +21,11 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('AddDeviceEnterpriseComponent', () => {
   let component: AddDeviceEnterpriseComponent
   let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
-  let addDeviceSpy: jasmine.Spy
-  let dialogCloseSpy: jasmine.Spy
+  let addDeviceSpy: MockInstance
+  let dialogCloseSpy: MockInstance
   beforeEach(() => {
-    const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice'])
-    addDeviceSpy = deviceService.addDevice.and.returnValue(of({}))
+    const deviceService = createSpyObj('DevicesService', ['addDevice'])
+    addDeviceSpy = deviceService.addDevice.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [
@@ -47,7 +49,7 @@ describe('AddDeviceEnterpriseComponent', () => {
     })
     fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
     component = fixture.componentInstance
-    dialogCloseSpy = spyOn(component.dialog, 'close')
+    dialogCloseSpy = vi.spyOn(component.dialog, 'close').mockImplementation(() => undefined)
     fixture.detectChanges()
   })
 
@@ -107,9 +109,9 @@ describe('AddDeviceEnterpriseComponent with existing device', () => {
   let fixture: ComponentFixture<AddDeviceEnterpriseComponent>
 
   beforeEach(() => {
-    const deviceService = jasmine.createSpyObj('DevicesService', ['addDevice', 'editDevice'])
-    deviceService.addDevice.and.returnValue(of({}))
-    deviceService.editDevice.and.returnValue(of({}))
+    const deviceService = createSpyObj('DevicesService', ['addDevice', 'editDevice'])
+    deviceService.addDevice.mockReturnValue(of({}))
+    deviceService.editDevice.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [

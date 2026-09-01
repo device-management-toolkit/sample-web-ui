@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -19,24 +21,24 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('IEEE8021xComponent', () => {
   let component: IEEE8021xComponent
   let fixture: ComponentFixture<IEEE8021xComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
+    const ieee8021xService = createSpyObj('IEEE8021xService', [
       'getData',
       'delete',
       'refreshCountByInterface'
     ])
-    getDataSpy = ieee8021xService.getData.and.returnValue(
+    getDataSpy = ieee8021xService.getData.mockReturnValue(
       of({
         data: [{}],
         totalCount: 1
       })
     )
-    deleteSpy = ieee8021xService.delete.and.returnValue(of(null))
-    ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
+    deleteSpy = ieee8021xService.delete.mockReturnValue(of(null))
+    ieee8021xService.refreshCountByInterface.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -72,21 +74,21 @@ describe('IEEE8021xComponent', () => {
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/ieee8021x/new'])
   })
 
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/ieee8021x/path'])
   })
 
   it('should delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
@@ -96,9 +98,9 @@ describe('IEEE8021xComponent', () => {
     expect(snackBarSpy).toHaveBeenCalled()
   })
   it('should not delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()

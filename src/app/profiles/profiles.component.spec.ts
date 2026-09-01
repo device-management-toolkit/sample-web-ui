@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -21,17 +23,17 @@ import { environment } from '../../environments/environment'
 describe('ProfilesComponent', () => {
   let component: ProfilesComponent
   let fixture: ComponentFixture<ProfilesComponent>
-  let getDataSpy: jasmine.Spy
-  let deleteSpy: jasmine.Spy
-  let serverFeaturesServiceSpy: jasmine.SpyObj<ServerFeaturesService>
+  let getDataSpy: MockInstance
+  let deleteSpy: MockInstance
+  let serverFeaturesServiceSpy: SpyObj<ServerFeaturesService>
   let translate: TranslateService
 
   beforeEach(() => {
-    serverFeaturesServiceSpy = jasmine.createSpyObj('ServerFeaturesService', ['getFeatures'])
-    serverFeaturesServiceSpy.getFeatures.and.returnValue(of({ ciraEnabled: true }))
+    serverFeaturesServiceSpy = createSpyObj('ServerFeaturesService', ['getFeatures'])
+    serverFeaturesServiceSpy.getFeatures.mockReturnValue(of({ ciraEnabled: true }))
 
-    const profilesService = jasmine.createSpyObj('ProfilesService', ['getData', 'delete'])
-    getDataSpy = profilesService.getData.and.returnValue(
+    const profilesService = createSpyObj('ProfilesService', ['getData', 'delete'])
+    getDataSpy = profilesService.getData.mockReturnValue(
       of({
         data: [
           {
@@ -51,7 +53,7 @@ describe('ProfilesComponent', () => {
         totalCount: 1
       })
     )
-    deleteSpy = profilesService.delete.and.returnValue(of(null))
+    deleteSpy = profilesService.delete.mockReturnValue(of(null))
 
     TestBed.configureTestingModule({
       imports: [
@@ -85,23 +87,23 @@ describe('ProfilesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getDataSpy.calls.any()).withContext('getData called').toBeTrue()
+    expect(getDataSpy.mock.calls.length > 0, 'getData called').toBe(true)
   })
 
   it('should navigate to new', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo()
     expect(routerSpy).toHaveBeenCalledWith(['/profiles', 'new'])
   })
   it('should navigate to existing', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.navigateTo('path')
     expect(routerSpy).toHaveBeenCalledWith(['/profiles', 'path'])
   })
   it('should delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
@@ -111,9 +113,9 @@ describe('ProfilesComponent', () => {
     expect(snackBarSpy).toHaveBeenCalled()
   })
   it('should not delete', () => {
-    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(false), close: null })
-    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj)
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.delete('profile')
     expect(dialogSpy).toHaveBeenCalled()
@@ -124,7 +126,7 @@ describe('ProfilesComponent', () => {
   })
   it('should change the page', () => {
     component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
-    expect(getDataSpy.calls.any()).withContext('getData called').toBeTrue()
+    expect(getDataSpy.mock.calls.length > 0, 'getData called').toBe(true)
     expect(component.paginator.length).toBe(1)
     expect(component.paginator.pageSize).toBe(25)
     expect(component.paginator.pageIndex).toBe(0)
@@ -134,16 +136,16 @@ describe('ProfilesComponent', () => {
     const originalCloud = environment.cloud
     ;(environment as { cloud: boolean }).cloud = false
     try {
-      serverFeaturesServiceSpy.getFeatures.calls.reset()
-      serverFeaturesServiceSpy.getFeatures.and.returnValue(of({ ciraEnabled: false }))
+      serverFeaturesServiceSpy.getFeatures.mockClear()
+      serverFeaturesServiceSpy.getFeatures.mockReturnValue(of({ ciraEnabled: false }))
 
       const enterpriseFixture = TestBed.createComponent(ProfilesComponent)
       const enterpriseComponent = enterpriseFixture.componentInstance
       enterpriseFixture.detectChanges()
 
-      expect(enterpriseComponent.cloudMode).toBeFalse()
+      expect(enterpriseComponent.cloudMode).toBe(false)
       expect(serverFeaturesServiceSpy.getFeatures).toHaveBeenCalled()
-      expect(enterpriseComponent.ciraEnabled()).toBeFalse()
+      expect(enterpriseComponent.ciraEnabled()).toBe(false)
     } finally {
       ;(environment as { cloud: boolean }).cloud = originalCloud
     }
@@ -153,15 +155,15 @@ describe('ProfilesComponent', () => {
     const originalCloud = environment.cloud
     ;(environment as { cloud: boolean }).cloud = true
     try {
-      serverFeaturesServiceSpy.getFeatures.calls.reset()
+      serverFeaturesServiceSpy.getFeatures.mockClear()
 
       const cloudFixture = TestBed.createComponent(ProfilesComponent)
       const cloudComponent = cloudFixture.componentInstance
       cloudFixture.detectChanges()
 
-      expect(cloudComponent.cloudMode).toBeTrue()
+      expect(cloudComponent.cloudMode).toBe(true)
       expect(serverFeaturesServiceSpy.getFeatures).not.toHaveBeenCalled()
-      expect(cloudComponent.ciraEnabled()).toBeTrue()
+      expect(cloudComponent.ciraEnabled()).toBe(true)
     } finally {
       ;(environment as { cloud: boolean }).cloud = originalCloud
     }

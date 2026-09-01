@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -19,9 +21,9 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 describe('IEEE8021xDetailComponent', () => {
   let component: IEEE8021xDetailComponent
   let fixture: ComponentFixture<IEEE8021xDetailComponent>
-  let ieee8021xGetRecordSpy: jasmine.Spy
-  let ieee8021xCreateSpy: jasmine.Spy
-  let ieee8021xUpdateSpy: jasmine.Spy
+  let ieee8021xGetRecordSpy: MockInstance
+  let ieee8021xCreateSpy: MockInstance
+  let ieee8021xUpdateSpy: MockInstance
   const config01: IEEE8021xConfig = {
     profileName: 'name 1',
     authenticationProtocol: 0, // EAP-TLS
@@ -32,16 +34,16 @@ describe('IEEE8021xDetailComponent', () => {
   let translate: TranslateService
 
   beforeEach(() => {
-    const ieee8021xService = jasmine.createSpyObj('IEEE8021xService', [
+    const ieee8021xService = createSpyObj('IEEE8021xService', [
       'getRecord',
       'update',
       'create',
       'refreshCountByInterface'
     ])
-    ieee8021xGetRecordSpy = ieee8021xService.getRecord.and.returnValue(of({}))
-    ieee8021xCreateSpy = ieee8021xService.create.and.returnValue(of({}))
-    ieee8021xUpdateSpy = ieee8021xService.update.and.returnValue(of({}))
-    ieee8021xService.refreshCountByInterface.and.returnValue(of({}))
+    ieee8021xGetRecordSpy = ieee8021xService.getRecord.mockReturnValue(of({}))
+    ieee8021xCreateSpy = ieee8021xService.create.mockReturnValue(of({}))
+    ieee8021xUpdateSpy = ieee8021xService.update.mockReturnValue(of({}))
+    ieee8021xService.refreshCountByInterface.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -83,12 +85,12 @@ describe('IEEE8021xDetailComponent', () => {
   })
 
   it('should cancel', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/ieee8021x'])
   })
   it('should submit when valid (update)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.ieee8021xForm.patchValue(config01)
     component.onSubmit()
     expect(ieee8021xUpdateSpy).toHaveBeenCalled()
@@ -96,7 +98,7 @@ describe('IEEE8021xDetailComponent', () => {
   })
 
   it('should not submit form when invalid', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.ieee8021xForm.patchValue({
       profileName: 'profile1',
       authenticationProtocol: 98
@@ -108,7 +110,7 @@ describe('IEEE8021xDetailComponent', () => {
   })
 
   it('should submit when valid (create)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
     component.isEdit = false
     component.ieee8021xForm.patchValue(config01)

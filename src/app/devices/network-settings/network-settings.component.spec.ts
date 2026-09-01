@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { NetworkSettingsComponent } from './network-settings.component'
@@ -18,12 +20,12 @@ import { HttpErrorResponse } from '@angular/common/http'
 describe('NetworkSettingsComponent', () => {
   let component: NetworkSettingsComponent
   let fixture: ComponentFixture<NetworkSettingsComponent>
-  let devicesServiceSpy: jasmine.SpyObj<DevicesService>
-  let dialogOpenSpy: jasmine.Spy
-  let snackBarOpenSpy: jasmine.Spy
+  let devicesServiceSpy: SpyObj<DevicesService>
+  let dialogOpenSpy: MockInstance
+  let snackBarOpenSpy: MockInstance
 
   beforeEach(async () => {
-    devicesServiceSpy = jasmine.createSpyObj('DevicesService', [
+    devicesServiceSpy = createSpyObj('DevicesService', [
       'getNetworkSettings',
       'getWirelessState',
       'getWirelessProfileSync',
@@ -35,7 +37,7 @@ describe('NetworkSettingsComponent', () => {
       'updateWirelessProfile',
       'deleteWirelessProfile'
     ])
-    devicesServiceSpy.getNetworkSettings.and.returnValue(
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(
       of({
         wired: { ieee8021x: {} },
         wireless: {
@@ -44,19 +46,19 @@ describe('NetworkSettingsComponent', () => {
         }
       } as any)
     )
-    devicesServiceSpy.getWirelessState.and.returnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.getWirelessState.mockReturnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: false, uefiProfileSyncSupported: true } as any)
     )
-    devicesServiceSpy.patchWiredNetworkSettings.and.returnValue(of(void 0))
-    devicesServiceSpy.requestWirelessStateChange.and.returnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
-    devicesServiceSpy.setWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.patchWiredNetworkSettings.mockReturnValue(of(void 0))
+    devicesServiceSpy.requestWirelessStateChange.mockReturnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
+    devicesServiceSpy.setWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: false, uefiProfileSyncSupported: true } as any)
     )
-    devicesServiceSpy.getWirelessProfiles.and.returnValue(of([]))
-    devicesServiceSpy.addWirelessProfile.and.returnValue(of(void 0))
-    devicesServiceSpy.updateWirelessProfile.and.returnValue(of(void 0))
-    devicesServiceSpy.deleteWirelessProfile.and.returnValue(of(void 0))
+    devicesServiceSpy.getWirelessProfiles.mockReturnValue(of([]))
+    devicesServiceSpy.addWirelessProfile.mockReturnValue(of(void 0))
+    devicesServiceSpy.updateWirelessProfile.mockReturnValue(of(void 0))
+    devicesServiceSpy.deleteWirelessProfile.mockReturnValue(of(void 0))
     TestBed.configureTestingModule({
       imports: [NetworkSettingsComponent],
       providers: [
@@ -67,8 +69,10 @@ describe('NetworkSettingsComponent', () => {
 
     fixture = TestBed.createComponent(NetworkSettingsComponent)
     component = fixture.componentInstance
-    snackBarOpenSpy = spyOn(fixture.debugElement.injector.get(MatSnackBar), 'open')
-    dialogOpenSpy = spyOn(fixture.debugElement.injector.get(MatDialog), 'open').and.returnValue({
+    snackBarOpenSpy = vi
+      .spyOn(fixture.debugElement.injector.get(MatSnackBar), 'open')
+      .mockImplementation((() => undefined) as any)
+    dialogOpenSpy = vi.spyOn(fixture.debugElement.injector.get(MatDialog), 'open').mockReturnValue({
       afterClosed: () => of(true)
     } as MatDialogRef<unknown>)
     fixture.detectChanges()
@@ -119,7 +123,7 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('suppresses the error snackbar on a 409 conflict (handled by the global interceptor dialog)', () => {
-    snackBarOpenSpy.calls.reset()
+    snackBarOpenSpy.mockClear()
     ;(component as unknown as { showError: (m: string, e?: unknown) => void }).showError(
       'msg',
       new HttpErrorResponse({ status: 409 })
@@ -128,7 +132,7 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('suppresses the error snackbar on a 412 conflict (handled by the global interceptor dialog)', () => {
-    snackBarOpenSpy.calls.reset()
+    snackBarOpenSpy.mockClear()
     ;(component as unknown as { showError: (m: string, e?: unknown) => void }).showError(
       'msg',
       new HttpErrorResponse({ status: 412 })
@@ -137,7 +141,7 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('shows the error snackbar for non-conflict HTTP failures', () => {
-    snackBarOpenSpy.calls.reset()
+    snackBarOpenSpy.mockClear()
     ;(component as unknown as { showError: (m: string, e?: unknown) => void }).showError(
       'msg',
       new HttpErrorResponse({ status: 500 })
@@ -146,18 +150,18 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('shows the error snackbar when no error is provided', () => {
-    snackBarOpenSpy.calls.reset()
+    snackBarOpenSpy.mockClear()
     ;(component as unknown as { showError: (m: string, e?: unknown) => void }).showError('msg')
     expect(snackBarOpenSpy).toHaveBeenCalled()
   })
 
   it('enables the UEFI profile sync toggle when the device reports support', () => {
-    expect(component.uefiProfileSyncSupported()).toBeTrue()
-    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.enabled).toBeTrue()
+    expect(component.uefiProfileSyncSupported()).toBe(true)
+    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.enabled).toBe(true)
   })
 
   it('disables and forces off the UEFI profile sync toggle when unsupported', () => {
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: true, uefiProfileSyncSupported: false } as any)
     )
 
@@ -165,16 +169,16 @@ describe('NetworkSettingsComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
 
-    expect(component.uefiProfileSyncSupported()).toBeFalse()
-    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.disabled).toBeTrue()
-    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.value).toBeFalse()
+    expect(component.uefiProfileSyncSupported()).toBe(false)
+    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.disabled).toBe(true)
+    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.value).toBe(false)
   })
 
   it('keeps the UEFI toggle disabled after saving when still unsupported', () => {
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: false, uefiProfileSyncSupported: false } as any)
     )
-    devicesServiceSpy.setWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.setWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: false, uefiProfileSyncSupported: false } as any)
     )
 
@@ -184,57 +188,57 @@ describe('NetworkSettingsComponent', () => {
 
     component.saveWirelessSettings()
 
-    expect(component.uefiProfileSyncSupported()).toBeFalse()
-    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.disabled).toBeTrue()
-    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.value).toBeFalse()
+    expect(component.uefiProfileSyncSupported()).toBe(false)
+    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.disabled).toBe(true)
+    expect(component.wirelessSettingsForm.controls.uefiProfileSyncEnabled.value).toBe(false)
   })
 
   it('reports wired 802.1x as disabled when no enabled value is present', () => {
     component.networkResults.set({ wired: { ieee8021x: {} } } as any)
-    expect(component.isWiredIeee8021xEnabled()).toBeFalse()
+    expect(component.isWiredIeee8021xEnabled()).toBe(false)
   })
 
   it('reports wired 802.1x as disabled for an empty string or "Disabled"', () => {
     component.networkResults.set({ wired: { ieee8021x: { enabled: '' } } } as any)
-    expect(component.isWiredIeee8021xEnabled()).toBeFalse()
+    expect(component.isWiredIeee8021xEnabled()).toBe(false)
 
     component.networkResults.set({ wired: { ieee8021x: { enabled: 'Disabled' } } } as any)
-    expect(component.isWiredIeee8021xEnabled()).toBeFalse()
+    expect(component.isWiredIeee8021xEnabled()).toBe(false)
   })
 
   it('reports wired 802.1x as enabled for a non-disabled value', () => {
     component.networkResults.set({ wired: { ieee8021x: { enabled: 'EnabledWithCertificates' } } } as any)
-    expect(component.isWiredIeee8021xEnabled()).toBeTrue()
+    expect(component.isWiredIeee8021xEnabled()).toBe(true)
   })
 
   it('toggles the wired 802.1x expanded state', () => {
-    expect(component.wiredIeee8021xExpanded()).toBeFalse()
+    expect(component.wiredIeee8021xExpanded()).toBe(false)
 
     component.toggleWiredIeee8021x()
-    expect(component.wiredIeee8021xExpanded()).toBeTrue()
+    expect(component.wiredIeee8021xExpanded()).toBe(true)
 
     component.toggleWiredIeee8021x()
-    expect(component.wiredIeee8021xExpanded()).toBeFalse()
+    expect(component.wiredIeee8021xExpanded()).toBe(false)
   })
 
   it('toggles the wired configuration form visibility', () => {
-    expect(component.showWiredConfigForm()).toBeFalse()
+    expect(component.showWiredConfigForm()).toBe(false)
 
     component.toggleWiredConfigForm()
-    expect(component.showWiredConfigForm()).toBeTrue()
+    expect(component.showWiredConfigForm()).toBe(true)
 
     component.toggleWiredConfigForm()
-    expect(component.showWiredConfigForm()).toBeFalse()
+    expect(component.showWiredConfigForm()).toBe(false)
   })
 
   it('toggles the wireless configuration form visibility', () => {
-    expect(component.showWirelessConfigForm()).toBeFalse()
+    expect(component.showWirelessConfigForm()).toBe(false)
 
     component.toggleWirelessConfigForm()
-    expect(component.showWirelessConfigForm()).toBeTrue()
+    expect(component.showWirelessConfigForm()).toBe(true)
 
     component.toggleWirelessConfigForm()
-    expect(component.showWirelessConfigForm()).toBeFalse()
+    expect(component.showWirelessConfigForm()).toBe(false)
   })
 
   it('reverts and hides the wired settings form when cancelling', () => {
@@ -245,9 +249,9 @@ describe('NetworkSettingsComponent', () => {
 
     component.cancelWiredSettings()
 
-    expect(component.wiredForm.controls.dhcpEnabled.value).toBeTrue()
-    expect(component.wiredForm.pristine).toBeTrue()
-    expect(component.showWiredConfigForm()).toBeFalse()
+    expect(component.wiredForm.controls.dhcpEnabled.value).toBe(true)
+    expect(component.wiredForm.pristine).toBe(true)
+    expect(component.showWiredConfigForm()).toBe(false)
   })
 
   it('reverts and hides the wireless settings form when cancelling', () => {
@@ -258,21 +262,21 @@ describe('NetworkSettingsComponent', () => {
 
     component.cancelWirelessSettings()
 
-    expect(component.wirelessSettingsForm.controls.enabled.value).toBeTrue()
-    expect(component.wirelessSettingsForm.pristine).toBeTrue()
-    expect(component.showWirelessConfigForm()).toBeFalse()
+    expect(component.wirelessSettingsForm.controls.enabled.value).toBe(true)
+    expect(component.wirelessSettingsForm.pristine).toBe(true)
+    expect(component.showWirelessConfigForm()).toBe(false)
   })
 
   it('closes the add profile form without a dialog when toggled shut', () => {
     component.wirelessStatus.set({ enabled: false, localProfileSyncEnabled: false, uefiProfileSyncEnabled: false })
     component.showWirelessProfileForm.set(true)
     component.editingWirelessProfileName.set(null)
-    dialogOpenSpy.calls.reset()
+    dialogOpenSpy.mockClear()
 
     component.toggleWirelessProfileForm()
 
     expect(dialogOpenSpy).not.toHaveBeenCalled()
-    expect(component.showWirelessProfileForm()).toBeFalse()
+    expect(component.showWirelessProfileForm()).toBe(false)
   })
 
   it('opens the add profile form through the WiFi-disabled warning when toggled open', () => {
@@ -282,16 +286,16 @@ describe('NetworkSettingsComponent', () => {
     component.toggleWirelessProfileForm()
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(WifiDisabledAlertComponent)
-    expect(component.showWirelessProfileForm()).toBeTrue()
+    expect(component.showWirelessProfileForm()).toBe(true)
   })
 
   it('reloads the read-only network details after saving wireless settings', () => {
-    devicesServiceSpy.getNetworkSettings.calls.reset()
+    devicesServiceSpy.getNetworkSettings.mockClear()
 
     component.saveWirelessSettings()
 
     expect(devicesServiceSpy.getNetworkSettings).toHaveBeenCalledTimes(1)
-    expect(component.isRefreshingNetwork()).toBeFalse()
+    expect(component.isRefreshingNetwork()).toBe(false)
   })
 
   it('refreshes the wireless profile list after saving a profile', () => {
@@ -303,8 +307,8 @@ describe('NetworkSettingsComponent', () => {
       encryptionMethod: 'CCMP',
       password: 'password1'
     })
-    devicesServiceSpy.getWirelessProfiles.calls.reset()
-    devicesServiceSpy.getWirelessProfiles.and.returnValue(
+    devicesServiceSpy.getWirelessProfiles.mockClear()
+    devicesServiceSpy.getWirelessProfiles.mockReturnValue(
       of([{ profileName: 'profile1', ssid: 'ssid1', priority: 1 }] as any)
     )
 
@@ -312,7 +316,7 @@ describe('NetworkSettingsComponent', () => {
 
     expect(devicesServiceSpy.getWirelessProfiles).toHaveBeenCalledTimes(1)
     expect(component.wirelessProfiles().length).toBe(1)
-    expect(component.isLoadingWirelessProfiles()).toBeFalse()
+    expect(component.isLoadingWirelessProfiles()).toBe(false)
   })
 
   it('does not flag the wireless profile limit when fewer than the maximum exist', () => {
@@ -324,7 +328,7 @@ describe('NetworkSettingsComponent', () => {
       })) as any
     )
 
-    expect(component.isWirelessProfileLimitReached()).toBeFalse()
+    expect(component.isWirelessProfileLimitReached()).toBe(false)
   })
 
   it('flags the wireless profile limit once the maximum number of profiles exist', () => {
@@ -336,7 +340,7 @@ describe('NetworkSettingsComponent', () => {
       })) as any
     )
 
-    expect(component.isWirelessProfileLimitReached()).toBeTrue()
+    expect(component.isWirelessProfileLimitReached()).toBe(true)
   })
 
   it('disables the add wireless profile button when the maximum number of profiles is reached', () => {
@@ -352,14 +356,14 @@ describe('NetworkSettingsComponent', () => {
 
     const addButton: HTMLButtonElement | null = fixture.nativeElement.querySelector('.profile-add-button')
     expect(addButton).not.toBeNull()
-    expect(addButton?.disabled).toBeTrue()
+    expect(addButton?.disabled).toBe(true)
   })
 
   it('starts a new wireless profile with an empty priority', () => {
     component.addNewWirelessProfile()
 
     expect(component.wirelessProfileForm.controls.priority.value).toBeNull()
-    expect(component.wirelessProfileForm.controls.priority.hasError('required')).toBeTrue()
+    expect(component.wirelessProfileForm.controls.priority.hasError('required')).toBe(true)
   })
 
   it('warns with a dialog but still opens the form when adding a profile while WiFi is disabled', () => {
@@ -368,17 +372,17 @@ describe('NetworkSettingsComponent', () => {
     component.addNewWirelessProfile()
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(WifiDisabledAlertComponent)
-    expect(component.showWirelessProfileForm()).toBeTrue()
+    expect(component.showWirelessProfileForm()).toBe(true)
   })
 
   it('does not open the WiFi disabled dialog when adding a profile while WiFi is enabled', () => {
     component.wirelessStatus.set({ enabled: true, localProfileSyncEnabled: false, uefiProfileSyncEnabled: false })
-    dialogOpenSpy.calls.reset()
+    dialogOpenSpy.mockClear()
 
     component.addNewWirelessProfile()
 
     expect(dialogOpenSpy).not.toHaveBeenCalledWith(WifiDisabledAlertComponent)
-    expect(component.showWirelessProfileForm()).toBeTrue()
+    expect(component.showWirelessProfileForm()).toBe(true)
   })
 
   it('flags a priority already used by another wireless profile', () => {
@@ -387,7 +391,7 @@ describe('NetworkSettingsComponent', () => {
 
     component.wirelessProfileForm.controls.priority.setValue(2)
 
-    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBeTrue()
+    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBe(true)
   })
 
   it('accepts a priority that is not used by any other wireless profile', () => {
@@ -396,7 +400,7 @@ describe('NetworkSettingsComponent', () => {
 
     component.wirelessProfileForm.controls.priority.setValue(3)
 
-    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBeFalse()
+    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBe(false)
   })
 
   it('does not flag the edited profile against its own priority', () => {
@@ -406,7 +410,7 @@ describe('NetworkSettingsComponent', () => {
     component.editWirelessProfile(profile)
 
     expect(component.wirelessProfileForm.controls.priority.value).toBe(2)
-    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBeFalse()
+    expect(component.wirelessProfileForm.controls.priority.hasError('priorityConflict')).toBe(false)
   })
 
   it('blocks non-numeric keys on the priority field', () => {
@@ -418,7 +422,7 @@ describe('NetworkSettingsComponent', () => {
       '.'
     ]) {
       const event = new KeyboardEvent('keydown', { key })
-      spyOn(event, 'preventDefault')
+      vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined)
 
       component.blockNonNumericKey(event)
 
@@ -428,7 +432,7 @@ describe('NetworkSettingsComponent', () => {
 
   it('allows numeric keys on the priority field', () => {
     const event = new KeyboardEvent('keydown', { key: '5' })
-    spyOn(event, 'preventDefault')
+    vi.spyOn(event, 'preventDefault').mockImplementation(() => undefined)
 
     component.blockNonNumericKey(event)
 
@@ -436,19 +440,19 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('shows an error and clears the loading flags when the network settings request fails', async () => {
-    devicesServiceSpy.getNetworkSettings.and.returnValue(throwError(() => new Error('boom')))
-    snackBarOpenSpy.calls.reset()
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(throwError(() => new Error('boom')))
+    snackBarOpenSpy.mockClear()
 
     await runAndSwallowRethrow(() => rebuildComponent())
 
     expect(snackBarOpenSpy).toHaveBeenCalled()
-    expect(component.isWiredLoading()).toBeFalse()
-    expect(component.isWirelessLoading()).toBeFalse()
-    expect(component.isWirelessConfigLoading()).toBeFalse()
+    expect(component.isWiredLoading()).toBe(false)
+    expect(component.isWirelessLoading()).toBe(false)
+    expect(component.isWirelessConfigLoading()).toBe(false)
   })
 
   it('selects the wireless tab when the device has no wired adapter', () => {
-    devicesServiceSpy.getNetworkSettings.and.returnValue(
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(
       of({ wired: null, wireless: { wifiNetworks: [], ieee8021xSettings: [] } } as any)
     )
 
@@ -458,11 +462,11 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('stops the wireless config spinner when the device has no wireless adapter', () => {
-    devicesServiceSpy.getNetworkSettings.and.returnValue(of({ wired: { ieee8021x: {} }, wireless: null } as any))
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(of({ wired: { ieee8021x: {} }, wireless: null } as any))
 
     rebuildComponent()
 
-    expect(component.isWirelessConfigLoading()).toBeFalse()
+    expect(component.isWirelessConfigLoading()).toBe(false)
   })
 
   it('reports adapters as present while the settings are still loading', () => {
@@ -470,8 +474,8 @@ describe('NetworkSettingsComponent', () => {
     component.isWirelessLoading.set(true)
     component.networkResults.set({ wired: null, wireless: null } as any)
 
-    expect(component.hasWiredAdapter()).toBeTrue()
-    expect(component.hasWirelessAdapter()).toBeTrue()
+    expect(component.hasWiredAdapter()).toBe(true)
+    expect(component.hasWirelessAdapter()).toBe(true)
   })
 
   it('reports adapter availability from the loaded settings once loading completes', () => {
@@ -479,16 +483,16 @@ describe('NetworkSettingsComponent', () => {
     component.isWirelessLoading.set(false)
 
     component.networkResults.set({ wired: { ieee8021x: {} }, wireless: {} } as any)
-    expect(component.hasWiredAdapter()).toBeTrue()
-    expect(component.hasWirelessAdapter()).toBeTrue()
+    expect(component.hasWiredAdapter()).toBe(true)
+    expect(component.hasWirelessAdapter()).toBe(true)
 
     component.networkResults.set({ wired: null, wireless: null } as any)
-    expect(component.hasWiredAdapter()).toBeFalse()
-    expect(component.hasWirelessAdapter()).toBeFalse()
+    expect(component.hasWiredAdapter()).toBe(false)
+    expect(component.hasWirelessAdapter()).toBe(false)
   })
 
   it('does not call the backend when the wired form is invalid', () => {
-    devicesServiceSpy.patchWiredNetworkSettings.calls.reset()
+    devicesServiceSpy.patchWiredNetworkSettings.mockClear()
     component.wiredForm.controls.dhcpEnabled.setValue(false)
     component.wiredForm.controls.ipSyncEnabled.setValue(false)
     component.wiredForm.controls.ipAddress.setValue('')
@@ -496,17 +500,17 @@ describe('NetworkSettingsComponent', () => {
     component.saveWiredSettings()
 
     expect(devicesServiceSpy.patchWiredNetworkSettings).not.toHaveBeenCalled()
-    expect(component.wiredForm.touched).toBeTrue()
+    expect(component.wiredForm.touched).toBe(true)
   })
 
   it('confirms before saving wired settings and aborts when the dialog is dismissed', () => {
-    dialogOpenSpy.and.returnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
-    devicesServiceSpy.patchWiredNetworkSettings.calls.reset()
+    dialogOpenSpy.mockReturnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
+    devicesServiceSpy.patchWiredNetworkSettings.mockClear()
     component.wiredForm.controls.dhcpEnabled.setValue(true)
 
     component.saveWiredSettings()
 
-    expect(dialogOpenSpy).toHaveBeenCalledWith(NetworkChangeAlertComponent, jasmine.any(Object))
+    expect(dialogOpenSpy).toHaveBeenCalledWith(NetworkChangeAlertComponent, expect.any(Object))
     expect(devicesServiceSpy.patchWiredNetworkSettings).not.toHaveBeenCalled()
   })
 
@@ -517,21 +521,21 @@ describe('NetworkSettingsComponent', () => {
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(
       NetworkChangeAlertComponent,
-      jasmine.objectContaining({ data: { messageKey: 'network.changeAlert.message.value' } })
+      expect.objectContaining({ data: { messageKey: 'network.changeAlert.message.value' } })
     )
   })
 
   it('saves wired settings with a DHCP payload and refreshes the read-only details', () => {
-    devicesServiceSpy.getNetworkSettings.calls.reset()
+    devicesServiceSpy.getNetworkSettings.mockClear()
     component.wiredForm.controls.dhcpEnabled.setValue(true)
 
     component.saveWiredSettings()
 
     expect(devicesServiceSpy.patchWiredNetworkSettings).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({ dhcpEnabled: true, ipSyncEnabled: true })
+      expect.any(String),
+      expect.objectContaining({ dhcpEnabled: true, ipSyncEnabled: true })
     )
-    expect(component.isSavingWired()).toBeFalse()
+    expect(component.isSavingWired()).toBe(false)
     expect(devicesServiceSpy.getNetworkSettings).toHaveBeenCalledTimes(1)
   })
 
@@ -549,8 +553,8 @@ describe('NetworkSettingsComponent', () => {
     component.saveWiredSettings()
 
     expect(devicesServiceSpy.patchWiredNetworkSettings).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({
+      expect.any(String),
+      expect.objectContaining({
         dhcpEnabled: false,
         ipSyncEnabled: false,
         ipAddress: '192.168.1.10',
@@ -563,70 +567,70 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('shows an error when saving wired settings fails', async () => {
-    devicesServiceSpy.patchWiredNetworkSettings.and.returnValue(throwError(() => new Error('fail')))
-    snackBarOpenSpy.calls.reset()
+    devicesServiceSpy.patchWiredNetworkSettings.mockReturnValue(throwError(() => new Error('fail')))
+    snackBarOpenSpy.mockClear()
     component.wiredForm.controls.dhcpEnabled.setValue(true)
 
     await runAndSwallowRethrow(() => component.saveWiredSettings())
 
     expect(snackBarOpenSpy).toHaveBeenCalled()
-    expect(component.isSavingWired()).toBeFalse()
+    expect(component.isSavingWired()).toBe(false)
   })
 
   it('ignores a null result when refreshing the read-only network details', () => {
     component.wiredForm.controls.dhcpEnabled.setValue(true)
     const previous = component.networkResults()
-    devicesServiceSpy.getNetworkSettings.and.returnValue(of(null as any))
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(of(null as any))
 
     component.saveWiredSettings()
 
-    expect(component.isRefreshingNetwork()).toBeFalse()
+    expect(component.isRefreshingNetwork()).toBe(false)
     expect(component.networkResults()).toBe(previous)
   })
 
   it('recovers when refreshing the read-only network details fails', () => {
     component.wiredForm.controls.dhcpEnabled.setValue(true)
-    devicesServiceSpy.getNetworkSettings.and.returnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(throwError(() => new Error('fail')))
 
     component.saveWiredSettings()
 
-    expect(component.isRefreshingNetwork()).toBeFalse()
+    expect(component.isRefreshingNetwork()).toBe(false)
   })
 
   it('disables IP sync when the loaded wired settings use DHCP', () => {
-    devicesServiceSpy.getNetworkSettings.and.returnValue(
+    devicesServiceSpy.getNetworkSettings.mockReturnValue(
       of({ wired: { dhcpEnabled: true, ieee8021x: {} }, wireless: null } as any)
     )
 
     rebuildComponent()
 
-    expect(component.wiredForm.controls.dhcpEnabled.value).toBeTrue()
-    expect(component.wiredForm.controls.ipSyncEnabled.disabled).toBeTrue()
+    expect(component.wiredForm.controls.dhcpEnabled.value).toBe(true)
+    expect(component.wiredForm.controls.ipSyncEnabled.disabled).toBe(true)
   })
 
   it('reloads the wireless configuration when saving wireless settings fails', async () => {
-    devicesServiceSpy.requestWirelessStateChange.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessState.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.setWirelessProfileSync.calls.reset()
-    devicesServiceSpy.getWirelessState.calls.reset()
-    snackBarOpenSpy.calls.reset()
+    devicesServiceSpy.requestWirelessStateChange.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessState.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.setWirelessProfileSync.mockClear()
+    devicesServiceSpy.getWirelessState.mockClear()
+    snackBarOpenSpy.mockClear()
 
     await runAndSwallowRethrow(() => component.saveWirelessSettings())
 
     expect(devicesServiceSpy.setWirelessProfileSync).not.toHaveBeenCalled()
     expect(devicesServiceSpy.getWirelessState).toHaveBeenCalled()
-    expect(component.isSavingWireless()).toBeFalse()
-    expect(component.wirelessSettingsForm.enabled).toBeTrue()
+    expect(component.isSavingWireless()).toBe(false)
+    expect(component.wirelessSettingsForm.enabled).toBe(true)
   })
 
   it('confirms before saving wireless settings and aborts when the dialog is dismissed', () => {
-    dialogOpenSpy.and.returnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
-    devicesServiceSpy.requestWirelessStateChange.calls.reset()
+    dialogOpenSpy.mockReturnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
+    devicesServiceSpy.requestWirelessStateChange.mockClear()
 
     component.saveWirelessSettings()
 
-    expect(dialogOpenSpy).toHaveBeenCalledWith(NetworkChangeAlertComponent, jasmine.any(Object))
+    expect(dialogOpenSpy).toHaveBeenCalledWith(NetworkChangeAlertComponent, expect.any(Object))
     expect(devicesServiceSpy.requestWirelessStateChange).not.toHaveBeenCalled()
   })
 
@@ -637,7 +641,7 @@ describe('NetworkSettingsComponent', () => {
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(
       NetworkChangeAlertComponent,
-      jasmine.objectContaining({ data: { messageKey: 'network.changeAlert.message.value' } })
+      expect.objectContaining({ data: { messageKey: 'network.changeAlert.message.value' } })
     )
   })
 
@@ -648,7 +652,7 @@ describe('NetworkSettingsComponent', () => {
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(
       NetworkChangeAlertComponent,
-      jasmine.objectContaining({ data: { messageKey: 'network.changeAlert.wifiDisableWithWired.value' } })
+      expect.objectContaining({ data: { messageKey: 'network.changeAlert.wifiDisableWithWired.value' } })
     )
   })
 
@@ -661,20 +665,20 @@ describe('NetworkSettingsComponent', () => {
 
     expect(dialogOpenSpy).toHaveBeenCalledWith(
       NetworkChangeAlertComponent,
-      jasmine.objectContaining({ data: { messageKey: 'network.changeAlert.wifiDisableNoWired.value' } })
+      expect.objectContaining({ data: { messageKey: 'network.changeAlert.wifiDisableNoWired.value' } })
     )
   })
 
   it('sends a WifiDisabled state when wireless is turned off', () => {
     component.wirelessSettingsForm.controls.enabled.setValue(false)
-    devicesServiceSpy.requestWirelessStateChange.calls.reset()
-    devicesServiceSpy.requestWirelessStateChange.and.returnValue(of({ state: 'WifiDisabled' } as any))
+    devicesServiceSpy.requestWirelessStateChange.mockClear()
+    devicesServiceSpy.requestWirelessStateChange.mockReturnValue(of({ state: 'WifiDisabled' } as any))
 
     component.saveWirelessSettings()
 
     expect(devicesServiceSpy.requestWirelessStateChange).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({ state: 'WifiDisabled' })
+      expect.any(String),
+      expect.objectContaining({ state: 'WifiDisabled' })
     )
   })
 
@@ -697,8 +701,8 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('updates the read-only status snapshot after a successful save', () => {
-    devicesServiceSpy.requestWirelessStateChange.and.returnValue(of({ state: 'WifiDisabled' } as any))
-    devicesServiceSpy.setWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.requestWirelessStateChange.mockReturnValue(of({ state: 'WifiDisabled' } as any))
+    devicesServiceSpy.setWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: false, uefiProfileSync: true, uefiProfileSyncSupported: true } as any)
     )
 
@@ -712,8 +716,8 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('leaves the read-only status snapshot undefined when the device status fails to load', () => {
-    devicesServiceSpy.getWirelessState.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessState.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(throwError(() => new Error('fail')))
 
     rebuildComponent()
 
@@ -725,31 +729,31 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('falls back to the current wireless settings when the wireless card data fails to load', () => {
-    devicesServiceSpy.getWirelessState.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessProfiles.and.returnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessState.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessProfiles.mockReturnValue(throwError(() => new Error('fail')))
 
     rebuildComponent()
 
-    expect(component.isWirelessConfigLoading()).toBeFalse()
+    expect(component.isWirelessConfigLoading()).toBe(false)
     expect(component.wirelessProfiles()).toEqual([])
-    expect(component.uefiProfileSyncSupported()).toBeTrue()
+    expect(component.uefiProfileSyncSupported()).toBe(true)
   })
 
   it('repopulates the wireless toggles from the reloaded configuration after a failed save', async () => {
-    devicesServiceSpy.requestWirelessStateChange.and.returnValue(throwError(() => new Error('fail')))
-    devicesServiceSpy.getWirelessState.and.returnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
-    devicesServiceSpy.getWirelessProfileSync.and.returnValue(
+    devicesServiceSpy.requestWirelessStateChange.mockReturnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessState.mockReturnValue(of({ state: 'WifiEnabledS0SxAC' } as any))
+    devicesServiceSpy.getWirelessProfileSync.mockReturnValue(
       of({ localProfileSync: true, uefiProfileSync: false, uefiProfileSyncSupported: true } as any)
     )
 
     await runAndSwallowRethrow(() => component.saveWirelessSettings())
 
-    expect(component.wirelessSettingsForm.controls.enabled.value).toBeTrue()
+    expect(component.wirelessSettingsForm.controls.enabled.value).toBe(true)
   })
 
   it('sorts wireless profiles by ascending priority', () => {
-    devicesServiceSpy.getWirelessProfiles.and.returnValue(
+    devicesServiceSpy.getWirelessProfiles.mockReturnValue(
       of([
         { profileName: 'b', ssid: 'b', priority: 3 },
         { profileName: 'a', ssid: 'a', priority: 1 }
@@ -762,7 +766,7 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('does not save a wireless profile when the form is invalid', () => {
-    devicesServiceSpy.addWirelessProfile.calls.reset()
+    devicesServiceSpy.addWirelessProfile.mockClear()
     component.resetWirelessProfileForm()
 
     component.saveWirelessProfile()
@@ -788,10 +792,10 @@ describe('NetworkSettingsComponent', () => {
     component.saveWirelessProfile()
 
     expect(devicesServiceSpy.addWirelessProfile).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({
+      expect.any(String),
+      expect.objectContaining({
         profileName: 'corpprofile',
-        ieee8021x: jasmine.objectContaining({
+        ieee8021x: expect.objectContaining({
           username: 'user1',
           authenticationProtocol: 0,
           clientCert: 'CLIENTCERT',
@@ -820,16 +824,16 @@ describe('NetworkSettingsComponent', () => {
     component.saveWirelessProfile()
 
     expect(devicesServiceSpy.updateWirelessProfile).toHaveBeenCalledWith(
-      jasmine.any(String),
-      jasmine.objectContaining({
-        ieee8021x: jasmine.objectContaining({ authenticationProtocol: 2, password: 'secret' })
+      expect.any(String),
+      expect.objectContaining({
+        ieee8021x: expect.objectContaining({ authenticationProtocol: 2, password: 'secret' })
       })
     )
   })
 
   it('shows an error when saving a wireless profile fails', async () => {
-    devicesServiceSpy.addWirelessProfile.and.returnValue(throwError(() => new Error('fail')))
-    snackBarOpenSpy.calls.reset()
+    devicesServiceSpy.addWirelessProfile.mockReturnValue(throwError(() => new Error('fail')))
+    snackBarOpenSpy.mockClear()
     component.addNewWirelessProfile()
     component.wirelessProfileForm.patchValue({
       profileName: 'p1',
@@ -843,11 +847,11 @@ describe('NetworkSettingsComponent', () => {
     await runAndSwallowRethrow(() => component.saveWirelessProfile())
 
     expect(snackBarOpenSpy).toHaveBeenCalled()
-    expect(component.isSavingWirelessProfile()).toBeFalse()
+    expect(component.isSavingWirelessProfile()).toBe(false)
   })
 
   it('falls back to an empty wireless profile list when reloading after a save fails', () => {
-    devicesServiceSpy.getWirelessProfiles.and.returnValue(throwError(() => new Error('fail')))
+    devicesServiceSpy.getWirelessProfiles.mockReturnValue(throwError(() => new Error('fail')))
     component.addNewWirelessProfile()
     component.wirelessProfileForm.patchValue({
       profileName: 'p1',
@@ -861,7 +865,7 @@ describe('NetworkSettingsComponent', () => {
     component.saveWirelessProfile()
 
     expect(component.wirelessProfiles()).toEqual([])
-    expect(component.isLoadingWirelessProfiles()).toBeFalse()
+    expect(component.isLoadingWirelessProfiles()).toBe(false)
   })
 
   it('populates the 802.1x fields when editing a certificate-based profile', () => {
@@ -880,27 +884,27 @@ describe('NetworkSettingsComponent', () => {
     expect(component.wirelessProfileForm.controls.ieee8021xUsername.value).toBe('user1')
     expect(component.wirelessProfileForm.controls.ieee8021xAuthenticationProtocol.value).toBe(2)
     expect(component.editingWirelessProfileName()).toBe('corp')
-    expect(component.wirelessProfileForm.controls.profileName.disabled).toBeTrue()
+    expect(component.wirelessProfileForm.controls.profileName.disabled).toBe(true)
   })
 
   it('deletes a wireless profile after confirmation and resets the form when editing it', () => {
-    dialogOpenSpy.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<unknown>)
+    dialogOpenSpy.mockReturnValue({ afterClosed: () => of(true) } as MatDialogRef<unknown>)
     component.editingWirelessProfileName.set('p1')
-    devicesServiceSpy.getWirelessProfiles.calls.reset()
-    snackBarOpenSpy.calls.reset()
+    devicesServiceSpy.getWirelessProfiles.mockClear()
+    snackBarOpenSpy.mockClear()
 
     component.deleteWirelessProfile('p1')
 
-    expect(devicesServiceSpy.deleteWirelessProfile).toHaveBeenCalledWith(jasmine.any(String), 'p1')
+    expect(devicesServiceSpy.deleteWirelessProfile).toHaveBeenCalledWith(expect.any(String), 'p1')
     expect(snackBarOpenSpy).toHaveBeenCalled()
     expect(component.editingWirelessProfileName()).toBeNull()
-    expect(component.isSavingWirelessProfile()).toBeFalse()
+    expect(component.isSavingWirelessProfile()).toBe(false)
     expect(devicesServiceSpy.getWirelessProfiles).toHaveBeenCalledTimes(1)
   })
 
   it('does not delete a wireless profile when the confirmation is dismissed', () => {
-    dialogOpenSpy.and.returnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
-    devicesServiceSpy.deleteWirelessProfile.calls.reset()
+    dialogOpenSpy.mockReturnValue({ afterClosed: () => of(false) } as MatDialogRef<unknown>)
+    devicesServiceSpy.deleteWirelessProfile.mockClear()
 
     component.deleteWirelessProfile('p1')
 
@@ -908,14 +912,14 @@ describe('NetworkSettingsComponent', () => {
   })
 
   it('shows an error when deleting a wireless profile fails', async () => {
-    dialogOpenSpy.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<unknown>)
-    devicesServiceSpy.deleteWirelessProfile.and.returnValue(throwError(() => new Error('fail')))
-    snackBarOpenSpy.calls.reset()
+    dialogOpenSpy.mockReturnValue({ afterClosed: () => of(true) } as MatDialogRef<unknown>)
+    devicesServiceSpy.deleteWirelessProfile.mockReturnValue(throwError(() => new Error('fail')))
+    snackBarOpenSpy.mockClear()
 
     await runAndSwallowRethrow(() => component.deleteWirelessProfile('p1'))
 
     expect(snackBarOpenSpy).toHaveBeenCalled()
-    expect(component.isSavingWirelessProfile()).toBeFalse()
+    expect(component.isSavingWirelessProfile()).toBe(false)
   })
 
   it('reads a PEM certificate file and stores the stripped base64 body', async () => {

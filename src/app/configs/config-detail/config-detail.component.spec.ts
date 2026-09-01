@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -18,23 +20,23 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('ConfigDetailComponent', () => {
   let component: ConfigDetailComponent
   let fixture: ComponentFixture<ConfigDetailComponent>
-  let getRecordSpy: jasmine.Spy
-  let updateRecordSpy: jasmine.Spy
-  let loadMpsRootCertSpy: jasmine.Spy
-  let createRecordSpy: jasmine.Spy
+  let getRecordSpy: MockInstance
+  let updateRecordSpy: MockInstance
+  let loadMpsRootCertSpy: MockInstance
+  let createRecordSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const configsService = jasmine.createSpyObj('ConfigsService', [
+    const configsService = createSpyObj('ConfigsService', [
       'getRecord',
       'update',
       'loadMPSRootCert',
       'create'
     ])
-    getRecordSpy = configsService.getRecord.and.returnValue(of({ serverAddressFormat: 3, configName: 'ciraConfig1' }))
-    updateRecordSpy = configsService.update.and.returnValue(of({}))
-    loadMpsRootCertSpy = configsService.loadMPSRootCert.and.returnValue(of('root certificate'))
-    createRecordSpy = configsService.create.and.returnValue(of({}))
+    getRecordSpy = configsService.getRecord.mockReturnValue(of({ serverAddressFormat: 3, configName: 'ciraConfig1' }))
+    updateRecordSpy = configsService.update.mockReturnValue(of({}))
+    loadMpsRootCertSpy = configsService.loadMPSRootCert.mockReturnValue(of('root certificate'))
+    createRecordSpy = configsService.create.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [
@@ -71,13 +73,13 @@ describe('ConfigDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-    expect(getRecordSpy.calls.any()).toBe(true, 'getRecord called')
-    expect(component.isEdit()).toBeTrue()
+    expect(getRecordSpy.mock.calls.length > 0, 'getRecord called').toBe(true)
+    expect(component.isEdit()).toBe(true)
     expect(component.pageTitle).toEqual('ciraConfig1')
   })
 
   it('should cancel', async () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     await component.cancel()
     expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs'])
   })
@@ -98,7 +100,7 @@ describe('ConfigDetailComponent', () => {
   })
 
   it('should submit when valid(update) with regenerate password', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.configForm.patchValue({
       configName: 'ciraConfig1',
       mpsServerAddress: '255.255.255.255',
@@ -114,14 +116,14 @@ describe('ConfigDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(loadMpsRootCertSpy).toHaveBeenCalled()
     expect(updateRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })
 
   it('should submit when valid(update) with static password', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.configForm.patchValue({
       configName: 'ciraConfig1',
       mpsServerAddress: '255.255.255.255',
@@ -139,14 +141,14 @@ describe('ConfigDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(loadMpsRootCertSpy).toHaveBeenCalled()
     expect(updateRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })
 
   it('should submit when valid(create)', () => {
-    const routerSpy = spyOn(component.router, 'navigate')
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     component.configForm.patchValue({
       configName: 'ciraConfig2',
       mpsServerAddress: '255.255.255.255',
@@ -163,7 +165,7 @@ describe('ConfigDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.isLoading()).toBeFalse()
+    expect(component.isLoading()).toBe(false)
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
   })

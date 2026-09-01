@@ -15,11 +15,16 @@ updates:
           - 'angular-eslint'
           - 'typescript-eslint'
           - 'rxjs'
-          - 'zone.js'
           - 'typescript'
         update-types:
           - patch
           - minor
+      # vitest and its plugins peer-depend on the same 4.x line; bump together.
+      vitest:
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+          - 'playwright'
     # Majors handled manually via `ng update`.
     ignore:
       - dependency-name: '@angular/*'
@@ -33,8 +38,6 @@ updates:
       - dependency-name: 'typescript-eslint'
         update-types: ['version-update:semver-major']
       - dependency-name: 'rxjs'
-        update-types: ['version-update:semver-major']
-      - dependency-name: 'zone.js'
         update-types: ['version-update:semver-major']
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']

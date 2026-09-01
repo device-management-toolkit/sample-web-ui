@@ -1,3 +1,10 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
@@ -11,13 +18,13 @@ import { provideTranslateService } from '@ngx-translate/core'
 describe('ProfilesService', () => {
   let service: ProfilesService
   let httpMock: HttpTestingController
-  let authServiceSpy: jasmine.SpyObj<AuthService>
+  let authServiceSpy: SpyObj<AuthService>
 
   const mockEnvironment = { rpsServer: 'https://test-server' }
   const mockUrl = `${mockEnvironment.rpsServer}/api/v1/admin/profiles`
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['onError'])
+    authServiceSpy = createSpyObj('AuthService', ['onError'])
     environment.rpsServer = mockEnvironment.rpsServer
     TestBed.configureTestingModule({
       providers: [
@@ -108,7 +115,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getData().subscribe({
         error: (error) => {
@@ -150,7 +157,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.getRecord('profile1').subscribe({
         error: (error) => {
@@ -192,7 +199,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.create({ profileName: 'profile1', activation: 'activation1', iderEnabled: true } as any).subscribe({
         error: (error) => {
@@ -234,7 +241,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 400, statusText: 'Bad Request' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.update({ profileName: 'profile1', activation: 'activation1', iderEnabled: true } as any).subscribe({
         error: (error) => {
@@ -260,7 +267,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 404, statusText: 'Not Found' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.delete('profile1').subscribe({
         error: (error) => {
@@ -288,7 +295,7 @@ describe('ProfilesService', () => {
 
     it('should handle errors', () => {
       const mockError = { status: 500, statusText: 'Internal Server Error' }
-      authServiceSpy.onError.and.returnValue(['Error occurred'])
+      authServiceSpy.onError.mockReturnValue(['Error occurred'])
 
       service.export('profile1', 'domain1').subscribe({
         error: (error) => {

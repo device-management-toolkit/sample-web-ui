@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -17,19 +19,19 @@ import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 describe('ProxyConfigDetailComponent', () => {
   let component: ProxyConfigDetailComponent
   let fixture: ComponentFixture<ProxyConfigDetailComponent>
-  let proxyConfigsGetRecordSpy: jasmine.Spy
-  let proxyConfigsCreateSpy: jasmine.Spy
-  let proxyConfigsUpdateSpy: jasmine.Spy
-  let routerSpy: jasmine.Spy
+  let proxyConfigsGetRecordSpy: MockInstance
+  let proxyConfigsCreateSpy: MockInstance
+  let proxyConfigsUpdateSpy: MockInstance
+  let routerSpy: MockInstance
   let translate: TranslateService
 
   beforeEach(() => {
-    const proxyConfigsService = jasmine.createSpyObj('ProxyConfigsService', [
+    const proxyConfigsService = createSpyObj('ProxyConfigsService', [
       'getRecord',
       'update',
       'create'
     ])
-    proxyConfigsGetRecordSpy = proxyConfigsService.getRecord.and.returnValue(
+    proxyConfigsGetRecordSpy = proxyConfigsService.getRecord.mockReturnValue(
       of({
         name: 'test-proxy',
         address: '192.168.1.100',
@@ -37,8 +39,8 @@ describe('ProxyConfigDetailComponent', () => {
         networkDnsSuffix: 'example.com'
       })
     )
-    proxyConfigsCreateSpy = proxyConfigsService.create.and.returnValue(of({}))
-    proxyConfigsUpdateSpy = proxyConfigsService.update.and.returnValue(of({}))
+    proxyConfigsCreateSpy = proxyConfigsService.create.mockReturnValue(of({}))
+    proxyConfigsUpdateSpy = proxyConfigsService.update.mockReturnValue(of({}))
 
     TestBed.configureTestingModule({
       imports: [
@@ -64,7 +66,7 @@ describe('ProxyConfigDetailComponent', () => {
     translate = TestBed.inject(TranslateService)
     translate.setFallbackLang('en')
     fixture.detectChanges()
-    routerSpy = spyOn(component.router, 'navigate')
+    routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
   })
 
   afterEach(() => {
@@ -135,7 +137,7 @@ describe('ProxyConfigDetailComponent', () => {
     component.isEdit = false
     component.pageTitle = 'Create Proxy Configuration'
 
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.proxyConfigForm.patchValue({
       name: 'new-proxy',
@@ -147,12 +149,12 @@ describe('ProxyConfigDetailComponent', () => {
     component.onSubmit()
 
     expect(proxyConfigsCreateSpy).toHaveBeenCalled()
-    expect(snackBarSpy).toHaveBeenCalledWith('Profile saved successfully', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Profile saved successfully', undefined, expect.any(Object))
     expect(routerSpy).toHaveBeenCalledWith(['/proxy-configs'])
   })
 
   it('should update proxy config successfully', () => {
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.proxyConfigForm.patchValue({
       name: 'test-proxy',
@@ -164,7 +166,7 @@ describe('ProxyConfigDetailComponent', () => {
     component.onSubmit()
 
     expect(proxyConfigsUpdateSpy).toHaveBeenCalled()
-    expect(snackBarSpy).toHaveBeenCalledWith('Profile saved successfully', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Profile saved successfully', undefined, expect.any(Object))
     expect(routerSpy).toHaveBeenCalledWith(['/proxy-configs'])
   })
 
@@ -174,9 +176,9 @@ describe('ProxyConfigDetailComponent', () => {
         errors: [{ msg: 'Name already exists' }]
       }
     }
-    proxyConfigsCreateSpy.and.returnValue(throwError(() => errorResponse))
+    proxyConfigsCreateSpy.mockReturnValue(throwError(() => errorResponse))
 
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     // Set up for create
     component.isEdit = false
@@ -190,7 +192,7 @@ describe('ProxyConfigDetailComponent', () => {
     component.onSubmit()
 
     expect(proxyConfigsCreateSpy).toHaveBeenCalled()
-    expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, expect.any(Object))
     expect(component.errorMessages).toEqual(['Name already exists'])
   })
 
@@ -200,9 +202,9 @@ describe('ProxyConfigDetailComponent', () => {
         message: 'Proxy configuration is in use'
       }
     }
-    proxyConfigsUpdateSpy.and.returnValue(throwError(() => errorResponse))
+    proxyConfigsUpdateSpy.mockReturnValue(throwError(() => errorResponse))
 
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.proxyConfigForm.patchValue({
       name: 'test-proxy',
@@ -214,7 +216,7 @@ describe('ProxyConfigDetailComponent', () => {
     component.onSubmit()
 
     expect(proxyConfigsUpdateSpy).toHaveBeenCalled()
-    expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, jasmine.any(Object))
+    expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, expect.any(Object))
     expect(component.errorMessages).toEqual(['Proxy configuration is in use'])
   })
 
@@ -224,7 +226,7 @@ describe('ProxyConfigDetailComponent', () => {
   })
 
   it('should not submit if form is invalid', () => {
-    const snackBarSpy = spyOn(component.snackBar, 'open')
+    const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     // Make form invalid by clearing required fields
     component.proxyConfigForm.patchValue({
