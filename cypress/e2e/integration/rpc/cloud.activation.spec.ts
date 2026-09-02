@@ -146,7 +146,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             }
 
             if (parts[2] === 'CIRA') {
-              expect(combined).to.match(/CIRA(?::|\s+)(?:Connection:?\s*)?Configured/i)
+              expect(combined).to.match(/CIRA(?::\s*|\s+)(?:Connection:?\s*)?Configured/i)
             } else if (parseInt(amtVersion) >= 19) {
               expect(combined).to.match(/TLS:\s*(?:Already )?Configured/i)
             } else {
