@@ -915,6 +915,17 @@ describe('ProfileDetailComponent', () => {
       expect(fixture.nativeElement.querySelector('[data-cy="radio-cira"]')).not.toBeNull()
     })
 
+    it('should show proxy configuration selection in enterprise when configs are available', () => {
+      proxyGetDataSpy.calls.reset()
+
+      environment.cloud = false
+      const enterpriseFixture = TestBed.createComponent(ProfileDetailComponent)
+      enterpriseFixture.detectChanges()
+
+      expect(proxyGetDataSpy).toHaveBeenCalled()
+      expect(enterpriseFixture.nativeElement.querySelector('[data-cy="proxyConfigSelect"]')).not.toBeNull()
+    })
+
     it('should fail open and fetch CIRA configs when the features call errors', () => {
       serverFeaturesGetFeaturesSpy.mockReturnValue(throwError(() => new Error('nope')))
       ciraGetDataSpy.mockClear()
@@ -1064,6 +1075,13 @@ describe('ProfileDetailComponent', () => {
 
       component.selectProxyProfile(event)
       expect(component.selectedProxyConfigs().length).toBe(1)
+    })
+
+    it('should mark an associated proxy configuration as selected', () => {
+      component.selectedProxyConfigs.set([{ priority: 1, name: 'proxy1' }])
+
+      expect(component.isProxyProfileSelected('proxy1')).toBeTrue()
+      expect(component.isProxyProfileSelected('proxy2')).toBeFalse()
     })
 
     it('should not select NO_PROXY_CONFIGS option', () => {
