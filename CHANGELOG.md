@@ -1,3 +1,10 @@
+## [3.66.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.0...v3.66.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* **e2e:** match 'CIRA: Configured' output in cloud activation assertion ([#3542](https://github.com/device-management-toolkit/sample-web-ui/issues/3542)) ([5e01225](https://github.com/device-management-toolkit/sample-web-ui/commit/5e012258eb08f230b8532c27d8fea4a64b48ae66))
+
 # [3.66.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.65.1...v3.66.0) (2026-08-27)
 
 
