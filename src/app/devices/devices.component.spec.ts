@@ -88,8 +88,8 @@ describe('DevicesComponent', () => {
     devicesService.getStats.mockReturnValue(
       of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
     )
-    sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
-    sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
+    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
+    sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
@@ -287,25 +287,25 @@ describe('DevicesComponent', () => {
 
   describe('onTabChange / server-side counts', () => {
     beforeEach(() => {
-      getDevicesSpy.calls.reset()
+      getDevicesSpy.mockClear()
     })
 
     it('should request all devices (no status filter) on tab 0', () => {
       component.onTabChange(0)
       expect(component.activeTab()).toBe(0)
-      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: undefined }))
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
     })
 
     it('should request activated devices from the server on tab 1', () => {
       component.onTabChange(1)
       expect(component.activeTab()).toBe(1)
-      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: 'activated' }))
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
     })
 
     it('should request discovered devices from the server on tab 2', () => {
       component.onTabChange(2)
       expect(component.activeTab()).toBe(2)
-      expect(getDevicesSpy).toHaveBeenCalledWith(jasmine.objectContaining({ status: 'discovered' }))
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
     })
 
     it('should reset paging to the first page when switching tabs', () => {
@@ -335,19 +335,19 @@ describe('DevicesComponent', () => {
       component.devices.data = [device01]
       component.isLoading.set(false)
       component.totalCount.set(0) // filtered tab has 0 — should not trigger no-data
-      expect(component.isNoData()).toBeFalse()
+      expect(component.isNoData()).toBe(false)
     })
 
     it('should return true only when the table is empty and not loading', () => {
       component.devices.data = []
       component.isLoading.set(false)
-      expect(component.isNoData()).toBeTrue()
+      expect(component.isNoData()).toBe(true)
     })
 
     it('should return false when loading even if the table is empty', () => {
       component.devices.data = []
       component.isLoading.set(true)
-      expect(component.isNoData()).toBeFalse()
+      expect(component.isNoData()).toBe(false)
     })
   })
 })
