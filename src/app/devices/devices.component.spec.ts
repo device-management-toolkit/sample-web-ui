@@ -83,11 +83,11 @@ describe('DevicesComponent', () => {
     updateDeviceSpy = devicesService.updateDevice.mockImplementation((device: any) => {
       return of(device)
     })
-      getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
-      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
-      devicesService.getStats.mockReturnValue(
-        of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
-      )
+    getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
+    devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+    devicesService.getStats.mockReturnValue(
+      of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
+    )
     sendPowerActionSpy = devicesService.sendPowerAction.and.returnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     sendDeactivateSpy = devicesService.sendDeactivate.and.returnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
