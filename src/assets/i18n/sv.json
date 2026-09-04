@@ -977,6 +977,10 @@
     "description": "Tabellkolumnrubrik för enhetsstatus",
     "value": "Status"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Produkttyp"
+  },
   "devices.table.tags": {
     "description": "Tabellkolumnrubrik för taggar",
     "value": "Taggar"
@@ -984,6 +988,18 @@
   "deviceToolbar.power.off": {
     "description": "Strömverktygstips för av",
     "value": "Ström: Av"
+  },
+  "devices.tabs.all": {
+    "description": "Tab label for all devices",
+    "value": "Alla"
+  },
+  "devices.tabs.activated": {
+    "description": "Tab label for activated devices",
+    "value": "Aktiverad"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Upptäckt"
   },
   "deviceToolbar.power.on": {
     "description": "Strömverktygstips för på",

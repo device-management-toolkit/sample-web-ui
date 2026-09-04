@@ -66,7 +66,8 @@ describe('DevicesComponent', () => {
       'sendPowerAction',
       'bulkPowerAction',
       'sendDeactivate',
-      'sendBulkDeactivate'
+      'sendBulkDeactivate',
+      'getStats'
     ])
     devicesService.PowerStates.mockReturnValue({
       2: 'On',
@@ -84,6 +85,9 @@ describe('DevicesComponent', () => {
     })
     getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
     devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+    devicesService.getStats.mockReturnValue(
+      of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
+    )
     sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
@@ -247,5 +251,103 @@ describe('DevicesComponent', () => {
 
     component.tagFilterChange(matSelectChange)
     expect(component.filteredTags()).toBe(mockValue)
+  })
+
+  describe('getProductType', () => {
+    it('should return ISM when bit 4 (0x10) is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return vPro when bit 3 (0x08) is set and bit 4 is not', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '8' } } as Device // 0x08 = 8
+      expect(component.getProductType(device)).toBe('vPro')
+    })
+
+    it('should return ISM when both bit 4 and bit 3 are set (ISM takes priority)', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '24' } } as Device // 0x18 = 24
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return empty string when neither bit is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '4' } } as Device // 0x04 = 4
+      expect(component.getProductType(device)).toBe('')
+    })
+
+    it('should return empty string when fwSku is undefined', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+
+    it('should return empty string when fwSku is not a number', () => {
+      const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+  })
+
+  describe('onTabChange / server-side counts', () => {
+    beforeEach(() => {
+      getDevicesSpy.mockClear()
+    })
+
+    it('should request all devices (no status filter) on tab 0', () => {
+      component.onTabChange(0)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
+    })
+
+    it('should request activated devices from the server on tab 1', () => {
+      component.onTabChange(1)
+      expect(component.activeTab()).toBe(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+    })
+
+    it('should request discovered devices from the server on tab 2', () => {
+      component.onTabChange(2)
+      expect(component.activeTab()).toBe(2)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
+    })
+
+    it('should reset paging to the first page when switching tabs', () => {
+      component.pageEvent.startsFrom = 50
+      component.onTabChange(1)
+      expect(component.pageEvent.startsFrom).toBe(0)
+    })
+
+    it('should expose server-provided counts', () => {
+      expect(component.allCount).toBe(42)
+      expect(component.activatedCount).toBe(7)
+      expect(component.discoveredCount).toBe(3)
+    })
+
+    it('should set currentTabCount from the active tab', () => {
+      component.onTabChange(0)
+      expect(component.currentTabCount).toBe(42)
+      component.onTabChange(1)
+      expect(component.currentTabCount).toBe(7)
+      component.onTabChange(2)
+      expect(component.currentTabCount).toBe(3)
+    })
+  })
+
+  describe('isNoData', () => {
+    it('should return false when the table has entries regardless of totalCount', () => {
+      component.devices.data = [device01]
+      component.isLoading.set(false)
+      component.totalCount.set(0) // filtered tab has 0 — should not trigger no-data
+      expect(component.isNoData()).toBe(false)
+    })
+
+    it('should return true only when the table is empty and not loading', () => {
+      component.devices.data = []
+      component.isLoading.set(false)
+      expect(component.isNoData()).toBe(true)
+    })
+
+    it('should return false when loading even if the table is empty', () => {
+      component.devices.data = []
+      component.isLoading.set(true)
+      expect(component.isNoData()).toBe(false)
+    })
   })
 })
