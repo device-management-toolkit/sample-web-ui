@@ -1077,6 +1077,10 @@
     "description": "Table column header for product type",
     "value": "Producttype"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "Type"
+  },
   "devices.table.tags": {
     "description": "Tabelkolomkop voor tags",
     "value": "Tags"

@@ -1077,6 +1077,10 @@
     "description": "Table column header for product type",
     "value": "نوع المنتج"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "النوع"
+  },
   "devices.table.tags": {
     "description": "عنوان عمود الجدول للعلامات",
     "value": "العلامات"
