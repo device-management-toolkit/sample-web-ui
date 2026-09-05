@@ -479,12 +479,15 @@ Cypress.Commands.add('goToPage', (pageName) => {
   cy.get('body').then(($body) => {
     if ($body.find('.cdk-overlay-backdrop').length > 0) {
       cy.get('.cdk-overlay-backdrop').click({ force: true })
-      cy.get('.cdk-overlay-backdrop', { timeout: 10000 }).should('not.exist')
     }
   })
 
+  // Re-check right before clicking: a backdrop can reopen between the check
+  // above and this click (e.g. a snackbar/dialog settling asynchronously).
+  cy.get('.cdk-overlay-backdrop', { timeout: 10000 }).should('not.exist')
+
   // Click navigation link
-  cy.get('a').contains(pageName).click()
+  cy.get('a').contains(pageName).click({ force: true })
 })
 
 Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {
