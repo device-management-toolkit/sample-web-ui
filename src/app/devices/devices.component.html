@@ -37,13 +37,15 @@
 
 <mat-card>
   <mat-card-content>
-    <!-- Tabs must stay visible even when the active tab has zero rows, otherwise
-         the user has no way to switch to a tab that does have data. -->
-    <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
-      <mat-tab [label]="allTabLabel"></mat-tab>
-      <mat-tab [label]="activatedTabLabel"></mat-tab>
-      <mat-tab [label]="discoveredTabLabel"></mat-tab>
-    </mat-tab-group>
+    @if (!isCloudMode) {
+      <!-- Tabs must stay visible even when the active tab has zero rows, otherwise
+           the user has no way to switch to a tab that does have data. -->
+      <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+        <mat-tab [label]="allTabLabel"></mat-tab>
+        <mat-tab [label]="activatedTabLabel"></mat-tab>
+        <mat-tab [label]="discoveredTabLabel"></mat-tab>
+      </mat-tab-group>
+    }
     @if (isNoData()) {
       <h3 class="flex justify-center">
         @if (!filteredTags().length) {
@@ -101,7 +103,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
             {{ element.hostname }}
-            @if (element.friendlyName !== null) {
+            @if (element.friendlyName) {
               <span>&nbsp;({{ element.friendlyName }})</span>
             }
           </mat-cell>
@@ -137,9 +139,8 @@
         </ng-container>
         <!-- deviceType Column -->
         <ng-container matColumnDef="deviceType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>{{
-            'devices.table.type.value' | translate
-          }}</mat-header-cell>
+          <!-- not sortable: deviceType is computed, not a real Device property -->
+          <mat-header-cell *matHeaderCellDef>{{ 'devices.table.type.value' | translate }}</mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
             <span class="device-type-chip" [class.activated]="getDeviceType(element) === 'activated'">
               {{ 'devices.tabs.' + getDeviceType(element) + '.value' | translate }}

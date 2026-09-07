@@ -300,10 +300,20 @@ describe('DevicesComponent', () => {
       const device = { ...device01, deviceInfo: undefined } as Device
       expect(component.getDeviceType(device)).toBe('discovered')
     })
+
+    it('should keep the computed device type logic stable for rendering', () => {
+      const activatedDevice = { ...device01, deviceInfo: { currentMode: 'client control mode' } } as Device
+      const discoveredDevice = { ...device02, deviceInfo: { currentMode: 'not activated' } } as Device
+
+      expect(component.getDeviceType(activatedDevice)).toBe('activated')
+      expect(component.getDeviceType(discoveredDevice)).toBe('discovered')
+    })
   })
 
   describe('onTabChange / server-side counts', () => {
     beforeEach(() => {
+      component.isCloudMode = false
+      component.getDevices()
       getDevicesSpy.mockClear()
     })
 
