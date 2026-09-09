@@ -1073,6 +1073,10 @@
     "description": "Table column header for product type",
     "value": "Produkttyp"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "Typ"
+  },
   "devices.table.tags": {
     "description": "Tabellen-Spaltenüberschrift für Tags",
     "value": "Tags"

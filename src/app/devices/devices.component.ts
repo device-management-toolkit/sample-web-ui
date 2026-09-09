@@ -199,6 +199,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     'guid',
     'status',
     'productType',
+    'deviceType',
     'tags',
     'actions',
     'notification'
@@ -221,6 +222,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         'select',
         'hostname',
         'productType',
+        'deviceType',
         'tags',
         'actions',
         'notification'
@@ -283,10 +285,12 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getDevices(): void {
     this.isLoading.set(true)
+    let responseTotalCount: number | undefined
 
-    // Counts (all/activated/discovered) are computed server-side and shared with
-    // headless/API consumers, so refresh them alongside the current page.
-    this.loadStats()
+    if (!this.isCloudMode) {
+      // Console exposes server-side counts for the activated/discovered tabs.
+      this.loadStats()
+    }
 
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
@@ -295,6 +299,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
+          responseTotalCount = res.totalCount
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
           }
@@ -335,6 +340,10 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe((devices) => {
         this.devices.data = devices
+        if (this.isCloudMode) {
+          this.serverTotalCount = responseTotalCount ?? devices.length
+          this.totalCount.set(this.serverTotalCount)
+        }
 
         // Restore selection state on data retrieval
         this.selectedDevices.clear()
@@ -433,6 +442,11 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
     return ''
+  }
+
+  getDeviceType(device: Device): DeviceFilterStatus {
+    const currentMode = device.deviceInfo?.currentMode?.trim().toLowerCase()
+    return currentMode && currentMode !== 'not activated' ? 'activated' : 'discovered'
   }
 
   translateConnectionStatus(status?: boolean): string {
