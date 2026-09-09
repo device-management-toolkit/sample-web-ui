@@ -7,8 +7,9 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { empty } from '../../fixtures/api/general'
 import { tags } from '../../fixtures/api/tags'
+import { secret } from '../../../support/secrets'
 
-const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
+const describeWhenNotCloud = Cypress.expose('CLOUD') ? describe.skip : describe
 
 // ---------------------------- Test section ----------------------------
 
@@ -34,7 +35,7 @@ describeWhenNotCloud('Test Device Creation', () => {
     cy.myIntercept('POST', 'devices', {
       statusCode: httpCodes.CREATED,
       body: {
-        hostname: Cypress.env('FQDN'),
+        hostname: Cypress.expose('FQDN'),
         friendlyName: 'Test Device',
         username: 'admin',
         guid: '',
@@ -57,7 +58,7 @@ describeWhenNotCloud('Test Device Creation', () => {
       body: {
         data: [
           {
-            hostname: Cypress.env('DEVICE'),
+            hostname: Cypress.expose('DEVICE'),
             friendlyName: 'Test Device',
             username: 'admin',
             guid: '123e4567-e89b-12d3-a456-426614174000',
@@ -75,10 +76,10 @@ describeWhenNotCloud('Test Device Creation', () => {
     cy.get('button').contains('Add New').click()
 
     // Fill in the device form with config values
-    cy.matTextlikeInputType('[formControlName="hostname"]', Cypress.env('DEVICE'))
+    cy.matTextlikeInputType('[formControlName="hostname"]', Cypress.expose('DEVICE'))
     cy.matTextlikeInputType('[formControlName="friendlyName"]', 'Test Device')
     cy.matTextlikeInputType('[formControlName="username"]', 'admin')
-    cy.matTextlikeInputType('[formControlName="password"]', Cypress.env('AMT_PASSWORD'))
+    cy.matTextlikeInputType('[formControlName="password"]', secret('AMT_PASSWORD'))
 
     // Enable TLS and Allow self-signed cert
     cy.matCheckboxSet('[formControlName="useTLS"]', true)
@@ -94,10 +95,10 @@ describeWhenNotCloud('Test Device Creation', () => {
       cy.wrap(req)
         .its('request.body')
         .should('include', {
-          hostname: Cypress.env('DEVICE'),
+          hostname: Cypress.expose('DEVICE'),
           friendlyName: 'Test Device',
           username: 'admin',
-          password: Cypress.env('AMT_PASSWORD'),
+          password: secret('AMT_PASSWORD'),
           useTLS: true,
           allowSelfSigned: true
         })
@@ -107,7 +108,7 @@ describeWhenNotCloud('Test Device Creation', () => {
     cy.wait('@get-devices-updated').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
     // Verify the device appears in the list
-    cy.get('mat-cell').contains(Cypress.env('DEVICE'))
+    cy.get('mat-cell').contains(Cypress.expose('DEVICE'))
     cy.get('mat-cell').contains('Test Device')
   })
 })

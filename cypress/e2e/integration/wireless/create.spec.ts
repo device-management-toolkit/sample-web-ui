@@ -7,6 +7,7 @@ import { empty } from '../../fixtures/api/general'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { wirelessConfigs } from '../../fixtures/api/wireless'
 import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
+import { secret } from '../../../support/secrets'
 
 describe('create a wireless profile', () => {
   beforeEach('clear cache and login', () => {
@@ -41,8 +42,8 @@ describe('create a wireless profile', () => {
     cy.get('button').contains('Add New').click()
     cy.enterWirelessInfo(
       wirelessFixtures.happyPath.profileName,
-      Cypress.env('WIFI_SSID'),
-      Cypress.env('WIFI_PSK_PASSPHRASE'),
+      Cypress.expose('WIFI_SSID'),
+      secret('WIFI_PSK_PASSPHRASE'),
       wirelessFixtures.happyPath.authenticationMethod,
       wirelessFixtures.happyPath.encryptionMethod
     )

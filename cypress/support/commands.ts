@@ -8,6 +8,7 @@ import stats from '../e2e/fixtures/api/stats'
 import { AuthenticationProtocols } from '../../src/app/ieee8021x/ieee8021x.constants'
 import { ActivationModes, TlsModes, UserConsentModes } from '../../src/app/profiles/profiles.constants'
 import { IEEE8021xConfig } from '../../src/models/models'
+import { secret } from './secrets'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -179,7 +180,7 @@ Cypress.Commands.add('setup', () => {
     body: stats.get.success.response
   }).as('version-request-2')
   // Login
-  cy.visit(Cypress.env('BASEURL'), {
+  cy.visit(Cypress.expose('BASEURL'), {
     failOnStatusCode: false,
     timeout: 60000
   })
@@ -193,8 +194,8 @@ Cypress.Commands.add('setup', () => {
     }
   })
 
-  const mpsUsername = Cypress.env('MPS_USERNAME')
-  const mpsPassword = Cypress.env('MPS_PASSWORD')
+  const mpsUsername = Cypress.expose('MPS_USERNAME')
+  const mpsPassword = secret('MPS_PASSWORD')
 
   // Wait for whichever login UI the deployment uses.
   // Local login renders userId/password; OAuth renders an SSO button.
@@ -227,7 +228,7 @@ Cypress.Commands.add('setup', () => {
 
   // Close about notice (only appears when environment.cloud = true)
   // Check if the application is running in cloud mode using Cypress environment
-  if (Cypress.env('CLOUD')) {
+  if (Cypress.expose('CLOUD')) {
     // In cloud mode (CLOUD = true), the dialog may appear on first login
     cy.get('body').then(($body) => {
       if ($body.find('[data-cy="closeNotice"]').length > 0) {
@@ -293,7 +294,7 @@ Cypress.Commands.add(
 
     if (!randAmt) {
       cy.get('[data-cy=genAmtPass] input').click()
-      cy.get('input[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
+      cy.get('input[formControlName=amtPassword]').type(secret('AMT_PASSWORD'), { force: true })
     }
     if (admin === 'acmactivate') {
       if (!randMebx) {
@@ -304,7 +305,7 @@ Cypress.Commands.add(
               cy.get('[data-cy=genMebxPass]').click()
             }
 
-            cy.get('input[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
+            cy.get('input[formControlName=mebxPassword]').type(secret('MEBX_PASSWORD'))
           })
       }
     }
@@ -383,11 +384,11 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   cy.matCheckboxSet('[formControlName="solEnabled"]', formData.solEnabled)
   cy.matCheckboxSet('[formControlName="generateRandomPassword"]', formData.generateRandomPassword)
   if (!formData.generateRandomPassword) {
-    cy.matTextlikeInputType('[formControlName="amtPassword"]', Cypress.env('AMT_PASSWORD'))
+    cy.matTextlikeInputType('[formControlName="amtPassword"]', secret('AMT_PASSWORD'))
   }
   cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', formData.generateRandomMEBxPassword)
   if (!formData.generateRandomMEBxPassword) {
-    cy.matTextlikeInputType('[formControlName="mebxPassword"]', Cypress.env('MEBX_PASSWORD'))
+    cy.matTextlikeInputType('[formControlName="mebxPassword"]', secret('MEBX_PASSWORD'))
   }
   // selectors need string values so convert booleans
   cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', formData.dhcpEnabled ? 'true' : 'false')
@@ -497,7 +498,7 @@ Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) =>
 // ------------------------------- Other --------------------------------
 
 Cypress.Commands.add('myIntercept', (method, url, body) => {
-  if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
+  if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'n') {
     cy.intercept(
       {
         method,

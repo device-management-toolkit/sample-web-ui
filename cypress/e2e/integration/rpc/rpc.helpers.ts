@@ -39,11 +39,38 @@ export interface AMTInfo {
   }
 }
 
-export const execConfig: Cypress.ExecOptions = {
-  log: true,
-  failOnNonZeroExit: false,
-  timeout: 240000
-} as any
+// Options for the "exec" task in cypress.config.ts, which replaces cy.exec().
+// The task always resolves with the exit code, so failOnNonZeroExit/log are gone.
+export interface RpcExecOptions {
+  timeout?: number
+}
+
+// rpc activate/deactivate and docker pulls routinely run for minutes, which is
+// why the suite has always asked for far more than cy.exec()'s 60s default.
+const DEFAULT_EXEC_TIMEOUT = 240000
+
+// Headroom so the Node-side kill timer always fires before Cypress gives up.
+// Otherwise Cypress aborts the run while the child process keeps going, and the
+// command is reported as a Cypress failure rather than a command timeout.
+const CYPRESS_TIMEOUT_HEADROOM = 30000
+
+export const execConfig: RpcExecOptions = {
+  timeout: DEFAULT_EXEC_TIMEOUT
+}
+
+/**
+ * Runs a shell command through the Node-side "exec" task. The timeout goes to
+ * cy.task() twice: the payload bounds the child, the third argument bounds the
+ * Cypress command, which otherwise falls back to taskTimeout (60s).
+ */
+export const execCommand = (command: string, config: RpcExecOptions): Cypress.Chainable<RpcExecResult> => {
+  const timeout = config.timeout ?? DEFAULT_EXEC_TIMEOUT
+  return cy.task<RpcExecResult>(
+    'exec',
+    { command, ...config, timeout },
+    { timeout: timeout + CYPRESS_TIMEOUT_HEADROOM }
+  )
+}
 
 export const buildOutput = (result: { stdout?: string; stderr?: string }) => {
   const stdout = result.stdout ? result.stdout.trim() : ''
@@ -54,12 +81,12 @@ export const buildOutput = (result: { stdout?: string; stderr?: string }) => {
 
 export const execWithRetry = (
   command: string,
-  config: Cypress.ExecOptions,
+  config: RpcExecOptions,
   maxRetries = 5,
   retryInterval = 5000
-): Cypress.Chainable<Cypress.Exec> => {
-  const attemptExec = (attempt: number): Cypress.Chainable<Cypress.Exec> => {
-    return cy.exec(command, config).then((result) => {
+): Cypress.Chainable<RpcExecResult> => {
+  const attemptExec = (attempt: number): Cypress.Chainable<RpcExecResult> => {
+    return execCommand(command, config).then((result) => {
       const { combined } = buildOutput(result)
 
       if (combined.includes('interrupted system call') && attempt < maxRetries) {
@@ -82,13 +109,15 @@ const transientAmtErrorPattern = /empty response from AMT|AMT Unavailable|no suc
 // Runs `rpc amtinfo` and selects the AMT payload from JSON output with log records.
 export const getAmtInfo = (
   infoCommand: string,
-  config: Cypress.ExecOptions = execConfig,
+  config: RpcExecOptions = execConfig,
   maxRetries = 5,
   retryInterval = 5000
 ): Cypress.Chainable<AMTInfo> => {
   const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
-    return cy.exec(infoCommand, config).then((result) => {
+    return execCommand(infoCommand, config).then((result) => {
       const { stdout, stderr, combined } = buildOutput(result)
+      // The parse branch yields an AMTInfo, the retry branch a Chainable.
+      // Cypress flattens that at runtime; cast back to the declared type.
       return cy.log(combined).then(() => {
         const source = stdout.length > 0 ? stdout : stderr
         const jsonStart = source.indexOf('{')
@@ -124,7 +153,7 @@ export const getAmtInfo = (
         }
 
         throw new Error(`rpc amtinfo did not contain an AMT version payload. Output:\n${combined}`)
-      })
+      }) as unknown as Cypress.Chainable<AMTInfo>
     })
   }
 
@@ -133,7 +162,7 @@ export const getAmtInfo = (
 
 export const getAmtInfoWithRetry = (
   infoCommand: string,
-  config: Cypress.ExecOptions = execConfig,
+  config: RpcExecOptions = execConfig,
   maxRetries = 3,
   retryInterval = 5000
 ): Cypress.Chainable<AMTInfo> => {
@@ -186,7 +215,7 @@ const buildSkipCertPart = (isAutoAdd: boolean, amtVersion: string): string => {
 
 // Exported so sub-specs (and the builders below) can use it to pick the
 // cloud vs. console command variant.
-export const isCloud: boolean = Cypress.env('CLOUD') === 'true' || Cypress.env('CLOUD') === true
+export const isCloud: boolean = Cypress.expose('CLOUD') === 'true' || Cypress.expose('CLOUD') === true
 
 /**
  * Constructs the authorization endpoint URL for auto-add device mode from BASEURL.
@@ -195,7 +224,7 @@ export const isCloud: boolean = Cypress.env('CLOUD') === 'true' || Cypress.env('
  * @returns Authorization endpoint URL or empty string
  */
 export const getAuthEndpoint = (): string => {
-  const baseUrl = Cypress.env('BASEURL')
+  const baseUrl = Cypress.expose('BASEURL')
   if (baseUrl) {
     // BASEURL format: https://host:port/
     // Auth endpoint format: https://host:port/api/v1/authorize
@@ -221,7 +250,7 @@ export interface RpcCommandOptions {
 }
 
 const buildRpcCommand = (opts: RpcCommandOptions, winExe: string, args: string): string => {
-  const rpcBinary = Cypress.env('RPC_BINARY') as string | undefined
+  const rpcBinary = Cypress.expose('RPC_BINARY') as string | undefined
 
   if (opts.isWin) {
     return `${winExe} ${args}`
@@ -261,6 +290,9 @@ export interface RpcExecResult {
   code: number
   stdout?: string
   stderr?: string
+  // Killed by its own timeout rather than exiting. A kill reports no exit
+  // status, so without this a timeout looks like a genuine non-zero exit.
+  timedOut?: boolean
 }
 
 export interface ExecFallbackContext {
@@ -274,7 +306,7 @@ export interface ExecFallbackContext {
 export type ExecFallbackRetryPredicate = (context: ExecFallbackContext) => boolean
 
 const getRpcMajorVersion = (): string => {
-  const rpcVersion = String(Cypress.env('RPC_VERSION') ?? 'v3')
+  const rpcVersion = String(Cypress.expose('RPC_VERSION') ?? 'v3')
     .trim()
     .toLowerCase()
   return /^v?2(?:\.|$)/.test(rpcVersion) ? '2' : '3'
@@ -347,7 +379,7 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
   }
 
   // RPC v3: check if auto-add mode via explicit environment variable
-  const isAutoAdd = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+  const isAutoAdd = Cypress.expose('AUTO_ADD_DEVICE') === true || Cypress.expose('AUTO_ADD_DEVICE') === 'true'
 
   cy.task('log', `>>> RPC VERSION : v3`)
   cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)
@@ -381,7 +413,7 @@ const isRpcCliCompatibilityError = (combinedOutput: string): boolean => {
 
 export const execWithCompatibilityFallback = (
   commands: string[],
-  config: Cypress.ExecOptions,
+  config: RpcExecOptions,
   shouldRetry?: ExecFallbackRetryPredicate
 ): Cypress.Chainable<RpcExecResult> => {
   const attemptExec = (index: number): Cypress.Chainable<RpcExecResult> => {
@@ -463,7 +495,7 @@ export const buildDeactivateCommand = (opts: DeactivateCommandOptions): string =
   }
 
   // RPC v3: check if auto-add mode via explicit environment variable
-  const isAutoAdd = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+  const isAutoAdd = Cypress.expose('AUTO_ADD_DEVICE') === true || Cypress.expose('AUTO_ADD_DEVICE') === 'true'
 
   cy.task('log', `>>> RPC VERSION : v3`)
   cy.task('log', `>>> AMT VERSION : ${opts.amtVersion}`)

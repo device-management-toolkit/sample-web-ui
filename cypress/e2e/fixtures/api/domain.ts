@@ -20,7 +20,7 @@ const domains = {
         data: [
           {
             profileName: 'happyPath',
-            domainSuffix: Cypress.env('DOMAIN_SUFFIX'),
+            domainSuffix: Cypress.expose('DOMAIN_SUFFIX'),
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
             provisioningCertPassword: 'P@ssw0rd',
@@ -84,7 +84,7 @@ const domains = {
         data: [
           {
             profileName: 'happyPath',
-            domainSuffix: Cypress.env('DOMAIN_SUFFIX'),
+            domainSuffix: Cypress.expose('DOMAIN_SUFFIX'),
             provisioningCert: 'test',
             provisioningCertStorageFormat: 'raw',
             provisioningCertPassword: 'P@ssw0rd',

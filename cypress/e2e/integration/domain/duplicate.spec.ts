@@ -7,6 +7,7 @@ import { domains } from '../../fixtures/api/domain'
 import { empty } from '../../fixtures/api/general'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { domainFixtures } from '../../fixtures/formEntry/domain'
+import { secret } from '../../../support/secrets'
 
 // ---------------------------- Test section ----------------------------
 
@@ -42,21 +43,21 @@ describe('Test Domain Page', () => {
     // handle file on disk or in-memory file
     const certFixtureData: Cypress.FileReference = {
       fileName: 'test-cert.pfx',
-      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
+      contents: Cypress.Buffer.from(secret('PROVISIONING_CERT'), 'base64')
     }
 
     cy.enterDomainInfo(
       domainFixtures.default.profileName,
-      Cypress.env('DOMAIN_SUFFIX'),
+      Cypress.expose('DOMAIN_SUFFIX'),
       certFixtureData,
-      Cypress.env('PROVISIONING_CERT_PASSWORD')
+      secret('PROVISIONING_CERT_PASSWORD')
     )
 
     cy.get('button').contains('SAVE').click()
     cy.wait('@post-domain')
     cy.wait('@get-domains2').its('response.statusCode').should('eq', httpCodes.SUCCESS)
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
-    cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
+    cy.get('mat-cell').contains(Cypress.expose('DOMAIN_SUFFIX'))
 
     // Attempt to create a duplicate domain
     cy.get('button').contains('Add New').click()
@@ -70,9 +71,9 @@ describe('Test Domain Page', () => {
     // Enter data for duplicate domain
     cy.enterDomainInfo(
       domainFixtures.default.profileName,
-      Cypress.env('DOMAIN_SUFFIX'),
+      Cypress.expose('DOMAIN_SUFFIX'),
       certFixtureData,
-      Cypress.env('PROVISIONING_CERT_PASSWORD')
+      secret('PROVISIONING_CERT_PASSWORD')
     )
 
     // Intercept call to create duplicate domain and return error code
@@ -116,14 +117,14 @@ describe('Test Domain Page', () => {
     // handle file on disk or in-memory file
     const certFixtureData: Cypress.FileReference = {
       fileName: 'test-cert.pfx',
-      contents: Cypress.Buffer.from(Cypress.env('PROVISIONING_CERT'), 'base64')
+      contents: Cypress.Buffer.from(secret('PROVISIONING_CERT'), 'base64')
     }
 
     cy.enterDomainInfo(
       domainFixtures.default.profileName + '2',
-      Cypress.env('DOMAIN_SUFFIX'),
+      Cypress.expose('DOMAIN_SUFFIX'),
       certFixtureData,
-      Cypress.env('PROVISIONING_CERT_PASSWORD')
+      secret('PROVISIONING_CERT_PASSWORD')
     )
 
     cy.myIntercept('POST', 'domains', {
@@ -151,7 +152,7 @@ describe('Test Domain Page', () => {
 
     // Check that the domain was not deleted
     cy.get('mat-cell').contains(domainFixtures.default.profileName)
-    cy.get('mat-cell').contains(Cypress.env('DOMAIN_SUFFIX'))
+    cy.get('mat-cell').contains(Cypress.expose('DOMAIN_SUFFIX'))
 
     // Change api response
     cy.myIntercept('GET', 'domains?$top=25&$skip=0&$count=true', {
@@ -167,6 +168,6 @@ describe('Test Domain Page', () => {
 
     // Check that the Domain was deleted properly
     cy.contains(domainFixtures.default.profileName).should('not.exist')
-    cy.contains(Cypress.env('DOMAIN_SUFFIX')).should('not.exist')
+    cy.contains(Cypress.expose('DOMAIN_SUFFIX')).should('not.exist')
   })
 })

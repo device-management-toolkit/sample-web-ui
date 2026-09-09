@@ -29,6 +29,11 @@ import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import * as path from 'path'
 
+// Credentials withheld from "expose" below. Shared with cypress.config.ts and
+// cypress/support/secrets.ts so the list exists in exactly one place. Keys this
+// config does not define are simply ignored.
+import { SECRET_ENV_KEYS } from './cypress/support/secret-keys'
+
 /**
  * All timestamps in this config are UTC (ISO 8601 with trailing "Z").
  * This matches the UTC timestamps written by mocha-junit-reporter inside
@@ -82,7 +87,18 @@ export default defineConfig({
   rejectUnauthorized: false,
 
   e2e: {
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
+      // Cypress 16 removed Cypress.env(); specs read config synchronously via
+      // Cypress.expose(), fed by "expose". Mirroring "env" keeps the --env and
+      // CYPRESS_* overrides above working. SECRET_ENV_KEYS (here,
+      // REDFISH_PASSWORD) are held back and read via cy.env() instead.
+      config.expose = { ...config.expose }
+      for (const [key, value] of Object.entries(config.env)) {
+        if (!SECRET_ENV_KEYS.includes(key) && config.expose[key] === undefined) {
+          config.expose[key] = value
+        }
+      }
+
       // Create a timestamped log file under cypress/logs/ for functional test runs.
       // The file is written in real-time so you can `tail -f` it during a run.
       // cypress/logs/*.log is covered by the *.log entry in .gitignore.
@@ -98,6 +114,8 @@ export default defineConfig({
           return null
         }
       })
+
+      return config
     },
     // Run specs under integration-redfish/ (alongside the original integration/ folder)
     specPattern: 'cypress/e2e/integration-redfish/**/*.spec.ts',

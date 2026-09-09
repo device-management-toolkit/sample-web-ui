@@ -5,6 +5,10 @@
 
 import { defineConfig } from 'cypress'
 
+// Credentials withheld from "expose" below. Shared with the redfish config and
+// with cypress/support/secrets.ts so the list exists in exactly one place.
+import { SECRET_ENV_KEYS } from './cypress/support/secret-keys'
+
 export default defineConfig({
   reporter: 'mocha-multi-reporters',
   reporterOptions: {
@@ -35,7 +39,6 @@ export default defineConfig({
   },
   chromeWebSecurity: false,
   e2e: {
-    experimentalStudio: true,
     screenshotOnRunFailure: false,
     specPattern: 'cypress/e2e/integration/**/*.ts',
     setupNodeEvents(on, config) {
@@ -73,6 +76,21 @@ export default defineConfig({
           }
         }
       }
+
+      // ── Mirror env into expose, minus the secrets ─────────────────────────
+      // Cypress 16 removed Cypress.env(); specs read config synchronously via
+      // Cypress.expose(), fed by "expose". Mirroring "env" keeps --env and
+      // CYPRESS_* overrides working, since those only ever land in "env".
+      // SECRET_ENV_KEYS are held back so credentials stay out of the config the
+      // app can read; tests reach those via cy.env(). Keys already in "expose"
+      // came from --expose and are left alone.
+      config.expose = { ...config.expose }
+      for (const [key, value] of Object.entries(config.env)) {
+        if (!SECRET_ENV_KEYS.includes(key) && config.expose[key] === undefined) {
+          config.expose[key] = value
+        }
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const versionFetcher = require('./cypress/support/version-fetcher')
 
@@ -118,6 +136,34 @@ export default defineConfig({
         log(message: string) {
           console.log(message)
           return null
+        },
+        // Replaces cy.exec(), removed in Cypress 16. Same
+        // { code, stdout, stderr } shape, and a non-zero exit is reported in
+        // "code" rather than thrown — the rpc specs assert on failing commands.
+        exec({ command, timeout }: { command: string; timeout?: number }) {
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { exec } = require('child_process')
+          return new Promise((resolve) => {
+            exec(
+              command,
+              { timeout: timeout ?? 60000, maxBuffer: 10 * 1024 * 1024 },
+              (
+                error: (Error & { code?: number; killed?: boolean; signal?: string }) | null,
+                stdout: string,
+                stderr: string
+              ) => {
+                // A killed child reports a signal and no exit status, so flag
+                // timeouts separately from a genuine non-zero exit.
+                const timedOut = error != null && typeof error.code !== 'number'
+                resolve({
+                  code: error ? (typeof error.code === 'number' ? error.code : 1) : 0,
+                  timedOut,
+                  stdout: String(stdout ?? ''),
+                  stderr: String(stderr ?? '')
+                })
+              }
+            )
+          })
         }
       })
       return config

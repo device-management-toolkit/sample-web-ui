@@ -15,7 +15,7 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { servicerootFixtures } from '../../fixtures/api/redfish/serviceroot'
 
-const redfishUrl = (): string => Cypress.env('REDFISH_BASEURL') ?? 'http://localhost:8181'
+const redfishUrl = (): string => Cypress.expose('REDFISH_BASEURL') ?? 'http://localhost:8181'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GET /redfish/v1/

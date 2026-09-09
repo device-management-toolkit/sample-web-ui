@@ -3,20 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { secret } from '../../../support/secrets'
+
 /**
  * Shared Redfish Cypress helpers for URL/auth and dynamic system selection.
  */
 
-export const redfishUrl = (): string => Cypress.env('REDFISH_BASEURL') ?? 'http://localhost:8181'
+export const redfishUrl = (): string => Cypress.expose('REDFISH_BASEURL') ?? 'http://localhost:8181'
 
 export const basicAuthHeaders = (): Record<string, string> => {
-  const username = (Cypress.env('REDFISH_USERNAME') as string) ?? 'standalone'
-  const password = (Cypress.env('REDFISH_PASSWORD') as string) ?? 'G@ppm0ym'
+  const username = (Cypress.expose('REDFISH_USERNAME') as string) ?? 'standalone'
+  const password = secret('REDFISH_PASSWORD') || 'G@ppm0ym'
   return { Authorization: `Basic ${btoa(`${username}:${password}`)}` }
 }
 
 const normalizedIsolationSwitch = (): string | undefined => {
-  const raw = Cypress.env('ISOLATE')
+  const raw = Cypress.expose('ISOLATE')
 
   if (typeof raw === 'boolean') {
     return raw ? 'Y' : 'N'
@@ -44,7 +46,7 @@ export const deviceAllowedStatuses = (
 }
 
 const configuredSystemId = (): string | undefined => {
-  const raw = Cypress.env('REDFISH_SYSTEM_ID')
+  const raw = Cypress.expose('REDFISH_SYSTEM_ID')
   if (typeof raw !== 'string') return undefined
   const trimmed = raw.trim()
   return trimmed.length > 0 ? trimmed : undefined

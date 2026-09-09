@@ -42,4 +42,4 @@ This is where new functions can be added to cypress to help reduce redundancy wi
 ### Environment Variables
 
 `sample-web-ui/cypress.json`<br>
-This is where important variables such as the base url of the server, passwords and whether cypress should mock api reponses are stored. You can add a new variable and call it in a test case with `Cypress.env("VARIABLE_NAME")`. If you wish to change an environment variable for a single instance of cypress, you can run `npm run cypress -- --env VAR_NAME=VALUE,VAR_NAME2=VALUE2` instead of the usual command.
+This is where important variables such as the base url of the server, passwords and whether cypress should mock api responses are stored. You can add a new variable and call it in a test case with `Cypress.expose("VARIABLE_NAME")`. If you wish to change an environment variable for a single instance of cypress, you can run `npm run cypress -- --env VAR_NAME=VALUE,VAR_NAME2=VALUE2` instead of the usual command.

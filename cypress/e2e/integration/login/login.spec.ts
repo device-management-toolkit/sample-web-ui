@@ -11,7 +11,8 @@ import { badRequest } from '../../fixtures/api/general'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import stats from '../../fixtures/api/stats'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
-const baseUrl: string = Cypress.env('BASEURL')
+import { secret } from '../../../support/secrets'
+const baseUrl: string = Cypress.expose('BASEURL')
 
 // ---------------------------- Test section ----------------------------
 
@@ -53,8 +54,8 @@ describe('Test login page', () => {
       }).as('stats-request')
 
       // Login
-      const mpsUsername = Cypress.env('MPS_USERNAME')
-      const mpsPassword = Cypress.env('MPS_PASSWORD')
+      const mpsUsername = Cypress.expose('MPS_USERNAME')
+      const mpsPassword = secret('MPS_PASSWORD')
       cy.login(mpsUsername, mpsPassword)
 
       // Check that correct post request is made
@@ -87,13 +88,13 @@ describe('Test login page', () => {
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
     }
 
-    const mpsUsername = Cypress.env('MPS_USERNAME')
-    const mpsPassword = Cypress.env('MPS_PASSWORD')
+    const mpsUsername = Cypress.expose('MPS_USERNAME')
+    const mpsPassword = (): string => secret('MPS_PASSWORD')
     const wrongPassword = 'SoWrong'
 
     it('no username / valid password', () => {
       // Attempt to log in
-      cy.login('EMPTY', mpsPassword)
+      cy.login('EMPTY', mpsPassword())
 
       // Check that to log in fails as expected
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
@@ -102,7 +103,7 @@ describe('Test login page', () => {
 
     it('invalid username / valid password', () => {
       prepareIntercepts()
-      cy.login(wrongPassword, mpsPassword)
+      cy.login(wrongPassword, mpsPassword())
       checkFailState()
     })
 
