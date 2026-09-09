@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [26.x]
 
     steps:
       - name: Harden Runner
@@ -35,16 +35,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run lint
-        if: ${{ matrix.node-version == '22.x' }}
       - run: npm run lint:cypress
-        if: ${{ matrix.node-version == '22.x' }}
       - run: npm run ci-prettify
       - run: npm run test-ci -- --output-file=sample-web-ui-$NODE_VERSION.xml
         env:
           NODE_VERSION: ${{ matrix.node-version }}
       - uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         name: Upload Coverage Results
-        if: ${{ matrix.node-version == '22.x' }}
         with:
           directory: ./coverage/samplewebui
       - name: Upload Test Results
