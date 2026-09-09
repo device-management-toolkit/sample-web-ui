@@ -31,6 +31,7 @@ export interface DeviceInfo {
   currentMode: string
   features: string
   ipAddress: string
+  discovered?: boolean
   firstDiscovered?: Date
   lastSynced?: Date
 }
@@ -38,6 +39,8 @@ export interface DeviceStats {
   totalCount: number
   connectedCount: number
   disconnectedCount: number
+  activatedCount: number
+  discoveredCount: number
 }
 export interface Domain {
   profileName: string
@@ -349,7 +352,10 @@ export interface PageEventOptions {
   startsFrom: number
   count: string
   tags?: string[]
+  status?: DeviceFilterStatus
 }
+
+export type DeviceFilterStatus = 'activated' | 'discovered'
 
 export interface Header {
   To: string
