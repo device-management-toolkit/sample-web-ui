@@ -25,7 +25,7 @@ import {
   notActivatedControlModes
 } from './rpc.helpers'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
     let amtInfo: AMTInfo
 
@@ -43,14 +43,13 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     }
 
     // Environment variables
-    const profileName: string = Cypress.env('PROFILE_NAME') as string
-    const password: string = Cypress.env('AMT_PASSWORD')
-    const fqdn: string = Cypress.env('ACTIVATION_URL')
-    const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+    const profileName: string = Cypress.expose('PROFILE_NAME') as string
+    const fqdn: string = Cypress.expose('ACTIVATION_URL')
+    const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
     const isWin = Cypress.platform === 'win32'
-    const rpcVersion = String(Cypress.env('RPC_VERSION') ?? 'v3')
+    const rpcVersion = String(Cypress.expose('RPC_VERSION') ?? 'v3')
       .trim()
       .toLowerCase()
     const passwordFlag = /^v?2(?:\.|$)/.test(rpcVersion) ? '-password' : '--password'
@@ -62,46 +61,51 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     let amtVersion = ''
 
     before(() => {
-      getAmtInfo(infoCommand).then((info) => {
-        amtVersion = getAmtVersion(info)
-        baseActivateCommands = buildCloudActivateCommandCandidates({
-          isWin,
-          rpcDockerImage,
-          amtVersion,
-          fqdn,
-          profileName
-        })
+      return cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+        getAmtInfo(infoCommand).then((info) => {
+          amtVersion = getAmtVersion(info)
+          baseActivateCommands = buildCloudActivateCommandCandidates({
+            isWin,
+            rpcDockerImage,
+            amtVersion,
+            fqdn,
+            profileName
+          })
 
-        activateCommands =
-          password && password.trim().length > 0
-            ? addArgsToCommandCandidates(baseActivateCommands, `${passwordFlag} ${password}`)
-            : baseActivateCommands
+          const amtPassword = AMT_PASSWORD
+          activateCommands =
+            amtPassword && amtPassword.trim().length > 0
+              ? addArgsToCommandCandidates(baseActivateCommands, `${passwordFlag} ${amtPassword}`)
+              : baseActivateCommands
+        })
       })
     })
 
     context('Negative Activation Test', () => {
       if (isAdminControlModeProfile) {
         it('Should NOT activate ACM when domain suffix is not registered in RPS', () => {
-          // Confirm the negative activation starts from an unprovisioned device.
-          cy.setup()
-          getAmtInfo(infoCommand).then((info) => {
-            assertNotActivatedWhenAvailable(info)
-          })
+          return cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+            // Confirm the negative activation starts from an unprovisioned device.
+            cy.setup()
+            getAmtInfo(infoCommand).then((info) => {
+              assertNotActivatedWhenAvailable(info)
+            })
 
-          // Reject the domain suffix without changing the AMT activation state.
-          const invalidDomainCommands = addArgsToCommandCandidates(
-            baseActivateCommands,
-            `--password ${password} -d dontmatch.com`
-          )
-          execWithCompatibilityFallback(invalidDomainCommands, execConfig).then((result) => {
-            const { combined } = buildOutput(result)
-            cy.log(combined)
-            expect(combined).to.contain(
-              'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
+            // Reject the domain suffix without changing the AMT activation state.
+            const invalidDomainCommands = addArgsToCommandCandidates(
+              baseActivateCommands,
+              `--password ${AMT_PASSWORD} -d dontmatch.com`
             )
-          })
-          getAmtInfoWithRetry(infoCommand).then((info) => {
-            assertNotActivatedWhenAvailable(info)
+            execWithCompatibilityFallback(invalidDomainCommands, execConfig).then((result) => {
+              const { combined } = buildOutput(result)
+              cy.log(combined)
+              expect(combined).to.contain(
+                'Specified AMT domain suffix: dontmatch.com does not match list of available AMT domain suffixes.'
+              )
+            })
+            getAmtInfoWithRetry(infoCommand).then((info) => {
+              assertNotActivatedWhenAvailable(info)
+            })
           })
         })
       }

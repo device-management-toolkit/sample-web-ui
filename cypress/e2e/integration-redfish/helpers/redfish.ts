@@ -3,20 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
+import { basicAuthRequest } from '../../../support/basic-auth-request'
+
 /**
  * Shared Redfish Cypress helpers for URL/auth and dynamic system selection.
  */
 
-export const redfishUrl = (): string => Cypress.env('REDFISH_BASEURL') ?? 'http://localhost:8181'
-
-export const basicAuthHeaders = (): Record<string, string> => {
-  const username = (Cypress.env('REDFISH_USERNAME') as string) ?? 'standalone'
-  const password = (Cypress.env('REDFISH_PASSWORD') as string) ?? 'G@ppm0ym'
-  return { Authorization: `Basic ${btoa(`${username}:${password}`)}` }
-}
+export const redfishUrl = (): string => Cypress.expose('REDFISH_BASEURL') ?? 'http://localhost:8181'
 
 const normalizedIsolationSwitch = (): string | undefined => {
-  const raw = Cypress.env('ISOLATE')
+  const raw = Cypress.expose('ISOLATE')
 
   if (typeof raw === 'boolean') {
     return raw ? 'Y' : 'N'
@@ -44,7 +40,7 @@ export const deviceAllowedStatuses = (
 }
 
 const configuredSystemId = (): string | undefined => {
-  const raw = Cypress.env('REDFISH_SYSTEM_ID')
+  const raw = Cypress.expose('REDFISH_SYSTEM_ID')
   if (typeof raw !== 'string') return undefined
   const trimmed = raw.trim()
   return trimmed.length > 0 ? trimmed : undefined
@@ -73,10 +69,9 @@ export const createSystemIdResolver = (fallbackSystemId: string): (() => string)
       return
     }
 
-    cy.request({
+    redfishRequest({
       method: 'GET',
       url: `${redfishUrl()}/redfish/v1/Systems`,
-      headers: basicAuthHeaders(),
       failOnStatusCode: false
     }).then((response) => {
       if (response.status !== 200) {
@@ -113,3 +108,9 @@ export const createSystemIdResolver = (fallbackSystemId: string): (() => string)
 
   return (): string => resolvedSystemId ?? fallbackSystemId
 }
+
+// Read the password only for authenticated requests, without a browser-global cache.
+export const redfishRequest = <T = any>(
+  options: Partial<Cypress.RequestOptions>
+): Cypress.Chainable<Cypress.Response<T>> =>
+  basicAuthRequest<T>(options, Cypress.expose('REDFISH_USERNAME') ?? 'standalone', 'REDFISH_PASSWORD')

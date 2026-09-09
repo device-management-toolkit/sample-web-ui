@@ -26,7 +26,7 @@
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { systemsFixtures } from '../../fixtures/api/redfish/systems'
-import { basicAuthHeaders, createSystemIdResolver, isIsolatedRun, redfishUrl } from '../helpers/redfish'
+import { redfishRequest, createSystemIdResolver, isIsolatedRun, redfishUrl } from '../helpers/redfish'
 
 const systemId = createSystemIdResolver(systemsFixtures.testSystemId)
 const isolatedRun = isIsolatedRun()
@@ -48,7 +48,7 @@ const loggedRequest = (
   const reqLine = `  [${label}] → ${method} ${options.url}${bodyStr}`
   cy.task('log', reqLine)
   cy.log(`→ **${method}** \`${options.url}\``)
-  return cy.request({ failOnStatusCode: false, ...options } as Cypress.RequestOptions).then((res) => {
+  return redfishRequest({ failOnStatusCode: false, ...options }).then((res) => {
     const preview = JSON.stringify(res.body).slice(0, 600)
     cy.task('log', `  [${label}] ← ${res.status}  ${preview}`)
     cy.log(`← **${res.status}**`)
@@ -101,7 +101,6 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
         loggedRequest(`POLL→"${targetState}"`, {
           method: 'GET',
           url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}`,
-          headers: basicAuthHeaders(),
           timeout: 120000,
           failOnStatusCode: false
         }).then((response) => {
@@ -156,7 +155,6 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
           loggedRequest('Pre-flight GET', {
             method: 'GET',
             url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}`,
-            headers: basicAuthHeaders(),
             failOnStatusCode: false
           }).then((preflight) => {
             // Transient 5xx — device may be recovering from previous test's Reset commands.
@@ -202,7 +200,6 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
               loggedRequest('Pre-flight PowerOn', {
                 method: 'POST',
                 url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}/Actions/ComputerSystem.Reset`,
-                headers: basicAuthHeaders(),
                 body: { ResetType: 'On' },
                 failOnStatusCode: false
               }).then((powerOnResp) => {
@@ -225,8 +222,7 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
             cy.task('log', '\n── Step 1: Confirm PowerState is "On" ──────────────────')
             loggedRequest('Step 1 GET', {
               method: 'GET',
-              url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}`,
-              headers: basicAuthHeaders()
+              url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}`
             }).then((step1) => {
               expect(step1.body, 'Step 1: PowerState must be "On"').to.have.property('PowerState', 'On')
               cy.task('log', '  ✅ PowerState confirmed: "On"')
@@ -236,7 +232,6 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
               loggedRequest('Step 2 ForceOff', {
                 method: 'POST',
                 url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}/Actions/ComputerSystem.Reset`,
-                headers: basicAuthHeaders(),
                 body: systemsFixtures.reset.forceOff
               }).then((step2) => {
                 expect(step2.status, 'Step 2: ForceOff must return 202').to.eq(202)
@@ -257,7 +252,6 @@ describe('Functional Test - Redfish System Power Cycle - POST /redfish/v1/System
                 loggedRequest('Step 5 On', {
                   method: 'POST',
                   url: `${redfishUrl()}/redfish/v1/Systems/${systemId()}/Actions/ComputerSystem.Reset`,
-                  headers: basicAuthHeaders(),
                   body: systemsFixtures.reset.on
                 }).then((step5) => {
                   expect(step5.status, 'Step 5: Power On must return 202').to.eq(202)

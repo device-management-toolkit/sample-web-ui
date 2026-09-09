@@ -36,6 +36,8 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run lint:cypress
+      - run: node --test cypress/node-tests/migration.test.cjs
+      - run: node --test --test-timeout=60000 cypress/node-tests/docker-cleanup.test.cjs
       - run: npm run ci-prettify
       - run: npm run test-ci -- --output-file=sample-web-ui-$NODE_VERSION.xml
         env:

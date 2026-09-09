@@ -21,15 +21,10 @@
  */
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
+import { redfishRequest } from '../helpers/redfish'
 import { sessionFixtures } from '../../fixtures/api/redfish/session'
 
-const redfishUrl = (): string => Cypress.env('REDFISH_BASEURL') ?? 'http://localhost:8181'
-
-const basicAuthHeaders = (): Record<string, string> => {
-  const username = (Cypress.env('REDFISH_USERNAME') as string) ?? 'standalone'
-  const password = (Cypress.env('REDFISH_PASSWORD') as string) ?? 'G@ppm0ym'
-  return { Authorization: `Basic ${btoa(`${username}:${password}`)}` }
-}
+const redfishUrl = (): string => Cypress.expose('REDFISH_BASEURL') ?? 'http://localhost:8181'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GET/PATCH/PUT /redfish/v1/SessionService
@@ -39,10 +34,9 @@ describe('Redfish SessionService - GET/PATCH/PUT /redfish/v1/SessionService', ()
     'TC_SESSIONSERVICE_GET_RESOURCE - GET returns SessionService document with @odata.type and Sessions link',
     () => {
       it('returns SessionService resource with @odata.type and Sessions link using Basic Auth', () => {
-        cy.request({
+        redfishRequest({
           method: 'GET',
           url: `${redfishUrl()}/redfish/v1/SessionService`,
-          headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
           expect(response.status).to.eq(httpCodes.SUCCESS)
@@ -69,10 +63,9 @@ describe('Redfish SessionService - GET/PATCH/PUT /redfish/v1/SessionService', ()
 
   context('TC_SESSIONSERVICE_PATCH_RESOURCE - PATCH updates and returns current SessionService state', () => {
     it('returns updated SessionService resource body using Basic Auth', () => {
-      cy.request({
+      redfishRequest({
         method: 'PATCH',
         url: `${redfishUrl()}/redfish/v1/SessionService`,
-        headers: basicAuthHeaders(),
         body: { SessionTimeout: 1800 },
         failOnStatusCode: false
       }).then((response) => {
@@ -95,10 +88,9 @@ describe('Redfish SessionService - GET/PATCH/PUT /redfish/v1/SessionService', ()
 
   context('TC_SESSIONSERVICE_PUT_RESOURCE - PUT returns current SessionService state', () => {
     it('returns current SessionService resource body with an empty request body using Basic Auth', () => {
-      cy.request({
+      redfishRequest({
         method: 'PUT',
         url: `${redfishUrl()}/redfish/v1/SessionService`,
-        headers: basicAuthHeaders(),
         body: {},
         failOnStatusCode: false
       }).then((response) => {
@@ -126,19 +118,17 @@ describe('Redfish SessionService - GET/PATCH/PUT /redfish/v1/SessionService', ()
 describe('Redfish Sessions Collection - GET/POST /redfish/v1/SessionService/Sessions', () => {
   before(() => {
     // Delete any sessions left over from previous test runs so POST tests start clean
-    cy.request({
+    redfishRequest({
       method: 'GET',
       url: `${redfishUrl()}/redfish/v1/SessionService/Sessions`,
-      headers: basicAuthHeaders(),
       failOnStatusCode: false
     }).then((response) => {
       if (response.status === httpCodes.SUCCESS) {
         const members = response.body.Members as { '@odata.id': string }[]
         members.forEach((m) => {
-          cy.request({
+          redfishRequest({
             method: 'DELETE',
             url: `${redfishUrl()}${m['@odata.id']}`,
-            headers: basicAuthHeaders(),
             failOnStatusCode: false
           })
         })
@@ -219,10 +209,9 @@ describe('Redfish Sessions Collection - GET/POST /redfish/v1/SessionService/Sess
 
   context('TC_SESSIONS_GET_COLLECTION - GET returns SessionCollection with members array and count', () => {
     it('returns SessionCollection resource with @odata.type, Members array, and count using Basic Auth', () => {
-      cy.request({
+      redfishRequest({
         method: 'GET',
         url: `${redfishUrl()}/redfish/v1/SessionService/Sessions`,
-        headers: basicAuthHeaders(),
         failOnStatusCode: false
       }).then((response) => {
         expect(response.status).to.eq(httpCodes.SUCCESS)
@@ -289,10 +278,9 @@ describe('Redfish Individual Session - GET/DELETE /redfish/v1/SessionService/Ses
     })
 
     it('returns HTTP 404 for a session ID that does not exist in the system', () => {
-      cy.request({
+      redfishRequest({
         method: 'GET',
         url: `${redfishUrl()}/redfish/v1/SessionService/Sessions/00000000-does-not-exist`,
-        headers: basicAuthHeaders(),
         failOnStatusCode: false
       }).then((response) => {
         expect(response.status).to.eq(404)
@@ -328,10 +316,9 @@ describe('Redfish Individual Session - GET/DELETE /redfish/v1/SessionService/Ses
     })
 
     it('returns HTTP 404 when attempting to delete a session ID that does not exist', () => {
-      cy.request({
+      redfishRequest({
         method: 'DELETE',
         url: `${redfishUrl()}/redfish/v1/SessionService/Sessions/00000000-does-not-exist`,
-        headers: basicAuthHeaders(),
         failOnStatusCode: false
       }).then((response) => {
         expect(response.status).to.eq(404)
@@ -416,10 +403,9 @@ describe('Redfish SessionService - Additional Properties', () => {
     'TC_SESSIONSERVICE_ADDITIONAL_PROPERTIES - ServiceEnabled state, member count and method restrictions',
     () => {
       it('GET SessionService resource returns ServiceEnabled set to true', () => {
-        cy.request({
+        redfishRequest({
           method: 'GET',
           url: `${redfishUrl()}/redfish/v1/SessionService`,
-          headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
           expect(response.status).to.eq(httpCodes.SUCCESS)
@@ -428,10 +414,9 @@ describe('Redfish SessionService - Additional Properties', () => {
       })
 
       it('Sessions collection returns Members@odata.count as a non-negative integer', () => {
-        cy.request({
+        redfishRequest({
           method: 'GET',
           url: `${redfishUrl()}/redfish/v1/SessionService/Sessions`,
-          headers: basicAuthHeaders(),
           failOnStatusCode: false
         }).then((response) => {
           expect(response.status).to.eq(httpCodes.SUCCESS)
@@ -446,10 +431,9 @@ describe('Redfish SessionService - Additional Properties', () => {
       })
 
       it('returns HTTP 405 Method Not Allowed for POST on /redfish/v1/SessionService', () => {
-        cy.request({
+        redfishRequest({
           method: 'POST',
           url: `${redfishUrl()}/redfish/v1/SessionService`,
-          headers: basicAuthHeaders(),
           body: {},
           failOnStatusCode: false
         }).then((response) => {

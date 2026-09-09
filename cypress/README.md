@@ -41,5 +41,24 @@ This is where new functions can be added to cypress to help reduce redundancy wi
 
 ### Environment Variables
 
-`sample-web-ui/cypress.json`<br>
-This is where important variables such as the base url of the server, passwords and whether cypress should mock api reponses are stored. You can add a new variable and call it in a test case with `Cypress.env("VARIABLE_NAME")`. If you wish to change an environment variable for a single instance of cypress, you can run `npm run cypress -- --env VAR_NAME=VALUE,VAR_NAME2=VALUE2` instead of the usual command.
+Defaults live in the Cypress configuration files. Override them with `cypress.env.json`, `CYPRESS_*` environment variables, or `npm run cypress -- --env VAR_NAME=VALUE,VAR_NAME2=VALUE2`.
+
+Read public configuration, such as `BASEURL` and `ISOLATE`, synchronously with `Cypress.expose('BASEURL')`. The shared `publicConfig()` helper copies only allowed keys from `env` into `expose`; explicit `--expose` values take precedence. Common public keys are listed in `cypress/support/public-config.ts`; a suite can supply its own allowlist in its configuration file. Unknown keys remain in `env`.
+
+Read credentials inside a test, hook, or custom command with `cy.env()`:
+
+```ts
+cy.env(['MPS_PASSWORD']).then(({ MPS_PASSWORD }) => {
+  cy.get('[name=Password]').type(MPS_PASSWORD, { log: false })
+})
+```
+
+Keep credentials out of `expose`, global caches, and spec module scope. `cy.env()` logs only key names, but later commands and assertions can reveal values; disable logging on credential-bearing commands and compare secrets using boolean assertions. See the [Cypress environment-variable documentation](https://docs.cypress.io/api/commands/env).
+
+RPC commands run through the Node `exec` task. Ordinary nonzero exits are returned for negative tests; timeouts, signals, and execution failures reject the task so they cannot pass as expected command failures.
+
+Run the configuration and RPC process regression checks with `node --test cypress/node-tests/migration.test.cjs`.
+
+Docker RPC commands use a uniquely named container and explicitly remove it before returning a result or failure. Timeouts, output limits, run cancellation, and plugin shutdown also trigger cleanup. A cleanup failure blocks further RPC commands in that run.
+
+Run the container cleanup checks with `node --test --test-timeout=60000 cypress/node-tests/docker-cleanup.test.cjs`. These require a running Docker daemon and use an Alpine test container without device access. Set `CYPRESS_DOCKER_TEST_IMAGE` to use an existing compatible image.

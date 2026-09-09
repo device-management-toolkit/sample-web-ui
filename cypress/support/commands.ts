@@ -21,7 +21,7 @@ declare global {
       matSelectChoose: (selector: string, value: string) => Chainable<Element>
       matSelectChooseByTransId: (selector: string, transId: string) => Chainable<Element>
       matSelectAssert: (selector: string, value: string) => Chainable<Element>
-      matTextlikeInputType: (selector: string, value: string) => Chainable<Element>
+      matTextlikeInputType: (selector: string, value: string, options?: Partial<TypeOptions>) => Chainable<Element>
       matTextlikeInputAssert: (selector: string, value: string) => Chainable<Element>
       matFormFieldAssertInvalid: (formControlName: string, expected: boolean) => Chainable<Element>
       setup: () => Chainable<Element>
@@ -139,15 +139,22 @@ Cypress.Commands.add('matSelectAssert', (selector: string, text: string) => {
   cy.get(elementId).should('have.text', text)
 })
 
-Cypress.Commands.add('matTextlikeInputType', (selector: string, value: string) => {
-  cy.get(selector)
-    .invoke('is', ':disabled')
-    .then((isDisabled) => {
-      if (!isDisabled) {
-        cy.get(selector).should('be.visible').clear({ force: true }).type(value, { force: true }).blur()
-      }
-    })
-})
+Cypress.Commands.add(
+  'matTextlikeInputType',
+  (selector: string, value: string, options: Partial<Cypress.TypeOptions> = {}) => {
+    cy.get(selector)
+      .invoke('is', ':disabled')
+      .then((isDisabled) => {
+        if (!isDisabled) {
+          cy.get(selector)
+            .should('be.visible')
+            .clear({ force: true })
+            .type(value, { force: true, ...options })
+            .blur()
+        }
+      })
+  }
+)
 
 Cypress.Commands.add('matTextlikeInputAssert', (selector: string, value: string) => {
   cy.get(selector).should('have.value', value)
@@ -179,7 +186,7 @@ Cypress.Commands.add('setup', () => {
     body: stats.get.success.response
   }).as('version-request-2')
   // Login
-  cy.visit(Cypress.env('BASEURL'), {
+  cy.visit(Cypress.expose('BASEURL'), {
     failOnStatusCode: false,
     timeout: 60000
   })
@@ -193,8 +200,7 @@ Cypress.Commands.add('setup', () => {
     }
   })
 
-  const mpsUsername = Cypress.env('MPS_USERNAME')
-  const mpsPassword = Cypress.env('MPS_PASSWORD')
+  const mpsUsername = Cypress.expose('MPS_USERNAME')
 
   // Wait for whichever login UI the deployment uses.
   // Local login renders userId/password; OAuth renders an SSO button.
@@ -212,7 +218,9 @@ Cypress.Commands.add('setup', () => {
 
     if (hasLocalLogin) {
       cy.get('[name=userId]').should('be.visible')
-      cy.login(mpsUsername, mpsPassword)
+      cy.env(['MPS_PASSWORD']).then(({ MPS_PASSWORD }) => {
+        cy.login(mpsUsername, MPS_PASSWORD)
+      })
       cy.wait('@login-request').its('response.statusCode').should('eq', httpCodes.SUCCESS)
       return
     }
@@ -227,7 +235,7 @@ Cypress.Commands.add('setup', () => {
 
   // Close about notice (only appears when environment.cloud = true)
   // Check if the application is running in cloud mode using Cypress environment
-  if (Cypress.env('CLOUD')) {
+  if (Cypress.expose('CLOUD')) {
     // In cloud mode (CLOUD = true), the dialog may appear on first login
     cy.get('body').then(($body) => {
       if ($body.find('[data-cy="closeNotice"]').length > 0) {
@@ -247,7 +255,7 @@ Cypress.Commands.add('login', (user, pass) => {
     cy.get('[name=userId]').type(user)
   }
   if (pass !== 'EMPTY') {
-    cy.get('[name=Password]').type(pass)
+    cy.get('[name=Password]').type(pass, { log: false })
   }
   cy.get('[id=btnLogin]').get('[type=submit]').click()
 })
@@ -293,7 +301,9 @@ Cypress.Commands.add(
 
     if (!randAmt) {
       cy.get('[data-cy=genAmtPass] input').click()
-      cy.get('input[formControlName=amtPassword]').type(Cypress.env('AMT_PASSWORD'), { force: true })
+      cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+        cy.get('input[formControlName=amtPassword]').type(AMT_PASSWORD, { force: true, log: false })
+      })
     }
     if (admin === 'acmactivate') {
       if (!randMebx) {
@@ -304,7 +314,9 @@ Cypress.Commands.add(
               cy.get('[data-cy=genMebxPass]').click()
             }
 
-            cy.get('input[formControlName=mebxPassword]').type(Cypress.env('MEBX_PASSWORD'))
+            cy.env(['MEBX_PASSWORD']).then(({ MEBX_PASSWORD }) => {
+              cy.get('input[formControlName=mebxPassword]').type(MEBX_PASSWORD, { log: false })
+            })
           })
       }
     }
@@ -383,11 +395,15 @@ Cypress.Commands.add('enterProfileInfoV2', (formData: any) => {
   cy.matCheckboxSet('[formControlName="solEnabled"]', formData.solEnabled)
   cy.matCheckboxSet('[formControlName="generateRandomPassword"]', formData.generateRandomPassword)
   if (!formData.generateRandomPassword) {
-    cy.matTextlikeInputType('[formControlName="amtPassword"]', Cypress.env('AMT_PASSWORD'))
+    cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+      cy.matTextlikeInputType('[formControlName="amtPassword"]', AMT_PASSWORD, { log: false })
+    })
   }
   cy.matCheckboxSet('[formControlName="generateRandomMEBxPassword"]', formData.generateRandomMEBxPassword)
   if (!formData.generateRandomMEBxPassword) {
-    cy.matTextlikeInputType('[formControlName="mebxPassword"]', Cypress.env('MEBX_PASSWORD'))
+    cy.env(['MEBX_PASSWORD']).then(({ MEBX_PASSWORD }) => {
+      cy.matTextlikeInputType('[formControlName="mebxPassword"]', MEBX_PASSWORD, { log: false })
+    })
   }
   // selectors need string values so convert booleans
   cy.matRadioButtonChoose('[formControlName="dhcpEnabled"]', formData.dhcpEnabled ? 'true' : 'false')
@@ -436,8 +452,8 @@ Cypress.Commands.add('assertProfileInfo', (profile: any) => {
 Cypress.Commands.add('enterDomainInfo', (name, domain, file, pass) => {
   cy.get('input[name="name"]').type(name)
   cy.get('input[name="domainName"]').type(domain)
-  cy.get('input[type="file"]').selectFile(file, { force: true }) // force true because the file selector is always hidden
-  cy.get('input[name="provisioningCertPassword"]').type(pass)
+  cy.get('input[type="file"]').selectFile(file, { force: true, log: false }) // force true because the file selector is always hidden
+  cy.get('input[name="provisioningCertPassword"]').type(pass, { log: false })
 })
 
 Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod, encryptionMethod) => {
@@ -453,7 +469,7 @@ Cypress.Commands.add('enterWirelessInfo', (name, userName, password, authMethod,
     .get('mat-option')
     .contains(encryptionMethod)
     .click()
-  cy.get('input[name="pskPassphrase"]').type(password, { force: true })
+  cy.get('input[name="pskPassphrase"]').type(password, { force: true, log: false })
 })
 
 Cypress.Commands.add('enterIEEE8021xInfo', (config: IEEE8021xConfig) => {
@@ -491,16 +507,16 @@ Cypress.Commands.add('goToPage', (pageName) => {
 })
 
 Cypress.Commands.add('setAMTMEBXPasswords', (mode, amtPassword, mebxPassword) => {
-  cy.get('input[formControlName=amtPassword]').type(amtPassword)
+  cy.get('input[formControlName=amtPassword]').type(amtPassword, { log: false })
   if (mode === 'acmactivate') {
-    cy.get('input[formControlName=mebxPassword]').type(mebxPassword)
+    cy.get('input[formControlName=mebxPassword]').type(mebxPassword, { log: false })
   }
 })
 
 // ------------------------------- Other --------------------------------
 
 Cypress.Commands.add('myIntercept', (method, url, body) => {
-  if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
+  if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'n') {
     cy.intercept(
       {
         method,

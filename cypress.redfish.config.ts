@@ -29,6 +29,8 @@ import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import * as path from 'path'
 
+import { publicConfig } from './cypress/support/public-config'
+
 /**
  * All timestamps in this config are UTC (ISO 8601 with trailing "Z").
  * This matches the UTC timestamps written by mocha-junit-reporter inside
@@ -82,7 +84,15 @@ export default defineConfig({
   rejectUnauthorized: false,
 
   e2e: {
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
+      // Preserve legacy public overrides without publishing unknown env keys.
+      config.expose = publicConfig(config.env, config.expose, [
+        'ISOLATE',
+        'REDFISH_BASEURL',
+        'REDFISH_SYSTEM_ID',
+        'REDFISH_USERNAME'
+      ])
+
       // Create a timestamped log file under cypress/logs/ for functional test runs.
       // The file is written in real-time so you can `tail -f` it during a run.
       // cypress/logs/*.log is covered by the *.log entry in .gitignore.
@@ -98,6 +108,8 @@ export default defineConfig({
           return null
         }
       })
+
+      return config
     },
     // Run specs under integration-redfish/ (alongside the original integration/ folder)
     specPattern: 'cypress/e2e/integration-redfish/**/*.spec.ts',

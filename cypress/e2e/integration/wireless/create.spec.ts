@@ -14,45 +14,47 @@ describe('create a wireless profile', () => {
   })
 
   it('creates a default profile', () => {
-    cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: wirelessConfigs.getAll.success.response
-    }).as('wirelessconfigsGetAll')
+    return cy.env(['WIFI_PSK_PASSPHRASE']).then(({ WIFI_PSK_PASSPHRASE }) => {
+      cy.myIntercept('GET', 'wirelessconfigs?$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: wirelessConfigs.getAll.success.response
+      }).as('wirelessconfigsGetAll')
 
-    cy.myIntercept('POST', 'wirelessconfigs', {
-      statusCode: httpCodes.CREATED,
-      body: wirelessConfigs.create.success.response
-    }).as('post-wireless')
+      cy.myIntercept('POST', 'wirelessconfigs', {
+        statusCode: httpCodes.CREATED,
+        body: wirelessConfigs.create.success.response
+      }).as('post-wireless')
 
-    cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: empty.response
-    }).as('get-wireless')
+      cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: empty.response
+      }).as('get-wireless')
 
-    cy.goToPage('Wireless')
-    cy.wait('@get-wireless')
+      cy.goToPage('Wireless')
+      cy.wait('@get-wireless')
 
-    // change api response
-    cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: wirelessConfigs.getAll.success.response
-    }).as('get-wireless2')
+      // change api response
+      cy.myIntercept('GET', 'wirelessconfigs?$top=25&$skip=0&$count=true', {
+        statusCode: httpCodes.SUCCESS,
+        body: wirelessConfigs.getAll.success.response
+      }).as('get-wireless2')
 
-    cy.get('button').contains('Add New').click()
-    cy.enterWirelessInfo(
-      wirelessFixtures.happyPath.profileName,
-      Cypress.env('WIFI_SSID'),
-      Cypress.env('WIFI_PSK_PASSPHRASE'),
-      wirelessFixtures.happyPath.authenticationMethod,
-      wirelessFixtures.happyPath.encryptionMethod
-    )
-    cy.get('button[type=submit]').click()
+      cy.get('button').contains('Add New').click()
+      cy.enterWirelessInfo(
+        wirelessFixtures.happyPath.profileName,
+        Cypress.expose('WIFI_SSID'),
+        WIFI_PSK_PASSPHRASE,
+        wirelessFixtures.happyPath.authenticationMethod,
+        wirelessFixtures.happyPath.encryptionMethod
+      )
+      cy.get('button[type=submit]').click()
 
-    cy.wait('@post-wireless').then((req) => {
-      cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
+      cy.wait('@post-wireless').then((req) => {
+        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
 
-      // Check that the wireless config was successful
-      cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName)
+        // Check that the wireless config was successful
+        cy.get('mat-cell').contains(wirelessFixtures.happyPath.profileName)
+      })
     })
   })
 })
