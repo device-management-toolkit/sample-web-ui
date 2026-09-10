@@ -24,8 +24,9 @@ import {
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
+import { secret } from '../../../support/secrets'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
     let amtInfo: AMTInfo
 
@@ -43,14 +44,15 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     }
 
     // Environment variables
-    const profileName: string = Cypress.env('PROFILE_NAME') as string
-    const password: string = Cypress.env('AMT_PASSWORD')
-    const fqdn: string = Cypress.env('ACTIVATION_URL')
-    const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+    const profileName: string = Cypress.expose('PROFILE_NAME') as string
+    // Read on use: secrets load in a before() hook, after this file evaluates.
+    const password = (): string => secret('AMT_PASSWORD')
+    const fqdn: string = Cypress.expose('ACTIVATION_URL')
+    const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
     const isWin = Cypress.platform === 'win32'
-    const rpcVersion = String(Cypress.env('RPC_VERSION') ?? 'v3')
+    const rpcVersion = String(Cypress.expose('RPC_VERSION') ?? 'v3')
       .trim()
       .toLowerCase()
     const passwordFlag = /^v?2(?:\.|$)/.test(rpcVersion) ? '-password' : '--password'
@@ -72,9 +74,10 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           profileName
         })
 
+        const amtPassword = password()
         activateCommands =
-          password && password.trim().length > 0
-            ? addArgsToCommandCandidates(baseActivateCommands, `${passwordFlag} ${password}`)
+          amtPassword && amtPassword.trim().length > 0
+            ? addArgsToCommandCandidates(baseActivateCommands, `${passwordFlag} ${amtPassword}`)
             : baseActivateCommands
       })
     })
@@ -91,7 +94,7 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           // Reject the domain suffix without changing the AMT activation state.
           const invalidDomainCommands = addArgsToCommandCandidates(
             baseActivateCommands,
-            `--password ${password} -d dontmatch.com`
+            `--password ${password()} -d dontmatch.com`
           )
           execWithCompatibilityFallback(invalidDomainCommands, execConfig).then((result) => {
             const { combined } = buildOutput(result)

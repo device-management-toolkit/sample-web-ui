@@ -15,12 +15,12 @@ import {
   getAmtVersion,
   notActivatedControlModes
 } from './rpc.helpers'
+import { secret } from '../../../support/secrets'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
-  const password: string = Cypress.env('AMT_PASSWORD')
-  const fqdn: string = Cypress.env('ACTIVATION_URL')
-  const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+  const fqdn: string = Cypress.expose('ACTIVATION_URL')
+  const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
   const isWin = Cypress.platform === 'win32'
   const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
   let deactivateCommands: string[] = []
@@ -30,7 +30,8 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       deactivateCommands = buildCloudDeactivateCommandCandidates({
         isWin,
         rpcDockerImage,
-        password,
+        // Read here: secrets load in a before() hook, after this file evaluates.
+        password: secret('AMT_PASSWORD'),
         amtVersion: getAmtVersion(info),
         fqdn
       })

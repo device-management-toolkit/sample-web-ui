@@ -52,8 +52,8 @@ describe('Test CIRA Config Page', () => {
     cy.enterCiraInfo(
       ciraFixtures.default.name,
       ciraFixtures.default.format,
-      Cypress.env('FQDN'),
-      Cypress.env('MPS_USERNAME')
+      Cypress.expose('FQDN'),
+      Cypress.expose('MPS_USERNAME')
     )
     cy.get('button[type=submit]').click({ timeout: 50000 })
 
@@ -66,8 +66,8 @@ describe('Test CIRA Config Page', () => {
 
     // //Check that the config was successful
     cy.get('mat-cell').contains(ciraFixtures.default.name)
-    cy.get('mat-cell').contains(Cypress.env('FQDN'))
-    cy.get('mat-cell').contains(Cypress.env('MPS_USERNAME'))
+    cy.get('mat-cell').contains(Cypress.expose('FQDN'))
+    cy.get('mat-cell').contains(Cypress.expose('MPS_USERNAME'))
 
     cy.myIntercept('POST', 'profiles', {
       statusCode: httpCodes.CREATED,

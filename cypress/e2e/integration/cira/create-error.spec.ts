@@ -9,7 +9,7 @@ import { badRequest, empty } from '../../fixtures/api/general'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { ciraFixtures } from '../../fixtures/formEntry/cira'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
-const baseUrl: string = Cypress.env('BASEURL')
+const baseUrl: string = Cypress.expose('BASEURL')
 
 // ---------------------------- Test section ----------------------------
 
@@ -45,7 +45,7 @@ describe('Test CIRA Config Page', () => {
       ciraFixtures.wrong.name,
       ciraFixtures.default.format,
       ciraFixtures.default.addr,
-      Cypress.env('MPS_USERNAME')
+      Cypress.expose('MPS_USERNAME')
     )
     cy.get('input[name=configName]').focus().blur()
     cy.get('mat-error').should('contain', 'Name accepts letters, numbers, underscore and hyphen only')

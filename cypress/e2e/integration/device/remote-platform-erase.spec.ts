@@ -6,7 +6,7 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { eventLogs } from '../../fixtures/api/eventlog'
 
-const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
+const describeWhenNotCloud = Cypress.expose('CLOUD') ? describe.skip : describe
 
 const navigateToRemotePlatformErase = (
   featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response

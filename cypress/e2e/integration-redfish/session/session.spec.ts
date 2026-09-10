@@ -22,12 +22,13 @@
 
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { sessionFixtures } from '../../fixtures/api/redfish/session'
+import { secret } from '../../../support/secrets'
 
-const redfishUrl = (): string => Cypress.env('REDFISH_BASEURL') ?? 'http://localhost:8181'
+const redfishUrl = (): string => Cypress.expose('REDFISH_BASEURL') ?? 'http://localhost:8181'
 
 const basicAuthHeaders = (): Record<string, string> => {
-  const username = (Cypress.env('REDFISH_USERNAME') as string) ?? 'standalone'
-  const password = (Cypress.env('REDFISH_PASSWORD') as string) ?? 'G@ppm0ym'
+  const username = (Cypress.expose('REDFISH_USERNAME') as string) ?? 'standalone'
+  const password = secret('REDFISH_PASSWORD') || 'G@ppm0ym'
   return { Authorization: `Basic ${btoa(`${username}:${password}`)}` }
 }
 

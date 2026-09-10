@@ -16,12 +16,12 @@ import {
   notActivatedControlModes,
   getAuthEndpoint
 } from './rpc.helpers'
+import { secret } from '../../../support/secrets'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
-  const profileName: string = Cypress.env('PROFILE_NAME') as string
-  const password: string = Cypress.env('AMT_PASSWORD')
-  const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+  const profileName: string = Cypress.expose('PROFILE_NAME') as string
+  const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
   const isAdminControlModeProfile = profileName.startsWith('acmactivate')
   const isWin = Cypress.platform === 'win32'
   const authEndpoint = getAuthEndpoint()
@@ -33,12 +33,13 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       deactivateCommand = buildDeactivateCommand({
         isWin,
         rpcDockerImage,
-        password,
+        // Read here: secrets load in a before() hook, after this file evaluates.
+        password: secret('AMT_PASSWORD'),
         amtVersion: getAmtVersion(info),
         isAdminControlModeProfile,
         authEndpoint: authEndpoint,
-        authUsername: Cypress.env('MPS_USERNAME'),
-        authPassword: Cypress.env('MPS_PASSWORD')
+        authUsername: Cypress.expose('MPS_USERNAME'),
+        authPassword: secret('MPS_PASSWORD')
       })
     })
   })

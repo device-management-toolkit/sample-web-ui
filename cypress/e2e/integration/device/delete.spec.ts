@@ -8,10 +8,10 @@ import { httpCodes } from '../../fixtures/api/httpCodes'
 import { empty } from '../../fixtures/api/general'
 import { tags } from '../../fixtures/api/tags'
 
-const describeWhenNotCloud = Cypress.env('CLOUD') ? describe.skip : describe
+const describeWhenNotCloud = Cypress.expose('CLOUD') ? describe.skip : describe
 
 // Detect auto-add device mode via the same flag used by the RPC helpers
-const autoAddDevice = Cypress.env('AUTO_ADD_DEVICE') === true || Cypress.env('AUTO_ADD_DEVICE') === 'true'
+const autoAddDevice = Cypress.expose('AUTO_ADD_DEVICE') === true || Cypress.expose('AUTO_ADD_DEVICE') === 'true'
 
 // When auto-add device is enabled, device is automatically removed during deactivation,
 // so skip the manual deletion tests
@@ -37,7 +37,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
       body: {
         data: [
           {
-            hostname: Cypress.env('DEVICE'),
+            hostname: Cypress.expose('DEVICE'),
             friendlyName: 'Test Device',
             username: 'admin',
             guid: '123e4567-e89b-12d3-a456-426614174000',
@@ -64,7 +64,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     cy.wait('@get-tags')
 
     // Verify the device is present
-    cy.get('mat-cell').contains(Cypress.env('DEVICE'))
+    cy.get('mat-cell').contains(Cypress.expose('DEVICE'))
     cy.get('mat-cell').contains('Test Device')
 
     // Click delete but cancel
@@ -72,7 +72,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     cy.get('button').contains('No').click()
 
     // Verify the device still exists
-    cy.get('mat-cell').contains(Cypress.env('DEVICE'))
+    cy.get('mat-cell').contains(Cypress.expose('DEVICE'))
     cy.get('mat-cell').contains('Test Device')
   })
 
@@ -82,7 +82,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     cy.wait('@get-tags')
 
     // Verify the device is present before deletion
-    cy.get('mat-cell').contains(Cypress.env('DEVICE'))
+    cy.get('mat-cell').contains(Cypress.expose('DEVICE'))
     cy.get('mat-cell').contains('Test Device')
 
     // Change API response to return empty list after deletion
@@ -102,7 +102,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     cy.wait('@get-devices-after-delete').its('response.statusCode').should('eq', httpCodes.SUCCESS)
 
     // Verify the device no longer appears in the list
-    cy.contains(Cypress.env('DEVICE')).should('not.exist')
+    cy.contains(Cypress.expose('DEVICE')).should('not.exist')
     cy.contains('Test Device').should('not.exist')
   })
 })

@@ -8,8 +8,9 @@ import { wirelessFixtures } from '../../fixtures/formEntry/wireless'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
 import { badRequest, empty } from '../../fixtures/api/general'
 import * as api8021x from '../../fixtures/api/ieee8021x'
+import { secret } from '../../../support/secrets'
 
-const baseUrl: string = Cypress.env('BASEURL')
+const baseUrl: string = Cypress.expose('BASEURL')
 
 describe('Test wireless creation page', () => {
   beforeEach('clear cache and login', () => {
@@ -38,8 +39,8 @@ describe('Test wireless creation page', () => {
   it('invalid profile name', () => {
     cy.enterWirelessInfo(
       wirelessFixtures.wrong.profileName,
-      Cypress.env('WIFI_SSID'),
-      Cypress.env('WIFI_PSK_PASSPHRASE'),
+      Cypress.expose('WIFI_SSID'),
+      secret('WIFI_PSK_PASSPHRASE'),
       wirelessFixtures.happyPath.authenticationMethod,
       wirelessFixtures.happyPath.encryptionMethod
     )

@@ -11,7 +11,7 @@ import { wirelessConfigs } from '../../fixtures/api/wireless'
 import { profileFixtures } from '../../fixtures/formEntry/profile'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
 import * as api8021x from '../../fixtures/api/ieee8021x'
-const baseUrl: string = Cypress.env('BASEURL')
+const baseUrl: string = Cypress.expose('BASEURL')
 
 // ---------------------------- Test section ----------------------------
 

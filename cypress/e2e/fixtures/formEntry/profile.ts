@@ -23,8 +23,8 @@ ActivationModes.forEach((activationMode) => {
         const profile: any = {
           profileName: `${activationMode.value}-${dhcpLabel}-${connection}`,
           activation: activationMode.value,
-          amtPassword: '', // Cypress.env('AMT_PASSWORD'),
-          mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
+          amtPassword: '', // Cypress.expose('AMT_PASSWORD'),
+          mebxPassword: '', // Cypress.expose('MEBX_PASSWORD'),
           dhcpEnabled,
           userConsent: 'All',
           iderEnabled: true,
@@ -56,8 +56,8 @@ TlsModes.forEach((tlsMode) => {
   amtProfiles.push({
     profileName: `STATIC-${name}`,
     activation: 'acmactivate',
-    amtPassword: '', // Cypress.env('AMT_PASSWORD'),
-    mebxPassword: '', // Cypress.env('MEBX_PASSWORD'),
+    amtPassword: '', // Cypress.expose('AMT_PASSWORD'),
+    mebxPassword: '', // Cypress.expose('MEBX_PASSWORD'),
     dhcpEnabled: false,
     ipSyncEnabled: false,
     localWifiSyncEnabled: false,
