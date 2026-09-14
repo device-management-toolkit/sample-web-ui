@@ -25,17 +25,16 @@ import {
   getAuthEndpoint
 } from './rpc.helpers'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   {
     let amtInfo: AMTInfo
 
     // Environment variables
-    const profileName: string = Cypress.env('PROFILE_NAME') as string
-    const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+    const profileName: string = Cypress.expose('PROFILE_NAME') as string
+    const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
-    const profileYamlFile: string = Cypress.env('PROFILE_YAML_FILE')
-    const encryptionKey: string = Cypress.env('ENCRYPTION_KEY')
+    const profileYamlFile: string = Cypress.expose('PROFILE_YAML_FILE')
     const isWin = Cypress.platform === 'win32'
     const authEndpoint = getAuthEndpoint()
 
@@ -45,17 +44,19 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     let amtVersion = ''
 
     before(() => {
-      getAmtInfo(infoCommand).then((info) => {
-        amtVersion = getAmtVersion(info)
-        activateCommand = buildActivateCommand({
-          isWin,
-          rpcDockerImage,
-          amtVersion,
-          profileYamlFile,
-          encryptionKey,
-          authEndpoint: authEndpoint,
-          authUsername: Cypress.env('MPS_USERNAME'),
-          authPassword: Cypress.env('MPS_PASSWORD')
+      return cy.env(['ENCRYPTION_KEY', 'MPS_PASSWORD']).then(({ ENCRYPTION_KEY, MPS_PASSWORD }) => {
+        getAmtInfo(infoCommand).then((info) => {
+          amtVersion = getAmtVersion(info)
+          activateCommand = buildActivateCommand({
+            isWin,
+            rpcDockerImage,
+            amtVersion,
+            profileYamlFile,
+            encryptionKey: ENCRYPTION_KEY,
+            authEndpoint: authEndpoint,
+            authUsername: Cypress.expose('MPS_USERNAME'),
+            authPassword: MPS_PASSWORD
+          })
         })
       })
     })

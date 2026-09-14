@@ -16,23 +16,24 @@ import {
   notActivatedControlModes
 } from './rpc.helpers'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
-  const password: string = Cypress.env('AMT_PASSWORD')
-  const fqdn: string = Cypress.env('ACTIVATION_URL')
-  const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+  const fqdn: string = Cypress.expose('ACTIVATION_URL')
+  const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
   const isWin = Cypress.platform === 'win32'
   const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
   let deactivateCommands: string[] = []
 
   before(() => {
-    getAmtInfo(infoCommand).then((info) => {
-      deactivateCommands = buildCloudDeactivateCommandCandidates({
-        isWin,
-        rpcDockerImage,
-        password,
-        amtVersion: getAmtVersion(info),
-        fqdn
+    return cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+      getAmtInfo(infoCommand).then((info) => {
+        deactivateCommands = buildCloudDeactivateCommandCandidates({
+          isWin,
+          rpcDockerImage,
+          password: AMT_PASSWORD,
+          amtVersion: getAmtVersion(info),
+          fqdn
+        })
       })
     })
   })

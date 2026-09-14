@@ -11,7 +11,7 @@ import { badRequest } from '../../fixtures/api/general'
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import stats from '../../fixtures/api/stats'
 import { urlFixtures } from '../../fixtures/formEntry/urls'
-const baseUrl: string = Cypress.env('BASEURL')
+const baseUrl: string = Cypress.expose('BASEURL')
 
 // ---------------------------- Test section ----------------------------
 
@@ -42,30 +42,32 @@ describe('Test login page', () => {
 
   context('Successful login', () => {
     it('logs in', () => {
-      cy.myIntercept('POST', 'authorize', {
-        statusCode: httpCodes.SUCCESS,
-        body: { token: '' }
-      }).as('login-request')
+      return cy.env(['MPS_PASSWORD']).then(({ MPS_PASSWORD }) => {
+        cy.myIntercept('POST', 'authorize', {
+          statusCode: httpCodes.SUCCESS,
+          body: { token: '' }
+        }).as('login-request')
 
-      cy.myIntercept('GET', 'api/v1/devices/stats', {
-        statusCode: 200,
-        body: stats.get.success.response
-      }).as('stats-request')
+        cy.myIntercept('GET', 'api/v1/devices/stats', {
+          statusCode: 200,
+          body: stats.get.success.response
+        }).as('stats-request')
 
-      // Login
-      const mpsUsername = Cypress.env('MPS_USERNAME')
-      const mpsPassword = Cypress.env('MPS_PASSWORD')
-      cy.login(mpsUsername, mpsPassword)
+        // Login
+        const mpsUsername = Cypress.expose('MPS_USERNAME')
+        const mpsPassword = MPS_PASSWORD
+        cy.login(mpsUsername, mpsPassword)
 
-      // Check that correct post request is made
-      cy.wait('@login-request').then((req) => {
-        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.SUCCESS)
-        cy.wrap(req).its('request.body.username').should('eq', mpsUsername)
-        cy.wrap(req).its('request.body.password').should('eq', mpsPassword)
+        // Check that correct post request is made
+        cy.wait('@login-request').then((req) => {
+          expect(req.response?.statusCode).to.eq(httpCodes.SUCCESS)
+          expect(req.request.body.username).to.eq(mpsUsername)
+          expect(req.request.body.password === mpsPassword, 'login password matches configured credential').to.eq(true)
+        })
+
+        // Check that the login was successful
+        cy.url().should('eq', baseUrl)
       })
-
-      // Check that the login was successful
-      cy.url().should('eq', baseUrl)
     })
   })
 
@@ -87,23 +89,26 @@ describe('Test login page', () => {
       cy.url().should('eq', baseUrl + urlFixtures.page.login)
     }
 
-    const mpsUsername = Cypress.env('MPS_USERNAME')
-    const mpsPassword = Cypress.env('MPS_PASSWORD')
+    const mpsUsername = Cypress.expose('MPS_USERNAME')
     const wrongPassword = 'SoWrong'
 
     it('no username / valid password', () => {
-      // Attempt to log in
-      cy.login('EMPTY', mpsPassword)
+      return cy.env(['MPS_PASSWORD']).then(({ MPS_PASSWORD }) => {
+        // Attempt to log in
+        cy.login('EMPTY', MPS_PASSWORD)
 
-      // Check that to log in fails as expected
-      cy.url().should('eq', baseUrl + urlFixtures.page.login)
-      cy.get('mat-error').should('have.length', 1)
+        // Check that to log in fails as expected
+        cy.url().should('eq', baseUrl + urlFixtures.page.login)
+        cy.get('mat-error').should('have.length', 1)
+      })
     })
 
     it('invalid username / valid password', () => {
-      prepareIntercepts()
-      cy.login(wrongPassword, mpsPassword)
-      checkFailState()
+      return cy.env(['MPS_PASSWORD']).then(({ MPS_PASSWORD }) => {
+        prepareIntercepts()
+        cy.login(wrongPassword, MPS_PASSWORD)
+        checkFailState()
+      })
     })
 
     it('valid username / no password', () => {

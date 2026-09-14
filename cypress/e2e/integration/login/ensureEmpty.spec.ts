@@ -13,21 +13,21 @@ describe('Ensure the server is empty', () => {
   })
 
   it('checks for domains', () => {
-    if (Cypress.env('ISOLATE').charAt(0).toLowerCase() === 'n') {
+    if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n') {
       cy.goToPage('Domains')
       cy.contains('No Domains').should('be.visible')
     }
   })
 
   it('checks for cira configs', () => {
-    if (Cypress.env('ISOLATE').charAt(0).toLowerCase() === 'n') {
+    if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n') {
       cy.goToPage('CIRA Configs')
       cy.contains('No CIRA Configs').should('be.visible')
     }
   })
 
   it('checks for profiles', () => {
-    if (Cypress.env('ISOLATE').charAt(0).toLowerCase() === 'n') {
+    if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n') {
       cy.goToPage('Profiles')
       cy.contains('No Profiles').should('be.visible')
     }

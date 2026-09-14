@@ -17,11 +17,10 @@ import {
   getAuthEndpoint
 } from './rpc.helpers'
 
-if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
+if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let amtInfo: AMTInfo
-  const profileName: string = Cypress.env('PROFILE_NAME') as string
-  const password: string = Cypress.env('AMT_PASSWORD')
-  const rpcDockerImage: string = Cypress.env('RPC_DOCKER_IMAGE')
+  const profileName: string = Cypress.expose('PROFILE_NAME') as string
+  const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
   const isAdminControlModeProfile = profileName.startsWith('acmactivate')
   const isWin = Cypress.platform === 'win32'
   const authEndpoint = getAuthEndpoint()
@@ -29,16 +28,18 @@ if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'y') {
   let deactivateCommand = ''
 
   before(() => {
-    getAmtInfo(infoCommand).then((info) => {
-      deactivateCommand = buildDeactivateCommand({
-        isWin,
-        rpcDockerImage,
-        password,
-        amtVersion: getAmtVersion(info),
-        isAdminControlModeProfile,
-        authEndpoint: authEndpoint,
-        authUsername: Cypress.env('MPS_USERNAME'),
-        authPassword: Cypress.env('MPS_PASSWORD')
+    return cy.env(['AMT_PASSWORD', 'MPS_PASSWORD']).then(({ AMT_PASSWORD, MPS_PASSWORD }) => {
+      getAmtInfo(infoCommand).then((info) => {
+        deactivateCommand = buildDeactivateCommand({
+          isWin,
+          rpcDockerImage,
+          password: AMT_PASSWORD,
+          amtVersion: getAmtVersion(info),
+          isAdminControlModeProfile,
+          authEndpoint: authEndpoint,
+          authUsername: Cypress.expose('MPS_USERNAME'),
+          authPassword: MPS_PASSWORD
+        })
       })
     })
   })

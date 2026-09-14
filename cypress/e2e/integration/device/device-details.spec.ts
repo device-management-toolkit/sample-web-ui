@@ -92,7 +92,7 @@ describe('Test device details page', () => {
     // cy.wait('@get-alarmOccurences').its('response.statusCode').should('eq', 200)
 
     // Do not run power actions on real devices
-    // if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
+    // if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'n') {
     //   // Out-of-band Power Actions
     //   const oobActions = ['Power On', 'Power Cycle', 'Hard Power Off', 'Reset', 'Power to BIOS', 'Reset to BIOS', 'Power to PXE', 'Reset to PXE']
     //   for (let i = 0; i < oobActions.length; i++) {
@@ -155,7 +155,7 @@ describe('Test device details page', () => {
   /* ==== Test Created with Cypress Studio ==== */
 
   // it('Hardware Information', function () {
-  //   if (Cypress.env('ISOLATE').charAt(0).toLowerCase() !== 'n') {
+  //   if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'n') {
   //     cy.myIntercept('GET', /.*hardwareInfo.*/, {
   //       statusCode: httpCodes.SUCCESS,
   //       body: eventLogs.hardwareInfo.success.response

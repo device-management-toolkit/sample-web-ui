@@ -5,6 +5,9 @@
 
 import { defineConfig } from 'cypress'
 
+import { cancelExecTasks, execTask } from './cypress/support/exec-task'
+import { publicConfig } from './cypress/support/public-config'
+
 export default defineConfig({
   reporter: 'mocha-multi-reporters',
   reporterOptions: {
@@ -35,7 +38,6 @@ export default defineConfig({
   },
   chromeWebSecurity: false,
   e2e: {
-    experimentalStudio: true,
     screenshotOnRunFailure: false,
     specPattern: 'cypress/e2e/integration/**/*.ts',
     setupNodeEvents(on, config) {
@@ -73,6 +75,10 @@ export default defineConfig({
           }
         }
       }
+
+      // Preserve legacy public overrides without publishing unknown env keys.
+      config.expose = publicConfig(config.env, config.expose)
+
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const versionFetcher = require('./cypress/support/version-fetcher')
 
@@ -114,11 +120,14 @@ export default defineConfig({
           console.warn('\n⚠️  Could not fetch component version info:', err)
         }
       })
+      on('after:spec', cancelExecTasks)
+      on('after:run', cancelExecTasks)
       on('task', {
         log(message: string) {
           console.log(message)
           return null
-        }
+        },
+        exec: execTask
       })
       return config
     }
