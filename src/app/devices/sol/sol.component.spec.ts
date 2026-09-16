@@ -213,6 +213,57 @@ describe('SolComponent', () => {
     expect(deviceConnectionSpy).toHaveBeenCalledWith(false)
     expect(component.isDisconnecting).toBeTruthy()
   })
+  it('should show "Connect SOL" button after a manual disconnect', () => {
+    fixture.detectChanges()
+
+    // Simulate a connected session
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    let button: HTMLElement = fixture.nativeElement.querySelector('button')
+    expect(button.textContent).toContain('sol.disconnect.value')
+
+    // Simulate a manual disconnect: child reports deviceStatus(0) after disconnect() is called
+    component.disconnect()
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    button = fixture.nativeElement.querySelector('button')
+    expect(button.textContent).toContain('sol.connect.value')
+  })
+  it('should not show "Connect SOL" while waiting for the connected status', () => {
+    fixture.detectChanges()
+
+    component.deviceState.set(0)
+    component.connect()
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    const button: HTMLElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceState()).toBe(-1)
+    expect(button.textContent).not.toContain('sol.connect.value')
+  })
+  it('should allow reconnecting after an unexpected disconnect', () => {
+    fixture.detectChanges()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isDisconnecting = false
+
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceConnection()).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+
+    button.click()
+    fixture.detectChanges()
+
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.deviceState()).not.toBe(0)
+  })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
     component.deviceStatus(0)

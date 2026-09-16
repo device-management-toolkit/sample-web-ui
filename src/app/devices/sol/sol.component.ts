@@ -137,6 +137,8 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   connect(): void {
+    this.isDisconnecting = false
+    this.deviceState.set(-1)
     this.init()
     this.deviceConnection.set(true)
   }
@@ -262,6 +264,7 @@ export class SolComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
     } else if (event === 0) {
       this.isLoading.set(false)
+      this.deviceConnection.set(false)
       if (!this.isDisconnecting) {
         this.displayError(
           'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
