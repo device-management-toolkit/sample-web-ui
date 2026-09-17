@@ -6,7 +6,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { of, throwError, Subject } from 'rxjs'
 import { Router } from '@angular/router'
@@ -56,8 +55,7 @@ describe('ExportDialogComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        ExportDialogComponent,
-        NoopAnimationsModule
+        ExportDialogComponent
       ],
       providers: [
         provideTranslateService(),

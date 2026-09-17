@@ -10,7 +10,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { ReactiveFormsModule } from '@angular/forms'
 import { DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -29,8 +28,7 @@ describe('HTTPBootDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HTTPBootDialogComponent,
-        ReactiveFormsModule,
-        NoopAnimationsModule
+        ReactiveFormsModule
       ],
       providers: [
         provideTranslateService(),
@@ -159,8 +157,7 @@ describe('HTTPBootDialogComponent in CCM mode', () => {
     TestBed.configureTestingModule({
       imports: [
         HTTPBootDialogComponent,
-        ReactiveFormsModule,
-        NoopAnimationsModule
+        ReactiveFormsModule
       ],
       providers: [
         provideTranslateService(),

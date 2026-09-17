@@ -11,7 +11,6 @@ import { AlarmsComponent } from './alarms.component'
 import { DevicesService } from '../devices.service'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { of, throwError } from 'rxjs'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideTranslateService } from '@ngx-translate/core'
 import { MatDialog } from '@angular/material/dialog'
 
@@ -34,7 +33,6 @@ describe('AlarmsComponent', () => {
     devicesServiceSpy.deleteAlarmOccurrence.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         AlarmsComponent
       ],
       providers: [

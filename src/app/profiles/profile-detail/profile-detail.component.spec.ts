@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { Validators } from '@angular/forms'
@@ -114,7 +113,6 @@ describe('ProfileDetailComponent', () => {
     // tlsConfigSpy = tlsService.getData.mockReturnValue(of({ data: [], totalCount: 0 }))
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         ProfileDetailComponent
       ],

@@ -9,7 +9,6 @@ import { describe } from 'vitest'
 describe.todo('EventChannelComponent')
 
 // import { ComponentFixture, TestBed } from '@angular/core/testing'
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 // // // import { EventChannelComponent } from './event-channel.component'
 // import { MQTTService } from './event-channel.service'
 // import { of } from 'rxjs'
@@ -28,7 +27,7 @@ describe.todo('EventChannelComponent')
 //   }
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [BrowserAnimationsModule, RouterModule],
+//       imports: [RouterModule],
 //       declarations: [EventChannelComponent],
 //       providers: [{ provide: MQTTService, useValue: eventChannelStub }]
 //     }).compileComponents()

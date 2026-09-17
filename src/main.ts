@@ -7,7 +7,6 @@ import { enableProdMode, inject, provideAppInitializer, provideZonelessChangeDet
 import { environment } from './environments/environment'
 import { AppComponent } from './app/app.component'
 import { provideRouter } from '@angular/router'
-import { provideAnimations } from '@angular/platform-browser/animations'
 import { routes } from './app/routes'
 import { bootstrapApplication } from '@angular/platform-browser'
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
@@ -34,7 +33,6 @@ patchAmtIderLargeMediaSupport()
 const providers = [
   AuthGuard,
   provideZonelessChangeDetection(),
-  provideAnimations(),
   provideRouter(routes),
   provideTranslateService({
     loader: provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' })

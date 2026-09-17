@@ -11,7 +11,6 @@ import { ActivatedRoute, NavigationStart, RouterEvent, Router, RouterModule } fr
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { KvmComponent } from './kvm.component'
 import { DevicesService } from '../devices.service'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
@@ -213,7 +212,6 @@ describe('KvmComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         RouterModule,
         KvmComponent
       ],

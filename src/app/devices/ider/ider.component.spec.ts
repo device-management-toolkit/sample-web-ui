@@ -11,7 +11,6 @@ import { ActivatedRoute, NavigationStart, RouterEvent, Router } from '@angular/r
 import { of, Subject, throwError } from 'rxjs'
 import { IderComponent } from './ider.component'
 import { DevicesService } from '../devices.service'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
@@ -117,7 +116,6 @@ describe('IderComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         IderComponent
       ],
       providers: [

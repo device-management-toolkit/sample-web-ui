@@ -11,7 +11,6 @@ import { ProfilesService } from '../../profiles/profiles.service'
 import { of } from 'rxjs'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox'
@@ -33,7 +32,6 @@ describe('AddDeviceComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         MatIconModule,
         MatTabsModule,
         MatSelectModule,
