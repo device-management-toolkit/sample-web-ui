@@ -42,6 +42,29 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       expect(controlMode).to.be.oneOf(normalizedNotActivatedModes)
     }
 
+    function waitForDeviceConnected(uuid: string, remainingAttempts = 20, intervalMs = 15000): void {
+      cy.intercept(/devices\/.*$/).as('getdevices')
+      cy.goToPage('Devices')
+      cy.wait('@getdevices')
+      cy.get('body').then(($body) => {
+        const row = $body
+          .find('mat-cell')
+          .filter((_, el) => (el.textContent ?? '').includes(uuid))
+          .closest('mat-row')
+        const statusText = row.text()
+        const isConnected = statusText.includes('Connected') && !statusText.includes('Disconnected')
+
+        if (isConnected) {
+          return
+        }
+        if (remainingAttempts <= 0) {
+          throw new Error(`Timed out waiting for device ${uuid} to show Connected on the Devices page`)
+        }
+        cy.wait(intervalMs)
+        waitForDeviceConnected(uuid, remainingAttempts - 1, intervalMs)
+      })
+    }
+
     // Environment variables
     const profileName: string = Cypress.expose('PROFILE_NAME') as string
     const fqdn: string = Cypress.expose('ACTIVATION_URL')
@@ -181,9 +204,9 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               cy.log(`Post-activation wired IP: ${postActivationInfo.wiredAdapter?.ipAddress}`)
               cy.log(`Post-activation wireless IP: ${postActivationInfo.wirelessAdapter?.ipAddress}`)
 
-              cy.intercept(/devices\/.*$/).as('getdevices')
-              cy.goToPage('Devices')
-              cy.wait('@getdevices')
+              // Wait for CIRA to actually connect (can take longer than a fixed guess) before
+              // clicking into the device, instead of racing MPS's live query with activation.
+              waitForDeviceConnected(postActivationInfo.uuid)
 
               // Cloud identifies devices by UUID
               cy.get('mat-cell').contains(postActivationInfo.uuid).parent().click()
