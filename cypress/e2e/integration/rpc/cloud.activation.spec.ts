@@ -42,9 +42,15 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       expect(controlMode).to.be.oneOf(normalizedNotActivatedModes)
     }
 
-    function waitForDeviceConnected(uuid: string, remainingAttempts = 20, intervalMs = 15000): void {
+    function waitForDeviceConnected(uuid: string, remainingAttempts = 20, intervalMs = 15000, isFirstAttempt = true): void {
       cy.intercept(/devices\/.*$/).as('getdevices')
-      cy.goToPage('Devices')
+      // goToPage navigates via the router, which won't re-fetch if already on this route
+      // (same URL, no navigation happens) - reload to force a fresh request on retries.
+      if (isFirstAttempt) {
+        cy.goToPage('Devices')
+      } else {
+        cy.reload()
+      }
       cy.wait('@getdevices')
       cy.get('body').then(($body) => {
         const row = $body
@@ -61,7 +67,7 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           throw new Error(`Timed out waiting for device ${uuid} to show Connected on the Devices page`)
         }
         cy.wait(intervalMs)
-        waitForDeviceConnected(uuid, remainingAttempts - 1, intervalMs)
+        waitForDeviceConnected(uuid, remainingAttempts - 1, intervalMs, false)
       })
     }
 
