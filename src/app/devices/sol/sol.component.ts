@@ -79,8 +79,15 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Initial setup: fetch redirection token before connecting to SOL
-    // Note: A fresh redirection token is required for each SOL connection attempt
+    // Initial setup fetches a fresh redirection token before connecting to SOL.
+    this.connect()
+  }
+
+  connect(): void {
+    this.isDisconnecting = false
+    this.deviceState.set(-1)
+    this.deviceConnection.set(false)
+    this.isLoading.set(true)
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
       .pipe(
@@ -89,9 +96,10 @@ export class SolComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe(() => {
-        // Only call init() after auth token is retrieved
-        this.init()
+      .subscribe({
+        // Start SOL initialization only after the redirection token is available.
+        next: () => this.init(),
+        error: () => this.isLoading.set(false)
       })
   }
 
@@ -130,17 +138,10 @@ export class SolComponent implements OnInit, OnDestroy {
     if (result != null && result) {
       this.readyToLoadSol = true
       this.getAMTFeatures()
-      // Auto-connect when SOL is ready
+      // Auto-connect when SOL setup and user consent are complete.
       this.deviceConnection.set(true)
     }
     return of(null)
-  }
-
-  connect(): void {
-    this.isDisconnecting = false
-    this.deviceState.set(-1)
-    this.init()
-    this.deviceConnection.set(true)
   }
 
   @HostListener('window:beforeunload')
@@ -251,7 +252,6 @@ export class SolComponent implements OnInit, OnDestroy {
       this.amtFeatures()?.optInState === 4
     ) {
       this.readyToLoadSol = true
-      // Auto-connect when user consent is not required
       this.deviceConnection.set(true)
       return of(true)
     }
