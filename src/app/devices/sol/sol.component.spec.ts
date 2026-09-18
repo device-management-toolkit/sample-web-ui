@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter, Output, signal, input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
@@ -192,26 +193,111 @@ describe('SolComponent', () => {
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
   })
   it('should have correct state on connect/disconnect methods', () => {
-    // Spy on the deviceConnection.set method to verify it's called
-    const deviceConnectionSpy = vi.spyOn(component.deviceConnection, 'set').mockImplementation(() => undefined)
-
     fixture.detectChanges()
 
-    // Check initial state
     expect(component.isDisconnecting).toBe(false)
 
-    // Test connect method
     component.connect()
-    fixture.detectChanges()
-    expect(component.isLoading()).toBe(false)
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.deviceState()).not.toBe(0)
 
-    // Test disconnect method
     component.disconnect()
+    expect(component.deviceConnection()).toBe(false)
+    expect(component.isDisconnecting).toBeTruthy()
+  })
+  it('should disable Connect SOL until the initial token is available', () => {
+    const tokenSubject = new Subject<{ token: string }>()
+    tokenSpy.mockReturnValue(tokenSubject)
+    const initSpy = vi.spyOn(component, 'init')
+
     fixture.detectChanges()
 
-    // Verify that deviceConnection.set was called with false
-    expect(deviceConnectionSpy).toHaveBeenCalledWith(false)
-    expect(component.isDisconnecting).toBeTruthy()
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(button.disabled).toBe(true)
+    expect(button.textContent).toContain('sol.loading.value')
+    button.click()
+    expect(initSpy).not.toHaveBeenCalled()
+
+    tokenSubject.next({ token: 'fresh-token' })
+
+    expect(component.authToken()).toBe('fresh-token')
+    expect(initSpy).toHaveBeenCalledOnce()
+  })
+  it('should show "Connect SOL" button after a manual disconnect', () => {
+    fixture.detectChanges()
+
+    // Simulate a connected session
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    let button: HTMLElement = fixture.nativeElement.querySelector('button')
+    expect(button.textContent).toContain('sol.disconnect.value')
+
+    // Simulate a manual disconnect: child reports deviceStatus(0) after disconnect() is called
+    component.disconnect()
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    button = fixture.nativeElement.querySelector('button')
+    expect(button.textContent).toContain('sol.connect.value')
+
+    button.click()
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.isDisconnecting).toBe(false)
+  })
+  it('should disable Connect SOL until a manual disconnect completes', () => {
+    tokenSpy.mockReturnValue(new Subject<{ token: string }>())
+    fixture.detectChanges()
+    component.deviceConnection.set(false)
+    component.isLoading.set(false)
+    component.isDisconnecting = true
+    const connectSpy = vi.spyOn(component, 'connect')
+    fixture.detectChanges(false)
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(button.disabled).toBe(true)
+    expect(button.textContent).toContain('sol.loading.value')
+    button.click()
+    expect(connectSpy).not.toHaveBeenCalled()
+
+    component.deviceStatus(0)
+    expect(component.deviceConnection()).toBe(false)
+    expect(component.isDisconnecting).toBe(false)
+  })
+  it('should not show "Connect SOL" while waiting for the connected status', () => {
+    fixture.detectChanges()
+
+    component.deviceState.set(0)
+    component.connect()
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    const button: HTMLElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceState()).toBe(-1)
+    expect(button.textContent).not.toContain('sol.connect.value')
+  })
+  it('should allow reconnecting after an unexpected disconnect', () => {
+    fixture.detectChanges()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isDisconnecting = false
+
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceConnection()).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+
+    button.click()
+    fixture.detectChanges()
+
+    expect(tokenSpy).toHaveBeenCalledTimes(2)
+    expect(component.authToken()).toBe('123')
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.deviceState()).not.toBe(0)
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
@@ -317,6 +403,24 @@ describe('SolComponent', () => {
     component.checkUserConsent()
     fixture.detectChanges()
     expect(component.readyToLoadSol).toBe(true)
+  })
+  it('uses a fresh token and passes it to SOL after reconnect', () => {
+    fixture.detectChanges()
+    tokenSpy.mockClear()
+    tokenSpy.mockReturnValue(of({ token: 'fresh-token' }))
+    component.deviceConnection.set(false)
+    component.readyToLoadSol = true
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    component.connect()
+    fixture.detectChanges()
+
+    const sol = fixture.debugElement.query(By.css('amt-sol')).componentInstance
+    expect(tokenSpy).toHaveBeenCalledOnce()
+    expect(component.authToken()).toBe('fresh-token')
+    expect(sol.authToken()).toBe('fresh-token')
+    expect(component.deviceConnection()).toBe(true)
   })
   it('checkUserConsent no', async () => {
     component.amtFeatures.set({

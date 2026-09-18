@@ -1,12 +1,12 @@
 <mat-toolbar style="height: 100px" class="flex flex-row">
   <div class="flex flex-50 items-center"></div>
   <div class="flex flex-50 justify-end">
-    @if (deviceState() === 0 && isLoading() !== false) {
+    @if (!deviceConnection() && !isLoading() && !isDisconnecting) {
       <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
         <mat-icon>tv_on</mat-icon>{{ 'sol.connect.value' | translate }}
       </button>
-    } @else if (deviceState() !== 2 && isLoading()) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+    } @else if (isDisconnecting || (deviceState() !== 2 && isLoading())) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" disabled>
         <mat-icon>tv_on</mat-icon>{{ 'sol.loading.value' | translate }}
       </button>
     } @else {
