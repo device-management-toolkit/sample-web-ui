@@ -37,6 +37,13 @@
 
 <mat-card>
   <mat-card-content>
+    <!-- Tabs must stay visible even when the active tab has zero rows, otherwise
+         the user has no way to switch to a tab that does have data. -->
+    <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+      <mat-tab [label]="allTabLabel"></mat-tab>
+      <mat-tab [label]="activatedTabLabel"></mat-tab>
+      <mat-tab [label]="discoveredTabLabel"></mat-tab>
+    </mat-tab-group>
     @if (isNoData()) {
       <h3 class="flex justify-center">
         @if (!filteredTags().length) {
@@ -118,6 +125,14 @@
             } @else {
               Power: {{ powerStates[element.powerstate] }}
             }
+          </mat-cell>
+        </ng-container>
+        <!-- productType Column -->
+        <ng-container matColumnDef="productType">
+          <!-- not sortable: productType is computed, not a real Device property -->
+          <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            {{ getProductType(element) }}
           </mat-cell>
         </ng-container>
         <!-- tags Column -->
@@ -203,7 +218,7 @@
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
           [pageSize]="pageEvent.pageSize"
-          [length]="totalCount()"
+          [length]="currentTabCount"
           (page)="pageChanged($event)"
           showFirstLastButtons>
         </mat-paginator>
