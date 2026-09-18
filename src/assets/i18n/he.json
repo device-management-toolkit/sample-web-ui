@@ -1069,6 +1069,10 @@
     "description": "Table column header for product type",
     "value": "סוג מוצר"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "סוג"
+  },
   "devices.table.tags": {
     "description": "כותרת עמודות טבלה לתגיות",
     "value": "תגיות"

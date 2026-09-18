@@ -1069,6 +1069,10 @@
     "description": "Table column header for product type",
     "value": "製品タイプ"
   },
+  "devices.table.type": {
+    "description": "Table column header for device type",
+    "value": "タイプ"
+  },
   "devices.table.tags": {
     "description": "タグ用テーブル列ヘッダー",
     "value": "タグ"
