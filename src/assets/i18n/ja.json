@@ -3262,5 +3262,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "デバイスが対応していない機能の行に表示されるキャプション",
     "value": "このデバイスでサポートされていません"
+  },
+  "downloadRpc.title": {
+    "description": "RPC ダウンロードページのタイトル",
+    "value": "RPC のダウンロード"
+  },
+  "downloadRpc.preview": {
+    "description": "RPC のダウンロードがプレビュー機能であることを示すチップ",
+    "value": "プレビュー機能"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Console サーバー URL 入力欄のラベル",
+    "value": "サーバー URL"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Console サーバー URL 入力欄のヒント",
+    "value": "デバイスが Console に接続するためのベース URL（例: https://console.example.com:8181）"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Console サーバー URL の検証エラー",
+    "value": "http:// または https:// で始まる絶対 URL を入力してください"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "サーバー URL がループバックを指している場合の警告",
+    "value": "このアドレスは、このブラウザーを実行しているマシンを指しています。rpc-go は AMT デバイス上で実行されるため、両者が同じマシンでない限り Console に接続できません（推奨されません）。デバイスから到達できるホスト名または IP アドレスを使用してください。"
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "トークン有効期間の選択欄のラベル",
+    "value": "トークンの有効期間"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "トークン有効期間の選択欄のヒント",
+    "value": "生成されたトークンが有効な期間です。短いほど安全です。有効期限が切れるとパッケージは動作しなくなります。"
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "トークン有効期間の選択肢: 15 分",
+    "value": "15 分"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "トークン有効期間の選択肢: 1 時間",
+    "value": "1 時間"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "トークン有効期間の選択肢: 8 時間",
+    "value": "8 時間"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "トークン有効期間の選択肢: 24 時間",
+    "value": "24 時間"
+  },
+  "downloadRpc.command.label": {
+    "description": "RPC コマンドの選択欄のラベル",
+    "value": "コマンド"
+  },
+  "downloadRpc.command.activate": {
+    "description": "アクティブ化コマンドの選択肢",
+    "value": "アクティブ化"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "非アクティブ化コマンドの選択肢",
+    "value": "非アクティブ化"
+  },
+  "downloadRpc.version.label": {
+    "description": "rpc-go バージョンの選択欄のラベル",
+    "value": "rpc-go バージョン"
+  },
+  "downloadRpc.os.label": {
+    "description": "オペレーティングシステムの選択欄のラベル",
+    "value": "オペレーティングシステム"
+  },
+  "downloadRpc.profile.label": {
+    "description": "プロフィールの選択欄のラベル",
+    "value": "プロフィール"
+  },
+  "downloadRpc.domain.label": {
+    "description": "ドメインの選択欄のラベル",
+    "value": "ドメイン"
+  },
+  "downloadRpc.auth.label": {
+    "description": "認証方法グループのラベル",
+    "value": "認証"
+  },
+  "downloadRpc.auth.none": {
+    "description": "資格情報なしの認証オプション（既定）",
+    "value": "資格情報を指定しない"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "パッケージに資格情報が含まれない場合に表示される注記",
+    "value": "パッケージには資格情報が含まれません。デバイス上で別の方法で指定する必要があります。rpc の実行時に --auth-username と --auth-password（または --auth-token）を渡すか、環境変数 AUTH_USERNAME と AUTH_PASSWORD（または AUTH_TOKEN）を設定してください。"
+  },
+  "downloadRpc.auth.token": {
+    "description": "トークン生成の認証オプション",
+    "value": "トークンを生成"
+  },
+  "downloadRpc.download": {
+    "description": "ダウンロードボタンのラベル",
+    "value": "ダウンロード"
+  },
+  "downloadRpc.success": {
+    "description": "パッケージのダウンロード成功メッセージ",
+    "value": "パッケージをダウンロードしました"
+  },
+  "downloadRpc.failVersions": {
+    "description": "rpc-go バージョンの読み込み失敗メッセージ",
+    "value": "rpc-go バージョンを読み込めませんでした"
+  },
+  "downloadRpc.failPackage": {
+    "description": "パッケージの作成失敗メッセージ",
+    "value": "パッケージを作成できませんでした"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "プロフィールの読み込み失敗メッセージ",
+    "value": "プロフィールを読み込めませんでした"
+  },
+  "downloadRpc.failDomains": {
+    "description": "ドメインの読み込み失敗メッセージ",
+    "value": "ドメインを読み込めませんでした"
+  },
+  "downloadRpc.subtitle": {
+    "description": "RPC ダウンロードページのサブタイトル",
+    "value": "デバイスで Intel AMT をアクティブ化または非アクティブ化するための、すぐに使える rpc-go パッケージを作成します。"
+  },
+  "downloadRpc.intro.contents": {
+    "description": "ダウンロードしたパッケージの内容の説明",
+    "value": "rpc-go は AMT デバイス上で動作し、デバイスを Console に接続するコマンドラインツールです。ダウンロードされる zip には、rpc-go の実行ファイルと、この Console のアドレスおよび下で選択したオプションが設定済みの config.yaml が含まれます。"
+  },
+  "downloadRpc.intro.usage": {
+    "description": "ダウンロードしたパッケージをデバイスで使用する方法の説明",
+    "value": "zip をデバイスにコピーして展開し、そのフォルダーで管理者または root として \"rpc activate\" または \"rpc deactivate\"（Windows では rpc.exe）を実行してください。rpc-go は実行したフォルダーにある config.yaml を読み込みます。"
+  },
+  "downloadRpc.command.hint": {
+    "description": "RPC コマンドの選択欄のヒント",
+    "value": "アクティブ化は、選択したプロフィールでデバイスの Intel AMT をプロビジョニングします。非アクティブ化は AMT の構成を削除します。"
+  },
+  "downloadRpc.version.hint": {
+    "description": "rpc-go バージョンの選択欄のヒント",
+    "value": "パッケージに含める rpc-go のリリースです。互換性があるのは rpc-go v3 のみで、最新の 5 つのリリースが表示されます。"
+  },
+  "downloadRpc.os.hint": {
+    "description": "オペレーティングシステムの選択欄のヒント",
+    "value": "パッケージを実行する AMT デバイスのオペレーティングシステムです。「Windows と Linux」を選ぶと両方のビルドが 1 つのパッケージに含まれます。"
+  },
+  "downloadRpc.os.windows": {
+    "description": "オペレーティングシステムの選択肢: Windows",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "オペレーティングシステムの選択肢: Linux",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "オペレーティングシステムの選択肢: Windows と Linux",
+    "value": "Windows と Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "プロフィールの選択欄のヒント",
+    "value": "デバイスのアクティブ化に使用する AMT プロフィールです。プロフィールは「プロフィール」ページで管理します。"
+  },
+  "downloadRpc.domain.hint": {
+    "description": "ドメインの選択欄のヒント",
+    "value": "Admin Control Mode で必須: プロビジョニング証明書がデバイスの DNS サフィックスと一致するドメインです。"
   }
 }

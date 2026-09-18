@@ -3134,5 +3134,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",
     "value": "Stöds inte på den här enheten"
+  },
+  "downloadRpc.title": {
+    "description": "Sidrubrik för Ladda ned RPC",
+    "value": "Ladda ned RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "Etikett som markerar Ladda ned RPC som en förhandsversion",
+    "value": "Förhandsfunktion"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Etikett för fältet för Console-serverns URL",
+    "value": "Server-URL"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Tips för fältet för Console-serverns URL",
+    "value": "Bas-URL som enheten når Console på, t.ex. https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Valideringsfel för Console-serverns URL",
+    "value": "Ange en absolut URL som börjar med http:// eller https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Varning när server-URL:en pekar på loopback",
+    "value": "Den här adressen pekar på datorn som kör den här webbläsaren. rpc-go körs på AMT-enheten och når därför bara Console om båda är samma dator, vilket inte rekommenderas. Använd det värdnamn eller den IP-adress som enheten kan nå."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Etikett för val av tokenets giltighetstid",
+    "value": "Tokenets giltighetstid"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Tips för val av tokenets giltighetstid",
+    "value": "Hur länge den genererade token är giltig. Kortare är säkrare; paketet slutar fungera när den går ut."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Alternativ för giltighetstid: 15 minuter",
+    "value": "15 minuter"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Alternativ för giltighetstid: 1 timme",
+    "value": "1 timme"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Alternativ för giltighetstid: 8 timmar",
+    "value": "8 timmar"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Alternativ för giltighetstid: 24 timmar",
+    "value": "24 timmar"
+  },
+  "downloadRpc.command.label": {
+    "description": "Etikett för val av RPC-kommando",
+    "value": "Kommando"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Alternativ för kommandot Aktivera",
+    "value": "Aktivera"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Alternativ för kommandot Inaktivera",
+    "value": "Inaktivera"
+  },
+  "downloadRpc.version.label": {
+    "description": "Etikett för val av rpc-go-version",
+    "value": "rpc-go-version"
+  },
+  "downloadRpc.os.label": {
+    "description": "Etikett för val av operativsystem",
+    "value": "Operativsystem"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Etikett för val av profil",
+    "value": "Profil"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Etikett för val av domän",
+    "value": "Domän"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Etikett för gruppen för autentiseringsmetod",
+    "value": "Autentisering"
+  },
+  "downloadRpc.auth.none": {
+    "description": "Autentiseringsalternativ utan autentiseringsuppgifter (standard)",
+    "value": "Ange inga autentiseringsuppgifter"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Anteckning som visas när inga autentiseringsuppgifter bäddas in i paketet",
+    "value": "Paketet innehåller inga autentiseringsuppgifter. Du måste ange dem på enheten på annat sätt: skicka --auth-username och --auth-password (eller --auth-token) när du kör rpc, eller ställ in miljövariablerna AUTH_USERNAME och AUTH_PASSWORD (eller AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Autentiseringsalternativet Generera token",
+    "value": "Generera token"
+  },
+  "downloadRpc.download": {
+    "description": "Etikett för knappen Ladda ned",
+    "value": "Ladda ned"
+  },
+  "downloadRpc.success": {
+    "description": "Meddelande när paketet har laddats ned",
+    "value": "Paketet har laddats ned"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Meddelande när rpc-go-versioner inte kunde läsas in",
+    "value": "Det gick inte att läsa in rpc-go-versioner"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Meddelande när paketet inte kunde skapas",
+    "value": "Det gick inte att skapa paketet"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Meddelande när profiler inte kunde läsas in",
+    "value": "Det gick inte att läsa in profiler"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Meddelande när domäner inte kunde läsas in",
+    "value": "Det gick inte att läsa in domäner"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Underrubrik för sidan Ladda ned RPC",
+    "value": "Skapa ett färdigt rpc-go-paket för att aktivera eller inaktivera Intel AMT på en enhet."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Förklarar vad det nedladdade paketet innehåller",
+    "value": "rpc-go är kommandoradsverktyget som körs på AMT-enheten och ansluter den till Console. Nedladdningen är en zip-fil med den körbara rpc-go-filen och en config.yaml som redan innehåller den här Consolens adress och alternativen du väljer nedan."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Förklarar hur det nedladdade paketet används på enheten",
+    "value": "Kopiera zip-filen till enheten, packa upp den och kör \"rpc activate\" eller \"rpc deactivate\" (rpc.exe i Windows) från den mappen som administratör eller root. rpc-go läser config.yaml från mappen där den körs."
+  },
+  "downloadRpc.command.hint": {
+    "description": "Tips för val av RPC-kommando",
+    "value": "Aktivera etablerar Intel AMT på enheten med den valda profilen. Inaktivera tar bort AMT-konfigurationen."
+  },
+  "downloadRpc.version.hint": {
+    "description": "Tips för val av rpc-go-version",
+    "value": "rpc-go-version som paketeras. Endast rpc-go v3 är kompatibel, och de 5 senaste versionerna visas."
+  },
+  "downloadRpc.os.hint": {
+    "description": "Tips för val av operativsystem",
+    "value": "Operativsystemet på AMT-enheten där paketet ska köras. Windows och Linux lägger båda versionerna i ett paket."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Alternativet Windows för val av operativsystem",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Alternativet Linux för val av operativsystem",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Alternativet Windows och Linux för val av operativsystem",
+    "value": "Windows och Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Tips för val av profil",
+    "value": "AMT-profilen som enheten aktiveras med. Profiler hanteras på sidan Profiler."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Tips för val av domän",
+    "value": "Krävs för Admin Control Mode: domänen vars etableringscertifikat matchar enhetens DNS-suffix."
   }
 }

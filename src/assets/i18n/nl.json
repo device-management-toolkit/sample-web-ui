@@ -3270,5 +3270,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
     "value": "Niet ondersteund op dit apparaat"
+  },
+  "downloadRpc.title": {
+    "description": "Paginatitel RPC downloaden",
+    "value": "RPC downloaden"
+  },
+  "downloadRpc.preview": {
+    "description": "Label dat RPC downloaden markeert als previewfunctie",
+    "value": "Previewfunctie"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Label van het invoerveld voor de Console-server-URL",
+    "value": "Server-URL"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Hint bij het invoerveld voor de Console-server-URL",
+    "value": "Basis-URL waarop het apparaat Console bereikt, bijv. https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Validatiefout voor de Console-server-URL",
+    "value": "Voer een absolute URL in die begint met http:// of https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Waarschuwing wanneer de server-URL naar loopback verwijst",
+    "value": "Dit adres verwijst naar de computer waarop deze browser draait. rpc-go draait op het AMT-apparaat en bereikt Console dus alleen als beide dezelfde computer zijn, wat niet wordt aanbevolen. Gebruik de hostnaam of het IP-adres dat het apparaat kan bereiken."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Label van de keuzelijst voor de geldigheidsduur van het token",
+    "value": "Geldigheidsduur van token"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Hint bij de keuzelijst voor de geldigheidsduur van het token",
+    "value": "Hoe lang het gegenereerde token geldig blijft. Korter is veiliger; het pakket werkt niet meer zodra het verloopt."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Optie voor geldigheidsduur van token: 15 minuten",
+    "value": "15 minuten"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Optie voor geldigheidsduur van token: 1 uur",
+    "value": "1 uur"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Optie voor geldigheidsduur van token: 8 uur",
+    "value": "8 uur"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Optie voor geldigheidsduur van token: 24 uur",
+    "value": "24 uur"
+  },
+  "downloadRpc.command.label": {
+    "description": "Label van de keuzelijst voor het RPC-commando",
+    "value": "Commando"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Optie voor het commando Activeren",
+    "value": "Activeren"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Optie voor het commando Deactiveren",
+    "value": "Deactiveren"
+  },
+  "downloadRpc.version.label": {
+    "description": "Label van de keuzelijst voor de rpc-go-versie",
+    "value": "rpc-go-versie"
+  },
+  "downloadRpc.os.label": {
+    "description": "Label van de keuzelijst voor het besturingssysteem",
+    "value": "Besturingssysteem"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Label van de keuzelijst voor het profiel",
+    "value": "Profiel"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Label van de keuzelijst voor het domein",
+    "value": "Domein"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Label van de groep voor de authenticatiemethode",
+    "value": "Authenticatie"
+  },
+  "downloadRpc.auth.none": {
+    "description": "Authenticatieoptie zonder referenties (standaard)",
+    "value": "Geen referenties opgeven"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Opmerking die wordt getoond wanneer er geen referenties in het pakket worden opgenomen",
+    "value": "Het pakket bevat geen referenties. U moet ze op het apparaat op een andere manier opgeven: geef --auth-username en --auth-password (of --auth-token) mee bij het uitvoeren van rpc, of stel de omgevingsvariabelen AUTH_USERNAME en AUTH_PASSWORD (of AUTH_TOKEN) in."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Authenticatieoptie Token genereren",
+    "value": "Token genereren"
+  },
+  "downloadRpc.download": {
+    "description": "Label van de knop Downloaden",
+    "value": "Downloaden"
+  },
+  "downloadRpc.success": {
+    "description": "Succesmelding na het downloaden van het pakket",
+    "value": "Pakket gedownload"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Melding wanneer de rpc-go-versies niet konden worden geladen",
+    "value": "Kan rpc-go-versies niet laden"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Melding wanneer het pakket niet kon worden gemaakt",
+    "value": "Kan pakket niet maken"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Melding wanneer de profielen niet konden worden geladen",
+    "value": "Kan profielen niet laden"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Melding wanneer de domeinen niet konden worden geladen",
+    "value": "Kan domeinen niet laden"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Ondertitel van de pagina RPC downloaden",
+    "value": "Maak een gebruiksklaar rpc-go-pakket om Intel AMT op een apparaat te activeren of te deactiveren."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Legt uit wat het gedownloade pakket bevat",
+    "value": "rpc-go is het opdrachtregelprogramma dat op het AMT-apparaat draait en het met Console verbindt. De download is een zip-bestand met het rpc-go-programma en een config.yaml die al is ingevuld met het adres van deze Console en de opties die u hieronder kiest."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Legt uit hoe het gedownloade pakket op het apparaat wordt gebruikt",
+    "value": "Kopieer de zip naar het apparaat, pak deze uit en voer vanuit die map \"rpc activate\" of \"rpc deactivate\" (rpc.exe op Windows) uit als Administrator of root. rpc-go leest config.yaml uit de map waarin het wordt uitgevoerd."
+  },
+  "downloadRpc.command.hint": {
+    "description": "Hint bij de keuzelijst voor het RPC-commando",
+    "value": "Activeren richt Intel AMT op het apparaat in met het geselecteerde profiel. Deactiveren verwijdert de AMT-configuratie."
+  },
+  "downloadRpc.version.hint": {
+    "description": "Hint bij de keuzelijst voor de rpc-go-versie",
+    "value": "rpc-go-versie die in het pakket komt. Alleen rpc-go v3 is compatibel en de 5 meest recente versies worden getoond."
+  },
+  "downloadRpc.os.hint": {
+    "description": "Hint bij de keuzelijst voor het besturingssysteem",
+    "value": "Besturingssysteem van het AMT-apparaat waarop het pakket wordt uitgevoerd. Windows en Linux plaatst beide builds in één pakket."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Optie Windows van de keuzelijst voor het besturingssysteem",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Optie Linux van de keuzelijst voor het besturingssysteem",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Optie Windows en Linux van de keuzelijst voor het besturingssysteem",
+    "value": "Windows en Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Hint bij de keuzelijst voor het profiel",
+    "value": "AMT-profiel waarmee het apparaat wordt geactiveerd. Profielen beheert u op de pagina Profielen."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Hint bij de keuzelijst voor het domein",
+    "value": "Vereist voor Admin Control Mode: het domein waarvan het inrichtingscertificaat overeenkomt met het DNS-achtervoegsel van het apparaat."
   }
 }
