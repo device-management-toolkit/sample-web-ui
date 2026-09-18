@@ -1057,6 +1057,166 @@
     "description": "Description for TLS settings",
     "value": "View TLS configuration"
   },
+  "downloadRpc.title": {
+    "description": "Download RPC page title",
+    "value": "Download RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "Chip marking Download RPC as a preview feature",
+    "value": "Preview Feature"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Download RPC page subtitle",
+    "value": "Build a ready-to-run rpc-go package to activate or deactivate Intel AMT on a device."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Explains what the downloaded package contains",
+    "value": "rpc-go is the command-line tool that runs on the AMT device and connects it to Console. The download is a zip containing the rpc-go executable and a config.yaml pre-filled with this Console's address and the options you choose below."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Explains how to use the downloaded package on the device",
+    "value": "Copy the zip to the device, extract it, and from that folder run \"rpc activate\" or \"rpc deactivate\" (rpc.exe on Windows) as Administrator or root. rpc-go reads config.yaml from the folder it runs in."
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Console server URL input label",
+    "value": "Server URL"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Console server URL input hint",
+    "value": "Base URL the device will reach Console at, e.g. https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Console server URL validation error",
+    "value": "Enter an absolute URL starting with http:// or https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Warning shown when the server URL points at loopback",
+    "value": "This address points at the machine running this browser. rpc-go runs on the AMT device, so it will only reach Console if both are the same machine — which is not recommended. Use the hostname or IP the device can reach."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Token lifetime selector label",
+    "value": "Token lifetime"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Token lifetime selector hint",
+    "value": "How long the generated token stays valid. Shorter is safer; the package stops working once it expires."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Token lifetime option: 15 minutes",
+    "value": "15 minutes"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Token lifetime option: 1 hour",
+    "value": "1 hour"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Token lifetime option: 8 hours",
+    "value": "8 hours"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Token lifetime option: 24 hours",
+    "value": "24 hours"
+  },
+  "downloadRpc.command.label": {
+    "description": "RPC command selector label",
+    "value": "Command"
+  },
+  "downloadRpc.command.hint": {
+    "description": "RPC command selector hint",
+    "value": "Activate provisions Intel AMT on the device using the selected profile. Deactivate removes the AMT configuration."
+  },
+  "downloadRpc.command.activate": {
+    "description": "Activate command option",
+    "value": "Activate"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Deactivate command option",
+    "value": "Deactivate"
+  },
+  "downloadRpc.version.label": {
+    "description": "rpc-go version selector label",
+    "value": "rpc-go Version"
+  },
+  "downloadRpc.version.hint": {
+    "description": "rpc-go version selector hint",
+    "value": "rpc-go release to package. Only rpc-go v3 is compatible, and the 5 most recent releases are shown."
+  },
+  "downloadRpc.os.label": {
+    "description": "Operating system selector label",
+    "value": "Operating System"
+  },
+  "downloadRpc.os.hint": {
+    "description": "Operating system selector hint",
+    "value": "Operating system of the AMT device the package will run on. Choose Windows and Linux to get both builds in one package."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Windows option for the operating system selector",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Linux option for the operating system selector",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Windows and Linux option for the operating system selector",
+    "value": "Windows and Linux"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Profile selector label",
+    "value": "Profile"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Profile selector hint",
+    "value": "AMT profile the device is activated with. Profiles are managed on the Profiles page."
+  },
+  "downloadRpc.domain.label": {
+    "description": "Domain selector label",
+    "value": "Domain"
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Domain selector hint",
+    "value": "Required for Admin Control Mode: the domain whose provisioning certificate matches the device's DNS suffix."
+  },
+  "downloadRpc.auth.label": {
+    "description": "Authentication method group label",
+    "value": "Authentication"
+  },
+  "downloadRpc.auth.none": {
+    "description": "No-credentials auth option (default)",
+    "value": "Don't provide credentials"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Note shown when no credentials will be embedded in the package",
+    "value": "The package will not contain credentials. You must provide them on the device by other means: pass --auth-username and --auth-password (or --auth-token) when running rpc, or set the AUTH_USERNAME and AUTH_PASSWORD (or AUTH_TOKEN) environment variables."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Generate token auth option",
+    "value": "Generate token"
+  },
+  "downloadRpc.download": {
+    "description": "Download button label",
+    "value": "Download"
+  },
+  "downloadRpc.success": {
+    "description": "Package downloaded success message",
+    "value": "Package downloaded"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Failed to load rpc-go versions message",
+    "value": "Failed to load rpc-go versions"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Failed to build package message",
+    "value": "Failed to build package"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Failed to load profiles message",
+    "value": "Failed to load profiles"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Failed to load domains message",
+    "value": "Failed to load domains"
+  },
   "deviceDetail.remotePlatformErase": {
     "description": "Category name for Remote Platform Erase",
     "value": "Remote Platform Erase"

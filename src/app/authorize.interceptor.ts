@@ -30,7 +30,7 @@ export const authorizationInterceptor: HttpInterceptorFn = (request, next) => {
     }
   }
 
-  if ((request.body as any)?.version != null && (request.body as any)?.version !== '') {
+  if (request.method === 'PATCH' && (request.body as any)?.version != null && (request.body as any)?.version !== '') {
     headers['if-match'] = (request.body as any).version
   }
 

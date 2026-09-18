@@ -20,6 +20,7 @@ import { WirelessComponent } from './wireless/wireless.component'
 import { IEEE8021xComponent } from './ieee8021x/ieee8021x.component'
 import { IEEE8021xDetailComponent } from './ieee8021x/ieee8021x-detail/ieee8021x-detail.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
+import { DownloadRpcComponent } from './download-rpc/download-rpc.component'
 import { LoginComponent } from './login/login.component'
 import { AuthGuard } from './shared/auth-guard.service'
 
@@ -94,5 +95,6 @@ export const routes: Routes = [
     ],
     canActivate: [AuthGuard]
   },
-  { path: 'proxy-configs/:name', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] }
+  { path: 'proxy-configs/:name', component: ProxyConfigDetailComponent, canActivate: [AuthGuard] },
+  { path: 'download-rpc', component: DownloadRpcComponent, canActivate: [AuthGuard] }
 ]
