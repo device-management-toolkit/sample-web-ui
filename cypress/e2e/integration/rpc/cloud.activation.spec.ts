@@ -42,32 +42,17 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       expect(controlMode).to.be.oneOf(normalizedNotActivatedModes)
     }
 
-    function waitForDeviceConnected(uuid: string, remainingAttempts = 20, intervalMs = 15000, isFirstAttempt = true): void {
-      cy.intercept(/devices\/.*$/).as('getdevices')
-      // goToPage navigates via the router, which won't re-fetch if already on this route
-      // (same URL, no navigation happens) - reload to force a fresh request on retries.
-      if (isFirstAttempt) {
-        cy.goToPage('Devices')
-      } else {
-        cy.reload()
-      }
-      cy.wait('@getdevices')
-      cy.get('body').then(($body) => {
-        const row = $body
-          .find('mat-cell')
-          .filter((_, el) => (el.textContent ?? '').includes(uuid))
-          .closest('mat-row')
-        const statusText = row.text()
-        const isConnected = statusText.includes('Connected') && !statusText.includes('Disconnected')
-
-        if (isConnected) {
+    function waitForRasConnected(remainingAttempts = 20, intervalMs = 15000): void {
+      getAmtInfo(infoCommand).then((info) => {
+        const remoteStatus = (info.ras?.remoteStatus ?? '').toLowerCase()
+        if (remoteStatus === 'connected') {
           return
         }
         if (remainingAttempts <= 0) {
-          throw new Error(`Timed out waiting for device ${uuid} to show Connected on the Devices page`)
+          throw new Error(`Timed out waiting for RAS Remote Status to become "connected" (last seen: "${info.ras?.remoteStatus}")`)
         }
         cy.wait(intervalMs)
-        waitForDeviceConnected(uuid, remainingAttempts - 1, intervalMs, false)
+        waitForRasConnected(remainingAttempts - 1, intervalMs)
       })
     }
 
@@ -205,14 +190,16 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
 
             cy.wait(120000)
 
+            waitForRasConnected()
+
             // Re-query amtinfo after activation to get the updated IP address
             getAmtInfo(infoCommand).then((postActivationInfo) => {
               cy.log(`Post-activation wired IP: ${postActivationInfo.wiredAdapter?.ipAddress}`)
               cy.log(`Post-activation wireless IP: ${postActivationInfo.wirelessAdapter?.ipAddress}`)
 
-              // Wait for CIRA to actually connect (can take longer than a fixed guess) before
-              // clicking into the device, instead of racing MPS's live query with activation.
-              waitForDeviceConnected(postActivationInfo.uuid)
+              cy.intercept(/devices\/.*$/).as('getdevices')
+              cy.goToPage('Devices')
+              cy.wait('@getdevices')
 
               // Cloud identifies devices by UUID
               cy.get('mat-cell').contains(postActivationInfo.uuid).parent().click()
