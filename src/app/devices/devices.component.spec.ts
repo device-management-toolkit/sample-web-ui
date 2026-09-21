@@ -272,14 +272,56 @@ describe('DevicesComponent', () => {
       expect(component.getProductType(device)).toBe('non-vPro')
     })
 
-    it('should return non-vPro when fwSku is undefined', () => {
+    it('should return an empty value when fwSku is undefined', () => {
       const device = { ...device01, deviceInfo: undefined } as Device
-      expect(component.getProductType(device)).toBe('non-vPro')
+      expect(component.getProductType(device)).toBe('')
     })
 
-    it('should return non-vPro when fwSku is not a number', () => {
+    it('should return an empty value when fwSku is not a number', () => {
       const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
-      expect(component.getProductType(device)).toBe('non-vPro')
+      expect(component.getProductType(device)).toBe('')
+    })
+  })
+
+  describe('getControlMode', () => {
+    it('should return acm for admin control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'admin control mode' } } as Device
+      expect(component.getControlMode(device)).toBe('acm')
+    })
+
+    it('should return acm when currentMode is just "admin"', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'admin' } } as Device
+      expect(component.getControlMode(device)).toBe('acm')
+    })
+
+    it('should return ccm for client control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'client control mode' } } as Device
+      expect(component.getControlMode(device)).toBe('ccm')
+    })
+
+    it('should return ccm when currentMode is just "client"', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'client' } } as Device
+      expect(component.getControlMode(device)).toBe('ccm')
+    })
+
+    it('should return notActivated when currentMode is empty', () => {
+      const device = { ...device01, deviceInfo: { currentMode: '' } } as Device
+      expect(component.getControlMode(device)).toBe('notActivated')
+    })
+
+    it('should return notActivated for the literal "not activated" value', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'not activated' } } as Device
+      expect(component.getControlMode(device)).toBe('notActivated')
+    })
+
+    it('should return unknown when deviceInfo is missing', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getControlMode(device)).toBe('unknown')
+    })
+
+    it('should return unknown for an unrecognized control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'some other mode' } } as Device
+      expect(component.getControlMode(device)).toBe('unknown')
     })
   })
 
@@ -302,22 +344,28 @@ describe('DevicesComponent', () => {
       expect(component.pageEvent.startsFrom).toBe(0)
     })
 
-    it('should expose server-provided counts', () => {
-      expect(component.allCount).toBe(42)
-      expect(component.activatedCount).toBe(7)
-      expect(component.discoveredCount).toBe(3)
+    it('should derive counts from the paginated device response instead of the stats endpoint', () => {
+      const getStatsSpy = TestBed.inject(DevicesService).getStats as unknown as MockInstance
+      getStatsSpy.mockClear()
+      component.onTabChange(0)
+      expect(getStatsSpy).not.toHaveBeenCalled()
+      expect(component.allCount).toBe(1)
     })
 
     it('should use the total count regardless of active tab', () => {
       component.onTabChange(0)
-      expect(component.currentTabCount).toBe(42)
+      expect(component.currentTabCount).toBe(1)
       component.onTabChange(1)
-      expect(component.currentTabCount).toBe(42)
+      expect(component.currentTabCount).toBe(1)
     })
 
     it('should never treat any tab as the discovered tab', () => {
       component.onTabChange(0)
       expect(component.isDiscoveredTab).toBe(false)
+    })
+
+    it('should not show the control mode column', () => {
+      expect(component.displayedColumns).not.toContain('controlMode')
     })
   })
 
@@ -351,6 +399,14 @@ describe('DevicesComponent', () => {
       expect(component.isDiscoveredTab).toBe(true)
       component.onTabChange(1)
       expect(component.isDiscoveredTab).toBe(false)
+    })
+
+    it('should show the control mode column only on the managed tab', () => {
+      component.onTabChange(0)
+      expect(component.displayedColumns).not.toContain('controlMode')
+
+      component.onTabChange(1)
+      expect(component.displayedColumns).toContain('controlMode')
     })
   })
 

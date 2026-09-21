@@ -1077,6 +1077,10 @@
     "description": "Table column header for product type",
     "value": "Producttype"
   },
+  "devices.table.controlMode": {
+    "description": "Table column header for control mode",
+    "value": "Controlemodus"
+  },
   "devices.table.tags": {
     "description": "Tabelkolomkop voor tags",
     "value": "Tags"
@@ -1092,6 +1096,22 @@
   "devices.tabs.managed": {
     "description": "Tab label for managed (activated) devices",
     "value": "Beheerd"
+  },
+  "devices.controlMode.acm": {
+    "description": "Control mode chip label for Admin Control Mode",
+    "value": "ACM"
+  },
+  "devices.controlMode.ccm": {
+    "description": "Control mode chip label for Client Control Mode",
+    "value": "CCM"
+  },
+  "devices.controlMode.notActivated": {
+    "description": "Control mode chip label for a device that has not been activated",
+    "value": "Niet geactiveerd"
+  },
+  "devices.controlMode.unknown": {
+    "description": "Control mode chip label when the control mode is not available",
+    "value": "UNKNOWN"
   },
   "deviceToolbar.power.on": {
     "description": "Energie-tooltip voor ingeschakeld",

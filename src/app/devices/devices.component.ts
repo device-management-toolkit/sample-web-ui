@@ -187,16 +187,25 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       : this.translate.instant('devices.actions.remove.value')
   }
 
-  public displayedColumns: string[] = [
-    'select',
-    'hostname',
-    'guid',
-    'status',
-    'productType',
-    'tags',
-    'actions',
-    'notification'
-  ]
+  // controlMode is only meaningful for activated devices, so it's hidden on the Discovered tab.
+  get displayedColumns(): string[] {
+    const columns = this.isCloudMode ? [
+          'select',
+          'hostname',
+          'guid',
+          'status',
+          'productType'
+        ] : [
+          'select',
+          'hostname',
+          'productType'
+        ]
+    if (!this.isCloudMode && !this.isDiscoveredTab) {
+      columns.push('controlMode')
+    }
+    columns.push('tags', 'actions', 'notification')
+    return columns
+  }
 
   public pageEvent: PageEventOptions = {
     pageSize: 25,
@@ -210,16 +219,6 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   constructor() {
     this.selectedDevices = new SelectionModel<Device>(true, [])
     this.powerStates = this.devicesService.PowerStates
-    if (!this.isCloudMode) {
-      this.displayedColumns = [
-        'select',
-        'hostname',
-        'productType',
-        'tags',
-        'actions',
-        'notification'
-      ]
-    }
   }
 
   ngOnInit(): void {
@@ -277,10 +276,12 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getDevices(): void {
     this.isLoading.set(true)
+    let responseTotalCount: number | undefined
 
-    // Counts (all/activated/discovered) are computed server-side and shared with
-    // headless/API consumers, so refresh them alongside the current page.
-    this.loadStats()
+    if (!this.isCloudMode) {
+      // Console exposes server-side counts for the discovered/managed tabs.
+      this.loadStats()
+    }
 
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
@@ -289,6 +290,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
+          responseTotalCount = res.totalCount
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
           }
@@ -329,6 +331,12 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe((devices) => {
         this.devices.data = devices
+        if (this.isCloudMode) {
+          // Cloud has no discovered/managed split, so the paginated response's
+          // totalCount is authoritative for the paginator length.
+          this.serverTotalCount = responseTotalCount ?? devices.length
+          this.totalCount.set(this.serverTotalCount)
+        }
 
         // Restore selection state on data retrieval
         this.selectedDevices.clear()
@@ -421,12 +429,22 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getProductType(device: Device): string {
     const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
-    if (isNaN(skuNum)) return 'non-vPro'
+    if (isNaN(skuNum)) return ''
     const isISM = (skuNum & 0x10) > 0
     const isVPro = (skuNum & 0x08) > 0
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
     return 'non-vPro'
+  }
+
+  getControlMode(device: Device): string {
+    const currentMode = device.deviceInfo?.currentMode
+    if (currentMode === undefined) return 'unknown'
+    const normalized = currentMode.trim().toLowerCase()
+    if (!normalized || normalized === 'not activated' || normalized === 'pre-provisioning state') return 'notActivated'
+    if (normalized.includes('admin')) return 'acm'
+    if (normalized.includes('client')) return 'ccm'
+    return 'unknown'
   }
 
   translateConnectionStatus(status?: boolean): string {

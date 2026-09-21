@@ -136,7 +136,19 @@
           <!-- not sortable: productType is computed, not a real Device property -->
           <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
-            {{ getProductType(element) }}
+            <span class="product-type-chip">{{ getProductType(element) }}</span>
+          </mat-cell>
+        </ng-container>
+        <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
+        <ng-container matColumnDef="controlMode">
+          <!-- not sortable: controlMode is computed, not a real Device property -->
+          <mat-header-cell *matHeaderCellDef>{{ 'devices.table.controlMode.value' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            <span
+              class="control-mode-chip"
+              [class.active]="getControlMode(element) === 'acm' || getControlMode(element) === 'ccm'">
+              {{ 'devices.controlMode.' + getControlMode(element) + '.value' | translate }}
+            </span>
           </mat-cell>
         </ng-container>
         <!-- tags Column -->
