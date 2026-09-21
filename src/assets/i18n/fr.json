@@ -1085,17 +1085,13 @@
     "description": "Info-bulle d'alimentation pour l'état éteint",
     "value": "Alimentation : Éteint"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Tous"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Activé"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Découvert"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Géré"
   },
   "deviceToolbar.power.on": {
     "description": "Info-bulle d'alimentation pour l'état allumé",

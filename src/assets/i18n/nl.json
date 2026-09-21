@@ -1085,17 +1085,13 @@
     "description": "Energie-tooltip voor uitgeschakeld",
     "value": "Stroom: Uit"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Alle"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Geactiveerd"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Ontdekt"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Beheerd"
   },
   "deviceToolbar.power.on": {
     "description": "Energie-tooltip voor ingeschakeld",

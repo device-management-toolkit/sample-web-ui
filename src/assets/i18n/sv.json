@@ -989,17 +989,13 @@
     "description": "Strömverktygstips för av",
     "value": "Ström: Av"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Alla"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Aktiverad"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Upptäckt"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Hanterad"
   },
   "deviceToolbar.power.on": {
     "description": "Strömverktygstips för på",

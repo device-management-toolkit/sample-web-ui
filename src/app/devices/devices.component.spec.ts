@@ -267,43 +267,33 @@ describe('DevicesComponent', () => {
       expect(component.getProductType(device)).toBe('ISM')
     })
 
-    it('should return empty string when neither bit is set', () => {
+    it('should return non-vPro when neither bit is set', () => {
       const device = { ...device01, deviceInfo: { fwSku: '4' } } as Device // 0x04 = 4
-      expect(component.getProductType(device)).toBe('')
+      expect(component.getProductType(device)).toBe('non-vPro')
     })
 
-    it('should return empty string when fwSku is undefined', () => {
+    it('should return non-vPro when fwSku is undefined', () => {
       const device = { ...device01, deviceInfo: undefined } as Device
-      expect(component.getProductType(device)).toBe('')
+      expect(component.getProductType(device)).toBe('non-vPro')
     })
 
-    it('should return empty string when fwSku is not a number', () => {
+    it('should return non-vPro when fwSku is not a number', () => {
       const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
-      expect(component.getProductType(device)).toBe('')
+      expect(component.getProductType(device)).toBe('non-vPro')
     })
   })
 
-  describe('onTabChange / server-side counts', () => {
+  describe('onTabChange / server-side counts (cloud mode)', () => {
     beforeEach(() => {
+      component.isCloudMode = true
       getDevicesSpy.mockClear()
     })
 
-    it('should request all devices (no status filter) on tab 0', () => {
+    it('should never filter by status regardless of tab, since cloud has no discovered/managed tabs', () => {
       component.onTabChange(0)
-      expect(component.activeTab()).toBe(0)
       expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
-    })
-
-    it('should request activated devices from the server on tab 1', () => {
       component.onTabChange(1)
-      expect(component.activeTab()).toBe(1)
-      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
-    })
-
-    it('should request discovered devices from the server on tab 2', () => {
-      component.onTabChange(2)
-      expect(component.activeTab()).toBe(2)
-      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
     })
 
     it('should reset paging to the first page when switching tabs', () => {
@@ -318,13 +308,49 @@ describe('DevicesComponent', () => {
       expect(component.discoveredCount).toBe(3)
     })
 
-    it('should set currentTabCount from the active tab', () => {
+    it('should use the total count regardless of active tab', () => {
       component.onTabChange(0)
       expect(component.currentTabCount).toBe(42)
       component.onTabChange(1)
-      expect(component.currentTabCount).toBe(7)
-      component.onTabChange(2)
+      expect(component.currentTabCount).toBe(42)
+    })
+
+    it('should never treat any tab as the discovered tab', () => {
+      component.onTabChange(0)
+      expect(component.isDiscoveredTab).toBe(false)
+    })
+  })
+
+  describe('onTabChange / server-side counts (console mode)', () => {
+    beforeEach(() => {
+      component.isCloudMode = false
+      getDevicesSpy.mockClear()
+    })
+
+    it('should request discovered devices from the server on tab 0', () => {
+      component.onTabChange(0)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
+    })
+
+    it('should request activated (managed) devices from the server on tab 1', () => {
+      component.onTabChange(1)
+      expect(component.activeTab()).toBe(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+    })
+
+    it('should set currentTabCount from the active tab', () => {
+      component.onTabChange(0)
       expect(component.currentTabCount).toBe(3)
+      component.onTabChange(1)
+      expect(component.currentTabCount).toBe(7)
+    })
+
+    it('should treat tab 0 as the discovered tab and tab 1 as managed', () => {
+      component.onTabChange(0)
+      expect(component.isDiscoveredTab).toBe(true)
+      component.onTabChange(1)
+      expect(component.isDiscoveredTab).toBe(false)
     })
   })
 

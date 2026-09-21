@@ -1085,17 +1085,13 @@
     "description": "Подсказка питания для состояния выключено",
     "value": "Питание: Выключено"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Все"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Активирован"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Обнаружен"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Управляемый"
   },
   "deviceToolbar.power.on": {
     "description": "Подсказка питания для состояния включено",

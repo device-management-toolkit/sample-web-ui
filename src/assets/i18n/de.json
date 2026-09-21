@@ -1081,17 +1081,13 @@
     "description": "Energie-Tooltip für Ausgeschaltet",
     "value": "Strom: Aus"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Alle"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Aktiviert"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Entdeckt"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Verwaltet"
   },
   "deviceToolbar.power.on": {
     "description": "Energie-Tooltip für Eingeschaltet",

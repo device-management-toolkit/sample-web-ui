@@ -111,6 +111,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
 
+  // Discovered/Managed tabs are a console-only concept.
   public activeTab = signal(0)
   private serverTotalCount = 0
   private serverActivatedCount = 0
@@ -122,26 +123,18 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   // Count for the currently selected tab, used to drive the paginator length.
   get currentTabCount(): number {
-    switch (this.activeTab()) {
-      case 1:
-        return this.serverActivatedCount
-      case 2:
-        return this.serverDiscoveredCount
-      default:
-        return this.serverTotalCount
+    if (this.isCloudMode) {
+      return this.serverTotalCount
     }
-  }
-
-  get allTabLabel(): string {
-    return `${this.translate.instant('devices.tabs.all.value')} (${this.allCount})`
-  }
-
-  get activatedTabLabel(): string {
-    return `${this.translate.instant('devices.tabs.activated.value')} (${this.activatedCount})`
+    return this.activeTab() === 1 ? this.serverActivatedCount : this.serverDiscoveredCount
   }
 
   get discoveredTabLabel(): string {
     return `${this.translate.instant('devices.tabs.discovered.value')} (${this.discoveredCount})`
+  }
+
+  get managedTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.managed.value')} (${this.activatedCount})`
   }
 
   get activatedCount(): number {
@@ -150,6 +143,11 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   get discoveredCount(): number {
     return this.serverDiscoveredCount
+  }
+
+  // Power actions don't apply to devices that haven't been activated yet.
+  get isDiscoveredTab(): boolean {
+    return !this.isCloudMode && this.activeTab() === 0
   }
 
   onTabChange(index: number): void {
@@ -163,14 +161,10 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   private currentTabStatus(): DeviceFilterStatus | undefined {
-    switch (this.activeTab()) {
-      case 1:
-        return 'activated'
-      case 2:
-        return 'discovered'
-      default:
-        return undefined
+    if (this.isCloudMode) {
+      return undefined
     }
+    return this.activeTab() === 1 ? 'activated' : 'discovered'
   }
 
   private loadStats(): void {
@@ -427,12 +421,12 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getProductType(device: Device): string {
     const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
-    if (isNaN(skuNum)) return ''
+    if (isNaN(skuNum)) return 'non-vPro'
     const isISM = (skuNum & 0x10) > 0
     const isVPro = (skuNum & 0x08) > 0
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
-    return ''
+    return 'non-vPro'
   }
 
   translateConnectionStatus(status?: boolean): string {

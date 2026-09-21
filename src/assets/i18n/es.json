@@ -1081,17 +1081,13 @@
     "description": "Información de energía para Apagado",
     "value": "Energía: Apagado"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Todos"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Activado"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Descubierto"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Administrado"
   },
   "deviceToolbar.power.on": {
     "description": "Información de energía para Encendido",

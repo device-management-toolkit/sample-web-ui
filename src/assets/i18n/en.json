@@ -1563,17 +1563,13 @@
     "description": "Power tooltip for Off",
     "value": "Power: Off"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "All"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Activated"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Discovered"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Managed"
   },
   "deviceToolbar.power.on": {
     "description": "Power tooltip for On",

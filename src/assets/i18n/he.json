@@ -1077,17 +1077,13 @@
     "description": "רמז מצב צריכת חשמל עבור כבוי",
     "value": "חשמל: כבוי"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "הכל"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "מופעל"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "התגלה"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "מנוהל"
   },
   "deviceToolbar.power.on": {
     "description": "רמז מצב צריכת חשמל עבור פועל",

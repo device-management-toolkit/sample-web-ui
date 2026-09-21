@@ -1077,17 +1077,13 @@
     "description": "Tooltip di alimentazione per spento",
     "value": "Alimentazione: Spento"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "Tutti"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "Attivato"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "Scoperto"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Gestito"
   },
   "deviceToolbar.power.on": {
     "description": "Tooltip di alimentazione per acceso",

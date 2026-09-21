@@ -1077,17 +1077,13 @@
     "description": "電源オフのツールチップ",
     "value": "電源: オフ"
   },
-  "devices.tabs.all": {
-    "description": "Tab label for all devices",
-    "value": "すべて"
-  },
-  "devices.tabs.activated": {
-    "description": "Tab label for activated devices",
-    "value": "アクティベート済み"
-  },
   "devices.tabs.discovered": {
     "description": "Tab label for discovered devices",
     "value": "検出済み"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "管理対象"
   },
   "deviceToolbar.power.on": {
     "description": "電源オンのツールチップ",
