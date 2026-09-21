@@ -58,7 +58,13 @@ export class SolComponent implements OnInit, OnDestroy {
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public authToken = signal(environment.cloud ? '' : 'direct')
   public isDisconnecting = false
+  public readonly isConnecting = signal(false)
   private readonly destroy$ = new Subject<void>()
+  private reconnectAfterManualDisconnect = false
+  private reconnectRetryCount = 0
+  private reconnectRetryTimer?: ReturnType<typeof setTimeout>
+  private readonly RECONNECT_RETRY_BASE_DELAY_MS = 2_000
+  private readonly MAX_RECONNECT_RETRIES = 3
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
@@ -74,6 +80,9 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting = true
+    if (this.reconnectRetryTimer != null) {
+      clearTimeout(this.reconnectRetryTimer)
+    }
     this.destroy$.next()
     this.destroy$.complete()
   }
@@ -84,9 +93,12 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   connect(): void {
+    // A fresh redirection token is required for each SOL connection attempt.
+    let receivedToken = false
     this.isDisconnecting = false
     this.deviceState.set(-1)
     this.deviceConnection.set(false)
+    this.isConnecting.set(true)
     this.isLoading.set(true)
     this.devicesService
       .getRedirectionExpirationToken(this.deviceId())
@@ -98,8 +110,20 @@ export class SolComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         // Start SOL initialization only after the redirection token is available.
-        next: () => this.init(),
-        error: () => this.isLoading.set(false)
+        next: () => {
+          receivedToken = true
+          this.init()
+        },
+        error: () => {
+          this.isLoading.set(false)
+          this.isConnecting.set(false)
+        },
+        complete: () => {
+          if (!receivedToken) {
+            this.isLoading.set(false)
+            this.isConnecting.set(false)
+          }
+        }
       })
   }
 
@@ -131,6 +155,9 @@ export class SolComponent implements OnInit, OnDestroy {
       .subscribe()
       .add(() => {
         this.isLoading.set(false)
+        if (!this.deviceConnection()) {
+          this.isConnecting.set(false)
+        }
       })
   }
 
@@ -261,17 +288,52 @@ export class SolComponent implements OnInit, OnDestroy {
   deviceStatus(event: any): void {
     this.deviceState.set(event)
     if (event === 3) {
+      if (this.reconnectRetryTimer != null) {
+        clearTimeout(this.reconnectRetryTimer)
+        this.reconnectRetryTimer = undefined
+      }
       this.isLoading.set(false)
+      this.isConnecting.set(false)
+      this.reconnectAfterManualDisconnect = false
+      this.reconnectRetryCount = 0
     } else if (event === 0) {
+      const wasManualDisconnect = this.isDisconnecting
       this.isLoading.set(false)
       this.deviceConnection.set(false)
-      if (!this.isDisconnecting) {
+      if (wasManualDisconnect) {
+        this.isConnecting.set(false)
+        this.reconnectAfterManualDisconnect = true
+        this.reconnectRetryCount = 0
+      } else if (this.reconnectAfterManualDisconnect) {
+        this.scheduleReconnectRetry()
+      } else {
+        this.isConnecting.set(false)
         this.displayError(
           'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
         )
       }
       this.isDisconnecting = false
     }
+  }
+
+  private scheduleReconnectRetry(): void {
+    if (this.reconnectRetryCount >= this.MAX_RECONNECT_RETRIES) {
+      this.reconnectAfterManualDisconnect = false
+      this.reconnectRetryCount = 0
+      this.isConnecting.set(false)
+      this.displayError(
+        'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
+      )
+      return
+    }
+
+    const retryDelay = this.RECONNECT_RETRY_BASE_DELAY_MS * 2 ** this.reconnectRetryCount
+    this.reconnectRetryCount++
+    this.isLoading.set(true)
+    this.reconnectRetryTimer = setTimeout(() => {
+      this.reconnectRetryTimer = undefined
+      this.connect()
+    }, retryDelay)
   }
 
   stopSol(): void {
