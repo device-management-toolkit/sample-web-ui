@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { AuditLogComponent } from './audit-log.component'
@@ -24,7 +23,6 @@ describe('AuditLogComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         RouterModule,
         AuditLogComponent
       ],

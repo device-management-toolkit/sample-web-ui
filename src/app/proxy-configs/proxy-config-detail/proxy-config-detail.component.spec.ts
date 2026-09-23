@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { ProxyConfigsService } from '../proxy-configs.service'
@@ -44,7 +43,6 @@ describe('ProxyConfigDetailComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         ProxyConfigDetailComponent
       ],

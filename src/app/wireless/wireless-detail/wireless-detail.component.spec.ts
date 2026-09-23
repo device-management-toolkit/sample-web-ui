@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { WirelessService } from '../wireless.service'
@@ -52,7 +51,6 @@ describe('WirelessDetailComponent', () => {
     )
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         WirelessDetailComponent
       ],

@@ -11,7 +11,6 @@ import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } fr
 import { of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
@@ -155,7 +154,6 @@ describe('SolComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         SolComponent,
         TestDeviceToolbarComponent,

@@ -13,7 +13,6 @@ import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatDialogModule } from '@angular/material/dialog'
 import { of } from 'rxjs'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { By } from '@angular/platform-browser'
@@ -41,7 +40,6 @@ describe('ExplorerComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         BrowserModule,
         ReactiveFormsModule,
         MatSnackBarModule,

@@ -7,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed, tick } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs'
 
@@ -88,7 +87,6 @@ describe('DevicesComponent', () => {
     sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
         DevicesComponent
       ],

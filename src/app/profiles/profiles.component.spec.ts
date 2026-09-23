@@ -7,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj, type SpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 
 import { ProfilesComponent } from './profiles.component'
@@ -57,7 +56,6 @@ describe('ProfilesComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         ProfilesComponent
       ],

@@ -7,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 
 import { ConfigsComponent } from './configs.component'
@@ -49,7 +48,6 @@ describe('ConfigsComponent', () => {
     deleteSpy = configsService.delete.mockReturnValue(of(null))
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         ConfigsComponent
       ],

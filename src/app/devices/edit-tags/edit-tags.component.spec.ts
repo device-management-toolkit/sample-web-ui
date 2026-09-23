@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DeviceEditTagsComponent } from './edit-tags.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { RouterModule } from '@angular/router'
@@ -25,7 +24,6 @@ describe('EditTagsComponent', () => {
     }
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         DeviceEditTagsComponent
       ],
