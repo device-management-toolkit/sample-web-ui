@@ -1,0 +1,118 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2026
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { createSpyObj, type SpyObj } from '../../test-helpers'
+import { TestBed } from '@angular/core/testing'
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideHttpClient } from '@angular/common/http'
+import { provideTranslateService } from '@ngx-translate/core'
+import { DownloadRpcService } from './download-rpc.service'
+import { AuthService } from '../auth.service'
+import { environment } from '../../environments/environment'
+import { PackageRequest, RpcRelease } from '../../models/models'
+
+describe('DownloadRpcService', () => {
+  let service: DownloadRpcService
+  let httpMock: HttpTestingController
+  let authServiceSpy: SpyObj<AuthService>
+
+  const mockEnvironment = { rpsServer: 'https://test-server' }
+  const mockUrl = `${mockEnvironment.rpsServer}/api/package`
+
+  beforeEach(() => {
+    authServiceSpy = createSpyObj('AuthService', ['onError'])
+    environment.rpsServer = mockEnvironment.rpsServer
+    TestBed.configureTestingModule({
+      providers: [
+        provideTranslateService(),
+        DownloadRpcService,
+        { provide: AuthService, useValue: authServiceSpy },
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    })
+    service = TestBed.inject(DownloadRpcService)
+    httpMock = TestBed.inject(HttpTestingController)
+  })
+
+  afterEach(() => {
+    httpMock.verify()
+  })
+
+  it('should be created', () => {
+    expect(service).toBeTruthy()
+  })
+
+  describe('getVersions', () => {
+    it('should GET the rpc-versions endpoint', () => {
+      const mockReleases: RpcRelease[] = [
+        { version: 'v3.0.1', assets: [{ os: 'linux', arch: 'x64' }] }
+      ]
+      service.getVersions().subscribe((res) => {
+        expect(res).toEqual(mockReleases)
+      })
+      const req = httpMock.expectOne(`${mockUrl}/rpc-versions`)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockReleases)
+    })
+
+    it('should route errors through AuthService.onError', () => {
+      authServiceSpy.onError.mockReturnValue(['boom'])
+      service.getVersions().subscribe({
+        error: (err) => {
+          expect(err).toEqual(['boom'])
+        }
+      })
+      const req = httpMock.expectOne(`${mockUrl}/rpc-versions`)
+      req.flush('error', { status: 500, statusText: 'Server Error' })
+      expect(authServiceSpy.onError).toHaveBeenCalled()
+    })
+  })
+
+  describe('buildPackage', () => {
+    it('should POST the request and return a blob', () => {
+      const body: PackageRequest = {
+        serverUrl: 'http://console.example:8181',
+        command: 'activate',
+        version: 'v3.0.1',
+        os: 'linux',
+        arch: 'x64',
+        auth: { mode: 'token' },
+        profile: 'p1'
+      }
+      const blob = new Blob(['zip'], { type: 'application/zip' })
+      service.buildPackage(body).subscribe((res) => {
+        expect(res).toEqual(blob)
+      })
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual(body)
+      expect(req.request.responseType).toBe('blob')
+      req.flush(blob)
+    })
+
+    it('should route errors through AuthService.onError', () => {
+      authServiceSpy.onError.mockReturnValue(['boom'])
+      const body: PackageRequest = {
+        serverUrl: 'http://console.example:8181',
+        command: 'activate',
+        version: 'v3.0.1',
+        os: 'linux',
+        arch: 'x64',
+        auth: { mode: 'token' },
+        profile: 'p1'
+      }
+      service.buildPackage(body).subscribe({
+        error: (err) => {
+          expect(err).toEqual(['boom'])
+        }
+      })
+      const req = httpMock.expectOne(mockUrl)
+      req.flush(new Blob(['error'], { type: 'application/json' }), { status: 500, statusText: 'Server Error' })
+      expect(authServiceSpy.onError).toHaveBeenCalled()
+    })
+  })
+})

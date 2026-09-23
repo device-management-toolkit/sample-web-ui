@@ -3270,5 +3270,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "تسمية تظهر في صف القدرة عندما لا يدعمها الجهاز",
     "value": "غير مدعوم على هذا الجهاز"
+  },
+  "downloadRpc.title": {
+    "description": "عنوان صفحة تنزيل RPC",
+    "value": "تنزيل RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "شارة تشير إلى أن تنزيل RPC ميزة معاينة",
+    "value": "ميزة معاينة"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "تسمية حقل عنوان URL لخادم Console",
+    "value": "عنوان URL للخادم"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "تلميح حقل عنوان URL لخادم Console",
+    "value": "عنوان URL الأساسي الذي سيصل به الجهاز إلى Console، مثل https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "خطأ التحقق من عنوان URL لخادم Console",
+    "value": "أدخل عنوان URL مطلقًا يبدأ بـ http:// أو https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "تحذير عندما يشير عنوان URL للخادم إلى الاسترجاع المحلي",
+    "value": "يشير هذا العنوان إلى الجهاز الذي يعمل عليه هذا المتصفح. يعمل rpc-go على جهاز AMT، لذا لن يصل إلى Console إلا إذا كانا الجهاز نفسه، وهو أمر غير مستحسن. استخدم اسم المضيف أو عنوان IP الذي يمكن للجهاز الوصول إليه."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "تسمية محدد مدة صلاحية الرمز المميز",
+    "value": "مدة صلاحية الرمز المميز"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "تلميح محدد مدة صلاحية الرمز المميز",
+    "value": "المدة التي يظل فيها الرمز المميز الذي تم إنشاؤه صالحًا. المدة الأقصر أكثر أمانًا؛ تتوقف الحزمة عن العمل بمجرد انتهاء صلاحيته."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "خيار مدة صلاحية الرمز المميز: 15 دقيقة",
+    "value": "15 دقيقة"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "خيار مدة صلاحية الرمز المميز: ساعة واحدة",
+    "value": "ساعة واحدة"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "خيار مدة صلاحية الرمز المميز: 8 ساعات",
+    "value": "8 ساعات"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "خيار مدة صلاحية الرمز المميز: 24 ساعة",
+    "value": "24 ساعة"
+  },
+  "downloadRpc.command.label": {
+    "description": "تسمية محدد أمر RPC",
+    "value": "الأمر"
+  },
+  "downloadRpc.command.activate": {
+    "description": "خيار أمر التنشيط",
+    "value": "تنشيط"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "خيار أمر إلغاء التنشيط",
+    "value": "إلغاء التنشيط"
+  },
+  "downloadRpc.version.label": {
+    "description": "تسمية محدد إصدار rpc-go",
+    "value": "إصدار rpc-go"
+  },
+  "downloadRpc.os.label": {
+    "description": "تسمية محدد نظام التشغيل",
+    "value": "نظام التشغيل"
+  },
+  "downloadRpc.profile.label": {
+    "description": "تسمية محدد الملف الشخصي",
+    "value": "الملف الشخصي"
+  },
+  "downloadRpc.domain.label": {
+    "description": "تسمية محدد المجال",
+    "value": "المجال"
+  },
+  "downloadRpc.auth.label": {
+    "description": "تسمية مجموعة طريقة المصادقة",
+    "value": "المصادقة"
+  },
+  "downloadRpc.auth.none": {
+    "description": "خيار المصادقة دون بيانات اعتماد (افتراضي)",
+    "value": "عدم تقديم بيانات اعتماد"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "ملاحظة تظهر عندما لا تتضمن الحزمة بيانات اعتماد",
+    "value": "لن تحتوي الحزمة على بيانات اعتماد. يجب عليك تقديمها على الجهاز بطريقة أخرى: مرّر ‎--auth-username و‎--auth-password (أو ‎--auth-token) عند تشغيل rpc، أو اضبط متغيرات البيئة AUTH_USERNAME وAUTH_PASSWORD (أو AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "خيار المصادقة إنشاء رمز مميز",
+    "value": "إنشاء رمز مميز"
+  },
+  "downloadRpc.download": {
+    "description": "تسمية زر التنزيل",
+    "value": "تنزيل"
+  },
+  "downloadRpc.success": {
+    "description": "رسالة نجاح تنزيل الحزمة",
+    "value": "تم تنزيل الحزمة"
+  },
+  "downloadRpc.failVersions": {
+    "description": "رسالة فشل تحميل إصدارات rpc-go",
+    "value": "فشل تحميل إصدارات rpc-go"
+  },
+  "downloadRpc.failPackage": {
+    "description": "رسالة فشل إنشاء الحزمة",
+    "value": "فشل إنشاء الحزمة"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "رسالة فشل تحميل الملفات الشخصية",
+    "value": "فشل تحميل الملفات الشخصية"
+  },
+  "downloadRpc.failDomains": {
+    "description": "رسالة فشل تحميل المجالات",
+    "value": "فشل تحميل المجالات"
+  },
+  "downloadRpc.subtitle": {
+    "description": "العنوان الفرعي لصفحة تنزيل RPC",
+    "value": "أنشئ حزمة rpc-go جاهزة للتشغيل لتنشيط Intel AMT أو إلغاء تنشيطه على جهاز."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "يوضح محتويات الحزمة التي تم تنزيلها",
+    "value": "rpc-go هي أداة سطر الأوامر التي تعمل على جهاز AMT وتوصله بـ Console. التنزيل عبارة عن ملف zip يحتوي على الملف التنفيذي لـ rpc-go وملف config.yaml مملوء مسبقًا بعنوان Console هذا والخيارات التي تحددها أدناه."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "يوضح كيفية استخدام الحزمة التي تم تنزيلها على الجهاز",
+    "value": "انسخ ملف zip إلى الجهاز، واستخرجه، ثم شغّل من ذلك المجلد \"rpc activate\" أو \"rpc deactivate\" (rpc.exe على Windows) بصلاحيات المسؤول أو root. يقرأ rpc-go ملف config.yaml من المجلد الذي يعمل فيه."
+  },
+  "downloadRpc.command.hint": {
+    "description": "تلميح محدد أمر RPC",
+    "value": "يقوم التنشيط بتوفير Intel AMT على الجهاز باستخدام الملف الشخصي المحدد. يزيل إلغاء التنشيط تكوين AMT."
+  },
+  "downloadRpc.version.hint": {
+    "description": "تلميح محدد إصدار rpc-go",
+    "value": "إصدار rpc-go المراد تضمينه في الحزمة. الإصدار rpc-go v3 فقط متوافق، ويتم عرض أحدث 5 إصدارات."
+  },
+  "downloadRpc.os.hint": {
+    "description": "تلميح محدد نظام التشغيل",
+    "value": "نظام تشغيل جهاز AMT الذي ستعمل عليه الحزمة. يضع خيار Windows وLinux الإصدارين كليهما في حزمة واحدة."
+  },
+  "downloadRpc.os.windows": {
+    "description": "خيار Windows في محدد نظام التشغيل",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "خيار Linux في محدد نظام التشغيل",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "خيار Windows وLinux في محدد نظام التشغيل",
+    "value": "Windows وLinux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "تلميح محدد الملف الشخصي",
+    "value": "ملف AMT الشخصي الذي يتم تنشيط الجهاز به. تتم إدارة الملفات الشخصية من صفحة الملفات الشخصية."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "تلميح محدد المجال",
+    "value": "مطلوب لوضع Admin Control: المجال الذي تتطابق شهادة التوفير الخاصة به مع لاحقة DNS للجهاز."
   }
 }

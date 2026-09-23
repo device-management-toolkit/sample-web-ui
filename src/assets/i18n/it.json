@@ -3262,5 +3262,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "Didascalia mostrata su una riga di capacità quando il dispositivo non la supporta",
     "value": "Non supportato su questo dispositivo"
+  },
+  "downloadRpc.title": {
+    "description": "Titolo della pagina Scarica RPC",
+    "value": "Scarica RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "Etichetta che indica Scarica RPC come funzionalità in anteprima",
+    "value": "Funzionalità in anteprima"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Etichetta del campo URL del server Console",
+    "value": "URL del server"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Suggerimento del campo URL del server Console",
+    "value": "URL di base con cui il dispositivo raggiungerà Console, ad es. https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Errore di convalida dell’URL del server Console",
+    "value": "Inserisci un URL assoluto che inizi con http:// o https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Avviso quando l’URL del server punta al loopback",
+    "value": "Questo indirizzo punta al computer su cui è in esecuzione questo browser. rpc-go viene eseguito sul dispositivo AMT, quindi raggiungerà Console solo se si tratta dello stesso computer, cosa sconsigliata. Usa il nome host o l’IP raggiungibile dal dispositivo."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Etichetta del selettore della durata del token",
+    "value": "Durata del token"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Suggerimento del selettore della durata del token",
+    "value": "Per quanto tempo il token generato resta valido. Più breve è più sicuro; il pacchetto smette di funzionare alla scadenza."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Opzione durata del token: 15 minuti",
+    "value": "15 minuti"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Opzione durata del token: 1 ora",
+    "value": "1 ora"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Opzione durata del token: 8 ore",
+    "value": "8 ore"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Opzione durata del token: 24 ore",
+    "value": "24 ore"
+  },
+  "downloadRpc.command.label": {
+    "description": "Etichetta del selettore del comando RPC",
+    "value": "Comando"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Opzione del comando Attiva",
+    "value": "Attiva"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Opzione del comando Disattiva",
+    "value": "Disattiva"
+  },
+  "downloadRpc.version.label": {
+    "description": "Etichetta del selettore della versione di rpc-go",
+    "value": "Versione di rpc-go"
+  },
+  "downloadRpc.os.label": {
+    "description": "Etichetta del selettore del sistema operativo",
+    "value": "Sistema operativo"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Etichetta del selettore del profilo",
+    "value": "Profilo"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Etichetta del selettore del dominio",
+    "value": "Dominio"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Etichetta del gruppo del metodo di autenticazione",
+    "value": "Autenticazione"
+  },
+  "downloadRpc.auth.none": {
+    "description": "Opzione di autenticazione senza credenziali (predefinita)",
+    "value": "Non fornire credenziali"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Nota mostrata quando il pacchetto non conterrà credenziali",
+    "value": "Il pacchetto non conterrà credenziali. Devi fornirle sul dispositivo in altro modo: passa --auth-username e --auth-password (o --auth-token) quando esegui rpc, oppure imposta le variabili d’ambiente AUTH_USERNAME e AUTH_PASSWORD (o AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Opzione di autenticazione Genera token",
+    "value": "Genera token"
+  },
+  "downloadRpc.download": {
+    "description": "Etichetta del pulsante Scarica",
+    "value": "Scarica"
+  },
+  "downloadRpc.success": {
+    "description": "Messaggio di conferma del download del pacchetto",
+    "value": "Pacchetto scaricato"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Messaggio di errore nel caricamento delle versioni di rpc-go",
+    "value": "Impossibile caricare le versioni di rpc-go"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Messaggio di errore nella creazione del pacchetto",
+    "value": "Impossibile creare il pacchetto"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Messaggio di errore nel caricamento dei profili",
+    "value": "Impossibile caricare i profili"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Messaggio di errore nel caricamento dei domini",
+    "value": "Impossibile caricare i domini"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Sottotitolo della pagina Scarica RPC",
+    "value": "Crea un pacchetto rpc-go pronto all’uso per attivare o disattivare Intel AMT su un dispositivo."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Spiega cosa contiene il pacchetto scaricato",
+    "value": "rpc-go è lo strumento da riga di comando che viene eseguito sul dispositivo AMT e lo collega a Console. Il download è un file zip contenente l’eseguibile rpc-go e un config.yaml già compilato con l’indirizzo di questa Console e le opzioni scelte qui sotto."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Spiega come usare il pacchetto scaricato sul dispositivo",
+    "value": "Copia lo zip sul dispositivo, estrailo e da quella cartella esegui \"rpc activate\" o \"rpc deactivate\" (rpc.exe su Windows) come amministratore o root. rpc-go legge config.yaml dalla cartella in cui viene eseguito."
+  },
+  "downloadRpc.command.hint": {
+    "description": "Suggerimento del selettore del comando RPC",
+    "value": "Attiva esegue il provisioning di Intel AMT sul dispositivo con il profilo selezionato. Disattiva rimuove la configurazione AMT."
+  },
+  "downloadRpc.version.hint": {
+    "description": "Suggerimento del selettore della versione di rpc-go",
+    "value": "Versione di rpc-go da includere nel pacchetto. È compatibile solo rpc-go v3 e vengono mostrate le 5 versioni più recenti."
+  },
+  "downloadRpc.os.hint": {
+    "description": "Suggerimento del selettore del sistema operativo",
+    "value": "Sistema operativo del dispositivo AMT su cui verrà eseguito il pacchetto. Windows e Linux include entrambe le build in un unico pacchetto."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Opzione Windows del selettore del sistema operativo",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Opzione Linux del selettore del sistema operativo",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Opzione Windows e Linux del selettore del sistema operativo",
+    "value": "Windows e Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Suggerimento del selettore del profilo",
+    "value": "Profilo AMT con cui viene attivato il dispositivo. I profili si gestiscono nella pagina Profili."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Suggerimento del selettore del dominio",
+    "value": "Obbligatorio per la modalità Admin Control: il dominio il cui certificato di provisioning corrisponde al suffisso DNS del dispositivo."
   }
 }

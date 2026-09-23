@@ -3262,5 +3262,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "תווית המוצגת בשורת יכולת כאשר המכשיר אינו תומך בה",
     "value": "לא נתמך במכשיר זה"
+  },
+  "downloadRpc.title": {
+    "description": "כותרת הדף הורדת RPC",
+    "value": "הורדת RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "תווית המסמנת את הורדת RPC כתכונה בתצוגה מקדימה",
+    "value": "תכונה בתצוגה מקדימה"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "תווית שדה כתובת ה-URL של שרת Console",
+    "value": "כתובת URL של השרת"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "רמז לשדה כתובת ה-URL של שרת Console",
+    "value": "כתובת ה-URL הבסיסית שדרכה המכשיר יגיע ל-Console, לדוגמה https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "שגיאת אימות של כתובת ה-URL של שרת Console",
+    "value": "הזן כתובת URL מוחלטת שמתחילה ב-http://‎ או ב-https://‎"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "אזהרה כאשר כתובת ה-URL של השרת מצביעה על loopback",
+    "value": "כתובת זו מצביעה על המחשב שבו פועל הדפדפן הזה. rpc-go פועל במכשיר ה-AMT, ולכן יגיע ל-Console רק אם שניהם אותו מחשב, דבר שאינו מומלץ. השתמש בשם המארח או בכתובת ה-IP שהמכשיר יכול להגיע אליהם."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "תווית בורר משך התוקף של האסימון",
+    "value": "משך תוקף האסימון"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "רמז לבורר משך התוקף של האסימון",
+    "value": "כמה זמן האסימון שנוצר נשאר בתוקף. קצר יותר בטוח יותר; החבילה מפסיקה לפעול כשתוקפו פג."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "אפשרות משך תוקף האסימון: 15 דקות",
+    "value": "15 דקות"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "אפשרות משך תוקף האסימון: שעה אחת",
+    "value": "שעה אחת"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "אפשרות משך תוקף האסימון: 8 שעות",
+    "value": "8 שעות"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "אפשרות משך תוקף האסימון: 24 שעות",
+    "value": "24 שעות"
+  },
+  "downloadRpc.command.label": {
+    "description": "תווית בורר פקודת RPC",
+    "value": "פקודה"
+  },
+  "downloadRpc.command.activate": {
+    "description": "אפשרות הפקודה הפעלה",
+    "value": "הפעלה"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "אפשרות הפקודה ביטול הפעלה",
+    "value": "ביטול הפעלה"
+  },
+  "downloadRpc.version.label": {
+    "description": "תווית בורר גרסת rpc-go",
+    "value": "גרסת rpc-go"
+  },
+  "downloadRpc.os.label": {
+    "description": "תווית בורר מערכת ההפעלה",
+    "value": "מערכת הפעלה"
+  },
+  "downloadRpc.profile.label": {
+    "description": "תווית בורר הפרופיל",
+    "value": "פרופיל"
+  },
+  "downloadRpc.domain.label": {
+    "description": "תווית בורר הדומיין",
+    "value": "דומיין"
+  },
+  "downloadRpc.auth.label": {
+    "description": "תווית קבוצת שיטת האימות",
+    "value": "אימות"
+  },
+  "downloadRpc.auth.none": {
+    "description": "אפשרות אימות ללא אישורים (ברירת מחדל)",
+    "value": "אל תספק אישורים"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "הערה המוצגת כאשר החבילה לא תכיל אישורים",
+    "value": "החבילה לא תכיל אישורים. עליך לספק אותם במכשיר בדרך אחרת: העבר ‎--auth-username ו-‎--auth-password (או ‎--auth-token) בעת הרצת rpc, או הגדר את משתני הסביבה AUTH_USERNAME ו-AUTH_PASSWORD (או AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "אפשרות האימות יצירת אסימון",
+    "value": "צור אסימון"
+  },
+  "downloadRpc.download": {
+    "description": "תווית לחצן ההורדה",
+    "value": "הורדה"
+  },
+  "downloadRpc.success": {
+    "description": "הודעת הצלחה על הורדת החבילה",
+    "value": "החבילה הורדה"
+  },
+  "downloadRpc.failVersions": {
+    "description": "הודעת כשל בטעינת גרסאות rpc-go",
+    "value": "טעינת גרסאות rpc-go נכשלה"
+  },
+  "downloadRpc.failPackage": {
+    "description": "הודעת כשל בבניית החבילה",
+    "value": "בניית החבילה נכשלה"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "הודעת כשל בטעינת הפרופילים",
+    "value": "טעינת הפרופילים נכשלה"
+  },
+  "downloadRpc.failDomains": {
+    "description": "הודעת כשל בטעינת הדומיינים",
+    "value": "טעינת הדומיינים נכשלה"
+  },
+  "downloadRpc.subtitle": {
+    "description": "כותרת משנה של הדף הורדת RPC",
+    "value": "צור חבילת rpc-go מוכנה להפעלה כדי להפעיל או לבטל את הפעלת Intel AMT במכשיר."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "מסביר מה מכילה החבילה שהורדה",
+    "value": "rpc-go הוא כלי שורת הפקודה שפועל במכשיר ה-AMT ומחבר אותו ל-Console. ההורדה היא קובץ zip שמכיל את קובץ ההפעלה של rpc-go וקובץ config.yaml שכבר מולאו בו הכתובת של Console זה והאפשרויות שתבחר למטה."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "מסביר כיצד להשתמש בחבילה שהורדה במכשיר",
+    "value": "העתק את קובץ ה-zip למכשיר, חלץ אותו, ומתוך אותה תיקייה הרץ \"rpc activate\" או \"rpc deactivate\" (rpc.exe ב-Windows) כמנהל מערכת או כ-root. rpc-go קורא את config.yaml מהתיקייה שבה הוא רץ."
+  },
+  "downloadRpc.command.hint": {
+    "description": "רמז לבורר פקודת RPC",
+    "value": "הפעלה מקצה את Intel AMT במכשיר באמצעות הפרופיל שנבחר. ביטול הפעלה מסיר את תצורת ה-AMT."
+  },
+  "downloadRpc.version.hint": {
+    "description": "רמז לבורר גרסת rpc-go",
+    "value": "גרסת rpc-go שתיכלל בחבילה. רק rpc-go v3 תואם, ומוצגות 5 הגרסאות האחרונות."
+  },
+  "downloadRpc.os.hint": {
+    "description": "רמז לבורר מערכת ההפעלה",
+    "value": "מערכת ההפעלה של מכשיר ה-AMT שבו החבילה תרוץ. Windows ו-Linux כולל את שתי הגרסאות בחבילה אחת."
+  },
+  "downloadRpc.os.windows": {
+    "description": "אפשרות Windows בבורר מערכת ההפעלה",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "אפשרות Linux בבורר מערכת ההפעלה",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "אפשרות Windows ו-Linux בבורר מערכת ההפעלה",
+    "value": "Windows ו-Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "רמז לבורר הפרופיל",
+    "value": "פרופיל ה-AMT שבו המכשיר מופעל. ניהול הפרופילים מתבצע בדף הפרופילים."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "רמז לבורר הדומיין",
+    "value": "נדרש עבור Admin Control Mode: הדומיין שאישור ההקצאה שלו תואם לסיומת ה-DNS של המכשיר."
   }
 }

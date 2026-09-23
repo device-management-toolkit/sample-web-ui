@@ -3266,5 +3266,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "Teksti, joka näytetään ominaisuusrivillä, kun laite ei tue sitä",
     "value": "Ei tuettu tässä laitteessa"
+  },
+  "downloadRpc.title": {
+    "description": "Lataa RPC -sivun otsikko",
+    "value": "Lataa RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "Merkki, joka osoittaa Lataa RPC -toiminnon esikatseluversioksi",
+    "value": "Esikatseluominaisuus"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Console-palvelimen URL-kentän nimi",
+    "value": "Palvelimen URL"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Console-palvelimen URL-kentän vihje",
+    "value": "Perus-URL, jonka kautta laite tavoittaa Consolen, esim. https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Console-palvelimen URL-osoitteen vahvistusvirhe",
+    "value": "Anna absoluuttinen URL, joka alkaa http:// tai https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Varoitus, kun palvelimen URL osoittaa loopback-osoitteeseen",
+    "value": "Tämä osoite viittaa koneeseen, jossa tämä selain on käynnissä. rpc-go toimii AMT-laitteessa, joten se tavoittaa Consolen vain, jos molemmat ovat samalla koneella, mitä ei suositella. Käytä isäntänimeä tai IP-osoitetta, jonka laite tavoittaa."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Tunnuksen voimassaoloajan valitsimen nimi",
+    "value": "Tunnuksen voimassaoloaika"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Tunnuksen voimassaoloajan valitsimen vihje",
+    "value": "Kuinka kauan luotu tunnus on voimassa. Lyhyempi on turvallisempi; paketti lakkaa toimimasta, kun tunnus vanhenee."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Tunnuksen voimassaoloaika: 15 minuuttia",
+    "value": "15 minuuttia"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Tunnuksen voimassaoloaika: 1 tunti",
+    "value": "1 tunti"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Tunnuksen voimassaoloaika: 8 tuntia",
+    "value": "8 tuntia"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Tunnuksen voimassaoloaika: 24 tuntia",
+    "value": "24 tuntia"
+  },
+  "downloadRpc.command.label": {
+    "description": "RPC-komennon valitsimen nimi",
+    "value": "Komento"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Aktivoi-komennon vaihtoehto",
+    "value": "Aktivoi"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Poista aktivointi -komennon vaihtoehto",
+    "value": "Poista aktivointi"
+  },
+  "downloadRpc.version.label": {
+    "description": "rpc-go-version valitsimen nimi",
+    "value": "rpc-go-versio"
+  },
+  "downloadRpc.os.label": {
+    "description": "Käyttöjärjestelmän valitsimen nimi",
+    "value": "Käyttöjärjestelmä"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Profiilin valitsimen nimi",
+    "value": "Profiili"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Verkkotunnuksen valitsimen nimi",
+    "value": "Verkkotunnus"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Todentamistavan ryhmän nimi",
+    "value": "Todentaminen"
+  },
+  "downloadRpc.auth.none": {
+    "description": "Todentamisvaihtoehto ilman tunnistetietoja (oletus)",
+    "value": "Älä anna tunnistetietoja"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Huomautus, kun pakettiin ei sisällytetä tunnistetietoja",
+    "value": "Paketti ei sisällä tunnistetietoja. Sinun on annettava ne laitteessa muulla tavoin: anna --auth-username ja --auth-password (tai --auth-token) suorittaessasi rpc:tä, tai aseta ympäristömuuttujat AUTH_USERNAME ja AUTH_PASSWORD (tai AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Luo tunnus -todentamisvaihtoehto",
+    "value": "Luo tunnus"
+  },
+  "downloadRpc.download": {
+    "description": "Lataa-painikkeen teksti",
+    "value": "Lataa"
+  },
+  "downloadRpc.success": {
+    "description": "Ilmoitus paketin onnistuneesta latauksesta",
+    "value": "Paketti ladattu"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Ilmoitus, kun rpc-go-versioiden lataus epäonnistui",
+    "value": "rpc-go-versioiden lataaminen epäonnistui"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Ilmoitus, kun paketin luonti epäonnistui",
+    "value": "Paketin luominen epäonnistui"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Ilmoitus, kun profiilien lataus epäonnistui",
+    "value": "Profiilien lataaminen epäonnistui"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Ilmoitus, kun verkkotunnusten lataus epäonnistui",
+    "value": "Verkkotunnusten lataaminen epäonnistui"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Lataa RPC -sivun alaotsikko",
+    "value": "Luo käyttövalmis rpc-go-paketti Intel AMT:n aktivointiin tai aktivoinnin poistamiseen laitteessa."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Kertoo, mitä ladattu paketti sisältää",
+    "value": "rpc-go on komentorivityökalu, joka toimii AMT-laitteessa ja yhdistää sen Consoleen. Lataus on zip-tiedosto, joka sisältää rpc-go-ohjelman ja config.yaml-tiedoston, johon on valmiiksi täytetty tämän Consolen osoite ja alla valitsemasi asetukset."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Kertoo, miten ladattua pakettia käytetään laitteessa",
+    "value": "Kopioi zip laitteeseen, pura se ja suorita kyseisessä kansiossa \"rpc activate\" tai \"rpc deactivate\" (Windowsissa rpc.exe) järjestelmänvalvojana tai root-käyttäjänä. rpc-go lukee config.yaml-tiedoston kansiosta, jossa se suoritetaan."
+  },
+  "downloadRpc.command.hint": {
+    "description": "RPC-komennon valitsimen vihje",
+    "value": "Aktivoi ottaa Intel AMT:n käyttöön laitteessa valitulla profiililla. Poista aktivointi poistaa AMT-määrityksen."
+  },
+  "downloadRpc.version.hint": {
+    "description": "rpc-go-version valitsimen vihje",
+    "value": "Pakettiin sisällytettävä rpc-go-versio. Vain rpc-go v3 on yhteensopiva, ja 5 uusinta versiota näytetään."
+  },
+  "downloadRpc.os.hint": {
+    "description": "Käyttöjärjestelmän valitsimen vihje",
+    "value": "AMT-laitteen käyttöjärjestelmä, jossa pakettia suoritetaan. Windows ja Linux sisällyttää molemmat versiot samaan pakettiin."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Käyttöjärjestelmän valitsimen vaihtoehto Windows",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Käyttöjärjestelmän valitsimen vaihtoehto Linux",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Käyttöjärjestelmän valitsimen vaihtoehto Windows ja Linux",
+    "value": "Windows ja Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Profiilin valitsimen vihje",
+    "value": "AMT-profiili, jolla laite aktivoidaan. Profiileja hallitaan Profiilit-sivulla."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Verkkotunnuksen valitsimen vihje",
+    "value": "Pakollinen Admin Control Mode -tilassa: verkkotunnus, jonka käyttöönottovarmenne vastaa laitteen DNS-päätettä."
   }
 }

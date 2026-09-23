@@ -45,11 +45,18 @@ describe('AuthorizeInterceptor', () => {
     environment.cloud = originalCloud
   })
 
-  it('should add if-match header if body contains version', () => {
-    httpClient.post('/test', { version: '123' }).subscribe()
+  it('should add if-match header if a PATCH body contains version', () => {
+    httpClient.patch('/test', { version: '123' }).subscribe()
 
     const req = httpTestingController.expectOne('/test')
     expect(req.request.headers.get('if-match')).toBe('123')
+  })
+
+  it('should not add if-match header to a POST whose body contains version', () => {
+    httpClient.post('/test', { version: 'v3.0.1' }).subscribe()
+
+    const req = httpTestingController.expectOne('/test')
+    expect(req.request.headers.has('if-match')).toBe(false)
   })
 
   describe('cloud', () => {
