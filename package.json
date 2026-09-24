@@ -64,7 +64,7 @@
     "@angular/compiler-cli": "~21.2.23",
     "@angular/localize": "~21.2.23",
     "@eslint/js": "^10.0.1",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^5.0.1",
     "angular-eslint": "21.4.0",
     "cypress": "^16.1.0",
     "eslint": "^10.10.0",
