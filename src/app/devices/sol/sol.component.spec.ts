@@ -7,8 +7,9 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter, Output, signal, input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
-import { of, ReplaySubject, Subject, throwError } from 'rxjs'
+import { EMPTY, of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -179,6 +180,7 @@ describe('SolComponent', () => {
   })
 
   afterEach(() => {
+    vi.useRealTimers()
     TestBed.resetTestingModule()
   })
 
@@ -190,26 +192,205 @@ describe('SolComponent', () => {
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
   })
   it('should have correct state on connect/disconnect methods', () => {
-    // Spy on the deviceConnection.set method to verify it's called
-    const deviceConnectionSpy = vi.spyOn(component.deviceConnection, 'set').mockImplementation(() => undefined)
-
     fixture.detectChanges()
 
-    // Check initial state
     expect(component.isDisconnecting).toBe(false)
 
-    // Test connect method
     component.connect()
-    fixture.detectChanges()
-    expect(component.isLoading()).toBe(false)
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.deviceState()).not.toBe(0)
 
-    // Test disconnect method
     component.disconnect()
+    expect(component.deviceConnection()).toBe(false)
+    expect(component.isDisconnecting).toBeTruthy()
+  })
+  it('should disable Connect SOL until the initial token is available', () => {
+    const tokenSubject = new Subject<{ token: string }>()
+    tokenSpy.mockReturnValue(tokenSubject)
+    const initSpy = vi.spyOn(component, 'init')
+
     fixture.detectChanges()
 
-    // Verify that deviceConnection.set was called with false
-    expect(deviceConnectionSpy).toHaveBeenCalledWith(false)
-    expect(component.isDisconnecting).toBeTruthy()
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(button.disabled).toBe(true)
+    expect(button.textContent).toContain('sol.loading.value')
+    button.click()
+    expect(initSpy).not.toHaveBeenCalled()
+
+    tokenSubject.next({ token: 'fresh-token' })
+
+    expect(component.authToken()).toBe('fresh-token')
+    expect(initSpy).toHaveBeenCalledOnce()
+  })
+  it('should re-enable Connect SOL when the token request completes without a token', () => {
+    tokenSpy.mockReturnValue(EMPTY)
+
+    fixture.detectChanges()
+    fixture.detectChanges()
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(component.isLoading()).toBe(false)
+    expect(component.isConnecting()).toBe(false)
+    expect(button.disabled).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+  })
+  it('should re-enable Connect SOL when setup finishes without a session', () => {
+    getPowerStateSpy.mockReturnValue(of({ powerstate: 0 }))
+    vi.spyOn(component, 'showPowerUpAlert').mockReturnValue(of(false))
+
+    fixture.detectChanges()
+    fixture.detectChanges()
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceConnection()).toBe(false)
+    expect(component.isConnecting()).toBe(false)
+    expect(button.disabled).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+  })
+  it('should show "Connect SOL" after a manual disconnect completes', () => {
+    tokenSpy.mockReturnValue(new Subject<{ token: string }>())
+    fixture.detectChanges()
+
+    // Simulate a connected session
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isConnecting.set(false)
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    let button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(button.textContent).toContain('sol.disconnect.value')
+
+    // Simulate a manual disconnect: child reports deviceStatus(0) after disconnect() is called
+    component.disconnect()
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    button = fixture.nativeElement.querySelector('button')
+    expect(button.disabled).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+    expect(component.isDisconnecting).toBe(false)
+    tokenSpy.mockReturnValue(of({ token: 'fresh-token' }))
+    component.connect()
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.isDisconnecting).toBe(false)
+  })
+  it('should disable Connect SOL until a manual disconnect completes', () => {
+    tokenSpy.mockReturnValue(new Subject<{ token: string }>())
+    fixture.detectChanges()
+    component.deviceConnection.set(false)
+    component.isLoading.set(false)
+    component.isDisconnecting = true
+    const connectSpy = vi.spyOn(component, 'connect')
+    fixture.detectChanges(false)
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(button.disabled).toBe(true)
+    expect(button.textContent).toContain('sol.disconnect.value')
+    button.click()
+    expect(connectSpy).not.toHaveBeenCalled()
+
+    component.deviceStatus(0)
+    expect(component.deviceConnection()).toBe(false)
+    expect(component.isDisconnecting).toBe(false)
+  })
+  it('should not show "Connect SOL" while waiting for the connected status', () => {
+    fixture.detectChanges()
+
+    component.deviceState.set(0)
+    component.connect()
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    const button: HTMLElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceState()).toBe(-1)
+    expect(button.textContent).not.toContain('sol.connect.value')
+  })
+  it('should allow reconnecting after an unexpected disconnect', () => {
+    fixture.detectChanges()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+    component.isDisconnecting = false
+
+    component.deviceStatus(0)
+    fixture.detectChanges()
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(component.deviceConnection()).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+
+    button.click()
+    fixture.detectChanges()
+
+    expect(tokenSpy).toHaveBeenCalledTimes(2)
+    expect(component.authToken()).toBe('123')
+    expect(component.deviceConnection()).toBe(true)
+    expect(component.isConnecting()).toBe(true)
+    expect(component.deviceState()).not.toBe(0)
+  })
+  it('should retry a failed reconnect after a manual disconnect without showing an error', () => {
+    vi.useFakeTimers()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+
+    component.disconnect()
+    component.deviceStatus(0)
+    component.connect()
+    const tokenCallsBeforeRetry = tokenSpy.mock.calls.length
+
+    component.deviceStatus(0)
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(component.isLoading()).toBe(true)
+
+    vi.advanceTimersByTime(2_000)
+    expect(tokenSpy).toHaveBeenCalledTimes(tokenCallsBeforeRetry + 1)
+    expect(component.isConnecting()).toBe(true)
+
+    component.deviceStatus(3)
+    expect(component.isConnecting()).toBe(false)
+  })
+  it('should cancel a queued reconnect retry when SOL connects', () => {
+    vi.useFakeTimers()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+
+    component.disconnect()
+    component.deviceStatus(0)
+    component.connect()
+    component.deviceStatus(0)
+    const tokenCallsBeforeConnection = tokenSpy.mock.calls.length
+
+    component.deviceStatus(3)
+    vi.advanceTimersByTime(2_000)
+
+    expect(tokenSpy).toHaveBeenCalledTimes(tokenCallsBeforeConnection)
+    expect(component.isConnecting()).toBe(false)
+  })
+  it('should show an error after manual reconnect retries are exhausted', () => {
+    vi.useFakeTimers()
+    component.deviceConnection.set(true)
+    component.deviceState.set(3)
+
+    component.disconnect()
+    component.deviceStatus(0)
+    component.connect()
+
+    for (const retryDelay of [
+      2_000,
+      4_000,
+      8_000
+    ]) {
+      component.deviceStatus(0)
+      expect(snackBarSpy).not.toHaveBeenCalled()
+      vi.advanceTimersByTime(retryDelay)
+    }
+
+    component.deviceStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
+      'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.',
+      undefined,
+      SnackbarDefaults.defaultError
+    )
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
     component.isDisconnecting = true
@@ -315,6 +496,24 @@ describe('SolComponent', () => {
     component.checkUserConsent()
     fixture.detectChanges()
     expect(component.readyToLoadSol).toBe(true)
+  })
+  it('uses a fresh token and passes it to SOL after reconnect', () => {
+    fixture.detectChanges()
+    tokenSpy.mockClear()
+    tokenSpy.mockReturnValue(of({ token: 'fresh-token' }))
+    component.deviceConnection.set(false)
+    component.readyToLoadSol = true
+    component.isLoading.set(false)
+    fixture.detectChanges()
+
+    component.connect()
+    fixture.detectChanges()
+
+    const sol = fixture.debugElement.query(By.css('amt-sol')).componentInstance
+    expect(tokenSpy).toHaveBeenCalledOnce()
+    expect(component.authToken()).toBe('fresh-token')
+    expect(sol.authToken()).toBe('fresh-token')
+    expect(component.deviceConnection()).toBe(true)
   })
   it('checkUserConsent no', async () => {
     component.amtFeatures.set({
