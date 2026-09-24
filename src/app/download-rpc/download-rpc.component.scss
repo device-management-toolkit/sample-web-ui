@@ -1,0 +1,19 @@
+.preview-chip {
+  margin-left: auto;
+}
+
+.server-url-warning,
+.auth-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  mat-icon {
+    flex: none;
+  }
+}
+
+mat-form-field {
+  margin: 12px 0;
+}

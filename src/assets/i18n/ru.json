@@ -3262,5 +3262,165 @@
   "remotePlatformErase.capUnsupported": {
     "description": "Подпись в строке возможности, когда устройство её не поддерживает",
     "value": "Не поддерживается на этом устройстве"
+  },
+  "downloadRpc.title": {
+    "description": "Заголовок страницы «Скачать RPC»",
+    "value": "Скачать RPC"
+  },
+  "downloadRpc.preview": {
+    "description": "Метка, обозначающая «Скачать RPC» как предварительную функцию",
+    "value": "Предварительная функция"
+  },
+  "downloadRpc.serverUrl.label": {
+    "description": "Метка поля URL сервера Console",
+    "value": "URL сервера"
+  },
+  "downloadRpc.serverUrl.hint": {
+    "description": "Подсказка к полю URL сервера Console",
+    "value": "Базовый URL, по которому устройство будет обращаться к Console, например https://console.example.com:8181"
+  },
+  "downloadRpc.serverUrl.invalid": {
+    "description": "Ошибка проверки URL сервера Console",
+    "value": "Введите абсолютный URL, начинающийся с http:// или https://"
+  },
+  "downloadRpc.serverUrl.localWarning": {
+    "description": "Предупреждение, когда URL сервера указывает на loopback",
+    "value": "Этот адрес указывает на компьютер, на котором запущен этот браузер. rpc-go работает на устройстве AMT, поэтому доступ к Console будет только в том случае, если это один и тот же компьютер, что не рекомендуется. Используйте имя хоста или IP-адрес, доступный с устройства."
+  },
+  "downloadRpc.tokenTtl.label": {
+    "description": "Метка выбора срока действия токена",
+    "value": "Срок действия токена"
+  },
+  "downloadRpc.tokenTtl.hint": {
+    "description": "Подсказка к выбору срока действия токена",
+    "value": "Сколько времени созданный токен остаётся действительным. Чем короче, тем безопаснее; после истечения срока пакет перестаёт работать."
+  },
+  "downloadRpc.tokenTtl.15m": {
+    "description": "Вариант срока действия токена: 15 минут",
+    "value": "15 минут"
+  },
+  "downloadRpc.tokenTtl.1h": {
+    "description": "Вариант срока действия токена: 1 час",
+    "value": "1 час"
+  },
+  "downloadRpc.tokenTtl.8h": {
+    "description": "Вариант срока действия токена: 8 часов",
+    "value": "8 часов"
+  },
+  "downloadRpc.tokenTtl.24h": {
+    "description": "Вариант срока действия токена: 24 часа",
+    "value": "24 часа"
+  },
+  "downloadRpc.command.label": {
+    "description": "Метка выбора команды RPC",
+    "value": "Команда"
+  },
+  "downloadRpc.command.activate": {
+    "description": "Вариант команды «Активировать»",
+    "value": "Активировать"
+  },
+  "downloadRpc.command.deactivate": {
+    "description": "Вариант команды «Деактивировать»",
+    "value": "Деактивировать"
+  },
+  "downloadRpc.version.label": {
+    "description": "Метка выбора версии rpc-go",
+    "value": "Версия rpc-go"
+  },
+  "downloadRpc.os.label": {
+    "description": "Метка выбора операционной системы",
+    "value": "Операционная система"
+  },
+  "downloadRpc.profile.label": {
+    "description": "Метка выбора профиля",
+    "value": "Профиль"
+  },
+  "downloadRpc.domain.label": {
+    "description": "Метка выбора домена",
+    "value": "Домен"
+  },
+  "downloadRpc.auth.label": {
+    "description": "Метка группы способа аутентификации",
+    "value": "Аутентификация"
+  },
+  "downloadRpc.auth.none": {
+    "description": "Вариант аутентификации без учётных данных (по умолчанию)",
+    "value": "Не указывать учётные данные"
+  },
+  "downloadRpc.auth.noneNote": {
+    "description": "Примечание, когда в пакет не будут встроены учётные данные",
+    "value": "Пакет не будет содержать учётных данных. Их нужно указать на устройстве другим способом: передайте --auth-username и --auth-password (или --auth-token) при запуске rpc либо задайте переменные окружения AUTH_USERNAME и AUTH_PASSWORD (или AUTH_TOKEN)."
+  },
+  "downloadRpc.auth.token": {
+    "description": "Вариант аутентификации «Создать токен»",
+    "value": "Создать токен"
+  },
+  "downloadRpc.download": {
+    "description": "Текст кнопки «Скачать»",
+    "value": "Скачать"
+  },
+  "downloadRpc.success": {
+    "description": "Сообщение об успешной загрузке пакета",
+    "value": "Пакет загружен"
+  },
+  "downloadRpc.failVersions": {
+    "description": "Сообщение об ошибке загрузки версий rpc-go",
+    "value": "Не удалось загрузить версии rpc-go"
+  },
+  "downloadRpc.failPackage": {
+    "description": "Сообщение об ошибке сборки пакета",
+    "value": "Не удалось собрать пакет"
+  },
+  "downloadRpc.failProfiles": {
+    "description": "Сообщение об ошибке загрузки профилей",
+    "value": "Не удалось загрузить профили"
+  },
+  "downloadRpc.failDomains": {
+    "description": "Сообщение об ошибке загрузки доменов",
+    "value": "Не удалось загрузить домены"
+  },
+  "downloadRpc.subtitle": {
+    "description": "Подзаголовок страницы «Скачать RPC»",
+    "value": "Соберите готовый к запуску пакет rpc-go для активации или деактивации Intel AMT на устройстве."
+  },
+  "downloadRpc.intro.contents": {
+    "description": "Поясняет, что содержит загруженный пакет",
+    "value": "rpc-go — это утилита командной строки, которая работает на устройстве AMT и подключает его к Console. Загружается zip-архив с исполняемым файлом rpc-go и файлом config.yaml, в котором уже указаны адрес этой Console и выбранные ниже параметры."
+  },
+  "downloadRpc.intro.usage": {
+    "description": "Поясняет, как использовать загруженный пакет на устройстве",
+    "value": "Скопируйте архив на устройство, распакуйте его и из этой папки выполните \"rpc activate\" или \"rpc deactivate\" (rpc.exe в Windows) с правами администратора или root. rpc-go читает config.yaml из папки, в которой запускается."
+  },
+  "downloadRpc.command.hint": {
+    "description": "Подсказка к выбору команды RPC",
+    "value": "«Активировать» подготавливает Intel AMT на устройстве с выбранным профилем. «Деактивировать» удаляет конфигурацию AMT."
+  },
+  "downloadRpc.version.hint": {
+    "description": "Подсказка к выбору версии rpc-go",
+    "value": "Версия rpc-go для пакета. Совместима только rpc-go v3; показаны 5 последних версий."
+  },
+  "downloadRpc.os.hint": {
+    "description": "Подсказка к выбору операционной системы",
+    "value": "Операционная система устройства AMT, на котором будет запускаться пакет. «Windows и Linux» помещает обе сборки в один пакет."
+  },
+  "downloadRpc.os.windows": {
+    "description": "Вариант «Windows» при выборе операционной системы",
+    "value": "Windows"
+  },
+  "downloadRpc.os.linux": {
+    "description": "Вариант «Linux» при выборе операционной системы",
+    "value": "Linux"
+  },
+  "downloadRpc.os.both": {
+    "description": "Вариант «Windows и Linux» при выборе операционной системы",
+    "value": "Windows и Linux"
+  },
+  "downloadRpc.profile.hint": {
+    "description": "Подсказка к выбору профиля",
+    "value": "Профиль AMT, с которым активируется устройство. Профили настраиваются на странице «Профили»."
+  },
+  "downloadRpc.domain.hint": {
+    "description": "Подсказка к выбору домена",
+    "value": "Обязательно для режима Admin Control: домен, сертификат подготовки которого соответствует DNS-суффиксу устройства."
   }
 }

@@ -16,7 +16,6 @@ import { of, throwError } from 'rxjs'
 import { AboutComponent } from '../core/about/about.component'
 import { environment } from '../../environments/environment'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
-import { provideNoopAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
@@ -45,7 +44,6 @@ describe('LoginComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
-        provideNoopAnimations(),
         { provide: AuthService, useValue: authServiceSpy },
         { provide: MatSnackBar, useValue: snackBarSpy },
         { provide: MatDialog, useValue: dialogSpy },

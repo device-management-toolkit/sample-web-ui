@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DevicesService } from '../devices.service'
 import { DeviceToolbarComponent } from './device-toolbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -95,7 +94,6 @@ describe('DeviceToolbarComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         DeviceToolbarComponent
       ],

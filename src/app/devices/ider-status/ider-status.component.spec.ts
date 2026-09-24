@@ -5,7 +5,6 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideTranslateService } from '@ngx-translate/core'
 import { IderStatusComponent } from './ider-status.component'
 
@@ -15,7 +14,7 @@ describe('IderStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, IderStatusComponent],
+      imports: [IderStatusComponent],
       providers: [provideTranslateService()]
     }).compileComponents()
 

@@ -626,3 +626,35 @@ export interface DisplaySelectionRequest {
 export interface ServerFeatures {
   ciraEnabled: boolean
 }
+
+export type RpcCommand = 'activate' | 'deactivate'
+export type RpcAuthMode = 'none' | 'token'
+
+// One downloadable rpc-go build, as returned by Console.
+export interface RpcAsset {
+  os: string // e.g. 'windows' | 'linux'
+  arch: string // e.g. 'x64' | 'x86'
+}
+
+// An rpc-go release (v3+, betas included) returned by Console.
+export interface RpcRelease {
+  version: string
+  assets: RpcAsset[]
+}
+
+export interface PackageAuth {
+  mode: RpcAuthMode
+}
+
+// Body posted to POST /api/package.
+export interface PackageRequest {
+  command: RpcCommand
+  version: string
+  os: string
+  arch: string
+  auth: PackageAuth
+  serverUrl: string // base URL rpc-go is pointed at
+  tokenTtl?: string // token auth only
+  profile?: string // activate only
+  domain?: string // activate + ACM only
+}

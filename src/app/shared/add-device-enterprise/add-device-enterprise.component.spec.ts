@@ -15,7 +15,6 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { provideTranslateService } from '@ngx-translate/core'
 
 describe('AddDeviceEnterpriseComponent', () => {
@@ -29,7 +28,6 @@ describe('AddDeviceEnterpriseComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         MatDialogModule,
         MatCheckboxModule,
         MatInputModule,
@@ -115,7 +113,6 @@ describe('AddDeviceEnterpriseComponent with existing device', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         MatDialogModule,
         MatCheckboxModule,
         MatInputModule,

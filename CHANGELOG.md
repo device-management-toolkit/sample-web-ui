@@ -1,3 +1,12 @@
+# [3.67.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.2...v3.67.0) (2026-09-23)
+
+
+### Features
+
+* **devices:** add enterprise Download RPC page ([#3572](https://github.com/device-management-toolkit/sample-web-ui/issues/3572)) ([8c4108c](https://github.com/device-management-toolkit/sample-web-ui/commit/8c4108c6de0a7174002c050aeb7609fde7953de0)), closes [device-management-toolkit/console#1144](https://github.com/device-management-toolkit/console/issues/1144)
+
+## [3.66.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.1...v3.66.2) (2026-09-21)
+
 ## [3.66.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.0...v3.66.1) (2026-09-03)
 
 

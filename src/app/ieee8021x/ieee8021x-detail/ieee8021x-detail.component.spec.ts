@@ -6,7 +6,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { of } from 'rxjs'
 import { IEEE8021xService } from '../ieee8021x.service'
@@ -46,7 +45,6 @@ describe('IEEE8021xDetailComponent', () => {
     ieee8021xService.refreshCountByInterface.mockReturnValue(of({}))
     TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         RouterModule,
         IEEE8021xDetailComponent
       ],

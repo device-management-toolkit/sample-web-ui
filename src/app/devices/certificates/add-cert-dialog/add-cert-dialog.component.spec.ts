@@ -9,7 +9,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddCertDialogComponent } from './add-cert-dialog.component'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from '../../devices.service'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { of } from 'rxjs'
 import { FormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -33,7 +32,6 @@ describe('AddCertDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         AddCertDialogComponent,
-        NoopAnimationsModule,
         FormsModule,
         MatCheckboxModule
       ],
