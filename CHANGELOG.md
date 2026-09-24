@@ -1,3 +1,10 @@
+## [3.67.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.0...v3.67.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* flip SOL button back to Connect after manual disconnect ([#3568](https://github.com/device-management-toolkit/sample-web-ui/issues/3568)) ([9d5a302](https://github.com/device-management-toolkit/sample-web-ui/commit/9d5a302b98055a36ded3cfac3476d6604d5ebdb2))
+
 # [3.67.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.2...v3.67.0) (2026-09-23)
 
 
