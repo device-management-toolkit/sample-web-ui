@@ -7,6 +7,25 @@
   flex: 0 0 75px;
 }
 
+.product-type-chip,
+.control-mode-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background: #e5e5e5;
+}
+
+.control-mode-chip {
+  background: #b0bec5;
+}
+
+.control-mode-chip.active {
+  background: #0277bd;
+  color: #fff;
+}
+
 mat-icon.addTag {
   visibility: hidden;
 }

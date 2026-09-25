@@ -15,11 +15,6 @@ describe('Test Device Page', () => {
   beforeEach('', () => {
     cy.setup()
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
-      statusCode: httpCodes.SUCCESS,
-      body: devices.getAll.forPaging.response
-    }).as('get-devices')
-
     cy.myIntercept('GET', 'api/v1/devices/stats', {
       statusCode: httpCodes.SUCCESS,
       body: {
@@ -40,17 +35,20 @@ describe('Test Device Page', () => {
       statusCode: httpCodes.SUCCESS,
       body: { powerstate: 2 }
     }).as('get-powerstate')
-
-    cy.goToPage('Devices')
-    cy.wait('@get-device-stats')
   })
 
   it('pagination for next page', () => {
+    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.forPaging.response
+    }).as('get-devices')
+
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices2')
 
+    cy.goToPage('Devices')
     cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices')
 
@@ -59,11 +57,17 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for previous page', () => {
+    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.forPaging.response
+    }).as('get-devices')
+
     cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices4')
 
+    cy.goToPage('Devices')
     cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices')
 
@@ -74,11 +78,17 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for last page', () => {
+    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.forPaging.response
+    }).as('get-devices')
+
     cy.myIntercept('GET', 'devices?$top=25&$skip=75&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices6')
 
+    cy.goToPage('Devices')
     cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices')
 
@@ -88,11 +98,17 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for first page', () => {
+    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      statusCode: httpCodes.SUCCESS,
+      body: devices.getAll.forPaging.response
+    }).as('get-devices')
+
     cy.myIntercept('GET', 'devices?$top=25&$skip=75&$count=true', {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices8')
 
+    cy.goToPage('Devices')
     cy.get('mat-paginator').find('.mat-mdc-paginator-range-label').contains(`1 – 25 of ${deviceFixtures.totalCount}`)
     cy.wait('@get-devices')
 
