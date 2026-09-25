@@ -118,4 +118,19 @@ describe('ToolbarComponent', () => {
 
     expect(component.isLoggedIn).toBeTruthy()
   })
+
+  it('should show the account menu when logged in', () => {
+    isLoggedInSubject.next(true)
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.textContent).toContain('account_circle')
+  })
+
+  it('should hide the account menu when auth is disabled', () => {
+    component.authDisabled = true
+    isLoggedInSubject.next(true)
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.textContent).not.toContain('account_circle')
+  })
 })
