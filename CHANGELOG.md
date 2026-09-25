@@ -1,3 +1,10 @@
+# [3.68.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.1...v3.68.0) (2026-09-25)
+
+
+### Features
+
+* add tabs, product type column, and discovered field ([#3417](https://github.com/device-management-toolkit/sample-web-ui/issues/3417)) ([ccb263d](https://github.com/device-management-toolkit/sample-web-ui/commit/ccb263d9d767cfa425109c3e69d098fd7822c40f))
+
 ## [3.67.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.0...v3.67.1) (2026-09-24)
 
 
