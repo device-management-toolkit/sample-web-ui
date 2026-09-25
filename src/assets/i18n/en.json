@@ -1551,6 +1551,10 @@
     "description": "Table column header for device status",
     "value": "Status"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Product Type"
+  },
   "devices.table.tags": {
     "description": "Table column header for tags",
     "value": "Tags"
@@ -1558,6 +1562,14 @@
   "deviceToolbar.power.off": {
     "description": "Power tooltip for Off",
     "value": "Power: Off"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Discovered"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Managed"
   },
   "deviceToolbar.power.on": {
     "description": "Power tooltip for On",

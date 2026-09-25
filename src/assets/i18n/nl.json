@@ -1073,6 +1073,10 @@
     "description": "Tabelkolomkop voor apparaatstatus",
     "value": "Status"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Producttype"
+  },
   "devices.table.tags": {
     "description": "Tabelkolomkop voor tags",
     "value": "Tags"
@@ -1080,6 +1084,14 @@
   "deviceToolbar.power.off": {
     "description": "Energie-tooltip voor uitgeschakeld",
     "value": "Stroom: Uit"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Ontdekt"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Beheerd"
   },
   "deviceToolbar.power.on": {
     "description": "Energie-tooltip voor ingeschakeld",

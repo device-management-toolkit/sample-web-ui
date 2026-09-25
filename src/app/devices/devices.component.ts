@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
 import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
-import { Device, PageEventOptions } from '../../models/models'
+import { Device, DeviceFilterStatus, PageEventOptions } from '../../models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
@@ -47,6 +47,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
+import { MatTabGroup, MatTab } from '@angular/material/tabs'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -86,6 +87,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatPaginator,
     MatHint,
     RouterModule,
+    MatTabGroup,
+    MatTab,
     TranslatePipe
   ]
 })
@@ -108,6 +111,76 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
 
+  // Discovered/Managed tabs are a console-only concept.
+  public activeTab = signal(0)
+  private serverTotalCount = 0
+  private serverActivatedCount = 0
+  private serverDiscoveredCount = 0
+
+  get allCount(): number {
+    return this.serverTotalCount
+  }
+
+  // Count for the currently selected tab, used to drive the paginator length.
+  get currentTabCount(): number {
+    if (this.isCloudMode) {
+      return this.serverTotalCount
+    }
+    return this.activeTab() === 1 ? this.serverActivatedCount : this.serverDiscoveredCount
+  }
+
+  get discoveredTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.discovered.value')} (${this.discoveredCount})`
+  }
+
+  get managedTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.managed.value')} (${this.activatedCount})`
+  }
+
+  get activatedCount(): number {
+    return this.serverActivatedCount
+  }
+
+  get discoveredCount(): number {
+    return this.serverDiscoveredCount
+  }
+
+  // Power actions don't apply to devices that haven't been activated yet.
+  get isDiscoveredTab(): boolean {
+    return !this.isCloudMode && this.activeTab() === 0
+  }
+
+  onTabChange(index: number): void {
+    this.activeTab.set(index)
+    // Different tabs return different result sets, so reset paging to the first page.
+    this.pageEvent.startsFrom = 0
+    if (this.paginator) {
+      this.paginator.pageIndex = 0
+    }
+    this.getDevices()
+  }
+
+  private currentTabStatus(): DeviceFilterStatus | undefined {
+    if (this.isCloudMode) {
+      return undefined
+    }
+    return this.activeTab() === 1 ? 'activated' : 'discovered'
+  }
+
+  private loadStats(): void {
+    this.devicesService.getStats().subscribe({
+      next: (stats) => {
+        this.serverTotalCount = stats.totalCount
+        this.serverActivatedCount = stats.activatedCount
+        this.serverDiscoveredCount = stats.discoveredCount
+        this.totalCount.set(this.currentTabCount)
+      },
+      error: (err) => {
+        console.error('Error loading device stats:', err)
+      }
+    })
+  }
+
   get deleteDeviceLabel(): string {
     return this.isCloudMode
       ? this.translate.instant('devices.actions.deactivateCloud.value')
@@ -119,6 +192,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     'hostname',
     'guid',
     'status',
+    'productType',
     'tags',
     'actions',
     'notification'
@@ -140,6 +214,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       this.displayedColumns = [
         'select',
         'hostname',
+        'productType',
         'tags',
         'actions',
         'notification'
@@ -203,15 +278,17 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   getDevices(): void {
     this.isLoading.set(true)
 
+    // Counts (all/activated/discovered) are computed server-side and shared with
+    // headless/API consumers, so refresh them alongside the current page.
+    this.loadStats()
+
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
 
     this.devicesService
-      .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
+      .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
-          this.totalCount.set(res.totalCount)
-
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
           }
@@ -335,11 +412,21 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount() === 0
+    return !this.isLoading() && this.devices.data.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {
     await this.router.navigate([`/devices/${path}`])
+  }
+
+  getProductType(device: Device): string {
+    const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
+    if (isNaN(skuNum)) return 'non-vPro'
+    const isISM = (skuNum & 0x10) > 0
+    const isVPro = (skuNum & 0x08) > 0
+    if (isISM) return 'ISM'
+    if (isVPro) return 'vPro'
+    return 'non-vPro'
   }
 
   translateConnectionStatus(status?: boolean): string {

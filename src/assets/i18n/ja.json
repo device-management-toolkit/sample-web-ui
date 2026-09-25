@@ -1065,6 +1065,10 @@
     "description": "デバイス状態のテーブル列見出し",
     "value": "ステータス"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "製品タイプ"
+  },
   "devices.table.tags": {
     "description": "タグ用テーブル列ヘッダー",
     "value": "タグ"
@@ -1072,6 +1076,14 @@
   "deviceToolbar.power.off": {
     "description": "電源オフのツールチップ",
     "value": "電源: オフ"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "検出済み"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "管理対象"
   },
   "deviceToolbar.power.on": {
     "description": "電源オンのツールチップ",
