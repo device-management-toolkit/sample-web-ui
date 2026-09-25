@@ -1065,6 +1065,14 @@
     "description": "כותרת עמודות טבלה למצב המכשיר",
     "value": "סטָטוּס"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "סוג מוצר"
+  },
+  "devices.table.controlMode": {
+    "description": "Table column header for control mode",
+    "value": "מצב בקרה"
+  },
   "devices.table.tags": {
     "description": "כותרת עמודות טבלה לתגיות",
     "value": "תגיות"
@@ -1072,6 +1080,30 @@
   "deviceToolbar.power.off": {
     "description": "רמז מצב צריכת חשמל עבור כבוי",
     "value": "חשמל: כבוי"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "התגלה"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "מנוהל"
+  },
+  "devices.controlMode.acm": {
+    "description": "Control mode chip label for Admin Control Mode",
+    "value": "ACM"
+  },
+  "devices.controlMode.ccm": {
+    "description": "Control mode chip label for Client Control Mode",
+    "value": "CCM"
+  },
+  "devices.controlMode.notActivated": {
+    "description": "Control mode chip label for a device that has not been activated",
+    "value": "לא מופעל"
+  },
+  "devices.controlMode.unknown": {
+    "description": "Control mode chip label when the control mode is not available",
+    "value": "UNKNOWN"
   },
   "deviceToolbar.power.on": {
     "description": "רמז מצב צריכת חשמל עבור פועל",

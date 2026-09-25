@@ -1,3 +1,17 @@
+## [3.68.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.0...v3.68.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* Added control mode column to the Ui" ([#3535](https://github.com/device-management-toolkit/sample-web-ui/issues/3535)) ([cff4d1c](https://github.com/device-management-toolkit/sample-web-ui/commit/cff4d1c465c04b078871431ea2a3ae71e07d27d2))
+
+# [3.68.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.1...v3.68.0) (2026-09-25)
+
+
+### Features
+
+* add tabs, product type column, and discovered field ([#3417](https://github.com/device-management-toolkit/sample-web-ui/issues/3417)) ([ccb263d](https://github.com/device-management-toolkit/sample-web-ui/commit/ccb263d9d767cfa425109c3e69d098fd7822c40f))
+
 ## [3.67.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.0...v3.67.1) (2026-09-24)
 
 

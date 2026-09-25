@@ -16,15 +16,17 @@
       </button>
     </div>
     <div>
-      <button mat-icon-button [matTooltip]="'devices.bulk.powerUp.value' | translate" (click)="bulkPowerAction(2)">
-        <mat-icon>power</mat-icon>
-      </button>
-      <button mat-icon-button [matTooltip]="'devices.bulk.powerOff.value' | translate" (click)="bulkPowerAction(8)">
-        <mat-icon>power_off</mat-icon>
-      </button>
-      <button mat-icon-button [matTooltip]="'devices.bulk.restart.value' | translate" (click)="bulkPowerAction(5)">
-        <mat-icon>restart_alt</mat-icon>
-      </button>
+      @if (!isDiscoveredTab) {
+        <button mat-icon-button [matTooltip]="'devices.bulk.powerUp.value' | translate" (click)="bulkPowerAction(2)">
+          <mat-icon>power</mat-icon>
+        </button>
+        <button mat-icon-button [matTooltip]="'devices.bulk.powerOff.value' | translate" (click)="bulkPowerAction(8)">
+          <mat-icon>power_off</mat-icon>
+        </button>
+        <button mat-icon-button [matTooltip]="'devices.bulk.restart.value' | translate" (click)="bulkPowerAction(5)">
+          <mat-icon>restart_alt</mat-icon>
+        </button>
+      }
       <button mat-icon-button [matTooltip]="'devices.bulk.deactivate.value' | translate" (click)="bulkDeactivate()">
         <mat-icon>delete</mat-icon>
       </button>
@@ -37,6 +39,15 @@
 
 <mat-card>
   <mat-card-content>
+    <!-- Discovered/Managed tabs are a console-only concept. Tabs must
+         stay visible even when the active tab has zero rows, otherwise the
+         user has no way to switch to a tab that does have data. -->
+    @if (!isCloudMode) {
+      <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
+        <mat-tab [label]="discoveredTabLabel"></mat-tab>
+        <mat-tab [label]="managedTabLabel"></mat-tab>
+      </mat-tab-group>
+    }
     @if (isNoData()) {
       <h3 class="flex justify-center">
         @if (!filteredTags().length) {
@@ -120,6 +131,26 @@
             }
           </mat-cell>
         </ng-container>
+        <!-- productType Column -->
+        <ng-container matColumnDef="productType">
+          <!-- not sortable: productType is computed, not a real Device property -->
+          <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            <span class="product-type-chip">{{ getProductType(element) }}</span>
+          </mat-cell>
+        </ng-container>
+        <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
+        <ng-container matColumnDef="controlMode">
+          <!-- not sortable: controlMode is computed, not a real Device property -->
+          <mat-header-cell *matHeaderCellDef>{{ 'devices.table.controlMode.value' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+            <span
+              class="control-mode-chip"
+              [class.active]="getControlMode(element) === 'acm' || getControlMode(element) === 'ccm'">
+              {{ 'devices.controlMode.' + getControlMode(element) + '.value' | translate }}
+            </span>
+          </mat-cell>
+        </ng-container>
         <!-- tags Column -->
         <ng-container matColumnDef="tags">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -142,24 +173,26 @@
           <mat-cell *matCellDef="let element">
             @if (!selectedDevices.isSelected(element)) {
               <div>
-                <button
-                  mat-icon-button
-                  [matTooltip]="'devices.actions.powerUp.value' | translate"
-                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 2)">
-                  <mat-icon>power</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  [matTooltip]="'devices.actions.powerOff.value' | translate"
-                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 8)">
-                  <mat-icon>power_off</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  [matTooltip]="'devices.actions.restart.value' | translate"
-                  (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
-                  <mat-icon>restart_alt</mat-icon>
-                </button>
+                @if (!isDiscoveredTab) {
+                  <button
+                    mat-icon-button
+                    [matTooltip]="'devices.actions.powerUp.value' | translate"
+                    (click)="$event.stopPropagation(); sendPowerAction(element.guid, 2)">
+                    <mat-icon>power</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    [matTooltip]="'devices.actions.powerOff.value' | translate"
+                    (click)="$event.stopPropagation(); sendPowerAction(element.guid, 8)">
+                    <mat-icon>power_off</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    [matTooltip]="'devices.actions.restart.value' | translate"
+                    (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
+                    <mat-icon>restart_alt</mat-icon>
+                  </button>
+                }
                 <button
                   mat-icon-button
                   [matTooltip]="deleteDeviceLabel"
@@ -203,7 +236,7 @@
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
           [pageSize]="pageEvent.pageSize"
-          [length]="totalCount()"
+          [length]="currentTabCount"
           (page)="pageChanged($event)"
           showFirstLastButtons>
         </mat-paginator>

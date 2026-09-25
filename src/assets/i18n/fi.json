@@ -1069,6 +1069,14 @@
     "description": "Laitteen tilan taulukon sarakkeen otsikko",
     "value": "Tila"
   },
+  "devices.table.productType": {
+    "description": "Table column header for product type",
+    "value": "Tuotetyyppi"
+  },
+  "devices.table.controlMode": {
+    "description": "Table column header for control mode",
+    "value": "Ohjaustila"
+  },
   "devices.table.tags": {
     "description": "Taulukon sarakkeen otsikko tunnisteille",
     "value": "Tunnisteet"
@@ -1076,6 +1084,30 @@
   "deviceToolbar.power.off": {
     "description": "Virtatilan vihjeteksti tilalle pois päältä",
     "value": "Virta: Pois päältä"
+  },
+  "devices.tabs.discovered": {
+    "description": "Tab label for discovered devices",
+    "value": "Löydetty"
+  },
+  "devices.tabs.managed": {
+    "description": "Tab label for managed (activated) devices",
+    "value": "Hallittu"
+  },
+  "devices.controlMode.acm": {
+    "description": "Control mode chip label for Admin Control Mode",
+    "value": "ACM"
+  },
+  "devices.controlMode.ccm": {
+    "description": "Control mode chip label for Client Control Mode",
+    "value": "CCM"
+  },
+  "devices.controlMode.notActivated": {
+    "description": "Control mode chip label for a device that has not been activated",
+    "value": "Ei aktivoitu"
+  },
+  "devices.controlMode.unknown": {
+    "description": "Control mode chip label when the control mode is not available",
+    "value": "UNKNOWN"
   },
   "deviceToolbar.power.on": {
     "description": "Virtatilan vihjeteksti tilalle päällä",
