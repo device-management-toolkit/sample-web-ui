@@ -1571,6 +1571,10 @@
     "description": "Tab label for discovered devices",
     "value": "Discovered"
   },
+  "devices.tabs.discoveredPreview": {
+    "description": "Chip marking the Discovered devices tab as a preview feature",
+    "value": "Preview Feature"
+  },
   "devices.tabs.managed": {
     "description": "Tab label for managed (activated) devices",
     "value": "Managed"
