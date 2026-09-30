@@ -1,3 +1,10 @@
+# [3.69.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.1...v3.69.0) (2026-09-30)
+
+
+### Features
+
+* mark Discovered tab as preview and show Managed first ([#3592](https://github.com/device-management-toolkit/sample-web-ui/issues/3592)) ([9fbb1a7](https://github.com/device-management-toolkit/sample-web-ui/commit/9fbb1a7ed0a1052466ed7cdf03a823b19385f6b6))
+
 ## [3.68.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.0...v3.68.1) (2026-09-25)
 
 
