@@ -47,7 +47,9 @@ export interface RpcExecOptions {
 
 // rpc activate/deactivate and docker pulls routinely run for minutes, which is
 // why the suite has always asked for far more than cy.exec()'s 60s default.
-const DEFAULT_EXEC_TIMEOUT = 240000
+// A cloud ACM activation on AMT 21 was measured at 264s end to end, so the
+// previous 240000 cap killed a run that would otherwise have succeeded.
+const DEFAULT_EXEC_TIMEOUT = 420000
 
 // Headroom so the Node-side kill timer always fires before Cypress gives up.
 // Otherwise Cypress aborts the run while the child process keeps going, and the
