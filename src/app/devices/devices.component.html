@@ -43,9 +43,16 @@
          stay visible even when the active tab has zero rows, otherwise the
          user has no way to switch to a tab that does have data. -->
     @if (!isCloudMode) {
-      <mat-tab-group (selectedTabChange)="onTabChange($event.index)">
-        <mat-tab [label]="discoveredTabLabel"></mat-tab>
+      <mat-tab-group [selectedIndex]="activeTab()" (selectedTabChange)="onTabChange($event.index)">
         <mat-tab [label]="managedTabLabel"></mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>{{ discoveredTabLabel }}</span>
+            <mat-chip class="preview-chip" highlighted color="warn" disableRipple data-cy="discoveredPreviewChip">
+              {{ 'devices.tabs.discoveredPreview.value' | translate }}
+            </mat-chip>
+          </ng-template>
+        </mat-tab>
       </mat-tab-group>
     }
     @if (isNoData()) {

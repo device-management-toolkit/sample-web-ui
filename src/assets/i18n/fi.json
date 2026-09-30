@@ -1089,6 +1089,10 @@
     "description": "Tab label for discovered devices",
     "value": "Löydetty"
   },
+  "devices.tabs.discoveredPreview": {
+    "description": "Chip marking the Discovered devices tab as a preview feature",
+    "value": "Esikatseluominaisuus"
+  },
   "devices.tabs.managed": {
     "description": "Tab label for managed (activated) devices",
     "value": "Hallittu"

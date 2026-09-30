@@ -47,7 +47,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
-import { MatTabGroup, MatTab } from '@angular/material/tabs'
+import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -89,6 +89,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     RouterModule,
     MatTabGroup,
     MatTab,
+    MatTabLabel,
     TranslatePipe
   ]
 })
@@ -111,7 +112,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
 
-  // Discovered/Managed tabs are a console-only concept.
+  // Discovered/Managed tabs are a console-only concept. Managed is tab 0 (shown
+  // first) since Discovered requires rpc-go v3, which isn't released yet.
   public activeTab = signal(0)
   private serverTotalCount = 0
   private serverActivatedCount = 0
@@ -126,7 +128,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     if (this.isCloudMode) {
       return this.serverTotalCount
     }
-    return this.activeTab() === 1 ? this.serverActivatedCount : this.serverDiscoveredCount
+    return this.activeTab() === 0 ? this.serverActivatedCount : this.serverDiscoveredCount
   }
 
   get discoveredTabLabel(): string {
@@ -147,7 +149,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   // Power actions don't apply to devices that haven't been activated yet.
   get isDiscoveredTab(): boolean {
-    return !this.isCloudMode && this.activeTab() === 0
+    return !this.isCloudMode && this.activeTab() === 1
   }
 
   onTabChange(index: number): void {
@@ -164,7 +166,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     if (this.isCloudMode) {
       return undefined
     }
-    return this.activeTab() === 1 ? 'activated' : 'discovered'
+    return this.activeTab() === 0 ? 'activated' : 'discovered'
   }
 
   private loadStats(): void {

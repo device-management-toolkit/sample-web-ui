@@ -375,38 +375,42 @@ describe('DevicesComponent', () => {
       getDevicesSpy.mockClear()
     })
 
-    it('should request discovered devices from the server on tab 0', () => {
-      component.onTabChange(0)
+    it('should default to the Managed tab', () => {
       expect(component.activeTab()).toBe(0)
-      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
     })
 
-    it('should request activated (managed) devices from the server on tab 1', () => {
+    it('should request activated (managed) devices from the server on tab 0', () => {
+      component.onTabChange(0)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+    })
+
+    it('should request discovered devices from the server on tab 1', () => {
       component.onTabChange(1)
       expect(component.activeTab()).toBe(1)
-      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
     })
 
     it('should set currentTabCount from the active tab', () => {
       component.onTabChange(0)
-      expect(component.currentTabCount).toBe(3)
-      component.onTabChange(1)
       expect(component.currentTabCount).toBe(7)
+      component.onTabChange(1)
+      expect(component.currentTabCount).toBe(3)
     })
 
-    it('should treat tab 0 as the discovered tab and tab 1 as managed', () => {
+    it('should treat tab 0 as managed and tab 1 as the discovered tab', () => {
       component.onTabChange(0)
-      expect(component.isDiscoveredTab).toBe(true)
-      component.onTabChange(1)
       expect(component.isDiscoveredTab).toBe(false)
+      component.onTabChange(1)
+      expect(component.isDiscoveredTab).toBe(true)
     })
 
     it('should show the control mode column only on the managed tab', () => {
       component.onTabChange(0)
-      expect(component.displayedColumns).not.toContain('controlMode')
+      expect(component.displayedColumns).toContain('controlMode')
 
       component.onTabChange(1)
-      expect(component.displayedColumns).toContain('controlMode')
+      expect(component.displayedColumns).not.toContain('controlMode')
     })
   })
 
