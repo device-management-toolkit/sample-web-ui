@@ -1036,12 +1036,8 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should select proxy profile and assign priority', () => {
-      const event = {
-        option: { value: 'proxy1' }
-      } as MatAutocompleteSelectedEvent
-
       component.selectedProxyConfigs.set([])
-      component.selectProxyProfile(event)
+      component.selectProxyProfile('proxy1')
 
       const selectedConfigs = component.selectedProxyConfigs()
       expect(selectedConfigs.length).toBe(1)
@@ -1052,35 +1048,24 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should not add duplicate proxy profile', () => {
-      const event = {
-        option: { value: 'proxy1' }
-      } as MatAutocompleteSelectedEvent
-
       component.selectedProxyConfigs.set([
         { priority: 1, name: 'proxy1' }
       ])
 
-      component.selectProxyProfile(event)
+      component.selectProxyProfile('proxy1')
       expect(component.selectedProxyConfigs().length).toBe(1)
     })
 
     it('should not select NO_PROXY_CONFIGS option', () => {
-      const event = {
-        option: { value: 'profileDetail.noProxy.value' }
-      } as MatAutocompleteSelectedEvent
-
       component.selectedProxyConfigs.set([])
-      component.selectProxyProfile(event)
+      component.selectProxyProfile('profileDetail.noProxy.value')
       expect(component.selectedProxyConfigs().length).toBe(0)
     })
 
     it('should assign correct priority when adding multiple proxies', () => {
-      const event1 = { option: { value: 'proxy1' } } as MatAutocompleteSelectedEvent
-      const event2 = { option: { value: 'proxy2' } } as MatAutocompleteSelectedEvent
-
       component.selectedProxyConfigs.set([])
-      component.selectProxyProfile(event1)
-      component.selectProxyProfile(event2)
+      component.selectProxyProfile('proxy1')
+      component.selectProxyProfile('proxy2')
 
       const selectedConfigs = component.selectedProxyConfigs()
       expect(selectedConfigs.length).toBe(2)
@@ -1240,16 +1225,12 @@ describe('ProfileDetailComponent', () => {
     })
 
     it('should clear proxy autocomplete after selection', () => {
-      const event = {
-        option: { value: 'proxy1' }
-      } as MatAutocompleteSelectedEvent
-
       component.selectedProxyConfigs.set([])
-      const patchValueSpy = vi.spyOn(component.proxyAutocomplete, 'patchValue').mockImplementation(() => undefined)
+      const resetSpy = vi.spyOn(component.proxyAutocomplete, 'reset').mockImplementation(() => undefined)
 
-      component.selectProxyProfile(event)
+      component.selectProxyProfile('proxy1')
 
-      expect(patchValueSpy).toHaveBeenCalledWith('')
+      expect(resetSpy).toHaveBeenCalled()
     })
   })
 })
