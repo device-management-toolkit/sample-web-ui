@@ -421,6 +421,12 @@ describe('KvmComponent', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
     expect(snackBarSpy).not.toHaveBeenCalled()
   })
+  it('should stop listening to router events once destroyed', () => {
+    fixture.destroy()
+    component.isDisconnecting = false
+    ;(router.events as unknown as Subject<RouterEvent>).next(new NavigationStart(1, 'regular'))
+    expect(component.isDisconnecting).toBe(false)
+  })
   it('power up alert dialog', () => {
     const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)

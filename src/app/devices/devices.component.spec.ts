@@ -5,10 +5,11 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../test-helpers'
-import { ComponentFixture, TestBed, tick } from '@angular/core/testing'
+import { ApplicationRef } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
-import { of } from 'rxjs'
+import { of, Subject } from 'rxjs'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
@@ -165,12 +166,22 @@ describe('DevicesComponent', () => {
     expect(component.paginator.pageIndex).toBe(0)
     expect(component.paginator.showFirstLastButtons).toBe(true)
   })
-  it.skip('should reset response', () => {
+  it('should reset response', () => {
+    vi.useFakeTimers()
     expect(component.devices.data.length).toBeGreaterThan(0)
-    ;(component.devices.data[0] as any).StatusMessage = 'SUCCESS'
+    component.statusMessageByGuid.set({ [device01.guid]: 'SUCCESS' })
     component.resetResponse()
-    tick(5001)
-    expect((component.devices.data[0] as any).StatusMessage).toEqual('')
+    vi.advanceTimersByTime(5001)
+    vi.useRealTimers()
+    expect(component.statusMessageByGuid()[device01.guid]).toEqual('')
+  })
+  it('should reset the response of every device after a bulk power action', () => {
+    vi.useFakeTimers()
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    component.bulkPowerAction(8)
+    vi.advanceTimersByTime(5001)
+    vi.useRealTimers()
+    expect(component.statusMessageByGuid()).toEqual({ [device01.guid]: '', [device02.guid]: '' })
   })
   it('should fire bulk power action', () => {
     const resetResponseSpy = vi.spyOn(component, 'resetResponse').mockImplementation(() => undefined)
@@ -432,6 +443,102 @@ describe('DevicesComponent', () => {
       component.devices.data = []
       component.isLoading.set(true)
       expect(component.isNoData()).toBe(false)
+    })
+  })
+
+  describe('rendering changes that arrive without user interaction', () => {
+    const renderedText = (): string => (fixture.nativeElement as HTMLElement).textContent ?? ''
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('should show the power state fetched after a power action', async () => {
+      component.powerStates = { 2: 'On', 8: 'Off' }
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+      expect(renderedText()).toContain('Power: On')
+
+      vi.useFakeTimers()
+      const getPowerStateSpy = TestBed.inject(DevicesService).getPowerState as unknown as MockInstance
+      getPowerStateSpy.mockReturnValue(of({ powerstate: 8 }))
+      component.sendPowerAction(device01.guid, 8)
+      await vi.advanceTimersByTimeAsync(2100)
+
+      expect(renderedText()).toContain('Power: Off')
+    })
+
+    it('should remove the success icon when the power action response is reset', async () => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+
+      vi.useFakeTimers()
+      component.sendPowerAction(device01.guid, 2)
+      await vi.advanceTimersByTimeAsync(100)
+      expect(renderedText()).toContain('check_circle')
+
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(renderedText()).not.toContain('check_circle')
+    })
+
+    it('should update the tab counts when stats arrive after the device list', async () => {
+      const getStatsSpy = TestBed.inject(DevicesService).getStats as unknown as MockInstance
+      getStatsSpy.mockReturnValue(of({ totalCount: 1, activatedCount: 1, discoveredCount: 0 }))
+      component.isCloudMode = false
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+      expect(renderedText()).toContain('devices.tabs.discovered.value (0)')
+
+      const lateStats = new Subject<{ totalCount: number; activatedCount: number; discoveredCount: number }>()
+      getStatsSpy.mockReturnValue(lateStats)
+      component.getDevices()
+      await fixture.whenStable()
+      lateStats.next({ totalCount: 4, activatedCount: 1, discoveredCount: 3 })
+      await fixture.whenStable()
+
+      expect(renderedText()).toContain('devices.tabs.discovered.value (3)')
+    })
+
+    describe('editing tags', () => {
+      let warnSpy: MockInstance
+
+      beforeEach(async () => {
+        fixture.autoDetectChanges()
+        // Material re-renders once after the first pass; wait it out so only the edit can refresh the view.
+        do {
+          await fixture.whenStable()
+          await new Promise((resolve) => setTimeout(resolve))
+        } while (!fixture.isStable())
+        expect(renderedText()).toContain('tagA')
+
+        // The save stays pending so the reload cannot be what updates the row.
+        updateDeviceSpy.mockReturnValue(new Subject<Device>())
+        warnSpy = vi.spyOn(console, 'warn')
+        vi.spyOn(TestBed.inject(MatDialog), 'open').mockImplementation(((_component: unknown, config: any) => {
+          config.data.splice(0, config.data.length, 'tagEdited')
+          return createSpyObj({ afterClosed: of(true), close: null })
+        }) as any)
+      })
+
+      it('should show the edited tags when the tags dialog closes', async () => {
+        component.editTagsForDevice(device01.guid)
+        await fixture.whenStable()
+
+        expect(renderedText()).toContain('tagEdited')
+        expect(renderedText()).not.toContain('tagA')
+        expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
+        expect(warnSpy).not.toHaveBeenCalledWith(expect.stringContaining('NG0956'))
+      })
+
+      it('should show the bulk-edited tags when the tags dialog closes', async () => {
+        component.devices.data.forEach((d) => component.selectedDevices.select(d))
+        component.bulkEditTags()
+        await fixture.whenStable()
+
+        expect(renderedText()).toContain('tagEdited')
+        expect(renderedText()).not.toContain('tagCommon01')
+        expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
+      })
     })
   })
 })
