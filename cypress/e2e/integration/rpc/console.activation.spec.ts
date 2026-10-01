@@ -39,6 +39,13 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const isWin = Cypress.platform === 'win32'
     const authEndpoint = getAuthEndpoint()
 
+    // Console gives the suite no readiness signal to poll before it touches the
+    // AMT APIs: the Devices table only renders a connection status in cloud
+    // mode (non-cloud shows the power state instead), and AMT's own RAS status
+    // does not report the tunnel Console uses. So the settle time before the
+    // device page is a plain wait -- raise it if the AMT APIs still answer 503.
+    const deviceReadyWaitMs = 180000
+
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
     let activateCommand = ''
@@ -103,7 +110,11 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
             }
 
-            cy.wait(30000)
+            // Settle before touching the device page: opening it issues an AMT
+            // features query, and until Console can reach the device that
+            // answers 503, which Angular raises as an uncaught error and
+            // Cypress fails the test on.
+            cy.wait(deviceReadyWaitMs)
 
             // Re-query amtinfo after activation to get the updated IP address.
             // The ME can take minutes to publish an address, so poll rather
