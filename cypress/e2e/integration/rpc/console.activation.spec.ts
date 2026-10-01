@@ -19,7 +19,8 @@ import {
   buildInfoCommand,
   buildActivateCommand,
   getAmtInfo,
-  getAmtInfoWithRetry,
+  getAmtInfoWithIpAddressRetry,
+  resolveDeviceIpAddress,
   getAmtVersion,
   notActivatedControlModes,
   getAuthEndpoint
@@ -102,28 +103,30 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
             }
 
-            cy.wait(120000)
+            cy.wait(30000)
 
-            // Re-query amtinfo after activation to get the updated IP address
-            // Use retry logic since device may need time to report valid IP after activation
-            getAmtInfoWithRetry(infoCommand).then((postActivationInfo) => {
+            // Re-query amtinfo after activation to get the updated IP address.
+            // The ME can take minutes to publish an address, so poll rather
+            // than waiting a fixed interval.
+            getAmtInfoWithIpAddressRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
 
-              // Console identifies devices by IP address
-              const wiredIp = postActivationInfo.wiredAdapter?.ipAddress
-              const wirelessIp = postActivationInfo.wirelessAdapter?.ipAddress
-              const hasValidWiredIp = Boolean(wiredIp && wiredIp !== '0.0.0.0')
-              const hasValidWirelessIp = Boolean(wirelessIp && wirelessIp !== '0.0.0.0')
+              // Console lists the device under the address rpc-go registered it
+              // with, which is the OS address whenever AMT shares the host
+              // interface and reports 0.0.0.0 for itself.
+              const deviceIp = resolveDeviceIpAddress(postActivationInfo)
 
-              if (!hasValidWiredIp && !hasValidWirelessIp) {
-                const errorMessage = 'Device not provisioned: wired and wireless IP addresses are missing or 0.0.0.0'
+              if (deviceIp == null) {
+                const errorMessage =
+                  'Device not provisioned: no usable IP address on either adapter after activation. ' +
+                  `wired=${JSON.stringify(postActivationInfo.wiredAdapter)} ` +
+                  `wireless=${JSON.stringify(postActivationInfo.wirelessAdapter)}`
                 cy.log(errorMessage)
                 throw new Error(errorMessage)
               }
 
-              const deviceIp = hasValidWiredIp ? (wiredIp as string) : (wirelessIp as string)
               cy.log(`Using identifier to find device: ${deviceIp}`)
               cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
             })
