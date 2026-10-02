@@ -45,6 +45,7 @@ export class ToolbarComponent implements OnInit {
 
   public isLoggedIn = false
   public cloudMode: boolean = environment.cloud
+  public authDisabled: boolean = environment.authDisabled
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
   public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
