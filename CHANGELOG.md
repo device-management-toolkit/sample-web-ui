@@ -1,3 +1,45 @@
+## [3.69.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.0...v3.69.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **devices:** clean up devices page layout and stale rendering ([20d606e](https://github.com/device-management-toolkit/sample-web-ui/commit/20d606ecb56043aafecf64e0554c5ea5b91b2d4b))
+
+# [3.69.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.1...v3.69.0) (2026-09-30)
+
+
+### Features
+
+* mark Discovered tab as preview and show Managed first ([#3592](https://github.com/device-management-toolkit/sample-web-ui/issues/3592)) ([9fbb1a7](https://github.com/device-management-toolkit/sample-web-ui/commit/9fbb1a7ed0a1052466ed7cdf03a823b19385f6b6))
+
+## [3.68.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.0...v3.68.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* Added control mode column to the Ui" ([#3535](https://github.com/device-management-toolkit/sample-web-ui/issues/3535)) ([cff4d1c](https://github.com/device-management-toolkit/sample-web-ui/commit/cff4d1c465c04b078871431ea2a3ae71e07d27d2))
+
+# [3.68.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.1...v3.68.0) (2026-09-25)
+
+
+### Features
+
+* add tabs, product type column, and discovered field ([#3417](https://github.com/device-management-toolkit/sample-web-ui/issues/3417)) ([ccb263d](https://github.com/device-management-toolkit/sample-web-ui/commit/ccb263d9d767cfa425109c3e69d098fd7822c40f))
+
+## [3.67.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.67.0...v3.67.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* flip SOL button back to Connect after manual disconnect ([#3568](https://github.com/device-management-toolkit/sample-web-ui/issues/3568)) ([9d5a302](https://github.com/device-management-toolkit/sample-web-ui/commit/9d5a302b98055a36ded3cfac3476d6604d5ebdb2))
+
+# [3.67.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.2...v3.67.0) (2026-09-23)
+
+
+### Features
+
+* **devices:** add enterprise Download RPC page ([#3572](https://github.com/device-management-toolkit/sample-web-ui/issues/3572)) ([8c4108c](https://github.com/device-management-toolkit/sample-web-ui/commit/8c4108c6de0a7174002c050aeb7609fde7953de0)), closes [device-management-toolkit/console#1144](https://github.com/device-management-toolkit/console/issues/1144)
+
 ## [3.66.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.1...v3.66.2) (2026-09-21)
 
 ## [3.66.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.66.0...v3.66.1) (2026-09-03)

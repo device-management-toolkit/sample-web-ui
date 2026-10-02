@@ -1,0 +1,133 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title i18n>{{ 'downloadRpc.title.value' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'downloadRpc.subtitle.value' | translate }}</mat-card-subtitle>
+    <mat-chip class="preview-chip" highlighted color="warn" disableRipple data-cy="previewChip">
+      {{ 'downloadRpc.preview.value' | translate }}
+    </mat-chip>
+  </mat-card-header>
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card-content>
+    <div class="intro" data-cy="intro">
+      <p>{{ 'downloadRpc.intro.contents.value' | translate }}</p>
+      <p>{{ 'downloadRpc.intro.usage.value' | translate }}</p>
+    </div>
+    <form [formGroup]="form" class="flex flex-col">
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.serverUrl.label.value' | translate }}</mat-label>
+        <input matInput formControlName="serverUrl" autocomplete="off" spellcheck="false" data-cy="serverUrl" />
+        <mat-hint>{{ 'downloadRpc.serverUrl.hint.value' | translate }}</mat-hint>
+        @if (form.get('serverUrl')?.hasError('serverUrl')) {
+          <mat-error>{{ 'downloadRpc.serverUrl.invalid.value' | translate }}</mat-error>
+        } @else {
+          <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      @if (isLoopbackServerUrl()) {
+        <div class="server-url-warning" data-cy="serverUrlLocalWarning">
+          <mat-icon color="warn">warning</mat-icon>
+          <span>{{ 'downloadRpc.serverUrl.localWarning.value' | translate }}</span>
+        </div>
+      }
+
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.command.label.value' | translate }}</mat-label>
+        <mat-select formControlName="command" (selectionChange)="onProfileOrCommandChange()" data-cy="command">
+          @for (c of commands; track c.value) {
+            <mat-option [value]="c.value">{{ c.label | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ 'downloadRpc.command.hint.value' | translate }}</mat-hint>
+        <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.version.label.value' | translate }}</mat-label>
+        <mat-select formControlName="version" (selectionChange)="onVersionChange()" data-cy="version">
+          @for (r of releases(); track r.version) {
+            <mat-option [value]="r.version">{{ r.version }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ 'downloadRpc.version.hint.value' | translate }}</mat-hint>
+        <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'downloadRpc.os.label.value' | translate }}</mat-label>
+        <mat-select formControlName="os" data-cy="os">
+          @for (os of availableOses(); track os.value) {
+            <mat-option [value]="os.value">{{ os.label | translate }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ 'downloadRpc.os.hint.value' | translate }}</mat-hint>
+        <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+      </mat-form-field>
+
+      @if (form.get('command')?.value === 'activate') {
+        <mat-form-field>
+          <mat-label>{{ 'downloadRpc.profile.label.value' | translate }}</mat-label>
+          <mat-select formControlName="profile" (selectionChange)="onProfileOrCommandChange()" data-cy="profile">
+            @for (p of profiles(); track p.profileName) {
+              <mat-option [value]="p.profileName">{{ p.profileName }}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>{{ 'downloadRpc.profile.hint.value' | translate }}</mat-hint>
+          <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+        </mat-form-field>
+
+        @if (isAcmSelected()) {
+          <mat-form-field>
+            <mat-label>{{ 'downloadRpc.domain.label.value' | translate }}</mat-label>
+            <mat-select formControlName="domain" data-cy="domain">
+              @for (d of domains(); track d.profileName) {
+                <mat-option [value]="d.profileName">{{ d.profileName }}</mat-option>
+              }
+            </mat-select>
+            <mat-hint>{{ 'downloadRpc.domain.hint.value' | translate }}</mat-hint>
+            <mat-error>{{ REQUIRED_ERROR_KEY | translate }}</mat-error>
+          </mat-form-field>
+        }
+      }
+
+      <mat-label>{{ 'downloadRpc.auth.label.value' | translate }}</mat-label>
+      <mat-radio-group formControlName="authMode" aria-label="auth mode" class="flex flex-col" data-cy="authMode">
+        @for (m of authMethods; track m.value) {
+          <mat-radio-button [value]="m.value">{{ m.label | translate }}</mat-radio-button>
+        }
+      </mat-radio-group>
+
+      @if (form.get('authMode')?.value === 'none') {
+        <div class="auth-note" data-cy="noCredentialsNote">
+          <mat-icon>info</mat-icon>
+          <span>{{ 'downloadRpc.auth.noneNote.value' | translate }}</span>
+        </div>
+      }
+
+      @if (form.get('authMode')?.value === 'token') {
+        <mat-form-field>
+          <mat-label>{{ 'downloadRpc.tokenTtl.label.value' | translate }}</mat-label>
+          <mat-select formControlName="tokenTtl" data-cy="tokenTtl">
+            @for (l of tokenLifetimes; track l.value) {
+              <mat-option [value]="l.value">{{ l.label | translate }}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>{{ 'downloadRpc.tokenTtl.hint.value' | translate }}</mat-hint>
+        </mat-form-field>
+      }
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="form.invalid || isLoading()"
+      data-cy="download"
+      (click)="onSubmit()">
+      {{ 'downloadRpc.download.value' | translate }}
+    </button>
+  </mat-card-actions>
+</mat-card>

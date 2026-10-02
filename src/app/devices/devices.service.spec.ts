@@ -524,6 +524,40 @@ describe('DevicesService', () => {
       const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices?$top=10&$skip=0&$count=true`)
       req.flush(null, mockError)
     })
+
+    it('should append the activated filter when status is activated', () => {
+      const mockDevices: DataWithCount<Device> = {
+        data: [{ hostname: 'device1', guid: 'guid1', connectionStatus: true }] as any,
+        totalCount: 1
+      }
+
+      service.getDevices({ pageSize: 10, startsFrom: 0, count: 'true', status: 'activated' }).subscribe((response) => {
+        expect(response).toEqual(mockDevices)
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/devices?$top=10&$skip=0&$count=true&activated=true`
+      )
+      expect(req.request.method).toBe('GET')
+      req.flush(mockDevices)
+    })
+
+    it('should append the discovered filter when status is discovered', () => {
+      const mockDevices: DataWithCount<Device> = {
+        data: [{ hostname: 'device1', guid: 'guid1', connectionStatus: true }] as any,
+        totalCount: 1
+      }
+
+      service.getDevices({ pageSize: 10, startsFrom: 0, count: 'true', status: 'discovered' }).subscribe((response) => {
+        expect(response).toEqual(mockDevices)
+      })
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/v1/devices?$top=10&$skip=0&$count=true&discovered=true`
+      )
+      expect(req.request.method).toBe('GET')
+      req.flush(mockDevices)
+    })
   })
 
   describe('updateDevice', () => {
@@ -900,7 +934,13 @@ describe('DevicesService', () => {
 
   describe('getStats', () => {
     it('should fetch device statistics', () => {
-      const mockResponse: DeviceStats = { totalCount: 100, connectedCount: 80, disconnectedCount: 20 }
+      const mockResponse: DeviceStats = {
+        totalCount: 100,
+        connectedCount: 80,
+        disconnectedCount: 20,
+        activatedCount: 60,
+        discoveredCount: 40
+      }
 
       service.getStats().subscribe((response) => {
         expect(response).toEqual(mockResponse)

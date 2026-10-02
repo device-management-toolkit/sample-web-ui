@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
 import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, throwError } from 'rxjs'
-import { Device, PageEventOptions } from '../../models/models'
+import { Device, DeviceFilterStatus, PageEventOptions, PowerState } from '../../models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { DevicesService } from './devices.service'
@@ -38,7 +38,7 @@ import {
 } from '@angular/material/table'
 import { MatOption } from '@angular/material/core'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
+import { MatFormField, MatHint, MatLabel, MatPrefix } from '@angular/material/form-field'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatTooltip } from '@angular/material/tooltip'
@@ -47,6 +47,8 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
+import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { MatDivider } from '@angular/material/divider'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -57,6 +59,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatInput,
     MatToolbar,
     MatButton,
+    MatPrefix,
     MatIcon,
     MatSort,
     MatIconButton,
@@ -86,6 +89,10 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatPaginator,
     MatHint,
     RouterModule,
+    MatTabGroup,
+    MatTab,
+    MatTabLabel,
+    MatDivider,
     TranslatePipe
   ]
 })
@@ -102,11 +109,86 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   public isLoading = signal(true)
   public tags = signal<string[]>([])
   public filteredTags = signal<string[]>([])
+  // Per-device state that changes after the list has loaded, keyed by guid.
+  public readonly powerStateByGuid = signal<Record<string, number>>({})
+  public readonly statusMessageByGuid = signal<Record<string, string>>({})
+  public readonly tagsByGuid = signal<Record<string, string[]>>({})
   public selectedDevices: SelectionModel<Device>
   public bulkActionResponses: any[] = []
   public isTrue = false
   public powerStates: any
   public isCloudMode: boolean = environment.cloud
+
+  // Discovered/Managed tabs are a console-only concept. Managed is tab 0 (shown
+  // first) since Discovered requires rpc-go v3, which isn't released yet.
+  public activeTab = signal(0)
+  private readonly serverTotalCount = signal(0)
+  private readonly serverActivatedCount = signal(0)
+  private readonly serverDiscoveredCount = signal(0)
+
+  get allCount(): number {
+    return this.serverTotalCount()
+  }
+
+  // Count for the currently selected tab, used to drive the paginator length.
+  get currentTabCount(): number {
+    if (this.isCloudMode) {
+      return this.serverTotalCount()
+    }
+    return this.activeTab() === 0 ? this.serverActivatedCount() : this.serverDiscoveredCount()
+  }
+
+  get discoveredTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.discovered.value')} (${this.discoveredCount})`
+  }
+
+  get managedTabLabel(): string {
+    return `${this.translate.instant('devices.tabs.managed.value')} (${this.activatedCount})`
+  }
+
+  get activatedCount(): number {
+    return this.serverActivatedCount()
+  }
+
+  get discoveredCount(): number {
+    return this.serverDiscoveredCount()
+  }
+
+  // Power actions don't apply to devices that haven't been activated yet.
+  get isDiscoveredTab(): boolean {
+    return !this.isCloudMode && this.activeTab() === 1
+  }
+
+  onTabChange(index: number): void {
+    this.activeTab.set(index)
+    // Different tabs return different result sets, so reset paging to the first page.
+    this.pageEvent.startsFrom = 0
+    if (this.paginator) {
+      this.paginator.pageIndex = 0
+    }
+    this.getDevices()
+  }
+
+  private currentTabStatus(): DeviceFilterStatus | undefined {
+    if (this.isCloudMode) {
+      return undefined
+    }
+    return this.activeTab() === 0 ? 'activated' : 'discovered'
+  }
+
+  private loadStats(): void {
+    this.devicesService.getStats().subscribe({
+      next: (stats) => {
+        this.serverTotalCount.set(stats.totalCount)
+        this.serverActivatedCount.set(stats.activatedCount)
+        this.serverDiscoveredCount.set(stats.discoveredCount)
+        this.totalCount.set(this.currentTabCount)
+      },
+      error: (err) => {
+        console.error('Error loading device stats:', err)
+      }
+    })
+  }
 
   get deleteDeviceLabel(): string {
     return this.isCloudMode
@@ -114,15 +196,25 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       : this.translate.instant('devices.actions.remove.value')
   }
 
-  public displayedColumns: string[] = [
-    'select',
-    'hostname',
-    'guid',
-    'status',
-    'tags',
-    'actions',
-    'notification'
-  ]
+  // controlMode is only meaningful for activated devices, so it's hidden on the Discovered tab.
+  get displayedColumns(): string[] {
+    const columns = this.isCloudMode ? [
+          'select',
+          'hostname',
+          'guid',
+          'status',
+          'productType'
+        ] : [
+          'select',
+          'hostname',
+          'productType'
+        ]
+    if (!this.isCloudMode && !this.isDiscoveredTab) {
+      columns.push('controlMode')
+    }
+    columns.push('tags', 'actions', 'notification')
+    return columns
+  }
 
   public pageEvent: PageEventOptions = {
     pageSize: 25,
@@ -136,15 +228,6 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   constructor() {
     this.selectedDevices = new SelectionModel<Device>(true, [])
     this.powerStates = this.devicesService.PowerStates
-    if (!this.isCloudMode) {
-      this.displayedColumns = [
-        'select',
-        'hostname',
-        'tags',
-        'actions',
-        'notification'
-      ]
-    }
   }
 
   ngOnInit(): void {
@@ -202,16 +285,21 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   getDevices(): void {
     this.isLoading.set(true)
+    let responseTotalCount: number | undefined
+
+    if (!this.isCloudMode) {
+      // Console exposes server-side counts for the discovered/managed tabs.
+      this.loadStats()
+    }
 
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
 
     this.devicesService
-      .getDevices({ ...this.pageEvent, tags: this.filteredTags() })
+      .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
-          this.totalCount.set(res.totalCount)
-
+          responseTotalCount = res.totalCount
           if (!environment.cloud) {
             return of(res.data) // Return as-is for non-cloud
           }
@@ -252,6 +340,17 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe((devices) => {
         this.devices.data = devices
+        this.powerStateByGuid.set(
+          Object.fromEntries(devices.map((d) => [d.guid, (d as Device & PowerState).powerstate]))
+        )
+        this.statusMessageByGuid.set({})
+        this.tagsByGuid.set(Object.fromEntries(devices.map((d) => [d.guid, d.tags])))
+        if (this.isCloudMode) {
+          // Cloud has no discovered/managed split, so the paginated response's
+          // totalCount is authoritative for the paginator length.
+          this.serverTotalCount.set(responseTotalCount ?? devices.length)
+          this.totalCount.set(this.serverTotalCount())
+        }
 
         // Restore selection state on data retrieval
         this.selectedDevices.clear()
@@ -283,9 +382,9 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         const requests: Observable<any>[] = []
         this.isLoading.set(true)
         this.selectedDevices.selected.forEach((device) => {
-          device.tags = device.tags.filter((t) => !removedTags.includes(t))
-          device.tags.push(...addedTags.filter((t) => !device.tags.includes(t)))
-          device.tags.sort(caseInsensitiveCompare)
+          const tags = device.tags.filter((t) => !removedTags.includes(t))
+          tags.push(...addedTags.filter((t) => !tags.includes(t)))
+          this.setTags(device, tags.sort(caseInsensitiveCompare))
           const req = this.devicesService.updateDevice(device).pipe(catchError((err) => of({ err })))
           requests.push(req)
         })
@@ -293,7 +392,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         forkJoin(requests).subscribe((result) => {
           this.isLoading.set(false)
           result.forEach((res) => {
-            ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+            this.setStatusMessage(res.guid, res.StatusMessage)
           })
           this.resetResponse()
           this.getTagsThenDevices()
@@ -309,7 +408,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(DeviceEditTagsComponent, { data: editedTags })
     dialogRef.afterClosed().subscribe((tagsChanged) => {
       if (tagsChanged) {
-        device.tags = editedTags.sort(caseInsensitiveCompare)
+        this.setTags(device, editedTags.sort(caseInsensitiveCompare))
         this.devicesService.updateDevice(device).subscribe(() => {
           this.getTagsThenDevices()
         })
@@ -335,11 +434,31 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.totalCount() === 0
+    return !this.isLoading() && this.devices.data.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {
     await this.router.navigate([`/devices/${path}`])
+  }
+
+  getProductType(device: Device): string {
+    const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
+    if (isNaN(skuNum)) return ''
+    const isISM = (skuNum & 0x10) > 0
+    const isVPro = (skuNum & 0x08) > 0
+    if (isISM) return 'ISM'
+    if (isVPro) return 'vPro'
+    return 'non-vPro'
+  }
+
+  getControlMode(device: Device): string {
+    const currentMode = device.deviceInfo?.currentMode
+    if (currentMode === undefined) return 'unknown'
+    const normalized = currentMode.trim().toLowerCase()
+    if (!normalized || normalized === 'not activated' || normalized === 'pre-provisioning state') return 'notActivated'
+    if (normalized.includes('admin')) return 'acm'
+    if (normalized.includes('client')) return 'ccm'
+    return 'unknown'
   }
 
   translateConnectionStatus(status?: boolean): string {
@@ -372,7 +491,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     forkJoin(requests).subscribe((result) => {
       this.isLoading.set(false)
       result.forEach((res) => {
-        ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+        this.setStatusMessage(res.guid, res.StatusMessage)
       })
       this.resetResponse()
     })
@@ -384,7 +503,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       .sendPowerAction(deviceId, action)
       .pipe(
         catchError((): any => {
-          ;(this.devices.data.find((x) => x.guid === deviceId) as any).StatusMessage = 'ERROR'
+          this.setStatusMessage(deviceId, 'ERROR')
         }),
         finalize(() => {
           this.isLoading.set(false)
@@ -392,13 +511,13 @@ export class DevicesComponent implements OnInit, AfterViewInit {
       )
       .subscribe({
         next: (data) => {
-          ;(this.devices.data.find((x) => x.guid === deviceId) as any).StatusMessage = data.Body.ReturnValueStr
+          this.setStatusMessage(deviceId, data.Body.ReturnValueStr)
           this.resetResponse()
           this.devicesService
             .getPowerState(deviceId)
             .pipe(delay(2000))
             .subscribe((z) => {
-              ;(this.devices.data.find((y) => y.guid === deviceId) as any).powerstate = z.powerstate
+              this.powerStateByGuid.update((states) => ({ ...states, [deviceId]: z.powerstate }))
             })
         },
         error: (err) => {
@@ -421,7 +540,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
           )
           .subscribe({
             next: (data) => {
-              ;(this.devices.data.find((x) => x.guid === deviceId) as any).StatusMessage = data?.status ?? ''
+              this.setStatusMessage(deviceId, data?.status ?? '')
               if (environment.cloud) {
                 setTimeout(() => {
                   this.getTagsThenDevices()
@@ -431,7 +550,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
               }
             },
             error: (err) => {
-              ;(this.devices.data.find((x) => x.guid === deviceId) as any).StatusMessage = 'ERROR'
+              this.setStatusMessage(deviceId, 'ERROR')
               console.error(err)
             }
           })
@@ -462,7 +581,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
           .subscribe({
             next: (res) => {
               if (this.isCloudMode) {
-                ;(this.devices.data.find((i) => i.guid === res.guid) as any).StatusMessage = res.StatusMessage
+                this.setStatusMessage(res.guid, res.StatusMessage)
               }
             },
             error: () => {
@@ -481,12 +600,23 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     })
   }
 
+  private setStatusMessage(guid: string, message: string): void {
+    this.statusMessageByGuid.update((messages) => ({ ...messages, [guid]: message }))
+  }
+
+  // The row object is what gets saved; the signal is what the tags cell renders.
+  private setTags(device: Device, tags: string[]): void {
+    device.tags = tags
+    this.tagsByGuid.update((all) => ({ ...all, [device.guid]: tags }))
+  }
+
   resetResponse(): void {
     setTimeout(() => {
-      const found: any = this.devices.data.find((item: any) => item.StatusMessage === 'SUCCESS')
-      if (found) {
-        found.StatusMessage = ''
-      }
+      this.statusMessageByGuid.update((messages) =>
+        Object.fromEntries(
+          Object.entries(messages).map(([guid, message]) => [guid, message === 'SUCCESS' ? '' : message])
+        )
+      )
     }, 5000)
   }
 
