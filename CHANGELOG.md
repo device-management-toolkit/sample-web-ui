@@ -1,3 +1,10 @@
+## [3.69.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.0...v3.69.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **devices:** clean up devices page layout and stale rendering ([20d606e](https://github.com/device-management-toolkit/sample-web-ui/commit/20d606ecb56043aafecf64e0554c5ea5b91b2d4b))
+
 # [3.69.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.68.1...v3.69.0) (2026-09-30)
 
 
