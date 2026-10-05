@@ -6,6 +6,7 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  DestroyRef,
   HostListener,
   OnDestroy,
   OnInit,
@@ -13,6 +14,7 @@ import {
   signal,
   input
 } from '@angular/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
@@ -72,6 +74,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
+  private readonly destroyRef = inject(DestroyRef)
 
   public readonly deviceId = input('')
 
@@ -157,7 +160,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       // handles kong route
       this.mpsServer = `${environment.mpsServer.replace('http', 'ws')}/ws/relay`
     }
-    this.router.events.subscribe((event) => {
+    this.router.events.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isDisconnecting = true
       }
