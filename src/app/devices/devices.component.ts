@@ -4,7 +4,20 @@
  **********************************************************************/
 
 import { SelectionModel } from '@angular/cdk/collections'
-import { AfterViewInit, Component, OnInit, ViewChild, inject, signal } from '@angular/core'
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  inject,
+  signal
+} from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
@@ -50,6 +63,7 @@ import { MatInput } from '@angular/material/input'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { MatDivider } from '@angular/material/divider'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { DiscoveredDevicePaneComponent } from './discovered-device-pane/discovered-device-pane.component'
 
 @Component({
   selector: 'app-devices',
@@ -93,15 +107,19 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatTab,
     MatTabLabel,
     MatDivider,
-    TranslatePipe
+    TranslatePipe,
+    DiscoveredDevicePaneComponent
   ]
 })
-export class DevicesComponent implements OnInit, AfterViewInit {
+export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar)
   private readonly dialog = inject(MatDialog)
   private readonly devicesService = inject(DevicesService)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly overlay = inject(Overlay)
+  private readonly viewContainerRef = inject(ViewContainerRef)
+  private readonly elementRef = inject(ElementRef<HTMLElement>)
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 
@@ -125,6 +143,12 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   private readonly serverTotalCount = signal(0)
   private readonly serverActivatedCount = signal(0)
   private readonly serverDiscoveredCount = signal(0)
+
+  // Discovered device shown in the side pane, and the row that opened it so focus can return there.
+  public readonly paneDevice = signal<Device | null>(null)
+  private paneTrigger: HTMLElement | null = null
+  private paneOverlay?: OverlayRef
+  @ViewChild('paneTemplate') paneTemplate!: TemplateRef<unknown>
 
   get allCount(): number {
     return this.serverTotalCount()
@@ -161,6 +185,7 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   onTabChange(index: number): void {
     this.activeTab.set(index)
+    this.paneDevice.set(null)
     // Different tabs return different result sets, so reset paging to the first page.
     this.pageEvent.startsFrom = 0
     if (this.paginator) {
@@ -237,6 +262,14 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.devices.paginator = this.paginator
     this.devices.sort = this.sort
+    // The overlay stays attached; the template's @if decides whether the pane is showing,
+    // which lets its leave animation run before it is removed.
+    this.paneOverlay = this.overlay.create({ positionStrategy: this.overlay.position().global() })
+    this.paneOverlay.attach(new TemplatePortal(this.paneTemplate, this.viewContainerRef))
+  }
+
+  ngOnDestroy(): void {
+    this.paneOverlay?.dispose()
   }
 
   applyFilter(event: Event): void {
@@ -345,6 +378,11 @@ export class DevicesComponent implements OnInit, AfterViewInit {
         )
         this.statusMessageByGuid.set({})
         this.tagsByGuid.set(Object.fromEntries(devices.map((d) => [d.guid, d.tags])))
+        // Keep the pane on the refreshed copy of its device, or close it if the device left this page.
+        const openGuid = this.paneDevice()?.guid
+        if (openGuid) {
+          this.paneDevice.set(devices.find((d) => d.guid === openGuid) ?? null)
+        }
         if (this.isCloudMode) {
           // Cloud has no discovered/managed split, so the paginated response's
           // totalCount is authoritative for the paginator length.
@@ -439,6 +477,28 @@ export class DevicesComponent implements OnInit, AfterViewInit {
 
   async navigateTo(path: string): Promise<void> {
     await this.router.navigate([`/devices/${path}`])
+  }
+
+  // A discovered device has no credentials in console, so the device page can't connect to it.
+  // Show what it reported during discovery instead.
+  async openDevice(device: Device, event?: Event): Promise<void> {
+    // Enter pressed on a button inside the row belongs to that button, not the row.
+    if (event instanceof KeyboardEvent && event.target !== event.currentTarget) return
+    if (this.isDiscoveredTab) {
+      this.paneTrigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null
+      // The overlay lives outside the app's [dir] element, so pass the page direction through for RTL.
+      const dir = this.elementRef.nativeElement.closest('[dir]')?.getAttribute('dir')
+      this.paneOverlay?.setDirection(dir === 'rtl' ? 'rtl' : 'ltr')
+      this.paneDevice.set(device)
+      return
+    }
+    await this.navigateTo(device.guid)
+  }
+
+  closePane(): void {
+    this.paneDevice.set(null)
+    this.paneTrigger?.focus()
+    this.paneTrigger = null
   }
 
   getProductType(device: Device): string {

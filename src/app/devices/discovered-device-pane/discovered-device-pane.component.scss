@@ -1,0 +1,215 @@
+// Colors come from the app's blue-grey / light-blue Material palettes so the pane reads as part of the page.
+$ink: #263238; // blue-grey 900
+$ink-muted: #546e7a; // blue-grey 600
+$discovered: #455a64; // blue-grey 700
+$rule: #cfd8dc; // blue-grey 100
+$rule-soft: #eceff1; // blue-grey 50
+
+:host {
+  --pane-offset: 100%;
+  --pane-shadow-x: -12px;
+
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 100; // above page content, below Material overlays (1000)
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box; // keep the border inside 100vw on phones
+  width: min(440px, 100vw);
+  background: #fff;
+  color: $ink;
+  border-inline-start: 1px solid $rule;
+  box-shadow: var(--pane-shadow-x) 0 32px rgba(38, 50, 56, 0.14);
+  animation: pane-in 240ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+:host-context([dir='rtl']) {
+  --pane-offset: -100%;
+  --pane-shadow-x: 12px;
+}
+
+@keyframes pane-in {
+  from {
+    transform: translateX(var(--pane-offset));
+  }
+}
+
+.pane-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 20px 12px 16px 24px;
+  padding-inline: 24px 12px;
+  border-block-end: 1px solid $rule;
+}
+
+.pane-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+h2 {
+  margin: 6px 0 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+
+  // Focused only so screen readers start here when the pane opens; it isn't interactive.
+  &:focus {
+    outline: none;
+  }
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  color: $ink-muted;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.pane-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px 32px;
+}
+
+// Dashed outline = visible on the network, not under management. Solid chips elsewhere mean managed.
+.status-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding-inline: 10px 14px;
+  border: 1.5px dashed $discovered;
+  border-radius: 16px;
+  color: $discovered;
+  font-size: 14px;
+  font-weight: 500;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+.status-explainer {
+  max-width: 60ch;
+  margin: 12px 0 0;
+  color: $ink-muted;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: minmax(9rem, 40%) 1fr;
+  gap: 8px 16px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+dt {
+  color: $ink-muted;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: 'Roboto Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 13px;
+}
+
+.identity {
+  margin-block-start: 20px;
+}
+
+.pane-section {
+  margin-block-start: 24px;
+  padding-block-start: 16px;
+  border-block-start: 1px solid $rule-soft;
+
+  h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 500;
+  }
+}
+
+.pane-subsection {
+  margin-block-start: 16px;
+
+  h4 {
+    margin: 0 0 8px;
+    color: $ink-muted;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+  }
+
+  // A rule along the inline-start edge shows which group a nested subsection belongs to.
+  &.nested {
+    margin-block-start: 12px;
+    padding-inline-start: 12px;
+    border-inline-start: 2px solid $rule-soft;
+  }
+
+  h5 {
+    margin: 0 0 6px;
+    color: $ink-muted;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+}
+
+// Flat panel so it reads as part of the section, not a floating card.
+.hashes.mat-expansion-panel {
+  margin-block-start: 16px;
+  border: 1px solid $rule;
+  border-radius: 4px;
+  box-shadow: none;
+
+  .mat-expansion-panel-header {
+    padding-inline: 16px;
+    height: 44px;
+  }
+  .mat-expansion-panel-header-title {
+    color: $ink;
+    font-size: 14px;
+  }
+}
+
+.hash-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding-block: 6px;
+    overflow-wrap: anywhere;
+    line-height: 18px;
+  }
+  li + li {
+    border-block-start: 1px solid $rule-soft;
+  }
+}
+
+.empty {
+  margin-block-start: 24px;
+  color: $ink-muted;
+  font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}

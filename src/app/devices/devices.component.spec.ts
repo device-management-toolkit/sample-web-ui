@@ -541,4 +541,71 @@ describe('DevicesComponent', () => {
       })
     })
   })
+
+  describe('discovered device pane (console mode)', () => {
+    let navigateSpy: MockInstance
+
+    beforeEach(() => {
+      component.isCloudMode = false
+      navigateSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => Promise.resolve(true)) as any)
+    })
+
+    it('opens the device page for a managed device', async () => {
+      component.onTabChange(0)
+      await component.openDevice(device01)
+      expect(navigateSpy).toHaveBeenCalledWith(['/devices/12324-4243-ewdsd'])
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('opens the pane instead of the device page for a discovered device', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(navigateSpy).not.toHaveBeenCalled()
+      expect(component.paneDevice()).toBe(device01)
+    })
+
+    it('ignores Enter pressed on a control inside the row', async () => {
+      component.onTabChange(1)
+      const row = document.createElement('div')
+      const button = document.createElement('button')
+      row.appendChild(button)
+      row.addEventListener('keydown', (e) => void component.openDevice(device01, e))
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('returns focus to the row that opened the pane when it closes', async () => {
+      component.onTabChange(1)
+      const row = document.createElement('div')
+      row.tabIndex = 0
+      document.body.appendChild(row)
+      row.addEventListener('click', (e) => void component.openDevice(device01, e))
+      row.click()
+      expect(component.paneDevice()).toBe(device01)
+      component.closePane()
+      expect(component.paneDevice()).toBeNull()
+      expect(document.activeElement).toBe(row)
+      row.remove()
+    })
+
+    it('closes the pane when switching tabs', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      component.onTabChange(0)
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('keeps the pane on the refreshed device after a reload, and closes it if the device is gone', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      const refreshed = { ...device01, hostname: 'device01-renamed' }
+      getDevicesSpy.mockReturnValue(of({ data: [refreshed, device02], totalCount: 2 }))
+      component.getDevices()
+      expect(component.paneDevice()?.hostname).toBe('device01-renamed')
+
+      getDevicesSpy.mockReturnValue(of({ data: [device02], totalCount: 1 }))
+      component.getDevices()
+      expect(component.paneDevice()).toBeNull()
+    })
+  })
 })

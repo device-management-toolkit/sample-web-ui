@@ -1117,6 +1117,170 @@
     "description": "Control mode chip label when the control mode is not available",
     "value": "UNKNOWN"
   },
+  "devices.discoveredPane.close": {
+    "description": "Accessible label for the button that closes the discovered device pane",
+    "value": "إغلاق تفاصيل الجهاز"
+  },
+  "devices.discoveredPane.status": {
+    "description": "Status shown at the top of the discovered device pane",
+    "value": "مكتشف، غير مُدار"
+  },
+  "devices.discoveredPane.explainer": {
+    "description": "Explains why a discovered device can only be viewed",
+    "value": "اكتشف rpc-go هذا الجهاز وأبلغ عنه Console. لم يتم تنشيط الجهاز بعد، لذا لا يمكن لـ Console الاتصال به حتى الآن. هذه التفاصيل هي ما أبلغ عنه rpc-go."
+  },
+  "devices.discoveredPane.firstDiscovered": {
+    "description": "Label for when the device was first discovered",
+    "value": "أول اكتشاف"
+  },
+  "devices.discoveredPane.lastSynced": {
+    "description": "Label for when the device last reported its details",
+    "value": "آخر مزامنة"
+  },
+  "devices.discoveredPane.empty": {
+    "description": "Shown when a discovered device has not reported any details",
+    "value": "لم يُبلغ هذا الجهاز عن أي تفاصيل بعد."
+  },
+  "devices.discoveredPane.sectionAmt": {
+    "description": "Section heading for Intel AMT details",
+    "value": "Intel AMT"
+  },
+  "devices.discoveredPane.sectionOs": {
+    "description": "Section heading for operating system details",
+    "value": "نظام التشغيل"
+  },
+  "devices.discoveredPane.sectionOsWired": {
+    "description": "Section heading for an operating system wired adapter; {{name}} is the adapter name",
+    "value": "محوّل سلكي {{name}}"
+  },
+  "devices.discoveredPane.sectionOsWireless": {
+    "description": "Section heading for an operating system wireless adapter; {{name}} is the adapter name",
+    "value": "محوّل لاسلكي {{name}}"
+  },
+  "devices.discoveredPane.sectionNetwork": {
+    "description": "Section heading for network interfaces",
+    "value": "الشبكة"
+  },
+  "devices.discoveredPane.sectionPlatform": {
+    "description": "Section heading for platform hardware (CPU, adapters)",
+    "value": "المنصة"
+  },
+  "devices.discoveredPane.sectionUpid": {
+    "description": "Subsection heading for the Unique Platform ID",
+    "value": "معرّف المنصة الفريد (UPID)"
+  },
+  "devices.discoveredPane.productType": {
+    "description": "Label for product type (vPro, ISM, non-vPro)",
+    "value": "نوع المنتج"
+  },
+  "devices.discoveredPane.fwVersion": {
+    "description": "Label for the Intel AMT firmware version",
+    "value": "إصدار البرنامج الثابت"
+  },
+  "devices.discoveredPane.fwBuild": {
+    "description": "Label for the Intel AMT firmware build number",
+    "value": "بنية البرنامج الثابت"
+  },
+  "devices.discoveredPane.sku": {
+    "description": "Label for the firmware SKU",
+    "value": "SKU"
+  },
+  "devices.discoveredPane.amtEnabledInBIOS": {
+    "description": "Label for whether Intel AMT is enabled in BIOS",
+    "value": "مُمكّن في BIOS"
+  },
+  "devices.discoveredPane.currentMode": {
+    "description": "Label for the Intel AMT control mode",
+    "value": "وضع التحكم"
+  },
+  "devices.discoveredPane.features": {
+    "description": "Label for the Intel AMT features list",
+    "value": "الميزات"
+  },
+  "devices.discoveredPane.ipAddress": {
+    "description": "Label for an IP address",
+    "value": "عنوان IP"
+  },
+  "devices.discoveredPane.dhcpEnabled": {
+    "description": "Label for whether DHCP is enabled",
+    "value": "DHCP"
+  },
+  "devices.discoveredPane.tlsMode": {
+    "description": "Label for the TLS mode",
+    "value": "TLS"
+  },
+  "devices.discoveredPane.meInterfaceVersion": {
+    "description": "Label for the Intel MEI driver version",
+    "value": "إصدار برنامج تشغيل MEI"
+  },
+  "devices.discoveredPane.lms": {
+    "description": "Label for the Local Manageability Service status or version",
+    "value": "Local Manageability Service"
+  },
+  "devices.discoveredPane.upidCsmeId": {
+    "description": "Label for the CSME ID part of the Unique Platform ID",
+    "value": "معرّف CSME"
+  },
+  "devices.discoveredPane.upidOemId": {
+    "description": "Label for the OEM ID part of the Unique Platform ID",
+    "value": "معرّف OEM"
+  },
+  "devices.discoveredPane.upidOemPlatformIdType": {
+    "description": "Label for the OEM platform ID type part of the Unique Platform ID",
+    "value": "نوع معرّف منصة OEM"
+  },
+  "devices.discoveredPane.certHashes": {
+    "description": "Label for the list of trusted root certificate hashes",
+    "value": "تجزئات الشهادات الموثوقة"
+  },
+  "devices.discoveredPane.macAddress": {
+    "description": "Label for a MAC address",
+    "value": "عنوان MAC"
+  },
+  "devices.discoveredPane.dhcpMode": {
+    "description": "Label for the DHCP mode",
+    "value": "وضع DHCP"
+  },
+  "devices.discoveredPane.linkStatus": {
+    "description": "Label for network link status",
+    "value": "الارتباط"
+  },
+  "devices.discoveredPane.os": {
+    "description": "Label for the operating system name",
+    "value": "الاسم"
+  },
+  "devices.discoveredPane.osVersion": {
+    "description": "Label for the operating system version",
+    "value": "الإصدار"
+  },
+  "devices.discoveredPane.cpuModel": {
+    "description": "Label for the processor model",
+    "value": "المعالج"
+  },
+  "devices.discoveredPane.dnsSuffix": {
+    "description": "Label for the DNS suffix",
+    "value": "لاحقة DNS"
+  },
+  "devices.discoveredPane.monitorConnected": {
+    "description": "Label for whether a monitor is connected",
+    "value": "الشاشة متصلة"
+  },
+  "devices.discoveredPane.ethernetAdapterCount": {
+    "description": "Label for the number of Ethernet adapters",
+    "value": "محولات Ethernet"
+  },
+  "devices.discoveredPane.wiredAdapters": {
+    "description": "Label for the list of wired adapters",
+    "value": "المحولات السلكية"
+  },
+  "devices.discoveredPane.wirelessAdapters": {
+    "description": "Label for the list of wireless adapters",
+    "value": "المحولات اللاسلكية"
+  },
+  "devices.discoveredPane.ieee8021xEnabled": {
+    "description": "Label for whether 802.1X is enabled",
+    "value": "802.1X"
+  },
   "deviceToolbar.power.on": {
     "description": "تلميح الطاقة للحالة تشغيل",
     "value": "الطاقة: تشغيل"

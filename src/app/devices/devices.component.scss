@@ -41,3 +41,33 @@ mat-icon.alwaysHidden {
 mat-cell:hover mat-icon.addTag {
   visibility: visible;
 }
+
+mat-row:focus-visible {
+  outline: 2px solid #0277bd;
+  outline-offset: -2px;
+}
+
+// The row whose details are open carries the same dashed "discovered" outline as the pane's status mark.
+mat-row.pane-open {
+  outline: 1.5px dashed #455a64;
+  outline-offset: -3px;
+  background-color: #eceff1;
+}
+
+// Leave animation for the pane; the enter animation lives in the pane's own styles.
+// --pane-offset is set by the pane and already accounts for RTL.
+.discovered-pane-leave {
+  animation: discovered-pane-out 180ms cubic-bezier(0.3, 0, 1, 1) forwards;
+}
+
+@keyframes discovered-pane-out {
+  to {
+    transform: translateX(var(--pane-offset));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discovered-pane-leave {
+    animation: none;
+  }
+}

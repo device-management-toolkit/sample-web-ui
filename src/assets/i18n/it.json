@@ -1109,6 +1109,170 @@
     "description": "Control mode chip label when the control mode is not available",
     "value": "UNKNOWN"
   },
+  "devices.discoveredPane.close": {
+    "description": "Accessible label for the button that closes the discovered device pane",
+    "value": "Chiudi dettagli dispositivo"
+  },
+  "devices.discoveredPane.status": {
+    "description": "Status shown at the top of the discovered device pane",
+    "value": "Rilevato, non gestito"
+  },
+  "devices.discoveredPane.explainer": {
+    "description": "Explains why a discovered device can only be viewed",
+    "value": "rpc-go ha rilevato questo dispositivo e lo ha segnalato a Console. Il dispositivo non è ancora stato attivato, quindi Console non può ancora connettersi. Questi dettagli sono quelli segnalati da rpc-go."
+  },
+  "devices.discoveredPane.firstDiscovered": {
+    "description": "Label for when the device was first discovered",
+    "value": "Primo rilevamento"
+  },
+  "devices.discoveredPane.lastSynced": {
+    "description": "Label for when the device last reported its details",
+    "value": "Ultima sincronizzazione"
+  },
+  "devices.discoveredPane.empty": {
+    "description": "Shown when a discovered device has not reported any details",
+    "value": "Questo dispositivo non ha ancora segnalato alcun dettaglio."
+  },
+  "devices.discoveredPane.sectionAmt": {
+    "description": "Section heading for Intel AMT details",
+    "value": "Intel AMT"
+  },
+  "devices.discoveredPane.sectionOs": {
+    "description": "Section heading for operating system details",
+    "value": "Sistema operativo"
+  },
+  "devices.discoveredPane.sectionOsWired": {
+    "description": "Section heading for an operating system wired adapter; {{name}} is the adapter name",
+    "value": "Adattatore cablato {{name}}"
+  },
+  "devices.discoveredPane.sectionOsWireless": {
+    "description": "Section heading for an operating system wireless adapter; {{name}} is the adapter name",
+    "value": "Adattatore wireless {{name}}"
+  },
+  "devices.discoveredPane.sectionNetwork": {
+    "description": "Section heading for network interfaces",
+    "value": "Rete"
+  },
+  "devices.discoveredPane.sectionPlatform": {
+    "description": "Section heading for platform hardware (CPU, adapters)",
+    "value": "Piattaforma"
+  },
+  "devices.discoveredPane.sectionUpid": {
+    "description": "Subsection heading for the Unique Platform ID",
+    "value": "ID piattaforma univoco (UPID)"
+  },
+  "devices.discoveredPane.productType": {
+    "description": "Label for product type (vPro, ISM, non-vPro)",
+    "value": "Tipo di prodotto"
+  },
+  "devices.discoveredPane.fwVersion": {
+    "description": "Label for the Intel AMT firmware version",
+    "value": "Versione firmware"
+  },
+  "devices.discoveredPane.fwBuild": {
+    "description": "Label for the Intel AMT firmware build number",
+    "value": "Build firmware"
+  },
+  "devices.discoveredPane.sku": {
+    "description": "Label for the firmware SKU",
+    "value": "SKU"
+  },
+  "devices.discoveredPane.amtEnabledInBIOS": {
+    "description": "Label for whether Intel AMT is enabled in BIOS",
+    "value": "Abilitato nel BIOS"
+  },
+  "devices.discoveredPane.currentMode": {
+    "description": "Label for the Intel AMT control mode",
+    "value": "Modalità di controllo"
+  },
+  "devices.discoveredPane.features": {
+    "description": "Label for the Intel AMT features list",
+    "value": "Funzionalità"
+  },
+  "devices.discoveredPane.ipAddress": {
+    "description": "Label for an IP address",
+    "value": "Indirizzo IP"
+  },
+  "devices.discoveredPane.dhcpEnabled": {
+    "description": "Label for whether DHCP is enabled",
+    "value": "DHCP"
+  },
+  "devices.discoveredPane.tlsMode": {
+    "description": "Label for the TLS mode",
+    "value": "TLS"
+  },
+  "devices.discoveredPane.meInterfaceVersion": {
+    "description": "Label for the Intel MEI driver version",
+    "value": "Versione driver MEI"
+  },
+  "devices.discoveredPane.lms": {
+    "description": "Label for the Local Manageability Service status or version",
+    "value": "Local Manageability Service"
+  },
+  "devices.discoveredPane.upidCsmeId": {
+    "description": "Label for the CSME ID part of the Unique Platform ID",
+    "value": "ID CSME"
+  },
+  "devices.discoveredPane.upidOemId": {
+    "description": "Label for the OEM ID part of the Unique Platform ID",
+    "value": "ID OEM"
+  },
+  "devices.discoveredPane.upidOemPlatformIdType": {
+    "description": "Label for the OEM platform ID type part of the Unique Platform ID",
+    "value": "Tipo di ID piattaforma OEM"
+  },
+  "devices.discoveredPane.certHashes": {
+    "description": "Label for the list of trusted root certificate hashes",
+    "value": "Hash dei certificati attendibili"
+  },
+  "devices.discoveredPane.macAddress": {
+    "description": "Label for a MAC address",
+    "value": "Indirizzo MAC"
+  },
+  "devices.discoveredPane.dhcpMode": {
+    "description": "Label for the DHCP mode",
+    "value": "Modalità DHCP"
+  },
+  "devices.discoveredPane.linkStatus": {
+    "description": "Label for network link status",
+    "value": "Collegamento"
+  },
+  "devices.discoveredPane.os": {
+    "description": "Label for the operating system name",
+    "value": "Nome"
+  },
+  "devices.discoveredPane.osVersion": {
+    "description": "Label for the operating system version",
+    "value": "Versione"
+  },
+  "devices.discoveredPane.cpuModel": {
+    "description": "Label for the processor model",
+    "value": "Processore"
+  },
+  "devices.discoveredPane.dnsSuffix": {
+    "description": "Label for the DNS suffix",
+    "value": "Suffisso DNS"
+  },
+  "devices.discoveredPane.monitorConnected": {
+    "description": "Label for whether a monitor is connected",
+    "value": "Monitor collegato"
+  },
+  "devices.discoveredPane.ethernetAdapterCount": {
+    "description": "Label for the number of Ethernet adapters",
+    "value": "Adattatori Ethernet"
+  },
+  "devices.discoveredPane.wiredAdapters": {
+    "description": "Label for the list of wired adapters",
+    "value": "Adattatori cablati"
+  },
+  "devices.discoveredPane.wirelessAdapters": {
+    "description": "Label for the list of wireless adapters",
+    "value": "Adattatori wireless"
+  },
+  "devices.discoveredPane.ieee8021xEnabled": {
+    "description": "Label for whether 802.1X is enabled",
+    "value": "802.1X"
+  },
   "deviceToolbar.power.on": {
     "description": "Tooltip di alimentazione per acceso",
     "value": "Alimentazione: Acceso"

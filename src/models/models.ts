@@ -34,6 +34,53 @@ export interface DeviceInfo {
   discovered?: boolean
   firstDiscovered?: Date
   lastSynced?: Date
+  // Reported by rpc-go during discovery; console stores and returns them as-is.
+  lmsInstalled?: boolean
+  lmsVersion?: string
+  tlsMode?: string
+  upid?: Record<string, unknown>
+  amtEnabledInBIOS?: boolean
+  meInterfaceVersion?: string
+  dhcpEnabled?: boolean
+  certHashes?: string[]
+  osName?: string
+  osVersion?: string
+  osDistro?: string
+  dnsSuffixOS?: string
+  cpuModel?: string
+  osIpAddress?: string
+  ethernetAdapterCount?: number
+  monitorConnected?: boolean
+  ieee8021xEnabled?: boolean
+  meNetwork?: MENetworkInfo
+  osNetwork?: OSNetworkInfo
+  platformAdapters?: PlatformAdaptersInfo
+}
+export interface MEInterfaceInfo {
+  ipAddress?: string
+  dhcpEnabled?: boolean
+  dhcpMode?: string
+  linkStatus?: string
+  macAddress?: string
+}
+export interface MENetworkInfo {
+  wired?: MEInterfaceInfo
+  wireless?: MEInterfaceInfo
+}
+export interface OSInterfaceInfo {
+  name?: string
+  ipAddress?: string
+  dhcpEnabled?: boolean
+  linkStatus?: string
+  macAddress?: string
+}
+export interface OSNetworkInfo {
+  wired?: OSInterfaceInfo[]
+  wireless?: OSInterfaceInfo
+}
+export interface PlatformAdaptersInfo {
+  wired?: string[]
+  wireless?: string[]
 }
 export interface DeviceStats {
   totalCount: number

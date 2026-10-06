@@ -1,0 +1,104 @@
+<header class="pane-header">
+  <div class="pane-heading">
+    <h2 id="discovered-pane-title" #title tabindex="-1" data-cy="discoveredPaneTitle">
+      {{ device().hostname || device().guid }}
+    </h2>
+    @if (device().hostname) {
+      <p class="subtitle mono" data-cy="discoveredPaneGuid">{{ device().guid }}</p>
+    }
+    @if (device().friendlyName) {
+      <p class="subtitle">{{ device().friendlyName }}</p>
+    }
+  </div>
+  <button
+    mat-icon-button
+    class="close"
+    [attr.aria-label]="'devices.discoveredPane.close.value' | translate"
+    (click)="closed.emit()"
+    data-cy="discoveredPaneClose">
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<div class="pane-body">
+  <div class="status">
+    <span class="status-mark" data-cy="discoveredPaneStatus">
+      <mat-icon aria-hidden="true">visibility</mat-icon>
+      {{ 'devices.discoveredPane.status.value' | translate }}
+    </span>
+    <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
+  </div>
+
+  @if (info()?.firstDiscovered || info()?.lastSynced) {
+    <dl class="identity">
+      @if (info()?.firstDiscovered) {
+        <dt>{{ 'devices.discoveredPane.firstDiscovered.value' | translate }}</dt>
+        <dd>{{ info()?.firstDiscovered | date: 'medium' }}</dd>
+      }
+      @if (info()?.lastSynced) {
+        <dt>{{ 'devices.discoveredPane.lastSynced.value' | translate }}</dt>
+        <dd>{{ info()?.lastSynced | date: 'medium' }}</dd>
+      }
+    </dl>
+  }
+
+  @for (section of sections(); track section.title; let i = $index) {
+    <section class="pane-section" [attr.aria-labelledby]="'discovered-section-' + i">
+      <h3 [id]="'discovered-section-' + i">{{ section.title | translate: section.titleParams }}</h3>
+      @if (section.rows.length) {
+        <ng-container *ngTemplateOutlet="rowList; context: { $implicit: section.rows }" />
+      }
+      @for (sub of section.subsections; track $index) {
+        <ng-container *ngTemplateOutlet="subsection; context: { $implicit: sub, level: 4 }" />
+      }
+      @if (section.certHashes?.length) {
+        <mat-expansion-panel class="hashes" data-cy="discoveredPaneCertHashes">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ 'devices.discoveredPane.certHashes.value' | translate }} ({{ section.certHashes?.length }})
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul class="hash-list mono">
+            @for (hash of section.certHashes; track $index) {
+              <li>{{ hash }}</li>
+            }
+          </ul>
+        </mat-expansion-panel>
+      }
+    </section>
+  } @empty {
+    <p class="empty" data-cy="discoveredPaneEmpty">{{ 'devices.discoveredPane.empty.value' | translate }}</p>
+  }
+</div>
+
+<ng-template #rowList let-rows>
+  <dl>
+    @for (row of rows; track row.label) {
+      <dt>{{ row.label | translate }}</dt>
+      <dd [class.mono]="row.mono">
+        @if (isFlag(row.value)) {
+          {{ (row.value ? 'common.yes.value' : 'common.no.value') | translate }}
+        } @else {
+          {{ row.value }}
+        }
+      </dd>
+    }
+  </dl>
+</ng-template>
+
+<!-- Subsections nest (e.g. Network > Intel AMT > Wired); heading level follows depth. -->
+<ng-template #subsection let-sub let-level="level">
+  <div class="pane-subsection" [class.nested]="level > 4">
+    @if (level === 4) {
+      <h4>{{ sub.title | translate: sub.titleParams }}</h4>
+    } @else {
+      <h5>{{ sub.title | translate: sub.titleParams }}</h5>
+    }
+    @if (sub.rows.length) {
+      <ng-container *ngTemplateOutlet="rowList; context: { $implicit: sub.rows }" />
+    }
+    @for (child of sub.subsections; track $index) {
+      <ng-container *ngTemplateOutlet="subsection; context: { $implicit: child, level: level + 1 }" />
+    }
+  </div>
+</ng-template>
