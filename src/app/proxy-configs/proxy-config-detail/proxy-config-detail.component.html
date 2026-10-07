@@ -68,7 +68,7 @@
             <mat-list>
               @for (message of errorMessages(); track message) {
                 <mat-list-item>
-                  <mat-icon matListItemIcon color="warn">warning</mat-icon>
+                  <mat-icon matListItemIcon>warning</mat-icon>
                   <div matListItemTitle>{{ message }}</div>
                 </mat-list-item>
               }
@@ -83,7 +83,6 @@
         <button
           data-cy="cancel-config-btn"
           mat-stroked-button
-          color="primary"
           type="button"
           [disabled]="isLoading()"
           (click)="cancel()">
@@ -94,7 +93,6 @@
         <button
           data-cy="save-config-btn"
           mat-raised-button
-          color="primary"
           type="submit"
           [disabled]="proxyConfigForm.invalid || isLoading()">
           {{ (isEdit() ? 'common.update.value' : 'common.save.value') | translate }}

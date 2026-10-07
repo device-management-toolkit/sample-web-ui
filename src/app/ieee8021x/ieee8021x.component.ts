@@ -27,7 +27,6 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
@@ -45,8 +44,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

@@ -737,6 +737,10 @@
     "description": "Työkaluvinkki laitteen toimintojen käyttämiseen",
     "value": "Käytä laite toimintoja hallita luettelo laitteita"
   },
+  "dashboard.welcome": {
+    "description": "Hallintapaneelin tervetuliaisotsikko, jossa on sovelluksen nimi",
+    "value": "Tervetuloa palveluun {{name}}"
+  },
   "delete.question": {
     "description": "Kysymys tietueiden poistamisesta",
     "value": "Oletko varma?"
@@ -1980,6 +1984,10 @@
     "description": "MQTT-tapahtumatyypin taulukon otsikko",
     "value": "Tyyppi"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Määritykset"
+  },
   "network.errorNetworkSetting": {
     "description": "Virhe verkkoasetusten hakemisessa",
     "value": "Virhe verkkoasetusten hakemisessa"
@@ -2837,9 +2845,41 @@
     "description": "Sovelluksen pääotsikko konsolitilassa",
     "value": "Konsoli"
   },
-  "toolbar.header.hello": {
-    "description": "Tervehdysviesti",
-    "value": "Hei"
+  "toolbar.palette.azure": {
+    "description": "Taivaansinisen ja sinisen väripaletin nimi",
+    "value": "Taivaansininen ja sininen"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Syaanin ja oranssin väripaletin nimi",
+    "value": "Syaani ja oranssi"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-nimiö painikkeelle, joka avaa väripalettivalikon",
+    "value": "Väripaletti"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Magentan ja violetin väripaletin nimi",
+    "value": "Magenta ja violetti"
+  },
+  "toolbar.palette.rose": {
+    "description": "Ruusunpunaisen ja punaisen väripaletin nimi",
+    "value": "Ruusunpunainen ja punainen"
+  },
+  "toolbar.theme.dark": {
+    "description": "Valikon vaihtoehto, joka käyttää aina tummaa teemaa",
+    "value": "Tumma"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-nimiö painikkeelle, joka avaa vaalean, tumman tai järjestelmän teeman valikon",
+    "value": "Teema"
+  },
+  "toolbar.theme.light": {
+    "description": "Valikon vaihtoehto, joka käyttää aina vaaleaa teemaa",
+    "value": "Vaalea"
+  },
+  "toolbar.theme.system": {
+    "description": "Valikon vaihtoehto, joka noudattaa käyttöjärjestelmän vaaleaa tai tummaa asetusta",
+    "value": "Järjestelmä"
   },
   "userConsent.errorCancelCode": {
     "description": "Virhe käyttäjän suostumuskoodin peruuttamisessa",

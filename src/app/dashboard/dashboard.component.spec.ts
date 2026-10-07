@@ -61,4 +61,16 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy()
     expect(getStatsSpy).toHaveBeenCalled()
   })
+
+  it('should welcome the user by app name in the only top-level heading', () => {
+    translate.setTranslation('en', {
+      'dashboard.welcome': { value: 'Welcome to {{name}}' },
+      'toolbar.header.cloudModeTitle': { value: 'Sample UI' }
+    })
+    translate.use('en')
+    fixture.detectChanges()
+
+    const headings: HTMLElement[] = Array.from(fixture.nativeElement.querySelectorAll('h1'))
+    expect(headings.map((heading) => heading.textContent?.trim())).toEqual(['Welcome to Sample UI'])
+  })
 })

@@ -6,7 +6,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
-import { ToolbarComponent } from './core/toolbar/toolbar.component'
+import { NavFooterComponent } from './core/nav-footer/nav-footer.component'
 import { NavbarComponent } from './core/navbar/navbar.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { TranslateService } from '@ngx-translate/core'
@@ -19,7 +19,7 @@ import { getDirection } from '../utils'
   styleUrls: ['./app.component.scss'],
   imports: [
     RouterModule,
-    ToolbarComponent,
+    NavFooterComponent,
     NavbarComponent,
     MatSidenavModule,
     BidiModule

@@ -1,10 +1,27 @@
+// Fits a 24px status icon and the row's 40px icon buttons, with the last icon ending on the 16px page inset.
 .mat-column-actions {
-  width: 275px;
-  flex: 0 0 275px;
+  flex: 0 0 calc(var(--action-count) * 40px + 56px);
+  justify-content: flex-end;
+  gap: 8px;
+
+  > div {
+    margin-inline-end: -8px;
+  }
 }
-.mat-column-notification {
-  width: 75px;
-  flex: 0 0 75px;
+
+// The card's edges sit on the same 16px inset as the page title and the table.
+.filter-card {
+  margin: 12px 16px;
+  padding: 0;
+
+  mat-form-field {
+    margin-bottom: 0;
+  }
+}
+
+// Tab labels start at the same 16px inset as the page title and the table.
+mat-tab-group ::ng-deep .mdc-tab {
+  padding-inline: 16px;
 }
 
 .preview-chip {
@@ -18,16 +35,17 @@
   min-height: 30px;
   padding: 0 12px;
   border-radius: 16px;
-  background: #e5e5e5;
+  background: var(--mat-sys-surface-container-highest);
 }
 
 .control-mode-chip {
-  background: #b0bec5;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
 }
 
 .control-mode-chip.active {
-  background: #0277bd;
-  color: #fff;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
 }
 
 mat-icon.addTag {

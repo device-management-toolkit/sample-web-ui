@@ -131,7 +131,7 @@ describe('PBABootDialogComponent', () => {
   it('should disable OK button when form is invalid', () => {
     component.bootForm.get('selectedBootSource')?.setValue(null)
     fixture.detectChanges()
-    const okButton = debugElement.query(By.css('button[color="primary"]'))
+    const okButton = debugElement.query(By.css('button[cdkFocusInitial]'))
     expect(okButton.nativeElement.disabled).toBeTruthy()
   })
 
@@ -139,7 +139,7 @@ describe('PBABootDialogComponent', () => {
     component.bootForm.get('selectedBootSource')?.setValue(mockBootSources[0])
     fixture.detectChanges()
 
-    const okButton = debugElement.query(By.css('button[color="primary"]'))
+    const okButton = debugElement.query(By.css('button[cdkFocusInitial]'))
     expect(okButton.nativeElement.disabled).toBeFalsy()
   })
 

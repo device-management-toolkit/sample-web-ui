@@ -13,7 +13,7 @@ import { merge, of, Subject } from 'rxjs'
 import { catchError, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from '../../../models/models'
-import { MatCardModule } from '@angular/material/card'
+import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
 import { DeviceLogService } from '../device-log.service'
@@ -28,7 +28,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   styleUrls: ['./audit-log.component.scss'],
   imports: [
     MatProgressBarModule,
-    MatCardModule,
+    MatToolbarModule,
     MatSortModule,
     MatTableModule,
     MatButtonModule,

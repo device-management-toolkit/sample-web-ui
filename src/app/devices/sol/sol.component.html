@@ -2,19 +2,19 @@
   <div class="flex flex-50 items-center"></div>
   <div class="flex flex-50 justify-end">
     @if (!deviceConnection() && !isLoading() && !isConnecting() && !isDisconnecting()) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+      <button mat-flat-button style="margin-right: 16px" (click)="connect()">
         <mat-icon>tv_on</mat-icon>{{ 'sol.connect.value' | translate }}
       </button>
     } @else if (isDisconnecting()) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" disabled>
+      <button mat-flat-button style="margin-right: 16px" disabled>
         <mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}
       </button>
     } @else if (isConnecting() || (deviceState() !== 2 && isLoading())) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" disabled>
+      <button mat-flat-button style="margin-right: 16px" disabled>
         <mat-icon>tv_on</mat-icon>{{ 'sol.loading.value' | translate }}
       </button>
     } @else {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+      <button mat-flat-button style="margin-right: 16px" (click)="disconnect()">
         <mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}
       </button>
     }

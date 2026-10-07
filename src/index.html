@@ -6,9 +6,16 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script>
+      // Applies the stored look before first paint; ThemeService takes over once the app starts.
+      ;['theme', 'palette'].forEach((key) => {
+        const value = localStorage.getItem(key)
+        if (/^[a-z]+$/.test(value ?? '')) document.documentElement.classList.add(`${value}-${key}`)
+      })
+    </script>
   </head>
 
-  <body class="mat-typography">
+  <body>
     <app-root></app-root>
   </body>
 </html>

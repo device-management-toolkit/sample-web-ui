@@ -15,7 +15,7 @@
       <mat-list>
         @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color="warn" matListItemIcon>error</mat-icon>
+            <mat-icon matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
@@ -48,7 +48,7 @@
 
         <div class="flex-row flex-wrap flex-1" style="margin: 16px 0">
           <div class="flex flex-50" style="margin-top: 12px">
-            <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+            <button type="button" mat-raised-button (click)="fileInput.click()">
               {{ 'common.chooseFile.value' | translate }}
             </button>
             <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".pfx" />
@@ -56,12 +56,12 @@
           <div class="flex flex-50 justify-center items-center">
             @if (!isCertificateUploaded()) {
               <div class="flex justify-center">
-                <mat-icon color="warn">remove_circle</mat-icon>
+                <mat-icon class="mat-text-error">remove_circle</mat-icon>
                 {{ 'common.cetificateNotUploaded.value' | translate }}
               </div>
             } @else {
               <div class="flex flex-50 justify-center">
-                <mat-icon color="primary">check_circle</mat-icon>
+                <mat-icon class="mat-text-primary">check_circle</mat-icon>
                 {{ 'common.cetificateUploaded.value' | translate }}
               </div>
             }
@@ -94,12 +94,12 @@
       </mat-card-content>
       <mat-card-actions class="flex-row">
         <div class="flex flex-50 justify-center">
-          <button type="button" mat-button color="primary" (click)="cancel()">
+          <button type="button" mat-button (click)="cancel()">
             <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
-          <button type="submit" mat-flat-button color="primary">
+          <button type="submit" mat-flat-button>
             <span>{{ 'common.save.value' | translate }}</span>
             <span class="glyphicon glyphicon-log-in padding10L"></span>
           </button>

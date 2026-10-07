@@ -733,6 +733,10 @@
     "description": "デバイス操作の使用方法に関するツールチップ",
     "value": "デバイス操作を使用してデバイス一覧を制御する"
   },
+  "dashboard.welcome": {
+    "description": "ダッシュボードのウェルカム見出し（アプリケーション名を含む）",
+    "value": "{{name}}へようこそ"
+  },
   "delete.question": {
     "description": "レコード削除に関する質問",
     "value": "よろしいでしょうか？"
@@ -1976,6 +1980,10 @@
     "description": "MQTTイベントタイプの表見出し",
     "value": "タイプ"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "設定"
+  },
   "network.errorNetworkSetting": {
     "description": "ネットワーク設定の取得エラー",
     "value": "ネットワーク設定の取得中にエラーが発生しました"
@@ -2833,9 +2841,41 @@
     "description": "コンソールモードにおけるアプリケーションのメインタイトル",
     "value": "コンソール"
   },
-  "toolbar.header.hello": {
-    "description": "ご挨拶",
-    "value": "こんにちは"
+  "toolbar.palette.azure": {
+    "description": "アジュールとブルーのカラーパレットの名前",
+    "value": "アジュールとブルー"
+  },
+  "toolbar.palette.cyan": {
+    "description": "シアンとオレンジのカラーパレットの名前",
+    "value": "シアンとオレンジ"
+  },
+  "toolbar.palette.label": {
+    "description": "カラーパレットのメニューを開くボタンの aria ラベル",
+    "value": "カラーパレット"
+  },
+  "toolbar.palette.magenta": {
+    "description": "マゼンタとバイオレットのカラーパレットの名前",
+    "value": "マゼンタとバイオレット"
+  },
+  "toolbar.palette.rose": {
+    "description": "ローズとレッドのカラーパレットの名前",
+    "value": "ローズとレッド"
+  },
+  "toolbar.theme.dark": {
+    "description": "常にダークテーマを使用するメニュー項目",
+    "value": "ダーク"
+  },
+  "toolbar.theme.label": {
+    "description": "ライト、ダーク、システムのテーマメニューを開くボタンの aria ラベル",
+    "value": "テーマ"
+  },
+  "toolbar.theme.light": {
+    "description": "常にライトテーマを使用するメニュー項目",
+    "value": "ライト"
+  },
+  "toolbar.theme.system": {
+    "description": "オペレーティングシステムのライトまたはダークの設定に従うメニュー項目",
+    "value": "システム"
   },
   "userConsent.errorCancelCode": {
     "description": "ユーザー同意コードのキャンセルに関するエラー",

@@ -733,6 +733,10 @@
     "description": "הסבר כלים לשימוש בפעולות מכשירים",
     "value": "השתמש בפעולות מכשירים כדי לשלוט ברשימת מכשירים"
   },
+  "dashboard.welcome": {
+    "description": "כותרת הפתיחה בלוח המחוונים, עם שם היישום",
+    "value": "ברוכים הבאים אל {{name}}"
+  },
   "delete.question": {
     "description": "שאלה לגבי מחיקת רשומות",
     "value": "אתה בטוח?"
@@ -1976,6 +1980,10 @@
     "description": "כותרת טבלה לסוג אירוע MQTT",
     "value": "סוּג"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "תצורה"
+  },
   "network.errorNetworkSetting": {
     "description": "שגיאה לאחזור הגדרות רשת",
     "value": "שגיאה בהגדרות רשת"
@@ -2833,9 +2841,41 @@
     "description": "הכותרת העיקרית של היישום במצב קונסולה",
     "value": "לְנַחֵם"
   },
-  "toolbar.header.hello": {
-    "description": "שלום הודעה",
-    "value": "היי"
+  "toolbar.palette.azure": {
+    "description": "שם ערכת הצבעים תכלת וכחול",
+    "value": "תכלת וכחול"
+  },
+  "toolbar.palette.cyan": {
+    "description": "שם ערכת הצבעים ציאן וכתום",
+    "value": "ציאן וכתום"
+  },
+  "toolbar.palette.label": {
+    "description": "תווית aria ללחצן שפותח את תפריט ערכות הצבעים",
+    "value": "ערכת צבעים"
+  },
+  "toolbar.palette.magenta": {
+    "description": "שם ערכת הצבעים מגנטה וסגול",
+    "value": "מגנטה וסגול"
+  },
+  "toolbar.palette.rose": {
+    "description": "שם ערכת הצבעים ורוד ואדום",
+    "value": "ורוד ואדום"
+  },
+  "toolbar.theme.dark": {
+    "description": "אפשרות בתפריט שמשתמשת תמיד בערכת הנושא הכהה",
+    "value": "כהה"
+  },
+  "toolbar.theme.label": {
+    "description": "תווית aria ללחצן שפותח את תפריט ערכת הנושא: בהירה, כהה או של המערכת",
+    "value": "ערכת נושא"
+  },
+  "toolbar.theme.light": {
+    "description": "אפשרות בתפריט שמשתמשת תמיד בערכת הנושא הבהירה",
+    "value": "בהיר"
+  },
+  "toolbar.theme.system": {
+    "description": "אפשרות בתפריט שעוקבת אחר ההגדרה הבהירה או הכהה של מערכת ההפעלה",
+    "value": "מערכת"
   },
   "userConsent.errorCancelCode": {
     "description": "שגיאה לביטול קוד הסכמת המשתמש",

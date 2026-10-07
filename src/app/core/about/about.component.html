@@ -1,12 +1,12 @@
 <h2 mat-dialog-title>
   @if (cloudMode === true) {
-    <mat-icon color="warn">warning</mat-icon>
+    <mat-icon class="mat-text-error">warning</mat-icon>
     {{ 'about.cloudMode.value' | translate }}
   } @else {
     {{ 'about.nonCloudMode.value' | translate }}
   }
 </h2>
-<mat-dialog-content class="mat-typography">
+<mat-dialog-content>
   @if (cloudMode === true) {
     <br />
     <p>

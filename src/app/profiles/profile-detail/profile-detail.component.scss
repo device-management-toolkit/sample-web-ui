@@ -1,5 +1,5 @@
 fieldset {
-  border: 1px solid #ccc;
+  border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 4px;
   padding: 10px;
   margin: 12px 0;
@@ -10,15 +10,15 @@ fieldset {
 }
 .drag-box {
   padding: 10px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  border-bottom: solid 1px var(--mat-sys-outline-variant);
+  color: var(--mat-sys-on-surface);
   line-height: 1.3;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
-  background: white;
+  background: var(--mat-sys-surface-container-low);
   font-size: 14px;
 }
 .cdk-drag-preview {
@@ -28,10 +28,7 @@ fieldset {
   }
   box-sizing: border-box;
   border-radius: 4px;
-  box-shadow:
-    0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--mat-sys-level4);
 }
 
 .cdk-drag-placeholder {
@@ -57,5 +54,5 @@ fieldset {
 
 .like-mat-hint {
   font-size: 75%;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--mat-sys-on-surface-variant);
 }
