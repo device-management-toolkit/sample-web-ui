@@ -210,7 +210,7 @@ export class DomainsComponent implements OnInit {
       message += this.translate.instant('domains.certExpring.value', { count: countWarn })
     }
     if (countExp > 0) {
-      message += this.translate.instant('domains.certExpired.value', { count: countWarn })
+      message += this.translate.instant('domains.certExpired.value', { count: countExp })
     }
 
     if (message !== '') {

@@ -1,3 +1,10 @@
+## [3.69.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.1...v3.69.2) (2026-10-06)
+
+
+### Bug Fixes
+
+* show the correct number of expired domain certs ([#3599](https://github.com/device-management-toolkit/sample-web-ui/issues/3599)) ([476bccd](https://github.com/device-management-toolkit/sample-web-ui/commit/476bccdf56261a6ac978cdc6dc6b6a9cd9fa5568))
+
 ## [3.69.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.0...v3.69.1) (2026-10-02)
 
 
