@@ -1,0 +1,55 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [26.x]
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run lint
+      - run: npm run lint:cypress
+      - run: node --test cypress/node-tests/migration.test.cjs
+      - run: node --test --test-timeout=60000 cypress/node-tests/docker-cleanup.test.cjs
+      - run: npm run ci-prettify
+      - run: npm run test-ci -- --output-file=sample-web-ui-$NODE_VERSION.xml
+        env:
+          NODE_VERSION: ${{ matrix.node-version }}
+      - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        name: Upload Coverage Results
+        with:
+          directory: ./coverage/samplewebui
+      - name: Upload Test Results
+        # Run even when Test fails — that is exactly when the junit report matters.
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sample-web-ui-unit-${{ matrix.node-version }}
+          path: sample-web-ui-${{ matrix.node-version }}.xml

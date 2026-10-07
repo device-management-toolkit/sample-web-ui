@@ -1,0 +1,146 @@
+<mat-toolbar>
+  {{ pageTitle | translate }}
+</mat-toolbar>
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<div class="flex-row">
+  <div class="flex-25 hide-sm"></div>
+  <mat-card class="flex flex-50">
+    <mat-card-header>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    @if (errorMessages.length > 0) {
+      <mat-list>
+        @for (item of errorMessages; track item) {
+          <mat-list-item class="error-messages-container">
+            <mat-icon color="warn" matListItemIcon>error</mat-icon>
+            <span class="error-messages" matListItemTitle>{{ item }}</span>
+          </mat-list-item>
+        }
+      </mat-list>
+    }
+    <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="flex-row flex-wrap">
+        <mat-form-field class="flex flex-1" style="margin-bottom: 10px">
+          <input
+            formControlName="configName"
+            matInput
+            name="configName"
+            [placeholder]="'configDetail.configNamePlaceholder.value' | translate"
+            required />
+          @if (configForm.controls.configName.hasError('required')) {
+            <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          } @else if (configForm.controls.configName.hasError('pattern')) {
+            <mat-error>{{ 'configDetail.configNamePatternError.value' | translate }}</mat-error>
+          }
+          <mat-hint>{{ 'configDetail.configNameHint.value' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-radio-group
+          class="flex-1 flex-row flex-wrap"
+          name="serverAddressFormat"
+          formControlName="serverAddressFormat">
+          <mat-radio-button class="flex flex-50" [value]="3" checked="true">{{
+            'configDetail.ipv4.value' | translate
+          }}</mat-radio-button>
+          <mat-radio-button class="flex flex-50" [value]="201">{{
+            'configDetail.fqdn.value' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="flex flex-1">
+          <input
+            formControlName="mpsServerAddress"
+            matInput
+            name="mpsServerAddress"
+            [placeholder]="'configDetail.mpsAddressPlaceholder.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.mpsAddressHint.value' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input
+            formControlName="commonName"
+            matInput
+            name="commonName"
+            [placeholder]="'configDetail.commonNamePlaceholder.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.commonNameHint.value' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input
+            type="number"
+            formControlName="mpsPort"
+            matInput
+            name="mpsPort"
+            [placeholder]="'configDetail.portPlaceholder.value' | translate"
+            required />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.portHint.value' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="flex flex-1">
+          <input
+            formControlName="username"
+            matInput
+            name="username"
+            [placeholder]="'configDetail.usernamePlaceholder.value' | translate"
+            required
+            maxlength="16" />
+          <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
+          <mat-hint>{{ 'configDetail.usernameHint.value' | translate }}</mat-hint>
+        </mat-form-field>
+        <br />
+        @if (!isCloud) {
+          <mat-slide-toggle formControlName="generateRandomPassword">
+            {{ 'configDetail.generateRandomPassword.value' | translate }}
+          </mat-slide-toggle>
+        }
+        <br />
+        <br />
+
+        @if (!configForm.controls.generateRandomPassword.value) {
+          <mat-form-field class="flex flex-1" style="margin-top: 16px">
+            <input
+              [type]="passwordInputType()"
+              formControlName="password"
+              matInput
+              name="password"
+              [placeholder]="'configDetail.passwordPlaceholder.value' | translate"
+              required
+              minlength="8"
+              maxlength="32" />
+            <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+            <mat-hint>{{ 'configDetail.passwordHint.value' | translate }}</mat-hint>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              [matTooltip]="'profileDetail.showHidePassword.value' | translate"
+              (click)="togglePasswordVisibility()"
+              [disabled]="configForm.controls.password.disabled">
+              @if (passwordInputType() !== 'text') {
+                <mat-icon>visibility</mat-icon>
+              } @else {
+                <mat-icon>visibility_off</mat-icon>
+              }
+            </button>
+          </mat-form-field>
+        }
+      </mat-card-content>
+      <mat-card-actions class="flex-row">
+        <div class="flex flex-50 justify-center">
+          <button type="button" mat-button color="primary" (click)="cancel()">
+            <span>{{ 'common.cancel.value' | translate }}</span>
+          </button>
+        </div>
+        <div class="flex flex-50 justify-center">
+          <button type="submit" mat-flat-button color="primary">
+            <span>{{ 'common.save.value' | translate }}</span>
+          </button>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+  <div class="flex-25 hide-sm"></div>
+</div>

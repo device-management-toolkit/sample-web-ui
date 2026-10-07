@@ -1,0 +1,40 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { beforeEach, describe, expect, it } from 'vitest'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+
+import { KeyDisplayDialogComponent } from './key-display-dialog.component'
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
+import { provideTranslateService } from '@ngx-translate/core'
+
+describe('KeyDisplayDialogComponent', () => {
+  let component: KeyDisplayDialogComponent
+  let fixture: ComponentFixture<KeyDisplayDialogComponent>
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideTranslateService(),
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { key: 'test' }
+        }
+      ],
+      imports: [
+        KeyDisplayDialogComponent,
+        MatDialogModule
+      ]
+    })
+
+    fixture = TestBed.createComponent(KeyDisplayDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
+
+  it('should create', () => {
+    expect(component).toBeTruthy()
+  })
+})

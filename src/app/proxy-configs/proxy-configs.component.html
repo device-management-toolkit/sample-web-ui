@@ -1,0 +1,88 @@
+<mat-toolbar>
+  <div class="flex-33">
+    <h3>{{ 'proxyConfigs.header.proxyTitle.value' | translate }}</h3>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex flex-33 justify-end">
+    <button id="btnAdd" mat-button [disabled]="isLoading()" (click)="navigateTo()">
+      <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate }}
+    </button>
+  </div>
+</mat-toolbar>
+<mat-card style="margin: 16px">
+  @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  @if (isNoData()) {
+    <mat-card-content style="text-align: center">
+      <p>{{ 'common.noData.value' | translate }}</p>
+    </mat-card-content>
+  } @else {
+    <mat-card-content>
+      <mat-table data-cy="proxy-configs-table" [dataSource]="configs">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            <h4>{{ 'proxyConfigs.header.name.value' | translate }}</h4>
+          </mat-header-cell>
+          <mat-cell data-cy="proxy-config-name-cell" *matCellDef="let element" [matTooltip]="element.name">
+            {{ element.name }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
+          <mat-header-cell *matHeaderCellDef>
+            <h4>{{ 'proxyConfigs.header.proxyAddress.value' | translate }}</h4>
+          </mat-header-cell>
+          <mat-cell data-cy="proxy-address-cell" *matCellDef="let element" [matTooltip]="element.address">
+            {{ element.address }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="port">
+          <mat-header-cell *matHeaderCellDef>
+            <h4>{{ 'proxyConfigs.header.port.value' | translate }}</h4>
+          </mat-header-cell>
+          <mat-cell data-cy="proxy-port-cell" *matCellDef="let element">
+            {{ element.port }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="networkDnsSuffix">
+          <mat-header-cell *matHeaderCellDef>
+            <h4>{{ 'proxyConfigs.header.dnsSuffix.value' | translate }}</h4>
+          </mat-header-cell>
+          <mat-cell data-cy="proxy-dns-cell" *matCellDef="let element">
+            {{ element.networkDnsSuffix }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="remove">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell data-cy="remove-cell" *matCellDef="let element" style="text-align: end">
+            <button
+              data-cy="delete-btn"
+              mat-icon-button
+              matTooltip="{{ 'common.delete.value' | translate }}"
+              (click)="delete(element.name); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="navigateTo(encodeURIComponent(row.name))"></mat-row>
+      </mat-table>
+
+      @if (!isLoading() && configs.data.length > 0) {
+        <mat-paginator
+          [pageSizeOptions]="[10, 25, 50, 100]"
+          [pageSize]="pageEvent.pageSize"
+          [showFirstLastButtons]="true"
+          [length]="totalCount()"
+          (page)="pageChanged($event)">
+        </mat-paginator>
+      }
+    </mat-card-content>
+  }
+</mat-card>

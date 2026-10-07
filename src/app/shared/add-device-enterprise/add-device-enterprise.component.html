@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>{{ 'devices.addDevice.value' | translate }}</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>{{ 'common.hostName.value' | translate }}</mat-label>
+      <input matInput title="hostname" formControlName="hostname" />
+      <mat-hint>{{ 'common.enterHostName.value' | translate }}</mat-hint>
+      @if (form.get('hostname')?.errors?.required) {
+        <mat-error>{{ 'addDevice.hostNameRequired.value' | translate }}</mat-error>
+      }
+      @if (form.get('hostname')?.errors?.pattern) {
+        <mat-error>{{ 'addDevice.hostNameInvalid.value' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>{{ 'common.friendlyName.value' | translate }}</mat-label>
+      <input matInput title="friendlyName" formControlName="friendlyName" />
+      <mat-hint>{{ 'common.enterFriendlyName.value' | translate }}</mat-hint>
+      @if (form.get('friendlyName')?.errors?.required) {
+        <mat-error>{{ 'addDevice.friendlyNameRequired.value' | translate }}</mat-error>
+      }
+      @if (form.get('friendlyName')?.errors?.maxlength) {
+        <mat-error>{{ 'addDevice.friendlyNameInvalid.value' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>{{ 'common.userName.value' | translate }}</mat-label>
+      <input matInput title="username" formControlName="username" />
+      <mat-hint>{{ 'common.enterUserName.value' | translate }}</mat-hint>
+      @if (form.get('username')?.errors?.required) {
+        <mat-error>{{ 'addDevice.userNameRequired.value' | translate }}</mat-error>
+      }
+      @if (form.get('username')?.errors?.minlength) {
+        <mat-error>{{ 'addDevice.userNameInvalid.value' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>{{ 'addDevice.amtPassword.value' | translate }}</mat-label>
+      <input
+        matInput
+        title="password"
+        formControlName="password"
+        type="password"
+        required
+        minlength="8"
+        maxlength="32" />
+      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+      <mat-hint>{{ 'addDevice.amtPasswordHint.value' | translate }}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="flex flex-1">
+      <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
+      <mat-chip-grid #tagList aria-label="Tag selection">
+        @for (tag of tags; track tag) {
+          <mat-chip-row [removable]="true" (removed)="remove(tag)">
+            {{ tag }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip-row>
+        }
+        <input
+          [placeholder]="'addDevice.placeholderNewTag.value' | translate"
+          [matChipInputFor]="tagList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)" />
+      </mat-chip-grid>
+      <mat-hint>{{ 'addDevice.enterTags.value' | translate }} </mat-hint>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="useTLS" class="flex flex-1">{{ 'addDevice.useTLS.value' | translate }}</mat-checkbox>
+    <mat-checkbox formControlName="allowSelfSigned" class="flex flex-1">{{
+      'addDevice.allowSelfSignedCertificates.value' | translate
+    }}</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="submit">{{ 'common.submit.value' | translate }}</button>
+  </form>
+</div>

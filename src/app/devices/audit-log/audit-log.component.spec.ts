@@ -1,0 +1,56 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../../test-helpers'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ActivatedRoute, RouterModule } from '@angular/router'
+import { of } from 'rxjs'
+import { AuditLogComponent } from './audit-log.component'
+import { DeviceLogService } from '../device-log.service'
+import { provideTranslateService } from '@ngx-translate/core'
+
+describe('AuditLogComponent', () => {
+  let component: AuditLogComponent
+  let fixture: ComponentFixture<AuditLogComponent>
+  let getAuditLogSpy: MockInstance
+
+  beforeEach(() => {
+    const devicesService = createSpyObj('DeviceLogService', ['getAuditLog'])
+    getAuditLogSpy = devicesService.getAuditLog.mockReturnValue(of({ totalCnt: 0, records: [] }))
+
+    TestBed.configureTestingModule({
+      imports: [
+        RouterModule,
+        AuditLogComponent
+      ],
+      providers: [
+        provideTranslateService(),
+        { provide: DeviceLogService, useValue: devicesService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'guid' })
+          }
+        }
+      ]
+    })
+  })
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AuditLogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
+
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
+  it('should create', () => {
+    expect(component).toBeTruthy()
+    expect(getAuditLogSpy.mock.calls.length > 0, 'getAuditLog called').toBe(true)
+  })
+})

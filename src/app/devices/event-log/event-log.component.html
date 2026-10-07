@@ -1,0 +1,59 @@
+@if (isLoading() !== false) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<mat-card>
+  <mat-card-header style="justify-content: space-between">
+    <mat-card-title>
+      {{ 'eventLog.entries.value' | translate: { count: dataSource.data.length } }}
+    </mat-card-title>
+
+    @if (!isCloudMode) {
+      <button mat-flat-button color="primary" (click)="download()">{{ 'eventLog.download.value' | translate }}</button>
+    }
+  </mat-card-header>
+  <mat-card-content>
+    @if (isNoData()) {
+      <h3 class="flex justify-center">{{ 'deviceDetail.noEventLog.value' | translate }}</h3>
+    } @else {
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Event">
+          <mat-header-cell *matHeaderCellDef> {{ 'auditLog.event.value' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
+        </ng-container>
+        @if (isCloudMode) {
+          <ng-container matColumnDef="Event Type">
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.eventType.value' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ decodeEventType(element.EventType) }} </mat-cell>
+          </ng-container>
+        } @else {
+          <ng-container matColumnDef="Source">
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.source.value' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.Entity }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Severity">
+            <mat-header-cell *matHeaderCellDef> {{ 'eventLog.severity.value' | translate }} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.EventSeverity }} </mat-cell>
+          </ng-container>
+        }
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell *matHeaderCellDef> {{ 'auditLog.time.value' | translate }} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.Time | amDateFormatter: 'MMMM d, yyyy h:mma' }} ({{ element.Time | amTimeAgoFormatter: true }})
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    }
+  </mat-card-content>
+  <mat-card-actions align="end">
+    @if (!isCloudMode) {
+      <button mat-icon-button (click)="lastPage()" [disabled]="currentPageIndex === 0">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button (click)="nextPage()" [disabled]="!hasMoreRecords">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

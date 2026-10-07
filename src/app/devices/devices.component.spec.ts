@@ -1,0 +1,544 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { createSpyObj } from '../../test-helpers'
+import { ApplicationRef } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialog } from '@angular/material/dialog'
+import { RouterTestingModule } from '@angular/router/testing'
+import { of, Subject } from 'rxjs'
+
+import { DevicesComponent } from './devices.component'
+import { DevicesService } from './devices.service'
+import { Device } from '../../models/models'
+import { MatSelectChange } from '@angular/material/select'
+import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+
+describe('DevicesComponent', () => {
+  let device01: Device
+  let device02: Device
+  let component: DevicesComponent
+  let fixture: ComponentFixture<DevicesComponent>
+  let getDevicesSpy: MockInstance
+  let updateDeviceSpy: MockInstance
+  let getTagsSpy: MockInstance
+  let sendPowerActionSpy: MockInstance
+  let sendDeactivateSpy: MockInstance
+  let translate: TranslateService
+
+  beforeEach(async () => {
+    device01 = {
+      hostname: 'device01',
+      friendlyName: '',
+      icon: 1,
+      connectionStatus: true,
+      guid: '12324-4243-ewdsd',
+      tags: ['tagA', 'tagCommon01'],
+      mpsInstance: '',
+      mpsusername: '',
+      tenantId: '',
+      dnsSuffix: 'vprodemo.com'
+    }
+    device02 = {
+      hostname: 'device02',
+      friendlyName: '',
+      icon: 1,
+      connectionStatus: true,
+      guid: '12324-4243-ewdse',
+      tags: ['tagB', 'tagCommon01'],
+      mpsInstance: '',
+      mpsusername: '',
+      tenantId: '',
+      dnsSuffix: 'vprodemo.com'
+    }
+    const devicesService = createSpyObj('DevicesService', [
+      'getDevices',
+      'updateDevice',
+      'getTags',
+      'getPowerState',
+      'PowerStates',
+      'sendPowerAction',
+      'bulkPowerAction',
+      'sendDeactivate',
+      'sendBulkDeactivate',
+      'getStats'
+    ])
+    devicesService.PowerStates.mockReturnValue({
+      2: 'On',
+      3: 'Sleep',
+      4: 'Sleep',
+      6: 'Off',
+      7: 'Hibernate',
+      8: 'Off',
+      9: 'Power Cycle',
+      13: 'Off'
+    })
+    getDevicesSpy = devicesService.getDevices.mockReturnValue(of({ data: [device01, device02], totalCount: 1 }))
+    updateDeviceSpy = devicesService.updateDevice.mockImplementation((device: any) => {
+      return of(device)
+    })
+    getTagsSpy = devicesService.getTags.mockReturnValue(of([]))
+    devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+    devicesService.getStats.mockReturnValue(
+      of({ totalCount: 42, connectedCount: 10, disconnectedCount: 5, activatedCount: 7, discoveredCount: 3 })
+    )
+    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
+    sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
+        DevicesComponent
+      ],
+      providers: [
+        provideTranslateService(),
+        { provide: DevicesService, useValue: devicesService },
+        { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
+        TranslateService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    })
+  })
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DevicesComponent)
+    component = fixture.componentInstance
+    translate = TestBed.inject(TranslateService)
+    translate.setFallbackLang('en')
+    component.ngOnInit()
+  })
+
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
+  it('should create', () => {
+    component.isCloudMode = true
+    expect(component).toBeTruthy()
+    expect(getDevicesSpy.mock.calls.length > 0, 'getDevices called').toBe(true)
+    expect(getTagsSpy.mock.calls.length > 0, 'getTags called').toBe(true)
+  })
+
+  it('should determine if all selected (false)', () => {
+    const result = component.isAllSelected()
+    expect(result).toBe(false)
+  })
+  it('should determine if all selected (true)', () => {
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    const result = component.isAllSelected()
+    expect(result).toBe(true)
+  })
+  it('should translate connection status - true', () => {
+    const result = component.translateConnectionStatus(true)
+    expect(result).toBe('Connected')
+  })
+  it('should translate connection status - false', () => {
+    const result = component.translateConnectionStatus(false)
+    expect(result).toBe('Disconnected')
+  })
+  it('should translate connection status - null', () => {
+    const result = component.translateConnectionStatus()
+    expect(result).toBe('Unknown')
+  })
+  it('should navigate to', async () => {
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    await component.navigateTo('guid')
+    expect(routerSpy).toHaveBeenCalledWith(['/devices/guid'])
+  })
+  it('should open the add device dialog', () => {
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(false), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+
+    component.addDevice()
+    expect(dialogSpy).toHaveBeenCalled()
+  })
+  it.skip('should change the page', () => {
+    component.pageChanged({ pageSize: 25, pageIndex: 2, length: 50 })
+    expect(getDevicesSpy.mock.calls.length > 0, 'getDevices called').toBe(true)
+    expect(component.paginator.length).toBe(1)
+    expect(component.paginator.pageSize).toBe(25)
+    expect(component.paginator.pageIndex).toBe(0)
+    expect(component.paginator.showFirstLastButtons).toBe(true)
+  })
+  it('should reset response', () => {
+    vi.useFakeTimers()
+    expect(component.devices.data.length).toBeGreaterThan(0)
+    component.statusMessageByGuid.set({ [device01.guid]: 'SUCCESS' })
+    component.resetResponse()
+    vi.advanceTimersByTime(5001)
+    vi.useRealTimers()
+    expect(component.statusMessageByGuid()[device01.guid]).toEqual('')
+  })
+  it('should reset the response of every device after a bulk power action', () => {
+    vi.useFakeTimers()
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    component.bulkPowerAction(8)
+    vi.advanceTimersByTime(5001)
+    vi.useRealTimers()
+    expect(component.statusMessageByGuid()).toEqual({ [device01.guid]: '', [device02.guid]: '' })
+  })
+  it('should fire bulk power action', () => {
+    const resetResponseSpy = vi.spyOn(component, 'resetResponse').mockImplementation(() => undefined)
+    component.selectedDevices.select(component.devices.data[0])
+    component.resetResponse()
+    fixture.detectChanges()
+    component.bulkPowerAction(8)
+    expect(resetResponseSpy).toHaveBeenCalled()
+  })
+  it('should fire send power action', () => {
+    const resetSpy = vi.spyOn(component, 'resetResponse').mockImplementation(() => undefined)
+    component.sendPowerAction(device01.guid, 2)
+    expect(sendPowerActionSpy).toHaveBeenCalled()
+    expect(resetSpy).toHaveBeenCalled()
+  })
+
+  it('should select all rows on change the master toggle', () => {
+    component.masterToggle()
+    expect(component.selectedDevices.selected).toEqual(component.devices.data)
+  })
+
+  it('should clear the selection when unselect the master toggle', () => {
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    component.masterToggle()
+    expect(component.selectedDevices.selected).toEqual([])
+  })
+
+  it('should fire deactivate action', () => {
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    component.sendDeactivate(device01.guid)
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(sendDeactivateSpy).toHaveBeenCalled()
+  })
+  it('should fire bulk deactivate action', () => {
+    expect(component.devices.data.length).toBeGreaterThan(0)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    component.selectedDevices.select(component.devices.data[0])
+    component.bulkDeactivate()
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(sendDeactivateSpy).toHaveBeenCalledTimes(1)
+  })
+  it('should fire bulk edit tags', () => {
+    expect(component.devices.data.length).toBeGreaterThan(0)
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    component.bulkEditTags()
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(updateDeviceSpy).toHaveBeenCalledTimes(2)
+  })
+  it('should fire device edit tags', () => {
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
+    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+    component.devices.data.forEach((d) => component.selectedDevices.select(d))
+    component.editTagsForDevice(device01.guid)
+    fixture.detectChanges()
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(updateDeviceSpy).toHaveBeenCalledTimes(1)
+  })
+  it('should call tagFilterChange', () => {
+    const mockMatSelect = createSpyObj('MatSelect', ['value'])
+    const mockValue = 'mockTag'
+    const matSelectChange: MatSelectChange = {
+      source: mockMatSelect,
+      value: mockValue
+    }
+
+    component.tagFilterChange(matSelectChange)
+    expect(component.filteredTags()).toBe(mockValue)
+  })
+
+  describe('getProductType', () => {
+    it('should return ISM when bit 4 (0x10) is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return vPro when bit 3 (0x08) is set and bit 4 is not', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '8' } } as Device // 0x08 = 8
+      expect(component.getProductType(device)).toBe('vPro')
+    })
+
+    it('should return ISM when both bit 4 and bit 3 are set (ISM takes priority)', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '24' } } as Device // 0x18 = 24
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
+    it('should return non-vPro when neither bit is set', () => {
+      const device = { ...device01, deviceInfo: { fwSku: '4' } } as Device // 0x04 = 4
+      expect(component.getProductType(device)).toBe('non-vPro')
+    })
+
+    it('should return an empty value when fwSku is undefined', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+
+    it('should return an empty value when fwSku is not a number', () => {
+      const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
+      expect(component.getProductType(device)).toBe('')
+    })
+  })
+
+  describe('getControlMode', () => {
+    it('should return acm for admin control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'admin control mode' } } as Device
+      expect(component.getControlMode(device)).toBe('acm')
+    })
+
+    it('should return acm when currentMode is just "admin"', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'admin' } } as Device
+      expect(component.getControlMode(device)).toBe('acm')
+    })
+
+    it('should return ccm for client control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'client control mode' } } as Device
+      expect(component.getControlMode(device)).toBe('ccm')
+    })
+
+    it('should return ccm when currentMode is just "client"', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'client' } } as Device
+      expect(component.getControlMode(device)).toBe('ccm')
+    })
+
+    it('should return notActivated when currentMode is empty', () => {
+      const device = { ...device01, deviceInfo: { currentMode: '' } } as Device
+      expect(component.getControlMode(device)).toBe('notActivated')
+    })
+
+    it('should return notActivated for the literal "not activated" value', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'not activated' } } as Device
+      expect(component.getControlMode(device)).toBe('notActivated')
+    })
+
+    it('should return unknown when deviceInfo is missing', () => {
+      const device = { ...device01, deviceInfo: undefined } as Device
+      expect(component.getControlMode(device)).toBe('unknown')
+    })
+
+    it('should return unknown for an unrecognized control mode', () => {
+      const device = { ...device01, deviceInfo: { currentMode: 'some other mode' } } as Device
+      expect(component.getControlMode(device)).toBe('unknown')
+    })
+  })
+
+  describe('onTabChange / server-side counts (cloud mode)', () => {
+    beforeEach(() => {
+      component.isCloudMode = true
+      getDevicesSpy.mockClear()
+    })
+
+    it('should never filter by status regardless of tab, since cloud has no discovered/managed tabs', () => {
+      component.onTabChange(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
+      component.onTabChange(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: undefined }))
+    })
+
+    it('should reset paging to the first page when switching tabs', () => {
+      component.pageEvent.startsFrom = 50
+      component.onTabChange(1)
+      expect(component.pageEvent.startsFrom).toBe(0)
+    })
+
+    it('should derive counts from the paginated device response instead of the stats endpoint', () => {
+      const getStatsSpy = TestBed.inject(DevicesService).getStats as unknown as MockInstance
+      getStatsSpy.mockClear()
+      component.onTabChange(0)
+      expect(getStatsSpy).not.toHaveBeenCalled()
+      expect(component.allCount).toBe(1)
+    })
+
+    it('should use the total count regardless of active tab', () => {
+      component.onTabChange(0)
+      expect(component.currentTabCount).toBe(1)
+      component.onTabChange(1)
+      expect(component.currentTabCount).toBe(1)
+    })
+
+    it('should never treat any tab as the discovered tab', () => {
+      component.onTabChange(0)
+      expect(component.isDiscoveredTab).toBe(false)
+    })
+
+    it('should not show the control mode column', () => {
+      expect(component.displayedColumns).not.toContain('controlMode')
+    })
+  })
+
+  describe('onTabChange / server-side counts (console mode)', () => {
+    beforeEach(() => {
+      component.isCloudMode = false
+      getDevicesSpy.mockClear()
+    })
+
+    it('should default to the Managed tab', () => {
+      expect(component.activeTab()).toBe(0)
+    })
+
+    it('should request activated (managed) devices from the server on tab 0', () => {
+      component.onTabChange(0)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+    })
+
+    it('should request discovered devices from the server on tab 1', () => {
+      component.onTabChange(1)
+      expect(component.activeTab()).toBe(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
+    })
+
+    it('should set currentTabCount from the active tab', () => {
+      component.onTabChange(0)
+      expect(component.currentTabCount).toBe(7)
+      component.onTabChange(1)
+      expect(component.currentTabCount).toBe(3)
+    })
+
+    it('should treat tab 0 as managed and tab 1 as the discovered tab', () => {
+      component.onTabChange(0)
+      expect(component.isDiscoveredTab).toBe(false)
+      component.onTabChange(1)
+      expect(component.isDiscoveredTab).toBe(true)
+    })
+
+    it('should show the control mode column only on the managed tab', () => {
+      component.onTabChange(0)
+      expect(component.displayedColumns).toContain('controlMode')
+
+      component.onTabChange(1)
+      expect(component.displayedColumns).not.toContain('controlMode')
+    })
+  })
+
+  describe('isNoData', () => {
+    it('should return false when the table has entries regardless of totalCount', () => {
+      component.devices.data = [device01]
+      component.isLoading.set(false)
+      component.totalCount.set(0) // filtered tab has 0 — should not trigger no-data
+      expect(component.isNoData()).toBe(false)
+    })
+
+    it('should return true only when the table is empty and not loading', () => {
+      component.devices.data = []
+      component.isLoading.set(false)
+      expect(component.isNoData()).toBe(true)
+    })
+
+    it('should return false when loading even if the table is empty', () => {
+      component.devices.data = []
+      component.isLoading.set(true)
+      expect(component.isNoData()).toBe(false)
+    })
+  })
+
+  describe('rendering changes that arrive without user interaction', () => {
+    const renderedText = (): string => (fixture.nativeElement as HTMLElement).textContent ?? ''
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('should show the power state fetched after a power action', async () => {
+      component.powerStates = { 2: 'On', 8: 'Off' }
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+      expect(renderedText()).toContain('Power: On')
+
+      vi.useFakeTimers()
+      const getPowerStateSpy = TestBed.inject(DevicesService).getPowerState as unknown as MockInstance
+      getPowerStateSpy.mockReturnValue(of({ powerstate: 8 }))
+      component.sendPowerAction(device01.guid, 8)
+      await vi.advanceTimersByTimeAsync(2100)
+
+      expect(renderedText()).toContain('Power: Off')
+    })
+
+    it('should remove the success icon when the power action response is reset', async () => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+
+      vi.useFakeTimers()
+      component.sendPowerAction(device01.guid, 2)
+      await vi.advanceTimersByTimeAsync(100)
+      expect(renderedText()).toContain('check_circle')
+
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(renderedText()).not.toContain('check_circle')
+    })
+
+    it('should update the tab counts when stats arrive after the device list', async () => {
+      const getStatsSpy = TestBed.inject(DevicesService).getStats as unknown as MockInstance
+      getStatsSpy.mockReturnValue(of({ totalCount: 1, activatedCount: 1, discoveredCount: 0 }))
+      component.isCloudMode = false
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+      expect(renderedText()).toContain('devices.tabs.discovered.value (0)')
+
+      const lateStats = new Subject<{ totalCount: number; activatedCount: number; discoveredCount: number }>()
+      getStatsSpy.mockReturnValue(lateStats)
+      component.getDevices()
+      await fixture.whenStable()
+      lateStats.next({ totalCount: 4, activatedCount: 1, discoveredCount: 3 })
+      await fixture.whenStable()
+
+      expect(renderedText()).toContain('devices.tabs.discovered.value (3)')
+    })
+
+    describe('editing tags', () => {
+      let warnSpy: MockInstance
+
+      beforeEach(async () => {
+        fixture.autoDetectChanges()
+        // Material re-renders once after the first pass; wait it out so only the edit can refresh the view.
+        do {
+          await fixture.whenStable()
+          await new Promise((resolve) => setTimeout(resolve))
+        } while (!fixture.isStable())
+        expect(renderedText()).toContain('tagA')
+
+        // The save stays pending so the reload cannot be what updates the row.
+        updateDeviceSpy.mockReturnValue(new Subject<Device>())
+        warnSpy = vi.spyOn(console, 'warn')
+        vi.spyOn(TestBed.inject(MatDialog), 'open').mockImplementation(((_component: unknown, config: any) => {
+          config.data.splice(0, config.data.length, 'tagEdited')
+          return createSpyObj({ afterClosed: of(true), close: null })
+        }) as any)
+      })
+
+      it('should show the edited tags when the tags dialog closes', async () => {
+        component.editTagsForDevice(device01.guid)
+        await fixture.whenStable()
+
+        expect(renderedText()).toContain('tagEdited')
+        expect(renderedText()).not.toContain('tagA')
+        expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
+        expect(warnSpy).not.toHaveBeenCalledWith(expect.stringContaining('NG0956'))
+      })
+
+      it('should show the bulk-edited tags when the tags dialog closes', async () => {
+        component.devices.data.forEach((d) => component.selectedDevices.select(d))
+        component.bulkEditTags()
+        await fixture.whenStable()
+
+        expect(renderedText()).toContain('tagEdited')
+        expect(renderedText()).not.toContain('tagCommon01')
+        expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
+      })
+    })
+  })
+})

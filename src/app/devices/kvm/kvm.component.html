@@ -1,0 +1,100 @@
+<mat-toolbar style="height: 100px" class="flex flex-row">
+  <div class="flex flex-50 items-center">
+    @if (amtFeatures()?.kvmAvailable) {
+      <mat-form-field style="margin-bottom: 0; margin-right: 16px">
+        <mat-label>{{ 'kvm.chooseEncoding.label.value' | translate }}</mat-label>
+        <mat-select [ngModel]="selectedEncoding()" (ngModelChange)="onEncodingChange($event)">
+          @for (encode of encodings; track encode) {
+            <mat-option [value]="encode.value">
+              {{ encode.viewValue }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="margin-bottom: 0; margin-right: 8px">
+        <mat-label>Display Selection</mat-label>
+        <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)">
+          @for (display of displays; track display.value) {
+            <mat-option [value]="display.value" [disabled]="display.disabled">
+              {{ display.viewValue }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="margin-bottom: 0; margin-right: 8px">
+        <mat-label>{{ 'kvm.hotKeys.label.value' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedHotkey" [placeholder]="'kvm.hotKeys.placeholder.value' | translate">
+          @for (hotkey of hotKeys; track hotkey.value) {
+            <mat-option [value]="hotkey.value">
+              {{ hotkey.label | translate }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button mat-stroked-button (click)="sendHotkey()" [disabled]="!selectedHotkey">
+        {{ 'kvm.hotKeys.send.value' | translate }}
+      </button>
+    }
+  </div>
+  <div class="flex flex-50 justify-end">
+    @if (amtFeatures()?.kvmAvailable) {
+      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
+        <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
+      </button>
+      @if ((deviceState() === 0 || !deviceKVMConnection()) && !isLoading()) {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+          <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
+        </button>
+      } @else if (deviceState() !== 2 && isLoading()) {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
+          <mat-icon>tv_off</mat-icon>{{ 'kvm.connecting.label.value' | translate }}
+        </button>
+      } @else {
+        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+          <mat-icon>tv_off</mat-icon>{{ 'kvm.disconnect.button.value' | translate }}
+        </button>
+      }
+    }
+    <button mat-flat-button color="primary" (click)="fileInput.click()">
+      <mat-icon>upload_file</mat-icon>{{ 'kvm.attachDisk.label.value' | translate }}
+    </button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
+    @if (isIDERActive()) {
+      <button mat-flat-button color="warn" (click)="onCancelIDER(fileInput)" class="stop-ider-button">
+        <mat-icon>stop</mat-icon>{{ 'kvm.stopIder.label.value' | translate }}
+      </button>
+    }
+  </div>
+</mat-toolbar>
+@if (isLoading() && deviceState() !== 2) {
+  <div class="loading-container">
+    <mat-progress-spinner class="spinner" mode="indeterminate"></mat-progress-spinner>
+    @if (loadingStatus()) {
+      <div class="loading-status">{{ loadingStatus() | translate }}</div>
+    }
+  </div>
+}
+@if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
+  <amt-kvm
+    class="kvm"
+    [isFullscreen]="isFullscreen()"
+    [deviceId]="deviceId()"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken()"
+    [deviceConnection]="deviceKVMConnection()"
+    [selectedEncoding]="selectedEncoding()"
+    [selectedHotkey]="hotKeySignal()"
+    (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
+}
+@if (diskImage && deviceIDERConnection()) {
+  <amt-ider
+    class="ider"
+    [deviceId]="deviceId()"
+    [mpsServer]="mpsServer"
+    [authToken]="authToken()"
+    [deviceConnection]="deviceIDERConnection()"
+    [cdrom]="diskImage"
+    [floppy]="null"
+    (deviceStatus)="deviceIDERStatus($event)">
+  </amt-ider>
+}

@@ -1,0 +1,68 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
+<mat-card class="flex flex-50 gap-12">
+  <mat-card-header>
+    <mat-card-title>{{ 'certificates.title.value' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'certificates.list.value' | translate }}</mat-card-subtitle>
+    <div class="flex flex-1 justify-end">
+      <button mat-button [matTooltip]="'certificates.add.tooltip.value' | translate" (click)="openAddCertDialog()">
+        <mat-icon>add</mat-icon> {{ 'common.addNew.value' | translate }}
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-list>
+    @if (isCertEmpty()) {
+      @if (isLoading()) {
+        <mat-list-item>{{ 'certificates.loading.value' | translate }}</mat-list-item>
+      } @else {
+        <mat-list-item>{{ 'certificates.empty.value' | translate }}</mat-list-item>
+      }
+    } @else {
+      @for (cert of certInfo()?.certificates?.publicKeyCertificateItems; track cert) {
+        <mat-list-item lines="3">
+          <span matListItemTitle>{{ cert.displayName }}</span>
+          <span matListItemLine>
+            {{ 'certificates.type.value' | translate }}:
+            {{
+              cert.trustedRootCertificate
+                ? ('certificates.typeRoot.value' | translate)
+                : ('certificates.typeClient.value' | translate)
+            }}
+          </span>
+          <span matListItemLine>
+            {{ 'certificates.profileAssociations.value' | translate }}:
+            @if (!cert.associatedProfiles || cert.associatedProfiles.length === 0) {
+              {{ 'certificates.profileAssociationsUnassociated.value' | translate }}
+            } @else {
+              {{ cert.associatedProfiles }}
+            }
+          </span>
+          <div matListItemMeta class="flex gap-1">
+            <button
+              mat-icon-button
+              [matTooltip]="'certificates.download.tooltip.value' | translate"
+              (click)="downloadCert(cert)">
+              <mat-icon>download</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              [matTooltip]="
+                (cert.associatedProfiles?.length > 0
+                  ? 'certificates.delete.associatedTooltip.value'
+                  : 'certificates.delete.tooltip.value'
+                ) | translate
+              "
+              (click)="deleteCertificate(cert)"
+              [disabled]="isLoading() || cert.readOnlyCertificate || cert.associatedProfiles?.length > 0"
+              [disabledInteractive]="true"
+              class="text-red-500">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      }
+    }
+  </mat-list>
+</mat-card>

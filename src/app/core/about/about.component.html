@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>
+  @if (cloudMode === true) {
+    <mat-icon color="warn">warning</mat-icon>
+    {{ 'about.cloudMode.value' | translate }}
+  } @else {
+    {{ 'about.nonCloudMode.value' | translate }}
+  }
+</h2>
+<mat-dialog-content class="mat-typography">
+  @if (cloudMode === true) {
+    <br />
+    <p>
+      {{ 'about.referenceImplementation.value' | translate }}
+    </p>
+    <mat-divider></mat-divider>
+    <br />
+    <h3>{{ 'about.sampleUI.value' | translate }}</h3>
+    <ul>
+      <li>{{ 'about.learn.value' | translate }}</li>
+      <li>{{ 'about.setUp.value' | translate }}</li>
+      <li>
+        {{ 'about.understand.value' | translate }}
+      </li>
+      <li>{{ 'about.howTo.value' | translate }}</li>
+    </ul>
+  } @else {
+    <p>
+      {{ 'about.description.value' | translate }}
+    </p>
+    <mat-divider></mat-divider>
+    <br />
+    <h3>{{ 'about.consoleProvides.value' | translate }}</h3>
+    <ul>
+      <li>{{ 'about.remotePower.value' | translate }}</li>
+      <li>{{ 'about.redirection.value' | translate }}</li>
+      <li>{{ 'about.device.value' | translate }}</li>
+    </ul>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (cloudMode === true) {
+    <label>
+      <input type="checkbox" [(ngModel)]="doNotShowAgain" /> {{ 'about.doNotShowAgain.value' | translate }}
+    </label>
+  }
+  <button mat-button [mat-dialog-close]="true" data-cy="closeNotice" cdkFocusInitial>
+    {{ 'about.gotIt.value' | translate }}
+  </button>
+</mat-dialog-actions>

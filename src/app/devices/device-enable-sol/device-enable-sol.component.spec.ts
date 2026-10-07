@@ -1,0 +1,47 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialogRef } from '@angular/material/dialog'
+import { DeviceEnableSolComponent } from './device-enable-sol.component'
+import { RouterModule } from '@angular/router'
+import { provideTranslateService } from '@ngx-translate/core'
+
+describe('DeviceEnableSolComponent', () => {
+  let component: DeviceEnableSolComponent
+  let fixture: ComponentFixture<DeviceEnableSolComponent>
+  const dialogMock = {
+    close: vi.fn()
+  }
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterModule,
+        DeviceEnableSolComponent
+      ],
+      providers: [
+        provideTranslateService(),
+        { provide: MatDialogRef, useValue: dialogMock }
+      ]
+    })
+  })
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DeviceEnableSolComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+    dialogMock.close = vi.fn()
+  })
+
+  afterEach(() => {
+    TestBed.resetTestingModule()
+  })
+
+  it('should create', () => {
+    expect(component).toBeTruthy()
+  })
+})

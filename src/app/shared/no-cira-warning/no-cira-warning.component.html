@@ -1,0 +1,16 @@
+<div class="dialog-top-spacer" aria-hidden="true"></div>
+<h2 mat-dialog-title>
+  <mat-icon color="warn" class="dialog-title-icon">warning</mat-icon>
+  {{ 'noCira.title.value' | translate }}
+</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{ 'noCira.message.value' | translate }}</p>
+  <p>{{ 'noCira.hint.value' | translate }}</p>
+  <p>{{ 'noCira.confirm.value' | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ 'common.cancelLower.value' | translate }}</button>
+  <button mat-button data-cy="no-cira-alert-ok" [mat-dialog-close]="true" cdkFocusInitial>
+    {{ 'common.continue.value' | translate }}
+  </button>
+</mat-dialog-actions>
