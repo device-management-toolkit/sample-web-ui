@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { DomainsService } from '../domains.service'
 
 import { DomainDetailComponent } from './domain-detail.component'
@@ -109,6 +109,45 @@ describe('DomainDetailComponent', () => {
 
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should show the cert domain suffix mismatch error and stay on the form(create)', () => {
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    createRecordSpy.mockReturnValue(throwError(() => ['FQDN not associated with provisioning certificate']))
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'cyz',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.isEdit = false
+    component.onSubmit()
+    fixture.detectChanges()
+
+    expect(createRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+    expect(fixture.nativeElement.querySelector('.error-messages').textContent).toContain(
+      'FQDN not associated with provisioning certificate'
+    )
+  })
+
+  it('should show the cert domain suffix mismatch error and stay on the form(update)', () => {
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    updateRecordSpy.mockReturnValue(throwError(() => ['FQDN not associated with provisioning certificate']))
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'cyz',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.onSubmit()
+    fixture.detectChanges()
+
+    expect(updateRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+    expect(fixture.nativeElement.querySelector('.error-messages').textContent).toContain(
+      'FQDN not associated with provisioning certificate'
+    )
   })
 
   it('should attach the domain certificate on file selected', () => {
