@@ -78,13 +78,20 @@
   <mat-divider></mat-divider>
 }
 @if (isNoData()) {
-  <h3 class="no-data">
-    @if (!filteredTags().length) {
-      <span>{{ 'devices.noData.value' | translate }}</span>
-    } @else {
-      <span>{{ 'devices.noDataFilter.value' | translate }}</span>
-    }
-  </h3>
+  @if (filteredTags().length) {
+    <app-empty-state icon="devices" [title]="'devices.noDataFilter.value' | translate" />
+  } @else if (isDiscoveredTab) {
+    <app-empty-state icon="devices" [title]="'devices.noData.value' | translate" />
+  } @else {
+    <app-empty-state
+      icon="devices"
+      [title]="'devices.noData.value' | translate"
+      [description]="
+        (isCloudMode ? 'devices.noDataDescriptionCloud.value' : 'devices.noDataDescriptionConsole.value') | translate
+      "
+      [actionLabel]="'common.addNew.value' | translate"
+      (action)="addDevice()" />
+  }
 } @else {
   <mat-table [dataSource]="devices" matSort [style.--action-count]="actionCount">
     <!-- select Column -->

@@ -212,4 +212,30 @@ describe('DomainsComponent', () => {
       expect.anything()
     )
   })
+
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const loadNothing = (): void => {
+      getDataSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getData(component.pageEvent())
+      fixture.detectChanges()
+    }
+
+    it('should not show when there are domains', () => {
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain what domains are for', () => {
+      loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('domains.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('domains.noDataDescription.value')
+    })
+
+    it('should start a new one from its button', () => {
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+      loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(routerSpy).toHaveBeenCalledWith(['/domains/new'])
+    })
+  })
 })

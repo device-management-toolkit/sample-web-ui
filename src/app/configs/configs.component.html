@@ -13,7 +13,12 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 @if (isNoData()) {
-  <h3 class="no-data">{{ 'configs.ciraNoData.value' | translate }}</h3>
+  <app-empty-state
+    icon="settings_ethernet"
+    [title]="'configs.ciraNoData.value' | translate"
+    [description]="'configs.ciraNoDataDescription.value' | translate"
+    [actionLabel]="'common.addNew.value' | translate"
+    (action)="navigateTo()" />
 } @else {
   <mat-table [dataSource]="configs()">
     <!-- name Column -->

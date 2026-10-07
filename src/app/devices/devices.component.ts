@@ -21,6 +21,7 @@ import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
 import { caseInsensitiveCompare } from '../../utils'
 import { environment } from '../../environments/environment'
 import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatCheckbox } from '@angular/material/checkbox'
 import {
@@ -93,7 +94,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatDivider,
     MatCard,
     MatCardContent,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class DevicesComponent implements OnInit, AfterViewInit {

@@ -353,10 +353,6 @@
   "common.no": {
     "value": "Nej"
   },
-  "common.noData": {
-    "description": "Meddelande när ingen data är tillgänglig",
-    "value": "Ingen data tillgänglig"
-  },
   "common.notApplicable": {
     "description": "Visas när OS-posten inte är tillämplig.",
     "value": "Ej tillämpligt"
@@ -494,6 +490,10 @@
   "configs.ciraNoData": {
     "description": "Inget CIRA-konfigurationsmeddelande",
     "value": "Inga CIRA-konfigurationer"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Förklarar vad CIRA-konfigurationer används till när det inte finns några",
+    "value": "En CIRA-konfiguration talar om för AMT vilken MPS-server den ska ansluta ut till, så att enheter kan hanteras även utanför det lokala nätverket. Lägg till en och välj den sedan som anslutning i en profil."
   },
   "configs.delete": {
     "description": "Meddelande om radering av CIRA-konfigurationer",
@@ -941,6 +941,14 @@
     "description": "Meddelande när inga enheter finns",
     "value": "Inga enheter hittades"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Förklarar hur enheter hamnar i listan när det inte finns några (moln)",
+    "value": "Enheter visas här när de har aktiverats. ”Lägg till nytt” skapar aktiveringskommandot som ska köras på enheten."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Förklarar hur man lägger till en enhet när det inte finns några (konsol)",
+    "value": "Lägg till en enhet med värdnamn och AMT-autentiseringsuppgifter för att börja hantera den."
+  },
   "devices.noDataFilter": {
     "description": "Meddelande när filterresultaten är tomma",
     "value": "Inga enheter matchar aktuellt filter"
@@ -1140,6 +1148,10 @@
   "domains.noData": {
     "description": "Inget domänmeddelande",
     "value": "Inga domäner"
+  },
+  "domains.noDataDescription": {
+    "description": "Förklarar vad domäner används till när det inte finns några",
+    "value": "En domän kopplar ett DNS-suffix till dess provisioneringscertifikat, vilket krävs för Admin Control Mode. Lägg till en innan du aktiverar enheter i ACM."
   },
   "domains.table.domainSuffix": {
     "description": "Kolumnrubrik för domänsuffix",
@@ -1699,6 +1711,10 @@
   "ieee8021xConfigs.noData": {
     "description": "Inget IEEE 8021x-konfigurationsmeddelande",
     "value": "Inga IEEE 8021x-konfigurationer"
+  },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Förklarar vad IEEE 8021x-konfigurationer används till när det inte finns några",
+    "value": "Med 802.1x-konfigurationer kan AMT autentisera sig i nätverk som skyddas med 802.1x. Lägg till en och välj den sedan i en profil (trådbundet) eller i en trådlös konfiguration (Wi-Fi)."
   },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Kolumnrubrik för autentiseringsprotokoll",
@@ -2445,6 +2461,10 @@
     "description": "Inget profilmeddelande",
     "value": "Inga profiler"
   },
+  "profiles.noDataDescription": {
+    "description": "Förklarar vad profiler används till när det inte finns några",
+    "value": "En profil anger hur AMT konfigureras vid aktivering: kontrolläge, nätverk och anslutningsinställningar. Lägg till en och använd den sedan för att aktivera enheter."
+  },
   "profiles.table.activation": {
     "description": "Aktiveringsläge kolumnrubrik",
     "value": "Aktiveringsläge"
@@ -2821,6 +2841,10 @@
     "description": "Meddelande som visas när det inte finns några trådlösa konfigurationer",
     "value": "Inga trådlösa konfigurationer"
   },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Förklarar vad trådlösa konfigurationer används till när det inte finns några",
+    "value": "Trådlösa konfigurationer innehåller de Wi-Fi-inställningar som AMT använder för att ansluta: SSID, autentisering och kryptering. Lägg till en och koppla den sedan till en profil."
+  },
   "wirelessConfigs.ssid": {
     "description": "Kolumnrubrik för SSID för den trådlösa konfigurationen",
     "value": "SSID"
@@ -2985,6 +3009,14 @@
     "value": "Ange namn på proxyinställning",
     "description": "Platshållare för fältet för proxyinställningens namn"
   },
+  "proxyConfigs.noData": {
+    "description": "Meddelande när det inte finns några proxyinställningar",
+    "value": "Inga proxyinställningar"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Förklarar vad proxyinställningar används till när det inte finns några",
+    "value": "Proxyinställningar beskriver de nätverksproxyer som AMT kan använda, var och en knuten till ett nätverks-DNS-suffix. Lägg till en och tilldela den sedan till en profil."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Ange proxyserveradress",
     "description": "Platshållare för proxyadressfältet"
@@ -3052,10 +3084,6 @@
   "common.update": {
     "value": "UPPDATERA",
     "description": "Text på uppdateringsknappen"
-  },
-  "common.noData": {
-    "value": "Ingen data tillgänglig",
-    "description": "Meddelande när ingen data är tillgänglig"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Kategorinamn för fjärrradering av plattform",

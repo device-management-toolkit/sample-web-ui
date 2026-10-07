@@ -524,6 +524,65 @@ describe('DevicesComponent', () => {
     })
   })
 
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const render = async (): Promise<void> => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+    }
+    const loadNothing = async (): Promise<void> => {
+      getDevicesSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getDevices()
+      await render()
+    }
+
+    it('should not show when there are devices', async () => {
+      await render()
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain how devices get listed in cloud mode', async () => {
+      component.isCloudMode = true
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('devices.noDataDescriptionCloud.value')
+    })
+
+    it('should explain how to add a device in console mode', async () => {
+      component.isCloudMode = false
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('devices.noDataDescriptionConsole.value')
+    })
+
+    it('should open the add device dialog from its button', async () => {
+      const dialogRefSpyObj = createSpyObj({ afterClosed: of({}), close: null })
+      const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+      await loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(dialogSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('should only say nothing matched when tags are filtered', async () => {
+      getTagsSpy.mockReturnValue(of(['tagA']))
+      component.filteredTags.set(['tagA'])
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noDataFilter.value')
+      expect(emptyState()?.querySelector('p')).toBeNull()
+      expect(emptyState()?.querySelector('button')).toBeNull()
+    })
+
+    it('should not offer to add a device on the discovered tab', async () => {
+      component.isCloudMode = false
+      getDevicesSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.onTabChange(1)
+      await render()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')).toBeNull()
+      expect(emptyState()?.querySelector('button')).toBeNull()
+    })
+  })
+
   describe('rendering changes that arrive without user interaction', () => {
     const renderedText = (): string => (fixture.nativeElement as HTMLElement).textContent ?? ''
 

@@ -1,0 +1,10 @@
+<mat-icon class="empty-state-icon">{{ icon() }}</mat-icon>
+<h3>{{ title() }}</h3>
+@if (description()) {
+  <p>{{ description() }}</p>
+}
+@if (actionLabel()) {
+  <button mat-flat-button data-cy="emptyStateAction" (click)="action.emit()">
+    <mat-icon>add</mat-icon> {{ actionLabel() }}
+  </button>
+}

@@ -33,6 +33,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',
@@ -55,7 +56,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatRow,
     MatPaginator,
     DatePipe,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class DomainsComponent implements OnInit {

@@ -441,10 +441,6 @@
   "common.no": {
     "value": "לֹא"
   },
-  "common.noData": {
-    "description": "הודעה כאשר אין נתונים זמינים",
-    "value": "אין נתונים זמינים"
-  },
   "common.notApplicable": {
     "description": "מוצג כאשר כניסת מערכת ההפעלה אינה חלה",
     "value": "לא ישים"
@@ -582,6 +578,10 @@
   "configs.ciraNoData": {
     "description": "אין הודעת תצורות של CIRA",
     "value": "אין תצורות CIRA"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "מסביר למה משמשות תצורות CIRA כאשר אין כאלה",
+    "value": "תצורת CIRA מגדירה ל-AMT לאיזה שרת MPS להתחבר, כך שהמכשירים נשארים ניתנים לניהול גם מחוץ לרשת המקומית. הוסף תצורה ולאחר מכן בחר אותה כחיבור בפרופיל."
   },
   "configs.delete": {
     "description": "הודעה למחיקת תצורות CIRA",
@@ -1029,6 +1029,14 @@
     "description": "הודעה כאשר אין מכשירים",
     "value": "לא נמצאו מכשירים"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "מסביר כיצד מכשירים מגיעים לרשימה כאשר אין כאלה (ענן)",
+    "value": "מכשירים מופיעים כאן לאחר שהופעלו. הלחצן \"הוסף חדש\" יוצר את פקודת ההפעלה שיש להריץ במכשיר."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "מסביר כיצד להוסיף מכשיר כאשר אין מכשירים (קונסולה)",
+    "value": "הוסף מכשיר באמצעות שם מארח ופרטי ההתחברות של AMT כדי להתחיל לנהל אותו."
+  },
   "devices.noDataFilter": {
     "description": "הודעה כאשר תוצאות המסנן ריקות",
     "value": "אין מכשירים תואמים את המסנן הנוכחי"
@@ -1228,6 +1236,10 @@
   "domains.noData": {
     "description": "אין הודעת דומיינים",
     "value": "אין תחומים"
+  },
+  "domains.noDataDescription": {
+    "description": "מסביר למה משמשים דומיינים כאשר אין כאלה",
+    "value": "דומיין מקשר סיומת DNS לתעודת ההקצאה שלה, הנדרשת עבור Admin Control Mode. הוסף דומיין לפני הפעלת מכשירים ב-ACM."
   },
   "domains.table.domainSuffix": {
     "description": "כותרת עמודות סיומת דומיין",
@@ -1787,6 +1799,10 @@
   "ieee8021xConfigs.noData": {
     "description": "אין הודעת תצורות IEEE 8021X",
     "value": "אין תצורות IEEE 8021X"
+  },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "מסביר למה משמשות תצורות IEEE 8021X כאשר אין כאלה",
+    "value": "תצורות 802.1x מאפשרות ל-AMT לבצע אימות ברשתות המאובטחות ב-802.1x. הוסף תצורה ולאחר מכן בחר אותה בפרופיל (קווי) או בתצורה אלחוטית (Wi-Fi)."
   },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "כותרת עמודות פרוטוקול אימות",
@@ -2573,6 +2589,10 @@
     "description": "אין הודעה על פרופילים",
     "value": "אין פרופילים"
   },
+  "profiles.noDataDescription": {
+    "description": "מסביר למה משמשים פרופילים כאשר אין כאלה",
+    "value": "פרופיל מגדיר כיצד AMT מוגדר בעת ההפעלה: מצב בקרה, רשת והגדרות חיבור. הוסף פרופיל ולאחר מכן השתמש בו להפעלת מכשירים."
+  },
   "profiles.table.activation": {
     "description": "כותרת העמודה של מצב הפעלה",
     "value": "מצב הפעלה"
@@ -2949,6 +2969,10 @@
     "description": "הודעה המוצגת כאשר אין תצורות אלחוטיות",
     "value": "אין תצורות אלחוטיות"
   },
+  "wirelessConfigs.noDataDescription": {
+    "description": "מסביר למה משמשות תצורות אלחוטיות כאשר אין כאלה",
+    "value": "תצורות אלחוטיות מכילות את הגדרות ה-Wi-Fi שבהן AMT משתמש כדי להתחבר: SSID, אימות והצפנה. הוסף תצורה ולאחר מכן שייך אותה לפרופיל."
+  },
   "wirelessConfigs.ssid": {
     "description": "כותרת עמודות עבור ה- SSID של התצורה האלחוטית",
     "value": "SSID"
@@ -3113,6 +3137,14 @@
     "value": "הזן שם הגדרת פרוקסי",
     "description": "טקסט מציין מקום עבור שדה שם הגדרת הפרוקסי"
   },
+  "proxyConfigs.noData": {
+    "description": "הודעה כאשר אין הגדרות פרוקסי",
+    "value": "אין הגדרות פרוקסי"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "מסביר למה משמשות הגדרות פרוקסי כאשר אין כאלה",
+    "value": "הגדרות פרוקסי מתארות את שרתי הפרוקסי ברשת ש-AMT יכול להשתמש בהם, כאשר כל אחד מהם משויך לסיומת DNS של הרשת. הוסף הגדרה ולאחר מכן הקצה אותה לפרופיל."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "הזן את כתובת שרת הפרוקסי",
     "description": "טקסט מציין מקום עבור שדה כתובת הפרוקסי"
@@ -3180,10 +3212,6 @@
   "common.update": {
     "value": "עדכן",
     "description": "טקסט כפתור עדכון"
-  },
-  "common.noData": {
-    "value": "אין נתונים זמינים",
-    "description": "הודעה כאשר אין נתונים זמינים"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "שם קטגוריה למחיקת פלטפורמה מרחוק",

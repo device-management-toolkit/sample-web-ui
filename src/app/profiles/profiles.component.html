@@ -14,7 +14,12 @@
 }
 
 @if (isNoData()) {
-  <h3 class="no-data">{{ 'profiles.noData.value' | translate }}</h3>
+  <app-empty-state
+    icon="settings_system_daydream"
+    [title]="'profiles.noData.value' | translate"
+    [description]="'profiles.noDataDescription.value' | translate"
+    [actionLabel]="'common.addNew.value' | translate"
+    (action)="navigateTo()" />
 } @else {
   <mat-table [dataSource]="profiles()">
     <!-- name Column -->

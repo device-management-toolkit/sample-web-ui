@@ -143,10 +143,6 @@
     "value": "UPDATE",
     "description": "Update button text"
   },
-  "common.noData": {
-    "value": "No data available",
-    "description": "No data available message"
-  },
   "about.cloudMode": {
     "description": "Title for the about section in cloud mode",
     "value": "About the Device Management Toolkit Sample Web UI"
@@ -605,10 +601,6 @@
   "common.no": {
     "value": "No"
   },
-  "common.noData": {
-    "description": "No data available message",
-    "value": "No data available"
-  },
   "common.notApplicable": {
     "description": "Displayed when the OS entry does not apply",
     "value": "Not Applicable"
@@ -754,6 +746,10 @@
   "configs.ciraNoData": {
     "description": "No CIRA Configs message",
     "value": "No CIRA Configs"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Explains what CIRA Configs are for when none exist",
+    "value": "A CIRA config tells AMT which MPS server to connect out to, so devices stay manageable outside the local network. Add one, then select it as the connection in a profile."
   },
   "configs.delete": {
     "description": "Message for deleting CIRA Configs",
@@ -1515,6 +1511,14 @@
     "description": "Message when no devices exist",
     "value": "No Devices Found"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Explains how devices get listed when none exist (cloud)",
+    "value": "Devices appear here once activated. Add New generates the activation command to run on the device."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Explains how to add a device when none exist (console)",
+    "value": "Add a device by hostname and AMT credentials to start managing it."
+  },
   "devices.noDataFilter": {
     "description": "Message when filter results are empty",
     "value": "No Devices Match Current Filter"
@@ -1714,6 +1718,10 @@
   "domains.noData": {
     "description": "No Domains message",
     "value": "No Domains"
+  },
+  "domains.noDataDescription": {
+    "description": "Explains what Domains are for when none exist",
+    "value": "A domain pairs a DNS suffix with its provisioning certificate, which is required for Admin Control Mode. Add one before activating devices in ACM."
   },
   "domains.table.domainSuffix": {
     "description": "Domain Suffix column header",
@@ -2276,6 +2284,10 @@
   "ieee8021xConfigs.noData": {
     "description": "No IEEE 8021x Configs message",
     "value": "No IEEE 8021x Configs"
+  },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Explains what IEEE 8021x Configs are for when none exist",
+    "value": "802.1x configs let AMT authenticate on networks secured with 802.1x. Add one, then select it in a profile (wired) or a wireless config (Wi-Fi)."
   },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Authentication Protocol column header",
@@ -3345,6 +3357,10 @@
     "description": "No Profiles message",
     "value": "No Profiles"
   },
+  "profiles.noDataDescription": {
+    "description": "Explains what Profiles are for when none exist",
+    "value": "A profile defines how AMT is configured at activation: control mode, network and connection settings. Add one, then use it to activate devices."
+  },
   "profiles.table.activation": {
     "description": "Activation Mode column header",
     "value": "Activation Mode"
@@ -3444,6 +3460,14 @@
   "proxyConfigs.namePlaceholder": {
     "description": "Proxy config name placeholder",
     "value": "Enter proxy config name"
+  },
+  "proxyConfigs.noData": {
+    "description": "No Proxy Configs message",
+    "value": "No Proxy Configs"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Explains what Proxy Configs are for when none exist",
+    "value": "Proxy configs describe the network proxies AMT can use, each tied to a network DNS suffix. Add one, then assign it to a profile."
   },
   "proxyConfigs.pageTitle.editProxy": {
     "description": "Edit Proxy Config page title",
@@ -3720,6 +3744,10 @@
   "wirelessConfigs.noData": {
     "description": "Message displayed when there are no wireless configurations",
     "value": "No Wireless Configs"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Explains what wireless configurations are for when none exist",
+    "value": "Wireless configs hold the Wi-Fi settings AMT uses to connect: SSID, authentication and encryption. Add one, then attach it to a profile."
   },
   "wirelessConfigs.ssid": {
     "description": "Column header for the SSID of the wireless configuration",
