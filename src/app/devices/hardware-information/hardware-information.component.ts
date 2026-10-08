@@ -102,8 +102,8 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
     this.destroy$.complete()
   }
 
-  calculateMediaSize(maxMediaSize: number): string {
-    const sizeInMB = (maxMediaSize / (1000 * 1000)).toFixed(0)
+  calculateMediaSize(maxMediaSize?: number): string {
+    const sizeInMB = ((maxMediaSize ?? 0) / (1000 * 1000)).toFixed(0)
     return `${sizeInMB} GB`
   }
 }
