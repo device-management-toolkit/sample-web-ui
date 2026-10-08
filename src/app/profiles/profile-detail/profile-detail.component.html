@@ -347,7 +347,7 @@
                     }
                   </mat-select>
                   <mat-hint>
-                    @if (profileForm.get('ciraConfigName')?.value === null) {
+                    @if (profileForm.controls.ciraConfigName.value === null) {
                       <span>{{ 'profileDetail.noConfigSelected.value' | translate }}</span>
                     }
                     {{ 'profileDetail.ciraConfigHint.value' | translate }}
