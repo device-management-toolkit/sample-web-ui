@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnDestroy, OnInit, inject, input } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject, input, signal } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { DevicesService } from '../devices.service'
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2'
@@ -52,12 +52,12 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   public readonly deviceId = input('')
   private readonly destroy$ = new Subject<void>()
 
-  public XMLData: any
+  public XMLData = signal<any>(undefined)
   public myControl = new FormControl('')
   public editorOptions = { theme: 'vs-dark', language: 'xml', minimap: { enabled: false } }
   public wsmanOperations: string[] = []
   public selectedWsmanOperation = ''
-  public filteredOptions!: Observable<string[]>
+  public filteredOptions = signal<Observable<string[]> | undefined>(undefined)
 
   ngOnInit(): void {
     this.devicesService
@@ -66,9 +66,11 @@ export class ExplorerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.wsmanOperations = data
         this.selectedWsmanOperation = this.wsmanOperations[0]
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value ?? ''))
+        this.filteredOptions.set(
+          this.myControl.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filter(value ?? ''))
+          )
         )
 
         this.devicesService
@@ -76,7 +78,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (data) => {
-              this.XMLData = data
+              this.XMLData.set(data)
             },
             error: (err) => {
               console.error(err)
@@ -104,7 +106,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          this.XMLData = data
+          this.XMLData.set(data)
         },
         error: (err) => {
           console.error(err)
