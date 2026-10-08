@@ -90,18 +90,18 @@ describe('HardwareInformationComponent', () => {
 
   it('should return matching processor for chip tag', () => {
     const mockProc = { DeviceID: 'CPU0', CurrentClockSpeed: 2400, MaxClockSpeed: 3600 } as any
-    component.hwInfo = { CIM_Processor: { responses: [mockProc] } } as any
+    component.hwInfo.set({ CIM_Processor: { responses: [mockProc] } } as any)
     expect(component.getProcessorForChip('CPU0')).toEqual(mockProc)
   })
 
   it('should return undefined for non-matching chip tag', () => {
     const mockProc = { DeviceID: 'CPU0' } as any
-    component.hwInfo = { CIM_Processor: { responses: [mockProc] } } as any
+    component.hwInfo.set({ CIM_Processor: { responses: [mockProc] } } as any)
     expect(component.getProcessorForChip('CPU1')).toBeUndefined()
   })
 
   it('should return undefined when hwInfo has no processor data', () => {
-    component.hwInfo = {} as any
+    component.hwInfo.set({} as any)
     expect(component.getProcessorForChip('CPU0')).toBeUndefined()
   })
 

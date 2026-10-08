@@ -194,7 +194,7 @@ describe('SolComponent', () => {
   it('should have correct state on connect/disconnect methods', () => {
     fixture.detectChanges()
 
-    expect(component.isDisconnecting).toBe(false)
+    expect(component.isDisconnecting()).toBe(false)
 
     component.connect()
     expect(component.deviceConnection()).toBe(true)
@@ -202,7 +202,7 @@ describe('SolComponent', () => {
 
     component.disconnect()
     expect(component.deviceConnection()).toBe(false)
-    expect(component.isDisconnecting).toBeTruthy()
+    expect(component.isDisconnecting()).toBeTruthy()
   })
   it('should disable Connect SOL until the initial token is available', () => {
     const tokenSubject = new Subject<{ token: string }>()
@@ -269,18 +269,18 @@ describe('SolComponent', () => {
     button = fixture.nativeElement.querySelector('button')
     expect(button.disabled).toBe(false)
     expect(button.textContent).toContain('sol.connect.value')
-    expect(component.isDisconnecting).toBe(false)
+    expect(component.isDisconnecting()).toBe(false)
     tokenSpy.mockReturnValue(of({ token: 'fresh-token' }))
     component.connect()
     expect(component.deviceConnection()).toBe(true)
-    expect(component.isDisconnecting).toBe(false)
+    expect(component.isDisconnecting()).toBe(false)
   })
   it('should disable Connect SOL until a manual disconnect completes', () => {
     tokenSpy.mockReturnValue(new Subject<{ token: string }>())
     fixture.detectChanges()
     component.deviceConnection.set(false)
     component.isLoading.set(false)
-    component.isDisconnecting = true
+    component.isDisconnecting.set(true)
     const connectSpy = vi.spyOn(component, 'connect')
     fixture.detectChanges(false)
 
@@ -292,7 +292,7 @@ describe('SolComponent', () => {
 
     component.deviceStatus(0)
     expect(component.deviceConnection()).toBe(false)
-    expect(component.isDisconnecting).toBe(false)
+    expect(component.isDisconnecting()).toBe(false)
   })
   it('should not show "Connect SOL" while waiting for the connected status', () => {
     fixture.detectChanges()
@@ -310,7 +310,7 @@ describe('SolComponent', () => {
     fixture.detectChanges()
     component.deviceConnection.set(true)
     component.deviceState.set(3)
-    component.isDisconnecting = false
+    component.isDisconnecting.set(false)
 
     component.deviceStatus(0)
     fixture.detectChanges()
@@ -393,14 +393,14 @@ describe('SolComponent', () => {
     )
   })
   it('should not show error and hide loading when isDisconnecting is true', () => {
-    component.isDisconnecting = true
+    component.isDisconnecting.set(true)
     component.deviceStatus(0)
     expect(snackBarSpy).not.toHaveBeenCalled()
     expect(component.isLoading()).toBe(false)
     expect(component.deviceState()).toBe(0)
   })
   it('should show error and hide loading when isDisconnecting is false', () => {
-    component.isDisconnecting = false
+    component.isDisconnecting.set(false)
     component.deviceStatus(0)
     expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
       'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.',
@@ -435,7 +435,7 @@ describe('SolComponent', () => {
   it('cancel enable sol request msg true', async () => {
     component.cancelEnableSolResponse(true)
     expect(snackBarSpy).toHaveBeenCalled()
-    expect(component.readyToLoadSol).toBe(false)
+    expect(component.readyToLoadSol()).toBe(false)
   })
   it('cancel enable sol request msg false', async () => {
     component.cancelEnableSolResponse(false)
@@ -495,14 +495,14 @@ describe('SolComponent', () => {
   it('checkUserConsent yes', async () => {
     component.checkUserConsent()
     fixture.detectChanges()
-    expect(component.readyToLoadSol).toBe(true)
+    expect(component.readyToLoadSol()).toBe(true)
   })
   it('uses a fresh token and passes it to SOL after reconnect', () => {
     fixture.detectChanges()
     tokenSpy.mockClear()
     tokenSpy.mockReturnValue(of({ token: 'fresh-token' }))
     component.deviceConnection.set(false)
-    component.readyToLoadSol = true
+    component.readyToLoadSol.set(true)
     component.isLoading.set(false)
     fixture.detectChanges()
 
@@ -537,9 +537,9 @@ describe('SolComponent', () => {
         bootString: ''
       }
     })
-    component.readyToLoadSol = false
+    component.readyToLoadSol.set(false)
     component.checkUserConsent()
-    expect(component.readyToLoadSol).toBe(false)
+    expect(component.readyToLoadSol()).toBe(false)
   })
   it('handlePowerState 2', async () => {
     component.handlePowerState({ powerstate: 2 }).subscribe((results) => {
@@ -753,11 +753,11 @@ describe('SolComponent', () => {
     expect(component.isLoading()).toEqual(false)
   })
   it('deviceStatus 0', async () => {
-    component.isDisconnecting = false
+    component.isDisconnecting.set(false)
     component.deviceStatus(0)
     expect(component.isLoading()).toEqual(false)
     expect(displayErrorSpy).toHaveBeenCalled()
-    expect(component.isDisconnecting).toEqual(false)
+    expect(component.isDisconnecting()).toEqual(false)
   })
   it('displayError', () => {
     component.displayError('test txt')

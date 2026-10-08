@@ -570,7 +570,7 @@ describe('IderComponent', () => {
 
     component.onFileSelected(mockEvt)
 
-    expect(component.diskImage).toEqual(mockFile)
+    expect(component.diskImage()).toEqual(mockFile)
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(false)
     expect(connectSpy).toHaveBeenCalled()
   })
@@ -578,7 +578,7 @@ describe('IderComponent', () => {
   it('should set diskImage to null when no file is selected', () => {
     const mockEvt = { target: { files: [] } } as unknown as Event
     component.onFileSelected(mockEvt)
-    expect(component.diskImage).toBeNull()
+    expect(component.diskImage()).toBeNull()
   })
 
   it('onAttachDiskImage starts connection and opens file picker', () => {
@@ -610,7 +610,7 @@ describe('IderComponent', () => {
 
     component.onFileSelected(mockEvt)
 
-    expect(component.diskImage).toBeNull()
+    expect(component.diskImage()).toBeNull()
     expect(component.deviceIDERConnection()).toBe(false)
     expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
@@ -649,7 +649,7 @@ describe('IderComponent', () => {
 
     window.dispatchEvent(new Event('focus'))
 
-    expect(component.diskImage).toBeNull()
+    expect(component.diskImage()).toBeNull()
     expect(component.isLoading()).toBe(false)
     expect(component.loadingStatus()).toBe('')
   })

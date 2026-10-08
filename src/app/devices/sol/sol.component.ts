@@ -54,10 +54,10 @@ export class SolComponent implements OnInit, OnDestroy {
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isLoading = signal(false)
   public powerState: PowerState = { powerstate: 0 }
-  public readyToLoadSol = false
+  public readyToLoadSol = signal(false)
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
   public authToken = signal(environment.cloud ? '' : 'direct')
-  public isDisconnecting = false
+  public isDisconnecting = signal(false)
   public readonly isConnecting = signal(false)
   private readonly destroy$ = new Subject<void>()
   private reconnectAfterManualDisconnect = false
@@ -73,13 +73,13 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.isDisconnecting = true
+        this.isDisconnecting.set(true)
       }
     })
   }
 
   ngOnDestroy(): void {
-    this.isDisconnecting = true
+    this.isDisconnecting.set(true)
     if (this.reconnectRetryTimer != null) {
       clearTimeout(this.reconnectRetryTimer)
     }
@@ -95,7 +95,7 @@ export class SolComponent implements OnInit, OnDestroy {
   connect(): void {
     // A fresh redirection token is required for each SOL connection attempt.
     let receivedToken = false
-    this.isDisconnecting = false
+    this.isDisconnecting.set(false)
     this.deviceState.set(-1)
     this.deviceConnection.set(false)
     this.isConnecting.set(true)
@@ -163,7 +163,7 @@ export class SolComponent implements OnInit, OnDestroy {
 
   postUserConsentDecision(result: boolean): Observable<any> {
     if (result != null && result) {
-      this.readyToLoadSol = true
+      this.readyToLoadSol.set(true)
       this.getAMTFeatures()
       // Auto-connect when SOL setup and user consent are complete.
       this.deviceConnection.set(true)
@@ -177,7 +177,7 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.isDisconnecting = true
+    this.isDisconnecting.set(true)
     this.deviceConnection.set(false)
   }
 
@@ -264,7 +264,7 @@ export class SolComponent implements OnInit, OnDestroy {
       const msg: string = this.translate.instant('sol.errorAccessEnable.value')
       this.displayError(msg)
     }
-    this.readyToLoadSol = false
+    this.readyToLoadSol.set(false)
   }
 
   showPowerUpAlert(): Observable<boolean> {
@@ -278,7 +278,7 @@ export class SolComponent implements OnInit, OnDestroy {
       this.amtFeatures()?.optInState === 3 ||
       this.amtFeatures()?.optInState === 4
     ) {
-      this.readyToLoadSol = true
+      this.readyToLoadSol.set(true)
       this.deviceConnection.set(true)
       return of(true)
     }
@@ -297,7 +297,7 @@ export class SolComponent implements OnInit, OnDestroy {
       this.reconnectAfterManualDisconnect = false
       this.reconnectRetryCount = 0
     } else if (event === 0) {
-      const wasManualDisconnect = this.isDisconnecting
+      const wasManualDisconnect = this.isDisconnecting()
       this.isLoading.set(false)
       this.deviceConnection.set(false)
       if (wasManualDisconnect) {
@@ -312,7 +312,7 @@ export class SolComponent implements OnInit, OnDestroy {
           'Connecting to SOL failed. Only one session per device is allowed. Also ensure that your token is valid and you have access.'
         )
       }
-      this.isDisconnecting = false
+      this.isDisconnecting.set(false)
     }
   }
 

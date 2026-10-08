@@ -9,7 +9,7 @@
   </mat-card-header>
   <mat-card-content>
     <div class="flex-row flex-wrap">
-      @for (setting of tlsData; track $index) {
+      @for (setting of tlsData(); track $index) {
         <div class="flex flex-50">
           <p>{{ 'tls.elementName.label.value' | translate }}</p>
         </div>

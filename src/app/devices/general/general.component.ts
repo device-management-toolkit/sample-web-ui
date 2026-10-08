@@ -67,30 +67,32 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public hwInfo?: HardwareInformation
   public isDisabled = true
   public isKVMDisabled = false
-  public amtEnabledFeatures = this.fb.group({
-    enableIDER: false,
-    enableKVM: [{ value: false, disabled: this.isKVMDisabled }],
-    enableSOL: false,
-    userConsent: [{ value: 'none', disabled: this.isDisabled }],
-    optInState: 0,
-    redirection: false,
-    httpsBootSupported: false,
-    winREBootSupported: false,
-    localPBABootSupported: false,
-    ocr: false,
-    rpe: false,
-    rpeSupported: false
-  })
+  public amtEnabledFeatures = signal(
+    this.fb.group({
+      enableIDER: false,
+      enableKVM: [{ value: false, disabled: this.isKVMDisabled }],
+      enableSOL: false,
+      userConsent: [{ value: 'none', disabled: this.isDisabled }],
+      optInState: 0,
+      redirection: false,
+      httpsBootSupported: false,
+      winREBootSupported: false,
+      localPBABootSupported: false,
+      ocr: false,
+      rpe: false,
+      rpeSupported: false
+    })
+  )
 
   public isLoading = signal(true)
   public isDataLoaded = signal(false)
   public readonly isUpdatingFeatures = computed(() => this.pendingFeatureUpdates() > 0)
-  public amtDHCPDNSSuffix: string | null = null
-  public amtTrustedDNSSuffix: string | null = null
-  public amtVersion: string | null = null
-  public amtBuild: string | null = null
-  public amtSKU: string | null = null
-  public amtProvisioningMode: string | null = null
+  public amtDHCPDNSSuffix = signal<string | null>(null)
+  public amtTrustedDNSSuffix = signal<string | null>(null)
+  public amtVersion = signal<string | null>(null)
+  public amtBuild = signal<string | null>(null)
+  public amtSKU = signal<string | null>(null)
+  public amtProvisioningMode = signal<string | null>(null)
   public cloudMode = environment.cloud
   public device: Device | null = null
   public userConsentValues = [
@@ -137,13 +139,17 @@ export class GeneralComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((results) => {
-        this.amtDHCPDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix ?? ''
-        this.amtTrustedDNSSuffix = results.amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix ?? ''
-        this.amtVersion = results.amtVersion?.CIM_SoftwareIdentity?.responses[10].VersionString ?? ''
-        this.amtBuild = results.amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ?? ''
-        this.amtSKU = skuLabel(getSkuFromAmtVersion(results.amtVersion?.CIM_SoftwareIdentity?.responses ?? []))
-        this.amtProvisioningMode = this.parseProvisioningMode(
-          results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode ?? 0
+        this.amtDHCPDNSSuffix.set(results.amtVersion?.AMT_SetupAndConfigurationService?.response.DhcpDNSSuffix ?? '')
+        this.amtTrustedDNSSuffix.set(
+          results.amtVersion?.AMT_SetupAndConfigurationService?.response.TrustedDNSSuffix ?? ''
+        )
+        this.amtVersion.set(results.amtVersion?.CIM_SoftwareIdentity?.responses[10].VersionString ?? '')
+        this.amtBuild.set(results.amtVersion?.CIM_SoftwareIdentity?.responses[6].VersionString ?? '')
+        this.amtSKU.set(skuLabel(getSkuFromAmtVersion(results.amtVersion?.CIM_SoftwareIdentity?.responses ?? [])))
+        this.amtProvisioningMode.set(
+          this.parseProvisioningMode(
+            results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode ?? 0
+          )
         )
         this.generalSettings = results.generalSettings
         // Keep the loaded features so setAmtFeatures() can send fields the form
@@ -151,31 +157,33 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.amtFeatures = results.amtFeatures
         this.isKVMDisabled = !(results.amtFeatures.kvmAvailable ?? true)
         this.isDisabled = results.amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode !== 1
-        this.amtEnabledFeatures = this.fb.group({
-          enableIDER: results.amtFeatures.IDER,
-          enableKVM: [{ value: results.amtFeatures.KVM, disabled: this.isKVMDisabled }],
-          enableSOL: results.amtFeatures.SOL,
-          userConsent: [{ value: results.amtFeatures.userConsent, disabled: this.isDisabled }],
-          optInState: results.amtFeatures.optInState,
-          redirection: results.amtFeatures.redirection,
-          ocr: [
-            {
-              value: results.amtFeatures.ocr,
-              disabled:
-                !results.amtFeatures.httpsBootSupported &&
-                !results.amtFeatures.winREBootSupported &&
-                !results.amtFeatures.localPBABootSupported
-            }
-          ],
+        this.amtEnabledFeatures.set(
+          this.fb.group({
+            enableIDER: results.amtFeatures.IDER,
+            enableKVM: [{ value: results.amtFeatures.KVM, disabled: this.isKVMDisabled }],
+            enableSOL: results.amtFeatures.SOL,
+            userConsent: [{ value: results.amtFeatures.userConsent, disabled: this.isDisabled }],
+            optInState: results.amtFeatures.optInState,
+            redirection: results.amtFeatures.redirection,
+            ocr: [
+              {
+                value: results.amtFeatures.ocr,
+                disabled:
+                  !results.amtFeatures.httpsBootSupported &&
+                  !results.amtFeatures.winREBootSupported &&
+                  !results.amtFeatures.localPBABootSupported
+              }
+            ],
 
-          httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
-          winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
-          localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
-          rpe: [
-            { value: results.amtFeatures.rpe, disabled: !(results.amtFeatures.rpeSupported ?? false) }
-          ],
-          rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
-        })
+            httpsBootSupported: [{ value: results.amtFeatures.httpsBootSupported, disabled: true }],
+            winREBootSupported: [{ value: results.amtFeatures.winREBootSupported, disabled: true }],
+            localPBABootSupported: [{ value: results.amtFeatures.localPBABootSupported, disabled: true }],
+            rpe: [
+              { value: results.amtFeatures.rpe, disabled: !(results.amtFeatures.rpeSupported ?? false) }
+            ],
+            rpeSupported: [{ value: results.amtFeatures.rpeSupported ?? false, disabled: true }]
+          })
+        )
         this.isDataLoaded.set(true)
       })
   }
@@ -186,9 +194,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   get isRedirectionRequired(): boolean {
-    const enableKVM = this.amtEnabledFeatures.get('enableKVM')?.value
-    const enableSOL = this.amtEnabledFeatures.get('enableSOL')?.value
-    const enableIDER = this.amtEnabledFeatures.get('enableIDER')?.value
+    const enableKVM = this.amtEnabledFeatures().get('enableKVM')?.value
+    const enableSOL = this.amtEnabledFeatures().get('enableSOL')?.value
+    const enableIDER = this.amtEnabledFeatures().get('enableIDER')?.value
     // coerce nullable form values to boolean
     return !!(enableKVM || enableSOL || enableIDER)
   }
@@ -196,7 +204,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   setAmtFeatures(): void {
     this.pendingFeatureUpdates.update((count) => count + 1)
     this.devicesService
-      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures.getRawValue() as AMTFeaturesRequest)
+      .setAmtFeatures(this.deviceId(), this.amtEnabledFeatures().getRawValue() as AMTFeaturesRequest)
       .pipe(
         finalize(() => {
           this.pendingFeatureUpdates.update((count) => count - 1)
@@ -205,7 +213,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (results) => {
           if (results.redirection != null) {
-            this.amtEnabledFeatures.patchValue({
+            this.amtEnabledFeatures().patchValue({
               redirection: results.redirection
             })
           }

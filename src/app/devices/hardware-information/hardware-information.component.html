@@ -9,7 +9,7 @@
     </mat-card-header>
     <mat-card-content>
       <div class="flex-row flex-wrap">
-        @for (chip of hwInfo?.CIM_Chip?.responses; track chip) {
+        @for (chip of hwInfo()?.CIM_Chip?.responses; track chip) {
           <div class="flex flex-1">
             @if (chip.Version !== null) {
               <div class="flex-row flex-1 flex-wrap">
@@ -32,25 +32,25 @@
           <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo?.CIM_Chassis?.response?.Manufacturer }}</span>
+          <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo()?.CIM_Chassis?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.model.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="model"> {{ hwInfo?.CIM_Chassis?.response?.Model }}</span>
+          <span class="mat-h3" data-cy="model"> {{ hwInfo()?.CIM_Chassis?.response?.Model }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.serialNo.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo?.CIM_Chassis?.response?.SerialNumber }}</span>
+          <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo()?.CIM_Chassis?.response?.SerialNumber }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="version">{{ hwInfo?.CIM_Chassis?.response?.Version }}</span>
+          <span class="mat-h3" data-cy="version">{{ hwInfo()?.CIM_Chassis?.response?.Version }}</span>
         </div>
       </div>
     </mat-card-content>
@@ -70,20 +70,20 @@
           <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="biosManufacturer">{{ hwInfo?.CIM_BIOSElement?.response?.Manufacturer }}</span>
+          <span class="mat-h3" data-cy="biosManufacturer">{{ hwInfo()?.CIM_BIOSElement?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="biosVersion"> {{ hwInfo?.CIM_BIOSElement?.response?.Version }}</span>
+          <span class="mat-h3" data-cy="biosVersion"> {{ hwInfo()?.CIM_BIOSElement?.response?.Version }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.releaseDate.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosReleaseData">{{
-            hwInfo?.CIM_BIOSElement?.response?.ReleaseDate.DateTime | amDateFormatter: 'MMMM d, yyyy h:mma'
+            hwInfo()?.CIM_BIOSElement?.response?.ReleaseDate.DateTime | amDateFormatter: 'MMMM d, yyyy h:mma'
           }}</span>
         </div>
         <div class="flex flex-50">
@@ -91,7 +91,7 @@
         </div>
         <div class="flex flex-50 justify-end">
           <span class="mat-h3" data-cy="biosTargetOS">
-            {{ targetOS[hwInfo?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] | translate }}
+            {{ targetOS[hwInfo()?.CIM_BIOSElement?.response?.TargetOperatingSystem || 0] | translate }}
           </span>
         </div>
       </div>
@@ -112,7 +112,7 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      @for (bank of hwInfo?.CIM_PhysicalMemory?.responses; track bank) {
+      @for (bank of hwInfo()?.CIM_PhysicalMemory?.responses; track bank) {
         <div class="flex-row flex-wrap">
           <div style="margin: 12px 0" class="flex flex-1">
             <mat-divider></mat-divider>
@@ -167,25 +167,25 @@
           <p>{{ 'hwInfo.label.manufacturer.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo?.CIM_Card?.response?.Manufacturer }}</span>
+          <span class="mat-h3" data-cy="manufacturer"> {{ hwInfo()?.CIM_Card?.response?.Manufacturer }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.model.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="model"> {{ hwInfo?.CIM_Card?.response?.Model }}</span>
+          <span class="mat-h3" data-cy="model"> {{ hwInfo()?.CIM_Card?.response?.Model }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.serial.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo?.CIM_Card?.response?.SerialNumber }}</span>
+          <span class="mat-h3" data-cy="serialNumber"> {{ hwInfo()?.CIM_Card?.response?.SerialNumber }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'hwInfo.label.version.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3" data-cy="version">{{ hwInfo?.CIM_Card?.response?.Version }}</span>
+          <span class="mat-h3" data-cy="version">{{ hwInfo()?.CIM_Card?.response?.Version }}</span>
         </div>
       </div>
     </mat-card-content>
@@ -203,7 +203,7 @@
         <mat-card-subtitle>{{ 'hwInfo.storageSummary.subtitle.value' | translate }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        @for (bank of diskInfo?.CIM_PhysicalPackage?.responses[0]; track bank) {
+        @for (bank of diskInfo()?.CIM_PhysicalPackage?.responses[0]; track bank) {
           <div class="flex-row flex-wrap">
             <div class="flex flex-50">
               <p>{{ 'hwInfo.label.model.value' | translate }}</p>
@@ -222,7 +222,7 @@
             </div>
             <div class="flex flex-50 justify-end">
               <span class="mat-h3" data-cy="Size">{{
-                calculateMediaSize(diskInfo?.CIM_MediaAccessDevice?.responses[0][$index]?.MaxMediaSize)
+                calculateMediaSize(diskInfo()?.CIM_MediaAccessDevice?.responses[0][$index]?.MaxMediaSize)
               }}</span>
             </div>
           </div>

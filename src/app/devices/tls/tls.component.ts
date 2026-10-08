@@ -28,7 +28,7 @@ export class TLSComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>()
 
   public isLoading = signal(true)
-  public tlsData?: any[] = []
+  public tlsData = signal<any[]>([])
 
   ngOnInit(): void {
     this.devicesService
@@ -45,7 +45,7 @@ export class TLSComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
-        this.tlsData = results
+        this.tlsData.set(results)
       })
   }
 

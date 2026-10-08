@@ -59,7 +59,7 @@ describe('AddCertDialogComponent', () => {
   })
 
   it('should initialize with isTrustedRoot set to false', () => {
-    expect(component.certInfo.isTrusted).toBe(false)
+    expect(component.certInfo().isTrusted).toBe(false)
   })
 
   it('should close dialog when onCancel is called', () => {
@@ -92,7 +92,7 @@ describe('AddCertDialogComponent', () => {
       mockFileReader.onload({ target: { result: mockFileReader.result } } as unknown as ProgressEvent<FileReader>)
     }
 
-    expect(component.certInfo.cert).toBe('SGVsbG8gV29ybGQ=')
+    expect(component.certInfo().cert).toBe('SGVsbG8gV29ybGQ=')
   })
 
   it('should parse PEM files by stripping headers and whitespace', () => {
@@ -122,22 +122,22 @@ describe('AddCertDialogComponent', () => {
       mockFileReader.onload({ target: { result: mockFileReader.result } } as unknown as ProgressEvent<FileReader>)
     }
 
-    expect(component.certInfo.cert).toBe('SGVsbG8gV29ybGQ=')
+    expect(component.certInfo().cert).toBe('SGVsbG8gV29ybGQ=')
   })
 
   it('should toggle isTrustedRoot when checkbox is clicked', () => {
     const checkbox = fixture.nativeElement.querySelector('mat-checkbox input')
 
-    expect(component.certInfo.isTrusted).toBe(false)
+    expect(component.certInfo().isTrusted).toBe(false)
 
     checkbox.click()
     fixture.detectChanges()
 
-    expect(component.certInfo.isTrusted).toBe(true)
+    expect(component.certInfo().isTrusted).toBe(true)
 
     checkbox.click()
     fixture.detectChanges()
 
-    expect(component.certInfo.isTrusted).toBe(false)
+    expect(component.certInfo().isTrusted).toBe(false)
   })
 })

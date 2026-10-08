@@ -12,7 +12,7 @@
       <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".cer,.pem" />
     </div>
     <div class="flex flex-50 justify-center items-center">
-      @if (certInfo.cert === '') {
+      @if (cert() === '') {
         <div class="flex justify-center">
           <mat-icon color="warn">remove_circle</mat-icon>
           {{ 'common.cetificateNotUploaded.value' | translate }}
@@ -26,13 +26,13 @@
     </div>
   </div>
 
-  <mat-checkbox class="example-margin" [(ngModel)]="certInfo.isTrusted">{{
+  <mat-checkbox class="example-margin" [(ngModel)]="isTrusted">{{
     'common.trustedRoot.value' | translate
   }}</mat-checkbox>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
-  <button mat-button [mat-dialog-close]="certInfo" color="primary" cdkFocusInitial>
+  <button mat-button [mat-dialog-close]="certInfo()" color="primary" cdkFocusInitial>
     {{ 'common.ok.value' | translate }}
   </button>
 </mat-dialog-actions>

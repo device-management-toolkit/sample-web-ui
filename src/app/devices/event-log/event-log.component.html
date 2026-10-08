@@ -4,7 +4,7 @@
 <mat-card>
   <mat-card-header style="justify-content: space-between">
     <mat-card-title>
-      {{ 'eventLog.entries.value' | translate: { count: dataSource.data.length } }}
+      {{ 'eventLog.entries.value' | translate: { count: dataSource().length } }}
     </mat-card-title>
 
     @if (!isCloudMode) {
@@ -15,7 +15,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'deviceDetail.noEventLog.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="dataSource">
+      <mat-table [dataSource]="dataSource()">
         <ng-container matColumnDef="Event">
           <mat-header-cell *matHeaderCellDef> {{ 'auditLog.event.value' | translate }} </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.Desc }} </mat-cell>
@@ -48,10 +48,10 @@
   </mat-card-content>
   <mat-card-actions align="end">
     @if (!isCloudMode) {
-      <button mat-icon-button (click)="lastPage()" [disabled]="currentPageIndex === 0">
+      <button mat-icon-button (click)="lastPage()" [disabled]="currentPageIndex() === 0">
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <button mat-icon-button (click)="nextPage()" [disabled]="!hasMoreRecords">
+      <button mat-icon-button (click)="nextPage()" [disabled]="!hasMoreRecords()">
         <mat-icon>chevron_right</mat-icon>
       </button>
     }

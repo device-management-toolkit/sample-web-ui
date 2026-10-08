@@ -13,7 +13,7 @@
           (click)="clearFilter()"
           spellcheck="false" />
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="inputChanged($event)">
-          @for (item of filteredOptions | async; track item) {
+          @for (item of filteredOptions() | async; track item) {
             <mat-option [value]="item">{{ item }}</mat-option>
           }
         </mat-autocomplete>
@@ -31,7 +31,7 @@
         <ngx-monaco-editor
           style="height: 100%"
           [options]="editorOptions"
-          [ngModel]="XMLData?.xmlInput"></ngx-monaco-editor>
+          [ngModel]="XMLData()?.xmlInput"></ngx-monaco-editor>
       </mat-card-content>
     </mat-card>
   </div>
@@ -44,7 +44,7 @@
         <ngx-monaco-editor
           style="height: 100%"
           [options]="editorOptions"
-          [ngModel]="XMLData?.xmlOutput"></ngx-monaco-editor>
+          [ngModel]="XMLData()?.xmlOutput"></ngx-monaco-editor>
       </mat-card-content>
     </mat-card>
   </div>

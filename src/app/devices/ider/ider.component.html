@@ -47,14 +47,14 @@
   </mat-card>
 </div>
 
-@if (diskImage && deviceIDERConnection()) {
+@if (diskImage() && deviceIDERConnection()) {
   <amt-ider
     class="ider"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()"
     [deviceConnection]="deviceIDERConnection()"
-    [cdrom]="diskImage"
+    [cdrom]="diskImage()"
     [floppy]="null"
     (deviceStatus)="deviceIDERStatus($event)"
     (iderData)="onIderData($event)">

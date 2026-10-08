@@ -1,5 +1,5 @@
 <mat-toolbar>
-  @if (device?.useTLS && !isCloudMode) {
+  @if (device()?.useTLS && !isCloudMode) {
     <div style="padding-right: 12px">
       <button
         [color]="isPinned() ? 'primary' : 'warn'"
@@ -11,27 +11,27 @@
     </div>
   }
   <span>
-    @if (device?.friendlyName) {
-      <span>{{ device?.friendlyName }}</span>
+    @if (device()?.friendlyName) {
+      <span>{{ device()?.friendlyName }}</span>
     } @else {
-      <span>{{ device?.hostname }}</span>
+      <span>{{ device()?.hostname }}</span>
     }
     <div class="mat-caption">
       @if (isCloudMode) {
         {{ deviceId() }}
       }
-      @if (device?.friendlyName) {
+      @if (device()?.friendlyName) {
         <span>
           @if (isCloudMode) {
             -
           }
-          {{ device?.hostname }}</span
+          {{ device()?.hostname }}</span
         >
       }
     </div>
   </span>
   <mat-chip-set class="flex-1 pad-15">
-    @for (tag of device?.tags; track tag) {
+    @for (tag of device()?.tags; track tag) {
       <mat-chip>{{ tag }}</mat-chip>
     }
   </mat-chip-set>

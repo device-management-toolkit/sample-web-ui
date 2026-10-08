@@ -72,7 +72,7 @@ export class DeviceToolbarComponent implements OnInit {
 
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isCloudMode = environment.cloud
-  public device: Device | null = null
+  public device = signal<Device | null>(null)
   public powerState = signal('Unknown')
   public basePowerOptions: PowerOptions[] = [
     {
@@ -161,9 +161,9 @@ export class DeviceToolbarComponent implements OnInit {
       .getDevice(this.deviceId())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
-        this.device = data
-        this.devicesService.device.next(this.device)
-        this.isPinned.set(this.device?.certHash != null && this.device?.certHash !== '')
+        this.device.set(data)
+        this.devicesService.device.next(data)
+        this.isPinned.set(data.certHash != null && data.certHash !== '')
         this.loadPowerState()
         this.loadAMTFeatures()
         // react to AMT feature updates emitted by service
@@ -303,7 +303,7 @@ export class DeviceToolbarComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((pinned) => {
             if (pinned != null) {
-              this.device!.certHash = pinned ? 'yup' : ''
+              this.device.update((device) => (device ? { ...device, certHash: pinned ? 'yup' : '' } : device))
               this.isPinned.set(!!pinned)
             }
           })
@@ -315,7 +315,7 @@ export class DeviceToolbarComponent implements OnInit {
       const sub = this.matDialog.open(AddDeviceEnterpriseComponent, {
         height: '500px',
         width: '600px',
-        data: this.device
+        data: this.device()
       })
       sub
         .afterClosed()

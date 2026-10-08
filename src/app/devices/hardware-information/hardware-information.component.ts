@@ -40,8 +40,8 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
 
   public isHwLoading = signal(true)
   public isDiskLoading = signal(false)
-  public hwInfo?: HardwareInformation
-  public diskInfo?: DiskInformation
+  public hwInfo = signal<HardwareInformation | undefined>(undefined)
+  public diskInfo = signal<DiskInformation | undefined>(undefined)
   public targetOS: any
   public memoryType: any
   public isCloudMode: boolean = environment.cloud
@@ -66,7 +66,7 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((results) => {
-        this.hwInfo = results
+        this.hwInfo.set(results)
         if (!this.isCloudMode) {
           this.getDiskInformation()
         }
@@ -89,12 +89,12 @@ export class HardwareInformationComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((diskInfo) => {
-        this.diskInfo = diskInfo
+        this.diskInfo.set(diskInfo)
       })
   }
 
   getProcessorForChip(tag: string): CIMProcessor | undefined {
-    return this.hwInfo?.CIM_Processor?.responses?.find((p: CIMProcessor) => p.DeviceID === tag)
+    return this.hwInfo()?.CIM_Processor?.responses?.find((p: CIMProcessor) => p.DeviceID === tag)
   }
 
   ngOnDestroy(): void {
