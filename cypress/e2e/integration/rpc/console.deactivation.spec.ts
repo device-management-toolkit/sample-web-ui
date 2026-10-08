@@ -61,8 +61,9 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           this.skip()
         }
 
-        // Match both v2 (-password) and v3 (--password) syntax by capturing the dash(es) and preserving them
-        const invalidCommand = deactivateCommand.replace(/(-{1,2})password\s+\S+/, '$1password invalidpassword')
+        // Match the AMT password flag only (v2 -password, v3 --password), not --auth-password,
+        // by requiring the flag to be preceded by whitespace or the start of the string.
+        const invalidCommand = deactivateCommand.replace(/(^|\s)(-{1,2})password\s+\S+/, '$1$2password invalidpassword')
         execWithRetry(invalidCommand, execConfig).then((result) => {
           const { combined } = buildOutput(result)
           cy.log(combined)
