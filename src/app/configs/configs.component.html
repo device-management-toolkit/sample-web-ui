@@ -17,7 +17,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'configs.ciraNoData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="configs">
+      <mat-table [dataSource]="configs()">
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> {{ 'configs.table.ciraName.value' | translate }} </mat-header-cell>
@@ -68,7 +68,7 @@
           showFirstLastButtons
           [length]="totalCount()"
           (page)="pageChanged($event)"
-          [pageSize]="pageEvent.pageSize">
+          [pageSize]="pageEvent().pageSize">
         </mat-paginator>
       </div>
     }

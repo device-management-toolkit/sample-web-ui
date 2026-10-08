@@ -23,7 +23,7 @@
             <mat-form-field class="flex flex-1">
               <input
                 formControlName="password"
-                [type]="loginPassInputType"
+                [type]="loginPassInputType()"
                 matInput
                 name="Password"
                 [placeholder]="'common.password.value' | translate"
@@ -35,7 +35,7 @@
                 type="button"
                 [matTooltip]="'profileDetail.showHidePassword.value' | translate"
                 (click)="toggleLoginPassVisibility()">
-                @if (loginPassInputType !== 'text') {
+                @if (loginPassInputType() !== 'text') {
                   <mat-icon>visibility</mat-icon>
                 } @else {
                   <mat-icon>visibility_off</mat-icon>

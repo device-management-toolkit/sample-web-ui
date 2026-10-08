@@ -71,7 +71,7 @@ export class WirelessComponent implements OnInit {
   private readonly translate = inject(TranslateService)
 
   // Properties
-  public configs = new MatTableDataSource<WirelessConfig>()
+  public configs = signal(new MatTableDataSource<WirelessConfig>())
   public isLoading = signal(true)
   public totalCount = signal(0)
   public displayedColumns: string[] = [
@@ -83,16 +83,16 @@ export class WirelessComponent implements OnInit {
   ]
   public authenticationMethods = AuthenticationMethods
   public encryptionMethods = EncryptionMethods
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -105,7 +105,7 @@ export class WirelessComponent implements OnInit {
       )
       .subscribe({
         next: (rsp) => {
-          this.configs = new MatTableDataSource<WirelessConfig>(rsp.data)
+          this.configs.set(new MatTableDataSource<WirelessConfig>(rsp.data))
           this.totalCount.set(rsp.totalCount)
         },
         error: () => {
@@ -135,7 +135,7 @@ export class WirelessComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('common.deleteConfiguration.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
@@ -154,12 +154,12 @@ export class WirelessComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

@@ -70,7 +70,7 @@ export class IEEE8021xComponent implements OnInit {
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 
-  public tableDataSource = new MatTableDataSource<IEEE8021xConfig>()
+  public tableDataSource = signal(new MatTableDataSource<IEEE8021xConfig>())
   public displayedColumns: string[] = [
     'profileName',
     'authenticationProtocol',
@@ -78,18 +78,18 @@ export class IEEE8021xComponent implements OnInit {
     'remove'
   ]
   public totalCount = signal(0)
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
   public protocols = AuthenticationProtocols
   public isLoading = signal(true)
 
   @ViewChild(MatPaginator) public paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -102,7 +102,7 @@ export class IEEE8021xComponent implements OnInit {
       )
       .subscribe({
         next: (pagedConfigs) => {
-          this.tableDataSource = new MatTableDataSource(pagedConfigs.data)
+          this.tableDataSource.set(new MatTableDataSource(pagedConfigs.data))
           this.totalCount.set(pagedConfigs.totalCount)
         },
         error: () => {
@@ -132,7 +132,7 @@ export class IEEE8021xComponent implements OnInit {
             )
             .subscribe({
               next: () => {
-                this.getData(this.pageEvent)
+                this.getData(this.pageEvent())
                 const deleteMessage: string = this.translate.instant('common.deleteProfile.value')
                 this.snackBar.open(deleteMessage, undefined, SnackbarDefaults.defaultSuccess)
               },
@@ -150,12 +150,12 @@ export class IEEE8021xComponent implements OnInit {
   }
 
   onPaginator(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

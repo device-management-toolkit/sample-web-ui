@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
 import { ToolbarComponent } from './core/toolbar/toolbar.component'
@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
   private readonly router = inject(Router)
   private readonly authService = inject(AuthService)
   public readonly translate = inject(TranslateService)
-  public direction: Direction = 'ltr'
-  public isLoggedIn = false
+  public direction = signal<Direction>('ltr')
+  public isLoggedIn = signal(false)
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
-      this.isLoggedIn = value
+      this.isLoggedIn.set(value)
     })
 
     this.translate.setFallbackLang('en')
@@ -47,6 +47,6 @@ export class AppComponent implements OnInit {
   }
 
   private setDirection(lang: string): void {
-    this.direction = getDirection(lang)
+    this.direction.set(getDirection(lang))
   }
 }

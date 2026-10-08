@@ -156,21 +156,19 @@ describe('ProxyConfigsComponent', () => {
   })
 
   it('should return true for isNoData when no data and not loading', () => {
-    component.configs.data = []
+    component.totalCount.set(0)
     component.isLoading.set(false)
     expect(component.isNoData()).toBe(true)
   })
 
   it('should return false for isNoData when loading', () => {
-    component.configs.data = []
+    component.totalCount.set(0)
     component.isLoading.set(true)
     expect(component.isNoData()).toBe(false)
   })
 
   it('should return false for isNoData when has data', () => {
-    component.configs.data = [
-      { name: 'test', address: '192.168.1.1', port: 8080, networkDnsSuffix: 'test.com', infoFormat: 1 }
-    ]
+    component.totalCount.set(1)
     component.isLoading.set(false)
     expect(component.isNoData()).toBe(false)
   })
