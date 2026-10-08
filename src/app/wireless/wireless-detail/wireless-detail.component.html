@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{ pageTitle | translate }}
+  {{ pageTitle() | translate }}
 </mat-toolbar>
 @if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -7,9 +7,9 @@
 <div class="flex-row flex-1">
   <div class="flex-25 hide-sm"></div>
   <mat-card class="flex flex-50">
-    @if (errorMessages.length > 0) {
+    @if (errorMessages().length > 0) {
       <mat-list>
-        @for (item of errorMessages; track item) {
+        @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
             <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
@@ -28,17 +28,17 @@
         <mat-form-field class="flex flex-1">
           <mat-label>{{ 'wirelessDetail.authenticationMethod.value' | translate }}</mat-label>
           <mat-select formControlName="authenticationMethod" required>
-            @for (method of authenticationMethods; track method) {
+            @for (method of authenticationMethods(); track method) {
               <mat-option [value]="method.value">
                 {{ method.label }}
               </mat-option>
             }
           </mat-select>
         </mat-form-field>
-        @if (showPSKPassPhrase) {
+        @if (showPSKPassPhrase()) {
           <mat-form-field class="flex flex-1">
             <mat-label>{{ 'wirelessDetail.pskPassphrase.value' | translate }}</mat-label>
-            <input [type]="pskInputType" matInput formControlName="pskPassphrase" name="pskPassphrase" />
+            <input [type]="pskInputType()" matInput formControlName="pskPassphrase" name="pskPassphrase" />
             <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
             <button
               mat-icon-button
@@ -46,7 +46,7 @@
               type="button"
               matTooltip="Show / Hide Password"
               (click)="togglePSKPassVisibility()">
-              @if (pskInputType === 'text') {
+              @if (pskInputType() === 'text') {
                 <mat-icon>visibility</mat-icon>
               } @else {
                 <mat-icon>visibility_off</mat-icon>
@@ -54,11 +54,11 @@
             </button>
           </mat-form-field>
         }
-        @if (showIEEE8021x) {
+        @if (showIEEE8021x()) {
           <mat-form-field class="flex flex-1">
             <mat-label>{{ 'wirelessDetail.ieee8021xConfiguration.value' | translate }}</mat-label>
             <mat-select formControlName="ieee8021xProfileName">
-              @for (cfgName of iee8021xConfigNames; track cfgName) {
+              @for (cfgName of iee8021xConfigNames(); track cfgName) {
                 <mat-option [value]="cfgName">
                   {{ cfgName }}
                 </mat-option>

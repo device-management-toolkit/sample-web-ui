@@ -4,7 +4,7 @@
   }
   <mat-card-header>
     <mat-card-title>
-      <h3>{{ pageTitle | translate }}</h3>
+      <h3>{{ pageTitle() | translate }}</h3>
     </mat-card-title>
   </mat-card-header>
 
@@ -62,11 +62,11 @@
         }
       </mat-form-field>
 
-      @if (errorMessages.length > 0) {
+      @if (errorMessages().length > 0) {
         <mat-card>
           <mat-card-content>
             <mat-list>
-              @for (message of errorMessages; track message) {
+              @for (message of errorMessages(); track message) {
                 <mat-list-item>
                   <mat-icon matListItemIcon color="warn">warning</mat-icon>
                   <div matListItemTitle>{{ message }}</div>
@@ -97,7 +97,7 @@
           color="primary"
           type="submit"
           [disabled]="proxyConfigForm.invalid || isLoading()">
-          {{ (isEdit ? 'common.update.value' : 'common.save.value') | translate }}
+          {{ (isEdit() ? 'common.update.value' : 'common.save.value') | translate }}
         </button>
       </div>
     </mat-card-actions>

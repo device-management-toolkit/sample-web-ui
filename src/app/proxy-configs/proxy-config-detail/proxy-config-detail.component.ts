@@ -51,9 +51,9 @@ export class ProxyConfigDetailComponent implements OnInit {
   private readonly proxyConfigsService = inject(ProxyConfigsService)
 
   public isLoading = signal(false)
-  public isEdit = false
-  public pageTitle = ''
-  public errorMessages: string[] = []
+  public isEdit = signal(false)
+  public pageTitle = signal('')
+  public errorMessages = signal<string[]>([])
 
   private originalName = ''
 
@@ -71,13 +71,13 @@ export class ProxyConfigDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       if (params['name'] && params['name'] !== 'new') {
-        this.isEdit = true
+        this.isEdit.set(true)
         this.originalName = decodeURIComponent(params['name'])
-        this.pageTitle = 'proxyConfigs.pageTitle.editProxy.value'
+        this.pageTitle.set('proxyConfigs.pageTitle.editProxy.value')
         this.loadProxyConfig(this.originalName)
         this.proxyConfigForm.controls.name.disable()
       } else {
-        this.pageTitle = 'proxyConfigs.pageTitle.newProxy.value'
+        this.pageTitle.set('proxyConfigs.pageTitle.newProxy.value')
       }
     })
   }
@@ -107,12 +107,14 @@ export class ProxyConfigDetailComponent implements OnInit {
   onSubmit(): void {
     if (this.proxyConfigForm.valid) {
       this.isLoading.set(true)
-      this.errorMessages = []
+      this.errorMessages.set([])
 
       const formValue = this.proxyConfigForm.getRawValue()
       const config: ProxyConfig = formValue as ProxyConfig
 
-      const operation$ = this.isEdit ? this.proxyConfigsService.update(config) : this.proxyConfigsService.create(config)
+      const operation$ = this.isEdit()
+        ? this.proxyConfigsService.update(config)
+        : this.proxyConfigsService.create(config)
 
       operation$
         .pipe(
@@ -128,9 +130,9 @@ export class ProxyConfigDetailComponent implements OnInit {
           error: (err) => {
             this.snackBar.open($localize`Error saving proxy profile`, undefined, SnackbarDefaults.defaultError)
             if (err?.error?.errors) {
-              this.errorMessages = err.error.errors.map((error: any) => error.msg)
+              this.errorMessages.set(err.error.errors.map((error: any) => error.msg))
             } else {
-              this.errorMessages = [err?.error?.message || 'An error occurred']
+              this.errorMessages.set([err?.error?.message || 'An error occurred'])
             }
           }
         })

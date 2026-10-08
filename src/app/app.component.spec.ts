@@ -79,6 +79,6 @@ describe('AppComponent', () => {
     // expect(component.mqttService.connect).toHaveBeenCalled()
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('mps/#')
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('rps/#')
-    expect(component.isLoggedIn).toBe(false)
+    expect(component.isLoggedIn()).toBe(false)
   })
 })

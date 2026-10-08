@@ -17,7 +17,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'wirelessConfigs.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="configs">
+      <mat-table [dataSource]="configs()">
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> {{ 'wirelessConfigs.name.value' | translate }} </mat-header-cell>
@@ -59,7 +59,7 @@
     @if (totalCount() !== 0) {
       <mat-paginator
         [pageSizeOptions]="[25, 50, 100]"
-        [pageSize]="pageEvent.pageSize"
+        [pageSize]="pageEvent().pageSize"
         [length]="totalCount()"
         (page)="pageChanged($event)"
         showFirstLastButtons>

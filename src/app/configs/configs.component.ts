@@ -67,7 +67,7 @@ export class ConfigsComponent implements OnInit {
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   // Public properties
-  public configs = new MatTableDataSource<CIRAConfig>()
+  public configs = signal(new MatTableDataSource<CIRAConfig>())
   public totalCount = signal(0)
   public isLoading = signal(true)
   public displayedColumns: string[] = [
@@ -79,17 +79,17 @@ export class ConfigsComponent implements OnInit {
     'rootcert',
     'remove'
   ]
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   // ViewChild
   @ViewChild(MatPaginator) public paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -102,7 +102,7 @@ export class ConfigsComponent implements OnInit {
       )
       .subscribe({
         next: (data: DataWithCount<CIRAConfig>) => {
-          this.configs = new MatTableDataSource<CIRAConfig>(data.data)
+          this.configs.set(new MatTableDataSource<CIRAConfig>(data.data))
           this.totalCount.set(data.totalCount)
         },
         error: () => {
@@ -132,7 +132,7 @@ export class ConfigsComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('configs.delete.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
@@ -150,12 +150,12 @@ export class ConfigsComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

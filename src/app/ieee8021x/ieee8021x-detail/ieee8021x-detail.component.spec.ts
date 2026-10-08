@@ -110,7 +110,7 @@ describe('IEEE8021xDetailComponent', () => {
   it('should submit when valid (create)', () => {
     const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
 
-    component.isEdit = false
+    component.isEdit.set(false)
     component.ieee8021xForm.patchValue(config01)
     component.onSubmit()
 

@@ -74,10 +74,10 @@
           (click)="navigateTo(encodeURIComponent(row.name))"></mat-row>
       </mat-table>
 
-      @if (!isLoading() && configs.data.length > 0) {
+      @if (!isLoading() && totalCount() > 0) {
         <mat-paginator
           [pageSizeOptions]="[10, 25, 50, 100]"
-          [pageSize]="pageEvent.pageSize"
+          [pageSize]="pageEvent().pageSize"
           [showFirstLastButtons]="true"
           [length]="totalCount()"
           (page)="pageChanged($event)">

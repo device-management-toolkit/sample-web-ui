@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   private readonly translate = inject(TranslateService)
   public cloudMode = environment.cloud
   public isLoading = signal(true)
-  public stats?: DeviceStats
+  public stats = signal<DeviceStats | undefined>(undefined)
 
   ngOnInit(): void {
     this.isLoading.set(true)
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
         })
       )
       .subscribe((data) => {
-        this.stats = data
+        this.stats.set(data)
       })
   }
 

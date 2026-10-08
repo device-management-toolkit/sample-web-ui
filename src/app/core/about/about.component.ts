@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, signal } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatButton } from '@angular/material/button'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -32,14 +32,14 @@ import { TranslatePipe } from '@ngx-translate/core'
   ]
 })
 export class AboutComponent implements OnDestroy, OnInit {
-  doNotShowAgain = false
+  doNotShowAgain = signal(false)
   cloudMode: boolean = environment.cloud
   ngOnInit(): void {
     const storedValue = localStorage.getItem('doNotShowAgain')
-    this.doNotShowAgain = storedValue ? JSON.parse(storedValue) : false
+    this.doNotShowAgain.set(storedValue ? JSON.parse(storedValue) : false)
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('doNotShowAgain', JSON.stringify(this.doNotShowAgain))
+    localStorage.setItem('doNotShowAgain', JSON.stringify(this.doNotShowAgain()))
   }
 }

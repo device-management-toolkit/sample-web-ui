@@ -176,7 +176,7 @@ describe('DomainsComponent', () => {
     expDateOne.setDate(today.getDate() - 1)
     expDateTwo.setDate(today.getDate() - 10)
 
-    component.domains.data = [
+    component.domains().data = [
       {
         domainSuffix: 'vprodemo2.com',
         profileName: 'domain2',

@@ -17,7 +17,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'domains.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="domains">
+      <mat-table [dataSource]="domains()">
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> {{ 'domains.table.name.value' | translate }} </mat-header-cell>
@@ -58,7 +58,7 @@
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="pageEvent.pageSize"
+          [pageSize]="pageEvent().pageSize"
           [length]="totalCount()"
           (page)="pageChanged($event)"
           showFirstLastButtons>

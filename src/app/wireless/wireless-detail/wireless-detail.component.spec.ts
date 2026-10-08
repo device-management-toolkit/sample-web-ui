@@ -140,7 +140,7 @@ describe('WirelessDetailComponent', () => {
   })
 
   it('should submit when valid (create)', () => {
-    component.isEdit = false
+    component.isEdit.set(false)
     component.wirelessForm.patchValue({
       profileName: 'profile1',
       authenticationMethod: 4, // WPA PSK
@@ -155,31 +155,31 @@ describe('WirelessDetailComponent', () => {
   })
 
   it('should turn psk pass visibility on when it is off', () => {
-    component.pskInputType = 'password'
+    component.pskInputType.set('password')
     component.togglePSKPassVisibility()
 
-    expect(component.pskInputType).toEqual('text')
+    expect(component.pskInputType()).toEqual('text')
   })
 
   it('should turn psk pass visibility off when it is on', () => {
-    component.pskInputType = 'text'
+    component.pskInputType.set('text')
     component.togglePSKPassVisibility()
 
-    expect(component.pskInputType).toEqual('password')
+    expect(component.pskInputType()).toEqual('password')
   })
 
   it('should support PSK passphrase and ieee8021x visibility', () => {
     component.onAuthenticationMethodChange(4) // WPA PSK
-    expect(component.showPSKPassPhrase).toBe(true)
-    expect(component.showIEEE8021x).toBe(false)
+    expect(component.showPSKPassPhrase()).toBe(true)
+    expect(component.showIEEE8021x()).toBe(false)
     component.onAuthenticationMethodChange(6) // WPA2 PSK
-    expect(component.showPSKPassPhrase).toBe(true)
-    expect(component.showIEEE8021x).toBe(false)
+    expect(component.showPSKPassPhrase()).toBe(true)
+    expect(component.showIEEE8021x()).toBe(false)
     component.onAuthenticationMethodChange(5) // WPA IEEE8021X
-    expect(component.showPSKPassPhrase).toBe(false)
-    expect(component.showIEEE8021x).toBe(true)
+    expect(component.showPSKPassPhrase()).toBe(false)
+    expect(component.showIEEE8021x()).toBe(true)
     component.onAuthenticationMethodChange(7) // WPA2 IEEE8021X
-    expect(component.showPSKPassPhrase).toBe(false)
-    expect(component.showIEEE8021x).toBe(true)
+    expect(component.showPSKPassPhrase()).toBe(false)
+    expect(component.showIEEE8021x()).toBe(true)
   })
 })

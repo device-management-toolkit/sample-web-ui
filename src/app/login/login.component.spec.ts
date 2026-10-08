@@ -124,13 +124,13 @@ describe('LoginComponent', () => {
 
   describe('toggleLoginPassVisibility', () => {
     it('should toggle the visibility of the password input', () => {
-      component.loginPassInputType = 'password'
+      component.loginPassInputType.set('password')
 
       component.toggleLoginPassVisibility()
-      expect(component.loginPassInputType).toBe('text')
+      expect(component.loginPassInputType()).toBe('text')
 
       component.toggleLoginPassVisibility()
-      expect(component.loginPassInputType).toBe('password')
+      expect(component.loginPassInputType()).toBe('password')
     })
   })
 

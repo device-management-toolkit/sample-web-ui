@@ -69,8 +69,8 @@ describe('DomainDetailComponent', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.mock.calls.length > 0, 'getRecord called').toBe(true)
     expect(component.isLoading()).toBe(false)
-    expect(component.isEdit).toBe(true)
-    expect(component.pageTitle).toEqual('domain')
+    expect(component.isEdit()).toBe(true)
+    expect(component.pageTitle()).toEqual('domain')
   })
 
   it('should cancel', async () => {
@@ -103,7 +103,7 @@ describe('DomainDetailComponent', () => {
       provisioningCert: 'domainCert',
       provisioningCertPassword: 'P@ssw0rd'
     })
-    component.isEdit = false
+    component.isEdit.set(false)
     expect(component.domainForm.valid).toBeTruthy()
     component.onSubmit()
 
@@ -131,16 +131,16 @@ describe('DomainDetailComponent', () => {
   })
 
   it('should turn cert pass visibility on when it is off', () => {
-    component.certPassInputType = 'password'
+    component.certPassInputType.set('password')
     component.toggleCertPassVisibility()
 
-    expect(component.certPassInputType).toEqual('text')
+    expect(component.certPassInputType()).toEqual('text')
   })
 
   it('should turn cert pass visibility off when it is on', () => {
-    component.certPassInputType = 'text'
+    component.certPassInputType.set('text')
     component.toggleCertPassVisibility()
 
-    expect(component.certPassInputType).toEqual('password')
+    expect(component.certPassInputType()).toEqual('password')
   })
 })

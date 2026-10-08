@@ -86,10 +86,10 @@ export class DomainDetailComponent implements OnInit {
   })
   public isLoading = signal(false)
   public isCertificateUploaded = signal(false)
-  public isEdit = false
-  public certPassInputType = 'password'
-  public pageTitle: string
-  public errorMessages: string[] = []
+  public isEdit = signal(false)
+  public certPassInputType = signal('password')
+  public pageTitle = signal('')
+  public errorMessages = signal<string[]>([])
 
   // ProfileName validation errors
   get profileNameErrors() {
@@ -106,7 +106,7 @@ export class DomainDetailComponent implements OnInit {
   }
 
   constructor() {
-    this.pageTitle = this.translate.instant('domains.header.domainsNewTitle.value')
+    this.pageTitle.set(this.translate.instant('domains.header.domainsNewTitle.value'))
   }
 
   ngOnInit(): void {
@@ -123,14 +123,14 @@ export class DomainDetailComponent implements OnInit {
           )
           .subscribe({
             next: (data) => {
-              this.isEdit = true
+              this.isEdit.set(true)
               this.domainForm.controls.profileName.disable()
-              this.pageTitle = data.profileName
+              this.pageTitle.set(data.profileName)
               this.domainForm.patchValue(data)
               this.isCertificateUploaded.set(!!data.provisioningCert)
             },
             error: (err) => {
-              this.errorMessages = err
+              this.errorMessages.set(err)
             }
           })
       }
@@ -143,7 +143,7 @@ export class DomainDetailComponent implements OnInit {
     if (this.domainForm.valid) {
       this.isLoading.set(true)
       let request
-      if (this.isEdit) {
+      if (this.isEdit()) {
         request = this.domainsService.update(result)
       } else {
         request = this.domainsService.create(result)
@@ -165,7 +165,7 @@ export class DomainDetailComponent implements OnInit {
             const errorMessage: string = this.translate.instant('domainDetail.errorDeleteConfiguration.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
 
-            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
+            this.errorMessages.set(err.map((errorMessage: string) => this.translate.instant(errorMessage)))
           }
         })
     }
@@ -194,7 +194,7 @@ export class DomainDetailComponent implements OnInit {
   }
 
   toggleCertPassVisibility(): void {
-    this.certPassInputType = this.certPassInputType === 'password' ? 'text' : 'password'
+    this.certPassInputType.set(this.certPassInputType() === 'password' ? 'text' : 'password')
   }
 
   async cancel(): Promise<void> {

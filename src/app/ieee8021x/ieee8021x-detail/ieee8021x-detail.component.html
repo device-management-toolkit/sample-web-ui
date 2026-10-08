@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{ pageTitle | translate }}
+  {{ pageTitle() | translate }}
 </mat-toolbar>
 
 @if (isLoading()) {
@@ -9,9 +9,9 @@
 <div class="flex-row flex-1 justify-center">
   <div class="flex-25 hide-sm"></div>
   <mat-card class="flex flex-50">
-    @if (errorMessages.length > 0) {
+    @if (errorMessages().length > 0) {
       <mat-list>
-        @for (item of errorMessages; track item) {
+        @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
             <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
@@ -21,7 +21,7 @@
     }
     <form [formGroup]="ieee8021xForm" (ngSubmit)="onSubmit()">
       <div style="margin-bottom: 20px">
-        @if (isEdit) {
+        @if (isEdit()) {
           <div>
             <h2>{{ ieee8021xForm.controls.profileName.value }}</h2>
             <h3>{{ getInterfaceLabel() }}</h3>
@@ -39,7 +39,7 @@
       </div>
 
       <mat-card-content class="flex-row flex-wrap">
-        @if (!isEdit) {
+        @if (!isEdit()) {
           <mat-form-field class="flex flex-1" style="margin-bottom: 24px">
             <mat-label>{{ 'common.profileName.value' | translate }}</mat-label>
             <input
@@ -57,7 +57,7 @@
         <mat-form-field class="flex flex-1">
           <mat-label>{{ 'ieee.authProtocol.value' | translate }}</mat-label>
           <mat-select formControlName="authenticationProtocol">
-            @for (protocol of authenticationProtocols; track protocol) {
+            @for (protocol of authenticationProtocols(); track protocol) {
               <mat-option [value]="protocol.value">
                 {{ protocol.label }}
               </mat-option>

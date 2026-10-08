@@ -54,7 +54,7 @@
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
-        @for (tag of tags; track tag) {
+        @for (tag of tags(); track tag) {
           <mat-chip-row [removable]="true" (removed)="remove(tag)">
             {{ tag }}
             <mat-icon matChipRemove>cancel</mat-icon>

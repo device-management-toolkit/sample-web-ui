@@ -102,14 +102,14 @@ export class IEEE8021xDetailComponent implements OnInit {
     ],
     version: ['']
   })
-  public pageTitle: string
-  public authenticationProtocols: FormOption<number>[] = AuthenticationProtocols.filter(
-    (z) => z.mode === 'wired' || z.mode === 'both'
+  public pageTitle = signal('')
+  public authenticationProtocols = signal<FormOption<number>[]>(
+    AuthenticationProtocols.filter((z) => z.mode === 'wired' || z.mode === 'both')
   )
-  public errorMessages: any[] = []
+  public errorMessages = signal<any[]>([])
 
   public isLoading = signal(false)
-  public isEdit = false
+  public isEdit = signal(false)
 
   constructor() {
     // add custom validation to enforce protocols appropriate to interface type
@@ -117,20 +117,20 @@ export class IEEE8021xDetailComponent implements OnInit {
     this.ieee8021xForm.controls.authenticationProtocol.addValidators(this.protocolValidator())
     this.ieee8021xForm.controls.wiredInterface.valueChanges.subscribe((isWired) => {
       if (isWired) {
-        this.authenticationProtocols = AuthenticationProtocols.filter((z) => z.mode === 'wired' || z.mode === 'both')
+        this.authenticationProtocols.set(AuthenticationProtocols.filter((z) => z.mode === 'wired' || z.mode === 'both'))
       } else {
-        this.authenticationProtocols = AuthenticationProtocols.filter((z) => z.mode === 'both')
+        this.authenticationProtocols.set(AuthenticationProtocols.filter((z) => z.mode === 'both'))
       }
       this.ieee8021xForm.controls.authenticationProtocol.updateValueAndValidity()
     })
-    this.pageTitle = this.translate.instant('ieee8021xConfigs.header.ieee8021NewTitle.value')
+    this.pageTitle.set(this.translate.instant('ieee8021xConfigs.header.ieee8021NewTitle.value'))
   }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       if (params.name) {
         this.isLoading.set(true)
-        this.isEdit = true
+        this.isEdit.set(true)
         this.ieee8021xService
           .getRecord(params.name as string)
           .pipe(
@@ -140,7 +140,7 @@ export class IEEE8021xDetailComponent implements OnInit {
           )
           .subscribe({
             next: (config) => {
-              this.pageTitle = config.profileName
+              this.pageTitle.set(config.profileName)
               this.ieee8021xForm.controls.profileName.disable()
               this.ieee8021xForm.patchValue(config)
             }
@@ -151,7 +151,9 @@ export class IEEE8021xDetailComponent implements OnInit {
 
   protocolValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const isValid = this.authenticationProtocols.map((p) => p.value).includes(control.value as number)
+      const isValid = this.authenticationProtocols()
+        .map((p) => p.value)
+        .includes(control.value as number)
       return isValid ? null : { protoclValue: true }
     }
   }
@@ -168,7 +170,7 @@ export class IEEE8021xDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (this.ieee8021xForm.valid) {
-      this.errorMessages = []
+      this.errorMessages.set([])
       this.isLoading.set(true)
       // disable pxeTimeout if not wired
       if (!this.ieee8021xForm.controls.wiredInterface.value) {
@@ -176,7 +178,7 @@ export class IEEE8021xDetailComponent implements OnInit {
       }
       const config: IEEE8021xConfig = Object.assign({}, this.ieee8021xForm.getRawValue())
       let request: Observable<IEEE8021xConfig>
-      if (this.isEdit) {
+      if (this.isEdit()) {
         request = this.ieee8021xService.update(config)
       } else {
         request = this.ieee8021xService.create(config)
@@ -196,7 +198,7 @@ export class IEEE8021xDetailComponent implements OnInit {
           error: (error) => {
             const errorMessage: string = this.translate.instant('ieee.errorCreateUpdate.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
-            this.errorMessages = error
+            this.errorMessages.set(error)
           }
         })
     }

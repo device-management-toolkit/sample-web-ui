@@ -43,7 +43,7 @@ export class ToolbarComponent implements OnInit {
   public readonly authService = inject(AuthService)
   private readonly translate = inject(TranslateService)
 
-  public isLoggedIn = false
+  public isLoggedIn = signal(false)
   public cloudMode: boolean = environment.cloud
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
@@ -55,8 +55,8 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
-      this.isLoggedIn = value
-      if (this.isLoggedIn && environment.cloud) {
+      this.isLoggedIn.set(value)
+      if (this.isLoggedIn() && environment.cloud) {
         this.authService.getMPSVersion().subscribe({
           error: () => {
             const msg: string = this.translate.instant('toolbar.errorMPS.value')
@@ -75,7 +75,7 @@ export class ToolbarComponent implements OnInit {
             this.rpsVersions.set(data)
           }
         })
-      } else if (this.isLoggedIn && !environment.cloud) {
+      } else if (this.isLoggedIn() && !environment.cloud) {
         this.authService.getConsoleVersion().subscribe({
           error: () => {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
