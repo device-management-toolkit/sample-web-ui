@@ -78,6 +78,11 @@ export class LoginComponent {
   public useOAuth = environment.useOAuth
 
   constructor() {
+    if (environment.authDisabled) {
+      this.router.navigate([''])
+      return
+    }
+
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }

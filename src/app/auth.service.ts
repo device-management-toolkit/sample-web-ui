@@ -35,6 +35,12 @@ export class AuthService {
   url = `${environment.mpsServer}/api/v1/authorize`
 
   constructor() {
+    // The server has no auth to check, so every visitor is already signed in.
+    if (environment.authDisabled) {
+      this.isLoggedIn = true
+      this.loggedInSubject$.next(this.isLoggedIn)
+      return
+    }
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
@@ -156,6 +162,10 @@ export class AuthService {
   }
 
   logout(): void {
+    if (environment.authDisabled) {
+      return
+    }
+
     const hadSession = this.isLoggedIn
 
     this.isLoggedIn = false

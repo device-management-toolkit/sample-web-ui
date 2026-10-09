@@ -33,7 +33,7 @@
       </div>
     </mat-menu>
 
-    @if (isLoggedIn === true) {
+    @if (isLoggedIn === true && !authDisabled) {
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
       </button>
