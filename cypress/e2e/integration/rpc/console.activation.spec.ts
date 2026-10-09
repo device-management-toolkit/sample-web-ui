@@ -139,7 +139,30 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
 
               cy.log(`Using identifier to find device: ${deviceIp}`)
-              cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
+              // Console's /devices list is a one-shot snapshot fetched on page load, not
+              // a poll. If the backend hasn't caught up with this device's activation yet
+              // (worse on RPC v2), waiting longer on the same loaded page never helps --
+              // reload and re-check instead, a bounded number of times.
+              const pollForDeviceRow = (attemptsLeft: number): void => {
+                cy.get('body').then(($body) => {
+                  const row = $body
+                    .find('mat-cell')
+                    .toArray()
+                    .find((el) => el.textContent?.includes(deviceIp))
+                  if (row != null) {
+                    cy.wrap(row).parent().click()
+                  } else if (attemptsLeft > 1) {
+                    cy.log(`Device ${deviceIp} not in Devices list yet, reloading (${attemptsLeft - 1} attempts left)`)
+                    cy.wait(20000)
+                    cy.reload()
+                    cy.wait(3000)
+                    pollForDeviceRow(attemptsLeft - 1)
+                  } else {
+                    throw new Error(`Device ${deviceIp} never appeared in the Console Devices list after repeated reloads`)
+                  }
+                })
+              }
+              pollForDeviceRow(6)
             })
 
             cy.wait(5000)
