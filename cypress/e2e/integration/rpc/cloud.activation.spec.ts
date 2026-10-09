@@ -42,6 +42,22 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       expect(controlMode).to.be.oneOf(normalizedNotActivatedModes)
     }
 
+    function waitForRasConnected(remainingAttempts = 20, intervalMs = 15000): void {
+      getAmtInfo(infoCommand).then((info) => {
+        const remoteStatus = (info.ras?.remoteStatus ?? '').toLowerCase()
+        if (remoteStatus === 'connected') {
+          return
+        }
+        if (remainingAttempts <= 0) {
+          throw new Error(
+            `Timed out waiting for RAS Remote Status to become "connected" (last seen: "${info.ras?.remoteStatus}")`
+          )
+        }
+        cy.wait(intervalMs)
+        waitForRasConnected(remainingAttempts - 1, intervalMs)
+      })
+    }
+
     // Environment variables
     const profileName: string = Cypress.expose('PROFILE_NAME') as string
     const fqdn: string = Cypress.expose('ACTIVATION_URL')
@@ -175,6 +191,8 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             }
 
             cy.wait(120000)
+
+            waitForRasConnected()
 
             // Re-query amtinfo after activation to get the updated IP address
             getAmtInfo(infoCommand).then((postActivationInfo) => {

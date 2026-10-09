@@ -27,6 +27,7 @@ export interface AMTInfo {
     dhcpEnabled: boolean
     dhcpMode: string
     ipAddress: string
+    osIpAddress: string
     macAddress: string
   }
   wirelessAdapter: {
@@ -35,6 +36,7 @@ export interface AMTInfo {
     dhcpEnabled: boolean
     dhcpMode: string
     ipAddress: string
+    osIpAddress: string
     macAddress: string
   }
 }
@@ -47,7 +49,7 @@ export interface RpcExecOptions {
 
 // rpc activate/deactivate and docker pulls routinely run for minutes, which is
 // why the suite has always asked for far more than cy.exec()'s 60s default.
-const DEFAULT_EXEC_TIMEOUT = 240000
+const DEFAULT_EXEC_TIMEOUT = 420000
 
 // Headroom so the Node-side kill timer always fires before Cypress gives up.
 // Otherwise Cypress aborts the run while the child process keeps going, and the
@@ -174,6 +176,61 @@ export const getAmtInfoWithRetry = (
 
       // AMT can answer before its control mode is populated after a state change.
       cy.log(`Retrying rpc amtinfo after response without controlMode (${attempt}/${maxRetries})`)
+      return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
+    })
+  }
+
+  return attemptGetInfo(1)
+}
+
+// rpc-go reports these when an adapter has no address yet, so neither can be
+// used to identify the device. Mirrors bestIPAddress() in rpc-go
+// internal/commands/amtinfo.go.
+const unusableIpAddresses: string[] = [
+  '',
+  '0.0.0.0',
+  'Not Found'
+]
+
+const isUsableIpAddress = (ipAddress?: string): boolean =>
+  ipAddress != null && !unusableIpAddresses.includes(ipAddress.trim())
+
+/**
+ * Picks the address Console lists the device under, using rpc-go's own
+ * precedence. The OS address comes first because rpc-go registers the device
+ * with `hostname = getLocalIP()`, and AMT's own address stays 0.0.0.0 while the
+ * ME shares the host's interface.
+ */
+export const resolveDeviceIpAddress = (amtInfo: AMTInfo): string | undefined =>
+  [
+    amtInfo.wiredAdapter?.osIpAddress,
+    amtInfo.wiredAdapter?.ipAddress,
+    amtInfo.wirelessAdapter?.osIpAddress,
+    amtInfo.wirelessAdapter?.ipAddress
+  ]
+    .find(isUsableIpAddress)
+    ?.trim()
+
+/**
+ * Polls `rpc amtinfo` until an adapter reports an address usable for finding the
+ * device in Console. getAmtInfoWithRetry cannot be used here: it retries on a
+ * missing controlMode, which activation has already populated, so it would
+ * return the first response every time.
+ */
+export const getAmtInfoWithIpAddressRetry = (
+  infoCommand: string,
+  config: RpcExecOptions = execConfig,
+  maxRetries = 12,
+  retryInterval = 15000
+): Cypress.Chainable<AMTInfo> => {
+  const attemptGetInfo = (attempt: number): Cypress.Chainable<AMTInfo> => {
+    return getAmtInfo(infoCommand, config).then((info) => {
+      if (resolveDeviceIpAddress(info) != null || attempt >= maxRetries) {
+        return cy.wrap(info)
+      }
+
+      // The ME can take minutes to publish an address after activation.
+      cy.log(`Retrying rpc amtinfo until an adapter reports an IP address (${attempt}/${maxRetries})`)
       return cy.wait(retryInterval).then(() => attemptGetInfo(attempt + 1))
     })
   }
