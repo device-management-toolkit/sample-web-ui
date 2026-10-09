@@ -139,7 +139,9 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
 
               cy.log(`Using identifier to find device: ${deviceIp}`)
-              cy.get('mat-cell', { timeout: 30000 }).contains(deviceIp).parent().click()
+              // timeout must be passed to .contains() itself -- a timeout on the
+              // preceding .get() does not carry over to the chained .contains().
+              cy.get('mat-cell').contains(deviceIp, { timeout: 60000 }).parent().click()
             })
 
             cy.wait(5000)
