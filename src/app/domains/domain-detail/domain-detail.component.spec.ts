@@ -7,8 +7,10 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { DomainsService } from '../domains.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 import { DomainDetailComponent } from './domain-detail.component'
 import { provideHttpClient } from '@angular/common/http'
@@ -109,6 +111,42 @@ describe('DomainDetailComponent', () => {
 
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should show the first API error when updating a domain fails', () => {
+    const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
+    vi.spyOn(translate, 'instant').mockImplementation((key: string) => key)
+    updateRecordSpy.mockReturnValue(throwError(() => ['Certificate chain is broken', 'Another error']))
+    component.domainForm.patchValue({
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    component.onSubmit()
+
+    expect(component.errorMessages).toEqual(['Certificate chain is broken', 'Another error'])
+    expect(snackBarSpy).toHaveBeenCalledWith('Certificate chain is broken', undefined, SnackbarDefaults.defaultError)
+  })
+
+  it('should show the fallback message when creating a domain fails without an API error', () => {
+    const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
+    vi.spyOn(translate, 'instant').mockImplementation((key: string) =>
+      key === 'domainDetail.errorDeleteConfiguration.value' ? 'Fallback error' : key
+    )
+    createRecordSpy.mockReturnValue(throwError(() => []))
+    component.isEdit = false
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    component.onSubmit()
+
+    expect(component.errorMessages).toEqual([])
+    expect(snackBarSpy).toHaveBeenCalledWith('Fallback error', undefined, SnackbarDefaults.defaultError)
   })
 
   it('should attach the domain certificate on file selected', () => {
