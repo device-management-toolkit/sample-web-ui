@@ -117,6 +117,10 @@ describe('HardwareInformationComponent', () => {
     expect(component.calculateMediaSize(0)).toBe('0 GB')
   })
 
+  it('treats a missing size as zero', () => {
+    expect(component.calculateMediaSize(undefined)).toBe('0 GB')
+  })
+
   it('rounds correctly for values not exactly multiple of 1 million', () => {
     expect(component.calculateMediaSize(1500000)).toBe('2 GB')
   })
