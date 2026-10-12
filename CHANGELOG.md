@@ -1,3 +1,10 @@
+## [3.69.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.2...v3.69.3) (2026-10-12)
+
+
+### Bug Fixes
+
+* add proxy configuration selector ([f84978a](https://github.com/device-management-toolkit/sample-web-ui/commit/f84978addd39c9599b4c70e41d1ecdc12f4aa927))
+
 ## [3.69.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.1...v3.69.2) (2026-10-06)
 
 
