@@ -1,5 +1,5 @@
 <mat-toolbar>
-  {{ pageTitle | translate }}
+  {{ pageTitle() | translate }}
 </mat-toolbar>
 @if (isLoading()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -11,9 +11,9 @@
       <mat-card-title></mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
     </mat-card-header>
-    @if (errorMessages.length > 0) {
+    @if (errorMessages().length > 0) {
       <mat-list>
-        @for (item of errorMessages; track item) {
+        @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
             <mat-icon color="warn" matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
@@ -70,7 +70,7 @@
 
         <mat-form-field class="flex flex-1" style="margin: 16px 0">
           <input
-            [type]="certPassInputType"
+            [type]="certPassInputType()"
             formControlName="provisioningCertPassword"
             matInput
             name="provisioningCertPassword"
@@ -84,7 +84,7 @@
             type="button"
             [matTooltip]="'common.showHidePassword.value' | translate"
             (click)="toggleCertPassVisibility()">
-            @if (certPassInputType === 'text') {
+            @if (certPassInputType() === 'text') {
               <mat-icon>visibility</mat-icon>
             } @else {
               <mat-icon>visibility_off</mat-icon>

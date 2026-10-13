@@ -77,16 +77,16 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   ]
   public totalCount = signal(0)
   public isLoading = signal(true)
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   ngAfterViewInit(): void {
@@ -110,16 +110,16 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.configs.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   delete(name: string): void {
@@ -139,7 +139,7 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               this.snackBar.open(
                 $localize`Configuration deleted successfully`,
                 undefined,

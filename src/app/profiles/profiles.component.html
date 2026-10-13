@@ -18,7 +18,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'profiles.noData.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="profiles">
+      <mat-table [dataSource]="profiles()">
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef style="flex: 1 1 0">
@@ -80,7 +80,7 @@
       <div>
         <mat-paginator
           [pageSizeOptions]="[25, 50, 100]"
-          [pageSize]="pageEvent.pageSize"
+          [pageSize]="pageEvent().pageSize"
           [length]="totalCount()"
           showFirstLastButtons
           (page)="pageChanged($event)">

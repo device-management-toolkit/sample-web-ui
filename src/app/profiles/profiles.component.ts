@@ -77,7 +77,7 @@ export class ProfilesComponent implements OnInit {
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 
-  public profiles = new MatTableDataSource<Profile>()
+  public profiles = signal(new MatTableDataSource<Profile>())
   public readonly isLoading = signal(true)
   public totalCount = signal(0)
   public readonly displayedColumns: string[] = [
@@ -87,11 +87,11 @@ export class ProfilesComponent implements OnInit {
     'activation',
     'remove'
   ]
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
   public readonly cloudMode = environment.cloud
   // Assume CIRA is enabled until the server says otherwise, so the list never
   // flashes false "CIRA disabled" warnings or blocks export during the brief
@@ -103,7 +103,7 @@ export class ProfilesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
     if (this.cloudMode === false) {
       this.serverFeaturesService.getFeatures().subscribe({
         next: (features) => this.ciraEnabled.set(features.ciraEnabled),
@@ -122,7 +122,7 @@ export class ProfilesComponent implements OnInit {
       )
       .subscribe({
         next: (rsp) => {
-          this.profiles = new MatTableDataSource<Profile>(rsp.data)
+          this.profiles.set(new MatTableDataSource<Profile>(rsp.data))
           this.totalCount.set(rsp.totalCount)
         },
         error: () => {
@@ -138,7 +138,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   export(profileName: string): void {
-    const profile = this.profiles.data.find((p) => p.profileName === profileName)
+    const profile = this.profiles().data.find((p) => p.profileName === profileName)
     if (!profile) {
       const msg: string = this.translate.instant('profiles.failExportProfile.value')
 
@@ -213,7 +213,7 @@ export class ProfilesComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('profiles.deleteProfile.value')
 
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
@@ -233,12 +233,12 @@ export class ProfilesComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

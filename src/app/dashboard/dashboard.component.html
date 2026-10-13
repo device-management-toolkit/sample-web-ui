@@ -10,7 +10,7 @@
           <mat-icon>devices</mat-icon>
         </div>
         <div class="flex-75">
-          <h1 data-cy="totalCount" class="mat-headline-3">{{ stats?.totalCount }}</h1>
+          <h1 data-cy="totalCount" class="mat-headline-3">{{ stats()?.totalCount }}</h1>
           <p>{{ 'dashboard.totalDevices.value' | translate }}</p>
         </div>
       </div>
@@ -24,7 +24,7 @@
             <mat-icon>phonelink</mat-icon>
           </div>
           <div class="flex-75">
-            <h1 data-cy="connectedCount" class="mat-headline-3">{{ stats?.connectedCount }}</h1>
+            <h1 data-cy="connectedCount" class="mat-headline-3">{{ stats()?.connectedCount }}</h1>
             <p>{{ 'dashboard.devicesConnected.value' | translate }}</p>
           </div>
         </div>
@@ -37,7 +37,7 @@
             <mat-icon>phonelink_off</mat-icon>
           </div>
           <div class="flex-75">
-            <h1 data-cy="disconnectedCount" class="mat-headline-3">{{ stats?.disconnectedCount }}</h1>
+            <h1 data-cy="disconnectedCount" class="mat-headline-3">{{ stats()?.disconnectedCount }}</h1>
             <p>{{ 'dashboard.devicesDisconnected.value' | translate }}</p>
           </div>
         </div>

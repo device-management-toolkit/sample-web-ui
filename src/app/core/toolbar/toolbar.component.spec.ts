@@ -116,6 +116,6 @@ describe('ToolbarComponent', () => {
     fixture.detectChanges()
     isLoggedInSubject.next(true)
 
-    expect(component.isLoggedIn).toBeTruthy()
+    expect(component.isLoggedIn()).toBeTruthy()
   })
 })

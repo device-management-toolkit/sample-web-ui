@@ -73,7 +73,7 @@ describe('ConfigDetailComponent', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.mock.calls.length > 0, 'getRecord called').toBe(true)
     expect(component.isEdit()).toBe(true)
-    expect(component.pageTitle).toEqual('ciraConfig1')
+    expect(component.pageTitle()).toEqual('ciraConfig1')
   })
 
   it('should cancel', async () => {
