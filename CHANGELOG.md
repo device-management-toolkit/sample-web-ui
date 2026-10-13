@@ -1,3 +1,10 @@
+# [3.71.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.70.0...v3.71.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+
 # [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
 
 
