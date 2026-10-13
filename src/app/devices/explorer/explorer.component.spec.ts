@@ -70,7 +70,7 @@ describe('ExplorerComponent', () => {
 
   it('should initialize wsmanOperations and filteredOptions on ngOnInit', () => {
     expect(component.wsmanOperations).toEqual(['Operation1', 'Operation2'])
-    expect(component.filteredOptions).toBeTruthy()
+    expect(component.filteredOptions()).toBeTruthy()
   })
 
   it('should update XMLData on input change', () => {
@@ -78,7 +78,7 @@ describe('ExplorerComponent', () => {
     component.inputChanged({ option: { value: 'Operation2' } } as any)
     expect(component.selectedWsmanOperation).toBe('Operation2')
     expect(devicesServiceSpy.executeExplorerCall).toHaveBeenCalledWith('123', 'Operation2')
-    expect(component.XMLData).toBe('<xml>Data</xml>')
+    expect(component.XMLData()).toBe('<xml>Data</xml>')
   })
 
   it('should clear the input field when clearFilter is called', () => {

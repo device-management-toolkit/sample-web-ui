@@ -13,7 +13,7 @@ import { merge, of, Subject } from 'rxjs'
 import { catchError, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuditLogResponse, Device } from '../../../models/models'
-import { MatCardModule } from '@angular/material/card'
+import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
 import { DeviceLogService } from '../device-log.service'
@@ -28,7 +28,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   styleUrls: ['./audit-log.component.scss'],
   imports: [
     MatProgressBarModule,
-    MatCardModule,
+    MatToolbarModule,
     MatSortModule,
     MatTableModule,
     MatButtonModule,
@@ -49,7 +49,7 @@ export class AuditLogComponent implements AfterViewInit, OnDestroy {
   public devices: Device[] = []
   public isLoading = signal(true)
   public displayedColumns = ['Event', 'timestamp']
-  public auditLogData: AuditLogResponse = { totalCnt: 0, records: [] }
+  public auditLogData = signal<AuditLogResponse>({ totalCnt: 0, records: [] })
   public isCloudMode: boolean = environment.cloud
   public pageSizes = [
     120
@@ -81,13 +81,13 @@ export class AuditLogComponent implements AfterViewInit, OnDestroy {
           console.error(err)
           const msg: string = this.translate.instant('audit.errorLog.value')
           this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          return of(this.auditLogData)
+          return of(this.auditLogData())
         }),
         takeUntil(this.destroy$)
       )
       .subscribe({
         next: (data) => {
-          this.auditLogData = data ?? { totalCnt: 0, records: [] }
+          this.auditLogData.set(data ?? { totalCnt: 0, records: [] })
           this.isLoading.set(false)
         },
         error: (err) => {
@@ -100,7 +100,7 @@ export class AuditLogComponent implements AfterViewInit, OnDestroy {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.auditLogData.records.length === 0
+    return !this.isLoading() && this.auditLogData().records.length === 0
   }
 
   async navigateTo(path: string): Promise<void> {

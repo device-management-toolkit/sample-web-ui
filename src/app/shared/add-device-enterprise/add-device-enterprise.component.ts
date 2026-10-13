@@ -4,7 +4,7 @@
  **********************************************************************/
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
-import { Component, inject } from '@angular/core'
+import { Component, inject, signal } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog'
@@ -63,39 +63,34 @@ export class AddDeviceEnterpriseComponent {
     allowSelfSigned: [true]
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  public tags: string[] = []
+  public tags = signal<string[]>([])
 
   constructor() {
     const device = this.device
 
     this.deviceOrig = device
     if (device != null) {
-      this.tags = device.tags || []
+      this.tags.set(device.tags || [])
       this.form.patchValue(device)
     }
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim()
-    if (value !== '' && !this.tags.includes(value)) {
-      this.tags.push(value)
-      this.tags.sort()
+    if (value !== '' && !this.tags().includes(value)) {
+      this.tags.update((tags) => [...tags, value].sort())
     }
     event.chipInput?.clear()
   }
 
   remove(tag: string): void {
-    const index = this.tags.indexOf(tag)
-
-    if (index >= 0) {
-      this.tags.splice(index, 1)
-    }
+    this.tags.update((tags) => tags.filter((t) => t !== tag))
   }
 
   submitForm(): void {
     if (this.form.valid) {
       const device: Device = { ...this.form.getRawValue() }
-      device.tags = this.tags
+      device.tags = this.tags()
       if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe(() => {

@@ -115,7 +115,7 @@ describe('HTTPBootDialogComponent', () => {
   })
 
   it('should disable OK button when form is invalid', () => {
-    const okButton = debugElement.query(By.css('button[color="primary"]'))
+    const okButton = debugElement.query(By.css('button[cdkFocusInitial]'))
 
     expect(okButton.nativeElement.disabled).toBeTruthy()
   })
@@ -126,7 +126,7 @@ describe('HTTPBootDialogComponent', () => {
     })
     fixture.detectChanges()
 
-    const okButton = debugElement.query(By.css('button[color="primary"]'))
+    const okButton = debugElement.query(By.css('button[cdkFocusInitial]'))
     expect(okButton.nativeElement.disabled).toBeFalsy()
   })
 

@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  font-size: 48px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+h3 {
+  margin-bottom: 8px;
+}
+
+p {
+  max-width: 480px;
+  color: var(--mat-sys-on-surface-variant);
+  text-wrap: balance;
+}
+
+button {
+  margin-top: 12px;
+}

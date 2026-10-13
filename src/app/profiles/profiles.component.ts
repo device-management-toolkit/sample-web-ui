@@ -28,7 +28,6 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
@@ -37,6 +36,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { environment } from '../../environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 import { ServerFeaturesService } from '../server-features.service'
 
@@ -49,8 +49,6 @@ import { ServerFeaturesService } from '../server-features.service'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -65,7 +63,8 @@ import { ServerFeaturesService } from '../server-features.service'
     MatPaginator,
     MatTooltip,
     ToolkitPipe,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class ProfilesComponent implements OnInit {
@@ -77,7 +76,7 @@ export class ProfilesComponent implements OnInit {
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 
-  public profiles = new MatTableDataSource<Profile>()
+  public profiles = signal(new MatTableDataSource<Profile>())
   public readonly isLoading = signal(true)
   public totalCount = signal(0)
   public readonly displayedColumns: string[] = [
@@ -87,11 +86,11 @@ export class ProfilesComponent implements OnInit {
     'activation',
     'remove'
   ]
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
   public readonly cloudMode = environment.cloud
   // Assume CIRA is enabled until the server says otherwise, so the list never
   // flashes false "CIRA disabled" warnings or blocks export during the brief
@@ -103,7 +102,7 @@ export class ProfilesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
     if (this.cloudMode === false) {
       this.serverFeaturesService.getFeatures().subscribe({
         next: (features) => this.ciraEnabled.set(features.ciraEnabled),
@@ -122,7 +121,7 @@ export class ProfilesComponent implements OnInit {
       )
       .subscribe({
         next: (rsp) => {
-          this.profiles = new MatTableDataSource<Profile>(rsp.data)
+          this.profiles.set(new MatTableDataSource<Profile>(rsp.data))
           this.totalCount.set(rsp.totalCount)
         },
         error: () => {
@@ -138,7 +137,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   export(profileName: string): void {
-    const profile = this.profiles.data.find((p) => p.profileName === profileName)
+    const profile = this.profiles().data.find((p) => p.profileName === profileName)
     if (!profile) {
       const msg: string = this.translate.instant('profiles.failExportProfile.value')
 
@@ -213,7 +212,7 @@ export class ProfilesComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('profiles.deleteProfile.value')
 
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
@@ -233,12 +232,12 @@ export class ProfilesComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

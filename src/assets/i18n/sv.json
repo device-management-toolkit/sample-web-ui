@@ -353,10 +353,6 @@
   "common.no": {
     "value": "Nej"
   },
-  "common.noData": {
-    "description": "Meddelande när ingen data är tillgänglig",
-    "value": "Ingen data tillgänglig"
-  },
   "common.notApplicable": {
     "description": "Visas när OS-posten inte är tillämplig.",
     "value": "Ej tillämpligt"
@@ -494,6 +490,10 @@
   "configs.ciraNoData": {
     "description": "Inget CIRA-konfigurationsmeddelande",
     "value": "Inga CIRA-konfigurationer"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Förklarar vad CIRA-konfigurationer används till när det inte finns några",
+    "value": "En CIRA-konfiguration talar om för AMT vilken MPS-server den ska ansluta ut till, så att enheter kan hanteras även utanför det lokala nätverket. Lägg till en och välj den sedan som anslutning i en profil."
   },
   "configs.delete": {
     "description": "Meddelande om radering av CIRA-konfigurationer",
@@ -644,6 +644,10 @@
   "dashboard.useDeviceActions": {
     "description": "Verktygstips för användning av enhetsåtgärder",
     "value": "Använd enhetsåtgärder för att styra en lista med enheter"
+  },
+  "dashboard.welcome": {
+    "description": "Välkomstrubrik på instrumentpanelen, med programmets namn",
+    "value": "Välkommen till {{name}}"
   },
   "delete.question": {
     "description": "Fråga om radering av poster",
@@ -937,6 +941,14 @@
     "description": "Meddelande när inga enheter finns",
     "value": "Inga enheter hittades"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Förklarar hur enheter hamnar i listan när det inte finns några (moln)",
+    "value": "Enheter visas här när de har aktiverats. ”Lägg till nytt” skapar aktiveringskommandot som ska köras på enheten."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Förklarar hur man lägger till en enhet när det inte finns några (konsol)",
+    "value": "Lägg till en enhet med värdnamn och AMT-autentiseringsuppgifter för att börja hantera den."
+  },
   "devices.noDataFilter": {
     "description": "Meddelande när filterresultaten är tomma",
     "value": "Inga enheter matchar aktuellt filter"
@@ -1136,6 +1148,10 @@
   "domains.noData": {
     "description": "Inget domänmeddelande",
     "value": "Inga domäner"
+  },
+  "domains.noDataDescription": {
+    "description": "Förklarar vad domäner används till när det inte finns några",
+    "value": "En domän kopplar ett DNS-suffix till dess provisioneringscertifikat, vilket krävs för Admin Control Mode. Lägg till en innan du aktiverar enheter i ACM."
   },
   "domains.table.domainSuffix": {
     "description": "Kolumnrubrik för domänsuffix",
@@ -1696,6 +1712,10 @@
     "description": "Inget IEEE 8021x-konfigurationsmeddelande",
     "value": "Inga IEEE 8021x-konfigurationer"
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Förklarar vad IEEE 8021x-konfigurationer används till när det inte finns några",
+    "value": "Med 802.1x-konfigurationer kan AMT autentisera sig i nätverk som skyddas med 802.1x. Lägg till en och välj den sedan i en profil (trådbundet) eller i en trådlös konfiguration (Wi-Fi)."
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Kolumnrubrik för autentiseringsprotokoll",
     "value": "Autentiseringsprotokoll"
@@ -1847,6 +1867,10 @@
   "mqttEvents.type.label": {
     "description": "Tabellrubrik för MQTT-händelsetyp",
     "value": "Typ"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Konfiguration"
   },
   "network.errorNetworkSetting": {
     "description": "Fel vid hämtning av nätverksinställningar",
@@ -2437,6 +2461,10 @@
     "description": "Inget profilmeddelande",
     "value": "Inga profiler"
   },
+  "profiles.noDataDescription": {
+    "description": "Förklarar vad profiler används till när det inte finns några",
+    "value": "En profil anger hur AMT konfigureras vid aktivering: kontrolläge, nätverk och anslutningsinställningar. Lägg till en och använd den sedan för att aktivera enheter."
+  },
   "profiles.table.activation": {
     "description": "Aktiveringsläge kolumnrubrik",
     "value": "Aktiveringsläge"
@@ -2705,9 +2733,41 @@
     "description": "Huvudrubrik för applikationen i konsolläge",
     "value": "Konsol"
   },
-  "toolbar.header.hello": {
-    "description": "Hälsningsmeddelande",
-    "value": "Hej"
+  "toolbar.palette.azure": {
+    "description": "Namn på färgpaletten azurblå och blå",
+    "value": "Azurblå och blå"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Namn på färgpaletten cyan och orange",
+    "value": "Cyan och orange"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-etikett för knappen som öppnar menyn med färgpaletter",
+    "value": "Färgpalett"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Namn på färgpaletten magenta och violett",
+    "value": "Magenta och violett"
+  },
+  "toolbar.palette.rose": {
+    "description": "Namn på färgpaletten rosa och röd",
+    "value": "Rosa och röd"
+  },
+  "toolbar.theme.dark": {
+    "description": "Menyalternativ som alltid använder mörkt tema",
+    "value": "Mörkt"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-etikett för knappen som öppnar menyn för ljust, mörkt eller systemets tema",
+    "value": "Tema"
+  },
+  "toolbar.theme.light": {
+    "description": "Menyalternativ som alltid använder ljust tema",
+    "value": "Ljust"
+  },
+  "toolbar.theme.system": {
+    "description": "Menyalternativ som följer operativsystemets ljusa eller mörka inställning",
+    "value": "System"
   },
   "userConsent.errorCancelCode": {
     "description": "Fel vid avbrytande av användarens samtyckeskod",
@@ -2780,6 +2840,10 @@
   "wirelessConfigs.noData": {
     "description": "Meddelande som visas när det inte finns några trådlösa konfigurationer",
     "value": "Inga trådlösa konfigurationer"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Förklarar vad trådlösa konfigurationer används till när det inte finns några",
+    "value": "Trådlösa konfigurationer innehåller de Wi-Fi-inställningar som AMT använder för att ansluta: SSID, autentisering och kryptering. Lägg till en och koppla den sedan till en profil."
   },
   "wirelessConfigs.ssid": {
     "description": "Kolumnrubrik för SSID för den trådlösa konfigurationen",
@@ -2945,6 +3009,14 @@
     "value": "Ange namn på proxyinställning",
     "description": "Platshållare för fältet för proxyinställningens namn"
   },
+  "proxyConfigs.noData": {
+    "description": "Meddelande när det inte finns några proxyinställningar",
+    "value": "Inga proxyinställningar"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Förklarar vad proxyinställningar används till när det inte finns några",
+    "value": "Proxyinställningar beskriver de nätverksproxyer som AMT kan använda, var och en knuten till ett nätverks-DNS-suffix. Lägg till en och tilldela den sedan till en profil."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Ange proxyserveradress",
     "description": "Platshållare för proxyadressfältet"
@@ -3012,10 +3084,6 @@
   "common.update": {
     "value": "UPPDATERA",
     "description": "Text på uppdateringsknappen"
-  },
-  "common.noData": {
-    "value": "Ingen data tillgänglig",
-    "description": "Meddelande när ingen data är tillgänglig"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Kategorinamn för fjärrradering av plattform",

@@ -27,13 +27,13 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 
 @Component({
   selector: 'app-ieee8021x',
@@ -45,8 +45,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -59,7 +57,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class IEEE8021xComponent implements OnInit {
@@ -70,7 +69,7 @@ export class IEEE8021xComponent implements OnInit {
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
 
-  public tableDataSource = new MatTableDataSource<IEEE8021xConfig>()
+  public tableDataSource = signal(new MatTableDataSource<IEEE8021xConfig>())
   public displayedColumns: string[] = [
     'profileName',
     'authenticationProtocol',
@@ -78,18 +77,18 @@ export class IEEE8021xComponent implements OnInit {
     'remove'
   ]
   public totalCount = signal(0)
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
   public protocols = AuthenticationProtocols
   public isLoading = signal(true)
 
   @ViewChild(MatPaginator) public paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -102,7 +101,7 @@ export class IEEE8021xComponent implements OnInit {
       )
       .subscribe({
         next: (pagedConfigs) => {
-          this.tableDataSource = new MatTableDataSource(pagedConfigs.data)
+          this.tableDataSource.set(new MatTableDataSource(pagedConfigs.data))
           this.totalCount.set(pagedConfigs.totalCount)
         },
         error: () => {
@@ -132,7 +131,7 @@ export class IEEE8021xComponent implements OnInit {
             )
             .subscribe({
               next: () => {
-                this.getData(this.pageEvent)
+                this.getData(this.pageEvent())
                 const deleteMessage: string = this.translate.instant('common.deleteProfile.value')
                 this.snackBar.open(deleteMessage, undefined, SnackbarDefaults.defaultSuccess)
               },
@@ -150,12 +149,12 @@ export class IEEE8021xComponent implements OnInit {
   }
 
   onPaginator(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

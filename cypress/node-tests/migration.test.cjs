@@ -11,7 +11,7 @@ const path = require('node:path')
 
 require('ts-node').register({
   transpileOnly: true,
-  compilerOptions: { module: 'CommonJS', moduleResolution: 'node' }
+  compilerOptions: { module: 'CommonJS', moduleResolution: 'bundler', rootDir: '.' }
 })
 const { execTask } = require('../support/exec-task.ts')
 const { publicConfig } = require('../support/public-config.ts')

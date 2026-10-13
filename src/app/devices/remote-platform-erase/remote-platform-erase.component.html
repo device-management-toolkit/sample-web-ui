@@ -7,7 +7,7 @@
     @if (isPlatformEraseSupported() && rpe()) {
       <button
         mat-flat-button
-        color="warn"
+        class="error-button"
         data-cy="initiateEraseButton"
         [disabled]="!hasSelectedCaps()"
         [matTooltip]="!hasSelectedCaps() ? ('remotePlatformErase.initiateNoCapsTooltip.value' | translate) : ''"
@@ -21,13 +21,14 @@
     <p>{{ 'remotePlatformErase.description.value' | translate }}</p>
     @if (isPlatformEraseSupported()) {
       <div role="status" style="padding: 12px 0">
-        <mat-icon color="warn" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">warning</mat-icon>
+        <mat-icon class="mat-text-error" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+          >warning</mat-icon
+        >
         <span>{{ 'remotePlatformErase.initiateWarning.value' | translate }}</span>
       </div>
 
       <div style="padding: 8px 0">
         <mat-slide-toggle
-          color="primary"
           data-cy="remoteEraseCheckbox"
           [checked]="rpe()"
           [disabled]="isLoading() || !amtFeatures()"
@@ -43,7 +44,7 @@
         <mat-divider style="margin: 16px 0"></mat-divider>
 
         <h3>
-          <mat-icon color="primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+          <mat-icon class="mat-text-primary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
             >checklist</mat-icon
           >
           <span>{{ 'remotePlatformErase.caps.title.value' | translate }}</span>
@@ -108,7 +109,9 @@
       }
     } @else if (!isLoading()) {
       <div data-cy="notSupportedMessage" style="padding: 8px 0">
-        <mat-icon color="accent" aria-hidden="true" style="vertical-align: middle; margin-right: 8px">info</mat-icon>
+        <mat-icon class="mat-text-secondary" aria-hidden="true" style="vertical-align: middle; margin-right: 8px"
+          >info</mat-icon
+        >
         <span>{{ 'remotePlatformErase.notSupported.value' | translate }}</span>
       </div>
     }

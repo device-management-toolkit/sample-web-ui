@@ -21,6 +21,7 @@ import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
 import { caseInsensitiveCompare } from '../../utils'
 import { environment } from '../../environments/environment'
 import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatCheckbox } from '@angular/material/checkbox'
 import {
@@ -39,7 +40,6 @@ import {
 import { MatOption } from '@angular/material/core'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatFormField, MatHint, MatLabel, MatPrefix } from '@angular/material/form-field'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
@@ -49,6 +49,7 @@ import { MatSort } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { MatDivider } from '@angular/material/divider'
+import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -65,14 +66,12 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatIconButton,
     MatTooltip,
     MatProgressBar,
-    MatCard,
     MatFormField,
     MatLabel,
     MatSelect,
     ReactiveFormsModule,
     FormsModule,
     MatOption,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -93,7 +92,10 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatTab,
     MatTabLabel,
     MatDivider,
-    TranslatePipe
+    MatCard,
+    MatCardContent,
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class DevicesComponent implements OnInit, AfterViewInit {
@@ -212,8 +214,13 @@ export class DevicesComponent implements OnInit, AfterViewInit {
     if (!this.isCloudMode && !this.isDiscoveredTab) {
       columns.push('controlMode')
     }
-    columns.push('tags', 'actions', 'notification')
+    columns.push('tags', 'actions')
     return columns
+  }
+
+  // Number of icon buttons a row's actions cell renders, which sizes that column.
+  get actionCount(): number {
+    return (this.isDiscoveredTab ? 0 : 3) + (this.isCloudMode ? 1 : 2)
   }
 
   public pageEvent: PageEventOptions = {

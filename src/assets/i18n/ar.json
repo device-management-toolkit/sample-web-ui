@@ -449,10 +449,6 @@
   "common.no": {
     "value": "لا"
   },
-  "common.noData": {
-    "description": "رسالة عند عدم توفر بيانات",
-    "value": "لا توجد بيانات متاحة"
-  },
   "common.notApplicable": {
     "description": "يتم عرضها عندما لا ينطبق إدخال نظام التشغيل",
     "value": "لا ينطبق"
@@ -590,6 +586,10 @@
   "configs.ciraNoData": {
     "description": "لا توجد رسالة CIRA Configs",
     "value": "لا توجد تكوينات CIRA"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "يشرح الغرض من تكوينات CIRA عند عدم وجود أي منها",
+    "value": "يحدد تكوين CIRA لـ AMT خادم MPS الذي يتصل به، لتبقى الأجهزة قابلة للإدارة خارج الشبكة المحلية. أضف تكوينًا، ثم اختره كاتصال في ملف تعريف."
   },
   "configs.delete": {
     "description": "رسالة لحذف تكوينات CIRA",
@@ -740,6 +740,10 @@
   "dashboard.useDeviceActions": {
     "description": "نصيحة لاستخدام إجراءات الجهاز",
     "value": "استخدم إجراءات الجهاز للتحكم في قائمة الأجهزة"
+  },
+  "dashboard.welcome": {
+    "description": "عنوان الترحيب في لوحة المعلومات مع اسم التطبيق",
+    "value": "مرحبًا بك في {{name}}"
   },
   "delete.question": {
     "description": "سؤال حول حذف السجلات",
@@ -1033,6 +1037,14 @@
     "description": "رسالة عند عدم وجود أجهزة",
     "value": "لم يتم العثور على أي أجهزة"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "يشرح كيف تظهر الأجهزة في القائمة عند عدم وجود أي منها (السحابة)",
+    "value": "تظهر الأجهزة هنا بعد تنشيطها. ينشئ زر «إضافة جديد» أمر التنشيط المطلوب تنفيذه على الجهاز."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "يشرح كيفية إضافة جهاز عند عدم وجود أي أجهزة (وحدة التحكم)",
+    "value": "أضف جهازًا باستخدام اسم المضيف وبيانات اعتماد AMT لبدء إدارته."
+  },
   "devices.noDataFilter": {
     "description": "رسالة عندما تكون نتائج التصفية فارغة",
     "value": "لا توجد أجهزة مطابقة للفلتر الحالي"
@@ -1232,6 +1244,10 @@
   "domains.noData": {
     "description": "لا توجد رسالة نطاقات",
     "value": "لا توجد مجالات"
+  },
+  "domains.noDataDescription": {
+    "description": "يشرح الغرض من المجالات عند عدم وجود أي منها",
+    "value": "يربط المجال لاحقة DNS بشهادة التزويد الخاصة بها، وهي مطلوبة لوضع Admin Control. أضف مجالًا قبل تنشيط الأجهزة في ACM."
   },
   "domains.table.domainSuffix": {
     "description": "عنوان عمود لاحقة المجال",
@@ -1792,6 +1808,10 @@
     "description": "لا توجد رسالة تكوينات IEEE 8021x",
     "value": "لا توجد تكوينات IEEE 8021x"
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "يشرح الغرض من تكوينات IEEE 8021x عند عدم وجود أي منها",
+    "value": "تتيح تكوينات 802.1x لـ AMT المصادقة على الشبكات المؤمَّنة بـ 802.1x. أضف تكوينًا، ثم اختره في ملف تعريف (سلكي) أو في تكوين لاسلكي (Wi-Fi)."
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "عنوان عمود بروتوكول المصادقة",
     "value": "بروتوكول المصادقة"
@@ -1983,6 +2003,10 @@
   "mqttEvents.type.label": {
     "description": "عنوان جدول لنوع حدث MQTT",
     "value": "النوع"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "التكوين"
   },
   "network.errorNetworkSetting": {
     "description": "خطأ في استرداد إعدادات الشبكة",
@@ -2573,6 +2597,10 @@
     "description": "رسالة \"لا توجد ملفات تعريف\"",
     "value": "لا توجد ملفات تعريف"
   },
+  "profiles.noDataDescription": {
+    "description": "يشرح الغرض من ملفات التعريف عند عدم وجود أي منها",
+    "value": "يحدد ملف التعريف كيفية تكوين AMT عند التنشيط: وضع التحكم والشبكة وإعدادات الاتصال. أضف ملف تعريف، ثم استخدمه لتنشيط الأجهزة."
+  },
   "profiles.table.activation": {
     "description": "عنوان عمود \"وضع التنشيط\"",
     "value": "وضع التنشيط"
@@ -2841,9 +2869,41 @@
     "description": "العنوان الرئيسي للتطبيق في وضع وحدة التحكم",
     "value": "وحدة التحكم"
   },
-  "toolbar.header.hello": {
-    "description": "رسالة الترحيب",
-    "value": "مرحبًا"
+  "toolbar.palette.azure": {
+    "description": "اسم لوحة الألوان اللازوردي والأزرق",
+    "value": "لازوردي وأزرق"
+  },
+  "toolbar.palette.cyan": {
+    "description": "اسم لوحة الألوان السماوي والبرتقالي",
+    "value": "سماوي وبرتقالي"
+  },
+  "toolbar.palette.label": {
+    "description": "تسمية aria للزر الذي يفتح قائمة لوحات الألوان",
+    "value": "لوحة الألوان"
+  },
+  "toolbar.palette.magenta": {
+    "description": "اسم لوحة الألوان الأرجواني والبنفسجي",
+    "value": "أرجواني وبنفسجي"
+  },
+  "toolbar.palette.rose": {
+    "description": "اسم لوحة الألوان الوردي والأحمر",
+    "value": "وردي وأحمر"
+  },
+  "toolbar.theme.dark": {
+    "description": "خيار في القائمة يستخدم المظهر الداكن دائمًا",
+    "value": "داكن"
+  },
+  "toolbar.theme.label": {
+    "description": "تسمية aria للزر الذي يفتح قائمة المظهر الفاتح أو الداكن أو مظهر النظام",
+    "value": "المظهر"
+  },
+  "toolbar.theme.light": {
+    "description": "خيار في القائمة يستخدم المظهر الفاتح دائمًا",
+    "value": "فاتح"
+  },
+  "toolbar.theme.system": {
+    "description": "خيار في القائمة يتبع إعداد المظهر الفاتح أو الداكن في نظام التشغيل",
+    "value": "النظام"
   },
   "userConsent.errorCancelCode": {
     "description": "خطأ في إلغاء رمز موافقة المستخدم",
@@ -2916,6 +2976,10 @@
   "wirelessConfigs.noData": {
     "description": "الرسالة التي تظهر عند عدم وجود تكوينات لاسلكية",
     "value": "لا توجد تكوينات لاسلكية"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "يشرح الغرض من التكوينات اللاسلكية عند عدم وجود أي منها",
+    "value": "تتضمن التكوينات اللاسلكية إعدادات Wi-Fi التي يستخدمها AMT للاتصال: SSID والمصادقة والتشفير. أضف تكوينًا، ثم أرفقه بملف تعريف."
   },
   "wirelessConfigs.ssid": {
     "description": "عنوان عمود لـ SSID للتكوين اللاسلكي",
@@ -3081,6 +3145,14 @@
     "value": "أدخل اسم إعداد الوكيل",
     "description": "نص العنصر النائب لحقل اسم إعداد الوكيل"
   },
+  "proxyConfigs.noData": {
+    "description": "رسالة عند عدم وجود إعدادات وكيل",
+    "value": "لا توجد إعدادات وكيل"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "يشرح الغرض من إعدادات الوكيل عند عدم وجود أي منها",
+    "value": "تصف إعدادات الوكيل خوادم الوكيل التي يمكن لـ AMT استخدامها، وكل منها مرتبط بلاحقة DNS للشبكة. أضف إعدادًا، ثم عيّنه لملف تعريف."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "أدخل عنوان خادم الوكيل",
     "description": "نص العنصر النائب لحقل عنوان الوكيل"
@@ -3148,10 +3220,6 @@
   "common.update": {
     "value": "تحديث",
     "description": "نص زر التحديث"
-  },
-  "common.noData": {
-    "value": "لا توجد بيانات متاحة",
-    "description": "رسالة عند عدم توفر بيانات"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "اسم الفئة لمسح المنصة عن بُعد",

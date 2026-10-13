@@ -269,7 +269,7 @@ describe('KvmComponent', () => {
     expect(component.deviceKVMConnection()).toBeFalsy()
 
     // Test connect method
-    component.readyToLoadKvm = true
+    component.readyToLoadKvm.set(true)
     component.connect()
     expect(component.isDisconnecting).toBeFalsy()
     expect(tokenSpy).toHaveBeenCalled()
@@ -282,13 +282,13 @@ describe('KvmComponent', () => {
     expect(component.deviceKVMConnection()).toBeFalsy()
   })
   it('connect() resets readyToLoadKvm and deviceKVMConnection to false before reconnecting', () => {
-    component.readyToLoadKvm = true
+    component.readyToLoadKvm.set(true)
     component.deviceKVMConnection.set(true)
     // Intercept init to observe intermediate reset state
     let readyToLoadKvmAtStartOfInit = true
     let connectionAtStartOfInit = true
     vi.spyOn(component, 'init').mockImplementation(() => {
-      readyToLoadKvmAtStartOfInit = component.readyToLoadKvm
+      readyToLoadKvmAtStartOfInit = component.readyToLoadKvm()
       connectionAtStartOfInit = component.deviceKVMConnection()
     })
     component.connect()
@@ -442,7 +442,7 @@ describe('KvmComponent', () => {
   it('cancel enable kvm request msg true', async () => {
     component.cancelEnableKvmResponse(true)
     expect(snackBarSpy).toHaveBeenCalled()
-    expect(component.readyToLoadKvm).toBe(false)
+    expect(component.readyToLoadKvm()).toBe(false)
   })
   it('cancel enable sol request msg false', async () => {
     component.cancelEnableKvmResponse(false)
@@ -566,7 +566,7 @@ describe('KvmComponent', () => {
   it('checkUserConsent yes', async () => {
     component.checkUserConsent()
     fixture.detectChanges()
-    expect(component.readyToLoadKvm).toBe(true)
+    expect(component.readyToLoadKvm()).toBe(true)
   })
   it('checkUserConsent no', async () => {
     component.amtFeatures.set({
@@ -590,9 +590,9 @@ describe('KvmComponent', () => {
         bootString: ''
       }
     })
-    component.readyToLoadKvm = false
+    component.readyToLoadKvm.set(false)
     component.checkUserConsent()
-    expect(component.readyToLoadKvm).toBe(false)
+    expect(component.readyToLoadKvm()).toBe(false)
   })
   it('should set loading status when checking consent', () => {
     component.loadingStatus.set('kvm.status.checkingConsent.value')
@@ -625,7 +625,7 @@ describe('KvmComponent', () => {
       component.isLoading.set(true)
       component.checkUserConsent().subscribe(() => {
         expect(component.isLoading()).toBe(true)
-        expect(component.readyToLoadKvm).toBe(true)
+        expect(component.readyToLoadKvm()).toBe(true)
         done()
       })
     })
@@ -881,7 +881,7 @@ describe('KvmComponent', () => {
     const deviceIDERConnectionSpy = vi.spyOn(component.deviceIDERConnection, 'set').mockImplementation(() => undefined)
     component.onFileSelected(mockEvt)
 
-    expect(component.diskImage).toEqual(mockFile)
+    expect(component.diskImage()).toEqual(mockFile)
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(true)
   })
   it('should emit false on canceling IDER', () => {

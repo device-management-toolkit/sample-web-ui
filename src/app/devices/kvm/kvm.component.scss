@@ -12,7 +12,7 @@
   gap: 16px;
 }
 .loading-status {
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--mat-sys-on-surface);
   font-size: 14px;
   font-weight: 500;
   text-align: center;

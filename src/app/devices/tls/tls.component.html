@@ -9,24 +9,24 @@
   </mat-card-header>
   <mat-card-content>
     <div class="flex-row flex-wrap">
-      @for (setting of tlsData; track $index) {
+      @for (setting of tlsData(); track $index) {
         <div class="flex flex-50">
           <p>{{ 'tls.elementName.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ setting.ElementName }}</span>
+          <span class="mat-font-body-lg">{{ setting.ElementName }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'tls.instanceId.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{ setting.InstanceID }}</span>
+          <span class="mat-font-body-lg">{{ setting.InstanceID }}</span>
         </div>
         <div class="flex flex-50">
           <p>{{ 'tls.mutualAuth.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{
+          <span class="mat-font-body-lg">{{
             setting.MutualAuthentication ? ('common.yes.value' | translate) : ('common.no.value' | translate)
           }}</span>
         </div>
@@ -34,7 +34,7 @@
           <p>{{ 'tls.enabled.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{
+          <span class="mat-font-body-lg">{{
             setting.Enabled ? ('common.yes.value' | translate) : ('common.no.value' | translate)
           }}</span>
         </div>
@@ -42,7 +42,7 @@
           <p>{{ 'tls.acceptNonSecure.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{
+          <span class="mat-font-body-lg">{{
             setting.AcceptNonSecureConnections ? ('common.yes.value' | translate) : ('common.no.value' | translate)
           }}</span>
         </div>
@@ -50,7 +50,7 @@
           <p>{{ 'tls.nonSecureSupported.label.value' | translate }}</p>
         </div>
         <div class="flex flex-50 justify-end">
-          <span class="mat-h3">{{
+          <span class="mat-font-body-lg">{{
             setting.NonSecureConnectionsSupported ? ('common.yes.value' | translate) : ('common.no.value' | translate)
           }}</span>
         </div>

@@ -76,8 +76,8 @@ describe('ProxyConfigDetailComponent', () => {
   })
 
   it('should initialize for edit proxy config', () => {
-    expect(component.isEdit).toBe(true) // because we have a 'name' param
-    expect(component.pageTitle).toBe('proxyConfigs.pageTitle.editProxy.value')
+    expect(component.isEdit()).toBe(true) // because we have a 'name' param
+    expect(component.pageTitle()).toBe('proxyConfigs.pageTitle.editProxy.value')
     expect(proxyConfigsGetRecordSpy).toHaveBeenCalledWith('test-proxy')
   })
 
@@ -90,8 +90,8 @@ describe('ProxyConfigDetailComponent', () => {
     const newComponent = newFixture.componentInstance
     newFixture.detectChanges()
 
-    expect(newComponent.isEdit).toBe(false)
-    expect(newComponent.pageTitle).toBe('proxyConfigs.pageTitle.newProxy.value')
+    expect(newComponent.isEdit()).toBe(false)
+    expect(newComponent.pageTitle()).toBe('proxyConfigs.pageTitle.newProxy.value')
   })
 
   it('should initialize proxy config form', () => {
@@ -132,8 +132,8 @@ describe('ProxyConfigDetailComponent', () => {
     ;(route.params as any) = of({}) // No name param means create
 
     component.ngOnInit() // Re-initialize
-    component.isEdit = false
-    component.pageTitle = 'Create Proxy Configuration'
+    component.isEdit.set(false)
+    component.pageTitle.set('Create Proxy Configuration')
 
     const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
@@ -179,7 +179,7 @@ describe('ProxyConfigDetailComponent', () => {
     const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     // Set up for create
-    component.isEdit = false
+    component.isEdit.set(false)
     component.proxyConfigForm.patchValue({
       name: 'duplicate-proxy',
       address: '192.168.1.200',
@@ -191,7 +191,7 @@ describe('ProxyConfigDetailComponent', () => {
 
     expect(proxyConfigsCreateSpy).toHaveBeenCalled()
     expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, expect.any(Object))
-    expect(component.errorMessages).toEqual(['Name already exists'])
+    expect(component.errorMessages()).toEqual(['Name already exists'])
   })
 
   it('should handle update error with server message', () => {
@@ -215,7 +215,7 @@ describe('ProxyConfigDetailComponent', () => {
 
     expect(proxyConfigsUpdateSpy).toHaveBeenCalled()
     expect(snackBarSpy).toHaveBeenCalledWith('Error saving proxy profile', undefined, expect.any(Object))
-    expect(component.errorMessages).toEqual(['Proxy configuration is in use'])
+    expect(component.errorMessages()).toEqual(['Proxy configuration is in use'])
   })
 
   it('should cancel and navigate back', async () => {
