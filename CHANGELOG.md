@@ -1,3 +1,10 @@
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
 ## [3.69.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.2...v3.69.3) (2026-10-12)
 
 
