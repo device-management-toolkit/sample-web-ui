@@ -1,19 +1,28 @@
 @use '@angular/material' as mat;
 
-// Matches the page toolbar height so the logo lines up with the page title.
+// Top padding matches the nav list's so the logo sits midway between the edge and the first link.
 .navbar-brand {
   display: flex;
-  align-items: center;
-  height: 56px;
-  padding-inline: 28px;
+  justify-content: center;
+  padding-top: 16px;
 }
 
-// A mask lets the white logo artwork take the theme's text colour.
+// The artwork has fixed colors, so each color scheme gets its own file.
 .logo {
-  width: 125px;
-  height: 35px;
-  background-color: var(--mat-sys-on-surface);
-  mask: url('../../../assets/logo.png') center / contain no-repeat;
+  width: 200px;
+  height: 66px;
+  background: url('../../../assets/dmt-logo_light.svg') center / contain no-repeat;
+}
+
+:host-context(.dark-theme) .logo {
+  background-image: url('../../../assets/dmt-logo_dark.svg');
+}
+
+// Without .light-theme or .dark-theme the theme follows the OS, so the logo does too.
+@media (prefers-color-scheme: dark) {
+  :host-context(html:not(.light-theme)) .logo {
+    background-image: url('../../../assets/dmt-logo_dark.svg');
+  }
 }
 
 // The nav list takes the spare height so the action button rests on the footer.
