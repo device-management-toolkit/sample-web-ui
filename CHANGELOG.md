@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.0...v4.0.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* show domain validation errors in snackbar ([#3636](https://github.com/device-management-toolkit/sample-web-ui/issues/3636)) ([6ecfd75](https://github.com/device-management-toolkit/sample-web-ui/commit/6ecfd7525508e6e79c8a9ddeb5aa99c032495364))
+
 # [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
 
 
