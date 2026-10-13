@@ -1,3 +1,11 @@
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
 # [3.71.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.70.0...v3.71.0) (2026-10-13)
 
 
