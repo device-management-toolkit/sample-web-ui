@@ -658,7 +658,7 @@ describe('IderComponent', () => {
     component.isIDERActive.set(true)
     fixture.detectChanges()
 
-    const attachButton = fixture.nativeElement.querySelector('button[color="primary"]') as HTMLButtonElement
+    const attachButton = fixture.nativeElement.querySelector('button[mat-flat-button]') as HTMLButtonElement
 
     expect(attachButton.disabled).toBe(true)
   })

@@ -741,6 +741,10 @@
     "description": "Всплывающая подсказка по использованию действий устройства",
     "value": "Используйте действия устройств для управления списком устройств."
   },
+  "dashboard.welcome": {
+    "description": "Приветственный заголовок на панели мониторинга с названием приложения",
+    "value": "Добро пожаловать в {{name}}"
+  },
   "delete.question": {
     "description": "Вопрос об удалении записей",
     "value": "Вы уверены?"
@@ -1976,6 +1980,10 @@
     "description": "Заголовок таблицы для типа события MQTT",
     "value": "Тип"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Конфигурация"
+  },
   "network.errorNetworkSetting": {
     "description": "Ошибка при получении сетевых настроек",
     "value": "Ошибка при получении сетевых настроек"
@@ -2833,9 +2841,41 @@
     "description": "Основное название приложения в консольном режиме",
     "value": "Консоль"
   },
-  "toolbar.header.hello": {
-    "description": "Приветственное сообщение",
-    "value": "Здравствуйте"
+  "toolbar.palette.azure": {
+    "description": "Название цветовой палитры «лазурный и синий»",
+    "value": "Лазурный и синий"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Название цветовой палитры «бирюзовый и оранжевый»",
+    "value": "Бирюзовый и оранжевый"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-метка кнопки, открывающей меню цветовых палитр",
+    "value": "Цветовая палитра"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Название цветовой палитры «пурпурный и фиолетовый»",
+    "value": "Пурпурный и фиолетовый"
+  },
+  "toolbar.palette.rose": {
+    "description": "Название цветовой палитры «розовый и красный»",
+    "value": "Розовый и красный"
+  },
+  "toolbar.theme.dark": {
+    "description": "Пункт меню, всегда использующий тёмную тему",
+    "value": "Тёмная"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-метка кнопки, открывающей меню выбора светлой, тёмной или системной темы",
+    "value": "Тема"
+  },
+  "toolbar.theme.light": {
+    "description": "Пункт меню, всегда использующий светлую тему",
+    "value": "Светлая"
+  },
+  "toolbar.theme.system": {
+    "description": "Пункт меню, следующий светлой или тёмной настройке операционной системы",
+    "value": "Системная"
   },
   "userConsent.errorCancelCode": {
     "description": "Ошибка при отмене кода согласия пользователя",

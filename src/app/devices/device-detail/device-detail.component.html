@@ -32,7 +32,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     @if (!isLoading() && !isDeviceTypeKnown()) {
-      <div style="padding: 12px 16px; color: #8a6d3b">{{ 'general.errorAMTVersion.value' | translate }}</div>
+      <div style="padding: 12px 16px; color: light-dark(#8a6d3b, #e0c38c)">
+        {{ 'general.errorAMTVersion.value' | translate }}
+      </div>
     }
 
     @switch (currentView()) {

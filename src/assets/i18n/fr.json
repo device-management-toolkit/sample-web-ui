@@ -741,6 +741,10 @@
     "description": "Info-bulle pour l'utilisation des actions de l'appareil",
     "value": "Utiliser les actions des appareils pour contrôler une liste d'appareils"
   },
+  "dashboard.welcome": {
+    "description": "Titre de bienvenue du tableau de bord, avec le nom de l'application",
+    "value": "Bienvenue sur {{name}}"
+  },
   "delete.question": {
     "description": "Question concernant la suppression d'enregistrements",
     "value": "Êtes-vous certain ?"
@@ -1984,6 +1988,10 @@
     "description": "En-tête du tableau pour le type d'événement MQTT",
     "value": "Type"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuration"
+  },
   "network.errorNetworkSetting": {
     "description": "Erreur lors de la récupération des paramètres réseau",
     "value": "Erreur lors de la récupération des paramètres réseau"
@@ -2841,9 +2849,41 @@
     "description": "Titre principal de l'application en mode console",
     "value": "Console"
   },
-  "toolbar.header.hello": {
-    "description": "Message d'accueil",
-    "value": "Bonjour"
+  "toolbar.palette.azure": {
+    "description": "Nom de la palette de couleurs azur et bleu",
+    "value": "Azur et bleu"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Nom de la palette de couleurs cyan et orange",
+    "value": "Cyan et orange"
+  },
+  "toolbar.palette.label": {
+    "description": "Libellé aria du bouton qui ouvre le menu des palettes de couleurs",
+    "value": "Palette de couleurs"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Nom de la palette de couleurs magenta et violet",
+    "value": "Magenta et violet"
+  },
+  "toolbar.palette.rose": {
+    "description": "Nom de la palette de couleurs rose et rouge",
+    "value": "Rose et rouge"
+  },
+  "toolbar.theme.dark": {
+    "description": "Option de menu qui utilise toujours le thème sombre",
+    "value": "Sombre"
+  },
+  "toolbar.theme.label": {
+    "description": "Libellé aria du bouton qui ouvre le menu des thèmes clair, sombre ou système",
+    "value": "Thème"
+  },
+  "toolbar.theme.light": {
+    "description": "Option de menu qui utilise toujours le thème clair",
+    "value": "Clair"
+  },
+  "toolbar.theme.system": {
+    "description": "Option de menu qui suit le réglage clair ou sombre du système d'exploitation",
+    "value": "Système"
   },
   "userConsent.errorCancelCode": {
     "description": "Erreur lors de l'annulation du code de consentement de l'utilisateur",

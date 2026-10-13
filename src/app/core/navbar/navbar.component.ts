@@ -7,9 +7,9 @@ import { Component, OnInit, inject, signal } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { RouterLink, RouterLinkActive } from '@angular/router'
-import { MatDivider } from '@angular/material/divider'
 import { MatNavList, MatListItem, MatListItemIcon } from '@angular/material/list'
 import { MatTooltip } from '@angular/material/tooltip'
+import { MatButton } from '@angular/material/button'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { ServerFeaturesService } from '../../server-features.service'
 
@@ -19,13 +19,13 @@ import { ServerFeaturesService } from '../../server-features.service'
   styleUrls: ['./navbar.component.scss'],
   imports: [
     MatNavList,
-    MatDivider,
     MatListItem,
     RouterLink,
     RouterLinkActive,
     MatIcon,
     MatListItemIcon,
     MatTooltip,
+    MatButton,
     TranslatePipe
   ]
 })

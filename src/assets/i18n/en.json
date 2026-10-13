@@ -905,6 +905,10 @@
     "description": "Tooltip for using device actions",
     "value": "Use device actions to control a list of devices"
   },
+  "dashboard.welcome": {
+    "description": "Welcome heading on the dashboard, with the application name",
+    "value": "Welcome to {{name}}"
+  },
   "delete.question": {
     "description": "Question about deleting records",
     "value": "Are you sure?"
@@ -2465,6 +2469,10 @@
     "description": "Table header for MQTT event type",
     "value": "Type"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuration"
+  },
   "network.disabled": {
     "description": "Used when a network setting is disabled",
     "value": "Disabled"
@@ -3605,9 +3613,41 @@
     "description": "Main title of the application in console mode",
     "value": "Console"
   },
-  "toolbar.header.hello": {
-    "description": "Hello message",
-    "value": "Hi"
+  "toolbar.palette.azure": {
+    "description": "Name of the azure and blue color palette",
+    "value": "Azure & Blue"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Name of the cyan and orange color palette",
+    "value": "Cyan & Orange"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria label for the button that opens the color palette menu",
+    "value": "Color palette"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Name of the magenta and violet color palette",
+    "value": "Magenta & Violet"
+  },
+  "toolbar.palette.rose": {
+    "description": "Name of the rose and red color palette",
+    "value": "Rose & Red"
+  },
+  "toolbar.theme.dark": {
+    "description": "Menu option that always uses the dark theme",
+    "value": "Dark"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria label for the button that opens the light, dark or system theme menu",
+    "value": "Theme"
+  },
+  "toolbar.theme.light": {
+    "description": "Menu option that always uses the light theme",
+    "value": "Light"
+  },
+  "toolbar.theme.system": {
+    "description": "Menu option that follows the light or dark setting of the operating system",
+    "value": "System"
   },
   "userConsent.errorCancelCode": {
     "description": "Error for cancelling user consent code",

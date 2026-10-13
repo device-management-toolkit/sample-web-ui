@@ -41,7 +41,6 @@
               }
             ],
             "styles": [
-              "src/styles/_variables.scss",
               "src/styles/theme.scss",
               "src/styles/styles.scss",
               "src/styles/css2.css",
@@ -66,7 +65,11 @@
               "outputPath": {
                 "base": "ui"
               },
-              "optimization": true,
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
               "outputHashing": "none",
               "sourceMap": false,
               "namedChunks": false,
@@ -93,7 +96,11 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,

@@ -741,6 +741,10 @@
     "description": "Tooltip voor het gebruik van apparaatacties",
     "value": "Gebruik apparaatacties om een lijst met apparaten te beheren."
   },
+  "dashboard.welcome": {
+    "description": "Welkomstkop op het dashboard, met de naam van de applicatie",
+    "value": "Welkom bij {{name}}"
+  },
   "delete.question": {
     "description": "Vraag over het verwijderen van records",
     "value": "Bent u zeker?"
@@ -1984,6 +1988,10 @@
     "description": "Tabelkop voor MQTT-gebeurtenistype",
     "value": "Type"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuratie"
+  },
   "network.errorNetworkSetting": {
     "description": "Fout bij het ophalen van netwerkinstellingen",
     "value": "Fout bij het ophalen van netwerkinstellingen"
@@ -2841,9 +2849,41 @@
     "description": "Hoofdtitel van de applicatie in de consolemodus",
     "value": "Console"
   },
-  "toolbar.header.hello": {
-    "description": "Hallo-bericht",
-    "value": "Hallo"
+  "toolbar.palette.azure": {
+    "description": "Naam van het kleurenpalet azuur en blauw",
+    "value": "Azuur en blauw"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Naam van het kleurenpalet cyaan en oranje",
+    "value": "Cyaan en oranje"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-label voor de knop die het menu met kleurenpaletten opent",
+    "value": "Kleurenpalet"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Naam van het kleurenpalet magenta en violet",
+    "value": "Magenta en violet"
+  },
+  "toolbar.palette.rose": {
+    "description": "Naam van het kleurenpalet roze en rood",
+    "value": "Roze en rood"
+  },
+  "toolbar.theme.dark": {
+    "description": "Menuoptie die altijd het donkere thema gebruikt",
+    "value": "Donker"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-label voor de knop die het menu voor het lichte, donkere of systeemthema opent",
+    "value": "Thema"
+  },
+  "toolbar.theme.light": {
+    "description": "Menuoptie die altijd het lichte thema gebruikt",
+    "value": "Licht"
+  },
+  "toolbar.theme.system": {
+    "description": "Menuoptie die de lichte of donkere instelling van het besturingssysteem volgt",
+    "value": "Systeem"
   },
   "userConsent.errorCancelCode": {
     "description": "Fout bij het annuleren van de toestemmingscode van de gebruiker.",

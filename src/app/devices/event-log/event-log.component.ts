@@ -10,7 +10,7 @@ import { of, Subject } from 'rxjs'
 import { catchError, finalize, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { EventLog } from '../../../models/models'
-import { MatCardModule } from '@angular/material/card'
+import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
 import { MatButtonModule } from '@angular/material/button'
@@ -35,7 +35,7 @@ const EVENTTYPEMAP: EventTypeMap = {
   styleUrls: ['./event-log.component.scss'],
   imports: [
     MatProgressBar,
-    MatCardModule,
+    MatToolbarModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,

@@ -12,7 +12,7 @@
       <mat-list>
         @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color="warn" matListItemIcon>error</mat-icon>
+            <mat-icon matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
@@ -418,12 +418,12 @@
       </mat-card-content>
       <mat-card-actions class="flex flex-row" style="margin-top: 48px">
         <div class="flex flex-50 justify-center">
-          <button type="button" mat-button color="primary" (click)="cancel()">
+          <button type="button" mat-button (click)="cancel()">
             <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
-          <button data-cy="save" type="submit" mat-flat-button color="primary">
+          <button data-cy="save" type="submit" mat-flat-button>
             <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>

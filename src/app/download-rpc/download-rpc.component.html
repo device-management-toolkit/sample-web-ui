@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title i18n>{{ 'downloadRpc.title.value' | translate }}</mat-card-title>
     <mat-card-subtitle>{{ 'downloadRpc.subtitle.value' | translate }}</mat-card-subtitle>
-    <mat-chip class="preview-chip" highlighted color="warn" disableRipple data-cy="previewChip">
+    <mat-chip class="preview-chip" highlighted disableRipple data-cy="previewChip">
       {{ 'downloadRpc.preview.value' | translate }}
     </mat-chip>
   </mat-card-header>
@@ -28,7 +28,7 @@
 
       @if (isLoopbackServerUrl()) {
         <div class="server-url-warning" data-cy="serverUrlLocalWarning">
-          <mat-icon color="warn">warning</mat-icon>
+          <mat-icon class="mat-text-error">warning</mat-icon>
           <span>{{ 'downloadRpc.serverUrl.localWarning.value' | translate }}</span>
         </div>
       }
@@ -122,7 +122,6 @@
   <mat-card-actions>
     <button
       mat-flat-button
-      color="primary"
       type="button"
       [disabled]="form.invalid || isLoading()"
       data-cy="download"

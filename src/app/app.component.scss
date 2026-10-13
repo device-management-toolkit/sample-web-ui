@@ -1,0 +1,11 @@
+// Keeps the footer pinned while the nav list scrolls.
+.sidenav-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+app-navbar {
+  flex: 1;
+  overflow-y: auto;
+}

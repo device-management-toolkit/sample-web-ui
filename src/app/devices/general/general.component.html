@@ -26,7 +26,7 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
-            <span class="mat-h3" data-cy="amtVersion">
+            <span class="mat-font-body-lg" data-cy="amtVersion">
               @if (amtVersion()) {
                 {{ amtVersion() }}
               } @else {
@@ -40,7 +40,7 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
-            <span class="mat-h3" data-cy="amtSku">
+            <span class="mat-font-body-lg" data-cy="amtSku">
               {{ amtBuild() }}
             </span>
           }
@@ -50,7 +50,7 @@
         </div>
         <div class="flex flex-50 justify-end">
           @if (!isLoading()) {
-            <span class="mat-h3" data-cy="amtSku">
+            <span class="mat-font-body-lg" data-cy="amtSku">
               {{ amtSKU() }}
             </span>
           }
@@ -74,7 +74,9 @@
             class="flex flex-1 flex-wrap items-center space-between gap-8 warn-border"
             style="margin-bottom: 16px; padding: 8px 12px">
             <div class="flex items-center">
-              <mat-icon color="warn" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0">warning</mat-icon>
+              <mat-icon class="mat-text-error" aria-hidden="true" style="margin-right: 8px; flex-shrink: 0"
+                >warning</mat-icon
+              >
               <span>{{
                 (isISM() ? 'general.redirectionWarningISM.value' : 'general.redirectionWarning.value') | translate
               }}</span>

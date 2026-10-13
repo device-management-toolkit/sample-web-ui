@@ -2,11 +2,10 @@
   @if (device()?.useTLS && !isCloudMode) {
     <div style="padding-right: 12px">
       <button
-        [color]="isPinned() ? 'primary' : 'warn'"
         mat-icon-button
         [matTooltip]="isPinned() ? 'TLS w/ Pinned Certificate' : 'TLS (not pinned)'"
         (click)="getDeviceCert()">
-        <mat-icon>lock</mat-icon>
+        <mat-icon [class]="isPinned() ? 'mat-text-primary' : 'mat-text-error'">lock</mat-icon>
       </button>
     </div>
   }
@@ -16,7 +15,7 @@
     } @else {
       <span>{{ device()?.hostname }}</span>
     }
-    <div class="mat-caption">
+    <div class="mat-font-body-sm">
       @if (isCloudMode) {
         {{ deviceId() }}
       }

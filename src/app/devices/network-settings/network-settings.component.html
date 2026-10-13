@@ -18,7 +18,6 @@
             <button
               class="card-edit-button"
               mat-button
-              color="primary"
               type="button"
               [attr.aria-label]="'common.editSettings.value' | translate"
               (click)="toggleWiredConfigForm()">
@@ -85,11 +84,7 @@
                       <button mat-button type="button" (click)="cancelWiredSettings()">
                         {{ 'common.cancelLower.value' | translate }}
                       </button>
-                      <button
-                        mat-flat-button
-                        color="primary"
-                        type="submit"
-                        [disabled]="isSavingWired() || wiredForm.pristine">
+                      <button mat-flat-button type="submit" [disabled]="isSavingWired() || wiredForm.pristine">
                         {{ 'common.save.value' | translate }}
                       </button>
                     </div>
@@ -102,7 +97,7 @@
                 </div>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="networkResults()?.wired?.linkIsUp"
                     [class.status-down]="!networkResults()?.wired?.linkIsUp">
                     {{
@@ -117,7 +112,7 @@
                   <p>{{ 'network.wired.dhcpEnabled.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{
+                  <span class="mat-font-body-lg">{{
                     networkResults()?.wired?.dhcpEnabled
                       ? ('common.yes.value' | translate)
                       : ('common.no.value' | translate)
@@ -128,7 +123,7 @@
                   <p>{{ 'network.wired.sharedIP.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{
+                  <span class="mat-font-body-lg">{{
                     networkResults()?.wired?.ipSyncEnabled
                       ? networkResults()?.wired?.dhcpEnabled
                         ? ('network.sharedIP.dynamic.value' | translate)
@@ -141,42 +136,42 @@
                   <p>{{ 'network.wired.macAddress.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.macAddress || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.macAddress || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wired.ipAddress.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.ipAddress || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.ipAddress || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wired.subnetMask.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.subnetMask || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.subnetMask || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wired.defaultGateway.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.defaultGateway || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.defaultGateway || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wired.primaryDNS.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.primaryDNS || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.primaryDNS || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wired.secondaryDNS.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wired?.secondaryDNS || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wired?.secondaryDNS || 'N/A' }}</span>
                 </div>
 
                 <button
@@ -191,7 +186,7 @@
                 </button>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="isWiredIeee8021xEnabled()"
                     [class.status-down]="!isWiredIeee8021xEnabled()">
                     {{ (isWiredIeee8021xEnabled() ? 'network.enabled.value' : 'network.disabled.value') | translate }}
@@ -203,7 +198,7 @@
                     <p>{{ 'network.ieee.availableInS0.value' | translate }}</p>
                   </div>
                   <div class="flex flex-50 justify-end">
-                    <span class="mat-h3">{{
+                    <span class="mat-font-body-lg">{{
                       networkResults()?.wired?.ieee8021x?.availableInS0
                         ? ('common.yes.value' | translate)
                         : ('common.no.value' | translate)
@@ -214,7 +209,7 @@
                     <p>{{ 'network.ieee.pxeTimeout.value' | translate }}</p>
                   </div>
                   <div class="flex flex-50 justify-end">
-                    <span class="mat-h3">{{ networkResults()?.wired?.ieee8021x?.pxeTimeout ?? 'N/A' }}</span>
+                    <span class="mat-font-body-lg">{{ networkResults()?.wired?.ieee8021x?.pxeTimeout ?? 'N/A' }}</span>
                   </div>
                 }
               </div>
@@ -246,7 +241,6 @@
             <button
               class="card-edit-button"
               mat-button
-              color="primary"
               type="button"
               [attr.aria-label]="'common.editSettings.value' | translate"
               (click)="toggleWirelessConfigForm()">
@@ -263,7 +257,7 @@
               @if (showWirelessConfigForm()) {
                 <div class="network-config-section">
                   <form class="network-form" [formGroup]="wirelessSettingsForm" (ngSubmit)="saveWirelessSettings()">
-                    <mat-slide-toggle color="primary" formControlName="enabled">
+                    <mat-slide-toggle formControlName="enabled">
                       {{
                         (wirelessSettingsForm.controls.enabled.value
                           ? 'network.wireless.wifiEnabled.value'
@@ -289,7 +283,6 @@
                       </button>
                       <button
                         mat-flat-button
-                        color="primary"
                         type="submit"
                         [disabled]="isSavingWireless() || wirelessSettingsForm.pristine">
                         {{ 'common.save.value' | translate }}
@@ -304,7 +297,7 @@
                 </div>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="wirelessStatus()?.enabled"
                     [class.status-down]="!wirelessStatus()?.enabled">
                     {{ (wirelessStatus()?.enabled ? 'network.enabled.value' : 'network.disabled.value') | translate }}
@@ -316,7 +309,7 @@
                 </div>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="wirelessStatus()?.localProfileSyncEnabled"
                     [class.status-down]="!wirelessStatus()?.localProfileSyncEnabled">
                     {{
@@ -331,7 +324,7 @@
                 </div>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="wirelessStatus()?.uefiProfileSyncEnabled"
                     [class.status-down]="!wirelessStatus()?.uefiProfileSyncEnabled">
                     {{
@@ -346,7 +339,7 @@
                 </div>
                 <div class="flex flex-50 justify-end">
                   <span
-                    class="mat-h3"
+                    class="mat-font-body-lg"
                     [class.status-up]="networkResults()?.wireless?.linkIsUp"
                     [class.status-down]="!networkResults()?.wireless?.linkIsUp">
                     {{
@@ -361,7 +354,7 @@
                   <p>{{ 'network.wireless.dhcpEnabled.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{
+                  <span class="mat-font-body-lg">{{
                     networkResults()?.wireless?.dhcpEnabled
                       ? ('common.yes.value' | translate)
                       : ('common.no.value' | translate)
@@ -372,7 +365,7 @@
                   <p>{{ 'network.wireless.sharedIP.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{
+                  <span class="mat-font-body-lg">{{
                     networkResults()?.wireless?.ipSyncEnabled
                       ? networkResults()?.wireless?.dhcpEnabled
                         ? ('network.sharedIP.dynamic.value' | translate)
@@ -385,42 +378,42 @@
                   <p>{{ 'network.wireless.macAddress.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.macAddress || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.macAddress || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wireless.ipAddress.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.ipAddress || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.ipAddress || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wireless.subnetMask.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.subnetMask || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.subnetMask || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wireless.defaultGateway.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.defaultGateway || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.defaultGateway || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wireless.primaryDNS.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.primaryDNS || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.primaryDNS || 'N/A' }}</span>
                 </div>
 
                 <div class="flex flex-50">
                   <p>{{ 'network.wireless.secondaryDNS.value' | translate }}</p>
                 </div>
                 <div class="flex flex-50 justify-end">
-                  <span class="mat-h3">{{ networkResults()?.wireless?.secondaryDNS || 'N/A' }}</span>
+                  <span class="mat-font-body-lg">{{ networkResults()?.wireless?.secondaryDNS || 'N/A' }}</span>
                 </div>
               </div>
             </mat-card-content>
@@ -435,7 +428,6 @@
             <button
               class="profile-add-button"
               mat-button
-              color="primary"
               type="button"
               [disabled]="isWirelessProfileLimitReached()"
               [matTooltip]="
@@ -573,7 +565,7 @@
                             'network.wirelessProfile.ieee8021xClientCert.value' | translate
                           }}</span>
                           <div class="network-form-upload-row">
-                            <button type="button" mat-stroked-button color="primary" (click)="clientCertInput.click()">
+                            <button type="button" mat-stroked-button (click)="clientCertInput.click()">
                               {{ 'common.chooseFile.value' | translate }}
                             </button>
                             <input
@@ -587,7 +579,7 @@
                               wirelessProfileForm.controls.ieee8021xClientCert.value !== ''
                             ) {
                               <span class="network-form-upload-status">
-                                <mat-icon color="primary">check_circle</mat-icon>
+                                <mat-icon class="mat-text-primary">check_circle</mat-icon>
                                 {{
                                   clientCertFileName() ||
                                     ('network.wirelessProfile.ieee8021xCertUploaded.value' | translate)
@@ -595,7 +587,7 @@
                               </span>
                             } @else {
                               <span class="network-form-upload-status">
-                                <mat-icon color="warn">remove_circle</mat-icon>
+                                <mat-icon class="mat-text-error">remove_circle</mat-icon>
                                 {{ 'network.wirelessProfile.ieee8021xCertNotUploaded.value' | translate }}
                               </span>
                             }
@@ -615,7 +607,7 @@
                             'network.wirelessProfile.ieee8021xPrivateKey.value' | translate
                           }}</span>
                           <div class="network-form-upload-row">
-                            <button type="button" mat-stroked-button color="primary" (click)="privateKeyInput.click()">
+                            <button type="button" mat-stroked-button (click)="privateKeyInput.click()">
                               {{ 'common.chooseFile.value' | translate }}
                             </button>
                             <input
@@ -629,7 +621,7 @@
                               wirelessProfileForm.controls.ieee8021xPrivateKey.value !== ''
                             ) {
                               <span class="network-form-upload-status">
-                                <mat-icon color="primary">check_circle</mat-icon>
+                                <mat-icon class="mat-text-primary">check_circle</mat-icon>
                                 {{
                                   privateKeyFileName() ||
                                     ('network.wirelessProfile.ieee8021xCertUploaded.value' | translate)
@@ -637,7 +629,7 @@
                               </span>
                             } @else {
                               <span class="network-form-upload-status">
-                                <mat-icon color="warn">remove_circle</mat-icon>
+                                <mat-icon class="mat-text-error">remove_circle</mat-icon>
                                 {{ 'network.wirelessProfile.ieee8021xCertNotUploaded.value' | translate }}
                               </span>
                             }
@@ -658,7 +650,7 @@
                           'network.wirelessProfile.ieee8021xCACert.value' | translate
                         }}</span>
                         <div class="network-form-upload-row">
-                          <button type="button" mat-stroked-button color="primary" (click)="caCertInput.click()">
+                          <button type="button" mat-stroked-button (click)="caCertInput.click()">
                             {{ 'common.chooseFile.value' | translate }}
                           </button>
                           <input
@@ -669,7 +661,7 @@
                             (change)="onCACertSelected($event)" />
                           @if (caCertFileName() !== '' || wirelessProfileForm.controls.ieee8021xCACert.value !== '') {
                             <span class="network-form-upload-status">
-                              <mat-icon color="primary">check_circle</mat-icon>
+                              <mat-icon class="mat-text-primary">check_circle</mat-icon>
                               {{
                                 caCertFileName() || ('network.wirelessProfile.ieee8021xCertUploaded.value' | translate)
                               }}
@@ -689,7 +681,6 @@
                     </button>
                     <button
                       mat-flat-button
-                      color="primary"
                       type="submit"
                       [disabled]="isSavingWirelessProfile() || wirelessProfileForm.invalid">
                       {{

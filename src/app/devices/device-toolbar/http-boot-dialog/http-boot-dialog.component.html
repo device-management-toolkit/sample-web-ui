@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>
   {{ 'devices.header.httpsBootTitle.value' | translate }}
 </h2>
-<mat-dialog-content class="mat-typography">
+<mat-dialog-content>
   <p>{{ 'devices.header.httpsBootDescription.value' | translate }}</p>
   <form [formGroup]="bootForm">
     <div>
@@ -38,7 +38,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="''" (click)="onCancel()">{{ 'common.cancelLower.value' | translate }}</button>
-  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" color="primary" cdkFocusInitial>
+  <button mat-button [disabled]="bootForm.invalid" (click)="onSubmit()" cdkFocusInitial>
     {{ 'common.ok.value' | translate }}
   </button>
 </mat-dialog-actions>

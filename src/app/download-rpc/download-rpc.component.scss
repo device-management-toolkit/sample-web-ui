@@ -1,5 +1,13 @@
+@use '@angular/material' as mat;
+
 .preview-chip {
   margin-left: auto;
+  @include mat.chips-overrides(
+    (
+      elevated-selected-container-color: var(--mat-sys-error),
+      selected-label-text-color: var(--mat-sys-on-error)
+    )
+  );
 }
 
 .server-url-warning,

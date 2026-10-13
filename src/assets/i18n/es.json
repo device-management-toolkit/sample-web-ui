@@ -737,6 +737,10 @@
     "description": "Información sobre herramientas para utilizar las acciones del dispositivo.",
     "value": "Utilice las acciones del dispositivo para controlar una lista de dispositivos."
   },
+  "dashboard.welcome": {
+    "description": "Encabezado de bienvenida del panel, con el nombre de la aplicación",
+    "value": "Te damos la bienvenida a {{name}}"
+  },
   "delete.question": {
     "description": "Pregunta sobre la eliminación de registros",
     "value": "¿Está seguro?"
@@ -1980,6 +1984,10 @@
     "description": "Encabezado de tabla para el tipo de evento MQTT",
     "value": "Tipo"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuración"
+  },
   "network.errorNetworkSetting": {
     "description": "Error al recuperar la configuración de red",
     "value": "Error al recuperar la configuración de red"
@@ -2837,9 +2845,41 @@
     "description": "Título principal de la aplicación en modo consola.",
     "value": "Consola"
   },
-  "toolbar.header.hello": {
-    "description": "Mensaje de bienvenida",
-    "value": "Hola"
+  "toolbar.palette.azure": {
+    "description": "Nombre de la paleta de colores azur y azul",
+    "value": "Azur y azul"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Nombre de la paleta de colores cian y naranja",
+    "value": "Cian y naranja"
+  },
+  "toolbar.palette.label": {
+    "description": "Etiqueta aria del botón que abre el menú de paletas de colores",
+    "value": "Paleta de colores"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Nombre de la paleta de colores magenta y violeta",
+    "value": "Magenta y violeta"
+  },
+  "toolbar.palette.rose": {
+    "description": "Nombre de la paleta de colores rosa y rojo",
+    "value": "Rosa y rojo"
+  },
+  "toolbar.theme.dark": {
+    "description": "Opción de menú que usa siempre el tema oscuro",
+    "value": "Oscuro"
+  },
+  "toolbar.theme.label": {
+    "description": "Etiqueta aria del botón que abre el menú de tema claro, oscuro o del sistema",
+    "value": "Tema"
+  },
+  "toolbar.theme.light": {
+    "description": "Opción de menú que usa siempre el tema claro",
+    "value": "Claro"
+  },
+  "toolbar.theme.system": {
+    "description": "Opción de menú que sigue el ajuste claro u oscuro del sistema operativo",
+    "value": "Sistema"
   },
   "userConsent.errorCancelCode": {
     "description": "Error al cancelar el código de consentimiento del usuario.",

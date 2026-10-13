@@ -741,6 +741,10 @@
     "description": "نصيحة لاستخدام إجراءات الجهاز",
     "value": "استخدم إجراءات الجهاز للتحكم في قائمة الأجهزة"
   },
+  "dashboard.welcome": {
+    "description": "عنوان الترحيب في لوحة المعلومات مع اسم التطبيق",
+    "value": "مرحبًا بك في {{name}}"
+  },
   "delete.question": {
     "description": "سؤال حول حذف السجلات",
     "value": "هل أنت متأكد؟"
@@ -1984,6 +1988,10 @@
     "description": "عنوان جدول لنوع حدث MQTT",
     "value": "النوع"
   },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "التكوين"
+  },
   "network.errorNetworkSetting": {
     "description": "خطأ في استرداد إعدادات الشبكة",
     "value": "خطأ في استرداد إعدادات الشبكة"
@@ -2841,9 +2849,41 @@
     "description": "العنوان الرئيسي للتطبيق في وضع وحدة التحكم",
     "value": "وحدة التحكم"
   },
-  "toolbar.header.hello": {
-    "description": "رسالة الترحيب",
-    "value": "مرحبًا"
+  "toolbar.palette.azure": {
+    "description": "اسم لوحة الألوان اللازوردي والأزرق",
+    "value": "لازوردي وأزرق"
+  },
+  "toolbar.palette.cyan": {
+    "description": "اسم لوحة الألوان السماوي والبرتقالي",
+    "value": "سماوي وبرتقالي"
+  },
+  "toolbar.palette.label": {
+    "description": "تسمية aria للزر الذي يفتح قائمة لوحات الألوان",
+    "value": "لوحة الألوان"
+  },
+  "toolbar.palette.magenta": {
+    "description": "اسم لوحة الألوان الأرجواني والبنفسجي",
+    "value": "أرجواني وبنفسجي"
+  },
+  "toolbar.palette.rose": {
+    "description": "اسم لوحة الألوان الوردي والأحمر",
+    "value": "وردي وأحمر"
+  },
+  "toolbar.theme.dark": {
+    "description": "خيار في القائمة يستخدم المظهر الداكن دائمًا",
+    "value": "داكن"
+  },
+  "toolbar.theme.label": {
+    "description": "تسمية aria للزر الذي يفتح قائمة المظهر الفاتح أو الداكن أو مظهر النظام",
+    "value": "المظهر"
+  },
+  "toolbar.theme.light": {
+    "description": "خيار في القائمة يستخدم المظهر الفاتح دائمًا",
+    "value": "فاتح"
+  },
+  "toolbar.theme.system": {
+    "description": "خيار في القائمة يتبع إعداد المظهر الفاتح أو الداكن في نظام التشغيل",
+    "value": "النظام"
   },
   "userConsent.errorCancelCode": {
     "description": "خطأ في إلغاء رمز موافقة المستخدم",
