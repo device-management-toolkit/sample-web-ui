@@ -2,7 +2,7 @@
  * Copyright (c) Intel Corporation 2025
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
-import { ChangeDetectorRef, Component, inject } from '@angular/core'
+import { Component, computed, inject, signal } from '@angular/core'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule } from '@angular/forms'
 import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule } from '@angular/material/dialog'
@@ -32,12 +32,10 @@ import { TranslatePipe } from '@ngx-translate/core'
 })
 export class AddCertDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<AddCertDialogComponent>)
-  private readonly cdr = inject(ChangeDetectorRef)
 
-  certInfo: CertInfo = {
-    cert: '',
-    isTrusted: false
-  }
+  cert = signal('')
+  isTrusted = signal(false)
+  certInfo = computed<CertInfo>(() => ({ cert: this.cert(), isTrusted: this.isTrusted() }))
 
   onFileSelected(e: Event): void {
     if (typeof FileReader === 'undefined') return
@@ -62,8 +60,7 @@ export class AddCertDialogComponent {
         const index: number = result.indexOf('base64,')
         cert = result.substring(index + 7, result.length)
       }
-      this.certInfo.cert = cert
-      this.cdr.detectChanges()
+      this.cert.set(cert)
     }
 
     if (isPem) {

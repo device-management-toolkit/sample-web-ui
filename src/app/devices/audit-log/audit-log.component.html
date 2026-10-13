@@ -3,7 +3,7 @@
 }
 <mat-card>
   <mat-card-header style="justify-content: space-between">
-    <mat-card-title> {{ 'auditLog.title.value' | translate }} ({{ auditLogData.totalCnt }}) </mat-card-title>
+    <mat-card-title> {{ 'auditLog.title.value' | translate }} ({{ auditLogData().totalCnt }}) </mat-card-title>
     @if (!isCloudMode) {
       <button mat-flat-button color="primary" [disabled]="isLoading()" (click)="download()">
         {{ 'auditLog.download.value' | translate }}
@@ -14,7 +14,7 @@
     @if (isNoData()) {
       <h3 class="flex justify-center">{{ 'auditLog.missing.value' | translate }}</h3>
     } @else {
-      <mat-table [dataSource]="auditLogData.records" matSort>
+      <mat-table [dataSource]="auditLogData().records" matSort>
         <!-- host Column -->
         <ng-container matColumnDef="Event">
           <mat-header-cell *matHeaderCellDef> {{ 'auditLog.event.value' | translate }} </mat-header-cell>
@@ -39,6 +39,9 @@
       </mat-table>
     }
 
-    <mat-paginator [pageSizeOptions]="pageSizes" [length]="auditLogData.totalCnt" showFirstLastButtons></mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="pageSizes"
+      [length]="auditLogData().totalCnt"
+      showFirstLastButtons></mat-paginator>
   </mat-card-content>
 </mat-card>

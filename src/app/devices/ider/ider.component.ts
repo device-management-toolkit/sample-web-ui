@@ -71,7 +71,7 @@ export class IderComponent implements OnInit, OnDestroy {
   public authToken = signal('')
   public isIDERActive = signal(false)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
-  public diskImage: File | null = null
+  public diskImage = signal<File | null>(null)
   public isDisconnecting = false
   public redirectionStatus: RedirectionStatus | null = null
 
@@ -325,10 +325,10 @@ export class IderComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event): void {
     this.awaitingDiskSelection = false
     const target = event.target as HTMLInputElement
-    this.diskImage = target.files?.[0] ?? null
+    this.diskImage.set(target.files?.[0] ?? null)
     this.deviceIDERConnection.set(false)
 
-    if (this.diskImage === null) {
+    if (this.diskImage() === null) {
       this.diskSelectionCanceled = true
       this.isLoading.set(false)
       this.loadingStatus.set('')
@@ -349,7 +349,7 @@ export class IderComponent implements OnInit, OnDestroy {
     }
 
     this.awaitingDiskSelection = false
-    if (this.diskImage === null) {
+    if (this.diskImage() === null) {
       this.diskSelectionCanceled = true
       this.isLoading.set(false)
       this.loadingStatus.set('')
@@ -363,7 +363,7 @@ export class IderComponent implements OnInit, OnDestroy {
     this.deviceIDERConnection.set(false)
     this.isIDERActive.set(false)
     this.resetTransferStats()
-    this.diskImage = null
+    this.diskImage.set(null)
     fileInput.value = ''
   }
 

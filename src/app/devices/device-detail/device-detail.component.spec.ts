@@ -147,7 +147,7 @@ describe('DeviceDetailComponent', () => {
     routeParams$.next({ id: 'guid', component: 'ider' })
     fixture.detectChanges()
 
-    expect(component.currentView).toBe('ider')
+    expect(component.currentView()).toBe('ider')
   })
 
   it('fails closed to general and hides KVM when AMT version cannot be retrieved', () => {
@@ -158,7 +158,7 @@ describe('DeviceDetailComponent', () => {
     fixture.detectChanges()
 
     expect(component.isDeviceTypeKnown()).toBe(false)
-    expect(component.currentView).toBe('general')
+    expect(component.currentView()).toBe('general')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
         '/devices',
@@ -180,7 +180,7 @@ describe('DeviceDetailComponent', () => {
 
     routeParams$.next({ id: 'guid', component: 'kvm' })
 
-    expect(component.currentView).toBe('ider')
+    expect(component.currentView()).toBe('ider')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
         '/devices',
@@ -200,7 +200,7 @@ describe('DeviceDetailComponent', () => {
 
     routeParams$.next({ id: 'guid', component: 'ider' })
 
-    expect(component.currentView).toBe('kvm')
+    expect(component.currentView()).toBe('kvm')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
         '/devices',
@@ -219,7 +219,7 @@ describe('DeviceDetailComponent', () => {
 
     routeParams$.next({ id: 'guid', component: 'ider' })
 
-    expect(component.currentView).toBe('ider')
+    expect(component.currentView()).toBe('ider')
     expect(navigateSpy).not.toHaveBeenCalled()
   })
 
@@ -232,7 +232,7 @@ describe('DeviceDetailComponent', () => {
     fixture.detectChanges()
 
     expect(component.isDeviceTypeKnown()).toBe(false)
-    expect(component.currentView).toBe('general')
+    expect(component.currentView()).toBe('general')
     expect(navigateSpy).toHaveBeenCalledWith(
       [
         '/devices',

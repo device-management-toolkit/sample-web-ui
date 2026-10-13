@@ -14,7 +14,7 @@
       <mat-form-field style="margin-bottom: 0; margin-right: 8px">
         <mat-label>Display Selection</mat-label>
         <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)">
-          @for (display of displays; track display.value) {
+          @for (display of displays(); track display.value) {
             <mat-option [value]="display.value" [disabled]="display.disabled">
               {{ display.viewValue }}
             </mat-option>
@@ -74,7 +74,7 @@
     }
   </div>
 }
-@if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
+@if (readyToLoadKvm() && amtFeatures()?.kvmAvailable) {
   <amt-kvm
     class="kvm"
     [isFullscreen]="isFullscreen()"
@@ -86,14 +86,14 @@
     [selectedHotkey]="hotKeySignal()"
     (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
-@if (diskImage && deviceIDERConnection()) {
+@if (diskImage() && deviceIDERConnection()) {
   <amt-ider
     class="ider"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()"
     [deviceConnection]="deviceIDERConnection()"
-    [cdrom]="diskImage"
+    [cdrom]="diskImage()"
     [floppy]="null"
     (deviceStatus)="deviceIDERStatus($event)">
   </amt-ider>
