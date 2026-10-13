@@ -162,9 +162,9 @@ export class DomainDetailComponent implements OnInit {
             this.router.navigate(['/domains'])
           },
           error: (err) => {
-            this.errorMessages = err.map((errorMessage: string) => this.translate.instant(errorMessage))
+            this.errorMessages.set(err.map((errorMessage: string) => this.translate.instant(errorMessage)))
             const errorMessage =
-              this.errorMessages[0] ?? this.translate.instant('domainDetail.errorDeleteConfiguration.value')
+              this.errorMessages()[0] ?? this.translate.instant('domainDetail.errorDeleteConfiguration.value')
             this.snackBar.open(errorMessage, undefined, SnackbarDefaults.defaultError)
           }
         })

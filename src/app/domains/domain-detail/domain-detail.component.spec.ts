@@ -125,7 +125,7 @@ describe('DomainDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.errorMessages).toEqual(['Certificate chain is broken', 'Another error'])
+    expect(component.errorMessages()).toEqual(['Certificate chain is broken', 'Another error'])
     expect(snackBarSpy).toHaveBeenCalledWith('Certificate chain is broken', undefined, SnackbarDefaults.defaultError)
   })
 
@@ -135,7 +135,7 @@ describe('DomainDetailComponent', () => {
       key === 'domainDetail.errorDeleteConfiguration.value' ? 'Fallback error' : key
     )
     createRecordSpy.mockReturnValue(throwError(() => []))
-    component.isEdit = false
+    component.isEdit.set(false)
     component.domainForm.patchValue({
       profileName: 'domain1',
       domainSuffix: 'domain.com',
@@ -145,7 +145,7 @@ describe('DomainDetailComponent', () => {
 
     component.onSubmit()
 
-    expect(component.errorMessages).toEqual([])
+    expect(component.errorMessages()).toEqual([])
     expect(snackBarSpy).toHaveBeenCalledWith('Fallback error', undefined, SnackbarDefaults.defaultError)
   })
 
