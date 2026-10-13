@@ -115,7 +115,7 @@ describe('DomainDetailComponent', () => {
 
   it('should show the first API error when updating a domain fails', () => {
     const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
-    vi.spyOn(translate, 'instant').mockImplementation((key: string) => key)
+    vi.spyOn(translate, 'instant').mockImplementation((key: string | string[]) => key)
     updateRecordSpy.mockReturnValue(throwError(() => ['Certificate chain is broken', 'Another error']))
     component.domainForm.patchValue({
       domainSuffix: 'domain.com',
@@ -131,7 +131,7 @@ describe('DomainDetailComponent', () => {
 
   it('should show the fallback message when creating a domain fails without an API error', () => {
     const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
-    vi.spyOn(translate, 'instant').mockImplementation((key: string) =>
+    vi.spyOn(translate, 'instant').mockImplementation((key: string | string[]) =>
       key === 'domainDetail.errorDeleteConfiguration.value' ? 'Fallback error' : key
     )
     createRecordSpy.mockReturnValue(throwError(() => []))
@@ -147,6 +147,8 @@ describe('DomainDetailComponent', () => {
 
     expect(component.errorMessages).toEqual([])
     expect(snackBarSpy).toHaveBeenCalledWith('Fallback error', undefined, SnackbarDefaults.defaultError)
+  })
+
   it('should show the cert domain suffix mismatch error and stay on the form(create)', () => {
     const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
     createRecordSpy.mockReturnValue(throwError(() => ['FQDN not associated with provisioning certificate']))
