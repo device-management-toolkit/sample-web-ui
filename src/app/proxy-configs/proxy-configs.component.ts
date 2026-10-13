@@ -27,6 +27,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { Router } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { finalize } from 'rxjs/operators'
 import { PageEventOptions, ProxyConfig } from '../../models/models'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -55,7 +56,8 @@ import { ProxyConfigsService } from './proxy-configs.service'
     MatRow,
     MatPaginator,
     MatTooltipModule,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class ProxyConfigsComponent implements OnInit, AfterViewInit {

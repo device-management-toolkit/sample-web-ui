@@ -445,10 +445,6 @@
   "common.no": {
     "value": "Ei"
   },
-  "common.noData": {
-    "description": "Viesti, kun dataa ei ole saatavilla",
-    "value": "Ei saatavilla olevaa dataa"
-  },
   "common.notApplicable": {
     "description": "Näkyy, kun OS-merkintä ei sovellu.",
     "value": "Ei sovelleta"
@@ -586,6 +582,10 @@
   "configs.ciraNoData": {
     "description": "Ei CIRA-määrityksiä -viesti",
     "value": "Ei CIRA-määrityksiä"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Selittää, mihin CIRA-määrityksiä käytetään, kun niitä ei ole",
+    "value": "CIRA-määritys kertoo AMT:lle, mihin MPS-palvelimeen se muodostaa lähtevän yhteyden, jotta laitteita voi hallita myös paikallisverkon ulkopuolella. Lisää määritys ja valitse se sitten profiilin yhteydeksi."
   },
   "configs.delete": {
     "description": "Viesti CIRA-määritysten poistamisesta",
@@ -1033,6 +1033,14 @@
     "description": "Viesti, kun laitteita ei ole",
     "value": "Laitteita ei löytynyt"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Selittää, miten laitteet tulevat luetteloon, kun niitä ei ole (pilvi)",
+    "value": "Laitteet näkyvät täällä, kun ne on aktivoitu. ”Lisää uusi” luo aktivointikomennon, joka suoritetaan laitteella."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Selittää, miten laite lisätään, kun laitteita ei ole (konsoli)",
+    "value": "Lisää laite isäntänimen ja AMT-tunnistetietojen avulla, niin voit alkaa hallita sitä."
+  },
   "devices.noDataFilter": {
     "description": "Viesti, kun suodatustulokset ovat tyhjät",
     "value": "Mikään laite ei vastaa nykyistä suodatinta"
@@ -1232,6 +1240,10 @@
   "domains.noData": {
     "description": "Ei verkkotunnuksia -viesti",
     "value": "Ei verkkotunnuksia"
+  },
+  "domains.noDataDescription": {
+    "description": "Selittää, mihin verkkotunnuksia käytetään, kun niitä ei ole",
+    "value": "Verkkotunnus yhdistää DNS-päätteen sen käyttöönottovarmenteeseen, joka vaaditaan Admin Control Mode -tilassa. Lisää verkkotunnus ennen kuin aktivoit laitteita ACM-tilaan."
   },
   "domains.table.domainSuffix": {
     "description": "Verkkotunnuksen loppuliitteen sarakkeen otsikko",
@@ -1791,6 +1803,10 @@
   "ieee8021xConfigs.noData": {
     "description": "Ei IEEE 8021x -määrityksiä koskevaa viestiä",
     "value": "Ei IEEE 8021x -määrityksiä"
+  },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Selittää, mihin IEEE 8021x -määrityksiä käytetään, kun niitä ei ole",
+    "value": "802.1x-määritysten avulla AMT voi todentautua 802.1x-suojatuissa verkoissa. Lisää määritys ja valitse se sitten profiilissa (langallinen) tai langattomissa asetuksissa (Wi-Fi)."
   },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Todentamisprotokollan sarakkeen otsikko",
@@ -2577,6 +2593,10 @@
     "description": "Ei profiileja -viesti",
     "value": "Ei profiileja"
   },
+  "profiles.noDataDescription": {
+    "description": "Selittää, mihin profiileja käytetään, kun niitä ei ole",
+    "value": "Profiili määrittää, miten AMT määritetään aktivoinnin yhteydessä: ohjaustila, verkko ja yhteysasetukset. Lisää profiili ja käytä sitä sitten laitteiden aktivointiin."
+  },
   "profiles.table.activation": {
     "description": "Aktivointitila-sarakkeen otsikko",
     "value": "Aktivointitila"
@@ -2953,6 +2973,10 @@
     "description": "Viesti, joka näkyy, kun langattomia määrityksiä ei ole",
     "value": "Ei langattomia asetuksia"
   },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Selittää, mihin langattomia asetuksia käytetään, kun niitä ei ole",
+    "value": "Langattomat asetukset sisältävät Wi-Fi-asetukset, joilla AMT muodostaa yhteyden: SSID, todennus ja salaus. Lisää asetus ja liitä se sitten profiiliin."
+  },
   "wirelessConfigs.ssid": {
     "description": "Langattoman verkon SSID-tunnuksen sarakkeen otsikko",
     "value": "SSID"
@@ -3117,6 +3141,14 @@
     "value": "Syötä välityspalvelinasetuksen nimi",
     "description": "Paikkamerkki välityspalvelinasetuksen nimikentälle"
   },
+  "proxyConfigs.noData": {
+    "description": "Viesti, kun välityspalvelinasetuksia ei ole",
+    "value": "Ei välityspalvelinasetuksia"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Selittää, mihin välityspalvelinasetuksia käytetään, kun niitä ei ole",
+    "value": "Välityspalvelinasetukset kuvaavat verkon välityspalvelimet, joita AMT voi käyttää, ja kukin niistä on sidottu verkon DNS-päätteeseen. Lisää asetus ja liitä se sitten profiiliin."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Syötä välityspalvelimen osoite",
     "description": "Paikkamerkki välityspalvelimen osoitekentälle"
@@ -3184,10 +3216,6 @@
   "common.update": {
     "value": "PÄIVITÄ",
     "description": "Päivitä-painikkeen teksti"
-  },
-  "common.noData": {
-    "value": "Ei saatavilla olevaa dataa",
-    "description": "Viesti, kun dataa ei ole saatavilla"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Etäalustan pyyhinnän kategorianimeke",

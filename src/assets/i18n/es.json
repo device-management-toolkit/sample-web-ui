@@ -445,10 +445,6 @@
   "common.no": {
     "value": "No"
   },
-  "common.noData": {
-    "description": "Mensaje cuando no hay datos disponibles",
-    "value": "No hay datos disponibles"
-  },
   "common.notApplicable": {
     "description": "Se muestra cuando la entrada del sistema operativo no es aplicable.",
     "value": "No aplicable."
@@ -586,6 +582,10 @@
   "configs.ciraNoData": {
     "description": "Sin mensajes de configuración CIRA.",
     "value": "Sin configuraciones CIRA."
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Explica para qué sirven las configuraciones CIRA cuando no hay ninguna",
+    "value": "Una configuración CIRA indica a AMT a qué servidor MPS debe conectarse, para que los dispositivos sigan siendo administrables fuera de la red local. Añada una y selecciónela después como conexión en un perfil."
   },
   "configs.delete": {
     "description": "Mensaje para eliminar configuraciones CIRA",
@@ -1033,6 +1033,14 @@
     "description": "Mensaje cuando no hay dispositivos",
     "value": "No se han encontrado dispositivos."
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Explica cómo llegan los dispositivos a la lista cuando no hay ninguno (nube)",
+    "value": "Los dispositivos aparecen aquí una vez activados. «Añadir nuevo» genera el comando de activación que debe ejecutarse en el dispositivo."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Explica cómo añadir un dispositivo cuando no hay ninguno (consola)",
+    "value": "Añada un dispositivo con su nombre de host y sus credenciales de AMT para empezar a administrarlo."
+  },
   "devices.noDataFilter": {
     "description": "Mensaje cuando los resultados del filtro están vacíos.",
     "value": "Ningún dispositivo coincide con el filtro actual."
@@ -1232,6 +1240,10 @@
   "domains.noData": {
     "description": "Mensaje «Sin dominios».",
     "value": "Sin dominios"
+  },
+  "domains.noDataDescription": {
+    "description": "Explica para qué sirven los dominios cuando no hay ninguno",
+    "value": "Un dominio asocia un sufijo DNS con su certificado de aprovisionamiento, necesario para Admin Control Mode. Añada uno antes de activar dispositivos en ACM."
   },
   "domains.table.domainSuffix": {
     "description": "Encabezado de la columna «Sufijo de dominio»",
@@ -1791,6 +1803,10 @@
   "ieee8021xConfigs.noData": {
     "description": "No hay mensajes de configuraciones IEEE 8021x.",
     "value": "Sin configuraciones IEEE 8021x."
+  },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Explica para qué sirven las configuraciones IEEE 8021x cuando no hay ninguna",
+    "value": "Las configuraciones 802.1x permiten que AMT se autentique en redes protegidas con 802.1x. Añada una y selecciónela después en un perfil (red cableada) o en una configuración inalámbrica (Wi-Fi)."
   },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Encabezado de la columna Protocolo de autenticación",
@@ -2577,6 +2593,10 @@
     "description": "Mensaje «Sin perfiles».",
     "value": "Sin perfiles"
   },
+  "profiles.noDataDescription": {
+    "description": "Explica para qué sirven los perfiles cuando no hay ninguno",
+    "value": "Un perfil define cómo se configura AMT en la activación: modo de control, red y ajustes de conexión. Añada uno y úselo después para activar dispositivos."
+  },
   "profiles.table.activation": {
     "description": "Encabezado de la columna «Modo de activación».",
     "value": "Modo de activación"
@@ -2953,6 +2973,10 @@
     "description": "Mensaje que se muestra cuando no hay configuraciones inalámbricas.",
     "value": "Sin configuraciones inalámbricas"
   },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Explica para qué sirven las configuraciones inalámbricas cuando no hay ninguna",
+    "value": "Las configuraciones inalámbricas contienen los ajustes de Wi-Fi que AMT utiliza para conectarse: SSID, autenticación y cifrado. Añada una y asóciela después a un perfil."
+  },
   "wirelessConfigs.ssid": {
     "description": "Encabezado de columna para el SSID de la configuración inalámbrica.",
     "value": "SSID"
@@ -3117,6 +3141,14 @@
     "value": "Ingrese el nombre de la configuración de proxy",
     "description": "Marcador de posición para el campo de nombre de configuración de proxy"
   },
+  "proxyConfigs.noData": {
+    "description": "Mensaje cuando no hay configuraciones de proxy",
+    "value": "Sin configuraciones de proxy"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Explica para qué sirven las configuraciones de proxy cuando no hay ninguna",
+    "value": "Las configuraciones de proxy describen los proxies de red que AMT puede utilizar, cada uno vinculado a un sufijo DNS de red. Añada una y asígnela después a un perfil."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Ingrese la dirección del servidor proxy",
     "description": "Marcador de posición para el campo de dirección del proxy"
@@ -3184,10 +3216,6 @@
   "common.update": {
     "value": "ACTUALIZAR",
     "description": "Texto del botón Actualizar"
-  },
-  "common.noData": {
-    "value": "No hay datos disponibles",
-    "description": "Mensaje cuando no hay datos disponibles"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Nombre de categoría para el borrado remoto de plataforma",

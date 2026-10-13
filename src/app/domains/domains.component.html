@@ -13,7 +13,12 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 @if (isNoData()) {
-  <h3 class="no-data">{{ 'domains.noData.value' | translate }}</h3>
+  <app-empty-state
+    icon="http"
+    [title]="'domains.noData.value' | translate"
+    [description]="'domains.noDataDescription.value' | translate"
+    [actionLabel]="'common.addNew.value' | translate"
+    (action)="navigateTo()" />
 } @else {
   <mat-table [dataSource]="domains()">
     <!-- name Column -->

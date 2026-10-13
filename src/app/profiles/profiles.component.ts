@@ -36,6 +36,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { environment } from '../../environments/environment'
 import { KeyDisplayDialogComponent } from './key-display-dialog/key-display-dialog.component'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 import { ServerFeaturesService } from '../server-features.service'
 
@@ -62,7 +63,8 @@ import { ServerFeaturesService } from '../server-features.service'
     MatPaginator,
     MatTooltip,
     ToolkitPipe,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class ProfilesComponent implements OnInit {

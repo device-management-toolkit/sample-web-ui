@@ -13,7 +13,12 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 @if (isNoData()) {
-  <h3 class="no-data">{{ 'common.noData.value' | translate }}</h3>
+  <app-empty-state
+    icon="router"
+    [title]="'proxyConfigs.noData.value' | translate"
+    [description]="'proxyConfigs.noDataDescription.value' | translate"
+    [actionLabel]="'common.addNew.value' | translate"
+    (action)="navigateTo()" />
 } @else {
   <mat-table data-cy="proxy-configs-table" [dataSource]="configs">
     <ng-container matColumnDef="name">

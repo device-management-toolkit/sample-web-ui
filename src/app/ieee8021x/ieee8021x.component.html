@@ -14,7 +14,12 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 @if (isNoData()) {
-  <h3 class="no-data">{{ 'ieee8021xConfigs.noData.value' | translate }}</h3>
+  <app-empty-state
+    icon="security"
+    [title]="'ieee8021xConfigs.noData.value' | translate"
+    [description]="'ieee8021xConfigs.noDataDescription.value' | translate"
+    [actionLabel]="'common.addNew.value' | translate"
+    (action)="navigateTo()" />
 } @else {
   <mat-table [dataSource]="tableDataSource()">
     <ng-container matColumnDef="profileName">

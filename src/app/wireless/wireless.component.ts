@@ -33,6 +33,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 
 @Component({
   selector: 'app-wireless',
@@ -56,7 +57,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class WirelessComponent implements OnInit {
