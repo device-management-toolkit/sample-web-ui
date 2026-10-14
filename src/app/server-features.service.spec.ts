@@ -50,10 +50,23 @@ describe('ServerFeaturesService', () => {
 
   describe('getFeatures', () => {
     it('should call the API and return the server features', () => {
+      const mockResponse: ServerFeatures = { ciraEnabled: true, authDisabled: true }
+
+      service.getFeatures().subscribe((response) => {
+        expect(response).toEqual(mockResponse)
+      })
+
+      const req = httpMock.expectOne(mockUrl)
+      expect(req.request.method).toBe('GET')
+      req.flush(mockResponse)
+    })
+
+    it('should support older Console responses without authDisabled', () => {
       const mockResponse: ServerFeatures = { ciraEnabled: true }
 
       service.getFeatures().subscribe((response) => {
         expect(response).toEqual(mockResponse)
+        expect(response.authDisabled).toBeUndefined()
       })
 
       const req = httpMock.expectOne(mockUrl)

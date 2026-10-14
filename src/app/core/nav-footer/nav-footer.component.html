@@ -84,15 +84,17 @@
   <button mat-icon-button (click)="displayAbout()">
     <mat-icon>info</mat-icon>
   </button>
-  @if (isLoggedIn()) {
+  @if (isLoggedIn() && !authService.isAuthDisabled) {
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
     </button>
   }
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon><span>{{ 'common.logOut.value' | translate }}</span>
-    </button>
+    @if (!authService.isAuthDisabled) {
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon><span>{{ 'common.logOut.value' | translate }}</span>
+      </button>
+    }
   </mat-menu>
 </div>

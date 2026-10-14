@@ -66,6 +66,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService)
   private readonly translate = inject(TranslateService)
   private readonly oauthService
+  public authDisabled = this.authService.isAuthDisabled
 
   public loginForm = this.fb.nonNullable.group({
     userId: ['', Validators.required],
@@ -78,6 +79,10 @@ export class LoginComponent {
   public useOAuth = environment.useOAuth
 
   constructor() {
+    if (this.authService.isAuthDisabled) {
+      this.router.navigate([''])
+    }
+
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
@@ -92,7 +97,7 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (!this.authDisabled && this.loginForm.valid) {
       this.isLoading.set(true)
       const result: { userId: string; password: string } = Object.assign({}, this.loginForm.getRawValue())
       this.authService
@@ -123,7 +128,9 @@ export class LoginComponent {
     }
   }
   oauthLogin(): void {
-    this.oauthService?.initCodeFlow()
+    if (!this.authDisabled) {
+      this.oauthService?.initCodeFlow()
+    }
   }
 
   toggleLoginPassVisibility(): void {

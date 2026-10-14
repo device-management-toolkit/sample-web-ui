@@ -19,6 +19,7 @@ import { MatIconButton } from '@angular/material/button'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { availableLangs } from '../../../constants'
 import { getDirection } from '../../../utils'
+import { filter, take } from 'rxjs'
 
 @Component({
   selector: 'app-nav-footer',
@@ -74,53 +75,64 @@ export class NavFooterComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
       this.isLoggedIn.set(value)
-      if (value && environment.cloud) {
-        this.authService.getMPSVersion().subscribe({
-          error: () => {
-            const msg: string = this.translate.instant('toolbar.errorMPS.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          },
-          next: (data) => {
-            this.mpsVersions.set(data)
-          }
-        })
-        this.authService.getRPSVersion().subscribe({
-          error: () => {
-            const msg: string = this.translate.instant('toolbar.errorRPS.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          },
-          next: (data) => {
-            this.rpsVersions.set(data)
-          }
-        })
-      } else if (value && !environment.cloud) {
-        this.authService.getConsoleVersion().subscribe({
-          error: () => {
-            // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
-          },
-          next: (data) => {
-            // Store console version data including tag_name
-            this.consoleVersion.set(data)
-            if (data.current !== 'DEVELOPMENT') {
-              if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
-                const ref = this.snackBar.open(
-                  'A new version of console is available!',
-                  'Download',
-                  SnackbarDefaults.longSuccess
-                )
-                ref.onAction().subscribe(() => {
-                  window.open(data.latest.html_url as string)
-                })
-              }
+    })
+
+    this.authService.canActivateProtectedRoutes$
+      .pipe(
+        filter((canAccessApp) => canAccessApp),
+        take(1)
+      )
+      .subscribe(() => this.loadVersions())
+  }
+
+  private loadVersions(): void {
+    if (environment.cloud) {
+      this.authService.getMPSVersion().subscribe({
+        error: () => {
+          const msg: string = this.translate.instant('toolbar.errorMPS.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+        },
+        next: (data) => {
+          this.mpsVersions.set(data)
+        }
+      })
+      this.authService.getRPSVersion().subscribe({
+        error: () => {
+          const msg: string = this.translate.instant('toolbar.errorRPS.value')
+          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+        },
+        next: (data) => {
+          this.rpsVersions.set(data)
+        }
+      })
+    } else {
+      this.authService.getConsoleVersion().subscribe({
+        error: () => {
+          // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
+        },
+        next: (data) => {
+          this.consoleVersion.set(data)
+          if (data.current !== 'DEVELOPMENT') {
+            if (this.authService.compareSemver(data.current as string, data.latest.tag_name as string) === -1) {
+              const ref = this.snackBar.open(
+                'A new version of console is available!',
+                'Download',
+                SnackbarDefaults.longSuccess
+              )
+              ref.onAction().subscribe(() => {
+                window.open(data.latest.html_url as string)
+              })
             }
           }
-        })
-      }
-    })
+        }
+      })
+    }
   }
 
   logout(): void {
-    this.authService.logout()
+    if (!this.authService.isAuthDisabled) {
+      this.authService.logout()
+    }
   }
 
   displayAbout(): void {

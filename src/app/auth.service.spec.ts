@@ -137,6 +137,32 @@ describe('AuthService', () => {
     })
   })
 
+  describe('protected route access', () => {
+    it('allows access when Console reports authentication is disabled', () => {
+      let canActivate = false
+      const subscription = service.canActivateProtectedRoutes$.subscribe((value) => {
+        canActivate = value
+      })
+
+      service.setAuthDisabled(true)
+
+      expect(canActivate).toBe(true)
+      subscription.unsubscribe()
+    })
+
+    it('still requires a session when authentication is enabled or not reported', () => {
+      let canActivate = true
+      const subscription = service.canActivateProtectedRoutes$.subscribe((value) => {
+        canActivate = value
+      })
+
+      service.setAuthDisabled(false)
+
+      expect(canActivate).toBe(false)
+      subscription.unsubscribe()
+    })
+  })
+
   describe('login', () => {
     it('should handle errors', () => {
       const mockError = { status: 401, statusText: 'Unauthorized' }

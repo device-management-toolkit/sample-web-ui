@@ -11,7 +11,7 @@ import { Router } from '@angular/router'
 import { AuthService } from '../../auth.service'
 import { ThemeService } from '../../theme.service'
 import { NavFooterComponent } from './nav-footer.component'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, combineLatest, map, of } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -24,6 +24,7 @@ describe('NavFooterComponent', () => {
   let authService: SpyObj<AuthService>
   let matDialog: SpyObj<MatDialog>
   let isLoggedInSubject: BehaviorSubject<boolean>
+  let authDisabledSubject: BehaviorSubject<boolean>
 
   const openMenu = (trigger: string): void => {
     fixture.nativeElement.querySelector(`[data-cy="${trigger}"]`).click()
@@ -46,6 +47,7 @@ describe('NavFooterComponent', () => {
     })
 
     isLoggedInSubject = new BehaviorSubject<boolean>(false)
+    authDisabledSubject = new BehaviorSubject<boolean>(false)
 
     const authServiceSpy = createSpyObj(
       'AuthService',
@@ -58,9 +60,16 @@ describe('NavFooterComponent', () => {
       ],
       {
         isLoggedIn: isLoggedInSubject.asObservable(),
-        loggedInSubject$: isLoggedInSubject
+        loggedInSubject$: isLoggedInSubject,
+        authDisabledSubject$: authDisabledSubject,
+        canActivateProtectedRoutes$: combineLatest([isLoggedInSubject, authDisabledSubject]).pipe(
+          map(([isLoggedIn, authDisabled]) => isLoggedIn || authDisabled)
+        )
       }
     )
+    Object.defineProperty(authServiceSpy, 'isAuthDisabled', {
+      get: () => authDisabledSubject.value
+    })
 
     authServiceSpy.getMPSVersion.mockReturnValue(of({ version: '1.0.0' }))
     authServiceSpy.getRPSVersion.mockReturnValue(of({ version: '1.0.0' }))
@@ -115,6 +124,16 @@ describe('NavFooterComponent', () => {
     expect(authService.logout).toHaveBeenCalled()
   })
 
+  it('should not show or invoke logout when authentication is disabled', () => {
+    isLoggedInSubject.next(true)
+    authDisabledSubject.next(true)
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.textContent).not.toContain('account_circle')
+    component.logout()
+    expect(authService.logout).not.toHaveBeenCalled()
+  })
+
   it('should call getMPSVersion when logged in and cloud mode', () => {
     fixture.detectChanges()
     isLoggedInSubject.next(true)
@@ -160,6 +179,20 @@ describe('NavFooterComponent', () => {
     isLoggedInSubject.next(true)
     consoleFixture.detectChanges()
 
+    expect(consoleFixture.nativeElement.textContent).toContain('v1.9.0')
+  })
+
+  it('should load the Console version when access is allowed without a session', () => {
+    Object.defineProperty(environment, 'cloud', { writable: true, value: false })
+    authService.getConsoleVersion.mockReturnValue(of({ current: 'v1.9.0', latest: { tag_name: 'v1.9.0' } }))
+    authDisabledSubject.next(true)
+    authService.getConsoleVersion.mockClear()
+    const consoleFixture = TestBed.createComponent(NavFooterComponent)
+    consoleFixture.detectChanges()
+
+    expect(authService.getConsoleVersion).toHaveBeenCalled()
+    expect(consoleFixture.componentInstance.isLoggedIn()).toBe(false)
+    expect(consoleFixture.nativeElement.textContent).not.toContain('account_circle')
     expect(consoleFixture.nativeElement.textContent).toContain('v1.9.0')
   })
 

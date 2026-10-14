@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     // Start from a clean store rather than stubbing the global.
     localStorage.clear()
-    authServiceSpy = createSpyObj('AuthService', ['login'])
+    authServiceSpy = createSpyObj('AuthService', ['login'], { isAuthDisabled: false })
     snackBarSpy = createSpyObj('MatSnackBar', ['open'])
     dialogSpy = createSpyObj('MatDialog', ['open'])
     routerSpy = createSpyObj('Router', ['navigate'])
@@ -68,6 +68,18 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should hide login controls when authentication is disabled', () => {
+    fixture.destroy()
+    Object.defineProperty(authServiceSpy, 'isAuthDisabled', { value: true })
+    fixture = TestBed.createComponent(LoginComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector('form')).toBeNull()
+    expect(fixture.nativeElement.querySelector('#btnLogin')).toBeNull()
+    expect(fixture.nativeElement.textContent).not.toContain('Login w/ SSO')
   })
 
   describe('onSubmit', () => {

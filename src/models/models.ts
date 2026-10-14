@@ -631,6 +631,7 @@ export interface DisplaySelectionRequest {
 // Server-level capability flags exposed by the Console API (enterprise build).
 export interface ServerFeatures {
   ciraEnabled: boolean
+  authDisabled?: boolean
 }
 
 export type RpcCommand = 'activate' | 'deactivate'
