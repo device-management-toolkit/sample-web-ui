@@ -2,7 +2,7 @@
   @if (connecting() || transferring()) {
     <mat-spinner diameter="20" />
   } @else if (active()) {
-    <mat-icon color="primary">check_circle</mat-icon>
+    <mat-icon class="mat-text-primary">check_circle</mat-icon>
   } @else {
     <mat-icon>storage</mat-icon>
   }
@@ -19,9 +19,11 @@
       }
     </span>
     @if (active()) {
-      <span class="mat-caption"> {{ 'ider.activity.transferred.value' | translate }}: {{ formatBytes(bytes()) }} </span>
+      <span class="mat-font-body-sm">
+        {{ 'ider.activity.transferred.value' | translate }}: {{ formatBytes(bytes()) }}
+      </span>
     } @else if (!connecting() && idleHint()) {
-      <span class="mat-caption">{{ idleHint() | translate }}</span>
+      <span class="mat-font-body-sm">{{ idleHint() | translate }}</span>
     }
   </div>
 </div>

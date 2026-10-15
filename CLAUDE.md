@@ -44,7 +44,7 @@ When adding a new backend URL or auth setting, add it to *all four* environment 
 
 ### App structure
 
-Standalone-component app bootstrapped from `src/main.ts`; routes live in `src/app/routes.ts`. Top-level feature folders under `src/app/` mirror the route hierarchy: `devices`, `profiles`, `configs` (CIRA), `domains`, `wireless`, `ieee8021x`, `proxy-configs`, `dashboard`, `login`, `event-channel`. Each typically has a list component, a `*-detail` component for create/edit, and a service. The `core/` folder holds the chrome (navbar, toolbar, about); `shared/` holds the `AuthGuard`, dialogs (`are-you-sure`, `power-up-alert`, `random-pass-alert`, `static-cira-warning`), the `add-device` wizards (cloud and enterprise variants), pipes, and config helpers.
+Standalone-component app bootstrapped from `src/main.ts`; routes live in `src/app/routes.ts`. Top-level feature folders under `src/app/` mirror the route hierarchy: `devices`, `profiles`, `configs` (CIRA), `domains`, `wireless`, `ieee8021x`, `proxy-configs`, `dashboard`, `login`, `event-channel`. Each typically has a list component, a `*-detail` component for create/edit, and a service. The `core/` folder holds the chrome (navbar, nav-footer, about); `shared/` holds the `AuthGuard`, dialogs (`are-you-sure`, `power-up-alert`, `random-pass-alert`, `static-cira-warning`), the `add-device` wizards (cloud and enterprise variants), pipes, and config helpers.
 
 ### Auth + HTTP plumbing
 

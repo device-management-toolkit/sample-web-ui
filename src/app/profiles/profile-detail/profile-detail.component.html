@@ -12,7 +12,7 @@
       <mat-list>
         @for (item of errorMessages(); track item) {
           <mat-list-item class="error-messages-container">
-            <mat-icon color="warn" matListItemIcon>error</mat-icon>
+            <mat-icon matListItemIcon>error</mat-icon>
             <span class="error-messages" matListItemTitle>{{ item }}</span>
           </mat-list-item>
         }
@@ -267,23 +267,16 @@
           @if (showProxyConfigurations()) {
             <mat-form-field class="flex flex-1" style="margin-top: 20px">
               <mat-label>{{ 'proxy.configs.label.value' | translate }}</mat-label>
-              <input
-                matInput
-                type="text"
-                data-cy="proxyAutocomplete"
-                [placeholder]="'proxy.configs.placeholder.value' | translate"
+              <mat-select
+                data-cy="proxyConfigSelect"
                 [formControl]="proxyAutocomplete"
-                [matAutocomplete]="proxyAuto" />
-              <mat-autocomplete
-                autoActiveFirstOption
-                #proxyAuto="matAutocomplete"
-                (optionSelected)="selectProxyProfile($event)">
-                @for (proxy of filteredProxyList | async; track proxy) {
-                  <mat-option [value]="proxy" [ngClass]="isProxySelectable(proxy)">
+                (selectionChange)="selectProxyProfile($event.value)">
+                @for (proxy of ProxyConfigurations(); track proxy) {
+                  <mat-option [value]="proxy">
                     {{ proxy }}
                   </mat-option>
                 }
-              </mat-autocomplete>
+              </mat-select>
               <mat-hint>{{ 'proxy.configs.hint.value' | translate }}</mat-hint>
             </mat-form-field>
           }
@@ -347,7 +340,7 @@
                     }
                   </mat-select>
                   <mat-hint>
-                    @if (profileForm.get('ciraConfigName')?.value === null) {
+                    @if (profileForm.controls.ciraConfigName.value === null) {
                       <span>{{ 'profileDetail.noConfigSelected.value' | translate }}</span>
                     }
                     {{ 'profileDetail.ciraConfigHint.value' | translate }}
@@ -425,12 +418,12 @@
       </mat-card-content>
       <mat-card-actions class="flex flex-row" style="margin-top: 48px">
         <div class="flex flex-50 justify-center">
-          <button type="button" mat-button color="primary" (click)="cancel()">
+          <button type="button" mat-button (click)="cancel()">
             <span>{{ 'common.cancel.value' | translate }}</span>
           </button>
         </div>
         <div class="flex flex-50 justify-center">
-          <button data-cy="save" type="submit" mat-flat-button color="primary">
+          <button data-cy="save" type="submit" mat-flat-button>
             <span>{{ 'common.save.value' | translate }}</span>
           </button>
         </div>

@@ -27,13 +27,13 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 
 @Component({
   selector: 'app-wireless',
@@ -45,8 +45,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -59,7 +57,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class WirelessComponent implements OnInit {
@@ -71,7 +70,7 @@ export class WirelessComponent implements OnInit {
   private readonly translate = inject(TranslateService)
 
   // Properties
-  public configs = new MatTableDataSource<WirelessConfig>()
+  public configs = signal(new MatTableDataSource<WirelessConfig>())
   public isLoading = signal(true)
   public totalCount = signal(0)
   public displayedColumns: string[] = [
@@ -83,16 +82,16 @@ export class WirelessComponent implements OnInit {
   ]
   public authenticationMethods = AuthenticationMethods
   public encryptionMethods = EncryptionMethods
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -105,7 +104,7 @@ export class WirelessComponent implements OnInit {
       )
       .subscribe({
         next: (rsp) => {
-          this.configs = new MatTableDataSource<WirelessConfig>(rsp.data)
+          this.configs.set(new MatTableDataSource<WirelessConfig>(rsp.data))
           this.totalCount.set(rsp.totalCount)
         },
         error: () => {
@@ -135,7 +134,7 @@ export class WirelessComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('common.deleteConfiguration.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
@@ -154,12 +153,12 @@ export class WirelessComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {

@@ -1,8 +1,86 @@
-.mdc-list-item--with-leading-icon .mdc-list-item__start {
-  margin-right: 12px;
+@use '@angular/material' as mat;
+
+// Top padding matches the nav list's so the logo sits midway between the edge and the first link.
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
 }
+
+// The artwork has fixed colors, so each color scheme gets its own file.
+.logo {
+  width: 200px;
+  height: 66px;
+  background: url('../../../assets/dmt-logo_light.svg') center / contain no-repeat;
+}
+
+:host-context(.dark-theme) .logo {
+  background-image: url('../../../assets/dmt-logo_dark.svg');
+}
+
+// Without .light-theme or .dark-theme the theme follows the OS, so the logo does too.
+@media (prefers-color-scheme: dark) {
+  :host-context(html:not(.light-theme)) .logo {
+    background-image: url('../../../assets/dmt-logo_dark.svg');
+  }
+}
+
+// The nav list takes the spare height so the action button rests on the footer.
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-nav-list {
+  flex: 1 0 auto;
+  min-width: 240px;
+  padding: 16px 12px 12px;
+  box-sizing: border-box;
+  @include mat.list-overrides(
+    (
+      list-item-one-line-container-height: 44px,
+      list-item-leading-icon-end-space: 12px,
+      list-item-label-text-size: var(--mat-sys-label-large-size),
+      list-item-label-text-weight: var(--mat-sys-label-large-weight),
+      list-item-label-text-line-height: var(--mat-sys-label-large-line-height),
+      list-item-label-text-tracking: var(--mat-sys-label-large-tracking),
+      list-item-label-text-color: var(--mat-sys-on-surface-variant),
+      list-item-leading-icon-color: var(--mat-sys-on-surface-variant),
+      list-item-hover-leading-icon-color: var(--mat-sys-on-surface)
+    )
+  );
+}
+
+.mat-mdc-list-item {
+  margin-bottom: 4px;
+}
+
+// Extra space above the label separates the groups.
+.nav-section {
+  margin-top: 16px;
+  padding: 8px 16px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-medium);
+  letter-spacing: var(--mat-sys-label-medium-tracking);
+}
+
+.nav-action {
+  padding: 12px;
+
+  a {
+    width: 100%;
+  }
+}
+
 .mat-mdc-list-item.active {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  width: calc(100%);
+  background-color: var(--mat-sys-secondary-container);
+  @include mat.list-overrides(
+    (
+      list-item-label-text-color: var(--mat-sys-on-secondary-container),
+      list-item-hover-label-text-color: var(--mat-sys-on-secondary-container),
+      list-item-focus-label-text-color: var(--mat-sys-on-secondary-container),
+      list-item-leading-icon-color: var(--mat-sys-on-secondary-container),
+      list-item-hover-leading-icon-color: var(--mat-sys-on-secondary-container)
+    )
+  );
 }

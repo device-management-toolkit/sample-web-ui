@@ -166,4 +166,30 @@ describe('ProfilesComponent', () => {
       ;(environment as { cloud: boolean }).cloud = originalCloud
     }
   })
+
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const loadNothing = (): void => {
+      getDataSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getData(component.pageEvent())
+      fixture.detectChanges()
+    }
+
+    it('should not show when there are profiles', () => {
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain what profiles are for', () => {
+      loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('profiles.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('profiles.noDataDescription.value')
+    })
+
+    it('should start a new one from its button', () => {
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+      loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(routerSpy).toHaveBeenCalledWith(['/profiles', 'new'])
+    })
+  })
 })

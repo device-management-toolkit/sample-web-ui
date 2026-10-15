@@ -90,4 +90,38 @@ describe('NavbarComponent', () => {
     component.ngOnInit()
     expect(component.ciraEnabled()).toBe(true)
   })
+
+  it('should list the configuration links under their own heading, after Dashboard and Devices', () => {
+    translate.setTranslation('en', { 'navbar.section.configuration': { value: 'Configuration' } })
+    translate.use('en')
+    fixture.detectChanges()
+    const entries: HTMLElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('mat-nav-list > a, mat-nav-list > .nav-section')
+    )
+    expect(entries.map((entry) => entry.getAttribute('routerlink') ?? entry.textContent?.trim())).toEqual([
+      '/',
+      '/devices',
+      'Configuration',
+      '/ieee8021x',
+      '/wireless',
+      '/ciraconfigs',
+      '/proxy-configs',
+      '/profiles',
+      '/domains'
+    ])
+  })
+
+  it('should show Download RPC as a filled button below the nav list (enterprise mode)', () => {
+    component.cloudMode = false
+    fixture.detectChanges()
+    const link: HTMLAnchorElement | null = fixture.nativeElement.querySelector('a[routerlink="/download-rpc"]')
+    expect(link?.hasAttribute('mat-flat-button')).toBe(true)
+    expect(link?.closest('mat-nav-list')).toBeNull()
+  })
+
+  it('should not show Download RPC in cloud mode', () => {
+    component.cloudMode = true
+    fixture.detectChanges()
+    expect(fixture.nativeElement.querySelector('a[routerlink="/download-rpc"]')).toBeNull()
+  })
 })

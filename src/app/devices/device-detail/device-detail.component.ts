@@ -84,7 +84,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService)
   private readonly snackBar = inject(MatSnackBar)
   private readonly destroy$ = new Subject<void>()
-  public deviceId = ''
+  public deviceId = signal('')
   public readonly isCloudMode: boolean = environment.cloud
   public isISMSystem = signal(false)
   public isDeviceTypeKnown = signal(false)
@@ -182,18 +182,18 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     return filtered
   })
 
-  public currentView = 'general'
+  public currentView = signal('general')
   public isLoading = signal(false)
-  isCollapsed = false
+  isCollapsed = signal(false)
 
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
         switchMap((params) => {
-          const deviceChanged = params.id !== this.deviceId
-          this.deviceId = params.id
-          this.currentView = params.component || 'general'
+          const deviceChanged = params.id !== this.deviceId()
+          this.deviceId.set(params.id)
+          this.currentView.set(params.component || 'general')
 
           if (!deviceChanged) {
             this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
@@ -204,7 +204,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           this.isDeviceTypeKnown.set(false)
           this.isLoading.set(true)
 
-          return this.devicesService.getAMTVersion(this.deviceId).pipe(
+          return this.devicesService.getAMTVersion(this.deviceId()).pipe(
             catchError(() => {
               const msg: string = this.translate.instant('general.errorAMTVersion.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
@@ -238,31 +238,31 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleSidenav(): void {
-    this.isCollapsed = !this.isCollapsed
+    this.isCollapsed.set(!this.isCollapsed())
   }
 
   private syncCurrentViewForSku(isIsm: boolean, isKnown: boolean): void {
-    let nextView = this.currentView
+    let nextView = this.currentView()
 
     // Fail closed while SKU is unknown to avoid showing a potentially unsupported KVM view.
-    if (!isKnown && (this.currentView === 'kvm' || this.currentView === 'ider')) {
+    if (!isKnown && (this.currentView() === 'kvm' || this.currentView() === 'ider')) {
       nextView = 'general'
     }
 
     if (isKnown) {
-      if (isIsm && this.currentView === 'kvm') nextView = 'ider'
-      if (!isIsm && this.currentView === 'ider') nextView = 'kvm'
+      if (isIsm && this.currentView() === 'kvm') nextView = 'ider'
+      if (!isIsm && this.currentView() === 'ider') nextView = 'kvm'
     }
 
-    if (nextView === this.currentView) {
+    if (nextView === this.currentView()) {
       return
     }
 
-    this.currentView = nextView
+    this.currentView.set(nextView)
     this.router.navigate(
       [
         '/devices',
-        this.deviceId,
+        this.deviceId(),
         nextView
       ],
       { replaceUrl: true }
@@ -270,6 +270,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
   }
 
   setCurrentView(category: any): void {
-    this.currentView = category.component
+    this.currentView.set(category.component)
   }
 }

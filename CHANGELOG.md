@@ -1,3 +1,46 @@
+## [4.0.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.0...v4.0.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* show domain validation errors in snackbar ([#3636](https://github.com/device-management-toolkit/sample-web-ui/issues/3636)) ([6ecfd75](https://github.com/device-management-toolkit/sample-web-ui/commit/6ecfd7525508e6e79c8a9ddeb5aa99c032495364))
+
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
+# [3.71.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.70.0...v3.71.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
+## [3.69.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.2...v3.69.3) (2026-10-12)
+
+
+### Bug Fixes
+
+* add proxy configuration selector ([f84978a](https://github.com/device-management-toolkit/sample-web-ui/commit/f84978addd39c9599b4c70e41d1ecdc12f4aa927))
+
+## [3.69.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.1...v3.69.2) (2026-10-06)
+
+
+### Bug Fixes
+
+* show the correct number of expired domain certs ([#3599](https://github.com/device-management-toolkit/sample-web-ui/issues/3599)) ([476bccd](https://github.com/device-management-toolkit/sample-web-ui/commit/476bccdf56261a6ac978cdc6dc6b6a9cd9fa5568))
+
 ## [3.69.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.0...v3.69.1) (2026-10-02)
 
 

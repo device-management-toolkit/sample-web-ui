@@ -89,17 +89,17 @@ export class KvmComponent implements OnInit, OnDestroy {
   public loadingStatus = signal('')
   public deviceState = signal(-1)
   public mpsServer = `${environment.mpsServer.replace('http', 'ws')}/relay`
-  public readyToLoadKvm = false
+  public readyToLoadKvm = signal(false)
   public authToken = signal('')
   public selectedHotkey: string | null = null
   public isIDERActive = signal(false)
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
-  public diskImage: File | null = null
+  public diskImage = signal<File | null>(null)
   public isDisconnecting = false
   private isEncodingChange = false
   public redirectionStatus: RedirectionStatus | null = null
   public hotKeySignal = signal<any>(null)
-  public displays: { value: number; viewValue: string; disabled: boolean }[] = []
+  public displays = signal<{ value: number; viewValue: string; disabled: boolean }[]>([])
   public selectedDisplay = signal(0)
 
   private powerState: any = 0
@@ -252,18 +252,20 @@ export class KvmComponent implements OnInit, OnDestroy {
     this.devicesService.getDisplaySelection(this.deviceId()).subscribe({
       next: (result: DisplaySelectionResponse) => {
         const displays = result?.displays ?? []
-        this.displays = displays.map((d) => {
-          const label = `Display ${d.displayIndex + 1}${d.resolutionX && d.resolutionY ? ` (${d.resolutionX} x ${d.resolutionY})` : ''}`
-          return { value: d.displayIndex, viewValue: label, disabled: d.isActive === false }
-        })
+        this.displays.set(
+          displays.map((d) => {
+            const label = `Display ${d.displayIndex + 1}${d.resolutionX && d.resolutionY ? ` (${d.resolutionX} x ${d.resolutionY})` : ''}`
+            return { value: d.displayIndex, viewValue: label, disabled: d.isActive === false }
+          })
+        )
         // Set to default display if present, else first active display, else keep current
         const defaultDisplay = displays.find((d) => d.isDefault)
         if (defaultDisplay) {
           this.selectedDisplay.set(defaultDisplay.displayIndex)
         } else {
-          const current = this.displays.find((x) => x.value === this.selectedDisplay())
+          const current = this.displays().find((x) => x.value === this.selectedDisplay())
           if (!current || current.disabled) {
-            const firstActive = this.displays.find((x) => !x.disabled)
+            const firstActive = this.displays().find((x) => !x.disabled)
             if (firstActive) this.selectedDisplay.set(firstActive.value)
           }
         }
@@ -271,12 +273,12 @@ export class KvmComponent implements OnInit, OnDestroy {
       error: (err) => {
         console.warn('Failed to load display selection:', err)
         // Fallback to default displays if API fails
-        this.displays = [
+        this.displays.set([
           { value: 0, viewValue: 'Display 1', disabled: false },
           { value: 1, viewValue: 'Display 2', disabled: true },
           { value: 2, viewValue: 'Display 3', disabled: true },
           { value: 3, viewValue: 'Display 4', disabled: true }
-        ]
+        ])
         this.selectedDisplay.set(0)
       }
     })
@@ -293,7 +295,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     // prefetched in ngOnInit, skip the refresh round-trip and use it directly.
     const elapsedMs = Date.now() - this.initStartTime
     if (elapsedMs < this.REDIR_TOKEN_REFRESH_THRESHOLD_MS && this.authToken()) {
-      this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
+      this.readyToLoadKvm.set(this.amtFeatures()?.kvmAvailable ?? false)
       this.isDisconnecting = false
       this.loadingStatus.set('kvm.status.connectingKVM.value')
       this.deviceKVMConnection.set(true)
@@ -305,7 +307,7 @@ export class KvmComponent implements OnInit, OnDestroy {
     return this.devicesService.getRedirectionExpirationToken(this.deviceId()).pipe(
       tap((token) => {
         this.authToken.set(token.token)
-        this.readyToLoadKvm = this.amtFeatures()?.kvmAvailable ?? false
+        this.readyToLoadKvm.set(this.amtFeatures()?.kvmAvailable ?? false)
         this.isDisconnecting = false
         this.loadingStatus.set('kvm.status.connectingKVM.value')
         this.deviceKVMConnection.set(true)
@@ -357,7 +359,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   connect(): void {
     this.isDisconnecting = false
     this.deviceState.set(-1)
-    this.readyToLoadKvm = false
+    this.readyToLoadKvm.set(false)
     this.deviceKVMConnection.set(false)
     this.displaysLoaded = false
     this.prefetchAuthToken()
@@ -374,16 +376,16 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement
-    this.diskImage = target.files?.[0] ?? null
+    this.diskImage.set(target.files?.[0] ?? null)
     // Set the deviceIDERConnection signal based on whether a file is selected
-    this.deviceIDERConnection.set(this.diskImage !== null)
+    this.deviceIDERConnection.set(this.diskImage() !== null)
   }
 
   onCancelIDER(fileInput: HTMLInputElement): void {
     // close the dialog, perform other actions as needed
     this.deviceIDERConnection.set(false)
     this.isIDERActive.set(false)
-    this.diskImage = null
+    this.diskImage.set(null)
     fileInput.value = ''
   }
 
@@ -528,7 +530,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       const msg: string = this.translate.instant('kvm.errorRetrieve.value')
       this.displayError(msg)
     }
-    this.readyToLoadKvm = false
+    this.readyToLoadKvm.set(false)
   }
 
   showPowerUpAlert(): Observable<boolean> {
@@ -542,7 +544,7 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.amtFeatures()?.optInState === 3 ||
       this.amtFeatures()?.optInState === 4
     ) {
-      this.readyToLoadKvm = true
+      this.readyToLoadKvm.set(true)
       return of(true)
     }
     return of(false)

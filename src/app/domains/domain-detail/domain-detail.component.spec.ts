@@ -7,8 +7,10 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { DomainsService } from '../domains.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 import { DomainDetailComponent } from './domain-detail.component'
 import { provideHttpClient } from '@angular/common/http'
@@ -69,8 +71,8 @@ describe('DomainDetailComponent', () => {
     expect(component).toBeTruthy()
     expect(getRecordSpy.mock.calls.length > 0, 'getRecord called').toBe(true)
     expect(component.isLoading()).toBe(false)
-    expect(component.isEdit).toBe(true)
-    expect(component.pageTitle).toEqual('domain')
+    expect(component.isEdit()).toBe(true)
+    expect(component.pageTitle()).toEqual('domain')
   })
 
   it('should cancel', async () => {
@@ -103,12 +105,87 @@ describe('DomainDetailComponent', () => {
       provisioningCert: 'domainCert',
       provisioningCertPassword: 'P@ssw0rd'
     })
-    component.isEdit = false
+    component.isEdit.set(false)
     expect(component.domainForm.valid).toBeTruthy()
     component.onSubmit()
 
     expect(createRecordSpy).toHaveBeenCalled()
     expect(routerSpy).toHaveBeenCalled()
+  })
+
+  it('should show the first API error when updating a domain fails', () => {
+    const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
+    vi.spyOn(translate, 'instant').mockImplementation((key: string | string[]) => key)
+    updateRecordSpy.mockReturnValue(throwError(() => ['Certificate chain is broken', 'Another error']))
+    component.domainForm.patchValue({
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    component.onSubmit()
+
+    expect(component.errorMessages()).toEqual(['Certificate chain is broken', 'Another error'])
+    expect(snackBarSpy).toHaveBeenCalledWith('Certificate chain is broken', undefined, SnackbarDefaults.defaultError)
+  })
+
+  it('should show the fallback message when creating a domain fails without an API error', () => {
+    const snackBarSpy = vi.spyOn(TestBed.inject(MatSnackBar), 'open').mockReturnValue({} as any)
+    vi.spyOn(translate, 'instant').mockImplementation((key: string | string[]) =>
+      key === 'domainDetail.errorDeleteConfiguration.value' ? 'Fallback error' : key
+    )
+    createRecordSpy.mockReturnValue(throwError(() => []))
+    component.isEdit.set(false)
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'domain.com',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+
+    component.onSubmit()
+
+    expect(component.errorMessages()).toEqual([])
+    expect(snackBarSpy).toHaveBeenCalledWith('Fallback error', undefined, SnackbarDefaults.defaultError)
+  })
+
+  it('should show the cert domain suffix mismatch error and stay on the form(create)', () => {
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    createRecordSpy.mockReturnValue(throwError(() => ['FQDN not associated with provisioning certificate']))
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'cyz',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.isEdit.set(false)
+    component.onSubmit()
+    fixture.detectChanges()
+
+    expect(createRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+    expect(fixture.nativeElement.querySelector('.error-messages').textContent).toContain(
+      'FQDN not associated with provisioning certificate'
+    )
+  })
+
+  it('should show the cert domain suffix mismatch error and stay on the form(update)', () => {
+    const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+    updateRecordSpy.mockReturnValue(throwError(() => ['FQDN not associated with provisioning certificate']))
+    component.domainForm.patchValue({
+      profileName: 'domain1',
+      domainSuffix: 'cyz',
+      provisioningCert: 'domainCert',
+      provisioningCertPassword: 'P@ssw0rd'
+    })
+    component.onSubmit()
+    fixture.detectChanges()
+
+    expect(updateRecordSpy).toHaveBeenCalled()
+    expect(routerSpy).not.toHaveBeenCalled()
+    expect(fixture.nativeElement.querySelector('.error-messages').textContent).toContain(
+      'FQDN not associated with provisioning certificate'
+    )
   })
 
   it('should attach the domain certificate on file selected', () => {
@@ -131,16 +208,16 @@ describe('DomainDetailComponent', () => {
   })
 
   it('should turn cert pass visibility on when it is off', () => {
-    component.certPassInputType = 'password'
+    component.certPassInputType.set('password')
     component.toggleCertPassVisibility()
 
-    expect(component.certPassInputType).toEqual('text')
+    expect(component.certPassInputType()).toEqual('text')
   })
 
   it('should turn cert pass visibility off when it is on', () => {
-    component.certPassInputType = 'text'
+    component.certPassInputType.set('text')
     component.toggleCertPassVisibility()
 
-    expect(component.certPassInputType).toEqual('password')
+    expect(component.certPassInputType()).toEqual('password')
   })
 })

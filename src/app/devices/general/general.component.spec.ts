@@ -83,8 +83,8 @@ describe('GeneralComponent', () => {
   })
 
   it('should show warning when feature is enabled but redirection is false', () => {
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('redirection')?.setValue(false)
     fixture.changeDetectorRef.markForCheck()
     fixture.detectChanges()
     fixture.detectChanges()
@@ -94,8 +94,8 @@ describe('GeneralComponent', () => {
   })
 
   it('should not show warning when redirection is true', () => {
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('redirection')?.setValue(true)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('redirection')?.setValue(true)
     fixture.detectChanges()
     const icons = fixture.debugElement.queryAll(By.css('mat-icon'))
     const hasWarning = icons.some((el) => el.nativeElement.textContent.trim() === 'warning')
@@ -103,10 +103,10 @@ describe('GeneralComponent', () => {
   })
 
   it('should not show warning when no features are enabled', () => {
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(false)
-    component.amtEnabledFeatures.get('enableSOL')?.setValue(false)
-    component.amtEnabledFeatures.get('enableIDER')?.setValue(false)
-    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(false)
+    component.amtEnabledFeatures().get('enableSOL')?.setValue(false)
+    component.amtEnabledFeatures().get('enableIDER')?.setValue(false)
+    component.amtEnabledFeatures().get('redirection')?.setValue(false)
     fixture.changeDetectorRef.markForCheck()
     fixture.detectChanges()
     fixture.detectChanges()
@@ -116,23 +116,23 @@ describe('GeneralComponent', () => {
   })
 
   it('should report isRedirectionRequired when any feature is enabled', () => {
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('enableSOL')?.setValue(false)
-    component.amtEnabledFeatures.get('enableIDER')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('enableSOL')?.setValue(false)
+    component.amtEnabledFeatures().get('enableIDER')?.setValue(false)
     expect(component.isRedirectionRequired).toBe(true)
   })
 
   it('should not require redirection when no features are enabled', () => {
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(false)
-    component.amtEnabledFeatures.get('enableSOL')?.setValue(false)
-    component.amtEnabledFeatures.get('enableIDER')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(false)
+    component.amtEnabledFeatures().get('enableSOL')?.setValue(false)
+    component.amtEnabledFeatures().get('enableIDER')?.setValue(false)
     expect(component.isRedirectionRequired).toBe(false)
   })
 
   it('should call setAmtFeatures when Enable button is clicked', () => {
     devicesServiceSpy.setAmtFeatures = vi.fn().mockReturnValue(of({}))
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('redirection')?.setValue(false)
     fixture.changeDetectorRef.markForCheck()
     fixture.detectChanges()
     fixture.detectChanges()
@@ -143,8 +143,8 @@ describe('GeneralComponent', () => {
 
   it('shows ISM redirection warning text for ISM systems', () => {
     fixture.componentRef.setInput('isISM', true)
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('redirection')?.setValue(false)
     fixture.detectChanges()
 
     expect(fixture.nativeElement.textContent).toContain('general.redirectionWarningISM.value')
@@ -153,8 +153,8 @@ describe('GeneralComponent', () => {
 
   it('shows standard redirection warning text for non-ISM systems', () => {
     fixture.componentRef.setInput('isISM', false)
-    component.amtEnabledFeatures.get('enableKVM')?.setValue(true)
-    component.amtEnabledFeatures.get('redirection')?.setValue(false)
+    component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
+    component.amtEnabledFeatures().get('redirection')?.setValue(false)
     fixture.detectChanges()
 
     expect(fixture.nativeElement.textContent).toContain('general.redirectionWarning.value')

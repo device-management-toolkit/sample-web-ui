@@ -445,10 +445,6 @@
   "common.no": {
     "value": "Nein"
   },
-  "common.noData": {
-    "description": "Meldung, wenn keine Daten verfügbar sind",
-    "value": "Keine Daten verfügbar"
-  },
   "common.notApplicable": {
     "description": "Wird angezeigt, wenn der OS-Eintrag nicht zutrifft.",
     "value": "Nicht zutreffend"
@@ -586,6 +582,10 @@
   "configs.ciraNoData": {
     "description": "Keine CIRA-Konfigurationsmeldung",
     "value": "Keine CIRA-Konfigurationen"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Erläutert, wozu CIRA-Konfigurationen dienen, wenn keine vorhanden sind",
+    "value": "Eine CIRA-Konfiguration legt fest, mit welchem MPS-Server sich AMT nach außen verbindet, damit Geräte auch außerhalb des lokalen Netzwerks verwaltbar bleiben. Fügen Sie eine hinzu und wählen Sie sie dann in einem Profil als Verbindung aus."
   },
   "configs.delete": {
     "description": "Meldung zum Löschen von CIRA-Konfigurationen",
@@ -736,6 +736,10 @@
   "dashboard.useDeviceActions": {
     "description": "Tooltip zur Verwendung von Geräteaktionen",
     "value": "Verwenden Sie Geräteaktionen, um eine Liste von Geräten zu steuern."
+  },
+  "dashboard.welcome": {
+    "description": "Begrüßungsüberschrift im Dashboard mit dem Anwendungsnamen",
+    "value": "Willkommen bei {{name}}"
   },
   "delete.question": {
     "description": "Frage zum Löschen von Datensätzen",
@@ -1029,6 +1033,14 @@
     "description": "Meldung, wenn keine Geräte vorhanden sind",
     "value": "Keine Geräte gefunden"
   },
+  "devices.noDataDescriptionCloud": {
+    "description": "Erläutert, wie Geräte in die Liste gelangen, wenn keine vorhanden sind (Cloud)",
+    "value": "Geräte erscheinen hier, sobald sie aktiviert wurden. „Neu hinzufügen“ erzeugt den Aktivierungsbefehl, der auf dem Gerät auszuführen ist."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Erläutert, wie ein Gerät hinzugefügt wird, wenn keine vorhanden sind (Konsole)",
+    "value": "Fügen Sie ein Gerät mit Hostname und AMT-Anmeldedaten hinzu, um es zu verwalten."
+  },
   "devices.noDataFilter": {
     "description": "Meldung, wenn die Filterergebnisse leer sind",
     "value": "Es werden keine Geräte gefunden, die dem aktuellen Filter entsprechen."
@@ -1228,6 +1240,10 @@
   "domains.noData": {
     "description": "Keine Domänenmeldung",
     "value": "Keine Domains"
+  },
+  "domains.noDataDescription": {
+    "description": "Erläutert, wozu Domains dienen, wenn keine vorhanden sind",
+    "value": "Eine Domain verknüpft ein DNS-Suffix mit dem zugehörigen Bereitstellungszertifikat, das für den Admin Control Mode erforderlich ist. Fügen Sie eine hinzu, bevor Sie Geräte im ACM aktivieren."
   },
   "domains.table.domainSuffix": {
     "description": "Spaltenüberschrift „Domain-Suffix”",
@@ -1788,6 +1804,10 @@
     "description": "Keine IEEE 8021x-Konfigurationsmeldung",
     "value": "Keine IEEE 8021x-Konfigurationen"
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Erläutert, wozu IEEE 8021x-Konfigurationen dienen, wenn keine vorhanden sind",
+    "value": "Mit 802.1x-Konfigurationen kann sich AMT in Netzwerken authentifizieren, die mit 802.1x gesichert sind. Fügen Sie eine hinzu und wählen Sie sie dann in einem Profil (kabelgebunden) oder in einer drahtlosen Konfiguration (WLAN) aus."
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Spaltenüberschrift „Authentifizierungsprotokoll“",
     "value": "Authentifizierungsprotokoll"
@@ -1979,6 +1999,10 @@
   "mqttEvents.type.label": {
     "description": "Tabellenüberschrift für MQTT-Ereignistyp",
     "value": "Typ"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Konfiguration"
   },
   "network.errorNetworkSetting": {
     "description": "Fehler beim Abrufen der Netzwerkeinstellungen",
@@ -2569,6 +2593,10 @@
     "description": "Keine Profile-Meldung",
     "value": "Keine Profile"
   },
+  "profiles.noDataDescription": {
+    "description": "Erläutert, wozu Profile dienen, wenn keine vorhanden sind",
+    "value": "Ein Profil legt fest, wie AMT bei der Aktivierung konfiguriert wird: Kontrollmodus, Netzwerk- und Verbindungseinstellungen. Fügen Sie eines hinzu und verwenden Sie es dann zum Aktivieren von Geräten."
+  },
   "profiles.table.activation": {
     "description": "Spaltenüberschrift „Aktivierungsmodus“",
     "value": "Aktivierungsmodus"
@@ -2837,9 +2865,41 @@
     "description": "Haupttitel der Anwendung im Konsolenmodus",
     "value": "Konsole"
   },
-  "toolbar.header.hello": {
-    "description": "Begrüßungsnachricht",
-    "value": "Hallo,"
+  "toolbar.palette.azure": {
+    "description": "Name der Farbpalette Azurblau und Blau",
+    "value": "Azurblau und Blau"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Name der Farbpalette Cyan und Orange",
+    "value": "Cyan und Orange"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-Label für die Schaltfläche zum Öffnen des Farbpalettenmenüs",
+    "value": "Farbpalette"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Name der Farbpalette Magenta und Violett",
+    "value": "Magenta und Violett"
+  },
+  "toolbar.palette.rose": {
+    "description": "Name der Farbpalette Rosa und Rot",
+    "value": "Rosa und Rot"
+  },
+  "toolbar.theme.dark": {
+    "description": "Menüoption, die immer das dunkle Design verwendet",
+    "value": "Dunkel"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-Label für die Schaltfläche zum Öffnen des Menüs für helles, dunkles oder Systemdesign",
+    "value": "Design"
+  },
+  "toolbar.theme.light": {
+    "description": "Menüoption, die immer das helle Design verwendet",
+    "value": "Hell"
+  },
+  "toolbar.theme.system": {
+    "description": "Menüoption, die der Hell-/Dunkel-Einstellung des Betriebssystems folgt",
+    "value": "System"
   },
   "userConsent.errorCancelCode": {
     "description": "Fehler beim Abbrechen des Codes zur Einwilligung des Benutzers",
@@ -2912,6 +2972,10 @@
   "wirelessConfigs.noData": {
     "description": "Meldung, die angezeigt wird, wenn keine WLAN-Konfigurationen vorhanden sind",
     "value": "Keine drahtlosen Konfigurationen"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Erläutert, wozu drahtlose Konfigurationen dienen, wenn keine vorhanden sind",
+    "value": "Drahtlose Konfigurationen enthalten die WLAN-Einstellungen, mit denen sich AMT verbindet: SSID, Authentifizierung und Verschlüsselung. Fügen Sie eine hinzu und ordnen Sie sie dann einem Profil zu."
   },
   "wirelessConfigs.ssid": {
     "description": "Spaltenüberschrift für die SSID der WLAN-Konfiguration",
@@ -3077,6 +3141,14 @@
     "value": "Namen der Proxy-Konfiguration eingeben",
     "description": "Platzhaltertext für das Namensfeld der Proxy-Konfiguration"
   },
+  "proxyConfigs.noData": {
+    "description": "Meldung, wenn keine Proxy-Konfigurationen vorhanden sind",
+    "value": "Keine Proxy-Konfigurationen"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Erläutert, wozu Proxy-Konfigurationen dienen, wenn keine vorhanden sind",
+    "value": "Proxy-Konfigurationen beschreiben die Netzwerk-Proxys, die AMT verwenden kann, jeweils gebunden an ein Netzwerk-DNS-Suffix. Fügen Sie eine hinzu und weisen Sie sie dann einem Profil zu."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Adresse des Proxy-Servers eingeben",
     "description": "Platzhaltertext für das Feld der Proxy-Adresse"
@@ -3144,10 +3216,6 @@
   "common.update": {
     "value": "AKTUALISIEREN",
     "description": "Text für die Schaltfläche Aktualisieren"
-  },
-  "common.noData": {
-    "value": "Keine Daten verfügbar",
-    "description": "Meldung, wenn keine Daten verfügbar sind"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Kategoriename für Remote-Plattformlöschung",

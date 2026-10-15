@@ -9,7 +9,10 @@ const { execFile, spawn } = require('node:child_process')
 const { promisify } = require('node:util')
 const { randomUUID } = require('node:crypto')
 const run = promisify(execFile)
-require('ts-node').register({ transpileOnly: true, compilerOptions: { module: 'CommonJS', moduleResolution: 'node' } })
+require('ts-node').register({
+  transpileOnly: true,
+  compilerOptions: { module: 'CommonJS', moduleResolution: 'bundler', rootDir: '.' }
+})
 const { execTask, cancelExecTasks } = require('../support/exec-task.ts')
 const image = process.env.CYPRESS_DOCKER_TEST_IMAGE || 'alpine:3.22'
 const docker = async (...args) => (await run('docker', args, { timeout: 120000, windowsHide: true })).stdout.trim()
@@ -82,7 +85,7 @@ test('run cancellation removes the active Docker container', async (t) => {
 
 const startPlugin = (t, command) => {
   const source = `
-    require('ts-node').register({transpileOnly:true,compilerOptions:{module:'CommonJS',moduleResolution:'node'}})
+    require('ts-node').register({transpileOnly:true,compilerOptions:{module:'CommonJS',moduleResolution:'bundler',rootDir:'.'}})
     const {execTask}=require('./cypress/support/exec-task.ts')
     process.on('message', message => { if(message === 'exit') process.exit(0) })
     execTask({command:process.argv[1],timeout:30000}).catch(()=>{})

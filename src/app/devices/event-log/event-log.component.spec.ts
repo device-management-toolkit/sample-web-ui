@@ -85,17 +85,17 @@ describe('EventLogComponent', () => {
     it('should correctly report isNoData', () => {
       // When loading is true, isNoData returns true regardless of data presence.
       component.isLoading.set(true)
-      component.dataSource.data = [{}] as any
+      component.dataSource.set([{}] as any)
       expect(component.isNoData()).toBe(true)
 
       // When not loading but with no data.
       component.isLoading.set(false)
-      component.dataSource.data = []
+      component.dataSource.set([])
       expect(component.isNoData()).toBe(true)
 
       // When not loading and data exists.
       component.isLoading.set(false)
-      component.dataSource.data = [{}] as any
+      component.dataSource.set([{}] as any)
       expect(component.isNoData()).toBe(false)
     })
   })
@@ -105,21 +105,21 @@ describe('EventLogComponent', () => {
       // Spy on loadEventLogs so we don’t perform actual HTTP calls.
       vi.spyOn(component, 'loadEventLogs').mockImplementation(() => undefined)
       component.pageSize = 10
-      component.currentPageIndex = 0
+      component.currentPageIndex.set(0)
     })
 
     it('should go to next page correctly', () => {
       component.nextPage()
       // nextPage uses pre-increment so currentPageIndex becomes 1 and calls loadEventLogs(1 * pageSize)
-      expect(component.currentPageIndex).toBe(1)
+      expect(component.currentPageIndex()).toBe(1)
       expect(component.loadEventLogs).toHaveBeenCalledWith(10)
     })
 
     it('should go to last page correctly', () => {
-      component.currentPageIndex = 1
+      component.currentPageIndex.set(1)
       component.lastPage()
       // lastPage decrements currentPageIndex to 0 and calls loadEventLogs(0)
-      expect(component.currentPageIndex).toBe(0)
+      expect(component.currentPageIndex()).toBe(0)
       expect(component.loadEventLogs).toHaveBeenCalledWith(0)
     })
   })

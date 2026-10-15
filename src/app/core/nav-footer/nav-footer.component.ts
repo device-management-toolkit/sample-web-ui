@@ -9,25 +9,22 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AuthService } from '../../auth.service'
+import { Palette, ThemeMode, ThemeService, palettes, themeModes } from '../../theme.service'
 import { AboutComponent } from '../about/about.component'
 import { MPSVersion, RPSVersion, ConsoleVersion } from '../../../models/models'
 import { environment } from '../../../environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatIconButton } from '@angular/material/button'
-import { MatDivider } from '@angular/material/divider'
-import { MatToolbar } from '@angular/material/toolbar'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { availableLangs } from '../../../constants'
 import { getDirection } from '../../../utils'
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+  selector: 'app-nav-footer',
+  templateUrl: './nav-footer.component.html',
+  styleUrls: ['./nav-footer.component.scss'],
   imports: [
-    MatToolbar,
-    MatDivider,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
@@ -36,14 +33,15 @@ import { getDirection } from '../../../utils'
     TranslatePipe
   ]
 })
-export class ToolbarComponent implements OnInit {
+export class NavFooterComponent implements OnInit {
   // Dependency Injection
   private readonly snackBar = inject(MatSnackBar)
   private readonly dialog = inject(MatDialog)
   public readonly authService = inject(AuthService)
+  public readonly themeService = inject(ThemeService)
   private readonly translate = inject(TranslateService)
 
-  public isLoggedIn = false
+  public isLoggedIn = signal(false)
   public cloudMode: boolean = environment.cloud
   public authDisabled: boolean = environment.authDisabled
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
@@ -54,10 +52,30 @@ export class ToolbarComponent implements OnInit {
     return availableLangs
   }
 
+  public readonly themeModes = themeModes
+  public readonly modeIcons: Record<ThemeMode, string> = {
+    system: 'brightness_auto',
+    light: 'light_mode',
+    dark: 'dark_mode'
+  }
+  public readonly modeLabels: Record<ThemeMode, string> = {
+    system: 'toolbar.theme.system.value',
+    light: 'toolbar.theme.light.value',
+    dark: 'toolbar.theme.dark.value'
+  }
+
+  public readonly palettes = palettes
+  public readonly paletteLabels: Record<Palette, string> = {
+    azure: 'toolbar.palette.azure.value',
+    rose: 'toolbar.palette.rose.value',
+    magenta: 'toolbar.palette.magenta.value',
+    cyan: 'toolbar.palette.cyan.value'
+  }
+
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
-      this.isLoggedIn = value
-      if (this.isLoggedIn && environment.cloud) {
+      this.isLoggedIn.set(value)
+      if (value && environment.cloud) {
         this.authService.getMPSVersion().subscribe({
           error: () => {
             const msg: string = this.translate.instant('toolbar.errorMPS.value')
@@ -76,7 +94,7 @@ export class ToolbarComponent implements OnInit {
             this.rpsVersions.set(data)
           }
         })
-      } else if (this.isLoggedIn && !environment.cloud) {
+      } else if (value && !environment.cloud) {
         this.authService.getConsoleVersion().subscribe({
           error: () => {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)

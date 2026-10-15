@@ -156,21 +156,19 @@ describe('ProxyConfigsComponent', () => {
   })
 
   it('should return true for isNoData when no data and not loading', () => {
-    component.configs.data = []
+    component.totalCount.set(0)
     component.isLoading.set(false)
     expect(component.isNoData()).toBe(true)
   })
 
   it('should return false for isNoData when loading', () => {
-    component.configs.data = []
+    component.totalCount.set(0)
     component.isLoading.set(true)
     expect(component.isNoData()).toBe(false)
   })
 
   it('should return false for isNoData when has data', () => {
-    component.configs.data = [
-      { name: 'test', address: '192.168.1.1', port: 8080, networkDnsSuffix: 'test.com', infoFormat: 1 }
-    ]
+    component.totalCount.set(1)
     component.isLoading.set(false)
     expect(component.isNoData()).toBe(false)
   })
@@ -178,5 +176,31 @@ describe('ProxyConfigsComponent', () => {
   it('should encode URI component', () => {
     const result = component.encodeURIComponent('test config')
     expect(result).toBe('test%20config')
+  })
+
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const loadNothing = (): void => {
+      getDataSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getData(component.pageEvent())
+      fixture.detectChanges()
+    }
+
+    it('should not show when there are proxy configs', () => {
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain what proxy configs are for', () => {
+      loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('proxyConfigs.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('proxyConfigs.noDataDescription.value')
+    })
+
+    it('should start a new one from its button', () => {
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+      loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(routerSpy).toHaveBeenCalledWith(['/proxy-configs/new'])
+    })
   })
 })

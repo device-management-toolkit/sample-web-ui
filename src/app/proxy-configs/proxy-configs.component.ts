@@ -20,7 +20,6 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
@@ -28,6 +27,7 @@ import { MatToolbar } from '@angular/material/toolbar'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { Router } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { finalize } from 'rxjs/operators'
 import { PageEventOptions, ProxyConfig } from '../../models/models'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -43,8 +43,6 @@ import { ProxyConfigsService } from './proxy-configs.service'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -58,7 +56,8 @@ import { ProxyConfigsService } from './proxy-configs.service'
     MatRow,
     MatPaginator,
     MatTooltipModule,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class ProxyConfigsComponent implements OnInit, AfterViewInit {
@@ -77,16 +76,16 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   ]
   public totalCount = signal(0)
   public isLoading = signal(true)
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   ngAfterViewInit(): void {
@@ -110,16 +109,16 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   }
 
   isNoData(): boolean {
-    return !this.isLoading() && this.configs.data.length === 0
+    return !this.isLoading() && this.totalCount() === 0
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       pageSize: event.pageSize,
       startsFrom: event.pageIndex * event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   delete(name: string): void {
@@ -139,7 +138,7 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               this.snackBar.open(
                 $localize`Configuration deleted successfully`,
                 undefined,
