@@ -110,11 +110,14 @@ describe('AuthService', () => {
         environment.authDisabled = true
       })
 
-      it('should start logged in without a stored session', () => {
+      it('should open protected routes without creating a session', () => {
         const rebuilt = rebuild()
+        let canActivate = false
+        rebuilt.canActivateProtectedRoutes$.subscribe((value) => (canActivate = value))
 
-        expect(rebuilt.isLoggedIn).toBe(true)
-        expect(rebuilt.loggedInSubject$.value).toBe(true)
+        expect(canActivate).toBe(true)
+        expect(rebuilt.isLoggedIn).toBe(false)
+        expect(rebuilt.loggedInSubject$.value).toBe(false)
       })
     })
 

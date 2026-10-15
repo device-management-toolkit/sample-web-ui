@@ -27,18 +27,16 @@ export class AuthService {
   router = inject(Router)
   loggedInSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
-  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
-    this.loggedInSubject$
-  ]).pipe(map((values) => values.every((b) => b)))
+  // With auth disabled there is no session, but every route is open.
+  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([this.loggedInSubject$]).pipe(
+    map(([isLoggedIn]) => isLoggedIn || environment.authDisabled)
+  )
 
   isLoggedIn = false
   url = `${environment.mpsServer}/api/v1/authorize`
 
   constructor() {
-    // The server has no auth to check, so every visitor is already signed in.
     if (environment.authDisabled) {
-      this.isLoggedIn = true
-      this.loggedInSubject$.next(this.isLoggedIn)
       return
     }
     if (environment.useOAuth) {

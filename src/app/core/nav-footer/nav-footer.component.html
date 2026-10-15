@@ -3,7 +3,7 @@
     <div class="info-row">
       <span class="label">{{ 'toolbar.header.cloudModeTitle.value' | translate }}</span>
     </div>
-    @if (isLoggedIn()) {
+    @if (canAccessApp()) {
       <div class="info-row">
         <span class="label">MPS</span>
         <span class="version">v{{ mpsVersions().serviceVersion }}</span>
@@ -84,7 +84,7 @@
   <button mat-icon-button (click)="displayAbout()">
     <mat-icon>info</mat-icon>
   </button>
-  @if (isLoggedIn() && !authDisabled) {
+  @if (isLoggedIn()) {
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
     </button>

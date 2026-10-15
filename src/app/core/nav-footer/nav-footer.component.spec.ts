@@ -11,7 +11,7 @@ import { Router } from '@angular/router'
 import { AuthService } from '../../auth.service'
 import { ThemeService } from '../../theme.service'
 import { NavFooterComponent } from './nav-footer.component'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, combineLatest, map, of } from 'rxjs'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
@@ -24,6 +24,7 @@ describe('NavFooterComponent', () => {
   let authService: SpyObj<AuthService>
   let matDialog: SpyObj<MatDialog>
   let isLoggedInSubject: BehaviorSubject<boolean>
+  let authDisabledSubject: BehaviorSubject<boolean>
 
   const openMenu = (trigger: string): void => {
     fixture.nativeElement.querySelector(`[data-cy="${trigger}"]`).click()
@@ -46,6 +47,7 @@ describe('NavFooterComponent', () => {
     })
 
     isLoggedInSubject = new BehaviorSubject<boolean>(false)
+    authDisabledSubject = new BehaviorSubject<boolean>(false)
 
     const authServiceSpy = createSpyObj(
       'AuthService',
@@ -58,7 +60,10 @@ describe('NavFooterComponent', () => {
       ],
       {
         isLoggedIn: isLoggedInSubject.asObservable(),
-        loggedInSubject$: isLoggedInSubject
+        loggedInSubject$: isLoggedInSubject,
+        canActivateProtectedRoutes$: combineLatest([isLoggedInSubject, authDisabledSubject]).pipe(
+          map(([isLoggedIn, authDisabled]) => isLoggedIn || authDisabled)
+        )
       }
     )
 
@@ -173,12 +178,13 @@ describe('NavFooterComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('account_circle')
   })
 
-  it('should hide the account menu when auth is disabled', () => {
-    component.authDisabled = true
+  it('should load versions but hide the account menu when auth is disabled', () => {
     fixture.detectChanges()
-    isLoggedInSubject.next(true)
+    authDisabledSubject.next(true)
     fixture.detectChanges()
 
+    expect(component.canAccessApp()).toBe(true)
+    expect(authService.getMPSVersion).toHaveBeenCalled()
     expect(fixture.nativeElement.textContent).not.toContain('account_circle')
   })
 

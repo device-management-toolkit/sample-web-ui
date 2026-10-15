@@ -43,7 +43,7 @@ export class NavFooterComponent implements OnInit {
 
   public isLoggedIn = signal(false)
   public cloudMode: boolean = environment.cloud
-  public authDisabled: boolean = environment.authDisabled
+  public canAccessApp = signal(false)
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
   public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
@@ -75,6 +75,9 @@ export class NavFooterComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loggedInSubject$.subscribe((value: any) => {
       this.isLoggedIn.set(value)
+    })
+    this.authService.canActivateProtectedRoutes$.subscribe((value) => {
+      this.canAccessApp.set(value)
       if (value && environment.cloud) {
         this.authService.getMPSVersion().subscribe({
           error: () => {
