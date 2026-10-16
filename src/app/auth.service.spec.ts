@@ -21,6 +21,7 @@ describe('AuthService', () => {
 
   const mockEnvironment = { mpsServer: 'https://test-mps', rpsServer: 'https://test-rps' }
   const originalCloud = environment.cloud
+  const originalAuthDisabled = environment.authDisabled
 
   beforeEach(() => {
     // The constructor reads the session flag, and spec order is random, so a
@@ -48,6 +49,7 @@ describe('AuthService', () => {
     httpMock.verify()
     localStorage.clear()
     environment.cloud = originalCloud
+    environment.authDisabled = originalAuthDisabled
   })
 
   it('should be created', () => {
@@ -99,6 +101,23 @@ describe('AuthService', () => {
         rebuild()
 
         expect(localStorage.getItem('loggedInUser')).toBeNull()
+      })
+    })
+
+    describe('auth disabled', () => {
+      beforeEach(() => {
+        environment.cloud = false
+        environment.authDisabled = true
+      })
+
+      it('should open protected routes without creating a session', () => {
+        const rebuilt = rebuild()
+        let canActivate = false
+        rebuilt.canActivateProtectedRoutes$.subscribe((value) => (canActivate = value))
+
+        expect(canActivate).toBe(true)
+        expect(rebuilt.isLoggedIn).toBe(false)
+        expect(rebuilt.loggedInSubject$.value).toBe(false)
       })
     })
 
@@ -234,6 +253,23 @@ describe('AuthService', () => {
 
         expect(service.isLoggedIn).toBe(false)
         expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
+      })
+    })
+
+    describe('auth disabled', () => {
+      beforeEach(() => {
+        environment.cloud = false
+        environment.authDisabled = true
+      })
+
+      it('should stay logged in, since there is no login page to return to', () => {
+        service.isLoggedIn = true
+
+        service.logout()
+
+        httpMock.expectNone(`${mockEnvironment.mpsServer}/api/v1/authorize/logout`)
+        expect(service.isLoggedIn).toBe(true)
+        expect(routerSpy.navigate).not.toHaveBeenCalled()
       })
     })
 
