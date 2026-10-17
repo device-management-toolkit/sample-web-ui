@@ -11,6 +11,7 @@ export const PUBLIC_ENV_KEYS = [
   'BASEURL',
   'CLOUD',
   'DEVICE',
+  'DISABLE_CIRA',
   'DOMAIN_SUFFIX',
   'FQDN',
   'ISOLATE',
