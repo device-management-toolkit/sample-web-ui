@@ -2746,8 +2746,8 @@
     "value": "Uso de contraseñas generadas aleatoriamente"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Mensaje de error cuando la contraseña SSD excede 64 bytes",
-    "value": "La contraseña SSD no debe exceder 64 bytes"
+    "description": "Mensaje de error cuando la contraseña SSD supera el límite de 64 bytes de la carga útil RPE",
+    "value": "La contraseña SSD no debe superar los 64 bytes UTF-8"
   },
   "sol.connect": {
     "description": "Botón para conectarse a SOL.",
@@ -3269,6 +3269,18 @@
   "remotePlatformErase.updateError": {
     "description": "Mensaje de error cuando falla la actualización de la función de borrado remoto de plataforma",
     "value": "Error al actualizar la función de borrado remoto de plataforma"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Solicitud de borrado confirmada; todavía no se conoce el resultado del BIOS",
+    "value": "Solicitud de borrado enviada. No se ha confirmado la finalización del BIOS."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "No se observó un resultado final reciente del BIOS antes de que venciera el tiempo de espera de la consulta de estado",
+    "value": "No se puede confirmar el resultado del borrado. Compruebe el resultado del BIOS antes de volver a intentarlo."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "El BIOS informó que el borrado se completó correctamente después de observar un resultado pendiente",
+    "value": "El BIOS informó que el borrado se completó correctamente."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "Mensaje de éxito tras iniciar el borrado remoto de plataforma",

@@ -2614,8 +2614,8 @@
     "value": "Använda slumpmässigt genererade lösenord"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Felmeddelande när SSD-lösenordet överskrider 64 bytes",
-    "value": "SSD-lösenordet får inte överskrida 64 bytes"
+    "description": "Felmeddelande när SSD-lösenordet överskrider RPE-nyttolastgränsen på 64 byte",
+    "value": "SSD-lösenordet får inte överskrida 64 UTF-8-byte"
   },
   "sol.connect": {
     "description": "Knapp för anslutning till SOL",
@@ -3137,6 +3137,18 @@
   "remotePlatformErase.updateError": {
     "description": "Felmeddelande när uppdatering av fjärrradering av plattform misslyckas",
     "value": "Det gick inte att uppdatera fjärrraderingsfunktionen för plattformen"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Raderingsbegäran har bekräftats, BIOS-resultatet är ännu okänt",
+    "value": "Begäran om radering har skickats. BIOS-slutförandet har inte bekräftats."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Inget nytt slutgiltigt BIOS-resultat observerades innan statuskontrollen löpte ut",
+    "value": "Det gick inte att bekräfta resultatet av raderingen. Kontrollera BIOS-resultatet innan du försöker igen."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "BIOS rapporterade att raderingen slutfördes efter att ett väntande resultat hade observerats",
+    "value": "BIOS rapporterade att raderingen slutfördes."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "Framgångsmeddelande efter att fjärrradering av plattform initierats",

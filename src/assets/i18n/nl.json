@@ -2750,8 +2750,8 @@
     "value": "Gebruik van willekeurig gegenereerde wachtwoorden"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Foutbericht wanneer SSD-wachtwoord meer dan 64 bytes is",
-    "value": "SSD-wachtwoord mag niet meer dan 64 bytes zijn"
+    "description": "Foutbericht wanneer het SSD-wachtwoord de RPE-payloadlimiet van 64 bytes overschrijdt",
+    "value": "Het SSD-wachtwoord mag niet langer zijn dan 64 UTF-8-bytes"
   },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",
@@ -3273,6 +3273,18 @@
   "remotePlatformErase.updateError": {
     "description": "Foutbericht wanneer bijwerken van extern wissen van het platform mislukt",
     "value": "Bijwerken van de functie voor extern wissen van het platform mislukt"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Wisverzoek bevestigd, BIOS-resultaat nog niet bekend",
+    "value": "Wisverzoek ingediend. Voltooiing door het BIOS is niet bevestigd."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Er is geen nieuw definitief BIOS-resultaat waargenomen voordat de statuscontrole verliep",
+    "value": "Kan de uitkomst van het wissen niet bevestigen. Controleer het BIOS-resultaat voordat u het opnieuw probeert."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "Het BIOS meldde dat het wissen is geslaagd nadat een resultaat in behandeling was waargenomen",
+    "value": "Het BIOS heeft gemeld dat het wissen is voltooid."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "Succesbericht na het starten van extern wissen van het platform",

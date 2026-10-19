@@ -9,6 +9,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { DevicesService } from './devices.service'
 import { environment } from '../../environments/environment'
+import { SUPPRESS_TRANSIENT_ERRORS } from '../error-handling.interceptor'
 import {
   AMTFeaturesResponse,
   DataWithCount,
@@ -342,6 +343,14 @@ describe('DevicesService', () => {
     })
   })
   describe('sendDeactivate', () => {
+    it('should poll remote erase status with transient error notifications suppressed', () => {
+      service.getRemoteEraseStatus('device1').subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v2/amt/boot/remoteErase/device1/status`)
+      expect(req.request.context.get(SUPPRESS_TRANSIENT_ERRORS)).toBe(true)
+      req.flush({ status: 'pending', message: '' })
+    })
+
     it('should deactivate a device in cloud mode', () => {
       const guid = 'device1'
       environment.cloud = true

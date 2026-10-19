@@ -2742,8 +2742,8 @@
     "value": "ランダム生成パスワードの使用について"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "SSDパスワードが64バイトを超える場合のエラーメッセージ",
-    "value": "SSDパスワードは64バイトを超えることはできません"
+    "description": "SSDパスワードがRPEペイロードの上限である64バイトを超える場合のエラーメッセージ",
+    "value": "SSDパスワードは64 UTF-8バイトを超えてはなりません"
   },
   "sol.connect": {
     "description": "SOL接続用ボタン",
@@ -3265,6 +3265,18 @@
   "remotePlatformErase.updateError": {
     "description": "リモートプラットフォーム消去機能の更新失敗エラーメッセージ",
     "value": "リモートプラットフォーム消去機能の更新に失敗しました"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "消去要求は受け付けられたが、BIOSの結果はまだ不明",
+    "value": "消去要求を送信しました。BIOSによる完了は確認されていません。"
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "状態確認がタイムアウトする前に、新しい最終BIOS結果を確認できなかった",
+    "value": "消去結果を確認できません。再試行する前にBIOSの結果を確認してください。"
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "保留中の結果が確認された後、BIOSが消去の成功を報告した",
+    "value": "BIOSから消去が正常に完了したとの報告がありました。"
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "リモートプラットフォーム消去開始後の成功メッセージ",

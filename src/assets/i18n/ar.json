@@ -2750,8 +2750,8 @@
     "value": "استخدام كلمات مرور عشوائية"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "رسالة خطأ عند تجاوز كلمة مرور SSD 64 بايت",
-    "value": "يجب أن لا تتجاوز كلمة مرور SSD 64 بايت"
+    "description": "رسالة خطأ عند تجاوز كلمة مرور SSD حد حمولة RPE البالغ 64 بايت",
+    "value": "يجب ألا تتجاوز كلمة مرور SSD 64 بايت بترميز UTF-8"
   },
   "sol.connect": {
     "description": "زر للاتصال بـ SOL",
@@ -3273,6 +3273,18 @@
   "remotePlatformErase.updateError": {
     "description": "رسالة خطأ عند فشل تحديث ميزة مسح المنصة عن بُعد",
     "value": "فشل تحديث ميزة مسح المنصة عن بُعد"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "تم الإقرار بإرسال طلب المسح، ولم تُعرف نتيجة BIOS بعد",
+    "value": "تم إرسال طلب المسح. لم يتم تأكيد اكتمال BIOS."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "لم تُرصد نتيجة BIOS نهائية حديثة قبل انتهاء مهلة التحقق من الحالة",
+    "value": "تعذر تأكيد نتيجة المسح. تحقق من نتيجة BIOS قبل إعادة المحاولة."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "أفاد BIOS بنجاح المسح بعد رصد نتيجة معلقة",
+    "value": "أفاد BIOS باكتمال المسح بنجاح."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "رسالة نجاح بعد بدء مسح المنصة عن بُعد",

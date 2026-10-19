@@ -2746,8 +2746,8 @@
     "value": "Verwendung zufällig generierter Passwörter"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Fehlermeldung wenn SSD-Passwort 64 Bytes überschreitet",
-    "value": "Das SSD-Passwort darf 64 Bytes nicht überschreiten"
+    "description": "Fehlermeldung, wenn das SSD-Passwort das RPE-Nutzdatenlimit von 64 Bytes überschreitet",
+    "value": "Das SSD-Passwort darf 64 UTF-8-Bytes nicht überschreiten"
   },
   "sol.connect": {
     "description": "Schaltfläche für die Verbindung mit SOL",
@@ -3269,6 +3269,18 @@
   "remotePlatformErase.updateError": {
     "description": "Fehlermeldung wenn die Aktualisierung der Remote-Plattformlöschungsfunktion fehlschlägt",
     "value": "Fehler beim Aktualisieren der Remote-Plattformlöschungsfunktion"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Löschanforderung bestätigt, BIOS-Ergebnis noch nicht bekannt",
+    "value": "Löschanforderung gesendet. Der Abschluss durch das BIOS wurde nicht bestätigt."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Vor Ablauf der Statusprüfung wurde kein neues endgültiges BIOS-Ergebnis festgestellt",
+    "value": "Das Ergebnis des Löschvorgangs konnte nicht bestätigt werden. Prüfen Sie das BIOS-Ergebnis, bevor Sie es erneut versuchen."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "BIOS meldete nach einem ausstehenden Ergebnis einen erfolgreichen Löschvorgang",
+    "value": "Das BIOS hat gemeldet, dass der Löschvorgang erfolgreich abgeschlossen wurde."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "Erfolgsmeldung nach dem Einleiten der Remote-Plattformlöschung",

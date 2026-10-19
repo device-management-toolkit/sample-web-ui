@@ -2746,8 +2746,8 @@
     "value": "Satunnaisesti luotujen salasanojen käyttö"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Virheilmoitus kun SSD-salasana ylittää 64 tavua",
-    "value": "SSD-salasana ei saa ylittää 64 tavua"
+    "description": "Virheilmoitus, kun SSD-salasana ylittää RPE-hyötykuorman 64 tavun rajan",
+    "value": "SSD-salasana saa olla enintään 64 UTF-8-tavua"
   },
   "sol.connect": {
     "description": "Painike SOL-yhteyden muodostamiseksi",
@@ -3269,6 +3269,18 @@
   "remotePlatformErase.updateError": {
     "description": "Virheviesti etäalustan pyyhintäominaisuuden päivityksen epäonnistuessa",
     "value": "Etäalustan pyyhintäominaisuuden päivitys epäonnistui"
+  },
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Tyhjennyspyyntö on hyväksytty, mutta BIOS-tulosta ei vielä tunneta",
+    "value": "Tyhjennyspyyntö lähetetty. BIOSin suorittamaa tyhjennystä ei ole vahvistettu."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Uutta lopullista BIOS-tulosta ei havaittu ennen tilan tarkistuksen aikakatkaisua",
+    "value": "Tyhjennyksen tulosta ei voitu vahvistaa. Tarkista BIOS-tulos ennen uutta yritystä."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "BIOS ilmoitti tyhjennyksen onnistuneen, kun ensin oli havaittu keskeneräinen tulos",
+    "value": "BIOS ilmoitti, että tyhjennys onnistui."
   },
   "remotePlatformErase.eraseSuccess": {
     "description": "Onnistumisviesti etäalustan pyyhinnan aloittamisen jälkeen",
