@@ -64,7 +64,7 @@
     "@angular/compiler-cli": "~22.2.3",
     "@angular/localize": "~22.2.3",
     "@eslint/js": "^10.0.1",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^5.0.5",
     "angular-eslint": "22.6.0",
     "cypress": "^16.2.0",
     "eslint": "^10.13.0",
@@ -78,6 +78,6 @@
     "ts-node": "~10.9.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.2",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.5"
   }
 }
