@@ -38,6 +38,13 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const profileYamlFile: string = Cypress.expose('PROFILE_YAML_FILE')
     const isWin = Cypress.platform === 'win32'
     const authEndpoint = getAuthEndpoint()
+    // rpc v2 cannot register the device with Console (auto-add is v3-only), and
+    // its local profiles leave AMT without TLS, so the suite adds it by hand.
+    const isRpcV2 = /^v?2(?:\.|$)/.test(
+      String(Cypress.expose('RPC_VERSION') ?? 'v3')
+        .trim()
+        .toLowerCase()
+    )
 
     // Console gives the suite no readiness signal to poll before it touches the
     // AMT APIs: the Devices table only renders a connection status in cloud
@@ -45,6 +52,39 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     // does not report the tunnel Console uses. So the settle time before the
     // device page is a plain wait -- raise it if the AMT APIs still answer 503.
     const deviceReadyWaitMs = 180000
+
+    // Adds the activated device through Console's Add Device dialog with TLS
+    // and self-signed certs off, unless a previous run already left it listed.
+    const addDeviceToConsole = (deviceIp: string): void => {
+      cy.wait('@listDevices')
+      cy.get('body').then(($body) => {
+        const alreadyListed =
+          $body.find('mat-cell').filter((_, cell) => (cell.textContent ?? '').includes(deviceIp)).length > 0
+        if (alreadyListed) {
+          cy.log(`Device ${deviceIp} is already listed in Console; skipping Add Device`)
+          return
+        }
+
+        cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+          cy.intercept('POST', /\/api\/v1\/devices$/).as('addDevice')
+          cy.get('button').contains('Add New').click()
+
+          cy.matTextlikeInputType('[formControlName="hostname"]', deviceIp)
+          cy.matTextlikeInputType('[formControlName="friendlyName"]', `e2e-${deviceIp}`)
+          cy.matTextlikeInputType('[formControlName="username"]', 'admin')
+          cy.matTextlikeInputType('[formControlName="password"]', AMT_PASSWORD, { log: false })
+          cy.matCheckboxSet('[formControlName="useTLS"]', false)
+          cy.matCheckboxSet('[formControlName="allowSelfSigned"]', false)
+          cy.get('button[type=submit]').click()
+
+          cy.wait('@addDevice').then(({ request, response }) => {
+            expect(request.body).to.include({ hostname: deviceIp, useTLS: false, allowSelfSigned: false })
+            expect(response?.statusCode, 'Add Device status').to.be.oneOf([200, 201])
+          })
+          cy.wait('@listDevices')
+        })
+      })
+    }
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -121,6 +161,7 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             // than waiting a fixed interval.
             getAmtInfoWithIpAddressRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
+              cy.intercept('GET', /\/api\/v1\/devices\?/).as('listDevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
 
@@ -136,6 +177,10 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
                   `wireless=${JSON.stringify(postActivationInfo.wirelessAdapter)}`
                 cy.log(errorMessage)
                 throw new Error(errorMessage)
+              }
+
+              if (isRpcV2) {
+                addDeviceToConsole(deviceIp)
               }
 
               cy.log(`Using identifier to find device: ${deviceIp}`)
