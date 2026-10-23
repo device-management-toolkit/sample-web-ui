@@ -46,13 +46,12 @@
     "tslib": "^2.8.1"
   },
   "overrides": {
+    "@angular/build": {
+      "vite": "~8.3.3"
+    },
     "diff": "^8.0.4",
-    "dompurify": "^3.4.16",
-    "serialize-javascript": "^7.0.5",
-    "uuid": "^11.1.1",
-    "webpack-dev-server": "^5.2.6",
-    "less": "^4.9.0",
-    "qs": "^6.16.0"
+    "dompurify": "^3.4.17",
+    "serialize-javascript": "^7.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~22.2.3",
