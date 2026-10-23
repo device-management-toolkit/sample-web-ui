@@ -18,6 +18,7 @@ import {
   execWithRetry,
   buildInfoCommand,
   buildActivateCommand,
+  buildConfigureTlsCommand,
   getAmtInfo,
   getAmtInfoWithIpAddressRetry,
   resolveDeviceIpAddress,
@@ -35,11 +36,14 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
+    // Profile names follow <mode>-<ip>-<TLS|CIRA>, e.g. acmactivate-DHCP-TLS.
+    const isTlsProfile = parts.length > 2 && parts[2].toUpperCase() === 'TLS'
     const profileYamlFile: string = Cypress.expose('PROFILE_YAML_FILE')
     const isWin = Cypress.platform === 'win32'
     const authEndpoint = getAuthEndpoint()
     // rpc v2 cannot register the device with Console (auto-add is v3-only), and
-    // its local profiles leave AMT without TLS, so the suite adds it by hand.
+    // its local profiles leave AMT without TLS, so the suite configures TLS with
+    // a separate rpc command and adds the device by hand.
     const isRpcV2 = /^v?2(?:\.|$)/.test(
       String(Cypress.expose('RPC_VERSION') ?? 'v3')
         .trim()
@@ -53,8 +57,22 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     // device page is a plain wait -- raise it if the AMT APIs still answer 503.
     const deviceReadyWaitMs = 180000
 
-    // Adds the activated device through Console's Add Device dialog with TLS
-    // and self-signed certs off, unless a previous run already left it listed.
+    // Turns on TLS (Server, AMT self-signed cert) after an rpc v2 activation with
+    // a TLS profile on AMT 15 and below, where rpc v2 leaves TLS off.
+    const configureTls = (): void => {
+      cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+        const command = buildConfigureTlsCommand({ isWin, rpcDockerImage, password: AMT_PASSWORD })
+        execWithRetry(command, execConfig).then((result) => {
+          const { combined } = buildOutput(result)
+          cy.log(combined)
+          expect(result.code, 'rpc configure tls exit code').to.equal(0)
+        })
+      })
+    }
+
+    // Adds the activated device through Console's Add Device dialog with its
+    // default TLS and self-signed cert settings, unless a previous run already
+    // left it listed.
     const addDeviceToConsole = (deviceIp: string): void => {
       cy.wait('@listDevices')
       cy.get('body').then(($body) => {
@@ -73,12 +91,10 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
           cy.matTextlikeInputType('[formControlName="friendlyName"]', `e2e-${deviceIp}`)
           cy.matTextlikeInputType('[formControlName="username"]', 'admin')
           cy.matTextlikeInputType('[formControlName="password"]', AMT_PASSWORD, { log: false })
-          cy.matCheckboxSet('[formControlName="useTLS"]', false)
-          cy.matCheckboxSet('[formControlName="allowSelfSigned"]', false)
           cy.get('button[type=submit]').click()
 
           cy.wait('@addDevice').then(({ request, response }) => {
-            expect(request.body).to.include({ hostname: deviceIp, useTLS: false, allowSelfSigned: false })
+            expect(request.body).to.include({ hostname: deviceIp })
             expect(response?.statusCode, 'Add Device status').to.be.oneOf([200, 201])
           })
           cy.wait('@listDevices')
@@ -148,6 +164,11 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               } catch {
                 cy.log('Activation output is not JSON formatted')
               }
+            }
+
+            // rpc v2 only leaves TLS unconfigured on AMT 15 and below.
+            if (isRpcV2 && isTlsProfile && parseInt(amtVersion) <= 15) {
+              configureTls()
             }
 
             // Settle before touching the device page: opening it issues an AMT
