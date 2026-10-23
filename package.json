@@ -1,6 +1,6 @@
 {
   "name": "@device-management-toolkit/sample-web-ui",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,7 +32,7 @@
     "@angular/material": "~22.2.2",
     "@angular/platform-browser": "~22.2.3",
     "@angular/router": "~22.2.3",
-    "@device-management-toolkit/ui-toolkit-angular": "^12.0.0",
+    "@device-management-toolkit/ui-toolkit-angular": "^12.0.1",
     "@ngx-translate/core": "^18.0.0",
     "@ngx-translate/http-loader": "^18.0.0",
     "@xterm/xterm": "^6.0.0",
