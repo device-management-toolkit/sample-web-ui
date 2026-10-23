@@ -3282,10 +3282,6 @@
     "description": "BIOS meldete nach einem ausstehenden Ergebnis einen erfolgreichen Löschvorgang",
     "value": "Das BIOS hat gemeldet, dass der Löschvorgang erfolgreich abgeschlossen wurde."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Erfolgsmeldung nach dem Einleiten der Remote-Plattformlöschung",
-    "value": "Remote-Plattformlöschung erfolgreich eingeleitet"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Erfolgsmeldung nach dem Löschen des OS-Laufwerks – fordert zur Neuinstallation auf",
     "value": "OS-Laufwerk erfolgreich gelöscht. Bitte installieren Sie ein Betriebssystem neu, bevor Sie dieses Gerät verwenden."
@@ -3361,10 +3357,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informationsmeldung, wenn CSME-Dekonfiguration ausgewählt ist, erklärt, dass sie nicht mit anderen Optionen kombiniert werden kann",
     "value": "Die CSME-Dekonfiguration führt eine vollständige Deprovisionierung von Intel AMT durch und kann nicht mit anderen Löschvorgängen kombiniert werden."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Erfolgsmeldung nach CSME-Dekonfiguration – fordert zur Neukonfiguration auf und teilt mit, dass das Gerät aus der Konsole entfernt wird",
-    "value": "CSME erfolgreich dekonfiguriert. Bitte konfigurieren Sie CSME neu. Dieses Gerät wird von der Konsole entfernt."
   },
   "remotePlatformErase.initiateNoCapsTooltip": {
     "description": "Tooltip am Schaltfläche 'Löschen starten', wenn keine Funktion ausgewählt ist",

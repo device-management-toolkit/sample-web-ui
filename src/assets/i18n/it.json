@@ -3278,10 +3278,6 @@
     "description": "Il BIOS ha segnalato il completamento corretto della cancellazione dopo aver rilevato un risultato in sospeso",
     "value": "Il BIOS ha segnalato che la cancellazione è stata completata correttamente."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Messaggio di successo dopo aver avviato la cancellazione remota della piattaforma",
-    "value": "Cancellazione remota della piattaforma avviata con successo"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Messaggio di successo dopo la cancellazione dell'unità OS – invita alla reinstallazione",
     "value": "Unità OS cancellata con successo. Reinstallare un sistema operativo prima di utilizzare questo dispositivo."
@@ -3365,10 +3361,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Messaggio informativo mostrato quando è selezionato Deconfigura CSME, spiegando che non può essere combinato con altre opzioni",
     "value": "La deconfigurazione CSME esegue un deprovisioning completo di Intel AMT e non può essere combinata con altre operazioni di cancellazione."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Messaggio di successo dopo la deconfigurazione CSME – invita alla riconfigurazione e informa che il dispositivo verrà rimosso dalla console",
-    "value": "CSME deconfigurato con successo. Riconfigurare CSME. Questo dispositivo verrà rimosso dalla console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",

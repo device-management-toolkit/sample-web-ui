@@ -1299,10 +1299,6 @@
     "description": "BIOS reported a successful erase after a pending result was observed",
     "value": "BIOS reported that the erase completed successfully."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Success message after initiating Remote Platform Erase",
-    "value": "Remote Platform Erase initiated successfully"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Success message after OS drive erase — prompts user to reinstall",
     "value": "OS drive erased successfully. Please reinstall an operating system before using this device."
@@ -1378,10 +1374,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Info message shown when Unconfigure CSME is selected, explaining it cannot be combined with other options",
     "value": "Unconfigure CSME performs a full unprovision of Intel AMT and cannot be combined with other erase operations."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Success message when CSME unconfigure is performed",
-    "value": "CSME unconfigured successfully. Please reconfigure CSME. This device will be removed from console."
   },
   "devices.actions.deactivate": {
     "description": "Tooltip for deactivating/removing a device",

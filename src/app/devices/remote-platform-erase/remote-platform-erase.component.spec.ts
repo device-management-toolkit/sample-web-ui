@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { UserConsentService } from '../user-consent.service'
 import { environment } from '../../../environments/environment'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 // Temporary set to 3 until CSME unconfigure is supported in the UI. The 4th capability is hidden in the template and not tested here.
 const VISIBLE_PLATFORM_ERASE_CAPABILITIES = 3 //PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
@@ -134,34 +135,40 @@ describe('RemotePlatformEraseComponent', () => {
       await vi.advanceTimersByTimeAsync(5000)
       expect(snackBarSpy.open).toHaveBeenLastCalledWith(message, undefined, expect.anything())
       expect(component.awaitingEraseResult()).toBe(false)
-      expect(devicesServiceSpy.setAmtFeatures).not.toHaveBeenCalled()
     })
 
     it.each([
       'succeeded',
       'failed',
       'unknown'
-    ] as const)('should leave a stale %s result unconfirmed', async (status) => {
+    ] as const)('should report a stale %s result as a warning after the extended timeout', async (status) => {
       devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status, message: 'stale result' }))
       component.initiateErase()
       await vi.advanceTimersByTimeAsync(300000)
-      expect(snackBarSpy.open).not.toHaveBeenCalledWith('stale result', undefined, expect.anything())
-      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+      expect(component.awaitingEraseResult()).toBe(true)
+      expect(snackBarSpy.open).not.toHaveBeenCalledWith(
         'remotePlatformErase.eraseUnconfirmed.value',
         undefined,
         expect.anything()
       )
-      expect(component.awaitingEraseResult()).toBe(false)
-    })
-
-    it('should leave an unreachable BIOS unconfirmed', async () => {
-      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(throwError(() => new Error('offline')))
-      component.initiateErase()
-      await vi.advanceTimersByTimeAsync(300000)
+      await vi.advanceTimersByTimeAsync(600000)
+      expect(snackBarSpy.open).not.toHaveBeenCalledWith('stale result', undefined, expect.anything())
       expect(snackBarSpy.open).toHaveBeenLastCalledWith(
         'remotePlatformErase.eraseUnconfirmed.value',
         undefined,
-        expect.anything()
+        SnackbarDefaults.defaultWarn
+      )
+      expect(component.awaitingEraseResult()).toBe(false)
+    })
+
+    it('should report an unreachable BIOS as a warning after the extended timeout', async () => {
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(throwError(() => new Error('offline')))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(600000)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
       )
     })
 
@@ -712,6 +719,15 @@ describe('RemotePlatformEraseComponent', () => {
     it('should complete without errors', () => {
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
+    })
+
+    it.each([true, false])('should preserve OCR setting %s after erase submission', (ocr) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, ocr, rpe: true })
+      devicesServiceSpy.setAmtFeatures.mockClear()
+
+      component.initiateErase()
+
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', expect.objectContaining({ ocr, rpe: true }))
     })
   })
 

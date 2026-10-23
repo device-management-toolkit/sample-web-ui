@@ -3150,10 +3150,6 @@
     "description": "BIOS rapporterade att raderingen slutfördes efter att ett väntande resultat hade observerats",
     "value": "BIOS rapporterade att raderingen slutfördes."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Framgångsmeddelande efter att fjärrradering av plattform initierats",
-    "value": "Fjärrradering av plattform har startats"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Framgångsmeddelande efter radering av OS-enhet – uppmanar till ominstallation",
     "value": "OS-enheten har raderats. Installera om ett operativsystem innan du använder den här enheten."
@@ -3237,10 +3233,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informationsmeddelande som visas när Avkonfigurering av CSME är valt, förklarar att det inte kan kombineras med andra alternativ",
     "value": "Avkonfigurering av CSME utför en fullständig avetablering av Intel AMT och kan inte kombineras med andra raderingsåtgärder."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Framgångsmeddelande efter CSME-avkonfigurering – uppmanar till omkonfigurering och informerar om att enheten tas bort från konsolen",
-    "value": "CSME avkonfigurerades. Konfigurera om CSME. Den här enheten tas bort från konsolen."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",

@@ -3286,10 +3286,6 @@
     "description": "Het BIOS meldde dat het wissen is geslaagd nadat een resultaat in behandeling was waargenomen",
     "value": "Het BIOS heeft gemeld dat het wissen is voltooid."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Succesbericht na het starten van extern wissen van het platform",
-    "value": "Extern wissen van het platform succesvol gestart"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Succesbericht na het wissen van de OS-schijf – vraagt om herinstallatie",
     "value": "OS-schijf succesvol gewist. Installeer een besturingssysteem opnieuw voordat u dit apparaat gebruikt."
@@ -3373,10 +3369,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Informatiebericht getoond wanneer CSME deconfigureren is geselecteerd, legt uit dat het niet kan worden gecombineerd met andere opties",
     "value": "CSME-deconfiguratie voert een volledige deprovisioning van Intel AMT uit en kan niet worden gecombineerd met andere wisbewerkingen."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Succesbericht na CSME-deconfiguratie – vraagt om herconfiguratie en meldt dat het apparaat uit de console wordt verwijderd",
-    "value": "CSME succesvol gedeconfigureerd. Configureer CSME opnieuw. Dit apparaat wordt verwijderd uit de console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",

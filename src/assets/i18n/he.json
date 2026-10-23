@@ -3278,10 +3278,6 @@
     "description": "ה-BIOS דיווח על מחיקה מוצלחת לאחר שהתקבלה תוצאה ממתינה",
     "value": "ה-BIOS דיווח שהמחיקה הושלמה בהצלחה."
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "הודעת הצלחה לאחר הפעלת מחיקת פלטפורמה מרחוק",
-    "value": "מחיקת הפלטפורמה מרחוק הופעלה בהצלחה"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "הודעת הצלחה לאחר מחיקת כונן מערכת ההפעלה – מבקשת התקנה מחדש",
     "value": "כונן מערכת ההפעלה נמחק בהצלחה. אנא התקן מחדש מערכת הפעלה לפני השימוש במכשיר זה."
@@ -3365,10 +3361,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "הודעת מידע המוצגת כאשר בוחרים בביטול תצורת CSME, ומסבירה מדוע לא ניתן לשלב עם אפשרויות אחרות",
     "value": "ביטול תצורת CSME מבצע ביטול מלא של תצורת Intel AMT ולא ניתן לשלב אותו עם פעולות מחיקה אחרות."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "הודעת הצלחה לאחר ביטול תצורת CSME – מבקשת הגדרה מחדש ומודיעה שהמכשיר יוסר מהקונסולה",
-    "value": "תצורת CSME בוטלה בהצלחה. אנא הגדר מחדש את CSME. מכשיר זה יוסר מהקונסולה."
   },
   "remotePlatformErase.selectionCount": {
     "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",

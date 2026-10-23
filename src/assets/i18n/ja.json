@@ -3278,10 +3278,6 @@
     "description": "保留中の結果が確認された後、BIOSが消去の成功を報告した",
     "value": "BIOSから消去が正常に完了したとの報告がありました。"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "リモートプラットフォーム消去開始後の成功メッセージ",
-    "value": "リモートプラットフォーム消去が正常に開始されました"
-  },
   "remotePlatformErase.osEraseSuccess": {
     "description": "OSドライブ消去後の成功メッセージ – 再インストールを促す",
     "value": "OSドライブが正常に消去されました。このデバイスを使用する前にOSを再インストールしてください。"
@@ -3365,10 +3361,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "CSMEの設定解除が選択されたときに表示される情報メッセージ（他のオプションと組み合わせられない理由を説明）",
     "value": "CSMEの設定解除はIntel AMTの完全なプロビジョニング解除を実行し、他の消去操作と組み合わせることはできません。"
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "CSMEの設定解除後の成功メッセージ – 再設定を促し、デバイスがコンソールから削除されることを通知",
-    "value": "CSMEの設定が正常に解除されました。CSMEを再設定してください。このデバイスはコンソールから削除されます。"
   },
   "remotePlatformErase.selectionCount": {
     "description": "現在選択されている消去操作の数を示すキャプション",

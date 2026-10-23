@@ -61,6 +61,9 @@ import { UserConsentService } from '../user-consent.service'
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
 const SSD_ERASE_KEY = 'secureEraseSsds'
 const SSD_PASSWORD_MAX_BYTES = 64
+const ERASE_STATUS_REQUEST_TIMEOUT_MS = 10 * 1000
+const ERASE_STATUS_POLL_INTERVAL_MS = 5 * 1000
+const ERASE_RESULT_TIMEOUT_MS = 10 * 60 * 1000
 
 @Component({
   selector: 'app-remote-platform-erase',
@@ -329,6 +332,24 @@ export class RemotePlatformEraseComponent implements OnChanges, OnInit {
           } else {
             if (this.destroyRef.destroyed || deviceId !== this.deviceId()) return
             this.snackBar.open(this.t('remotePlatformErase.eraseSubmitted'), undefined, SnackbarDefaults.defaultSuccess)
+            const payload: AMTFeaturesRequest = {
+              userConsent: this.amtFeatures()?.userConsent ?? 'none',
+              enableKVM: this.amtFeatures()?.KVM ?? false,
+              enableSOL: this.amtFeatures()?.SOL ?? false,
+              enableIDER: this.amtFeatures()?.IDER ?? false,
+              ocr: this.amtFeatures()?.ocr ?? false,
+              rpe: true
+            }
+            this.devicesService
+              .setAmtFeatures(deviceId, payload)
+              .pipe(
+                catchError((err) => {
+                  const msg: string = err.error?.message || this.t('remotePlatformErase.updateError')
+                  this.displayError(msg)
+                  return EMPTY
+                })
+              )
+              .subscribe()
             if (!environment.cloud) {
               this.watchEraseResult(deviceId, req.secureEraseAllSSDs)
             }
@@ -344,15 +365,15 @@ export class RemotePlatformEraseComponent implements OnChanges, OnInit {
     let observedPending = false
     let confirmed = false
     this.awaitingEraseResult.set(true)
-    this.eraseResultWatcher = timer(0, 5000)
+    this.eraseResultWatcher = timer(0, ERASE_STATUS_POLL_INTERVAL_MS)
       .pipe(
         exhaustMap(() =>
           this.devicesService.getRemoteEraseStatus(deviceId).pipe(
-            timeout(10000),
+            timeout(ERASE_STATUS_REQUEST_TIMEOUT_MS),
             catchError(() => of({ status: 'unknown', message: '' }))
           )
         ),
-        takeUntil(timer(300000)),
+        takeUntil(timer(ERASE_RESULT_TIMEOUT_MS)),
         takeWhile((result) => {
           observedPending ||= result.status === 'pending'
           return !observedPending || (result.status !== 'succeeded' && result.status !== 'failed')
@@ -377,7 +398,7 @@ export class RemotePlatformEraseComponent implements OnChanges, OnInit {
         },
         complete: () => {
           if (!confirmed && !this.destroyRef.destroyed) {
-            this.displayError(this.t('remotePlatformErase.eraseUnconfirmed'))
+            this.snackBar.open(this.t('remotePlatformErase.eraseUnconfirmed'), undefined, SnackbarDefaults.defaultWarn)
           }
         }
       })
