@@ -1901,8 +1901,12 @@
     "value": "إرسال"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "رسالة تظهر عند إغلاق AMT لجلسة KVM",
-    "value": "تم إغلاق جلسة KVM بواسطة AMT"
+    "description": "رسالة تظهر عند انقطاع جلسة KVM نشطة بشكل غير متوقع",
+    "value": "انقطع اتصال جلسة KVM"
+  },
+  "kvm.connectionFailed": {
+    "description": "رسالة تظهر عند فشل اتصال KVM قبل إنشاء الجلسة",
+    "value": "فشلت المصادقة - تعذر إنشاء اتصال KVM."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "رسالة الحالة المعروضة أثناء استرداد ميزات AMT",

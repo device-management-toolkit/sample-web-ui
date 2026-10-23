@@ -1897,8 +1897,12 @@
     "value": "Lähetä"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Viesti, joka näytetään kun AMT sulkee KVM-istunnon",
-    "value": "AMT sulki KVM-istunnon"
+    "description": "Viesti, joka näytetään, kun muodostettu KVM-istunto katkeaa odottamatta",
+    "value": "KVM-istunnon yhteys katkesi"
+  },
+  "kvm.connectionFailed": {
+    "description": "Viesti, joka näytetään, kun KVM-yhteys epäonnistuu ennen istunnon muodostamista",
+    "value": "Todennus epäonnistui - KVM-yhteyttä ei voitu muodostaa."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Tilailmoitus AMT-ominaisuuksien hakemisen aikana",
