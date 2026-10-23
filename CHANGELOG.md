@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.1.0...v4.2.0) (2026-10-23)
+
+
+### Features
+
+* **devices:** improve KVM connection feedback ([#3659](https://github.com/device-management-toolkit/sample-web-ui/issues/3659)) ([51c25d6](https://github.com/device-management-toolkit/sample-web-ui/commit/51c25d6c64cf4e5b01621cec302c1bc4770d5f1f)), closes [device-management-toolkit/deployment#711](https://github.com/device-management-toolkit/deployment/issues/711)
+
 # [4.1.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.1...v4.1.0) (2026-10-16)
 
 
