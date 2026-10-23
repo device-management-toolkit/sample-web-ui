@@ -19,6 +19,7 @@ sed -i \
 -e "s|##ISSUER##|$ISSUER|g" \
 -e "s|##REDIRECTURI##|$REDIRECTURI|g" \
 -e "s|##SCOPE##|$SCOPE|g" \
+-e "s|##AUDIENCE##|$AUDIENCE|g" \
  /usr/share/nginx/html/*.js
 
 # AOT constant-folds useOAuth at build time; patch the minified token directly.

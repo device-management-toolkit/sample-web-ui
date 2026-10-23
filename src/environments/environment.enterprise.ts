@@ -19,6 +19,7 @@ export const environment = {
     scope: '##SCOPE##',
     responseType: 'code',
     requireHttps: true, // set to false when local
-    strictDiscoveryDocumentValidation: true
+    strictDiscoveryDocumentValidation: true,
+    customQueryParams: { audience: '##AUDIENCE##' } // dropped when Console sets no audience
   }
 }

@@ -15,6 +15,7 @@ import { AuthGuard } from './app/shared/auth-guard.service'
 import { AuthService } from './app/auth.service'
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks'
 import { errorHandlingInterceptor } from './app/error-handling.interceptor'
+import { oauthConfig } from './app/oauth-config'
 import { authorizationInterceptor } from './app/authorize.interceptor'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
@@ -63,7 +64,7 @@ if (environment.useOAuth) {
       const oauthService = inject(OAuthService)
       // Created before configure() so it hears the first token_expires event.
       const authService = inject(AuthService)
-      oauthService.configure(environment.auth)
+      oauthService.configure(oauthConfig(environment.auth))
       await oauthService.loadDiscoveryDocumentAndTryLogin()
       await authService.renewExpiredSession()
     })

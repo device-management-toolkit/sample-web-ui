@@ -18,6 +18,7 @@ export const environment = {
     redirectUri: '##REDIRECTURI##',
     scope: '##SCOPE##',
     responseType: 'code',
-    requireHttps: false
+    requireHttps: false,
+    customQueryParams: { audience: '##AUDIENCE##' }
   }
 }

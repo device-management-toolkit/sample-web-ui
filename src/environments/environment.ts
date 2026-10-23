@@ -22,7 +22,8 @@ export const environment = {
     redirectUri: 'http://localhost:4200/dashboard',
     scope: '',
     responseType: 'code',
-    requireHttps: true // set to false when local
+    requireHttps: true, // set to false when local
+    customQueryParams: { audience: '' }
   }
 }
 
