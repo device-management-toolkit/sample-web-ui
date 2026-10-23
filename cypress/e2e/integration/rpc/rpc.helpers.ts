@@ -456,6 +456,13 @@ export const buildActivateCommand = (opts: ActivateCommandOptions): string => {
   )
 }
 
+// rpc v2 local activation leaves AMT 15 and below without TLS even for a TLS
+// profile, so the console suite configures TLS (AMT self-signed cert) itself.
+export const buildConfigureTlsCommand = (opts: RpcCommandOptions & { password: string }): string => {
+  const args = `configure tls -mode Server -password ${opts.password} -v`
+  return buildRpcCommand({ isWin: opts.isWin, rpcDockerImage: opts.rpcDockerImage }, 'rpc.exe', args)
+}
+
 export const addArgsToCommandCandidates = (commands: string[], argsToAppend: string): string[] =>
   commands.map((command) => `${command} ${argsToAppend}`)
 
