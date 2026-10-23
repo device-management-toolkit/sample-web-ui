@@ -3398,5 +3398,13 @@
   "downloadRpc.domain.hint": {
     "description": "Tips för val av domän",
     "value": "Krävs för Admin Control Mode: domänen vars etableringscertifikat matchar enhetens DNS-suffix."
+  },
+  "kvm.sessionClosedByDevice": {
+    "description": "Meddelande som visas när en etablerad KVM-session oväntat kopplas från",
+    "value": "KVM-sessionen har kopplats från"
+  },
+  "kvm.connectionFailed": {
+    "description": "Meddelande som visas när KVM-anslutningen misslyckas innan en session har upprättats",
+    "value": "Autentisering misslyckades - Det gick inte att upprätta en KVM-anslutning."
   }
 }

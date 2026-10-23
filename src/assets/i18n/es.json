@@ -1897,8 +1897,12 @@
     "value": "Enviar"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Mensaje que se muestra cuando AMT cierra la sesión KVM",
-    "value": "La sesión KVM fue cerrada por AMT"
+    "description": "Mensaje que se muestra cuando una sesión KVM establecida se desconecta inesperadamente",
+    "value": "Sesión KVM desconectada"
+  },
+  "kvm.connectionFailed": {
+    "description": "Mensaje que se muestra cuando falla la conexión KVM antes de establecer una sesión",
+    "value": "Error de autenticación - No se pudo establecer una conexión KVM."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Mensaje de estado mientras se recuperan las características de AMT",

@@ -1901,8 +1901,12 @@
     "value": "Verzenden"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Bericht getoond wanneer AMT de KVM-sessie sluit",
-    "value": "KVM-sessie is gesloten door AMT"
+    "description": "Bericht dat wordt weergegeven wanneer een bestaande KVM-sessie onverwacht wordt verbroken",
+    "value": "KVM-sessie verbroken"
+  },
+  "kvm.connectionFailed": {
+    "description": "Bericht dat wordt weergegeven wanneer de KVM-verbinding mislukt voordat een sessie tot stand komt",
+    "value": "Authenticatie mislukt - Kan geen KVM-verbinding tot stand brengen."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
