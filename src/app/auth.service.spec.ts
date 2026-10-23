@@ -13,6 +13,8 @@ import { Router } from '@angular/router'
 import { environment } from '../environments/environment'
 import { MPSVersion, RPSVersion } from '../models/models'
 import { provideTranslateService } from '@ngx-translate/core'
+import { OAuthEvent, OAuthInfoEvent, OAuthService } from 'angular-oauth2-oidc'
+import { Subject } from 'rxjs'
 
 describe('AuthService', () => {
   let service: AuthService
@@ -407,6 +409,173 @@ describe('AuthService', () => {
       expect(service.compareSemver('1.0.0', '1.0.1')).toBeLessThan(0)
       expect(service.compareSemver('1.2.0', '1.1.5')).toBeGreaterThan(0)
       expect(service.compareSemver('1.0.0', '1.0.0')).toBe(0)
+    })
+  })
+
+  describe('OAuth token renewal', () => {
+    const originalUseOAuth = environment.useOAuth
+    let events: Subject<OAuthEvent>
+    let oauthService: SpyObj<OAuthService>
+
+    const rebuild = (): AuthService => {
+      TestBed.resetTestingModule()
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          AuthService,
+          { provide: Router, useValue: routerSpy },
+          { provide: OAuthService, useValue: oauthService },
+          provideHttpClient(),
+          provideHttpClientTesting()
+        ]
+      })
+
+      const rebuilt = TestBed.inject(AuthService)
+      httpMock = TestBed.inject(HttpTestingController)
+      return rebuilt
+    }
+
+    beforeEach(() => {
+      environment.useOAuth = true
+      events = new Subject<OAuthEvent>()
+      oauthService = createSpyObj(
+        'OAuthService',
+        [
+          'hasValidAccessToken',
+          'getRefreshToken',
+          'refreshToken',
+          'logOut'
+        ],
+        {
+          events,
+          tokenEndpoint: 'https://idp.example.com/oauth2/token'
+        }
+      )
+      oauthService.hasValidAccessToken.mockReturnValue(true)
+      oauthService.getRefreshToken.mockReturnValue('refresh-token')
+      oauthService.refreshToken.mockResolvedValue({})
+    })
+
+    afterEach(() => {
+      environment.useOAuth = originalUseOAuth
+    })
+
+    it('refreshes when the access token is about to expire', () => {
+      rebuild()
+
+      events.next(new OAuthInfoEvent('token_expires', 'access_token'))
+
+      expect(oauthService.refreshToken).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not refresh when only the ID token is about to expire', () => {
+      rebuild()
+
+      events.next(new OAuthInfoEvent('token_expires', 'id_token'))
+
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+    })
+
+    it('does not call the IdP without a refresh token', async () => {
+      oauthService.getRefreshToken.mockReturnValue(null)
+      const auth = rebuild()
+
+      events.next(new OAuthInfoEvent('token_expires', 'access_token'))
+
+      await expect(auth.refreshAccessToken()).resolves.toBe(false)
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+    })
+
+    it('shares one refresh between concurrent callers', async () => {
+      const auth = rebuild()
+
+      const results = await Promise.all([auth.refreshAccessToken(), auth.refreshAccessToken()])
+
+      expect(results).toEqual([true, true])
+      expect(oauthService.refreshToken).toHaveBeenCalledTimes(1)
+    })
+
+    it('resolves false when the IdP refuses, and tries again on the next call', async () => {
+      oauthService.refreshToken.mockRejectedValueOnce(new Error('invalid_grant'))
+      const auth = rebuild()
+
+      await expect(auth.refreshAccessToken()).resolves.toBe(false)
+      await expect(auth.refreshAccessToken()).resolves.toBe(true)
+      expect(oauthService.refreshToken).toHaveBeenCalledTimes(2)
+    })
+
+    it('recognises only the IdP token endpoint as the token request', () => {
+      const auth = rebuild()
+
+      expect(auth.isOAuthTokenRequest('https://idp.example.com/oauth2/token')).toBe(true)
+      expect(auth.isOAuthTokenRequest('https://console.example.com/api/v1/devices')).toBe(false)
+    })
+
+    it('renews on start-up an access token that expired while the app was closed', async () => {
+      oauthService.hasValidAccessToken.mockReturnValue(false)
+      const auth = rebuild()
+
+      await auth.renewExpiredSession()
+
+      expect(oauthService.refreshToken).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not renew on start-up while the access token is still valid', async () => {
+      const auth = rebuild()
+
+      await auth.renewExpiredSession()
+
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+    })
+
+    it('does not renew on start-up without a refresh token', async () => {
+      oauthService.hasValidAccessToken.mockReturnValue(false)
+      oauthService.getRefreshToken.mockReturnValue(null)
+      const auth = rebuild()
+
+      await auth.renewExpiredSession()
+
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+    })
+
+    it('holds an expiry that fires before discovery and renews once start-up has the token endpoint', async () => {
+      Object.assign(oauthService, { tokenEndpoint: null })
+      const auth = rebuild()
+
+      expect(() => events.next(new OAuthInfoEvent('token_expires', 'access_token'))).not.toThrow()
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+
+      Object.assign(oauthService, { tokenEndpoint: 'https://idp.example.com/oauth2/token' })
+      await auth.renewExpiredSession()
+
+      expect(oauthService.refreshToken).toHaveBeenCalledTimes(1)
+    })
+
+    it('resolves false without a token endpoint', async () => {
+      Object.assign(oauthService, { tokenEndpoint: null })
+      const auth = rebuild()
+
+      await expect(auth.refreshAccessToken()).resolves.toBe(false)
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
+    })
+
+    it('resolves false when the library throws before sending the request', async () => {
+      oauthService.refreshToken.mockImplementation(() => {
+        throw new Error('tokenEndpoint must use HTTPS')
+      })
+      const auth = rebuild()
+
+      await expect(auth.refreshAccessToken()).resolves.toBe(false)
+    })
+
+    it('never refreshes when OAuth is off', async () => {
+      environment.useOAuth = false
+      const auth = rebuild()
+
+      await expect(auth.refreshAccessToken()).resolves.toBe(false)
+      expect(auth.isOAuthTokenRequest('https://idp.example.com/oauth2/token')).toBe(false)
+      await expect(auth.renewExpiredSession()).resolves.toBeUndefined()
+      expect(oauthService.refreshToken).not.toHaveBeenCalled()
     })
   })
 })

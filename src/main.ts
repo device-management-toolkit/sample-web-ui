@@ -12,6 +12,7 @@ import { bootstrapApplication } from '@angular/platform-browser'
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http'
 import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc'
 import { AuthGuard } from './app/shared/auth-guard.service'
+import { AuthService } from './app/auth.service'
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks'
 import { errorHandlingInterceptor } from './app/error-handling.interceptor'
 import { authorizationInterceptor } from './app/authorize.interceptor'
@@ -58,10 +59,13 @@ if (environment.useOAuth) {
       },
       JwksValidationHandler
     ),
-    provideAppInitializer(() => {
+    provideAppInitializer(async () => {
       const oauthService = inject(OAuthService)
+      // Created before configure() so it hears the first token_expires event.
+      const authService = inject(AuthService)
       oauthService.configure(environment.auth)
-      return oauthService.loadDiscoveryDocumentAndTryLogin()
+      await oauthService.loadDiscoveryDocumentAndTryLogin()
+      await authService.renewExpiredSession()
     })
   )
 } else {

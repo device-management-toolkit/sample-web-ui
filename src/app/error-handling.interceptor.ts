@@ -1,11 +1,12 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
-import { catchError, of, throwError } from 'rxjs'
+import { catchError, from, of, switchMap, throwError } from 'rxjs'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { environment } from '../environments/environment'
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   const authService = inject(AuthService)
@@ -13,7 +14,23 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   const snackbar = inject(MatSnackBar)
   const translate = inject(TranslateService)
 
+  // IdP token request errors go to the library untouched: refreshing would
+  // wait on itself, and a refused refresh must not log out twice.
+  if (environment.useOAuth && authService.isOAuthTokenRequest(request.url)) {
+    return next(request)
+  }
+
   return next(request).pipe(
+    // OAuth 401: refresh once and retry. The OAuth interceptor runs after this
+    // one and attaches the new token. Errors of the retry reach the handler
+    // below, so a second 401 logs out.
+    catchError((error: any) =>
+      environment.useOAuth && error instanceof HttpErrorResponse && error.status === 401
+        ? from(authService.refreshAccessToken()).pipe(
+            switchMap((refreshed) => (refreshed ? next(request) : throwError(() => error)))
+          )
+        : throwError(() => error)
+    ),
     catchError((error: any) => {
       if (error instanceof HttpErrorResponse) {
         if (error.status === 401) {

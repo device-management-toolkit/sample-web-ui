@@ -10,7 +10,7 @@ import { catchError, filter, map } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 import { Router } from '@angular/router'
 import { ValidatorError, MPSVersion, RPSVersion } from '../models/models'
-import { OAuthService } from 'angular-oauth2-oidc'
+import { OAuthInfoEvent, OAuthService } from 'angular-oauth2-oidc'
 
 // A UI hint, not a credential. The Console binary's session is an HttpOnly cookie.
 const SESSION_FLAG = 'sessionActive'
@@ -34,6 +34,9 @@ export class AuthService {
 
   isLoggedIn = false
   url = `${environment.mpsServer}/api/v1/authorize`
+  private refreshInFlight: Promise<boolean> | null = null
+  // An expiry raised before discovery loaded the token endpoint, left to start-up.
+  private renewalPending = false
 
   constructor() {
     if (environment.authDisabled) {
@@ -69,59 +72,68 @@ export class AuthService {
       this.oauthService.events
         .pipe(filter((e) => ['session_terminated', 'session_error'].includes(e.type)))
         .subscribe(() => this.logout())
+
+      // The library raises token_expires at 75% of the token lifetime, also
+      // after a page reload, but renews nothing by itself. On a reload late in
+      // the lifetime it fires before discovery, so renewExpiredSession() renews.
+      this.oauthService.events
+        .pipe(filter((e) => e.type === 'token_expires' && (e as OAuthInfoEvent).info === 'access_token'))
+        .subscribe(() => {
+          if (this.oauthService?.tokenEndpoint) {
+            void this.refreshAccessToken()
+          } else {
+            this.renewalPending = true
+          }
+        })
     }
   }
 
-  public runInitialLoginSequence(): Promise<void> {
-    if (location.hash) {
-      console.log('Encountered hash fragment, plotting as table...')
-      console.table(
-        location.hash
-          .substr(1)
-          .split('&')
-          .map((kvp) => kvp.split('='))
-      )
+  /**
+   * Renews the OAuth access token with the stored refresh token. Resolves
+   * false without calling the IdP when there is no refresh token, and false
+   * when the IdP refuses. Concurrent callers share one token request.
+   */
+  refreshAccessToken(): Promise<boolean> {
+    const oauthService = this.oauthService
+    if (!oauthService?.tokenEndpoint || !oauthService.getRefreshToken()) {
+      return Promise.resolve(false)
     }
-    return this.oauthService!.loadDiscoveryDocument()
-      .then(() => this.oauthService!.tryLogin())
-      .then(() => {
-        if (this.oauthService!.hasValidAccessToken()) {
-          return Promise.resolve()
-        }
 
-        return this.oauthService!.silentRefresh()
-          .then(() => Promise.resolve())
-          .catch((result) => {
-            const errorResponsesRequiringUserInteraction = [
-              'interaction_required',
-              'login_required',
-              'account_selection_required',
-              'consent_required'
-            ]
+    // async, so a synchronous throw from the library also resolves false.
+    const refresh = async (): Promise<boolean> => {
+      try {
+        await oauthService.refreshToken()
+        return true
+      } catch {
+        return false
+      }
+    }
 
-            // wait for user to login manually
-            if (result && result.reason && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
-              return Promise.resolve()
-            }
+    this.refreshInFlight ??= refresh().finally(() => {
+      this.refreshInFlight = null
+    })
 
-            // Welp, couldn't log in
-            return Promise.reject(result)
-          })
-      })
-      .then(() => {
-        if (
-          this.oauthService!.state &&
-          this.oauthService!.state !== 'undefined' &&
-          this.oauthService!.state !== 'null'
-        ) {
-          let stateUrl = this.oauthService!.state
-          if (stateUrl.startsWith('/') === false) {
-            stateUrl = decodeURIComponent(stateUrl)
-          }
-          console.log(`There was state of ${this.oauthService!.state}, so we are sending you to: ${stateUrl}`)
-          this.router.navigateByUrl(stateUrl)
-        }
-      })
+    return this.refreshInFlight
+  }
+
+  /**
+   * Start-up step, after discovery: renews an access token that expired while
+   * the app was closed, or whose expiry fired before discovery, before routing.
+   */
+  async renewExpiredSession(): Promise<void> {
+    if (this.oauthService == null) {
+      return
+    }
+    if (this.renewalPending || !this.oauthService.hasValidAccessToken()) {
+      this.renewalPending = false
+      await this.refreshAccessToken()
+    }
+  }
+
+  /** Whether url is the IdP token endpoint, which must never wait on a refresh. */
+  isOAuthTokenRequest(url: string): boolean {
+    const tokenEndpoint = this.oauthService?.tokenEndpoint
+    return !!tokenEndpoint && url === tokenEndpoint
   }
 
   getLoggedUserToken(): string {
