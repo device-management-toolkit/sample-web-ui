@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpContext } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, map, shareReplay, tap } from 'rxjs/operators'
@@ -41,8 +41,10 @@ import {
   DisplaySelectionResponse,
   DisplaySelectionRequest,
   RemoteEraseRequest,
+  RemoteEraseStatus,
   BootCapabilities
 } from '../../models/models'
+import { SUPPRESS_TRANSIENT_ERRORS } from '../error-handling.interceptor'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -393,6 +395,12 @@ export class DevicesService {
         throw err
       })
     )
+  }
+
+  getRemoteEraseStatus(deviceId: string): Observable<RemoteEraseStatus> {
+    return this.http.get<RemoteEraseStatus>(`${environment.mpsServer}/api/v2/amt/boot/remoteErase/${deviceId}/status`, {
+      context: new HttpContext().set(SUPPRESS_TRANSIENT_ERRORS, true)
+    })
   }
 
   getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {

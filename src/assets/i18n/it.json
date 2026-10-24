@@ -2746,8 +2746,8 @@
     "value": "Utilizzo di password generate in modo casuale"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Messaggio di errore quando la password SSD supera i 64 byte",
-    "value": "La password SSD non deve superare i 64 byte"
+    "description": "Messaggio di errore quando la password SSD supera il limite di 64 byte del payload RPE",
+    "value": "La password SSD non deve superare 64 byte UTF-8"
   },
   "sol.connect": {
     "description": "Pulsante per la connessione a SOL",
@@ -3270,9 +3270,17 @@
     "description": "Messaggio di errore quando l'aggiornamento della funzione di cancellazione remota fallisce",
     "value": "Impossibile aggiornare la funzionalità di cancellazione remota della piattaforma"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Messaggio di successo dopo aver avviato la cancellazione remota della piattaforma",
-    "value": "Cancellazione remota della piattaforma avviata con successo"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Richiesta di cancellazione accettata, risultato del BIOS non ancora noto",
+    "value": "Richiesta di cancellazione inviata. Il completamento da parte del BIOS non è stato confermato."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Nessun nuovo risultato BIOS definitivo rilevato prima della scadenza del controllo dello stato",
+    "value": "Impossibile confermare l'esito della cancellazione. Controllare il risultato del BIOS prima di riprovare."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "Il BIOS ha segnalato il completamento corretto della cancellazione dopo aver rilevato un risultato in sospeso",
+    "value": "Il BIOS ha segnalato che la cancellazione è stata completata correttamente."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Messaggio di successo dopo la cancellazione dell'unità OS – invita alla reinstallazione",
@@ -3357,10 +3365,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Messaggio informativo mostrato quando è selezionato Deconfigura CSME, spiegando che non può essere combinato con altre opzioni",
     "value": "La deconfigurazione CSME esegue un deprovisioning completo di Intel AMT e non può essere combinata con altre operazioni di cancellazione."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Messaggio di successo dopo la deconfigurazione CSME – invita alla riconfigurazione e informa che il dispositivo verrà rimosso dalla console",
-    "value": "CSME deconfigurato con successo. Riconfigurare CSME. Questo dispositivo verrà rimosso dalla console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",

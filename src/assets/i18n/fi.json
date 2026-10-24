@@ -2750,8 +2750,8 @@
     "value": "Satunnaisesti luotujen salasanojen käyttö"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Virheilmoitus kun SSD-salasana ylittää 64 tavua",
-    "value": "SSD-salasana ei saa ylittää 64 tavua"
+    "description": "Virheilmoitus, kun SSD-salasana ylittää RPE-hyötykuorman 64 tavun rajan",
+    "value": "SSD-salasana saa olla enintään 64 UTF-8-tavua"
   },
   "sol.connect": {
     "description": "Painike SOL-yhteyden muodostamiseksi",
@@ -3274,9 +3274,17 @@
     "description": "Virheviesti etäalustan pyyhintäominaisuuden päivityksen epäonnistuessa",
     "value": "Etäalustan pyyhintäominaisuuden päivitys epäonnistui"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Onnistumisviesti etäalustan pyyhinnan aloittamisen jälkeen",
-    "value": "Etäalustan pyyhintä käynnistetty onnistuneesti"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Tyhjennyspyyntö on hyväksytty, mutta BIOS-tulosta ei vielä tunneta",
+    "value": "Tyhjennyspyyntö lähetetty. BIOSin suorittamaa tyhjennystä ei ole vahvistettu."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Uutta lopullista BIOS-tulosta ei havaittu ennen tilan tarkistuksen aikakatkaisua",
+    "value": "Tyhjennyksen tulosta ei voitu vahvistaa. Tarkista BIOS-tulos ennen uutta yritystä."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "BIOS ilmoitti tyhjennyksen onnistuneen, kun ensin oli havaittu keskeneräinen tulos",
+    "value": "BIOS ilmoitti, että tyhjennys onnistui."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Onnistumisviesti käyttöjärjestelmäaseman pyyhinnän jälkeen – kehottaa uudelleenasennukseen",
@@ -3361,10 +3369,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Tietosanoma, joka näytetään kun CSME:n konfiguraation poisto on valittu, selittäen ettei sitä voi yhdistää muihin vaihtoehtoihin",
     "value": "CSME:n konfiguraation poisto suorittaa Intel AMT:n täydellisen poistamisen ja sitä ei voi yhdistää muihin poistotoimintoihin."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Onnistumisviesti CSME:n konfiguraation poiston jälkeen – kehottaa uudelleenkonfigurointiin ja ilmoittaa, että laite poistetaan konsolista",
-    "value": "CSME:n konfiguraatio poistettu onnistuneesti. Konfiguroi CSME uudelleen. Tämä laite poistetaan konsolista."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",
