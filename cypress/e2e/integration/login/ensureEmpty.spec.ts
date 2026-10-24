@@ -21,8 +21,14 @@ describe('Ensure the server is empty', () => {
 
   it('checks for cira configs', () => {
     if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n') {
-      cy.goToPage('CIRA Configs')
-      cy.contains('No CIRA Configs').should('be.visible')
+      cy.get('body').then(($body) => {
+        // Nav item is hidden entirely when the server reports CIRA disabled
+        // (APP_DISABLE_CIRA) - nothing to check against in that mode.
+        if ($body.find('a:contains("CIRA Configs")').length > 0) {
+          cy.goToPage('CIRA Configs')
+          cy.contains('No CIRA Configs').should('be.visible')
+        }
+      })
     }
   })
 
