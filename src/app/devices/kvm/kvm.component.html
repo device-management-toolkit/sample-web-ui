@@ -14,7 +14,7 @@
       <mat-form-field style="margin-bottom: 0; margin-right: 8px">
         <mat-label>Display Selection</mat-label>
         <mat-select [ngModel]="selectedDisplay()" (ngModelChange)="onDisplayChange($event)">
-          @for (display of displays; track display.value) {
+          @for (display of displays(); track display.value) {
             <mat-option [value]="display.value" [disabled]="display.disabled">
               {{ display.viewValue }}
             </mat-option>
@@ -38,29 +38,29 @@
   </div>
   <div class="flex flex-50 justify-end">
     @if (amtFeatures()?.kvmAvailable) {
-      <button mat-flat-button color="primary" style="margin-right: 16px" (click)="toggleFullscreen()">
+      <button mat-flat-button style="margin-right: 16px" (click)="toggleFullscreen()">
         <mat-icon>fullscreen</mat-icon>{{ 'kvm.fullscreen.button.value' | translate }}
       </button>
       @if ((deviceState() === 0 || !deviceKVMConnection()) && !isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="connect()">
+        <button mat-flat-button style="margin-right: 16px" (click)="connect()">
           <mat-icon>tv_on</mat-icon>{{ 'kvm.connect.button.value' | translate }}
         </button>
       } @else if (deviceState() !== 2 && isLoading()) {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()" disabled>
+        <button mat-flat-button style="margin-right: 16px" (click)="disconnect()" disabled>
           <mat-icon>tv_off</mat-icon>{{ 'kvm.connecting.label.value' | translate }}
         </button>
       } @else {
-        <button mat-flat-button color="primary" style="margin-right: 16px" (click)="disconnect()">
+        <button mat-flat-button style="margin-right: 16px" (click)="disconnect()">
           <mat-icon>tv_off</mat-icon>{{ 'kvm.disconnect.button.value' | translate }}
         </button>
       }
     }
-    <button mat-flat-button color="primary" (click)="fileInput.click()">
+    <button mat-flat-button (click)="fileInput.click()">
       <mat-icon>upload_file</mat-icon>{{ 'kvm.attachDisk.label.value' | translate }}
     </button>
     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso, .img" />
     @if (isIDERActive()) {
-      <button mat-flat-button color="warn" (click)="onCancelIDER(fileInput)" class="stop-ider-button">
+      <button mat-flat-button (click)="onCancelIDER(fileInput)" class="stop-ider-button error-button">
         <mat-icon>stop</mat-icon>{{ 'kvm.stopIder.label.value' | translate }}
       </button>
     }
@@ -74,7 +74,7 @@
     }
   </div>
 }
-@if (readyToLoadKvm && amtFeatures()?.kvmAvailable) {
+@if (readyToLoadKvm() && amtFeatures()?.kvmAvailable) {
   <amt-kvm
     class="kvm"
     [isFullscreen]="isFullscreen()"
@@ -86,14 +86,14 @@
     [selectedHotkey]="hotKeySignal()"
     (deviceStatus)="deviceKVMStatus($event)"></amt-kvm>
 }
-@if (diskImage && deviceIDERConnection()) {
+@if (diskImage() && deviceIDERConnection()) {
   <amt-ider
     class="ider"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()"
     [deviceConnection]="deviceIDERConnection()"
-    [cdrom]="diskImage"
+    [cdrom]="diskImage()"
     [floppy]="null"
     (deviceStatus)="deviceIDERStatus($event)">
   </amt-ider>

@@ -1,14 +1,17 @@
+<a href="#" class="navbar-brand">
+  <span class="logo" role="img" aria-label="logo"></span>
+</a>
 <mat-nav-list class="mat-nav-list">
-  <a href="#" class="flex navbar-brand justify-center">
-    <img alt="logo" style="margin: 10px 0" height="35" src="../../../assets/logo.png" />
-  </a>
-
-  <mat-divider></mat-divider>
   <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     <mat-icon matListItemIcon>home</mat-icon>
     <span i18n="navlink">{{ 'dashboard.header.dashboardTitle.value' | translate }}</span>
   </a>
+  <a mat-list-item routerLink="/devices" routerLinkActive="active">
+    <mat-icon matListItemIcon>devices</mat-icon
+    ><span i18n="navlink">{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
+  </a>
 
+  <div class="nav-section">{{ 'navbar.section.configuration.value' | translate }}</div>
   <a mat-list-item routerLink="/ieee8021x" routerLinkActive="active">
     <mat-icon matListItemIcon>security</mat-icon>
     <span i18n="navlink">{{ 'ieee8021x.headerd.ieeeTitle.value' | translate }}</span>
@@ -44,19 +47,15 @@
     ><span i18n="navlink">{{ 'domains.header.domainsTitle.value' | translate }}</span>
   </a>
 
-  <a mat-list-item routerLink="/devices" routerLinkActive="active">
-    <mat-icon matListItemIcon>devices</mat-icon
-    ><span i18n="navlink">{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
-  </a>
-
-  @if (cloudMode === false) {
-    <a mat-list-item routerLink="/download-rpc" routerLinkActive="active">
-      <mat-icon matListItemIcon>download</mat-icon
-      ><span i18n="navlink">{{ 'downloadRpc.title.value' | translate }}</span>
-    </a>
-  }
-
   <!-- <a mat-list-item routerLink="/event-channel" routerLinkActive="active">
         <mat-icon matListItemIcon>data_exploration</mat-icon><span i18n="navlink">MQTT Events</span>
     </a> -->
 </mat-nav-list>
+@if (cloudMode === false) {
+  <div class="nav-action">
+    <a mat-flat-button routerLink="/download-rpc">
+      <mat-icon>download</mat-icon>
+      {{ 'downloadRpc.title.value' | translate }}
+    </a>
+  </div>
+}

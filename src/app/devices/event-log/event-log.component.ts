@@ -5,12 +5,12 @@
 
 import { Component, AfterViewInit, OnDestroy, ViewChild, inject, signal, input } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table'
 import { of, Subject } from 'rxjs'
 import { catchError, finalize, takeUntil } from 'rxjs/operators'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { EventLog } from '../../../models/models'
-import { MatCardModule } from '@angular/material/card'
+import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { environment } from '../../../environments/environment'
 import { MatButtonModule } from '@angular/material/button'
@@ -35,7 +35,7 @@ const EVENTTYPEMAP: EventTypeMap = {
   styleUrls: ['./event-log.component.scss'],
   imports: [
     MatProgressBar,
-    MatCardModule,
+    MatToolbarModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
@@ -62,10 +62,10 @@ export class EventLogComponent implements AfterViewInit, OnDestroy {
   ]
 
   public isCloudMode: boolean = environment.cloud
-  public dataSource = new MatTableDataSource<EventLog>([])
-  public hasMoreRecords = false
+  public dataSource = signal<EventLog[]>([])
+  public hasMoreRecords = signal(false)
   public pageSize = 10
-  public currentPageIndex = 0
+  public currentPageIndex = signal(0)
 
   constructor() {
     if (!this.isCloudMode) {
@@ -95,7 +95,7 @@ export class EventLogComponent implements AfterViewInit, OnDestroy {
         )
         .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
-          this.dataSource.data = data.records
+          this.dataSource.set(data.records)
         })
     } else {
       this.loadEventLogs(0)
@@ -118,8 +118,8 @@ export class EventLogComponent implements AfterViewInit, OnDestroy {
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.hasMoreRecords = data.hasMoreRecords
-        this.dataSource.data = data.records
+        this.hasMoreRecords.set(data.hasMoreRecords)
+        this.dataSource.set(data.records)
       })
   }
 
@@ -128,15 +128,17 @@ export class EventLogComponent implements AfterViewInit, OnDestroy {
   }
 
   nextPage(): void {
-    this.loadEventLogs(++this.currentPageIndex * this.pageSize)
+    this.currentPageIndex.update((index) => index + 1)
+    this.loadEventLogs(this.currentPageIndex() * this.pageSize)
   }
 
   lastPage(): void {
-    this.loadEventLogs(--this.currentPageIndex * this.pageSize)
+    this.currentPageIndex.update((index) => index - 1)
+    this.loadEventLogs(this.currentPageIndex() * this.pageSize)
   }
 
   isNoData(): boolean {
-    return this.isLoading() || this.dataSource.data.length === 0
+    return this.isLoading() || this.dataSource().length === 0
   }
   download(): void {
     this.isLoading.set(true)

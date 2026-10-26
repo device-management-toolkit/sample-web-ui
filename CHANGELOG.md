@@ -1,3 +1,60 @@
+# [4.2.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.1.0...v4.2.0) (2026-10-23)
+
+
+### Features
+
+* **devices:** improve KVM connection feedback ([#3659](https://github.com/device-management-toolkit/sample-web-ui/issues/3659)) ([51c25d6](https://github.com/device-management-toolkit/sample-web-ui/commit/51c25d6c64cf4e5b01621cec302c1bc4770d5f1f)), closes [device-management-toolkit/deployment#711](https://github.com/device-management-toolkit/deployment/issues/711)
+
+# [4.1.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.1...v4.1.0) (2026-10-16)
+
+
+### Features
+
+* **login:** skip login when Console runs with auth disabled ([#3577](https://github.com/device-management-toolkit/sample-web-ui/issues/3577)) ([00c150a](https://github.com/device-management-toolkit/sample-web-ui/commit/00c150a996ba67c9402254629d445208468ca19e)), closes [#3643](https://github.com/device-management-toolkit/sample-web-ui/issues/3643)
+
+## [4.0.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.0...v4.0.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* show domain validation errors in snackbar ([#3636](https://github.com/device-management-toolkit/sample-web-ui/issues/3636)) ([6ecfd75](https://github.com/device-management-toolkit/sample-web-ui/commit/6ecfd7525508e6e79c8a9ddeb5aa99c032495364))
+
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
+# [3.71.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.70.0...v3.71.0) (2026-10-13)
+
+
+### Features
+
+* add call-to-action empty states to the list pages ([#3634](https://github.com/device-management-toolkit/sample-web-ui/issues/3634)) ([bb1549a](https://github.com/device-management-toolkit/sample-web-ui/commit/bb1549a4be5113707b86b0142596f4e164ec228a))
+
+# [3.70.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.3...v3.70.0) (2026-10-13)
+
+
+### Features
+
+* migrate to Material 3 and move app chrome into the sidebar ([#3633](https://github.com/device-management-toolkit/sample-web-ui/issues/3633)) ([c86ef34](https://github.com/device-management-toolkit/sample-web-ui/commit/c86ef34b01abd55f3ef52c9abd77c401d0e3e971))
+
+## [3.69.3](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.2...v3.69.3) (2026-10-12)
+
+
+### Bug Fixes
+
+* add proxy configuration selector ([f84978a](https://github.com/device-management-toolkit/sample-web-ui/commit/f84978addd39c9599b4c70e41d1ecdc12f4aa927))
+
+## [3.69.2](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.1...v3.69.2) (2026-10-06)
+
+
+### Bug Fixes
+
+* show the correct number of expired domain certs ([#3599](https://github.com/device-management-toolkit/sample-web-ui/issues/3599)) ([476bccd](https://github.com/device-management-toolkit/sample-web-ui/commit/476bccdf56261a6ac978cdc6dc6b6a9cd9fa5568))
+
 ## [3.69.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v3.69.0...v3.69.1) (2026-10-02)
 
 

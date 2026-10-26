@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+
+mat-list-item {
+  @include mat.list-overrides(
+    (
+      list-item-leading-icon-color: var(--mat-sys-error),
+      list-item-hover-leading-icon-color: var(--mat-sys-error)
+    )
+  );
+}

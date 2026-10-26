@@ -1,6 +1,3 @@
-@use '@angular/material' as mat;
-@use 'sass:map';
-
 .network-form {
   display: flex;
   flex-direction: column;
@@ -38,13 +35,13 @@
 }
 
 .wireless-profile-list {
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 4px;
   padding: 0;
 }
 
 .wireless-profile-item:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .network-form-upload {
@@ -55,7 +52,7 @@
 
 .network-form-upload-label {
   font-size: 75%;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .network-form-upload-row {
@@ -73,7 +70,7 @@
 
 .like-mat-hint {
   font-size: 75%;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .network-tab-content {
@@ -100,12 +97,12 @@
 }
 
 .status-up {
-  color: map.get(mat.$m2-green-palette, 700);
+  color: light-dark(#388e3c, #81c784);
   font-weight: 600;
 }
 
 .status-down {
-  color: map.get(mat.$m2-red-palette, 700);
+  color: var(--mat-sys-error);
   font-weight: 600;
 }
 
@@ -134,13 +131,13 @@
   width: 16px;
   height: 16px;
   line-height: 16px;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .ieee-sub-item {
   p {
     margin-left: 16px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--mat-sys-on-surface-variant);
   }
 }
 
@@ -170,7 +167,7 @@ mat-card {
   gap: 12px;
   margin-bottom: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .network-config-section .network-form {

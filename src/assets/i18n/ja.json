@@ -441,10 +441,6 @@
   "common.no": {
     "value": "いいえ"
   },
-  "common.noData": {
-    "description": "データが利用できない場合のメッセージ",
-    "value": "利用可能なデータがありません"
-  },
   "common.notApplicable": {
     "description": "OSエントリが該当しない場合に表示されます",
     "value": "該当なし"
@@ -582,6 +578,10 @@
   "configs.ciraNoData": {
     "description": "CIRA設定に関するメッセージは含まれません",
     "value": "CIRA設定は行わないでください"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "CIRA設定が存在しない場合に、その用途を説明するメッセージ",
+    "value": "CIRA設定は、AMTが外部へ接続する先のMPSサーバーを指定し、ローカルネットワークの外でもデバイスを管理できるようにします。設定を追加し、プロフィールで接続として選択してください。"
   },
   "configs.delete": {
     "description": "CIRA設定の削除に関するメッセージ",
@@ -732,6 +732,10 @@
   "dashboard.useDeviceActions": {
     "description": "デバイス操作の使用方法に関するツールチップ",
     "value": "デバイス操作を使用してデバイス一覧を制御する"
+  },
+  "dashboard.welcome": {
+    "description": "ダッシュボードのウェルカム見出し（アプリケーション名を含む）",
+    "value": "{{name}}へようこそ"
   },
   "delete.question": {
     "description": "レコード削除に関する質問",
@@ -1024,6 +1028,14 @@
   "devices.noData": {
     "description": "デバイスが存在しない場合のメッセージ",
     "value": "デバイスが見つかりません"
+  },
+  "devices.noDataDescriptionCloud": {
+    "description": "デバイスが存在しない場合に、一覧に表示される方法を説明するメッセージ（クラウド）",
+    "value": "デバイスはアクティベートされるとここに表示されます。「新規追加」で、デバイス上で実行するアクティベーションコマンドを生成できます。"
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "デバイスが存在しない場合に、追加方法を説明するメッセージ（コンソール）",
+    "value": "ホスト名とAMT資格情報を指定してデバイスを追加すると、管理を開始できます。"
   },
   "devices.noDataFilter": {
     "description": "検索結果が空の場合のメッセージ",
@@ -1388,6 +1400,10 @@
   "domains.noData": {
     "description": "ドメインに関するメッセージ",
     "value": "ドメインは使用しないでください"
+  },
+  "domains.noDataDescription": {
+    "description": "ドメインが存在しない場合に、その用途を説明するメッセージ",
+    "value": "ドメインは、DNSサフィックスとそのプロビジョニング証明書を関連付けるもので、Admin Control Modeに必要です。ACMでデバイスをアクティベートする前に追加してください。"
   },
   "domains.table.domainSuffix": {
     "description": "ドメインサフィックスの列見出し",
@@ -1948,6 +1964,10 @@
     "description": "IEEE 8021x 設定メッセージは存在しません",
     "value": "IEEE 8021x設定は行わない"
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "IEEE 8021x設定が存在しない場合に、その用途を説明するメッセージ",
+    "value": "802.1x設定により、AMTは802.1xで保護されたネットワークで認証できます。設定を追加し、プロフィール（有線）またはワイヤレス設定（Wi-Fi）で選択してください。"
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "認証プロトコル列ヘッダー",
     "value": "認証プロトコル"
@@ -2037,8 +2057,12 @@
     "value": "送信"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
-    "value": "KVMセッションはAMTによって閉じられました"
+    "description": "確立済みのKVMセッションが予期せず切断されたときに表示されるメッセージ",
+    "value": "KVMセッションが切断されました"
+  },
+  "kvm.connectionFailed": {
+    "description": "KVMセッションの確立前に接続が失敗したときに表示されるメッセージ",
+    "value": "認証に失敗しました - KVM接続を確立できません。"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "AMT機能の取得中に表示されるステータスメッセージ",
@@ -2139,6 +2163,10 @@
   "mqttEvents.type.label": {
     "description": "MQTTイベントタイプの表見出し",
     "value": "タイプ"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "設定"
   },
   "network.errorNetworkSetting": {
     "description": "ネットワーク設定の取得エラー",
@@ -2729,6 +2757,10 @@
     "description": "プロフィール情報がない場合",
     "value": "プロフィールなし"
   },
+  "profiles.noDataDescription": {
+    "description": "プロフィールが存在しない場合に、その用途を説明するメッセージ",
+    "value": "プロフィールは、アクティベーション時のAMTの設定内容（制御モード、ネットワーク、接続設定）を定義します。プロフィールを追加し、デバイスのアクティベーションに使用してください。"
+  },
   "profiles.table.activation": {
     "description": "アクティベーションモードの列見出し",
     "value": "アクティベーションモード"
@@ -2997,9 +3029,41 @@
     "description": "コンソールモードにおけるアプリケーションのメインタイトル",
     "value": "コンソール"
   },
-  "toolbar.header.hello": {
-    "description": "ご挨拶",
-    "value": "こんにちは"
+  "toolbar.palette.azure": {
+    "description": "アジュールとブルーのカラーパレットの名前",
+    "value": "アジュールとブルー"
+  },
+  "toolbar.palette.cyan": {
+    "description": "シアンとオレンジのカラーパレットの名前",
+    "value": "シアンとオレンジ"
+  },
+  "toolbar.palette.label": {
+    "description": "カラーパレットのメニューを開くボタンの aria ラベル",
+    "value": "カラーパレット"
+  },
+  "toolbar.palette.magenta": {
+    "description": "マゼンタとバイオレットのカラーパレットの名前",
+    "value": "マゼンタとバイオレット"
+  },
+  "toolbar.palette.rose": {
+    "description": "ローズとレッドのカラーパレットの名前",
+    "value": "ローズとレッド"
+  },
+  "toolbar.theme.dark": {
+    "description": "常にダークテーマを使用するメニュー項目",
+    "value": "ダーク"
+  },
+  "toolbar.theme.label": {
+    "description": "ライト、ダーク、システムのテーマメニューを開くボタンの aria ラベル",
+    "value": "テーマ"
+  },
+  "toolbar.theme.light": {
+    "description": "常にライトテーマを使用するメニュー項目",
+    "value": "ライト"
+  },
+  "toolbar.theme.system": {
+    "description": "オペレーティングシステムのライトまたはダークの設定に従うメニュー項目",
+    "value": "システム"
   },
   "userConsent.errorCancelCode": {
     "description": "ユーザー同意コードのキャンセルに関するエラー",
@@ -3072,6 +3136,10 @@
   "wirelessConfigs.noData": {
     "description": "ワイヤレス設定が存在しない場合に表示されるメッセージ",
     "value": "ワイヤレス設定なし"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "ワイヤレス設定が存在しない場合に、その用途を説明するメッセージ",
+    "value": "ワイヤレス設定には、AMTが接続に使用するWi-Fi設定（SSID、認証、暗号化）が含まれます。設定を追加し、プロフィールに関連付けてください。"
   },
   "wirelessConfigs.ssid": {
     "description": "無線設定のSSID用列ヘッダー",
@@ -3237,6 +3305,14 @@
     "value": "プロキシ設定名を入力",
     "description": "プロキシ設定名フィールドのプレースホルダー"
   },
+  "proxyConfigs.noData": {
+    "description": "プロキシ設定が存在しない場合のメッセージ",
+    "value": "プロキシ設定なし"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "プロキシ設定が存在しない場合に、その用途を説明するメッセージ",
+    "value": "プロキシ設定は、AMTが使用できるネットワークプロキシを定義し、それぞれがネットワークDNSサフィックスに関連付けられます。設定を追加し、プロフィールに割り当ててください。"
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "プロキシサーバーのアドレスを入力",
     "description": "プロキシアドレスフィールドのプレースホルダー"
@@ -3304,10 +3380,6 @@
   "common.update": {
     "value": "更新",
     "description": "更新ボタンのテキスト"
-  },
-  "common.noData": {
-    "value": "利用可能なデータがありません",
-    "description": "データが利用できない場合のメッセージ"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "リモートプラットフォーム消去のカテゴリ名",

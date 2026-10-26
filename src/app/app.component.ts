@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { AuthService } from './auth.service'
-import { ToolbarComponent } from './core/toolbar/toolbar.component'
+import { NavFooterComponent } from './core/nav-footer/nav-footer.component'
 import { NavbarComponent } from './core/navbar/navbar.component'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { TranslateService } from '@ngx-translate/core'
@@ -19,7 +19,7 @@ import { getDirection } from '../utils'
   styleUrls: ['./app.component.scss'],
   imports: [
     RouterModule,
-    ToolbarComponent,
+    NavFooterComponent,
     NavbarComponent,
     MatSidenavModule,
     BidiModule
@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
   private readonly router = inject(Router)
   private readonly authService = inject(AuthService)
   public readonly translate = inject(TranslateService)
-  public direction: Direction = 'ltr'
-  public isLoggedIn = false
+  public direction = signal<Direction>('ltr')
+  public canAccessApp = signal(false)
 
   ngOnInit(): void {
-    this.authService.loggedInSubject$.subscribe((value: any) => {
-      this.isLoggedIn = value
+    this.authService.canActivateProtectedRoutes$.subscribe((canAccessApp) => {
+      this.canAccessApp.set(canAccessApp)
     })
 
     this.translate.setFallbackLang('en')
@@ -47,6 +47,6 @@ export class AppComponent implements OnInit {
   }
 
   private setDirection(lang: string): void {
-    this.direction = getDirection(lang)
+    this.direction.set(getDirection(lang))
   }
 }

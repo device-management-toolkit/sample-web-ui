@@ -7,7 +7,7 @@
     <mat-card-content>
       @if (isISM()) {
         <div class="flex items-start gap-8">
-          <mat-icon color="primary" style="flex: none">info</mat-icon>
+          <mat-icon class="mat-text-primary" style="flex: none">info</mat-icon>
           <span style="font-size: 15px; font-weight: 500">{{ 'ider.ism.info.value' | translate }}</span>
         </div>
       }
@@ -28,17 +28,13 @@
         [idleHint]="'ider.status.attachHelp.value'" />
 
       <div class="flex items-center gap-8">
-        <button
-          mat-flat-button
-          color="primary"
-          [disabled]="isLoading() || isIDERActive()"
-          (click)="onAttachDiskImage(fileInput)">
+        <button mat-flat-button [disabled]="isLoading() || isIDERActive()" (click)="onAttachDiskImage(fileInput)">
           <mat-icon>upload_file</mat-icon>
           {{ 'ider.attachDisk.label.value' | translate }}
         </button>
         <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept=".iso" />
         @if (isIDERActive()) {
-          <button mat-flat-button color="warn" (click)="onCancelIDER(fileInput)">
+          <button mat-flat-button class="error-button" (click)="onCancelIDER(fileInput)">
             <mat-icon>stop</mat-icon>{{ 'ider.stopIder.label.value' | translate }}
           </button>
         }
@@ -47,14 +43,14 @@
   </mat-card>
 </div>
 
-@if (diskImage && deviceIDERConnection()) {
+@if (diskImage() && deviceIDERConnection()) {
   <amt-ider
     class="ider"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()"
     [deviceConnection]="deviceIDERConnection()"
-    [cdrom]="diskImage"
+    [cdrom]="diskImage()"
     [floppy]="null"
     (deviceStatus)="deviceIDERStatus($event)"
     (iderData)="onIderData($event)">

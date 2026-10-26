@@ -1,42 +1,124 @@
 @use '@angular/material' as mat;
-@use 'src/styles/_variables.scss' as vars;
 
-h1,
-.mat-headline-4,
-.mat-headline-3 {
-  margin-bottom: 12px;
-  padding-bottom: 0;
+// Same height and inset as the toolbars that title the other pages.
+.welcome {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 56px;
+  margin: 0;
+  padding: 12px 16px;
 }
 
-.mat-headline-2 {
-  margin: 12px;
+// Cards in a row share one height whatever they hold.
+.card-row > div {
+  display: flex;
 }
 
-.mat-icon {
-  font-size: 48px;
-  height: 48px;
-  line-height: 1;
-  width: 48px;
-  color: mat.m2-get-color-from-palette(vars.$samplewebui-primary, A200);
+.card-row mat-card {
+  flex: 1;
+}
+
+.stat-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  color: var(--mat-sys-on-secondary-container);
+  @include mat.card-overrides(
+    (
+      filled-container-color: var(--mat-sys-secondary-container)
+    )
+  );
+
+  mat-icon {
+    flex: none;
+    font-size: 40px;
+    height: 40px;
+    width: 40px;
+  }
+
+  // Holds the line open while the counts load.
+  .mat-font-display-md {
+    min-height: var(--mat-sys-display-medium-line-height);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.action-card h3 {
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.doc-card {
+  padding: 16px 20px;
+  transition: background-color 150ms ease-out;
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container-low);
+  }
+
+  h2 {
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  mat-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    color: var(--mat-sys-primary);
+  }
 }
 
 .mat-mdc-icon-button {
-  width: 100px;
-  height: 100px;
-  border: 2px solid mat.m2-get-color-from-palette(vars.$samplewebui-accent, A100);
+  background-color: var(--mat-sys-primary-container);
+  @include mat.icon-button-overrides(
+    (
+      state-layer-size: 64px,
+      icon-size: 28px,
+      icon-color: var(--mat-sys-on-primary-container)
+    )
+  );
+
+  mat-icon {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+  }
 }
 
-.mat-mdc-card {
-  background-color: mat.m2-get-color-from-palette(vars.$samplewebui-accent, A100);
+.steps {
+  margin: 32px 12px 24px;
 }
 
-mat-divider {
-  margin: 24px 0;
-}
+.step {
+  position: relative;
 
-h3 {
-  margin-top: 24px;
-  text-align: center;
+  // Joins each step to the one before it, circle edge to circle edge.
+  &:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: 31px;
+    inset-inline-start: calc(-50% + 44px);
+    inset-inline-end: calc(50% + 44px);
+    border-top: 2px solid var(--mat-sys-outline-variant);
+  }
+
+  h3 {
+    max-width: 180px;
+    margin: 12px auto 0;
+    font: var(--mat-sys-title-small);
+    letter-spacing: var(--mat-sys-title-small-tracking);
+    text-align: center;
+  }
 }
 
 .pointer {

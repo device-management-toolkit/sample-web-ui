@@ -269,7 +269,7 @@ describe('KvmComponent', () => {
     expect(component.deviceKVMConnection()).toBeFalsy()
 
     // Test connect method
-    component.readyToLoadKvm = true
+    component.readyToLoadKvm.set(true)
     component.connect()
     expect(component.isDisconnecting).toBeFalsy()
     expect(tokenSpy).toHaveBeenCalled()
@@ -282,13 +282,13 @@ describe('KvmComponent', () => {
     expect(component.deviceKVMConnection()).toBeFalsy()
   })
   it('connect() resets readyToLoadKvm and deviceKVMConnection to false before reconnecting', () => {
-    component.readyToLoadKvm = true
+    component.readyToLoadKvm.set(true)
     component.deviceKVMConnection.set(true)
     // Intercept init to observe intermediate reset state
     let readyToLoadKvmAtStartOfInit = true
     let connectionAtStartOfInit = true
     vi.spyOn(component, 'init').mockImplementation(() => {
-      readyToLoadKvmAtStartOfInit = component.readyToLoadKvm
+      readyToLoadKvmAtStartOfInit = component.readyToLoadKvm()
       connectionAtStartOfInit = component.deviceKVMConnection()
     })
     component.connect()
@@ -309,19 +309,41 @@ describe('KvmComponent', () => {
     expect(component.isLoading()).toBe(false)
     expect(component.deviceState()).toBe(0)
   })
-  it('should show error and hide loading when isDisconnecting is false', () => {
+  it('should report a connection failure when KVM never connected', () => {
     component.isDisconnecting = false
     component.deviceKVMConnection.set(true)
+    component.deviceKVMStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
+      'kvm.connectionFailed.value',
+      undefined,
+      SnackbarDefaults.defaultWarn
+    )
+    expect(component.isLoading()).toBe(false)
+    expect(component.deviceState()).toBe(0)
+    // A failed connection must reset the Connect button.
+    expect(component.deviceKVMConnection()).toBe(false)
+  })
+  it('should report a disconnected session after KVM connected', () => {
+    component.deviceKVMStatus(2)
     component.deviceKVMStatus(0)
     expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
       'kvm.sessionClosedByDevice.value',
       undefined,
       SnackbarDefaults.defaultWarn
     )
-    expect(component.isLoading()).toBe(false)
-    expect(component.deviceState()).toBe(0)
-    // AMT dropped the connection — deviceKVMConnection must be reset so Connect button appears
     expect(component.deviceKVMConnection()).toBe(false)
+  })
+  it('should report a connection failure on a retry after a connected session closes', () => {
+    component.deviceKVMStatus(2)
+    component.deviceKVMStatus(0)
+    snackBarSpy.mockClear()
+    component.connect()
+    component.deviceKVMStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
+      'kvm.connectionFailed.value',
+      undefined,
+      SnackbarDefaults.defaultWarn
+    )
   })
   it('should not reset deviceKVMConnection when isDisconnecting is true (intentional disconnect)', () => {
     component.isDisconnecting = true
@@ -442,7 +464,7 @@ describe('KvmComponent', () => {
   it('cancel enable kvm request msg true', async () => {
     component.cancelEnableKvmResponse(true)
     expect(snackBarSpy).toHaveBeenCalled()
-    expect(component.readyToLoadKvm).toBe(false)
+    expect(component.readyToLoadKvm()).toBe(false)
   })
   it('cancel enable sol request msg false', async () => {
     component.cancelEnableKvmResponse(false)
@@ -566,7 +588,7 @@ describe('KvmComponent', () => {
   it('checkUserConsent yes', async () => {
     component.checkUserConsent()
     fixture.detectChanges()
-    expect(component.readyToLoadKvm).toBe(true)
+    expect(component.readyToLoadKvm()).toBe(true)
   })
   it('checkUserConsent no', async () => {
     component.amtFeatures.set({
@@ -590,9 +612,9 @@ describe('KvmComponent', () => {
         bootString: ''
       }
     })
-    component.readyToLoadKvm = false
+    component.readyToLoadKvm.set(false)
     component.checkUserConsent()
-    expect(component.readyToLoadKvm).toBe(false)
+    expect(component.readyToLoadKvm()).toBe(false)
   })
   it('should set loading status when checking consent', () => {
     component.loadingStatus.set('kvm.status.checkingConsent.value')
@@ -625,7 +647,7 @@ describe('KvmComponent', () => {
       component.isLoading.set(true)
       component.checkUserConsent().subscribe(() => {
         expect(component.isLoading()).toBe(true)
-        expect(component.readyToLoadKvm).toBe(true)
+        expect(component.readyToLoadKvm()).toBe(true)
         done()
       })
     })
@@ -881,7 +903,7 @@ describe('KvmComponent', () => {
     const deviceIDERConnectionSpy = vi.spyOn(component.deviceIDERConnection, 'set').mockImplementation(() => undefined)
     component.onFileSelected(mockEvt)
 
-    expect(component.diskImage).toEqual(mockFile)
+    expect(component.diskImage()).toEqual(mockFile)
     expect(deviceIDERConnectionSpy).toHaveBeenCalledWith(true)
   })
   it('should emit false on canceling IDER', () => {

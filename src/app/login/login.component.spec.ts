@@ -124,13 +124,13 @@ describe('LoginComponent', () => {
 
   describe('toggleLoginPassVisibility', () => {
     it('should toggle the visibility of the password input', () => {
-      component.loginPassInputType = 'password'
+      component.loginPassInputType.set('password')
 
       component.toggleLoginPassVisibility()
-      expect(component.loginPassInputType).toBe('text')
+      expect(component.loginPassInputType()).toBe('text')
 
       component.toggleLoginPassVisibility()
-      expect(component.loginPassInputType).toBe('password')
+      expect(component.loginPassInputType()).toBe('password')
     })
   })
 
@@ -143,6 +143,22 @@ describe('LoginComponent', () => {
       expect(component.loginForm).toBeTruthy()
       expect(component.loginForm.contains('userId')).toBe(true)
       expect(component.loginForm.contains('password')).toBe(true)
+    })
+
+    it('should not navigate away when auth is enabled', () => {
+      expect(routerSpy.navigate).not.toHaveBeenCalled()
+    })
+
+    it('should go straight to the dashboard when auth is disabled', () => {
+      const original = environment.authDisabled
+      environment.authDisabled = true
+      try {
+        TestBed.createComponent(LoginComponent)
+
+        expect(routerSpy.navigate).toHaveBeenCalledWith([''])
+      } finally {
+        environment.authDisabled = original
+      }
     })
   })
 })

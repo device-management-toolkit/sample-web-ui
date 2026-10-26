@@ -55,7 +55,7 @@ describe('TLSComponent', () => {
     component.ngOnInit()
 
     expect(mockDevicesService.getTLSSettings).toHaveBeenCalledWith('test-device-id')
-    expect(component.tlsData).toEqual(mockTLSData)
+    expect(component.tlsData()).toEqual(mockTLSData)
     expect(component.isLoading()).toBe(false)
   })
 })

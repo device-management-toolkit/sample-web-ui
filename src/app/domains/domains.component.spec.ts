@@ -166,10 +166,76 @@ describe('DomainsComponent', () => {
     expect(component.getRemainingTime(longDate)).toEqual('5domains.yearsRemaining.value')
   })
 
-  it('should ', () => {
+  it('should show the correct warning and expired certificate counts', () => {
+    const today = new Date()
+    const warnDate = new Date(today)
+    const expDateOne = new Date(today)
+    const expDateTwo = new Date(today)
+
+    warnDate.setDate(today.getDate() + 30)
+    expDateOne.setDate(today.getDate() - 1)
+    expDateTwo.setDate(today.getDate() - 10)
+
+    component.domains().data = [
+      {
+        domainSuffix: 'vprodemo2.com',
+        profileName: 'domain2',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: warnDate
+      },
+      {
+        domainSuffix: 'vprodemo3.com',
+        profileName: 'domain3',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: expDateOne
+      },
+      {
+        domainSuffix: 'vprodemo4.com',
+        profileName: 'domain4',
+        provisioningCertStorageFormat: 'string',
+        expirationDate: expDateTwo
+      }
+    ] as any
+
+    const translateSpy = vi
+      .spyOn(translate, 'instant')
+      .mockImplementation((key, params) => `${key}:${params?.count ?? ''}`)
     const snackBarSpy = vi.spyOn(component.snackBar, 'open').mockImplementation((() => undefined) as any)
 
     component.expirationWarning()
-    expect(snackBarSpy).toHaveBeenCalled()
+
+    expect(translateSpy).toHaveBeenCalledWith('domains.certExpring.value', { count: 1 })
+    expect(translateSpy).toHaveBeenCalledWith('domains.certExpired.value', { count: 2 })
+    expect(snackBarSpy).toHaveBeenCalledWith(
+      'domains.certExpring.value:1domains.certExpired.value:2',
+      undefined,
+      expect.anything()
+    )
+  })
+
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const loadNothing = (): void => {
+      getDataSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getData(component.pageEvent())
+      fixture.detectChanges()
+    }
+
+    it('should not show when there are domains', () => {
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain what domains are for', () => {
+      loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('domains.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('domains.noDataDescription.value')
+    })
+
+    it('should start a new one from its button', () => {
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+      loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(routerSpy).toHaveBeenCalledWith(['/domains/new'])
+    })
   })
 })

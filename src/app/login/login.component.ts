@@ -74,10 +74,15 @@ export class LoginComponent {
   public currentYear = new Date().getFullYear()
   public isLoading = signal(false)
   public errorMessage = ''
-  public loginPassInputType = 'password'
+  public loginPassInputType = signal('password')
   public useOAuth = environment.useOAuth
 
   constructor() {
+    if (environment.authDisabled) {
+      this.router.navigate([''])
+      return
+    }
+
     if (environment.useOAuth) {
       this.oauthService = inject(OAuthService)
     }
@@ -127,6 +132,6 @@ export class LoginComponent {
   }
 
   toggleLoginPassVisibility(): void {
-    this.loginPassInputType = this.loginPassInputType === 'password' ? 'text' : 'password'
+    this.loginPassInputType.set(this.loginPassInputType() === 'password' ? 'text' : 'password')
   }
 }

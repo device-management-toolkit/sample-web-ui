@@ -54,7 +54,7 @@
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
-        @for (tag of tags; track tag) {
+        @for (tag of tags(); track tag) {
           <mat-chip-row [removable]="true" (removed)="remove(tag)">
             {{ tag }}
             <mat-icon matChipRemove>cancel</mat-icon>
@@ -75,6 +75,6 @@
       'addDevice.allowSelfSignedCertificates.value' | translate
     }}</mat-checkbox>
 
-    <button mat-raised-button color="primary" type="submit">{{ 'common.submit.value' | translate }}</button>
+    <button mat-raised-button type="submit">{{ 'common.submit.value' | translate }}</button>
   </form>
 </div>

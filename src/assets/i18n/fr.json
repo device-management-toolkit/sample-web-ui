@@ -449,10 +449,6 @@
   "common.no": {
     "value": "Non"
   },
-  "common.noData": {
-    "description": "Message indiquant qu’aucune donnée n’est disponible",
-    "value": "Aucune donnée disponible"
-  },
   "common.notApplicable": {
     "description": "Affiché lorsque l'entrée du système d'exploitation ne s'applique pas.",
     "value": "Sans objet"
@@ -590,6 +586,10 @@
   "configs.ciraNoData": {
     "description": "Aucun message CIRA Configs",
     "value": "Aucune configuration CIRA"
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Explique à quoi servent les configurations CIRA lorsqu'il n'y en a aucune",
+    "value": "Une configuration CIRA indique à AMT à quel serveur MPS se connecter, afin que les appareils restent gérables en dehors du réseau local. Ajoutez-en une, puis sélectionnez-la comme connexion dans un profil."
   },
   "configs.delete": {
     "description": "Message pour la suppression des configurations CIRA",
@@ -740,6 +740,10 @@
   "dashboard.useDeviceActions": {
     "description": "Info-bulle pour l'utilisation des actions de l'appareil",
     "value": "Utiliser les actions des appareils pour contrôler une liste d'appareils"
+  },
+  "dashboard.welcome": {
+    "description": "Titre de bienvenue du tableau de bord, avec le nom de l'application",
+    "value": "Bienvenue sur {{name}}"
   },
   "delete.question": {
     "description": "Question concernant la suppression d'enregistrements",
@@ -1032,6 +1036,14 @@
   "devices.noData": {
     "description": "Message lorsqu'aucun appareil n'existe",
     "value": "Aucun appareil trouvé"
+  },
+  "devices.noDataDescriptionCloud": {
+    "description": "Explique comment les appareils arrivent dans la liste lorsqu'il n'y en a aucun (cloud)",
+    "value": "Les appareils apparaissent ici une fois activés. « Ajouter » génère la commande d'activation à exécuter sur l'appareil."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Explique comment ajouter un appareil lorsqu'il n'y en a aucun (console)",
+    "value": "Ajoutez un appareil à l'aide de son nom d'hôte et de ses identifiants AMT pour commencer à le gérer."
   },
   "devices.noDataFilter": {
     "description": "Message lorsque les résultats du filtre sont vides",
@@ -1396,6 +1408,10 @@
   "domains.noData": {
     "description": "Message « Aucun domaine »",
     "value": "Aucun domaine"
+  },
+  "domains.noDataDescription": {
+    "description": "Explique à quoi servent les domaines lorsqu'il n'y en a aucun",
+    "value": "Un domaine associe un suffixe DNS à son certificat de provisionnement, requis pour le mode Admin Control. Ajoutez-en un avant d'activer des appareils en ACM."
   },
   "domains.table.domainSuffix": {
     "description": "En-tête de colonne « Suffixe de domaine »",
@@ -1956,6 +1972,10 @@
     "description": "Aucun message de configuration IEEE 8021x",
     "value": "Pas de configurations IEEE 8021x"
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Explique à quoi servent les configurations IEEE 8021x lorsqu'il n'y en a aucune",
+    "value": "Les configurations 802.1x permettent à AMT de s'authentifier sur les réseaux sécurisés par 802.1x. Ajoutez-en une, puis sélectionnez-la dans un profil (filaire) ou dans une configuration sans fil (Wi-Fi)."
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "En-tête de colonne Protocole d'authentification",
     "value": "Protocole d'authentification"
@@ -2045,8 +2065,12 @@
     "value": "Envoyer"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Message affiché quand AMT ferme la session KVM",
-    "value": "La session KVM a été fermée par AMT"
+    "description": "Message affiché lorsqu’une session KVM établie est interrompue de manière inattendue",
+    "value": "Session KVM déconnectée"
+  },
+  "kvm.connectionFailed": {
+    "description": "Message affiché lorsque la connexion KVM échoue avant l’établissement d’une session",
+    "value": "Échec de l’authentification - Impossible d’établir une connexion KVM."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Message d'état affiché lors de la récupération des fonctionnalités AMT",
@@ -2147,6 +2171,10 @@
   "mqttEvents.type.label": {
     "description": "En-tête du tableau pour le type d'événement MQTT",
     "value": "Type"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuration"
   },
   "network.errorNetworkSetting": {
     "description": "Erreur lors de la récupération des paramètres réseau",
@@ -2737,6 +2765,10 @@
     "description": "Message « Aucun profil »",
     "value": "Pas de profils"
   },
+  "profiles.noDataDescription": {
+    "description": "Explique à quoi servent les profils lorsqu'il n'y en a aucun",
+    "value": "Un profil définit la façon dont AMT est configuré lors de l'activation : mode de contrôle, réseau et paramètres de connexion. Ajoutez-en un, puis utilisez-le pour activer des appareils."
+  },
   "profiles.table.activation": {
     "description": "En-tête de colonne « Mode d'activation »",
     "value": "Mode d'activation"
@@ -3005,9 +3037,41 @@
     "description": "Titre principal de l'application en mode console",
     "value": "Console"
   },
-  "toolbar.header.hello": {
-    "description": "Message d'accueil",
-    "value": "Bonjour"
+  "toolbar.palette.azure": {
+    "description": "Nom de la palette de couleurs azur et bleu",
+    "value": "Azur et bleu"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Nom de la palette de couleurs cyan et orange",
+    "value": "Cyan et orange"
+  },
+  "toolbar.palette.label": {
+    "description": "Libellé aria du bouton qui ouvre le menu des palettes de couleurs",
+    "value": "Palette de couleurs"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Nom de la palette de couleurs magenta et violet",
+    "value": "Magenta et violet"
+  },
+  "toolbar.palette.rose": {
+    "description": "Nom de la palette de couleurs rose et rouge",
+    "value": "Rose et rouge"
+  },
+  "toolbar.theme.dark": {
+    "description": "Option de menu qui utilise toujours le thème sombre",
+    "value": "Sombre"
+  },
+  "toolbar.theme.label": {
+    "description": "Libellé aria du bouton qui ouvre le menu des thèmes clair, sombre ou système",
+    "value": "Thème"
+  },
+  "toolbar.theme.light": {
+    "description": "Option de menu qui utilise toujours le thème clair",
+    "value": "Clair"
+  },
+  "toolbar.theme.system": {
+    "description": "Option de menu qui suit le réglage clair ou sombre du système d'exploitation",
+    "value": "Système"
   },
   "userConsent.errorCancelCode": {
     "description": "Erreur lors de l'annulation du code de consentement de l'utilisateur",
@@ -3080,6 +3144,10 @@
   "wirelessConfigs.noData": {
     "description": "Message affiché lorsqu'il n'y a pas de configuration sans fil.",
     "value": "Aucune configuration sans fil"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Explique à quoi servent les configurations sans fil lorsqu'il n'y en a aucune",
+    "value": "Les configurations sans fil contiennent les paramètres Wi-Fi qu'AMT utilise pour se connecter : SSID, authentification et cryptage. Ajoutez-en une, puis associez-la à un profil."
   },
   "wirelessConfigs.ssid": {
     "description": "En-tête de colonne pour le SSID de la configuration sans fil",
@@ -3245,6 +3313,14 @@
     "value": "Saisir le nom de la configuration de proxy",
     "description": "Texte indicatif pour le champ de nom de la configuration de proxy"
   },
+  "proxyConfigs.noData": {
+    "description": "Message affiché lorsqu'il n'y a aucune configuration de proxy",
+    "value": "Aucune configuration de proxy"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Explique à quoi servent les configurations de proxy lorsqu'il n'y en a aucune",
+    "value": "Les configurations de proxy décrivent les proxys réseau qu'AMT peut utiliser, chacun étant lié à un suffixe DNS du réseau. Ajoutez-en une, puis attribuez-la à un profil."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Saisir l’adresse du serveur proxy",
     "description": "Texte indicatif pour le champ d’adresse du proxy"
@@ -3312,10 +3388,6 @@
   "common.update": {
     "value": "METTRE À JOUR",
     "description": "Texte du bouton Mettre à jour"
-  },
-  "common.noData": {
-    "value": "Aucune donnée disponible",
-    "description": "Message indiquant qu’aucune donnée n’est disponible"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Nom de catégorie pour l'effacement distant de la plateforme",

@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  padding-block: 12px 8px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.app-info {
+  padding-inline: 28px;
+}
+
+// Label at one edge, version at the other.
+.info-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  font: var(--mat-sys-title-small);
+  letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+.version {
+  font: var(--mat-sys-body-small);
+  letter-spacing: var(--mat-sys-body-small-tracking);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+// The swatch carries a palette class, so these tokens are that palette's own.
+.swatch {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-inline-end: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mat-sys-primary) 50%, var(--mat-sys-tertiary) 50%);
+}
+
+// Menu icons project ahead of the label; order puts the check at the trailing edge.
+.mat-mdc-menu-item .check {
+  order: 1;
+  margin-inline: auto 0;
+  padding-inline-start: 12px;
+}
+
+.lang-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.lang-menu {
+  min-width: 180px;
+}

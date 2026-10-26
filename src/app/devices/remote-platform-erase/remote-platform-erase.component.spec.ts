@@ -689,13 +689,13 @@ describe('RemotePlatformEraseComponent', () => {
       component.isLoading.set(false)
       component.isPlatformEraseSupported.set(false)
       fixture.detectChanges()
-      const info = fixture.nativeElement.querySelector('mat-icon[color="accent"]')
+      const info = fixture.nativeElement.querySelector('mat-icon.mat-text-secondary')
       expect(info).not.toBeNull()
     })
 
     it('should show warning when isPlatformEraseSupported is true', () => {
       fixture.detectChanges()
-      const warn = fixture.nativeElement.querySelector('mat-icon[color="warn"]')
+      const warn = fixture.nativeElement.querySelector('mat-icon.mat-text-error')
       expect(warn).not.toBeNull()
     })
 
@@ -703,20 +703,20 @@ describe('RemotePlatformEraseComponent', () => {
       devicesServiceSpy.getAMTFeatures.mockReturnValue(of({ ...mockAMTFeatures, rpeSupported: false }))
       component.ngOnInit()
       fixture.detectChanges()
-      const warn = fixture.nativeElement.querySelector('mat-icon[color="warn"]')
+      const warn = fixture.nativeElement.querySelector('mat-icon.mat-text-error')
       expect(warn).toBeNull()
     })
 
     it('should show selectHint when rpe is true', () => {
       component.rpe.set(true)
       fixture.detectChanges()
-      const hint = fixture.nativeElement.querySelector('mat-icon[color="primary"]')
+      const hint = fixture.nativeElement.querySelector('mat-icon.mat-text-primary')
       expect(hint).not.toBeNull()
     })
 
     it('should hide selectHint when rpe is false', () => {
       fixture.detectChanges()
-      const hint = fixture.nativeElement.querySelector('mat-icon[color="primary"]')
+      const hint = fixture.nativeElement.querySelector('mat-icon.mat-text-primary')
       expect(hint).toBeNull()
     })
   })

@@ -1,0 +1,98 @@
+<div class="app-info">
+  @if (cloudMode === true) {
+    <div class="info-row">
+      <span class="label">{{ 'toolbar.header.cloudModeTitle.value' | translate }}</span>
+    </div>
+    @if (canAccessApp()) {
+      <div class="info-row">
+        <span class="label">MPS</span>
+        <span class="version">v{{ mpsVersions().serviceVersion }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">RPS</span>
+        <span class="version">v{{ rpsVersions().serviceVersion }}</span>
+      </div>
+    }
+  } @else {
+    <div class="info-row">
+      <span class="label">{{ 'toolbar.header.consoleModeTitle.value' | translate }}</span>
+      @if (consoleVersion().current) {
+        <span class="version">{{ consoleVersion().current }}</span>
+      }
+    </div>
+  }
+</div>
+<div class="actions">
+  <button
+    mat-icon-button
+    data-cy="themeMode"
+    [attr.aria-label]="'toolbar.theme.label.value' | translate"
+    [matMenuTriggerFor]="modeMenu">
+    <mat-icon>{{ modeIcons[themeService.mode()] }}</mat-icon>
+  </button>
+  <mat-menu #modeMenu="matMenu">
+    @for (mode of themeModes; track mode) {
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.data-cy]="'themeMode-' + mode"
+        [attr.aria-checked]="themeService.mode() === mode"
+        (click)="themeService.setMode(mode)">
+        <mat-icon>{{ modeIcons[mode] }}</mat-icon>
+        <span>{{ modeLabels[mode] | translate }}</span>
+        @if (themeService.mode() === mode) {
+          <mat-icon class="check">check</mat-icon>
+        }
+      </button>
+    }
+  </mat-menu>
+  <button
+    mat-icon-button
+    data-cy="themePalette"
+    [attr.aria-label]="'toolbar.palette.label.value' | translate"
+    [matMenuTriggerFor]="paletteMenu">
+    <mat-icon>palette</mat-icon>
+  </button>
+  <mat-menu #paletteMenu="matMenu">
+    @for (palette of palettes; track palette) {
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.data-cy]="'themePalette-' + palette"
+        [attr.aria-checked]="themeService.palette() === palette"
+        (click)="themeService.setPalette(palette)">
+        <span matMenuItemIcon class="swatch" [class]="palette + '-palette'"></span>
+        <span>{{ paletteLabels[palette] | translate }}</span>
+        @if (themeService.palette() === palette) {
+          <mat-icon class="check">check</mat-icon>
+        }
+      </button>
+    }
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="langMenu">
+    <mat-icon>language</mat-icon>
+  </button>
+  <mat-menu #langMenu="matMenu" class="lang-menu">
+    <div class="lang-scroll">
+      @for (lang of availableLangs; track lang.code) {
+        <button mat-menu-item (click)="switchLang(lang.code)">
+          {{ lang.label }}
+        </button>
+      }
+    </div>
+  </mat-menu>
+  <button mat-icon-button (click)="displayAbout()">
+    <mat-icon>info</mat-icon>
+  </button>
+  @if (isLoggedIn()) {
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  }
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon><span>{{ 'common.logOut.value' | translate }}</span>
+    </button>
+  </mat-menu>
+</div>

@@ -91,9 +91,9 @@ export class ConfigDetailComponent implements OnInit {
     version: [null]
   })
   public isLoading = signal(false)
-  public pageTitle: string
+  public pageTitle = signal('')
   public isEdit = signal(false)
-  public errorMessages: string[] = []
+  public errorMessages = signal<string[]>([])
   public passwordInputType = signal<'password' | 'text'>('password')
   public isCloud = environment.cloud
   // Computed property to determine if password field should be shown
@@ -102,7 +102,7 @@ export class ConfigDetailComponent implements OnInit {
   })
 
   constructor() {
-    this.pageTitle = this.translate.instant('configs.header.ciraNewTitle.value')
+    this.pageTitle.set(this.translate.instant('configs.header.ciraNewTitle.value'))
   }
   // IP ADDRESS REGEX
   // ^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$
@@ -121,12 +121,12 @@ export class ConfigDetailComponent implements OnInit {
           .subscribe({
             next: (data) => {
               this.isEdit.set(true)
-              this.pageTitle = data.configName
+              this.pageTitle.set(data.configName)
               this.configForm.controls.configName.disable()
               this.configForm.patchValue(data)
             },
             error: (error) => {
-              this.errorMessages = error
+              this.errorMessages.set(error)
             }
           })
       }
@@ -226,7 +226,7 @@ export class ConfigDetailComponent implements OnInit {
           },
           error: (error) => {
             console.error('error', error)
-            this.errorMessages = error
+            this.errorMessages.set(error)
           }
         })
     }

@@ -13,7 +13,7 @@
           (click)="clearFilter()"
           spellcheck="false" />
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="inputChanged($event)">
-          @for (item of filteredOptions | async; track item) {
+          @for (item of filteredOptions() | async; track item) {
             <mat-option [value]="item">{{ item }}</mat-option>
           }
         </mat-autocomplete>
@@ -25,26 +25,26 @@
   <div class="flex-50">
     <mat-card style="height: 100%; padding: 0">
       <mat-card-header>
-        <h3 class="mat-h3">{{ 'common.input.value' | translate }}</h3>
+        <h3>{{ 'common.input.value' | translate }}</h3>
       </mat-card-header>
       <mat-card-content style="min-height: calc(100% - 76px); height: calc(100% - 76px); padding: 0">
         <ngx-monaco-editor
           style="height: 100%"
           [options]="editorOptions"
-          [ngModel]="XMLData?.xmlInput"></ngx-monaco-editor>
+          [ngModel]="XMLData()?.xmlInput"></ngx-monaco-editor>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="flex-50">
     <mat-card style="height: 100%; padding: 0">
       <mat-card-header>
-        <h3 class="mat-h3">{{ 'common.output.value' | translate }}</h3>
+        <h3>{{ 'common.output.value' | translate }}</h3>
       </mat-card-header>
       <mat-card-content style="min-height: calc(100% - 76px); height: calc(100% - 76px); padding: 0">
         <ngx-monaco-editor
           style="height: 100%"
           [options]="editorOptions"
-          [ngModel]="XMLData?.xmlOutput"></ngx-monaco-editor>
+          [ngModel]="XMLData()?.xmlOutput"></ngx-monaco-editor>
       </mat-card-content>
     </mat-card>
   </div>

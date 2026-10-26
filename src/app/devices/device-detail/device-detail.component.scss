@@ -3,7 +3,6 @@
 }
 
 a.mat-mdc-list-item.active {
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--mat-sys-surface-container-highest);
   width: calc(100%);
 }

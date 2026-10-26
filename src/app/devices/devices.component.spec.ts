@@ -261,6 +261,11 @@ describe('DevicesComponent', () => {
     component.tagFilterChange(matSelectChange)
     expect(component.filteredTags()).toBe(mockValue)
   })
+  it('should render the search and tag filters inside a card', () => {
+    fixture.detectChanges()
+    expect(fixture.nativeElement.querySelector('mat-card [data-cy="filterSearch"]')).not.toBeNull()
+    expect(fixture.nativeElement.querySelector('mat-card [data-cy="filterTags"]')).not.toBeNull()
+  })
 
   describe('getProductType', () => {
     it('should return ISM when bit 4 (0x10) is set', () => {
@@ -425,6 +430,79 @@ describe('DevicesComponent', () => {
     })
   })
 
+  describe('actions column', () => {
+    const table = (): HTMLElement => (fixture.nativeElement as HTMLElement).querySelector('mat-table')!
+    const renderedButtons = (): number =>
+      table().querySelector('mat-row')!.querySelectorAll('.mat-column-actions button').length
+
+    const render = async (): Promise<void> => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+    }
+
+    it('should be the last column in cloud mode', () => {
+      component.isCloudMode = true
+      expect(component.displayedColumns.at(-1)).toBe('actions')
+    })
+
+    it('should be the last column in console mode', () => {
+      component.isCloudMode = false
+      expect(component.displayedColumns.at(-1)).toBe('actions')
+    })
+
+    it('should be sized to the buttons of a cloud row', async () => {
+      component.isCloudMode = true
+      await render()
+      expect(renderedButtons()).toBe(4)
+      expect(table().style.getPropertyValue('--action-count')).toBe('4')
+    })
+
+    it('should be sized to the buttons of a managed row', async () => {
+      component.isCloudMode = false
+      await render()
+      expect(renderedButtons()).toBe(5)
+      expect(table().style.getPropertyValue('--action-count')).toBe('5')
+    })
+
+    it('should be sized to the buttons of a discovered row', async () => {
+      component.isCloudMode = false
+      component.onTabChange(1)
+      await render()
+      expect(renderedButtons()).toBe(2)
+      expect(table().style.getPropertyValue('--action-count')).toBe('2')
+    })
+
+    describe('status icon', () => {
+      const actionsCell = (): HTMLElement => table().querySelector('mat-row')!.querySelector('.mat-column-actions')!
+
+      beforeEach(async () => {
+        await render()
+        vi.useFakeTimers()
+      })
+
+      afterEach(() => {
+        vi.useRealTimers()
+      })
+
+      it('should sit before the buttons of a row that sent a power action', async () => {
+        component.sendPowerAction(device01.guid, 2)
+        await vi.advanceTimersByTimeAsync(100)
+
+        expect(actionsCell().firstElementChild?.textContent?.trim()).toBe('check_circle')
+        expect(actionsCell().lastElementChild?.querySelectorAll('button').length).toBe(component.actionCount)
+      })
+
+      it('should be the only content of a selected row after a bulk power action', async () => {
+        component.devices.data.forEach((d) => component.selectedDevices.select(d))
+        component.bulkPowerAction(2)
+        await vi.advanceTimersByTimeAsync(100)
+
+        expect(actionsCell().children.length).toBe(1)
+        expect(actionsCell().textContent?.trim()).toBe('check_circle')
+      })
+    })
+  })
+
   describe('isNoData', () => {
     it('should return false when the table has entries regardless of totalCount', () => {
       component.devices.data = [device01]
@@ -443,6 +521,65 @@ describe('DevicesComponent', () => {
       component.devices.data = []
       component.isLoading.set(true)
       expect(component.isNoData()).toBe(false)
+    })
+  })
+
+  describe('empty state', () => {
+    const emptyState = (): HTMLElement | null => (fixture.nativeElement as HTMLElement).querySelector('app-empty-state')
+    const render = async (): Promise<void> => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+    }
+    const loadNothing = async (): Promise<void> => {
+      getDevicesSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.getDevices()
+      await render()
+    }
+
+    it('should not show when there are devices', async () => {
+      await render()
+      expect(emptyState()).toBeNull()
+    })
+
+    it('should explain how devices get listed in cloud mode', async () => {
+      component.isCloudMode = true
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('devices.noDataDescriptionCloud.value')
+    })
+
+    it('should explain how to add a device in console mode', async () => {
+      component.isCloudMode = false
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')?.textContent).toContain('devices.noDataDescriptionConsole.value')
+    })
+
+    it('should open the add device dialog from its button', async () => {
+      const dialogRefSpyObj = createSpyObj({ afterClosed: of({}), close: null })
+      const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
+      await loadNothing()
+      emptyState()!.querySelector('button')!.click()
+      expect(dialogSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('should only say nothing matched when tags are filtered', async () => {
+      getTagsSpy.mockReturnValue(of(['tagA']))
+      component.filteredTags.set(['tagA'])
+      await loadNothing()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noDataFilter.value')
+      expect(emptyState()?.querySelector('p')).toBeNull()
+      expect(emptyState()?.querySelector('button')).toBeNull()
+    })
+
+    it('should not offer to add a device on the discovered tab', async () => {
+      component.isCloudMode = false
+      getDevicesSpy.mockReturnValue(of({ data: [], totalCount: 0 }))
+      component.onTabChange(1)
+      await render()
+      expect(emptyState()?.querySelector('h3')?.textContent).toContain('devices.noData.value')
+      expect(emptyState()?.querySelector('p')).toBeNull()
+      expect(emptyState()?.querySelector('button')).toBeNull()
     })
   })
 

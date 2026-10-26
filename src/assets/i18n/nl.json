@@ -449,10 +449,6 @@
   "common.no": {
     "value": "Nee"
   },
-  "common.noData": {
-    "description": "Bericht wanneer er geen gegevens beschikbaar zijn",
-    "value": "Geen gegevens beschikbaar"
-  },
   "common.notApplicable": {
     "description": "Wordt weergegeven wanneer de OS-vermelding niet van toepassing is.",
     "value": "Niet van toepassing"
@@ -590,6 +586,10 @@
   "configs.ciraNoData": {
     "description": "Geen CIRA Configs-bericht",
     "value": "Geen CIRA-configuraties."
+  },
+  "configs.ciraNoDataDescription": {
+    "description": "Legt uit waarvoor CIRA-configuraties dienen wanneer er geen zijn",
+    "value": "Een CIRA-configuratie vertelt AMT met welke MPS-server het verbinding moet maken, zodat apparaten ook buiten het lokale netwerk beheerbaar blijven. Voeg er een toe en selecteer deze vervolgens als verbinding in een profiel."
   },
   "configs.delete": {
     "description": "Bericht voor het verwijderen van CIRA-configuraties",
@@ -740,6 +740,10 @@
   "dashboard.useDeviceActions": {
     "description": "Tooltip voor het gebruik van apparaatacties",
     "value": "Gebruik apparaatacties om een lijst met apparaten te beheren."
+  },
+  "dashboard.welcome": {
+    "description": "Welkomstkop op het dashboard, met de naam van de applicatie",
+    "value": "Welkom bij {{name}}"
   },
   "delete.question": {
     "description": "Vraag over het verwijderen van records",
@@ -1032,6 +1036,14 @@
   "devices.noData": {
     "description": "Bericht wanneer er geen apparaten aanwezig zijn",
     "value": "Geen apparaten gevonden"
+  },
+  "devices.noDataDescriptionCloud": {
+    "description": "Legt uit hoe apparaten in de lijst komen wanneer er geen zijn (cloud)",
+    "value": "Apparaten verschijnen hier zodra ze zijn geactiveerd. 'Nieuw toevoegen' genereert de activeringsopdracht die u op het apparaat uitvoert."
+  },
+  "devices.noDataDescriptionConsole": {
+    "description": "Legt uit hoe u een apparaat toevoegt wanneer er geen zijn (console)",
+    "value": "Voeg een apparaat toe met de hostnaam en AMT-referenties om het te gaan beheren."
   },
   "devices.noDataFilter": {
     "description": "Bericht wanneer filterresultaten leeg zijn",
@@ -1396,6 +1408,10 @@
   "domains.noData": {
     "description": "Geen domeinenbericht",
     "value": "Geen domeinen"
+  },
+  "domains.noDataDescription": {
+    "description": "Legt uit waarvoor domeinen dienen wanneer er geen zijn",
+    "value": "Een domein koppelt een DNS-achtervoegsel aan het bijbehorende provisioningcertificaat, dat vereist is voor Admin Control Mode. Voeg er een toe voordat u apparaten in ACM activeert."
   },
   "domains.table.domainSuffix": {
     "description": "Kolomkop Domeinsuffix",
@@ -1956,6 +1972,10 @@
     "description": "Geen IEEE 8021x Configs-bericht",
     "value": "Geen IEEE 8021x-configuraties."
   },
+  "ieee8021xConfigs.noDataDescription": {
+    "description": "Legt uit waarvoor IEEE 8021x-configuraties dienen wanneer er geen zijn",
+    "value": "Met 802.1x-configuraties kan AMT zich verifiëren op netwerken die met 802.1x zijn beveiligd. Voeg er een toe en selecteer deze vervolgens in een profiel (bekabeld) of in een draadloze configuratie (wifi)."
+  },
   "ieee8021xConfigs.table.authenticationProtocol": {
     "description": "Kolomkop Authenticatieprotocol",
     "value": "Authenticatieprotocol"
@@ -2045,8 +2065,12 @@
     "value": "Verzenden"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Bericht getoond wanneer AMT de KVM-sessie sluit",
-    "value": "KVM-sessie is gesloten door AMT"
+    "description": "Bericht dat wordt weergegeven wanneer een bestaande KVM-sessie onverwacht wordt verbroken",
+    "value": "KVM-sessie verbroken"
+  },
+  "kvm.connectionFailed": {
+    "description": "Bericht dat wordt weergegeven wanneer de KVM-verbinding mislukt voordat een sessie tot stand komt",
+    "value": "Authenticatie mislukt - Kan geen KVM-verbinding tot stand brengen."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Statusbericht weergegeven tijdens het ophalen van AMT-functies",
@@ -2147,6 +2171,10 @@
   "mqttEvents.type.label": {
     "description": "Tabelkop voor MQTT-gebeurtenistype",
     "value": "Type"
+  },
+  "navbar.section.configuration": {
+    "description": "Heading above the configuration links in the navigation",
+    "value": "Configuratie"
   },
   "network.errorNetworkSetting": {
     "description": "Fout bij het ophalen van netwerkinstellingen",
@@ -2737,6 +2765,10 @@
     "description": "Geen profielenbericht",
     "value": "Geen profielen"
   },
+  "profiles.noDataDescription": {
+    "description": "Legt uit waarvoor profielen dienen wanneer er geen zijn",
+    "value": "Een profiel bepaalt hoe AMT bij activering wordt geconfigureerd: controlemodus, netwerk- en verbindingsinstellingen. Voeg er een toe en gebruik het vervolgens om apparaten te activeren."
+  },
   "profiles.table.activation": {
     "description": "Kolomkop Activeringsmodus",
     "value": "Activeringsmodus"
@@ -3005,9 +3037,41 @@
     "description": "Hoofdtitel van de applicatie in de consolemodus",
     "value": "Console"
   },
-  "toolbar.header.hello": {
-    "description": "Hallo-bericht",
-    "value": "Hallo"
+  "toolbar.palette.azure": {
+    "description": "Naam van het kleurenpalet azuur en blauw",
+    "value": "Azuur en blauw"
+  },
+  "toolbar.palette.cyan": {
+    "description": "Naam van het kleurenpalet cyaan en oranje",
+    "value": "Cyaan en oranje"
+  },
+  "toolbar.palette.label": {
+    "description": "Aria-label voor de knop die het menu met kleurenpaletten opent",
+    "value": "Kleurenpalet"
+  },
+  "toolbar.palette.magenta": {
+    "description": "Naam van het kleurenpalet magenta en violet",
+    "value": "Magenta en violet"
+  },
+  "toolbar.palette.rose": {
+    "description": "Naam van het kleurenpalet roze en rood",
+    "value": "Roze en rood"
+  },
+  "toolbar.theme.dark": {
+    "description": "Menuoptie die altijd het donkere thema gebruikt",
+    "value": "Donker"
+  },
+  "toolbar.theme.label": {
+    "description": "Aria-label voor de knop die het menu voor het lichte, donkere of systeemthema opent",
+    "value": "Thema"
+  },
+  "toolbar.theme.light": {
+    "description": "Menuoptie die altijd het lichte thema gebruikt",
+    "value": "Licht"
+  },
+  "toolbar.theme.system": {
+    "description": "Menuoptie die de lichte of donkere instelling van het besturingssysteem volgt",
+    "value": "Systeem"
   },
   "userConsent.errorCancelCode": {
     "description": "Fout bij het annuleren van de toestemmingscode van de gebruiker.",
@@ -3080,6 +3144,10 @@
   "wirelessConfigs.noData": {
     "description": "Bericht dat wordt weergegeven wanneer er geen draadloze configuraties zijn.",
     "value": "Geen draadloze configuraties"
+  },
+  "wirelessConfigs.noDataDescription": {
+    "description": "Legt uit waarvoor draadloze configuraties dienen wanneer er geen zijn",
+    "value": "Draadloze configuraties bevatten de wifi-instellingen waarmee AMT verbinding maakt: SSID, authenticatie en versleuteling. Voeg er een toe en koppel deze vervolgens aan een profiel."
   },
   "wirelessConfigs.ssid": {
     "description": "Kolomkop voor de SSID van de draadloze configuratie",
@@ -3245,6 +3313,14 @@
     "value": "Voer de naam van de proxyconfiguratie in",
     "description": "Placeholdertekst voor het naamveld van de proxyconfiguratie"
   },
+  "proxyConfigs.noData": {
+    "description": "Bericht wanneer er geen proxyconfiguraties zijn",
+    "value": "Geen proxyconfiguraties"
+  },
+  "proxyConfigs.noDataDescription": {
+    "description": "Legt uit waarvoor proxyconfiguraties dienen wanneer er geen zijn",
+    "value": "Proxyconfiguraties beschrijven de netwerkproxy's die AMT kan gebruiken, elk gekoppeld aan een netwerk-DNS-achtervoegsel. Voeg er een toe en wijs deze vervolgens toe aan een profiel."
+  },
   "proxyConfigs.addressPlaceholder": {
     "value": "Voer het adres van de proxyserver in",
     "description": "Placeholdertekst voor het proxyadresveld"
@@ -3312,10 +3388,6 @@
   "common.update": {
     "value": "BIJWERKEN",
     "description": "Tekst voor de knop Bijwerken"
-  },
-  "common.noData": {
-    "value": "Geen gegevens beschikbaar",
-    "description": "Bericht wanneer er geen gegevens beschikbaar zijn"
   },
   "deviceDetail.remotePlatformErase": {
     "description": "Categorienaam voor extern wissen van het platform",

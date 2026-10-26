@@ -28,12 +28,12 @@ import {
   MatRow,
   MatTableDataSource
 } from '@angular/material/table'
-import { MatCard, MatCardContent } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',
@@ -43,8 +43,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatButton,
     MatIcon,
     MatProgressBar,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -58,7 +56,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatRow,
     MatPaginator,
     DatePipe,
-    TranslatePipe
+    TranslatePipe,
+    EmptyStateComponent
   ]
 })
 export class DomainsComponent implements OnInit {
@@ -73,7 +72,7 @@ export class DomainsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   // Public properties
-  public domains = new MatTableDataSource<Domain>()
+  public domains = signal(new MatTableDataSource<Domain>())
   public totalCount = signal(0)
   public isLoading = signal(true)
   public myDate = ''
@@ -83,18 +82,18 @@ export class DomainsComponent implements OnInit {
     'expirationDate',
     'remove'
   ]
-  public pageEvent: PageEventOptions = {
+  public pageEvent = signal<PageEventOptions>({
     pageSize: 25,
     startsFrom: 0,
     count: 'true'
-  }
+  })
 
   // Private constants
   private readonly millisecondsInADay = 86400000
   private readonly warningPeriodInDays = 60
 
   ngOnInit(): void {
-    this.getData(this.pageEvent)
+    this.getData(this.pageEvent())
   }
 
   getData(pageEvent: PageEventOptions): void {
@@ -107,7 +106,7 @@ export class DomainsComponent implements OnInit {
       )
       .subscribe({
         next: (data: DataWithCount<Domain>) => {
-          this.domains = new MatTableDataSource<Domain>(data.data)
+          this.domains.set(new MatTableDataSource<Domain>(data.data))
           this.totalCount.set(data.totalCount)
           this.expirationWarning()
         },
@@ -137,7 +136,7 @@ export class DomainsComponent implements OnInit {
           )
           .subscribe({
             next: () => {
-              this.getData(this.pageEvent)
+              this.getData(this.pageEvent())
               const msg: string = this.translate.instant('domains.delteDomain.value')
               this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
             },
@@ -152,12 +151,12 @@ export class DomainsComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageEvent = {
-      ...this.pageEvent,
+    this.pageEvent.set({
+      ...this.pageEvent(),
       startsFrom: event.pageIndex * event.pageSize,
       pageSize: event.pageSize
-    }
-    this.getData(this.pageEvent)
+    })
+    this.getData(this.pageEvent())
   }
 
   async navigateTo(path = 'new'): Promise<void> {
@@ -196,7 +195,7 @@ export class DomainsComponent implements OnInit {
     let countExp = 0
     const today = new Date()
 
-    for (const domain of this.domains.data) {
+    for (const domain of this.domains().data) {
       const expDate = new Date(domain.expirationDate)
       if (expDate < today) {
         countExp++
@@ -210,7 +209,7 @@ export class DomainsComponent implements OnInit {
       message += this.translate.instant('domains.certExpring.value', { count: countWarn })
     }
     if (countExp > 0) {
-      message += this.translate.instant('domains.certExpired.value', { count: countWarn })
+      message += this.translate.instant('domains.certExpired.value', { count: countExp })
     }
 
     if (message !== '') {
