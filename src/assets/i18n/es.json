@@ -3284,7 +3284,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Mensaje de éxito tras borrar la unidad del SO – solicita reinstalación",
-    "value": "Unidad del sistema operativo borrada correctamente. Reinstale un sistema operativo antes de usar este dispositivo."
+    "value": "El BIOS informó que el borrado de la unidad del sistema operativo se completó correctamente. Reinstale un sistema operativo antes de usar este dispositivo."
   },
   "remotePlatformErase.eraseError": {
     "description": "Mensaje de error cuando el borrado remoto de plataforma no puede iniciarse",

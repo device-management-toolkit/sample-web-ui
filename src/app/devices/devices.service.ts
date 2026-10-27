@@ -398,9 +398,13 @@ export class DevicesService {
   }
 
   getRemoteEraseStatus(deviceId: string): Observable<RemoteEraseStatus> {
-    return this.http.get<RemoteEraseStatus>(`${environment.mpsServer}/api/v2/amt/boot/remoteErase/${deviceId}/status`, {
-      context: new HttpContext().set(SUPPRESS_TRANSIENT_ERRORS, true)
-    })
+    const apiVersion = environment.cloud ? 'v1' : 'v2'
+    return this.http.get<RemoteEraseStatus>(
+      `${environment.mpsServer}/api/${apiVersion}/amt/boot/remoteErase/${deviceId}/status`,
+      {
+        context: new HttpContext().set(SUPPRESS_TRANSIENT_ERRORS, true)
+      }
+    )
   }
 
   getRemoteEraseCapabilities(deviceId: string): Observable<BootCapabilities> {

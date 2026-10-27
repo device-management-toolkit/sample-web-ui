@@ -3288,7 +3288,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Message de succès après l'effacement du lecteur OS – invite à réinstaller",
-    "value": "Lecteur OS effacé avec succès. Veuillez réinstaller un système d'exploitation avant d'utiliser cet appareil."
+    "value": "Le BIOS a indiqué que l'effacement du lecteur du système d'exploitation s'est terminé avec succès. Veuillez réinstaller un système d'exploitation avant d'utiliser cet appareil."
   },
   "remotePlatformErase.eraseError": {
     "description": "Message d'erreur quand l'effacement distant de la plateforme ne peut pas être lancé",

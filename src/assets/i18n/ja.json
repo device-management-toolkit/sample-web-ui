@@ -3280,7 +3280,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "OSドライブ消去後の成功メッセージ – 再インストールを促す",
-    "value": "OSドライブが正常に消去されました。このデバイスを使用する前にOSを再インストールしてください。"
+    "value": "BIOSからOSドライブの消去が正常に完了したとの報告がありました。このデバイスを使用する前にOSを再インストールしてください。"
   },
   "remotePlatformErase.eraseError": {
     "description": "リモートプラットフォーム消去の開始失敗エラーメッセージ",
