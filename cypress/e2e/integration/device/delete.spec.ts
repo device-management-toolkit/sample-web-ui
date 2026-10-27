@@ -32,7 +32,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     }).as('get-tags')
 
     // Stub the get devices request returning the device created in create.spec.ts
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: {
         data: [
@@ -86,7 +86,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     cy.get('mat-cell').contains('Test Device')
 
     // Change API response to return empty list after deletion
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: empty.response
     }).as('get-devices-after-delete')

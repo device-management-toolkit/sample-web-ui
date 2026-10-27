@@ -38,12 +38,12 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for next page', () => {
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=25&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices2')
@@ -57,12 +57,12 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for previous page', () => {
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=25&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=25&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices4')
@@ -78,12 +78,12 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for last page', () => {
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=75&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=75&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices6')
@@ -98,12 +98,12 @@ describe('Test Device Page', () => {
   })
 
   it('pagination for first page', () => {
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=75&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=75&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.forPaging.response
     }).as('get-devices8')
