@@ -19,7 +19,7 @@ describe('Test Device Page', () => {
       body: tags.getAll.success.response
     }).as('get-tags')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response
     }).as('get-devices')
@@ -39,7 +39,7 @@ describe('Test Device Page', () => {
   // UI Only
   it('filters for windows devices', () => {
     if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'n') {
-      cy.myIntercept('GET', '**/devices?tags=Windows&$top=25&$skip=0&$count=true', {
+      cy.myIntercept('GET', /devices\?tags=Windows&\$top=25&\$skip=0&\$count=true/, {
         statusCode: httpCodes.SUCCESS,
         body: devices.getAll.windows.response
       }).as('get-windows')
