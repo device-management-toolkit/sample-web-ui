@@ -16,8 +16,10 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatCard } from '@angular/material/card'
 import { MatProgressBar } from '@angular/material/progress-bar'
+import { MatDivider } from '@angular/material/divider'
 import { environment } from '../../environments/environment'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { LayoutService } from '../core/layout.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +28,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   imports: [
     MatProgressBar,
     MatCard,
+    MatDivider,
     MatIcon,
     MatTooltip,
     MatIconButton,
@@ -38,6 +41,8 @@ export class DashboardComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
   private readonly translate = inject(TranslateService)
+  public readonly layout = inject(LayoutService)
+  public isHandset = this.layout.isHandset
   public cloudMode = environment.cloud
   public isLoading = signal(true)
   public stats = signal<DeviceStats | undefined>(undefined)

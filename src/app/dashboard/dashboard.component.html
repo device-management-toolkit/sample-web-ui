@@ -13,36 +13,43 @@
   }}
 </h1>
 
-<div class="card-row flex-row flex-wrap">
-  <div class="flex-33">
-    <mat-card appearance="filled" class="stat-card">
+@if (cloudMode) {
+  <mat-card appearance="filled" class="stats-card flex-row">
+    <div class="stat-block">
       <mat-icon>devices</mat-icon>
       <div>
         <div data-cy="totalCount" class="mat-font-display-md">{{ stats()?.totalCount }}</div>
         <p>{{ 'dashboard.totalDevices.value' | translate }}</p>
       </div>
-    </mat-card>
-  </div>
-  @if (cloudMode) {
+    </div>
+    <mat-divider [vertical]="!isHandset()"></mat-divider>
+    <div class="stat-block">
+      <mat-icon>phonelink</mat-icon>
+      <div>
+        <div data-cy="connectedCount" class="mat-font-display-md">{{ stats()?.connectedCount }}</div>
+        <p>{{ 'dashboard.devicesConnected.value' | translate }}</p>
+      </div>
+    </div>
+    <mat-divider [vertical]="!isHandset()"></mat-divider>
+    <div class="stat-block">
+      <mat-icon>phonelink_off</mat-icon>
+      <div>
+        <div data-cy="disconnectedCount" class="mat-font-display-md">{{ stats()?.disconnectedCount }}</div>
+        <p>{{ 'dashboard.devicesDisconnected.value' | translate }}</p>
+      </div>
+    </div>
+  </mat-card>
+} @else {
+  <div class="card-row flex-row flex-wrap">
     <div class="flex-33">
       <mat-card appearance="filled" class="stat-card">
-        <mat-icon>phonelink</mat-icon>
+        <mat-icon>devices</mat-icon>
         <div>
-          <div data-cy="connectedCount" class="mat-font-display-md">{{ stats()?.connectedCount }}</div>
-          <p>{{ 'dashboard.devicesConnected.value' | translate }}</p>
+          <div data-cy="totalCount" class="mat-font-display-md">{{ stats()?.totalCount }}</div>
+          <p>{{ 'dashboard.totalDevices.value' | translate }}</p>
         </div>
       </mat-card>
     </div>
-    <div class="flex-33">
-      <mat-card appearance="filled" class="stat-card">
-        <mat-icon>phonelink_off</mat-icon>
-        <div>
-          <div data-cy="disconnectedCount" class="mat-font-display-md">{{ stats()?.disconnectedCount }}</div>
-          <p>{{ 'dashboard.devicesDisconnected.value' | translate }}</p>
-        </div>
-      </mat-card>
-    </div>
-  } @else {
     <div class="flex-33 flex-column justify-center">
       <mat-card appearance="outlined" class="action-card">
         <div class="flex flex-1 justify-center" [matTooltip]="'dashboard.addDeviceTooltip.value' | translate">
@@ -63,8 +70,8 @@
         <h3>{{ 'dashboard.manageYourDevice.value' | translate }}</h3>
       </mat-card>
     </div>
-  }
-</div>
+  </div>
+}
 <div class="card-row flex-row flex-wrap">
   <div class="flex-33">
     <mat-card
@@ -125,7 +132,7 @@
           <mat-icon>wifi</mat-icon>
         </button>
       </div>
-      <h3>1. {{ 'dashboard.createWirelessConfig.value' | translate }}</h3>
+      <h3 class="step-label">1. {{ 'dashboard.createWirelessConfig.value' | translate }}</h3>
     </div>
 
     <div class="step flex-20 flex-column justify-center">
@@ -136,7 +143,7 @@
           <mat-icon>phonelink_setup</mat-icon>
         </button>
       </div>
-      <h3>2. {{ 'dashboard.createCiraConfig.value' | translate }}</h3>
+      <h3 class="step-label">2. {{ 'dashboard.createCiraConfig.value' | translate }}</h3>
     </div>
     <div class="step flex-20 flex-column justify-center">
       <div
@@ -146,7 +153,7 @@
           <mat-icon>system_update</mat-icon>
         </button>
       </div>
-      <h3>3. {{ 'dashboard.createProfile.value' | translate }}</h3>
+      <h3 class="step-label">3. {{ 'dashboard.createProfile.value' | translate }}</h3>
     </div>
     <div class="step flex-20 flex-column justify-center">
       <div class="flex flex-1 justify-center" matTooltip="Required for activation in Admin Control Mode (ACM)">
@@ -154,7 +161,7 @@
           <mat-icon>security</mat-icon>
         </button>
       </div>
-      <h3>4. {{ 'dashboard.addProvisioningCertificate.value' | translate }}</h3>
+      <h3 class="step-label">4. {{ 'dashboard.addProvisioningCertificate.value' | translate }}</h3>
     </div>
     <div class="step flex-20 flex-column justify-center">
       <div
@@ -164,7 +171,7 @@
           <mat-icon>phonelink</mat-icon>
         </button>
       </div>
-      <h3>5. {{ 'dashboard.manageYourDeviceStep.value' | translate }}</h3>
+      <h3 class="step-label">5. {{ 'dashboard.manageYourDeviceStep.value' | translate }}</h3>
     </div>
   </div>
 }
