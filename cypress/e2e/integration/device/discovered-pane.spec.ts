@@ -8,7 +8,8 @@
 import { httpCodes } from '../../fixtures/api/httpCodes'
 import { tags } from '../../fixtures/api/tags'
 
-const describeWhenNotCloud = Cypress.expose('CLOUD') ? describe.skip : describe
+const describeWhenIsolatedConsole =
+  Cypress.expose('CLOUD') || Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n' ? describe.skip : describe
 
 const managedDevice = {
   hostname: 'finance-ws-12',
@@ -86,7 +87,7 @@ const paneSettled = (): void => {
   })
 }
 
-describeWhenNotCloud('Discovered device pane', () => {
+describeWhenIsolatedConsole('Discovered device pane', () => {
   beforeEach(() => {
     cy.setup()
     cy.myIntercept('GET', 'api/v1/devices/stats', {

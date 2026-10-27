@@ -6,7 +6,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { provideTranslateService } from '@ngx-translate/core'
-import { DiscoveredDevicePaneComponent } from './discovered-device-pane.component'
+import { DiscoveredDevicePaneComponent, PaneValue } from './discovered-device-pane.component'
 import { Device } from '../../../models/models'
 
 describe('DiscoveredDevicePaneComponent', () => {
@@ -101,6 +101,139 @@ describe('DiscoveredDevicePaneComponent', () => {
     )
   })
 
+  it.each([
+    [
+      'linux',
+      'Ubuntu 24.04 LTS',
+      'linux / Ubuntu 24.04 LTS'
+    ],
+    [
+      'linux',
+      undefined,
+      'linux'
+    ],
+    [
+      undefined,
+      'Ubuntu 24.04 LTS',
+      'Ubuntu 24.04 LTS'
+    ],
+    [
+      undefined,
+      undefined,
+      undefined
+    ]
+  ])('shows reported OS name %s and distribution %s without dropping either', (osName, osDistro, expected) => {
+    render({
+      ...baseDevice,
+      deviceInfo: {
+        fwVersion: '',
+        fwBuild: '',
+        fwSku: '',
+        currentMode: '',
+        features: '',
+        ipAddress: '',
+        osName,
+        osDistro
+      }
+    })
+    const osRow = component
+      .sections()
+      .find((section) => section.title === 'devices.discoveredPane.sectionOs.value')
+      ?.rows.find((row) => row.label === 'devices.discoveredPane.os.value')
+    expect(osRow?.value).toBe(expected)
+    if (expected) expect(fixture.nativeElement.textContent).toContain(expected)
+  })
+
+  it('shows whether discovery ran elevated and could reach the MEI driver', () => {
+    render({
+      ...baseDevice,
+      deviceInfo: {
+        fwVersion: '',
+        fwBuild: '',
+        fwSku: '',
+        currentMode: '',
+        features: '',
+        ipAddress: '',
+        heciAvailable: true,
+        meInterfaceVersion: '6.17.0-29-generic',
+        isElevated: false
+      }
+    })
+    const amt = component.sections()[0]
+    expect(amt.title).toBe('devices.discoveredPane.sectionAmt.value')
+    expect(amt.rows).toEqual([
+      expect.objectContaining({ label: 'devices.discoveredPane.productType.value' }),
+      expect.objectContaining({ label: 'devices.discoveredPane.heciAvailable.value', value: true }),
+      expect.objectContaining({ label: 'devices.discoveredPane.meInterfaceVersion.value', value: '6.17.0-29-generic' }),
+      expect.objectContaining({ label: 'devices.discoveredPane.isElevated.value', value: false })
+    ])
+    const values = Array.from(fixture.nativeElement.querySelectorAll('dd') as NodeListOf<HTMLElement>).map((dd) =>
+      dd.textContent?.trim()
+    )
+    expect(values).toEqual([
+      'vPro',
+      'common.yes.value',
+      '6.17.0-29-generic',
+      'common.no.value'
+    ])
+  })
+
+  it('translates the fixed TLS, DHCP and link values rpc-go reports and keeps unrecognised ones as reported', () => {
+    render({
+      ...baseDevice,
+      deviceInfo: {
+        fwVersion: '',
+        fwBuild: '',
+        fwSku: '',
+        currentMode: '',
+        features: '',
+        ipAddress: '',
+        tlsMode: 'Server',
+        meNetwork: {
+          wired: { dhcpMode: 'passive', linkStatus: 'up' },
+          wireless: { dhcpMode: 'active', linkStatus: 'Dormant' }
+        }
+      }
+    })
+    const [amt, network] = component.sections()
+    expect(amt.rows).toContainEqual(
+      expect.objectContaining({
+        label: 'devices.discoveredPane.tlsMode.value',
+        value: { key: 'tlsModes.serverAuthOnly.value' }
+      })
+    )
+    const [wired, wireless] = network.subsections?.[0].subsections ?? []
+    expect(wired.rows.map((r) => r.value)).toEqual([
+      { key: 'devices.discoveredPane.dhcpModePassive.value' },
+      { key: 'devices.discoveredPane.linkStatusUp.value' }
+    ])
+    expect(wireless.rows.map((r) => r.value)).toEqual([
+      { key: 'devices.discoveredPane.dhcpModeActive.value' },
+      'Dormant'
+    ])
+    const text = fixture.nativeElement.textContent as string
+    expect(text).toContain('tlsModes.serverAuthOnly.value')
+    expect(text).toContain('Dormant')
+    expect(text).not.toContain('[object Object]')
+  })
+
+  it('shows control mode with the devices table label, or as reported when the table has none for it', () => {
+    const device: Device = {
+      ...baseDevice,
+      deviceInfo: { fwVersion: '', fwBuild: '', fwSku: '', currentMode: 'not activated', features: '', ipAddress: '' }
+    }
+    const controlModeRow = (): PaneValue | undefined =>
+      component.sections()[0].rows.find((r) => r.label === 'devices.discoveredPane.currentMode.value')?.value
+
+    fixture.componentRef.setInput('controlMode', 'notActivated')
+    render(device)
+    expect(controlModeRow()).toEqual({ key: 'devices.controlMode.notActivated.value' })
+
+    fixture.componentRef.setInput('controlMode', 'unknown')
+    fixture.detectChanges()
+    expect(controlModeRow()).toBe('not activated')
+  })
+
   it('orders sections platform, AMT, OS, network and nests UPID and interfaces as subsections', () => {
     render({
       ...baseDevice,
@@ -169,6 +302,37 @@ describe('DiscoveredDevicePaneComponent', () => {
     const network = component.sections().find((s) => s.title === 'devices.discoveredPane.sectionNetwork.value')
     expect(network?.subsections?.map((s) => s.title)).toEqual(['devices.discoveredPane.sectionOs.value'])
   })
+
+  it.each(['wired', 'wireless'] as const)(
+    'preserves a name-only %s adapter but prunes unnamed empty adapters',
+    (kind) => {
+      for (const name of ['eth0', '']) {
+        render({
+          ...baseDevice,
+          deviceInfo: {
+            fwVersion: '',
+            fwBuild: '',
+            fwSku: '',
+            currentMode: '',
+            features: '',
+            ipAddress: '',
+            osNetwork: kind === 'wired' ? { wired: [{ name }] } : { wireless: { name } }
+          }
+        })
+        const network = component.sections().find((s) => s.title === 'devices.discoveredPane.sectionNetwork.value')
+        if (name) {
+          expect(network?.subsections).toHaveLength(1)
+          const adapters = network?.subsections?.[0].subsections
+          expect(adapters).toHaveLength(1)
+          expect(adapters?.[0].titleParams).toEqual({ name })
+          expect(adapters?.[0].rows).toEqual([])
+          expect(fixture.nativeElement.querySelector('h5')).not.toBeNull()
+        } else {
+          expect(network).toBeUndefined()
+        }
+      }
+    }
+  )
 
   it('shows certificate hashes in a collapsed panel', () => {
     render({

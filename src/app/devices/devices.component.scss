@@ -61,15 +61,15 @@ mat-cell:hover mat-icon.addTag {
 }
 
 mat-row:focus-visible {
-  outline: 2px solid #0277bd;
+  outline: 2px solid var(--mat-sys-primary);
   outline-offset: -2px;
 }
 
 // The row whose details are open carries the same dashed "discovered" outline as the pane's status mark.
 mat-row.pane-open {
-  outline: 1.5px dashed #455a64;
+  outline: 1.5px dashed var(--mat-sys-outline);
   outline-offset: -3px;
-  background-color: #eceff1;
+  background-color: var(--mat-sys-surface-container-highest);
 }
 
 // Leave animation for the pane; the enter animation lives in the pane's own styles.

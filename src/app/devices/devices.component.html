@@ -93,7 +93,7 @@
       (action)="addDevice()" />
   }
 } @else {
-  <mat-table [dataSource]="devices" matSort [style.--action-count]="actionCount">
+  <mat-table [dataSource]="devices" [trackBy]="trackDevice" matSort [style.--action-count]="actionCount">
     <!-- select Column -->
     <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef>
@@ -269,6 +269,7 @@
     <app-discovered-device-pane
       [device]="device"
       [productType]="getProductType(device)"
+      [controlMode]="getControlMode(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />
   }

@@ -1139,7 +1139,7 @@
   },
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
-    "value": "rpc-go a découvert cet appareil et l'a signalé à Console. L'appareil n'a pas encore été activé ; Console ne peut donc pas encore s'y connecter. Ces informations sont celles signalées par rpc-go."
+    "value": "rpc-go a découvert cet appareil et l'a signalé à Console. Cet appareil n'est pas géré par Console. Ces informations sont celles signalées par rpc-go."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
@@ -1221,9 +1221,21 @@
     "description": "Label for the TLS mode",
     "value": "TLS"
   },
+  "devices.discoveredPane.tlsModeNone": {
+    "description": "Intel AMT TLS mode: TLS is disabled",
+    "value": "Désactivé"
+  },
   "devices.discoveredPane.meInterfaceVersion": {
     "description": "Label for the Intel MEI driver version",
     "value": "Version du pilote MEI"
+  },
+  "devices.discoveredPane.heciAvailable": {
+    "description": "Label for whether rpc-go could reach the Intel MEI (HECI) driver during discovery",
+    "value": "Pilote MEI disponible"
+  },
+  "devices.discoveredPane.isElevated": {
+    "description": "Label for whether rpc-go ran with administrator or root rights during discovery",
+    "value": "Découverte avec droits d'administrateur"
   },
   "devices.discoveredPane.lms": {
     "description": "Label for the Local Manageability Service status or version",
@@ -1253,9 +1265,25 @@
     "description": "Label for the DHCP mode",
     "value": "Mode DHCP"
   },
+  "devices.discoveredPane.dhcpModeActive": {
+    "description": "Intel AMT DHCP mode: AMT requests its own DHCP lease",
+    "value": "Actif"
+  },
+  "devices.discoveredPane.dhcpModePassive": {
+    "description": "Intel AMT DHCP mode: AMT shares the host operating system's DHCP lease",
+    "value": "Passif"
+  },
   "devices.discoveredPane.linkStatus": {
     "description": "Label for network link status",
     "value": "Liaison"
+  },
+  "devices.discoveredPane.linkStatusUp": {
+    "description": "Network interface link status: link is up",
+    "value": "Connecté"
+  },
+  "devices.discoveredPane.linkStatusDown": {
+    "description": "Network interface link status: link is down",
+    "value": "Déconnecté"
   },
   "devices.discoveredPane.os": {
     "description": "Label for the operating system name",

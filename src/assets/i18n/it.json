@@ -1131,7 +1131,7 @@
   },
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
-    "value": "rpc-go ha rilevato questo dispositivo e lo ha segnalato a Console. Il dispositivo non è ancora stato attivato, quindi Console non può ancora connettersi. Questi dettagli sono quelli segnalati da rpc-go."
+    "value": "rpc-go ha rilevato questo dispositivo e lo ha segnalato a Console. Il dispositivo non è gestito da Console. Questi dettagli sono quelli segnalati da rpc-go."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
@@ -1213,9 +1213,21 @@
     "description": "Label for the TLS mode",
     "value": "TLS"
   },
+  "devices.discoveredPane.tlsModeNone": {
+    "description": "Intel AMT TLS mode: TLS is disabled",
+    "value": "Disabilitato"
+  },
   "devices.discoveredPane.meInterfaceVersion": {
     "description": "Label for the Intel MEI driver version",
     "value": "Versione driver MEI"
+  },
+  "devices.discoveredPane.heciAvailable": {
+    "description": "Label for whether rpc-go could reach the Intel MEI (HECI) driver during discovery",
+    "value": "Driver MEI disponibile"
+  },
+  "devices.discoveredPane.isElevated": {
+    "description": "Label for whether rpc-go ran with administrator or root rights during discovery",
+    "value": "Rilevamento con privilegi di amministratore"
   },
   "devices.discoveredPane.lms": {
     "description": "Label for the Local Manageability Service status or version",
@@ -1245,9 +1257,25 @@
     "description": "Label for the DHCP mode",
     "value": "Modalità DHCP"
   },
+  "devices.discoveredPane.dhcpModeActive": {
+    "description": "Intel AMT DHCP mode: AMT requests its own DHCP lease",
+    "value": "Attivo"
+  },
+  "devices.discoveredPane.dhcpModePassive": {
+    "description": "Intel AMT DHCP mode: AMT shares the host operating system's DHCP lease",
+    "value": "Passivo"
+  },
   "devices.discoveredPane.linkStatus": {
     "description": "Label for network link status",
     "value": "Collegamento"
+  },
+  "devices.discoveredPane.linkStatusUp": {
+    "description": "Network interface link status: link is up",
+    "value": "Connesso"
+  },
+  "devices.discoveredPane.linkStatusDown": {
+    "description": "Network interface link status: link is down",
+    "value": "Disconnesso"
   },
   "devices.discoveredPane.os": {
     "description": "Label for the operating system name",

@@ -11,8 +11,12 @@ import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
 import { Device, DeviceInfo, MEInterfaceInfo, OSInterfaceInfo } from '../../../models/models'
 
-// A value is either plain text or a yes/no flag the template translates.
-export type PaneValue = string | boolean
+// Translation key for a fixed value rpc-go reports in English.
+export interface PaneLabel {
+  key: string
+}
+// A value is plain text, a yes/no flag, or a label; the template translates the last two.
+export type PaneValue = string | boolean | PaneLabel
 export interface PaneRow {
   label: string
   value: PaneValue
@@ -35,9 +39,28 @@ const UPID_LABELS: Record<string, string> = {
   oemPlatformIdType: 'devices.discoveredPane.upidOemPlatformIdType.value'
 }
 
+// Fixed values rpc-go reports, keyed in lower case. Anything else is shown as reported.
+// The TLS modes match the profile page's, so they share its labels.
+const TLS_MODE_LABELS: Record<string, string> = {
+  server: 'tlsModes.serverAuthOnly.value',
+  serverandnontls: 'tlsModes.serverAndNonTls.value',
+  mutual: 'tlsModes.mutualTlsOnly.value',
+  mutualandnontls: 'tlsModes.mutualAndNonTls.value',
+  none: 'devices.discoveredPane.tlsModeNone.value',
+  unknown: 'common.unknown.value'
+}
+const LINK_STATUS_LABELS: Record<string, string> = {
+  up: 'devices.discoveredPane.linkStatusUp.value',
+  down: 'devices.discoveredPane.linkStatusDown.value'
+}
+const DHCP_MODE_LABELS: Record<string, string> = {
+  active: 'devices.discoveredPane.dhcpModeActive.value',
+  passive: 'devices.discoveredPane.dhcpModePassive.value'
+}
+
 /**
  * Read-only details for a device rpc-go has discovered and reported to console,
- * but that has not been activated. Everything shown is what rpc-go reported;
+ * but that is not managed by Console. Everything shown is what rpc-go reported;
  * nothing here talks to AMT, because console has no credentials for it yet.
  */
 @Component({
@@ -63,6 +86,8 @@ const UPID_LABELS: Record<string, string> = {
 export class DiscoveredDevicePaneComponent implements AfterViewInit {
   public readonly device = input.required<Device>()
   public readonly productType = input('')
+  // The devices table's control mode for this device, so both show the same label.
+  public readonly controlMode = input('')
   public readonly closed = output<void>()
 
   @ViewChild('title') title?: ElementRef<HTMLElement>
@@ -91,6 +116,21 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
     return typeof value === 'boolean'
   }
 
+  isLabel(value: PaneValue): value is PaneLabel {
+    return typeof value === 'object'
+  }
+
+  private label(raw: string | undefined, labels: Record<string, string>): PaneValue | undefined {
+    const key = raw ? labels[raw.trim().toLowerCase()] : undefined
+    return key ? { key } : raw
+  }
+
+  // An unrecognised mode keeps its reported text rather than collapsing to "unknown".
+  private controlModeValue(raw: string | undefined): PaneValue | undefined {
+    const mode = this.controlMode()
+    return raw && mode && mode !== 'unknown' ? { key: `devices.controlMode.${mode}.value` } : raw
+  }
+
   private amtSection(info: DeviceInfo): PaneSection {
     const lms =
       info.lmsInstalled === undefined
@@ -111,13 +151,16 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
         ['fwBuild', info.fwBuild],
         ['sku', info.fwSku],
         ['amtEnabledInBIOS', info.amtEnabledInBIOS],
-        ['currentMode', info.currentMode],
+        ['currentMode', this.controlModeValue(info.currentMode)],
         ['features', info.features],
         ['ipAddress', info.ipAddress],
         ['dhcpEnabled', info.dhcpEnabled],
-        ['tlsMode', info.tlsMode],
+        ['tlsMode', this.label(info.tlsMode, TLS_MODE_LABELS)],
+        ['heciAvailable', info.heciAvailable],
         ['meInterfaceVersion', info.meInterfaceVersion],
-        ['lms', lms]
+        ['lms', lms],
+        // Without admin rights rpc-go can't read Intel AMT, so this explains any details missing above.
+        ['isElevated', info.isElevated]
       ]),
       subsections: [{ title: 'devices.discoveredPane.sectionUpid.value', rows: upid }],
       certHashes: info.certHashes
@@ -128,7 +171,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
     return {
       title: 'devices.discoveredPane.sectionOs.value',
       rows: this.rows([
-        ['os', info.osDistro || info.osName],
+        ['os', [info.osName, info.osDistro].filter(Boolean).join(' / ')],
         ['osVersion', info.osVersion],
         ['ipAddress', info.osIpAddress],
         ['dnsSuffix', info.dnsSuffixOS],
@@ -175,8 +218,8 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
               true
             ],
             ['dhcpEnabled', net.dhcpEnabled],
-            ['dhcpMode', net.dhcpMode],
-            ['linkStatus', net.linkStatus]
+            ['dhcpMode', this.label(net.dhcpMode, DHCP_MODE_LABELS)],
+            ['linkStatus', this.label(net.linkStatus, LINK_STATUS_LABELS)]
           ])
         : []
     })
@@ -198,7 +241,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
           true
         ],
         ['dhcpEnabled', net.dhcpEnabled],
-        ['linkStatus', net.linkStatus]
+        ['linkStatus', this.label(net.linkStatus, LINK_STATUS_LABELS)]
       ])
     })
     const wired = (info.osNetwork?.wired ?? []).map((n) => adapter('devices.discoveredPane.sectionOsWired.value', n))
@@ -213,7 +256,8 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
     const subsections = section.subsections
       ?.map((sub) => this.prune(sub))
       .filter((sub): sub is PaneSection => sub !== null)
-    const empty = !section.rows.length && !subsections?.length && !section.certHashes?.length
+    const empty =
+      !section.rows.length && !subsections?.length && !section.certHashes?.length && !section.titleParams?.['name']
     return empty ? null : { ...section, subsections }
   }
 

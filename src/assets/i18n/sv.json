@@ -1043,7 +1043,7 @@
   },
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
-    "value": "rpc-go upptäckte den här enheten och rapporterade den till Console. Enheten har inte aktiverats än, så Console kan inte ansluta till den. Uppgifterna nedan rapporterade rpc-go."
+    "value": "rpc-go upptäckte den här enheten och rapporterade den till Console. Enheten hanteras inte av Console. Uppgifterna nedan rapporterade rpc-go."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
@@ -1125,9 +1125,21 @@
     "description": "Label for the TLS mode",
     "value": "TLS"
   },
+  "devices.discoveredPane.tlsModeNone": {
+    "description": "Intel AMT TLS mode: TLS is disabled",
+    "value": "Inaktiverad"
+  },
   "devices.discoveredPane.meInterfaceVersion": {
     "description": "Label for the Intel MEI driver version",
     "value": "MEI-drivrutinsversion"
+  },
+  "devices.discoveredPane.heciAvailable": {
+    "description": "Label for whether rpc-go could reach the Intel MEI (HECI) driver during discovery",
+    "value": "MEI-drivrutin tillgänglig"
+  },
+  "devices.discoveredPane.isElevated": {
+    "description": "Label for whether rpc-go ran with administrator or root rights during discovery",
+    "value": "Identifiering med administratörsbehörighet"
   },
   "devices.discoveredPane.lms": {
     "description": "Label for the Local Manageability Service status or version",
@@ -1157,9 +1169,25 @@
     "description": "Label for the DHCP mode",
     "value": "DHCP-läge"
   },
+  "devices.discoveredPane.dhcpModeActive": {
+    "description": "Intel AMT DHCP mode: AMT requests its own DHCP lease",
+    "value": "Aktiv"
+  },
+  "devices.discoveredPane.dhcpModePassive": {
+    "description": "Intel AMT DHCP mode: AMT shares the host operating system's DHCP lease",
+    "value": "Passiv"
+  },
   "devices.discoveredPane.linkStatus": {
     "description": "Label for network link status",
     "value": "Länk"
+  },
+  "devices.discoveredPane.linkStatusUp": {
+    "description": "Network interface link status: link is up",
+    "value": "Ansluten"
+  },
+  "devices.discoveredPane.linkStatusDown": {
+    "description": "Network interface link status: link is down",
+    "value": "Frånkopplad"
   },
   "devices.discoveredPane.os": {
     "description": "Label for the operating system name",

@@ -6,6 +6,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../test-helpers'
 import { ApplicationRef } from '@angular/core'
+import { Dir, Directionality } from '@angular/cdk/bidi'
+import { OverlayContainer, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -31,8 +33,11 @@ describe('DevicesComponent', () => {
   let sendPowerActionSpy: MockInstance
   let sendDeactivateSpy: MockInstance
   let translate: TranslateService
+  let directionality: Dir
 
   beforeEach(async () => {
+    directionality = new Dir()
+    directionality.ngAfterContentInit()
     device01 = {
       hostname: 'device01',
       friendlyName: '',
@@ -97,6 +102,7 @@ describe('DevicesComponent', () => {
       ],
       providers: [
         provideTranslateService(),
+        { provide: Directionality, useValue: directionality },
         { provide: DevicesService, useValue: devicesService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
@@ -701,6 +707,32 @@ describe('DevicesComponent', () => {
       expect(component.paneDevice()).toBe(device01)
     })
 
+    it('uses the current direction when creating the overlay', () => {
+      directionality.dir = 'rtl'
+      fixture.detectChanges()
+      expect(TestBed.inject(OverlayContainer).getContainerElement().querySelector('[dir="rtl"]')).not.toBeNull()
+    })
+
+    it('updates direction while the pane is open and unsubscribes on destroy', async () => {
+      fixture.detectChanges()
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      fixture.detectChanges()
+      const container = TestBed.inject(OverlayContainer).getContainerElement()
+      const setDirection = vi.spyOn(OverlayRef.prototype, 'setDirection')
+
+      for (const dir of ['rtl', 'ltr'] as const) {
+        directionality.dir = dir
+        expect(container.querySelector(`[dir="${dir}"] app-discovered-device-pane`)).not.toBeNull()
+        expect(component.paneDevice()).toBe(device01)
+      }
+
+      fixture.destroy()
+      setDirection.mockClear()
+      directionality.change.emit('rtl')
+      expect(setDirection).not.toHaveBeenCalled()
+    })
+
     it('ignores Enter pressed on a control inside the row', async () => {
       component.onTabChange(1)
       const row = document.createElement('div')
@@ -730,6 +762,26 @@ describe('DevicesComponent', () => {
       await component.openDevice(device01)
       component.onTabChange(0)
       expect(component.paneDevice()).toBeNull()
+    })
+
+    it('preserves the row and restores focus after refreshed devices are reordered', () => {
+      component.onTabChange(1)
+      fixture.detectChanges()
+      const host: HTMLElement = fixture.nativeElement
+      const row = host.querySelector<HTMLElement>('mat-row')!
+      row.click()
+      fixture.detectChanges()
+      const refreshed = { ...component.devices.data[0], hostname: 'device01-renamed' }
+      getDevicesSpy.mockReturnValue(of({ data: [{ ...device02 }, refreshed], totalCount: 2 }))
+
+      component.getDevices()
+      fixture.detectChanges()
+
+      expect(host.querySelector('mat-row.pane-open')).toBe(row)
+      expect(row.textContent).toContain('device01-renamed')
+      expect(component.paneDevice()?.hostname).toBe('device01-renamed')
+      component.closePane()
+      expect(document.activeElement).toBe(row)
     })
 
     it('keeps the pane on the refreshed device after a reload, and closes it if the device is gone', async () => {

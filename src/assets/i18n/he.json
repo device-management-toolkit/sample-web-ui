@@ -1131,7 +1131,7 @@
   },
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
-    "value": "rpc-go גילה את המכשיר הזה ודיווח עליו ל-Console. המכשיר עדיין לא הופעל, ולכן Console אינו יכול להתחבר אליו עדיין. אלה הפרטים ש-rpc-go דיווח."
+    "value": "rpc-go גילה את המכשיר הזה ודיווח עליו ל-Console. המכשיר אינו מנוהל על ידי Console. אלה הפרטים ש-rpc-go דיווח."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
@@ -1213,9 +1213,21 @@
     "description": "Label for the TLS mode",
     "value": "TLS"
   },
+  "devices.discoveredPane.tlsModeNone": {
+    "description": "Intel AMT TLS mode: TLS is disabled",
+    "value": "מושבת"
+  },
   "devices.discoveredPane.meInterfaceVersion": {
     "description": "Label for the Intel MEI driver version",
     "value": "גרסת מנהל התקן MEI"
+  },
+  "devices.discoveredPane.heciAvailable": {
+    "description": "Label for whether rpc-go could reach the Intel MEI (HECI) driver during discovery",
+    "value": "מנהל התקן MEI זמין"
+  },
+  "devices.discoveredPane.isElevated": {
+    "description": "Label for whether rpc-go ran with administrator or root rights during discovery",
+    "value": "הגילוי בוצע בהרשאות מנהל"
   },
   "devices.discoveredPane.lms": {
     "description": "Label for the Local Manageability Service status or version",
@@ -1245,9 +1257,25 @@
     "description": "Label for the DHCP mode",
     "value": "מצב DHCP"
   },
+  "devices.discoveredPane.dhcpModeActive": {
+    "description": "Intel AMT DHCP mode: AMT requests its own DHCP lease",
+    "value": "פעיל"
+  },
+  "devices.discoveredPane.dhcpModePassive": {
+    "description": "Intel AMT DHCP mode: AMT shares the host operating system's DHCP lease",
+    "value": "פסיבי"
+  },
   "devices.discoveredPane.linkStatus": {
     "description": "Label for network link status",
     "value": "קישור"
+  },
+  "devices.discoveredPane.linkStatusUp": {
+    "description": "Network interface link status: link is up",
+    "value": "מחובר"
+  },
+  "devices.discoveredPane.linkStatusDown": {
+    "description": "Network interface link status: link is down",
+    "value": "מנותק"
   },
   "devices.discoveredPane.os": {
     "description": "Label for the operating system name",

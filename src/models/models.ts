@@ -52,6 +52,9 @@ export interface DeviceInfo {
   ethernetAdapterCount?: number
   monitorConnected?: boolean
   ieee8021xEnabled?: boolean
+  // Lets an unprivileged or driverless discovery run be told apart from a device without Intel AMT.
+  isElevated?: boolean
+  heciAvailable?: boolean
   meNetwork?: MENetworkInfo
   osNetwork?: OSNetworkInfo
   platformAdapters?: PlatformAdaptersInfo

@@ -1135,7 +1135,7 @@
   },
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
-    "value": "rpc-go löysi tämän laitteen ja ilmoitti sen Consolelle. Laitetta ei ole vielä aktivoitu, joten Console ei voi vielä muodostaa siihen yhteyttä. Nämä tiedot ilmoitti rpc-go."
+    "value": "rpc-go löysi tämän laitteen ja ilmoitti sen Consolelle. Console ei hallitse tätä laitetta. Nämä tiedot ilmoitti rpc-go."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
@@ -1217,9 +1217,21 @@
     "description": "Label for the TLS mode",
     "value": "TLS"
   },
+  "devices.discoveredPane.tlsModeNone": {
+    "description": "Intel AMT TLS mode: TLS is disabled",
+    "value": "Pois käytöstä"
+  },
   "devices.discoveredPane.meInterfaceVersion": {
     "description": "Label for the Intel MEI driver version",
     "value": "MEI-ohjaimen versio"
+  },
+  "devices.discoveredPane.heciAvailable": {
+    "description": "Label for whether rpc-go could reach the Intel MEI (HECI) driver during discovery",
+    "value": "MEI-ohjain käytettävissä"
+  },
+  "devices.discoveredPane.isElevated": {
+    "description": "Label for whether rpc-go ran with administrator or root rights during discovery",
+    "value": "Haku suoritettu järjestelmänvalvojan oikeuksin"
   },
   "devices.discoveredPane.lms": {
     "description": "Label for the Local Manageability Service status or version",
@@ -1249,9 +1261,25 @@
     "description": "Label for the DHCP mode",
     "value": "DHCP-tila"
   },
+  "devices.discoveredPane.dhcpModeActive": {
+    "description": "Intel AMT DHCP mode: AMT requests its own DHCP lease",
+    "value": "Aktiivinen"
+  },
+  "devices.discoveredPane.dhcpModePassive": {
+    "description": "Intel AMT DHCP mode: AMT shares the host operating system's DHCP lease",
+    "value": "Passiivinen"
+  },
   "devices.discoveredPane.linkStatus": {
     "description": "Label for network link status",
     "value": "Yhteys"
+  },
+  "devices.discoveredPane.linkStatusUp": {
+    "description": "Network interface link status: link is up",
+    "value": "Yhdistetty"
+  },
+  "devices.discoveredPane.linkStatusDown": {
+    "description": "Network interface link status: link is down",
+    "value": "Ei yhteyttä"
   },
   "devices.discoveredPane.os": {
     "description": "Label for the operating system name",

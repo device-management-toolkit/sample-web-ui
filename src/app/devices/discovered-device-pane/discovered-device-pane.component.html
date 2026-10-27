@@ -55,7 +55,7 @@
         <mat-expansion-panel class="hashes" data-cy="discoveredPaneCertHashes">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{ 'devices.discoveredPane.certHashes.value' | translate }} ({{ section.certHashes?.length }})
+              {{ 'devices.discoveredPane.certHashes.value' | translate }} ({{ section.certHashes.length }})
             </mat-panel-title>
           </mat-expansion-panel-header>
           <ul class="hash-list mono">
@@ -78,6 +78,8 @@
       <dd [class.mono]="row.mono">
         @if (isFlag(row.value)) {
           {{ (row.value ? 'common.yes.value' : 'common.no.value') | translate }}
+        } @else if (isLabel(row.value)) {
+          {{ row.value.key | translate }}
         } @else {
           {{ row.value }}
         }

@@ -1,9 +1,9 @@
-// Colors come from the app's blue-grey / light-blue Material palettes so the pane reads as part of the page.
-$ink: #263238; // blue-grey 900
-$ink-muted: #546e7a; // blue-grey 600
-$discovered: #455a64; // blue-grey 700
-$rule: #cfd8dc; // blue-grey 100
-$rule-soft: #eceff1; // blue-grey 50
+// Material 3 system tokens, so the pane follows the light/dark theme and the chosen palette.
+$ink: var(--mat-sys-on-surface);
+$ink-muted: var(--mat-sys-on-surface-variant);
+$discovered: var(--mat-sys-outline);
+$rule: var(--mat-sys-outline-variant);
+$rule-soft: var(--mat-sys-surface-container-highest);
 
 :host {
   --pane-offset: 100%;
@@ -17,10 +17,10 @@ $rule-soft: #eceff1; // blue-grey 50
   flex-direction: column;
   box-sizing: border-box; // keep the border inside 100vw on phones
   width: min(440px, 100vw);
-  background: #fff;
+  background: var(--mat-sys-surface-container-low);
   color: $ink;
   border-inline-start: 1px solid $rule;
-  box-shadow: var(--pane-shadow-x) 0 32px rgba(38, 50, 56, 0.14);
+  box-shadow: var(--pane-shadow-x) 0 32px color-mix(in srgb, var(--mat-sys-shadow) 14%, transparent);
   animation: pane-in 240ms cubic-bezier(0.2, 0, 0, 1);
 }
 
@@ -84,7 +84,7 @@ h2 {
   padding-inline: 10px 14px;
   border: 1.5px dashed $discovered;
   border-radius: 16px;
-  color: $discovered;
+  color: $ink-muted;
   font-size: 14px;
   font-weight: 500;
 
@@ -176,6 +176,7 @@ dd {
   border: 1px solid $rule;
   border-radius: 4px;
   box-shadow: none;
+  background: transparent;
 
   .mat-expansion-panel-header {
     padding-inline: 16px;

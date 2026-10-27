@@ -4,12 +4,12 @@
  **********************************************************************/
 
 import { SelectionModel } from '@angular/cdk/collections'
+import { Directionality } from '@angular/cdk/bidi'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   TemplateRef,
@@ -18,6 +18,7 @@ import {
   inject,
   signal
 } from '@angular/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatDialog } from '@angular/material/dialog'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
@@ -121,7 +122,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly translate = inject(TranslateService)
   private readonly overlay = inject(Overlay)
   private readonly viewContainerRef = inject(ViewContainerRef)
-  private readonly elementRef = inject(ElementRef<HTMLElement>)
+  private readonly directionality = inject(Directionality)
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 
@@ -180,7 +181,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.serverDiscoveredCount()
   }
 
-  // Power actions don't apply to devices that haven't been activated yet.
+  // Power actions aren't available for devices not managed by Console.
   get isDiscoveredTab(): boolean {
     return !this.isCloudMode && this.activeTab() === 1
   }
@@ -260,6 +261,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor() {
     this.selectedDevices = new SelectionModel<Device>(true, [])
     this.powerStates = this.devicesService.PowerStates
+    this.directionality.change.pipe(takeUntilDestroyed()).subscribe((dir) => this.paneOverlay?.setDirection(dir))
   }
 
   ngOnInit(): void {
@@ -271,7 +273,10 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.devices.sort = this.sort
     // The overlay stays attached; the template's @if decides whether the pane is showing,
     // which lets its leave animation run before it is removed.
-    this.paneOverlay = this.overlay.create({ positionStrategy: this.overlay.position().global() })
+    this.paneOverlay = this.overlay.create({
+      positionStrategy: this.overlay.position().global(),
+      direction: this.directionality.value
+    })
     this.paneOverlay.attach(new TemplatePortal(this.paneTemplate, this.viewContainerRef))
   }
 
@@ -486,6 +491,10 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     await this.router.navigate([`/devices/${path}`])
   }
 
+  trackDevice(_index: number, device: Device): string {
+    return device.guid
+  }
+
   // A discovered device has no credentials in console, so the device page can't connect to it.
   // Show what it reported during discovery instead.
   async openDevice(device: Device, event?: Event): Promise<void> {
@@ -493,9 +502,6 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event instanceof KeyboardEvent && event.target !== event.currentTarget) return
     if (this.isDiscoveredTab) {
       this.paneTrigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null
-      // The overlay lives outside the app's [dir] element, so pass the page direction through for RTL.
-      const dir = this.elementRef.nativeElement.closest('[dir]')?.getAttribute('dir')
-      this.paneOverlay?.setDirection(dir === 'rtl' ? 'rtl' : 'ltr')
       this.paneDevice.set(device)
       return
     }
