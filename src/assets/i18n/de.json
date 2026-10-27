@@ -1897,8 +1897,12 @@
     "value": "Senden"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Meldung, wenn AMT die KVM-Sitzung schließt",
-    "value": "KVM-Sitzung wurde von AMT geschlossen"
+    "description": "Meldung, wenn eine bestehende KVM-Sitzung unerwartet getrennt wird",
+    "value": "KVM-Sitzung getrennt"
+  },
+  "kvm.connectionFailed": {
+    "description": "Meldung, wenn die KVM-Verbindung vor dem Aufbau einer Sitzung fehlschlägt",
+    "value": "Authentifizierung fehlgeschlagen - Eine KVM-Verbindung konnte nicht hergestellt werden."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Statusmeldung beim Abrufen der AMT-Funktionen",
