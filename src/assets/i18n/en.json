@@ -1,131 +1,131 @@
 {
   "proxyConfigs.header.proxyTitle": {
-    "value": "Proxy Configs",
-    "description": "Proxy Configs title"
+    "description": "Proxy Configs title",
+    "value": "Proxy Configs"
   },
   "proxyConfigs.header.name": {
-    "value": "Name",
-    "description": "Proxy config name column header"
+    "description": "Proxy config name column header",
+    "value": "Name"
   },
   "proxyConfigs.header.proxyAddress": {
-    "value": "Proxy Address",
-    "description": "Proxy Address column header"
+    "description": "Proxy Address column header",
+    "value": "Proxy Address"
   },
   "proxyConfigs.header.addressFormat": {
-    "value": "Address Format",
-    "description": "Address Format column header"
+    "description": "Address Format column header",
+    "value": "Address Format"
   },
   "proxyConfigs.header.port": {
-    "value": "Port",
-    "description": "Port column header"
+    "description": "Port column header",
+    "value": "Port"
   },
   "proxyConfigs.header.dnsSuffix": {
-    "value": "Network DNS Suffix",
-    "description": "Network DNS Suffix column header"
+    "description": "Network DNS Suffix column header",
+    "value": "Network DNS Suffix"
   },
   "proxyConfigs.pageTitle.newProxy": {
-    "value": "New Proxy Config",
-    "description": "New Proxy Config page title"
+    "description": "New Proxy Config page title",
+    "value": "New Proxy Config"
   },
   "proxyConfigs.pageTitle.editProxy": {
-    "value": "Edit Proxy Config",
-    "description": "Edit Proxy Config page title"
+    "description": "Edit Proxy Config page title",
+    "value": "Edit Proxy Config"
   },
   "proxyConfigs.proxyAddress": {
-    "value": "Proxy Address",
-    "description": "Proxy Address field label"
+    "description": "Proxy Address field label",
+    "value": "Proxy Address"
   },
   "proxyConfigs.name": {
-    "value": "Name",
-    "description": "Proxy config name field label"
+    "description": "Proxy config name field label",
+    "value": "Name"
   },
   "proxyConfigs.namePlaceholder": {
-    "value": "Enter proxy config name",
-    "description": "Proxy config name placeholder"
+    "description": "Proxy config name placeholder",
+    "value": "Enter proxy config name"
   },
   "proxyConfigs.addressPlaceholder": {
-    "value": "Enter proxy server address",
-    "description": "Placeholder for proxy address field"
+    "description": "Placeholder for proxy address field",
+    "value": "Enter proxy server address"
   },
   "proxyConfigs.addressFormat": {
-    "value": "Address Format",
-    "description": "Address Format field label"
+    "description": "Address Format field label",
+    "value": "Address Format"
   },
   "proxyConfigs.port": {
-    "value": "Port",
-    "description": "Port field label"
+    "description": "Port field label",
+    "value": "Port"
   },
   "proxyConfigs.dnsSuffix": {
-    "value": "Network DNS Suffix",
-    "description": "DNS Suffix field label"
+    "description": "DNS Suffix field label",
+    "value": "Network DNS Suffix"
   },
   "proxyConfigs.dnsSuffixPlaceholder": {
-    "value": "example.com",
-    "description": "Placeholder for DNS suffix field"
+    "description": "Placeholder for DNS suffix field",
+    "value": "example.com"
   },
   "proxyConfigs.validation.portRequired": {
-    "value": "Port is required",
-    "description": "Port required validation message"
+    "description": "Port required validation message",
+    "value": "Port is required"
   },
   "proxyConfigs.validation.portRange": {
-    "value": "Port must be between 0 and 65535",
-    "description": "Port range validation message"
+    "description": "Port range validation message",
+    "value": "Port must be between 0 and 65535"
   },
   "proxyConfigs.validation.nameRequired": {
-    "value": "Name is required",
-    "description": "Name required validation message"
+    "description": "Name required validation message",
+    "value": "Name is required"
   },
   "proxyConfigs.validation.dnsSuffixRequired": {
-    "value": "Network DNS suffix is required",
-    "description": "DNS suffix required validation message"
+    "description": "DNS suffix required validation message",
+    "value": "Network DNS suffix is required"
   },
   "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "value": "Network DNS suffix must be 192 characters or less",
-    "description": "DNS suffix max length validation message"
+    "description": "DNS suffix max length validation message",
+    "value": "Network DNS suffix must be 192 characters or less"
   },
   "proxyConfigs.messages.createdSuccess": {
-    "value": "Proxy config created successfully",
-    "description": "Success message for creating proxy config"
+    "description": "Success message for creating proxy config",
+    "value": "Proxy config created successfully"
   },
   "proxyConfigs.messages.updatedSuccess": {
-    "value": "Proxy config updated successfully",
-    "description": "Success message for updating proxy config"
+    "description": "Success message for updating proxy config",
+    "value": "Proxy config updated successfully"
   },
   "proxyConfigs.messages.deletedSuccess": {
-    "value": "Proxy config {{name}} deleted successfully",
-    "description": "Success message for deleting proxy config"
+    "description": "Success message for deleting proxy config",
+    "value": "Proxy config {{name}} deleted successfully"
   },
   "proxy.label": {
-    "value": "Proxies",
-    "description": "Label for the proxies section"
+    "description": "Label for the proxies section",
+    "value": "Proxies"
   },
   "proxy.configs.label": {
-    "value": "Proxy Configs",
-    "description": "Label for the proxy configs input field"
+    "description": "Label for the proxy configs input field",
+    "value": "Proxy Configs"
   },
   "proxy.configs.placeholder": {
-    "value": "Search for Proxy Configs to Add",
-    "description": "Placeholder text for searching proxy configs"
+    "description": "Placeholder text for searching proxy configs",
+    "value": "Search for Proxy Configs to Add"
   },
   "proxy.configs.hint": {
-    "value": "Proxies can be assigned to this profile",
-    "description": "Hint shown under the proxy configs input field"
+    "description": "Hint shown under the proxy configs input field",
+    "value": "Proxies can be assigned to this profile"
   },
   "proxy.associatedProfiles.label": {
-    "value": "Associated Proxy Profiles (In Priority Order)",
-    "description": "Label for the associated proxy profiles list"
+    "description": "Label for the associated proxy profiles list",
+    "value": "Associated Proxy Profiles (In Priority Order)"
   },
   "proxy.associatedProfiles.hint": {
-    "value": "Drag and Drop to reorder",
-    "description": "Hint shown for drag-and-drop reordering"
+    "description": "Hint shown for drag-and-drop reordering",
+    "value": "Drag and Drop to reorder"
   },
   "common.delete": {
-    "value": "Delete",
-    "description": "Delete button text"
+    "description": "Delete button text",
+    "value": "Delete"
   },
   "common.deleteProfile": {
-    "value": "Delete Profile",
-    "description": "Delete profile button text"
+    "description": "Delete profile button text",
+    "value": "Delete Profile"
   },
   "common.editTags": {
     "description": "Button text for editing tags in bulk",
@@ -140,8 +140,8 @@
     "description": "Edit settings button text"
   },
   "common.update": {
-    "value": "UPDATE",
-    "description": "Update button text"
+    "description": "Update button text",
+    "value": "UPDATE"
   },
   "about.cloudMode": {
     "description": "Title for the about section in cloud mode",
@@ -511,17 +511,9 @@
   "common.continue": {
     "value": "Continue"
   },
-  "common.delete": {
-    "description": "Delete button text",
-    "value": "Delete"
-  },
   "common.deleteConfiguration": {
     "description": "Message for deleted configurations",
     "value": "Configuration deleted successfully"
-  },
-  "common.deleteProfile": {
-    "description": "Delete profile button text",
-    "value": "Delete Profile"
   },
   "common.deviceMangementToolkitPortal": {
     "description": "Message for the log in subtitle",
@@ -545,10 +537,6 @@
   },
   "common.down": {
     "value": "Down"
-  },
-  "common.editTags": {
-    "description": "Button text for editing tags in bulk",
-    "value": "Edit tags"
   },
   "common.enabled": {
     "description": "Used when the local profile synchronization is enabled",
@@ -659,10 +647,6 @@
   },
   "common.up": {
     "value": "Up"
-  },
-  "common.update": {
-    "description": "Update button text",
-    "value": "UPDATE"
   },
   "common.userName": {
     "description": "Message for username",
@@ -1611,10 +1595,6 @@
     "description": "Power tooltip for Sleep",
     "value": "Power: Sleep"
   },
-  "deviceToolbar.power.off": {
-    "description": "Power tooltip for Off",
-    "value": "Power: Off"
-  },
   "deviceToolbar.power.refreshAriaLabel": {
     "description": "Aria label for the refresh power status button",
     "value": "Refresh power status"
@@ -2364,6 +2344,18 @@
   "kvm.fullscreen.button": {
     "description": "Button label to toggle fullscreen mode in KVM",
     "value": "Fullscreen"
+  },
+  "kvm.exitFullscreen.button": {
+    "description": "Tooltip for the button that exits KVM fullscreen mode",
+    "value": "Exit fullscreen"
+  },
+  "kvm.settings.button": {
+    "description": "Tooltip for the button that opens the KVM settings panel in fullscreen mode",
+    "value": "Settings"
+  },
+  "kvm.powerMenu.button": {
+    "description": "Tooltip for the power actions menu button in KVM fullscreen mode",
+    "value": "Power actions"
   },
   "kvm.hotKeys.label": {
     "description": "Label for the hotkeys dropdown in KVM toolbar",
@@ -3381,90 +3373,6 @@
     "description": "Network Config column header",
     "value": "Network Config"
   },
-  "proxy.associatedProfiles.hint": {
-    "description": "Hint shown for drag-and-drop reordering",
-    "value": "Drag and Drop to reorder"
-  },
-  "proxy.associatedProfiles.label": {
-    "description": "Label for the associated proxy profiles list",
-    "value": "Associated Proxy Profiles (In Priority Order)"
-  },
-  "proxy.configs.hint": {
-    "description": "Hint shown under the proxy configs input field",
-    "value": "Proxies can be assigned to this profile"
-  },
-  "proxy.configs.label": {
-    "description": "Label for the proxy configs input field",
-    "value": "Proxy Configs"
-  },
-  "proxy.configs.placeholder": {
-    "description": "Placeholder text for searching proxy configs",
-    "value": "Search for Proxy Configs to Add"
-  },
-  "proxy.label": {
-    "description": "Label for the proxies section",
-    "value": "Proxies"
-  },
-  "proxyConfigs.addressFormat": {
-    "description": "Address Format field label",
-    "value": "Address Format"
-  },
-  "proxyConfigs.addressPlaceholder": {
-    "description": "Placeholder for proxy address field",
-    "value": "Enter proxy server address"
-  },
-  "proxyConfigs.dnsSuffix": {
-    "description": "DNS Suffix field label",
-    "value": "Network DNS Suffix"
-  },
-  "proxyConfigs.dnsSuffixPlaceholder": {
-    "description": "Placeholder for DNS suffix field",
-    "value": "example.com"
-  },
-  "proxyConfigs.header.addressFormat": {
-    "description": "Address Format column header",
-    "value": "Address Format"
-  },
-  "proxyConfigs.header.dnsSuffix": {
-    "description": "Network DNS Suffix column header",
-    "value": "Network DNS Suffix"
-  },
-  "proxyConfigs.header.name": {
-    "description": "Proxy config name column header",
-    "value": "Name"
-  },
-  "proxyConfigs.header.port": {
-    "description": "Port column header",
-    "value": "Port"
-  },
-  "proxyConfigs.header.proxyAddress": {
-    "description": "Proxy Address column header",
-    "value": "Proxy Address"
-  },
-  "proxyConfigs.header.proxyTitle": {
-    "description": "Proxy Configs title",
-    "value": "Proxy Configs"
-  },
-  "proxyConfigs.messages.createdSuccess": {
-    "description": "Success message for creating proxy config",
-    "value": "Proxy config created successfully"
-  },
-  "proxyConfigs.messages.deletedSuccess": {
-    "description": "Success message for deleting proxy config",
-    "value": "Proxy config {{name}} deleted successfully"
-  },
-  "proxyConfigs.messages.updatedSuccess": {
-    "description": "Success message for updating proxy config",
-    "value": "Proxy config updated successfully"
-  },
-  "proxyConfigs.name": {
-    "description": "Proxy config name field label",
-    "value": "Name"
-  },
-  "proxyConfigs.namePlaceholder": {
-    "description": "Proxy config name placeholder",
-    "value": "Enter proxy config name"
-  },
   "proxyConfigs.noData": {
     "description": "No Proxy Configs message",
     "value": "No Proxy Configs"
@@ -3472,42 +3380,6 @@
   "proxyConfigs.noDataDescription": {
     "description": "Explains what Proxy Configs are for when none exist",
     "value": "Proxy configs describe the network proxies AMT can use, each tied to a network DNS suffix. Add one, then assign it to a profile."
-  },
-  "proxyConfigs.pageTitle.editProxy": {
-    "description": "Edit Proxy Config page title",
-    "value": "Edit Proxy Config"
-  },
-  "proxyConfigs.pageTitle.newProxy": {
-    "description": "New Proxy Config page title",
-    "value": "New Proxy Config"
-  },
-  "proxyConfigs.port": {
-    "description": "Port field label",
-    "value": "Port"
-  },
-  "proxyConfigs.proxyAddress": {
-    "description": "Proxy Address field label",
-    "value": "Proxy Address"
-  },
-  "proxyConfigs.validation.dnsSuffixMaxLength": {
-    "description": "DNS suffix max length validation message",
-    "value": "Network DNS suffix must be 192 characters or less"
-  },
-  "proxyConfigs.validation.dnsSuffixRequired": {
-    "description": "DNS suffix required validation message",
-    "value": "Network DNS suffix is required"
-  },
-  "proxyConfigs.validation.nameRequired": {
-    "description": "Name required validation message",
-    "value": "Name is required"
-  },
-  "proxyConfigs.validation.portRange": {
-    "description": "Port range validation message",
-    "value": "Port must be between 0 and 65535"
-  },
-  "proxyConfigs.validation.portRequired": {
-    "description": "Port required validation message",
-    "value": "Port is required"
   },
   "randomPassword.learnMore": {
     "description": "Message for a support link",
@@ -3552,6 +3424,18 @@
   "sol.errorRetrievingPower": {
     "description": "Error for retrieving power status",
     "value": "Error retrieving power status"
+  },
+  "sol.exitFullscreen.button": {
+    "description": "Tooltip for the button that exits SOL fullscreen mode",
+    "value": "Exit fullscreen"
+  },
+  "sol.fullscreen.button": {
+    "description": "Button for entering SOL fullscreen mode",
+    "value": "Fullscreen"
+  },
+  "sol.powerMenu.button": {
+    "description": "Tooltip for the power actions menu button in SOL fullscreen mode",
+    "value": "Power actions"
   },
   "sol.loading": {
     "description": "Message for loading to SOL",
@@ -3816,5 +3700,13 @@
   "wirelessDetail.wirelessProfileNameHint": {
     "description": "Hint for the wireless profile name field",
     "value": "Provide a name for the wireless profile"
+  },
+  "common.menu": {
+    "description": "Label for the mobile navigation menu toggle",
+    "value": "Menu"
+  },
+  "general.categories": {
+    "description": "Label for the device category drawer toggle",
+    "value": "Categories"
   }
 }

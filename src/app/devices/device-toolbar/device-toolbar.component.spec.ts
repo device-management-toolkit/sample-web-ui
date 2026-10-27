@@ -11,86 +11,53 @@ import { DeviceToolbarComponent } from './device-toolbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { Subject, of, throwError } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
-import { BootDetails, Device } from '../../../models/models'
+import { Device } from '../../../models/models'
 import { EventEmitter } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { provideTranslateService } from '@ngx-translate/core'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
+import { PowerActionService } from '../power-action.service'
+import { signal } from '@angular/core'
 
 describe('DeviceToolbarComponent', () => {
   let component: DeviceToolbarComponent
   let fixture: ComponentFixture<DeviceToolbarComponent>
-  let sendPowerActionSpy: MockInstance
   let getDeviceSpy: MockInstance
   let sendDeactivateSpy: MockInstance
   let devicesService: SpyObj<DevicesService>
+  let powerActionService: SpyObj<PowerActionService>
   let snackBar: SpyObj<MatSnackBar>
 
   const isCloudMode = environment.cloud
 
   beforeEach(async () => {
-    // Create a spy for the snackBar service
     snackBar = createSpyObj('MatSnackBar', ['open'])
 
     devicesService = createSpyObj('DevicesService', [
-      'sendPowerAction',
       'getDevice',
       'sendDeactivate',
-      'getPowerState',
-      'getPowerStateCached',
-      'getAMTFeatures',
       'getAMTFeaturesCached',
-      'getAMTVersion',
-      'featuresChanges'
+      'featuresChanges',
+      'getDeviceCertificate'
     ])
     devicesService.featuresChanges.mockReturnValue(of(null))
     devicesService.deviceState = new EventEmitter<number>()
 
-    devicesService.TargetOSMap = { 0: 'Unknown' } as any
-    sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(
-      of({
-        Body: {
-          ReturnValueStr: 'NOT_READY'
-        }
-      })
-    )
-
-    devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
-    devicesService.getPowerStateCached.mockReturnValue(of({ powerstate: 2 }))
-    const mockAMTFeatures = {
-      userConsent: 'None',
-      ocr: true,
-      httpsBootSupported: true,
-      kvm: true,
-      sol: true,
-      ider: true,
-      redirection: true,
-      optInState: 1,
-      kvmAvailable: true,
-      winREBootSupported: true,
-      localPBABootSupported: true,
-      rpe: true,
-      rpeSupported: true,
-      pbaBootFilesPath: [],
-      winREBootFilesPath: {
-        instanceID: '',
-        biosBootString: '',
-        bootString: ''
-      }
-    } as any
-    devicesService.getAMTFeatures.mockReturnValue(of(mockAMTFeatures))
+    const mockAMTFeatures = { userConsent: 'None', ocr: true, httpsBootSupported: true } as any
     devicesService.getAMTFeaturesCached.mockReturnValue(of(mockAMTFeatures))
     getDeviceSpy = devicesService.getDevice.mockReturnValue(of({ guid: 'guid' } as any))
     sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
-    devicesService.getAMTVersion.mockReturnValue(
-      of({
-        AMT_SetupAndConfigurationService: {
-          response: { ProvisioningMode: 1 } // Default to ACM mode
-        }
-      })
-    )
     devicesService.device = new Subject<Device>()
+
+    powerActionService = createSpyObj('PowerActionService', [
+      'loadPowerState',
+      'refreshPowerState',
+      'sendPowerAction',
+      'buildPowerOptions'
+    ])
+    powerActionService.powerState = signal('Unknown') as any
+    powerActionService.buildPowerOptions.mockReturnValue([{ label: 'powerOptions.resetToHTTPSBoot.value', action: 105 }])
 
     TestBed.configureTestingModule({
       imports: [
@@ -100,6 +67,7 @@ describe('DeviceToolbarComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
+        { provide: PowerActionService, useValue: powerActionService },
         { provide: MatSnackBar, useValue: snackBar },
         {
           provide: ActivatedRoute,
@@ -127,39 +95,27 @@ describe('DeviceToolbarComponent', () => {
     expect(getDeviceSpy).toHaveBeenCalledWith('guid')
   })
 
-  it('should send power action', () => {
-    fixture.componentRef.setInput('deviceId', 'guid')
+  it('should load power state through PowerActionService on init', () => {
+    expect(powerActionService.loadPowerState).toHaveBeenCalledWith('guid', component.isLoading())
+  })
+
+  it('should build power options from AMT features through PowerActionService', () => {
+    expect(powerActionService.buildPowerOptions).toHaveBeenCalledWith({ userConsent: 'None', ocr: true, httpsBootSupported: true })
+    expect(component.powerOptions()).toEqual([{ label: 'powerOptions.resetToHTTPSBoot.value', action: 105 }])
+  })
+
+  it('should delegate send power action to PowerActionService', () => {
     component.sendPowerAction(4)
-
-    fixture.detectChanges()
-
-    expect(sendPowerActionSpy).toHaveBeenCalledWith('guid', 4, false, {})
-    fixture.detectChanges()
-    expect(component.isLoading()()).toBe(false)
+    expect(powerActionService.sendPowerAction).toHaveBeenCalledWith('guid', 4, component.isLoading())
   })
 
-  it('should fetch power state using cached API on initial load', () => {
-    expect(devicesService.getPowerStateCached).toHaveBeenCalledWith('guid')
-    expect(devicesService.getPowerState).not.toHaveBeenCalled()
-  })
-
-  it('should fetch power state using non-cached API on refresh', () => {
-    devicesService.getPowerState.mockClear()
-    devicesService.getPowerStateCached.mockClear()
-
+  it('should delegate refresh power state to PowerActionService', () => {
     component.refreshPowerState()
-
-    expect(devicesService.getPowerState).toHaveBeenCalledWith('guid')
-    expect(devicesService.getPowerStateCached).not.toHaveBeenCalled()
+    expect(powerActionService.refreshPowerState).toHaveBeenCalledWith('guid', component.isLoading())
   })
 
-  it('should show snackbar and reset loading state when refresh power state fails', () => {
-    devicesService.getPowerState.mockReturnValue(throwError(() => new Error('Network error')))
-
-    component.refreshPowerState()
-
-    expect(snackBar.open).toHaveBeenCalled()
-    expect(component.isLoading()()).toBe(false)
+  it('should expose the shared power state signal from PowerActionService', () => {
+    expect(component.powerState).toBe(powerActionService.powerState)
   })
 
   it('should navigate to device', async () => {
@@ -213,206 +169,33 @@ describe('DeviceToolbarComponent', () => {
     expect(component.isLoading()()).toBe(false)
   })
 
-  it('should open PBABootDialogComponent and send filtered PBA sources', () => {
-    const pbaSources = [
-      {
-        biosBootString: 'PBA1',
-        bootString: 'OemPba.efi',
-        elementName: '',
-        failThroughSupported: 0,
-        instanceID: 'PBA1',
-        structuredBootString: '',
-        description: 'PBA Boot'
-      },
-      {
-        biosBootString: 'Other',
-        bootString: 'Other.efi',
-        elementName: '',
-        failThroughSupported: 0,
-        instanceID: 'Other',
-        structuredBootString: '',
-        description: 'Other Boot'
-      }
-    ]
-    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
-    devicesService.getAMTVersion.mockReturnValue(
-      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 1 } } })
-    )
-    const dialogRefSpyObj = createSpyObj({
-      afterClosed: of({ bootPath: 'OemPba.efi', enforceSecureBoot: true }),
-      close: null
-    })
-    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
-    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
-    component.performPBABoot(107)
-    expect(devicesService.getBootSources).toHaveBeenCalledWith('guid')
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: {
-        pbaBootFilesPath: [
-          {
-            biosBootString: 'PBA1',
-            bootString: 'OemPba.efi',
-            elementName: '',
-            failThroughSupported: 0,
-            instanceID: 'PBA1',
-            structuredBootString: '',
-            description: 'PBA Boot'
-          }
-        ],
-        action: 107,
-        isCCM: false
-      }
-    })
-    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
-    expect(executeAuthSpy).toHaveBeenCalledWith(107, false, { bootPath: 'OemPba.efi', enforceSecureBoot: true })
-  })
-
-  it('should call executeAuthorizedPowerAction for WinRE without boot details', () => {
-    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
-    component.performWinREBoot(109)
-    expect(executeAuthSpy).toHaveBeenCalledWith(109, false, { enforceSecureBoot: true })
-  })
-  it('should have OCR power option in non-cloud mode', () => {
-    environment.cloud = false
-    component.isCloudMode = false
-
-    component.ngOnInit()
-
-    const ocrOption = component.powerOptions()!.find((option: { action: number }) => option.action === 105)
-    expect(ocrOption).toBeTruthy()
-    expect(ocrOption?.label).toBe('powerOptions.resetToHTTPSBoot.value')
-  })
-
-  it('should open HttpbootDetailComponent dialog in non-cloud mode', () => {
-    environment.cloud = false
-    component.isCloudMode = false
-
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
+  it('should fetch and pin the device certificate', async () => {
+    devicesService.getDeviceCertificate.mockReturnValue(of({ cert: 'data' } as any))
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
     const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
-    component.performHTTPBoot(105)
+    component.getDeviceCert()
+    await fixture.whenStable()
 
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: { isCCM: false }
-    })
-    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled()
+    expect(devicesService.getDeviceCertificate).toHaveBeenCalledWith('guid')
+    expect(dialogSpy).toHaveBeenCalled()
+    expect(component.isPinned()).toBe(true)
   })
 
-  it('should process authorized power action for OCR with boot details', () => {
+  it('should reload the page after editing a device in non-cloud mode', async () => {
     environment.cloud = false
     component.isCloudMode = false
+    const reloadSpy = vi.fn()
+    vi.stubGlobal('location', { ...window.location, reload: reloadSpy })
 
-    const bootDetails: BootDetails = {
-      url: 'http://example.com/boot.iso',
-      username: 'user',
-      password: 'pass',
-      enforceSecureBoot: true
-    }
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(bootDetails), close: null })
+    const dialogRefSpyObj = createSpyObj({ afterClosed: of(true), close: null })
     vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
 
-    const executeAuthSpy = vi.spyOn(component, 'executeAuthorizedPowerAction').mockImplementation(() => undefined)
+    component.editDevice()
+    await fixture.whenStable()
 
-    component.performHTTPBoot(105)
-
-    expect(executeAuthSpy).toHaveBeenCalledWith(105, false, bootDetails)
-  })
-
-  it('should pass isCCM true to HTTPBootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
-    devicesService.getAMTVersion.mockReturnValue(
-      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
-    )
-
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
-
-    component.performHTTPBoot(105)
-
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: { isCCM: true }
-    })
-  })
-
-  it('should still open HTTPBootDialog with isCCM false when getAMTVersion fails', () => {
-    devicesService.getAMTVersion.mockReturnValue(throwError(() => new Error('Network error')))
-
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
-
-    component.performHTTPBoot(105)
-
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: { isCCM: false }
-    })
-  })
-
-  it('should still open PBABootDialog with isCCM false when getAMTVersion fails but boot sources succeed', () => {
-    devicesService.getAMTVersion.mockReturnValue(throwError(() => new Error('Network error')))
-
-    const pbaSources = [
-      {
-        biosBootString: 'PBA1',
-        bootString: 'OemPba.efi',
-        elementName: '',
-        failThroughSupported: 0,
-        instanceID: 'PBA1',
-        structuredBootString: ''
-      }
-    ]
-    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
-
-    component.performPBABoot(107)
-
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: {
-        pbaBootFilesPath: pbaSources,
-        action: 107,
-        isCCM: false
-      }
-    })
-  })
-
-  it('should pass isCCM true to PBABootDialog when device is in CCM mode (ProvisioningMode 4)', () => {
-    devicesService.getAMTVersion.mockReturnValue(
-      of({ AMT_SetupAndConfigurationService: { response: { ProvisioningMode: 4 } } })
-    )
-
-    const pbaSources = [
-      {
-        biosBootString: 'PBA1',
-        bootString: 'OemPba.efi',
-        elementName: '',
-        failThroughSupported: 0,
-        instanceID: 'PBA1',
-        structuredBootString: ''
-      }
-    ]
-    devicesService.getBootSources = vi.fn().mockReturnValue(of(pbaSources))
-    const dialogRefSpyObj = createSpyObj({ afterClosed: of(null), close: null })
-    const dialogSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue(dialogRefSpyObj)
-
-    component.performPBABoot(107)
-
-    expect(dialogSpy).toHaveBeenCalledWith(expect.any(Function), {
-      width: '400px',
-      disableClose: false,
-      data: {
-        pbaBootFilesPath: pbaSources,
-        action: 107,
-        isCCM: true
-      }
-    })
+    expect(reloadSpy).toHaveBeenCalled()
+    expect(snackBar.open).toHaveBeenCalledWith('Device updated successfully', undefined, SnackbarDefaults.defaultSuccess)
+    vi.unstubAllGlobals()
   })
 })

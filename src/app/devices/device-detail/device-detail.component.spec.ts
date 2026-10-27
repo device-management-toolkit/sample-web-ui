@@ -18,6 +18,7 @@ import { GeneralComponent } from '../general/general.component'
 import { IderComponent } from '../ider/ider.component'
 import { KvmComponent } from '../kvm/kvm.component'
 import { provideTranslateService } from '@ngx-translate/core'
+import { LayoutService } from '../../core/layout.service'
 
 describe('DeviceDetailComponent', () => {
   let component: DeviceDetailComponent
@@ -26,6 +27,14 @@ describe('DeviceDetailComponent', () => {
   let snackBar: MatSnackBar
   let routeParams$: ReplaySubject<any>
   let devicesServiceSpy: SpyObj<DevicesService>
+  let layoutServiceStub: {
+    isHandset: ReturnType<typeof signal<boolean>>
+    opened: ReturnType<typeof signal<boolean>>
+    immersive: ReturnType<typeof signal<boolean>>
+    toggle: ReturnType<typeof vi.fn>
+    close: ReturnType<typeof vi.fn>
+    setImmersive: ReturnType<typeof vi.fn>
+  }
 
   const makeAmtVersion = (sku: string) => ({
     CIM_SoftwareIdentity: {
@@ -78,6 +87,14 @@ describe('DeviceDetailComponent', () => {
     routeParams$ = new ReplaySubject<any>(1)
     devicesServiceSpy = createSpyObj('DevicesService', ['getAMTVersion'])
     devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('16400') as any))
+    layoutServiceStub = {
+      isHandset: signal(false),
+      opened: signal(false),
+      immersive: signal(false),
+      toggle: vi.fn(),
+      close: vi.fn(),
+      setImmersive: vi.fn()
+    }
 
     TestBed.configureTestingModule({
       imports: [
@@ -89,6 +106,7 @@ describe('DeviceDetailComponent', () => {
         provideRouter([]), // Provide an empty router configuration
         provideNativeDateAdapter(),
         { provide: DevicesService, useValue: devicesServiceSpy },
+        { provide: LayoutService, useValue: layoutServiceStub },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -273,5 +291,124 @@ describe('DeviceDetailComponent', () => {
       expect(components).toContain('network-settings')
       expect(components).toContain('tls')
     }
+  })
+
+  describe('Responsive drawer', () => {
+    it('uses mode="side" and stays opened when not a handset', () => {
+      layoutServiceStub.isHandset.set(false)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+
+      const sidenav = fixture.debugElement.query((d) => d.name === 'mat-sidenav').componentInstance
+      expect(sidenav.mode).toBe('side')
+      expect(sidenav.opened).toBe(true)
+    })
+
+    it('uses mode="over" and tracks the local drawerOpened signal when a handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+
+      const sidenav = fixture.debugElement.query((d) => d.name === 'mat-sidenav').componentInstance
+      expect(sidenav.mode).toBe('over')
+      expect(sidenav.opened).toBe(false)
+
+      component.drawerOpened.set(true)
+      fixture.detectChanges()
+      expect(sidenav.opened).toBe(true)
+    })
+
+    it('closes the drawer via (closedStart) without touching the shell layout.opened()', () => {
+      layoutServiceStub.isHandset.set(true)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+      component.drawerOpened.set(true)
+      fixture.detectChanges()
+
+      const sidenav = fixture.debugElement.query((d) => d.name === 'mat-sidenav').componentInstance
+      sidenav.closedStart.emit()
+      expect(component.drawerOpened()).toBe(false)
+      expect(layoutServiceStub.close).not.toHaveBeenCalled()
+    })
+
+    it('auto-closes the drawer when a category is selected on handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+      component.drawerOpened.set(true)
+
+      component.setCurrentView({ component: 'general' })
+      expect(component.drawerOpened()).toBe(false)
+    })
+
+    it('leaves the drawer open when a category is selected on desktop', () => {
+      layoutServiceStub.isHandset.set(false)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+      component.drawerOpened.set(true)
+
+      component.setCurrentView({ component: 'general' })
+      expect(component.drawerOpened()).toBe(true)
+    })
+
+    it('hides the collapse/expand toggle on handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+
+      const toggles = Array.from(fixture.nativeElement.querySelectorAll('a[mat-list-item]')).filter((a: any) =>
+        a.querySelector('mat-icon')?.textContent?.includes('chevron')
+      )
+      expect(toggles.length).toBe(0)
+    })
+
+    it('shows the collapse/expand toggle on desktop', () => {
+      layoutServiceStub.isHandset.set(false)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+
+      const toggles = Array.from(fixture.nativeElement.querySelectorAll('a[mat-list-item]')).filter((a: any) =>
+        a.querySelector('mat-icon')?.textContent?.includes('chevron')
+      )
+      expect(toggles.length).toBe(1)
+    })
+
+    it('shows the category FAB only when handset and not immersive', () => {
+      layoutServiceStub.isHandset.set(false)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.category-fab')).toBeNull()
+
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.category-fab')).not.toBeNull()
+
+      layoutServiceStub.immersive.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.category-fab')).toBeNull()
+    })
+
+    it('toggles the drawer when the category FAB is clicked', () => {
+      layoutServiceStub.isHandset.set(true)
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+
+      const fab: HTMLButtonElement = fixture.nativeElement.querySelector('.category-fab')
+      fab.click()
+      expect(component.drawerOpened()).toBe(true)
+
+      fab.click()
+      expect(component.drawerOpened()).toBe(false)
+    })
+
+    it('hides app-device-toolbar while immersive', () => {
+      routeParams$.next({ id: 'guid' })
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('app-device-toolbar')).not.toBeNull()
+
+      layoutServiceStub.immersive.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('app-device-toolbar')).toBeNull()
+    })
   })
 })

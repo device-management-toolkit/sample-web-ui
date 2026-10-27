@@ -51,6 +51,7 @@ import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { MatDivider } from '@angular/material/divider'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { LayoutService } from '../core/layout.service'
 
 @Component({
   selector: 'app-devices',
@@ -104,6 +105,8 @@ export class DevicesComponent implements OnInit, AfterViewInit {
   private readonly devicesService = inject(DevicesService)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  public readonly layout = inject(LayoutService)
+  public isHandset = this.layout.isHandset
 
   public devices: MatTableDataSource<Device> = new MatTableDataSource<Device>()
 

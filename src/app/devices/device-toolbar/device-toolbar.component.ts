@@ -4,13 +4,11 @@
  **********************************************************************/
 
 import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/core'
-import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { Observable, of, forkJoin, EMPTY, timer } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
-import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from '../../../models/models'
+import { AMTFeaturesResponse, Device } from '../../../models/models'
 import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { environment } from '../../../environments/environment'
@@ -24,18 +22,11 @@ import { MatIconButton } from '@angular/material/button'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatToolbar } from '@angular/material/toolbar'
 import { DeviceCertDialogComponent } from '../device-cert-dialog/device-cert-dialog.component'
-import { UserConsentService } from '../user-consent.service'
-import { HTTPBootDialogComponent } from './http-boot-dialog/http-boot-dialog.component'
-import { PBABootDialogComponent } from './pba-boot-dialog/pba-boot-dialog.component'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { finalize } from 'rxjs/operators'
+import { PowerActionService, PowerOptions } from '../power-action.service'
 
-const PROVISIONING_MODE_CCM = 4
-
-interface PowerOptions {
-  label: string
-  action: number
-}
 @Component({
   selector: 'app-device-toolbar',
   templateUrl: './device-toolbar.component.html',
@@ -58,12 +49,11 @@ interface PowerOptions {
 export class DeviceToolbarComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar)
   private readonly devicesService = inject(DevicesService)
-  private readonly userConsentService = inject(UserConsentService)
   private readonly matDialog = inject(MatDialog)
-  private readonly dialog = inject(MatDialog)
   private readonly destroyRef = inject(DestroyRef)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly powerActionService = inject(PowerActionService)
 
   public readonly isLoading = input(signal(false))
 
@@ -73,88 +63,8 @@ export class DeviceToolbarComponent implements OnInit {
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isCloudMode = environment.cloud
   public device = signal<Device | null>(null)
-  public powerState = signal('Unknown')
-  public basePowerOptions: PowerOptions[] = [
-    {
-      label: 'powerOptions.hibernate.value',
-      action: 7
-    },
-    {
-      label: 'powerOptions.sleep.value',
-      action: 4
-    },
-    {
-      label: 'powerOptions.powerCycle.value',
-      action: 5
-    },
-    {
-      label: 'powerOptions.reset.value',
-      action: 10
-    },
-    {
-      label: 'powerOptions.softOff.value',
-      action: 12
-    },
-    {
-      label: 'powerOptions.softReset.value',
-      action: 14
-    },
-    {
-      label: 'powerOptions.resetToIDER.value',
-      action: 202
-    },
-    {
-      label: 'powerOptions.resetToBIOS.value',
-      action: 101
-    },
-    {
-      label: 'powerOptions.powerUpToBIOS.value',
-      action: 100
-    },
-    {
-      label: 'powerOptions.resetToPXE.value',
-      action: 400
-    },
-    {
-      label: 'powerOptions.powerUpToPXE.value',
-      action: 401
-    }
-  ]
+  public powerState = this.powerActionService.powerState
   public powerOptions = signal<PowerOptions[]>([])
-
-  // Conditional power options based on AMT features
-  private readonly conditionalPowerOptions = {
-    localPBABootSupported: [
-      {
-        label: 'powerOptions.resetToPBA.value',
-        action: 107
-      },
-      {
-        label: 'powerOptions.powerUpToPBA.value',
-        action: 108
-      }
-    ],
-    winREBootSupported: [
-      {
-        label: 'powerOptions.resetToWinRe.value',
-        action: 109
-      },
-      {
-        label: 'powerOptions.powerUpToWinRe.value',
-        action: 110
-      }
-    ],
-    httpsBootSupported: [
-      {
-        label: 'powerOptions.resetToHTTPSBoot.value',
-        action: 105
-      },
-      {
-        label: 'powerOptions.powerUpToHTTPSBoot.value',
-        action: 106
-      }
-    ]
-  }
 
   ngOnInit(): void {
     this.devicesService
@@ -164,7 +74,7 @@ export class DeviceToolbarComponent implements OnInit {
         this.device.set(data)
         this.devicesService.device.next(data)
         this.isPinned.set(data.certHash != null && data.certHash !== '')
-        this.loadPowerState()
+        this.powerActionService.loadPowerState(this.deviceId(), this.isLoading())
         this.loadAMTFeatures()
         // react to AMT feature updates emitted by service
         this.devicesService
@@ -173,7 +83,7 @@ export class DeviceToolbarComponent implements OnInit {
           .subscribe((features) => {
             if (features) {
               this.amtFeatures.set(features)
-              this.buildPowerOptions()
+              this.powerOptions.set(this.powerActionService.buildPowerOptions(features))
             }
           })
       })
@@ -187,109 +97,12 @@ export class DeviceToolbarComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((features) => {
         this.amtFeatures.set(features)
-        this.buildPowerOptions()
+        this.powerOptions.set(this.powerActionService.buildPowerOptions(features))
       })
-  }
-
-  private buildPowerOptions(): void {
-    let options: PowerOptions[] = [...this.basePowerOptions]
-
-    const f = this.amtFeatures()
-    if (f?.ocr) {
-      // Add HTTPS Boot options if httpsBootSupported is true
-      if (f.httpsBootSupported) {
-        options = options.concat(this.conditionalPowerOptions.httpsBootSupported)
-      }
-
-      // Add PBA options if localPBABootSupported is true
-      if (f.localPBABootSupported) {
-        options = options.concat(this.conditionalPowerOptions.localPBABootSupported)
-      }
-
-      if (f.winREBootSupported) {
-        options = options.concat(this.conditionalPowerOptions.winREBootSupported)
-      }
-    }
-
-    // Sort options by action number for consistent ordering
-    options.sort((a, b) => a.action - b.action)
-
-    this.powerOptions.set(options)
-  }
-
-  private setOptimisticPowerState(action: number): void {
-    // Immediately reflect the expected outcome so the UI doesn't show the
-    // old state while waiting for the device to transition.
-    switch (action) {
-      case 2: // power on
-        this.powerState.set('deviceToolbar.power.on.value')
-        break
-      case 8: // power off
-      case 12: // soft off
-        this.powerState.set('deviceToolbar.power.off.value')
-        break
-      default: // reset, cycle, etc. — state is transitioning
-        this.powerState.set('Unknown')
-    }
-  }
-
-  private setPowerStateLabel(powerstate: number): void {
-    switch (powerstate) {
-      case 2:
-        this.powerState.set('deviceToolbar.power.on.value')
-        break
-      case 3:
-      case 4:
-        this.powerState.set('deviceToolbar.power.sleep.value')
-        break
-      default:
-        this.powerState.set('deviceToolbar.power.off.value')
-    }
-  }
-
-  private loadPowerState(): void {
-    // Use cached to dedupe simultaneous requests (KVM deep-link + toolbar both loading).
-    this.fetchPowerState(this.devicesService.getPowerStateCached(this.deviceId()))
   }
 
   refreshPowerState(): void {
-    // Bypass the cache so manual refresh always fetches the latest state from the device.
-    this.fetchPowerState(this.devicesService.getPowerState(this.deviceId()), false, () => {
-      const msg: string = this.translate.instant('kvm.errorRetrievePower.value')
-      this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-    })
-  }
-
-  private silentRefreshPowerState(): void {
-    // Refresh without showing the loading spinner — used after a power action
-    // where the optimistic state is already shown to the user.
-    this.fetchPowerState(this.devicesService.getPowerState(this.deviceId()), true)
-  }
-
-  private fetchPowerState(source: Observable<any>, silent = false, onError?: () => void): void {
-    if (!silent) {
-      this.isLoading().set(true)
-    }
-
-    source
-      .pipe(
-        catchError((err) => {
-          if (onError) {
-            console.error(err)
-            onError()
-          }
-          return EMPTY
-        }),
-        finalize(() => {
-          if (!silent) {
-            this.isLoading().set(false)
-          }
-        }),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((powerState) => {
-        this.setPowerStateLabel(powerState.powerstate)
-      })
+    this.powerActionService.refreshPowerState(this.deviceId(), this.isLoading())
   }
 
   getDeviceCert(): void {
@@ -328,186 +141,7 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   sendPowerAction(action: number): void {
-    if (action >= 100) {
-      this.preprocessingForAuthorizedPowerAction(action)
-    } else {
-      this.executePowerAction(action)
-    }
-  }
-
-  performHTTPBoot(action: number): void {
-    this.devicesService
-      .getAMTVersion(this.deviceId())
-      .pipe(
-        catchError(() => of(null)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((amtVersion) => {
-        const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === PROVISIONING_MODE_CCM
-        const dialogRef = this.dialog.open(HTTPBootDialogComponent, {
-          width: '400px',
-          disableClose: false,
-          data: { isCCM }
-        })
-
-        dialogRef
-          .afterClosed()
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((bootDetails: BootDetails) => {
-            if (!bootDetails) {
-              return
-            }
-            this.executeAuthorizedPowerAction(action, false, bootDetails)
-          })
-      })
-  }
-
-  // Add this new method for PBA boot
-  performPBABoot(action: number): void {
-    forkJoin({
-      amtVersion: this.devicesService.getAMTVersion(this.deviceId()).pipe(catchError(() => of(null))),
-      sources: this.devicesService.getBootSources(this.deviceId())
-    })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(({ amtVersion, sources }) => {
-        const isCCM = amtVersion?.AMT_SetupAndConfigurationService?.response?.ProvisioningMode === PROVISIONING_MODE_CCM
-        const pbaSources = sources.filter((s) => s.biosBootString?.toLowerCase().includes('pba'))
-        const dialogRef = this.dialog.open(PBABootDialogComponent, {
-          width: '400px',
-          disableClose: false,
-          data: {
-            pbaBootFilesPath: pbaSources,
-            action: action,
-            isCCM
-          }
-        })
-        dialogRef
-          .afterClosed()
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((bootDetails: BootDetails) => {
-            if (!bootDetails) {
-              return
-            }
-            this.executeAuthorizedPowerAction(action, false, bootDetails)
-          })
-      })
-  }
-
-  performWinREBoot(action: number): void {
-    const bootDetails: BootDetails = {
-      enforceSecureBoot: true
-    }
-    this.executeAuthorizedPowerAction(action, false, bootDetails)
-  }
-
-  preprocessingForAuthorizedPowerAction(action?: number): void {
-    // Handle specific action pre-processing
-    switch (action) {
-      case 105:
-      case 106: // HTTP Boot action
-        this.performHTTPBoot(action)
-        break
-      case 107:
-      case 108: // PBA Boot action
-        this.performPBABoot(action)
-        break
-      case 109:
-      case 110: // WinRE Boot action
-        this.performWinREBoot(action)
-        break
-      case 101: {
-        // Reset to BIOS
-        const useSOL = this.router.url.toString().includes('sol')
-        this.executeAuthorizedPowerAction(action, useSOL)
-        break
-      }
-      default:
-        this.executeAuthorizedPowerAction(action)
-        break
-    }
-  }
-
-  executeAuthorizedPowerAction(action?: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading().set(true)
-    this.devicesService
-      .getAMTFeatures(this.deviceId())
-      .pipe(
-        switchMap((results: AMTFeaturesResponse) => this.handleAMTFeaturesResponse(results)),
-        switchMap((result: boolean) => {
-          if (result) {
-            return of(null)
-          } else {
-            return this.checkUserConsent()
-          }
-        }),
-        switchMap((result: any) =>
-          this.userConsentService.handleUserConsentDecision(result, this.deviceId(), this.amtFeatures() ?? undefined)
-        ),
-        switchMap((result: any | UserConsentResponse) =>
-          this.userConsentService.handleUserConsentResponse(this.deviceId(), result, 'PowerAction')
-        )
-      )
-      .subscribe({
-        next: () => {
-          if (action !== undefined) {
-            this.executePowerAction(action, useSOL, bootDetails)
-          }
-        },
-        error: () => {
-          const msg: string = this.translate.instant('devices.errorInitializing.value')
-
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-        },
-        complete: () => {
-          this.isLoading().set(false)
-        }
-      })
-  }
-
-  executePowerAction(action: number, useSOL = false, bootDetails: BootDetails = {} as BootDetails): void {
-    this.isLoading().set(true)
-    this.devicesService
-      .sendPowerAction(this.deviceId(), action, useSOL, bootDetails)
-      .pipe(
-        catchError((err) => {
-          console.error(err)
-          const msg: string = this.translate.instant('devices.errorPowerAction.value')
-          this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          return of(null)
-        }),
-        finalize(() => {
-          this.isLoading().set(false)
-        })
-      )
-      .subscribe((data) => {
-        if (this.isCloudMode) {
-          if (data.Body?.ReturnValueStr === 'NOT_READY') {
-            const msg: string = this.translate.instant('devices.powerActionNotReady.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultWarn)
-          } else {
-            const msg: string = this.translate.instant('devices.powerActionSent.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-          }
-        } else {
-          if (data.ReturnValue === 0) {
-            const msg: string = this.translate.instant('devices.powerActionSent.value')
-            console.log('Power action sent successfully:', data)
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultSuccess)
-            // Set expected state immediately for instant feedback.
-            this.setOptimisticPowerState(action)
-            // Then silently confirm actual state after device transitions — no loading spinner.
-            timer(5000)
-              .pipe(takeUntilDestroyed(this.destroyRef))
-              .subscribe(() => {
-                this.silentRefreshPowerState()
-              })
-          } else {
-            console.log('Power action failed:', data)
-            const msg: string = this.translate.instant('devices.failPowerAction.value')
-            this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-          }
-        }
-      })
+    this.powerActionService.sendPowerAction(this.deviceId(), action, this.isLoading())
   }
 
   async navigateTo(path: string): Promise<void> {
@@ -549,25 +183,6 @@ export class DeviceToolbarComponent implements OnInit {
             })
         }
       })
-  }
-
-  handleAMTFeaturesResponse(results: AMTFeaturesResponse): Observable<any> {
-    this.amtFeatures.set(results)
-    if (this.amtFeatures()?.userConsent === 'None') {
-      return of(true) // User consent is not required
-    }
-    return of(false)
-  }
-
-  checkUserConsent(): Observable<any> {
-    if (
-      this.amtFeatures()?.userConsent === 'none' ||
-      this.amtFeatures()?.optInState === 3 ||
-      this.amtFeatures()?.optInState === 4
-    ) {
-      return of(true)
-    }
-    return of(false)
   }
 
   public get deactivateRemoveAction(): string {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input, computed } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subject, takeUntil, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
@@ -18,9 +18,13 @@ import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol
 import { SOLComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatIcon } from '@angular/material/icon'
-import { MatButton } from '@angular/material/button'
+import { MatButton, MatIconButton } from '@angular/material/button'
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
+import { MatTooltip } from '@angular/material/tooltip'
 import { UserConsentService } from '../user-consent.service'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { LayoutService } from '../../core/layout.service'
+import { PowerActionService, PowerOptions } from '../power-action.service'
 
 @Component({
   selector: 'app-sol',
@@ -31,6 +35,11 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatToolbar,
     MatIcon,
     MatButton,
+    MatIconButton,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatTooltip,
     SOLComponent,
     TranslatePipe
   ]
@@ -44,7 +53,12 @@ export class SolComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
+  public readonly layout = inject(LayoutService)
+  private readonly powerActionService = inject(PowerActionService)
   public readonly deviceId = input('')
+
+  public readonly isFullscreen = signal(false)
+  public readonly powerMenuOptions = computed<PowerOptions[]>(() => this.powerActionService.buildPowerOptions(this.amtFeatures()))
 
   public readonly deviceState = signal(0)
 
@@ -83,8 +97,30 @@ export class SolComponent implements OnInit, OnDestroy {
     if (this.reconnectRetryTimer != null) {
       clearTimeout(this.reconnectRetryTimer)
     }
+    // Guard against navigating away while still in fullscreen — restore the shell chrome.
+    this.layout.setImmersive(false)
     this.destroy$.next()
     this.destroy$.complete()
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.isFullscreen()) {
+      this.setFullscreen(false)
+    }
+  }
+
+  setFullscreen(value: boolean): void {
+    this.isFullscreen.set(value)
+    this.layout.setImmersive(value)
+  }
+
+  toggleFullscreen(): void {
+    this.setFullscreen(!this.isFullscreen())
+  }
+
+  sendPowerAction(action: number): void {
+    this.powerActionService.sendPowerAction(this.deviceId(), action, { set: (value: boolean) => this.isLoading.set(value) })
   }
 
   ngOnInit(): void {

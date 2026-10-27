@@ -1014,6 +1014,81 @@ describe('KvmComponent', () => {
     expect(hotKeySignalSpy).toHaveBeenCalledWith('ctrl-alt-f5')
   })
 
+  // Fullscreen tests
+  describe('Fullscreen', () => {
+    it('setFullscreen(true) sets isFullscreen and enters immersive mode', () => {
+      component.setFullscreen(true)
+      expect(component.isFullscreen()).toBe(true)
+      expect(component.layout.immersive()).toBe(true)
+    })
+
+    it('setFullscreen(false) clears isFullscreen, exits immersive mode, and closes the settings overlay', () => {
+      component.setFullscreen(true)
+      const closeSpy = vi.spyOn(component, 'closeSettingsOverlay')
+      component.setFullscreen(false)
+      expect(component.isFullscreen()).toBe(false)
+      expect(component.layout.immersive()).toBe(false)
+      expect(closeSpy).toHaveBeenCalled()
+    })
+
+    it('toggleFullscreen() flips the current state through setFullscreen', () => {
+      const setFullscreenSpy = vi.spyOn(component, 'setFullscreen')
+      component.toggleFullscreen()
+      expect(setFullscreenSpy).toHaveBeenCalledWith(true)
+      component.toggleFullscreen()
+      expect(setFullscreenSpy).toHaveBeenCalledWith(false)
+    })
+
+    it('Escape key exits fullscreen only while fullscreen is active', () => {
+      component.onEscapeKey()
+      expect(component.isFullscreen()).toBe(false)
+
+      component.setFullscreen(true)
+      component.onEscapeKey()
+      expect(component.isFullscreen()).toBe(false)
+    })
+
+    it('ngOnDestroy restores the shell chrome by exiting immersive mode', () => {
+      component.setFullscreen(true)
+      component.ngOnDestroy()
+      expect(component.layout.immersive()).toBe(false)
+    })
+
+    it('delegates power actions from the floating power menu to PowerActionService', () => {
+      component.sendPowerAction(4)
+      expect(sendPowerActionSpy).toHaveBeenCalledWith('', 4, false, {})
+    })
+
+    it('computes power menu options from the current AMT features', () => {
+      component.amtFeatures.set({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0,
+        httpsBootSupported: false,
+        ocr: false,
+        winREBootSupported: false,
+        localPBABootSupported: false,
+        rpeSupported: true,
+        rpe: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: { instanceID: '', biosBootString: '', bootString: '' }
+      })
+      expect(component.powerMenuOptions().length).toBeGreaterThan(0)
+    })
+
+    it('does not open the settings overlay before the template is available', () => {
+      expect(() => component.openSettingsOverlay(document.createElement('button'))).not.toThrow()
+    })
+
+    it('closeSettingsOverlay is a no-op when no overlay is open', () => {
+      expect(() => component.closeSettingsOverlay()).not.toThrow()
+    })
+  })
+
   // Keyboard event handling tests
   describe('Keyboard Event Handling', () => {
     let createdElements: HTMLElement[] = []

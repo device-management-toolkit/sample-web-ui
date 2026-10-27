@@ -6,3 +6,10 @@ a.mat-mdc-list-item.active {
   background-color: var(--mat-sys-surface-container-highest);
   width: calc(100%);
 }
+
+.category-fab {
+  position: fixed !important;
+  bottom: 16px;
+  inset-inline-end: 16px;
+  z-index: 100;
+}

@@ -92,7 +92,119 @@
       [actionLabel]="'common.addNew.value' | translate"
       (action)="addDevice()" />
   }
+} @else if (isHandset()) {
+  <div class="list-cards device-cards">
+    @for (element of devices.filteredData; track element.guid) {
+      <mat-card appearance="outlined" class="list-card device-card" (click)="navigateTo(element.guid)">
+        <div class="list-card-head">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selectedDevices.toggle(element) : null"
+            [checked]="selectedDevices.isSelected(element)">
+          </mat-checkbox>
+          <span class="list-card-title">
+            {{ element.hostname }}
+            @if (element.friendlyName !== null) {
+              <span>&nbsp;({{ element.friendlyName }})</span>
+            }
+          </span>
+          @if (statusMessageByGuid()[element.guid] === 'SUCCESS') {
+            <mat-icon class="mat-text-primary" [matTooltip]="'devices.notification.success.value' | translate"
+              >check_circle</mat-icon
+            >
+          } @else if (statusMessageByGuid()[element.guid] === 'NOT_READY') {
+            <mat-icon class="mat-text-error" [matTooltip]="'devices.notification.notReady.value' | translate"
+              >warning</mat-icon
+            >
+          } @else if (statusMessageByGuid()[element.guid] === 'ERROR') {
+            <mat-icon class="mat-text-error" [matTooltip]="'devices.notification.error.value' | translate"
+              >error</mat-icon
+            >
+          }
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'devices.table.guid.value' | translate }}</span>
+          <span class="list-card-value">{{ element.guid }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'devices.table.status.value' | translate }}</span>
+          <span class="list-card-value">
+            @if (isCloudMode) {
+              {{ translateConnectionStatus(element.connectionStatus) }}
+              @if (element.connectionStatus) {
+                <span>&nbsp;(Power: {{ powerStates[powerStateByGuid()[element.guid]] }})</span>
+              }
+            } @else {
+              Power: {{ powerStates[powerStateByGuid()[element.guid]] }}
+            }
+          </span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'devices.table.productType.value' | translate }}</span>
+          <span class="list-card-value product-type-chip">{{ getProductType(element) }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'devices.table.controlMode.value' | translate }}</span>
+          <span
+            class="list-card-value control-mode-chip"
+            [class.active]="getControlMode(element) === 'acm' || getControlMode(element) === 'ccm'">
+            {{ 'devices.controlMode.' + getControlMode(element) + '.value' | translate }}
+          </span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'common.tags.value' | translate }}</span>
+          <span class="list-card-value">
+            <mat-icon class="addTag" (click)="$event.stopPropagation(); editTagsForDevice(element.guid)">edit</mat-icon>
+            <mat-chip-set>
+              @for (tag of tagsByGuid()[element.guid]; track $index) {
+                <mat-chip [disableRipple]="true">{{ tag }}</mat-chip>
+              }
+            </mat-chip-set>
+          </span>
+        </div>
+        @if (!selectedDevices.isSelected(element)) {
+          <div class="list-card-actions">
+            @if (!isDiscoveredTab) {
+              <button
+                mat-icon-button
+                [matTooltip]="'devices.actions.powerUp.value' | translate"
+                (click)="$event.stopPropagation(); sendPowerAction(element.guid, 2)">
+                <mat-icon>power</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                [matTooltip]="'devices.actions.powerOff.value' | translate"
+                (click)="$event.stopPropagation(); sendPowerAction(element.guid, 8)">
+                <mat-icon>power_off</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                [matTooltip]="'devices.actions.restart.value' | translate"
+                (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
+                <mat-icon>restart_alt</mat-icon>
+              </button>
+            }
+            <button
+              mat-icon-button
+              [matTooltip]="deleteDeviceLabel"
+              (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            @if (!isCloudMode) {
+              <button
+                mat-icon-button
+                [matTooltip]="'devices.actions.edit.value' | translate"
+                (click)="$event.stopPropagation(); editDevice(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+          </div>
+        }
+      </mat-card>
+    }
+  </div>
 } @else {
+  <div class="table-scroll">
   <mat-table [dataSource]="devices" matSort [style.--action-count]="actionCount">
     <!-- select Column -->
     <ng-container matColumnDef="select">
@@ -242,6 +354,7 @@
     <!--      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
     <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.guid)"></mat-row>
   </mat-table>
+  </div>
 }
 
 @if (totalCount() !== 0) {

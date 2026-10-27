@@ -1,15 +1,24 @@
-<app-device-toolbar [deviceId]="deviceId()"></app-device-toolbar>
+@if (!layout.immersive()) {
+  <app-device-toolbar [deviceId]="deviceId()"></app-device-toolbar>
+}
 <mat-sidenav-container autosize>
-  <mat-sidenav mode="side" position="end" opened [style.width.px]="isCollapsed() ? 60 : 250">
+  <mat-sidenav
+    [mode]="isHandset() ? 'over' : 'side'"
+    position="end"
+    [opened]="isHandset() ? drawerOpened() : true"
+    (closedStart)="drawerOpened.set(false)"
+    [style.width.px]="isHandset() ? 250 : isCollapsed() ? 60 : 250">
     <mat-list>
-      <a
-        mat-list-item
-        style="cursor: pointer"
-        (click)="toggleSidenav()"
-        [matTooltip]="isCollapsed() ? ('general.expand.value' | translate) : ('general.collapse.value' | translate)"
-        matTooltipPosition="left">
-        <mat-icon matListItemIcon>{{ !isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
-      </a>
+      @if (!isHandset()) {
+        <a
+          mat-list-item
+          style="cursor: pointer"
+          (click)="toggleSidenav()"
+          [matTooltip]="isCollapsed() ? ('general.expand.value' | translate) : ('general.collapse.value' | translate)"
+          matTooltipPosition="left">
+          <mat-icon matListItemIcon>{{ !isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+        </a>
+      }
       @for (item of categories(); track item.component) {
         <a
           mat-list-item
@@ -19,11 +28,11 @@
           style="cursor: pointer"
           [matTooltip]="item.name | translate"
           matTooltipPosition="left">
-          @if (!isCollapsed()) {
+          @if (!isCollapsed() || isHandset()) {
             <h3 matListItemTitle>{{ item.name | translate }}</h3>
           }
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-          @if (!isCollapsed()) {
+          @if (!isCollapsed() || isHandset()) {
             <p matListItemLine>{{ item.description | translate }}</p>
           }
         </a>
@@ -95,3 +104,13 @@
     }
   </mat-sidenav-content>
 </mat-sidenav-container>
+@if (isHandset() && !layout.immersive()) {
+  <button
+    mat-fab
+    class="category-fab"
+    color="secondary"
+    (click)="toggleDrawer()"
+    [attr.aria-label]="'general.categories.value' | translate">
+    <mat-icon>tune</mat-icon>
+  </button>
+}

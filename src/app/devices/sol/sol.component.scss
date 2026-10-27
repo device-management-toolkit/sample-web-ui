@@ -8,3 +8,26 @@
 .xterm {
   text-align: left;
 }
+
+// CSS-only fullscreen (mirrors kvm.component.scss) so the floating controls
+// below render above <amt-sol>'s terminal.
+.sol-stage.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background-color: black;
+  overflow: auto;
+}
+
+.sol-floating-bar {
+  position: fixed;
+  top: 16px;
+  inset-inline-end: 16px;
+  z-index: 950;
+  display: flex;
+  gap: 4px;
+  background-color: var(--mat-sys-surface-container-highest);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}

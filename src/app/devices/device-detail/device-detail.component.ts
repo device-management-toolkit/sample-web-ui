@@ -32,6 +32,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatFabButton } from '@angular/material/button'
+import { LayoutService } from '../../core/layout.service'
 
 interface DeviceDetailCategory {
   name: string
@@ -74,7 +76,8 @@ interface DeviceDetailCategory {
     NetworkSettingsComponent,
     TLSComponent,
     RemotePlatformEraseComponent,
-    TranslatePipe
+    TranslatePipe,
+    MatFabButton
   ]
 })
 export class DeviceDetailComponent implements OnInit, OnDestroy {
@@ -84,6 +87,9 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService)
   private readonly snackBar = inject(MatSnackBar)
   private readonly destroy$ = new Subject<void>()
+  public readonly layout = inject(LayoutService)
+  public isHandset = this.layout.isHandset
+  public drawerOpened = signal(false)
   public deviceId = signal('')
   public readonly isCloudMode: boolean = environment.cloud
   public isISMSystem = signal(false)
@@ -241,6 +247,10 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     this.isCollapsed.set(!this.isCollapsed())
   }
 
+  toggleDrawer(): void {
+    this.drawerOpened.update((value) => !value)
+  }
+
   private syncCurrentViewForSku(isIsm: boolean, isKnown: boolean): void {
     let nextView = this.currentView()
 
@@ -271,5 +281,8 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
   setCurrentView(category: any): void {
     this.currentView.set(category.component)
+    if (this.isHandset()) {
+      this.drawerOpened.set(false)
+    }
   }
 }

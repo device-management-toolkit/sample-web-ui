@@ -5,7 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../test-helpers'
-import { ApplicationRef } from '@angular/core'
+import { ApplicationRef, signal } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -19,6 +19,7 @@ import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
+import { LayoutService } from '../core/layout.service'
 
 describe('DevicesComponent', () => {
   let device01: Device
@@ -31,6 +32,7 @@ describe('DevicesComponent', () => {
   let sendPowerActionSpy: MockInstance
   let sendDeactivateSpy: MockInstance
   let translate: TranslateService
+  let layoutServiceStub: { isHandset: ReturnType<typeof signal<boolean>> }
 
   beforeEach(async () => {
     device01 = {
@@ -90,6 +92,7 @@ describe('DevicesComponent', () => {
     )
     sendPowerActionSpy = devicesService.sendPowerAction.mockReturnValue(of({ Body: { ReturnValueStr: 'SUCCESS' } }))
     sendDeactivateSpy = devicesService.sendDeactivate.mockReturnValue(of({ status: 'SUCCESS' }))
+    layoutServiceStub = { isHandset: signal(false) }
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([{ path: 'devices', component: DevicesComponent }]),
@@ -98,6 +101,7 @@ describe('DevicesComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: DevicesService, useValue: devicesService },
+        { provide: LayoutService, useValue: layoutServiceStub },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
@@ -676,6 +680,63 @@ describe('DevicesComponent', () => {
         expect(renderedText()).not.toContain('tagCommon01')
         expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
       })
+    })
+  })
+
+  describe('responsive card/table switch', () => {
+    const render = async (): Promise<void> => {
+      fixture.autoDetectChanges()
+      await fixture.whenStable()
+    }
+
+    it('shows the table and hides the cards on desktop', async () => {
+      layoutServiceStub.isHandset.set(false)
+      await render()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.device-cards')).toBeNull()
+    })
+
+    it('shows the cards and hides the table on a handset', async () => {
+      layoutServiceStub.isHandset.set(true)
+      await render()
+      expect(fixture.nativeElement.querySelector('.device-cards')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).toBeNull()
+    })
+
+    it('renders one device card per device, reusing the same signal-backed status/power/tag data as the table', async () => {
+      layoutServiceStub.isHandset.set(true)
+      component.statusMessageByGuid.set({ [device01.guid]: 'SUCCESS' })
+      await render()
+
+      const cards = fixture.nativeElement.querySelectorAll('.device-card')
+      expect(cards.length).toBe(2)
+      expect(cards[0].textContent).toContain('device01')
+      expect(cards[0].querySelector('.mat-text-primary')).not.toBeNull()
+    })
+
+    it('supports selecting and navigating from a device card', async () => {
+      const routerSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => undefined) as any)
+      layoutServiceStub.isHandset.set(true)
+      await render()
+
+      const firstCard: HTMLElement = fixture.nativeElement.querySelector('.device-card')
+      const checkbox: HTMLElement = firstCard.querySelector('mat-checkbox')!
+      checkbox.click()
+      expect(component.selectedDevices.isSelected(device01)).toBe(true)
+
+      firstCard.click()
+      expect(routerSpy).toHaveBeenCalledWith([`/devices/${device01.guid}`])
+    })
+
+    it('sends a power action from a device card without navigating', async () => {
+      layoutServiceStub.isHandset.set(true)
+      await render()
+
+      const firstCard: HTMLElement = fixture.nativeElement.querySelector('.device-card')
+      const powerUpButton: HTMLElement = firstCard.querySelector('.list-card-actions button')!
+      powerUpButton.click()
+
+      expect(sendPowerActionSpy).toHaveBeenCalledWith(device01.guid, 2)
     })
   })
 })

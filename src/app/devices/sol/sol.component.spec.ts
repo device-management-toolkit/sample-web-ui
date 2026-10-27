@@ -767,4 +767,72 @@ describe('SolComponent', () => {
     component.displayWarning('test txt')
     expect(snackBarSpy).toHaveBeenCalled()
   })
+
+  describe('Fullscreen', () => {
+    it('setFullscreen(true) sets isFullscreen and enters immersive mode', () => {
+      component.setFullscreen(true)
+      expect(component.isFullscreen()).toBe(true)
+      expect(component.layout.immersive()).toBe(true)
+    })
+
+    it('setFullscreen(false) clears isFullscreen and exits immersive mode', () => {
+      component.setFullscreen(true)
+      component.setFullscreen(false)
+      expect(component.isFullscreen()).toBe(false)
+      expect(component.layout.immersive()).toBe(false)
+    })
+
+    it('toggleFullscreen() flips the current state through setFullscreen', () => {
+      expect(component.isFullscreen()).toBe(false)
+      component.toggleFullscreen()
+      expect(component.isFullscreen()).toBe(true)
+      component.toggleFullscreen()
+      expect(component.isFullscreen()).toBe(false)
+    })
+
+    it('Escape key exits fullscreen only while fullscreen is active', () => {
+      component.onEscapeKey()
+      expect(component.isFullscreen()).toBe(false)
+
+      component.setFullscreen(true)
+      component.onEscapeKey()
+      expect(component.isFullscreen()).toBe(false)
+    })
+
+    it('ngOnDestroy restores the shell chrome by exiting immersive mode', () => {
+      component.setFullscreen(true)
+      component.ngOnDestroy()
+      expect(component.layout.immersive()).toBe(false)
+    })
+
+    it('delegates power actions from the floating power menu to PowerActionService', () => {
+      component.sendPowerAction(4)
+      expect(sendPowerActionSpy).toHaveBeenCalledWith('', 4, false, {})
+    })
+
+    it('computes power menu options from the current AMT features', () => {
+      component.amtFeatures.set({
+        userConsent: 'none',
+        KVM: true,
+        SOL: true,
+        IDER: true,
+        redirection: true,
+        kvmAvailable: true,
+        optInState: 0,
+        httpsBootSupported: true,
+        ocr: true,
+        winREBootSupported: true,
+        localPBABootSupported: true,
+        rpeSupported: true,
+        rpe: true,
+        pbaBootFilesPath: [],
+        winREBootFilesPath: {
+          instanceID: '',
+          biosBootString: '',
+          bootString: ''
+        }
+      })
+      expect(component.powerMenuOptions().length).toBeGreaterThan(0)
+    })
+  })
 })

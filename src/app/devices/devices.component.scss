@@ -59,3 +59,18 @@ mat-icon.alwaysHidden {
 mat-cell:hover mat-icon.addTag {
   visibility: visible;
 }
+
+.device-card {
+  cursor: pointer;
+
+  .list-card-value mat-icon.addTag {
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .filter-card mat-card-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

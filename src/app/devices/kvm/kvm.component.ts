@@ -10,8 +10,12 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
+  TemplateRef,
+  ViewContainerRef,
+  computed,
   inject,
   signal,
+  viewChild,
   input
 } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
@@ -35,14 +39,21 @@ import { DeviceEnableKvmComponent } from '../device-enable-kvm/device-enable-kvm
 import { KVMComponent, IDERComponent } from '@device-management-toolkit/ui-toolkit-angular'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 import { MatIcon } from '@angular/material/icon'
-import { MatButton } from '@angular/material/button'
+import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatOption } from '@angular/material/core'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatSelect } from '@angular/material/select'
 import { MatFormField, MatLabel } from '@angular/material/form-field'
 import { MatToolbar } from '@angular/material/toolbar'
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
+import { MatTooltip } from '@angular/material/tooltip'
+import { NgTemplateOutlet } from '@angular/common'
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
 import { UserConsentService } from '../user-consent.service'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { LayoutService } from '../../core/layout.service'
+import { PowerActionService, PowerOptions } from '../power-action.service'
 
 @Component({
   selector: 'app-kvm',
@@ -58,8 +69,14 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     FormsModule,
     MatOption,
     MatButton,
+    MatIconButton,
     MatIcon,
     MatProgressSpinner,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem,
+    MatTooltip,
+    NgTemplateOutlet,
     KVMComponent,
     IDERComponent,
     TranslatePipe
@@ -75,8 +92,13 @@ export class KvmComponent implements OnInit, OnDestroy {
   public readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
   private readonly destroyRef = inject(DestroyRef)
+  private readonly overlay = inject(Overlay)
+  private readonly viewContainerRef = inject(ViewContainerRef)
+  public readonly layout = inject(LayoutService)
+  private readonly powerActionService = inject(PowerActionService)
 
   public readonly deviceId = input('')
+  public readonly settingsTemplate = viewChild<TemplateRef<unknown>>('settingsTemplate')
 
   public deviceKVMConnection = signal(false)
 
@@ -102,6 +124,10 @@ export class KvmComponent implements OnInit, OnDestroy {
   public displays = signal<{ value: number; viewValue: string; disabled: boolean }[]>([])
   public selectedDisplay = signal(0)
 
+  public readonly devicePowerState = this.powerActionService.powerState
+  public readonly powerMenuOptions = computed<PowerOptions[]>(() => this.powerActionService.buildPowerOptions(this.amtFeatures()))
+
+  private settingsOverlayRef: OverlayRef | null = null
   private powerState: any = 0
   private timeInterval!: any
   private initStartTime = 0
@@ -339,22 +365,57 @@ export class KvmComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:fullscreenchange')
-  @HostListener('document:webkitfullscreenchange')
-  @HostListener('document:mozfullscreenchange')
-  @HostListener('document:MSFullscreenChange')
-  exitFullscreen(): void {
-    if (
-      !document.fullscreenElement &&
-      !(document as any).webkitIsFullScreen &&
-      !(document as any).mozFullScreen &&
-      !(document as any).msFullscreenElement
-    ) {
-      this.toggleFullscreen()
+  // The fullscreen view is CSS-only (.kvm-stage.fullscreen) rather than the
+  // native Fullscreen API, so floating controls (power menu/settings) can
+  // render above <amt-kvm>'s canvas. Escape exits, matching native fullscreen UX.
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.isFullscreen()) {
+      this.setFullscreen(false)
     }
   }
+
+  setFullscreen(value: boolean): void {
+    this.isFullscreen.set(value)
+    this.layout.setImmersive(value)
+    if (!value) {
+      this.closeSettingsOverlay()
+    }
+  }
+
   toggleFullscreen(): void {
-    this.isFullscreen.set(!this.isFullscreen())
+    this.setFullscreen(!this.isFullscreen())
+  }
+
+  openSettingsOverlay(origin: EventTarget | null): void {
+    const template = this.settingsTemplate()
+    if (!template || this.settingsOverlayRef || !(origin instanceof HTMLElement)) {
+      return
+    }
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(origin)
+      .withPositions([
+        { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 8 }
+      ])
+    this.settingsOverlayRef = this.overlay.create({
+      positionStrategy,
+      hasBackdrop: true,
+      backdropClass: 'kvm-settings-backdrop',
+      panelClass: 'kvm-settings-panel',
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    })
+    this.settingsOverlayRef.backdropClick().subscribe(() => this.closeSettingsOverlay())
+    this.settingsOverlayRef.attach(new TemplatePortal(template, this.viewContainerRef))
+  }
+
+  closeSettingsOverlay(): void {
+    this.settingsOverlayRef?.dispose()
+    this.settingsOverlayRef = null
+  }
+
+  sendPowerAction(action: number): void {
+    this.powerActionService.sendPowerAction(this.deviceId(), action, { set: (value: boolean) => this.isLoading.set(value) })
   }
 
   connect(): void {
@@ -620,5 +681,8 @@ export class KvmComponent implements OnInit, OnDestroy {
     document.removeEventListener('keydown', this.handleKeyboardEventCapture, true)
     document.removeEventListener('keyup', this.handleKeyboardEventCapture, true)
     document.removeEventListener('keypress', this.handleKeyboardEventCapture, true)
+    // Guard against navigating away while still in fullscreen — restore the shell chrome.
+    this.closeSettingsOverlay()
+    this.layout.setImmersive(false)
   }
 }

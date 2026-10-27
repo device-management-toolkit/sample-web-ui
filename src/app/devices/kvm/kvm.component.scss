@@ -21,3 +21,56 @@
 .stop-ider-button {
   margin-inline-start: 8px;
 }
+
+// Let the toolbar grow to fit its content and wrap instead of overflowing: a
+// fixed height with a rigid 50/50 split let the encoding/display/hotkey
+// controls overflow their half and render underneath (overlapping) the
+// connect/fullscreen/attach buttons on narrower screens.
+.kvm-bar {
+  height: auto !important;
+  min-height: 64px;
+  padding: 8px 16px;
+  row-gap: 8px;
+  column-gap: 8px;
+}
+
+// CSS-only fullscreen (not the native Fullscreen API) so the floating
+// controls below render above <amt-kvm>'s canvas — see kvm.component.ts.
+.kvm-stage.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background-color: black;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kvm-floating-bar {
+  position: fixed;
+  top: 16px;
+  inset-inline-end: 16px;
+  z-index: 950;
+  display: flex;
+  gap: 4px;
+  background-color: var(--mat-sys-surface-container-highest);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+// On portrait phones the remote desktop (landscape) wastes most of the screen.
+// Rotate the canvas 90° so it uses the long edge. NOTE: pointer mapping in the
+// toolkit is computed against the un-rotated canvas rect, so rotation is best
+// for *viewing*; for accurate interactive control, turn the device to landscape
+// (no rotation is applied then) or exit fullscreen.
+@media screen and (max-width: 599px) and (orientation: portrait) {
+  .kvm-stage.fullscreen ::ng-deep canvas.canvas {
+    transform: rotate(90deg);
+    transform-origin: center center;
+    // Swap the fit bounds because the canvas is now rotated a quarter turn.
+    max-width: 100vh;
+    max-height: 100vw;
+  }
+}

@@ -137,3 +137,25 @@ mat-sidenav-container {
     white-space: normal;
   }
 }
+
+// KVM/SOL fullscreen settings panel (CDK Overlay). Attached to the document
+// body, so these classes must be global rather than component-scoped.
+// Stacked above the CSS-fullscreen stage (z-index 900) and the app shell.
+.kvm-settings-backdrop {
+  z-index: 1190;
+}
+
+.kvm-settings-panel {
+  z-index: 1200;
+
+  .kvm-settings-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--mat-sys-surface-container-highest);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}
