@@ -38,6 +38,19 @@ Console defaults to `AllowedOrigins: ["*"]` with `AllowCredentials: false`, so b
 
 Deployments that serve the UI from the same origin as the API need no CORS changes.
 
+### Remote platform erase status
+
+After an erase submission succeeds, the UI polls the BIOS erase result every five
+seconds for up to ten minutes. Standalone MPS deployments use
+`/api/v1/amt/boot/remoteErase/{guid}/status`; Console/enterprise deployments use
+`/api/v2/amt/boot/remoteErase/{guid}/status`. The backend must support the
+corresponding status endpoint.
+
+The UI confirms completion or failure only after observing a pending result, so a
+previous erase result cannot be mistaken for the current operation. If the device
+is unreachable or no fresh result can be confirmed, the UI warns that the outcome
+is unconfirmed. Keep the erase page open while polling.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

@@ -41,7 +41,6 @@ import {
   takeWhile,
   timeout
 } from 'rxjs'
-import { environment } from '../../../environments/environment'
 import { DevicesService } from '../devices.service'
 import {
   AMTFeaturesRequest,
@@ -350,9 +349,7 @@ export class RemotePlatformEraseComponent implements OnChanges, OnInit {
                 })
               )
               .subscribe()
-            if (!environment.cloud) {
-              this.watchEraseResult(deviceId, req.secureEraseAllSSDs)
-            }
+            this.watchEraseResult(deviceId, req.secureEraseAllSSDs)
 
             // Preserve selected operations after completion and refresh computed UI state.
             this.onCapChange()

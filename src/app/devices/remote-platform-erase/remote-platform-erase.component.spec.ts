@@ -84,6 +84,7 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.featuresChanges.mockReturnValue(of(null))
     devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ ...mockAMTFeatures }))
     devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+    devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
     devicesServiceSpy.sendDeactivate.mockReturnValue(of({}))
 
     await TestBed.configureTestingModule({
@@ -122,20 +123,26 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it.each([
-      { status: 'failed' as const, message: 'BIOS erase failed: drive password/authentication failure.' },
-      { status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' }
-    ])('should show a fresh $status result only after pending', async ({ status, message }) => {
-      devicesServiceSpy.getRemoteEraseStatus
-        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
-        .mockReturnValue(of({ status, message }))
-      component.initiateErase()
-      await vi.advanceTimersByTimeAsync(0)
-      expect(component.awaitingEraseResult()).toBe(true)
-      expect(snackBarSpy.open).not.toHaveBeenCalledWith(message, undefined, expect.anything())
-      await vi.advanceTimersByTimeAsync(5000)
-      expect(snackBarSpy.open).toHaveBeenLastCalledWith(message, undefined, expect.anything())
-      expect(component.awaitingEraseResult()).toBe(false)
-    })
+      { cloud: true, status: 'failed' as const, message: 'BIOS erase failed: drive password/authentication failure.' },
+      { cloud: true, status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' },
+      { cloud: false, status: 'failed' as const, message: 'BIOS erase failed: drive password/authentication failure.' },
+      { cloud: false, status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' }
+    ])(
+      'should show a fresh $status result only after pending when cloud=$cloud',
+      async ({ cloud, status, message }) => {
+        environment.cloud = cloud
+        devicesServiceSpy.getRemoteEraseStatus
+          .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+          .mockReturnValue(of({ status, message }))
+        component.initiateErase()
+        await vi.advanceTimersByTimeAsync(0)
+        expect(component.awaitingEraseResult()).toBe(true)
+        expect(snackBarSpy.open).not.toHaveBeenCalledWith(message, undefined, expect.anything())
+        await vi.advanceTimersByTimeAsync(5000)
+        expect(snackBarSpy.open).toHaveBeenLastCalledWith(message, undefined, expect.anything())
+        expect(component.awaitingEraseResult()).toBe(false)
+      }
+    )
 
     it.each([
       'succeeded',
