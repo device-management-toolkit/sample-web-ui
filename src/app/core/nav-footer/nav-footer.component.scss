@@ -16,13 +16,18 @@
   gap: 12px;
 }
 
+// Decomposed longhand so theme.scss's responsive type-scale overrides apply.
 .label {
-  font: var(--mat-sys-title-small);
+  font-size: var(--mat-sys-title-small-size);
+  font-weight: var(--mat-sys-title-small-weight);
+  line-height: var(--mat-sys-title-small-line-height);
   letter-spacing: var(--mat-sys-title-small-tracking);
 }
 
 .version {
-  font: var(--mat-sys-body-small);
+  font-size: var(--mat-sys-body-small-size);
+  font-weight: var(--mat-sys-body-small-weight);
+  line-height: var(--mat-sys-body-small-line-height);
   letter-spacing: var(--mat-sys-body-small-tracking);
   color: var(--mat-sys-on-surface-variant);
 }

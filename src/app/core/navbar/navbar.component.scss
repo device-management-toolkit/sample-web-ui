@@ -60,7 +60,10 @@ mat-nav-list {
   margin-top: 16px;
   padding: 8px 16px;
   color: var(--mat-sys-on-surface-variant);
-  font: var(--mat-sys-label-medium);
+  // Decomposed longhand so theme.scss's responsive type-scale overrides apply.
+  font-size: var(--mat-sys-label-medium-size);
+  font-weight: var(--mat-sys-label-medium-weight);
+  line-height: var(--mat-sys-label-medium-line-height);
   letter-spacing: var(--mat-sys-label-medium-tracking);
 }
 

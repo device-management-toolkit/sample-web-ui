@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDividerModule } from '@angular/material/divider'
@@ -123,5 +123,16 @@ describe('NavbarComponent', () => {
     component.cloudMode = true
     fixture.detectChanges()
     expect(fixture.nativeElement.querySelector('a[routerlink="/download-rpc"]')).toBeNull()
+  })
+
+  it('should emit navigate when a nav link is clicked (so the shell can close the drawer on handset)', () => {
+    fixture.detectChanges()
+    const navigateSpy = vi.fn()
+    component.navigate.subscribe(navigateSpy)
+
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector('a[routerlink="/devices"]')
+    link.click()
+
+    expect(navigateSpy).toHaveBeenCalledOnce()
   })
 })

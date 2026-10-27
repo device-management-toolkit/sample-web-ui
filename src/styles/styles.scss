@@ -31,3 +31,109 @@ mat-sidenav-container {
 .error-messages.mdc-list-item__primary-text {
   white-space: break-spaces;
 }
+
+// Table horizontal scroll for narrow screens (desktop/tablet view).
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+
+  mat-table {
+    min-width: 600px;
+  }
+}
+
+// Card-based list layout for mobile views (replaces tables on phone/tablet).
+.list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: 12px;
+  background-color: var(--mat-sys-surface-container-low);
+}
+
+.list-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.list-card-title {
+  // Decomposed longhand so the responsive type-scale overrides in theme.scss
+  // (which only redefine the `-size`/`-line-height`/`-weight` tokens) apply.
+  font-size: var(--mat-sys-title-medium-size);
+  font-weight: var(--mat-sys-title-medium-weight);
+  line-height: var(--mat-sys-title-medium-line-height);
+  letter-spacing: var(--mat-sys-title-medium-tracking);
+  flex: 1;
+}
+
+.list-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+}
+
+.list-card-label {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: var(--mat-sys-label-medium-size);
+  font-weight: var(--mat-sys-label-medium-weight);
+  min-width: 120px;
+}
+
+.list-card-value {
+  flex: 1;
+  text-align: end;
+}
+
+.list-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+// Paginator phone compaction.
+@media screen and (max-width: 599px) {
+  .mat-mdc-paginator-container {
+    justify-content: flex-end !important;
+  }
+
+  .mat-mdc-paginator-page-size-label,
+  .mat-mdc-paginator-range-label {
+    display: none;
+  }
+
+  .mat-mdc-paginator-range-actions {
+    gap: 4px !important;
+  }
+
+  .mat-mdc-paginator-range-actions button {
+    min-width: auto;
+    padding: 4px 8px;
+  }
+
+  // Fix toolbar wrapping at all screen sizes.
+  mat-toolbar.mat-toolbar-single-row {
+    flex-wrap: wrap;
+    height: auto;
+    white-space: normal;
+  }
+}

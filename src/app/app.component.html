@@ -1,14 +1,25 @@
 <mat-sidenav-container autosize [dir]="direction()">
   @if (canAccessApp()) {
-    <mat-sidenav mode="side" opened>
+    <mat-sidenav
+      [mode]="isHandset() ? 'over' : 'side'"
+      [opened]="isHandset() ? layout.opened() : true"
+      (closedStart)="layout.close()">
       <div class="sidenav-layout">
-        <app-navbar></app-navbar>
+        <app-navbar (navigate)="onNavbarNavigate()"></app-navbar>
         <app-nav-footer></app-nav-footer>
       </div>
     </mat-sidenav>
   }
 
-  <mat-sidenav-content>
+  <mat-sidenav-content [class.has-topbar]="isHandset() && canAccessApp() && !layout.immersive()">
+    @if (isHandset() && canAccessApp() && !layout.immersive()) {
+      <mat-toolbar class="mobile-topbar" color="primary">
+        <button mat-icon-button (click)="layout.toggle()" [attr.aria-label]="'common.menu.value' | translate">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+    }
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

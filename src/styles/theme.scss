@@ -114,7 +114,13 @@ body {
   margin: 0;
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  // Decomposed longhand, not `font: var(--mat-sys-body-medium)` — the shorthand
+  // token is a static literal baked in by mat.theme(), not composed from the
+  // `-size`/`-line-height`/`-weight` tokens, so it would ignore the responsive
+  // overrides in the media queries below.
+  font-size: var(--mat-sys-body-medium-size);
+  font-weight: var(--mat-sys-body-medium-weight);
+  line-height: var(--mat-sys-body-medium-line-height);
   letter-spacing: var(--mat-sys-body-medium-tracking);
 }
 
@@ -126,22 +132,30 @@ h4 {
 }
 
 h1 {
-  font: var(--mat-sys-headline-small);
+  font-size: var(--mat-sys-headline-small-size);
+  font-weight: var(--mat-sys-headline-small-weight);
+  line-height: var(--mat-sys-headline-small-line-height);
   letter-spacing: var(--mat-sys-headline-small-tracking);
 }
 
 h2 {
-  font: var(--mat-sys-title-large);
+  font-size: var(--mat-sys-title-large-size);
+  font-weight: var(--mat-sys-title-large-weight);
+  line-height: var(--mat-sys-title-large-line-height);
   letter-spacing: var(--mat-sys-title-large-tracking);
 }
 
 h3 {
-  font: var(--mat-sys-title-medium);
+  font-size: var(--mat-sys-title-medium-size);
+  font-weight: var(--mat-sys-title-medium-weight);
+  line-height: var(--mat-sys-title-medium-line-height);
   letter-spacing: var(--mat-sys-title-medium-tracking);
 }
 
 h4 {
-  font: var(--mat-sys-body-large);
+  font-size: var(--mat-sys-body-large-size);
+  font-weight: var(--mat-sys-body-large-weight);
+  line-height: var(--mat-sys-body-large-line-height);
   letter-spacing: var(--mat-sys-body-large-tracking);
 }
 
@@ -259,4 +273,44 @@ p {
   word-wrap: normal;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+// Responsive typography scaling for tablet (max-width: 959px)
+@media screen and (max-width: 959px) {
+  html {
+    --mat-sys-body-medium-size: 15px;
+    --mat-sys-body-large-size: 16px;
+    --mat-sys-body-small-size: 13px;
+    --mat-sys-title-medium-size: 18px;
+    --mat-sys-title-large-size: 20px;
+    --mat-sys-title-small-size: 14px;
+    --mat-sys-label-large-size: 13px;
+    --mat-sys-label-medium-size: 12px;
+    --mat-sys-label-small-size: 11px;
+    --mat-sys-headline-small-size: 24px;
+    --mat-sys-headline-medium-size: 28px;
+    --mat-sys-headline-large-size: 32px;
+    --mat-sys-display-small-size: 36px;
+    --mat-sys-display-medium-size: 45px;
+  }
+}
+
+// Responsive typography scaling for phone (max-width: 599px)
+@media screen and (max-width: 599px) {
+  html {
+    --mat-sys-body-medium-size: 14px;
+    --mat-sys-body-large-size: 15px;
+    --mat-sys-body-small-size: 12px;
+    --mat-sys-title-medium-size: 17px;
+    --mat-sys-title-large-size: 19px;
+    --mat-sys-title-small-size: 13px;
+    --mat-sys-label-large-size: 13px;
+    --mat-sys-label-medium-size: 11px;
+    --mat-sys-label-small-size: 10px;
+    --mat-sys-headline-small-size: 22px;
+    --mat-sys-headline-medium-size: 26px;
+    --mat-sys-headline-large-size: 28px;
+    --mat-sys-display-small-size: 32px;
+    --mat-sys-display-medium-size: 40px;
+  }
 }

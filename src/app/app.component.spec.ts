@@ -3,19 +3,20 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CUSTOM_ELEMENTS_SCHEMA, Component, signal } from '@angular/core'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router, RouterModule } from '@angular/router'
 import { BehaviorSubject, of } from 'rxjs'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth.service'
-import { provideTranslateService, TranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { BidiModule } from '@angular/cdk/bidi'
 import { provideHttpClient } from '@angular/common/http'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
+import { LayoutService } from './core/layout.service'
 // import { MQTTService } from './event-channel/event-channel.service'
 
 @Component({
@@ -35,6 +36,14 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>
   let translate: TranslateService
   let loggedIn: BehaviorSubject<boolean>
+  let layoutServiceStub: {
+    isHandset: ReturnType<typeof signal<boolean>>
+    opened: ReturnType<typeof signal<boolean>>
+    immersive: ReturnType<typeof signal<boolean>>
+    toggle: ReturnType<typeof vi.fn>
+    close: ReturnType<typeof vi.fn>
+    setImmersive: ReturnType<typeof vi.fn>
+  }
 
   // const eventChannelStub = {
   //   connect: vi.fn(),
@@ -47,6 +56,14 @@ describe('AppComponent', () => {
     const authServiceStub = {
       canActivateProtectedRoutes$: loggedIn
     }
+    layoutServiceStub = {
+      isHandset: signal(false),
+      opened: signal(false),
+      immersive: signal(false),
+      toggle: vi.fn(),
+      close: vi.fn(),
+      setImmersive: vi.fn()
+    }
 
     TestBed.configureTestingModule({
       imports: [
@@ -57,6 +74,7 @@ describe('AppComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: AuthService, useValue: authServiceStub },
+        { provide: LayoutService, useValue: layoutServiceStub },
         {
           provide: Router,
           useValue: {
@@ -74,6 +92,7 @@ describe('AppComponent', () => {
         imports: [
           MatSidenavModule,
           BidiModule,
+          TranslatePipe,
           TestNavbarComponent,
           TestNavFooterComponent
         ],
@@ -115,5 +134,67 @@ describe('AppComponent', () => {
     const root: HTMLElement = fixture.nativeElement
     expect(root.querySelector('mat-sidenav app-nav-footer')).not.toBeNull()
     expect(root.querySelectorAll('app-nav-footer').length).toBe(1)
+  })
+
+  describe('Responsive sidenav', () => {
+    it('uses mode="side" and stays opened when not a handset', () => {
+      loggedIn.next(true)
+      layoutServiceStub.isHandset.set(false)
+      fixture.detectChanges()
+
+      const sidenav = fixture.debugElement.query((d) => d.name === 'mat-sidenav').componentInstance
+      expect(sidenav.mode).toBe('side')
+      expect(sidenav.opened).toBe(true)
+    })
+
+    it('uses mode="over" and tracks layout.opened() when a handset', () => {
+      loggedIn.next(true)
+      layoutServiceStub.isHandset.set(true)
+      layoutServiceStub.opened.set(false)
+      fixture.detectChanges()
+
+      const sidenav = fixture.debugElement.query((d) => d.name === 'mat-sidenav').componentInstance
+      expect(sidenav.mode).toBe('over')
+      expect(sidenav.opened).toBe(false)
+
+      layoutServiceStub.opened.set(true)
+      fixture.detectChanges()
+      expect(sidenav.opened).toBe(true)
+    })
+
+    it('shows the mobile top bar only when handset, logged in, and not immersive', () => {
+      loggedIn.next(true)
+      layoutServiceStub.isHandset.set(false)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.mobile-topbar')).toBeNull()
+
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.mobile-topbar')).not.toBeNull()
+
+      layoutServiceStub.immersive.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.mobile-topbar')).toBeNull()
+    })
+
+    it('toggles the drawer when the mobile top bar menu button is clicked', () => {
+      loggedIn.next(true)
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+
+      const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('.mobile-topbar button')
+      menuButton.click()
+      expect(layoutServiceStub.toggle).toHaveBeenCalledOnce()
+    })
+
+    it('onNavbarNavigate() closes the drawer only on handset', () => {
+      layoutServiceStub.isHandset.set(false)
+      component.onNavbarNavigate()
+      expect(layoutServiceStub.close).not.toHaveBeenCalled()
+
+      layoutServiceStub.isHandset.set(true)
+      component.onNavbarNavigate()
+      expect(layoutServiceStub.close).toHaveBeenCalledOnce()
+    })
   })
 })

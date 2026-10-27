@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal } from '@angular/core'
+import { Component, OnInit, inject, signal, Output, EventEmitter } from '@angular/core'
 import { environment } from '../../../environments/environment'
 import { MatIcon } from '@angular/material/icon'
 import { RouterLink, RouterLinkActive } from '@angular/router'
@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit {
   // Start from cloudMode so enterprise hides the tab until the API responds,
   // avoiding a flash of the tab when the server reports CIRA disabled.
   ciraEnabled = signal(this.cloudMode)
+  @Output() navigate = new EventEmitter<void>()
   private readonly translate = inject(TranslateService)
   private readonly serverFeaturesService = inject(ServerFeaturesService)
 

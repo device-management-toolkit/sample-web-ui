@@ -2,21 +2,21 @@
   <span class="logo" role="img" aria-label="logo"></span>
 </a>
 <mat-nav-list class="mat-nav-list">
-  <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="navigate.emit()">
     <mat-icon matListItemIcon>home</mat-icon>
     <span i18n="navlink">{{ 'dashboard.header.dashboardTitle.value' | translate }}</span>
   </a>
-  <a mat-list-item routerLink="/devices" routerLinkActive="active">
+  <a mat-list-item routerLink="/devices" routerLinkActive="active" (click)="navigate.emit()">
     <mat-icon matListItemIcon>devices</mat-icon
     ><span i18n="navlink">{{ 'devices.headerd.devicesTitle.value' | translate }}</span>
   </a>
 
   <div class="nav-section">{{ 'navbar.section.configuration.value' | translate }}</div>
-  <a mat-list-item routerLink="/ieee8021x" routerLinkActive="active">
+  <a mat-list-item routerLink="/ieee8021x" routerLinkActive="active" (click)="navigate.emit()">
     <mat-icon matListItemIcon>security</mat-icon>
     <span i18n="navlink">{{ 'ieee8021x.headerd.ieeeTitle.value' | translate }}</span>
   </a>
-  <a mat-list-item routerLink="/wireless" routerLinkActive="active">
+  <a mat-list-item routerLink="/wireless" routerLinkActive="active" (click)="navigate.emit()">
     <mat-icon matListItemIcon>wifi</mat-icon
     ><span i18n="navlink">{{ 'wireless.header.wirelessTitle.value' | translate }}</span>
   </a>
@@ -26,23 +26,24 @@
       routerLink="/ciraconfigs"
       routerLinkActive="active"
       [matTooltipPosition]="'right'"
-      [matTooltip]="ciraTitle">
+      [matTooltip]="ciraTitle"
+      (click)="navigate.emit()">
       <mat-icon matListItemIcon>settings_ethernet</mat-icon
       ><span i18n="navlink">{{ 'configs.header.ciraTitle.value' | translate }}</span>
     </a>
   }
   @if (cloudMode === true) {
-    <a mat-list-item routerLink="/proxy-configs" routerLinkActive="active">
+    <a mat-list-item routerLink="/proxy-configs" routerLinkActive="active" (click)="navigate.emit()">
       <mat-icon matListItemIcon>router</mat-icon
       ><span i18n="navlink">{{ 'proxyConfigs.header.proxyTitle.value' | translate }}</span>
     </a>
   }
 
-  <a mat-list-item routerLink="/profiles" routerLinkActive="active">
+  <a mat-list-item routerLink="/profiles" routerLinkActive="active" (click)="navigate.emit()">
     <mat-icon matListItemIcon>settings_system_daydream</mat-icon
     ><span i18n="navlink">{{ 'profiles.header.profileTitle.value' | translate }}</span>
   </a>
-  <a mat-list-item routerLink="/domains" routerLinkActive="active">
+  <a mat-list-item routerLink="/domains" routerLinkActive="active" (click)="navigate.emit()">
     <mat-icon matListItemIcon>http</mat-icon
     ><span i18n="navlink">{{ 'domains.header.domainsTitle.value' | translate }}</span>
   </a>
