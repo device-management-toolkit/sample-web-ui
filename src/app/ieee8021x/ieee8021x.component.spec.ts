@@ -8,9 +8,11 @@ import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { of } from 'rxjs'
+import { signal } from '@angular/core'
 
 import { IEEE8021xComponent } from './ieee8021x.component'
 import { IEEE8021xService } from './ieee8021x.service'
+import { LayoutService } from '../core/layout.service'
 import { RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
@@ -23,6 +25,7 @@ describe('IEEE8021xComponent', () => {
   let getDataSpy: MockInstance
   let deleteSpy: MockInstance
   let translate: TranslateService
+  let layoutServiceStub: { isHandset: ReturnType<typeof signal<boolean>> }
 
   beforeEach(() => {
     const ieee8021xService = createSpyObj('IEEE8021xService', [
@@ -32,12 +35,13 @@ describe('IEEE8021xComponent', () => {
     ])
     getDataSpy = ieee8021xService.getData.mockReturnValue(
       of({
-        data: [{}],
+        data: [{ profileName: 'profile1' }],
         totalCount: 1
       })
     )
     deleteSpy = ieee8021xService.delete.mockReturnValue(of(null))
     ieee8021xService.refreshCountByInterface.mockReturnValue(of({}))
+    layoutServiceStub = { isHandset: signal(false) }
     TestBed.configureTestingModule({
       imports: [
         RouterModule,
@@ -46,6 +50,7 @@ describe('IEEE8021xComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: IEEE8021xService, useValue: ieee8021xService },
+        { provide: LayoutService, useValue: layoutServiceStub },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
@@ -139,6 +144,23 @@ describe('IEEE8021xComponent', () => {
       loadNothing()
       emptyState()!.querySelector('button')!.click()
       expect(routerSpy).toHaveBeenCalledWith(['/ieee8021x/new'])
+    })
+  })
+
+  describe('responsive card/table switch', () => {
+    it('shows the table and hides the cards on desktop', () => {
+      layoutServiceStub.isHandset.set(false)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-cards')).toBeNull()
+    })
+
+    it('shows the cards and hides the table on a handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.list-cards')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-card').textContent).toContain('profile1')
     })
   })
 })

@@ -8,9 +8,11 @@ import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { of } from 'rxjs'
+import { signal } from '@angular/core'
 
 import { WirelessComponent } from './wireless.component'
 import { WirelessService } from './wireless.service'
+import { LayoutService } from '../core/layout.service'
 import { RouterModule } from '@angular/router'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { provideHttpClient } from '@angular/common/http'
@@ -23,6 +25,7 @@ describe('WirelessComponent', () => {
   let getDataSpy: MockInstance
   let deleteSpy: MockInstance
   let translate: TranslateService
+  let layoutServiceStub: { isHandset: ReturnType<typeof signal<boolean>> }
 
   beforeEach(() => {
     const wirelessService = createSpyObj('WirelessService', ['getData', 'delete'])
@@ -42,6 +45,7 @@ describe('WirelessComponent', () => {
       })
     )
     deleteSpy = wirelessService.delete.mockReturnValue(of(null))
+    layoutServiceStub = { isHandset: signal(false) }
     TestBed.configureTestingModule({
       imports: [
         RouterModule,
@@ -50,6 +54,7 @@ describe('WirelessComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: WirelessService, useValue: wirelessService },
+        { provide: LayoutService, useValue: layoutServiceStub },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
@@ -143,6 +148,23 @@ describe('WirelessComponent', () => {
       loadNothing()
       emptyState()!.querySelector('button')!.click()
       expect(routerSpy).toHaveBeenCalledWith(['/wireless/new'])
+    })
+  })
+
+  describe('responsive card/table switch', () => {
+    it('shows the table and hides the cards on desktop', () => {
+      layoutServiceStub.isHandset.set(false)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-cards')).toBeNull()
+    })
+
+    it('shows the cards and hides the table on a handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.list-cards')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-card').textContent).toContain('P1')
     })
   })
 })

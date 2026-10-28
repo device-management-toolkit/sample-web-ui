@@ -20,7 +20,31 @@
     [description]="'ieee8021xConfigs.noDataDescription.value' | translate"
     [actionLabel]="'common.addNew.value' | translate"
     (action)="navigateTo()" />
+} @else if (isHandset()) {
+  <div class="list-cards">
+    @for (element of tableDataSource().filteredData; track element.profileName) {
+      <mat-card appearance="outlined" class="list-card" (click)="navigateTo(element.profileName)">
+        <div class="list-card-head">
+          <span class="list-card-title">{{ element.profileName }}</span>
+          <div class="list-card-actions" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="delete(element.profileName)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'ieee8021xConfigs.table.authenticationProtocol.value' | translate }}</span>
+          <span class="list-card-value">{{ element.authenticationProtocol | toolkit: protocols }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'ieee8021xConfigs.table.interface.value' | translate }}</span>
+          <span class="list-card-value">{{ getInterfaceLabel(element) }}</span>
+        </div>
+      </mat-card>
+    }
+  </div>
 } @else {
+  <div class="table-scroll">
   <mat-table [dataSource]="tableDataSource()">
     <ng-container matColumnDef="profileName">
       <mat-header-cell *matHeaderCellDef>{{ 'ieee8021xConfigs.table.profileName.value' | translate }}</mat-header-cell>
@@ -50,6 +74,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
   </mat-table>
+  </div>
 }
 @if (totalCount() !== 0) {
   <mat-paginator

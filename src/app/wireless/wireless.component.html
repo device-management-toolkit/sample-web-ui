@@ -19,7 +19,35 @@
     [description]="'wirelessConfigs.noDataDescription.value' | translate"
     [actionLabel]="'common.addNew.value' | translate"
     (action)="navigateTo()" />
+} @else if (isHandset()) {
+  <div class="list-cards">
+    @for (element of configs().filteredData; track element.profileName) {
+      <mat-card appearance="outlined" class="list-card" (click)="navigateTo(element.profileName)">
+        <div class="list-card-head">
+          <span class="list-card-title">{{ element.profileName }}</span>
+          <div class="list-card-actions" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="delete(element.profileName)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'wirelessConfigs.authentication.value' | translate }}</span>
+          <span class="list-card-value">{{ element.authenticationMethod | toolkit: authenticationMethods }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'wirelessConfigs.encryption.value' | translate }}</span>
+          <span class="list-card-value">{{ element.encryptionMethod | toolkit: encryptionMethods }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'wirelessConfigs.ssid.value' | translate }}</span>
+          <span class="list-card-value">{{ element.ssid }}</span>
+        </div>
+      </mat-card>
+    }
+  </div>
 } @else {
+  <div class="table-scroll">
   <mat-table [dataSource]="configs()">
     <!-- name Column -->
     <ng-container matColumnDef="name">
@@ -58,6 +86,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
   </mat-table>
+  </div>
 }
 @if (totalCount() !== 0) {
   <mat-paginator

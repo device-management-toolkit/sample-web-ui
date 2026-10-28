@@ -31,9 +31,11 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { MatCard } from '@angular/material/card'
 import { ToolkitPipe } from '../shared/pipes/toolkit.pipe'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
+import { LayoutService } from '../core/layout.service'
 
 @Component({
   selector: 'app-ieee8021x',
@@ -45,6 +47,7 @@ import { EmptyStateComponent } from '../shared/empty-state/empty-state.component
     MatButton,
     MatIcon,
     MatProgressBar,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -68,7 +71,9 @@ export class IEEE8021xComponent implements OnInit {
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly layout = inject(LayoutService)
 
+  public readonly isHandset = this.layout.isHandset
   public tableDataSource = signal(new MatTableDataSource<IEEE8021xConfig>())
   public displayedColumns: string[] = [
     'profileName',

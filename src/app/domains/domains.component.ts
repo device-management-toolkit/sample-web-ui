@@ -32,8 +32,10 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { MatCard } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
+import { LayoutService } from '../core/layout.service'
 @Component({
   selector: 'app-domains',
   templateUrl: './domains.component.html',
@@ -43,6 +45,7 @@ import { EmptyStateComponent } from '../shared/empty-state/empty-state.component
     MatButton,
     MatIcon,
     MatProgressBar,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -67,11 +70,13 @@ export class DomainsComponent implements OnInit {
   public readonly router = inject(Router)
   public readonly snackBar = inject(MatSnackBar)
   private readonly translate = inject(TranslateService)
+  private readonly layout = inject(LayoutService)
 
   // ViewChild
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   // Public properties
+  public readonly isHandset = this.layout.isHandset
   public domains = signal(new MatTableDataSource<Domain>())
   public totalCount = signal(0)
   public isLoading = signal(true)

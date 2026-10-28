@@ -12,6 +12,7 @@ import { CIRAConfig, DataWithCount, PageEventOptions } from '../../models/models
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { ConfigsService } from './configs.service'
+import { LayoutService } from '../core/layout.service'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import {
   MatTable,
@@ -30,6 +31,7 @@ import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
+import { MatCard } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 
@@ -42,6 +44,7 @@ import { EmptyStateComponent } from '../shared/empty-state/empty-state.component
     MatButton,
     MatIcon,
     MatProgressBar,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -65,7 +68,9 @@ export class ConfigsComponent implements OnInit {
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly layout = inject(LayoutService)
   // Public properties
+  public readonly isHandset = this.layout.isHandset
   public configs = signal(new MatTableDataSource<CIRAConfig>())
   public totalCount = signal(0)
   public isLoading = signal(true)

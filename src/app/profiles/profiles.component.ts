@@ -39,6 +39,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { ExportDialogComponent } from './export-dialog/export-dialog.component'
 import { ServerFeaturesService } from '../server-features.service'
+import { MatCard } from '@angular/material/card'
+import { LayoutService } from '../core/layout.service'
 
 @Component({
   selector: 'app-profiles',
@@ -49,6 +51,7 @@ import { ServerFeaturesService } from '../server-features.service'
     MatButton,
     MatIcon,
     MatProgressBar,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -75,7 +78,9 @@ export class ProfilesComponent implements OnInit {
   public readonly snackBar = inject(MatSnackBar)
   public readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
+  private readonly layout = inject(LayoutService)
 
+  public readonly isHandset = this.layout.isHandset
   public profiles = signal(new MatTableDataSource<Profile>())
   public readonly isLoading = signal(true)
   public totalCount = signal(0)

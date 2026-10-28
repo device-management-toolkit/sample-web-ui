@@ -33,6 +33,8 @@ import { PageEventOptions, ProxyConfig } from '../../models/models'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
 import { AreYouSureDialogComponent } from '../shared/are-you-sure/are-you-sure.component'
 import { ProxyConfigsService } from './proxy-configs.service'
+import { MatCard } from '@angular/material/card'
+import { LayoutService } from '../core/layout.service'
 
 @Component({
   selector: 'app-proxy-configs',
@@ -43,6 +45,7 @@ import { ProxyConfigsService } from './proxy-configs.service'
     MatButton,
     MatIcon,
     MatProgressBar,
+    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -65,7 +68,9 @@ export class ProxyConfigsComponent implements OnInit, AfterViewInit {
   public readonly snackBar = inject(MatSnackBar)
   private readonly proxyConfigsService = inject(ProxyConfigsService)
   private readonly dialog = inject(MatDialog)
+  private readonly layout = inject(LayoutService)
 
+  public readonly isHandset = this.layout.isHandset
   public configs = new MatTableDataSource<ProxyConfig>()
   public displayedColumns: string[] = [
     'name',

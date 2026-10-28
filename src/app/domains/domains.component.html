@@ -19,7 +19,39 @@
     [description]="'domains.noDataDescription.value' | translate"
     [actionLabel]="'common.addNew.value' | translate"
     (action)="navigateTo()" />
+} @else if (isHandset()) {
+  <div class="list-cards">
+    @for (element of domains().filteredData; track element.profileName) {
+      <mat-card appearance="outlined" class="list-card" (click)="navigateTo(element.profileName)">
+        <div class="list-card-head">
+          <span class="list-card-title">{{ element.profileName }}</span>
+          <div class="list-card-actions" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="delete(element.profileName)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'domains.table.domainSuffix.value' | translate }}</span>
+          <span class="list-card-value">{{ element.domainSuffix }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'domains.table.expirationDate.value' | translate }}</span>
+          <span class="list-card-value" data-cy="expCol">
+            {{ element.expirationDate | date: 'MM/dd/yyyy' }} -
+            <mat-icon
+              class="mat-text-error"
+              [style.display]="getRemainingTime(element.expirationDate) === 'Expired' ? 'inline' : 'none'"
+              >warning</mat-icon
+            >
+            {{ getRemainingTime(element.expirationDate) }}
+          </span>
+        </div>
+      </mat-card>
+    }
+  </div>
 } @else {
+  <div class="table-scroll">
   <mat-table [dataSource]="domains()">
     <!-- name Column -->
     <ng-container matColumnDef="name">
@@ -56,6 +88,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.profileName)"></mat-row>
   </mat-table>
+  </div>
 }
 @if (totalCount() !== 0) {
   <div>

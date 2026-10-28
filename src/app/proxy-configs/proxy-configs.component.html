@@ -19,7 +19,52 @@
     [description]="'proxyConfigs.noDataDescription.value' | translate"
     [actionLabel]="'common.addNew.value' | translate"
     (action)="navigateTo()" />
+} @else if (isHandset()) {
+  <div class="list-cards">
+    @for (element of configs.filteredData; track element.name) {
+      <mat-card
+        appearance="outlined"
+        class="list-card"
+        (click)="navigateTo(encodeURIComponent(element.name))">
+        <div class="list-card-head">
+          <span class="list-card-title">{{ element.name }}</span>
+          <div class="list-card-actions" (click)="$event.stopPropagation()">
+            <button
+              data-cy="delete-btn"
+              mat-icon-button
+              matTooltip="{{ 'common.delete.value' | translate }}"
+              (click)="delete(element.name)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'proxyConfigs.header.proxyAddress.value' | translate }}</span>
+          <span class="list-card-value">{{ element.address }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'proxyConfigs.header.port.value' | translate }}</span>
+          <span class="list-card-value">{{ element.port }}</span>
+        </div>
+        <div class="list-card-row">
+          <span class="list-card-label">{{ 'proxyConfigs.header.dnsSuffix.value' | translate }}</span>
+          <span class="list-card-value">{{ element.networkDnsSuffix }}</span>
+        </div>
+      </mat-card>
+    }
+  </div>
+
+  @if (!isLoading() && totalCount() > 0) {
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      [pageSize]="pageEvent().pageSize"
+      [showFirstLastButtons]="true"
+      [length]="totalCount()"
+      (page)="pageChanged($event)">
+    </mat-paginator>
+  }
 } @else {
+  <div class="table-scroll">
   <mat-table data-cy="proxy-configs-table" [dataSource]="configs">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>
@@ -74,6 +119,7 @@
       *matRowDef="let row; columns: displayedColumns"
       (click)="navigateTo(encodeURIComponent(row.name))"></mat-row>
   </mat-table>
+  </div>
 
   @if (!isLoading() && totalCount() > 0) {
     <mat-paginator

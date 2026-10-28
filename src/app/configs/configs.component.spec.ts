@@ -8,9 +8,11 @@ import { createSpyObj } from '../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { of } from 'rxjs'
+import { signal } from '@angular/core'
 
 import { ConfigsComponent } from './configs.component'
 import { ConfigsService } from './configs.service'
+import { LayoutService } from '../core/layout.service'
 import { RouterModule } from '@angular/router'
 import { provideHttpClient } from '@angular/common/http'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
@@ -23,6 +25,7 @@ describe('ConfigsComponent', () => {
   let getDataSpy: MockInstance
   let deleteSpy: MockInstance
   let translate: TranslateService
+  let layoutServiceStub: { isHandset: ReturnType<typeof signal<boolean>> }
 
   beforeEach(async () => {
     const configsService = createSpyObj('ConfigsService', ['getData', 'delete'])
@@ -46,6 +49,7 @@ describe('ConfigsComponent', () => {
       })
     )
     deleteSpy = configsService.delete.mockReturnValue(of(null))
+    layoutServiceStub = { isHandset: signal(false) }
     TestBed.configureTestingModule({
       imports: [
         RouterModule,
@@ -54,6 +58,7 @@ describe('ConfigsComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: ConfigsService, useValue: configsService },
+        { provide: LayoutService, useValue: layoutServiceStub },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
         provideHttpClient(),
@@ -136,6 +141,23 @@ describe('ConfigsComponent', () => {
       loadNothing()
       emptyState()!.querySelector('button')!.click()
       expect(routerSpy).toHaveBeenCalledWith(['/ciraconfigs', 'new'])
+    })
+  })
+
+  describe('responsive card/table switch', () => {
+    it('shows the table and hides the cards on desktop', () => {
+      layoutServiceStub.isHandset.set(false)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-cards')).toBeNull()
+    })
+
+    it('shows the cards and hides the table on a handset', () => {
+      layoutServiceStub.isHandset.set(true)
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('.list-cards')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('.table-scroll mat-table')).toBeNull()
+      expect(fixture.nativeElement.querySelector('.list-card').textContent).toContain('ciraconfig1')
     })
   })
 })
