@@ -27,6 +27,16 @@ LABEL license='SPDX-License-Identifier: Apache-2.0' \
 
 RUN apk update && apk upgrade --no-cache
 
+# The server config the app actually needs: gzip compression, immutable caching
+# for hashed assets, and the SPA fallback that keeps deep links at 200. A
+# deployment is free to bind-mount over this path — docker-compose.yml does
+# exactly that, with the repo-root nginx.conf — but baking a copy in means a
+# bare `docker run` of this image is correctly configured rather than falling
+# back to nginx's stock default.conf, which serves the app with no
+# compression, no caching, and a 404 on every deep link.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 COPY --from=build /artifact /usr/share/nginx/html
 COPY --from=build /usr/src/app/init.sh /docker-entrypoint.d/init.sh
+RUN nginx -t
 EXPOSE 80
