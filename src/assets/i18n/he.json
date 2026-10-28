@@ -2746,8 +2746,8 @@
     "value": "באמצעות סיסמאות שנוצרו אקראיות"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "הודעת שגיאה כאשר סיסמת SSD עולה על 64 בתים",
-    "value": "סיסמת SSD לא יכולה להעלות על 64 בתים"
+    "description": "הודעת שגיאה כאשר סיסמת SSD עולה על מגבלת המטען של RPE, ‏64 בתים",
+    "value": "סיסמת SSD לא יכולה לעלות על 64 בתים בקידוד UTF-8"
   },
   "sol.connect": {
     "description": "כפתור לחיבור ל- SOL",
@@ -3270,9 +3270,17 @@
     "description": "הודעת שגיאה כאשר עדכון תכונת מחיקת פלטפורמה מרחוק נכשל",
     "value": "עדכון תכונת מחיקת הפלטפורמה מרחוק נכשל"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "הודעת הצלחה לאחר הפעלת מחיקת פלטפורמה מרחוק",
-    "value": "מחיקת הפלטפורמה מרחוק הופעלה בהצלחה"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "אישור קבלת בקשת המחיקה; תוצאת ה-BIOS עדיין אינה ידועה",
+    "value": "בקשת המחיקה נשלחה. השלמת הפעולה על ידי ה-BIOS לא אושרה."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "לא התקבלה תוצאת BIOS סופית ועדכנית לפני שתם הזמן לבדיקת המצב",
+    "value": "לא ניתן לאשר את תוצאת המחיקה. בדקו את תוצאת ה-BIOS לפני ניסיון חוזר."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "ה-BIOS דיווח על מחיקה מוצלחת לאחר שהתקבלה תוצאה ממתינה",
+    "value": "ה-BIOS דיווח שהמחיקה הושלמה בהצלחה."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "הודעת הצלחה לאחר מחיקת כונן מערכת ההפעלה – מבקשת התקנה מחדש",
@@ -3357,10 +3365,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "הודעת מידע המוצגת כאשר בוחרים בביטול תצורת CSME, ומסבירה מדוע לא ניתן לשלב עם אפשרויות אחרות",
     "value": "ביטול תצורת CSME מבצע ביטול מלא של תצורת Intel AMT ולא ניתן לשלב אותו עם פעולות מחיקה אחרות."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "הודעת הצלחה לאחר ביטול תצורת CSME – מבקשת הגדרה מחדש ומודיעה שהמכשיר יוסר מהקונסולה",
-    "value": "תצורת CSME בוטלה בהצלחה. אנא הגדר מחדש את CSME. מכשיר זה יוסר מהקונסולה."
   },
   "remotePlatformErase.selectionCount": {
     "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",

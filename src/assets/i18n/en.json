@@ -1287,9 +1287,17 @@
     "description": "Error message when Remote Platform Erase feature update fails",
     "value": "Failed to update Remote Platform Erase feature"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Success message after initiating Remote Platform Erase",
-    "value": "Remote Platform Erase initiated successfully"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Erase submission acknowledged, BIOS result not yet known",
+    "value": "Erase request submitted. BIOS completion has not been confirmed."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "No fresh terminal BIOS result was observed before the status check timed out",
+    "value": "Unable to confirm the erase outcome. Check the BIOS result before retrying."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "BIOS reported a successful erase after a pending result was observed",
+    "value": "BIOS reported that the erase completed successfully."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Success message after OS drive erase — prompts user to reinstall",
@@ -1366,10 +1374,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Info message shown when Unconfigure CSME is selected, explaining it cannot be combined with other options",
     "value": "Unconfigure CSME performs a full unprovision of Intel AMT and cannot be combined with other erase operations."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Success message when CSME unconfigure is performed",
-    "value": "CSME unconfigured successfully. Please reconfigure CSME. This device will be removed from console."
   },
   "devices.actions.deactivate": {
     "description": "Tooltip for deactivating/removing a device",
@@ -3522,8 +3526,8 @@
     "value": "Using Random Generated Passwords"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Error message when SSD password exceeds 64 bytes",
-    "value": "SSD password must not exceed 64 bytes"
+    "description": "Error message when the SSD password exceeds the 64-byte RPE payload limit",
+    "value": "SSD password must not exceed 64 UTF-8 bytes"
   },
   "sol.connect": {
     "description": "Button for connecting to SOL",

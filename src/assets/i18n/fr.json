@@ -2754,8 +2754,8 @@
     "value": "Utilisation de mots de passe générés aléatoirement"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "Message d'erreur lorsque le mot de passe SSD dépasse 64 bytes",
-    "value": "Le mot de passe SSD ne doit pas dépasser 64 bytes"
+    "description": "Message d'erreur lorsque le mot de passe SSD dépasse la limite de 64 octets de la charge utile RPE",
+    "value": "Le mot de passe SSD ne doit pas dépasser 64 octets UTF-8"
   },
   "sol.connect": {
     "description": "Bouton pour se connecter à SOL",
@@ -3278,9 +3278,17 @@
     "description": "Message d'erreur quand la mise à jour de l'effacement distant de la plateforme échoue",
     "value": "Échec de la mise à jour de la fonctionnalité d'effacement distant de la plateforme"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "Message de succès après le lancement de l'effacement distant de la plateforme",
-    "value": "Effacement distant de la plateforme lancé avec succès"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "Demande d'effacement acceptée, résultat du BIOS encore inconnu",
+    "value": "Demande d'effacement envoyée. La fin de l'opération par le BIOS n'a pas été confirmée."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "Aucun nouveau résultat final du BIOS n'a été observé avant l'expiration du délai de vérification de l'état",
+    "value": "Impossible de confirmer le résultat de l'effacement. Vérifiez le résultat du BIOS avant de réessayer."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "Le BIOS a signalé la réussite de l'effacement après l'observation d'un résultat en attente",
+    "value": "Le BIOS a indiqué que l'effacement s'est terminé avec succès."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Message de succès après l'effacement du lecteur OS – invite à réinstaller",
@@ -3365,10 +3373,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "Message d'information affiché lorsque Déconfigurer CSME est sélectionné, expliquant qu'il ne peut pas être combiné avec d'autres options",
     "value": "La déconfiguration de CSME effectue un déprovisionnement complet d'Intel AMT et ne peut pas être combinée avec d'autres opérations d'effacement."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "Message de succès après la déconfiguration CSME – invite à reconfigurer et informe que l'appareil sera supprimé de la console",
-    "value": "CSME déconfigurée avec succès. Veuillez reconfigurer CSME. Cet appareil sera supprimé de la console."
   },
   "remotePlatformErase.selectionCount": {
     "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",

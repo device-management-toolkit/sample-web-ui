@@ -9,6 +9,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http'
 import { DevicesService } from './devices.service'
 import { environment } from '../../environments/environment'
+import { SUPPRESS_TRANSIENT_ERRORS } from '../error-handling.interceptor'
 import {
   AMTFeaturesResponse,
   DataWithCount,
@@ -341,6 +342,29 @@ describe('DevicesService', () => {
       req.flush(null, mockError)
     })
   })
+  describe('getRemoteEraseStatus', () => {
+    const originalCloud = environment.cloud
+
+    afterEach(() => {
+      environment.cloud = originalCloud
+    })
+
+    it.each([
+      { cloud: true, apiVersion: 'v1' },
+      { cloud: false, apiVersion: 'v2' }
+    ])('should poll $apiVersion erase status when cloud=$cloud', ({ cloud, apiVersion }) => {
+      environment.cloud = cloud
+      service.getRemoteEraseStatus('device1').subscribe()
+
+      const req = httpMock.expectOne(
+        `${mockEnvironment.mpsServer}/api/${apiVersion}/amt/boot/remoteErase/device1/status`
+      )
+      expect(req.request.method).toBe('GET')
+      expect(req.request.context.get(SUPPRESS_TRANSIENT_ERRORS)).toBe(true)
+      req.flush({ status: 'pending', message: '' })
+    })
+  })
+
   describe('sendDeactivate', () => {
     it('should deactivate a device in cloud mode', () => {
       const guid = 'device1'

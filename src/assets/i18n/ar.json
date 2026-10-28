@@ -2754,8 +2754,8 @@
     "value": "استخدام كلمات مرور عشوائية"
   },
   "remotePlatformErase.ssdPasswordTooLong": {
-    "description": "رسالة خطأ عند تجاوز كلمة مرور SSD 64 بايت",
-    "value": "يجب أن لا تتجاوز كلمة مرور SSD 64 بايت"
+    "description": "رسالة خطأ عند تجاوز كلمة مرور SSD حد حمولة RPE البالغ 64 بايت",
+    "value": "يجب ألا تتجاوز كلمة مرور SSD 64 بايت بترميز UTF-8"
   },
   "sol.connect": {
     "description": "زر للاتصال بـ SOL",
@@ -3278,9 +3278,17 @@
     "description": "رسالة خطأ عند فشل تحديث ميزة مسح المنصة عن بُعد",
     "value": "فشل تحديث ميزة مسح المنصة عن بُعد"
   },
-  "remotePlatformErase.eraseSuccess": {
-    "description": "رسالة نجاح بعد بدء مسح المنصة عن بُعد",
-    "value": "تم بدء مسح المنصة عن بُعد بنجاح"
+  "remotePlatformErase.eraseSubmitted": {
+    "description": "تم الإقرار بإرسال طلب المسح، ولم تُعرف نتيجة BIOS بعد",
+    "value": "تم إرسال طلب المسح. لم يتم تأكيد اكتمال BIOS."
+  },
+  "remotePlatformErase.eraseUnconfirmed": {
+    "description": "لم تُرصد نتيجة BIOS نهائية حديثة قبل انتهاء مهلة التحقق من الحالة",
+    "value": "تعذر تأكيد نتيجة المسح. تحقق من نتيجة BIOS قبل إعادة المحاولة."
+  },
+  "remotePlatformErase.eraseCompleted": {
+    "description": "أفاد BIOS بنجاح المسح بعد رصد نتيجة معلقة",
+    "value": "أفاد BIOS باكتمال المسح بنجاح."
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "رسالة نجاح بعد مسح محرك نظام التشغيل – تطلب إعادة التثبيت",
@@ -3365,10 +3373,6 @@
   "remotePlatformErase.csmeUnconfigureExclusive": {
     "description": "رسالة معلومات تظهر عند تحديد إلغاء تهيئة CSME، تشرح سبب عدم إمكانية دمجه مع خيارات أخرى",
     "value": "يؤدي إلغاء تهيئة CSME إلى إلغاء توفير Intel AMT بالكامل ولا يمكن دمجه مع عمليات المسح الأخرى."
-  },
-  "remotePlatformErase.csmeEraseSuccess": {
-    "description": "رسالة نجاح بعد إلغاء تهيئة CSME – تطلب إعادة التهيئة وتُعلم بأن الجهاز سيُزال من وحدة التحكم",
-    "value": "تم إلغاء تهيئة CSME بنجاح. يرجى إعادة تهيئة CSME. سيتم إزالة هذا الجهاز من وحدة التحكم."
   },
   "remotePlatformErase.selectionCount": {
     "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",
