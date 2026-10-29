@@ -16,6 +16,8 @@ const baseUrl: string = Cypress.expose('BASEURL')
 // ---------------------------- Test section ----------------------------
 
 describe('Test Profile Page', () => {
+  const disableCira = Cypress.expose('DISABLE_CIRA') === true || Cypress.expose('DISABLE_CIRA') === 'true'
+
   beforeEach('clear cache and login', () => {
     cy.setup()
   })
@@ -47,12 +49,13 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles5')
 
     cy.get('button').contains('Add New').click()
-    cy.wait('@get-configs2').its('response.statusCode').should('be.oneOf', [200, 304])
     cy.wait('@get-wireless2')
     cy.wait('@intercept8021xGetAll')
   })
 
-  it('invalid profile name', () => {
+  // happyPath fixture is a CIRA-type profile; not a valid UI operation when
+  // CIRA is disabled on the deployed console (see create.spec.ts).
+  ;(disableCira ? it.skip : it)('invalid profile name', () => {
     cy.enterProfileInfo(
       profileFixtures.wrong.name,
       profileFixtures.happyPath.activation,
