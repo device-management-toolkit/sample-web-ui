@@ -3,7 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  OnDestroy,
+  HostListener,
+  inject,
+  signal,
+  input,
+  computed
+} from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subject, takeUntil, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
@@ -16,7 +26,10 @@ import { AMTFeaturesRequest, AMTFeaturesResponse, PowerState, UserConsentRespons
 import { PowerUpAlertComponent } from '../../shared/power-up-alert/power-up-alert.component'
 import { DeviceEnableSolComponent } from '../device-enable-sol/device-enable-sol.component'
 import { SOLComponent } from '@device-management-toolkit/ui-toolkit-angular'
-import { MatToolbar } from '@angular/material/toolbar'
+import { SolTerminalType } from '@device-management-toolkit/ui-toolkit/core'
+import { MatFormField, MatLabel } from '@angular/material/form-field'
+import { MatSelect, MatOption } from '@angular/material/select'
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { UserConsentService } from '../user-consent.service'
@@ -28,9 +41,16 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   styleUrls: ['./sol.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    MatToolbar,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
     MatIcon,
     MatButton,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
     SOLComponent,
     TranslatePipe
   ]
@@ -47,6 +67,12 @@ export class SolComponent implements OnInit, OnDestroy {
   public readonly deviceId = input('')
 
   public readonly deviceState = signal(0)
+  public readonly solOemDiagnostic = signal('Waiting for SOL handshake')
+  public readonly terminalTypes = SolTerminalType
+  public readonly terminalType = signal(SolTerminalType.PCANSI)
+  public readonly encodingLocked = computed(
+    () => this.deviceConnection() || this.isConnecting() || this.isLoading() || this.isDisconnecting()
+  )
 
   public deviceConnection = signal(false)
 
@@ -73,6 +99,7 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationStart) {
+        this.cancelQueuedReconnect()
         this.isDisconnecting.set(true)
       }
     })
@@ -80,9 +107,7 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting.set(true)
-    if (this.reconnectRetryTimer != null) {
-      clearTimeout(this.reconnectRetryTimer)
-    }
+    this.cancelQueuedReconnect()
     this.destroy$.next()
     this.destroy$.complete()
   }
@@ -95,6 +120,7 @@ export class SolComponent implements OnInit, OnDestroy {
   connect(): void {
     // A fresh redirection token is required for each SOL connection attempt.
     let receivedToken = false
+    this.solOemDiagnostic.set('Waiting for SOL handshake')
     this.isDisconnecting.set(false)
     this.deviceState.set(-1)
     this.deviceConnection.set(false)
@@ -177,8 +203,16 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
+    this.cancelQueuedReconnect()
     this.isDisconnecting.set(true)
     this.deviceConnection.set(false)
+  }
+
+  private cancelQueuedReconnect(): void {
+    if (this.reconnectRetryTimer != null) {
+      clearTimeout(this.reconnectRetryTimer)
+      this.reconnectRetryTimer = undefined
+    }
   }
 
   handlePowerState(powerState: any): Observable<any> {
@@ -285,9 +319,37 @@ export class SolComponent implements OnInit, OnDestroy {
     return of(false)
   }
 
-  deviceStatus(event: any): void {
+  setTerminalType(type: SolTerminalType): void {
+    if (type !== SolTerminalType.VTUTF8 && type !== SolTerminalType.PCANSI) {
+      throw new RangeError(`Unsupported SOL POC terminal type: ${type}`)
+    }
+    if (type === this.terminalType()) return
+    if (this.encodingLocked()) {
+      throw new Error('Disconnect SOL before changing the encoding')
+    }
+    this.terminalType.set(type)
+  }
+
+  deviceStatus(event: number, sol?: SOLComponent): void {
+    if (event === 1 && sol != null) {
+      if (sol.redirector == null) throw new Error('SOL redirector must exist before connecting')
+      if (sol.dataProcessor == null) throw new Error('SOL processor must exist before connecting')
+      sol.dataProcessor.setTerminalType(this.terminalType())
+      sol.redirector.onSolOemCapabilities = (bytes) => {
+        const hex = bytes.map((byte) => byte.toString(16).padStart(2, '0')).join(' ')
+        this.solOemDiagnostic.set(`OEM payload (${bytes.length} bytes): ${hex || '(empty)'}. Decoder unchanged.`)
+      }
+    }
+    if (event === 0) sol?.dataProcessor?.reset()
+    const previousState = this.deviceState()
     this.deviceState.set(event)
     if (event === 3) {
+      if (previousState !== 3) {
+        this.snackBar.open(this.translate.instant('sol.connectedHint.value'), undefined, {
+          duration: 10_000,
+          politeness: 'polite'
+        })
+      }
       if (this.reconnectRetryTimer != null) {
         clearTimeout(this.reconnectRetryTimer)
         this.reconnectRetryTimer = undefined

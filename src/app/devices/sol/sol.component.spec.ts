@@ -8,15 +8,18 @@ import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter, Output, signal, input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
-import { EMPTY, of, ReplaySubject, Subject, throwError } from 'rxjs'
+import { ActivatedRoute, NavigationStart, Router, RouterModule } from '@angular/router'
+import { EMPTY, of, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
 import { UserConsentService } from '../user-consent.service'
-import { provideTranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
+import { SOLComponent } from '@device-management-toolkit/ui-toolkit-angular'
+import { SolTerminalType } from '@device-management-toolkit/ui-toolkit/core'
+import { MatSelect } from '@angular/material/select'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -33,7 +36,7 @@ describe('SolComponent', () => {
   let devicesService: SpyObj<DevicesService>
   let userConsentService: SpyObj<UserConsentService>
 
-  const eventSubject = new ReplaySubject<RouterEvent>(1)
+  let eventSubject: Subject<NavigationStart>
 
   beforeEach(async () => {
     devicesService = createSpyObj('DevicesService', [
@@ -169,6 +172,8 @@ describe('SolComponent', () => {
     })
 
     router = TestBed.inject(Router)
+    eventSubject = new Subject<NavigationStart>()
+    vi.spyOn(router, 'events', 'get').mockReturnValue(eventSubject)
   })
 
   beforeEach(() => {
@@ -190,6 +195,174 @@ describe('SolComponent', () => {
     expect(tokenSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
+  })
+  it('lets the toolbar select PC-ANSI before a processor exists', () => {
+    component.readyToLoadSol.set(false)
+    vi.spyOn(component, 'ngOnInit').mockImplementation(() => undefined)
+    fixture.detectChanges()
+    const select = fixture.debugElement.query(By.directive(MatSelect))
+    expect(select.componentInstance.value).toBe(SolTerminalType.PCANSI)
+    select.triggerEventHandler('selectionChange', { value: SolTerminalType.PCANSI })
+    fixture.detectChanges()
+    expect(component.terminalType()).toBe(SolTerminalType.PCANSI)
+    expect(select.componentInstance.value).toBe(SolTerminalType.PCANSI)
+  })
+
+  it('applies the selected mode at startup and after reconnect without waiting for OEM data', () => {
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    component.setTerminalType(SolTerminalType.PCANSI)
+    sol.instantiate()
+    component.deviceStatus(1, sol)
+    expect(sol.dataProcessor?.terminalType).toBe(SolTerminalType.PCANSI)
+    const reset = vi.spyOn(sol.dataProcessor!, 'reset')
+    component.deviceStatus(0, sol)
+    expect(reset).toHaveBeenCalledOnce()
+    sol.cleanup()
+    sol.instantiate()
+    component.deviceStatus(1, sol)
+    expect(sol.dataProcessor?.terminalType).toBe(SolTerminalType.PCANSI)
+    sol.cleanup()
+  })
+
+  it('selects encoding while disconnected and applies it to the next connection', () => {
+    tokenSpy.mockReturnValue(EMPTY)
+    vi.spyOn(component, 'ngOnInit').mockImplementation(() => undefined)
+    fixture.detectChanges()
+    const connect = vi.spyOn(component, 'connect')
+    const disconnect = vi.spyOn(component, 'disconnect')
+    component.setTerminalType(SolTerminalType.VTUTF8)
+    expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
+    expect(connect).not.toHaveBeenCalled()
+    expect(disconnect).not.toHaveBeenCalled()
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    component.readyToLoadSol.set(true)
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    sol.instantiate()
+    component.deviceStatus(1, sol)
+    expect(sol.dataProcessor?.terminalType).toBe(SolTerminalType.VTUTF8)
+    sol.cleanup()
+  })
+
+  it('keeps the socket and decoder unchanged and locks the selector while connected', () => {
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    const redirector = sol.redirector!
+    const close = vi.spyOn(redirector.socket!, 'close')
+    redirector.onStateChange(3)
+    fixture.detectChanges()
+    const select: MatSelect = fixture.debugElement.query(By.directive(MatSelect)).componentInstance
+    expect(select.disabled).toBe(true)
+    expect(() => component.setTerminalType(SolTerminalType.VTUTF8)).toThrow(
+      'Disconnect SOL before changing the encoding'
+    )
+    expect(component.terminalType()).toBe(SolTerminalType.PCANSI)
+    expect(sol.dataProcessor?.terminalType).toBe(SolTerminalType.PCANSI)
+    expect(sol.redirector).toBe(redirector)
+    expect(close).not.toHaveBeenCalled()
+    component.disconnect()
+    fixture.detectChanges()
+    expect(select.disabled).toBe(false)
+    component.setTerminalType(SolTerminalType.VTUTF8)
+    expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
+  })
+
+  it('explains encoding selection and the BIOS redraw limitation', () => {
+    vi.spyOn(component, 'ngOnInit').mockImplementation(() => undefined)
+    const message =
+      'Select encoding before connecting. Changing it requires disconnecting. After changing encoding, Reset To BIOS may be needed to redraw the screen properly.'
+    const translate = TestBed.inject(TranslateService)
+    translate.setTranslation('en', {
+      'sol.encodingSelectionHint': { value: message },
+      'deviceDetail.solDescription': { value: 'Serial Over LAN' }
+    })
+    translate.use('en')
+    fixture.detectChanges()
+    expect(fixture.nativeElement.textContent).toContain(message)
+    const card: HTMLElement = fixture.nativeElement.querySelector('mat-card')
+    expect(card.querySelector('mat-card-title')?.textContent).toContain('Serial Over LAN')
+    const content = card.querySelector('mat-card-content')!
+    expect(content.querySelector('p')?.textContent).toContain(message)
+    expect(content.querySelector('mat-select')).not.toBeNull()
+  })
+
+  it('disables the encoding selector during connection transitions', () => {
+    tokenSpy.mockReturnValue(EMPTY)
+    vi.spyOn(component, 'ngOnInit').mockImplementation(() => undefined)
+    fixture.detectChanges()
+    component.isConnecting.set(false)
+    component.isLoading.set(false)
+    component.isDisconnecting.set(false)
+    fixture.detectChanges()
+    const select: MatSelect = fixture.debugElement.query(By.directive(MatSelect)).componentInstance
+    expect(select.disabled).toBe(false)
+    for (const busy of [
+      component.isConnecting,
+      component.isLoading,
+      component.isDisconnecting
+    ]) {
+      busy.set(true)
+      fixture.detectChanges()
+      expect(select.disabled).toBe(true)
+      busy.set(false)
+    }
+    fixture.detectChanges()
+    expect(select.disabled).toBe(false)
+  })
+
+  it.each([
+    'disconnect',
+    'navigation',
+    'destroy'
+  ])('cancels a queued manual reconnect retry on %s', (action) => {
+    vi.useFakeTimers()
+    component.deviceConnection.set(true)
+    component.disconnect()
+    component.deviceStatus(0)
+    component.connect()
+    component.deviceStatus(0)
+    const connect = vi.spyOn(component, 'connect')
+    if (action === 'disconnect') component.disconnect()
+    if (action === 'navigation') eventSubject.next(new NavigationStart(1, '/devices'))
+    if (action === 'destroy') component.ngOnDestroy()
+    vi.advanceTimersByTime(10_000)
+    expect(connect).not.toHaveBeenCalled()
+  })
+
+  it('rejects unsupported selector values without changing the selection', () => {
+    expect(() => {
+      // @ts-expect-error Exercise invalid values from untyped consumers.
+      component.setTerminalType(0)
+    }).toThrow(RangeError)
+    expect(component.terminalType()).toBe(SolTerminalType.PCANSI)
+  })
+  it('retains raw OEM diagnostics after disconnect without printing them on screen', () => {
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    sol.instantiate()
+    component.deviceStatus(1, sol)
+    expect(sol.redirector?.onSolOemCapabilities).toBeTypeOf('function')
+    sol.redirector?.onSolOemCapabilities?.([0, 0x84])
+    expect(component.solOemDiagnostic()).toBe('OEM payload (2 bytes): 00 84. Decoder unchanged.')
+    expect(sol.dataProcessor?.terminalType).toBe(SolTerminalType.PCANSI)
+    component.deviceStatus(0, sol)
+    fixture.detectChanges()
+    expect(component.solOemDiagnostic()).toContain('OEM payload (2 bytes): 00 84')
+    expect(fixture.nativeElement.textContent).not.toContain('SOL POC diagnostic:')
+    sol.cleanup()
+  })
+
+  it('reports absent OEM data and resets the diagnostic for a new attempt', () => {
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    sol.instantiate()
+    component.deviceStatus(1, sol)
+    sol.redirector?.onSolOemCapabilities?.([])
+    expect(component.solOemDiagnostic()).toBe('OEM payload (0 bytes): (empty). Decoder unchanged.')
+    component.connect()
+    expect(component.solOemDiagnostic()).toBe('Waiting for SOL handshake')
+    sol.cleanup()
   })
   it('should have correct state on connect/disconnect methods', () => {
     fixture.detectChanges()
@@ -412,9 +585,26 @@ describe('SolComponent', () => {
   })
   it('should  hide loading when connected', () => {
     component.deviceStatus(3)
-    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith('sol.connectedHint.value', undefined, {
+      duration: 10_000,
+      politeness: 'polite'
+    })
     expect(component.isLoading()).toBe(false)
     expect(component.deviceState()).toBe(3)
+  })
+  it('shows the translated connected hint once per connection, including reconnects', () => {
+    const message = 'Connected. If the screen is blank, use a navigation key to request fresh output.'
+    const translate = TestBed.inject(TranslateService)
+    translate.setTranslation('en', { 'sol.connectedHint': { value: message } })
+    translate.use('en')
+    component.deviceStatus(3)
+    component.deviceStatus(3)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(message, undefined, { duration: 10_000, politeness: 'polite' })
+    component.isDisconnecting.set(true)
+    component.deviceStatus(0)
+    component.deviceStatus(1)
+    component.deviceStatus(3)
+    expect(snackBarSpy).toHaveBeenCalledTimes(2)
   })
   it('should not show error when NavigationStart triggers', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
