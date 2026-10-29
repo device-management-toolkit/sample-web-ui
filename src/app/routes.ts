@@ -23,6 +23,8 @@ import { DashboardComponent } from './dashboard/dashboard.component'
 import { DownloadRpcComponent } from './download-rpc/download-rpc.component'
 import { LoginComponent } from './login/login.component'
 import { AuthGuard } from './shared/auth-guard.service'
+import { environment } from '../environments/environment'
+import { PasswordChangeComponent } from './account/password-change.component'
 
 export const routes: Routes = [
   {
@@ -39,6 +41,15 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  ...(!environment.cloud && !environment.useOAuth && !environment.authDisabled
+    ? [
+        {
+          path: 'account/password',
+          component: PasswordChangeComponent,
+          canActivate: [AuthGuard]
+        }
+      ]
+    : []),
   { path: 'devices', component: DevicesComponent, canActivate: [AuthGuard] },
   { path: 'devices/:id', component: DeviceDetailComponent, canActivate: [AuthGuard] },
   { path: 'devices/:id/:component', component: DeviceDetailComponent, canActivate: [AuthGuard] },

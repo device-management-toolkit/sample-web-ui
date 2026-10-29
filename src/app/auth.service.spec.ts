@@ -214,6 +214,21 @@ describe('AuthService', () => {
     })
   })
 
+  describe('changePassword', () => {
+    it('should send current and new passwords to the protected Console endpoint', () => {
+      service.changePassword('old-password', 'new-password-123', 'new-password-123').subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual({
+        currentPassword: 'old-password',
+        newPassword: 'new-password-123',
+        confirmPassword: 'new-password-123'
+      })
+      req.flush({ message: 'password changed' })
+    })
+  })
+
   describe('logout', () => {
     it('should clear session state and navigate to login', () => {
       const removeItemSpy = vi.spyOn(localStorage, 'removeItem')

@@ -46,6 +46,12 @@
     <mat-icon matListItemIcon>http</mat-icon
     ><span i18n="navlink">{{ 'domains.header.domainsTitle.value' | translate }}</span>
   </a>
+  @if (showPasswordManagement) {
+    <a mat-list-item routerLink="/account/password" routerLinkActive="active">
+      <mat-icon matListItemIcon>password</mat-icon>
+      <span>{{ 'account.passwordChange.title.value' | translate }}</span>
+    </a>
+  }
 
   <!-- <a mat-list-item routerLink="/event-channel" routerLinkActive="active">
         <mat-icon matListItemIcon>data_exploration</mat-icon><span i18n="navlink">MQTT Events</span>

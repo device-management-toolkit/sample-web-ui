@@ -77,6 +77,10 @@ export class LoginComponent {
   public loginPassInputType = signal('password')
   public useOAuth = environment.useOAuth
 
+  get showStandaloneCredentialHelp(): boolean {
+    return !environment.cloud && !environment.authDisabled && !this.useOAuth
+  }
+
   constructor() {
     if (environment.authDisabled) {
       this.router.navigate([''])
