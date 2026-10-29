@@ -103,6 +103,11 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
       statusCode: httpCodes.SUCCESS,
       body: { data: [discoveredDevice], totalCount: 1 }
     }).as('get-discovered')
+    // rpc-go synced again after the list loaded; the pane must show this copy.
+    cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...discoveredDevice, deviceInfo: { ...discoveredDevice.deviceInfo, lastSynced: '2026-10-06T08:43:52Z' } }
+    }).as('get-discovered-device')
 
     cy.goToPage('Devices')
     cy.wait('@get-managed')
@@ -128,6 +133,16 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     paneSettled()
     cy.get('app-discovered-device-pane').invoke('outerWidth').should('eq', 390)
     cy.screenshot('discovered-pane-phone', { capture: 'viewport' })
+  })
+
+  it('shows the latest sync time without reloading the page', () => {
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.wait('@get-discovered-device')
+    // Seconds survive any time zone offset; the list copy synced at :37.
+    cy.get('[data-cy="discoveredPaneLastSynced"]')
+      .invoke('text')
+      .should('contain', ':52 ')
+      .and('not.match', /[\u202F\u00A0]/)
   })
 
   it('closes on Escape and returns focus to the row', () => {

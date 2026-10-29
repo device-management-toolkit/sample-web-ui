@@ -47,6 +47,28 @@ describe('DiscoveredDevicePaneComponent', () => {
     expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneEmpty"]')).toBeTruthy()
   })
 
+  it('formats discovery timestamps with plain spaces so they copy cleanly', () => {
+    render({
+      ...baseDevice,
+      deviceInfo: {
+        fwVersion: '',
+        fwBuild: '',
+        fwSku: '',
+        currentMode: '',
+        features: '',
+        ipAddress: '',
+        firstDiscovered: new Date(2026, 9, 29, 10, 11, 32),
+        lastSynced: '2026-10-29T10:13:32' as unknown as Date
+      }
+    })
+    const host: HTMLElement = fixture.nativeElement
+    const first = host.querySelector('[data-cy="discoveredPaneFirstDiscovered"]')?.textContent?.trim()
+    const last = host.querySelector('[data-cy="discoveredPaneLastSynced"]')?.textContent?.trim()
+    expect(first).toBe('Oct 29, 2026, 10:11:32 AM')
+    expect(last).toBe('Oct 29, 2026, 10:13:32 AM')
+    expect(component.firstDiscovered()).not.toMatch(/[\u202F\u00A0]/)
+  })
+
   it('drops fields the device did not report', () => {
     render({
       ...baseDevice,

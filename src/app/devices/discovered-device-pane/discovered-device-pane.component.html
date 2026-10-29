@@ -29,15 +29,15 @@
     <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
   </div>
 
-  @if (info()?.firstDiscovered || info()?.lastSynced) {
+  @if (firstDiscovered() || lastSynced()) {
     <dl class="identity">
-      @if (info()?.firstDiscovered) {
+      @if (firstDiscovered()) {
         <dt>{{ 'devices.discoveredPane.firstDiscovered.value' | translate }}</dt>
-        <dd>{{ info()?.firstDiscovered | date: 'medium' }}</dd>
+        <dd data-cy="discoveredPaneFirstDiscovered">{{ firstDiscovered() }}</dd>
       }
-      @if (info()?.lastSynced) {
+      @if (lastSynced()) {
         <dt>{{ 'devices.discoveredPane.lastSynced.value' | translate }}</dt>
-        <dd>{{ info()?.lastSynced | date: 'medium' }}</dd>
+        <dd data-cy="discoveredPaneLastSynced">{{ lastSynced() }}</dd>
       }
     </dl>
   }

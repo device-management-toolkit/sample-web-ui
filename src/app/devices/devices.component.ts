@@ -25,7 +25,7 @@ import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
 import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
-import { forkJoin, from, Observable, of, throwError } from 'rxjs'
+import { forkJoin, from, Observable, of, Subscription, throwError } from 'rxjs'
 import { Device, DeviceFilterStatus, PageEventOptions, PowerState } from '../../models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
 import SnackbarDefaults from '../shared/config/snackBarDefault'
@@ -151,6 +151,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly paneDevice = signal<Device | null>(null)
   private paneTrigger: HTMLElement | null = null
   private paneOverlay?: OverlayRef
+  private paneRefresh?: Subscription
   @ViewChild('paneTemplate') paneTemplate!: TemplateRef<unknown>
 
   get allCount(): number {
@@ -188,6 +189,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onTabChange(index: number): void {
     this.activeTab.set(index)
+    this.paneRefresh?.unsubscribe()
     this.paneDevice.set(null)
     // Different tabs return different result sets, so reset paging to the first page.
     this.pageEvent.startsFrom = 0
@@ -281,6 +283,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.paneRefresh?.unsubscribe()
     this.paneOverlay?.dispose()
   }
 
@@ -503,12 +506,28 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isDiscoveredTab) {
       this.paneTrigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null
       this.paneDevice.set(device)
+      this.refreshPaneDevice(device.guid)
       return
     }
     await this.navigateTo(device.guid)
   }
 
+  // rpc-go may have synced since the list was loaded, so fetch the latest copy while the
+  // cached row is shown. A failed fetch leaves the cached copy in place.
+  private refreshPaneDevice(guid: string): void {
+    this.paneRefresh?.unsubscribe()
+    this.paneRefresh = this.devicesService
+      .getDevice(guid)
+      .pipe(catchError(() => of(null)))
+      .subscribe((latest) => {
+        if (latest && this.paneDevice()?.guid === guid) {
+          this.paneDevice.set(latest)
+        }
+      })
+  }
+
   closePane(): void {
+    this.paneRefresh?.unsubscribe()
     this.paneDevice.set(null)
     this.paneTrigger?.focus()
     this.paneTrigger = null

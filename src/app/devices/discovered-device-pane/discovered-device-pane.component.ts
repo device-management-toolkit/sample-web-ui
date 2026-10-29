@@ -3,8 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { AfterViewInit, Component, ElementRef, ViewChild, computed, input, output } from '@angular/core'
-import { DatePipe, NgTemplateOutlet } from '@angular/common'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  LOCALE_ID,
+  ViewChild,
+  computed,
+  inject,
+  input,
+  output
+} from '@angular/core'
+import { NgTemplateOutlet, formatDate } from '@angular/common'
 import { MatIconButton } from '@angular/material/button'
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
 import { MatIcon } from '@angular/material/icon'
@@ -68,7 +78,6 @@ const DHCP_MODE_LABELS: Record<string, string> = {
   templateUrl: './discovered-device-pane.component.html',
   styleUrls: ['./discovered-device-pane.component.scss'],
   imports: [
-    DatePipe,
     NgTemplateOutlet,
     MatIconButton,
     MatIcon,
@@ -84,6 +93,8 @@ const DHCP_MODE_LABELS: Record<string, string> = {
   }
 })
 export class DiscoveredDevicePaneComponent implements AfterViewInit {
+  private readonly locale = inject(LOCALE_ID)
+
   public readonly device = input.required<Device>()
   public readonly productType = input('')
   // The devices table's control mode for this device, so both show the same label.
@@ -93,6 +104,9 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   @ViewChild('title') title?: ElementRef<HTMLElement>
 
   public readonly info = computed<DeviceInfo | undefined>(() => this.device().deviceInfo)
+
+  public readonly firstDiscovered = computed(() => this.timestamp(this.info()?.firstDiscovered))
+  public readonly lastSynced = computed(() => this.timestamp(this.info()?.lastSynced))
 
   public readonly sections = computed<PaneSection[]>(() => {
     const info = this.info()
@@ -118,6 +132,12 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
 
   isLabel(value: PaneValue): value is PaneLabel {
     return typeof value === 'object'
+  }
+
+  // CLDR puts narrow/no-break spaces in time formats (e.g. before "AM"), which paste as "?"
+  // in some apps, so swap them for plain spaces.
+  private timestamp(value: Date | string | undefined): string {
+    return value ? formatDate(value, 'medium', this.locale).replace(/[\u202F\u00A0]/g, ' ') : ''
   }
 
   private label(raw: string | undefined, labels: Record<string, string>): PaneValue | undefined {

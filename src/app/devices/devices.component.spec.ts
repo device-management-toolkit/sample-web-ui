@@ -11,7 +11,7 @@ import { OverlayContainer, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
-import { of, Subject } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
@@ -28,6 +28,7 @@ describe('DevicesComponent', () => {
   let component: DevicesComponent
   let fixture: ComponentFixture<DevicesComponent>
   let getDevicesSpy: MockInstance
+  let getDeviceSpy: MockInstance
   let updateDeviceSpy: MockInstance
   let getTagsSpy: MockInstance
   let sendPowerActionSpy: MockInstance
@@ -64,6 +65,7 @@ describe('DevicesComponent', () => {
     }
     const devicesService = createSpyObj('DevicesService', [
       'getDevices',
+      'getDevice',
       'updateDevice',
       'getTags',
       'getPowerState',
@@ -85,6 +87,9 @@ describe('DevicesComponent', () => {
       13: 'Off'
     })
     getDevicesSpy = devicesService.getDevices.mockReturnValue(of({ data: [device01, device02], totalCount: 1 }))
+    getDeviceSpy = devicesService.getDevice.mockImplementation((guid: string) =>
+      of([device01, device02].find((d) => d.guid === guid))
+    )
     updateDeviceSpy = devicesService.updateDevice.mockImplementation((device: any) => {
       return of(device)
     })
@@ -705,6 +710,38 @@ describe('DevicesComponent', () => {
       await component.openDevice(device01)
       expect(navigateSpy).not.toHaveBeenCalled()
       expect(component.paneDevice()).toBe(device01)
+    })
+
+    it('shows the latest copy of a discovered device rather than the cached row', async () => {
+      const latest = {
+        ...device01,
+        deviceInfo: { ...device01.deviceInfo, lastSynced: new Date('2026-10-29T10:13:32Z') }
+      } as Device
+      const response = new Subject<Device>()
+      getDeviceSpy.mockReturnValue(response)
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(getDeviceSpy).toHaveBeenCalledWith(device01.guid)
+      expect(component.paneDevice()).toBe(device01)
+      response.next(latest)
+      expect(component.paneDevice()).toBe(latest)
+    })
+
+    it('keeps the cached device when fetching the latest copy fails', async () => {
+      getDeviceSpy.mockReturnValue(throwError(() => new Error('offline')))
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(component.paneDevice()).toBe(device01)
+    })
+
+    it('ignores a late response after the pane has closed', async () => {
+      const response = new Subject<Device>()
+      getDeviceSpy.mockReturnValue(response)
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      component.closePane()
+      response.next(device01)
+      expect(component.paneDevice()).toBeNull()
     })
 
     it('uses the current direction when creating the overlay', () => {
