@@ -17,6 +17,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideTranslateService, TranslateService } from '@ngx-translate/core'
 import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader'
 import { ServerFeaturesService } from '../../server-features.service'
+import { environment } from '../../../environments/environment'
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent
@@ -123,5 +124,25 @@ describe('NavbarComponent', () => {
     component.cloudMode = true
     fixture.detectChanges()
     expect(fixture.nativeElement.querySelector('a[routerlink="/download-rpc"]')).toBeNull()
+  })
+
+  it('should show password management only for standalone enterprise authentication', () => {
+    const originalUseOAuth = environment.useOAuth
+    const originalAuthDisabled = environment.authDisabled
+    try {
+      component.cloudMode = false
+      environment.useOAuth = false
+      environment.authDisabled = false
+
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('a[routerlink="/account/password"]')).not.toBeNull()
+
+      environment.useOAuth = true
+      fixture.detectChanges()
+      expect(fixture.nativeElement.querySelector('a[routerlink="/account/password"]')).toBeNull()
+    } finally {
+      environment.useOAuth = originalUseOAuth
+      environment.authDisabled = originalAuthDisabled
+    }
   })
 })

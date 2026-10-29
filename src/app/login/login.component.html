@@ -59,6 +59,16 @@
             </div>
           </mat-card-actions>
         </form>
+
+        @if (showStandaloneCredentialHelp) {
+          <mat-card-content class="credential-help">
+            <details>
+              <summary>{{ 'login.keyringHelp.title.value' | translate }}</summary>
+              <p>{{ 'login.keyringHelp.firstRun.value' | translate }}</p>
+              <p>{{ 'login.keyringHelp.recovery.value' | translate }}</p>
+            </details>
+          </mat-card-content>
+        }
       } @else {
         <mat-card-content> </mat-card-content>
         <mat-card-actions style="margin: 0 auto; padding: 24px 0">

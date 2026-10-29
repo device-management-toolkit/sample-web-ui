@@ -1,0 +1,14 @@
+/*********************************************************************
+ * Copyright (c) Intel Corporation 2022
+ * SPDX-License-Identifier: Apache-2.0
+ **********************************************************************/
+
+.credential-help {
+  padding-top: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.credential-help summary {
+  cursor: pointer;
+  font-weight: 500;
+}

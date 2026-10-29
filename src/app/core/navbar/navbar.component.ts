@@ -55,4 +55,8 @@ export class NavbarComponent implements OnInit {
       ? this.translate.instant('configs.header.ciraTitle.value')
       : this.translate.instant('configs.header.noCiraTitle.value')
   }
+
+  get showPasswordManagement(): boolean {
+    return !this.cloudMode && !environment.useOAuth && !environment.authDisabled
+  }
 }

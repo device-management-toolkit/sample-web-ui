@@ -159,6 +159,14 @@ export class AuthService {
     )
   }
 
+  changePassword(currentPassword: string, newPassword: string, confirmPassword: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.url}/password`, {
+      currentPassword,
+      newPassword,
+      confirmPassword
+    })
+  }
+
   logout(): void {
     if (environment.authDisabled) {
       return

@@ -2413,6 +2413,66 @@
     "description": "Title for KVM",
     "value": "Enable KVM"
   },
+  "login.keyringHelp.title": {
+    "description": "Expandable login help title for keyring setup and recovery",
+    "value": "Keyring setup and recovery"
+  },
+  "login.keyringHelp.firstRun": {
+    "description": "CLI instructions for first-time keyring credential setup",
+    "value": "When keyring mode is enabled and both administrator entries are missing, start Console in an interactive terminal. Console prompts for a username, password, and confirmation."
+  },
+  "login.keyringHelp.recovery": {
+    "description": "Manual recovery instructions for a forgotten keyring password",
+    "value": "Stop Console. In your OS keyring manager, delete both dmt-console entries (admin-username and admin-password-hash), then restart to set up credentials again. This does not reset config-backed passwords."
+  },
+  "account.passwordChange.title": {
+    "description": "Title of the standalone administrator password management page",
+    "value": "Change password"
+  },
+  "account.passwordChange.description": {
+    "description": "Instruction for changing the standalone administrator password",
+    "value": "Verify your current password before choosing a new one."
+  },
+  "account.passwordChange.currentPassword": {
+    "description": "Label for the current administrator password",
+    "value": "Current password"
+  },
+  "account.passwordChange.newPassword": {
+    "description": "Label for the new administrator password",
+    "value": "New password"
+  },
+  "account.passwordChange.confirmPassword": {
+    "description": "Label for confirming the new administrator password",
+    "value": "Confirm new password"
+  },
+  "account.passwordChange.passwordHint": {
+    "description": "Password strength hint",
+    "value": "Use at least 8 characters and 4 distinct characters."
+  },
+  "account.passwordChange.required": {
+    "description": "Validation message for required password fields",
+    "value": "This field is required."
+  },
+  "account.passwordChange.weakPassword": {
+    "description": "Validation message for a weak new password",
+    "value": "Use at least 8 characters and 4 distinct characters."
+  },
+  "account.passwordChange.mismatch": {
+    "description": "Validation message when new password confirmation does not match",
+    "value": "The new passwords do not match."
+  },
+  "account.passwordChange.submit": {
+    "description": "Submit button for changing the administrator password",
+    "value": "Change password"
+  },
+  "account.passwordChange.success": {
+    "description": "Success message after changing the administrator password",
+    "value": "Your password was changed."
+  },
+  "account.passwordChange.error": {
+    "description": "Fallback error when the administrator password cannot be changed",
+    "value": "Unable to change the password. Try again."
+  },
   "login.error": {
     "description": "Error for logging in",
     "value": "Error logging in"
