@@ -6,10 +6,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
 import { createSpyObj } from '../../test-helpers'
 import { ApplicationRef } from '@angular/core'
+import { Dir, Directionality } from '@angular/cdk/bidi'
+import { OverlayContainer, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
-import { of, Subject } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
@@ -26,13 +28,17 @@ describe('DevicesComponent', () => {
   let component: DevicesComponent
   let fixture: ComponentFixture<DevicesComponent>
   let getDevicesSpy: MockInstance
+  let getDeviceSpy: MockInstance
   let updateDeviceSpy: MockInstance
   let getTagsSpy: MockInstance
   let sendPowerActionSpy: MockInstance
   let sendDeactivateSpy: MockInstance
   let translate: TranslateService
+  let directionality: Dir
 
   beforeEach(async () => {
+    directionality = new Dir()
+    directionality.ngAfterContentInit()
     device01 = {
       hostname: 'device01',
       friendlyName: '',
@@ -59,6 +65,7 @@ describe('DevicesComponent', () => {
     }
     const devicesService = createSpyObj('DevicesService', [
       'getDevices',
+      'getDevice',
       'updateDevice',
       'getTags',
       'getPowerState',
@@ -80,6 +87,9 @@ describe('DevicesComponent', () => {
       13: 'Off'
     })
     getDevicesSpy = devicesService.getDevices.mockReturnValue(of({ data: [device01, device02], totalCount: 1 }))
+    getDeviceSpy = devicesService.getDevice.mockImplementation((guid: string) =>
+      of([device01, device02].find((d) => d.guid === guid))
+    )
     updateDeviceSpy = devicesService.updateDevice.mockImplementation((device: any) => {
       return of(device)
     })
@@ -97,6 +107,7 @@ describe('DevicesComponent', () => {
       ],
       providers: [
         provideTranslateService(),
+        { provide: Directionality, useValue: directionality },
         { provide: DevicesService, useValue: devicesService },
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         TranslateService,
@@ -676,6 +687,151 @@ describe('DevicesComponent', () => {
         expect(renderedText()).not.toContain('tagCommon01')
         expect(() => TestBed.inject(ApplicationRef).tick()).not.toThrow()
       })
+    })
+  })
+
+  describe('discovered device pane (console mode)', () => {
+    let navigateSpy: MockInstance
+
+    beforeEach(() => {
+      component.isCloudMode = false
+      navigateSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => Promise.resolve(true)) as any)
+    })
+
+    it('opens the device page for a managed device', async () => {
+      component.onTabChange(0)
+      await component.openDevice(device01)
+      expect(navigateSpy).toHaveBeenCalledWith(['/devices/12324-4243-ewdsd'])
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('opens the pane instead of the device page for a discovered device', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(navigateSpy).not.toHaveBeenCalled()
+      expect(component.paneDevice()).toBe(device01)
+    })
+
+    it('shows the latest copy of a discovered device rather than the cached row', async () => {
+      const latest = {
+        ...device01,
+        deviceInfo: { ...device01.deviceInfo, lastSynced: new Date('2026-10-29T10:13:32Z') }
+      } as Device
+      const response = new Subject<Device>()
+      getDeviceSpy.mockReturnValue(response)
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(getDeviceSpy).toHaveBeenCalledWith(device01.guid)
+      expect(component.paneDevice()).toBe(device01)
+      response.next(latest)
+      expect(component.paneDevice()).toBe(latest)
+    })
+
+    it('keeps the cached device when fetching the latest copy fails', async () => {
+      getDeviceSpy.mockReturnValue(throwError(() => new Error('offline')))
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(component.paneDevice()).toBe(device01)
+    })
+
+    it('ignores a late response after the pane has closed', async () => {
+      const response = new Subject<Device>()
+      getDeviceSpy.mockReturnValue(response)
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      component.closePane()
+      response.next(device01)
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('uses the current direction when creating the overlay', () => {
+      directionality.dir = 'rtl'
+      fixture.detectChanges()
+      expect(TestBed.inject(OverlayContainer).getContainerElement().querySelector('[dir="rtl"]')).not.toBeNull()
+    })
+
+    it('updates direction while the pane is open and unsubscribes on destroy', async () => {
+      fixture.detectChanges()
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      fixture.detectChanges()
+      const container = TestBed.inject(OverlayContainer).getContainerElement()
+      const setDirection = vi.spyOn(OverlayRef.prototype, 'setDirection')
+
+      for (const dir of ['rtl', 'ltr'] as const) {
+        directionality.dir = dir
+        expect(container.querySelector(`[dir="${dir}"] app-discovered-device-pane`)).not.toBeNull()
+        expect(component.paneDevice()).toBe(device01)
+      }
+
+      fixture.destroy()
+      setDirection.mockClear()
+      directionality.change.emit('rtl')
+      expect(setDirection).not.toHaveBeenCalled()
+    })
+
+    it('ignores Enter pressed on a control inside the row', async () => {
+      component.onTabChange(1)
+      const row = document.createElement('div')
+      const button = document.createElement('button')
+      row.appendChild(button)
+      row.addEventListener('keydown', (e) => void component.openDevice(device01, e))
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('returns focus to the row that opened the pane when it closes', async () => {
+      component.onTabChange(1)
+      const row = document.createElement('div')
+      row.tabIndex = 0
+      document.body.appendChild(row)
+      row.addEventListener('click', (e) => void component.openDevice(device01, e))
+      row.click()
+      expect(component.paneDevice()).toBe(device01)
+      component.closePane()
+      expect(component.paneDevice()).toBeNull()
+      expect(document.activeElement).toBe(row)
+      row.remove()
+    })
+
+    it('closes the pane when switching tabs', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      component.onTabChange(0)
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('preserves the row and restores focus after refreshed devices are reordered', () => {
+      component.onTabChange(1)
+      fixture.detectChanges()
+      const host: HTMLElement = fixture.nativeElement
+      const row = host.querySelector<HTMLElement>('mat-row')!
+      row.click()
+      fixture.detectChanges()
+      const refreshed = { ...component.devices.data[0], hostname: 'device01-renamed' }
+      getDevicesSpy.mockReturnValue(of({ data: [{ ...device02 }, refreshed], totalCount: 2 }))
+
+      component.getDevices()
+      fixture.detectChanges()
+
+      expect(host.querySelector('mat-row.pane-open')).toBe(row)
+      expect(row.textContent).toContain('device01-renamed')
+      expect(component.paneDevice()?.hostname).toBe('device01-renamed')
+      component.closePane()
+      expect(document.activeElement).toBe(row)
+    })
+
+    it('keeps the pane on the refreshed device after a reload, and closes it if the device is gone', async () => {
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      const refreshed = { ...device01, hostname: 'device01-renamed' }
+      getDevicesSpy.mockReturnValue(of({ data: [refreshed, device02], totalCount: 2 }))
+      component.getDevices()
+      expect(component.paneDevice()?.hostname).toBe('device01-renamed')
+
+      getDevicesSpy.mockReturnValue(of({ data: [device02], totalCount: 1 }))
+      component.getDevices()
+      expect(component.paneDevice()).toBeNull()
     })
   })
 })
