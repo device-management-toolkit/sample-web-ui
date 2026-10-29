@@ -3471,6 +3471,22 @@
     "description": "Authenticatieoptie Token genereren",
     "value": "Token genereren"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "Certificaten"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "Het zelfondertekende AMT-certificaat van het apparaat accepteren"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "rpc-go accepteert het certificaat dat AMT op zijn lokale TLS-poort aanbiedt."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "Console stelt skip-cert-check automatisch in wanneer het een zelfondertekend certificaat gebruikt. Gebruik een vertrouwd certificaat op Console om dit uit te schakelen."
+  },
   "downloadRpc.download": {
     "description": "Label van de knop Downloaden",
     "value": "Downloaden"

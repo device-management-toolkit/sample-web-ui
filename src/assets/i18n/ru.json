@@ -3459,6 +3459,22 @@
     "description": "Вариант аутентификации «Создать токен»",
     "value": "Создать токен"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "Сертификаты"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "Принимать самоподписанный сертификат AMT устройства"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "rpc-go принимает сертификат, который AMT предъявляет на своём локальном порту TLS."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "Console автоматически устанавливает skip-cert-check, если использует самоподписанный сертификат. Чтобы отключить этот параметр, используйте в Console доверенный сертификат."
+  },
   "downloadRpc.download": {
     "description": "Текст кнопки «Скачать»",
     "value": "Скачать"

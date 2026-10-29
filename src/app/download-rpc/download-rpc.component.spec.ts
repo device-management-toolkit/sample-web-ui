@@ -43,7 +43,10 @@ describe('DownloadRpcComponent', () => {
     // Other specs share this environment object and do not always restore it.
     originalRpsServer = environment.rpsServer
     environment.rpsServer = 'https://console.example:8181'
-    downloadServiceSpy = createSpyObj('DownloadRpcService', ['getVersions', 'buildPackage'])
+    downloadServiceSpy = createSpyObj('DownloadRpcService', [
+      'getVersions',
+      'buildPackage'
+    ])
     profilesServiceSpy = createSpyObj('ProfilesService', ['getData'])
     domainsServiceSpy = createSpyObj('DomainsService', ['getData'])
     snackBarSpy = createSpyObj('MatSnackBar', ['open'])
@@ -166,6 +169,52 @@ describe('DownloadRpcComponent', () => {
     expect(fixture.nativeElement.querySelector('mat-card-subtitle')?.textContent).toContain(
       'downloadRpc.subtitle.value'
     )
+  })
+
+  it('defaults the AMT self-signed cert option to on and sends it', () => {
+    vi.spyOn(component as any, 'saveBlob').mockImplementation(() => undefined)
+    expect(component.form.get('skipAmtCertCheck')?.value).toBe(true)
+    component.form.patchValue({ version: 'v3.0.1', os: 'linux', profile: 'ccmProfile' })
+    component.onProfileOrCommandChange()
+    component.onSubmit()
+
+    expect(downloadServiceSpy.buildPackage).toHaveBeenCalledWith(expect.objectContaining({ skipAmtCertCheck: true }))
+  })
+
+  it('sends skipAmtCertCheck false when the user unticks it', () => {
+    vi.spyOn(component as any, 'saveBlob').mockImplementation(() => undefined)
+    component.form.patchValue({ version: 'v3.0.1', os: 'linux', profile: 'ccmProfile', skipAmtCertCheck: false })
+    component.onProfileOrCommandChange()
+    component.onSubmit()
+
+    expect(downloadServiceSpy.buildPackage).toHaveBeenCalledWith(expect.objectContaining({ skipAmtCertCheck: false }))
+  })
+
+  it('shows the AMT cert option with its hint', () => {
+    fixture.detectChanges()
+    const box = fixture.nativeElement.querySelector('[data-cy="skipAmtCertCheck"]')
+    expect(box?.textContent).toContain('downloadRpc.certs.amt.label.value')
+    expect(box?.querySelector('input[type="checkbox"]')?.checked).toBe(true)
+    expect(fixture.nativeElement.querySelector('[data-cy="skipAmtCertCheckHint"]')?.textContent).toContain(
+      'downloadRpc.certs.amt.hint.value'
+    )
+  })
+
+  it('explains that Console sets its own cert check, without a checkbox', () => {
+    fixture.detectChanges()
+    expect(fixture.nativeElement.querySelector('[data-cy="skipCertCheckNote"]')?.textContent).toContain(
+      'downloadRpc.certs.console.note.value'
+    )
+    expect(fixture.nativeElement.querySelector('[data-cy="skipCertCheck"]')).toBeNull()
+  })
+
+  it("does not send Console's cert setting; Console writes it itself", () => {
+    vi.spyOn(component as any, 'saveBlob').mockImplementation(() => undefined)
+    component.form.patchValue({ version: 'v3.0.1', os: 'linux', profile: 'ccmProfile' })
+    component.onProfileOrCommandChange()
+    component.onSubmit()
+
+    expect(downloadServiceSpy.buildPackage.mock.calls[0][0].skipCertCheck).toBeUndefined()
   })
 
   it('pre-fills serverUrl with the API base the UI talks to', () => {
@@ -292,7 +341,8 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       authMode: 'token',
       profile: 'ccmProfile',
-      domain: ''
+      domain: '',
+      skipAmtCertCheck: true
     })
     component.onProfileOrCommandChange()
     component.onSubmit()
@@ -305,6 +355,7 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       arch: 'x64',
       auth: { mode: 'token' },
+      skipAmtCertCheck: true,
       profile: 'ccmProfile'
     })
     expect(clickSpy).toHaveBeenCalled()
@@ -321,7 +372,8 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       authMode: 'none',
       profile: 'acmProfile',
-      domain: 'dom1'
+      domain: 'dom1',
+      skipAmtCertCheck: true
     })
     component.onProfileOrCommandChange()
     component.onSubmit()
@@ -333,6 +385,7 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       arch: 'x64',
       auth: { mode: 'none' },
+      skipAmtCertCheck: true,
       profile: 'acmProfile',
       domain: 'dom1'
     })
@@ -356,7 +409,8 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       authMode: 'token',
       profile: '',
-      domain: ''
+      domain: '',
+      skipAmtCertCheck: true
     })
     component.onProfileOrCommandChange()
     component.onSubmit()
@@ -368,7 +422,8 @@ describe('DownloadRpcComponent', () => {
       version: 'v3.0.1',
       os: 'linux',
       arch: 'x64',
-      auth: { mode: 'token' }
+      auth: { mode: 'token' },
+      skipAmtCertCheck: true
     })
   })
 
@@ -382,7 +437,8 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       authMode: 'token',
       profile: '',
-      domain: ''
+      domain: '',
+      skipAmtCertCheck: true
     })
     component.onProfileOrCommandChange()
     component.onSubmit()
@@ -403,7 +459,8 @@ describe('DownloadRpcComponent', () => {
       os: 'linux',
       authMode: 'token',
       profile: '',
-      domain: ''
+      domain: '',
+      skipAmtCertCheck: true
     })
     component.onProfileOrCommandChange()
     component.onSubmit()

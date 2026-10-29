@@ -25,3 +25,13 @@
 mat-form-field {
   margin: 12px 0;
 }
+
+.certs-label {
+  margin-top: 16px;
+}
+
+.cert-hint {
+  margin: 0 0 10px 40px;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}

@@ -117,6 +117,17 @@
           <mat-hint>{{ 'downloadRpc.tokenTtl.hint.value' | translate }}</mat-hint>
         </mat-form-field>
       }
+
+      <mat-label class="certs-label">{{ 'downloadRpc.certs.label.value' | translate }}</mat-label>
+      <mat-checkbox formControlName="skipAmtCertCheck" data-cy="skipAmtCertCheck">
+        {{ 'downloadRpc.certs.amt.label.value' | translate }}
+      </mat-checkbox>
+      <div class="cert-hint" data-cy="skipAmtCertCheckHint">{{ 'downloadRpc.certs.amt.hint.value' | translate }}</div>
+
+      <div class="auth-note" data-cy="skipCertCheckNote">
+        <mat-icon>info</mat-icon>
+        <span>{{ 'downloadRpc.certs.console.note.value' | translate }}</span>
+      </div>
     </form>
   </mat-card-content>
   <mat-card-actions>

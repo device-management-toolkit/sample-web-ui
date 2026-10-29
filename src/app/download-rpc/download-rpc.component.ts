@@ -28,6 +28,7 @@ import { MatInput } from '@angular/material/input'
 import { MatSelect } from '@angular/material/select'
 import { MatOption } from '@angular/material/core'
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio'
+import { MatCheckbox } from '@angular/material/checkbox'
 import { MatChip } from '@angular/material/chips'
 import { MatIcon } from '@angular/material/icon'
 import { MatProgressBar } from '@angular/material/progress-bar'
@@ -64,6 +65,7 @@ import { AuthModes, OsOptions, RpcArch, RpcCommands, TokenLifetimes } from './do
     MatOption,
     MatRadioGroup,
     MatRadioButton,
+    MatCheckbox,
     MatButton,
     MatChip,
     MatIcon,
@@ -100,7 +102,8 @@ export class DownloadRpcComponent implements OnInit {
     authMode: ['none' as RpcAuthMode, Validators.required],
     tokenTtl: ['1h', Validators.required],
     profile: [''],
-    domain: ['']
+    domain: [''],
+    skipAmtCertCheck: [true]
   })
 
   private readonly serverUrl = toSignal(this.form.controls['serverUrl'].valueChanges, {
@@ -188,7 +191,8 @@ export class DownloadRpcComponent implements OnInit {
       os: v.os,
       arch: RpcArch,
       serverUrl: String(v.serverUrl).trim(),
-      auth: { mode: v.authMode }
+      auth: { mode: v.authMode },
+      skipAmtCertCheck: Boolean(v.skipAmtCertCheck)
     }
     if (v.authMode === 'token') {
       request.tokenTtl = v.tokenTtl

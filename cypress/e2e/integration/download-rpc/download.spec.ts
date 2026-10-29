@@ -83,6 +83,12 @@ describeWhenNotCloud('Download RPC', () => {
     })
   })
 
+  it('defaults the AMT cert option to on and explains the Console cert setting', () => {
+    cy.get('[data-cy="skipAmtCertCheck"] input[type="checkbox"]').should('be.checked').and('be.enabled')
+    cy.get('[data-cy="skipCertCheckNote"]').should('be.visible')
+    cy.get('[data-cy="skipCertCheck"]').should('not.exist')
+  })
+
   it('offers only the operating systems with an x64 build', () => {
     cy.then(() => {
       releases.forEach((release) => {
@@ -139,6 +145,7 @@ describeWhenNotCloud('Download RPC', () => {
             arch: 'x64',
             serverUrl: 'https://console.corp.example.com',
             auth: { mode: 'token' },
+            skipAmtCertCheck: true,
             tokenTtl: '8h',
             profile: profile.profileName,
             ...(isAcm ? { domain: domains[0].profileName } : {})

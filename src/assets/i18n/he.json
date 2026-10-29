@@ -3463,6 +3463,22 @@
     "description": "אפשרות האימות יצירת אסימון",
     "value": "צור אסימון"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "אישורים"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "קבל את אישור ה-AMT בחתימה עצמית של המכשיר"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "rpc-go מקבל את האישור ש-AMT מציג ביציאת ה-TLS המקומית שלו."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "Console מגדיר את skip-cert-check אוטומטית כאשר הוא משתמש באישור בחתימה עצמית. כדי לכבות זאת, השתמש באישור מהימן ב-Console."
+  },
   "downloadRpc.download": {
     "description": "תווית לחצן ההורדה",
     "value": "הורדה"

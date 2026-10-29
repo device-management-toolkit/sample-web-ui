@@ -663,4 +663,5 @@ export interface PackageRequest {
   tokenTtl?: string // token auth only
   profile?: string // activate only
   domain?: string // activate + ACM only
+  skipAmtCertCheck?: boolean // writes skip-amt-cert-check; omitted means false
 }

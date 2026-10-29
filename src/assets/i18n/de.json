@@ -3467,6 +3467,22 @@
     "description": "Authentifizierungsoption „Token generieren“",
     "value": "Token generieren"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "Zertifikate"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "Selbstsigniertes AMT-Zertifikat des Geräts akzeptieren"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "rpc-go akzeptiert das Zertifikat, das AMT an seinem lokalen TLS-Port vorlegt."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "Console setzt skip-cert-check automatisch, wenn es ein selbstsigniertes Zertifikat verwendet. Um dies zu deaktivieren, verwenden Sie in Console ein vertrauenswürdiges Zertifikat."
+  },
   "downloadRpc.download": {
     "description": "Beschriftung der Schaltfläche „Herunterladen“",
     "value": "Herunterladen"

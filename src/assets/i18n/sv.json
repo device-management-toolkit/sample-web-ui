@@ -3331,6 +3331,22 @@
     "description": "Autentiseringsalternativet Generera token",
     "value": "Generera token"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "Certifikat"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "Godkänn enhetens självsignerade AMT-certifikat"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "rpc-go godkänner certifikatet som AMT presenterar på sin lokala TLS-port."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "Console ställer in skip-cert-check automatiskt när det använder ett självsignerat certifikat. Använd ett betrott certifikat i Console för att stänga av det."
+  },
   "downloadRpc.download": {
     "description": "Etikett för knappen Ladda ned",
     "value": "Ladda ned"

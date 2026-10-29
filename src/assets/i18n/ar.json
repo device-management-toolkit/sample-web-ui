@@ -3471,6 +3471,22 @@
     "description": "خيار المصادقة إنشاء رمز مميز",
     "value": "إنشاء رمز مميز"
   },
+  "downloadRpc.certs.label": {
+    "description": "Heading above the certificate options on the Download RPC page",
+    "value": "الشهادات"
+  },
+  "downloadRpc.certs.amt.label": {
+    "description": "Checkbox that writes skip-amt-cert-check to the rpc-go config",
+    "value": "قبول شهادة AMT الموقعة ذاتيًا للجهاز"
+  },
+  "downloadRpc.certs.amt.hint": {
+    "description": "Hint under the AMT self-signed certificate checkbox",
+    "value": "يقبل rpc-go الشهادة التي يقدمها AMT على منفذ TLS المحلي الخاص به."
+  },
+  "downloadRpc.certs.console.note": {
+    "description": "Note explaining that Console sets skip-cert-check itself",
+    "value": "يعيّن Console الخيار skip-cert-check تلقائيًا عندما يستخدم شهادة موقعة ذاتيًا. لإيقاف تشغيله، استخدم شهادة موثوقة على Console."
+  },
   "downloadRpc.download": {
     "description": "تسمية زر التنزيل",
     "value": "تنزيل"
