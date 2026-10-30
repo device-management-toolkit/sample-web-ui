@@ -2753,6 +2753,18 @@
     "description": "Fehlermeldung wenn SSD-Passwort 64 Bytes überschreitet",
     "value": "Das SSD-Passwort darf 64 Bytes nicht überschreiten"
   },
+  "sol.encoding": {
+    "description": "Beschriftung der Auswahl für die SOL-Zeichenkodierung",
+    "value": "SOL-Kodierung"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Hinweis zur Auswahl der SOL-Kodierung bei getrennter Verbindung und zur Neuanzeige des BIOS",
+    "value": "Wählen Sie die Kodierung vor dem Verbinden aus. Zum Ändern muss die Verbindung getrennt werden. Nach einer Kodierungsänderung kann ein Neustart ins BIOS erforderlich sein, damit der Bildschirm korrekt neu angezeigt wird."
+  },
+  "sol.connectedHint": {
+    "description": "Hinweis nach dem Verbinden, wenn die Remote-Konsole eine neue Ausgabe benötigt",
+    "value": "Verbunden. Wenn der Bildschirm leer ist, verwenden Sie eine Navigationstaste, um eine neue Ausgabe anzufordern."
+  },
   "sol.connect": {
     "description": "Schaltfläche für die Verbindung mit SOL",
     "value": "Verbinden Sie SOL"

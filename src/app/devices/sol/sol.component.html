@@ -1,29 +1,42 @@
-<mat-toolbar style="height: 100px" class="flex flex-row">
-  <div class="flex flex-50 items-center"></div>
-  <div class="flex flex-50 justify-end">
+<mat-card class="sol-overview">
+  <mat-card-header class="sol-overview-header">
+    <mat-card-title>{{ 'deviceDetail.solDescription.value' | translate }}</mat-card-title>
     @if (!deviceConnection() && !isLoading() && !isConnecting() && !isDisconnecting()) {
-      <button mat-flat-button style="margin-right: 16px" (click)="connect()">
+      <button mat-flat-button (click)="connect()">
         <mat-icon>tv_on</mat-icon>{{ 'sol.connect.value' | translate }}
       </button>
     } @else if (isDisconnecting()) {
-      <button mat-flat-button style="margin-right: 16px" disabled>
-        <mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}
-      </button>
+      <button mat-flat-button disabled><mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}</button>
     } @else if (isConnecting() || (deviceState() !== 2 && isLoading())) {
-      <button mat-flat-button style="margin-right: 16px" disabled>
-        <mat-icon>tv_on</mat-icon>{{ 'sol.loading.value' | translate }}
-      </button>
+      <button mat-flat-button disabled><mat-icon>tv_on</mat-icon>{{ 'sol.loading.value' | translate }}</button>
     } @else {
-      <button mat-flat-button style="margin-right: 16px" (click)="disconnect()">
+      <button mat-flat-button (click)="disconnect()">
         <mat-icon>tv_off</mat-icon>{{ 'sol.disconnect.value' | translate }}
       </button>
     }
-  </div>
-</mat-toolbar>
+  </mat-card-header>
+  <mat-card-content>
+    <p id="sol-encoding-guidance" class="sol-encoding-hint">
+      {{ 'sol.encodingSelectionHint.value' | translate }}
+    </p>
+    <mat-form-field class="sol-encoding-field" subscriptSizing="dynamic">
+      <mat-label>{{ 'sol.encoding.value' | translate }}</mat-label>
+      <mat-select
+        aria-describedby="sol-encoding-guidance"
+        [value]="terminalType()"
+        [disabled]="encodingLocked()"
+        (selectionChange)="setTerminalType($event.value)">
+        <mat-option [value]="terminalTypes.PCANSI">PC-ANSI / CP437</mat-option>
+        <mat-option [value]="terminalTypes.VTUTF8">UTF-8</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
 @if (readyToLoadSol()) {
   <amt-sol
+    #sol
     [deviceConnection]="deviceConnection()"
-    (deviceStatus)="deviceStatus($event)"
+    (deviceStatus)="deviceStatus($event, sol)"
     [deviceId]="deviceId()"
     [mpsServer]="mpsServer"
     [authToken]="authToken()">

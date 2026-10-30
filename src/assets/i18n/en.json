@@ -3525,6 +3525,18 @@
     "description": "Error message when SSD password exceeds 64 bytes",
     "value": "SSD password must not exceed 64 bytes"
   },
+  "sol.encoding": {
+    "description": "Label for the SOL character encoding selector",
+    "value": "SOL encoding"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Guidance for selecting SOL encoding while disconnected and redrawing the BIOS screen",
+    "value": "Select encoding before connecting. Changing it requires disconnecting. After changing encoding, Reset To BIOS may be needed to redraw the screen properly."
+  },
+  "sol.connectedHint": {
+    "description": "Notice after connecting when the remote console may need fresh output",
+    "value": "Connected. If the screen is blank, use a navigation key to request fresh output."
+  },
   "sol.connect": {
     "description": "Button for connecting to SOL",
     "value": "Connect SOL"

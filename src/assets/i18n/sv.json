@@ -2617,6 +2617,18 @@
     "description": "Felmeddelande när SSD-lösenordet överskrider 64 bytes",
     "value": "SSD-lösenordet får inte överskrida 64 bytes"
   },
+  "sol.encoding": {
+    "description": "Etikett för väljaren för SOL-teckenkodning",
+    "value": "SOL-kodning"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Vägledning för att välja SOL-kodning när anslutningen är frånkopplad och rita om BIOS-skärmen",
+    "value": "Välj kodning innan du ansluter. För att ändra den måste du koppla från. Efter att kodningen har ändrats kan en omstart till BIOS behövas för att skärmen ska ritas om korrekt."
+  },
+  "sol.connectedHint": {
+    "description": "Meddelande efter anslutning när fjärrkonsolen kan behöva ny utmatning",
+    "value": "Ansluten. Om skärmen är tom använder du en navigeringstangent för att begära ny utmatning."
+  },
   "sol.connect": {
     "description": "Knapp för anslutning till SOL",
     "value": "Anslut SOL"
