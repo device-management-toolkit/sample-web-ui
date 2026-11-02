@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, DestroyRef, OnInit, inject, signal, input, computed } from '@angular/core'
+import { Component, DestroyRef, OnChanges, OnInit, SimpleChanges, inject, signal, input, computed } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
 import { catchError, switchMap } from 'rxjs/operators'
@@ -27,7 +27,20 @@ import { MatInputModule } from '@angular/material/input'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { filter, finalize, forkJoin, Observable, of, EMPTY } from 'rxjs'
+import {
+  filter,
+  finalize,
+  forkJoin,
+  Observable,
+  of,
+  EMPTY,
+  Subscription,
+  timer,
+  exhaustMap,
+  takeUntil,
+  takeWhile,
+  timeout
+} from 'rxjs'
 import { DevicesService } from '../devices.service'
 import {
   AMTFeaturesRequest,
@@ -47,6 +60,9 @@ import { UserConsentService } from '../user-consent.service'
 const CSME_UNCONFIGURE_KEY = 'csmeUnconfigure'
 const SSD_ERASE_KEY = 'secureEraseSsds'
 const SSD_PASSWORD_MAX_BYTES = 64
+const ERASE_STATUS_REQUEST_TIMEOUT_MS = 10 * 1000
+const ERASE_STATUS_POLL_INTERVAL_MS = 5 * 1000
+const ERASE_RESULT_TIMEOUT_MS = 10 * 60 * 1000
 
 @Component({
   selector: 'app-remote-platform-erase',
@@ -67,7 +83,7 @@ const SSD_PASSWORD_MAX_BYTES = 64
     TranslatePipe
   ]
 })
-export class RemotePlatformEraseComponent implements OnInit {
+export class RemotePlatformEraseComponent implements OnChanges, OnInit {
   private readonly devicesService = inject(DevicesService)
   private readonly snackBar = inject(MatSnackBar)
   private readonly destroyRef = inject(DestroyRef)
@@ -82,6 +98,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   public readonly deviceId = input('')
   public deviceLabel = signal('')
   public isLoading = signal(false)
+  public awaitingEraseResult = signal(false)
   public powerState: PowerState = { powerstate: 0 }
   public isPlatformEraseSupported = signal(false)
   public rpe = signal(false)
@@ -100,6 +117,13 @@ export class RemotePlatformEraseComponent implements OnInit {
   public isSsdEncrypted = signal(false)
   public ssdEncryptedControl = this.fb.control<boolean | null>(false)
   public ssdPasswordControl = this.fb.control<string | null>('', [this.validateSsdPasswordBytes.bind(this)])
+  private eraseResultWatcher: Subscription | null = null
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['deviceId'] && !changes['deviceId'].firstChange) {
+      this.cancelEraseResultWatcher()
+    }
+  }
 
   ngOnInit(): void {
     this.isLoading.set(true)
@@ -195,7 +219,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   initiateErase(): void {
-    if (!this.rpe() || !this.hasSelectedCaps()) {
+    if (this.isLoading() || this.awaitingEraseResult() || !this.rpe() || !this.hasSelectedCaps()) {
       return
     }
     // Validate SSD password if encrypted SSD erase is selected
@@ -268,6 +292,7 @@ export class RemotePlatformEraseComponent implements OnInit {
   }
 
   private executeErase(): void {
+    const deviceId = this.deviceId()
     const caps = this.eraseCaps()
     const req: RemoteEraseRequest = {
       secureEraseAllSSDs: caps.some((c, i) => c.key === 'secureEraseSsds' && this.eraseCapsArray.at(i)?.value === true),
@@ -280,7 +305,7 @@ export class RemotePlatformEraseComponent implements OnInit {
     }
     this.isLoading.set(true)
     this.devicesService
-      .setRemoteEraseOptions(this.deviceId(), req)
+      .setRemoteEraseOptions(deviceId, req)
       .pipe(
         finalize(() => this.isLoading.set(false)),
         catchError((err) => {
@@ -293,21 +318,19 @@ export class RemotePlatformEraseComponent implements OnInit {
         next: () => {
           if (req.unconfigureCSME) {
             this.devicesService
-              .sendDeactivate(this.deviceId())
+              .sendDeactivate(deviceId)
               .pipe(catchError(() => EMPTY))
               .subscribe(() => {
                 this.snackBar.open(
-                  this.t('remotePlatformErase.csmeEraseSuccess'),
+                  this.t('remotePlatformErase.eraseSubmitted'),
                   undefined,
                   SnackbarDefaults.defaultSuccess
                 )
                 void this.router.navigate(['/devices'])
               })
           } else {
-            const successMsg = req.secureEraseAllSSDs
-              ? this.t('remotePlatformErase.osEraseSuccess')
-              : this.t('remotePlatformErase.eraseSuccess')
-            this.snackBar.open(successMsg, undefined, SnackbarDefaults.defaultSuccess)
+            if (this.destroyRef.destroyed || deviceId !== this.deviceId()) return
+            this.snackBar.open(this.t('remotePlatformErase.eraseSubmitted'), undefined, SnackbarDefaults.defaultSuccess)
             const payload: AMTFeaturesRequest = {
               userConsent: this.amtFeatures()?.userConsent ?? 'none',
               enableKVM: this.amtFeatures()?.KVM ?? false,
@@ -317,15 +340,71 @@ export class RemotePlatformEraseComponent implements OnInit {
               rpe: true
             }
             this.devicesService
-              .setAmtFeatures(this.deviceId(), payload)
-              .pipe(catchError(() => EMPTY))
+              .setAmtFeatures(deviceId, payload)
+              .pipe(
+                catchError((err) => {
+                  const msg: string = err.error?.message || this.t('remotePlatformErase.updateError')
+                  this.displayError(msg)
+                  return EMPTY
+                })
+              )
               .subscribe()
+            this.watchEraseResult(deviceId, req.secureEraseAllSSDs)
 
             // Preserve selected operations after completion and refresh computed UI state.
             this.onCapChange()
           }
         }
       })
+  }
+
+  private watchEraseResult(deviceId: string, erasedSSDs: boolean): void {
+    let observedPending = false
+    let confirmed = false
+    this.awaitingEraseResult.set(true)
+    this.eraseResultWatcher = timer(0, ERASE_STATUS_POLL_INTERVAL_MS)
+      .pipe(
+        exhaustMap(() =>
+          this.devicesService.getRemoteEraseStatus(deviceId).pipe(
+            timeout(ERASE_STATUS_REQUEST_TIMEOUT_MS),
+            catchError(() => of({ status: 'unknown', message: '' }))
+          )
+        ),
+        takeUntil(timer(ERASE_RESULT_TIMEOUT_MS)),
+        takeWhile((result) => {
+          observedPending ||= result.status === 'pending'
+          return !observedPending || (result.status !== 'succeeded' && result.status !== 'failed')
+        }, true),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.awaitingEraseResult.set(false))
+      )
+      .subscribe({
+        next: (result) => {
+          if (!observedPending) return
+          if (result.status === 'failed') {
+            confirmed = true
+            this.displayError(result.message)
+          } else if (result.status === 'succeeded') {
+            confirmed = true
+            this.snackBar.open(
+              this.t(erasedSSDs ? 'remotePlatformErase.osEraseSuccess' : 'remotePlatformErase.eraseCompleted'),
+              undefined,
+              SnackbarDefaults.defaultSuccess
+            )
+          }
+        },
+        complete: () => {
+          if (!confirmed && !this.destroyRef.destroyed) {
+            this.snackBar.open(this.t('remotePlatformErase.eraseUnconfirmed'), undefined, SnackbarDefaults.defaultWarn)
+          }
+        }
+      })
+  }
+
+  private cancelEraseResultWatcher(): void {
+    const watcher = this.eraseResultWatcher
+    this.eraseResultWatcher = null
+    watcher?.unsubscribe()
   }
 
   private updateCapControlStates(): void {
@@ -373,7 +452,12 @@ export class RemotePlatformEraseComponent implements OnInit {
     }
     const byteLength = new TextEncoder().encode(value).length
     if (byteLength > SSD_PASSWORD_MAX_BYTES) {
-      return { ssdPasswordTooLong: { maxBytes: SSD_PASSWORD_MAX_BYTES, actualBytes: byteLength } }
+      return {
+        ssdPasswordTooLong: {
+          maxBytes: SSD_PASSWORD_MAX_BYTES,
+          actualBytes: byteLength
+        }
+      }
     }
     return null
   }

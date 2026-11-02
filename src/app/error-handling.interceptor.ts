@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
 import { catchError, of, throwError } from 'rxjs'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+
+// Polling requests set this to report transient gateway timeouts to the caller instead of notifying the user.
+export const SUPPRESS_TRANSIENT_ERRORS = new HttpContextToken<boolean>(() => false)
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   const authService = inject(AuthService)
@@ -25,6 +28,8 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
           dialog.open(DialogContentComponent, {
             data: { name: translate.instant('error.itemModified.value') }
           })
+        } else if (error.status === 504 && request.context.get(SUPPRESS_TRANSIENT_ERRORS)) {
+          return throwError(() => error)
         } else if (error.status === 504) {
           snackbar.open(
             translate.instant('error.deviceNotResponding.value'),

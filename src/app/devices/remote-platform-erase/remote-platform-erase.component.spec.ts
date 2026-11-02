@@ -3,20 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RemotePlatformEraseComponent } from './remote-platform-erase.component'
 import { DevicesService } from '../devices.service'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { of, throwError } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 import { provideTranslateService } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from '../../../models/models'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { UserConsentService } from '../user-consent.service'
+import { environment } from '../../../environments/environment'
+import SnackbarDefaults from '../../shared/config/snackBarDefault'
 
 // Temporary set to 3 until CSME unconfigure is supported in the UI. The 4th capability is hidden in the template and not tested here.
 const VISIBLE_PLATFORM_ERASE_CAPABILITIES = 3 //PLATFORM_ERASE_CAPABILITIES.filter((cap) => cap.key !== 'csmeUnconfigure')
@@ -57,6 +59,7 @@ describe('RemotePlatformEraseComponent', () => {
       'setAmtFeatures',
       'getDevice',
       'getRemoteEraseCapabilities',
+      'getRemoteEraseStatus',
       'setRemoteEraseOptions',
       'sendDeactivate'
     ])
@@ -81,6 +84,7 @@ describe('RemotePlatformEraseComponent', () => {
     devicesServiceSpy.featuresChanges.mockReturnValue(of(null))
     devicesServiceSpy.setAmtFeatures.mockReturnValue(of({ ...mockAMTFeatures }))
     devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(of({}))
+    devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
     devicesServiceSpy.sendDeactivate.mockReturnValue(of({}))
 
     await TestBed.configureTestingModule({
@@ -98,6 +102,191 @@ describe('RemotePlatformEraseComponent', () => {
     fixture = TestBed.createComponent(RemotePlatformEraseComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+  })
+
+  describe('BIOS erase results', () => {
+    const originalCloud = environment.cloud
+
+    beforeEach(() => {
+      vi.useFakeTimers()
+      environment.cloud = false
+      component.rpe.set(true)
+      component.eraseCapControl(0).setValue(true)
+      component.onCapChange()
+      matDialogSpy.open.mockReturnValue({ afterClosed: () => of(true) } as any)
+    })
+
+    afterEach(() => {
+      fixture.destroy()
+      environment.cloud = originalCloud
+      vi.useRealTimers()
+    })
+
+    it.each([
+      { cloud: true, status: 'failed' as const, message: 'BIOS erase failed: drive password/authentication failure.' },
+      { cloud: true, status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' },
+      { cloud: false, status: 'failed' as const, message: 'BIOS erase failed: drive password/authentication failure.' },
+      { cloud: false, status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' }
+    ])(
+      'should show a fresh $status result only after pending when cloud=$cloud',
+      async ({ cloud, status, message }) => {
+        environment.cloud = cloud
+        devicesServiceSpy.getRemoteEraseStatus
+          .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+          .mockReturnValue(of({ status, message }))
+        component.initiateErase()
+        await vi.advanceTimersByTimeAsync(0)
+        expect(component.awaitingEraseResult()).toBe(true)
+        expect(snackBarSpy.open).not.toHaveBeenCalledWith(message, undefined, expect.anything())
+        await vi.advanceTimersByTimeAsync(5000)
+        expect(snackBarSpy.open).toHaveBeenLastCalledWith(message, undefined, expect.anything())
+        expect(component.awaitingEraseResult()).toBe(false)
+      }
+    )
+
+    it.each([
+      'succeeded',
+      'failed',
+      'unknown'
+    ] as const)('should report a stale %s result as a warning after the extended timeout', async (status) => {
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status, message: 'stale result' }))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(300000)
+      expect(component.awaitingEraseResult()).toBe(true)
+      expect(snackBarSpy.open).not.toHaveBeenCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        expect.anything()
+      )
+      await vi.advanceTimersByTimeAsync(600000)
+      expect(snackBarSpy.open).not.toHaveBeenCalledWith('stale result', undefined, expect.anything())
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+      expect(component.awaitingEraseResult()).toBe(false)
+    })
+
+    it('should report an unreachable BIOS as a warning after the extended timeout', async () => {
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(throwError(() => new Error('offline')))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(600000)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+    })
+
+    it('should silently stop polling the submitted device when the input changes', async () => {
+      fixture.componentRef.setInput('deviceId', 'device-a')
+      fixture.detectChanges()
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+        .mockReturnValue(of({ status: 'succeeded', message: 'stale result for device-b' }))
+
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(0)
+
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('device-a', expect.any(Object))
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledExactlyOnceWith('device-a')
+      expect(component.awaitingEraseResult()).toBe(true)
+
+      snackBarSpy.open.mockClear()
+      fixture.componentRef.setInput('deviceId', 'device-b')
+      fixture.detectChanges()
+      await vi.advanceTimersByTimeAsync(5000)
+
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledExactlyOnceWith('device-a')
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(snackBarSpy.open).not.toHaveBeenCalled()
+    })
+
+    it('should not start polling when the submission resolves after the input changed', async () => {
+      const submission = new Subject<object>()
+      fixture.componentRef.setInput('deviceId', 'device-a')
+      fixture.detectChanges()
+      devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(submission)
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+
+      component.initiateErase()
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('device-a', expect.any(Object))
+
+      fixture.componentRef.setInput('deviceId', 'device-b')
+      fixture.detectChanges()
+      snackBarSpy.open.mockClear()
+      submission.next({})
+      submission.complete()
+      await vi.advanceTimersByTimeAsync(300000)
+
+      expect(devicesServiceSpy.getRemoteEraseStatus).not.toHaveBeenCalled()
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(component.isLoading()).toBe(false)
+      expect(snackBarSpy.open).not.toHaveBeenCalled()
+    })
+
+    it('should not notify or start polling when the submission resolves after destruction', async () => {
+      const submission = new Subject<object>()
+      devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(submission)
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+
+      component.initiateErase()
+      fixture.destroy()
+      snackBarSpy.open.mockClear()
+      submission.next({})
+      submission.complete()
+      await vi.advanceTimersByTimeAsync(300000)
+
+      expect(devicesServiceSpy.getRemoteEraseStatus).not.toHaveBeenCalled()
+      expect(snackBarSpy.open).not.toHaveBeenCalled()
+    })
+
+    it.each([
+      {
+        name: 'BIOS restore only',
+        ssd: false,
+        expected: { secureEraseAllSSDs: false, restoreBIOSToEOM: true },
+        message: 'remotePlatformErase.eraseCompleted.value'
+      },
+      {
+        name: 'SSD erase with BIOS restore',
+        ssd: true,
+        expected: { secureEraseAllSSDs: true, restoreBIOSToEOM: true },
+        message: 'remotePlatformErase.osEraseSuccess.value'
+      }
+    ])('should poll and report the matching success message for $name', async ({ ssd, expected, message }) => {
+      component.eraseCapControl(0).setValue(ssd)
+      component.eraseCapControl(2).setValue(true)
+      component.onCapChange()
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+        .mockReturnValue(of({ status: 'succeeded', message: '' }))
+
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(5000)
+
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith(
+        '',
+        expect.objectContaining({ ...expected, tpmClear: false, unconfigureCSME: false })
+      )
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(2)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(message, undefined, expect.anything())
+      expect(component.awaitingEraseResult()).toBe(false)
+    })
+
+    it('should prevent duplicate erases and stop checking when destroyed', async () => {
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+      component.initiateErase()
+      component.initiateErase()
+      expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledTimes(1)
+      await vi.advanceTimersByTimeAsync(0)
+      fixture.destroy()
+      snackBarSpy.open.mockClear()
+      await vi.advanceTimersByTimeAsync(300000)
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(1)
+      expect(snackBarSpy.open).not.toHaveBeenCalled()
+    })
   })
 
   it('should create', () => {
@@ -147,7 +336,7 @@ describe('RemotePlatformEraseComponent', () => {
     expect(snackBarSpy.open).toHaveBeenCalledWith('AMT device unreachable', undefined, expect.any(Object))
   })
 
-  it('should show OS erase success message when secureEraseAllSSDs is selected', () => {
+  it('should report submission, not completion, when secureEraseAllSSDs is selected', () => {
     component.eraseCaps.set([
       { key: 'secureEraseSsds', supported: true },
       { key: 'tpmClear', supported: false },
@@ -165,7 +354,7 @@ describe('RemotePlatformEraseComponent', () => {
     component.initiateErase()
 
     expect(snackBarSpy.open).toHaveBeenCalledWith(
-      'remotePlatformErase.osEraseSuccess.value',
+      'remotePlatformErase.eraseSubmitted.value',
       undefined,
       expect.anything()
     )
@@ -538,6 +727,15 @@ describe('RemotePlatformEraseComponent', () => {
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalled()
     })
+
+    it.each([true, false])('should preserve OCR setting %s after erase submission', (ocr) => {
+      component.amtFeatures.set({ ...mockAMTFeatures, ocr, rpe: true })
+      devicesServiceSpy.setAmtFeatures.mockClear()
+
+      component.initiateErase()
+
+      expect(devicesServiceSpy.setAmtFeatures).toHaveBeenCalledWith('', expect.objectContaining({ ocr, rpe: true }))
+    })
   })
 
   describe('CSME exclusivity', () => {
@@ -878,24 +1076,20 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   describe('SSD Password Validation', () => {
-    it('should validate SSD password is within 64-byte limit', () => {
+    it('should validate SSD password is within the 64-byte limit', () => {
       const validPassword = 'password123'
       component.ssdPasswordControl.setValue(validPassword)
       expect(component.ssdPasswordControl.valid).toBe(true)
     })
 
     it('should reject SSD password exceeding 64 bytes', () => {
-      // Create a password that is 65 bytes (65 ASCII characters)
-      const tooLongPassword = 'a'.repeat(65)
-      component.ssdPasswordControl.setValue(tooLongPassword)
+      component.ssdPasswordControl.setValue('a'.repeat(65))
       expect(component.ssdPasswordControl.valid).toBe(false)
       expect(component.ssdPasswordControl.errors?.['ssdPasswordTooLong']).toBeDefined()
     })
 
-    it('should allow SSD password exactly 64 bytes', () => {
-      // Exactly 64 bytes
-      const maxPassword = 'a'.repeat(64)
-      component.ssdPasswordControl.setValue(maxPassword)
+    it('should allow SSD password of exactly 64 bytes', () => {
+      component.ssdPasswordControl.setValue('a'.repeat(64))
       expect(component.ssdPasswordControl.valid).toBe(true)
       expect(component.ssdPasswordControl.errors).toBeNull()
     })
@@ -919,6 +1113,15 @@ describe('RemotePlatformEraseComponent', () => {
       const multibytePassword = '中'.repeat(21)
       component.ssdPasswordControl.setValue(multibytePassword)
       expect(component.ssdPasswordControl.valid).toBe(true)
+    })
+
+    it('should allow more than 32 characters when within 64 bytes and reject beyond', () => {
+      component.ssdPasswordControl.setValue('\u00e9'.repeat(32))
+      expect(component.ssdPasswordControl.valid).toBe(true)
+      component.ssdPasswordControl.setValue('a'.repeat(40))
+      expect(component.ssdPasswordControl.valid).toBe(true)
+      component.ssdPasswordControl.setValue('\u00e9'.repeat(33))
+      expect(component.ssdPasswordControl.valid).toBe(false)
     })
 
     it('initiateErase should prevent submission if SSD password exceeds 64 bytes', () => {
@@ -947,7 +1150,7 @@ describe('RemotePlatformEraseComponent', () => {
       component.selectedCapsCount.set(1)
       component.isSsdSelected.set(true)
       component.isSsdEncrypted.set(true)
-      component.ssdPasswordControl.setValue('a'.repeat(64))
+      component.ssdPasswordControl.setValue('a'.repeat(32))
 
       component.initiateErase()
 

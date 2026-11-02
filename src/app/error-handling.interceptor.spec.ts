@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createSpyObj, type SpyObj } from '../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http'
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
-import { errorHandlingInterceptor } from './error-handling.interceptor'
+import { errorHandlingInterceptor, SUPPRESS_TRANSIENT_ERRORS } from './error-handling.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { provideTranslateService } from '@ngx-translate/core'
 
@@ -96,6 +96,29 @@ describe('ErrorHandlingInterceptor', () => {
     req.flush({}, { status: 504, statusText: 'Gateway Timeout' })
 
     expect(snackbar.open).toHaveBeenCalledExactlyOnceWith(expect.any(String), expect.any(String), { duration: 5000 })
+  })
+
+  it('should rethrow 504 without a snackbar when transient errors are suppressed', () => {
+    const onError = vi.fn()
+    const context = new HttpContext().set(SUPPRESS_TRANSIENT_ERRORS, true)
+    httpClient.get('/test', { context }).subscribe({ error: onError })
+
+    httpMock.expectOne('/test').flush({}, { status: 504, statusText: 'Gateway Timeout' })
+
+    expect(snackbar.open).not.toHaveBeenCalled()
+    expect(onError).toHaveBeenCalledWith(expect.objectContaining({ status: 504 }))
+  })
+
+  it('should still handle 401 when transient errors are suppressed', () => {
+    const onError = vi.fn()
+    const context = new HttpContext().set(SUPPRESS_TRANSIENT_ERRORS, true)
+    httpClient.get('/test', { context }).subscribe({ error: onError })
+
+    httpMock.expectOne('/test').flush({ exp: 'token expired' }, { status: 401, statusText: 'Unauthorized' })
+
+    expect(authService.logout).toHaveBeenCalled()
+    expect(dialog.open).toHaveBeenCalled()
+    expect(onError).toHaveBeenCalled()
   })
 
   it('should rethrow other errors', () => {
