@@ -21,6 +21,29 @@ The Sample Web UI provides a reference UI solution to help demonstrate the core 
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### Local SOL handshake POC
+
+The SOL toolbar offers PC-ANSI / CP437 (default) and UTF-8. Select a mode
+before connecting to decode the first screen correctly. The choice is applied
+at connection startup and retained across reconnects while this page remains
+open; it is not saved across page reloads or navigation. You can also change it
+while connected without reconnecting. This discards partial decoder input,
+but does not redraw existing output: navigate to a different BIOS tab and back
+to request fresh output. No automatic encoding detection is performed.
+
+The local toolkit tarball supplies `AMTRedirector.onSolOemCapabilities`.
+The SOL component retains its raw OEM payload diagnostic in `solOemDiagnostic()`
+after connecting and after disconnect, but does not print it on the SOL page.
+A new connection attempt clears the previous result.
+This diagnostic does not interpret the payload or automatically change decoding;
+the field layout and meaning must be verified before enabling auto-selection.
+It does not require resetting the device into BIOS just to inspect the handshake.
+If the diagnostic remains at "Waiting for SOL handshake", no complete successful
+Start Redirection Session Reply was observed by the diagnostic.
+
+The tarball is a local POC dependency, not a published release. Keep it available
+when restoring dependencies; Docker builds must copy it before `npm ci`.
+
 ### Backend CORS settings for the session cookie
 
 The two builds carry the session differently. The cloud build (`npm start`) authenticates against MPS and RPS with an `Authorization: Bearer` header, because Kong verifies the JWT itself and reads it only from that header. It sends no credentials, so nothing below applies to it.

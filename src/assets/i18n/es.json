@@ -2753,6 +2753,18 @@
     "description": "Mensaje de error cuando la contraseña SSD excede 64 bytes",
     "value": "La contraseña SSD no debe exceder 64 bytes"
   },
+  "sol.encoding": {
+    "description": "Etiqueta del selector de codificación de caracteres de SOL",
+    "value": "Codificación de SOL"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Orientación para seleccionar la codificación SOL sin conexión y volver a dibujar la pantalla del BIOS",
+    "value": "Seleccione la codificación antes de conectarse. Para cambiarla, debe desconectarse. Después de cambiar la codificación, puede ser necesario reiniciar en el BIOS para que la pantalla se vuelva a dibujar correctamente."
+  },
+  "sol.connectedHint": {
+    "description": "Aviso tras la conexión cuando la consola remota puede necesitar una nueva salida",
+    "value": "Conectado. Si la pantalla está en blanco, utilice una tecla de navegación para solicitar una nueva salida."
+  },
   "sol.connect": {
     "description": "Botón para conectarse a SOL.",
     "value": "Conecte SOL"

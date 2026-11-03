@@ -2757,6 +2757,18 @@
     "description": "Foutbericht wanneer SSD-wachtwoord meer dan 64 bytes is",
     "value": "SSD-wachtwoord mag niet meer dan 64 bytes zijn"
   },
+  "sol.encoding": {
+    "description": "Label voor de selectie van de SOL-tekencodering",
+    "value": "SOL-codering"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Uitleg over het kiezen van de SOL-codering zonder verbinding en het hertekenen van het BIOS-scherm",
+    "value": "Selecteer de codering voordat u verbinding maakt. U moet de verbinding verbreken om deze te wijzigen. Na het wijzigen van de codering kan een herstart naar het BIOS nodig zijn om het scherm correct opnieuw op te bouwen."
+  },
+  "sol.connectedHint": {
+    "description": "Melding na het verbinden wanneer de externe console mogelijk nieuwe uitvoer nodig heeft",
+    "value": "Verbonden. Als het scherm leeg is, gebruikt u een navigatietoets om nieuwe uitvoer op te vragen."
+  },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",
     "value": "Connect SOL"

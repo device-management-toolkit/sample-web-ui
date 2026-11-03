@@ -2753,6 +2753,18 @@
     "description": "Virheilmoitus kun SSD-salasana ylittää 64 tavua",
     "value": "SSD-salasana ei saa ylittää 64 tavua"
   },
+  "sol.encoding": {
+    "description": "SOL-merkistökoodauksen valitsimen otsikko",
+    "value": "SOL-merkistökoodaus"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Ohje SOL-koodauksen valintaan ilman yhteyttä ja BIOS-näytön uudelleenpiirtoon",
+    "value": "Valitse koodaus ennen yhdistämistä. Sen vaihtaminen edellyttää yhteyden katkaisemista. Koodauksen vaihtamisen jälkeen saatetaan tarvita uudelleenkäynnistys BIOSiin, jotta näyttö piirtyy uudelleen oikein."
+  },
+  "sol.connectedHint": {
+    "description": "Ilmoitus yhteyden muodostamisen jälkeen, kun etäkonsoli saattaa tarvita uutta tulostetta",
+    "value": "Yhdistetty. Jos näyttö on tyhjä, pyydä uutta tulostetta navigointinäppäimellä."
+  },
   "sol.connect": {
     "description": "Painike SOL-yhteyden muodostamiseksi",
     "value": "Yhdistä SOL"

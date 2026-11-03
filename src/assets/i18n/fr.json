@@ -2757,6 +2757,18 @@
     "description": "Message d'erreur lorsque le mot de passe SSD dépasse 64 bytes",
     "value": "Le mot de passe SSD ne doit pas dépasser 64 bytes"
   },
+  "sol.encoding": {
+    "description": "Libellé du sélecteur d’encodage des caractères SOL",
+    "value": "Encodage SOL"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Conseils pour sélectionner l’encodage SOL hors connexion et réafficher l’écran du BIOS",
+    "value": "Sélectionnez l’encodage avant la connexion. Sa modification nécessite une déconnexion. Après un changement d’encodage, un redémarrage dans le BIOS peut être nécessaire pour réafficher correctement l’écran."
+  },
+  "sol.connectedHint": {
+    "description": "Avis après la connexion lorsque la console distante peut nécessiter un nouvel affichage",
+    "value": "Connecté. Si l’écran est vide, utilisez une touche de navigation pour demander un nouvel affichage."
+  },
   "sol.connect": {
     "description": "Bouton pour se connecter à SOL",
     "value": "Connectez SOL"
