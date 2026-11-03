@@ -12,7 +12,7 @@ import stats from '../../fixtures/api/stats'
 describe('Test device details page', () => {
   beforeEach('', () => {
     cy.setup()
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: devices.getAll.success.response
     }).as('get-devices')

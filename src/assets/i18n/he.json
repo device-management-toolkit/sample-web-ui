@@ -1893,8 +1893,12 @@
     "value": "לִשְׁלוֹחַ"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "הודעה המוצגת כאשר AMT סוגר את הפגישה של KVM",
-    "value": "הפגישה של KVM נסגרה על ידי AMT"
+    "description": "הודעה המוצגת כאשר חיבור של הפעלת KVM פעילה מתנתק באופן בלתי צפוי",
+    "value": "החיבור להפעלת KVM נותק"
+  },
+  "kvm.connectionFailed": {
+    "description": "הודעה המוצגת כאשר חיבור KVM נכשל לפני יצירת הפעלה",
+    "value": "האימות נכשל - לא ניתן ליצור חיבור KVM."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "הודעת סטאטוס המוצגת בעת אחזור תכונות AMT",

@@ -1893,8 +1893,12 @@
     "value": "送信"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "AMTがKVMセッションを閉じたときに表示されるメッセージ",
-    "value": "KVMセッションはAMTによって閉じられました"
+    "description": "確立済みのKVMセッションが予期せず切断されたときに表示されるメッセージ",
+    "value": "KVMセッションが切断されました"
+  },
+  "kvm.connectionFailed": {
+    "description": "KVMセッションの確立前に接続が失敗したときに表示されるメッセージ",
+    "value": "認証に失敗しました - KVM接続を確立できません。"
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "AMT機能の取得中に表示されるステータスメッセージ",

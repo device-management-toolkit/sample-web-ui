@@ -106,6 +106,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   private timeInterval!: any
   private initStartTime = 0
   private displaysLoaded = false
+  private kvmSessionConnected = false
   // If init() completes faster than this, we assume no blocking dialog was
   // shown and the token fetched in ngOnInit is still valid.
   private readonly REDIR_TOKEN_REFRESH_THRESHOLD_MS = environment.redirTokenRefreshThresholdMs ?? 5_000
@@ -358,6 +359,7 @@ export class KvmComponent implements OnInit, OnDestroy {
 
   connect(): void {
     this.isDisconnecting = false
+    this.kvmSessionConnected = false
     this.deviceState.set(-1)
     this.readyToLoadKvm.set(false)
     this.deviceKVMConnection.set(false)
@@ -567,6 +569,7 @@ export class KvmComponent implements OnInit, OnDestroy {
   deviceKVMStatus = (event: any): void => {
     this.deviceState.set(event)
     if (event === 2) {
+      this.kvmSessionConnected = true
       this.isLoading.set(false)
       this.loadingStatus.set('')
       // Load the display list now that the websocket is up
@@ -578,10 +581,12 @@ export class KvmComponent implements OnInit, OnDestroy {
       this.isLoading.set(false)
       this.loadingStatus.set('')
       if (!this.isDisconnecting && !this.isEncodingChange) {
-        // AMT dropped the connection - reset so button shows "Connect KVM"
+        // A failed handshake also reports disconnected; do not attribute it to AMT.
         this.deviceKVMConnection.set(false)
-        this.displayWarning(this.translate.instant('kvm.sessionClosedByDevice.value'))
+        const messageKey = this.kvmSessionConnected ? 'kvm.sessionClosedByDevice.value' : 'kvm.connectionFailed.value'
+        this.displayWarning(this.translate.instant(messageKey))
       }
+      this.kvmSessionConnected = false
       this.isDisconnecting = false
     }
 

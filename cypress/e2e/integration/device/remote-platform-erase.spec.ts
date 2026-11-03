@@ -16,7 +16,7 @@ const navigateToRemotePlatformErase = (
     body: featuresBody
   }).as('get-features')
 
-  cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+  cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
     statusCode: httpCodes.SUCCESS,
     body: eventLogs.devices.success.response
   }).as('get-devices')

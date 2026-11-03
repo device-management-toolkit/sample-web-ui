@@ -2378,8 +2378,12 @@
     "value": "Send"
   },
   "kvm.sessionClosedByDevice": {
-    "description": "Message shown when AMT closes the KVM session (e.g. idle timeout)",
-    "value": "KVM session was closed by AMT"
+    "description": "Message shown when an established KVM session closes unexpectedly",
+    "value": "KVM session disconnected"
+  },
+  "kvm.connectionFailed": {
+    "description": "Message shown when a KVM connection fails before a session is established",
+    "value": "Authentication failed - Unable to establish a KVM connection."
   },
   "kvm.status.checkingAMTFeatures": {
     "description": "Status message shown while retrieving AMT features",
