@@ -1,3 +1,10 @@
+# [4.3.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.2.1...v4.3.0) (2026-11-04)
+
+
+### Features
+
+* **devices:** show discovered devices in a read-only side pane ([#3670](https://github.com/device-management-toolkit/sample-web-ui/issues/3670)) ([d37499e](https://github.com/device-management-toolkit/sample-web-ui/commit/d37499e164dfef5458655e276db89f250fd58960)), closes [#3612](https://github.com/device-management-toolkit/sample-web-ui/issues/3612)
+
 ## [4.2.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.2.0...v4.2.1) (2026-10-26)
 
 # [4.2.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.1.0...v4.2.0) (2026-10-23)
