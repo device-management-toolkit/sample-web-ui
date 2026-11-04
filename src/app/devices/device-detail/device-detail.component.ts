@@ -12,7 +12,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
-import { catchError, distinctUntilChanged, map, of, Subject, switchMap, takeUntil } from 'rxjs'
+import { catchError, distinctUntilChanged, filter, map, of, Subject, switchMap, takeUntil } from 'rxjs'
 import { getSkuFromAmtVersion, isISMSku } from '../sku'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
@@ -191,31 +191,12 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        map((params) => params.id),
-        distinctUntilChanged(),
-        switchMap((id) => {
-          this.isRpeSupported.set(null)
-          return this.devicesService.getAMTFeaturesCached(id).pipe(
-            catchError((err) => {
-              const msg: string = err.error?.message || this.translate.instant('general.errorAMTFeatures.value')
-              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return of(null)
-            })
-          )
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((features) => {
-        const isSupported = features?.rpeSupported === true
-        this.isRpeSupported.set(isSupported)
-        this.syncCurrentViewForRpe()
-      })
-
-    this.activatedRoute.params
-      .pipe(
         takeUntil(this.destroy$),
         switchMap((params) => {
           const deviceChanged = params.id !== this.deviceId()
+          if (deviceChanged) {
+            this.isRpeSupported.set(null)
+          }
           this.deviceId.set(params.id)
           this.currentView.set(params.component || 'general')
           this.syncCurrentViewForRpe()
@@ -254,6 +235,39 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         error: () => {
           this.isLoading.set(false)
         }
+      })
+
+    this.activatedRoute.params
+      .pipe(
+        map((params) => params.id),
+        distinctUntilChanged(),
+        switchMap((id) => this.devicesService.featuresChanges(id).pipe(filter(Boolean))),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((features) => {
+        this.isRpeSupported.set(features.rpeSupported === true)
+        this.syncCurrentViewForRpe()
+      })
+
+    this.activatedRoute.params
+      .pipe(
+        map((params) => params.id),
+        distinctUntilChanged(),
+        switchMap((id) =>
+          this.devicesService.getAMTFeaturesCached(id).pipe(
+            catchError((err) => {
+              const msg: string = err.error?.message || this.translate.instant('general.errorAMTFeatures.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+              return of(null)
+            })
+          )
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((features) => {
+        const isSupported = features?.rpeSupported === true
+        this.isRpeSupported.set(isSupported)
+        this.syncCurrentViewForRpe()
       })
   }
 
