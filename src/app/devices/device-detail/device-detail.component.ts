@@ -265,9 +265,13 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((features) => {
-        const isSupported = features?.rpeSupported === true
-        this.isRpeSupported.set(isSupported)
-        this.syncCurrentViewForRpe()
+        if (features) {
+          this.isRpeSupported.set(features.rpeSupported === true)
+          this.syncCurrentViewForRpe()
+        } else if (this.isRpeSupported() !== true) {
+          this.isRpeSupported.set(false)
+          this.syncCurrentViewForRpe()
+        }
       })
   }
 

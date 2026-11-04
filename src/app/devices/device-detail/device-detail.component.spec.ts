@@ -188,6 +188,20 @@ describe('DeviceDetailComponent', () => {
     )
   })
 
+  it('preserves confirmed RPE support when the initial feature fetch fails', () => {
+    devicesServiceSpy.featuresChanges.mockReturnValue(of({ rpeSupported: true } as any))
+    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(throwError(() => new Error('features unavailable')))
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
+    vi.spyOn(snackBar, 'open').mockImplementation((() => undefined) as any)
+    routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
+    fixture.detectChanges()
+
+    expect(component.isRpeSupported()).toBe(true)
+    expect(component.currentView()).toBe('remote-platform-erase')
+    expect(component.categories().map((c) => c.component)).toContain('remote-platform-erase')
+    expect(navigateSpy).not.toHaveBeenCalled()
+  })
+
   it('redirects to the new device General page when switching from supported to unsupported RPE', () => {
     devicesServiceSpy.getAMTFeaturesCached.mockImplementation((id: string) =>
       of({ rpeSupported: id === 'device-a' } as any)
