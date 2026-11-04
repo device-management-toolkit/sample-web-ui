@@ -78,9 +78,11 @@ describeWhenNotCloud('Remote Platform Erase', () => {
   it('should hide RPE navigation and checkbox when remote erase is unsupported', () => {
     navigateToDeviceDetail(eventLogs.remotePlatformErase.notSupported.response)
     cy.wait('@get-features')
+    cy.get('app-general').should('exist')
+    cy.get('app-general mat-progress-bar').should('not.exist')
 
     cy.get('.mat-mdc-list-item-title').contains('Remote Platform Erase').should('not.exist')
-    cy.get('[data-cy="remoteEraseCheckbox"]').should('not.exist')
+    cy.get('app-general mat-checkbox[formControlName="rpe"]').should('not.exist')
   })
 
   it('should show checkbox when supported but not enabled', () => {
