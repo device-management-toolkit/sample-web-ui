@@ -3486,10 +3486,6 @@
     "description": "Mensaje de error al recuperar el estado de alimentación durante el borrado remoto",
     "value": "Error al recuperar el estado de alimentación"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Mensaje que se muestra cuando el borrado remoto de plataforma no es compatible con el dispositivo",
-    "value": "El borrado remoto de plataforma no es compatible"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Título de la tarjeta de capacidades de borrado",
     "value": "Capacidades de borrado"
@@ -3562,10 +3558,6 @@
     "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
     "value": "{{selected}} de 3 operaciones seleccionadas",
     "_value_old": "{{selected}} de {{total}} operaciones seleccionadas"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",
-    "value": "No compatible con este dispositivo"
   },
   "downloadRpc.title": {
     "description": "Título de la página Descargar RPC",

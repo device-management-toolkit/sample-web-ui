@@ -3490,10 +3490,6 @@
     "description": "Message d'erreur lors de la récupération de l'état d'alimentation pendant l'effacement distant",
     "value": "Erreur lors de la récupération de l'état d'alimentation"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Message affiché quand l'effacement distant de la plateforme n'est pas pris en charge",
-    "value": "L'effacement distant de la plateforme n'est pas pris en charge"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Titre de la carte des capacités d'effacement",
     "value": "Capacités d'effacement"
@@ -3566,10 +3562,6 @@
     "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",
     "value": "{{selected}} opération(s) sélectionnée(s) sur 3",
     "_value_old": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Légende affichée sur une ligne de capacité lorsque l'appareil ne la prend pas en charge",
-    "value": "Non pris en charge sur cet appareil"
   },
   "downloadRpc.title": {
     "description": "Titre de la page Télécharger RPC",

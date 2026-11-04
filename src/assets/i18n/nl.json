@@ -3490,10 +3490,6 @@
     "description": "Foutbericht bij het ophalen van de stroomstatus tijdens extern wissen",
     "value": "Fout bij het ophalen van de stroomstatus"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Bericht dat wordt weergegeven wanneer extern wissen van het platform niet wordt ondersteund",
-    "value": "Extern wissen van het platform wordt niet ondersteund"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Titel van de kaart met wissmogelijkheden",
     "value": "Wissmogelijkheden"
@@ -3566,10 +3562,6 @@
     "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
     "value": "{{selected}} van 3 bewerkingen geselecteerd",
     "_value_old": "{{selected}} van {{total}} bewerkingen geselecteerd"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
-    "value": "Niet ondersteund op dit apparaat"
   },
   "downloadRpc.title": {
     "description": "Paginatitel RPC downloaden",

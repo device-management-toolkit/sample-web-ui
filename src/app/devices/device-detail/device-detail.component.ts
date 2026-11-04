@@ -12,7 +12,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav'
 import { DeviceToolbarComponent } from '../device-toolbar/device-toolbar.component'
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router'
-import { catchError, of, Subject, switchMap, takeUntil } from 'rxjs'
+import { catchError, distinctUntilChanged, map, of, Subject, switchMap, takeUntil } from 'rxjs'
 import { getSkuFromAmtVersion, isISMSku } from '../sku'
 import { ExplorerComponent } from '../explorer/explorer.component'
 import { AlarmsComponent } from '../alarms/alarms.component'
@@ -161,6 +161,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     const filtered = base
       .filter((c) => !(c.component === 'kvm' && (!this.isDeviceTypeKnown() || this.isISMSystem())))
       .filter((c) => !(c.component === 'ider' && (!this.isDeviceTypeKnown() || !this.isISMSystem())))
+      .filter((c) => !(c.component === 'remote-platform-erase' && this.isRpeSupported() !== true))
 
     if (!this.isCloudMode) {
       filtered.push(
@@ -184,9 +185,32 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
   public currentView = signal('general')
   public isLoading = signal(false)
+  public isRpeSupported = signal<boolean | null>(null)
   isCollapsed = signal(false)
 
   ngOnInit(): void {
+    this.activatedRoute.params
+      .pipe(
+        map((params) => params.id),
+        distinctUntilChanged(),
+        switchMap((id) => {
+          this.isRpeSupported.set(null)
+          return this.devicesService.getAMTFeaturesCached(id).pipe(
+            catchError((err) => {
+              const msg: string = err.error?.message || this.translate.instant('general.errorAMTFeatures.value')
+              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
+              return of(null)
+            })
+          )
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((features) => {
+        const isSupported = features?.rpeSupported === true
+        this.isRpeSupported.set(isSupported)
+        this.syncCurrentViewForRpe()
+      })
+
     this.activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
@@ -194,6 +218,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
           const deviceChanged = params.id !== this.deviceId()
           this.deviceId.set(params.id)
           this.currentView.set(params.component || 'general')
+          this.syncCurrentViewForRpe()
 
           if (!deviceChanged) {
             this.syncCurrentViewForSku(this.isISMSystem(), this.isDeviceTypeKnown())
@@ -267,6 +292,20 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
       ],
       { replaceUrl: true }
     )
+  }
+
+  private syncCurrentViewForRpe(): void {
+    if (this.isRpeSupported() === false && this.currentView() === 'remote-platform-erase') {
+      this.currentView.set('general')
+      this.router.navigate(
+        [
+          '/devices',
+          this.deviceId(),
+          'general'
+        ],
+        { replaceUrl: true }
+      )
+    }
   }
 
   setCurrentView(category: any): void {

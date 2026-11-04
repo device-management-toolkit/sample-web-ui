@@ -3482,10 +3482,6 @@
     "description": "リモート消去中の電源状態取得失敗エラーメッセージ",
     "value": "電源状態の取得に失敗しました"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "デバイスでリモートプラットフォーム消去がサポートされていない場合のメッセージ",
-    "value": "リモートプラットフォーム消去はサポートされていません"
-  },
   "remotePlatformErase.caps.title": {
     "description": "消去機能カードのタイトル",
     "value": "消去機能"
@@ -3558,10 +3554,6 @@
     "description": "現在選択されている消去操作の数を示すキャプション",
     "value": "3 件中 {{selected}} 件の操作が選択されています",
     "_value_old": "{{total}} 件中 {{selected}} 件の操作が選択されています"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "デバイスが対応していない機能の行に表示されるキャプション",
-    "value": "このデバイスでサポートされていません"
   },
   "downloadRpc.title": {
     "description": "RPC ダウンロードページのタイトル",

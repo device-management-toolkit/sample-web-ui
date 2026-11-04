@@ -3490,10 +3490,6 @@
     "description": "رسالة خطأ عند استرداد حالة الطاقة أثناء المسح البعيد",
     "value": "خطأ في استرداد حالة الطاقة"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "الرسالة المعروضة عندما لا يدعم الجهاز مسح المنصة عن بُعد",
-    "value": "مسح المنصة عن بُعد غير مدعوم"
-  },
   "remotePlatformErase.caps.title": {
     "description": "وصف عنوان بطاقة إمكانيات المسح",
     "value": "إمكانيات المسح"
@@ -3566,10 +3562,6 @@
     "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",
     "value": "تم تحديد {{selected}} من أصل 3 عمليات",
     "_value_old": "تم تحديد {{selected}} من أصل {{total}} عمليات"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "تسمية تظهر في صف القدرة عندما لا يدعمها الجهاز",
-    "value": "غير مدعوم على هذا الجهاز"
   },
   "downloadRpc.title": {
     "description": "عنوان صفحة تنزيل RPC",

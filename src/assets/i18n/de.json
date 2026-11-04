@@ -3486,10 +3486,6 @@
     "description": "Fehlermeldung beim Abrufen des Stromstatus während der Remote-Plattformlöschung",
     "value": "Fehler beim Abrufen des Stromstatus"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Meldung wenn Remote-Plattformlöschung auf dem Gerät nicht unterstützt wird",
-    "value": "Remote-Plattformlöschung wird nicht unterstützt"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Titel der Löschfähigkeiten-Karte",
     "value": "Löschfähigkeiten"
@@ -3562,10 +3558,6 @@
     "description": "Beschriftung, die anzeigt, wie viele Löschvorgänge derzeit ausgewählt sind",
     "value": "{{selected}} von 3 Vorgängen ausgewählt",
     "_value_old": "{{selected}} von {{total}} Vorgängen ausgewählt"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Beschriftung in einer Fähigkeitszeile, wenn das Gerät diese nicht unterstützt",
-    "value": "Auf diesem Gerät nicht unterstützt"
   },
   "downloadRpc.title": {
     "description": "Seitentitel „RPC herunterladen“",

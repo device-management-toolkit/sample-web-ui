@@ -76,8 +76,9 @@ describe('DeviceDetailComponent', () => {
 
   beforeEach(() => {
     routeParams$ = new ReplaySubject<any>(1)
-    devicesServiceSpy = createSpyObj('DevicesService', ['getAMTVersion'])
+    devicesServiceSpy = createSpyObj('DevicesService', ['getAMTVersion', 'getAMTFeaturesCached'])
     devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('16400') as any))
+    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: true } as any))
 
     TestBed.configureTestingModule({
       imports: [
@@ -141,6 +142,31 @@ describe('DeviceDetailComponent', () => {
     const components = component.categories().map((c) => c.component)
     expect(components).toContain('kvm')
     expect(components).not.toContain('ider')
+  })
+
+  it('hides the remote platform erase category when it is unsupported', () => {
+    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: false } as any))
+    routeParams$.next({ id: 'guid' })
+    fixture.detectChanges()
+
+    expect(component.categories().map((c) => c.component)).not.toContain('remote-platform-erase')
+  })
+
+  it('redirects a directly opened remote platform erase route when unsupported', () => {
+    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: false } as any))
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
+    routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
+    fixture.detectChanges()
+
+    expect(component.currentView()).toBe('general')
+    expect(navigateSpy).toHaveBeenCalledWith(
+      [
+        '/devices',
+        'guid',
+        'general'
+      ],
+      { replaceUrl: true }
+    )
   })
 
   it('sets currentView from route component param', () => {

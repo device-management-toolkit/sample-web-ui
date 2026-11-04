@@ -3482,10 +3482,6 @@
     "description": "הודעת שגיאה בעת כשל באחזור סטטוס כוח במהלך מחיקת פלטפורמה מרחוק",
     "value": "שגיאה באחזור סטטוס כוח"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "הודעה המוצגת כאשר מחיקת פלטפורמה מרחוק אינה נתמכת במכשיר",
-    "value": "מחיקת פלטפורמה מרחוק אינה נתמכת"
-  },
   "remotePlatformErase.caps.title": {
     "description": "כותרת כרטיס יכולות המחיקה",
     "value": "יכולות מחיקה"
@@ -3558,10 +3554,6 @@
     "description": "תווית המציגה כמה פעולות מחיקה נבחרו כעת",
     "value": "נבחרו {{selected}} מתוך 3 פעולות",
     "_value_old": "נבחרו {{selected}} מתוך {{total}} פעולות"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "תווית המוצגת בשורת יכולת כאשר המכשיר אינו תומך בה",
-    "value": "לא נתמך במכשיר זה"
   },
   "downloadRpc.title": {
     "description": "כותרת הדף הורדת RPC",

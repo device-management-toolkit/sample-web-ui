@@ -1251,10 +1251,6 @@
     "value": "{{selected}} of 3 operations selected",
     "_value_old": "{{selected}} of {{total}} operations selected"
   },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Caption shown on a capability row when the device does not support it",
-    "value": "Not supported on this device"
-  },
   "remotePlatformErase.initiateTitle": {
     "description": "Title for the initiate erase action card",
     "value": "Initiate Remote Erase"
@@ -1306,10 +1302,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Error message when retrieving power status fails during Remote Platform Erase",
     "value": "Error retrieving power status"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Message shown when Remote Platform Erase is not supported on the device",
-    "value": "Remote Platform Erase is not supported"
   },
   "remotePlatformErase.caps.title": {
     "description": "Title for the platform erase capabilities card",

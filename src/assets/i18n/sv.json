@@ -3350,10 +3350,6 @@
     "description": "Felmeddelande vid hämtning av strömstatus under fjärrradering",
     "value": "Fel vid hämtning av strömstatus"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Meddelande som visas när fjärrradering av plattform inte stöds på enheten",
-    "value": "Fjärrradering av plattform stöds inte"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Titel på kortet med raderingsmöjligheter",
     "value": "Raderingsmöjligheter"
@@ -3426,10 +3422,6 @@
     "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",
     "value": "{{selected}} av 3 åtgärder valda",
     "_value_old": "{{selected}} av {{total}} åtgärder valda"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",
-    "value": "Stöds inte på den här enheten"
   },
   "downloadRpc.title": {
     "description": "Sidrubrik för Ladda ned RPC",

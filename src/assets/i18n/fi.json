@@ -3486,10 +3486,6 @@
     "description": "Virheviesti virran tilan hakemisen epäonnistuessa etäpyyhinnän aikana",
     "value": "Virhe virran tilan hakemisessa"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Viesti laitteen etäalustan pyyhinnän tuen puuttuessa",
-    "value": "Etäalustan pyyhintää ei tueta"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Pyyhintäominaisuuksien kortin otsikko",
     "value": "Pyyhintäominaisuudet"
@@ -3562,10 +3558,6 @@
     "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",
     "value": "{{selected}} / 3 toimintoa valittu",
     "_value_old": "{{selected}} / {{total}} toimintoa valittu"
-  },
-  "remotePlatformErase.capUnsupported": {
-    "description": "Teksti, joka näytetään ominaisuusrivillä, kun laite ei tue sitä",
-    "value": "Ei tuettu tässä laitteessa"
   },
   "downloadRpc.title": {
     "description": "Lataa RPC -sivun otsikko",
