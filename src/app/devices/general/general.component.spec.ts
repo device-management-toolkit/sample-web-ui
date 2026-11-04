@@ -95,6 +95,7 @@ describe('GeneralComponent', () => {
 
   it('should show the RPE checkbox when supported', () => {
     component.amtEnabledFeatures().get('rpeSupported')?.setValue(true)
+    fixture.changeDetectorRef.markForCheck()
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('mat-checkbox[formControlName="rpe"]')).not.toBeNull()
@@ -102,6 +103,7 @@ describe('GeneralComponent', () => {
 
   it('should hide the RPE checkbox when unsupported', () => {
     component.amtEnabledFeatures().get('rpeSupported')?.setValue(false)
+    fixture.changeDetectorRef.markForCheck()
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('mat-checkbox[formControlName="rpe"]')).toBeNull()
