@@ -93,7 +93,7 @@
       (action)="addDevice()" />
   }
 } @else {
-  <mat-table [dataSource]="devices" matSort [style.--action-count]="actionCount">
+  <mat-table [dataSource]="devices" [trackBy]="trackDevice" matSort [style.--action-count]="actionCount">
     <!-- select Column -->
     <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef>
@@ -116,9 +116,9 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'devices.table.hostname.value' | translate }}
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+      <mat-cell *matCellDef="let element">
         {{ element.hostname }}
-        @if (element.friendlyName !== null) {
+        @if (element.friendlyName) {
           <span>&nbsp;({{ element.friendlyName }})</span>
         }
       </mat-cell>
@@ -126,14 +126,14 @@
     <!-- guid Column -->
     <ng-container matColumnDef="guid">
       <mat-header-cell *matHeaderCellDef> {{ 'devices.table.guid.value' | translate }}</mat-header-cell>
-      <mat-cell data-cy="guid" *matCellDef="let element" (click)="navigateTo(element.guid)">
+      <mat-cell data-cy="guid" *matCellDef="let element">
         {{ element.guid }}
       </mat-cell>
     </ng-container>
     <!-- status Column -->
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef> {{ 'devices.table.status.value' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+      <mat-cell *matCellDef="let element">
         @if (isCloudMode) {
           {{ translateConnectionStatus(element.connectionStatus) }}
           @if (element.connectionStatus) {
@@ -148,7 +148,7 @@
     <ng-container matColumnDef="productType">
       <!-- not sortable: productType is computed, not a real Device property -->
       <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+      <mat-cell *matCellDef="let element">
         <span class="product-type-chip">{{ getProductType(element) }}</span>
       </mat-cell>
     </ng-container>
@@ -156,7 +156,7 @@
     <ng-container matColumnDef="controlMode">
       <!-- not sortable: controlMode is computed, not a real Device property -->
       <mat-header-cell *matHeaderCellDef>{{ 'devices.table.controlMode.value' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="navigateTo(element.guid)">
+      <mat-cell *matCellDef="let element">
         <span
           class="control-mode-chip"
           [class.active]="getControlMode(element) === 'acm' || getControlMode(element) === 'ccm'">
@@ -239,8 +239,15 @@
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <!--      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateTo(row.guid)"></mat-row>
+    <!-- Managed rows open the device page; discovered rows open the read-only pane,
+         since console has no credentials to connect to a device it only discovered. -->
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      tabindex="0"
+      [class.pane-open]="paneDevice()?.guid === row.guid"
+      [attr.aria-expanded]="isDiscoveredTab ? paneDevice()?.guid === row.guid : null"
+      (click)="openDevice(row, $event)"
+      (keydown.enter)="openDevice(row, $event)"></mat-row>
   </mat-table>
 }
 
@@ -255,3 +262,15 @@
     </mat-paginator>
   </div>
 }
+
+<!-- Rendered into the CDK overlay container so it sits above the app's side nav. -->
+<ng-template #paneTemplate>
+  @if (paneDevice(); as device) {
+    <app-discovered-device-pane
+      [device]="device"
+      [productType]="getProductType(device)"
+      [controlMode]="getControlMode(device)"
+      (closed)="closePane()"
+      animate.leave="discovered-pane-leave" />
+  }
+</ng-template>
