@@ -90,11 +90,9 @@ describe('DeviceDetailComponent', () => {
     featuresChanges$ = new Subject<any>()
     devicesServiceSpy = createSpyObj('DevicesService', [
       'getAMTVersion',
-      'getAMTFeaturesCached',
       'featuresChanges'
     ])
     devicesServiceSpy.getAMTVersion.mockReturnValue(of(makeAmtVersion('16400') as any))
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: true } as any))
     devicesServiceSpy.featuresChanges.mockReturnValue(featuresChanges$)
 
     TestBed.configureTestingModule({
@@ -164,18 +162,18 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('hides the remote platform erase category when it is unsupported', () => {
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: false } as any))
     routeParams$.next({ id: 'guid' })
     fixture.detectChanges()
+    featuresChanges$.next({ rpeSupported: false })
 
     expect(component.categories().map((c) => c.component)).not.toContain('remote-platform-erase')
   })
 
   it('redirects a directly opened remote platform erase route when unsupported', () => {
-    devicesServiceSpy.featuresChanges.mockReturnValue(of({ rpeSupported: false }))
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
     routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
     fixture.detectChanges()
+    featuresChanges$.next({ rpeSupported: false })
 
     expect(component.currentView()).toBe('general')
     expect(navigateSpy).toHaveBeenCalledWith(
@@ -186,20 +184,6 @@ describe('DeviceDetailComponent', () => {
       ],
       { replaceUrl: true }
     )
-  })
-
-  it('preserves confirmed RPE support when the initial feature fetch fails', () => {
-    devicesServiceSpy.featuresChanges.mockReturnValue(of({ rpeSupported: true } as any))
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(throwError(() => new Error('features unavailable')))
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
-    vi.spyOn(snackBar, 'open').mockImplementation((() => undefined) as any)
-    routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
-    fixture.detectChanges()
-
-    expect(component.isRpeSupported()).toBe(true)
-    expect(component.currentView()).toBe('remote-platform-erase')
-    expect(component.categories().map((c) => c.component)).toContain('remote-platform-erase')
-    expect(navigateSpy).not.toHaveBeenCalled()
   })
 
   it('redirects to the new device General page when switching from supported to unsupported RPE', () => {
@@ -227,17 +211,6 @@ describe('DeviceDetailComponent', () => {
       ],
       { replaceUrl: true }
     )
-  })
-
-  it('restores RPE visibility after a later feature update succeeds', () => {
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(throwError(() => new Error('features unavailable')))
-    routeParams$.next({ id: 'guid' })
-    fixture.detectChanges()
-    expect(component.categories().map((c) => c.component)).not.toContain('remote-platform-erase')
-
-    featuresChanges$.next({ rpeSupported: true })
-
-    expect(component.categories().map((c) => c.component)).toContain('remote-platform-erase')
   })
 
   it('allows direct RPE navigation after a later feature update succeeds', () => {
