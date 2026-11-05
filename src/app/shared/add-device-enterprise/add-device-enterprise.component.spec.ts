@@ -73,7 +73,6 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      productType: 'vPro',
       useTLS: true,
       allowSelfSigned: true
     })
@@ -85,7 +84,6 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: 'testuser',
       password: 'password',
       tenantId: '',
-      productType: 'vPro',
       useTLS: true,
       allowSelfSigned: true,
       tags: ['']
@@ -100,7 +98,6 @@ describe('AddDeviceEnterpriseComponent', () => {
       username: '',
       password: '',
       tenantId: '',
-      productType: '',
       useTLS: true,
       allowSelfSigned: true
     })

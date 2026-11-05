@@ -57,17 +57,6 @@
     }
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>{{ 'addDevice.productType.value' | translate }}</mat-label>
-      <mat-select title="productType" formControlName="productType" data-cy="productType">
-        <mat-option value="">-</mat-option>
-        @for (type of productTypes; track type) {
-          <mat-option [value]="type">{{ type }}</mat-option>
-        }
-      </mat-select>
-      <mat-hint>{{ 'addDevice.productTypeHint.value' | translate }}</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>{{ 'common.tags.value' | translate }}</mat-label>
       <mat-chip-grid #tagList aria-label="Tag selection">
         @for (tag of tags(); track tag) {

@@ -14,7 +14,6 @@ import { MatButton } from '@angular/material/button'
 import { MatCheckbox } from '@angular/material/checkbox'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
-import { MatSelect, MatOption } from '@angular/material/select'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -33,8 +32,6 @@ import { isCIRADevice } from '../device-connection'
     MatLabel,
     MatIcon,
     MatInput,
-    MatSelect,
-    MatOption,
     MatChipsModule,
     MatHint,
     MatError,
@@ -63,12 +60,10 @@ export class AddDeviceEnterpriseComponent {
       ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
-    productType: [''],
     useTLS: [true],
     allowSelfSigned: [true]
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
-  public readonly productTypes = ['vPro', 'ISM']
   public tags = signal<string[]>([])
   // True when the dialog was opened with an existing device.
   public readonly isEdit: boolean

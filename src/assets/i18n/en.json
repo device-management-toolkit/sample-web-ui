@@ -279,14 +279,6 @@
     "description": "Notice shown when editing a CIRA device",
     "value": "This device connects through CIRA and was registered during activation. Only its tags can be edited here."
   },
-  "addDevice.productType": {
-    "description": "Label for the product type selector",
-    "value": "Product Type"
-  },
-  "addDevice.productTypeHint": {
-    "description": "Hint for the product type selector",
-    "value": "Optional. The manageability SKU of the device (vPro or ISM)."
-  },
   "alarm.errorAdding": {
     "description": "Error for adding",
     "value": "Error adding Alarm Occurrences"
