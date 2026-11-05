@@ -9,12 +9,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddDeviceEnterpriseComponent } from './add-device-enterprise.component'
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { DevicesService } from '../../devices/devices.service'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { provideTranslateService } from '@ngx-translate/core'
 
 describe('AddDeviceEnterpriseComponent', () => {
@@ -242,5 +243,56 @@ describe('AddDeviceEnterpriseComponent with CIRA device', () => {
 
     expect(component.isCIRA).toBe(true)
     expect(component.form.disabled).toBe(true)
+  })
+})
+
+describe('AddDeviceEnterpriseComponent when Console rejects the device', () => {
+  let component: AddDeviceEnterpriseComponent
+  let dialogCloseSpy: MockInstance
+  let snackBarOpenSpy: MockInstance
+
+  beforeEach(() => {
+    const deviceService = createSpyObj('DevicesService', ['addDevice'])
+    deviceService.addDevice.mockReturnValue(
+      throwError(() => ({ status: 400, error: { message: 'could not connect to 10.0.0.5 to read the AMT UUID' } }))
+    )
+    const snackBar = createSpyObj('MatSnackBar', ['open'])
+    snackBarOpenSpy = snackBar.open
+
+    TestBed.configureTestingModule({
+      imports: [AddDeviceEnterpriseComponent],
+      providers: [
+        provideTranslateService(),
+        { provide: DevicesService, useValue: deviceService },
+        { provide: MatSnackBar, useValue: snackBar },
+        { provide: MAT_DIALOG_DATA, useValue: { tags: [] } },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        { provide: MatDialogRef, useValue: { close: () => {} } }
+      ]
+    })
+    const fixture = TestBed.createComponent(AddDeviceEnterpriseComponent)
+    component = fixture.componentInstance
+    dialogCloseSpy = vi.spyOn(component.dialog, 'close').mockImplementation(() => undefined)
+    fixture.detectChanges()
+  })
+
+  it('shows the server message and keeps the dialog open', () => {
+    component.form.setValue({
+      hostname: '10.0.0.5',
+      friendlyName: 'Unreachable',
+      username: 'admin',
+      password: 'P@ssw0rd',
+      tenantId: '',
+      useTLS: true,
+      allowSelfSigned: true
+    })
+    component.submitForm()
+
+    expect(snackBarOpenSpy).toHaveBeenCalledWith(
+      'could not connect to 10.0.0.5 to read the AMT UUID',
+      expect.any(String),
+      expect.anything()
+    )
+    expect(dialogCloseSpy).not.toHaveBeenCalled()
   })
 })
