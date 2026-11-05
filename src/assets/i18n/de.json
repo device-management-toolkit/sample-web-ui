@@ -1719,10 +1719,6 @@
     "description": "Tooltip für „One Click Recovery” wird nicht unterstützt.",
     "value": "Die Wiederherstellung mit einem Klick wird nicht unterstützt."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip für Remote Platform Erase wird nicht unterstützt",
-    "value": "Remote Platform Erase wird nicht unterstützt."
-  },
   "general.pbaBootShort": {
     "description": "Bezeichnung für PBA-Boot",
     "value": "PBA-Boot:"
@@ -3558,6 +3554,10 @@
     "description": "Beschriftung, die anzeigt, wie viele Löschvorgänge derzeit ausgewählt sind",
     "value": "{{selected}} von 3 Vorgängen ausgewählt",
     "_value_old": "{{selected}} von {{total}} Vorgängen ausgewählt"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Beschriftung in einer Fähigkeitszeile, wenn das Gerät diese nicht unterstützt",
+    "value": "Auf diesem Gerät nicht unterstützt"
   },
   "downloadRpc.title": {
     "description": "Seitentitel „RPC herunterladen“",

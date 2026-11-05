@@ -1627,10 +1627,6 @@
     "description": "Verktygstips för återställning med ett klick stöds inte",
     "value": "Återställning med ett klick stöds inte."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Verktygstips för Remote Platform Erase stöds inte",
-    "value": "Remote Platform Erase stöds inte."
-  },
   "general.pbaBootShort": {
     "description": "Etikett för PBA-start",
     "value": "PBA-start:"
@@ -3422,6 +3418,10 @@
     "description": "Bildtext som visar hur många raderingsåtgärder som för närvarande är valda",
     "value": "{{selected}} av 3 åtgärder valda",
     "_value_old": "{{selected}} av {{total}} åtgärder valda"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bildtext som visas på en funktionsrad när enheten inte stöder den",
+    "value": "Stöds inte på den här enheten"
   },
   "downloadRpc.title": {
     "description": "Sidrubrik för Ladda ned RPC",

@@ -1715,10 +1715,6 @@
     "description": "ワンクリック復元機能のツールチップはサポートされていません",
     "value": "ワンクリック復元はサポートされていません"
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "リモートプラットフォーム消去のツールチップはサポートされていません",
-    "value": "リモートプラットフォーム消去はサポートされていません"
-  },
   "general.pbaBootShort": {
     "description": "PBAブート用ラベル",
     "value": "PBA ブート:"
@@ -3554,6 +3550,10 @@
     "description": "現在選択されている消去操作の数を示すキャプション",
     "value": "3 件中 {{selected}} 件の操作が選択されています",
     "_value_old": "{{total}} 件中 {{selected}} 件の操作が選択されています"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "デバイスが対応していない機能の行に表示されるキャプション",
+    "value": "このデバイスでサポートされていません"
   },
   "downloadRpc.title": {
     "description": "RPC ダウンロードページのタイトル",

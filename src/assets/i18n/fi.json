@@ -1719,10 +1719,6 @@
     "description": "One Click Recovery -työkalun vinkki ei tueta",
     "value": "Yhden napsautuksen palautusta ei tueta."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Remote Platform Erase -työkaluvinkki ei tueta",
-    "value": "Remote Platform Erasea ei tueta."
-  },
   "general.pbaBootShort": {
     "description": "PBA-käynnistyksen etiketti",
     "value": "PBA-käynnistys:"
@@ -3558,6 +3554,10 @@
     "description": "Teksti, joka näyttää kuinka monta pyyhintätoimintoa on valittu",
     "value": "{{selected}} / 3 toimintoa valittu",
     "_value_old": "{{selected}} / {{total}} toimintoa valittu"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Teksti, joka näytetään ominaisuusrivillä, kun laite ei tue sitä",
+    "value": "Ei tuettu tässä laitteessa"
   },
   "downloadRpc.title": {
     "description": "Lataa RPC -sivun otsikko",

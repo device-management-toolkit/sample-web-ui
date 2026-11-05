@@ -65,6 +65,13 @@
                   <small [id]="'rpe-cap-desc-' + cap.key">
                     {{ 'remotePlatformErase.cap.' + cap.key + '.desc.value' | translate }}
                   </small>
+                  @if (!cap.supported) {
+                    <div>
+                      <small
+                        ><em>{{ 'remotePlatformErase.capUnsupported.value' | translate }}</em></small
+                      >
+                    </div>
+                  }
                 </div>
               </mat-checkbox>
               @if (cap.key === 'secureEraseSsds' && isSsdSelected()) {

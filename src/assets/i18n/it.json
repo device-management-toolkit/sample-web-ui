@@ -1715,10 +1715,6 @@
     "description": "Tooltip per il ripristino con un clic non supportato",
     "value": "Il ripristino con un clic non è supportato."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip per Remote Platform Erase non supportato",
-    "value": "Remote Platform Erase non è supportato."
-  },
   "general.pbaBootShort": {
     "description": "Etichetta per l'avvio PBA",
     "value": "Avvio PBA:"
@@ -3554,6 +3550,10 @@
     "description": "Didascalia che indica quante operazioni di cancellazione sono attualmente selezionate",
     "value": "{{selected}} di 3 operazioni selezionate",
     "_value_old": "{{selected}} di {{total}} operazioni selezionate"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Didascalia mostrata su una riga di capacità quando il dispositivo non la supporta",
+    "value": "Non supportato su questo dispositivo"
   },
   "downloadRpc.title": {
     "description": "Titolo della pagina Scarica RPC",

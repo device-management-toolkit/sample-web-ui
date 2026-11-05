@@ -1719,10 +1719,6 @@
     "description": "No se admite la información sobre herramientas para la recuperación con un solo clic.",
     "value": "No se admite la recuperación con un solo clic."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "No se admite la información sobre herramientas para Remote Platform Erase.",
-    "value": "Remote Platform Erase no es compatible."
-  },
   "general.pbaBootShort": {
     "description": "Etiqueta para el arranque de PBA",
     "value": "Arranque de PBA:"
@@ -3558,6 +3554,10 @@
     "description": "Indicador que muestra cuántas operaciones de borrado están seleccionadas actualmente",
     "value": "{{selected}} de 3 operaciones seleccionadas",
     "_value_old": "{{selected}} de {{total}} operaciones seleccionadas"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Indicador mostrado en una fila de capacidad cuando el dispositivo no la admite",
+    "value": "No compatible con este dispositivo"
   },
   "downloadRpc.title": {
     "description": "Título de la página Descargar RPC",

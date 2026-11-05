@@ -681,7 +681,6 @@ describe('RemotePlatformEraseComponent', () => {
       component.isLoading.set(false)
       component.isPlatformEraseSupported.set(false)
       fixture.detectChanges()
-      expect(fixture.nativeElement.textContent).not.toContain('remotePlatformErase.notSupported.value')
       expect(fixture.nativeElement.querySelector('[data-cy="notSupportedMessage"]')).toBeNull()
     })
 

@@ -1723,10 +1723,6 @@
     "description": "Info-bulle pour la récupération en un clic non prise en charge",
     "value": "La récupération en un clic n'est pas prise en charge."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Info-bulle pour Remote Platform Erase non prise en charge",
-    "value": "Remote Platform Erase n'est pas pris en charge."
-  },
   "general.pbaBootShort": {
     "description": "Étiquette pour le démarrage PBA",
     "value": "Démarrage PBA :"
@@ -3562,6 +3558,10 @@
     "description": "Légende indiquant combien d'opérations d'effacement sont actuellement sélectionnées",
     "value": "{{selected}} opération(s) sélectionnée(s) sur 3",
     "_value_old": "{{selected}} opération(s) sélectionnée(s) sur {{total}}"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Légende affichée sur une ligne de capacité lorsque l'appareil ne la prend pas en charge",
+    "value": "Non pris en charge sur cet appareil"
   },
   "downloadRpc.title": {
     "description": "Titre de la page Télécharger RPC",

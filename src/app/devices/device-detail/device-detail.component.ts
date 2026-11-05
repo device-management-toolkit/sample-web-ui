@@ -248,31 +248,6 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         this.isRpeSupported.set(features.rpeSupported === true)
         this.syncCurrentViewForRpe()
       })
-
-    this.activatedRoute.params
-      .pipe(
-        map((params) => params.id),
-        distinctUntilChanged(),
-        switchMap((id) =>
-          this.devicesService.getAMTFeaturesCached(id).pipe(
-            catchError((err) => {
-              const msg: string = err.error?.message || this.translate.instant('general.errorAMTFeatures.value')
-              this.snackBar.open(msg, undefined, SnackbarDefaults.defaultError)
-              return of(null)
-            })
-          )
-        ),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((features) => {
-        if (features) {
-          this.isRpeSupported.set(features.rpeSupported === true)
-          this.syncCurrentViewForRpe()
-        } else if (this.isRpeSupported() !== true) {
-          this.isRpeSupported.set(false)
-          this.syncCurrentViewForRpe()
-        }
-      })
   }
 
   ngOnDestroy(): void {

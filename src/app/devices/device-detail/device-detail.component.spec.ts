@@ -172,7 +172,7 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('redirects a directly opened remote platform erase route when unsupported', () => {
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(of({ rpeSupported: false } as any))
+    devicesServiceSpy.featuresChanges.mockReturnValue(of({ rpeSupported: false }))
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
     routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
     fixture.detectChanges()
@@ -203,16 +203,20 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('redirects to the new device General page when switching from supported to unsupported RPE', () => {
-    devicesServiceSpy.getAMTFeaturesCached.mockImplementation((id: string) =>
-      of({ rpeSupported: id === 'device-a' } as any)
-    )
+    devicesServiceSpy.featuresChanges.mockImplementation((id: string) => of({ rpeSupported: id === 'device-a' }))
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
+
     routeParams$.next({ id: 'device-a', component: 'remote-platform-erase' })
     fixture.detectChanges()
+
+    expect(component.isRpeSupported()).toBe(true)
+    expect(component.currentView()).toBe('remote-platform-erase')
+    expect(navigateSpy).not.toHaveBeenCalled()
 
     routeParams$.next({ id: 'device-b', component: 'remote-platform-erase' })
 
     expect(component.deviceId()).toBe('device-b')
+    expect(component.isRpeSupported()).toBe(false)
     expect(component.currentView()).toBe('general')
     expect(navigateSpy).toHaveBeenCalledTimes(1)
     expect(navigateSpy).toHaveBeenCalledWith(
@@ -237,11 +241,14 @@ describe('DeviceDetailComponent', () => {
   })
 
   it('allows direct RPE navigation after a later feature update succeeds', () => {
-    devicesServiceSpy.getAMTFeaturesCached.mockReturnValue(throwError(() => new Error('features unavailable')))
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
     routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })
     fixture.detectChanges()
+
+    featuresChanges$.next({ rpeSupported: false })
+
     expect(component.currentView()).toBe('general')
+    expect(navigateSpy).toHaveBeenCalledTimes(1)
 
     featuresChanges$.next({ rpeSupported: true })
     routeParams$.next({ id: 'guid', component: 'remote-platform-erase' })

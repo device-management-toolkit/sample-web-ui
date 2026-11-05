@@ -1723,10 +1723,6 @@
     "description": "Tooltip voor herstel met één klik wordt niet ondersteund.",
     "value": "One Click Recovery wordt niet ondersteund."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip voor Remote Platform Erase wordt niet ondersteund.",
-    "value": "Remote Platform Erase wordt niet ondersteund."
-  },
   "general.pbaBootShort": {
     "description": "Label voor PBA-opstart",
     "value": "PBA-boot:"
@@ -3562,6 +3558,10 @@
     "description": "Bijschrift dat aangeeft hoeveel wisbewerkingen momenteel zijn geselecteerd",
     "value": "{{selected}} van 3 bewerkingen geselecteerd",
     "_value_old": "{{selected}} van {{total}} bewerkingen geselecteerd"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "Bijschrift dat wordt weergegeven op een capaciteitsrij wanneer het apparaat deze niet ondersteunt",
+    "value": "Niet ondersteund op dit apparaat"
   },
   "downloadRpc.title": {
     "description": "Paginatitel RPC downloaden",

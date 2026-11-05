@@ -1723,10 +1723,6 @@
     "description": "أداة التلميح لـ One Click Recovery غير مدعومة",
     "value": "لا يتم دعم الاسترداد بنقرة واحدة"
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "أداة التلميح لمسح النظام الأساسي عن بُعد غير مدعومة",
-    "value": "مسح النظام الأساسي عن بُعد غير مدعوم"
-  },
   "general.pbaBootShort": {
     "description": "تسمية لتمهيد PBA",
     "value": "تشغيل PBA:"
@@ -3562,6 +3558,10 @@
     "description": "تسمية توضح عدد عمليات المحو المحددة حاليًا",
     "value": "تم تحديد {{selected}} من أصل 3 عمليات",
     "_value_old": "تم تحديد {{selected}} من أصل {{total}} عمليات"
+  },
+  "remotePlatformErase.capUnsupported": {
+    "description": "تسمية تظهر في صف القدرة عندما لا يدعمها الجهاز",
+    "value": "غير مدعوم على هذا الجهاز"
   },
   "downloadRpc.title": {
     "description": "عنوان صفحة تنزيل RPC",
