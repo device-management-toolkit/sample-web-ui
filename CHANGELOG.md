@@ -1,3 +1,10 @@
+## [4.3.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.0...v4.3.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **login:** ask to log in again when a session expires ([#3686](https://github.com/device-management-toolkit/sample-web-ui/issues/3686)) ([64e887a](https://github.com/device-management-toolkit/sample-web-ui/commit/64e887a09b726ffbb56c9cdd023fe4a9224662d2)), closes [device-management-toolkit/console#993](https://github.com/device-management-toolkit/console/issues/993)
+
 # [4.3.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.2.1...v4.3.0) (2026-11-04)
 
 
