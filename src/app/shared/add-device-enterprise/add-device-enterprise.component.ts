@@ -14,9 +14,11 @@ import { MatButton } from '@angular/material/button'
 import { MatCheckbox } from '@angular/material/checkbox'
 import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
+import { MatSelect, MatOption } from '@angular/material/select'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
+import { isCIRADevice } from '../device-connection'
 
 @Component({
   selector: 'app-add-device-enterprise',
@@ -31,6 +33,8 @@ import { TranslatePipe } from '@ngx-translate/core'
     MatLabel,
     MatIcon,
     MatInput,
+    MatSelect,
+    MatOption,
     MatChipsModule,
     MatHint,
     MatError,
@@ -59,19 +63,31 @@ export class AddDeviceEnterpriseComponent {
       ]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     tenantId: [''],
+    productType: [''],
     useTLS: [true],
     allowSelfSigned: [true]
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
+  public readonly productTypes = ['vPro', 'ISM']
   public tags = signal<string[]>([])
+  // True when the dialog was opened with an existing device.
+  public readonly isEdit: boolean
+  // CIRA devices are registered by the activation flow, so only their tags can
+  // be edited here; every other detail is read-only.
+  public readonly isCIRA: boolean
 
   constructor() {
     const device = this.device
 
     this.deviceOrig = device
+    this.isEdit = device?.guid != null && device.guid !== ''
+    this.isCIRA = this.isEdit && isCIRADevice(device)
     if (device != null) {
       this.tags.set(device.tags || [])
       this.form.patchValue(device)
+    }
+    if (this.isCIRA) {
+      this.form.disable()
     }
   }
 
@@ -88,10 +104,18 @@ export class AddDeviceEnterpriseComponent {
   }
 
   submitForm(): void {
+    if (this.isCIRA) {
+      // PATCH only the editable field so the server keeps the registered details.
+      const tagsOnly = { guid: this.deviceOrig.guid, tags: this.tags() } as Device
+      this.deviceService.editDevice(tagsOnly).subscribe(() => {
+        this.dialog.close({ submitted: true })
+      })
+      return
+    }
     if (this.form.valid) {
       const device: Device = { ...this.form.getRawValue() }
       device.tags = this.tags()
-      if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
+      if (this.isEdit) {
         device.guid = this.deviceOrig.guid
         this.deviceService.editDevice(device).subscribe(() => {
           this.dialog.close({ submitted: true })

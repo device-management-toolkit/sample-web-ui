@@ -275,6 +275,18 @@
     "description": "Message for using TLS",
     "value": "Use TLS"
   },
+  "addDevice.ciraReadOnly": {
+    "description": "Notice shown when editing a CIRA device",
+    "value": "This device connects through CIRA and was registered during activation. Only its tags can be edited here."
+  },
+  "addDevice.productType": {
+    "description": "Label for the product type selector",
+    "value": "Product Type"
+  },
+  "addDevice.productTypeHint": {
+    "description": "Hint for the product type selector",
+    "value": "Optional. The manageability SKU of the device (vPro or ISM)."
+  },
   "alarm.errorAdding": {
     "description": "Error for adding",
     "value": "Error adding Alarm Occurrences"
@@ -1571,6 +1583,10 @@
     "description": "Table column header for tags",
     "value": "Tags"
   },
+  "devices.table.connectionType": {
+    "description": "Table column header for the connection type (CIRA or Direct)",
+    "value": "Connection"
+  },
   "deviceToolbar.power.off": {
     "description": "Power tooltip for Off",
     "value": "Power: Off"
@@ -2124,6 +2140,26 @@
   "general.amtSummaryDescription": {
     "description": "Description for AMT Summary card",
     "value": "Summary of AMT information"
+  },
+  "general.connectionType": {
+    "description": "Label for how the device connects to Console (CIRA or Direct)",
+    "value": "Connection Type"
+  },
+  "general.createdDate": {
+    "description": "Label for when the device was added to Console",
+    "value": "Added"
+  },
+  "general.deviceId": {
+    "description": "Label for the Console-generated device ID",
+    "value": "Device ID"
+  },
+  "general.lastUpdated": {
+    "description": "Label for when the device record was last edited",
+    "value": "Last Updated"
+  },
+  "general.productType": {
+    "description": "Label for the product type recorded on the device",
+    "value": "Product Type"
   },
   "general.amtTrustedDNSSuffix": {
     "description": "Label for AMT Trusted DNS Suffix",

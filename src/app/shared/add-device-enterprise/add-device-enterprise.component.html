@@ -1,5 +1,8 @@
-<h2 mat-dialog-title>{{ 'devices.addDevice.value' | translate }}</h2>
+<h2 mat-dialog-title>{{ (isEdit ? 'devices.editDevice.value' : 'devices.addDevice.value') | translate }}</h2>
 <div mat-dialog-content>
+  @if (isCIRA) {
+    <p class="mat-font-body-sm" data-cy="ciraReadOnly">{{ 'addDevice.ciraReadOnly.value' | translate }}</p>
+  }
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <mat-form-field appearance="fill" class="flex flex-1">
       <mat-label>{{ 'common.hostName.value' | translate }}</mat-label>
@@ -25,30 +28,43 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>{{ 'common.userName.value' | translate }}</mat-label>
-      <input matInput title="username" formControlName="username" />
-      <mat-hint>{{ 'common.enterUserName.value' | translate }}</mat-hint>
-      @if (form.get('username')?.errors?.required) {
-        <mat-error>{{ 'addDevice.userNameRequired.value' | translate }}</mat-error>
-      }
-      @if (form.get('username')?.errors?.minlength) {
-        <mat-error>{{ 'addDevice.userNameInvalid.value' | translate }}</mat-error>
-      }
-    </mat-form-field>
+    @if (!isCIRA) {
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>{{ 'common.userName.value' | translate }}</mat-label>
+        <input matInput title="username" formControlName="username" />
+        <mat-hint>{{ 'common.enterUserName.value' | translate }}</mat-hint>
+        @if (form.get('username')?.errors?.required) {
+          <mat-error>{{ 'addDevice.userNameRequired.value' | translate }}</mat-error>
+        }
+        @if (form.get('username')?.errors?.minlength) {
+          <mat-error>{{ 'addDevice.userNameInvalid.value' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="flex flex-1">
+        <mat-label>{{ 'addDevice.amtPassword.value' | translate }}</mat-label>
+        <input
+          matInput
+          title="password"
+          formControlName="password"
+          type="password"
+          required
+          minlength="8"
+          maxlength="32" />
+        <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+        <mat-hint>{{ 'addDevice.amtPasswordHint.value' | translate }}</mat-hint>
+      </mat-form-field>
+    }
 
     <mat-form-field appearance="fill" class="flex flex-1">
-      <mat-label>{{ 'addDevice.amtPassword.value' | translate }}</mat-label>
-      <input
-        matInput
-        title="password"
-        formControlName="password"
-        type="password"
-        required
-        minlength="8"
-        maxlength="32" />
-      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
-      <mat-hint>{{ 'addDevice.amtPasswordHint.value' | translate }}</mat-hint>
+      <mat-label>{{ 'addDevice.productType.value' | translate }}</mat-label>
+      <mat-select title="productType" formControlName="productType" data-cy="productType">
+        <mat-option value="">-</mat-option>
+        @for (type of productTypes; track type) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>{{ 'addDevice.productTypeHint.value' | translate }}</mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="flex flex-1">

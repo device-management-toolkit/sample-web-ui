@@ -4,6 +4,7 @@
  **********************************************************************/
 
 import { Component, OnDestroy, OnInit, computed, inject, signal, input } from '@angular/core'
+import { DatePipe } from '@angular/common'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSelectModule } from '@angular/material/select'
@@ -20,6 +21,7 @@ import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton } from '@angular/material/button'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { connectionTypeOf } from '../../shared/device-connection'
 
 @Component({
   selector: 'app-general',
@@ -33,7 +35,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     MatTooltip,
     TranslatePipe,
     MatIcon,
-    MatButton
+    MatButton,
+    DatePipe
   ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
@@ -95,6 +98,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public amtProvisioningMode = signal<string | null>(null)
   public cloudMode = environment.cloud
   public device: Device | null = null
+  // The device record as stored by Console (identity, timestamps, connection type).
+  public deviceRecord = signal<Device | null>(null)
+  public readonly connectionType = computed(() => connectionTypeOf(this.deviceRecord()))
   public userConsentValues = [
     'none',
     'kvm',
@@ -107,6 +113,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private readonly pendingFeatureUpdates = signal(0)
 
   ngOnInit(): void {
+    this.devicesService
+      .getDevice(this.deviceId())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (device) => this.deviceRecord.set(device),
+        error: () => this.deviceRecord.set(null)
+      })
     forkJoin({
       // Reuses the toolbar's in-flight / cached features fetch so device-detail
       // entry costs one /features round-trip total, not two.

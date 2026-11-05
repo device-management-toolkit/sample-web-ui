@@ -11,6 +11,7 @@ import { GeneralComponent } from './general.component'
 import { ActivatedRoute } from '@angular/router'
 import { of, Subject } from 'rxjs'
 import { DevicesService } from '../devices.service'
+import { Device } from '../../../models/models'
 import { provideTranslateService } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 
@@ -22,6 +23,7 @@ describe('GeneralComponent', () => {
   beforeEach(() => {
     devicesServiceSpy = createSpyObj('DevicesService', [
       'getDevices',
+      'getDevice',
       'updateDevice',
       'getTags',
       'getPowerState',
@@ -64,6 +66,17 @@ describe('GeneralComponent', () => {
     devicesServiceSpy.featuresChanges.mockReturnValue(of(null))
     devicesServiceSpy.getGeneralSettings.mockReturnValue(of({}))
     devicesServiceSpy.getAMTVersion.mockReturnValue(of(['']))
+    devicesServiceSpy.getDevice.mockReturnValue(
+      of({
+        guid: 'guid-1',
+        id: 'record-id-1',
+        createdDate: '2026-05-26T12:00:00Z',
+        lastUpdated: '2026-06-19T09:30:00Z',
+        connectionType: 'CIRA',
+        productType: 'vPro',
+        tags: []
+      } as unknown as Device)
+    )
     TestBed.configureTestingModule({
       imports: [GeneralComponent],
       providers: [
