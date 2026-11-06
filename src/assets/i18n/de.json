@@ -1719,10 +1719,6 @@
     "description": "Tooltip für „One Click Recovery” wird nicht unterstützt.",
     "value": "Die Wiederherstellung mit einem Klick wird nicht unterstützt."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip für Remote Platform Erase wird nicht unterstützt",
-    "value": "Remote Platform Erase wird nicht unterstützt."
-  },
   "general.pbaBootShort": {
     "description": "Bezeichnung für PBA-Boot",
     "value": "PBA-Boot:"
@@ -3485,10 +3481,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Fehlermeldung beim Abrufen des Stromstatus während der Remote-Plattformlöschung",
     "value": "Fehler beim Abrufen des Stromstatus"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Meldung wenn Remote-Plattformlöschung auf dem Gerät nicht unterstützt wird",
-    "value": "Remote-Plattformlöschung wird nicht unterstützt"
   },
   "remotePlatformErase.caps.title": {
     "description": "Titel der Löschfähigkeiten-Karte",

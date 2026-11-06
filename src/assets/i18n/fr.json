@@ -1723,10 +1723,6 @@
     "description": "Info-bulle pour la récupération en un clic non prise en charge",
     "value": "La récupération en un clic n'est pas prise en charge."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Info-bulle pour Remote Platform Erase non prise en charge",
-    "value": "Remote Platform Erase n'est pas pris en charge."
-  },
   "general.pbaBootShort": {
     "description": "Étiquette pour le démarrage PBA",
     "value": "Démarrage PBA :"
@@ -3489,10 +3485,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Message d'erreur lors de la récupération de l'état d'alimentation pendant l'effacement distant",
     "value": "Erreur lors de la récupération de l'état d'alimentation"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Message affiché quand l'effacement distant de la plateforme n'est pas pris en charge",
-    "value": "L'effacement distant de la plateforme n'est pas pris en charge"
   },
   "remotePlatformErase.caps.title": {
     "description": "Titre de la carte des capacités d'effacement",

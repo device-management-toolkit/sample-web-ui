@@ -1719,10 +1719,6 @@
     "description": "One Click Recovery -työkalun vinkki ei tueta",
     "value": "Yhden napsautuksen palautusta ei tueta."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Remote Platform Erase -työkaluvinkki ei tueta",
-    "value": "Remote Platform Erasea ei tueta."
-  },
   "general.pbaBootShort": {
     "description": "PBA-käynnistyksen etiketti",
     "value": "PBA-käynnistys:"
@@ -3485,10 +3481,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Virheviesti virran tilan hakemisen epäonnistuessa etäpyyhinnän aikana",
     "value": "Virhe virran tilan hakemisessa"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Viesti laitteen etäalustan pyyhinnän tuen puuttuessa",
-    "value": "Etäalustan pyyhintää ei tueta"
   },
   "remotePlatformErase.caps.title": {
     "description": "Pyyhintäominaisuuksien kortin otsikko",

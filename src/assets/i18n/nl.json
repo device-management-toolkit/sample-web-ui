@@ -1723,10 +1723,6 @@
     "description": "Tooltip voor herstel met één klik wordt niet ondersteund.",
     "value": "One Click Recovery wordt niet ondersteund."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip voor Remote Platform Erase wordt niet ondersteund.",
-    "value": "Remote Platform Erase wordt niet ondersteund."
-  },
   "general.pbaBootShort": {
     "description": "Label voor PBA-opstart",
     "value": "PBA-boot:"
@@ -3489,10 +3485,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Foutbericht bij het ophalen van de stroomstatus tijdens extern wissen",
     "value": "Fout bij het ophalen van de stroomstatus"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Bericht dat wordt weergegeven wanneer extern wissen van het platform niet wordt ondersteund",
-    "value": "Extern wissen van het platform wordt niet ondersteund"
   },
   "remotePlatformErase.caps.title": {
     "description": "Titel van de kaart met wissmogelijkheden",

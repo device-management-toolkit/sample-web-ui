@@ -1307,10 +1307,6 @@
     "description": "Error message when retrieving power status fails during Remote Platform Erase",
     "value": "Error retrieving power status"
   },
-  "remotePlatformErase.notSupported": {
-    "description": "Message shown when Remote Platform Erase is not supported on the device",
-    "value": "Remote Platform Erase is not supported"
-  },
   "remotePlatformErase.caps.title": {
     "description": "Title for the platform erase capabilities card",
     "value": "Erase Capabilities"
@@ -2196,10 +2192,6 @@
   "general.oneClickRecoveryNotSupported": {
     "description": "Tooltip for One Click Recovery not supported",
     "value": "One Click Recovery is not supported"
-  },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip for Remote Platform Erase not supported",
-    "value": "Remote Platform Erase is not supported"
   },
   "general.pbaBootShort": {
     "description": "Label for PBA boot",

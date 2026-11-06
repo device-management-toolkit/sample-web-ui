@@ -1715,10 +1715,6 @@
     "description": "קובץ כלים לשחזור לחיצה אחת לא נתמך",
     "value": "התאוששות בלחיצה אחת אינה נתמכת"
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "כלי טיפים למחיקת פלטפורמה מרחוק אינו נתמך",
-    "value": "מחיקת פלטפורמה מרחוק אינה נתמכת"
-  },
   "general.pbaBootShort": {
     "description": "תווית ל- PBA Boot",
     "value": "מגף PBA:"
@@ -3481,10 +3477,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "הודעת שגיאה בעת כשל באחזור סטטוס כוח במהלך מחיקת פלטפורמה מרחוק",
     "value": "שגיאה באחזור סטטוס כוח"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "הודעה המוצגת כאשר מחיקת פלטפורמה מרחוק אינה נתמכת במכשיר",
-    "value": "מחיקת פלטפורמה מרחוק אינה נתמכת"
   },
   "remotePlatformErase.caps.title": {
     "description": "כותרת כרטיס יכולות המחיקה",

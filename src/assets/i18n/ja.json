@@ -1715,10 +1715,6 @@
     "description": "ワンクリック復元機能のツールチップはサポートされていません",
     "value": "ワンクリック復元はサポートされていません"
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "リモートプラットフォーム消去のツールチップはサポートされていません",
-    "value": "リモートプラットフォーム消去はサポートされていません"
-  },
   "general.pbaBootShort": {
     "description": "PBAブート用ラベル",
     "value": "PBA ブート:"
@@ -3481,10 +3477,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "リモート消去中の電源状態取得失敗エラーメッセージ",
     "value": "電源状態の取得に失敗しました"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "デバイスでリモートプラットフォーム消去がサポートされていない場合のメッセージ",
-    "value": "リモートプラットフォーム消去はサポートされていません"
   },
   "remotePlatformErase.caps.title": {
     "description": "消去機能カードのタイトル",

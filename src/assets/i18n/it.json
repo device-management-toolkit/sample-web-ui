@@ -1715,10 +1715,6 @@
     "description": "Tooltip per il ripristino con un clic non supportato",
     "value": "Il ripristino con un clic non è supportato."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Tooltip per Remote Platform Erase non supportato",
-    "value": "Remote Platform Erase non è supportato."
-  },
   "general.pbaBootShort": {
     "description": "Etichetta per l'avvio PBA",
     "value": "Avvio PBA:"
@@ -3481,10 +3477,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Messaggio di errore durante il recupero dello stato di alimentazione nella cancellazione remota",
     "value": "Errore durante il recupero dello stato di alimentazione"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Messaggio mostrato quando la cancellazione remota della piattaforma non è supportata",
-    "value": "La cancellazione remota della piattaforma non è supportata"
   },
   "remotePlatformErase.caps.title": {
     "description": "Titolo della scheda delle capacità di cancellazione",

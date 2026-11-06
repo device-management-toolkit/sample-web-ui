@@ -1723,10 +1723,6 @@
     "description": "أداة التلميح لـ One Click Recovery غير مدعومة",
     "value": "لا يتم دعم الاسترداد بنقرة واحدة"
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "أداة التلميح لمسح النظام الأساسي عن بُعد غير مدعومة",
-    "value": "مسح النظام الأساسي عن بُعد غير مدعوم"
-  },
   "general.pbaBootShort": {
     "description": "تسمية لتمهيد PBA",
     "value": "تشغيل PBA:"
@@ -3489,10 +3485,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "رسالة خطأ عند استرداد حالة الطاقة أثناء المسح البعيد",
     "value": "خطأ في استرداد حالة الطاقة"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "الرسالة المعروضة عندما لا يدعم الجهاز مسح المنصة عن بُعد",
-    "value": "مسح المنصة عن بُعد غير مدعوم"
   },
   "remotePlatformErase.caps.title": {
     "description": "وصف عنوان بطاقة إمكانيات المسح",

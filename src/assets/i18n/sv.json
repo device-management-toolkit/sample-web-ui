@@ -1627,10 +1627,6 @@
     "description": "Verktygstips för återställning med ett klick stöds inte",
     "value": "Återställning med ett klick stöds inte."
   },
-  "general.remotePlatformEraseNotSupported": {
-    "description": "Verktygstips för Remote Platform Erase stöds inte",
-    "value": "Remote Platform Erase stöds inte."
-  },
   "general.pbaBootShort": {
     "description": "Etikett för PBA-start",
     "value": "PBA-start:"
@@ -3349,10 +3345,6 @@
   "remotePlatformErase.errorRetrievingPower": {
     "description": "Felmeddelande vid hämtning av strömstatus under fjärrradering",
     "value": "Fel vid hämtning av strömstatus"
-  },
-  "remotePlatformErase.notSupported": {
-    "description": "Meddelande som visas när fjärrradering av plattform inte stöds på enheten",
-    "value": "Fjärrradering av plattform stöds inte"
   },
   "remotePlatformErase.caps.title": {
     "description": "Titel på kortet med raderingsmöjligheter",
