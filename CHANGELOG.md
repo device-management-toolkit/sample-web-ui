@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.1...v4.4.0) (2026-11-06)
+
+
+### Features
+
+* hide RPE tab and checkbox when not supported by the device ([#3687](https://github.com/device-management-toolkit/sample-web-ui/issues/3687)) ([6a249f5](https://github.com/device-management-toolkit/sample-web-ui/commit/6a249f567c7db47c1d8dc489f8aa9b8e98afe31e))
+
 ## [4.3.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.0...v4.3.1) (2026-11-04)
 
 
