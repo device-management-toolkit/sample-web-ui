@@ -12,6 +12,8 @@ import { amtProfiles } from '../../fixtures/formEntry/profile'
 import * as api8021x from '../../fixtures/api/ieee8021x'
 
 describe('Test Profile Page', () => {
+  const disableCira = Cypress.expose('DISABLE_CIRA') === true || Cypress.expose('DISABLE_CIRA') === 'true'
+
   beforeEach(() => {
     cy.setup()
     // Stub the get and post requests
@@ -50,27 +52,32 @@ describe('Test Profile Page', () => {
     }).as('get-profiles2')
 
     cy.get('button').contains('Add New').click()
-    cy.wait('@get-configs')
     cy.wait('@get-wirelessConfigs')
     cy.wait('@intercept8021xGetAll')
   })
 
-  amtProfiles.forEach((amtProfile) => {
-    it(`creates the profile - ${amtProfile.profileName as string}`, () => {
-      cy.log(amtProfile)
-      cy.matTextlikeInputType('[formControlName="profileName"]', amtProfile.profileName)
+  // When CIRA is disabled on the deployed console, the UI never lets you pick a
+  // CIRA config (the dropdown stays disabled), so creating a CIRA-type profile
+  // isn't a valid operation to test - skip those cases instead of guessing
+  // whether the server actually fetched CIRA configs for this profile.
+  amtProfiles
+    .filter((amtProfile) => !disableCira || !amtProfile.ciraConfigName)
+    .forEach((amtProfile) => {
+      it(`creates the profile - ${amtProfile.profileName as string}`, () => {
+        cy.log(amtProfile)
+        cy.matTextlikeInputType('[formControlName="profileName"]', amtProfile.profileName)
 
-      cy.enterProfileInfoV2(amtProfile)
-      cy.get('button[type=submit]').click()
-      if (!amtProfile.dhcpEnabled && amtProfile.ciraConfigName) {
-        cy.get('button').contains('Continue').click()
-      }
-      if (amtProfile.generateRandomMEBxPassword || amtProfile.generateRandomPassword) {
-        cy.get('button').contains('Continue').click()
-      }
-      cy.wait('@post-profile').then((req) => {
-        cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
+        cy.enterProfileInfoV2(amtProfile)
+        cy.get('button[type=submit]').click()
+        if (!amtProfile.dhcpEnabled && amtProfile.ciraConfigName) {
+          cy.get('button').contains('Continue').click()
+        }
+        if (amtProfile.generateRandomMEBxPassword || amtProfile.generateRandomPassword) {
+          cy.get('button').contains('Continue').click()
+        }
+        cy.wait('@post-profile').then((req) => {
+          cy.wrap(req).its('response.statusCode').should('eq', httpCodes.CREATED)
+        })
       })
     })
-  })
 })
