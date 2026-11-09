@@ -93,6 +93,22 @@ describe('GeneralComponent', () => {
     expect(hasWarning).toBe(true)
   })
 
+  it('should show the RPE checkbox when supported', () => {
+    component.amtEnabledFeatures().get('rpeSupported')?.setValue(true)
+    fixture.changeDetectorRef.markForCheck()
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector('mat-checkbox[formControlName="rpe"]')).not.toBeNull()
+  })
+
+  it('should hide the RPE checkbox when unsupported', () => {
+    component.amtEnabledFeatures().get('rpeSupported')?.setValue(false)
+    fixture.changeDetectorRef.markForCheck()
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector('mat-checkbox[formControlName="rpe"]')).toBeNull()
+  })
+
   it('should not show warning when redirection is true', () => {
     component.amtEnabledFeatures().get('enableKVM')?.setValue(true)
     component.amtEnabledFeatures().get('redirection')?.setValue(true)

@@ -8,15 +8,13 @@ import { eventLogs } from '../../fixtures/api/eventlog'
 
 const describeWhenNotCloud = Cypress.expose('CLOUD') ? describe.skip : describe
 
-const navigateToRemotePlatformErase = (
-  featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response
-): void => {
+const navigateToDeviceDetail = (featuresBody: object): void => {
   cy.myIntercept('GET', /.*amt\/features.*/, {
     statusCode: httpCodes.SUCCESS,
     body: featuresBody
   }).as('get-features')
 
-  cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+  cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
     statusCode: httpCodes.SUCCESS,
     body: eventLogs.devices.success.response
   }).as('get-devices')
@@ -46,11 +44,6 @@ const navigateToRemotePlatformErase = (
     body: eventLogs.version.success.response
   }).as('get-version')
 
-  cy.myIntercept('GET', /.*amt\/boot\/remoteErase.*/, {
-    statusCode: httpCodes.SUCCESS,
-    body: eventLogs.remotePlatformErase.capabilities.response
-  }).as('get-capabilities')
-
   cy.myIntercept('GET', /.*alarmOccurrences.*/, {
     statusCode: httpCodes.SUCCESS,
     body: eventLogs.alarmOccurrences.success.response
@@ -61,7 +54,16 @@ const navigateToRemotePlatformErase = (
 
   cy.get('mat-row').first().click()
   cy.wait('@get-device-by-id').its('response.statusCode').should('eq', 200)
+}
 
+const navigateToRemotePlatformErase = (
+  featuresBody: object = eventLogs.remotePlatformErase.supportedDisabled.response
+): void => {
+  navigateToDeviceDetail(featuresBody)
+  cy.myIntercept('GET', /.*amt\/boot\/remoteErase.*/, {
+    statusCode: httpCodes.SUCCESS,
+    body: eventLogs.remotePlatformErase.capabilities.response
+  }).as('get-capabilities')
   cy.get('.mat-mdc-list-item-title').contains('Remote Platform Erase').click()
   cy.wait('@get-capabilities')
   // Wait for Angular to finish loading (isLoading signal → mat-progress-bar disappears)
@@ -73,12 +75,14 @@ describeWhenNotCloud('Remote Platform Erase', () => {
     cy.setup()
   })
 
-  it('should show "not supported" message when remoteEraseSupported is false', () => {
-    navigateToRemotePlatformErase(eventLogs.remotePlatformErase.notSupported.response)
+  it('should hide RPE navigation and checkbox when remote erase is unsupported', () => {
+    navigateToDeviceDetail(eventLogs.remotePlatformErase.notSupported.response)
     cy.wait('@get-features')
+    cy.get('app-general').should('exist')
+    cy.get('app-general mat-progress-bar').should('not.exist')
 
-    cy.get('[data-cy="remoteEraseCheckbox"]').should('not.exist')
-    cy.get('mat-icon').contains('info').should('exist')
+    cy.get('.mat-mdc-list-item-title').contains('Remote Platform Erase').should('not.exist')
+    cy.get('app-general mat-checkbox[formControlName="rpe"]').should('not.exist')
   })
 
   it('should show checkbox when supported but not enabled', () => {

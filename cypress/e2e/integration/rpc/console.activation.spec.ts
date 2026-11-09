@@ -18,6 +18,7 @@ import {
   execWithRetry,
   buildInfoCommand,
   buildActivateCommand,
+  buildConfigureTlsCommand,
   getAmtInfo,
   getAmtInfoWithIpAddressRetry,
   resolveDeviceIpAddress,
@@ -35,9 +36,19 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
     const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
+    // Profile names follow <mode>-<ip>-<TLS|CIRA>, e.g. acmactivate-DHCP-TLS.
+    const isTlsProfile = parts.length > 2 && parts[2].toUpperCase() === 'TLS'
     const profileYamlFile: string = Cypress.expose('PROFILE_YAML_FILE')
     const isWin = Cypress.platform === 'win32'
     const authEndpoint = getAuthEndpoint()
+    // rpc v2 cannot register the device with Console (auto-add is v3-only), and
+    // its local profiles leave AMT without TLS, so the suite configures TLS with
+    // a separate rpc command and adds the device by hand.
+    const isRpcV2 = /^v?2(?:\.|$)/.test(
+      String(Cypress.expose('RPC_VERSION') ?? 'v3')
+        .trim()
+        .toLowerCase()
+    )
 
     // Console gives the suite no readiness signal to poll before it touches the
     // AMT APIs: the Devices table only renders a connection status in cloud
@@ -45,6 +56,51 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     // does not report the tunnel Console uses. So the settle time before the
     // device page is a plain wait -- raise it if the AMT APIs still answer 503.
     const deviceReadyWaitMs = 180000
+
+    // Turns on TLS (Server, AMT self-signed cert) after an rpc v2 activation with
+    // a TLS profile on AMT 15 and below, where rpc v2 leaves TLS off.
+    const configureTls = (): void => {
+      cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+        const command = buildConfigureTlsCommand({ isWin, rpcDockerImage, password: AMT_PASSWORD })
+        execWithRetry(command, execConfig).then((result) => {
+          const { combined } = buildOutput(result)
+          cy.log(combined)
+          expect(result.code, 'rpc configure tls exit code').to.equal(0)
+        })
+      })
+    }
+
+    // Adds the activated device through Console's Add Device dialog with its
+    // default TLS and self-signed cert settings, unless a previous run already
+    // left it listed.
+    const addDeviceToConsole = (deviceIp: string): void => {
+      cy.wait('@listDevices')
+      cy.get('body').then(($body) => {
+        const alreadyListed =
+          $body.find('mat-cell').filter((_, cell) => (cell.textContent ?? '').includes(deviceIp)).length > 0
+        if (alreadyListed) {
+          cy.log(`Device ${deviceIp} is already listed in Console; skipping Add Device`)
+          return
+        }
+
+        cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
+          cy.intercept('POST', /\/api\/v1\/devices$/).as('addDevice')
+          cy.get('button').contains('Add New').click()
+
+          cy.matTextlikeInputType('[formControlName="hostname"]', deviceIp)
+          cy.matTextlikeInputType('[formControlName="friendlyName"]', `e2e-${deviceIp}`)
+          cy.matTextlikeInputType('[formControlName="username"]', 'admin')
+          cy.matTextlikeInputType('[formControlName="password"]', AMT_PASSWORD, { log: false })
+          cy.get('button[type=submit]').click()
+
+          cy.wait('@addDevice').then(({ request, response }) => {
+            expect(request.body).to.include({ hostname: deviceIp })
+            expect(response?.statusCode, 'Add Device status').to.be.oneOf([200, 201])
+          })
+          cy.wait('@listDevices')
+        })
+      })
+    }
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
@@ -110,6 +166,11 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
             }
 
+            // rpc v2 only leaves TLS unconfigured on AMT 15 and below.
+            if (isRpcV2 && isTlsProfile && parseInt(amtVersion) <= 15) {
+              configureTls()
+            }
+
             // Settle before touching the device page: opening it issues an AMT
             // features query, and until Console can reach the device that
             // answers 503, which Angular raises as an uncaught error and
@@ -121,6 +182,7 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
             // than waiting a fixed interval.
             getAmtInfoWithIpAddressRetry(infoCommand).then((postActivationInfo) => {
               cy.intercept(/devices\/.*$/).as('getdevices')
+              cy.intercept('GET', /\/api\/v1\/devices\?/).as('listDevices')
               cy.goToPage('Devices')
               cy.wait('@getdevices')
 
@@ -136,6 +198,10 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
                   `wireless=${JSON.stringify(postActivationInfo.wirelessAdapter)}`
                 cy.log(errorMessage)
                 throw new Error(errorMessage)
+              }
+
+              if (isRpcV2) {
+                addDeviceToConsole(deviceIp)
               }
 
               cy.log(`Using identifier to find device: ${deviceIp}`)
