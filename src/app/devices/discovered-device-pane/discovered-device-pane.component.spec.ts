@@ -47,6 +47,57 @@ describe('DiscoveredDevicePaneComponent', () => {
     expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneEmpty"]')).toBeTruthy()
   })
 
+  it('shows an error instead of the empty message when loading the latest details failed', () => {
+    fixture.componentRef.setInput('loadError', true)
+    render(baseDevice)
+    expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneError"]')).toBeTruthy()
+    expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneEmpty"]')).toBeNull()
+  })
+
+  it('keeps the cached details visible alongside the load error', () => {
+    fixture.componentRef.setInput('loadError', true)
+    render({
+      ...baseDevice,
+      deviceInfo: { fwVersion: '16.1.30', fwBuild: '', fwSku: '', currentMode: '', features: '', ipAddress: '' }
+    })
+    expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneError"]')).toBeTruthy()
+    expect(component.sections().length).toBe(1)
+  })
+
+  it('shows no error when loading succeeded', () => {
+    render(baseDevice)
+    expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneError"]')).toBeNull()
+  })
+
+  it('shows the AMT DNS suffix when the API returns it', () => {
+    render({
+      ...baseDevice,
+      dnsSuffix: 'corp.example.com',
+      deviceInfo: { fwVersion: '16.1.30', fwBuild: '', fwSku: '', currentMode: '', features: '', ipAddress: '' }
+    })
+    const row = component.sections()[0].rows.find((r) => r.label === 'devices.discoveredPane.amtDnsSuffix.value')
+    expect(row?.value).toBe('corp.example.com')
+  })
+
+  it('shows the AMT DNS suffix even when no other details were reported', () => {
+    render({ ...baseDevice, dnsSuffix: 'corp.example.com' })
+    const sections = component.sections()
+    expect(sections.length).toBe(1)
+    expect(sections[0].title).toBe('devices.discoveredPane.sectionAmt.value')
+    expect(sections[0].rows.map((r) => [r.label, r.value])).toEqual([
+      ['devices.discoveredPane.amtDnsSuffix.value', 'corp.example.com']
+    ])
+    expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneEmpty"]')).toBeNull()
+  })
+
+  it('leaves out the AMT DNS suffix when none is returned', () => {
+    render({
+      ...baseDevice,
+      deviceInfo: { fwVersion: '16.1.30', fwBuild: '', fwSku: '', currentMode: '', features: '', ipAddress: '' }
+    })
+    expect(component.sections()[0].rows.map((r) => r.label)).not.toContain('devices.discoveredPane.amtDnsSuffix.value')
+  })
+
   it('formats discovery timestamps with plain spaces so they copy cleanly', () => {
     render({
       ...baseDevice,

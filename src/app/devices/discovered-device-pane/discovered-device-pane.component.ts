@@ -99,6 +99,8 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   public readonly productType = input('')
   // The devices table's control mode for this device, so both show the same label.
   public readonly controlMode = input('')
+  // The fetch for the latest copy failed, so what is shown may be out of date or missing.
+  public readonly loadError = input(false)
   public readonly closed = output<void>()
 
   @ViewChild('title') title?: ElementRef<HTMLElement>
@@ -110,7 +112,13 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
 
   public readonly sections = computed<PaneSection[]>(() => {
     const info = this.info()
-    if (!info) return []
+    if (!info) {
+      const suffixOnly = this.prune({
+        title: 'devices.discoveredPane.sectionAmt.value',
+        rows: this.rows([['amtDnsSuffix', this.device().dnsSuffix]])
+      })
+      return suffixOnly ? [suffixOnly] : []
+    }
     return [
       this.platformSection(info),
       this.amtSection(info),
@@ -174,6 +182,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
         ['currentMode', this.controlModeValue(info.currentMode)],
         ['features', info.features],
         ['ipAddress', info.ipAddress],
+        ['amtDnsSuffix', this.device().dnsSuffix],
         ['dhcpEnabled', info.dhcpEnabled],
         ['tlsMode', this.label(info.tlsMode, TLS_MODE_LABELS)],
         ['heciAvailable', info.heciAvailable],

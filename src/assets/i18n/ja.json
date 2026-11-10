@@ -1145,6 +1145,14 @@
     "description": "Shown when a discovered device has not reported any details",
     "value": "このデバイスはまだ詳細を報告していません。"
   },
+  "devices.discoveredPane.loadError": {
+    "description": "Shown in the discovered device pane when fetching the latest details fails",
+    "value": "このデバイスの最新の詳細を読み込めませんでした。表示されている内容は古い可能性があります。"
+  },
+  "devices.discoveredPane.amtDnsSuffix": {
+    "description": "Label for the Intel AMT DNS suffix",
+    "value": "AMT DNS サフィックス"
+  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"
