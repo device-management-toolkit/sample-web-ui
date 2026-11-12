@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ 'devices.manage.dialog.title.value' | translate }}</h2>
+<div mat-dialog-content>
+  <p class="description">{{ 'devices.manage.dialog.description.value' | translate }}</p>
+  <p class="device mono" data-cy="manageDeviceName">{{ device.hostname || device.guid }}</p>
+  <form [formGroup]="form" (ngSubmit)="submit()" id="manage-device-form">
+    <mat-form-field appearance="fill" class="field">
+      <mat-label>{{ 'common.userName.value' | translate }}</mat-label>
+      <input matInput formControlName="username" title="username" autocomplete="off" />
+      @if (form.get('username')?.errors?.required) {
+        <mat-error>{{ 'addDevice.userNameRequired.value' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+      <mat-label>{{ 'common.password.value' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        title="password"
+        [type]="hidePassword() ? 'password' : 'text'"
+        autocomplete="new-password" />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        [matTooltip]="'common.showHidePassword.value' | translate"
+        [attr.aria-pressed]="!hidePassword()"
+        (click)="hidePassword.set(!hidePassword())"
+        data-cy="manageDeviceTogglePassword">
+        <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+    </mat-form-field>
+    @if (errorKey(); as key) {
+      <p class="error" role="alert" data-cy="manageDeviceError">{{ key | translate }}</p>
+    }
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button type="button" [mat-dialog-close]="false" [disabled]="submitting()">
+    {{ 'common.cancel.value' | translate }}
+  </button>
+  <button
+    mat-flat-button
+    type="submit"
+    form="manage-device-form"
+    [disabled]="form.invalid || submitting()"
+    data-cy="manageDeviceSubmit">
+    {{ 'devices.manage.button.value' | translate }}
+  </button>
+</div>

@@ -66,6 +66,7 @@ import { MatDivider } from '@angular/material/divider'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DiscoveredDevicePaneComponent } from './discovered-device-pane/discovered-device-pane.component'
+import { ManageDeviceDialogComponent } from './manage-device-dialog/manage-device-dialog.component'
 
 @Component({
   selector: 'app-devices',
@@ -248,7 +249,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Number of icon buttons a row's actions cell renders, which sizes that column.
   get actionCount(): number {
-    return (this.isDiscoveredTab ? 0 : 3) + (this.isCloudMode ? 1 : 2)
+    return (this.isDiscoveredTab ? 1 : 3) + (this.isCloudMode ? 1 : 2)
   }
 
   public pageEvent: PageEventOptions = {
@@ -267,6 +268,13 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // ?tab=managed|discovered picks the tab, e.g. after a discovered device is adopted.
+    if (!this.isCloudMode) {
+      const tab = this.router.parseUrl(this.router.url).queryParams['tab']
+      if (tab === 'managed' || tab === 'discovered') {
+        this.activeTab.set(tab === 'discovered' ? 1 : 0)
+      }
+    }
     this.getTagsThenDevices()
   }
 
@@ -531,6 +539,43 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paneDevice.set(null)
     this.paneTrigger?.focus()
     this.paneTrigger = null
+  }
+
+  manageTooltip(device: Device): string {
+    const { eligible, reasonKey } = this.getManageEligibility(device)
+    return this.translate.instant(eligible ? 'devices.manage.button.value' : (reasonKey ?? ''))
+  }
+
+  // Console decides whether a discovered device can be adopted and re-checks on submit.
+  // A missing answer, e.g. from an older Console, counts as unknown.
+  getManageEligibility(device: Device): { eligible: boolean; reasonKey?: string } {
+    const adoption = device.adoption
+    if (adoption?.eligible) return { eligible: true }
+    const reason =
+      adoption?.reason === 'notActivated' || adoption?.reason === 'unsupported' ? adoption.reason : 'unknown'
+    return { eligible: false, reasonKey: `devices.manage.ineligible.${reason}.value` }
+  }
+
+  // Adopting registers an activated discovered device with Console using its existing AMT credentials.
+  manageDevice(device: Device): void {
+    if (!this.getManageEligibility(device).eligible) return
+    this.dialog
+      .open(ManageDeviceDialogComponent, { width: '480px', data: device })
+      .afterClosed()
+      .subscribe((adopted) => {
+        if (adopted) this.onAdopted()
+      })
+  }
+
+  private onAdopted(): void {
+    this.snackBar.open(
+      this.translate.instant('devices.manage.success.value'),
+      undefined,
+      SnackbarDefaults.defaultSuccess
+    )
+    // Switching tabs closes the pane and reloads the lists and counts.
+    this.onTabChange(0)
+    void this.router.navigate(['/devices'], { queryParams: { tab: 'managed' } })
   }
 
   getProductType(device: Device): string {

@@ -41,7 +41,8 @@ import {
   DisplaySelectionResponse,
   DisplaySelectionRequest,
   RemoteEraseRequest,
-  BootCapabilities
+  BootCapabilities,
+  AdoptRequest
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -418,6 +419,11 @@ export class DevicesService {
         throw err
       })
     )
+  }
+
+  // Console connects to the device with these credentials before marking it managed.
+  adoptDevice(guid: string, credentials: AdoptRequest): Observable<Device> {
+    return this.http.post<Device>(`${environment.mpsServer}/api/v1/devices/${guid}/adopt`, credentials)
   }
 
   editDevice(device: Device): Observable<Device> {

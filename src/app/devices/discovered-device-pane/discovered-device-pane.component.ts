@@ -15,7 +15,7 @@ import {
   output
 } from '@angular/core'
 import { NgTemplateOutlet, formatDate } from '@angular/common'
-import { MatIconButton } from '@angular/material/button'
+import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -79,6 +79,7 @@ const DHCP_MODE_LABELS: Record<string, string> = {
   styleUrls: ['./discovered-device-pane.component.scss'],
   imports: [
     NgTemplateOutlet,
+    MatButton,
     MatIconButton,
     MatIcon,
     MatExpansionPanel,
@@ -99,7 +100,11 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   public readonly productType = input('')
   // The devices table's control mode for this device, so both show the same label.
   public readonly controlMode = input('')
+  // Whether Console can adopt this device; when not, manageDisabledReason (a translation key) says why.
+  public readonly canManage = input(false)
+  public readonly manageDisabledReason = input('')
   public readonly closed = output<void>()
+  public readonly manage = output<void>()
 
   @ViewChild('title') title?: ElementRef<HTMLElement>
 

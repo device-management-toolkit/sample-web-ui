@@ -395,4 +395,25 @@ describe('DiscoveredDevicePaneComponent', () => {
     render(baseDevice)
     expect(document.activeElement).toBe(fixture.nativeElement.querySelector('[data-cy="discoveredPaneTitle"]'))
   })
+
+  describe('manage button', () => {
+    const button = (): HTMLButtonElement => fixture.nativeElement.querySelector('[data-cy="discoveredPaneManage"]')
+
+    it('emits manage when the device is eligible', () => {
+      const emitted = vi.fn()
+      component.manage.subscribe(emitted)
+      fixture.componentRef.setInput('canManage', true)
+      render(baseDevice)
+      expect(button().disabled).toBe(false)
+      button().click()
+      expect(emitted).toHaveBeenCalledTimes(1)
+    })
+
+    it('is disabled with the reason shown when the device is not eligible', () => {
+      fixture.componentRef.setInput('manageDisabledReason', 'devices.manage.ineligible.notActivated.value')
+      render(baseDevice)
+      expect(button().disabled).toBe(true)
+      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageReason"]')).toBeTruthy()
+    })
+  })
 })
