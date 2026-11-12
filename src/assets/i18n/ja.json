@@ -1133,6 +1133,50 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go がこのデバイスを検出し、Console に報告しました。このデバイスは Console によって管理されていません。以下は rpc-go が報告した詳細です。"
   },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "管理"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "デバイスを管理"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "このデバイスの Intel AMT 管理者資格情報を入力してください。Console はデバイスに接続して資格情報を確認します。"
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "デバイスが管理対象になりました"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "デバイスがユーザー名またはパスワードを拒否しました。"
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "Console がデバイスに接続できませんでした。"
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "デバイスへの接続がタイムアウトしました。"
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "デバイスを管理できませんでした。もう一度お試しください。"
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "このデバイスはまだアクティベートされていません。先にアクティベートすると管理できるようになります。"
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "このデバイスは Intel vPro または Intel Standard Manageability に対応していないため、管理できません。"
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device whose capabilities are unknown cannot be managed",
+    "value": "デバイスの機能を判別できませんでした。検出をもう一度実行してください。"
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "初回検出"

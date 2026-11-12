@@ -1133,6 +1133,50 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go ha rilevato questo dispositivo e lo ha segnalato a Console. Il dispositivo non è gestito da Console. Questi dettagli sono quelli segnalati da rpc-go."
   },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "Gestisci"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "Gestisci dispositivo"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "Inserisci le credenziali di amministratore Intel AMT di questo dispositivo. Console si connette al dispositivo per verificarle."
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Il dispositivo è ora gestito"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "Il dispositivo ha rifiutato il nome utente o la password."
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "Console non è riuscita a raggiungere il dispositivo."
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "La connessione al dispositivo è scaduta."
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "Impossibile gestire il dispositivo. Riprova."
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Questo dispositivo non è ancora attivato. Attivalo prima, poi potrà essere gestito."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "Questo dispositivo non può essere gestito perché non supporta Intel vPro o Intel Standard Manageability."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device whose capabilities are unknown cannot be managed",
+    "value": "Impossibile determinare le funzionalità del dispositivo. Esegui di nuovo il rilevamento."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "Primo rilevamento"

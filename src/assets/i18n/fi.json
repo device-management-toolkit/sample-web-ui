@@ -1137,6 +1137,50 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go löysi tämän laitteen ja ilmoitti sen Consolelle. Console ei hallitse tätä laitetta. Nämä tiedot ilmoitti rpc-go."
   },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "Hallitse"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "Hallitse laitetta"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "Anna tämän laitteen Intel AMT -järjestelmänvalvojan tunnistetiedot. Console muodostaa yhteyden laitteeseen niiden tarkistamiseksi."
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Laitetta hallitaan nyt"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "Laite hylkäsi käyttäjätunnuksen tai salasanan."
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "Console ei tavoittanut laitetta."
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "Laitteen yhteys aikakatkaistiin."
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "Laitetta ei voitu ottaa hallintaan. Yritä uudelleen."
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Tätä laitetta ei ole vielä aktivoitu. Aktivoi se ensin, jonka jälkeen sitä voi hallita."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "Tätä laitetta ei voi hallita, koska se ei tue Intel vPro- tai Intel Standard Manageability -ominaisuutta."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device whose capabilities are unknown cannot be managed",
+    "value": "Laitteen ominaisuuksia ei voitu selvittää. Suorita etsintä uudelleen."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "Löydetty ensimmäisen kerran"

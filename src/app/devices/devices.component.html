@@ -219,6 +219,18 @@
                 (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
                 <mat-icon>restart_alt</mat-icon>
               </button>
+            } @else {
+              <!-- The span carries the tooltip because a disabled button does not show one. -->
+              <span [matTooltip]="manageTooltip(element)">
+                <button
+                  mat-icon-button
+                  [disabled]="!getManageEligibility(element).eligible"
+                  [attr.aria-label]="'devices.manage.button.value' | translate"
+                  data-cy="manageDevice"
+                  (click)="$event.stopPropagation(); manageDevice(element)">
+                  <mat-icon>manage_accounts</mat-icon>
+                </button>
+              </span>
             }
             <button
               mat-icon-button
@@ -270,6 +282,9 @@
       [device]="device"
       [productType]="getProductType(device)"
       [controlMode]="getControlMode(device)"
+      [canManage]="getManageEligibility(device).eligible"
+      [manageDisabledReason]="getManageEligibility(device).reasonKey ?? ''"
+      (manage)="manageDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />
   }

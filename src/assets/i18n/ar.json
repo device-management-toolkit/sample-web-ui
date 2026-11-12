@@ -1141,6 +1141,50 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "اكتشف rpc-go هذا الجهاز وأبلغ عنه Console. هذا الجهاز غير مُدار بواسطة Console. هذه التفاصيل هي ما أبلغ عنه rpc-go."
   },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "إدارة"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "إدارة الجهاز"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "أدخل بيانات اعتماد مسؤول Intel AMT لهذا الجهاز. يتصل Console بالجهاز للتحقق منها."
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "أصبح الجهاز مُدارًا الآن"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "رفض الجهاز اسم المستخدم أو كلمة المرور."
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "تعذر على Console الوصول إلى الجهاز."
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "انتهت مهلة الاتصال بالجهاز."
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "تعذرت إدارة الجهاز. حاول مرة أخرى."
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "لم يتم تنشيط هذا الجهاز بعد. قم بتنشيطه أولاً، وبعدها يمكن إدارته."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "لا يمكن إدارة هذا الجهاز لأنه لا يدعم Intel vPro أو Intel Standard Manageability."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device whose capabilities are unknown cannot be managed",
+    "value": "تعذر تحديد إمكانات الجهاز. شغّل الاكتشاف مرة أخرى."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "أول اكتشاف"
