@@ -12,6 +12,8 @@ import { amtProfiles } from '../../fixtures/formEntry/profile'
 // ---------------------------- Test section ----------------------------
 
 describe('Test Profile Page', () => {
+  const disableCira = Cypress.expose('DISABLE_CIRA') === true || Cypress.expose('DISABLE_CIRA') === 'true'
+
   beforeEach(() => {
     cy.setup()
     // Stub the requests
@@ -32,17 +34,22 @@ describe('Test Profile Page', () => {
     cy.get('button').contains('No').click()
   })
 
-  amtProfiles.forEach((profile: any) => {
-    it(`should delete ${profile.profileName as string}`, () => {
-      cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
-        statusCode: httpCodes.SUCCESS,
-        body: empty.response
-      }).as('get-profiles4')
-      // Delete profile
-      cy.get('mat-row').contains(profile.profileName).parent().contains('delete').click()
-      cy.get('button').contains('Yes').click()
-      cy.wait('@delete-profile')
-      cy.wait('@get-profiles4')
+  // create.spec.ts skips creating CIRA-type profiles when CIRA is disabled;
+  // skip deleting them here too, or this fails looking for a row that was
+  // never created.
+  amtProfiles
+    .filter((profile: any) => !disableCira || !profile.ciraConfigName)
+    .forEach((profile: any) => {
+      it(`should delete ${profile.profileName as string}`, () => {
+        cy.myIntercept('GET', 'profiles?$top=25&$skip=0&$count=true', {
+          statusCode: httpCodes.SUCCESS,
+          body: empty.response
+        }).as('get-profiles4')
+        // Delete profile
+        cy.get('mat-row').contains(profile.profileName).parent().contains('delete').click()
+        cy.get('button').contains('Yes').click()
+        cy.wait('@delete-profile')
+        cy.wait('@get-profiles4')
+      })
     })
-  })
 })
