@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/core'
+import { Component, OnInit, computed, inject, signal, input, DestroyRef } from '@angular/core'
 import { catchError, finalize, switchMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
 import { environment } from '../../../environments/environment'
 import { AddDeviceEnterpriseComponent } from '../../shared/add-device-enterprise/add-device-enterprise.component'
+import { connectionTypeOf } from '../../shared/device-connection'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
 import { MatDivider } from '@angular/material/divider'
@@ -73,6 +74,7 @@ export class DeviceToolbarComponent implements OnInit {
   public amtFeatures = signal<AMTFeaturesResponse | null>(null)
   public isCloudMode = environment.cloud
   public device = signal<Device | null>(null)
+  public readonly connectionType = computed(() => connectionTypeOf(this.device()))
   public powerState = signal('Unknown')
   public basePowerOptions: PowerOptions[] = [
     {

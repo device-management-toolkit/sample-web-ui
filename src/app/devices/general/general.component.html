@@ -55,6 +55,36 @@
             </span>
           }
         </div>
+        <div class="flex flex-50">
+          <p>{{ 'general.connectionType.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-font-body-lg" data-cy="connectionType">{{ connectionType() }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'general.productType.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-font-body-lg" data-cy="productType">{{ deviceRecord()?.productType }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'general.deviceId.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-font-body-sm" data-cy="deviceId">{{ deviceRecord()?.id }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'general.createdDate.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-font-body-lg" data-cy="createdDate">{{ deviceRecord()?.createdDate | date: 'medium' }}</span>
+        </div>
+        <div class="flex flex-50">
+          <p>{{ 'general.lastUpdated.value' | translate }}</p>
+        </div>
+        <div class="flex flex-50 justify-end">
+          <span class="mat-font-body-lg" data-cy="lastUpdated">{{ deviceRecord()?.lastUpdated | date: 'medium' }}</span>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
