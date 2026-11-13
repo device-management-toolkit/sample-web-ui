@@ -78,6 +78,14 @@ export default defineConfig({
 
       // Preserve legacy public overrides without publishing unknown env keys.
       config.expose = publicConfig(config.env, config.expose)
+      const disableCira = config.expose.DISABLE_CIRA === true || config.expose.DISABLE_CIRA === 'true'
+      if (disableCira) {
+        const excludeSpecPattern = config.excludeSpecPattern
+        config.excludeSpecPattern = [
+          ...(Array.isArray(excludeSpecPattern) ? excludeSpecPattern : excludeSpecPattern ? [excludeSpecPattern] : []),
+          'cypress/e2e/integration/cira/**/*.ts'
+        ]
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const versionFetcher = require('./cypress/support/version-fetcher')
