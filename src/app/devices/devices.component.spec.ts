@@ -278,6 +278,23 @@ describe('DevicesComponent', () => {
     expect(fixture.nativeElement.querySelector('mat-card [data-cy="filterTags"]')).not.toBeNull()
   })
 
+  describe('productTypeLabel', () => {
+    it('falls back to Unknown on the discovered tab when no SKU was reported', () => {
+      component.isCloudMode = false
+      component.activeTab.set(1)
+      vi.spyOn(component['translate'], 'instant').mockReturnValue('Unknown')
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '' } } as Device)).toBe('Unknown')
+    })
+
+    it('keeps the reported type and leaves managed devices without a SKU empty', () => {
+      component.isCloudMode = false
+      component.activeTab.set(1)
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '16392' } } as Device)).toBe('vPro')
+      component.activeTab.set(0)
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '' } } as Device)).toBe('')
+    })
+  })
+
   describe('getProductType', () => {
     it('should return ISM when bit 4 (0x10) is set', () => {
       const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16

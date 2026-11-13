@@ -8,7 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HttpErrorResponse } from '@angular/common/http'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { provideTranslateService } from '@ngx-translate/core'
-import { of, throwError, EMPTY } from 'rxjs'
+import { of, throwError, EMPTY, Subject } from 'rxjs'
 import { ManageDeviceDialogComponent } from './manage-device-dialog.component'
 import { DevicesService } from '../devices.service'
 import { createSpyObj, SpyObj } from '../../../test-helpers'
@@ -18,7 +18,7 @@ describe('ManageDeviceDialogComponent', () => {
   let fixture: ComponentFixture<ManageDeviceDialogComponent>
   let component: ManageDeviceDialogComponent
   let devicesService: SpyObj<DevicesService>
-  let dialogRef: { close: ReturnType<typeof vi.fn> }
+  let dialogRef: { close: ReturnType<typeof vi.fn>; disableClose?: boolean }
 
   const device = { guid: 'guid-1', hostname: 'lab-pc' } as Device
 
@@ -93,5 +93,20 @@ describe('ManageDeviceDialogComponent', () => {
     ;(fixture.nativeElement.querySelector('[data-cy="manageDeviceTogglePassword"]') as HTMLButtonElement).click()
     fixture.detectChanges()
     expect(input.type).toBe('text')
+  })
+
+  it('gives the visibility toggle an accessible name', () => {
+    const toggle = fixture.nativeElement.querySelector('[data-cy="manageDeviceTogglePassword"]') as HTMLButtonElement
+    expect(toggle.getAttribute('aria-label')).toBeTruthy()
+  })
+
+  it('blocks dismissal while the request is pending and restores it afterwards', () => {
+    const pending = new Subject<Device>()
+    devicesService.adoptDevice.mockReturnValue(pending)
+    component.form.setValue({ username: 'admin', password: 'pw' })
+    component.submit()
+    expect(dialogRef.disableClose).toBe(true)
+    pending.error(new HttpErrorResponse({ status: 500 }))
+    expect(dialogRef.disableClose).toBe(false)
   })
 })

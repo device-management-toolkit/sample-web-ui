@@ -149,7 +149,7 @@
       <!-- not sortable: productType is computed, not a real Device property -->
       <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span class="product-type-chip">{{ getProductType(element) }}</span>
+        <span class="product-type-chip">{{ productTypeLabel(element) }}</span>
       </mat-cell>
     </ng-container>
     <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
@@ -280,7 +280,7 @@
   @if (paneDevice(); as device) {
     <app-discovered-device-pane
       [device]="device"
-      [productType]="getProductType(device)"
+      [productType]="productTypeLabel(device)"
       [controlMode]="getControlMode(device)"
       [canManage]="getManageEligibility(device).eligible"
       [manageDisabledReason]="getManageEligibility(device).reasonKey ?? ''"

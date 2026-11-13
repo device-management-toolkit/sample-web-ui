@@ -1089,6 +1089,10 @@
     "description": "Table column header for product type",
     "value": "Producttype"
   },
+  "devices.productType.unknown": {
+    "description": "Product type shown for a discovered device that reported no Intel AMT data",
+    "value": "Onbekend"
+  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Controlemodus"
@@ -1182,8 +1186,8 @@
     "value": "Dit apparaat kan niet worden beheerd omdat het Intel vPro of Intel Standard Manageability niet ondersteunt."
   },
   "devices.manage.ineligible.unknown": {
-    "description": "Why a device whose capabilities are unknown cannot be managed",
-    "value": "De mogelijkheden van het apparaat konden niet worden bepaald. Voer de detectie opnieuw uit."
+    "description": "Why a device that reported no Intel AMT capability cannot be managed",
+    "value": "Dit apparaat heeft geen Intel AMT-functionaliteit gemeld en kan daarom niet worden beheerd. Het ondersteunt mogelijk geen Intel vPro of Intel Standard Manageability, of het Intel MEI-stuurprogramma ontbreekt."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

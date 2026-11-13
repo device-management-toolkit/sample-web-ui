@@ -69,11 +69,19 @@ export class ManageDeviceDialogComponent {
   submit(): void {
     if (this.form.invalid || this.submitting()) return
     this.submitting.set(true)
+    // Escape or a backdrop click would otherwise dismiss the dialog while the request is
+    // still pending, so a successful adoption would be mistaken for a cancel.
+    this.dialogRef.disableClose = true
     this.errorKey.set(null)
     this.devicesService
       .adoptDevice(this.device.guid, this.form.getRawValue())
       // The error interceptor completes silently on a gateway timeout, so always re-enable the form.
-      .pipe(finalize(() => this.submitting.set(false)))
+      .pipe(
+        finalize(() => {
+          this.submitting.set(false)
+          this.dialogRef.disableClose = false
+        })
+      )
       .subscribe({
         next: () => this.dialogRef.close(true),
         error: (err: unknown) => this.errorKey.set(this.errorKeyFor(err))
