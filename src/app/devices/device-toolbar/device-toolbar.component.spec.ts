@@ -7,9 +7,15 @@ import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } fr
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DevicesService } from '../devices.service'
-import { DeviceToolbarComponent } from './device-toolbar.component'
+import {
+  DeviceToolbarComponent,
+  POWER_POLL_INTERVAL_MS,
+  POWER_POLL_TIMEOUT_MS,
+  POWER_REBOOT_MIN_WAIT_MS,
+  POWER_STEADY_ON_READS
+} from './device-toolbar.component'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { Subject, of, throwError } from 'rxjs'
+import { Observable, Subject, of, throwError } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
 import { BootDetails, Device } from '../../../models/models'
 import { EventEmitter } from '@angular/core'
@@ -160,6 +166,368 @@ describe('DeviceToolbarComponent', () => {
 
     expect(snackBar.open).toHaveBeenCalled()
     expect(component.isLoading()()).toBe(false)
+    expect(component.powerState()).toBe('Unknown')
+  })
+
+  describe('power status after a power action', () => {
+    const ON = 'deviceToolbar.power.on.value'
+    const SLEEP = 'deviceToolbar.power.sleep.value'
+    const OFF = 'deviceToolbar.power.off.value'
+
+    // The device reports these states in turn, then keeps reporting the last one (as a real device stays asleep or off).
+    const reportStates = (...states: (number | Error)[]): void => {
+      devicesService.getPowerState.mockReset()
+      const toResponse = (state: number | Error): Observable<{ powerstate: number }> =>
+        state instanceof Error ? throwError(() => state) : of({ powerstate: state })
+      for (const state of states) {
+        devicesService.getPowerState.mockReturnValueOnce(toResponse(state))
+      }
+      if (states.length > 0) {
+        devicesService.getPowerState.mockReturnValue(toResponse(states[states.length - 1]))
+      }
+    }
+    const nextPoll = (): void => {
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+    }
+
+    beforeEach(() => {
+      vi.useFakeTimers()
+      component.isCloudMode = false
+      sendPowerActionSpy.mockReturnValue(of({ ReturnValue: 0 }))
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('turns yellow on sleep and stays yellow while the device is still on', () => {
+      reportStates(2, 2, 4)
+
+      component.executePowerAction(4)
+      expect(component.powerState()).toBe(SLEEP)
+
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(SLEEP)
+
+      nextPoll()
+      expect(component.powerState()).toBe(SLEEP)
+      // still asleep: keeps checking every 5 s so it turns green as soon as the device wakes
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(SLEEP)
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(5)
+    })
+
+    it('keeps sleep yellow while the device keeps reporting on, until the timeout', () => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+
+      component.executePowerAction(4)
+      vi.advanceTimersByTime(POWER_POLL_TIMEOUT_MS - POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(SLEEP)
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+      const calls = devicesService.getPowerState.mock.calls.length
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS * 2)
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(calls)
+    })
+
+    it.each([
+      [7, 'hibernate'],
+      [12, 'soft off']
+    ])('turns red on %s (%s) and stays red until the device reports off', (action) => {
+      reportStates(2, 2, action === 7 ? 7 : 8)
+
+      component.executePowerAction(action)
+      expect(component.powerState()).toBe(OFF)
+
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(OFF)
+
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(OFF)
+      // still off: keeps checking every 5 s so it turns green as soon as the device is powered on
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(4)
+    })
+
+    it('turns red on power cycle, then green once the device is back after going down', () => {
+      reportStates(8, new Error('unreachable'), 2)
+
+      component.executePowerAction(5)
+      expect(component.powerState()).toBe(OFF)
+
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(OFF)
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it.each([
+      [5, 'power cycle'],
+      [10, 'reset'],
+      [14, 'soft reset'],
+      [101, 'reset to BIOS']
+    ])('keeps %s (%s) red while AMT reports on throughout, until the minimum restart time', (action) => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+
+      component.executePowerAction(action)
+      for (
+        let elapsed = POWER_POLL_INTERVAL_MS;
+        elapsed < POWER_REBOOT_MIN_WAIT_MS;
+        elapsed += POWER_POLL_INTERVAL_MS
+      ) {
+        nextPoll()
+        expect(component.powerState()).toBe(OFF)
+      }
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it('keeps a reset red through AMT drop-outs and turns green once AMT answers on steadily', () => {
+      const down = new Error('unreachable')
+      const steadyOn = Array<number>(POWER_STEADY_ON_READS).fill(2)
+      reportStates(2, down, down, 2, down, ...steadyOn)
+
+      component.executePowerAction(10)
+      for (let i = 0; i < 5 + POWER_STEADY_ON_READS - 1; i++) {
+        nextPoll()
+        expect(component.powerState()).toBe(OFF)
+      }
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it('shows the last reported state when the device never reaches the expected one', () => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+
+      component.executePowerAction(12)
+      vi.advanceTimersByTime(POWER_POLL_TIMEOUT_MS - POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(OFF)
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+      const calls = devicesService.getPowerState.mock.calls.length
+      nextPoll()
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(calls)
+    })
+
+    it('turns green by itself when a hibernated device comes back up without the UI', () => {
+      reportStates(2, 7)
+
+      component.executePowerAction(7)
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(OFF)
+
+      reportStates(7, new Error('unreachable'), 2)
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(OFF)
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(OFF)
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(ON)
+
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS * 3)
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(3)
+    })
+
+    it('keeps checking a device that is already off when the page opens', () => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 8 }))
+      component.refreshPowerState()
+      expect(component.powerState()).toBe(OFF)
+
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(OFF)
+
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it('turns green by itself when a sleeping device is woken outside the UI', () => {
+      reportStates(4)
+      component.executePowerAction(4)
+      nextPoll()
+      expect(component.powerState()).toBe(SLEEP)
+
+      reportStates(2)
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it.each([
+      [7, 'hibernate'],
+      [4, 'sleep'],
+      [12, 'soft off']
+    ])('turns green once AMT answers on steadily after dropping out when %s (%s) does not happen', (action) => {
+      const down = new Error('unreachable')
+      reportStates(down, down, 2, 2, 2)
+
+      component.executePowerAction(action)
+      for (let i = 0; i < 4; i++) {
+        nextPoll()
+        expect(component.powerState()).not.toBe(ON)
+      }
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it.each([
+      [12, OFF],
+      [4, SLEEP]
+    ])('ignores a single failed read while the device is still going down (%s)', (action, expected) => {
+      reportStates(new Error('blip'), 2, 2)
+
+      component.executePowerAction(action)
+      nextPoll()
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(expected)
+    })
+
+    it.each([
+      0,
+      1,
+      undefined
+    ])('shows Unknown when the device reports an unknown power state (%s)', (state) => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: state }))
+
+      component.refreshPowerState()
+
+      expect(component.powerState()).toBe('Unknown')
+    })
+
+    it('recovers from Unknown by itself once the device can be read again', () => {
+      devicesService.getPowerState.mockReturnValue(throwError(() => new Error('unreachable')))
+      component.executePowerAction(12)
+      vi.advanceTimersByTime(POWER_POLL_TIMEOUT_MS)
+      expect(component.powerState()).toBe('Unknown')
+
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it('recovers from a failed manual refresh by itself', () => {
+      devicesService.getPowerState.mockReturnValue(throwError(() => new Error('Network error')))
+      component.refreshPowerState()
+      expect(component.powerState()).toBe('Unknown')
+
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+      vi.advanceTimersByTime(POWER_POLL_INTERVAL_MS)
+      expect(component.powerState()).toBe(ON)
+    })
+
+    it('shows Unknown when the device is unreachable until the timeout', () => {
+      component.powerState.set(OFF)
+      devicesService.getPowerState.mockReturnValue(throwError(() => new Error('unreachable')))
+
+      component.executePowerAction(2)
+      expect(component.powerState()).toBe(OFF)
+
+      vi.advanceTimersByTime(POWER_POLL_TIMEOUT_MS)
+      expect(component.powerState()).toBe('Unknown')
+    })
+
+    it.each([
+      [OFF, 8],
+      [SLEEP, 4]
+    ])('keeps %s on power up and turns green only once the device reports on', (before, stillDown) => {
+      component.powerState.set(before)
+      reportStates(stillDown, stillDown, 2)
+
+      component.executePowerAction(2)
+      expect(component.powerState()).toBe(before)
+
+      nextPoll()
+      nextPoll()
+      expect(component.powerState()).toBe(before)
+
+      nextPoll()
+      expect(component.powerState()).toBe(ON)
+      nextPoll()
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(3)
+    })
+
+    it('does not change the colour when the device rejects the action', () => {
+      sendPowerActionSpy.mockReturnValue(of({ ReturnValue: 1 }))
+
+      component.executePowerAction(12)
+
+      expect(component.powerState()).toBe(ON)
+      expect(snackBar.open).toHaveBeenCalledWith(expect.anything(), undefined, SnackbarDefaults.defaultError)
+      nextPoll()
+      expect(devicesService.getPowerState).not.toHaveBeenCalled()
+    })
+
+    it('does not fail when sending the action fails', () => {
+      sendPowerActionSpy.mockReturnValue(throwError(() => new Error('Network error')))
+
+      component.executePowerAction(12)
+
+      expect(component.powerState()).toBe(ON)
+      expect(snackBar.open).toHaveBeenCalledWith(expect.anything(), undefined, SnackbarDefaults.defaultError)
+    })
+
+    it('stops waiting when the user refreshes manually', () => {
+      devicesService.getPowerState.mockReturnValue(of({ powerstate: 2 }))
+      component.executePowerAction(4)
+
+      component.refreshPowerState()
+      expect(component.powerState()).toBe(ON)
+
+      const calls = devicesService.getPowerState.mock.calls.length
+      vi.advanceTimersByTime(POWER_POLL_TIMEOUT_MS)
+      expect(devicesService.getPowerState).toHaveBeenCalledTimes(calls)
+    })
+
+    describe('in cloud mode', () => {
+      beforeEach(() => {
+        component.isCloudMode = true
+      })
+
+      it('shows the expected state and keeps checking when MPS reports success', () => {
+        sendPowerActionSpy.mockReturnValue(of({ Body: { ReturnValue: 0, ReturnValueStr: 'SUCCESS' } }))
+        reportStates(2, 8)
+
+        component.executePowerAction(12)
+        expect(component.powerState()).toBe(OFF)
+
+        nextPoll()
+        nextPoll()
+        expect(component.powerState()).toBe(OFF)
+        expect(devicesService.getPowerState).toHaveBeenCalledTimes(2)
+        expect(snackBar.open).toHaveBeenCalledWith(expect.anything(), undefined, SnackbarDefaults.defaultSuccess)
+      })
+
+      it('shows an error and keeps the colour when MPS reports a failure', () => {
+        sendPowerActionSpy.mockReturnValue(
+          of({ Body: { RequestPowerStateChange_OUTPUT: { ReturnValue: 36, ReturnValueStr: 'INVALID_PARAMETER' } } })
+        )
+
+        component.executePowerAction(12)
+
+        expect(component.powerState()).toBe(ON)
+        expect(snackBar.open).toHaveBeenCalledWith(expect.anything(), undefined, SnackbarDefaults.defaultError)
+      })
+
+      it('warns without changing the colour when MPS reports NOT_READY', () => {
+        sendPowerActionSpy.mockReturnValue(of({ Body: { ReturnValueStr: 'NOT_READY' } }))
+
+        component.executePowerAction(12)
+
+        expect(component.powerState()).toBe(ON)
+        expect(snackBar.open).toHaveBeenCalledWith(expect.anything(), undefined, SnackbarDefaults.defaultWarn)
+      })
+    })
   })
 
   it('should navigate to device', async () => {
