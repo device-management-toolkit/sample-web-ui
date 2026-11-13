@@ -149,7 +149,7 @@
       <!-- not sortable: productType is computed, not a real Device property -->
       <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span class="product-type-chip">{{ getProductType(element) }}</span>
+        <span class="product-type-chip">{{ productTypeLabel(element) }}</span>
       </mat-cell>
     </ng-container>
     <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
@@ -219,6 +219,18 @@
                 (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
                 <mat-icon>restart_alt</mat-icon>
               </button>
+            } @else {
+              <!-- The span carries the tooltip because a disabled button does not show one. -->
+              <span [matTooltip]="manageTooltip(element)">
+                <button
+                  mat-icon-button
+                  [disabled]="!getManageEligibility(element).eligible"
+                  [attr.aria-label]="'devices.manage.button.value' | translate"
+                  data-cy="manageDevice"
+                  (click)="$event.stopPropagation(); manageDevice(element)">
+                  <mat-icon>manage_accounts</mat-icon>
+                </button>
+              </span>
             }
             <button
               mat-icon-button
@@ -268,8 +280,11 @@
   @if (paneDevice(); as device) {
     <app-discovered-device-pane
       [device]="device"
-      [productType]="getProductType(device)"
+      [productType]="productTypeLabel(device)"
       [controlMode]="getControlMode(device)"
+      [canManage]="getManageEligibility(device).eligible"
+      [manageDisabledReason]="getManageEligibility(device).reasonKey ?? ''"
+      (manage)="manageDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />
   }

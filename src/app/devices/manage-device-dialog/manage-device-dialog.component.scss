@@ -1,0 +1,19 @@
+.description {
+  margin: 0 0 8px;
+}
+
+.device {
+  margin: 0 0 16px;
+  font-family: monospace;
+  overflow-wrap: anywhere;
+}
+
+.field {
+  display: flex;
+  width: 100%;
+}
+
+.error {
+  margin: 0;
+  color: var(--mat-sys-error);
+}

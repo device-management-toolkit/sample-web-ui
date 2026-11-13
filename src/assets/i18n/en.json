@@ -1559,6 +1559,10 @@
     "description": "Table column header for product type",
     "value": "Product Type"
   },
+  "devices.productType.unknown": {
+    "description": "Product type shown for a discovered device that reported no Intel AMT data",
+    "value": "Unknown"
+  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Control Mode"
@@ -1610,6 +1614,50 @@
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go discovered this device and reported it to Console. The device is not managed by Console. These details are what rpc-go reported."
+  },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "Manage"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "Manage device"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "Enter the Intel AMT admin credentials for this device. Console connects to the device to verify them."
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Device is now managed"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "The device rejected the username or password."
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "Console could not reach the device."
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "The connection to the device timed out."
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "The device could not be managed. Try again."
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "This device is not activated yet. Activate it first, then it can be managed."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "This device cannot be managed because it does not support Intel vPro or Intel Standard Manageability."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no Intel AMT capability cannot be managed",
+    "value": "This device did not report any Intel AMT capability, so it cannot be managed. It may not support Intel vPro or Intel Standard Manageability, or the Intel MEI driver may be missing."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

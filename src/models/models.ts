@@ -23,6 +23,18 @@ export interface Device {
   useTLS?: boolean
   allowSelfSigned?: boolean
   certHash?: string
+  // Set by Console on discovered devices.
+  adoption?: Adoption
+}
+// Whether Console can adopt a discovered device; reason says why not.
+export interface Adoption {
+  eligible: boolean
+  reason?: 'notActivated' | 'unsupported' | 'unknown'
+}
+// Credentials Console uses to adopt an already-activated discovered device.
+export interface AdoptRequest {
+  username: string
+  password: string
 }
 export interface DeviceInfo {
   fwVersion: string

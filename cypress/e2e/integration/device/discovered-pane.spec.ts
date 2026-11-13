@@ -33,6 +33,7 @@ const discoveredDevice = {
   guid: '4c4c4544-0042-3510-8048-b4c04f4d3633',
   connectionStatus: false,
   tags: [],
+  adoption: { eligible: false, reason: 'notActivated' },
   deviceInfo: {
     discovered: true,
     firstDiscovered: '2026-09-28T14:02:11Z',
@@ -151,6 +152,49 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.get('body').type('{esc}')
     cy.get('app-discovered-device-pane').should('not.exist')
     cy.focused().should('have.class', 'mat-mdc-row')
+  })
+
+  it('disables Manage and says why when the device is not activated', () => {
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.get('[data-cy="discoveredPaneManage"]').should('be.disabled')
+    cy.get('[data-cy="discoveredPaneManageReason"]').should('contain.text', 'not activated yet')
+  })
+
+  it('keeps the dialog open on wrong credentials and moves the device to Managed on success', () => {
+    const activatedCopy = {
+      ...discoveredDevice,
+      adoption: { eligible: true },
+      deviceInfo: { ...discoveredDevice.deviceInfo, currentMode: 'Admin Control Mode' }
+    }
+    cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: activatedCopy
+    }).as('get-activated-device')
+    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/adopt$`), {
+      statusCode: 403,
+      body: { error: 'rejected', message: 'rejected' }
+    }).as('adopt-rejected')
+
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.wait('@get-activated-device')
+    cy.get('[data-cy="discoveredPaneManage"]').should('not.be.disabled').click()
+    cy.get('[data-cy="manageDeviceSubmit"]').should('be.disabled')
+    cy.get('app-manage-device-dialog input[title="password"]').type('wrong')
+    cy.get('[data-cy="manageDeviceSubmit"]').click()
+    cy.wait('@adopt-rejected')
+    cy.get('[data-cy="manageDeviceError"]').should('contain.text', 'rejected')
+    cy.get('app-manage-device-dialog').should('exist')
+
+    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/adopt$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...activatedCopy, deviceInfo: { ...activatedCopy.deviceInfo, discovered: false } }
+    }).as('adopt-ok')
+    cy.get('app-manage-device-dialog input[title="password"]').clear()
+    cy.get('app-manage-device-dialog input[title="password"]').type('right')
+    cy.get('[data-cy="manageDeviceSubmit"]').click()
+    cy.wait('@adopt-ok')
+    cy.get('app-manage-device-dialog').should('not.exist')
+    cy.location('search').should('contain', 'tab=managed')
   })
 
   it('still opens the device page for a managed device', () => {

@@ -103,6 +103,18 @@ h2 {
   line-height: 21px;
 }
 
+.manage {
+  margin-block-start: 16px;
+}
+
+.manage-reason {
+  max-width: 60ch;
+  margin: 8px 0 0;
+  color: $ink-muted;
+  font-size: 13px;
+  line-height: 18px;
+}
+
 dl {
   display: grid;
   grid-template-columns: minmax(9rem, 40%) 1fr;

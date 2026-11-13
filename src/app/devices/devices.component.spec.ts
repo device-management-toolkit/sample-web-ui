@@ -278,6 +278,23 @@ describe('DevicesComponent', () => {
     expect(fixture.nativeElement.querySelector('mat-card [data-cy="filterTags"]')).not.toBeNull()
   })
 
+  describe('productTypeLabel', () => {
+    it('falls back to Unknown on the discovered tab when no SKU was reported', () => {
+      component.isCloudMode = false
+      component.activeTab.set(1)
+      vi.spyOn(component['translate'], 'instant').mockReturnValue('Unknown')
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '' } } as Device)).toBe('Unknown')
+    })
+
+    it('keeps the reported type and leaves managed devices without a SKU empty', () => {
+      component.isCloudMode = false
+      component.activeTab.set(1)
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '16392' } } as Device)).toBe('vPro')
+      component.activeTab.set(0)
+      expect(component.productTypeLabel({ deviceInfo: { fwSku: '' } } as Device)).toBe('')
+    })
+  })
+
   describe('getProductType', () => {
     it('should return ISM when bit 4 (0x10) is set', () => {
       const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16
@@ -479,8 +496,8 @@ describe('DevicesComponent', () => {
       component.isCloudMode = false
       component.onTabChange(1)
       await render()
-      expect(renderedButtons()).toBe(2)
-      expect(table().style.getPropertyValue('--action-count')).toBe('2')
+      expect(renderedButtons()).toBe(3)
+      expect(table().style.getPropertyValue('--action-count')).toBe('3')
     })
 
     describe('status icon', () => {
@@ -832,6 +849,96 @@ describe('DevicesComponent', () => {
       getDevicesSpy.mockReturnValue(of({ data: [device02], totalCount: 1 }))
       component.getDevices()
       expect(component.paneDevice()).toBeNull()
+    })
+  })
+
+  describe('manage (adopt) a discovered device', () => {
+    // FW SKU bit 0x08 marks vPro; admin control mode is ACM.
+    const eligible = (): Device => ({ ...device01, adoption: { eligible: true } })
+    const notActivated = (): Device => ({ ...device01, adoption: { eligible: false, reason: 'notActivated' } })
+    let navigateSpy: MockInstance
+    let openSpy: MockInstance
+    let closed: Subject<boolean>
+
+    beforeEach(() => {
+      component.isCloudMode = false
+      navigateSpy = vi.spyOn(component.router, 'navigate').mockImplementation((() => Promise.resolve(true)) as any)
+      closed = new Subject<boolean>()
+      openSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue({ afterClosed: () => closed } as any)
+    })
+
+    it('treats an activated vPro device as eligible', () => {
+      expect(component.getManageEligibility(eligible()).eligible).toBe(true)
+    })
+
+    it('explains why a device that is not activated cannot be managed', () => {
+      expect(component.getManageEligibility(notActivated())).toEqual({
+        eligible: false,
+        reasonKey: 'devices.manage.ineligible.notActivated.value'
+      })
+    })
+
+    it.each(['unsupported', 'unknown'] as const)('explains the %s reason Console gives', (reason) => {
+      expect(component.getManageEligibility({ ...device01, adoption: { eligible: false, reason } })).toEqual({
+        eligible: false,
+        reasonKey: `devices.manage.ineligible.${reason}.value`
+      })
+    })
+
+    it('treats a missing adoption answer, e.g. from an older Console, as unknown', () => {
+      expect(component.getManageEligibility(device01)).toEqual({
+        eligible: false,
+        reasonKey: 'devices.manage.ineligible.unknown.value'
+      })
+    })
+
+    it('does not open the dialog for an ineligible device', () => {
+      component.manageDevice(notActivated())
+      expect(openSpy).not.toHaveBeenCalled()
+    })
+
+    it('moves to the Managed tab and reloads after the device is adopted', () => {
+      component.onTabChange(1)
+      getDevicesSpy.mockClear()
+      component.manageDevice(eligible())
+      expect(openSpy).toHaveBeenCalledTimes(1)
+      closed.next(true)
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+      expect(navigateSpy).toHaveBeenCalledWith(['/devices'], { queryParams: { tab: 'managed' } })
+    })
+
+    it('stays on the Discovered tab when the dialog is cancelled', () => {
+      component.onTabChange(1)
+      component.manageDevice(eligible())
+      closed.next(false)
+      expect(component.activeTab()).toBe(1)
+      expect(navigateSpy).not.toHaveBeenCalled()
+    })
+
+    it('opens the Discovered tab from ?tab=discovered', () => {
+      vi.spyOn(component.router, 'url', 'get').mockReturnValue('/devices?tab=discovered')
+      component.ngOnInit()
+      expect(component.activeTab()).toBe(1)
+    })
+
+    it('offers Manage on a discovered row, disabled when the device is ineligible', async () => {
+      component.onTabChange(1)
+      getDevicesSpy.mockReturnValue(of({ data: [eligible(), { ...notActivated(), guid: 'other' }], totalCount: 2 }))
+      component.getDevices()
+      fixture.detectChanges()
+      await fixture.whenStable()
+      const buttons = Array.from(
+        (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLButtonElement>('[data-cy="manageDevice"]')
+      )
+      expect(buttons.map((b) => b.disabled)).toEqual([false, true])
+    })
+
+    it('does not offer Manage on the Managed tab', async () => {
+      component.onTabChange(0)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      expect((fixture.nativeElement as HTMLElement).querySelector('[data-cy="manageDevice"]')).toBeNull()
     })
   })
 })

@@ -27,6 +27,17 @@
       {{ 'devices.discoveredPane.status.value' | translate }}
     </span>
     <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
+    <button
+      mat-flat-button
+      class="manage"
+      [disabled]="!canManage()"
+      (click)="manage.emit()"
+      data-cy="discoveredPaneManage">
+      {{ 'devices.manage.button.value' | translate }}
+    </button>
+    @if (!canManage() && manageDisabledReason()) {
+      <p class="manage-reason" data-cy="discoveredPaneManageReason">{{ manageDisabledReason() | translate }}</p>
+    }
   </div>
 
   @if (firstDiscovered() || lastSynced()) {

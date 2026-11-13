@@ -1085,6 +1085,10 @@
     "description": "Table column header for product type",
     "value": "Produkttyp"
   },
+  "devices.productType.unknown": {
+    "description": "Product type shown for a discovered device that reported no Intel AMT data",
+    "value": "Unbekannt"
+  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Kontrollmodus"
@@ -1136,6 +1140,50 @@
   "devices.discoveredPane.explainer": {
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go hat dieses Gerät entdeckt und an Console gemeldet. Das Gerät wird nicht von Console verwaltet. Diese Angaben hat rpc-go gemeldet."
+  },
+  "devices.manage.button": {
+    "description": "Button that adopts a discovered device so Console manages it",
+    "value": "Verwalten"
+  },
+  "devices.manage.dialog.title": {
+    "description": "Title of the dialog that collects credentials to manage a discovered device",
+    "value": "Gerät verwalten"
+  },
+  "devices.manage.dialog.description": {
+    "description": "Explains what the credentials are used for when managing a discovered device",
+    "value": "Geben Sie die Intel AMT-Administratoranmeldedaten für dieses Gerät ein. Console verbindet sich mit dem Gerät, um sie zu überprüfen."
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Das Gerät wird jetzt verwaltet"
+  },
+  "devices.manage.error.unauthorized": {
+    "description": "Error when the device rejects the supplied credentials",
+    "value": "Das Gerät hat den Benutzernamen oder das Kennwort abgelehnt."
+  },
+  "devices.manage.error.unreachable": {
+    "description": "Error when Console cannot reach the device",
+    "value": "Console konnte das Gerät nicht erreichen."
+  },
+  "devices.manage.error.timeout": {
+    "description": "Error when the connection to the device times out",
+    "value": "Die Verbindung zum Gerät ist abgelaufen."
+  },
+  "devices.manage.error.generic": {
+    "description": "Error shown when managing a device fails for another reason",
+    "value": "Das Gerät konnte nicht verwaltet werden. Versuchen Sie es erneut."
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Dieses Gerät ist noch nicht aktiviert. Aktivieren Sie es zuerst, dann kann es verwaltet werden."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "Dieses Gerät kann nicht verwaltet werden, da es Intel vPro oder Intel Standard Manageability nicht unterstützt."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no Intel AMT capability cannot be managed",
+    "value": "Dieses Gerät hat keine Intel AMT-Funktion gemeldet und kann daher nicht verwaltet werden. Möglicherweise unterstützt es weder Intel vPro noch Intel Standard Manageability, oder der Intel MEI-Treiber fehlt."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
