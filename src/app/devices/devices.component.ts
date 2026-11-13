@@ -24,7 +24,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import { MatSelectChange, MatSelect } from '@angular/material/select'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router, RouterModule } from '@angular/router'
-import { catchError, concatMap, delay, finalize, map, switchMap } from 'rxjs/operators'
+import { catchError, concatMap, defaultIfEmpty, delay, finalize, map, switchMap } from 'rxjs/operators'
 import { forkJoin, from, Observable, of, Subscription, throwError } from 'rxjs'
 import { Device, DeviceFilterStatus, PageEventOptions, PowerState } from '../../models/models'
 import { AddDeviceComponent } from '../shared/add-device/add-device.component'
@@ -149,6 +149,8 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Discovered device shown in the side pane, and the row that opened it so focus can return there.
   public readonly paneDevice = signal<Device | null>(null)
+  // Set when the latest-copy fetch for the open pane fails, so the pane can say so.
+  public readonly paneLoadError = signal(false)
   private paneTrigger: HTMLElement | null = null
   private paneOverlay?: OverlayRef
   private paneRefresh?: Subscription
@@ -506,6 +508,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isDiscoveredTab) {
       this.paneTrigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null
       this.paneDevice.set(device)
+      this.paneLoadError.set(false)
       this.refreshPaneDevice(device.guid)
       return
     }
@@ -513,15 +516,22 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // rpc-go may have synced since the list was loaded, so fetch the latest copy while the
-  // cached row is shown. A failed fetch leaves the cached copy in place.
+  // cached row is shown. A failed fetch leaves the cached copy in place and flags the error.
   private refreshPaneDevice(guid: string): void {
     this.paneRefresh?.unsubscribe()
     this.paneRefresh = this.devicesService
       .getDevice(guid)
-      .pipe(catchError(() => of(null)))
+      .pipe(
+        catchError(() => of(null)),
+        // The error interceptor completes a 504 without emitting.
+        defaultIfEmpty(null)
+      )
       .subscribe((latest) => {
-        if (latest && this.paneDevice()?.guid === guid) {
+        if (this.paneDevice()?.guid !== guid) return
+        if (latest) {
           this.paneDevice.set(latest)
+        } else {
+          this.paneLoadError.set(true)
         }
       })
   }
@@ -529,6 +539,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   closePane(): void {
     this.paneRefresh?.unsubscribe()
     this.paneDevice.set(null)
+    this.paneLoadError.set(false)
     this.paneTrigger?.focus()
     this.paneTrigger = null
   }

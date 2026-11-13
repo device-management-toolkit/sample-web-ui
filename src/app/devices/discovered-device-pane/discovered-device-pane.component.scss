@@ -203,6 +203,15 @@ dd {
   }
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block: 16px;
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 14px;
+}
+
 .empty {
   margin-block-start: 24px;
   color: $ink-muted;

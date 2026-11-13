@@ -11,7 +11,7 @@ import { OverlayContainer, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
 import { RouterTestingModule } from '@angular/router/testing'
-import { of, Subject, throwError } from 'rxjs'
+import { EMPTY, of, Subject, throwError } from 'rxjs'
 
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
@@ -732,6 +732,27 @@ describe('DevicesComponent', () => {
       component.onTabChange(1)
       await component.openDevice(device01)
       expect(component.paneDevice()).toBe(device01)
+      expect(component.paneLoadError()).toBe(true)
+    })
+
+    it('flags a load error when the fetch completes without a value (gateway timeout)', async () => {
+      getDeviceSpy.mockReturnValue(EMPTY)
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(component.paneDevice()).toBe(device01)
+      expect(component.paneLoadError()).toBe(true)
+    })
+
+    it('clears the load error when the pane is closed or the fetch succeeds', async () => {
+      getDeviceSpy.mockReturnValue(throwError(() => new Error('offline')))
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(component.paneLoadError()).toBe(true)
+      component.closePane()
+      expect(component.paneLoadError()).toBe(false)
+      getDeviceSpy.mockReturnValue(of(device01))
+      await component.openDevice(device01)
+      expect(component.paneLoadError()).toBe(false)
     })
 
     it('ignores a late response after the pane has closed', async () => {

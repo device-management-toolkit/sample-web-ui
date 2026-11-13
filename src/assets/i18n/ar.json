@@ -1153,6 +1153,14 @@
     "description": "Shown when a discovered device has not reported any details",
     "value": "لم يُبلغ هذا الجهاز عن أي تفاصيل بعد."
   },
+  "devices.discoveredPane.loadError": {
+    "description": "Shown in the discovered device pane when fetching the latest details fails",
+    "value": "تعذر تحميل أحدث تفاصيل هذا الجهاز. قد تكون المعلومات المعروضة قديمة."
+  },
+  "devices.discoveredPane.amtDnsSuffix": {
+    "description": "Label for the Intel AMT DNS suffix",
+    "value": "لاحقة DNS الخاصة بـ AMT"
+  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"

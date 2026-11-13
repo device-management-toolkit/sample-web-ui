@@ -1153,6 +1153,14 @@
     "description": "Shown when a discovered device has not reported any details",
     "value": "Dit apparaat heeft nog geen gegevens gemeld."
   },
+  "devices.discoveredPane.loadError": {
+    "description": "Shown in the discovered device pane when fetching the latest details fails",
+    "value": "De nieuwste gegevens van dit apparaat konden niet worden geladen. Wat wordt getoond, is mogelijk verouderd."
+  },
+  "devices.discoveredPane.amtDnsSuffix": {
+    "description": "Label for the Intel AMT DNS suffix",
+    "value": "AMT-DNS-achtervoegsel"
+  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"
