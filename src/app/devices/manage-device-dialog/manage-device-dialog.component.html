@@ -23,6 +23,7 @@
         matSuffix
         type="button"
         [matTooltip]="'common.showHidePassword.value' | translate"
+        [attr.aria-label]="'common.showHidePassword.value' | translate"
         [attr.aria-pressed]="!hidePassword()"
         (click)="hidePassword.set(!hidePassword())"
         data-cy="manageDeviceTogglePassword">

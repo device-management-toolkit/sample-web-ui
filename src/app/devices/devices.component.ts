@@ -588,6 +588,14 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     return 'non-vPro'
   }
 
+  // The Product Type to show. A discovered device that reported no firmware SKU, e.g. one
+  // without Intel AMT, would otherwise show an empty cell.
+  productTypeLabel(device: Device): string {
+    const productType = this.getProductType(device)
+    if (productType || !this.isDiscoveredTab) return productType
+    return this.translate.instant('devices.productType.unknown.value')
+  }
+
   getControlMode(device: Device): string {
     const currentMode = device.deviceInfo?.currentMode
     if (currentMode === undefined) return 'unknown'
