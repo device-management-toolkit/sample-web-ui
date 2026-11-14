@@ -1,4 +1,4 @@
-@if (isLoading()) {
+@if (isLoading() || awaitingEraseResult()) {
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 <mat-card>
@@ -9,7 +9,7 @@
         mat-flat-button
         class="error-button"
         data-cy="initiateEraseButton"
-        [disabled]="!hasSelectedCaps()"
+        [disabled]="isLoading() || awaitingEraseResult() || !hasSelectedCaps()"
         [matTooltip]="!hasSelectedCaps() ? ('remotePlatformErase.initiateNoCapsTooltip.value' | translate) : ''"
         (click)="initiateErase()">
         <mat-icon>delete_forever</mat-icon>
@@ -31,7 +31,7 @@
         <mat-slide-toggle
           data-cy="remoteEraseCheckbox"
           [checked]="rpe()"
-          [disabled]="isLoading() || !amtFeatures()"
+          [disabled]="isLoading() || awaitingEraseResult() || !amtFeatures()"
           (change)="toggleFeature($event.checked)">
           {{ 'remotePlatformErase.featureEnabled.value' | translate }}
         </mat-slide-toggle>

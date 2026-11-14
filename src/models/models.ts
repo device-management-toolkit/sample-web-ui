@@ -218,6 +218,13 @@ export interface RemoteEraseRequest extends BootCapabilities {
   ssdPassword?: string
 }
 
+export interface RemoteEraseStatus {
+  status: 'pending' | 'succeeded' | 'failed' | 'unknown'
+  message: string
+  biosStatus?: number
+  biosDetail?: number
+}
+
 export interface PowerState {
   powerstate: number
 }
