@@ -3272,7 +3272,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "לא התקבלה תוצאת BIOS סופית ועדכנית לפני שתם הזמן לבדיקת המצב",
-    "value": "לא ניתן לאשר את תוצאת המחיקה. בדקו את תוצאת ה-BIOS לפני ניסיון חוזר."
+    "value": "בקשת המחיקה נשלחה, אך Console לא הצליחה לאשר את השלמתה. בדקו את התוצאה במכשיר."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "ה-BIOS דיווח על מחיקה מוצלחת לאחר שהתקבלה תוצאה ממתינה",

@@ -1293,7 +1293,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "No fresh terminal BIOS result was observed before the status check timed out",
-    "value": "Unable to confirm the erase outcome. Check the BIOS result before retrying."
+    "value": "The erase request was submitted, but Console could not confirm completion. Verify the result on the device."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "BIOS reported a successful erase after a pending result was observed",

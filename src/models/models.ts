@@ -171,6 +171,8 @@ export interface RemoteEraseRequest extends BootCapabilities {
 export interface RemoteEraseStatus {
   status: 'pending' | 'succeeded' | 'failed' | 'unknown'
   message: string
+  biosStatus?: number
+  biosDetail?: number
 }
 
 export interface PowerState {

@@ -10,7 +10,7 @@ import { RemotePlatformEraseComponent } from './remote-platform-erase.component'
 import { DevicesService } from '../devices.service'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { of, Subject, throwError } from 'rxjs'
+import { NEVER, of, Subject, throwError } from 'rxjs'
 import { provideTranslateService } from '@ngx-translate/core'
 import { AMTFeaturesResponse } from '../../../models/models'
 import { AreYouSureDialogComponent } from '../../shared/are-you-sure/are-you-sure.component'
@@ -126,7 +126,7 @@ describe('RemotePlatformEraseComponent', () => {
       { status: 'succeeded' as const, message: 'remotePlatformErase.osEraseSuccess.value' }
     ])('should show a fresh $status result only after pending', async ({ status, message }) => {
       devicesServiceSpy.getRemoteEraseStatus
-        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+        .mockReturnValueOnce(of({ status: 'pending', message: '', biosStatus: 1, biosDetail: 0 }))
         .mockReturnValue(of({ status, message }))
       component.initiateErase()
       await vi.advanceTimersByTimeAsync(0)
@@ -161,6 +161,84 @@ describe('RemotePlatformEraseComponent', () => {
       expect(component.awaitingEraseResult()).toBe(false)
     })
 
+    it('should accept success after BIOS reports not updated', async () => {
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(of({ status: 'unknown', message: '', biosStatus: 2, biosDetail: 0 }))
+        .mockReturnValue(of({ status: 'succeeded', message: 'done', biosStatus: 0, biosDetail: 0 }))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(snackBarSpy.open).not.toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+      const calls = devicesServiceSpy.getRemoteEraseStatus.mock.calls.length
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(calls)
+    })
+
+    it.each([
+      { status: 'unknown' as const, biosStatus: undefined },
+      { status: 'pending' as const, biosStatus: undefined }
+    ])('should not accept success after an unconfirmed $status / $biosStatus result', async (initial) => {
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(of({ ...initial, message: '' }))
+        .mockReturnValue(of({ status: 'succeeded', message: '', biosStatus: 0, biosDetail: 0 }))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(component.awaitingEraseResult()).toBe(true)
+      await vi.advanceTimersByTimeAsync(595000)
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+      const calls = devicesServiceSpy.getRemoteEraseStatus.mock.calls.length
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(calls)
+    })
+
+    it('should stop with an unconfirmed warning when BIOS status becomes reachable again', async () => {
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(throwError(() => new Error('device unavailable')))
+        .mockReturnValue(of({ status: 'succeeded', message: 'last boot succeeded', biosStatus: 0, biosDetail: 0 }))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(0)
+      expect(component.awaitingEraseResult()).toBe(true)
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+      expect(snackBarSpy.open).not.toHaveBeenCalledWith(
+        'remotePlatformErase.osEraseSuccess.value',
+        undefined,
+        expect.anything()
+      )
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(2)
+    })
+
+    it('should stop unconfirmed after a timed-out request recovers', async () => {
+      devicesServiceSpy.getRemoteEraseStatus
+        .mockReturnValueOnce(NEVER)
+        .mockReturnValue(of({ status: 'unknown', message: '', biosStatus: 2, biosDetail: 0 }))
+      component.initiateErase()
+      await vi.advanceTimersByTimeAsync(15000)
+      expect(component.awaitingEraseResult()).toBe(false)
+      expect(snackBarSpy.open).toHaveBeenLastCalledWith(
+        'remotePlatformErase.eraseUnconfirmed.value',
+        undefined,
+        SnackbarDefaults.defaultWarn
+      )
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(devicesServiceSpy.getRemoteEraseStatus).toHaveBeenCalledTimes(2)
+    })
+
     it('should report an unreachable BIOS as a warning after the extended timeout', async () => {
       devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(throwError(() => new Error('offline')))
       component.initiateErase()
@@ -176,7 +254,7 @@ describe('RemotePlatformEraseComponent', () => {
       fixture.componentRef.setInput('deviceId', 'device-a')
       fixture.detectChanges()
       devicesServiceSpy.getRemoteEraseStatus
-        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+        .mockReturnValueOnce(of({ status: 'pending', message: '', biosStatus: 1 }))
         .mockReturnValue(of({ status: 'succeeded', message: 'stale result for device-b' }))
 
       component.initiateErase()
@@ -201,7 +279,7 @@ describe('RemotePlatformEraseComponent', () => {
       fixture.componentRef.setInput('deviceId', 'device-a')
       fixture.detectChanges()
       devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(submission)
-      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '', biosStatus: 1 }))
 
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledWith('device-a', expect.any(Object))
@@ -222,7 +300,7 @@ describe('RemotePlatformEraseComponent', () => {
     it('should not notify or start polling when the submission resolves after destruction', async () => {
       const submission = new Subject<object>()
       devicesServiceSpy.setRemoteEraseOptions.mockReturnValue(submission)
-      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '', biosStatus: 1 }))
 
       component.initiateErase()
       fixture.destroy()
@@ -253,7 +331,7 @@ describe('RemotePlatformEraseComponent', () => {
       component.eraseCapControl(2).setValue(true)
       component.onCapChange()
       devicesServiceSpy.getRemoteEraseStatus
-        .mockReturnValueOnce(of({ status: 'pending', message: '' }))
+        .mockReturnValueOnce(of({ status: 'pending', message: '', biosStatus: 1 }))
         .mockReturnValue(of({ status: 'succeeded', message: '' }))
 
       component.initiateErase()
@@ -269,7 +347,7 @@ describe('RemotePlatformEraseComponent', () => {
     })
 
     it('should prevent duplicate erases and stop checking when destroyed', async () => {
-      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '' }))
+      devicesServiceSpy.getRemoteEraseStatus.mockReturnValue(of({ status: 'pending', message: '', biosStatus: 1 }))
       component.initiateErase()
       component.initiateErase()
       expect(devicesServiceSpy.setRemoteEraseOptions).toHaveBeenCalledTimes(1)

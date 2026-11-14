@@ -3276,7 +3276,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Vor Ablauf der Statusprüfung wurde kein neues endgültiges BIOS-Ergebnis festgestellt",
-    "value": "Das Ergebnis des Löschvorgangs konnte nicht bestätigt werden. Prüfen Sie das BIOS-Ergebnis, bevor Sie es erneut versuchen."
+    "value": "Der Löschauftrag wurde übermittelt, aber Console konnte den Abschluss nicht bestätigen. Überprüfen Sie das Ergebnis auf dem Gerät."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "BIOS meldete nach einem ausstehenden Ergebnis einen erfolgreichen Löschvorgang",

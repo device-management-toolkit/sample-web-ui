@@ -3280,7 +3280,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Aucun nouveau résultat final du BIOS n'a été observé avant l'expiration du délai de vérification de l'état",
-    "value": "Impossible de confirmer le résultat de l'effacement. Vérifiez le résultat du BIOS avant de réessayer."
+    "value": "La demande d'effacement a été soumise, mais Console n'a pas pu en confirmer la fin. Vérifiez le résultat sur l'appareil."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "Le BIOS a signalé la réussite de l'effacement après l'observation d'un résultat en attente",

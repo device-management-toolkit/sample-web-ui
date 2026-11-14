@@ -3144,7 +3144,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Inget nytt slutgiltigt BIOS-resultat observerades innan statuskontrollen löpte ut",
-    "value": "Det gick inte att bekräfta resultatet av raderingen. Kontrollera BIOS-resultatet innan du försöker igen."
+    "value": "Begäran om radering har skickats, men Console kunde inte bekräfta att den slutförts. Kontrollera resultatet på enheten."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "BIOS rapporterade att raderingen slutfördes efter att ett väntande resultat hade observerats",

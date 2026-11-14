@@ -3272,7 +3272,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "状態確認がタイムアウトする前に、新しい最終BIOS結果を確認できなかった",
-    "value": "消去結果を確認できません。再試行する前にBIOSの結果を確認してください。"
+    "value": "消去要求は送信されましたが、Console は完了を確認できませんでした。デバイスで結果を確認してください。"
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "保留中の結果が確認された後、BIOSが消去の成功を報告した",

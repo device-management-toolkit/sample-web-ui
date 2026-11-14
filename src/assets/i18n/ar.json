@@ -3280,7 +3280,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "لم تُرصد نتيجة BIOS نهائية حديثة قبل انتهاء مهلة التحقق من الحالة",
-    "value": "تعذر تأكيد نتيجة المسح. تحقق من نتيجة BIOS قبل إعادة المحاولة."
+    "value": "تم إرسال طلب المسح، لكن تعذر على Console تأكيد اكتماله. تحقق من النتيجة على الجهاز."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "أفاد BIOS بنجاح المسح بعد رصد نتيجة معلقة",

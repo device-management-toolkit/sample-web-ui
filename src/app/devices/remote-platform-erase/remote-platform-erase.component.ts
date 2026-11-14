@@ -6,7 +6,7 @@
 import { Component, DestroyRef, OnChanges, OnInit, SimpleChanges, inject, signal, input, computed } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
-import { catchError, switchMap } from 'rxjs/operators'
+import { catchError, map, switchMap } from 'rxjs/operators'
 import {
   FormArray,
   FormBuilder,
@@ -364,26 +364,34 @@ export class RemotePlatformEraseComponent implements OnChanges, OnInit {
   private watchEraseResult(deviceId: string, erasedSSDs: boolean): void {
     let observedPending = false
     let confirmed = false
+    let observedUnavailable = false
     this.awaitingEraseResult.set(true)
     this.eraseResultWatcher = timer(0, ERASE_STATUS_POLL_INTERVAL_MS)
       .pipe(
         exhaustMap(() =>
           this.devicesService.getRemoteEraseStatus(deviceId).pipe(
             timeout(ERASE_STATUS_REQUEST_TIMEOUT_MS),
-            catchError(() => of({ status: 'unknown', message: '' }))
+            map((result) => ({ result })),
+            catchError(() => {
+              observedUnavailable = true
+              return of({ result: null })
+            })
           )
         ),
         takeUntil(timer(ERASE_RESULT_TIMEOUT_MS)),
-        takeWhile((result) => {
-          observedPending ||= result.status === 'pending'
+        takeWhile(({ result }) => {
+          if (result === null) return true
+          // BIOS reports 1 (in progress) or 2 (not updated) after a new request; a later terminal result is fresh.
+          observedPending ||= result.biosStatus === 1 || result.biosStatus === 2
+          if (observedUnavailable) return false
           return !observedPending || (result.status !== 'succeeded' && result.status !== 'failed')
         }, true),
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.awaitingEraseResult.set(false))
       )
       .subscribe({
-        next: (result) => {
-          if (!observedPending) return
+        next: ({ result }) => {
+          if (!observedPending || result === null) return
           if (result.status === 'failed') {
             confirmed = true
             this.displayError(result.message)

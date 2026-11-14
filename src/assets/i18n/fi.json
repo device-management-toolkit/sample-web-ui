@@ -3276,7 +3276,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Uutta lopullista BIOS-tulosta ei havaittu ennen tilan tarkistuksen aikakatkaisua",
-    "value": "Tyhjennyksen tulosta ei voitu vahvistaa. Tarkista BIOS-tulos ennen uutta yritystä."
+    "value": "Tyhjennyspyyntö lähetettiin, mutta Console ei voinut vahvistaa sen valmistumista. Tarkista tulos laitteesta."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "BIOS ilmoitti tyhjennyksen onnistuneen, kun ensin oli havaittu keskeneräinen tulos",

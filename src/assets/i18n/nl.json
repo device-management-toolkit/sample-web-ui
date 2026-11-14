@@ -3280,7 +3280,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Er is geen nieuw definitief BIOS-resultaat waargenomen voordat de statuscontrole verliep",
-    "value": "Kan de uitkomst van het wissen niet bevestigen. Controleer het BIOS-resultaat voordat u het opnieuw probeert."
+    "value": "Het verzoek om te wissen is ingediend, maar Console kon de voltooiing niet bevestigen. Controleer het resultaat op het apparaat."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "Het BIOS meldde dat het wissen is geslaagd nadat een resultaat in behandeling was waargenomen",

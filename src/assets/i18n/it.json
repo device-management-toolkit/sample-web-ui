@@ -3272,7 +3272,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "Nessun nuovo risultato BIOS definitivo rilevato prima della scadenza del controllo dello stato",
-    "value": "Impossibile confermare l'esito della cancellazione. Controllare il risultato del BIOS prima di riprovare."
+    "value": "La richiesta di cancellazione è stata inviata, ma Console non ha potuto confermarne il completamento. Verificare il risultato sul dispositivo."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "Il BIOS ha segnalato il completamento corretto della cancellazione dopo aver rilevato un risultato in sospeso",

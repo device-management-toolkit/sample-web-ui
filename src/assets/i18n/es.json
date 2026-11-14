@@ -3276,7 +3276,7 @@
   },
   "remotePlatformErase.eraseUnconfirmed": {
     "description": "No se observó un resultado final reciente del BIOS antes de que venciera el tiempo de espera de la consulta de estado",
-    "value": "No se puede confirmar el resultado del borrado. Compruebe el resultado del BIOS antes de volver a intentarlo."
+    "value": "Se envió la solicitud de borrado, pero Console no pudo confirmar que se completara. Verifique el resultado en el dispositivo."
   },
   "remotePlatformErase.eraseCompleted": {
     "description": "El BIOS informó que el borrado se completó correctamente después de observar un resultado pendiente",
