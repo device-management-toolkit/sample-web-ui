@@ -38,39 +38,6 @@ Console defaults to `AllowedOrigins: ["*"]` with `AllowCredentials: false`, so b
 
 Deployments that serve the UI from the same origin as the API need no CORS changes.
 
-### Remote platform erase status
-
-After an erase submission succeeds, the UI polls the BIOS erase result every five
-seconds for up to ten minutes. Standalone MPS deployments use
-`/api/v1/amt/boot/remoteErase/{guid}/status`; Console/enterprise deployments use
-`/api/v2/amt/boot/remoteErase/{guid}/status`. The backend must support the
-corresponding status endpoint.
-
-Intel's [Remote Platform Erase documentation](https://software.intel.com/sites/manageability/AMT_Implementation_and_Reference_Guide/WordDocuments/Secure_Remote_Platform_Erase.htm)
-describes the BIOS reporting **In Progress** after it starts the submitted erase
-boot option, followed by **Success** or **Failed** when the erase flow finishes.
-The UI only accepts a terminal result after observing pending during its polling
-session, which filters out a result that was already present before that progress
-was observed. The status endpoint reads `BIOSLastStatus`, a last-boot status field,
-and does not provide an operation ID; a later unrelated boot result after pending
-cannot be conclusively distinguished from the erase result. A success snackbar
-therefore means **BIOS reported erase completion**, not that this application
-independently verified the drive contents.
-
-The Intel reference defines status word `1` as **In Progress** and `2` as
-**Not Updated**. The backend treats only `1` as pending; `2` remains unconfirmed.
-The erase submission activates the next single-use boot configuration, which
-Intel documents as clearing `BIOSLastStatus` to **Not Updated** on newer firmware
-releases. The pending-then-terminal guard remains necessary for firmware that may
-retain an older status value.
-
-Intel documents base RPE support starting with CSME 16.0, with capabilities varying
-by platform and BIOS; storage erase verification is documented starting with
-CSME 18.0. See the [AMT_BootSettingData reference](https://software.intel.com/sites/manageability/AMT_Implementation_and_Reference_Guide/HTMLDocuments/WS-Management_Class_Reference/AMT_BootSettingData.htm)
-and verify the status sequence on every supported device/firmware combination.
-If the device is unreachable or no fresh result can be confirmed, the UI warns
-that the outcome is unconfirmed. Keep the erase page open while polling.
-
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
