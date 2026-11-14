@@ -970,20 +970,11 @@ describe('RemotePlatformEraseComponent', () => {
   })
 
   describe('template visibility', () => {
-    it('should hide not-supported message while loading', () => {
-      component.isLoading.set(true)
-      component.isPlatformEraseSupported.set(false)
-      fixture.detectChanges()
-      const notSupported = fixture.nativeElement.querySelector('[data-cy="notSupportedMessage"]')
-      expect(notSupported).toBeNull()
-    })
-
-    it('should show not-supported message after loading completes when not supported', () => {
+    it('should not show unsupported RPE messaging when unsupported', () => {
       component.isLoading.set(false)
       component.isPlatformEraseSupported.set(false)
       fixture.detectChanges()
-      const info = fixture.nativeElement.querySelector('mat-icon.mat-text-secondary')
-      expect(info).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('[data-cy="notSupportedMessage"]')).toBeNull()
     })
 
     it('should show warning when isPlatformEraseSupported is true', () => {

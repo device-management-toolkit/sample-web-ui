@@ -45,7 +45,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     loggedIn = new BehaviorSubject<boolean>(false)
     const authServiceStub = {
-      loggedInSubject$: loggedIn
+      canActivateProtectedRoutes$: loggedIn
     }
 
     TestBed.configureTestingModule({
@@ -95,7 +95,7 @@ describe('AppComponent', () => {
     // expect(component.mqttService.connect).toHaveBeenCalled()
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('mps/#')
     // expect(component.mqttService.subscribeToTopic).toHaveBeenCalledWith('rps/#')
-    expect(component.isLoggedIn()).toBe(false)
+    expect(component.canAccessApp()).toBe(false)
   })
 
   it('should show no sidenav or nav footer before login', () => {

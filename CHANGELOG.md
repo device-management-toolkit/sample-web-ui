@@ -1,3 +1,40 @@
+# [4.4.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.1...v4.4.0) (2026-11-06)
+
+
+### Features
+
+* hide RPE tab and checkbox when not supported by the device ([#3687](https://github.com/device-management-toolkit/sample-web-ui/issues/3687)) ([6a249f5](https://github.com/device-management-toolkit/sample-web-ui/commit/6a249f567c7db47c1d8dc489f8aa9b8e98afe31e))
+
+## [4.3.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.0...v4.3.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **login:** ask to log in again when a session expires ([#3686](https://github.com/device-management-toolkit/sample-web-ui/issues/3686)) ([64e887a](https://github.com/device-management-toolkit/sample-web-ui/commit/64e887a09b726ffbb56c9cdd023fe4a9224662d2)), closes [device-management-toolkit/console#993](https://github.com/device-management-toolkit/console/issues/993)
+
+# [4.3.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.2.1...v4.3.0) (2026-11-04)
+
+
+### Features
+
+* **devices:** show discovered devices in a read-only side pane ([#3670](https://github.com/device-management-toolkit/sample-web-ui/issues/3670)) ([d37499e](https://github.com/device-management-toolkit/sample-web-ui/commit/d37499e164dfef5458655e276db89f250fd58960)), closes [#3612](https://github.com/device-management-toolkit/sample-web-ui/issues/3612)
+
+## [4.2.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.2.0...v4.2.1) (2026-10-26)
+
+# [4.2.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.1.0...v4.2.0) (2026-10-23)
+
+
+### Features
+
+* **devices:** improve KVM connection feedback ([#3659](https://github.com/device-management-toolkit/sample-web-ui/issues/3659)) ([51c25d6](https://github.com/device-management-toolkit/sample-web-ui/commit/51c25d6c64cf4e5b01621cec302c1bc4770d5f1f)), closes [device-management-toolkit/deployment#711](https://github.com/device-management-toolkit/deployment/issues/711)
+
+# [4.1.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.1...v4.1.0) (2026-10-16)
+
+
+### Features
+
+* **login:** skip login when Console runs with auth disabled ([#3577](https://github.com/device-management-toolkit/sample-web-ui/issues/3577)) ([00c150a](https://github.com/device-management-toolkit/sample-web-ui/commit/00c150a996ba67c9402254629d445208468ca19e)), closes [#3643](https://github.com/device-management-toolkit/sample-web-ui/issues/3643)
+
 ## [4.0.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.0.0...v4.0.1) (2026-10-13)
 
 

@@ -309,19 +309,41 @@ describe('KvmComponent', () => {
     expect(component.isLoading()).toBe(false)
     expect(component.deviceState()).toBe(0)
   })
-  it('should show error and hide loading when isDisconnecting is false', () => {
+  it('should report a connection failure when KVM never connected', () => {
     component.isDisconnecting = false
     component.deviceKVMConnection.set(true)
+    component.deviceKVMStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
+      'kvm.connectionFailed.value',
+      undefined,
+      SnackbarDefaults.defaultWarn
+    )
+    expect(component.isLoading()).toBe(false)
+    expect(component.deviceState()).toBe(0)
+    // A failed connection must reset the Connect button.
+    expect(component.deviceKVMConnection()).toBe(false)
+  })
+  it('should report a disconnected session after KVM connected', () => {
+    component.deviceKVMStatus(2)
     component.deviceKVMStatus(0)
     expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
       'kvm.sessionClosedByDevice.value',
       undefined,
       SnackbarDefaults.defaultWarn
     )
-    expect(component.isLoading()).toBe(false)
-    expect(component.deviceState()).toBe(0)
-    // AMT dropped the connection — deviceKVMConnection must be reset so Connect button appears
     expect(component.deviceKVMConnection()).toBe(false)
+  })
+  it('should report a connection failure on a retry after a connected session closes', () => {
+    component.deviceKVMStatus(2)
+    component.deviceKVMStatus(0)
+    snackBarSpy.mockClear()
+    component.connect()
+    component.deviceKVMStatus(0)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(
+      'kvm.connectionFailed.value',
+      undefined,
+      SnackbarDefaults.defaultWarn
+    )
   })
   it('should not reset deviceKVMConnection when isDisconnecting is true (intentional disconnect)', () => {
     component.isDisconnecting = true

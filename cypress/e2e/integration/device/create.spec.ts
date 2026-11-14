@@ -25,7 +25,7 @@ describeWhenNotCloud('Test Device Creation', () => {
     }).as('get-tags')
 
     // Stub the initial get devices request (empty list)
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: empty.response
     }).as('get-devices')
@@ -53,7 +53,7 @@ describeWhenNotCloud('Test Device Creation', () => {
       cy.wait('@get-tags')
 
       // Change API response to return the new device after creation
-      cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+      cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
         statusCode: httpCodes.SUCCESS,
         body: {
           data: [

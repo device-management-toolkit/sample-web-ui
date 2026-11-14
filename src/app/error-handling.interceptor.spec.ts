@@ -63,6 +63,61 @@ describe('ErrorHandlingInterceptor', () => {
     req.flush({ exp: 'token expired' }, { status: 401, statusText: 'Unauthorized' })
   })
 
+  // console#993: Console answers an expired session with a plain 401 (no exp field).
+  describe('401 while a session is believed active', () => {
+    beforeEach(() => {
+      authService.isLoggedIn = true
+      authService.logout.mockImplementation(() => {
+        authService.isLoggedIn = false
+      })
+    })
+
+    it('should ask the user to log in again and not surface the error', () => {
+      let errored = false
+      let completed = false
+      httpClient.get('/api/v1/devices/stats').subscribe({
+        error: () => (errored = true),
+        complete: () => (completed = true)
+      })
+
+      httpMock
+        .expectOne('/api/v1/devices/stats')
+        .flush({ error: 'invalid access token' }, { status: 401, statusText: 'Unauthorized' })
+
+      expect(dialog.open).toHaveBeenCalledExactlyOnceWith(DialogContentComponent, {
+        data: { name: 'error.sessionTimedOut.value' }
+      })
+      expect(authService.logout).toHaveBeenCalledOnce()
+      expect(errored).toBe(false)
+      expect(completed).toBe(true)
+    })
+
+    it('should show the message once when several requests fail together', () => {
+      let errors = 0
+      httpClient.get('/a').subscribe({ error: () => errors++ })
+      httpClient.get('/b').subscribe({ error: () => errors++ })
+
+      httpMock.expectOne('/a').flush({}, { status: 401, statusText: 'Unauthorized' })
+      httpMock.expectOne('/b').flush({}, { status: 401, statusText: 'Unauthorized' })
+
+      expect(dialog.open).toHaveBeenCalledOnce()
+      expect(errors).toBe(0)
+    })
+  })
+
+  it('should pass a 401 through without the message when no session was active', () => {
+    authService.isLoggedIn = false
+    let status = 0
+    httpClient.post('/api/v1/authorize', {}).subscribe({ error: (e) => (status = e.status) })
+
+    httpMock
+      .expectOne('/api/v1/authorize')
+      .flush({ error: 'invalid credentials' }, { status: 401, statusText: 'Unauthorized' })
+
+    expect(dialog.open).not.toHaveBeenCalled()
+    expect(status).toBe(401)
+  })
+
   it('should handle 412 error and show dialog', () => {
     httpClient.get('/test').subscribe({
       error: () => {

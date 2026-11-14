@@ -11,6 +11,7 @@ export const environment = {
   production: false,
   cloud: true,
   useOAuth: false, // for use with console
+  authDisabled: false,
   mpsServer: 'http://localhost:3000',
   rpsServer: 'http://localhost:8081',
   vault: 'http://localhost/vault',

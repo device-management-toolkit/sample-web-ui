@@ -31,11 +31,11 @@ export class AppComponent implements OnInit {
   private readonly authService = inject(AuthService)
   public readonly translate = inject(TranslateService)
   public direction = signal<Direction>('ltr')
-  public isLoggedIn = signal(false)
+  public canAccessApp = signal(false)
 
   ngOnInit(): void {
-    this.authService.loggedInSubject$.subscribe((value: any) => {
-      this.isLoggedIn.set(value)
+    this.authService.canActivateProtectedRoutes$.subscribe((canAccessApp) => {
+      this.canAccessApp.set(canAccessApp)
     })
 
     this.translate.setFallbackLang('en')

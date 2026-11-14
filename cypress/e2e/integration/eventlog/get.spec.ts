@@ -52,7 +52,7 @@ describe('Test event logs page', () => {
       body: eventLogs.alarmOccurrences.success.response
     }).as('get-alarmOccurences')
 
-    cy.myIntercept('GET', 'devices?$top=25&$skip=0&$count=true', {
+    cy.myIntercept('GET', /devices\?\$top=25&\$skip=0&\$count=true/, {
       statusCode: httpCodes.SUCCESS,
       body: eventLogs.devices.success.response
     }).as('get-devices')

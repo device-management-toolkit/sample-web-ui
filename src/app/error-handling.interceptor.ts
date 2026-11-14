@@ -16,14 +16,24 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   const snackbar = inject(MatSnackBar)
   const translate = inject(TranslateService)
 
+  // Read when the request is sent: an earlier 401's logout() may clear it first.
+  const sentWithSession = authService.isLoggedIn
+
   return next(request).pipe(
     catchError((error: any) => {
       if (error instanceof HttpErrorResponse) {
         if (error.status === 401) {
-          if (error.error.exp === 'token expired') {
+          // A 401 on a request sent with a session means it expired (console#993).
+          // Console sends no exp field, so the flag decides. logout() clears it,
+          // so parallel failures show the message once.
+          if (authService.isLoggedIn || error.error?.exp === 'token expired') {
             dialog.open(DialogContentComponent, { data: { name: translate.instant('error.sessionTimedOut.value') } })
           }
           authService.logout()
+          if (sentWithSession) {
+            // The user is on their way to /login; the caller need not report it too.
+            return of()
+          }
         } else if (error.status === 412 || error.status === 409) {
           dialog.open(DialogContentComponent, {
             data: { name: translate.instant('error.itemModified.value') }

@@ -144,5 +144,21 @@ describe('LoginComponent', () => {
       expect(component.loginForm.contains('userId')).toBe(true)
       expect(component.loginForm.contains('password')).toBe(true)
     })
+
+    it('should not navigate away when auth is enabled', () => {
+      expect(routerSpy.navigate).not.toHaveBeenCalled()
+    })
+
+    it('should go straight to the dashboard when auth is disabled', () => {
+      const original = environment.authDisabled
+      environment.authDisabled = true
+      try {
+        TestBed.createComponent(LoginComponent)
+
+        expect(routerSpy.navigate).toHaveBeenCalledWith([''])
+      } finally {
+        environment.authDisabled = original
+      }
+    })
   })
 })
