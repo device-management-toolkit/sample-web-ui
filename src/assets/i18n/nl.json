@@ -3288,7 +3288,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Succesbericht na het wissen van de OS-schijf – vraagt om herinstallatie",
-    "value": "OS-schijf succesvol gewist. Installeer een besturingssysteem opnieuw voordat u dit apparaat gebruikt."
+    "value": "Het BIOS heeft gemeld dat het wissen van de OS-schijf is voltooid. Installeer een besturingssysteem opnieuw voordat u dit apparaat gebruikt."
   },
   "remotePlatformErase.eraseError": {
     "description": "Foutbericht wanneer extern wissen van het platform niet kan worden gestart",

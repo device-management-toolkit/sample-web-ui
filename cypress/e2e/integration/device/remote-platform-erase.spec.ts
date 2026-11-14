@@ -267,7 +267,8 @@ describeWhenIsolatedConsole('Remote Platform Erase BIOS result polling', () => {
   const deviceB = 'guid-b'
   const messages = {
     submitted: 'Erase request submitted. BIOS completion has not been confirmed.',
-    osEraseSuccess: 'OS drive erased successfully. Please reinstall an operating system before using this device.',
+    osEraseSuccess:
+      'BIOS reported that the OS drive erase completed successfully. Please reinstall an operating system before using this device.',
     biosEraseSuccess: 'BIOS reported that the erase completed successfully.',
     unconfirmed: 'Unable to confirm the erase outcome. Check the BIOS result before retrying.',
     deviceNotResponding: 'Device did not respond. Double check connection settings and try again.',

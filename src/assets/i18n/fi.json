@@ -3284,7 +3284,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Onnistumisviesti käyttöjärjestelmäaseman pyyhinnän jälkeen – kehottaa uudelleenasennukseen",
-    "value": "Käyttöjärjestelmän asema pyyhitty onnistuneesti. Asenna käyttöjärjestelmä uudelleen ennen tämän laitteen käyttöä."
+    "value": "BIOS ilmoitti, että käyttöjärjestelmäaseman tyhjennys onnistui. Asenna käyttöjärjestelmä uudelleen ennen tämän laitteen käyttöä."
   },
   "remotePlatformErase.eraseError": {
     "description": "Virheviesti etäalustan pyyhinnan käynnistyksen epäonnistuessa",

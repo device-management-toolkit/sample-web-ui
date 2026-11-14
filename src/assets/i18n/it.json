@@ -3280,7 +3280,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Messaggio di successo dopo la cancellazione dell'unità OS – invita alla reinstallazione",
-    "value": "Unità OS cancellata con successo. Reinstallare un sistema operativo prima di utilizzare questo dispositivo."
+    "value": "Il BIOS ha segnalato il completamento corretto della cancellazione dell'unità del sistema operativo. Reinstallare un sistema operativo prima di utilizzare questo dispositivo."
   },
   "remotePlatformErase.eraseError": {
     "description": "Messaggio di errore quando la cancellazione remota della piattaforma non può essere avviata",

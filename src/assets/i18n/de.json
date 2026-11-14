@@ -3284,7 +3284,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Erfolgsmeldung nach dem Löschen des OS-Laufwerks – fordert zur Neuinstallation auf",
-    "value": "OS-Laufwerk erfolgreich gelöscht. Bitte installieren Sie ein Betriebssystem neu, bevor Sie dieses Gerät verwenden."
+    "value": "Das BIOS hat gemeldet, dass der Löschvorgang des OS-Laufwerks erfolgreich abgeschlossen wurde. Bitte installieren Sie ein Betriebssystem neu, bevor Sie dieses Gerät verwenden."
   },
   "remotePlatformErase.eraseError": {
     "description": "Fehlermeldung wenn die Remote-Plattformlöschung nicht eingeleitet werden kann",

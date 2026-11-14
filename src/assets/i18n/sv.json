@@ -3152,7 +3152,7 @@
   },
   "remotePlatformErase.osEraseSuccess": {
     "description": "Framgångsmeddelande efter radering av OS-enhet – uppmanar till ominstallation",
-    "value": "OS-enheten har raderats. Installera om ett operativsystem innan du använder den här enheten."
+    "value": "BIOS rapporterade att raderingen av OS-enheten slutfördes. Installera om ett operativsystem innan du använder den här enheten."
   },
   "remotePlatformErase.eraseError": {
     "description": "Felmeddelande när fjärrradering av plattform inte kan initieras",
