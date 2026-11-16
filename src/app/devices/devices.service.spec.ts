@@ -8,6 +8,7 @@ import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
 import { provideHttpClient } from '@angular/common/http'
 import { DevicesService } from './devices.service'
+import { BACKGROUND_REQUEST } from '../shared/config/http-context'
 import { environment } from '../../environments/environment'
 import {
   AMTFeaturesResponse,
@@ -867,6 +868,22 @@ describe('DevicesService', () => {
 
   describe('getPowerState', () => {
     const mockResponse: PowerState = { powerstate: 2 }
+
+    it('keeps power-state requests foreground by default', () => {
+      service.getPowerState('device1').subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
+      expect(req.request.context.get(BACKGROUND_REQUEST)).toBe(false)
+      req.flush(mockResponse)
+    })
+
+    it('passes the background option through the HTTP request context', () => {
+      service.getPowerState('device1', { background: true }).subscribe()
+
+      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/amt/power/state/device1`)
+      expect(req.request.context.get(BACKGROUND_REQUEST)).toBe(true)
+      req.flush(mockResponse)
+    })
 
     it('should fetch power state for a device', () => {
       service.getPowerState('device1').subscribe((response) => {
