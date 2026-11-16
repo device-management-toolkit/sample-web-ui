@@ -1138,7 +1138,7 @@
     "value": "rpc-go גילה את המכשיר הזה ודיווח עליו ל-Console. המכשיר אינו מנוהל על ידי Console. אלה הפרטים ש-rpc-go דיווח."
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "ניהול"
   },
   "devices.manage.dialog.title": {

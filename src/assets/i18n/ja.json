@@ -1138,7 +1138,7 @@
     "value": "rpc-go がこのデバイスを検出し、Console に報告しました。このデバイスは Console によって管理されていません。以下は rpc-go が報告した詳細です。"
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "管理"
   },
   "devices.manage.dialog.title": {

@@ -100,7 +100,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   public readonly productType = input('')
   // The devices table's control mode for this device, so both show the same label.
   public readonly controlMode = input('')
-  // Whether Console can adopt this device; when not, manageDisabledReason (a translation key) says why.
+  // Whether Console can manage this device; when not, manageDisabledReason (a translation key) says why.
   public readonly canManage = input(false)
   public readonly manageDisabledReason = input('')
   public readonly closed = output<void>()

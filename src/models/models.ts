@@ -24,15 +24,15 @@ export interface Device {
   allowSelfSigned?: boolean
   certHash?: string
   // Set by Console on discovered devices.
-  adoption?: Adoption
+  management?: Management
 }
-// Whether Console can adopt a discovered device; reason says why not.
-export interface Adoption {
+// Whether Console can manage a discovered device; reason says why not.
+export interface Management {
   eligible: boolean
   reason?: 'notActivated' | 'unsupported' | 'unknown'
 }
-// Credentials Console uses to adopt an already-activated discovered device.
-export interface AdoptRequest {
+// Credentials Console uses to manage an already-activated discovered device.
+export interface ManageRequest {
   username: string
   password: string
 }

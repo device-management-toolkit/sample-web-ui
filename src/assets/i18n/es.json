@@ -1142,7 +1142,7 @@
     "value": "rpc-go detectó este dispositivo y lo informó a Console. Console no administra este dispositivo. Estos detalles son los que informó rpc-go."
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "Administrar"
   },
   "devices.manage.dialog.title": {

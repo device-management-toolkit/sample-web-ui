@@ -1138,7 +1138,7 @@
     "value": "rpc-go ha rilevato questo dispositivo e lo ha segnalato a Console. Il dispositivo non è gestito da Console. Questi dettagli sono quelli segnalati da rpc-go."
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "Gestisci"
   },
   "devices.manage.dialog.title": {

@@ -852,10 +852,10 @@ describe('DevicesComponent', () => {
     })
   })
 
-  describe('manage (adopt) a discovered device', () => {
+  describe('manage a discovered device', () => {
     // FW SKU bit 0x08 marks vPro; admin control mode is ACM.
-    const eligible = (): Device => ({ ...device01, adoption: { eligible: true } })
-    const notActivated = (): Device => ({ ...device01, adoption: { eligible: false, reason: 'notActivated' } })
+    const eligible = (): Device => ({ ...device01, management: { eligible: true } })
+    const notActivated = (): Device => ({ ...device01, management: { eligible: false, reason: 'notActivated' } })
     let navigateSpy: MockInstance
     let openSpy: MockInstance
     let closed: Subject<boolean>
@@ -879,13 +879,13 @@ describe('DevicesComponent', () => {
     })
 
     it.each(['unsupported', 'unknown'] as const)('explains the %s reason Console gives', (reason) => {
-      expect(component.getManageEligibility({ ...device01, adoption: { eligible: false, reason } })).toEqual({
+      expect(component.getManageEligibility({ ...device01, management: { eligible: false, reason } })).toEqual({
         eligible: false,
         reasonKey: `devices.manage.ineligible.${reason}.value`
       })
     })
 
-    it('treats a missing adoption answer, e.g. from an older Console, as unknown', () => {
+    it('treats a missing management answer, e.g. from an older Console, as unknown', () => {
       expect(component.getManageEligibility(device01)).toEqual({
         eligible: false,
         reasonKey: 'devices.manage.ineligible.unknown.value'
@@ -897,7 +897,7 @@ describe('DevicesComponent', () => {
       expect(openSpy).not.toHaveBeenCalled()
     })
 
-    it('moves to the Managed tab and reloads after the device is adopted', () => {
+    it('moves to the Managed tab and reloads after the device is managed', () => {
       component.onTabChange(1)
       getDevicesSpy.mockClear()
       component.manageDevice(eligible())

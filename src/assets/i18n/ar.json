@@ -1146,7 +1146,7 @@
     "value": "اكتشف rpc-go هذا الجهاز وأبلغ عنه Console. هذا الجهاز غير مُدار بواسطة Console. هذه التفاصيل هي ما أبلغ عنه rpc-go."
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "إدارة"
   },
   "devices.manage.dialog.title": {

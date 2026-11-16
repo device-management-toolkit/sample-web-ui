@@ -1146,7 +1146,7 @@
     "value": "rpc-go обнаружил это устройство и сообщил о нём в Console. Это устройство не управляется Console. Эти сведения сообщил rpc-go."
   },
   "devices.manage.button": {
-    "description": "Button that adopts a discovered device so Console manages it",
+    "description": "Button that moves a discovered device to Managed",
     "value": "Управлять"
   },
   "devices.manage.dialog.title": {

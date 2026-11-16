@@ -33,7 +33,7 @@ const discoveredDevice = {
   guid: '4c4c4544-0042-3510-8048-b4c04f4d3633',
   connectionStatus: false,
   tags: [],
-  adoption: { eligible: false, reason: 'notActivated' },
+  management: { eligible: false, reason: 'notActivated' },
   deviceInfo: {
     discovered: true,
     firstDiscovered: '2026-09-28T14:02:11Z',
@@ -163,17 +163,17 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
   it('keeps the dialog open on wrong credentials and moves the device to Managed on success', () => {
     const activatedCopy = {
       ...discoveredDevice,
-      adoption: { eligible: true },
+      management: { eligible: true },
       deviceInfo: { ...discoveredDevice.deviceInfo, currentMode: 'Admin Control Mode' }
     }
     cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
       statusCode: httpCodes.SUCCESS,
       body: activatedCopy
     }).as('get-activated-device')
-    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/adopt$`), {
+    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/manage$`), {
       statusCode: 403,
       body: { error: 'rejected', message: 'rejected' }
-    }).as('adopt-rejected')
+    }).as('manage-rejected')
 
     cy.get('mat-row').contains('lab-pc-07').click()
     cy.wait('@get-activated-device')
@@ -181,18 +181,18 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.get('[data-cy="manageDeviceSubmit"]').should('be.disabled')
     cy.get('app-manage-device-dialog input[title="password"]').type('wrong')
     cy.get('[data-cy="manageDeviceSubmit"]').click()
-    cy.wait('@adopt-rejected')
+    cy.wait('@manage-rejected')
     cy.get('[data-cy="manageDeviceError"]').should('contain.text', 'rejected')
     cy.get('app-manage-device-dialog').should('exist')
 
-    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/adopt$`), {
+    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/manage$`), {
       statusCode: httpCodes.SUCCESS,
       body: { ...activatedCopy, deviceInfo: { ...activatedCopy.deviceInfo, discovered: false } }
-    }).as('adopt-ok')
+    }).as('manage-ok')
     cy.get('app-manage-device-dialog input[title="password"]').clear()
     cy.get('app-manage-device-dialog input[title="password"]').type('right')
     cy.get('[data-cy="manageDeviceSubmit"]').click()
-    cy.wait('@adopt-ok')
+    cy.wait('@manage-ok')
     cy.get('app-manage-device-dialog').should('not.exist')
     cy.location('search').should('contain', 'tab=managed')
   })

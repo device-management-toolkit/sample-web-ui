@@ -23,7 +23,7 @@ describe('ManageDeviceDialogComponent', () => {
   const device = { guid: 'guid-1', hostname: 'lab-pc' } as Device
 
   beforeEach(async () => {
-    devicesService = createSpyObj<DevicesService>('DevicesService', ['adoptDevice'])
+    devicesService = createSpyObj<DevicesService>('DevicesService', ['manageDevice'])
     dialogRef = { close: vi.fn() }
     await TestBed.configureTestingModule({
       imports: [ManageDeviceDialogComponent],
@@ -41,14 +41,14 @@ describe('ManageDeviceDialogComponent', () => {
 
   it('does not submit until a password is entered', () => {
     component.submit()
-    expect(devicesService.adoptDevice).not.toHaveBeenCalled()
+    expect(devicesService.manageDevice).not.toHaveBeenCalled()
   })
 
   it('sends the credentials and closes with true on success', () => {
-    devicesService.adoptDevice.mockReturnValue(of({}))
+    devicesService.manageDevice.mockReturnValue(of({}))
     component.form.setValue({ username: 'admin', password: 'P@ssw0rd' })
     component.submit()
-    expect(devicesService.adoptDevice).toHaveBeenCalledWith('guid-1', { username: 'admin', password: 'P@ssw0rd' })
+    expect(devicesService.manageDevice).toHaveBeenCalledWith('guid-1', { username: 'admin', password: 'P@ssw0rd' })
     expect(dialogRef.close).toHaveBeenCalledWith(true)
   })
 
@@ -59,7 +59,7 @@ describe('ManageDeviceDialogComponent', () => {
     [504, 'devices.manage.error.timeout.value'],
     [500, 'devices.manage.error.generic.value']
   ])('keeps the dialog open with an inline error for HTTP %i', (status, key) => {
-    devicesService.adoptDevice.mockReturnValue(throwError(() => new HttpErrorResponse({ status })))
+    devicesService.manageDevice.mockReturnValue(throwError(() => new HttpErrorResponse({ status })))
     component.form.setValue({ username: 'admin', password: 'wrong' })
     component.submit()
     expect(dialogRef.close).not.toHaveBeenCalled()
@@ -70,7 +70,7 @@ describe('ManageDeviceDialogComponent', () => {
   })
 
   it('re-enables the form when the request completes without a result', () => {
-    devicesService.adoptDevice.mockReturnValue(EMPTY)
+    devicesService.manageDevice.mockReturnValue(EMPTY)
     component.form.setValue({ username: 'admin', password: 'pw' })
     component.submit()
     expect(component.submitting()).toBe(false)
@@ -78,11 +78,11 @@ describe('ManageDeviceDialogComponent', () => {
   })
 
   it('clears a previous error when retrying', () => {
-    devicesService.adoptDevice.mockReturnValueOnce(throwError(() => new HttpErrorResponse({ status: 401 })))
+    devicesService.manageDevice.mockReturnValueOnce(throwError(() => new HttpErrorResponse({ status: 401 })))
     component.form.setValue({ username: 'admin', password: 'wrong' })
     component.submit()
     expect(component.errorKey()).not.toBeNull()
-    devicesService.adoptDevice.mockReturnValueOnce(of({}))
+    devicesService.manageDevice.mockReturnValueOnce(of({}))
     component.submit()
     expect(component.errorKey()).toBeNull()
   })
@@ -102,7 +102,7 @@ describe('ManageDeviceDialogComponent', () => {
 
   it('blocks dismissal while the request is pending and restores it afterwards', () => {
     const pending = new Subject<Device>()
-    devicesService.adoptDevice.mockReturnValue(pending)
+    devicesService.manageDevice.mockReturnValue(pending)
     component.form.setValue({ username: 'admin', password: 'pw' })
     component.submit()
     expect(dialogRef.disableClose).toBe(true)

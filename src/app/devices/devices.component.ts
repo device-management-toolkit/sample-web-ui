@@ -268,7 +268,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // ?tab=managed|discovered picks the tab, e.g. after a discovered device is adopted.
+    // ?tab=managed|discovered picks the tab, e.g. after a discovered device is managed.
     if (!this.isCloudMode) {
       const tab = this.router.parseUrl(this.router.url).queryParams['tab']
       if (tab === 'managed' || tab === 'discovered') {
@@ -546,28 +546,28 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.translate.instant(eligible ? 'devices.manage.button.value' : (reasonKey ?? ''))
   }
 
-  // Console decides whether a discovered device can be adopted and re-checks on submit.
+  // Console decides whether a discovered device can be managed and re-checks on submit.
   // A missing answer, e.g. from an older Console, counts as unknown.
   getManageEligibility(device: Device): { eligible: boolean; reasonKey?: string } {
-    const adoption = device.adoption
-    if (adoption?.eligible) return { eligible: true }
+    const management = device.management
+    if (management?.eligible) return { eligible: true }
     const reason =
-      adoption?.reason === 'notActivated' || adoption?.reason === 'unsupported' ? adoption.reason : 'unknown'
+      management?.reason === 'notActivated' || management?.reason === 'unsupported' ? management.reason : 'unknown'
     return { eligible: false, reasonKey: `devices.manage.ineligible.${reason}.value` }
   }
 
-  // Adopting registers an activated discovered device with Console using its existing AMT credentials.
+  // Managing registers an activated discovered device with Console using its existing AMT credentials.
   manageDevice(device: Device): void {
     if (!this.getManageEligibility(device).eligible) return
     this.dialog
       .open(ManageDeviceDialogComponent, { width: '480px', data: device })
       .afterClosed()
-      .subscribe((adopted) => {
-        if (adopted) this.onAdopted()
+      .subscribe((managed) => {
+        if (managed) this.onManaged()
       })
   }
 
-  private onAdopted(): void {
+  private onManaged(): void {
     this.snackBar.open(
       this.translate.instant('devices.manage.success.value'),
       undefined,
