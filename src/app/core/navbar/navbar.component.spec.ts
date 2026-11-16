@@ -126,7 +126,7 @@ describe('NavbarComponent', () => {
     expect(fixture.nativeElement.querySelector('a[routerlink="/download-rpc"]')).toBeNull()
   })
 
-  it('should show password management only for standalone enterprise authentication', () => {
+  it('should not show password management in the navigation list', () => {
     const originalUseOAuth = environment.useOAuth
     const originalAuthDisabled = environment.authDisabled
     try {
@@ -135,7 +135,7 @@ describe('NavbarComponent', () => {
       environment.authDisabled = false
 
       fixture.detectChanges()
-      expect(fixture.nativeElement.querySelector('a[routerlink="/account/password"]')).not.toBeNull()
+      expect(fixture.nativeElement.querySelector('a[routerlink="/account/password"]')).toBeNull()
 
       environment.useOAuth = true
       fixture.detectChanges()

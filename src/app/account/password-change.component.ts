@@ -7,10 +7,11 @@ import { Component, inject, signal } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms'
 import { MatButton } from '@angular/material/button'
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
-import { MatError, MatFormField } from '@angular/material/form-field'
+import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
 import { MatInput } from '@angular/material/input'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { AuthService } from '../auth.service'
+import { passwordConfirmationErrorState } from '../shared/password-confirmation-error-state'
 
 const strongPasswordValidator: ValidatorFn = (control): ValidationErrors | null => {
   const password = String(control.value ?? '')
@@ -30,6 +31,8 @@ const strongPasswordValidator: ValidatorFn = (control): ValidationErrors | null 
     MatCardTitle,
     MatError,
     MatFormField,
+    MatHint,
+    MatLabel,
     MatInput,
     ReactiveFormsModule,
     TranslatePipe
@@ -48,6 +51,7 @@ export class PasswordChangeComponent {
     newPassword: ['', [Validators.required, strongPasswordValidator]],
     confirmPassword: ['', Validators.required]
   })
+  readonly confirmationErrorState = passwordConfirmationErrorState(() => this.confirmationMismatch)
 
   get confirmationMismatch(): boolean {
     const { newPassword, confirmPassword } = this.form.getRawValue()
@@ -64,20 +68,22 @@ export class PasswordChangeComponent {
     this.isLoading.set(true)
     this.statusMessage.set('')
 
-    this.authService.changePassword(currentPassword, newPassword, confirmPassword).subscribe({
-      next: () => {
-        this.statusIsError.set(false)
-        this.statusMessage.set(this.translate.instant('account.passwordChange.success.value'))
-        this.form.reset()
-      },
-      error: (error: { error?: { error?: string; message?: string } }) => {
-        this.statusIsError.set(true)
-        this.statusMessage.set(
-          error.error?.message ??
-            error.error?.error ??
-            this.translate.instant('account.passwordChange.error.value')
-        )
-      }
-    }).add(() => this.isLoading.set(false))
+    this.authService
+      .changePassword(currentPassword, newPassword, confirmPassword)
+      .subscribe({
+        next: () => {
+          this.statusIsError.set(false)
+          this.statusMessage.set(this.translate.instant('account.passwordChange.success.value'))
+          this.form.reset()
+          this.authService.logout()
+        },
+        error: (error: { error?: { error?: string; message?: string } }) => {
+          this.statusIsError.set(true)
+          this.statusMessage.set(
+            error.error?.message ?? error.error?.error ?? this.translate.instant('account.passwordChange.error.value')
+          )
+        }
+      })
+      .add(() => this.isLoading.set(false))
   }
 }

@@ -7,12 +7,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createSpyObj, type SpyObj } from '../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withInterceptors } from '@angular/common/http'
+import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from './auth.service'
 import { Router } from '@angular/router'
 import { environment } from '../environments/environment'
 import { MPSVersion, RPSVersion } from '../models/models'
 import { provideTranslateService } from '@ngx-translate/core'
+import { authorizationInterceptor } from './authorize.interceptor'
+import { errorHandlingInterceptor } from './error-handling.interceptor'
 
 describe('AuthService', () => {
   let service: AuthService
@@ -226,6 +230,117 @@ describe('AuthService', () => {
         confirmPassword: 'new-password-123'
       })
       req.flush({ message: 'password changed' })
+    })
+  })
+
+  describe('auth form interceptor integration', () => {
+    let dialog: SpyObj<MatDialog>
+
+    beforeEach(() => {
+      TestBed.resetTestingModule()
+      environment.cloud = false
+      environment.authDisabled = false
+      dialog = createSpyObj('MatDialog', ['open'])
+      TestBed.configureTestingModule({
+        providers: [
+          provideTranslateService(),
+          provideHttpClient(withInterceptors([authorizationInterceptor, errorHandlingInterceptor])),
+          provideHttpClientTesting(),
+          { provide: Router, useValue: routerSpy },
+          { provide: MatDialog, useValue: dialog },
+          { provide: MatSnackBar, useValue: createSpyObj('MatSnackBar', ['open']) }
+        ]
+      })
+      service = TestBed.inject(AuthService)
+      httpMock = TestBed.inject(HttpTestingController)
+      service.isLoggedIn = true
+      service.loggedInSubject$.next(true)
+      localStorage.setItem('sessionActive', 'true')
+    })
+
+    it('surfaces an incorrect current password without logging out or showing a session dialog', () => {
+      let responseStatus = 0
+      service.changePassword('wrong', 'New-password-123', 'New-password-123').subscribe({
+        error: (error) => (responseStatus = error.status)
+      })
+
+      const request = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
+      expect(request.request.withCredentials).toBe(true)
+      request.flush(
+        { error: 'invalid credentials', message: 'Incorrect Username and/or Password!' },
+        { status: 401, statusText: 'Unauthorized' }
+      )
+
+      expect(responseStatus).toBe(401)
+      expect(service.isLoggedIn).toBe(true)
+      expect(localStorage.getItem('sessionActive')).toBe('true')
+      expect(routerSpy.navigate).not.toHaveBeenCalled()
+      expect(dialog.open).not.toHaveBeenCalled()
+    })
+
+    it('still logs out when the password-change session itself is invalid', () => {
+      service.changePassword('old', 'New-password-123', 'New-password-123').subscribe()
+      httpMock
+        .expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
+        .flush({ error: 'invalid access token' }, { status: 401, statusText: 'Unauthorized' })
+      httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/logout`).flush({})
+
+      expect(service.isLoggedIn).toBe(false)
+      expect(localStorage.getItem('sessionActive')).toBeNull()
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login'])
+      expect(dialog.open).toHaveBeenCalledOnce()
+    })
+
+    it.each([
+      { status: 409, code: 'SETUP_ALREADY_COMPLETED' },
+      { status: 401, code: 'INVALID_SETUP_TOKEN' }
+    ])('leaves setup error $code to the setup page', ({ status, code }) => {
+      let responseCode = ''
+      service.completeFirstRunSetup('token', 'admin', 'Password-123!', 'Password-123!').subscribe({
+        error: (error) => (responseCode = error.error.code)
+      })
+      const request = httpMock.expectOne('/api/v1/auth/setup')
+      expect(request.request.withCredentials).toBe(false)
+      request.flush({ code }, { status, statusText: 'Setup rejected' })
+
+      expect(responseCode).toBe(code)
+      expect(dialog.open).not.toHaveBeenCalled()
+      expect(service.isLoggedIn).toBe(true)
+    })
+
+    it('leaves environment-managed password conflicts to the password form', () => {
+      let responseStatus = 0
+      service.changePassword('old', 'New-password-123', 'New-password-123').subscribe({
+        error: (error) => (responseStatus = error.status)
+      })
+      httpMock
+        .expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
+        .flush({ error: 'password is managed by AUTH_ADMIN_PASSWORD' }, { status: 409, statusText: 'Conflict' })
+
+      expect(responseStatus).toBe(409)
+      expect(dialog.open).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('first-run setup', () => {
+    it('sends the one-time token and credentials in a request without cookies', () => {
+      const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
+      const originalSetupApi = runtimeConfig.__CONSOLE_SETUP_API__
+      runtimeConfig.__CONSOLE_SETUP_API__ = 'https://localhost:40000'
+
+      service.completeFirstRunSetup('one-time-token', 'admin', 'Password-123!', 'Password-123!').subscribe()
+
+      const req = httpMock.expectOne('https://localhost:40000/api/v1/auth/setup')
+      expect(req.request.method).toBe('POST')
+      expect(req.request.body).toEqual({
+        token: 'one-time-token',
+        username: 'admin',
+        password: 'Password-123!',
+        confirmPassword: 'Password-123!'
+      })
+      expect(req.request.withCredentials).toBe(false)
+      req.flush({ status: 'configured' })
+      runtimeConfig.__CONSOLE_SETUP_API__ = originalSetupApi
     })
   })
 

@@ -17,7 +17,7 @@ describe('PasswordChangeComponent', () => {
   let authService: SpyObj<AuthService>
 
   beforeEach(() => {
-    authService = createSpyObj('AuthService', ['changePassword'])
+    authService = createSpyObj('AuthService', ['changePassword', 'logout'])
     TestBed.configureTestingModule({
       imports: [PasswordChangeComponent],
       providers: [provideTranslateService(), { provide: AuthService, useValue: authService }]
@@ -42,7 +42,20 @@ describe('PasswordChangeComponent', () => {
     expect(component.form.controls.newPassword.hasError('weakPassword')).toBe(true)
   })
 
-  it('should submit credentials and clear the form when the password changes', () => {
+  it('should reject a password without enough distinct characters', () => {
+    component.form.setValue({
+      currentPassword: 'old-password',
+      newPassword: 'aaaabbbb',
+      confirmPassword: 'aaaabbbb'
+    })
+
+    component.submit()
+
+    expect(authService.changePassword).not.toHaveBeenCalled()
+    expect(component.form.controls.newPassword.hasError('weakPassword')).toBe(true)
+  })
+
+  it('should submit credentials and log out when the password changes', () => {
     authService.changePassword.mockReturnValue(of({ message: 'password changed' }))
     component.form.setValue({
       currentPassword: 'old-password',
@@ -50,27 +63,11 @@ describe('PasswordChangeComponent', () => {
       confirmPassword: 'new-password-123'
     })
 
-    it('should reject a password without enough distinct characters', () => {
-      component.form.setValue({
-        currentPassword: 'old-password',
-        newPassword: 'aaaabbbb',
-        confirmPassword: 'aaaabbbb'
-      })
-
-      component.submit()
-
-      expect(authService.changePassword).not.toHaveBeenCalled()
-      expect(component.form.controls.newPassword.hasError('weakPassword')).toBe(true)
-    })
-
     component.submit()
 
-    expect(authService.changePassword).toHaveBeenCalledWith(
-      'old-password',
-      'new-password-123',
-      'new-password-123'
-    )
+    expect(authService.changePassword).toHaveBeenCalledWith('old-password', 'new-password-123', 'new-password-123')
     expect(component.statusIsError()).toBe(false)
+    expect(authService.logout).toHaveBeenCalledOnce()
     expect(component.form.getRawValue()).toEqual({
       currentPassword: '',
       newPassword: '',
@@ -94,6 +91,7 @@ describe('PasswordChangeComponent', () => {
     expect(component.statusIsError()).toBe(true)
     expect(component.statusMessage()).toBe('Current password is incorrect.')
     expect(fixture.nativeElement.textContent).toContain('Current password is incorrect.')
+    expect(authService.logout).not.toHaveBeenCalled()
   })
 
   it('should not submit when the new password confirmation differs', () => {
@@ -104,8 +102,17 @@ describe('PasswordChangeComponent', () => {
     })
 
     component.submit()
+    fixture.detectChanges()
 
     expect(authService.changePassword).not.toHaveBeenCalled()
     expect(component.confirmationMismatch).toBe(true)
+    expect(fixture.nativeElement.querySelector('mat-error')?.textContent).toContain(
+      'account.passwordChange.mismatch.value'
+    )
+
+    component.form.controls.newPassword.setValue('different-password-123')
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector('mat-error')).toBeNull()
   })
 })

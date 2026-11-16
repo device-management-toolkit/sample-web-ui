@@ -4,6 +4,7 @@
  **********************************************************************/
 
 import { Component, OnInit, inject, signal } from '@angular/core'
+import { RouterLink } from '@angular/router'
 
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -30,6 +31,7 @@ import { getDirection } from '../../../utils'
     MatIcon,
     MatMenu,
     MatMenuItem,
+    RouterLink,
     TranslatePipe
   ]
 })
@@ -47,6 +49,10 @@ export class NavFooterComponent implements OnInit {
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
   public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
+
+  get showPasswordManagement(): boolean {
+    return !this.cloudMode && !environment.useOAuth && !environment.authDisabled
+  }
 
   public get availableLangs() {
     return availableLangs

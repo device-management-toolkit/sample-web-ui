@@ -34,7 +34,6 @@ import { OAuthService } from 'angular-oauth2-oidc'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
   imports: [
     MatCard,
     MatCardHeader,
@@ -76,10 +75,6 @@ export class LoginComponent {
   public errorMessage = ''
   public loginPassInputType = signal('password')
   public useOAuth = environment.useOAuth
-
-  get showStandaloneCredentialHelp(): boolean {
-    return !environment.cloud && !environment.authDisabled && !this.useOAuth
-  }
 
   constructor() {
     if (environment.authDisabled) {

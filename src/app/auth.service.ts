@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
@@ -17,6 +17,8 @@ const SESSION_FLAG = 'sessionActive'
 
 // The session JWT. Cloud sends it; the Console binary purges it.
 const TOKEN_KEY = 'loggedInUser'
+
+export const HANDLE_AUTH_FORM_ERRORS = new HttpContextToken<boolean>(() => false)
 
 @Injectable({
   providedIn: 'root'
@@ -159,12 +161,51 @@ export class AuthService {
     )
   }
 
-  changePassword(currentPassword: string, newPassword: string, confirmPassword: string): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(`${this.url}/password`, {
-      currentPassword,
-      newPassword,
-      confirmPassword
+  changePassword(
+    currentPassword: string,
+    newPassword: string,
+    confirmPassword: string
+  ): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.url}/password`,
+      {
+        currentPassword,
+        newPassword,
+        confirmPassword
+      },
+      { context: new HttpContext().set(HANDLE_AUTH_FORM_ERRORS, true) }
+    )
+  }
+
+  getSetupStatus(): Observable<{ setupRequired: boolean }> {
+    return this.http.get<{ setupRequired: boolean }>(`${this.setupAPIBase()}/api/v1/auth/setup/status`, {
+      withCredentials: false
     })
+  }
+
+  completeFirstRunSetup(
+    token: string,
+    username: string,
+    password: string,
+    confirmPassword: string
+  ): Observable<{ status: string }> {
+    return this.http.post<{ status: string }>(
+      `${this.setupAPIBase()}/api/v1/auth/setup`,
+      { token, username, password, confirmPassword },
+      { withCredentials: false, context: new HttpContext().set(HANDLE_AUTH_FORM_ERRORS, true) }
+    )
+  }
+
+  clearLocalSession(): void {
+    this.isLoggedIn = false
+    this.loggedInSubject$.next(false)
+    localStorage.removeItem(SESSION_FLAG)
+    localStorage.removeItem(TOKEN_KEY)
+  }
+
+  private setupAPIBase(): string {
+    const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
+    return runtimeConfig.__CONSOLE_SETUP_API__ || ''
   }
 
   logout(): void {

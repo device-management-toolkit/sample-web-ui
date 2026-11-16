@@ -161,39 +161,9 @@ describe('LoginComponent', () => {
       }
     })
 
-    it('should show keyring recovery guidance for standalone Console auth', () => {
-      const originalCloud = environment.cloud
-      const originalOAuth = component.useOAuth
-      try {
-        environment.cloud = false
-        component.useOAuth = false
-        expect(component.showStandaloneCredentialHelp).toBe(true)
-      } finally {
-        environment.cloud = originalCloud
-        component.useOAuth = originalOAuth
-      }
-    })
-
-    it('should not show keyring-specific guidance for cloud, OAuth, or disabled auth', () => {
-      const originalCloud = environment.cloud
-      const originalAuthDisabled = environment.authDisabled
-      const originalOAuth = component.useOAuth
-      try {
-        environment.cloud = true
-        expect(component.showStandaloneCredentialHelp).toBe(false)
-
-        environment.cloud = false
-        component.useOAuth = true
-        expect(component.showStandaloneCredentialHelp).toBe(false)
-
-        component.useOAuth = false
-        environment.authDisabled = true
-        expect(component.showStandaloneCredentialHelp).toBe(false)
-      } finally {
-        environment.cloud = originalCloud
-        environment.authDisabled = originalAuthDisabled
-        component.useOAuth = originalOAuth
-      }
+    it('should not show keyring setup or recovery guidance in the login dialog', () => {
+      expect(fixture.nativeElement.textContent).not.toContain('Keyring setup and recovery')
+      expect(fixture.nativeElement.querySelector('details')).toBeNull()
     })
   })
 })

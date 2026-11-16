@@ -9,6 +9,10 @@ import { environment } from '../environments/environment'
 import { AuthService } from './auth.service'
 
 export const authorizationInterceptor: HttpInterceptorFn = (request, next) => {
+  if (request.url.includes('/api/v1/auth/setup')) {
+    return next(request.clone({ withCredentials: false }))
+  }
+
   // Kong only reads the Authorization header. The Console binary uses a cookie.
   const authService = environment.cloud ? inject(AuthService) : null
 

@@ -25,6 +25,7 @@ import { LoginComponent } from './login/login.component'
 import { AuthGuard } from './shared/auth-guard.service'
 import { environment } from '../environments/environment'
 import { PasswordChangeComponent } from './account/password-change.component'
+import { SetupComponent } from './setup/setup.component'
 
 export const routes: Routes = [
   {
@@ -41,6 +42,14 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  ...(!environment.cloud && !environment.useOAuth && !environment.authDisabled
+    ? [
+        {
+          path: 'setup',
+          component: SetupComponent
+        }
+      ]
+    : []),
   ...(!environment.cloud && !environment.useOAuth && !environment.authDisabled
     ? [
         {
