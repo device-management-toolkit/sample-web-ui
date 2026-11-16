@@ -16,6 +16,8 @@ const baseUrl: string = Cypress.expose('BASEURL')
 // ---------------------------- Test section ----------------------------
 
 describe('Test Profile Page', () => {
+  const disableCira = Cypress.expose('DISABLE_CIRA') === true || Cypress.expose('DISABLE_CIRA') === 'true'
+
   beforeEach('clear cache and login', () => {
     cy.setup()
   })
@@ -47,7 +49,9 @@ describe('Test Profile Page', () => {
     cy.wait('@get-profiles5')
 
     cy.get('button').contains('Add New').click()
-    cy.wait('@get-configs2').its('response.statusCode').should('be.oneOf', [200, 304])
+    if (!disableCira) {
+      cy.wait('@get-configs2').its('response.statusCode').should('be.oneOf', [200, 304])
+    }
     cy.wait('@get-wireless2')
     cy.wait('@intercept8021xGetAll')
   })
@@ -55,16 +59,16 @@ describe('Test Profile Page', () => {
   it('invalid profile name', () => {
     cy.enterProfileInfo(
       profileFixtures.wrong.name,
-      profileFixtures.happyPath.activation,
+      profileFixtures.happyPathTls.activation,
       true,
       true,
-      profileFixtures.happyPath.dhcpEnabled,
-      profileFixtures.happyPath.connectionMode,
-      profileFixtures.happyPath.ciraConfig,
-      profileFixtures.happyPath.userConsent,
-      profileFixtures.happyPath.iderEnabled,
-      profileFixtures.happyPath.kvmEnabled,
-      profileFixtures.happyPath.solEnabled
+      profileFixtures.happyPathTls.dhcpEnabled,
+      profileFixtures.happyPathTls.connectionMode,
+      profileFixtures.happyPathTls.tlsConfig,
+      profileFixtures.happyPathTls.userConsent,
+      profileFixtures.happyPathTls.iderEnabled,
+      profileFixtures.happyPathTls.kvmEnabled,
+      profileFixtures.happyPathTls.solEnabled
     )
   })
 

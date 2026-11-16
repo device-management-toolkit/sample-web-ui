@@ -8,6 +8,8 @@
 // This ensures that the e2e flow is in the proper state before beginning
 
 describe('Ensure the server is empty', () => {
+  const disableCira = Cypress.expose('DISABLE_CIRA') === true || Cypress.expose('DISABLE_CIRA') === 'true'
+
   beforeEach('before', () => {
     cy.setup()
   })
@@ -21,8 +23,10 @@ describe('Ensure the server is empty', () => {
 
   it('checks for cira configs', () => {
     if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() === 'n') {
-      cy.goToPage('CIRA Configs')
-      cy.contains('No CIRA Configs').should('be.visible')
+      if (!disableCira) {
+        cy.goToPage('CIRA Configs')
+        cy.contains('No CIRA Configs').should('be.visible')
+      }
     }
   })
 

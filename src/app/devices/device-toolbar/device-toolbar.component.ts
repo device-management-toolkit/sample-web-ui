@@ -4,10 +4,10 @@
  **********************************************************************/
 
 import { Component, OnInit, inject, signal, input, DestroyRef } from '@angular/core'
-import { catchError, exhaustMap, finalize, map, switchMap } from 'rxjs/operators'
+import { catchError, defaultIfEmpty, exhaustMap, finalize, map, switchMap, takeUntil, timeout } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
-import { Observable, of, forkJoin, EMPTY, Subscription, timer } from 'rxjs'
+import { Observable, of, forkJoin, EMPTY, Subject, Subscription, timer } from 'rxjs'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { AMTFeaturesResponse, BootDetails, Device, UserConsentResponse } from '../../../models/models'
@@ -37,16 +37,23 @@ const POWER_STATE_SLEEP = 'deviceToolbar.power.sleep.value'
 const POWER_STATE_OFF = 'deviceToolbar.power.off.value'
 const POWER_STATE_UNKNOWN = 'Unknown'
 
+// CIM "Power Cycle (Off - Hard)": a cycle in progress, not a settled off state.
+const CIM_POWER_STATE_CYCLING = 9
+
 // After a power action, and while the device is asleep or off, it is re-read at this interval.
-export const POWER_POLL_INTERVAL_MS = 5_000
+export const POWER_POLL_INTERVAL_MS = 3_000
+// While the device is on and nothing is pending, AMT is re-read at this slower interval so the button follows outside changes.
+export const POWER_IDLE_POLL_INTERVAL_MS = 5_000
+export const POWER_IDLE_FAILURE_LIMIT = 3
+export const POWER_READ_TIMEOUT_MS = 10_000
 // After a power action the device is followed this long for the expected state; after that the button shows what it reports.
 export const POWER_POLL_TIMEOUT_MS = 120_000
 // A restart (reset, power cycle, soft reset) keeps the power on, so AMT reports "on" throughout. If AMT never drops out,
 // "on" only counts as back up after this long.
-export const POWER_REBOOT_MIN_WAIT_MS = 60_000
+export const POWER_REBOOT_MIN_WAIT_MS = 30_000
 // AMT can answer between drop-outs while the device restarts, so after it was only seen unreachable (never reported
 // off or asleep) it must report "on" this many times in a row before the device counts as back up.
-export const POWER_STEADY_ON_READS = 3
+export const POWER_STEADY_ON_READS = 2
 
 type PowerTransitionKind = 'on' | 'sleep' | 'off' | 'reboot' | 'other'
 
@@ -120,6 +127,10 @@ export class DeviceToolbarComponent implements OnInit {
   public device = signal<Device | null>(null)
   public powerState = signal(POWER_STATE_UNKNOWN)
   private powerWatch: Subscription | null = null
+  // Kept outside the watcher, which is rebuilt whenever its poll interval changes.
+  private powerCycling = false
+  private cycleOnReads = 0
+  private readonly powerFetchCancelled = new Subject<void>()
   public basePowerOptions: PowerOptions[] = [
     {
       label: 'powerOptions.hibernate.value',
@@ -271,20 +282,12 @@ export class DeviceToolbarComponent implements OnInit {
     return 'other'
   }
 
-  // The state the device is heading to, shown as soon as the action is accepted.
-  // null keeps the current colour: power up only turns green once the device reports it is on.
-  private static expectedPowerStateLabel(kind: PowerTransitionKind): string | null {
-    switch (kind) {
-      case 'on':
-        return null
-      case 'sleep':
-        return POWER_STATE_SLEEP
-      case 'off':
-      case 'reboot': // goes down first; turns green once it is back up
-        return POWER_STATE_OFF
-      default:
-        return POWER_STATE_UNKNOWN
-    }
+  private static optimisticPowerStateLabel(action: number, kind: PowerTransitionKind): string | null {
+    if (kind === 'on' || action === 12 || action === 14) return null
+    if (action === 4) return POWER_STATE_SLEEP
+    if (kind === 'off' || kind === 'reboot') return POWER_STATE_OFF
+
+    return POWER_STATE_UNKNOWN
   }
 
   // Whether the device reached the state the action leads to. "Back up after going down" is handled separately.
@@ -295,7 +298,7 @@ export class DeviceToolbarComponent implements OnInit {
       case 'sleep':
         return powerstate === 3 || powerstate === 4
       case 'off':
-        return powerstate !== 2 && powerstate !== 3 && powerstate !== 4
+        return powerstate !== 0 && powerstate !== 1 && powerstate !== 2 && powerstate !== 3 && powerstate !== 4
       case 'reboot':
         // AMT never showed the restart (no drop-out): accept "on" once a restart has had time to finish.
         return powerstate === 2 && elapsedMs >= POWER_REBOOT_MIN_WAIT_MS
@@ -304,37 +307,46 @@ export class DeviceToolbarComponent implements OnInit {
     }
   }
 
-  // Shows where the device is heading, then re-reads the power state until the device gets there or the timeout passes.
-  // Readings on the way (e.g. still "on" while the OS is shutting down) are not shown, so the button doesn't flip back early.
+  // Keep the last confirmed state until AMT reports that the device changed power state.
   private watchPowerTransition(action: number): void {
+    this.powerFetchCancelled.next()
     this.stopPowerWatch()
     const kind = DeviceToolbarComponent.powerTransitionKind(action)
-    const expected = DeviceToolbarComponent.expectedPowerStateLabel(kind)
-    if (expected != null) {
-      this.powerState.set(expected)
+    const isSoftAction = action === 12 || action === 14
+    const optimisticState = DeviceToolbarComponent.optimisticPowerStateLabel(action, kind)
+    if (optimisticState != null) {
+      this.powerState.set(optimisticState)
     }
 
     let reportedDown = false // AMT reported the device off or asleep
+    let cycling = false // AMT reported a power cycle in progress
     let droppedOut = false // AMT stopped answering, as it does while the device restarts
     let failedReads = 0
     let onReads = 0
+    let latestPowerState: number | undefined
+    const startedAt = Date.now()
     this.powerWatch = timer(POWER_POLL_INTERVAL_MS, POWER_POLL_INTERVAL_MS)
       .pipe(
-        exhaustMap((tick) =>
-          this.devicesService.getPowerState(this.deviceId()).pipe(
+        exhaustMap((tick) => {
+          latestPowerState = undefined
+          return this.devicesService.getPowerState(this.deviceId(), { background: true }).pipe(
+            timeout({ first: POWER_READ_TIMEOUT_MS }),
             map((state) => ({ tick, powerstate: state?.powerstate as number | undefined })),
-            catchError(() => of({ tick, powerstate: undefined }))
+            catchError(() => of({ tick, powerstate: undefined })),
+            defaultIfEmpty({ tick, powerstate: undefined })
           )
-        ),
+        }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(({ tick, powerstate }) => {
-        const elapsedMs = (tick + 1) * POWER_POLL_INTERVAL_MS
+      .subscribe(({ powerstate }) => {
+        latestPowerState = powerstate
+        const elapsedMs = Date.now() - startedAt
         if (powerstate == null) {
-          // One failed read can be a network blip; two in a row means AMT has dropped out.
+          // A soft action waits green until the device goes down, so one failed read is enough to turn red;
+          // otherwise one failed read can be a network blip and two in a row means AMT has dropped out.
           failedReads++
           onReads = 0
-          if (failedReads >= 2) {
+          if (failedReads >= (isSoftAction ? 1 : 2)) {
             droppedOut = true
           }
         } else {
@@ -343,60 +355,127 @@ export class DeviceToolbarComponent implements OnInit {
             onReads++
           } else {
             onReads = 0
-            reportedDown = true
+            if (powerstate === CIM_POWER_STATE_CYCLING) {
+              cycling = true
+            } else if (powerstate !== 0 && powerstate !== 1) {
+              reportedDown = true
+            }
           }
         }
 
-        // Back up after going down, whatever the action was meant to do. A reported off/sleep is definite, so one
-        // "on" is enough; after a drop-out alone AMT must answer "on" steadily, since it can answer between drop-outs.
-        const backUp = powerstate === 2 && (reportedDown || (droppedOut && onReads >= POWER_STEADY_ON_READS))
-        if (
-          powerstate != null &&
-          (backUp || DeviceToolbarComponent.isPowerTransitionDone(kind, powerstate, elapsedMs))
-        ) {
-          this.showPowerState(powerstate)
-        } else if (elapsedMs >= POWER_POLL_TIMEOUT_MS) {
-          // The device never reached the expected state: show what it last reported rather than a guess.
-          if (powerstate == null) {
-            this.showUnknownPowerState()
-          } else {
-            this.showPowerState(powerstate)
+        if (powerstate === CIM_POWER_STATE_CYCLING) {
+          this.powerState.set(POWER_STATE_OFF)
+          return
+        }
+
+        const settling = droppedOut || cycling
+
+        if (droppedOut) {
+          if (kind === 'sleep') {
+            this.powerState.set(POWER_STATE_SLEEP)
+          } else if (kind === 'off' || kind === 'reboot') {
+            this.powerState.set(POWER_STATE_OFF)
           }
         }
+
+        // A reported off/sleep is definite, so one "on" is enough; after a drop-out or a power cycle alone AMT
+        // must answer "on" steadily, since it can answer between drop-outs.
+        const backUp = powerstate === 2 && (reportedDown || (settling && onReads >= POWER_STEADY_ON_READS))
+        const reportedDeviceDown = powerstate != null && powerstate !== 0 && powerstate !== 1 && powerstate !== 2
+        if (
+          powerstate != null &&
+          (backUp ||
+            reportedDeviceDown ||
+            ((!settling || powerstate !== 2) &&
+              DeviceToolbarComponent.isPowerTransitionDone(kind, powerstate, elapsedMs)))
+        ) {
+          this.showPowerState(powerstate)
+        }
       })
+    this.powerWatch.add(
+      timer(POWER_POLL_TIMEOUT_MS)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => this.showPowerState(latestPowerState))
+    )
   }
 
   // Shows Unknown and keeps checking, so the button recovers once the device can be read again.
   private showUnknownPowerState(): void {
     this.stopPowerWatch()
+    this.powerCycling = false
+    this.cycleOnReads = 0
     this.powerState.set(POWER_STATE_UNKNOWN)
-    this.watchUntilOn()
+    this.watchPowerState()
   }
 
-  // Shows the device's power state, and while it is asleep or off keeps checking so the button turns green
-  // when the device comes back up, including when it is woken outside the UI (power button, keyboard, wake timer).
+  // Shows the device's power state and keeps following it, so the button also changes when the device is slept,
+  // shut down or woken outside the UI (power button, keyboard, wake timer).
   private showPowerState(powerstate: number | undefined): void {
     this.stopPowerWatch()
+    this.powerCycling = powerstate === CIM_POWER_STATE_CYCLING
+    this.cycleOnReads = 0
     this.setPowerStateLabel(powerstate)
-    if (powerstate !== 2) {
-      this.watchUntilOn()
-    }
+    this.watchPowerState()
   }
 
-  private watchUntilOn(): void {
-    this.powerWatch = timer(POWER_POLL_INTERVAL_MS, POWER_POLL_INTERVAL_MS)
+  private watchPowerState(): void {
+    this.stopPowerWatch()
+    const interval = this.powerState() === POWER_STATE_ON ? POWER_IDLE_POLL_INTERVAL_MS : POWER_POLL_INTERVAL_MS
+    let failedReads = 0
+    this.powerWatch = timer(interval, interval)
       .pipe(
-        // A failed read (AMT often isn't reachable while the device is down) keeps the current colour.
-        exhaustMap(() => this.devicesService.getPowerState(this.deviceId()).pipe(catchError(() => EMPTY))),
+        exhaustMap(() =>
+          this.devicesService.getPowerState(this.deviceId(), { background: true }).pipe(
+            timeout({ first: POWER_READ_TIMEOUT_MS }),
+            catchError(() => of(undefined)),
+            defaultIfEmpty(undefined)
+          )
+        ),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((state) => {
-        if (state?.powerstate == null) return
-        this.setPowerStateLabel(state.powerstate)
-        if (state.powerstate === 2) {
-          this.stopPowerWatch()
+        if (state?.powerstate == null) {
+          failedReads++
+          this.cycleOnReads = 0
+          if (this.powerState() === POWER_STATE_ON && failedReads >= POWER_IDLE_FAILURE_LIMIT) {
+            // The "on" state is no longer trusted: require a steady run of "on" (or an explicit off/asleep) to recover.
+            this.powerCycling = true
+            this.powerState.set(POWER_STATE_UNKNOWN)
+            this.watchPowerState()
+          }
+          return
+        }
+        failedReads = 0
+        this.applyPolledPowerState(state.powerstate)
+        const next = this.powerState() === POWER_STATE_ON ? POWER_IDLE_POLL_INTERVAL_MS : POWER_POLL_INTERVAL_MS
+        if (next !== interval) {
+          this.watchPowerState()
         }
       })
+  }
+
+  // After a power cycle, AMT can answer "on" between drop-outs, so only a steady run of "on" (or an explicit
+  // off/asleep) ends the cycle.
+  private applyPolledPowerState(powerstate: number): void {
+    if (powerstate === CIM_POWER_STATE_CYCLING) {
+      this.powerCycling = true
+      this.cycleOnReads = 0
+    } else if (powerstate === 2) {
+      this.cycleOnReads++
+      if (this.cycleOnReads >= POWER_STEADY_ON_READS) {
+        this.powerCycling = false
+      }
+    } else if (powerstate !== 0 && powerstate !== 1) {
+      this.powerCycling = false
+    }
+
+    if (powerstate !== 2) {
+      this.cycleOnReads = 0
+    }
+
+    if (!(powerstate === 2 && this.powerCycling)) {
+      this.setPowerStateLabel(powerstate)
+    }
   }
 
   private stopPowerWatch(): void {
@@ -440,10 +519,13 @@ export class DeviceToolbarComponent implements OnInit {
   }
 
   private fetchPowerState(source: Observable<any>, onError?: () => void): void {
+    this.powerFetchCancelled.next()
     this.isLoading().set(true)
 
     source
       .pipe(
+        timeout({ first: POWER_READ_TIMEOUT_MS }),
+        defaultIfEmpty({ powerstate: undefined }),
         catchError((err) => {
           if (onError) {
             console.error(err)
@@ -456,10 +538,11 @@ export class DeviceToolbarComponent implements OnInit {
         finalize(() => {
           this.isLoading().set(false)
         }),
+        takeUntil(this.powerFetchCancelled),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((powerState) => {
-        this.showPowerState(powerState.powerstate)
+        this.showPowerState(powerState?.powerstate)
       })
   }
 
