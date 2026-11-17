@@ -152,6 +152,11 @@
         <span class="product-type-chip">{{ getProductType(element) }}</span>
       </mat-cell>
     </ng-container>
+    <!-- connectionType Column: CIRA or Direct, as recorded by Console -->
+    <ng-container matColumnDef="connectionType">
+      <mat-header-cell *matHeaderCellDef>{{ 'devices.table.connectionType.value' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-cy="connectionType">{{ getConnectionType(element) }}</mat-cell>
+    </ng-container>
     <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
     <ng-container matColumnDef="controlMode">
       <!-- not sortable: controlMode is computed, not a real Device property -->

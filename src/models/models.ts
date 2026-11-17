@@ -23,6 +23,14 @@ export interface Device {
   useTLS?: boolean
   allowSelfSigned?: boolean
   certHash?: string
+  // Server-managed identity and lifecycle fields (read-only).
+  id?: string
+  createdDate?: string
+  lastUpdated?: string
+  // CIRA or Direct; derived by Console from the MPS credentials when omitted.
+  connectionType?: string
+  // Optional client-supplied manageability SKU (vPro/ISM).
+  productType?: string
 }
 export interface DeviceInfo {
   fwVersion: string

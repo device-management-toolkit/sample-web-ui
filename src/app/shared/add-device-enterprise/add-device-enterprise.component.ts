@@ -16,7 +16,10 @@ import { MatInput } from '@angular/material/input'
 import { MatFormField, MatLabel, MatHint, MatError, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { CdkScrollable } from '@angular/cdk/scrolling'
 import { MatIcon } from '@angular/material/icon'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import SnackbarDefaults from '../config/snackBarDefault'
+import { isCIRADevice } from '../device-connection'
 
 @Component({
   selector: 'app-add-device-enterprise',
@@ -44,6 +47,8 @@ export class AddDeviceEnterpriseComponent {
   // Dependency Injection
   private readonly fb = inject(FormBuilder)
   private readonly deviceService = inject(DevicesService)
+  private readonly snackBar = inject(MatSnackBar)
+  private readonly translate = inject(TranslateService)
   private readonly device = inject<Device>(MAT_DIALOG_DATA)
   public readonly dialog = inject<MatDialogRef<AddDeviceEnterpriseComponent>>(MatDialogRef)
 
@@ -64,14 +69,24 @@ export class AddDeviceEnterpriseComponent {
   })
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA]
   public tags = signal<string[]>([])
+  // True when the dialog was opened with an existing device.
+  public readonly isEdit: boolean
+  // CIRA devices are registered by the activation flow, so only their tags can
+  // be edited here; every other detail is read-only.
+  public readonly isCIRA: boolean
 
   constructor() {
     const device = this.device
 
     this.deviceOrig = device
+    this.isEdit = device?.guid != null && device.guid !== ''
+    this.isCIRA = this.isEdit && isCIRADevice(device)
     if (device != null) {
       this.tags.set(device.tags || [])
       this.form.patchValue(device)
+    }
+    if (this.isCIRA) {
+      this.form.disable()
     }
   }
 
@@ -88,19 +103,37 @@ export class AddDeviceEnterpriseComponent {
   }
 
   submitForm(): void {
+    if (this.isCIRA) {
+      // PATCH only the editable field so the server keeps the registered details.
+      const tagsOnly = { guid: this.deviceOrig.guid, tags: this.tags() } as Device
+      this.deviceService.editDevice(tagsOnly).subscribe({
+        next: () => this.dialog.close({ submitted: true }),
+        error: (err) => this.showError(err)
+      })
+      return
+    }
     if (this.form.valid) {
       const device: Device = { ...this.form.getRawValue() }
       device.tags = this.tags()
-      if (this.deviceOrig?.guid != null && this.deviceOrig?.guid !== '') {
+      if (this.isEdit) {
         device.guid = this.deviceOrig.guid
-        this.deviceService.editDevice(device).subscribe(() => {
-          this.dialog.close({ submitted: true })
+        this.deviceService.editDevice(device).subscribe({
+          next: () => this.dialog.close({ submitted: true }),
+          error: (err) => this.showError(err)
         })
       } else {
-        this.deviceService.addDevice(device).subscribe(() => {
-          this.dialog.close({ submitted: true })
+        this.deviceService.addDevice(device).subscribe({
+          next: () => this.dialog.close({ submitted: true }),
+          error: (err) => this.showError(err)
         })
       }
     }
+  }
+
+  // Console explains why an add or edit was rejected (for example, it could not
+  // reach the device to read its AMT UUID); surface that instead of failing silently.
+  private showError(err: { error?: { message?: string } }): void {
+    const message = err?.error?.message || this.translate.instant('error.deviceNotResponding.value')
+    this.snackBar.open(message, this.translate.instant('common.dismiss.value'), SnackbarDefaults.defaultError)
   }
 }

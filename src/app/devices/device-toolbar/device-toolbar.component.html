@@ -30,6 +30,11 @@
     </div>
   </span>
   <mat-chip-set class="flex-1 pad-15">
+    @if (connectionType()) {
+      <mat-chip data-cy="connectionType" [matTooltip]="'devices.table.connectionType.value' | translate" highlighted>{{
+        connectionType()
+      }}</mat-chip>
+    }
     @for (tag of device()?.tags; track tag) {
       <mat-chip>{{ tag }}</mat-chip>
     }

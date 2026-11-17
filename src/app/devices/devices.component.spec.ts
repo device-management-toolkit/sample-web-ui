@@ -279,6 +279,11 @@ describe('DevicesComponent', () => {
   })
 
   describe('getProductType', () => {
+    it('should prefer the productType stored on the device record', () => {
+      const device = { ...device01, productType: 'ISM', deviceInfo: { fwSku: '8' } } as Device
+      expect(component.getProductType(device)).toBe('ISM')
+    })
+
     it('should return ISM when bit 4 (0x10) is set', () => {
       const device = { ...device01, deviceInfo: { fwSku: '16' } } as Device // 0x10 = 16
       expect(component.getProductType(device)).toBe('ISM')
@@ -307,6 +312,27 @@ describe('DevicesComponent', () => {
     it('should return an empty value when fwSku is not a number', () => {
       const device = { ...device01, deviceInfo: { fwSku: 'notanumber' } } as Device
       expect(component.getProductType(device)).toBe('')
+    })
+  })
+
+  describe('getConnectionType', () => {
+    it('should use the connectionType recorded by Console', () => {
+      expect(component.getConnectionType({ ...device01, connectionType: 'CIRA' } as Device)).toBe('CIRA')
+      expect(
+        component.getConnectionType({ ...device01, connectionType: 'Direct', mpsusername: 'admin' } as Device)
+      ).toBe('Direct')
+    })
+
+    it('should fall back to the MPS username for legacy rows', () => {
+      expect(component.getConnectionType({ ...device01, mpsusername: 'admin' } as Device)).toBe('CIRA')
+      expect(component.getConnectionType(device01)).toBe('Direct')
+    })
+
+    it('should show the connectionType column in enterprise mode', () => {
+      component.isCloudMode = false
+      expect(component.displayedColumns).toContain('connectionType')
+      component.isCloudMode = true
+      expect(component.displayedColumns).not.toContain('connectionType')
     })
   })
 

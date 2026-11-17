@@ -35,6 +35,7 @@ import { DeviceEditTagsComponent } from './edit-tags/edit-tags.component'
 import { caseInsensitiveCompare } from '../../utils'
 import { environment } from '../../environments/environment'
 import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
+import { connectionTypeOf } from '../shared/device-connection'
 import { EmptyStateComponent } from '../shared/empty-state/empty-state.component'
 import { MatChipSet, MatChip } from '@angular/material/chips'
 import { MatCheckbox } from '@angular/material/checkbox'
@@ -237,7 +238,8 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
         ] : [
           'select',
           'hostname',
-          'productType'
+          'productType',
+          'connectionType'
         ]
     if (!this.isCloudMode && !this.isDiscoveredTab) {
       columns.push('controlMode')
@@ -533,7 +535,10 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paneTrigger = null
   }
 
+  // Prefers the productType stored on the device record; falls back to the
+  // firmware SKU bits reported by the device.
   getProductType(device: Device): string {
+    if (device.productType) return device.productType
     const skuNum = parseInt(device.deviceInfo?.fwSku ?? '', 10)
     if (isNaN(skuNum)) return ''
     const isISM = (skuNum & 0x10) > 0
@@ -541,6 +546,10 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
     return 'non-vPro'
+  }
+
+  getConnectionType(device: Device): string {
+    return connectionTypeOf(device)
   }
 
   getControlMode(device: Device): string {
