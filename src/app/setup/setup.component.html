@@ -1,0 +1,64 @@
+<div class="setup-page">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title i18n>Set up Console administrator</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (setupRequired()) {
+        <p i18n>Create the administrator credentials for this Console instance.</p>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <mat-form-field>
+            <mat-label i18n>Username</mat-label>
+            <input matInput autocomplete="username" formControlName="username" />
+            @if (form.controls.username.hasError('required')) {
+              <mat-error i18n>Username is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label i18n>Password</mat-label>
+            <input matInput type="password" autocomplete="new-password" formControlName="password" />
+            <mat-hint i18n>At least 8 characters and 4 distinct characters.</mat-hint>
+            @if (form.controls.password.hasError('required')) {
+              <mat-error i18n>Password is required.</mat-error>
+            } @else if (form.controls.password.hasError('weakPassword')) {
+              <mat-error i18n>Choose a longer password with more distinct characters.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label i18n>Confirm password</mat-label>
+            <input
+              matInput
+              type="password"
+              autocomplete="new-password"
+              formControlName="confirmPassword"
+              [errorStateMatcher]="confirmationErrorState" />
+            @if (form.controls.confirmPassword.hasError('required')) {
+              <mat-error i18n>Password confirmation is required.</mat-error>
+            } @else if (confirmationMismatch) {
+              <mat-error i18n>Passwords do not match.</mat-error>
+            }
+          </mat-form-field>
+
+          <button mat-flat-button type="submit" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <span i18n>Setting up...</span>
+            } @else {
+              <span i18n>Set up administrator</span>
+            }
+          </button>
+        </form>
+        <p class="setup-note" i18n>
+          Setup does not sign you in. Sign in with your new credentials after setup completes.
+        </p>
+      }
+
+      @if (statusMessage()) {
+        <p class="status-message" [class.error]="statusIsError()" role="status" aria-live="polite">
+          {{ statusMessage() }}
+        </p>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,33 @@
+.setup-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+mat-card {
+  width: min(100%, 36rem);
+}
+
+mat-card-content {
+  padding-top: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.setup-note {
+  margin-bottom: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.status-message {
+  margin-bottom: 0;
+  color: var(--mat-sys-primary);
+}
+
+.status-message.error {
+  color: var(--mat-sys-error);
+}
