@@ -8,15 +8,17 @@ import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter, Output, signal, input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
-import { EMPTY, of, ReplaySubject, Subject, throwError } from 'rxjs'
+import { NavigationStart, Router, RouterModule } from '@angular/router'
+import { EMPTY, of, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
 import { MatDialog } from '@angular/material/dialog'
 import { Device } from '../../../models/models'
 import { UserConsentService } from '../user-consent.service'
-import { provideTranslateService } from '@ngx-translate/core'
+import { provideTranslateService, TranslateService } from '@ngx-translate/core'
+import { SOLComponent, SolTerminalType } from '@device-management-toolkit/ui-toolkit-angular'
+import { MatSelect } from '@angular/material/select'
 
 describe('SolComponent', () => {
   let component: SolComponent
@@ -33,7 +35,7 @@ describe('SolComponent', () => {
   let devicesService: SpyObj<DevicesService>
   let userConsentService: SpyObj<UserConsentService>
 
-  const eventSubject = new ReplaySubject<RouterEvent>(1)
+  let eventSubject: Subject<NavigationStart>
 
   beforeEach(async () => {
     devicesService = createSpyObj('DevicesService', [
@@ -163,12 +165,13 @@ describe('SolComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
-        { provide: UserConsentService, useValue: userConsentService },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
+        { provide: UserConsentService, useValue: userConsentService }
       ]
     })
 
     router = TestBed.inject(Router)
+    eventSubject = new Subject<NavigationStart>()
+    vi.spyOn(router, 'events', 'get').mockReturnValue(eventSubject)
   })
 
   beforeEach(() => {
@@ -184,13 +187,152 @@ describe('SolComponent', () => {
     TestBed.resetTestingModule()
   })
 
-  it('should create', () => {
+  it('starts idle with the encoding selector available before connecting', () => {
     expect(component).toBeTruthy()
     fixture.detectChanges()
-    expect(tokenSpy).toHaveBeenCalled()
-    expect(getPowerStateSpy).toHaveBeenCalled()
-    expect(getAMTFeaturesSpy).toHaveBeenCalled()
+    const select: MatSelect = fixture.debugElement.query(By.directive(MatSelect)).componentInstance
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(select.disabled).toBe(false)
+    expect(button.textContent).toContain('sol.connect.value')
+    expect(fixture.nativeElement.querySelector('#sol-encoding-guidance')).toBeNull()
+    expect(fixture.nativeElement.querySelector('mat-select').getAttribute('aria-describedby')).toBeNull()
+    expect(tokenSpy).not.toHaveBeenCalled()
+    expect(getPowerStateSpy).not.toHaveBeenCalled()
+    expect(getAMTFeaturesSpy).not.toHaveBeenCalled()
   })
+  it('allows selecting UTF-8 before connecting', () => {
+    component.readyToLoadSol.set(false)
+    fixture.detectChanges()
+    const select = fixture.debugElement.query(By.directive(MatSelect))
+    expect(select.componentInstance.value).toBe(SolTerminalType.PCANSI)
+    select.triggerEventHandler('selectionChange', { value: SolTerminalType.VTUTF8 })
+    fixture.detectChanges()
+    expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
+    expect(select.componentInstance.value).toBe(SolTerminalType.VTUTF8)
+  })
+
+  it('applies the selected mode on first connection and after reconnect', () => {
+    component.setTerminalType(SolTerminalType.VTUTF8)
+    component.readyToLoadSol.set(true)
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    vi.spyOn(sol, 'startSol').mockReturnValue(undefined)
+    component.deviceConnection.set(true)
+    fixture.detectChanges()
+    expect(sol.terminalType).toBe(SolTerminalType.VTUTF8)
+    component.deviceConnection.set(false)
+    fixture.detectChanges()
+    component.deviceConnection.set(true)
+    fixture.detectChanges()
+    expect(sol.terminalType).toBe(SolTerminalType.VTUTF8)
+  })
+
+  it('selects encoding while disconnected and applies it to the next connection', () => {
+    tokenSpy.mockReturnValue(EMPTY)
+    fixture.detectChanges()
+    const connect = vi.spyOn(component, 'connect')
+    const disconnect = vi.spyOn(component, 'disconnect')
+    component.setTerminalType(SolTerminalType.VTUTF8)
+    expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
+    expect(connect).not.toHaveBeenCalled()
+    expect(disconnect).not.toHaveBeenCalled()
+    expect(snackBarSpy).not.toHaveBeenCalled()
+    component.readyToLoadSol.set(true)
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    expect(sol.terminalType).toBe(SolTerminalType.VTUTF8)
+  })
+
+  it('locks the selector while connecting and preserves the encoding', () => {
+    component.readyToLoadSol.set(true)
+    fixture.detectChanges()
+    const sol: SOLComponent = fixture.debugElement.query(By.directive(SOLComponent)).componentInstance
+    component.isConnecting.set(true)
+    fixture.detectChanges()
+    const select: MatSelect = fixture.debugElement.query(By.directive(MatSelect)).componentInstance
+    expect(select.disabled).toBe(true)
+    expect(() => component.setTerminalType(SolTerminalType.VTUTF8)).not.toThrow()
+    expect(component.terminalType()).toBe(SolTerminalType.PCANSI)
+    expect(sol.terminalType).toBe(SolTerminalType.PCANSI)
+    component.isConnecting.set(false)
+    fixture.detectChanges()
+    expect(select.disabled).toBe(false)
+    component.setTerminalType(SolTerminalType.VTUTF8)
+    expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
+    fixture.detectChanges()
+    expect(sol.terminalType).toBe(SolTerminalType.VTUTF8)
+  })
+
+  it('explains that changing encoding requires disconnecting while locked', () => {
+    component.deviceConnection.set(true)
+    const translate = TestBed.inject(TranslateService)
+    translate.setTranslation('en', {
+      'deviceDetail.solDescription': { value: 'Serial Over LAN' }
+    })
+    translate.use('en')
+    fixture.detectChanges()
+    const card: HTMLElement = fixture.nativeElement.querySelector('mat-card')
+    expect(card.querySelector('mat-card-title')?.textContent).toContain('Serial Over LAN')
+    const content = card.querySelector('mat-card-content')!
+    expect(content.querySelector('#sol-encoding-guidance')).not.toBeNull()
+    const select: HTMLElement = content.querySelector('mat-select')!
+    expect(select).not.toBeNull()
+    expect(select.getAttribute('aria-describedby')).toBe('sol-encoding-guidance')
+  })
+
+  it('disables the encoding selector during connection transitions', () => {
+    tokenSpy.mockReturnValue(EMPTY)
+    fixture.detectChanges()
+    component.isConnecting.set(false)
+    component.isLoading.set(false)
+    component.isDisconnecting.set(false)
+    fixture.detectChanges()
+    const select: MatSelect = fixture.debugElement.query(By.directive(MatSelect)).componentInstance
+    expect(select.disabled).toBe(false)
+    for (const busy of [
+      component.isConnecting,
+      component.isLoading,
+      component.isDisconnecting
+    ]) {
+      busy.set(true)
+      fixture.detectChanges()
+      expect(select.disabled).toBe(true)
+      busy.set(false)
+    }
+    fixture.detectChanges()
+    expect(select.disabled).toBe(false)
+  })
+
+  it.each([
+    'disconnect',
+    'navigation',
+    'destroy'
+  ])('cancels a queued manual reconnect retry on %s', (action) => {
+    vi.useFakeTimers()
+    component.deviceConnection.set(true)
+    component.disconnect()
+    component.deviceStatus(0)
+    component.connect()
+    component.deviceStatus(0)
+    const connect = vi.spyOn(component, 'connect')
+    if (action === 'disconnect') component.disconnect()
+    if (action === 'navigation') eventSubject.next(new NavigationStart(1, '/devices'))
+    if (action === 'destroy') component.ngOnDestroy()
+    vi.advanceTimersByTime(10_000)
+    expect(connect).not.toHaveBeenCalled()
+  })
+
+  it('ignores unsupported selector values without changing the selection', () => {
+    // @ts-expect-error Exercise invalid values from untyped consumers.
+    expect(() => component.setTerminalType(0)).not.toThrow()
+    expect(component.terminalType()).toBe(SolTerminalType.PCANSI)
+  })
+
+  it('records the connect state', () => {
+    expect(() => component.deviceStatus(1)).not.toThrow()
+    expect(component.deviceState()).toBe(1)
+  })
+
   it('should have correct state on connect/disconnect methods', () => {
     fixture.detectChanges()
 
@@ -211,10 +353,14 @@ describe('SolComponent', () => {
 
     fixture.detectChanges()
 
+    const connectButton: HTMLButtonElement = fixture.nativeElement.querySelector('button')
+    expect(connectButton.textContent).toContain('sol.connect.value')
+    connectButton.click()
+    fixture.detectChanges()
+
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
     expect(button.disabled).toBe(true)
     expect(button.textContent).toContain('sol.loading.value')
-    button.click()
     expect(initSpy).not.toHaveBeenCalled()
 
     tokenSubject.next({ token: 'fresh-token' })
@@ -226,6 +372,7 @@ describe('SolComponent', () => {
     tokenSpy.mockReturnValue(EMPTY)
 
     fixture.detectChanges()
+    fixture.nativeElement.querySelector('button').click()
     fixture.detectChanges()
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
@@ -239,6 +386,7 @@ describe('SolComponent', () => {
     vi.spyOn(component, 'showPowerUpAlert').mockReturnValue(of(false))
 
     fixture.detectChanges()
+    fixture.nativeElement.querySelector('button').click()
     fixture.detectChanges()
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
@@ -303,7 +451,7 @@ describe('SolComponent', () => {
     fixture.detectChanges()
 
     const button: HTMLElement = fixture.nativeElement.querySelector('button')
-    expect(component.deviceState()).toBe(-1)
+    expect(component.deviceState()).toBe(1)
     expect(button.textContent).not.toContain('sol.connect.value')
   })
   it('should allow reconnecting after an unexpected disconnect', () => {
@@ -322,7 +470,7 @@ describe('SolComponent', () => {
     button.click()
     fixture.detectChanges()
 
-    expect(tokenSpy).toHaveBeenCalledTimes(2)
+    expect(tokenSpy).toHaveBeenCalledTimes(1)
     expect(component.authToken()).toBe('123')
     expect(component.deviceConnection()).toBe(true)
     expect(component.isConnecting()).toBe(true)
@@ -412,9 +560,26 @@ describe('SolComponent', () => {
   })
   it('should  hide loading when connected', () => {
     component.deviceStatus(3)
-    expect(snackBarSpy).not.toHaveBeenCalled()
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith('sol.connectedHint.value', undefined, {
+      duration: 5_000,
+      politeness: 'polite'
+    })
     expect(component.isLoading()).toBe(false)
     expect(component.deviceState()).toBe(3)
+  })
+  it('shows the translated connected hint once per connection, including reconnects', () => {
+    const message = 'Connected. If the screen is blank, use a navigation key to request fresh output.'
+    const translate = TestBed.inject(TranslateService)
+    translate.setTranslation('en', { 'sol.connectedHint': { value: message } })
+    translate.use('en')
+    component.deviceStatus(3)
+    component.deviceStatus(3)
+    expect(snackBarSpy).toHaveBeenCalledExactlyOnceWith(message, undefined, { duration: 5_000, politeness: 'polite' })
+    component.isDisconnecting.set(true)
+    component.deviceStatus(0)
+    component.deviceStatus(1)
+    component.deviceStatus(3)
+    expect(snackBarSpy).toHaveBeenCalledTimes(2)
   })
   it('should not show error when NavigationStart triggers', () => {
     eventSubject.next(new NavigationStart(1, 'regular'))
@@ -493,8 +658,8 @@ describe('SolComponent', () => {
     })
   })
   it('checkUserConsent yes', async () => {
+    component.amtFeatures.set({ userConsent: 'none', optInState: 0 } as any)
     component.checkUserConsent()
-    fixture.detectChanges()
     expect(component.readyToLoadSol()).toBe(true)
   })
   it('uses a fresh token and passes it to SOL after reconnect', () => {

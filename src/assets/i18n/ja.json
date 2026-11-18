@@ -2937,6 +2937,18 @@
     "description": "SSDパスワードが64バイトを超える場合のエラーメッセージ",
     "value": "SSDパスワードは64バイトを超えることはできません"
   },
+  "sol.encoding": {
+    "description": "SOL文字エンコーディング選択欄のラベル",
+    "value": "SOLエンコーディング"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "SOLエンコーディングの選択に関する案内",
+    "value": "エンコーディングを変更する前に切断してください。"
+  },
+  "sol.connectedHint": {
+    "description": "接続後、リモートコンソールに新しい出力が必要な場合の通知",
+    "value": "接続しました。画面が空白の場合は、ナビゲーションキーを押して新しい出力を要求してください。"
+  },
   "sol.connect": {
     "description": "SOL接続用ボタン",
     "value": "Connect SOL"

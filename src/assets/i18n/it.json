@@ -2937,6 +2937,18 @@
     "description": "Messaggio di errore quando la password SSD supera i 64 byte",
     "value": "La password SSD non deve superare i 64 byte"
   },
+  "sol.encoding": {
+    "description": "Etichetta del selettore della codifica dei caratteri SOL",
+    "value": "Codifica SOL"
+  },
+  "sol.encodingSelectionHint": {
+    "description": "Indicazioni per selezionare la codifica SOL",
+    "value": "Disconnettersi prima di modificare la codifica."
+  },
+  "sol.connectedHint": {
+    "description": "Avviso dopo la connessione quando la console remota potrebbe richiedere un nuovo output",
+    "value": "Connesso. Se lo schermo è vuoto, utilizzare un tasto di navigazione per richiedere un nuovo output."
+  },
   "sol.connect": {
     "description": "Pulsante per la connessione a SOL",
     "value": "Connettersi a SOL"
