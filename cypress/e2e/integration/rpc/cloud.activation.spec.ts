@@ -15,7 +15,9 @@ import {
   AMTInfo,
   addArgsToCommandCandidates,
   buildCloudActivateCommandCandidates,
+  buildTimeSyncInfoCommand,
   execConfig,
+  execCommand,
   buildOutput,
   execWithCompatibilityFallback,
   buildInfoCommand,
@@ -43,8 +45,10 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     }
 
     function waitForRasConnected(remainingAttempts = 20, intervalMs = 15000): void {
+      cy.task('log', `Checking RAS connectivity (${remainingAttempts} retries remaining)`)
       getAmtInfo(infoCommand).then((info) => {
         const remoteStatus = (info.ras?.remoteStatus ?? '').toLowerCase()
+        cy.task('log', `RAS remote status: ${remoteStatus || 'unavailable'}`)
         if (remoteStatus === 'connected') {
           return
         }
@@ -63,18 +67,42 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
     const fqdn: string = Cypress.expose('ACTIVATION_URL')
     const rpcDockerImage: string = Cypress.expose('RPC_DOCKER_IMAGE')
     const parts: string[] = profileName ? profileName.split('-') : []
-    const isAdminControlModeProfile = parts.length > 0 && parts[0] === 'acmactivate'
+    const isAdminControlModeProfile = /^(?:acmactivate|acm)(?:-|$)/i.test(profileName)
     const isWin = Cypress.platform === 'win32'
     const rpcVersion = String(Cypress.expose('RPC_VERSION') ?? 'v3')
       .trim()
       .toLowerCase()
-    const passwordFlag = /^v?2(?:\.|$)/.test(rpcVersion) ? '-password' : '--password'
+    const isRpcV2 = /^v?2(?:\.|$)/.test(rpcVersion)
+    const supportsTimeSyncDiagnostics = !isRpcV2
+    const passwordFlag = isRpcV2 ? '-password' : '--password'
 
     // Default: use Docker (Linux/Mac); Windows overrides handled internally by the builders.
     const infoCommand = buildInfoCommand({ isWin, rpcDockerImage })
+    const timeSyncInfoCommand = buildTimeSyncInfoCommand({ isWin, rpcDockerImage })
     let baseActivateCommands: string[] = []
     let activateCommands: string[] = []
     let amtVersion = ''
+    let lmsAvailable = false
+
+    const getLocalTimeSyncEnabled = (): Cypress.Chainable<number> =>
+      execCommand(timeSyncInfoCommand, execConfig).then((result) => {
+        const { stdout, combined } = buildOutput(result)
+        expect(result.code, `Time-sync diagnostics failed:\n${combined}`).to.equal(0)
+        const jsonStart = stdout.indexOf('[')
+        expect(jsonStart, `Expected diagnostics JSON, got:\n${combined}`).to.be.at.least(0)
+        const records = JSON.parse(stdout.slice(jsonStart)) as {
+          data?: {
+            Body?: {
+              PullResponse?: {
+                TimeSynchronizationServiceItems?: { LocalTimeSyncEnabled?: number | string }[]
+              }
+            }
+          }
+        }[]
+        const value = records[0]?.data?.Body?.PullResponse?.TimeSynchronizationServiceItems?.[0]?.LocalTimeSyncEnabled
+        expect(String(value), 'LocalTimeSyncEnabled').to.match(/^[012]$/)
+        return Number(value)
+      })
 
     before(() => {
       return cy.env(['AMT_PASSWORD']).then(({ AMT_PASSWORD }) => {
@@ -131,18 +159,36 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
       context('TC_ACTIVATION_DEVICE_ACTIVATE', () => {
         beforeEach(() => {
           cy.setup()
-          getAmtInfoWithRetry(infoCommand).then((info) => {
-            amtInfo = info
-          })
-          cy.wait(1000)
+          return getAmtInfoWithRetry(infoCommand)
+            .then((info) => {
+              amtInfo = info
+              if (!supportsTimeSyncDiagnostics) {
+                return cy.wrap(false)
+              }
+              expect(amtInfo.localTlsEnforced, 'RPC amtinfo localTlsEnforced').to.be.a('boolean')
+              return cy.task<boolean>('isLmsAvailable', { localTlsEnforced: amtInfo.localTlsEnforced })
+            })
+            .then((available) => {
+              lmsAvailable = available
+              return cy.wait(1000)
+            })
         })
 
         it('Should Activate Device', () => {
           assertNotActivatedWhenAvailable(amtInfo)
+          const canReadTimeSyncViaDiagnostics =
+            supportsTimeSyncDiagnostics && !(amtInfo.localTlsEnforced === true && !lmsAvailable)
+          if (canReadTimeSyncViaDiagnostics) {
+            getLocalTimeSyncEnabled().should('equal', 0)
+          } else {
+            cy.log('Skipping pre-activation time-sync diagnostic: unsupported for this RPC version/device combination')
+          }
 
+          cy.task('log', 'Starting cloud activation RPC command')
           execWithCompatibilityFallback(activateCommands, execConfig, ({ result, combinedOutput }) => {
             return result.code !== 0 && /IncorrectPermissions/i.test(combinedOutput)
           }).then((result) => {
+            cy.task('log', `Cloud activation RPC command exited with code ${result.code}`)
             const { stdout, stderr, combined } = buildOutput(result)
             const primaryOutput = stdout.length > 0 ? stdout : stderr
 
@@ -190,10 +236,21 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               }
             }
 
+            if (canReadTimeSyncViaDiagnostics) {
+              cy.task('log', 'Reading post-activation LocalTimeSyncEnabled')
+              getLocalTimeSyncEnabled().should('equal', lmsAvailable ? 1 : 2)
+            } else {
+              cy.log(
+                'Skipping post-activation time-sync diagnostic: unsupported for this RPC version/device combination'
+              )
+            }
+
+            cy.task('log', 'Post-activation time-sync check complete; waiting 120 seconds before RAS verification')
             cy.wait(120000)
 
             waitForRasConnected()
 
+            cy.task('log', 'RAS connected; starting device UI verification')
             // Re-query amtinfo after activation to get the updated IP address
             getAmtInfo(infoCommand).then((postActivationInfo) => {
               cy.log(`Post-activation wired IP: ${postActivationInfo.wiredAdapter?.ipAddress}`)

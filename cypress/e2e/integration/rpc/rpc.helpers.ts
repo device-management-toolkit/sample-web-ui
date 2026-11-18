@@ -10,6 +10,7 @@ export interface AMTInfo {
   buildNumber: string
   controlMode?: string
   heciAvailable?: boolean
+  localTlsEnforced?: boolean
   dnsSuffix: string
   dnsSuffixOS: string
   hostnameOS: string
@@ -327,6 +328,13 @@ export const buildInfoCommand = (opts: RpcCommandOptions): string => {
   const args = rpcVersion === '2' ? 'amtinfo -json' : 'amtinfo --json'
   return buildRpcCommand(opts, 'rpc.exe', args)
 }
+
+export const buildTimeSyncInfoCommand = (opts: RpcCommandOptions): string =>
+  buildRpcCommand(
+    opts,
+    'rpc.exe',
+    'diagnostics wsman get --class AMT_TimeSynchronizationService --format json --skip-amt-cert-check'
+  )
 
 export interface ActivateCommandOptions {
   isWin: boolean
