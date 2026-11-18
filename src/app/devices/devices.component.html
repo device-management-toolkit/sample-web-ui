@@ -284,6 +284,7 @@
       [controlMode]="getControlMode(device)"
       [canManage]="getManageEligibility(device).eligible"
       [manageDisabledReason]="getManageEligibility(device).reasonKey ?? ''"
+      [manageHint]="getManageEligibility(device).hintKey ?? ''"
       (manage)="manageDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />

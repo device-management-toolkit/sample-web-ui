@@ -855,7 +855,7 @@ describe('DevicesComponent', () => {
   describe('manage a discovered device', () => {
     // FW SKU bit 0x08 marks vPro; admin control mode is ACM.
     const eligible = (): Device => ({ ...device01, management: { eligible: true } })
-    const notActivated = (): Device => ({ ...device01, management: { eligible: false, reason: 'notActivated' } })
+    const notActivated = (): Device => ({ ...device01, management: { eligible: true, reason: 'notActivated' } })
     let navigateSpy: MockInstance
     let openSpy: MockInstance
     let closed: Subject<boolean>
@@ -871,29 +871,29 @@ describe('DevicesComponent', () => {
       expect(component.getManageEligibility(eligible()).eligible).toBe(true)
     })
 
-    it('explains why a device that is not activated cannot be managed', () => {
+    it('keeps Manage enabled for a device that appears not activated, with a hint', () => {
       expect(component.getManageEligibility(notActivated())).toEqual({
-        eligible: false,
-        reasonKey: 'devices.manage.ineligible.notActivated.value'
+        eligible: true,
+        hintKey: 'devices.manage.hint.notActivated.value'
       })
     })
 
-    it.each(['unsupported', 'unknown'] as const)('explains the %s reason Console gives', (reason) => {
-      expect(component.getManageEligibility({ ...device01, management: { eligible: false, reason } })).toEqual({
-        eligible: false,
-        reasonKey: `devices.manage.ineligible.${reason}.value`
-      })
+    it('blocks only a device that does not support vPro or ISM', () => {
+      expect(
+        component.getManageEligibility({ ...device01, management: { eligible: false, reason: 'unsupported' } })
+      ).toEqual({ eligible: false, reasonKey: 'devices.manage.ineligible.unsupported.value' })
     })
 
-    it('treats a missing management answer, e.g. from an older Console, as unknown', () => {
-      expect(component.getManageEligibility(device01)).toEqual({
-        eligible: false,
-        reasonKey: 'devices.manage.ineligible.unknown.value'
-      })
+    it('keeps Manage enabled with a hint when capability is unknown or Console gave no answer', () => {
+      const hint = { eligible: true, hintKey: 'devices.manage.hint.unknown.value' }
+      expect(
+        component.getManageEligibility({ ...device01, management: { eligible: true, reason: 'unknown' } })
+      ).toEqual(hint)
+      expect(component.getManageEligibility(device01)).toEqual(hint)
     })
 
-    it('does not open the dialog for an ineligible device', () => {
-      component.manageDevice(notActivated())
+    it('does not open the dialog for an unsupported device', () => {
+      component.manageDevice({ ...device01, management: { eligible: false, reason: 'unsupported' } })
       expect(openSpy).not.toHaveBeenCalled()
     })
 
@@ -922,9 +922,14 @@ describe('DevicesComponent', () => {
       expect(component.activeTab()).toBe(1)
     })
 
-    it('offers Manage on a discovered row, disabled when the device is ineligible', async () => {
+    it('offers Manage on a discovered row, disabled only when the device is unsupported', async () => {
       component.onTabChange(1)
-      getDevicesSpy.mockReturnValue(of({ data: [eligible(), { ...notActivated(), guid: 'other' }], totalCount: 2 }))
+      getDevicesSpy.mockReturnValue(
+        of({
+          data: [eligible(), { ...device01, guid: 'other', management: { eligible: false, reason: 'unsupported' } }],
+          totalCount: 2
+        })
+      )
       component.getDevices()
       fixture.detectChanges()
       await fixture.whenStable()

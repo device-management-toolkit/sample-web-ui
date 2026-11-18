@@ -103,6 +103,8 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   // Whether Console can manage this device; when not, manageDisabledReason (a translation key) says why.
   public readonly canManage = input(false)
   public readonly manageDisabledReason = input('')
+  // A soft warning (translation key) shown while Manage is still enabled, e.g. the device appears not activated.
+  public readonly manageHint = input('')
   public readonly closed = output<void>()
   public readonly manage = output<void>()
 

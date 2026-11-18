@@ -542,21 +542,24 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   manageTooltip(device: Device): string {
-    const { eligible, reasonKey } = this.getManageEligibility(device)
-    return this.translate.instant(eligible ? 'devices.manage.button.value' : (reasonKey ?? ''))
+    const { reasonKey, hintKey } = this.getManageEligibility(device)
+    return this.translate.instant(reasonKey ?? hintKey ?? 'devices.manage.button.value')
   }
 
-  // Console decides whether a discovered device can be managed and re-checks on submit.
-  // A missing answer, e.g. from an older Console, counts as unknown.
-  getManageEligibility(device: Device): { eligible: boolean; reasonKey?: string } {
+  // Console decides: `eligible` gates the button, and `reason` on an eligible device is a soft hint
+  // (appears not activated, capability unknown) because Console verifies the credentials on submit.
+  // A missing answer, e.g. from an older Console, stays enabled with the unknown hint.
+  getManageEligibility(device: Device): { eligible: boolean; reasonKey?: string; hintKey?: string } {
     const management = device.management
-    if (management?.eligible) return { eligible: true }
-    const reason =
-      management?.reason === 'notActivated' || management?.reason === 'unsupported' ? management.reason : 'unknown'
-    return { eligible: false, reasonKey: `devices.manage.ineligible.${reason}.value` }
+    if (!management) return { eligible: true, hintKey: 'devices.manage.hint.unknown.value' }
+    if (!management.eligible) return { eligible: false, reasonKey: 'devices.manage.ineligible.unsupported.value' }
+    if (management.reason === 'notActivated')
+      return { eligible: true, hintKey: 'devices.manage.hint.notActivated.value' }
+    if (management.reason === 'unknown') return { eligible: true, hintKey: 'devices.manage.hint.unknown.value' }
+    return { eligible: true }
   }
 
-  // Managing registers an activated discovered device with Console using its existing AMT credentials.
+  // Managing registers a discovered device with Console using its existing AMT credentials.
   manageDevice(device: Device): void {
     if (!this.getManageEligibility(device).eligible) return
     this.dialog

@@ -410,10 +410,19 @@ describe('DiscoveredDevicePaneComponent', () => {
     })
 
     it('is disabled with the reason shown when the device is not eligible', () => {
-      fixture.componentRef.setInput('manageDisabledReason', 'devices.manage.ineligible.notActivated.value')
+      fixture.componentRef.setInput('manageDisabledReason', 'devices.manage.ineligible.unsupported.value')
       render(baseDevice)
       expect(button().disabled).toBe(true)
       expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageReason"]')).toBeTruthy()
+    })
+
+    it('stays enabled and shows a soft hint when the device appears not activated', () => {
+      fixture.componentRef.setInput('canManage', true)
+      fixture.componentRef.setInput('manageHint', 'devices.manage.hint.notActivated.value')
+      render(baseDevice)
+      expect(button().disabled).toBe(false)
+      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageHint"]')).toBeTruthy()
+      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageReason"]')).toBeNull()
     })
   })
 })

@@ -1171,23 +1171,31 @@
   },
   "devices.manage.error.timeout": {
     "description": "Error when the connection to the device times out",
-    "value": "انتهت مهلة الاتصال بالجهاز."
+    "value": "تعذّر على Console الوصول إلى الجهاز، أو انتهت مهلة الاتصال."
+  },
+  "devices.manage.error.tls": {
+    "description": "Error shown when the TLS connection to the device fails while managing it",
+    "value": "فشل الاتصال الآمن (TLS) بالجهاز، على سبيل المثال لأن شهادته غير موثوق بها."
+  },
+  "devices.manage.error.notAmt": {
+    "description": "Error shown when the device answers but is not an Intel AMT service",
+    "value": "لم يستجب الجهاز كجهاز Intel AMT."
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
     "value": "تعذرت إدارة الجهاز. حاول مرة أخرى."
   },
-  "devices.manage.ineligible.notActivated": {
-    "description": "Why a device that is not activated cannot be managed",
-    "value": "لم يتم تنشيط هذا الجهاز بعد. قم بتنشيطه أولاً، وبعدها يمكن إدارته."
+  "devices.manage.hint.notActivated": {
+    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
+    "value": "يبدو أن هذا الجهاز غير مفعّل، لذا قد يتم رفض بيانات الاعتماد. يتحقق Console منها عند الإرسال."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "لا يمكن إدارة هذا الجهاز لأنه لا يدعم Intel vPro أو Intel Standard Manageability."
   },
-  "devices.manage.ineligible.unknown": {
-    "description": "Why a device that reported no Intel AMT capability cannot be managed",
-    "value": "لم يُبلغ هذا الجهاز عن أي إمكانية في Intel AMT، لذا لا يمكن إدارته. قد لا يدعم Intel vPro أو Intel Standard Manageability، أو قد يكون برنامج تشغيل Intel MEI مفقودًا."
+  "devices.manage.hint.unknown": {
+    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
+    "value": "لم يتم الإبلاغ عن إمكانات هذا الجهاز. يتحقق Console من بيانات الاعتماد عند الإرسال."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

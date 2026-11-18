@@ -55,7 +55,8 @@ describe('ManageDeviceDialogComponent', () => {
   it.each([
     [401, 'devices.manage.error.unauthorized.value'],
     [0, 'devices.manage.error.unreachable.value'],
-    [502, 'devices.manage.error.unreachable.value'],
+    [502, 'devices.manage.error.tls.value'],
+    [422, 'devices.manage.error.notAmt.value'],
     [504, 'devices.manage.error.timeout.value'],
     [500, 'devices.manage.error.generic.value']
   ])('keeps the dialog open with an inline error for HTTP %i', (status, key) => {

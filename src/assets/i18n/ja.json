@@ -1163,23 +1163,31 @@
   },
   "devices.manage.error.timeout": {
     "description": "Error when the connection to the device times out",
-    "value": "デバイスへの接続がタイムアウトしました。"
+    "value": "Console がデバイスに到達できなかったか、接続がタイムアウトしました。"
+  },
+  "devices.manage.error.tls": {
+    "description": "Error shown when the TLS connection to the device fails while managing it",
+    "value": "デバイスへの安全な (TLS) 接続に失敗しました。たとえば、証明書が信頼されていない可能性があります。"
+  },
+  "devices.manage.error.notAmt": {
+    "description": "Error shown when the device answers but is not an Intel AMT service",
+    "value": "デバイスが Intel AMT デバイスとして応答しませんでした。"
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
     "value": "デバイスを管理できませんでした。もう一度お試しください。"
   },
-  "devices.manage.ineligible.notActivated": {
-    "description": "Why a device that is not activated cannot be managed",
-    "value": "このデバイスはまだアクティベートされていません。先にアクティベートすると管理できるようになります。"
+  "devices.manage.hint.notActivated": {
+    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
+    "value": "このデバイスはアクティベートされていないようです。そのため、認証情報が拒否される可能性があります。Console は送信時に認証情報を検証します。"
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "このデバイスは Intel vPro または Intel Standard Manageability に対応していないため、管理できません。"
   },
-  "devices.manage.ineligible.unknown": {
-    "description": "Why a device that reported no Intel AMT capability cannot be managed",
-    "value": "このデバイスは Intel AMT の機能を報告しなかったため、管理できません。Intel vPro または Intel Standard Manageability に対応していないか、Intel MEI ドライバーがない可能性があります。"
+  "devices.manage.hint.unknown": {
+    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
+    "value": "このデバイスの機能は報告されませんでした。Console は送信時に認証情報を検証します。"
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

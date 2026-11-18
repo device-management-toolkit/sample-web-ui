@@ -1167,23 +1167,31 @@
   },
   "devices.manage.error.timeout": {
     "description": "Error when the connection to the device times out",
-    "value": "Die Verbindung zum Gerät ist abgelaufen."
+    "value": "Console konnte das Gerät nicht erreichen, oder die Verbindung ist abgelaufen."
+  },
+  "devices.manage.error.tls": {
+    "description": "Error shown when the TLS connection to the device fails while managing it",
+    "value": "Die sichere Verbindung (TLS) zum Gerät ist fehlgeschlagen, zum Beispiel weil sein Zertifikat nicht vertrauenswürdig ist."
+  },
+  "devices.manage.error.notAmt": {
+    "description": "Error shown when the device answers but is not an Intel AMT service",
+    "value": "Das Gerät hat nicht als Intel AMT-Gerät geantwortet."
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
     "value": "Das Gerät konnte nicht verwaltet werden. Versuchen Sie es erneut."
   },
-  "devices.manage.ineligible.notActivated": {
-    "description": "Why a device that is not activated cannot be managed",
-    "value": "Dieses Gerät ist noch nicht aktiviert. Aktivieren Sie es zuerst, dann kann es verwaltet werden."
+  "devices.manage.hint.notActivated": {
+    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
+    "value": "Dieses Gerät scheint nicht aktiviert zu sein, daher werden die Anmeldedaten möglicherweise abgelehnt. Console überprüft sie beim Absenden."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "Dieses Gerät kann nicht verwaltet werden, da es Intel vPro oder Intel Standard Manageability nicht unterstützt."
   },
-  "devices.manage.ineligible.unknown": {
-    "description": "Why a device that reported no Intel AMT capability cannot be managed",
-    "value": "Dieses Gerät hat keine Intel AMT-Funktion gemeldet und kann daher nicht verwaltet werden. Möglicherweise unterstützt es weder Intel vPro noch Intel Standard Manageability, oder der Intel MEI-Treiber fehlt."
+  "devices.manage.hint.unknown": {
+    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
+    "value": "Die Funktionen dieses Geräts wurden nicht gemeldet. Console überprüft die Anmeldedaten beim Absenden."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

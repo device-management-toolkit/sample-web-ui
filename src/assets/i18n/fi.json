@@ -1167,23 +1167,31 @@
   },
   "devices.manage.error.timeout": {
     "description": "Error when the connection to the device times out",
-    "value": "Laitteen yhteys aikakatkaistiin."
+    "value": "Console ei tavoittanut laitetta tai yhteys aikakatkaistiin."
+  },
+  "devices.manage.error.tls": {
+    "description": "Error shown when the TLS connection to the device fails while managing it",
+    "value": "Suojattu (TLS) yhteys laitteeseen epäonnistui, esimerkiksi koska sen varmennetta ei pidetä luotettavana."
+  },
+  "devices.manage.error.notAmt": {
+    "description": "Error shown when the device answers but is not an Intel AMT service",
+    "value": "Laite ei vastannut Intel AMT -laitteena."
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
     "value": "Laitetta ei voitu ottaa hallintaan. Yritä uudelleen."
   },
-  "devices.manage.ineligible.notActivated": {
-    "description": "Why a device that is not activated cannot be managed",
-    "value": "Tätä laitetta ei ole vielä aktivoitu. Aktivoi se ensin, jonka jälkeen sitä voi hallita."
+  "devices.manage.hint.notActivated": {
+    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
+    "value": "Tätä laitetta ei näytä olevan aktivoitu, joten tunnistetiedot saatetaan hylätä. Console tarkistaa ne lähetettäessä."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "Tätä laitetta ei voi hallita, koska se ei tue Intel vPro- tai Intel Standard Manageability -ominaisuutta."
   },
-  "devices.manage.ineligible.unknown": {
-    "description": "Why a device that reported no Intel AMT capability cannot be managed",
-    "value": "Tämä laite ei ilmoittanut Intel AMT -ominaisuuksia, joten sitä ei voi hallita. Se ei ehkä tue Intel vPro- tai Intel Standard Manageability -ominaisuutta, tai Intel MEI -ohjain puuttuu."
+  "devices.manage.hint.unknown": {
+    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
+    "value": "Tämän laitteen ominaisuuksia ei ilmoitettu. Console tarkistaa tunnistetiedot lähetettäessä."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

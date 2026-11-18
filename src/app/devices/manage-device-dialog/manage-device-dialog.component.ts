@@ -94,8 +94,11 @@ export class ManageDeviceDialogComponent {
       case 403:
         return 'devices.manage.error.unauthorized.value'
       case 0:
-      case 502:
         return 'devices.manage.error.unreachable.value'
+      case 502:
+        return 'devices.manage.error.tls.value'
+      case 422:
+        return 'devices.manage.error.notAmt.value'
       case 408:
       case 504:
         return 'devices.manage.error.timeout.value'

@@ -37,6 +37,8 @@
     </button>
     @if (!canManage() && manageDisabledReason()) {
       <p class="manage-reason" data-cy="discoveredPaneManageReason">{{ manageDisabledReason() | translate }}</p>
+    } @else if (canManage() && manageHint()) {
+      <p class="manage-reason" data-cy="discoveredPaneManageHint">{{ manageHint() | translate }}</p>
     }
   </div>
 
