@@ -78,7 +78,14 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
 
   it('should delete the device created in create.spec.ts', () => {
     cy.goToPage('Devices')
-    cy.wait('@get-devices')
+    cy.wait('@get-devices').then(({ response }) => {
+      const devices = response?.body.data as Array<{ hostname: string, guid: string }>
+      expect(devices, 'initial device list').to.be.an('array')
+      const matchingDevices = devices.filter((device) => device.hostname === Cypress.expose('DEVICE'))
+      expect(matchingDevices, 'matching device').to.have.length(1)
+      expect(matchingDevices[0].guid, 'device GUID').to.be.a('string').and.not.be.empty
+      cy.wrap(matchingDevices[0].guid).as('device-guid')
+    })
     cy.wait('@get-tags')
 
     // Verify the device is present before deletion
@@ -92,17 +99,26 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     }).as('get-devices-after-delete')
 
     // Click delete and confirm
-    cy.get('mat-cell').contains('delete').click()
+    cy.contains('mat-row', Cypress.expose('DEVICE')).find('mat-cell').contains('delete').click()
     cy.get('button').contains('Yes').click()
 
     // Wait for delete and list refresh requests
     cy.wait('@delete-device').then((req) => {
       cy.wrap(req).its('response.statusCode').should('eq', httpCodes.NO_CONTENT)
+      cy.get<string>('@device-guid').then((deviceGuid) => {
+        expect(new URL(req.request.url).pathname.split('/').pop(), 'deleted device GUID').to.eq(deviceGuid)
+      })
     })
-    cy.wait('@get-devices-after-delete').its('response.statusCode').should('eq', httpCodes.SUCCESS)
+    cy.wait('@get-devices-after-delete').then(({ response }) => {
+      expect(response?.statusCode).to.eq(httpCodes.SUCCESS)
+      const devices = response?.body.data as Array<{ guid: string }>
+      expect(devices, 'refreshed device list').to.be.an('array')
+      cy.get<string>('@device-guid').then((deviceGuid) => {
+        expect(devices.map((device) => device.guid), 'refreshed device GUIDs').not.to.include(deviceGuid)
+      })
+    })
 
     // Verify the device no longer appears in the list
-    cy.contains(Cypress.expose('DEVICE')).should('not.exist')
-    cy.contains('Test Device').should('not.exist')
+    cy.get('body').contains('mat-row', Cypress.expose('DEVICE')).should('not.exist')
   })
 })
