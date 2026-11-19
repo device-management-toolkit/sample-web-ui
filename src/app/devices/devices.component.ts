@@ -552,7 +552,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private onManaged(): void {
     this.snackBar.open(
-      this.translate.instant('devices.manage.success.value'),
+      this.translate.instant('devices.adopt.success.value'),
       undefined,
       SnackbarDefaults.defaultSuccess
     )

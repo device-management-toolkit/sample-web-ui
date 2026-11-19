@@ -227,8 +227,8 @@
                 mat-icon-button
                 [disabled]="!adoption.eligible"
                 [disabledInteractive]="true"
-                [matTooltip]="adoption.reasonKey ?? 'devices.manage.button.value' | translate"
-                [attr.aria-label]="'devices.manage.button.value' | translate"
+                [matTooltip]="adoption.reasonKey ?? 'devices.adopt.button.value' | translate"
+                [attr.aria-label]="'devices.adopt.button.value' | translate"
                 data-cy="adoptDevice"
                 (click)="$event.stopPropagation(); adoptDevice(element)">
                 <mat-icon>how_to_reg</mat-icon>
