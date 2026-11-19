@@ -240,7 +240,8 @@
               (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
               <mat-icon>delete</mat-icon>
             </button>
-            @if (!isCloudMode) {
+            <!-- A discovered device gets its credentials through Adopt, which checks eligibility first. -->
+            @if (!isCloudMode && !isDiscoveredTab) {
               <button
                 mat-icon-button
                 [matTooltip]="'devices.actions.edit.value' | translate"
