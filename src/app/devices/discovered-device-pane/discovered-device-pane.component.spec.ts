@@ -75,7 +75,7 @@ describe('DiscoveredDevicePaneComponent', () => {
       dnsSuffix: 'corp.example.com',
       deviceInfo: { fwVersion: '16.1.30', fwBuild: '', fwSku: '', currentMode: '', features: '', ipAddress: '' }
     })
-    const row = component.sections()[0].rows.find((r) => r.label === 'devices.discoveredPane.amtDnsSuffix.value')
+    const row = component.sections()[0].rows.find((r) => r.label === 'devices.discoveredPane.dnsSuffix.value')
     expect(row?.value).toBe('corp.example.com')
   })
 
@@ -85,7 +85,7 @@ describe('DiscoveredDevicePaneComponent', () => {
     expect(sections.length).toBe(1)
     expect(sections[0].title).toBe('devices.discoveredPane.sectionAmt.value')
     expect(sections[0].rows.map((r) => [r.label, r.value])).toEqual([
-      ['devices.discoveredPane.amtDnsSuffix.value', 'corp.example.com']
+      ['devices.discoveredPane.dnsSuffix.value', 'corp.example.com']
     ])
     expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneEmpty"]')).toBeNull()
   })
@@ -95,7 +95,7 @@ describe('DiscoveredDevicePaneComponent', () => {
       ...baseDevice,
       deviceInfo: { fwVersion: '16.1.30', fwBuild: '', fwSku: '', currentMode: '', features: '', ipAddress: '' }
     })
-    expect(component.sections()[0].rows.map((r) => r.label)).not.toContain('devices.discoveredPane.amtDnsSuffix.value')
+    expect(component.sections()[0].rows.map((r) => r.label)).not.toContain('devices.discoveredPane.dnsSuffix.value')
   })
 
   it('formats discovery timestamps with plain spaces so they copy cleanly', () => {

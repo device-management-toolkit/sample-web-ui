@@ -1157,10 +1157,6 @@
     "description": "Shown in the discovered device pane when fetching the latest details fails",
     "value": "Не удалось загрузить последние сведения об этом устройстве. Показанные данные могут быть устаревшими."
   },
-  "devices.discoveredPane.amtDnsSuffix": {
-    "description": "Label for the Intel AMT DNS suffix",
-    "value": "DNS-суффикс AMT"
-  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"

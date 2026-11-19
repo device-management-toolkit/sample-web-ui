@@ -1153,10 +1153,6 @@
     "description": "Shown in the discovered device pane when fetching the latest details fails",
     "value": "Laitteen uusimpia tietoja ei voitu ladata. Näytetyt tiedot voivat olla vanhentuneita."
   },
-  "devices.discoveredPane.amtDnsSuffix": {
-    "description": "Label for the Intel AMT DNS suffix",
-    "value": "AMT:n DNS-liite"
-  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"

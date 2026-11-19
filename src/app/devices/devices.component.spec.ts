@@ -842,6 +842,19 @@ describe('DevicesComponent', () => {
       expect(document.activeElement).toBe(row)
     })
 
+    it('clears the load error when a list refresh replaces the open device', async () => {
+      getDeviceSpy.mockReturnValue(throwError(() => new Error('offline')))
+      component.onTabChange(1)
+      await component.openDevice(device01)
+      expect(component.paneLoadError()).toBe(true)
+
+      getDevicesSpy.mockReturnValue(of({ data: [{ ...device01 }, device02], totalCount: 2 }))
+      component.getDevices()
+
+      expect(component.paneDevice()?.guid).toBe(device01.guid)
+      expect(component.paneLoadError()).toBe(false)
+    })
+
     it('keeps the pane on the refreshed device after a reload, and closes it if the device is gone', async () => {
       component.onTabChange(1)
       await component.openDevice(device01)

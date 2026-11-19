@@ -115,7 +115,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
     if (!info) {
       const suffixOnly = this.prune({
         title: 'devices.discoveredPane.sectionAmt.value',
-        rows: this.rows([['amtDnsSuffix', this.device().dnsSuffix]])
+        rows: this.rows([this.amtDnsSuffixRow()])
       })
       return suffixOnly ? [suffixOnly] : []
     }
@@ -159,6 +159,11 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
     return raw && mode && mode !== 'unknown' ? { key: `devices.controlMode.${mode}.value` } : raw
   }
 
+  // Shown under Intel AMT whether or not deviceInfo is present, so it is defined once.
+  private amtDnsSuffixRow(): [string, string | undefined] {
+    return ['dnsSuffix', this.device().dnsSuffix]
+  }
+
   private amtSection(info: DeviceInfo): PaneSection {
     const lms =
       info.lmsInstalled === undefined
@@ -182,7 +187,7 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
         ['currentMode', this.controlModeValue(info.currentMode)],
         ['features', info.features],
         ['ipAddress', info.ipAddress],
-        ['amtDnsSuffix', this.device().dnsSuffix],
+        this.amtDnsSuffixRow(),
         ['dhcpEnabled', info.dhcpEnabled],
         ['tlsMode', this.label(info.tlsMode, TLS_MODE_LABELS)],
         ['heciAvailable', info.heciAvailable],

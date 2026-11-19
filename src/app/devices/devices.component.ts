@@ -398,7 +398,11 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
         // Keep the pane on the refreshed copy of its device, or close it if the device left this page.
         const openGuid = this.paneDevice()?.guid
         if (openGuid) {
-          this.paneDevice.set(devices.find((d) => d.guid === openGuid) ?? null)
+          const fresh = devices.find((d) => d.guid === openGuid) ?? null
+          this.paneDevice.set(fresh)
+          // The list now holds a fresh copy, so an earlier failed detail fetch no longer applies.
+          this.paneRefresh?.unsubscribe()
+          this.paneLoadError.set(false)
         }
         if (this.isCloudMode) {
           // Cloud has no discovered/managed split, so the paginated response's

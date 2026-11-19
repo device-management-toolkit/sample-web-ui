@@ -1153,10 +1153,6 @@
     "description": "Shown in the discovered device pane when fetching the latest details fails",
     "value": "Die neuesten Details für dieses Gerät konnten nicht geladen werden. Die angezeigten Informationen sind möglicherweise veraltet."
   },
-  "devices.discoveredPane.amtDnsSuffix": {
-    "description": "Label for the Intel AMT DNS suffix",
-    "value": "AMT-DNS-Suffix"
-  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"
