@@ -29,6 +29,13 @@
     <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
   </div>
 
+  @if (loadError()) {
+    <p class="error" role="alert" data-cy="discoveredPaneError">
+      <mat-icon aria-hidden="true">error</mat-icon>
+      {{ 'devices.discoveredPane.loadError.value' | translate }}
+    </p>
+  }
+
   @if (firstDiscovered() || lastSynced()) {
     <dl class="identity">
       @if (firstDiscovered()) {
@@ -67,7 +74,9 @@
       }
     </section>
   } @empty {
-    <p class="empty" data-cy="discoveredPaneEmpty">{{ 'devices.discoveredPane.empty.value' | translate }}</p>
+    @if (!loadError()) {
+      <p class="empty" data-cy="discoveredPaneEmpty">{{ 'devices.discoveredPane.empty.value' | translate }}</p>
+    }
   }
 </div>
 
