@@ -440,34 +440,6 @@ describe('DevicesService', () => {
     })
   })
 
-  describe('manageDevice', () => {
-    it('should post the credentials to the manage endpoint', () => {
-      const credentials = { username: 'admin', password: 'P@ssw0rd' }
-      const managed: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any
-
-      service.manageDevice('guid1', credentials).subscribe((response) => {
-        expect(response).toEqual(managed)
-      })
-
-      const req = httpMock.expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/guid1/manage`)
-      expect(req.request.method).toBe('POST')
-      expect(req.request.body).toEqual(credentials)
-      req.flush(managed)
-    })
-
-    it('should surface errors to the caller', () => {
-      let status = 0
-      service.manageDevice('guid1', { username: 'admin', password: 'bad' }).subscribe({
-        error: (error) => (status = error.status)
-      })
-
-      httpMock
-        .expectOne(`${mockEnvironment.mpsServer}/api/v1/devices/guid1/manage`)
-        .flush(null, { status: 401, statusText: 'Unauthorized' })
-      expect(status).toBe(401)
-    })
-  })
-
   describe('editDevice', () => {
     it('should edit an existing device', () => {
       const mockDevice: Device = { hostname: 'device1', guid: 'guid1', connectionStatus: true } as any

@@ -1141,41 +1141,9 @@
     "description": "Button that moves a discovered device to Managed",
     "value": "Ota käyttöön"
   },
-  "devices.manage.dialog.title": {
-    "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Ota laite käyttöön"
-  },
-  "devices.manage.dialog.description": {
-    "description": "Explains what the credentials are used for when managing a discovered device",
-    "value": "Anna tämän laitteen Intel AMT -järjestelmänvalvojan tunnistetiedot. Console muodostaa yhteyden laitteeseen niiden tarkistamiseksi."
-  },
   "devices.manage.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Laitetta hallitaan nyt"
-  },
-  "devices.manage.error.unauthorized": {
-    "description": "Error when the device rejects the supplied credentials",
-    "value": "Laite hylkäsi käyttäjätunnuksen tai salasanan."
-  },
-  "devices.manage.error.unreachable": {
-    "description": "Error when Console cannot reach the device",
-    "value": "Console ei tavoittanut laitetta."
-  },
-  "devices.manage.error.timeout": {
-    "description": "Error when the connection to the device times out",
-    "value": "Console ei tavoittanut laitetta tai yhteys aikakatkaistiin."
-  },
-  "devices.manage.error.tls": {
-    "description": "Error shown when the TLS connection to the device fails while managing it",
-    "value": "Suojattu (TLS) yhteys laitteeseen epäonnistui, esimerkiksi koska sen varmennetta ei pidetä luotettavana."
-  },
-  "devices.manage.error.notAmt": {
-    "description": "Error shown when the device answers but is not an Intel AMT service",
-    "value": "Laite ei vastannut Intel AMT -laitteena."
-  },
-  "devices.manage.error.generic": {
-    "description": "Error shown when managing a device fails for another reason",
-    "value": "Laitetta ei voitu ottaa käyttöön. Yritä uudelleen."
   },
   "devices.manage.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",

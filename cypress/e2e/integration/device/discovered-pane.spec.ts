@@ -171,7 +171,7 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.get('[data-cy="discoveredPaneAdoptReason"]').should('contain.text', 'is not activated')
   })
 
-  it('keeps the dialog open on wrong credentials and moves the device to Managed on success', () => {
+  it('adopts through the edit device dialog and moves the device to Managed', () => {
     const activatedCopy = {
       ...discoveredDevice,
       management: { eligible: true },
@@ -181,30 +181,27 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
       statusCode: httpCodes.SUCCESS,
       body: activatedCopy
     }).as('get-activated-device')
-    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/manage$`), {
-      statusCode: 403,
-      body: { error: 'rejected', message: 'rejected' }
-    }).as('manage-rejected')
+    // Saving a password for a discovered device moves it to Managed in Console.
+    cy.myIntercept('PATCH', /devices$/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...activatedCopy, deviceInfo: { ...activatedCopy.deviceInfo, discovered: false } }
+    }).as('patch-device')
 
     cy.get('mat-row').contains('lab-pc-07').click()
     cy.wait('@get-activated-device')
     cy.get('[data-cy="discoveredPaneAdopt"]').should('not.be.disabled').click()
-    cy.get('[data-cy="manageDeviceSubmit"]').should('be.disabled')
-    cy.get('app-manage-device-dialog input[title="password"]').type('wrong')
-    cy.get('[data-cy="manageDeviceSubmit"]').click()
-    cy.wait('@manage-rejected')
-    cy.get('[data-cy="manageDeviceError"]').should('contain.text', 'rejected')
-    cy.get('app-manage-device-dialog').should('exist')
-
-    cy.myIntercept('POST', new RegExp(`devices/${discoveredDevice.guid}/manage$`), {
-      statusCode: httpCodes.SUCCESS,
-      body: { ...activatedCopy, deviceInfo: { ...activatedCopy.deviceInfo, discovered: false } }
-    }).as('manage-ok')
-    cy.get('app-manage-device-dialog input[title="password"]').clear()
-    cy.get('app-manage-device-dialog input[title="password"]').type('right')
-    cy.get('[data-cy="manageDeviceSubmit"]').click()
-    cy.wait('@manage-ok')
-    cy.get('app-manage-device-dialog').should('not.exist')
+    cy.get('app-add-device-enterprise input[title="hostname"]').should('have.value', 'lab-pc-07')
+    cy.get('app-add-device-enterprise input[title="friendlyName"]').type('Lab PC 07')
+    cy.get('app-add-device-enterprise input[title="username"]').clear()
+    cy.get('app-add-device-enterprise input[title="username"]').type('admin')
+    cy.get('app-add-device-enterprise input[title="password"]').type('P@ssw0rd')
+    cy.get('app-add-device-enterprise button[type="submit"]').click()
+    cy.wait('@patch-device')
+      .its('request.body')
+      .should((body) => {
+        expect(body).to.include({ guid: discoveredDevice.guid, username: 'admin', password: 'P@ssw0rd' })
+      })
+    cy.get('app-add-device-enterprise').should('not.exist')
     cy.get('.mat-mdc-tab').eq(0).should('have.attr', 'aria-selected', 'true')
   })
 

@@ -67,7 +67,6 @@ import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DiscoveredDevicePaneComponent } from './discovered-device-pane/discovered-device-pane.component'
 import { adoptEligibility } from './adopt-eligibility'
-import { ManageDeviceDialogComponent } from './manage-device-dialog/manage-device-dialog.component'
 
 @Component({
   selector: 'app-devices',
@@ -537,14 +536,15 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   protected readonly adoptEligibility = adoptEligibility
 
-  // Managing registers a discovered device with Console using its existing AMT credentials.
+  // Adopting opens the edit device dialog. Saving the device's AMT credentials there
+  // (PATCH /api/v1/devices with a password) moves it to Managed in Console.
   adoptDevice(device: Device): void {
     if (!adoptEligibility(device).eligible) return
     this.dialog
-      .open(ManageDeviceDialogComponent, { width: '480px', data: device })
+      .open(AddDeviceEnterpriseComponent, { height: '650px', width: '700px', data: device })
       .afterClosed()
-      .subscribe((managed) => {
-        if (managed) this.onManaged()
+      .subscribe((result) => {
+        if (result?.submitted) this.onManaged()
       })
   }
 

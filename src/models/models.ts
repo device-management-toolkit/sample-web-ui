@@ -31,11 +31,6 @@ export interface Management {
   eligible: boolean
   reason?: 'notActivated' | 'unsupported' | 'unknown'
 }
-// Credentials Console uses to manage an already-activated discovered device.
-export interface ManageRequest {
-  username: string
-  password: string
-}
 export interface DeviceInfo {
   fwVersion: string
   fwBuild: string

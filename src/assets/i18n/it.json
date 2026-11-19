@@ -1137,41 +1137,9 @@
     "description": "Button that moves a discovered device to Managed",
     "value": "Adotta"
   },
-  "devices.manage.dialog.title": {
-    "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Adotta dispositivo"
-  },
-  "devices.manage.dialog.description": {
-    "description": "Explains what the credentials are used for when managing a discovered device",
-    "value": "Inserisci le credenziali di amministratore Intel AMT di questo dispositivo. Console si connette al dispositivo per verificarle."
-  },
   "devices.manage.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Il dispositivo è ora gestito"
-  },
-  "devices.manage.error.unauthorized": {
-    "description": "Error when the device rejects the supplied credentials",
-    "value": "Il dispositivo ha rifiutato il nome utente o la password."
-  },
-  "devices.manage.error.unreachable": {
-    "description": "Error when Console cannot reach the device",
-    "value": "Console non è riuscita a raggiungere il dispositivo."
-  },
-  "devices.manage.error.timeout": {
-    "description": "Error when the connection to the device times out",
-    "value": "Console non ha potuto raggiungere il dispositivo, oppure la connessione è scaduta."
-  },
-  "devices.manage.error.tls": {
-    "description": "Error shown when the TLS connection to the device fails while managing it",
-    "value": "La connessione sicura (TLS) al dispositivo non è riuscita, ad esempio perché il suo certificato non è attendibile."
-  },
-  "devices.manage.error.notAmt": {
-    "description": "Error shown when the device answers but is not an Intel AMT service",
-    "value": "Il dispositivo non ha risposto come dispositivo Intel AMT."
-  },
-  "devices.manage.error.generic": {
-    "description": "Error shown when managing a device fails for another reason",
-    "value": "Impossibile adottare il dispositivo. Riprova."
   },
   "devices.manage.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",

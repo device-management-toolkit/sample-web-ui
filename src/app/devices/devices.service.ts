@@ -41,8 +41,7 @@ import {
   DisplaySelectionResponse,
   DisplaySelectionRequest,
   RemoteEraseRequest,
-  BootCapabilities,
-  ManageRequest
+  BootCapabilities
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
@@ -419,11 +418,6 @@ export class DevicesService {
         throw err
       })
     )
-  }
-
-  // Console connects to the device with these credentials before marking it managed.
-  manageDevice(guid: string, credentials: ManageRequest): Observable<Device> {
-    return this.http.post<Device>(`${environment.mpsServer}/api/v1/devices/${guid}/manage`, credentials)
   }
 
   editDevice(device: Device): Observable<Device> {

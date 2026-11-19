@@ -1137,41 +1137,9 @@
     "description": "Button that moves a discovered device to Managed",
     "value": "אימוץ"
   },
-  "devices.manage.dialog.title": {
-    "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "אימוץ מכשיר"
-  },
-  "devices.manage.dialog.description": {
-    "description": "Explains what the credentials are used for when managing a discovered device",
-    "value": "הזן את פרטי ההתחברות של מנהל Intel AMT עבור מכשיר זה. Console מתחבר למכשיר כדי לאמת אותם."
-  },
   "devices.manage.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "המכשיר מנוהל כעת"
-  },
-  "devices.manage.error.unauthorized": {
-    "description": "Error when the device rejects the supplied credentials",
-    "value": "המכשיר דחה את שם המשתמש או הסיסמה."
-  },
-  "devices.manage.error.unreachable": {
-    "description": "Error when Console cannot reach the device",
-    "value": "Console לא הצליח להגיע למכשיר."
-  },
-  "devices.manage.error.timeout": {
-    "description": "Error when the connection to the device times out",
-    "value": "Console לא הצליח להגיע להתקן, או שהחיבור הגיע לתום הזמן הקצוב."
-  },
-  "devices.manage.error.tls": {
-    "description": "Error shown when the TLS connection to the device fails while managing it",
-    "value": "החיבור המאובטח (TLS) להתקן נכשל, לדוגמה מפני שהאישור שלו אינו מהימן."
-  },
-  "devices.manage.error.notAmt": {
-    "description": "Error shown when the device answers but is not an Intel AMT service",
-    "value": "ההתקן לא הגיב כהתקן Intel AMT."
-  },
-  "devices.manage.error.generic": {
-    "description": "Error shown when managing a device fails for another reason",
-    "value": "לא ניתן היה לאמץ את המכשיר. נסה שוב."
   },
   "devices.manage.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",

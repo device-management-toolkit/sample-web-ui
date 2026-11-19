@@ -220,18 +220,19 @@
                 <mat-icon>restart_alt</mat-icon>
               </button>
             } @else {
-              <!-- The span carries the tooltip because a disabled button does not show one. -->
+              <!-- disabledInteractive keeps an ineligible Adopt focusable, so keyboard and screen-reader
+                   users still get the tooltip (exposed through aria-describedby) saying why. -->
               @let adoption = adoptEligibility(element);
-              <span [matTooltip]="adoption.reasonKey ?? 'devices.manage.button.value' | translate">
-                <button
-                  mat-icon-button
-                  [disabled]="!adoption.eligible"
-                  [attr.aria-label]="'devices.manage.button.value' | translate"
-                  data-cy="adoptDevice"
-                  (click)="$event.stopPropagation(); adoptDevice(element)">
-                  <mat-icon>how_to_reg</mat-icon>
-                </button>
-              </span>
+              <button
+                mat-icon-button
+                [disabled]="!adoption.eligible"
+                [disabledInteractive]="true"
+                [matTooltip]="adoption.reasonKey ?? 'devices.manage.button.value' | translate"
+                [attr.aria-label]="'devices.manage.button.value' | translate"
+                data-cy="adoptDevice"
+                (click)="$event.stopPropagation(); adoptDevice(element)">
+                <mat-icon>how_to_reg</mat-icon>
+              </button>
             }
             <button
               mat-icon-button

@@ -1145,41 +1145,9 @@
     "description": "Button that moves a discovered device to Managed",
     "value": "Overnemen"
   },
-  "devices.manage.dialog.title": {
-    "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Apparaat overnemen"
-  },
-  "devices.manage.dialog.description": {
-    "description": "Explains what the credentials are used for when managing a discovered device",
-    "value": "Voer de Intel AMT-beheerdersgegevens van dit apparaat in. Console maakt verbinding met het apparaat om ze te controleren."
-  },
   "devices.manage.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Het apparaat wordt nu beheerd"
-  },
-  "devices.manage.error.unauthorized": {
-    "description": "Error when the device rejects the supplied credentials",
-    "value": "Het apparaat heeft de gebruikersnaam of het wachtwoord geweigerd."
-  },
-  "devices.manage.error.unreachable": {
-    "description": "Error when Console cannot reach the device",
-    "value": "Console kon het apparaat niet bereiken."
-  },
-  "devices.manage.error.timeout": {
-    "description": "Error when the connection to the device times out",
-    "value": "Console kon het apparaat niet bereiken, of de verbinding is verlopen."
-  },
-  "devices.manage.error.tls": {
-    "description": "Error shown when the TLS connection to the device fails while managing it",
-    "value": "De beveiligde verbinding (TLS) met het apparaat is mislukt, bijvoorbeeld omdat het certificaat niet vertrouwd wordt."
-  },
-  "devices.manage.error.notAmt": {
-    "description": "Error shown when the device answers but is not an Intel AMT service",
-    "value": "Het apparaat reageerde niet als een Intel AMT-apparaat."
-  },
-  "devices.manage.error.generic": {
-    "description": "Error shown when managing a device fails for another reason",
-    "value": "Het apparaat kon niet worden overgenomen. Probeer het opnieuw."
   },
   "devices.manage.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",

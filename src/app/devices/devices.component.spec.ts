@@ -16,6 +16,7 @@ import { of, Subject, throwError } from 'rxjs'
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
 import { Device } from '../../models/models'
+import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
 import { MatSelectChange } from '@angular/material/select'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
@@ -839,11 +840,11 @@ describe('DevicesComponent', () => {
     // FW SKU bit 0x08 marks vPro; admin control mode is ACM.
     const eligible = (): Device => ({ ...device01, management: { eligible: true } })
     let openSpy: MockInstance
-    let closed: Subject<boolean>
+    let closed: Subject<{ submitted: boolean } | undefined>
 
     beforeEach(() => {
       component.isCloudMode = false
-      closed = new Subject<boolean>()
+      closed = new Subject<{ submitted: boolean } | undefined>()
       openSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue({ afterClosed: () => closed } as any)
     })
 
@@ -852,14 +853,16 @@ describe('DevicesComponent', () => {
       expect(openSpy).not.toHaveBeenCalled()
     })
 
-    it('moves to the Managed tab and reloads the lists once after the device is managed', async () => {
+    it('opens the edit device dialog, then moves to the Managed tab and reloads the lists once after saving', async () => {
       component.onTabChange(1)
       fixture.detectChanges()
       await fixture.whenStable()
       getDevicesSpy.mockClear()
-      component.adoptDevice(eligible())
-      expect(openSpy).toHaveBeenCalledTimes(1)
-      closed.next(true)
+      const device = eligible()
+      component.adoptDevice(device)
+      // Adopt reuses the edit device dialog, which saves with PATCH /api/v1/devices.
+      expect(openSpy).toHaveBeenCalledWith(AddDeviceEnterpriseComponent, expect.objectContaining({ data: device }))
+      closed.next({ submitted: true })
       fixture.detectChanges()
       await fixture.whenStable()
       expect(component.activeTab()).toBe(0)
@@ -873,14 +876,14 @@ describe('DevicesComponent', () => {
       await fixture.whenStable()
       getDevicesSpy.mockClear()
       component.adoptDevice(eligible())
-      closed.next(false)
+      closed.next(undefined)
       fixture.detectChanges()
       await fixture.whenStable()
       expect(component.activeTab()).toBe(1)
       expect(getDevicesSpy).not.toHaveBeenCalled()
     })
 
-    it('offers Adopt on a discovered row, disabled only when the device is unsupported', async () => {
+    const renderDiscoveredRows = async (): Promise<HTMLButtonElement[]> => {
       component.onTabChange(1)
       getDevicesSpy.mockReturnValue(
         of({
@@ -891,10 +894,25 @@ describe('DevicesComponent', () => {
       component.getDevices()
       fixture.detectChanges()
       await fixture.whenStable()
-      const buttons = Array.from(
+      return Array.from(
         (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLButtonElement>('[data-cy="adoptDevice"]')
       )
-      expect(buttons.map((b) => b.disabled)).toEqual([false, true])
+    }
+
+    it('offers Adopt on a discovered row, disabled when the device is not eligible', async () => {
+      const buttons = await renderDiscoveredRows()
+      expect(buttons.map((b) => b.getAttribute('aria-disabled') === 'true')).toEqual([false, true])
+    })
+
+    // The ineligible button stays focusable so its tooltip reason reaches keyboard and screen-reader users.
+    it('keeps an ineligible Adopt focusable, but clicking it opens neither the dialog nor the pane', async () => {
+      const [, ineligible] = await renderDiscoveredRows()
+      expect(ineligible.disabled).toBe(false)
+      ineligible.focus()
+      expect(document.activeElement).toBe(ineligible)
+      ineligible.click()
+      expect(openSpy).not.toHaveBeenCalled()
+      expect(component.paneDevice()).toBeNull()
     })
 
     it('does not offer Adopt on the Managed tab', async () => {

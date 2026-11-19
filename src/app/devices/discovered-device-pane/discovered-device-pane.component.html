@@ -31,10 +31,11 @@
         {{ 'devices.manage.button.value' | translate }}
       </button>
     </div>
-    <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
+    <!-- The reason sits right under the disabled Adopt button it explains, above the general explainer. -->
     @if (!adoption().eligible && adoption().reasonKey) {
       <p class="adopt-reason" data-cy="discoveredPaneAdoptReason">{{ adoption().reasonKey | translate }}</p>
     }
+    <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
   </div>
 
   @if (firstDiscovered() || lastSynced()) {

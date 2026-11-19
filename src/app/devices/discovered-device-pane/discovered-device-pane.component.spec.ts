@@ -415,6 +415,12 @@ describe('DiscoveredDevicePaneComponent', () => {
       expect(reason()).toBeTruthy()
     })
 
+    it('shows the reason above the general explainer', () => {
+      render({ ...baseDevice, management: { eligible: false, reason: 'notActivated' } })
+      const explainer: Element = fixture.nativeElement.querySelector('.status-explainer')
+      expect(reason()!.compareDocumentPosition(explainer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    })
+
     it.each([
       ['not activated', { eligible: false, reason: 'notActivated' }],
       ['capability unknown', { eligible: false, reason: 'unknown' }],
