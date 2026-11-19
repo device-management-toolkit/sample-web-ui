@@ -149,7 +149,7 @@
       <!-- not sortable: productType is computed, not a real Device property -->
       <mat-header-cell *matHeaderCellDef>{{ 'devices.table.productType.value' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span class="product-type-chip">{{ productTypeLabel(element) }}</span>
+        <span class="product-type-chip">{{ getProductType(element) }}</span>
       </mat-cell>
     </ng-container>
     <!-- controlMode Column: only meaningful for activated devices, so it's hidden on Discovered -->
@@ -221,14 +221,15 @@
               </button>
             } @else {
               <!-- The span carries the tooltip because a disabled button does not show one. -->
-              <span [matTooltip]="manageTooltip(element)">
+              @let adoption = adoptEligibility(element);
+              <span [matTooltip]="adoption.reasonKey ?? 'devices.manage.button.value' | translate">
                 <button
                   mat-icon-button
-                  [disabled]="!getManageEligibility(element).eligible"
+                  [disabled]="!adoption.eligible"
                   [attr.aria-label]="'devices.manage.button.value' | translate"
-                  data-cy="manageDevice"
-                  (click)="$event.stopPropagation(); manageDevice(element)">
-                  <mat-icon>manage_accounts</mat-icon>
+                  data-cy="adoptDevice"
+                  (click)="$event.stopPropagation(); adoptDevice(element)">
+                  <mat-icon>how_to_reg</mat-icon>
                 </button>
               </span>
             }
@@ -280,12 +281,9 @@
   @if (paneDevice(); as device) {
     <app-discovered-device-pane
       [device]="device"
-      [productType]="productTypeLabel(device)"
+      [productType]="getProductType(device)"
       [controlMode]="getControlMode(device)"
-      [canManage]="getManageEligibility(device).eligible"
-      [manageDisabledReason]="getManageEligibility(device).reasonKey ?? ''"
-      [manageHint]="getManageEligibility(device).hintKey ?? ''"
-      (manage)="manageDevice(device)"
+      (adopt)="adoptDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />
   }

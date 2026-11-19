@@ -396,33 +396,33 @@ describe('DiscoveredDevicePaneComponent', () => {
     expect(document.activeElement).toBe(fixture.nativeElement.querySelector('[data-cy="discoveredPaneTitle"]'))
   })
 
-  describe('manage button', () => {
-    const button = (): HTMLButtonElement => fixture.nativeElement.querySelector('[data-cy="discoveredPaneManage"]')
+  describe('adopt button', () => {
+    const button = (): HTMLButtonElement => fixture.nativeElement.querySelector('[data-cy="discoveredPaneAdopt"]')
+    const reason = (): Element | null => fixture.nativeElement.querySelector('[data-cy="discoveredPaneAdoptReason"]')
 
-    it('emits manage when the device is eligible', () => {
+    it('emits adopt when the device is eligible', () => {
       const emitted = vi.fn()
-      component.manage.subscribe(emitted)
-      fixture.componentRef.setInput('canManage', true)
-      render(baseDevice)
+      component.adopt.subscribe(emitted)
+      render({ ...baseDevice, management: { eligible: true } })
       expect(button().disabled).toBe(false)
       button().click()
       expect(emitted).toHaveBeenCalledTimes(1)
     })
 
     it('is disabled with the reason shown when the device is not eligible', () => {
-      fixture.componentRef.setInput('manageDisabledReason', 'devices.manage.ineligible.unsupported.value')
-      render(baseDevice)
+      render({ ...baseDevice, management: { eligible: false, reason: 'unsupported' } })
       expect(button().disabled).toBe(true)
-      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageReason"]')).toBeTruthy()
+      expect(reason()).toBeTruthy()
     })
 
-    it('stays enabled and shows a soft hint when the device appears not activated', () => {
-      fixture.componentRef.setInput('canManage', true)
-      fixture.componentRef.setInput('manageHint', 'devices.manage.hint.notActivated.value')
-      render(baseDevice)
-      expect(button().disabled).toBe(false)
-      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageHint"]')).toBeTruthy()
-      expect(fixture.nativeElement.querySelector('[data-cy="discoveredPaneManageReason"]')).toBeNull()
+    it.each([
+      ['not activated', { eligible: false, reason: 'notActivated' }],
+      ['capability unknown', { eligible: false, reason: 'unknown' }],
+      ['Console gave no answer', undefined]
+    ])('is disabled with the reason shown when the device is %s', (_label, management) => {
+      render({ ...baseDevice, management } as Device)
+      expect(button().disabled).toBe(true)
+      expect(reason()).toBeTruthy()
     })
   })
 })

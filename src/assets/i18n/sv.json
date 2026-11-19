@@ -993,10 +993,6 @@
     "description": "Table column header for product type",
     "value": "Produkttyp"
   },
-  "devices.productType.unknown": {
-    "description": "Product type shown for a discovered device that reported no Intel AMT data",
-    "value": "Okänd"
-  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Kontrolläge"
@@ -1051,11 +1047,11 @@
   },
   "devices.manage.button": {
     "description": "Button that moves a discovered device to Managed",
-    "value": "Hantera"
+    "value": "Ta över"
   },
   "devices.manage.dialog.title": {
     "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Hantera enhet"
+    "value": "Ta över enhet"
   },
   "devices.manage.dialog.description": {
     "description": "Explains what the credentials are used for when managing a discovered device",
@@ -1087,19 +1083,19 @@
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
-    "value": "Enheten kunde inte hanteras. Försök igen."
+    "value": "Enheten kunde inte tas över. Försök igen."
   },
-  "devices.manage.hint.notActivated": {
-    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
-    "value": "Den här enheten verkar inte vara aktiverad, så inloggningsuppgifterna kan komma att avvisas. Console verifierar dem när du skickar."
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Den här enheten kan inte övertas eftersom den inte är aktiverad. Aktivera den med rpc-go och synkronisera sedan."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
-    "value": "Den här enheten kan inte hanteras eftersom den inte stöder Intel vPro eller Intel Standard Manageability."
+    "value": "Den här enheten kan inte tas över eftersom den inte stöder Intel vPro eller Intel Standard Manageability."
   },
-  "devices.manage.hint.unknown": {
-    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
-    "value": "Den här enhetens funktioner rapporterades inte. Console verifierar inloggningsuppgifterna när du skickar."
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "Den här enheten kan inte övertas eftersom dess Intel AMT-funktioner inte rapporterades. Kör identifieringen med åtkomst till MEI-drivrutinen och synkronisera sedan."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

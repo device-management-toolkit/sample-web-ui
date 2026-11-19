@@ -19,6 +19,7 @@ import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
+import { adoptEligibility } from '../adopt-eligibility'
 import { Device, DeviceInfo, MEInterfaceInfo, OSInterfaceInfo } from '../../../models/models'
 
 // Translation key for a fixed value rpc-go reports in English.
@@ -100,17 +101,14 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   public readonly productType = input('')
   // The devices table's control mode for this device, so both show the same label.
   public readonly controlMode = input('')
-  // Whether Console can manage this device; when not, manageDisabledReason (a translation key) says why.
-  public readonly canManage = input(false)
-  public readonly manageDisabledReason = input('')
-  // A soft warning (translation key) shown while Manage is still enabled, e.g. the device appears not activated.
-  public readonly manageHint = input('')
   public readonly closed = output<void>()
-  public readonly manage = output<void>()
+  public readonly adopt = output<void>()
 
   @ViewChild('title') title?: ElementRef<HTMLElement>
 
   public readonly info = computed<DeviceInfo | undefined>(() => this.device().deviceInfo)
+  // Whether the device can be adopted, worked out once per device change.
+  public readonly adoption = computed(() => adoptEligibility(this.device()))
 
   public readonly firstDiscovered = computed(() => this.timestamp(this.info()?.firstDiscovered))
   public readonly lastSynced = computed(() => this.timestamp(this.info()?.lastSynced))

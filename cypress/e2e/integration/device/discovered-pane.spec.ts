@@ -33,7 +33,7 @@ const discoveredDevice = {
   guid: '4c4c4544-0042-3510-8048-b4c04f4d3633',
   connectionStatus: false,
   tags: [],
-  management: { eligible: false, reason: 'notActivated' },
+  management: { eligible: false, reason: 'unsupported' },
   deviceInfo: {
     discovered: true,
     firstDiscovered: '2026-09-28T14:02:11Z',
@@ -154,10 +154,21 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.focused().should('have.class', 'mat-mdc-row')
   })
 
-  it('disables Manage and says why when the device is not activated', () => {
+  it('disables Adopt and says why when the device does not support vPro or ISM', () => {
     cy.get('mat-row').contains('lab-pc-07').click()
-    cy.get('[data-cy="discoveredPaneManage"]').should('be.disabled')
-    cy.get('[data-cy="discoveredPaneManageReason"]').should('contain.text', 'not activated yet')
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('be.disabled')
+    cy.get('[data-cy="discoveredPaneAdoptReason"]').should('contain.text', 'does not support Intel vPro')
+  })
+
+  it('disables Adopt and says why when the device is not activated', () => {
+    cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...discoveredDevice, management: { eligible: false, reason: 'notActivated' } }
+    }).as('get-not-activated-device')
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.wait('@get-not-activated-device')
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('be.disabled')
+    cy.get('[data-cy="discoveredPaneAdoptReason"]').should('contain.text', 'is not activated')
   })
 
   it('keeps the dialog open on wrong credentials and moves the device to Managed on success', () => {
@@ -177,7 +188,7 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
 
     cy.get('mat-row').contains('lab-pc-07').click()
     cy.wait('@get-activated-device')
-    cy.get('[data-cy="discoveredPaneManage"]').should('not.be.disabled').click()
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('not.be.disabled').click()
     cy.get('[data-cy="manageDeviceSubmit"]').should('be.disabled')
     cy.get('app-manage-device-dialog input[title="password"]').type('wrong')
     cy.get('[data-cy="manageDeviceSubmit"]').click()
@@ -194,7 +205,7 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.get('[data-cy="manageDeviceSubmit"]').click()
     cy.wait('@manage-ok')
     cy.get('app-manage-device-dialog').should('not.exist')
-    cy.location('search').should('contain', 'tab=managed')
+    cy.get('.mat-mdc-tab').eq(0).should('have.attr', 'aria-selected', 'true')
   })
 
   it('still opens the device page for a managed device', () => {

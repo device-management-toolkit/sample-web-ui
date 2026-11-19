@@ -1559,10 +1559,6 @@
     "description": "Table column header for product type",
     "value": "Product Type"
   },
-  "devices.productType.unknown": {
-    "description": "Product type shown for a discovered device that reported no Intel AMT data",
-    "value": "Unknown"
-  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Control Mode"
@@ -1617,11 +1613,11 @@
   },
   "devices.manage.button": {
     "description": "Button that moves a discovered device to Managed",
-    "value": "Manage"
+    "value": "Adopt"
   },
   "devices.manage.dialog.title": {
     "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Manage device"
+    "value": "Adopt device"
   },
   "devices.manage.dialog.description": {
     "description": "Explains what the credentials are used for when managing a discovered device",
@@ -1653,19 +1649,19 @@
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
-    "value": "The device could not be managed. Try again."
+    "value": "The device could not be adopted. Try again."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
-    "value": "This device cannot be managed because it does not support Intel vPro or Intel Standard Manageability."
+    "value": "This device cannot be adopted because it does not support Intel vPro or Intel Standard Manageability."
   },
-  "devices.manage.hint.notActivated": {
-    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
-    "value": "This device appears not to be activated, so the credentials may be rejected. Console verifies them when you submit."
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "This device cannot be adopted because it is not activated. Activate it with rpc-go, then sync."
   },
-  "devices.manage.hint.unknown": {
-    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
-    "value": "This device's capabilities were not reported. Console verifies the credentials when you submit."
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "This device cannot be adopted because its Intel AMT capabilities were not reported. Run discovery with access to the MEI driver, then sync."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

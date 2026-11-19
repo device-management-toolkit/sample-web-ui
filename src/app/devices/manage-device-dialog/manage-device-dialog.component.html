@@ -29,7 +29,7 @@
         data-cy="manageDeviceTogglePassword">
         <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
       </button>
-      <mat-error>{{ 'fieldRequired.long.value' | translate }}</mat-error>
+      <mat-error>{{ 'fieldRequired.short.value' | translate }}</mat-error>
     </mat-form-field>
     @if (errorKey(); as key) {
       <p class="error" role="alert" data-cy="manageDeviceError">{{ key | translate }}</p>

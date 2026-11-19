@@ -66,6 +66,7 @@ import { MatDivider } from '@angular/material/divider'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DiscoveredDevicePaneComponent } from './discovered-device-pane/discovered-device-pane.component'
+import { adoptEligibility } from './adopt-eligibility'
 import { ManageDeviceDialogComponent } from './manage-device-dialog/manage-device-dialog.component'
 
 @Component({
@@ -268,13 +269,6 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // ?tab=managed|discovered picks the tab, e.g. after a discovered device is managed.
-    if (!this.isCloudMode) {
-      const tab = this.router.parseUrl(this.router.url).queryParams['tab']
-      if (tab === 'managed' || tab === 'discovered') {
-        this.activeTab.set(tab === 'discovered' ? 1 : 0)
-      }
-    }
     this.getTagsThenDevices()
   }
 
@@ -541,27 +535,11 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paneTrigger = null
   }
 
-  manageTooltip(device: Device): string {
-    const { reasonKey, hintKey } = this.getManageEligibility(device)
-    return this.translate.instant(reasonKey ?? hintKey ?? 'devices.manage.button.value')
-  }
-
-  // Console decides: `eligible` gates the button, and `reason` on an eligible device is a soft hint
-  // (appears not activated, capability unknown) because Console verifies the credentials on submit.
-  // A missing answer, e.g. from an older Console, stays enabled with the unknown hint.
-  getManageEligibility(device: Device): { eligible: boolean; reasonKey?: string; hintKey?: string } {
-    const management = device.management
-    if (!management) return { eligible: true, hintKey: 'devices.manage.hint.unknown.value' }
-    if (!management.eligible) return { eligible: false, reasonKey: 'devices.manage.ineligible.unsupported.value' }
-    if (management.reason === 'notActivated')
-      return { eligible: true, hintKey: 'devices.manage.hint.notActivated.value' }
-    if (management.reason === 'unknown') return { eligible: true, hintKey: 'devices.manage.hint.unknown.value' }
-    return { eligible: true }
-  }
+  protected readonly adoptEligibility = adoptEligibility
 
   // Managing registers a discovered device with Console using its existing AMT credentials.
-  manageDevice(device: Device): void {
-    if (!this.getManageEligibility(device).eligible) return
+  adoptDevice(device: Device): void {
+    if (!adoptEligibility(device).eligible) return
     this.dialog
       .open(ManageDeviceDialogComponent, { width: '480px', data: device })
       .afterClosed()
@@ -576,9 +554,9 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
       undefined,
       SnackbarDefaults.defaultSuccess
     )
-    // Switching tabs closes the pane and reloads the lists and counts.
-    this.onTabChange(0)
-    void this.router.navigate(['/devices'], { queryParams: { tab: 'managed' } })
+    // The tab group is bound to activeTab and emits selectedTabChange, so onTabChange closes the pane
+    // and reloads the lists and counts. Calling it here as well would load them twice.
+    this.activeTab.set(0)
   }
 
   getProductType(device: Device): string {
@@ -589,14 +567,6 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isISM) return 'ISM'
     if (isVPro) return 'vPro'
     return 'non-vPro'
-  }
-
-  // The Product Type to show. A discovered device that reported no firmware SKU, e.g. one
-  // without Intel AMT, would otherwise show an empty cell.
-  productTypeLabel(device: Device): string {
-    const productType = this.getProductType(device)
-    if (productType || !this.isDiscoveredTab) return productType
-    return this.translate.instant('devices.productType.unknown.value')
   }
 
   getControlMode(device: Device): string {

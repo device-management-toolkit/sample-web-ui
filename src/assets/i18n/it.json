@@ -1081,10 +1081,6 @@
     "description": "Table column header for product type",
     "value": "Tipo di prodotto"
   },
-  "devices.productType.unknown": {
-    "description": "Product type shown for a discovered device that reported no Intel AMT data",
-    "value": "Sconosciuto"
-  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Modalità di controllo"
@@ -1139,11 +1135,11 @@
   },
   "devices.manage.button": {
     "description": "Button that moves a discovered device to Managed",
-    "value": "Gestisci"
+    "value": "Adotta"
   },
   "devices.manage.dialog.title": {
     "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Gestisci dispositivo"
+    "value": "Adotta dispositivo"
   },
   "devices.manage.dialog.description": {
     "description": "Explains what the credentials are used for when managing a discovered device",
@@ -1175,19 +1171,19 @@
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
-    "value": "Impossibile gestire il dispositivo. Riprova."
+    "value": "Impossibile adottare il dispositivo. Riprova."
   },
-  "devices.manage.hint.notActivated": {
-    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
-    "value": "Questo dispositivo sembra non essere attivato, quindi le credenziali potrebbero essere rifiutate. Console le verifica all'invio."
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Questo dispositivo non può essere adottato perché non è attivato. Attivalo con rpc-go, quindi sincronizza."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
-    "value": "Questo dispositivo non può essere gestito perché non supporta Intel vPro o Intel Standard Manageability."
+    "value": "Questo dispositivo non può essere adottato perché non supporta Intel vPro né Intel Standard Manageability."
   },
-  "devices.manage.hint.unknown": {
-    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
-    "value": "Le funzionalità di questo dispositivo non sono state segnalate. Console verifica le credenziali all'invio."
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "Questo dispositivo non può essere adottato perché le sue funzionalità Intel AMT non sono state segnalate. Esegui il rilevamento con accesso al driver MEI, quindi sincronizza."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

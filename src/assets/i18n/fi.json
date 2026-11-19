@@ -1085,10 +1085,6 @@
     "description": "Table column header for product type",
     "value": "Tuotetyyppi"
   },
-  "devices.productType.unknown": {
-    "description": "Product type shown for a discovered device that reported no Intel AMT data",
-    "value": "Tuntematon"
-  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "Ohjaustila"
@@ -1143,11 +1139,11 @@
   },
   "devices.manage.button": {
     "description": "Button that moves a discovered device to Managed",
-    "value": "Hallitse"
+    "value": "Ota käyttöön"
   },
   "devices.manage.dialog.title": {
     "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "Hallitse laitetta"
+    "value": "Ota laite käyttöön"
   },
   "devices.manage.dialog.description": {
     "description": "Explains what the credentials are used for when managing a discovered device",
@@ -1179,19 +1175,19 @@
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
-    "value": "Laitetta ei voitu ottaa hallintaan. Yritä uudelleen."
+    "value": "Laitetta ei voitu ottaa käyttöön. Yritä uudelleen."
   },
-  "devices.manage.hint.notActivated": {
-    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
-    "value": "Tätä laitetta ei näytä olevan aktivoitu, joten tunnistetiedot saatetaan hylätä. Console tarkistaa ne lähetettäessä."
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Tätä laitetta ei voi ottaa hallintaan, koska sitä ei ole aktivoitu. Aktivoi se rpc-go:lla ja synkronoi sen jälkeen."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
-    "value": "Tätä laitetta ei voi hallita, koska se ei tue Intel vPro- tai Intel Standard Manageability -ominaisuutta."
+    "value": "Tätä laitetta ei voi ottaa käyttöön, koska se ei tue Intel vPro- tai Intel Standard Manageability -ominaisuutta."
   },
-  "devices.manage.hint.unknown": {
-    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
-    "value": "Tämän laitteen ominaisuuksia ei ilmoitettu. Console tarkistaa tunnistetiedot lähetettäessä."
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "Tätä laitetta ei voi ottaa hallintaan, koska sen Intel AMT -ominaisuuksia ei raportoitu. Suorita etsintä MEI-ohjaimen käyttöoikeudella ja synkronoi sen jälkeen."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

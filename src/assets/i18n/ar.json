@@ -1089,10 +1089,6 @@
     "description": "Table column header for product type",
     "value": "نوع المنتج"
   },
-  "devices.productType.unknown": {
-    "description": "Product type shown for a discovered device that reported no Intel AMT data",
-    "value": "غير معروف"
-  },
   "devices.table.controlMode": {
     "description": "Table column header for control mode",
     "value": "وضع التحكم"
@@ -1147,11 +1143,11 @@
   },
   "devices.manage.button": {
     "description": "Button that moves a discovered device to Managed",
-    "value": "إدارة"
+    "value": "تبنّي"
   },
   "devices.manage.dialog.title": {
     "description": "Title of the dialog that collects credentials to manage a discovered device",
-    "value": "إدارة الجهاز"
+    "value": "تبنّي الجهاز"
   },
   "devices.manage.dialog.description": {
     "description": "Explains what the credentials are used for when managing a discovered device",
@@ -1183,19 +1179,19 @@
   },
   "devices.manage.error.generic": {
     "description": "Error shown when managing a device fails for another reason",
-    "value": "تعذرت إدارة الجهاز. حاول مرة أخرى."
+    "value": "تعذّر تبنّي الجهاز. حاول مرة أخرى."
   },
-  "devices.manage.hint.notActivated": {
-    "description": "Soft hint shown when a device appears not activated but Manage is still allowed",
-    "value": "يبدو أن هذا الجهاز غير مفعّل، لذا قد يتم رفض بيانات الاعتماد. يتحقق Console منها عند الإرسال."
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "لا يمكن تبنّي هذا الجهاز لأنه غير مُفعَّل. فعّله باستخدام rpc-go ثم قم بالمزامنة."
   },
   "devices.manage.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
-    "value": "لا يمكن إدارة هذا الجهاز لأنه لا يدعم Intel vPro أو Intel Standard Manageability."
+    "value": "لا يمكن تبنّي هذا الجهاز لأنه لا يدعم Intel vPro أو Intel Standard Manageability."
   },
-  "devices.manage.hint.unknown": {
-    "description": "Soft hint shown when a device reported no capability but Manage is still allowed",
-    "value": "لم يتم الإبلاغ عن إمكانات هذا الجهاز. يتحقق Console من بيانات الاعتماد عند الإرسال."
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "لا يمكن تبنّي هذا الجهاز لأنه لم يتم الإبلاغ عن إمكانات Intel AMT الخاصة به. شغّل الاكتشاف مع إمكانية الوصول إلى برنامج تشغيل MEI ثم قم بالمزامنة."
   },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",

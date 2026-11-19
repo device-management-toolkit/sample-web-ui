@@ -22,23 +22,18 @@
 
 <div class="pane-body">
   <div class="status">
-    <span class="status-mark" data-cy="discoveredPaneStatus">
-      <mat-icon aria-hidden="true">visibility</mat-icon>
-      {{ 'devices.discoveredPane.status.value' | translate }}
-    </span>
+    <div class="status-row">
+      <span class="status-mark" data-cy="discoveredPaneStatus">
+        <mat-icon aria-hidden="true">visibility</mat-icon>
+        {{ 'devices.discoveredPane.status.value' | translate }}
+      </span>
+      <button mat-flat-button [disabled]="!adoption().eligible" (click)="adopt.emit()" data-cy="discoveredPaneAdopt">
+        {{ 'devices.manage.button.value' | translate }}
+      </button>
+    </div>
     <p class="status-explainer">{{ 'devices.discoveredPane.explainer.value' | translate }}</p>
-    <button
-      mat-flat-button
-      class="manage"
-      [disabled]="!canManage()"
-      (click)="manage.emit()"
-      data-cy="discoveredPaneManage">
-      {{ 'devices.manage.button.value' | translate }}
-    </button>
-    @if (!canManage() && manageDisabledReason()) {
-      <p class="manage-reason" data-cy="discoveredPaneManageReason">{{ manageDisabledReason() | translate }}</p>
-    } @else if (canManage() && manageHint()) {
-      <p class="manage-reason" data-cy="discoveredPaneManageHint">{{ manageHint() | translate }}</p>
+    @if (!adoption().eligible && adoption().reasonKey) {
+      <p class="adopt-reason" data-cy="discoveredPaneAdoptReason">{{ adoption().reasonKey | translate }}</p>
     }
   </div>
 
