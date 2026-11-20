@@ -66,6 +66,7 @@ import { MatDivider } from '@angular/material/divider'
 import { MatCard, MatCardContent } from '@angular/material/card'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DiscoveredDevicePaneComponent } from './discovered-device-pane/discovered-device-pane.component'
+import { adoptEligibility } from './adopt-eligibility'
 
 @Component({
   selector: 'app-devices',
@@ -248,7 +249,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Number of icon buttons a row's actions cell renders, which sizes that column.
   get actionCount(): number {
-    return (this.isDiscoveredTab ? 0 : 3) + (this.isCloudMode ? 1 : 2)
+    return (this.isDiscoveredTab ? 1 : 3) + (this.isCloudMode ? 1 : 2)
   }
 
   public pageEvent: PageEventOptions = {
@@ -531,6 +532,31 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paneDevice.set(null)
     this.paneTrigger?.focus()
     this.paneTrigger = null
+  }
+
+  protected readonly adoptEligibility = adoptEligibility
+
+  // Adopting opens the edit device dialog. Saving the device's AMT credentials there
+  // (PATCH /api/v1/devices with a password) moves it to Managed in Console.
+  adoptDevice(device: Device): void {
+    if (!adoptEligibility(device).eligible) return
+    this.dialog
+      .open(AddDeviceEnterpriseComponent, { height: '650px', width: '700px', data: device })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result?.submitted) this.onManaged()
+      })
+  }
+
+  private onManaged(): void {
+    this.snackBar.open(
+      this.translate.instant('devices.manage.success.value'),
+      undefined,
+      SnackbarDefaults.defaultSuccess
+    )
+    // The tab group is bound to activeTab and emits selectedTabChange, so onTabChange closes the pane
+    // and reloads the lists and counts. Calling it here as well would load them twice.
+    this.activeTab.set(0)
   }
 
   getProductType(device: Device): string {

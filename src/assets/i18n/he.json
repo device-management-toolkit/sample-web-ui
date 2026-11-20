@@ -1133,6 +1133,26 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go גילה את המכשיר הזה ודיווח עליו ל-Console. המכשיר אינו מנוהל על ידי Console. אלה הפרטים ש-rpc-go דיווח."
   },
+  "devices.manage.button": {
+    "description": "Button that moves a discovered device to Managed",
+    "value": "אימוץ"
+  },
+  "devices.manage.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "המכשיר מנוהל כעת"
+  },
+  "devices.manage.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "לא ניתן לאמץ התקן זה מכיוון שהוא אינו מופעל. הפעל אותו באמצעות rpc-go ולאחר מכן בצע סנכרון."
+  },
+  "devices.manage.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "לא ניתן לאמץ מכשיר זה מכיוון שהוא אינו תומך ב-Intel vPro או ב-Intel Standard Manageability."
+  },
+  "devices.manage.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "לא ניתן לאמץ התקן זה מכיוון שיכולות Intel AMT שלו לא דווחו. הפעל גילוי עם גישה לדרייבר MEI ולאחר מכן בצע סנכרון."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "התגלה לראשונה"
