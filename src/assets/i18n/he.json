@@ -2957,6 +2957,10 @@
     "description": "הודעת שגיאה כאשר סיסמת SSD עולה על 64 בתים",
     "value": "סיסמת SSD לא יכולה להעלות על 64 בתים"
   },
+  "sol.encoding": {
+    "description": "תווית בורר קידוד התווים של SOL",
+    "value": "קידוד SOL"
+  },
   "sol.connect": {
     "description": "כפתור לחיבור ל- SOL",
     "value": "Connect Sol"

@@ -2961,6 +2961,10 @@
     "description": "Fehlermeldung wenn SSD-Passwort 64 Bytes überschreitet",
     "value": "Das SSD-Passwort darf 64 Bytes nicht überschreiten"
   },
+  "sol.encoding": {
+    "description": "Beschriftung der Auswahl für die SOL-Zeichenkodierung",
+    "value": "SOL-Kodierung"
+  },
   "sol.connect": {
     "description": "Schaltfläche für die Verbindung mit SOL",
     "value": "Verbinden Sie SOL"

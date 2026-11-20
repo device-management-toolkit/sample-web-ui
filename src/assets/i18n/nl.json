@@ -2965,6 +2965,10 @@
     "description": "Foutbericht wanneer SSD-wachtwoord meer dan 64 bytes is",
     "value": "SSD-wachtwoord mag niet meer dan 64 bytes zijn"
   },
+  "sol.encoding": {
+    "description": "Label voor de selectie van de SOL-tekencodering",
+    "value": "SOL-codering"
+  },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",
     "value": "Connect SOL"

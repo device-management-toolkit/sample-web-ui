@@ -2825,6 +2825,10 @@
     "description": "Felmeddelande när SSD-lösenordet överskrider 64 bytes",
     "value": "SSD-lösenordet får inte överskrida 64 bytes"
   },
+  "sol.encoding": {
+    "description": "Etikett för väljaren för SOL-teckenkodning",
+    "value": "SOL-kodning"
+  },
   "sol.connect": {
     "description": "Knapp för anslutning till SOL",
     "value": "Anslut SOL"
