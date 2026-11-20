@@ -17,6 +17,13 @@ const autoAddDevice = Cypress.expose('AUTO_ADD_DEVICE') === true || Cypress.expo
 // so skip the manual deletion tests
 const describeWhenNoAutoDelete = autoAddDevice ? describe.skip : describeWhenNotCloud
 
+const TEST_DEVICE_NAME = 'Test Device'
+
+// Activation can register the same address as a second device, so match the
+// row of create.spec.ts by both its hostname and its friendly name.
+const testDeviceRowSelector = (): string =>
+  `mat-row:contains("${Cypress.expose('DEVICE')}"):contains("${TEST_DEVICE_NAME}")`
+
 // ---------------------------- Test section ----------------------------
 
 describeWhenNoAutoDelete('Test Device Deletion', () => {
@@ -79,9 +86,11 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
   it('should delete the device created in create.spec.ts', () => {
     cy.goToPage('Devices')
     cy.wait('@get-devices').then(({ response }) => {
-      const devices = response?.body.data as Array<{ hostname: string, guid: string }>
+      const devices = response?.body.data as Array<{ hostname: string, friendlyName: string, guid: string }>
       expect(devices, 'initial device list').to.be.an('array')
-      const matchingDevices = devices.filter((device) => device.hostname === Cypress.expose('DEVICE'))
+      const matchingDevices = devices.filter(
+        (device) => device.hostname === Cypress.expose('DEVICE') && device.friendlyName === TEST_DEVICE_NAME
+      )
       expect(matchingDevices, 'matching device').to.have.length(1)
       expect(matchingDevices[0].guid, 'device GUID').to.be.a('string').and.not.be.empty
       cy.wrap(matchingDevices[0].guid).as('device-guid')
@@ -99,7 +108,7 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     }).as('get-devices-after-delete')
 
     // Click delete and confirm
-    cy.contains('mat-row', Cypress.expose('DEVICE')).find('mat-cell').contains('delete').click()
+    cy.get(testDeviceRowSelector()).should('have.length', 1).find('mat-cell').contains('delete').click()
     cy.get('button').contains('Yes').click()
 
     // Wait for delete and list refresh requests
@@ -119,6 +128,6 @@ describeWhenNoAutoDelete('Test Device Deletion', () => {
     })
 
     // Verify the device no longer appears in the list
-    cy.get('body').contains('mat-row', Cypress.expose('DEVICE')).should('not.exist')
+    cy.get(testDeviceRowSelector()).should('not.exist')
   })
 })
