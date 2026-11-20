@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.4.0...v4.5.0) (2026-11-19)
+
+
+### Features
+
+* **devices:** adopt discovered devices through the edit dialog ([#3702](https://github.com/device-management-toolkit/sample-web-ui/issues/3702)) ([8d1256d](https://github.com/device-management-toolkit/sample-web-ui/commit/8d1256db2966a930c9922f2b0a56848974383ec9)), closes [device-management-toolkit/console#1378](https://github.com/device-management-toolkit/console/issues/1378)
+
 # [4.4.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.1...v4.4.0) (2026-11-06)
 
 
