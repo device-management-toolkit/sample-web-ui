@@ -1,3 +1,10 @@
+## [4.5.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.0...v4.5.1) (2026-11-20)
+
+
+### Bug Fixes
+
+* **devices:** hide edit on discovered rows ([#3712](https://github.com/device-management-toolkit/sample-web-ui/issues/3712)) ([659e91b](https://github.com/device-management-toolkit/sample-web-ui/commit/659e91b46eb542313c4b72b65ab922ec6db1cd4d)), closes [device-management-toolkit/console#1378](https://github.com/device-management-toolkit/console/issues/1378)
+
 # [4.5.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.4.0...v4.5.0) (2026-11-19)
 
 
