@@ -17,19 +17,19 @@ describe('adoptEligibility', () => {
   it('blocks a device that is not activated', () => {
     expect(adoptEligibility(device({ eligible: false, reason: 'notActivated' }))).toEqual({
       eligible: false,
-      reasonKey: 'devices.manage.ineligible.notActivated.value'
+      reasonKey: 'devices.adopt.ineligible.notActivated.value'
     })
   })
 
   it('blocks a device that does not support vPro or ISM', () => {
     expect(adoptEligibility(device({ eligible: false, reason: 'unsupported' }))).toEqual({
       eligible: false,
-      reasonKey: 'devices.manage.ineligible.unsupported.value'
+      reasonKey: 'devices.adopt.ineligible.unsupported.value'
     })
   })
 
   it('blocks a device whose capability is unknown, and when Console gave no answer', () => {
-    const blocked = { eligible: false, reasonKey: 'devices.manage.ineligible.unknown.value' }
+    const blocked = { eligible: false, reasonKey: 'devices.adopt.ineligible.unknown.value' }
     expect(adoptEligibility(device({ eligible: false, reason: 'unknown' }))).toEqual(blocked)
     expect(adoptEligibility(device())).toEqual(blocked)
   })

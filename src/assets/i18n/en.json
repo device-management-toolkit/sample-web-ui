@@ -1611,23 +1611,23 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go discovered this device and reported it to Console. The device is not managed by Console. These details are what rpc-go reported."
   },
-  "devices.manage.button": {
+  "devices.adopt.button": {
     "description": "Button that moves a discovered device to Managed",
     "value": "Adopt"
   },
-  "devices.manage.success": {
+  "devices.adopt.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Device is now managed"
   },
-  "devices.manage.ineligible.unsupported": {
+  "devices.adopt.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "This device cannot be adopted because it does not support Intel vPro or Intel Standard Manageability."
   },
-  "devices.manage.ineligible.notActivated": {
+  "devices.adopt.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",
     "value": "This device cannot be adopted because it is not activated. Activate it with rpc-go, then sync."
   },
-  "devices.manage.ineligible.unknown": {
+  "devices.adopt.ineligible.unknown": {
     "description": "Why a device that reported no AMT capability cannot be managed",
     "value": "This device cannot be adopted because its Intel AMT capabilities were not reported. Run discovery with access to the MEI driver, then sync."
   },

@@ -1141,23 +1141,23 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "اكتشف rpc-go هذا الجهاز وأبلغ عنه Console. هذا الجهاز غير مُدار بواسطة Console. هذه التفاصيل هي ما أبلغ عنه rpc-go."
   },
-  "devices.manage.button": {
+  "devices.adopt.button": {
     "description": "Button that moves a discovered device to Managed",
     "value": "تبنّي"
   },
-  "devices.manage.success": {
+  "devices.adopt.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "أصبح الجهاز مُدارًا الآن"
   },
-  "devices.manage.ineligible.notActivated": {
+  "devices.adopt.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",
     "value": "لا يمكن تبنّي هذا الجهاز لأنه غير مُفعَّل. فعّله باستخدام rpc-go ثم قم بالمزامنة."
   },
-  "devices.manage.ineligible.unsupported": {
+  "devices.adopt.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "لا يمكن تبنّي هذا الجهاز لأنه لا يدعم Intel vPro أو Intel Standard Manageability."
   },
-  "devices.manage.ineligible.unknown": {
+  "devices.adopt.ineligible.unknown": {
     "description": "Why a device that reported no AMT capability cannot be managed",
     "value": "لا يمكن تبنّي هذا الجهاز لأنه لم يتم الإبلاغ عن إمكانات Intel AMT الخاصة به. شغّل الاكتشاف مع إمكانية الوصول إلى برنامج تشغيل MEI ثم قم بالمزامنة."
   },

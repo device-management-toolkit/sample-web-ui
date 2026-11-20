@@ -1137,23 +1137,23 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go löysi tämän laitteen ja ilmoitti sen Consolelle. Console ei hallitse tätä laitetta. Nämä tiedot ilmoitti rpc-go."
   },
-  "devices.manage.button": {
+  "devices.adopt.button": {
     "description": "Button that moves a discovered device to Managed",
     "value": "Ota käyttöön"
   },
-  "devices.manage.success": {
+  "devices.adopt.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Laitetta hallitaan nyt"
   },
-  "devices.manage.ineligible.notActivated": {
+  "devices.adopt.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",
     "value": "Tätä laitetta ei voi ottaa hallintaan, koska sitä ei ole aktivoitu. Aktivoi se rpc-go:lla ja synkronoi sen jälkeen."
   },
-  "devices.manage.ineligible.unsupported": {
+  "devices.adopt.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "Tätä laitetta ei voi ottaa käyttöön, koska se ei tue Intel vPro- tai Intel Standard Manageability -ominaisuutta."
   },
-  "devices.manage.ineligible.unknown": {
+  "devices.adopt.ineligible.unknown": {
     "description": "Why a device that reported no AMT capability cannot be managed",
     "value": "Tätä laitetta ei voi ottaa hallintaan, koska sen Intel AMT -ominaisuuksia ei raportoitu. Suorita etsintä MEI-ohjaimen käyttöoikeudella ja synkronoi sen jälkeen."
   },

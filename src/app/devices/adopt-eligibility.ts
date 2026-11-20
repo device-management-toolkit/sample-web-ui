@@ -20,10 +20,10 @@ export function adoptEligibility(device: Device): AdoptEligibility {
   if (management?.eligible && !management.reason) return { eligible: true }
   switch (management?.reason) {
     case 'unsupported':
-      return { eligible: false, reasonKey: 'devices.manage.ineligible.unsupported.value' }
+      return { eligible: false, reasonKey: 'devices.adopt.ineligible.unsupported.value' }
     case 'notActivated':
-      return { eligible: false, reasonKey: 'devices.manage.ineligible.notActivated.value' }
+      return { eligible: false, reasonKey: 'devices.adopt.ineligible.notActivated.value' }
     default:
-      return { eligible: false, reasonKey: 'devices.manage.ineligible.unknown.value' }
+      return { eligible: false, reasonKey: 'devices.adopt.ineligible.unknown.value' }
   }
 }
