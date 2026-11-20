@@ -94,7 +94,6 @@ export class SolComponent implements OnInit, OnDestroy {
     }
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.cancelQueuedReconnect()
         this.isDisconnecting.set(true)
       }
     })
@@ -102,7 +101,9 @@ export class SolComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDisconnecting.set(true)
-    this.cancelQueuedReconnect()
+    if (this.reconnectRetryTimer != null) {
+      clearTimeout(this.reconnectRetryTimer)
+    }
     this.destroy$.next()
     this.destroy$.complete()
   }
@@ -192,16 +193,8 @@ export class SolComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.cancelQueuedReconnect()
     this.isDisconnecting.set(true)
     this.deviceConnection.set(false)
-  }
-
-  private cancelQueuedReconnect(): void {
-    if (this.reconnectRetryTimer != null) {
-      clearTimeout(this.reconnectRetryTimer)
-      this.reconnectRetryTimer = undefined
-    }
   }
 
   handlePowerState(powerState: any): Observable<any> {

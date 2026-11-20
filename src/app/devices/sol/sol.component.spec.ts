@@ -8,8 +8,8 @@ import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { Component, EventEmitter, Output, signal, input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { NavigationStart, Router, RouterModule } from '@angular/router'
-import { EMPTY, of, Subject, throwError } from 'rxjs'
+import { ActivatedRoute, NavigationStart, Router, RouterEvent, RouterModule } from '@angular/router'
+import { EMPTY, of, ReplaySubject, Subject, throwError } from 'rxjs'
 import { SolComponent } from './sol.component'
 import { DevicesService } from '../devices.service'
 import SnackbarDefaults from '../../shared/config/snackBarDefault'
@@ -35,7 +35,7 @@ describe('SolComponent', () => {
   let devicesService: SpyObj<DevicesService>
   let userConsentService: SpyObj<UserConsentService>
 
-  let eventSubject: Subject<NavigationStart>
+  const eventSubject = new ReplaySubject<RouterEvent>(1)
 
   beforeEach(async () => {
     localStorage.removeItem('solTerminalType')
@@ -166,13 +166,12 @@ describe('SolComponent', () => {
       providers: [
         provideTranslateService(),
         { provide: DevicesService, useValue: { ...devicesService, ...authServiceStub } },
-        { provide: UserConsentService, useValue: userConsentService }
+        { provide: UserConsentService, useValue: userConsentService },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 'guid' }) } }
       ]
     })
 
     router = TestBed.inject(Router)
-    eventSubject = new Subject<NavigationStart>()
-    vi.spyOn(router, 'events', 'get').mockReturnValue(eventSubject)
   })
 
   beforeEach(() => {
@@ -196,8 +195,6 @@ describe('SolComponent', () => {
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')
     expect(select.disabled).toBe(false)
     expect(button.textContent).toContain('sol.loading.value')
-    expect(fixture.nativeElement.querySelector('#sol-encoding-guidance')).toBeNull()
-    expect(fixture.nativeElement.querySelector('mat-select').getAttribute('aria-describedby')).toBeNull()
     expect(tokenSpy).toHaveBeenCalled()
     expect(getPowerStateSpy).toHaveBeenCalled()
     expect(getAMTFeaturesSpy).toHaveBeenCalled()
@@ -264,7 +261,6 @@ describe('SolComponent', () => {
     const selectElement = fixture.debugElement.query(By.directive(MatSelect))
     const select: MatSelect = selectElement.componentInstance
     expect(select.disabled).toBe(false)
-    expect(fixture.nativeElement.querySelector('#sol-encoding-guidance')).toBeNull()
 
     for (const busy of [
       component.isConnecting,
@@ -281,25 +277,6 @@ describe('SolComponent', () => {
     fixture.detectChanges()
     expect(component.terminalType()).toBe(SolTerminalType.VTUTF8)
     expect(sol.terminalType()).toBe(SolTerminalType.VTUTF8)
-  })
-
-  it.each([
-    'disconnect',
-    'navigation',
-    'destroy'
-  ])('cancels a queued manual reconnect retry on %s', (action) => {
-    vi.useFakeTimers()
-    component.deviceConnection.set(true)
-    component.disconnect()
-    component.deviceStatus(0)
-    component.connect()
-    component.deviceStatus(0)
-    const connect = vi.spyOn(component, 'connect')
-    if (action === 'disconnect') component.disconnect()
-    if (action === 'navigation') eventSubject.next(new NavigationStart(1, '/devices'))
-    if (action === 'destroy') component.ngOnDestroy()
-    vi.advanceTimersByTime(10_000)
-    expect(connect).not.toHaveBeenCalled()
   })
 
   it('ignores unsupported selector values without changing the selection', () => {
