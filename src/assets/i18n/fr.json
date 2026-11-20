@@ -2949,14 +2949,6 @@
     "description": "Libellé du sélecteur d’encodage des caractères SOL",
     "value": "Encodage SOL"
   },
-  "sol.encodingSelectionHint": {
-    "description": "Conseils pour sélectionner l’encodage SOL",
-    "value": "Déconnectez-vous avant de modifier l’encodage."
-  },
-  "sol.connectedHint": {
-    "description": "Avis après la connexion lorsque la console distante peut nécessiter un nouvel affichage",
-    "value": "Connecté. Si l’écran est vide, utilisez une touche de navigation pour demander un nouvel affichage."
-  },
   "sol.connect": {
     "description": "Bouton pour se connecter à SOL",
     "value": "Connectez SOL"

@@ -2945,14 +2945,6 @@
     "description": "Beschriftung der Auswahl für die SOL-Zeichenkodierung",
     "value": "SOL-Kodierung"
   },
-  "sol.encodingSelectionHint": {
-    "description": "Hinweis zur Auswahl der SOL-Kodierung",
-    "value": "Trennen Sie die Verbindung, bevor Sie die Kodierung ändern."
-  },
-  "sol.connectedHint": {
-    "description": "Hinweis nach dem Verbinden, wenn die Remote-Konsole eine neue Ausgabe benötigt",
-    "value": "Verbunden. Wenn der Bildschirm leer ist, verwenden Sie eine Navigationstaste, um eine neue Ausgabe anzufordern."
-  },
   "sol.connect": {
     "description": "Schaltfläche für die Verbindung mit SOL",
     "value": "Verbinden Sie SOL"

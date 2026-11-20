@@ -16,18 +16,9 @@
     }
   </mat-card-header>
   <mat-card-content>
-    @if (encodingLocked()) {
-      <p id="sol-encoding-guidance" class="sol-encoding-hint">
-        {{ 'sol.encodingSelectionHint.value' | translate }}
-      </p>
-    }
     <mat-form-field class="sol-encoding-field" subscriptSizing="dynamic">
       <mat-label>{{ 'sol.encoding.value' | translate }}</mat-label>
-      <mat-select
-        [attr.aria-describedby]="encodingLocked() ? 'sol-encoding-guidance' : null"
-        [value]="terminalType()"
-        [disabled]="encodingLocked()"
-        (selectionChange)="setTerminalType($event.value)">
+      <mat-select [value]="terminalType()" (selectionChange)="setTerminalType($event.value)">
         <mat-option [value]="terminalTypes.PCANSI">PC-ANSI / CP437</mat-option>
         <mat-option [value]="terminalTypes.VTUTF8">UTF-8</mat-option>
       </mat-select>

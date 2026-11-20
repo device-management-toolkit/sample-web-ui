@@ -2949,14 +2949,6 @@
     "description": "Label voor de selectie van de SOL-tekencodering",
     "value": "SOL-codering"
   },
-  "sol.encodingSelectionHint": {
-    "description": "Uitleg over het kiezen van de SOL-codering",
-    "value": "Verbreek de verbinding voordat u de codering wijzigt."
-  },
-  "sol.connectedHint": {
-    "description": "Melding na het verbinden wanneer de externe console mogelijk nieuwe uitvoer nodig heeft",
-    "value": "Verbonden. Als het scherm leeg is, gebruikt u een navigatietoets om nieuwe uitvoer op te vragen."
-  },
   "sol.connect": {
     "description": "Knop voor verbinding met SOL",
     "value": "Connect SOL"

@@ -2941,14 +2941,6 @@
     "description": "תווית בורר קידוד התווים של SOL",
     "value": "קידוד SOL"
   },
-  "sol.encodingSelectionHint": {
-    "description": "הנחיות לבחירת קידוד SOL",
-    "value": "התנתקו לפני שינוי הקידוד."
-  },
-  "sol.connectedHint": {
-    "description": "הודעה לאחר החיבור כאשר המסוף המרוחק עשוי להזדקק לפלט חדש",
-    "value": "החיבור נוצר. אם המסך ריק, יש להשתמש במקש ניווט כדי לבקש פלט חדש."
-  },
   "sol.connect": {
     "description": "כפתור לחיבור ל- SOL",
     "value": "Connect Sol"

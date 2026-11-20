@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { Component, ViewEncapsulation, OnDestroy, HostListener, inject, signal, input, computed } from '@angular/core'
+import { Component, ViewEncapsulation, OnInit, OnDestroy, HostListener, inject, signal, input } from '@angular/core'
 import { NavigationStart, Router } from '@angular/router'
 import { defer, iif, Observable, of, Subject, takeUntil, throwError } from 'rxjs'
 import { catchError, switchMap, tap } from 'rxjs/operators'
@@ -44,7 +44,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
     TranslatePipe
   ]
 })
-export class SolComponent implements OnDestroy {
+export class SolComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly devicesService = inject(DevicesService)
   private readonly userConsentService = inject(UserConsentService)
@@ -56,10 +56,8 @@ export class SolComponent implements OnDestroy {
 
   public readonly deviceState = signal(0)
   public readonly terminalTypes = SolTerminalType
-  public readonly terminalType = signal(SolTerminalType.PCANSI)
-  public readonly encodingLocked = computed(
-    () => this.deviceConnection() || this.isConnecting() || this.isLoading() || this.isDisconnecting()
-  )
+  private readonly TERMINAL_TYPE_STORAGE_KEY = 'solTerminalType'
+  public readonly terminalType = signal(this.getStoredTerminalType())
 
   public deviceConnection = signal(false)
 
@@ -78,6 +76,16 @@ export class SolComponent implements OnDestroy {
   private reconnectRetryTimer?: ReturnType<typeof setTimeout>
   private readonly RECONNECT_RETRY_BASE_DELAY_MS = 2_000
   private readonly MAX_RECONNECT_RETRIES = 3
+
+  private getStoredTerminalType(): SolTerminalType {
+    return localStorage.getItem(this.TERMINAL_TYPE_STORAGE_KEY) === String(SolTerminalType.VTUTF8)
+      ? SolTerminalType.VTUTF8
+      : SolTerminalType.PCANSI
+  }
+
+  ngOnInit(): void {
+    this.connect()
+  }
 
   constructor() {
     if (environment.mpsServer.includes('/mps')) {
@@ -103,7 +111,7 @@ export class SolComponent implements OnDestroy {
     // A fresh redirection token is required for each SOL connection attempt.
     let receivedToken = false
     this.isDisconnecting.set(false)
-    this.deviceState.set(-1)
+    this.deviceState.set(1)
     this.deviceConnection.set(false)
     this.isConnecting.set(true)
     this.isLoading.set(true)
@@ -305,20 +313,13 @@ export class SolComponent implements OnDestroy {
       return
     }
     if (type === this.terminalType()) return
-    if (this.encodingLocked()) return
     this.terminalType.set(type)
+    localStorage.setItem(this.TERMINAL_TYPE_STORAGE_KEY, String(type))
   }
 
   deviceStatus(event: number): void {
-    const previousState = this.deviceState()
     this.deviceState.set(event)
     if (event === 3) {
-      if (previousState !== 3) {
-        this.snackBar.open(this.translate.instant('sol.connectedHint.value'), undefined, {
-          duration: 5_000,
-          politeness: 'polite'
-        })
-      }
       if (this.reconnectRetryTimer != null) {
         clearTimeout(this.reconnectRetryTimer)
         this.reconnectRetryTimer = undefined

@@ -2949,14 +2949,6 @@
     "description": "تسمية محدد ترميز أحرف SOL",
     "value": "ترميز SOL"
   },
-  "sol.encodingSelectionHint": {
-    "description": "إرشادات لاختيار ترميز SOL",
-    "value": "افصل الاتصال قبل تغيير الترميز."
-  },
-  "sol.connectedHint": {
-    "description": "إشعار بعد الاتصال عندما تحتاج وحدة التحكم البعيدة إلى إخراج جديد",
-    "value": "تم الاتصال. إذا كانت الشاشة فارغة، فاستخدم أحد مفاتيح التنقل لطلب إخراج جديد."
-  },
   "sol.connect": {
     "description": "زر للاتصال بـ SOL",
     "value": "ربط SOL"
