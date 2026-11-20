@@ -1,3 +1,10 @@
+# [4.6.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.1...v4.6.0) (2026-11-20)
+
+
+### Features
+
+* **devices:** add selectable SOL character encoding ([#3699](https://github.com/device-management-toolkit/sample-web-ui/issues/3699)) ([4b919a7](https://github.com/device-management-toolkit/sample-web-ui/commit/4b919a7975f47ba2a1ba9cdc38479aee1ffbdaf5))
+
 ## [4.5.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.0...v4.5.1) (2026-11-20)
 
 
