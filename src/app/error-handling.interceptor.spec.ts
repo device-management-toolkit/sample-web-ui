@@ -7,13 +7,14 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createSpyObj, type SpyObj } from '../test-helpers'
 import { TestBed } from '@angular/core/testing'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing'
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http'
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { errorHandlingInterceptor } from './error-handling.interceptor'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { provideTranslateService } from '@ngx-translate/core'
+import { BACKGROUND_REQUEST } from './shared/config/http-context'
 
 describe('ErrorHandlingInterceptor', () => {
   let httpMock: HttpTestingController
@@ -151,6 +152,38 @@ describe('ErrorHandlingInterceptor', () => {
     req.flush({}, { status: 504, statusText: 'Gateway Timeout' })
 
     expect(snackbar.open).toHaveBeenCalledExactlyOnceWith(expect.any(String), expect.any(String), { duration: 5000 })
+  })
+
+  it('should complete background 504 requests without showing a snackbar', () => {
+    let emitted = false
+    const context = new HttpContext().set(BACKGROUND_REQUEST, true)
+
+    for (let request = 0; request < 2; request++) {
+      let completed = false
+      httpClient.get('/test', { context }).subscribe({
+        next: () => (emitted = true),
+        complete: () => (completed = true)
+      })
+
+      httpMock.expectOne('/test').flush({}, { status: 504, statusText: 'Gateway Timeout' })
+      expect(completed).toBe(true)
+    }
+
+    expect(emitted).toBe(false)
+    expect(snackbar.open).not.toHaveBeenCalled()
+  })
+
+  it('should retain session-expiry handling for background requests', () => {
+    authService.isLoggedIn = true
+    const context = new HttpContext().set(BACKGROUND_REQUEST, true)
+    httpClient.get('/test', { context }).subscribe()
+
+    httpMock.expectOne('/test').flush({}, { status: 401, statusText: 'Unauthorized' })
+
+    expect(authService.logout).toHaveBeenCalledOnce()
+    expect(dialog.open).toHaveBeenCalledExactlyOnceWith(DialogContentComponent, {
+      data: { name: 'error.sessionTimedOut.value' }
+    })
   })
 
   it('should rethrow other errors', () => {
