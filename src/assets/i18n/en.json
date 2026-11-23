@@ -1611,6 +1611,26 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go discovered this device and reported it to Console. The device is not managed by Console. These details are what rpc-go reported."
   },
+  "devices.adopt.button": {
+    "description": "Button that moves a discovered device to Managed",
+    "value": "Adopt"
+  },
+  "devices.adopt.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Device is now managed"
+  },
+  "devices.adopt.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "This device cannot be adopted because it does not support Intel vPro or Intel Standard Manageability."
+  },
+  "devices.adopt.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "This device cannot be adopted because it is not activated. Activate it with rpc-go, then sync."
+  },
+  "devices.adopt.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "This device cannot be adopted because its Intel AMT capabilities were not reported. Run discovery with access to the MEI driver, then sync."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "First discovered"
@@ -3708,6 +3728,10 @@
   "remotePlatformErase.ssdPasswordTooLong": {
     "description": "Error message when SSD password exceeds 64 bytes",
     "value": "SSD password must not exceed 64 bytes"
+  },
+  "sol.encoding": {
+    "description": "Label for the SOL character encoding selector",
+    "value": "SOL encoding"
   },
   "sol.connect": {
     "description": "Button for connecting to SOL",

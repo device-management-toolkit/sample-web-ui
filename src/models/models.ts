@@ -23,6 +23,13 @@ export interface Device {
   useTLS?: boolean
   allowSelfSigned?: boolean
   certHash?: string
+  // Set by Console on discovered devices.
+  management?: Management
+}
+// Whether Console can manage a discovered device; reason says why not.
+export interface Management {
+  eligible: boolean
+  reason?: 'notActivated' | 'unsupported' | 'unknown'
 }
 export interface DeviceInfo {
   fwVersion: string

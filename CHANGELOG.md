@@ -1,3 +1,24 @@
+# [4.6.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.1...v4.6.0) (2026-11-20)
+
+
+### Features
+
+* **devices:** add selectable SOL character encoding ([#3699](https://github.com/device-management-toolkit/sample-web-ui/issues/3699)) ([4b919a7](https://github.com/device-management-toolkit/sample-web-ui/commit/4b919a7975f47ba2a1ba9cdc38479aee1ffbdaf5))
+
+## [4.5.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.0...v4.5.1) (2026-11-20)
+
+
+### Bug Fixes
+
+* **devices:** hide edit on discovered rows ([#3712](https://github.com/device-management-toolkit/sample-web-ui/issues/3712)) ([659e91b](https://github.com/device-management-toolkit/sample-web-ui/commit/659e91b46eb542313c4b72b65ab922ec6db1cd4d)), closes [device-management-toolkit/console#1378](https://github.com/device-management-toolkit/console/issues/1378)
+
+# [4.5.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.4.0...v4.5.0) (2026-11-19)
+
+
+### Features
+
+* **devices:** adopt discovered devices through the edit dialog ([#3702](https://github.com/device-management-toolkit/sample-web-ui/issues/3702)) ([8d1256d](https://github.com/device-management-toolkit/sample-web-ui/commit/8d1256db2966a930c9922f2b0a56848974383ec9)), closes [device-management-toolkit/console#1378](https://github.com/device-management-toolkit/console/issues/1378)
+
 # [4.4.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.3.1...v4.4.0) (2026-11-06)
 
 

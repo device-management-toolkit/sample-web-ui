@@ -33,6 +33,7 @@ const discoveredDevice = {
   guid: '4c4c4544-0042-3510-8048-b4c04f4d3633',
   connectionStatus: false,
   tags: [],
+  management: { eligible: false, reason: 'unsupported' },
   deviceInfo: {
     discovered: true,
     firstDiscovered: '2026-09-28T14:02:11Z',
@@ -151,6 +152,57 @@ describeWhenIsolatedConsole('Discovered device pane', () => {
     cy.get('body').type('{esc}')
     cy.get('app-discovered-device-pane').should('not.exist')
     cy.focused().should('have.class', 'mat-mdc-row')
+  })
+
+  it('disables Adopt and says why when the device does not support vPro or ISM', () => {
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('be.disabled')
+    cy.get('[data-cy="discoveredPaneAdoptReason"]').should('contain.text', 'does not support Intel vPro')
+  })
+
+  it('disables Adopt and says why when the device is not activated', () => {
+    cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...discoveredDevice, management: { eligible: false, reason: 'notActivated' } }
+    }).as('get-not-activated-device')
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.wait('@get-not-activated-device')
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('be.disabled')
+    cy.get('[data-cy="discoveredPaneAdoptReason"]').should('contain.text', 'is not activated')
+  })
+
+  it('adopts through the edit device dialog and moves the device to Managed', () => {
+    const activatedCopy = {
+      ...discoveredDevice,
+      management: { eligible: true },
+      deviceInfo: { ...discoveredDevice.deviceInfo, currentMode: 'Admin Control Mode' }
+    }
+    cy.myIntercept('GET', new RegExp(`devices/${discoveredDevice.guid}$`), {
+      statusCode: httpCodes.SUCCESS,
+      body: activatedCopy
+    }).as('get-activated-device')
+    // Saving a password for a discovered device moves it to Managed in Console.
+    cy.myIntercept('PATCH', /devices$/, {
+      statusCode: httpCodes.SUCCESS,
+      body: { ...activatedCopy, deviceInfo: { ...activatedCopy.deviceInfo, discovered: false } }
+    }).as('patch-device')
+
+    cy.get('mat-row').contains('lab-pc-07').click()
+    cy.wait('@get-activated-device')
+    cy.get('[data-cy="discoveredPaneAdopt"]').should('not.be.disabled').click()
+    cy.get('app-add-device-enterprise input[title="hostname"]').should('have.value', 'lab-pc-07')
+    cy.get('app-add-device-enterprise input[title="friendlyName"]').type('Lab PC 07')
+    cy.get('app-add-device-enterprise input[title="username"]').clear()
+    cy.get('app-add-device-enterprise input[title="username"]').type('admin')
+    cy.get('app-add-device-enterprise input[title="password"]').type('P@ssw0rd')
+    cy.get('app-add-device-enterprise button[type="submit"]').click()
+    cy.wait('@patch-device')
+      .its('request.body')
+      .should((body) => {
+        expect(body).to.include({ guid: discoveredDevice.guid, username: 'admin', password: 'P@ssw0rd' })
+      })
+    cy.get('app-add-device-enterprise').should('not.exist')
+    cy.get('.mat-mdc-tab').eq(0).should('have.attr', 'aria-selected', 'true')
   })
 
   it('still opens the device page for a managed device', () => {

@@ -1,5 +1,23 @@
 @import '@xterm/xterm/css/xterm.css';
 
+app-sol .sol-overview {
+  margin-bottom: 16px;
+}
+
+app-sol .sol-overview-header {
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+app-sol .sol-encoding-field {
+  width: 15rem;
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+}
+
 .spinner {
   position: absolute;
   top: 50%;

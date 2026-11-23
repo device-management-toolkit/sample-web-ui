@@ -1141,6 +1141,26 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go обнаружил это устройство и сообщил о нём в Console. Это устройство не управляется Console. Эти сведения сообщил rpc-go."
   },
+  "devices.adopt.button": {
+    "description": "Button that moves a discovered device to Managed",
+    "value": "Принять"
+  },
+  "devices.adopt.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "Устройство теперь находится под управлением"
+  },
+  "devices.adopt.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "Это устройство нельзя принять в управление, так как оно не активировано. Активируйте его с помощью rpc-go, затем выполните синхронизацию."
+  },
+  "devices.adopt.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "Это устройство нельзя принять, так как оно не поддерживает Intel vPro или Intel Standard Manageability."
+  },
+  "devices.adopt.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "Это устройство нельзя принять в управление, так как его возможности Intel AMT не были получены. Запустите обнаружение с доступом к драйверу MEI, затем выполните синхронизацию."
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "Впервые обнаружено"
@@ -2932,6 +2952,10 @@
   "remotePlatformErase.ssdPasswordTooLong": {
     "description": "Сообщение об ошибке когда пароль SSD превышает 64 байта",
     "value": "Пароль SSD не должен превышать 64 байта"
+  },
+  "sol.encoding": {
+    "description": "Подпись поля выбора кодировки символов SOL",
+    "value": "Кодировка SOL"
   },
   "sol.connect": {
     "description": "Кнопка для подключения к SOL",
