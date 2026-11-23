@@ -1169,6 +1169,10 @@
     "description": "Shown when a discovered device has not reported any details",
     "value": "Dieses Gerät hat noch keine Details gemeldet."
   },
+  "devices.discoveredPane.loadError": {
+    "description": "Shown in the discovered device pane when fetching the latest details fails",
+    "value": "Die neuesten Details für dieses Gerät konnten nicht geladen werden. Die angezeigten Informationen sind möglicherweise veraltet."
+  },
   "devices.discoveredPane.sectionAmt": {
     "description": "Section heading for Intel AMT details",
     "value": "Intel AMT"

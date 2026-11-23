@@ -285,6 +285,7 @@
       [device]="device"
       [productType]="getProductType(device)"
       [controlMode]="getControlMode(device)"
+      [loadError]="paneLoadError()"
       (adopt)="adoptDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />

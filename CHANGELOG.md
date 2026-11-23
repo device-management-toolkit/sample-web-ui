@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.6.0...v4.7.0) (2026-11-23)
+
+
+### Features
+
+* **devices:** flag stale discovered pane data and show AMT DNS suffix ([#3701](https://github.com/device-management-toolkit/sample-web-ui/issues/3701)) ([fa5f06e](https://github.com/device-management-toolkit/sample-web-ui/commit/fa5f06ef55b46f1307e310856ff8b367a65410c5))
+
 # [4.6.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.5.1...v4.6.0) (2026-11-20)
 
 
