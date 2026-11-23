@@ -1141,23 +1141,23 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go a découvert cet appareil et l'a signalé à Console. Cet appareil n'est pas géré par Console. Ces informations sont celles signalées par rpc-go."
   },
-  "devices.manage.button": {
+  "devices.adopt.button": {
     "description": "Button that moves a discovered device to Managed",
     "value": "Adopter"
   },
-  "devices.manage.success": {
+  "devices.adopt.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "L'appareil est désormais géré"
   },
-  "devices.manage.ineligible.notActivated": {
+  "devices.adopt.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",
     "value": "Cet appareil ne peut pas être adopté car il n'est pas activé. Activez-le avec rpc-go, puis synchronisez."
   },
-  "devices.manage.ineligible.unsupported": {
+  "devices.adopt.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "Cet appareil ne peut pas être adopté car il ne prend pas en charge Intel vPro ni Intel Standard Manageability."
   },
-  "devices.manage.ineligible.unknown": {
+  "devices.adopt.ineligible.unknown": {
     "description": "Why a device that reported no AMT capability cannot be managed",
     "value": "Cet appareil ne peut pas être adopté car ses capacités Intel AMT n'ont pas été signalées. Lancez la découverte avec accès au pilote MEI, puis synchronisez."
   },
@@ -2964,6 +2964,10 @@
   "remotePlatformErase.ssdPasswordTooLong": {
     "description": "Message d'erreur lorsque le mot de passe SSD dépasse 64 bytes",
     "value": "Le mot de passe SSD ne doit pas dépasser 64 bytes"
+  },
+  "sol.encoding": {
+    "description": "Libellé du sélecteur d’encodage des caractères SOL",
+    "value": "Encodage SOL"
   },
   "sol.connect": {
     "description": "Bouton pour se connecter à SOL",

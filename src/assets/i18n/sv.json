@@ -1045,23 +1045,23 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go upptäckte den här enheten och rapporterade den till Console. Enheten hanteras inte av Console. Uppgifterna nedan rapporterade rpc-go."
   },
-  "devices.manage.button": {
+  "devices.adopt.button": {
     "description": "Button that moves a discovered device to Managed",
     "value": "Ta över"
   },
-  "devices.manage.success": {
+  "devices.adopt.success": {
     "description": "Message shown after a discovered device is now managed",
     "value": "Enheten hanteras nu"
   },
-  "devices.manage.ineligible.notActivated": {
+  "devices.adopt.ineligible.notActivated": {
     "description": "Why a device that is not activated cannot be managed",
     "value": "Den här enheten kan inte övertas eftersom den inte är aktiverad. Aktivera den med rpc-go och synkronisera sedan."
   },
-  "devices.manage.ineligible.unsupported": {
+  "devices.adopt.ineligible.unsupported": {
     "description": "Why a device without vPro or Standard Manageability cannot be managed",
     "value": "Den här enheten kan inte tas över eftersom den inte stöder Intel vPro eller Intel Standard Manageability."
   },
-  "devices.manage.ineligible.unknown": {
+  "devices.adopt.ineligible.unknown": {
     "description": "Why a device that reported no AMT capability cannot be managed",
     "value": "Den här enheten kan inte övertas eftersom dess Intel AMT-funktioner inte rapporterades. Kör identifieringen med åtkomst till MEI-drivrutinen och synkronisera sedan."
   },
@@ -2824,6 +2824,10 @@
   "remotePlatformErase.ssdPasswordTooLong": {
     "description": "Felmeddelande när SSD-lösenordet överskrider 64 bytes",
     "value": "SSD-lösenordet får inte överskrida 64 bytes"
+  },
+  "sol.encoding": {
+    "description": "Etikett för väljaren för SOL-teckenkodning",
+    "value": "SOL-kodning"
   },
   "sol.connect": {
     "description": "Knapp för anslutning till SOL",

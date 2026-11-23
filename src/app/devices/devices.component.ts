@@ -249,7 +249,9 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Number of icon buttons a row's actions cell renders, which sizes that column.
   get actionCount(): number {
-    return (this.isDiscoveredTab ? 1 : 3) + (this.isCloudMode ? 1 : 2)
+    // A discovered row has Adopt and Delete; Discovered is console-only.
+    if (this.isDiscoveredTab) return 2
+    return 3 + (this.isCloudMode ? 1 : 2)
   }
 
   public pageEvent: PageEventOptions = {
@@ -550,7 +552,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private onManaged(): void {
     this.snackBar.open(
-      this.translate.instant('devices.manage.success.value'),
+      this.translate.instant('devices.adopt.success.value'),
       undefined,
       SnackbarDefaults.defaultSuccess
     )

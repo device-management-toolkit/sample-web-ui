@@ -480,8 +480,20 @@ describe('DevicesComponent', () => {
       component.isCloudMode = false
       component.onTabChange(1)
       await render()
-      expect(renderedButtons()).toBe(3)
-      expect(table().style.getPropertyValue('--action-count')).toBe('3')
+      expect(renderedButtons()).toBe(2)
+      expect(table().style.getPropertyValue('--action-count')).toBe('2')
+    })
+
+    // Adopt opens the edit dialog with the eligibility check, so Edit would be a way around it.
+    it('should offer Adopt instead of Edit on a discovered row', async () => {
+      component.isCloudMode = false
+      component.onTabChange(1)
+      await render()
+      const icons = Array.from(table().querySelector('mat-row')!.querySelectorAll('.mat-column-actions mat-icon')).map(
+        (icon) => icon.textContent?.trim()
+      )
+      expect(icons).toContain('how_to_reg')
+      expect(icons).not.toContain('edit')
     })
 
     describe('status icon', () => {
