@@ -219,6 +219,20 @@
                 (click)="$event.stopPropagation(); sendPowerAction(element.guid, 5)">
                 <mat-icon>restart_alt</mat-icon>
               </button>
+            } @else {
+              <!-- disabledInteractive keeps an ineligible Adopt focusable, so keyboard and screen-reader
+                   users still get the tooltip (exposed through aria-describedby) saying why. -->
+              @let adoption = adoptEligibility(element);
+              <button
+                mat-icon-button
+                [disabled]="!adoption.eligible"
+                [disabledInteractive]="true"
+                [matTooltip]="adoption.reasonKey ?? 'devices.adopt.button.value' | translate"
+                [attr.aria-label]="'devices.adopt.button.value' | translate"
+                data-cy="adoptDevice"
+                (click)="$event.stopPropagation(); adoptDevice(element)">
+                <mat-icon>how_to_reg</mat-icon>
+              </button>
             }
             <button
               mat-icon-button
@@ -226,7 +240,8 @@
               (click)="$event.stopPropagation(); sendDeactivate(element.guid)">
               <mat-icon>delete</mat-icon>
             </button>
-            @if (!isCloudMode) {
+            <!-- A discovered device gets its credentials through Adopt, which checks eligibility first. -->
+            @if (!isCloudMode && !isDiscoveredTab) {
               <button
                 mat-icon-button
                 [matTooltip]="'devices.actions.edit.value' | translate"
@@ -271,6 +286,7 @@
       [productType]="getProductType(device)"
       [controlMode]="getControlMode(device)"
       [loadError]="paneLoadError()"
+      (adopt)="adoptDevice(device)"
       (closed)="closePane()"
       animate.leave="discovered-pane-leave" />
   }

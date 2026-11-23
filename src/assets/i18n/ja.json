@@ -1133,6 +1133,26 @@
     "description": "Explains why a discovered device can only be viewed",
     "value": "rpc-go がこのデバイスを検出し、Console に報告しました。このデバイスは Console によって管理されていません。以下は rpc-go が報告した詳細です。"
   },
+  "devices.adopt.button": {
+    "description": "Button that moves a discovered device to Managed",
+    "value": "採用"
+  },
+  "devices.adopt.success": {
+    "description": "Message shown after a discovered device is now managed",
+    "value": "デバイスが管理対象になりました"
+  },
+  "devices.adopt.ineligible.notActivated": {
+    "description": "Why a device that is not activated cannot be managed",
+    "value": "このデバイスはアクティベートされていないため、採用できません。rpc-go でアクティベートしてから同期してください。"
+  },
+  "devices.adopt.ineligible.unsupported": {
+    "description": "Why a device without vPro or Standard Manageability cannot be managed",
+    "value": "このデバイスは Intel vPro および Intel Standard Manageability をサポートしていないため、採用できません。"
+  },
+  "devices.adopt.ineligible.unknown": {
+    "description": "Why a device that reported no AMT capability cannot be managed",
+    "value": "このデバイスの Intel AMT 機能が報告されなかったため、採用できません。MEI ドライバーにアクセスできる状態で検出を実行してから同期してください。"
+  },
   "devices.discoveredPane.firstDiscovered": {
     "description": "Label for when the device was first discovered",
     "value": "初回検出"
@@ -2940,6 +2960,10 @@
   "remotePlatformErase.ssdPasswordTooLong": {
     "description": "SSDパスワードが64バイトを超える場合のエラーメッセージ",
     "value": "SSDパスワードは64バイトを超えることはできません"
+  },
+  "sol.encoding": {
+    "description": "SOL文字エンコーディング選択欄のラベル",
+    "value": "SOLエンコーディング"
   },
   "sol.connect": {
     "description": "SOL接続用ボタン",

@@ -446,4 +446,40 @@ describe('DiscoveredDevicePaneComponent', () => {
     render(baseDevice)
     expect(document.activeElement).toBe(fixture.nativeElement.querySelector('[data-cy="discoveredPaneTitle"]'))
   })
+
+  describe('adopt button', () => {
+    const button = (): HTMLButtonElement => fixture.nativeElement.querySelector('[data-cy="discoveredPaneAdopt"]')
+    const reason = (): Element | null => fixture.nativeElement.querySelector('[data-cy="discoveredPaneAdoptReason"]')
+
+    it('emits adopt when the device is eligible', () => {
+      const emitted = vi.fn()
+      component.adopt.subscribe(emitted)
+      render({ ...baseDevice, management: { eligible: true } })
+      expect(button().disabled).toBe(false)
+      button().click()
+      expect(emitted).toHaveBeenCalledTimes(1)
+    })
+
+    it('is disabled with the reason shown when the device is not eligible', () => {
+      render({ ...baseDevice, management: { eligible: false, reason: 'unsupported' } })
+      expect(button().disabled).toBe(true)
+      expect(reason()).toBeTruthy()
+    })
+
+    it('shows the reason above the general explainer', () => {
+      render({ ...baseDevice, management: { eligible: false, reason: 'notActivated' } })
+      const explainer: Element = fixture.nativeElement.querySelector('.status-explainer')
+      expect(reason()!.compareDocumentPosition(explainer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    })
+
+    it.each([
+      ['not activated', { eligible: false, reason: 'notActivated' }],
+      ['capability unknown', { eligible: false, reason: 'unknown' }],
+      ['Console gave no answer', undefined]
+    ])('is disabled with the reason shown when the device is %s', (_label, management) => {
+      render({ ...baseDevice, management } as Device)
+      expect(button().disabled).toBe(true)
+      expect(reason()).toBeTruthy()
+    })
+  })
 })

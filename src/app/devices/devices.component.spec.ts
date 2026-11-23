@@ -16,6 +16,7 @@ import { EMPTY, of, Subject, throwError } from 'rxjs'
 import { DevicesComponent } from './devices.component'
 import { DevicesService } from './devices.service'
 import { Device } from '../../models/models'
+import { AddDeviceEnterpriseComponent } from '../shared/add-device-enterprise/add-device-enterprise.component'
 import { MatSelectChange } from '@angular/material/select'
 import { provideHttpClient } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing'
@@ -483,6 +484,18 @@ describe('DevicesComponent', () => {
       expect(table().style.getPropertyValue('--action-count')).toBe('2')
     })
 
+    // Adopt opens the edit dialog with the eligibility check, so Edit would be a way around it.
+    it('should offer Adopt instead of Edit on a discovered row', async () => {
+      component.isCloudMode = false
+      component.onTabChange(1)
+      await render()
+      const icons = Array.from(table().querySelector('mat-row')!.querySelectorAll('.mat-column-actions mat-icon')).map(
+        (icon) => icon.textContent?.trim()
+      )
+      expect(icons).toContain('how_to_reg')
+      expect(icons).not.toContain('edit')
+    })
+
     describe('status icon', () => {
       const actionsCell = (): HTMLElement => table().querySelector('mat-row')!.querySelector('.mat-column-actions')!
 
@@ -866,6 +879,93 @@ describe('DevicesComponent', () => {
       getDevicesSpy.mockReturnValue(of({ data: [device02], totalCount: 1 }))
       component.getDevices()
       expect(component.paneDevice()).toBeNull()
+    })
+  })
+
+  describe('adopt a discovered device', () => {
+    // FW SKU bit 0x08 marks vPro; admin control mode is ACM.
+    const eligible = (): Device => ({ ...device01, management: { eligible: true } })
+    let openSpy: MockInstance
+    let closed: Subject<{ submitted: boolean } | undefined>
+
+    beforeEach(() => {
+      component.isCloudMode = false
+      closed = new Subject<{ submitted: boolean } | undefined>()
+      openSpy = vi.spyOn(TestBed.inject(MatDialog), 'open').mockReturnValue({ afterClosed: () => closed } as any)
+    })
+
+    it('does not open the dialog for an unsupported device', () => {
+      component.adoptDevice({ ...device01, management: { eligible: false, reason: 'unsupported' } })
+      expect(openSpy).not.toHaveBeenCalled()
+    })
+
+    it('opens the edit device dialog, then moves to the Managed tab and reloads the lists once after saving', async () => {
+      component.onTabChange(1)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      getDevicesSpy.mockClear()
+      const device = eligible()
+      component.adoptDevice(device)
+      // Adopt reuses the edit device dialog, which saves with PATCH /api/v1/devices.
+      expect(openSpy).toHaveBeenCalledWith(AddDeviceEnterpriseComponent, expect.objectContaining({ data: device }))
+      closed.next({ submitted: true })
+      fixture.detectChanges()
+      await fixture.whenStable()
+      expect(component.activeTab()).toBe(0)
+      expect(getDevicesSpy).toHaveBeenCalledTimes(1)
+      expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'activated' }))
+    })
+
+    it('stays on the Discovered tab when the dialog is cancelled', async () => {
+      component.onTabChange(1)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      getDevicesSpy.mockClear()
+      component.adoptDevice(eligible())
+      closed.next(undefined)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      expect(component.activeTab()).toBe(1)
+      expect(getDevicesSpy).not.toHaveBeenCalled()
+    })
+
+    const renderDiscoveredRows = async (): Promise<HTMLButtonElement[]> => {
+      component.onTabChange(1)
+      getDevicesSpy.mockReturnValue(
+        of({
+          data: [eligible(), { ...device01, guid: 'other', management: { eligible: false, reason: 'unsupported' } }],
+          totalCount: 2
+        })
+      )
+      component.getDevices()
+      fixture.detectChanges()
+      await fixture.whenStable()
+      return Array.from(
+        (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLButtonElement>('[data-cy="adoptDevice"]')
+      )
+    }
+
+    it('offers Adopt on a discovered row, disabled when the device is not eligible', async () => {
+      const buttons = await renderDiscoveredRows()
+      expect(buttons.map((b) => b.getAttribute('aria-disabled') === 'true')).toEqual([false, true])
+    })
+
+    // The ineligible button stays focusable so its tooltip reason reaches keyboard and screen-reader users.
+    it('keeps an ineligible Adopt focusable, but clicking it opens neither the dialog nor the pane', async () => {
+      const [, ineligible] = await renderDiscoveredRows()
+      expect(ineligible.disabled).toBe(false)
+      ineligible.focus()
+      expect(document.activeElement).toBe(ineligible)
+      ineligible.click()
+      expect(openSpy).not.toHaveBeenCalled()
+      expect(component.paneDevice()).toBeNull()
+    })
+
+    it('does not offer Adopt on the Managed tab', async () => {
+      component.onTabChange(0)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      expect((fixture.nativeElement as HTMLElement).querySelector('[data-cy="adoptDevice"]')).toBeNull()
     })
   })
 })

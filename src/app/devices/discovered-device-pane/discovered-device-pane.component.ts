@@ -15,10 +15,11 @@ import {
   output
 } from '@angular/core'
 import { NgTemplateOutlet, formatDate } from '@angular/common'
-import { MatIconButton } from '@angular/material/button'
+import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
+import { adoptEligibility } from '../adopt-eligibility'
 import { Device, DeviceInfo, MEInterfaceInfo, OSInterfaceInfo } from '../../../models/models'
 
 // Translation key for a fixed value rpc-go reports in English.
@@ -79,6 +80,7 @@ const DHCP_MODE_LABELS: Record<string, string> = {
   styleUrls: ['./discovered-device-pane.component.scss'],
   imports: [
     NgTemplateOutlet,
+    MatButton,
     MatIconButton,
     MatIcon,
     MatExpansionPanel,
@@ -102,10 +104,13 @@ export class DiscoveredDevicePaneComponent implements AfterViewInit {
   // The fetch for the latest copy failed, so what is shown may be out of date or missing.
   public readonly loadError = input(false)
   public readonly closed = output<void>()
+  public readonly adopt = output<void>()
 
   @ViewChild('title') title?: ElementRef<HTMLElement>
 
   public readonly info = computed<DeviceInfo | undefined>(() => this.device().deviceInfo)
+  // Whether the device can be adopted, worked out once per device change.
+  public readonly adoption = computed(() => adoptEligibility(this.device()))
 
   public readonly firstDiscovered = computed(() => this.timestamp(this.info()?.firstDiscovered))
   public readonly lastSynced = computed(() => this.timestamp(this.info()?.lastSynced))

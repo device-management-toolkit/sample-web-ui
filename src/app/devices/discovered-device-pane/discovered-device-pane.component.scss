@@ -75,6 +75,13 @@ h2 {
   padding: 20px 24px 32px;
 }
 
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
 // Dashed outline = visible on the network, not under management. Solid chips elsewhere mean managed.
 .status-mark {
   display: inline-flex;
@@ -101,6 +108,14 @@ h2 {
   color: $ink-muted;
   font-size: 14px;
   line-height: 21px;
+}
+
+.adopt-reason {
+  max-width: 60ch;
+  margin: 12px 0 0;
+  color: $ink-muted;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 dl {
