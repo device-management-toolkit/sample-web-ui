@@ -4,9 +4,27 @@
  **********************************************************************/
 
 import { defineConfig } from 'cypress'
+import { createConnection } from 'node:net'
 
 import { cancelExecTasks, execTask } from './cypress/support/exec-task'
 import { publicConfig } from './cypress/support/public-config'
+
+const isTcpPortOpen = (port: number): Promise<boolean> =>
+  new Promise((resolve) => {
+    const socket = createConnection({ host: '127.0.0.1', port })
+    let settled = false
+    const finish = (isOpen: boolean): void => {
+      if (settled) return
+      settled = true
+      socket.destroy()
+      resolve(isOpen)
+    }
+
+    socket.setTimeout(1500)
+    socket.once('connect', () => finish(true))
+    socket.once('timeout', () => finish(false))
+    socket.once('error', () => finish(false))
+  })
 
 export default defineConfig({
   reporter: 'mocha-multi-reporters',
@@ -134,6 +152,9 @@ export default defineConfig({
         log(message: string) {
           console.log(message)
           return null
+        },
+        async isLmsAvailable({ localTlsEnforced }: { localTlsEnforced: boolean }) {
+          return isTcpPortOpen(localTlsEnforced ? 16993 : 16992)
         },
         exec: execTask
       })
