@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router'
+import { provideRouter } from '@angular/router'
 import { AuthService } from '../../auth.service'
 import { ThemeService } from '../../theme.service'
 import { NavFooterComponent } from './nav-footer.component'
@@ -73,7 +73,6 @@ describe('NavFooterComponent', () => {
     authServiceSpy.compareSemver.mockReturnValue(1)
 
     const matDialogSpy = createSpyObj('MatDialog', ['open'])
-    const routerSpy = createSpyObj('Router', ['navigate'])
 
     await TestBed.configureTestingModule({
       imports: [
@@ -83,10 +82,10 @@ describe('NavFooterComponent', () => {
         provideTranslateService(),
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideRouter([]),
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: MatDialog, useValue: matDialogSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: MatDialog, useValue: matDialogSpy }
       ]
     }).compileComponents()
 
@@ -176,6 +175,31 @@ describe('NavFooterComponent', () => {
     fixture.detectChanges()
 
     expect(fixture.nativeElement.textContent).toContain('account_circle')
+  })
+
+  it.each([
+    { cloud: false, oauth: false, disabled: false, visible: true },
+    { cloud: true, oauth: false, disabled: false, visible: false },
+    { cloud: false, oauth: true, disabled: false, visible: false },
+    { cloud: false, oauth: false, disabled: true, visible: false }
+  ])('should gate profile password management for $cloud/$oauth/$disabled', ({ cloud, oauth, disabled, visible }) => {
+    const originalOAuth = environment.useOAuth
+    const originalDisabled = environment.authDisabled
+    try {
+      component.cloudMode = cloud
+      environment.useOAuth = oauth
+      environment.authDisabled = disabled
+      fixture.detectChanges()
+      isLoggedInSubject.next(true)
+      fixture.detectChanges()
+      openMenu('accountMenu')
+
+      expect(document.querySelector('a[routerlink="/account/password"]') !== null).toBe(visible)
+      expect(document.querySelector('.mat-mdc-menu-content')?.textContent).toContain('logout')
+    } finally {
+      environment.useOAuth = originalOAuth
+      environment.authDisabled = originalDisabled
+    }
   })
 
   it('should load versions but hide the account menu when auth is disabled', () => {

@@ -160,5 +160,10 @@ describe('LoginComponent', () => {
         environment.authDisabled = original
       }
     })
+
+    it('should not show keyring setup or recovery guidance in the login dialog', () => {
+      expect(fixture.nativeElement.textContent).not.toContain('Keyring setup and recovery')
+      expect(fixture.nativeElement.querySelector('details')).toBeNull()
+    })
   })
 })

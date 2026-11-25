@@ -3,7 +3,7 @@ import { catchError, of, throwError } from 'rxjs'
 import { DialogContentComponent } from './shared/dialog-content/dialog-content.component'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog } from '@angular/material/dialog'
-import { AuthService } from './auth.service'
+import { AuthService, HANDLE_AUTH_FORM_ERRORS } from './auth.service'
 import { inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { BACKGROUND_REQUEST } from './shared/config/http-context'
@@ -20,6 +20,16 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   return next(request).pipe(
     catchError((error: any) => {
       if (error instanceof HttpErrorResponse) {
+        // Credential rejection is not session expiry; auth forms also own their conflict messages.
+        if (
+          request.context.get(HANDLE_AUTH_FORM_ERRORS) &&
+          (error.status === 409 ||
+            (error.status === 401 &&
+              (error.error?.error === 'invalid credentials' || error.error?.code === 'INVALID_SETUP_TOKEN')))
+        ) {
+          return throwError(() => error)
+        }
+
         if (error.status === 401) {
           // A 401 on a request sent with a session means it expired (console#993).
           // Console sends no exp field, so the flag decides. logout() clears it,
