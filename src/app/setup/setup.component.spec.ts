@@ -47,8 +47,9 @@ describe('SetupComponent', () => {
 
   it('clears the fragment immediately and submits the token only in the setup request body', () => {
     authService.completeFirstRunSetup.mockReturnValue(of({ status: 'configured' }))
-    component.form.setValue({
-      setupToken: 'setup-token',
+    expect(component.setupTokenFromFragment()).toBe(true)
+    expect(component.form.controls.setupToken.value).toBe('setup-token')
+    component.form.patchValue({
       username: 'admin',
       password: 'Strong-password-123',
       confirmPassword: 'Strong-password-123'
