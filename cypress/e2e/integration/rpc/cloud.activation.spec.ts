@@ -205,25 +205,30 @@ if (Cypress.expose('ISOLATE').charAt(0).toLowerCase() !== 'y') {
               return
             }
 
+            // Chai truncates long actual values, hiding the RPC error at the end of the
+            // output. Surface the exit code and output tail so failures are diagnosable.
+            const outputTail = `RPC exit code ${result.code}. Output tail:\n${combined.slice(-3000)}`
+            expect(result.code, `Cloud activation RPC command failed. ${outputTail}`).to.equal(0)
+
             if (isAdminControlModeProfile) {
-              expect(combined).to.match(/admin control mode/i)
+              expect(combined, outputTail).to.match(/admin control mode/i)
             } else {
-              expect(combined).to.match(/client control mode/i)
+              expect(combined, outputTail).to.match(/client control mode/i)
             }
 
             if (parts[2] === 'CIRA') {
-              expect(combined).to.match(/CIRA(?::\s*|\s+)(?:Connection:?\s*)?Configured/i)
+              expect(combined, outputTail).to.match(/CIRA(?::\s*|\s+)(?:Connection:?\s*)?Configured/i)
             } else if (parseInt(amtVersion) >= 19) {
-              expect(combined).to.match(/TLS:\s*(?:Already )?Configured/i)
+              expect(combined, outputTail).to.match(/TLS:\s*(?:Already )?Configured/i)
             } else {
-              expect(combined).to.match(/TLS:\s*Configured/i)
+              expect(combined, outputTail).to.match(/TLS:\s*Configured/i)
             }
 
-            if (profileName.endsWith('WiFi')) {
-              expect(combined).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
-              expect(combined).to.match(/Wireless(?: Network)?:?\s*(?:Wireless )?Configured/i)
+            if (profileName.endsWith('TLS')) {
+              expect(combined, outputTail).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
+              expect(combined, outputTail).to.match(/Wireless(?: Network)?:?\s*(?:Wireless )?Configured/i)
             } else {
-              expect(combined).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
+              expect(combined, outputTail).to.match(/(?:Wired )?Network:\s*Wired Network Configured/i)
             }
 
             if (primaryOutput.length > 0) {
