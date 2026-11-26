@@ -1,3 +1,10 @@
+## [4.7.1](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.7.0...v4.7.1) (2026-11-26)
+
+
+### Bug Fixes
+
+* device status synchronization ([#3692](https://github.com/device-management-toolkit/sample-web-ui/issues/3692)) ([b83e73d](https://github.com/device-management-toolkit/sample-web-ui/commit/b83e73d02a18bc545b661ce3ca55cdb2e397c2d1))
+
 # [4.7.0](https://github.com/device-management-toolkit/sample-web-ui/compare/v4.6.0...v4.7.0) (2026-11-23)
 
 
