@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpContext } from '@angular/common/http'
 import { EventEmitter, Injectable, inject } from '@angular/core'
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs'
 import { catchError, finalize, map, shareReplay, tap } from 'rxjs/operators'
@@ -45,6 +45,7 @@ import {
 } from '../../models/models'
 import { caseInsensitiveCompare } from '../../utils'
 import { TranslateService } from '@ngx-translate/core'
+import { BACKGROUND_REQUEST } from '../shared/config/http-context'
 
 @Injectable({
   providedIn: 'root'
@@ -527,8 +528,9 @@ export class DevicesService {
     stream.next({ ...current, ...patch })
   }
 
-  getPowerState(deviceId: string): Observable<PowerState> {
-    return this.http.get<PowerState>(`${environment.mpsServer}/api/v1/amt/power/state/${deviceId}`).pipe(
+  getPowerState(deviceId: string, options: { background?: boolean } = {}): Observable<PowerState> {
+    const context = new HttpContext().set(BACKGROUND_REQUEST, options.background === true)
+    return this.http.get<PowerState>(`${environment.mpsServer}/api/v1/amt/power/state/${deviceId}`, { context }).pipe(
       tap((state) => this.getOrCreatePowerStateStream(deviceId).next(state)),
       catchError((err) => {
         throw err

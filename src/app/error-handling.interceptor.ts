@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AuthService } from './auth.service'
 import { inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { BACKGROUND_REQUEST } from './shared/config/http-context'
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
   const authService = inject(AuthService)
@@ -36,13 +37,15 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (request, next) => {
             data: { name: translate.instant('error.itemModified.value') }
           })
         } else if (error.status === 504) {
-          snackbar.open(
-            translate.instant('error.deviceNotResponding.value'),
-            translate.instant('common.dismiss.value'),
-            {
-              duration: 5000
-            }
-          )
+          if (!request.context.get(BACKGROUND_REQUEST)) {
+            snackbar.open(
+              translate.instant('error.deviceNotResponding.value'),
+              translate.instant('common.dismiss.value'),
+              {
+                duration: 5000
+              }
+            )
+          }
           return of()
         }
       }
