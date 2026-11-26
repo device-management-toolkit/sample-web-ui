@@ -526,6 +526,33 @@ describe('DevicesService', () => {
       req.flush(null, mockError)
     })
 
+    it('should encode inventory expressions, ordering, and tags as query values', () => {
+      const filter = "contains(os,'A&B + C')"
+      const orderBy = 'amtVersion desc, hostname asc'
+      service
+        .getDevices({
+          pageSize: 25,
+          startsFrom: 25,
+          count: 'true',
+          tags: ['R&D', 'lab'],
+          status: 'discovered',
+          filter,
+          orderBy
+        })
+        .subscribe()
+
+      const req = httpMock.expectOne((request) =>
+        request.url.startsWith(`${mockEnvironment.mpsServer}/api/v1/devices?`)
+      )
+      const query = new URL(req.request.urlWithParams).searchParams
+      expect(query.get('$filter')).toBe(filter)
+      expect(query.get('$orderby')).toBe(orderBy)
+      expect(query.get('tags')).toBe('R&D,lab')
+      expect(query.get('discovered')).toBe('true')
+      expect(query.get('$skip')).toBe('25')
+      req.flush({ data: [], totalCount: 0 })
+    })
+
     it('should append the activated filter when status is activated', () => {
       const mockDevices: DataWithCount<Device> = {
         data: [{ hostname: 'device1', guid: 'guid1', connectionStatus: true }] as any,

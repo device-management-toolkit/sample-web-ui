@@ -19,6 +19,34 @@
   }
 }
 
+.inventory-panel {
+  margin: 0 16px 12px;
+
+  summary {
+    width: fit-content;
+    cursor: pointer;
+    padding-block: 6px;
+    color: var(--mat-sys-primary);
+
+    &:focus-visible {
+      outline: 2px solid var(--mat-sys-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  .inventory-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    gap: 12px;
+    padding: 8px 0 0;
+  }
+
+  .inventory-actions {
+    grid-column: 1 / -1;
+    gap: 8px;
+  }
+}
+
 // Tab labels start at the same 16px inset as the page title and the table.
 mat-tab-group ::ng-deep .mdc-tab {
   padding-inline: 16px;

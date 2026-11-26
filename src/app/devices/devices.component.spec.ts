@@ -419,6 +419,50 @@ describe('DevicesComponent', () => {
       expect(getDevicesSpy).toHaveBeenCalledWith(expect.objectContaining({ status: 'discovered' }))
     })
 
+    it('should apply the inventory query on the first page with the selected tab and tags', () => {
+      component.onTabChange(1)
+      component.pageEvent.startsFrom = 50
+      getTagsSpy.mockReturnValue(of(['lab']))
+      component.filteredTags.set(['lab'])
+      component.inventoryForm.setValue({
+        sku: 'vPro',
+        os: "O'Brien Linux",
+        version: '16.1',
+        mode: 'CCM',
+        lms: 'false',
+        sort: 'amtVersion',
+        direction: 'desc'
+      })
+      fixture.detectChanges()
+      const panel = fixture.nativeElement.querySelector('details.inventory-panel') as HTMLDetailsElement
+      expect(panel.open).toBe(false)
+
+      panel.open = true
+      panel.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+      fixture.detectChanges()
+
+      expect(panel.open).toBe(false)
+      expect(panel.querySelector('summary')?.textContent).toContain('(5)')
+
+      expect(getDevicesSpy).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          startsFrom: 0,
+          tags: ['lab'],
+          status: 'discovered',
+          filter:
+            "skuType eq 'vPro' and contains(os,'O''Brien Linux') and startswith(amtVersion,'16.1') and currentMode eq 'CCM' and lmsInstalled eq false",
+          orderBy: 'amtVersion desc'
+        })
+      )
+      expect(component.totalCount()).toBe(1)
+      expect(component.currentTabCount).toBe(3)
+
+      component.clearInventoryQuery()
+      expect(getDevicesSpy).toHaveBeenLastCalledWith(
+        expect.objectContaining({ filter: undefined, orderBy: undefined, tags: ['lab'], status: 'discovered' })
+      )
+    })
+
     it('should set currentTabCount from the active tab', () => {
       component.onTabChange(0)
       expect(component.currentTabCount).toBe(7)
@@ -615,8 +659,11 @@ describe('DevicesComponent', () => {
     })
 
     it('should show the power state fetched after a power action', async () => {
+      component.isCloudMode = true
       component.powerStates = { 2: 'On', 8: 'Off' }
       fixture.autoDetectChanges()
+      await fixture.whenStable()
+      component.powerStateByGuid.set({ [device01.guid]: 2 })
       await fixture.whenStable()
       expect(renderedText()).toContain('Power: On')
 

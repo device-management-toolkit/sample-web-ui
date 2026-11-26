@@ -1001,6 +1001,62 @@
     "description": "Метка для фильтрации устройств по тегам",
     "value": "Фильтр тегов"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Все"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Применить"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "По возрастанию"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Сбросить фильтры инвентаризации"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Порядок по умолчанию"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "По убыванию"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Направление сортировки"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Отображаемое имя"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS установлен"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Ни vPro, ни ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Операционная система"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Сортировать по"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Фильтры и сортировка инвентаризации"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "Версия AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Описание диалогового окна «Добавить сертификат»",
     "value": "Сертификат будет добавлен в AMT."

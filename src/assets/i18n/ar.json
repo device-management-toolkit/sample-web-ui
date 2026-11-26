@@ -1001,6 +1001,62 @@
     "description": "تسمية لتصفية الأجهزة حسب العلامات",
     "value": "تصفية العلامات"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "الكل"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "تطبيق"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "تصاعدي"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "مسح عوامل تصفية المخزون"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "الترتيب الافتراضي"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "تنازلي"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "اتجاه الفرز"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "الاسم الوصفي"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "تثبيت LMS"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "لا vPro ولا ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "نظام التشغيل"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "الفرز حسب"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "تصفية المخزون وفرزه"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "إصدار AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "إضافة وصف مربع حوار الشهادة",
     "value": "سيتم إضافة الشهادة إلى AMT."

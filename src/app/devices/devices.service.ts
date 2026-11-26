@@ -440,7 +440,7 @@ export class DevicesService {
   getDevices(pageEvent: PageEventOptions): Observable<DataWithCount<Device>> {
     let query = `${environment.mpsServer}/api/v1/devices`
     if (pageEvent?.tags && pageEvent.tags.length > 0) {
-      query += `?tags=${pageEvent.tags.join(',')}&$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
+      query += `?tags=${pageEvent.tags.map(encodeURIComponent).join(',')}&$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     } else {
       query += `?$top=${pageEvent.pageSize}&$skip=${pageEvent.startsFrom}&$count=${pageEvent.count}`
     }
@@ -448,6 +448,12 @@ export class DevicesService {
       query += '&activated=true'
     } else if (pageEvent?.status === 'discovered') {
       query += '&discovered=true'
+    }
+    if (pageEvent.filter) {
+      query += '&$filter=' + encodeURIComponent(pageEvent.filter)
+    }
+    if (pageEvent.orderBy) {
+      query += '&$orderby=' + encodeURIComponent(pageEvent.orderBy)
     }
     return this.http.get<DataWithCount<Device>>(query).pipe(
       catchError((err) => {

@@ -997,6 +997,62 @@
     "description": "Etiqueta para filtrar dispositivos por etiquetas.",
     "value": "Filtrar etiquetas"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Cualquiera"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Aplicar"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Ascendente"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Borrar filtros de inventario"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Orden predeterminado"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Descendente"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Dirección de ordenación"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Nombre descriptivo"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS instalado"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Ni vPro ni ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Sistema operativo"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Ordenar por"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Filtros y ordenación del inventario"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "Versión de AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Añadir descripción del cuadro de diálogo Certificado",
     "value": "El certificado se añadirá a AMT."

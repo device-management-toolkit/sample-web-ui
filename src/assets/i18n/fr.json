@@ -1001,6 +1001,62 @@
     "description": "Étiquette pour filtrer les appareils par balises",
     "value": "Filtrer les balises"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Tous"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Appliquer"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Croissant"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Effacer les filtres d’inventaire"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Ordre par défaut"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Décroissant"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Sens du tri"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Nom d’affichage"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS installé"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Ni vPro ni ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Système d’exploitation"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Trier par"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Filtres et tri de l’inventaire"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "Version d’AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Ajouter la description de la boîte de dialogue Certificat",
     "value": "Le certificat sera ajouté à AMT."

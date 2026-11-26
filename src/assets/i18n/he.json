@@ -993,6 +993,62 @@
     "description": "תווית לסינון התקנים על ידי תגיות",
     "value": "תגי סינון"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "הכול"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "החלה"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "סדר עולה"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "ניקוי מסנני המלאי"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "סדר ברירת מחדל"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "סדר יורד"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "כיוון המיון"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "שם תצוגה"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS מותקן"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "ללא vPro או ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "מערכת הפעלה"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "מיון לפי"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "סינון ומיון מלאי"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "גרסת AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "הוסף תיאור דיאלוג תעודה",
     "value": "האישור יתווסף ל- AMT."

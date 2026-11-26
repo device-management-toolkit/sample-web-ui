@@ -410,6 +410,8 @@ export interface PageEventOptions {
   count: string
   tags?: string[]
   status?: DeviceFilterStatus
+  filter?: string
+  orderBy?: string
 }
 
 export type DeviceFilterStatus = 'activated' | 'discovered'

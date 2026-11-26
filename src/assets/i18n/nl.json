@@ -1001,6 +1001,62 @@
     "description": "Label voor het filteren van apparaten op tags",
     "value": "Filtertags"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Alle"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Toepassen"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Oplopend"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Inventarisfilters wissen"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Standaardvolgorde"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Aflopend"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Sorteerrichting"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Weergavenaam"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS geïnstalleerd"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Geen vPro of ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Besturingssysteem"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Sorteren op"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Inventarisfilters en sortering"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT-versie"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Beschrijving van het dialoogvenster Certificaat toevoegen",
     "value": "Het certificaat wordt toegevoegd aan AMT."

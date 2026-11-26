@@ -997,6 +997,62 @@
     "description": "Bezeichnung zum Filtern von Geräten nach Tags",
     "value": "Filter-Tags"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Alle"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Anwenden"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Aufsteigend"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Inventarfilter zurücksetzen"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Standardsortierung"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Absteigend"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Sortierrichtung"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Anzeigename"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS installiert"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Weder vPro noch ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Betriebssystem"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Sortieren nach"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Inventarfilter und Sortierung"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT-Version"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Beschreibung des Dialogfelds „Zertifikat hinzufügen“",
     "value": "Das Zertifikat wird zu AMT hinzugefügt."
