@@ -40,7 +40,7 @@
     "angular-oauth2-oidc-jwks": "^20.0.0",
     "date-fns": "^4.4.0",
     "esbuild": "^0.28.2",
-    "monaco-editor": "^0.56.0",
+    "monaco-editor": "^0.58.0",
     "ngx-monaco-editor-v2": "^22.0.5",
     "rxjs": "~7.8.2",
     "tslib": "^2.9.1"
