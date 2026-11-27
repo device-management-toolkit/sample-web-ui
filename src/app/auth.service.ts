@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 import { Router } from '@angular/router'
@@ -17,6 +17,8 @@ const SESSION_FLAG = 'sessionActive'
 
 // The session JWT. Cloud sends it; the Console binary purges it.
 const TOKEN_KEY = 'loggedInUser'
+
+export const HANDLE_AUTH_FORM_ERRORS = new HttpContextToken<boolean>(() => false)
 
 @Injectable({
   providedIn: 'root'
@@ -157,6 +159,72 @@ export class AuthService {
         throw err
       })
     )
+  }
+
+  changePassword(
+    currentPassword: string,
+    newPassword: string,
+    confirmPassword: string
+  ): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.url}/password`,
+      {
+        currentPassword,
+        newPassword,
+        confirmPassword
+      },
+      { context: new HttpContext().set(HANDLE_AUTH_FORM_ERRORS, true) }
+    )
+  }
+
+  // Console registers password change only for standalone auth with the keyring
+  // secret backend. An empty request fails validation (400 JSON) before anything
+  // is read or stored; other backends answer 404 or the UI's index.html.
+  isPasswordChangeSupported(): Observable<boolean> {
+    if (environment.cloud || environment.useOAuth || environment.authDisabled) {
+      return of(false)
+    }
+    return this.http.post(`${this.url}/password`, {}).pipe(
+      map(() => false),
+      catchError((error: HttpErrorResponse) => of(error.status === 400 && typeof error.error?.error === 'string'))
+    )
+  }
+
+  // Console injects the loopback setup API only while keyring first-run setup
+  // is pending. Without it (config backend, or keyring already configured)
+  // there is nothing to set up.
+  getSetupStatus(): Observable<{ setupRequired: boolean }> {
+    if (!this.setupAPIBase()) {
+      return of({ setupRequired: false })
+    }
+    return this.http.get<{ setupRequired: boolean }>(`${this.setupAPIBase()}/api/v1/auth/setup/status`, {
+      withCredentials: false
+    })
+  }
+
+  completeFirstRunSetup(
+    token: string,
+    username: string,
+    password: string,
+    confirmPassword: string
+  ): Observable<{ status: string }> {
+    return this.http.post<{ status: string }>(
+      `${this.setupAPIBase()}/api/v1/auth/setup`,
+      { token, username, password, confirmPassword },
+      { withCredentials: false, context: new HttpContext().set(HANDLE_AUTH_FORM_ERRORS, true) }
+    )
+  }
+
+  clearLocalSession(): void {
+    this.isLoggedIn = false
+    this.loggedInSubject$.next(false)
+    localStorage.removeItem(SESSION_FLAG)
+    localStorage.removeItem(TOKEN_KEY)
+  }
+
+  private setupAPIBase(): string {
+    const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
+    return runtimeConfig.__CONSOLE_SETUP_API__ || ''
   }
 
   logout(): void {

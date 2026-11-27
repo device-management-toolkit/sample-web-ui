@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createSpyObj, type SpyObj } from '../../../test-helpers'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router'
+import { provideRouter } from '@angular/router'
 import { AuthService } from '../../auth.service'
 import { ThemeService } from '../../theme.service'
 import { NavFooterComponent } from './nav-footer.component'
@@ -56,7 +56,8 @@ describe('NavFooterComponent', () => {
         'getMPSVersion',
         'getRPSVersion',
         'getConsoleVersion',
-        'compareSemver'
+        'compareSemver',
+        'isPasswordChangeSupported'
       ],
       {
         isLoggedIn: isLoggedInSubject.asObservable(),
@@ -71,9 +72,9 @@ describe('NavFooterComponent', () => {
     authServiceSpy.getRPSVersion.mockReturnValue(of({ version: '1.0.0' }))
     authServiceSpy.getConsoleVersion.mockReturnValue(of({ version: '1.0.0' }))
     authServiceSpy.compareSemver.mockReturnValue(1)
+    authServiceSpy.isPasswordChangeSupported.mockReturnValue(of(false))
 
     const matDialogSpy = createSpyObj('MatDialog', ['open'])
-    const routerSpy = createSpyObj('Router', ['navigate'])
 
     await TestBed.configureTestingModule({
       imports: [
@@ -83,10 +84,10 @@ describe('NavFooterComponent', () => {
         provideTranslateService(),
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideRouter([]),
         { provide: TRANSLATE_HTTP_LOADER_CONFIG, useValue: { prefix: '/assets/i18n/', suffix: '.json' } },
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: MatDialog, useValue: matDialogSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: MatDialog, useValue: matDialogSpy }
       ]
     }).compileComponents()
 
@@ -176,6 +177,35 @@ describe('NavFooterComponent', () => {
     fixture.detectChanges()
 
     expect(fixture.nativeElement.textContent).toContain('account_circle')
+  })
+
+  it.each([
+    { supported: true, visible: true },
+    { supported: false, visible: false }
+  ])('should show password change in console mode only when supported ($supported)', ({ supported, visible }) => {
+    Object.defineProperty(environment, 'cloud', { writable: true, value: false })
+    authService.getConsoleVersion.mockReturnValue(of({ current: 'DEVELOPMENT' }))
+    authService.isPasswordChangeSupported.mockReturnValue(of(supported))
+    const consoleFixture = TestBed.createComponent(NavFooterComponent)
+    consoleFixture.detectChanges()
+    isLoggedInSubject.next(true)
+    consoleFixture.detectChanges()
+    consoleFixture.nativeElement.querySelector('[data-cy="accountMenu"]').click()
+    consoleFixture.detectChanges()
+
+    expect(authService.isPasswordChangeSupported).toHaveBeenCalled()
+    expect(document.querySelector('a[routerlink="/account/password"]') !== null).toBe(visible)
+    expect(document.querySelector('.mat-mdc-menu-content')?.textContent).toContain('logout')
+  })
+
+  it('should not check password change support in cloud mode', () => {
+    fixture.detectChanges()
+    isLoggedInSubject.next(true)
+    fixture.detectChanges()
+    openMenu('accountMenu')
+
+    expect(authService.isPasswordChangeSupported).not.toHaveBeenCalled()
+    expect(document.querySelector('a[routerlink="/account/password"]')).toBeNull()
   })
 
   it('should load versions but hide the account menu when auth is disabled', () => {

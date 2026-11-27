@@ -85,12 +85,17 @@
     <mat-icon>info</mat-icon>
   </button>
   @if (isLoggedIn()) {
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" data-cy="accountMenu">
       <mat-icon>account_circle</mat-icon>
     </button>
   }
 
   <mat-menu #menu="matMenu">
+    @if (passwordChangeSupported()) {
+      <a mat-menu-item routerLink="/account/password">
+        <mat-icon>password</mat-icon><span>{{ 'account.passwordChange.title.value' | translate }}</span>
+      </a>
+    }
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon><span>{{ 'common.logOut.value' | translate }}</span>
     </button>

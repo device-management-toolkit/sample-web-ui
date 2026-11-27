@@ -4,6 +4,7 @@
  **********************************************************************/
 
 import { Component, OnInit, inject, signal } from '@angular/core'
+import { RouterLink } from '@angular/router'
 
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -30,6 +31,7 @@ import { getDirection } from '../../../utils'
     MatIcon,
     MatMenu,
     MatMenuItem,
+    RouterLink,
     TranslatePipe
   ]
 })
@@ -47,6 +49,8 @@ export class NavFooterComponent implements OnInit {
   public rpsVersions = signal<RPSVersion>({} as RPSVersion)
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
   public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
+
+  public passwordChangeSupported = signal(false)
 
   public get availableLangs() {
     return availableLangs
@@ -98,6 +102,9 @@ export class NavFooterComponent implements OnInit {
           }
         })
       } else if (value && !environment.cloud) {
+        this.authService.isPasswordChangeSupported().subscribe((supported) => {
+          this.passwordChangeSupported.set(supported)
+        })
         this.authService.getConsoleVersion().subscribe({
           error: () => {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)
