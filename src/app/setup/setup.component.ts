@@ -4,19 +4,15 @@
  **********************************************************************/
 
 import { Component, inject, signal } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms'
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MatButton } from '@angular/material/button'
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
 import { MatInput } from '@angular/material/input'
 import { environment } from '../../environments/environment'
 import { AuthService } from '../auth.service'
+import { adminPasswordValidator } from '../shared/admin-password.validator'
 import { passwordConfirmationErrorState } from '../shared/password-confirmation-error-state'
-
-const strongPasswordValidator: ValidatorFn = (control): ValidationErrors | null => {
-  const characters = Array.from(String(control.value ?? ''))
-  return characters.length >= 8 && new Set(characters).size >= 4 ? null : { weakPassword: true }
-}
 
 @Component({
   selector: 'app-setup',
@@ -48,7 +44,7 @@ export class SetupComponent {
   readonly form = this.formBuilder.nonNullable.group({
     setupToken: ['', Validators.required],
     username: ['', Validators.required],
-    password: ['', [Validators.required, strongPasswordValidator]],
+    password: ['', [Validators.required, adminPasswordValidator]],
     confirmPassword: ['', Validators.required]
   })
   readonly confirmationErrorState = passwordConfirmationErrorState(() => this.confirmationMismatch)

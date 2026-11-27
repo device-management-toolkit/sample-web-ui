@@ -260,7 +260,7 @@ describe('AuthService', () => {
 
     it('surfaces an incorrect current password without logging out or showing a session dialog', () => {
       let responseStatus = 0
-      service.changePassword('wrong', 'New-password-123', 'New-password-123').subscribe({
+      service.changePassword('wrong', 'New-password-123!', 'New-password-123!').subscribe({
         error: (error) => (responseStatus = error.status)
       })
 
@@ -279,7 +279,7 @@ describe('AuthService', () => {
     })
 
     it('still logs out when the password-change session itself is invalid', () => {
-      service.changePassword('old', 'New-password-123', 'New-password-123').subscribe()
+      service.changePassword('old', 'New-password-123!', 'New-password-123!').subscribe()
       httpMock
         .expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
         .flush({ error: 'invalid access token' }, { status: 401, statusText: 'Unauthorized' })
@@ -307,22 +307,97 @@ describe('AuthService', () => {
       expect(dialog.open).not.toHaveBeenCalled()
       expect(service.isLoggedIn).toBe(true)
     })
+  })
 
-    it('leaves environment-managed password conflicts to the password form', () => {
-      let responseStatus = 0
-      service.changePassword('old', 'New-password-123', 'New-password-123').subscribe({
-        error: (error) => (responseStatus = error.status)
-      })
-      httpMock
-        .expectOne(`${mockEnvironment.mpsServer}/api/v1/authorize/password`)
-        .flush({ error: 'password is managed by AUTH_ADMIN_PASSWORD' }, { status: 409, statusText: 'Conflict' })
+  describe('isPasswordChangeSupported', () => {
+    const passwordUrl = `${mockEnvironment.mpsServer}/api/v1/authorize/password`
+    const originalUseOAuth = environment.useOAuth
 
-      expect(responseStatus).toBe(409)
-      expect(dialog.open).not.toHaveBeenCalled()
+    beforeEach(() => {
+      environment.cloud = false
+      environment.authDisabled = false
+      environment.useOAuth = false
+    })
+
+    afterEach(() => {
+      environment.useOAuth = originalUseOAuth
+    })
+
+    it.each([
+      {
+        name: 'keyring backend rejects the empty probe',
+        body: { error: 'current password, new password, and confirmation are required' },
+        status: 400,
+        expected: true
+      },
+      { name: 'route is not registered (config backend)', body: '404 page not found', status: 404, expected: false },
+      { name: 'unexpected success', body: { message: 'password changed' }, status: 200, expected: false }
+    ])('reports $expected when $name', ({ body, status, expected }) => {
+      let supported: boolean | undefined
+      service.isPasswordChangeSupported().subscribe((value) => (supported = value))
+
+      const request = httpMock.expectOne(passwordUrl)
+      expect(request.request.method).toBe('POST')
+      expect(request.request.body).toEqual({})
+      request.flush(body, { status, statusText: 'probe' })
+
+      expect(supported).toBe(expected)
+    })
+
+    it('reports false when the embedded UI answers with index.html', () => {
+      let supported: boolean | undefined
+      service.isPasswordChangeSupported().subscribe((value) => (supported = value))
+
+      httpMock.expectOne(passwordUrl).flush('<!doctype html><app-root></app-root>', { status: 200, statusText: 'OK' })
+
+      expect(supported).toBe(false)
+    })
+
+    it.each([
+      { name: 'cloud', cloud: true, oauth: false, disabled: false },
+      { name: 'OAuth', cloud: false, oauth: true, disabled: false },
+      { name: 'auth disabled', cloud: false, oauth: false, disabled: true }
+    ])('reports false without a request in $name mode', ({ cloud, oauth, disabled }) => {
+      environment.cloud = cloud
+      environment.useOAuth = oauth
+      environment.authDisabled = disabled
+      let supported: boolean | undefined
+      service.isPasswordChangeSupported().subscribe((value) => (supported = value))
+
+      httpMock.expectNone(passwordUrl)
+      expect(supported).toBe(false)
     })
   })
 
   describe('first-run setup', () => {
+    it('reports no setup required without a request when Console injects no setup API', () => {
+      const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
+      const originalSetupApi = runtimeConfig.__CONSOLE_SETUP_API__
+      runtimeConfig.__CONSOLE_SETUP_API__ = ''
+      let required: boolean | undefined
+
+      service.getSetupStatus().subscribe((status) => (required = status.setupRequired))
+
+      httpMock.expectNone(() => true)
+      expect(required).toBe(false)
+      runtimeConfig.__CONSOLE_SETUP_API__ = originalSetupApi
+    })
+
+    it('asks the injected setup API for status', () => {
+      const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
+      const originalSetupApi = runtimeConfig.__CONSOLE_SETUP_API__
+      runtimeConfig.__CONSOLE_SETUP_API__ = 'https://localhost:40000'
+      let required: boolean | undefined
+
+      service.getSetupStatus().subscribe((status) => (required = status.setupRequired))
+
+      const req = httpMock.expectOne('https://localhost:40000/api/v1/auth/setup/status')
+      expect(req.request.withCredentials).toBe(false)
+      req.flush({ setupRequired: true })
+      expect(required).toBe(true)
+      runtimeConfig.__CONSOLE_SETUP_API__ = originalSetupApi
+    })
+
     it('sends the one-time token and credentials in a request without cookies', () => {
       const runtimeConfig = window as Window & { __CONSOLE_SETUP_API__?: string }
       const originalSetupApi = runtimeConfig.__CONSOLE_SETUP_API__

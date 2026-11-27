@@ -2643,7 +2643,7 @@
   },
   "account.passwordChange.passwordHint": {
     "description": "Password strength hint",
-    "value": "Use at least 8 characters and 4 distinct characters."
+    "value": "Use at least 8 characters with a lowercase letter, an uppercase letter, a digit, and a symbol."
   },
   "account.passwordChange.required": {
     "description": "Validation message for required password fields",
@@ -2651,7 +2651,7 @@
   },
   "account.passwordChange.weakPassword": {
     "description": "Validation message for a weak new password",
-    "value": "Use at least 8 characters and 4 distinct characters."
+    "value": "Use at least 8 characters with a lowercase letter, an uppercase letter, a digit, and a symbol."
   },
   "account.passwordChange.mismatch": {
     "description": "Validation message when new password confirmation does not match",
@@ -2664,6 +2664,14 @@
   "account.passwordChange.success": {
     "description": "Success message after changing the administrator password",
     "value": "Your password was changed."
+  },
+  "account.passwordChange.incorrectCurrent": {
+    "description": "Error when the current administrator password is wrong",
+    "value": "The current password is incorrect."
+  },
+  "account.passwordChange.unavailable": {
+    "description": "Shown when this Console configuration does not support changing the password in the UI",
+    "value": "Password change is available only when Console stores the administrator credentials in the OS keyring (AUTH_SECRET_BACKEND=keyring). Otherwise, change the administrator password in the Console configuration and restart Console."
   },
   "account.passwordChange.error": {
     "description": "Fallback error when the administrator password cannot be changed",

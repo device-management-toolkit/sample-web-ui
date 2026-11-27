@@ -4,20 +4,15 @@
  **********************************************************************/
 
 import { Component, inject, signal } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms'
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MatButton } from '@angular/material/button'
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card'
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field'
 import { MatInput } from '@angular/material/input'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { AuthService } from '../auth.service'
+import { adminPasswordValidator } from '../shared/admin-password.validator'
 import { passwordConfirmationErrorState } from '../shared/password-confirmation-error-state'
-
-const strongPasswordValidator: ValidatorFn = (control): ValidationErrors | null => {
-  const password = String(control.value ?? '')
-  const characters = Array.from(password)
-  return characters.length >= 8 && new Set(characters).size >= 4 ? null : { weakPassword: true }
-}
 
 @Component({
   selector: 'app-password-change',
@@ -44,14 +39,21 @@ export class PasswordChangeComponent {
   private readonly translate = inject(TranslateService)
 
   readonly isLoading = signal(false)
+  readonly supported = signal(true)
   readonly statusMessage = signal('')
   readonly statusIsError = signal(false)
   readonly form = this.formBuilder.nonNullable.group({
     currentPassword: ['', Validators.required],
-    newPassword: ['', [Validators.required, strongPasswordValidator]],
+    newPassword: ['', [Validators.required, adminPasswordValidator]],
     confirmPassword: ['', Validators.required]
   })
   readonly confirmationErrorState = passwordConfirmationErrorState(() => this.confirmationMismatch)
+
+  constructor() {
+    this.authService.isPasswordChangeSupported().subscribe((supported) => {
+      this.supported.set(supported)
+    })
+  }
 
   get confirmationMismatch(): boolean {
     const { newPassword, confirmPassword } = this.form.getRawValue()
@@ -77,10 +79,14 @@ export class PasswordChangeComponent {
           this.form.reset()
           this.authService.logout()
         },
-        error: (error: { error?: { error?: string; message?: string } }) => {
+        error: (error: { status?: number; error?: { error?: string } }) => {
           this.statusIsError.set(true)
           this.statusMessage.set(
-            error.error?.message ?? error.error?.error ?? this.translate.instant('account.passwordChange.error.value')
+            error.status === 401
+              ? this.translate.instant('account.passwordChange.incorrectCurrent.value')
+              : typeof error.error?.error === 'string'
+                ? error.error.error
+                : this.translate.instant('account.passwordChange.error.value')
           )
         }
       })

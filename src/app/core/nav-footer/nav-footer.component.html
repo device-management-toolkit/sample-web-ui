@@ -91,7 +91,7 @@
   }
 
   <mat-menu #menu="matMenu">
-    @if (showPasswordManagement) {
+    @if (passwordChangeSupported()) {
       <a mat-menu-item routerLink="/account/password">
         <mat-icon>password</mat-icon><span>{{ 'account.passwordChange.title.value' | translate }}</span>
       </a>

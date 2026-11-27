@@ -50,9 +50,7 @@ export class NavFooterComponent implements OnInit {
   public mpsVersions = signal<MPSVersion>({} as MPSVersion)
   public consoleVersion = signal<ConsoleVersion>({} as ConsoleVersion)
 
-  get showPasswordManagement(): boolean {
-    return !this.cloudMode && !environment.useOAuth && !environment.authDisabled
-  }
+  public passwordChangeSupported = signal(false)
 
   public get availableLangs() {
     return availableLangs
@@ -104,6 +102,9 @@ export class NavFooterComponent implements OnInit {
           }
         })
       } else if (value && !environment.cloud) {
+        this.authService.isPasswordChangeSupported().subscribe((supported) => {
+          this.passwordChangeSupported.set(supported)
+        })
         this.authService.getConsoleVersion().subscribe({
           error: () => {
             // this.snackBar.open($localize`Error retrieving console version`, undefined, SnackbarDefaults.defaultError)

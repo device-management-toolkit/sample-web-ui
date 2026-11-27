@@ -51,8 +51,8 @@ describe('SetupComponent', () => {
     expect(component.form.controls.setupToken.value).toBe('setup-token')
     component.form.patchValue({
       username: 'admin',
-      password: 'Strong-password-123',
-      confirmPassword: 'Strong-password-123'
+      password: 'Strong-password-123!',
+      confirmPassword: 'Strong-password-123!'
     })
 
     expect(window.location.hash).toBe('')
@@ -61,8 +61,8 @@ describe('SetupComponent', () => {
     expect(authService.completeFirstRunSetup).toHaveBeenCalledWith(
       'setup-token',
       'admin',
-      'Strong-password-123',
-      'Strong-password-123'
+      'Strong-password-123!',
+      'Strong-password-123!'
     )
     expect(authService.clearLocalSession).toHaveBeenCalled()
     expect(replaceLocation).toHaveBeenCalledWith('https://console.example.test:8181/login')
@@ -89,8 +89,8 @@ describe('SetupComponent', () => {
     component.form.setValue({
       setupToken: 'setup-token',
       username: 'admin',
-      password: 'Strong-password-123',
-      confirmPassword: 'Strong-password-123'
+      password: 'Strong-password-123!',
+      confirmPassword: 'Strong-password-123!'
     })
 
     component.submit()
@@ -107,8 +107,8 @@ describe('SetupComponent', () => {
     component.form.setValue({
       setupToken: 'expired-token',
       username: 'admin',
-      password: 'Strong-password-123',
-      confirmPassword: 'Strong-password-123'
+      password: 'Strong-password-123!',
+      confirmPassword: 'Strong-password-123!'
     })
 
     component.submit()
@@ -121,8 +121,8 @@ describe('SetupComponent', () => {
     component.form.setValue({
       setupToken: 'setup-token',
       username: 'admin',
-      password: 'Strong-password-123',
-      confirmPassword: 'different-password-123'
+      password: 'Strong-password-123!',
+      confirmPassword: 'Different-password-123!'
     })
 
     component.submit()
@@ -131,7 +131,7 @@ describe('SetupComponent', () => {
     expect(authService.completeFirstRunSetup).not.toHaveBeenCalled()
     expect(fixture.nativeElement.querySelector('mat-error')?.textContent).toContain('Passwords do not match.')
 
-    component.form.controls.password.setValue('different-password-123')
+    component.form.controls.password.setValue('Different-password-123!')
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('mat-error')).toBeNull()

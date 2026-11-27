@@ -11,7 +11,7 @@
             <mat-form-field>
               <mat-label i18n>Setup token</mat-label>
               <input matInput type="password" autocomplete="off" formControlName="setupToken" />
-              <mat-hint i18n>Enter the token from the Console setup-token file.</mat-hint>
+              <mat-hint i18n>Paste the one-time token shown in the Console terminal.</mat-hint>
               @if (form.controls.setupToken.hasError('required')) {
                 <mat-error i18n>Setup token is required.</mat-error>
               }
@@ -29,11 +29,16 @@
           <mat-form-field>
             <mat-label i18n>Password</mat-label>
             <input matInput type="password" autocomplete="new-password" formControlName="password" />
-            <mat-hint i18n>At least 8 characters and 4 distinct characters.</mat-hint>
+            <mat-hint i18n
+              >At least 8 characters with a lowercase letter, an uppercase letter, a digit, and a symbol.</mat-hint
+            >
             @if (form.controls.password.hasError('required')) {
               <mat-error i18n>Password is required.</mat-error>
             } @else if (form.controls.password.hasError('weakPassword')) {
-              <mat-error i18n>Choose a longer password with more distinct characters.</mat-error>
+              <mat-error i18n
+                >Use at least 8 characters with a lowercase letter, an uppercase letter, a digit, and a
+                symbol.</mat-error
+              >
             }
           </mat-form-field>
 

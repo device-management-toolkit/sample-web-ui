@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  **********************************************************************/
 
-import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http'
+import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 import { Router } from '@angular/router'
@@ -177,7 +177,26 @@ export class AuthService {
     )
   }
 
+  // Console registers password change only for standalone auth with the keyring
+  // secret backend. An empty request fails validation (400 JSON) before anything
+  // is read or stored; other backends answer 404 or the UI's index.html.
+  isPasswordChangeSupported(): Observable<boolean> {
+    if (environment.cloud || environment.useOAuth || environment.authDisabled) {
+      return of(false)
+    }
+    return this.http.post(`${this.url}/password`, {}).pipe(
+      map(() => false),
+      catchError((error: HttpErrorResponse) => of(error.status === 400 && typeof error.error?.error === 'string'))
+    )
+  }
+
+  // Console injects the loopback setup API only while keyring first-run setup
+  // is pending. Without it (config backend, or keyring already configured)
+  // there is nothing to set up.
   getSetupStatus(): Observable<{ setupRequired: boolean }> {
+    if (!this.setupAPIBase()) {
+      return of({ setupRequired: false })
+    }
     return this.http.get<{ setupRequired: boolean }>(`${this.setupAPIBase()}/api/v1/auth/setup/status`, {
       withCredentials: false
     })
