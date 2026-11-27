@@ -905,6 +905,62 @@
     "description": "Etikett för filtrering av enheter efter taggar",
     "value": "Filtrera taggar"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Alla"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Tillämpa"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Stigande"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Rensa inventeringsfilter"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Standardordning"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Fallande"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Sorteringsriktning"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Visningsnamn"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS installerat"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Varken vPro eller ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Operativsystem"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Sortera efter"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Inventeringsfilter och sortering"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT-version"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Lägg till beskrivning av certifikatdialogrutan",
     "value": "Certifikatet kommer att läggas till i AMT."

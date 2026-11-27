@@ -1471,6 +1471,62 @@
     "description": "Label for filtering devices by tags",
     "value": "Filter Tags"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Any"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Apply"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Ascending"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Clear inventory filters"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Default order"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Descending"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Sort direction"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Friendly name"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS installed"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Neither vPro nor ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Operating system"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Sort by"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Inventory filters and sort"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT version"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Add Certificate dialog description",
     "value": "The certificate will be added to AMT."

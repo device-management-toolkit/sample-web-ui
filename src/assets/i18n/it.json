@@ -993,6 +993,62 @@
     "description": "Etichetta per filtrare i dispositivi in base ai tag",
     "value": "Filtra tag"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Qualsiasi"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Applica"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Crescente"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Cancella i filtri dell’inventario"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Ordine predefinito"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Decrescente"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Direzione di ordinamento"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Nome descrittivo"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS installato"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Né vPro né ISM"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Sistema operativo"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Ordina per"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Filtri e ordinamento dell’inventario"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "Versione AMT"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Aggiungi descrizione della finestra di dialogo Certificato",
     "value": "Il certificato verrà aggiunto all'AMT."

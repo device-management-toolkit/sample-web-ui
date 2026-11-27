@@ -997,6 +997,62 @@
     "description": "Tunniste laitteiden suodattamiseen tunnisteiden avulla",
     "value": "Suodata tunnisteet"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "Kaikki"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "Käytä"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "Nouseva"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "Tyhjennä inventaariosuodattimet"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "Oletusjärjestys"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "Laskeva"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "Lajittelusuunta"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "Näyttönimi"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS asennettu"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "Ei vProta eikä ISM:ää"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "Käyttöjärjestelmä"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "Lajitteluperuste"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "Inventaarion suodatus ja lajittelu"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT-versio"
+  },
   "devices.header.addCertificateDescription": {
     "description": "Lisää sertifikaatin kuvaus",
     "value": "Sertifikaatti lisätään AMT:hen."

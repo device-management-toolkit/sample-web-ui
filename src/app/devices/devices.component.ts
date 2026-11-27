@@ -52,14 +52,14 @@ import {
   MatTableDataSource
 } from '@angular/material/table'
 import { MatOption } from '@angular/material/core'
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule, FormControl, FormGroup } from '@angular/forms'
 import { MatFormField, MatHint, MatLabel, MatPrefix } from '@angular/material/form-field'
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
-import { MatSort } from '@angular/material/sort'
+import { MatSort, MatSortHeader } from '@angular/material/sort'
 import { MatInput } from '@angular/material/input'
 import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
 import { MatDivider } from '@angular/material/divider'
@@ -79,6 +79,7 @@ import { adoptEligibility } from './adopt-eligibility'
     MatPrefix,
     MatIcon,
     MatSort,
+    MatSortHeader,
     MatIconButton,
     MatTooltip,
     MatProgressBar,
@@ -155,13 +156,15 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   private paneTrigger: HTMLElement | null = null
   private paneOverlay?: OverlayRef
   private paneRefresh?: Subscription
+  private deviceListRequest?: Subscription
+  private deviceStatsRequest?: Subscription
   @ViewChild('paneTemplate') paneTemplate!: TemplateRef<unknown>
 
   get allCount(): number {
     return this.serverTotalCount()
   }
 
-  // Count for the currently selected tab, used to drive the paginator length.
+  // Unfiltered count for the currently selected tab.
   get currentTabCount(): number {
     if (this.isCloudMode) {
       return this.serverTotalCount()
@@ -194,12 +197,54 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeTab.set(index)
     this.paneRefresh?.unsubscribe()
     this.paneDevice.set(null)
-    // Different tabs return different result sets, so reset paging to the first page.
+    this.reloadFirstPage()
+  }
+
+  private reloadFirstPage(): void {
     this.pageEvent.startsFrom = 0
-    if (this.paginator) {
-      this.paginator.pageIndex = 0
-    }
     this.getDevices()
+  }
+
+  appliedInventoryFilterCount = 0
+
+  readonly inventoryForm = new FormGroup({
+    sku: new FormControl('', { nonNullable: true }),
+    os: new FormControl('', { nonNullable: true }),
+    version: new FormControl('', { nonNullable: true }),
+    mode: new FormControl('', { nonNullable: true }),
+    lms: new FormControl('', { nonNullable: true }),
+    sort: new FormControl('', { nonNullable: true }),
+    direction: new FormControl('asc', { nonNullable: true })
+  })
+
+  readonly inventorySortFields = [
+    { field: 'hostname', label: 'devices.table.hostname.value' },
+    { field: 'friendlyName', label: 'devices.inventory.friendlyName.value' },
+    { field: 'skuType', label: 'devices.table.productType.value' },
+    { field: 'os', label: 'devices.inventory.os.value' },
+    { field: 'amtVersion', label: 'devices.inventory.version.value' },
+    { field: 'currentMode', label: 'devices.table.controlMode.value' },
+    { field: 'lmsInstalled', label: 'devices.inventory.lms.value' }
+  ]
+
+  applyInventoryQuery(): void {
+    const { sku, os, version, mode, lms, sort, direction } = this.inventoryForm.getRawValue()
+    const quote = (value: string) => "'" + value.trim().replaceAll("'", "''") + "'"
+    const predicates: string[] = []
+    if (sku) predicates.push(`skuType eq ${quote(sku)}`)
+    if (os.trim()) predicates.push(`contains(os,${quote(os)})`)
+    if (version.trim()) predicates.push(`startswith(amtVersion,${quote(version)})`)
+    if (mode) predicates.push(`currentMode eq ${quote(mode)}`)
+    if (lms) predicates.push(`lmsInstalled eq ${lms}`)
+    this.appliedInventoryFilterCount = predicates.length
+    this.pageEvent.filter = predicates.join(' and ') || undefined
+    this.pageEvent.orderBy = sort ? `${sort} ${direction}` : undefined
+    this.reloadFirstPage()
+  }
+
+  clearInventoryQuery(): void {
+    this.inventoryForm.reset()
+    this.applyInventoryQuery()
   }
 
   private currentTabStatus(): DeviceFilterStatus | undefined {
@@ -210,12 +255,12 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadStats(): void {
-    this.devicesService.getStats().subscribe({
+    this.deviceStatsRequest?.unsubscribe()
+    this.deviceStatsRequest = this.devicesService.getStats().subscribe({
       next: (stats) => {
         this.serverTotalCount.set(stats.totalCount)
         this.serverActivatedCount.set(stats.activatedCount)
         this.serverDiscoveredCount.set(stats.discoveredCount)
-        this.totalCount.set(this.currentTabCount)
       },
       error: (err) => {
         console.error('Error loading device stats:', err)
@@ -263,7 +308,9 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator
-  @ViewChild(MatSort) sort!: MatSort
+  @ViewChild(MatSort) set tableSort(sort: MatSort | undefined) {
+    this.devices.sort = this.isCloudMode ? (sort ?? null) : null
+  }
 
   constructor() {
     this.selectedDevices = new SelectionModel<Device>(true, [])
@@ -276,8 +323,6 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.devices.paginator = this.paginator
-    this.devices.sort = this.sort
     // The overlay stays attached; the template's @if decides whether the pane is showing,
     // which lets its leave animation run before it is removed.
     this.paneOverlay = this.overlay.create({
@@ -288,6 +333,8 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.deviceListRequest?.unsubscribe()
+    this.deviceStatsRequest?.unsubscribe()
     this.paneRefresh?.unsubscribe()
     this.paneOverlay?.dispose()
   }
@@ -337,6 +384,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getDevices(): void {
+    this.deviceListRequest?.unsubscribe()
     this.isLoading.set(true)
     let responseTotalCount: number | undefined
 
@@ -348,7 +396,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
     // Store previous selection before making the request
     const prevSelected = this.selectedDevices.selected.map((d) => d.guid)
 
-    this.devicesService
+    this.deviceListRequest = this.devicesService
       .getDevices({ ...this.pageEvent, tags: this.filteredTags(), status: this.currentTabStatus() })
       .pipe(
         switchMap((res) => {
@@ -407,11 +455,10 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
           this.paneRefresh?.unsubscribe()
           this.paneLoadError.set(false)
         }
+        const count = responseTotalCount ?? devices.length
+        this.totalCount.set(count)
         if (this.isCloudMode) {
-          // Cloud has no discovered/managed split, so the paginated response's
-          // totalCount is authoritative for the paginator length.
-          this.serverTotalCount.set(responseTotalCount ?? devices.length)
-          this.totalCount.set(this.serverTotalCount())
+          this.serverTotalCount.set(count)
         }
 
         // Restore selection state on data retrieval
@@ -423,7 +470,7 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   tagFilterChange(event: MatSelectChange): void {
     this.filteredTags.set(event.value)
-    this.getDevices()
+    this.reloadFirstPage()
   }
 
   bulkEditTags(): void {
@@ -777,6 +824,6 @@ export class DevicesComponent implements OnInit, AfterViewInit, OnDestroy {
   pageChanged(event: PageEvent): void {
     this.pageEvent.pageSize = event.pageSize
     this.pageEvent.startsFrom = event.pageIndex * event.pageSize
-    this.getTagsThenDevices()
+    this.getDevices()
   }
 }

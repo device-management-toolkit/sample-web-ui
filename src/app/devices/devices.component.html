@@ -58,6 +58,80 @@
       </mat-select>
     </mat-form-field>
   </mat-card-content>
+  @if (!isCloudMode) {
+    <details #inventoryPanel class="inventory-panel">
+      <summary #inventoryToggle>
+        {{ 'devices.inventory.toggle.value' | translate }}
+        @if (appliedInventoryFilterCount) {
+          ({{ appliedInventoryFilterCount }})
+        }
+      </summary>
+      <form
+        [formGroup]="inventoryForm"
+        (ngSubmit)="applyInventoryQuery(); inventoryPanel.open = false; inventoryToggle.focus()">
+        <mat-card-content class="inventory-fields">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.table.productType.value' | translate }}</mat-label>
+            <mat-select formControlName="sku">
+              <mat-option value="">{{ 'devices.inventory.any.value' | translate }}</mat-option>
+              <mat-option value="vPro">vPro</mat-option>
+              <mat-option value="ISM">ISM</mat-option>
+              <mat-option value="none">{{ 'devices.inventory.neither.value' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.inventory.os.value' | translate }}</mat-label>
+            <input matInput formControlName="os" />
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.inventory.version.value' | translate }}</mat-label>
+            <input matInput formControlName="version" />
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.table.controlMode.value' | translate }}</mat-label>
+            <mat-select formControlName="mode">
+              <mat-option value="">{{ 'devices.inventory.any.value' | translate }}</mat-option>
+              <mat-option value="ACM">{{ 'devices.controlMode.acm.value' | translate }}</mat-option>
+              <mat-option value="CCM">{{ 'devices.controlMode.ccm.value' | translate }}</mat-option>
+              <mat-option value="notActivated">{{ 'devices.controlMode.notActivated.value' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.inventory.lms.value' | translate }}</mat-label>
+            <mat-select formControlName="lms">
+              <mat-option value="">{{ 'devices.inventory.any.value' | translate }}</mat-option>
+              <mat-option value="true">{{ 'common.yes.value' | translate }}</mat-option>
+              <mat-option value="false">{{ 'common.no.value' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ 'devices.inventory.sortBy.value' | translate }}</mat-label>
+            <mat-select formControlName="sort">
+              <mat-option value="">{{ 'devices.inventory.defaultOrder.value' | translate }}</mat-option>
+              @for (sort of inventorySortFields; track sort.field) {
+                <mat-option [value]="sort.field">{{ sort.label | translate }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          @if (inventoryForm.controls.sort.value) {
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ 'devices.inventory.direction.value' | translate }}</mat-label>
+              <mat-select formControlName="direction">
+                <mat-option value="asc">{{ 'devices.inventory.ascending.value' | translate }}</mat-option>
+                <mat-option value="desc">{{ 'devices.inventory.descending.value' | translate }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          }
+          <div class="inventory-actions flex flex-wrap">
+            <button mat-flat-button type="submit">{{ 'devices.inventory.apply.value' | translate }}</button>
+            <button mat-button type="button" (click)="clearInventoryQuery()">
+              {{ 'devices.inventory.clear.value' | translate }}
+            </button>
+          </div>
+        </mat-card-content>
+      </form>
+    </details>
+  }
 </mat-card>
 
 <!-- Discovered/Managed tabs are a console-only concept. Tabs must
@@ -78,7 +152,7 @@
   <mat-divider></mat-divider>
 }
 @if (isNoData()) {
-  @if (filteredTags().length) {
+  @if (filteredTags().length || pageEvent.filter) {
     <app-empty-state icon="devices" [title]="'devices.noDataFilter.value' | translate" />
   } @else if (isDiscoveredTab) {
     <app-empty-state icon="devices" [title]="'devices.noData.value' | translate" />
@@ -113,7 +187,7 @@
     </ng-container>
     <!-- host Column -->
     <ng-container matColumnDef="hostname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!isCloudMode">
         {{ 'devices.table.hostname.value' | translate }}
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
@@ -166,7 +240,7 @@
     </ng-container>
     <!-- tags Column -->
     <ng-container matColumnDef="tags">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!isCloudMode">
         <!-- include this always hidden icon to match spacing in the cell -->
         <mat-icon class="alwaysHidden">edit</mat-icon>
         {{ 'common.tags.value' | translate }}
@@ -271,7 +345,8 @@
     <mat-paginator
       [pageSizeOptions]="[25, 50, 100]"
       [pageSize]="pageEvent.pageSize"
-      [length]="currentTabCount"
+      [length]="totalCount()"
+      [pageIndex]="pageEvent.startsFrom / pageEvent.pageSize"
       (page)="pageChanged($event)"
       showFirstLastButtons>
     </mat-paginator>

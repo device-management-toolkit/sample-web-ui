@@ -993,6 +993,62 @@
     "description": "タグによるデバイスフィルタリング用ラベル",
     "value": "フィルタータグ"
   },
+  "devices.inventory.any": {
+    "description": "Device inventory query control label",
+    "value": "すべて"
+  },
+  "devices.inventory.apply": {
+    "description": "Device inventory query control label",
+    "value": "適用"
+  },
+  "devices.inventory.ascending": {
+    "description": "Device inventory query control label",
+    "value": "昇順"
+  },
+  "devices.inventory.clear": {
+    "description": "Device inventory query control label",
+    "value": "インベントリフィルターをクリア"
+  },
+  "devices.inventory.defaultOrder": {
+    "description": "Device inventory query control label",
+    "value": "既定の並び順"
+  },
+  "devices.inventory.descending": {
+    "description": "Device inventory query control label",
+    "value": "降順"
+  },
+  "devices.inventory.direction": {
+    "description": "Device inventory query control label",
+    "value": "並べ替え順"
+  },
+  "devices.inventory.friendlyName": {
+    "description": "Device inventory query control label",
+    "value": "表示名"
+  },
+  "devices.inventory.lms": {
+    "description": "Device inventory query control label",
+    "value": "LMS のインストール"
+  },
+  "devices.inventory.neither": {
+    "description": "Device inventory query control label",
+    "value": "vPro でも ISM でもない"
+  },
+  "devices.inventory.os": {
+    "description": "Device inventory query control label",
+    "value": "オペレーティングシステム"
+  },
+  "devices.inventory.sortBy": {
+    "description": "Device inventory query control label",
+    "value": "並べ替えの基準"
+  },
+  "devices.inventory.toggle": {
+    "description": "Label for expanding the device inventory controls",
+    "value": "インベントリのフィルターと並べ替え"
+  },
+  "devices.inventory.version": {
+    "description": "Device inventory query control label",
+    "value": "AMT バージョン"
+  },
   "devices.header.addCertificateDescription": {
     "description": "証明書追加ダイアログの説明",
     "value": "証明書はAMTに追加されます。"
